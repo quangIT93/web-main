@@ -1,18 +1,15 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import routes from './pages/routes'
-// @ts-ignore
-import { Layout } from '#components'
-// import NotFound from './pages/NotFound'
+import { routes } from './pages/routes'
+import { Layout } from './components'
 import './App.scss'
 import ScrollObserver from './utils/ScrollObserver'
 const NotFound = React.lazy(() => import('./pages/NotFound'))
-// import Home from './pages/Home'
-// const Home = React.lazy(() => import('./pages/Home'))
+
 
 interface RouteProps {
   path: string
-  componenet: React.ReactNode
+  component: React.ReactNode
 }
 
 const App: React.FC = () => {
@@ -23,9 +20,11 @@ const App: React.FC = () => {
           <Layout>
             <Routes>
               {/* @ts-ignore */}
-              {routes.map(({ path, componenet }: RouteProps) => {
-                return <Route path={path} element={componenet} key={path} />
-              })}
+              {
+                routes.map(({ path, component: component }: RouteProps) => {
+                  return <Route path={path} element={component} key={path} />
+                })
+              }
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>

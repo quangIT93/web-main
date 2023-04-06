@@ -1,14 +1,11 @@
 import React from 'react'
 import Feed from '.'
+import RouteProps from '../routes'
 
-interface Props {
-  path: string
-  componenet: React.ReactNode
-}
 
-const route: Props = {
+const route: RouteProps = {
   path: '/feed',
-  componenet: <Feed />,
+  component: <Feed />,
 }
 
 export default route

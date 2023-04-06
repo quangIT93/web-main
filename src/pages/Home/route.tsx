@@ -1,14 +1,10 @@
 import React, { lazy } from 'react'
 import Home from '.'
+import RouteProps from '../routes'
 
-interface Props {
-  path: string
-  componenet: React.ReactNode
-}
-
-const route: Props = {
+const route: RouteProps = {
   path: '/',
-  componenet: <Home />,
+  component: <Home />,
 }
 
 export default route
