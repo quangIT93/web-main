@@ -1,0 +1,148 @@
+@import '../../scss/variable';
+@import '../../scss/mixins';
+
+$navbar-height: 90px;
+$policy-padding-left: 180px;
+
+.policy {
+  margin-top: calc(26px + $navbar-height);
+  display: flex;
+  align-items: flex-start;
+  padding-inline: 180px;
+  position: relative;
+
+  @include breakpoint(tablet) {
+    padding-inline: 35px;
+    display: block;
+
+    & ul {
+      display: none; 
+    }
+  }
+
+  & section:not(:first-child) {
+    margin-top: 14px;
+  }
+
+  .sub-list {
+    list-style-type: none !important;
+    li {
+      margin-left: 24px;
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 300;
+    }
+  }
+
+  ul {
+    // list-style-type: lower-alpha;
+    margin-block: 0;
+    padding: 0;
+
+    li {
+      // white-space: nowrap;
+      cursor: pointer;
+      font-size: 14px;
+
+      a {
+        color: inherit;
+        display: block;
+        width: 100%;
+        padding: 8px 12px;
+
+        &:hover {
+          background-color: $primary-hover-color;
+        }
+      }
+    }
+  }
+
+  &__category {
+    width: 160px;
+    margin-top: calc(26px + $navbar-height);
+    top: 0;
+    left: $policy-padding-left;
+    position: fixed;
+    z-index: 999;
+
+    @include breakpoint(tablet) {
+      display: none;
+    }
+
+  }
+
+  &__category-fake {
+    width: 160px;
+    height: 200px;
+    
+    @include breakpoint(tablet) {
+      display: none;
+    }
+  }
+
+  &__content {
+    margin-left: 24px;
+    width: calc(100% - 160px);
+
+    @include breakpoint(tablet) {
+      width: 100%;
+      margin-left: 0px;
+    }
+  }
+}
+
+.category {
+  &__active {
+    background-color: $primary-hover-color;
+    border-right: 1px solid $primary-color !important;
+  }
+}
+
+.content {
+  &__title {
+    margin: 0px;
+    line-height: 18px;
+  }
+
+  &__sub-title {
+    margin-top: 14px;
+  }
+
+  &__body {
+    margin-top: 14px;
+    font-weight: 300;
+    line-height: 18px;
+  }
+
+  &__additional-info {
+    display: block;
+    margin-top: 14px;
+  }
+}
+
+.content__body-dotsymbol {
+  position: relative;
+}
+
+.content__body-indent {
+  text-indent: 24px;
+}
+
+.content__body-indent:before {
+  content: '•';
+  top: 0;
+  left: -13px;
+  position: absolute;
+}
+
+.content__body-indent2x {
+  text-indent: 48px;
+}
+
+.content__body-indent2x:before {
+  content: '•';
+  top: 0;
+  left: -13px;
+  position: absolute;
+}

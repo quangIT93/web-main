@@ -1,0 +1,93 @@
+@import '../../../../scss/variable';
+@import '../../../../scss/mixins';
+
+.footer {
+  padding: 36px 364px;
+  margin-top: 126px;
+  color: #ffffff;
+  background-color: $primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include breakpoint(tablet) {
+    padding: 36px 28px;
+  }
+
+  @include breakpoint(mobile) {
+    padding-block: 12px;
+    flex-direction: column;
+  }
+
+  &__title {
+    white-space: nowrap;
+  }
+
+  & > div {
+    display: flex;
+    align-items: center;
+  }
+
+  & button {
+    background: #ffffff;
+    color: $text-footer-color;
+    border-radius: 8px;
+    padding: 10px;
+    height: 44px;
+    border: none;
+    outline: none;
+  }
+}
+
+.footer__btn {
+  cursor: pointer;
+
+  a {
+    display: flex;
+    align-items: center;
+    color: inherit;
+
+    & span {
+      font-weight: 500;
+      margin-left: 10px;
+      font-size: 14px;
+      line-height: 18px;
+      white-space: nowrap;
+      color: $text-footer-color;
+    }
+  }
+
+  &:not(:first-child) {
+    margin-left: 8px;
+  }
+}
+
+.footer-mobile {
+  display: none !important;
+  align-items: center;
+}
+
+.footer {
+  @media screen and (max-width: 1024px) {
+    padding: 36px 120px;
+  }
+
+  @media screen and (max-width: 1366px) {
+    padding: 36px 100px;
+  }
+}
+
+@include breakpoint(mobile) {
+  .footer {
+    padding: 16px;
+  }
+
+  .footer-desktop {
+    display: none !important;
+  }
+
+  .footer-mobile {
+    margin-top: 8px;
+    display: block !important;
+  }
+}

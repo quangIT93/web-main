@@ -1,0 +1,134 @@
+@import '../../scss/variable';
+
+.btn {
+  height: 48px;
+  border: none;
+  outline: none;
+  border-radius: 30px;
+  background-color: transparent;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn__post {
+  width: 136px;
+  font-weight: bold;
+  background-color: $primary-color;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding-block: 14px;
+  padding-left: 20px;
+  padding-right: 26px;
+}
+
+.btn__login {
+  width: 160px;
+  border: 0.5px solid $gray-border-btn;
+  font-weight: 400px;
+  padding-block: 5px;
+  padding-left: 5px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 24px;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    & > span {
+      margin-left: 8px;
+    }
+  }
+}
+
+.navbar {
+  padding: 20px 180px;
+  // These properies will cause the other navbar 
+  // in the neighbors components
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-between;
+
+  &-links {
+    list-style-type: none;
+    margin-left: 82px;
+    display: flex;
+    align-items: center;
+    color: $text-color;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.navbar-links .links__item {
+  a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+
+  &:not(:first-child) {
+    margin-left: 24px;
+  }
+}
+
+.links__item-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > span {
+    margin-left: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.actions-features {
+  display: flex;
+  align-items: center;
+  margin-right: 32px;
+
+  &__icon {
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:not(:first-child) {
+      margin-left: 28px;
+    }
+  }
+}
+
+.actions-post button > span {
+  line-height: 19px;
+  margin-left: 4px;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.login {
+  &__icon {
+    padding-right: 10px;
+  }
+
+  &__avatar {
+    background-color: $primary-color;
+    width: 38px;
+    height: 38px;
+    border-radius: 100em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

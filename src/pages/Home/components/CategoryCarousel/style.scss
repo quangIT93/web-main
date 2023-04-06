@@ -1,0 +1,80 @@
+@import "../../../../scss/variable";
+
+.job-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 100em;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.category-carousel {
+  margin-top: 60px;
+  overflow: hidden;
+  position: relative;
+
+  &__container {
+    display: flex;
+    align-items: center;
+  }
+
+  &__slide {
+    background-color: orange;
+    flex: 0 0 calc(100% / 12); /* Slide covers 50% of the viewport */
+    min-width: 0;
+
+    & > div:first-child {
+      text-align: center;
+    }
+
+    & img {
+      display: block;
+      width: 50px;
+      height: 50px;
+      margin-inline: auto;
+    }
+
+    & > div:last-child {
+      height: 45px;
+      text-align: center;
+    }
+
+    & > div:last-child {
+      transition: all 0.1s ease-in;
+    }
+
+    &:hover > div:last-child {
+      border-bottom: 3px solid $gray-border-category;
+    } 
+
+    & > div:last-child.selected {
+      border-bottom: 3px solid $primary-color;
+    }
+
+    & span {
+      display: inline-block;
+      margin-top: 7px;
+      white-space: nowrap;
+      cursor: pointer;
+      text-align: center;
+    }
+  }
+}
+
+.container{
+  &__previous-job, &__next-job {
+    position: absolute;
+    background: pink;
+  }
+
+  &__previous-job {
+    left: 0;
+  }
+
+  &__next-job {
+    right: 0;
+  }
+}

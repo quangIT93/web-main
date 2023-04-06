@@ -1,0 +1,44 @@
+@import '../../scss/variable';
+@import '../../scss/mixins';
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo__quote {
+  margin-left: 10px;
+  display: inline-block;
+  color: $primary-color;
+}
+
+.quote {
+  display: flex;
+  align-items: center;
+
+  &__title,
+  &__body {
+    display: block;
+    color: inherit;
+  }
+
+  &__title {
+    line-height: 19px;
+    font-weight: bold;
+  }
+
+  &__body {
+    margin-top: 3px;
+    font-size: 13px;
+    line-height: 15px;
+  }
+}
+
+@include breakpoint(mobile) {
+  .logo {
+    & img {
+      width: 24px;
+      height: 30px;
+    }
+  }
+}

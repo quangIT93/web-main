@@ -1,0 +1,41 @@
+// @font-face {
+// font-family: "Roboto";
+// src: local("Roboto"),
+//  url("./fonts/Roboto/Roboto-Medium.ttf") format("truetype"),
+//  url("./fonts/Roboto/Roboto-Black.ttf") format("truetype"),
+//  url("./fonts/Roboto/Roboto-Bold.ttf") format("truetype"),
+//  url("./fonts/Roboto/Roboto-Regular.ttf") format("truetype"),
+//  url("./fonts/Roboto/Roboto-Thin.ttf") format("truetype"),
+//  url("./fonts/Roboto/Roboto-Light.ttf") format("truetype");
+// }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+$navbar-height: 90px;
+$text-color: #000000;
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding: calc($navbar-height + 10px);
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', -apple-system, sans-serif;
+  color: $text-color;
+}
+
+a {
+  text-decoration: none;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
