@@ -37,7 +37,8 @@ const Landing: React.FC = () => {
           </div>
           <div className='div-info-app'>
             <div className='div-qrcode'>
-              <img className='img-qrcode' src={require('../../img/langdingPage/image_42.png')} />
+              <img className='img-qrcode' src={require('../../img/langdingPage/QRcode-appstore.png')} />
+              <img className='img-qrcode' src={require('../../img/langdingPage/QRcode-ggplay.png')} />
             </div>
             <div className='div-dow' style={{ flexDirection: "column", justifyContent: "space-around", display: "flex" }}>
               <a href='https://bit.ly/3m3vE3W' target='_blank' >
@@ -66,6 +67,7 @@ const Landing: React.FC = () => {
           content='Artificial Intelligence'
           describe='Công ty chúng tôi cung cấp việc làm AI cho những ai quan tâm đến Machine Learning, Artificial Intelligence,...'
           titleButton='Liên hệ với chúng tôi '
+          tagId='us'
         />
 
         <ItemInfoRight imageDescription={"/images/image 51.png"}
@@ -78,7 +80,9 @@ const Landing: React.FC = () => {
           describe='“Muốn đi nhanh hãy đi một mình, muốn đi xa hãy đi cùng nhau”
           Trở thành đồng đội của chúng tôi và cùng nhau xây dựng 1 team cùng phát triển.'
           titleButton='Neoworks Career'
-          imgBackground={"/images/Background.png"} />
+          imgBackground={"/images/Background.png"}
+          tagId='career'
+        />
 
       </div>
 

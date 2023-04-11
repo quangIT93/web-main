@@ -11,16 +11,17 @@ interface CategoryCarouselItemProps {
     imageDescription?: string
     imgBackground?: string
     titleButton?: string
+    tagId: string
 }
 
 
 
 const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({ content,
     describe,
-    imageDescription, imgBackground, titleButton }) => {
+    imageDescription, imgBackground, titleButton, tagId }) => {
 
     return (
-        <div className='container' style={{ backgroundImage: `url(${imgBackground})` }}>
+        <div id={`${tagId}`} className='container' style={{ backgroundImage: `url(${imgBackground})` }}>
             <div className='div-img'>
                 <img src={imageDescription} />
             </div>

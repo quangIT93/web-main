@@ -13,6 +13,8 @@
 .div-qrcode {
 //  background-image: url("../../img/langdingPage/image_42.png ");
   //height: 199px;
+  display: flex;
+  flex-direction: row;
   width: auto;
   margin-right: 30px;
   @include breakpoint(mobile){
@@ -55,6 +57,7 @@
 }
 .img-qrcode{
   height: 150px;
+  margin-left: 10px;
   @include breakpoint(mobile){
     height: 00px;
    

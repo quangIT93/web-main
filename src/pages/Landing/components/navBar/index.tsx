@@ -20,12 +20,12 @@ const Navbar: React.FC = () => {
           <Link to="#">Trang chủ</Link>
         </li>
         <li className="links__item links">
-          <Link to="/policy"
-          > Về chúng tôi</Link>
+          <a href='#us'>
+            Về chúng tôi</a>
 
         </li>
         <li className="links__item links">
-          <Link to="#">Neoworks Career</Link>
+          <a href='#career'> Neoworks Career </a>
 
         </li>
       </ul>

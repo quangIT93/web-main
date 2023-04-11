@@ -19,7 +19,7 @@ const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({ content,
     imageDescription, imgBackground }) => {
 
     return (
-        <div className='container-right' style={{ backgroundImage: `url(${imgBackground})` }}>
+        <div id="con-us" className='container-right' style={{ backgroundImage: `url(${imgBackground})` }}>
 
             <div className='div-content-right'>
                 <div id='div-content'>
