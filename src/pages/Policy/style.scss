@@ -19,6 +19,15 @@ $policy-padding-left: 180px;
       display: none; 
     }
   }
+  @include breakpoint(mobile) {
+    margin-top: 0px;
+    padding-inline: 5px;
+    display: block;
+
+    & ul {
+      display: none; 
+    }
+  }
 
   & section:not(:first-child) {
     margin-top: 14px;
@@ -79,6 +88,11 @@ $policy-padding-left: 180px;
     @include breakpoint(tablet) {
       display: none;
     }
+    @include breakpoint(mobile) {
+      width: 160px;
+    height: 80px;
+    
+    }
   }
 
   &__content {
@@ -86,6 +100,10 @@ $policy-padding-left: 180px;
     width: calc(100% - 160px);
 
     @include breakpoint(tablet) {
+      width: 100%;
+      margin-left: 0px;
+    }
+    @include breakpoint(mobile) {
       width: 100%;
       margin-left: 0px;
     }

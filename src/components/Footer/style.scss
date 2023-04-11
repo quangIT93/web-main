@@ -1,0 +1,253 @@
+
+@import "../../scss//mixins";
+.container-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #DCDCDC;
+    border-top: 1px solid #DCDCDC;
+    @include breakpoint(mobile){
+       flex-wrap: wrap-reverse;
+       border-bottom: 0px solid #DCDCDC;
+       padding-bottom: 0px;
+      }
+
+      @include breakpoint(tablet){
+        flex-wrap: wrap-reverse;
+        border-bottom: 0px solid #DCDCDC;
+        padding-bottom: 0px;
+       }
+}
+
+.footer-left{
+    flex-direction: column;
+    & h3{
+        color: #0D99FF;
+        margin-bottom: 10px;
+        @include breakpoint(mobile){
+            text-align: center;
+            margin-top: 10px;
+           }
+
+           @include breakpoint(tablet){
+            text-align: center;
+            margin-top: 10px;
+           }
+    }
+    & p{
+        font-style: normal;
+        color: #575757;
+        font-size: 13px;
+        margin-bottom: 5px;
+        @include breakpoint(mobile){
+            text-align: center;
+            font-size: 13px;
+           }
+
+           
+           @include breakpoint(tablet){
+            text-align: center;
+            font-size: 14px;
+           }
+    }
+    @include breakpoint(mobile){
+        justify-content: center;
+        
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+        width: 100%;
+        border-top: 1px solid #DCDCDC;
+       }
+
+       @include breakpoint(tablet){
+        justify-content: center;
+        
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+        width: 100%;
+        border-top: 1px solid #DCDCDC;
+       }
+
+       
+}
+
+.footer-left>img{
+    height: 100px;
+    @include breakpoint(mobile){
+        height: 80px;
+        width: 80px;
+       }
+       @include breakpoint(tablet){
+        height: 100px;
+        width: 100px;
+       }
+}
+.footer-center{
+    display: flex;
+    flex-direction: column;
+    & h4{
+        color: #0D99FF;
+         margin-bottom: 20px;
+    }
+     & a{
+        font-style: normal;
+        color: #575757;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    @include breakpoint(mobile){
+    position: fixed;
+       }
+       @include breakpoint(tablet){
+        position: fixed;
+           }
+}
+
+.right-top{
+    & h4{
+        color: #0D99FF;  
+    }
+    @include breakpoint(mobile){
+        
+        }
+}
+.right-top .div-img-footer{
+    display: flex;
+    flex-direction: row;
+   
+}
+.div-img-footer > img{
+    height: 150px;
+    width: 150px;
+    @include breakpoint(mobile){
+        height: 100px;
+        width: 100px;
+    }
+    @include breakpoint(tablet){
+        height: 120px;
+        width: 120px;
+    }
+}
+
+.div-link-app{  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 20px;
+}
+.div-link-app >a >img{
+    height: 35px;
+    width: 100px;
+    @include breakpoint(mobile){
+        height: 20px;
+        width: 70px;
+    }
+    @include breakpoint(tablet){
+        height: 30px;
+        width: 90px;
+    }
+}
+#div-img-socal{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+    margin-top: 10px;
+    
+}
+
+#div-img-socal >a>img{
+    height: 35px;
+    width: 35px;
+    border-radius: 5px;
+    @include breakpoint(mobile){
+        margin-right: 10px;
+        border-radius: 5px;
+    }
+    @include breakpoint(tablet){
+        margin-right: 30px;
+        border-radius: 5px;
+        height: 45px;
+        width: 45px;
+    }
+}
+
+#div-policy-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    @include breakpoint(mobile){
+        flex-wrap: wrap;
+        width: 100%;
+        padding-bottom: 10px;
+        padding-top: 0px;
+    }
+    @include breakpoint(tablet){
+        flex-wrap: wrap;
+        width: 100%;
+        padding-bottom: 10px;
+        padding-top: 0px;
+    }
+}
+#div-policy-footer >a >p{
+    font-size: 12px;
+    color: #0D99FF;
+    text-decoration: underline;
+    @include breakpoint(mobile){
+        font-size: 15px;
+        
+    }
+    @include breakpoint(tablet){
+        font-size: 15px;
+        
+    }
+}
+
+#div-policy-footer-right{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 40%;
+    & p{
+        font-size: 12px;
+        @include breakpoint(mobile){
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        @include breakpoint(tablet){
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    }
+    @include breakpoint(mobile){
+        flex-wrap: wrap-reverse;
+        width: 100%;
+        justify-content: center;
+    }
+    @include breakpoint(tablet){
+        flex-wrap: wrap-reverse;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.footer-right{
+    @include breakpoint(mobile){
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        }
+        @include breakpoint(tablet){
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+            }
+}
