@@ -13,7 +13,7 @@
    @include breakpoint(mobile){
     padding: 0px;
     margin-bottom: 10px;
-    
+    justify-content: center;
        }
        @include breakpoint(tablet){
         padding: 0px;
@@ -36,8 +36,15 @@
     @include breakpoint(mobile){
        align-items: center;
        
-       height: 150px;
+       height: 170px;
        background-color: white;
+     ////  
+       position: absolute;
+    margin-top: 250px;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 20px;
+    padding-bottom: 20px;
+
        }
        @include breakpoint(tablet){
         align-items: center;
