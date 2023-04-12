@@ -7,7 +7,7 @@ interface Props {
 }
 
 const route: Props = {
-  path: '/',
+  path: '/home',
   componenet: <Home />,
 }
 
