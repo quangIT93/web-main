@@ -1,14 +1,9 @@
 import React, { lazy } from 'react'
 import Landing from '.'
-
-interface Props {
-  path: string
-  componenet: React.ReactNode
-}
-
-const route: Props = {
+import RouteProps from '../routes'
+const route: RouteProps = {
   path: '/',
-  componenet: <Landing />,
+  component: <Landing />,
 }
 
 export default route
