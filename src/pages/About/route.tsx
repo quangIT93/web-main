@@ -1,14 +1,10 @@
 // import React from "react";
 import About from '.'
+import RouteProps from '../routes'
 
-interface Props {
-  path: string
-  componenet: React.ReactNode
-}
-
-const route: Props = {
+const route: RouteProps = {
   path: '/about',
-  componenet: <About />,
+  component: <About />,
 }
 
 export default route

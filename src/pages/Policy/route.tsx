@@ -1,14 +1,10 @@
 import React from 'react'
 import Policy from '.'
+import RouteProps from '../routes'
 
-interface Props {
-  path: string
-  componenet: React.ReactNode
-}
-
-const route: Props = {
+const route: RouteProps = {
   path: '/policy',
-  componenet: <Policy />,
+  component: <Policy />,
 }
 
 export default route
