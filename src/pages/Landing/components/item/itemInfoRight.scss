@@ -1,0 +1,181 @@
+@import '../../../../scss/mixins';
+.container-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+  align-content: space-around;
+
+  padding: 50px 50px;
+  padding-right: 130px;
+  @include breakpoint(mobile) {
+    padding: 0px;
+    margin-bottom: 10px;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+  }
+  @include breakpoint(tablet) {
+    padding: 0px;
+    margin-bottom: 10px;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+  }
+  @include breakpoint(an_order) {
+    padding-right: 80px;
+  }
+}
+
+.div-img > img {
+  height: 400px;
+  width: 540px;
+  border-radius: 10px;
+
+  @include breakpoint(mobile) {
+    //     margin-top: -50px;
+
+    ///
+    height: auto;
+    width: calc(100vw - 0px);
+    // height: 360px;
+    // width: 370px;
+    //  position: inherit;
+  }
+  @include breakpoint(tablet) {
+    //     margin-top: -50px;
+    height: auto;
+    width: calc(100vw - 40px);
+    //  position: inherit;
+  }
+  @include breakpoint(an_order) {
+    //     margin-top: -50px;
+    height: auto;
+    width: calc(100vw - 850px);
+    //  position: inherit;
+  }
+}
+
+.div-img {
+  @include breakpoint(mobile) {
+    align-items: center;
+  }
+  @include breakpoint(tablet) {
+    align-items: center;
+  }
+}
+.div-content-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+
+  height: 300px;
+  @include breakpoint(mobile) {
+    align-items: center;
+
+    height: 170px;
+    background-color: white;
+    ////////////
+    position: absolute;
+    margin-top: 250px;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 20px;
+    padding-bottom: 20px;
+  }
+  @include breakpoint(tablet) {
+    align-items: center;
+
+    height: 170px;
+    background-color: white;
+    ////
+  }
+}
+.div-content-right > #div-content > p {
+  font-size: 50px;
+  font-weight: 600;
+  text-align: right;
+  @include breakpoint(mobile) {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    padding-top: 25px;
+  }
+  @include breakpoint(tablet) {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+  }
+  @include breakpoint(an_order) {
+    font-size: 30px;
+    font-weight: 600;
+  }
+}
+.space {
+  width: 0px;
+}
+#div-content {
+  width: 400px;
+  @include breakpoint(mobile) {
+    width: 100%;
+  }
+  @include breakpoint(tablet) {
+    width: 100%;
+  }
+}
+#div-describe-right {
+  width: 550px;
+
+  @include breakpoint(mobile) {
+    width: 100%;
+  }
+  @include breakpoint(tablet) {
+    width: 100%;
+  }
+}
+#div-describe-right > p {
+  font-size: 17px;
+  text-align: right;
+  margin-left: 90px;
+  @include breakpoint(mobile) {
+    font-size: 15px;
+    text-align: center;
+    padding: 10px;
+    margin-left: 0px;
+  }
+  @include breakpoint(tablet) {
+    font-size: 17px;
+    text-align: center;
+    padding: 10px;
+    margin-left: 0px;
+  }
+}
+.btn-contract {
+  display: flex;
+  width: 280px;
+  height: 40px;
+  background-color: #0d99ff;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+
+  & p {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    @include breakpoint(mobile) {
+      font-size: 15px;
+    }
+    @include breakpoint(tablet) {
+      font-size: 16px;
+    }
+  }
+
+  @include breakpoint(mobile) {
+    width: 280px;
+    height: 45px;
+  }
+  @include breakpoint(tablet) {
+    width: 320px;
+    height: 55px;
+  }
+}

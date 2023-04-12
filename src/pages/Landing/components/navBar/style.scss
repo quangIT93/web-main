@@ -1,22 +1,23 @@
-@import '../../scss/variable';
-@import '../../scss/mixins';
-.btn {
-  height: 48px;
-  border: none;
-  outline: none;
-  border-radius: 30px;
-  background-color: transparent;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
+
+@import "../../../../scss/mixins";
+
+// .btn {
+//   height: 48px;
+//   border: none;
+//   outline: none;
+//   border-radius: 30px;
+//   background-color: transparent;
+//   font-size: 16px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+// }
 
 .btn__post {
   width: 136px;
   font-weight: bold;
-  background-color: $primary-color;
+ 
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -27,7 +28,7 @@
 
 .btn__login {
   width: 160px;
-  border: 0.5px solid $gray-border-btn;
+ 
   font-weight: 400px;
   padding-block: 5px;
   padding-left: 5px;
@@ -43,30 +44,69 @@
     }
   }
 }
+.banner{
+  background-image: url("../../../../img//langdingPage//Background.png");
+  width: auto;
+  @include breakpoint(mobile){
+   padding-bottom: 10px;
+ }
+ @include breakpoint(tablet){
+  padding-bottom: 10px;
+}
+ 
+}
+.navibar {
+  background-color: #F3F8FB;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  @include breakpoint(mobile){
+ //   padding-right: 60px;
+    justify-content: center;
+    flex-direction: column;
+ } @include breakpoint(tablet){
+  //padding-right: 60px;
+  justify-content: center;
+ // flex-direction: column;
+}
 
-.navbar {
-  padding: 20px 180px;
-  // These properies will cause the other navbar 
-  // in the neighbors components
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
-  @include breakpoint(mobile) {
-    padding: 20px 10px;
-  }
+ 
 
   &-links {
     list-style-type: none;
    // margin-left: 82px;
     display: flex;
     align-items: center;
-    color: $text-color;
+   
   }
 
   &__actions {
     display: flex;
     align-items: center;
+   
   }
+}
+.logoTitle{
+  color: #0D99FF;
+  font-size: 35px;
+   @include breakpoint(mobile){
+     font-size: 20px;
+    // margin-left: 29px;
+  }
+  @include breakpoint(tablet){
+    font-size: 25px;
+    margin-left: 50px;
+ }
+  font-family: 'Rammetto One', cursive  !important
+ 
+}
+.div-space{
+  width: 50px;
+  @include breakpoint(mobile){
+   width: 0px;
+ }
 }
 
 .navbar-links .links__item {
@@ -76,6 +116,12 @@
     color: inherit;
     line-height: 18px;
     white-space: nowrap;
+    font-weight: 500;
+    @include breakpoint(mobile){
+      font-size: 12px;
+     
+     
+   }
   }
 
   &:not(:first-child) {
@@ -126,7 +172,7 @@
   }
 
   &__avatar {
-    background-color: $primary-color;
+  
     width: 38px;
     height: 38px;
     border-radius: 100em;

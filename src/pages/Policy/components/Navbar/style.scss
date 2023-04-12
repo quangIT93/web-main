@@ -18,6 +18,9 @@
   @include breakpoint(tablet) {
     padding: 8px 31px;
   }
+  @include breakpoint(mobile) {
+    padding: 8px 10px;
+  }
 
   &__quote {
     color: $primary-color;

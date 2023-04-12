@@ -65,7 +65,7 @@ const Category = (props: CurrentCategoryActiveProps) => {
           <CategoryItem isActive={false} link="about-us" content="Về Hi Job" />
           <CategoryItem
             isActive={false}
-            link="privary-policy"
+            link="privacy-policy"
             content="Chính sách bảo mật"
           />
           <CategoryItem

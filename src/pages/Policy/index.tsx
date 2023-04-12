@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import Footer from '../../components/Footer/index'
 // @ts-ignore
 import { ScrollContext } from '#utils'
 import './style.scss'
@@ -68,7 +68,7 @@ const Policy: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className="policy">
+      <div className="policy" style={{ marginBottom: "10px" }}>
         <div className="policy__category-fake"></div>
         <Category
           isAboutUs={categoriesState.isAboutUs}
@@ -77,7 +77,7 @@ const Policy: React.FC = () => {
         />
         <div className="policy__content">
           <section id="about-us">
-            <h2 ref={titleOneRef} className="content__title">
+            <h2 ref={titleOneRef} className="`content__title`">
               Về Hi Job
             </h2>
             <span className="content__additional-info">Sứ mệnh</span>

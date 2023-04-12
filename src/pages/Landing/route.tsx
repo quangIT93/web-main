@@ -1,6 +1,5 @@
 import React, { lazy } from 'react'
-import Home from '.'
-import RouteProps from '../routes'
+import Landing from '.'
 
 interface Props {
   path: string
@@ -8,8 +7,8 @@ interface Props {
 }
 
 const route: Props = {
-  path: '/home',
-  componenet: <Home />,
+  path: '/',
+  componenet: <Landing />,
 }
 
 export default route
