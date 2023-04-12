@@ -14,8 +14,6 @@ interface CategoryCarouselItemProps {
     tagId: string
 }
 
-
-
 const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({ content,
     describe,
     imageDescription, imgBackground, titleButton, tagId }) => {
@@ -37,8 +35,6 @@ const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({ content,
                         <p> {titleButton} </p>
                     </div>
                 </a>
-
-
             </div>
             <div className='space'>
 

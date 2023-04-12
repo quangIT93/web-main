@@ -8,6 +8,7 @@
   align-content: space-around;
   flex-wrap: wrap;
   padding: 50px 100px;
+  padding-left: 150px;
   @include breakpoint(mobile) {
     padding: 0px;
     margin-bottom: 10px;
@@ -16,6 +17,9 @@
   @include breakpoint(tablet) {
     padding: 0px;
     margin-bottom: 10px;
+  }
+  @include breakpoint(an_order) {
+    padding-right: 50px;
   }
 }
 
@@ -64,6 +68,10 @@
     font-weight: 600;
     text-align: center;
   }
+  @include breakpoint(an_order) {
+    font-size: 30px;
+    font-weight: 600;
+  }
 }
 .space {
   width: 200px;
@@ -87,15 +95,24 @@
   }
 }
 #div-describe > p {
-  font-size: 20px;
+  font-size: 17px;
+  width: 85%;
   @include breakpoint(mobile) {
     font-size: 15px;
     text-align: center;
     padding: 10px;
+    width: 100%;
   }
   @include breakpoint(tablet) {
     font-size: 17px;
     text-align: center;
+    padding: 10px;
+    width: 100%;
+  }
+
+  @include breakpoint(an_order) {
+    font-size: 17px;
+    // text-align: center;
     padding: 10px;
   }
 }

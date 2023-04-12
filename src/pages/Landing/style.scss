@@ -155,6 +155,10 @@
       height: 190px;
       width: auto;
     }
+    @include breakpoint(an_order) {
+      height: 400px;
+      width: auto;
+    }
   }
 }
 #img-left {

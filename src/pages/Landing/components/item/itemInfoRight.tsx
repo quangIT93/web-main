@@ -12,11 +12,11 @@ interface CategoryCarouselItemProps {
     imgBackground?: string
 }
 
-
-
-const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({ content,
+const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({
+    content,
     describe,
-    imageDescription, imgBackground }) => {
+    imageDescription,
+    imgBackground }) => {
 
     return (
         <div id="con-us" className='container-right' style={{ backgroundImage: `url(${imgBackground})` }}>
@@ -33,14 +33,11 @@ const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({ content,
                         <p> Liên hệ với chúng tôi </p>
                     </div>
                 </a>
-
-
             </div>
             <div className='div-img'>
                 <img src={imageDescription} />
             </div>
             <div className='space'>
-
             </div>
         </div>
     )
