@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import Feed from '.'
 import RouteProps from '../routes'
 
