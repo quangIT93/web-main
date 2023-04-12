@@ -37,16 +37,17 @@ const Landing: React.FC = () => {
           </div>
           <div className='div-info-app'>
             <div className='div-qrcode'>
-              <img className='img-qrcode' src={require('../../img/langdingPage/QRcode-appstore.png')} />
               <img className='img-qrcode' src={require('../../img/langdingPage/QRcode-ggplay.png')} />
+              <img className='img-qrcode' src={require('../../img/langdingPage/QRcode-appstore.png')} />
+
             </div>
-            <div className='div-dow' style={{ flexDirection: "column", justifyContent: "space-around", display: "flex" }}>
+            <div className='div-dow' >
               <a href='https://bit.ly/3m3vE3W' target='_blank' >
                 <img src={require('../../img/langdingPage/image 43.png')} />
               </a>
-              <a href=''>
+              {/* <a href=''>
                 <img id='img-gallery' src={require('../../img/langdingPage/image 44.png')} />
-              </a>
+              </a> */}
               <a href='http://bit.ly/3KF5JZS' target='_blank'>
                 <img src={require('../../img/langdingPage/image 45.png')} />
               </a>

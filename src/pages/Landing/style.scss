@@ -1,193 +1,199 @@
-
-@import "../../scss//mixins";
+@import '../../scss//mixins';
 .home__main {
   padding-inline: 180px;
 }
 
-.div-info-app{
-  flex-direction: row;
-  width: 100%;
+.div-info-app {
+  flex-direction: column;
+  width: 60%;
   display: flex;
   justify-content: center;
 }
 .div-qrcode {
-//  background-image: url("../../img/langdingPage/image_42.png ");
+  //  background-image: url("../../img/langdingPage/image_42.png ");
   //height: 199px;
   display: flex;
   flex-direction: row;
   width: auto;
-  margin-right: 30px;
-  @include breakpoint(mobile){
-   margin: 0px;
-   // margin-left: -20px;
-  }
-  @include breakpoint(tablet){
+  //margin-right: 30px;
+  justify-content: space-evenly;
+  @include breakpoint(mobile) {
     margin: 0px;
     // margin-left: -20px;
-   }
- 
+  }
+  @include breakpoint(tablet) {
+    margin: 0px;
+    // margin-left: -20px;
+  }
 }
-.logo_hi_job{
-  height: 200px; width: auto;
-  @include breakpoint(mobile){
-   height: 80px;
- }
- @include breakpoint(tablet){
-  height: 100px;
+.logo_hi_job {
+  height: 200px;
+  width: auto;
+  @include breakpoint(mobile) {
+    height: 80px;
+  }
+  @include breakpoint(tablet) {
+    height: 100px;
+  }
 }
-}
- #p1{
+#p1 {
   font-size: 30px;
-  @include breakpoint(mobile){
+  @include breakpoint(mobile) {
     font-size: 15px;
   }
-  @include breakpoint(tablet){
+  @include breakpoint(tablet) {
     font-size: 17px;
   }
- 
 }
-.describe> .p2{
+.describe > .p2 {
   font-size: 25px;
-@include breakpoint(mobile){
-  font-size: 12px;
+  @include breakpoint(mobile) {
+    font-size: 12px;
+  }
+  @include breakpoint(tablet) {
+    font-size: 15px;
+  }
 }
-@include breakpoint(tablet){
-  font-size: 15px;
-}
-}
-.img-qrcode{
+.img-qrcode {
   height: 150px;
   margin-left: 10px;
-  @include breakpoint(mobile){
+  @include breakpoint(mobile) {
     height: 00px;
-   
   }
-  @include breakpoint(tablet){
+  @include breakpoint(tablet) {
     height: 00px;
-   
   }
 }
-.div-dow > a>img{
-  height: 40px;
-  @include breakpoint(mobile){
+.div-dow > a > img {
+  height: 45px;
+  @include breakpoint(mobile) {
     height: 25px;
-   // margin-left: -20px;
+    // margin-left: -20px;
   }
-  @include breakpoint(tablet){
+  @include breakpoint(tablet) {
     height: 29px;
-   // margin-left: -20px;
+    // margin-left: -20px;
   }
 }
-.div-dow > a> #img-gallery{
+.div-dow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  @include breakpoint(mobile) {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0px;
+  }
+  @include breakpoint(tablet) {
+    flex-direction: column;
+    margin-top: 0px;
+  }
+  a {
+    @include breakpoint(mobile) {
+      text-align: center;
+    }
+    @include breakpoint(tablet) {
+      text-align: center;
+    }
+  }
+}
+.div-dow > a > #img-gallery {
   height: 41.5px;
-  @include breakpoint(mobile){
+  @include breakpoint(mobile) {
     height: 26px;
-   // margin-left: -20px;
+    // margin-left: -20px;
   }
-  @include breakpoint(tablet){
+  @include breakpoint(tablet) {
     height: 30px;
-   // margin-left: -20px;
+    // margin-left: -20px;
   }
 }
-.item{
+.item {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   margin-top: 50px;
-  @include breakpoint(mobile){
+  @include breakpoint(mobile) {
     margin: 0px;
     margin: 0px;
     position: inherit;
     margin-top: -50px;
     background-color: white;
-
-   }
-   @include breakpoint(tablet){
+  }
+  @include breakpoint(tablet) {
     margin: 0px;
     margin: 0px;
     position: inherit;
     margin-top: -50px;
     background-color: white;
-
-   }
-  
+  }
 }
 
-.div-banner-right{
+.div-banner-right {
   display: flex;
   flex-direction: row;
 
-  @include breakpoint(mobile){
-      
-   //align-items: center;
-   padding-top: 20px;
-   }
-   @include breakpoint(tablet){
-      
+  @include breakpoint(mobile) {
+    //align-items: center;
+    padding-top: 20px;
+  }
+  @include breakpoint(tablet) {
     //align-items: center;
     padding-top: 20px;
     padding-right: 10px;
- 
-    }
-  & img{
+  }
+  & img {
     height: 500px;
     width: auto;
-    @include breakpoint(mobile){
-      
+    @include breakpoint(mobile) {
       height: 130px;
       width: auto;
-
-     }
-     @include breakpoint(tablet){
-      
+    }
+    @include breakpoint(tablet) {
       height: 190px;
       width: auto;
-
-     }
+    }
   }
- }
- #img-left{
+}
+#img-left {
   //position: absolute;
   color: aliceblue;
   position: initial;
- }
- #img-center{
- color: aliceblue;
- margin-left: -40px;
- margin-top: 100px;
- position: relative;
- @include breakpoint(mobile){
-      margin-left: -10px;
-      margin-top: 50px;
- }
- @include breakpoint(tablet){
-  margin-left: -10px;
-  margin-top: 50px;
 }
- }
- #img-right{
+#img-center {
+  color: aliceblue;
+  margin-left: -40px;
+  margin-top: 100px;
+  position: relative;
+  @include breakpoint(mobile) {
+    margin-left: -10px;
+    margin-top: 50px;
+  }
+  @include breakpoint(tablet) {
+    margin-left: -10px;
+    margin-top: 50px;
+  }
+}
+#img-right {
   //position: absolute;
   color: aliceblue;
   position: inherit;
   margin-left: -40px;
-  @include breakpoint(mobile){
+  @include breakpoint(mobile) {
     margin-left: -10px;
   }
-  @include breakpoint(tablet){
+  @include breakpoint(tablet) {
     margin-left: -10px;
   }
- 
- }
- #space-banner{
+}
+#space-banner {
   width: 200px;
-  @include breakpoint(mobile){
-      
+  @include breakpoint(mobile) {
     width: 0px;
-   }
-   @include breakpoint(tablet){
-      
+  }
+  @include breakpoint(tablet) {
     width: 0px;
-   }
- }
- 
+  }
+}

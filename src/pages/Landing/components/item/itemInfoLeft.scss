@@ -1,138 +1,131 @@
-
-
-@import "../../../../scss/mixins";
-.container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    justify-content: space-around;
-    align-content: space-around;
-    flex-wrap: wrap;
-   padding: 50px 100px;
-   @include breakpoint(mobile){
+@import '../../../../scss/mixins';
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+  align-content: space-around;
+  flex-wrap: wrap;
+  padding: 50px 100px;
+  @include breakpoint(mobile) {
     padding: 0px;
     margin-bottom: 10px;
     justify-content: center;
-       }
-       @include breakpoint(tablet){
-        padding: 0px;
-        margin-bottom: 10px;
-        
-           }
+  }
+  @include breakpoint(tablet) {
+    padding: 0px;
+    margin-bottom: 10px;
+  }
 }
 
-.div-img > img{
-    height: 350px;
-    width: auto;
-    border-radius: 10px;
+.div-img > img {
+  height: 350px;
+  width: auto;
+  border-radius: 10px;
 }
 
-.div-content{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 300px;
-    @include breakpoint(mobile){
-       align-items: center;
-       
-       height: 170px;
-       background-color: white;
-     ////  
-       position: absolute;
+.div-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 300px;
+  @include breakpoint(mobile) {
+    align-items: center;
+
+    height: 170px;
+    background-color: white;
+    ////
+    position: absolute;
     margin-top: 250px;
     border-top-right-radius: 25px;
     border-top-left-radius: 20px;
     padding-bottom: 20px;
+  }
+  @include breakpoint(tablet) {
+    align-items: center;
 
-       }
-       @include breakpoint(tablet){
-        align-items: center;
-        
-        height: 150px;
-        background-color: white;
-        }
-
-   
+    height: 200px;
+    background-color: white;
+    //////
+  }
 }
-.div-content > #div-content> p{
-    font-size: 50px;
+.div-content > #div-content > p {
+  font-size: 50px;
+  font-weight: 600;
+  @include breakpoint(mobile) {
+    font-size: 20px;
     font-weight: 600;
-    @include breakpoint(mobile){
-        font-size: 20px;
-        font-weight: 600;
-        text-align: center;
-        padding-top: 20px;
-       }
-       @include breakpoint(tablet){
-        font-size: 20px;
-        font-weight: 600;
-        text-align: center;
-       }
-   
+    text-align: center;
+    padding-top: 20px;
+  }
+  @include breakpoint(tablet) {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+  }
 }
-.space{
-    width: 200px;
+.space {
+  width: 200px;
 }
-#div-content{
-    width: 400px;
-    @include breakpoint(mobile){
-       width: 100%;
-       }
-       @include breakpoint(tablet){
-        width: 100%;
-        }
+#div-content {
+  width: 400px;
+  @include breakpoint(mobile) {
+    width: 100%;
+  }
+  @include breakpoint(tablet) {
+    width: 100%;
+  }
 }
-#div-describe{
-    
-    width: 500px;
-    @include breakpoint(mobile){
-     width: 100%;
-       }
-       @include breakpoint(tablet){
-        width: 100%;
-          }
+#div-describe {
+  width: 500px;
+  @include breakpoint(mobile) {
+    width: 100%;
+  }
+  @include breakpoint(tablet) {
+    width: 100%;
+  }
 }
-#div-describe > p{
-   font-size: 20px;
-   @include breakpoint(mobile){
+#div-describe > p {
+  font-size: 20px;
+  @include breakpoint(mobile) {
     font-size: 15px;
     text-align: center;
     padding: 10px;
-   }
-   @include breakpoint(tablet){
+  }
+  @include breakpoint(tablet) {
     font-size: 17px;
     text-align: center;
-    padding:10px
-   }
+    padding: 10px;
+  }
 }
-.btn-contract{
-    display: flex;
-    width: 280px;
-    height: 40px;
-    background-color: #0D99FF;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
+.btn-contract {
+  display: flex;
+  width: 280px;
+  height: 40px;
+  background-color: #0d99ff;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 
-    & p{
-        font-size: 20px;
-        color: white;
-        font-weight: bold;
-        @include breakpoint(mobile){
-            font-size: 15px;
-           }
-           @include breakpoint(tablet){
-            font-size: 15px;
-           }
+  & p {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    @include breakpoint(mobile) {
+      font-size: 15px;
     }
+    @include breakpoint(tablet) {
+      font-size: 15px;
+    }
+  }
 
-    @include breakpoint(mobile){
-        width: 280px;
+  @include breakpoint(mobile) {
+    width: 280px;
     height: 30px;
-       }
-       @include breakpoint(tablet){
-        width: 280px;
-        height: 30px;
-       }
+  }
+  @include breakpoint(tablet) {
+    width: 280px;
+    height: 30px;
+  }
 }

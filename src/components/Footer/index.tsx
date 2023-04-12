@@ -32,21 +32,18 @@ const Footer: React.FC = () => {
                     <div className='right-top' >
                         <h4>TẢI ỨNG DỤNG HI JOB</h4>
                         <div className='div-img-footer'>
-                            <img src={require('../../img/langdingPage/imageQR.png')} />
-                            <div className='div-link-app'>
-                                <a href='http://bit.ly/3KF5JZS' target='_blank' >
-
-                                    <img src={require('../../img/langdingPage/image 45.png')} />
-                                </a>
-                                <a href='https://bit.ly/3m3vE3W' target='_blank'>
-                                    <img id='img-gallery' src={require('../../img/langdingPage/image 43.png')} />
-                                </a>
-                                <a href=''>
-                                    <img src={require('../../img/langdingPage/image 44.png')} />
-                                </a>
-                            </div>
+                            <img src={require('../../img/langdingPage/QRcode-ggplay.png')} />
+                            <img style={{ marginLeft: 10 }} src={require('../../img/langdingPage/QRcode-appstore.png')} />
                         </div>
+                        <div className='div-link-app'>
+                            <a href='https://bit.ly/3m3vE3W' target='_blank'>
+                                <img id='img-gallery' src={require('../../img/langdingPage/image 43.png')} />
+                            </a>
+                            <a href='http://bit.ly/3KF5JZS' target='_blank' >
+                                <img src={require('../../img/langdingPage/image 45.png')} />
+                            </a>
 
+                        </div>
                     </div>
                     <div className='div-socal-link'>
                         <h4 style={{ color: "#0D99FF" }}>LIÊN KẾT</h4>
