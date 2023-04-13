@@ -11,6 +11,7 @@
     flex-wrap: wrap-reverse;
     border-bottom: 0px solid #dcdcdc;
     padding-bottom: 0px;
+    border-top: 0px;
   }
 
   @include breakpoint(tablet) {
@@ -27,12 +28,12 @@
     margin-bottom: 10px;
     @include breakpoint(mobile) {
       text-align: center;
-      margin-top: 10px;
+      //  margin-top: 10px;
     }
 
     @include breakpoint(tablet) {
       text-align: center;
-      margin-top: 10px;
+      //margin-top: 10px;
     }
   }
   & p {
@@ -112,6 +113,7 @@
   }
   @include breakpoint(mobile) {
     width: 60%;
+    padding-left: 10px;
   }
   @include breakpoint(tablet) {
     width: 60%;
@@ -123,8 +125,8 @@
   flex-direction: row;
 }
 .div-img-footer > img {
-  height: 150px;
-  width: 150px;
+  height: auto;
+  max-width: 100%;
   @include breakpoint(mobile) {
     height: 0px;
   }
@@ -136,7 +138,7 @@
 .div-link-app {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   // margin-left: 20px;
   @include breakpoint(mobile) {
     flex-direction: column;
@@ -147,10 +149,10 @@
   }
 }
 .div-link-app > a > img {
-  height: 40px;
+  height: 35px;
   width: auto;
   @include breakpoint(mobile) {
-    height: 30px;
+    //height: 35px;
     //width: 70px;
   }
   @include breakpoint(tablet) {
@@ -164,6 +166,13 @@
   justify-content: space-between;
   width: 60%;
   margin-top: 10px;
+
+  @include breakpoint(mobile) {
+    width: 100%;
+  }
+  @include breakpoint(tablet) {
+    width: 100%;
+  }
 }
 
 #div-img-socal > a > img {
@@ -179,6 +188,15 @@
     border-radius: 5px;
     height: 45px;
     width: 45px;
+  }
+}
+.div-socal-link {
+  display: none;
+  @include breakpoint(mobile) {
+    display: block;
+  }
+  @include breakpoint(tablet) {
+    display: block;
   }
 }
 
@@ -248,7 +266,9 @@
     width: 100%;
     //////
     position: sticky;
-    padding-top: 60px;
+    margin-top: 60px;
+    padding-top: 10px;
+    border-top: 1px solid #dcdcdc;
   }
   @include breakpoint(tablet) {
     display: flex;

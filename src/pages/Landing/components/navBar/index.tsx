@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, } from 'react-router-dom'
 
 import '../navBar/style.scss'
 
@@ -8,9 +8,9 @@ import '../navBar/style.scss'
 const Navbar: React.FC = () => {
   return (
     <nav className="navibar">
-      <Link to="#">
-        <a className='logoTitle'>neoworks</a>
-      </Link>
+
+      <a href='#' className='logoTitle'>neoworks</a>
+
       <div className='div-space'>
 
       </div>

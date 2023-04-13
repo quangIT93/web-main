@@ -1,6 +1,6 @@
 @mixin breakpoint($point) {
   @if $point == tablet {
-    @media screen and (max-width: 784px) and (min-width: 422px) {
+    @media screen and (max-width: 784px) and (min-width: 420px) {
       @content;
     }
   } @else if $point == mobile {
@@ -8,7 +8,7 @@
       @content;
     }
   } @else if $point == an_order {
-    @media screen and (max-width: 1450px) and (min-width: 790px) {
+    @media screen and (max-width: 1400px) and (min-width: 784px) {
       @content;
     }
   }

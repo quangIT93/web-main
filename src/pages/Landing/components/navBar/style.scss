@@ -1,5 +1,4 @@
-
-@import "../../../../scss/mixins";
+@import '../../../../scss/mixins';
 
 // .btn {
 //   height: 48px;
@@ -17,7 +16,7 @@
 .btn__post {
   width: 136px;
   font-weight: bold;
- 
+
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -28,7 +27,7 @@
 
 .btn__login {
   width: 160px;
- 
+
   font-weight: 400px;
   padding-block: 5px;
   padding-left: 5px;
@@ -44,69 +43,76 @@
     }
   }
 }
-.banner{
-  background-image: url("../../../../img//langdingPage//Background.png");
+.banner {
+  background-image: url('../../../../img//langdingPage//Background.png');
   width: auto;
-  @include breakpoint(mobile){
-   padding-bottom: 10px;
- }
- @include breakpoint(tablet){
-  padding-bottom: 10px;
-}
- 
+  position: unset;
+  padding-top: 90px;
+  @include breakpoint(mobile) {
+    padding-bottom: 10px;
+    position: relative;
+    padding-right: 20px;
+    padding-top: 30px;
+  }
+  @include breakpoint(tablet) {
+    padding-bottom: 10px;
+    position: relative;
+    padding-right: 20px;
+    padding-top: 30px;
+  }
 }
 .navibar {
-  background-color: #F3F8FB;
+  background-color: #f3f8fb;
   flex-wrap: wrap;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  @include breakpoint(mobile){
- //   padding-right: 60px;
+  position: fixed;
+  width: 100%;
+  @include breakpoint(mobile) {
+    //   padding-right: 60px;
     justify-content: center;
     flex-direction: column;
- } @include breakpoint(tablet){
-  //padding-right: 60px;
-  justify-content: center;
- // flex-direction: column;
-}
-
- 
+    position: unset;
+  }
+  @include breakpoint(tablet) {
+    //padding-right: 60px;
+    justify-content: center;
+    position: unset;
+    // flex-direction: column;
+  }
 
   &-links {
     list-style-type: none;
-   // margin-left: 82px;
+    // margin-left: 82px;
     display: flex;
     align-items: center;
-   
   }
 
   &__actions {
     display: flex;
     align-items: center;
-   
   }
 }
-.logoTitle{
-  color: #0D99FF;
+.logoTitle {
+  color: #0d99ff;
   font-size: 35px;
-   @include breakpoint(mobile){
-     font-size: 20px;
+  @include breakpoint(mobile) {
+    font-size: 20px;
     // margin-left: 29px;
   }
-  @include breakpoint(tablet){
+  @include breakpoint(tablet) {
     font-size: 25px;
     margin-left: 50px;
- }
-  font-family: 'Rammetto One', cursive  !important
- 
+  }
+  font-family: 'Rammetto One', cursive !important;
 }
-.div-space{
+.div-space {
   width: 50px;
-  @include breakpoint(mobile){
-   width: 0px;
- }
+  @include breakpoint(mobile) {
+    width: 0px;
+  }
 }
 
 .navbar-links .links__item {
@@ -117,11 +123,9 @@
     line-height: 18px;
     white-space: nowrap;
     font-weight: 500;
-    @include breakpoint(mobile){
+    @include breakpoint(mobile) {
       font-size: 12px;
-     
-     
-   }
+    }
   }
 
   &:not(:first-child) {
@@ -172,7 +176,6 @@
   }
 
   &__avatar {
-  
     width: 38px;
     height: 38px;
     border-radius: 100em;

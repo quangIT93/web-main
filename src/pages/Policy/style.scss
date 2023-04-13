@@ -16,7 +16,7 @@ $policy-padding-left: 180px;
     display: block;
 
     & ul {
-      display: none; 
+      display: none;
     }
   }
   @include breakpoint(mobile) {
@@ -25,7 +25,7 @@ $policy-padding-left: 180px;
     display: block;
 
     & ul {
-      display: none; 
+      display: none;
     }
   }
 
@@ -78,20 +78,18 @@ $policy-padding-left: 180px;
     @include breakpoint(tablet) {
       display: none;
     }
-
   }
 
   &__category-fake {
     width: 160px;
     height: 200px;
-    
+
     @include breakpoint(tablet) {
       display: none;
     }
     @include breakpoint(mobile) {
       width: 160px;
-    height: 80px;
-    
+      height: 80px;
     }
   }
 
@@ -131,6 +129,7 @@ $policy-padding-left: 180px;
     margin-top: 14px;
     font-weight: 300;
     line-height: 18px;
+    text-align: justify;
   }
 
   &__additional-info {
