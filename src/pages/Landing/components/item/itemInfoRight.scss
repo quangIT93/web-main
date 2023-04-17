@@ -44,7 +44,7 @@
   @include breakpoint(tablet) {
     //     margin-top: -50px;
     height: auto;
-    width: calc(100vw - 40px);
+    width: calc(100vw - 10px);
     //  position: inherit;
   }
   @include breakpoint(an_order) {

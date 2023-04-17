@@ -62,14 +62,15 @@
   }
 }
 .navibar {
-  background-color: rgba(243, 248, 251, 0.92);
+  background-color: rgba(243, 248, 251, 0.95);
   flex-wrap: wrap;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   flex-wrap: wrap;
   position: fixed;
   width: 100%;
+  z-index: 99;
   @include breakpoint(mobile) {
     //   padding-right: 60px;
     justify-content: center;
@@ -104,13 +105,15 @@
   }
   @include breakpoint(tablet) {
     font-size: 25px;
-    margin-left: 50px;
   }
   font-family: 'Rammetto One', cursive !important;
 }
 .div-space {
-  width: 50px;
+  width: 100px;
   @include breakpoint(mobile) {
+    width: 0px;
+  }
+  @include breakpoint(tablet) {
     width: 0px;
   }
 }
