@@ -4,11 +4,11 @@
   flex-direction: row;
   align-items: center;
   width: 100%;
-  justify-content: space-around;
+  justify-content: center;
   align-content: space-around;
 
   padding: 50px 50px;
-  padding-right: 130px;
+  padding-right: 120px;
   @include breakpoint(mobile) {
     padding: 0px;
     margin-bottom: 10px;
@@ -27,10 +27,10 @@
 }
 
 .div-img > img {
-  height: 400px;
-  width: 540px;
-  border-radius: 10px;
-
+  height: auto;
+  width: 100%;
+  border-radius: 20px;
+  object-fit: cover;
   @include breakpoint(mobile) {
     //     margin-top: -50px;
 
@@ -44,14 +44,13 @@
   @include breakpoint(tablet) {
     //     margin-top: -50px;
     height: auto;
-    width: calc(100vw - 40px);
+    width: calc(100vw - 10px);
     //  position: inherit;
   }
   @include breakpoint(an_order) {
-    //     margin-top: -50px;
     height: auto;
     width: calc(100vw - 850px);
-    //  position: inherit;
+    object-fit: cover;
   }
 }
 
@@ -68,6 +67,7 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-end;
+  margin-right: 100px;
 
   height: 300px;
   @include breakpoint(mobile) {
@@ -81,6 +81,7 @@
     border-top-right-radius: 25px;
     border-top-left-radius: 20px;
     padding-bottom: 20px;
+    margin-right: 0px;
   }
   @include breakpoint(tablet) {
     align-items: center;
@@ -88,6 +89,11 @@
     height: 170px;
     background-color: white;
     ////
+    margin-right: 00px;
+  }
+  @include breakpoint(an_order) {
+    ////
+    margin-right: 55px;
   }
 }
 .div-content-right > #div-content > p {
@@ -112,6 +118,7 @@
 }
 .space {
   width: 0px;
+  display: none;
 }
 #div-content {
   width: 400px;

@@ -4,7 +4,7 @@
   flex-direction: row;
   align-items: center;
   width: 100%;
-  justify-content: space-around;
+  justify-content: center;
   align-content: space-around;
   flex-wrap: wrap;
   padding: 50px 100px;
@@ -22,18 +22,17 @@
     padding-right: 50px;
   }
 }
-
 .div-img > img {
   height: 350px;
   width: auto;
   border-radius: 10px;
 }
-
 .div-content {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 300px;
+  margin-left: 100px;
   @include breakpoint(mobile) {
     align-items: center;
 
@@ -45,6 +44,7 @@
     border-top-right-radius: 25px;
     border-top-left-radius: 20px;
     padding-bottom: 20px;
+    margin-left: 00px;
   }
   @include breakpoint(tablet) {
     align-items: center;
@@ -52,8 +52,14 @@
     height: 200px;
     background-color: white;
     //////
+    margin-left: 00px;
+  }
+  @include breakpoint(an_order) {
+    margin-left: 50px;
+    height: calc(100vw - 900px);
   }
 }
+
 .div-content > #div-content > p {
   font-size: 50px;
   font-weight: 600;

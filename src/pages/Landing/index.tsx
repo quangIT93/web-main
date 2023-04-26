@@ -26,7 +26,7 @@ const Landing: React.FC = () => {
   return (
     <div className="home">
       <NaviBar />
-      <div style={{ flexDirection: "row", alignContent: "center", justifyContent: "space-between", display: "flex", paddingTop: 30, position: "sticky" }} className='banner'>
+      <div style={{ flexDirection: "row", alignContent: "center", justifyContent: "space-between", display: "flex", }} className='banner'>
 
         <div style={{ flexDirection: "column", width: "50%", justifyContent: "center", alignItems: "center", display: "flex" }}>
           <img className='logo_hi_job' style={{}} src={require('../../img/langdingPage/logoH.png')} />
@@ -42,13 +42,11 @@ const Landing: React.FC = () => {
 
             </div>
             <div className='div-dow' >
-              <a href='https://bit.ly/3m3vE3W' target='_blank' >
+              <a href='https://play.google.com/store/apps/details?id=com.neoworks.hijob' target='_blank' >
                 <img src={require('../../img/langdingPage/image 43.png')} />
               </a>
-              {/* <a href=''>
-                <img id='img-gallery' src={require('../../img/langdingPage/image 44.png')} />
-              </a> */}
-              <a href='http://bit.ly/3KF5JZS' target='_blank'>
+
+              <a href='https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi' target='_blank'>
                 <img src={require('../../img/langdingPage/image 45.png')} />
               </a>
             </div>
@@ -56,11 +54,10 @@ const Landing: React.FC = () => {
         </div>
         <div className='div-banner-right'>
           <img id='img-left' src={require('../../img/langdingPage/Home.png')} />
-          <img id='img-center' src={require('../../img/langdingPage/Job Detail.png')} />
           <img id='img-right' src={require('../../img/langdingPage/history2.png')} />
+          <img id='img-center' src={require('../../img/langdingPage/Job Detail.png')} />
         </div>
         <div id='space-banner'>
-
         </div>
       </div>
       <div className='item' >
@@ -70,7 +67,6 @@ const Landing: React.FC = () => {
           titleButton='Liên hệ với chúng tôi '
           tagId='us'
         />
-
         <ItemInfoRight imageDescription={"/images/image 51.png"}
           content='Software Solutions'
           describe='Bạn đang tìm kiếm phần mềm hoạch định nguồn lực doanh nghiệp? Chúng tôi có giải pháp tốt nhất cho điều đó.'

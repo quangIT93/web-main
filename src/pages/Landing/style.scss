@@ -5,7 +5,7 @@
 
 .div-info-app {
   flex-direction: column;
-  width: 60%;
+  width: 40%;
   display: flex;
   justify-content: center;
 }
@@ -55,7 +55,7 @@
   }
 }
 .img-qrcode {
-  height: 150px;
+  // height: 150px;
   margin-left: 10px;
   @include breakpoint(mobile) {
     height: 00px;
@@ -65,7 +65,7 @@
   }
 }
 .div-dow > a > img {
-  height: 45px;
+  height: 35px;
   @include breakpoint(mobile) {
     height: 25px;
     // margin-left: -20px;
@@ -142,11 +142,12 @@
   @include breakpoint(tablet) {
     //align-items: center;
     padding-top: 20px;
-    padding-right: 10px;
+    padding-right: 20px;
   }
   & img {
     height: 500px;
     width: auto;
+    object-fit: cover;
     @include breakpoint(mobile) {
       height: 130px;
       width: auto;
@@ -164,36 +165,39 @@
 #img-left {
   //position: absolute;
   color: aliceblue;
-  position: initial;
 }
 #img-center {
   color: aliceblue;
-  margin-left: -40px;
+  margin-left: -420px;
   margin-top: 100px;
-  position: relative;
+
   @include breakpoint(mobile) {
-    margin-left: -10px;
+    margin-left: -110px;
     margin-top: 50px;
   }
   @include breakpoint(tablet) {
-    margin-left: -10px;
+    margin-left: -150px;
+    margin-top: 50px;
+  }
+  @include breakpoint(an_order) {
+    margin-left: -360px;
     margin-top: 50px;
   }
 }
 #img-right {
   //position: absolute;
   color: aliceblue;
-  position: inherit;
-  margin-left: -40px;
+
+  margin-left: 120px;
   @include breakpoint(mobile) {
-    margin-left: -10px;
+    margin-left: 30px;
   }
   @include breakpoint(tablet) {
-    margin-left: -10px;
+    margin-left: 30px;
   }
 }
 #space-banner {
-  width: 200px;
+  width: 300px;
   @include breakpoint(mobile) {
     width: 0px;
   }
