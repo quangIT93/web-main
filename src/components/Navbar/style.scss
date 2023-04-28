@@ -46,7 +46,7 @@
 
 .navbar {
   padding: 20px 180px;
-  // These properies will cause the other navbar 
+  // These properies will cause the other navbar
   // in the neighbors components
   // display: flex;
   // align-items: center;
@@ -57,7 +57,7 @@
 
   &-links {
     list-style-type: none;
-   // margin-left: 82px;
+    // margin-left: 82px;
     display: flex;
     align-items: center;
     color: $text-color;
@@ -66,6 +66,7 @@
   &__actions {
     display: flex;
     align-items: center;
+   // display: none;
   }
 }
 
@@ -100,6 +101,7 @@
   display: flex;
   align-items: center;
   margin-right: 32px;
+ 
 
   &__icon {
     line-height: 16px;
@@ -119,6 +121,7 @@
   color: #ffffff;
   white-space: nowrap;
 }
+
 
 .login {
   &__icon {

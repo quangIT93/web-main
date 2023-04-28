@@ -2,9 +2,17 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { routes } from './pages/routes'
 import { Layout } from './components'
+// import firebase config
+import { initializeApp } from "firebase/app";
+import {firebaseConfig} from "./config/firebase/firebaseConfig"
+import { getAnalytics} from "firebase/analytics";
 import './App.scss'
 import ScrollObserver from './utils/ScrollObserver'
 const NotFound = React.lazy(() => import('./pages/NotFound'))
+
+// Initialize Firebase
+const app= initializeApp(firebaseConfig)
+getAnalytics(app);
 
 
 interface RouteProps {

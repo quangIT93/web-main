@@ -29,7 +29,7 @@ const Landing: React.FC = () => {
       <div style={{ flexDirection: "row", alignContent: "center", justifyContent: "space-between", display: "flex", }} className='banner'>
 
         <div style={{ flexDirection: "column", width: "50%", justifyContent: "center", alignItems: "center", display: "flex" }}>
-          <img className='logo_hi_job' style={{}} src={require('../../img/langdingPage/logoH.png')} />
+          <img className='logo_hi_job' style={{}} src={require('../../img/langdingPage/logoHiJob-nopadding.png')} />
           <div style={{ padding: 20, justifyContent: "space-around" }} className='describe' >
             <p id='p1' style={{ color: "#0D99FF", fontWeight: "bold", textAlign: "center" }}>Kết nối tài năng</p>
             <p className='p2' style={{ textAlign: "center", color: "#0D99FF" }}>Đưa tài năng của bạn <br />
@@ -71,7 +71,6 @@ const Landing: React.FC = () => {
           content='Software Solutions'
           describe='Bạn đang tìm kiếm phần mềm hoạch định nguồn lực doanh nghiệp? Chúng tôi có giải pháp tốt nhất cho điều đó.'
         />
-
         <ItemInfoLeft imageDescription={"/images/unsplash_Zyx1bK9mqmA.png"}
           content='Be one of us!'
           describe='“Muốn đi nhanh hãy đi một mình, muốn đi xa hãy đi cùng nhau”
@@ -80,7 +79,6 @@ const Landing: React.FC = () => {
           imgBackground={"/images/Background.png"}
           tagId='career'
         />
-
       </div>
 
       {/* <Popup isOpen={isOpen} toggle={toggle}></Popup> */}

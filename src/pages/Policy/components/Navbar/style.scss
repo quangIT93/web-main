@@ -17,9 +17,13 @@
 
   @include breakpoint(tablet) {
     padding: 8px 31px;
+
+    position: absolute;
   }
   @include breakpoint(mobile) {
     padding: 8px 10px;
+    position: absolute;
+  
   }
 
   &__quote {
@@ -35,8 +39,7 @@
   background-color: $primary-color;
   margin-inline: 10px;
 
-  @include breakpoint(mobile) { 
+  @include breakpoint(mobile) {
     height: 30px;
   }
 }
-

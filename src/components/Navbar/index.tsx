@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
         <div className="actions-post">
-          <Link to="/post">
+          <Link to="">
             <button className="btn btn__post">
               <EditIcon width={16} height={16} />
               <span>Đăng bài</span>
