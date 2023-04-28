@@ -6,6 +6,7 @@ import "intl/locale-data/jsonp/en";
 import NaviBar from "../../components/Navbar/index"
 import { AxiosResponse } from "axios"
 import Footer from "../../components/Footer/index"
+// @ts-ignore
 import { useSearchParams } from "react-router-dom";
 import postApi from '../../api/postApi';
 import ItemSuggest from "./components/ItemSuggest"

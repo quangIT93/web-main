@@ -11,5 +11,9 @@ context.keys().forEach((path: string) => {
   routes.push(context(`${path}`).default)
 })
 
+console.log(context.keys())
+console.log(routes)
+console.log(context)
+
 export { routes }
 export default RouteProps;

@@ -7,9 +7,10 @@ interface Props {
   componenet: React.ReactNode
 }
 
-const route: Props = {
+const route: RouteProps = {
   path: '/home',
-  componenet: <Home />,
+  // componenet: <Home />,
+  component: <Home />,
 }
 
 export default route

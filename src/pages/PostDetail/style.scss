@@ -1,17 +1,17 @@
 @import '../../scss/mixins';
 .detail {
-  .actions-features{
-    display: none;
-  }
+  // .actions-features{
+  //   display: none;
+  // }
 
-  .navbar__actions{
-    @include breakpoint(tablet) {
-      display: none;
-    }
-    @include breakpoint(mobile) {
-      display: none;
-    }   
-  }
+  // .navbar__actions{
+  //   @include breakpoint(tablet) {
+  //     display: none;
+  //   }
+  //   @include breakpoint(mobile) {
+  //     display: none;
+  //   }   
+  // }
   padding-top: 110px;
   @include breakpoint(tablet) {
     padding-top: 80px;
