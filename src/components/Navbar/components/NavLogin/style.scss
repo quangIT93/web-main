@@ -1,0 +1,93 @@
+@import '../../../../scss/variable';
+// @import '../../scss/mixins';
+
+.actions-login {
+  position: relative;
+  &:hover {
+    .actions-login__nav {
+      display: block;
+    }
+  }
+  .actions-login__nav::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    width: 100%; /* chiều rộng của phần tử ::before */
+    height: 20px;
+    background-color: transparent; /* màu nền */
+  }
+
+  .actions-login__nav {
+    position: absolute;
+    width: 400px;
+    background-color: $white;
+    box-shadow: 1px 1px 5px $text-color;
+    padding: 40px;
+    right: 0px;
+    top: 60px;
+    border-radius: 20px;
+    width: 380px;
+    display: none;
+    .nav-login__user {
+      display: flex;
+      align-items: center;
+      .nav-info__user {
+        padding-left: 10px;
+        h2 {
+          font-size: 16px;
+        }
+
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .nav-login__pay {
+      display: flex;
+      padding: 20px 0;
+      justify-content: space-between;
+
+      .btn__navPay {
+        border-radius: 20px;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        min-width: 142px;
+        span {
+          padding-left: 10px;
+        }
+      }
+
+      .login-pay__left {
+        border: 1px solid $btn-coin;
+      }
+
+      .login-pay__right {
+        background-color: $btn-coin;
+        color: $white;
+      }
+    }
+
+    .nav-login__setting {
+      ul {
+        li {
+          list-style-type: none;
+          padding: 8px 6px;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          &:hover {
+            background-color: $btn-hover;
+            transition: all 0.3s linear;
+          }
+          .login-setting__icon {
+            padding-right: 10px;
+            font-size: 30px;
+          }
+        }
+      }
+    }
+  }
+}

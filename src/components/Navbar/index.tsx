@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+
+import NavLogin from './components/NavLogin'
+import NavHistory from './components/NavHistory'
+import NavWorks from './components/NavWorks'
+import NavbarPost from './components/NavbarPost'
+
 // @ts-ignore
 import { Logo, ArrowdownIcon, ArrowrightIcon } from '#components'
 // @ts-ignore
 import { BellIcon, ChatIcon, SearchIcon, EditIcon } from '#components'
 // @ts-ignore
 import { AvatarIcon } from '#components'
+
 import './style.scss'
 
 const navbarStyle = {
@@ -15,23 +22,35 @@ const navbarStyle = {
 }
 
 const Navbar: React.FC = () => {
+  const [hidenNavPost, setHiddenNavPost] = useState('')
+  const handleNavPost = () => {
+    if (!hidenNavPost) {
+      setHiddenNavPost('hidenNavPost')
+      document.body.style.overflow = 'hidden'
+    } else {
+      setHiddenNavPost('')
+      document.body.style.overflow = 'scroll'
+    }
+  }
   return (
     <nav style={navbarStyle} className="navbar">
       <Link to="/">
         <Logo />
       </Link>
       <ul className="navbar-links">
-        <li className="links__item">
+        <li className="links__item links__item__homepage">
           <Link to="/">Trang chủ</Link>
         </li>
-        <li className="links__item links__item-dropdown">
+        <li className="links__item links__item-dropdown links__item__works">
           <Link to="/">Công việc</Link>
+          <NavWorks />
           <span>
             <ArrowdownIcon />
           </span>
         </li>
-        <li className="links__item links__item-dropdown">
+        <li className="links__item links__item-dropdown links__item__history">
           <Link to="/">Lịch sử</Link>
+          <NavHistory />
           <span>
             <ArrowdownIcon />
           </span>
@@ -39,7 +58,7 @@ const Navbar: React.FC = () => {
       </ul>
       <div className="navbar__actions">
         <div className="actions-features">
-          <div className="actions-features__icon">
+          <div className="actions-features__icon" onClick={handleNavPost}>
             <SearchIcon width={14} height={14} />
           </div>
           <div className="actions-features__icon">
@@ -63,13 +82,21 @@ const Navbar: React.FC = () => {
               <div className="login__avatar">
                 <AvatarIcon />
               </div>
-              <span>Đăng nhập</span>
+              <div className="login__center">
+                <span>Đăng nhập</span>
+                <span>Chọn khu vực</span>
+              </div>
             </div>
             <div className="login__icon">
               <ArrowrightIcon />
             </div>
           </button>
+          <NavLogin />
         </div>
+      </div>
+
+      <div className={`navbar-post ${hidenNavPost}`}>
+        <NavbarPost />
       </div>
     </nav>
   )
