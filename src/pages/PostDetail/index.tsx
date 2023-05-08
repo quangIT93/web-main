@@ -9,10 +9,16 @@ import Footer from '../../components/Footer/index'
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom'
 import postApi from '../../api/postApi'
+import locationApi from '../../api/locaitonApi'
 import ItemSuggest from './components/ItemSuggest'
 // @ts-ignore
 import { Carousel } from 'react-carousel-minimal'
 import { Button, Breadcrumb } from 'antd'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../store/index'
+import { RootState } from '../../store/reducer'
 
 import {
   EnvironmentOutlined,
@@ -33,6 +39,14 @@ interface ItemCategories {
 }
 // page view details post
 const Detail: React.FC = () => {
+  // test redux
+  const state = useSelector((state: RootState) => state)
+  const dispatch = useDispatch()
+  const { setPostByTheme, setProvince } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
+
   const componentRef = React.useRef<HTMLDivElement>(null)
   const componentRefJob = React.useRef<HTMLDivElement>(null)
 
@@ -51,6 +65,9 @@ const Detail: React.FC = () => {
   React.useEffect(() => {
     getPostById()
   }, [])
+  console.log('state1', state.post)
+
+  // set size for Breadcrumb
   React.useEffect(() => {
     function handleWindowResize() {
       const w =
@@ -119,8 +136,13 @@ const Detail: React.FC = () => {
       describe: 'AI Works',
     },
   ]
-  const onclick = () => {
-    window.open(`${post?.data.share_link}`)
+  const onclick = async () => {
+    //  window.open(`${post?.data.share_link}`)
+    //test redux
+    // const result = await postApi.getPostByThemeId(20, 10, 0)
+    // const listLo = await locationApi.getAllProvines("vi")
+    // setPostByTheme(result)
+    // setProvince(listLo)
   }
 
   const captionStyle = {
@@ -135,7 +157,6 @@ const Detail: React.FC = () => {
   setTimeout(() => {
     setAutomatic(true)
   }, 500)
-
   return (
     <>
       {automatic && (

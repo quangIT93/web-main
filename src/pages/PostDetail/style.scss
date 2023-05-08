@@ -1,21 +1,17 @@
 @import '../../scss/mixins';
 .detail {
-  .actions-post {
-    display: none;
-  }
+  // .actions-features{
+  //   display: none;
+  // }
 
-  .actions-login {
-    display: none;
-  }
-
-  .navbar__actions {
-    @include breakpoint(tablet) {
-      display: none;
-    }
-    @include breakpoint(mobile) {
-      display: none;
-    }
-  }
+  // .navbar__actions{
+  //   @include breakpoint(tablet) {
+  //     display: none;
+  //   }
+  //   @include breakpoint(mobile) {
+  //     display: none;
+  //   }
+  // }
   padding-top: 110px;
   @include breakpoint(tablet) {
     padding-top: 80px;
@@ -63,7 +59,7 @@
     @include breakpoint(mobile) {
       max-width: 97%;
     }
-    @include breakpoint(an_order) {
+    @include breakpoint(largeTablet) {
       max-width: 98%;
     }
 
@@ -103,7 +99,7 @@
         margin-top: 30px;
         height: auto;
       }
-      @include breakpoint(an_order) {
+      @include breakpoint(largeTablet) {
         margin-left: 15px;
         max-width: 350px;
       }
@@ -118,7 +114,7 @@
           font-size: 19px;
           color: #001424;
           margin-bottom: 5px;
-          @include breakpoint(an_order) {
+          @include breakpoint(largeTablet) {
             font-size: 17px;
           }
         }
@@ -152,7 +148,7 @@
             @include breakpoint(tablet) {
               font-size: 14px;
             }
-            @include breakpoint(an_order) {
+            @include breakpoint(largeTablet) {
               font-size: 14px;
             }
           }
@@ -248,7 +244,7 @@
 
         margin-top: 30px;
       }
-      @include breakpoint(an_order) {
+      @include breakpoint(largeTablet) {
         width: 520px;
       }
     }
@@ -281,7 +277,7 @@
         @media screen and (max-width: 500px) {
           height: 100%;
         }
-        @include breakpoint(an_order) {
+        @include breakpoint(largeTablet) {
           width: 520px;
         }
       }
@@ -319,7 +315,7 @@
       @include breakpoint(mobile) {
         display: none;
       }
-      @include breakpoint(an_order) {
+      @include breakpoint(largeTablet) {
         margin-left: 15px;
         max-width: 350px;
       }
