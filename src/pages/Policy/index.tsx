@@ -25,50 +25,49 @@ const Policy: React.FC = () => {
   // @ts-ignore
   const { scrollY } = React.useContext(ScrollContext)
 
-  const getActiveCategory = () => {
-    const { current: firstTitleEl } = titleOneRef
-    const { current: secondTitleEl } = titleTwoRef
-    const { current: thirdTitleEl } = titleThreeRef
+  React.useEffect(() => {
+    const getActiveCategory = () => {
+      const { current: firstTitleEl } = titleOneRef
+      const { current: secondTitleEl } = titleTwoRef
+      const { current: thirdTitleEl } = titleThreeRef
 
-    if (firstTitleEl && secondTitleEl && thirdTitleEl) {
-      if (
-        scrollY - firstTitleEl.offsetTop >= 0 &&
-        scrollY - secondTitleEl.offsetTop < 0
-      ) {
-        setCategoriesState({
-          isAboutUs: true,
-          privaryPolicy: false,
-          termsOfUse: false,
-        })
-      }
-      if (
-        scrollY - secondTitleEl.offsetTop >= 0 &&
-        scrollY - thirdTitleEl.offsetTop < 0
-      ) {
-        setCategoriesState({
-          isAboutUs: false,
-          privaryPolicy: true,
-          termsOfUse: false,
-        })
-      }
-      if (scrollY - thirdTitleEl.offsetTop >= 0) {
-        setCategoriesState({
-          isAboutUs: false,
-          privaryPolicy: false,
-          termsOfUse: true,
-        })
+      if (firstTitleEl && secondTitleEl && thirdTitleEl) {
+        if (
+          scrollY - firstTitleEl.offsetTop >= 0 &&
+          scrollY - secondTitleEl.offsetTop < 0
+        ) {
+          setCategoriesState({
+            isAboutUs: true,
+            privaryPolicy: false,
+            termsOfUse: false,
+          })
+        }
+        if (
+          scrollY - secondTitleEl.offsetTop >= 0 &&
+          scrollY - thirdTitleEl.offsetTop < 0
+        ) {
+          setCategoriesState({
+            isAboutUs: false,
+            privaryPolicy: true,
+            termsOfUse: false,
+          })
+        }
+        if (scrollY - thirdTitleEl.offsetTop >= 0) {
+          setCategoriesState({
+            isAboutUs: false,
+            privaryPolicy: false,
+            termsOfUse: true,
+          })
+        }
       }
     }
-  }
-
-  React.useEffect(() => {
     getActiveCategory()
   }, [scrollY])
 
   return (
     <>
       <Navbar />
-      <div className="policy" style={{ marginBottom: "10px" }}>
+      <div className="policy" style={{ marginBottom: '10px' }}>
         <div className="policy__category-fake"></div>
         <Category
           isAboutUs={categoriesState.isAboutUs}

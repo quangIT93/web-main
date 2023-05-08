@@ -1,14 +1,22 @@
 @mixin breakpoint($point) {
   @if $point == tablet {
-    @media screen and (max-width: 784px) and (min-width: 420px) {
+    @media screen and (max-width: 784px) and (min-width: 421px) {
       @content;
     }
   } @else if $point == mobile {
     @media screen and (max-width: 420px) {
       @content;
     }
+  } @else if $point == largeTablet {
+    @media screen and (max-width: 1024px) and (min-width: 785px) {
+      @content;
+    }
+  } @else if $point == destop {
+    @media screen and (max-width: 1025px) and (min-width: 1400) {
+      @content;
+    }
   } @else if $point == an_order {
-    @media screen and (max-width: 1400px) and (min-width: 784px) {
+    @media screen and (min-width: 1401px) {
       @content;
     }
   }

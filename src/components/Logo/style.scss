@@ -6,40 +6,59 @@
   align-items: center;
 }
 
-.logo__quote {
-  margin-left: 10px;
-  display: inline-block;
-  color: $primary-color;
-  width: 180px;
-}
+// .logo__quote {
+//   margin-left: 10px;
+//   display: inline-block;
+//   color: $primary-color;
+//   width: 180px;
+// }
 
-.quote {
-  display: flex;
-  align-items: center;
+// .quote {
+//   display: flex;
+//   align-items: center;
 
-  &__title,
-  &__body {
-    display: block;
-    color: inherit;
-  }
+//   &__title,
+//   &__body {
+//     display: block;
+//     color: inherit;
+//   }
 
-  &__title {
-    line-height: 19px;
-    font-weight: bold;
-  }
+//   &__title {
+//     line-height: 19px;
+//     font-weight: bold;
+//   }
 
-  &__body {
-    margin-top: 3px;
-    font-size: 13px;
-    line-height: 15px;
-  }
-}
+//   &__body {
+//     margin-top: 3px;
+//     font-size: 13px;
+//     line-height: 15px;
+//   }
+// }
 
 @include breakpoint(mobile) {
   .logo {
     & img {
-      width: 24px;
-      height: 30px;
+      // width: 24px;
+      // height: 30px;
+    }
+  }
+}
+
+@include breakpoint(tablet) {
+  .logo {
+    padding-left: 12px;
+    & img {
+      // width: 40px;
+      // height: 40px;
+    }
+  }
+}
+
+@include breakpoint(largeTablet) {
+  .logo {
+    & img {
+      // width: 24px;
+      // height: 30px;
     }
   }
 }

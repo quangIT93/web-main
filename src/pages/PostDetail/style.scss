@@ -1,17 +1,21 @@
 @import '../../scss/mixins';
 .detail {
-  // .actions-features{
-  //   display: none;
-  // }
+  .actions-post {
+    display: none;
+  }
 
-  // .navbar__actions{
-  //   @include breakpoint(tablet) {
-  //     display: none;
-  //   }
-  //   @include breakpoint(mobile) {
-  //     display: none;
-  //   }   
-  // }
+  .actions-login {
+    display: none;
+  }
+
+  .navbar__actions {
+    @include breakpoint(tablet) {
+      display: none;
+    }
+    @include breakpoint(mobile) {
+      display: none;
+    }
+  }
   padding-top: 110px;
   @include breakpoint(tablet) {
     padding-top: 80px;
@@ -70,7 +74,7 @@
     .thumbnails {
       position: sticky;
       margin-top: -90px;
-     
+
       justify-content: center;
       .active-thumbnail {
         border: #ffff solid 3px;
@@ -115,7 +119,7 @@
           color: #001424;
           margin-bottom: 5px;
           @include breakpoint(an_order) {
-           font-size: 17px;
+            font-size: 17px;
           }
         }
       }
@@ -125,15 +129,15 @@
         display: flex;
         flex-direction: column;
         height: 85%;
-            justify-content: space-evenly;
-         @include breakpoint(tablet) {
-            height: 85%;
-            justify-content: space-evenly;
-            max-height: 600px;
-          }
-          @include breakpoint(mobile) {
-            height: auto;
-          }
+        justify-content: space-evenly;
+        @include breakpoint(tablet) {
+          height: 85%;
+          justify-content: space-evenly;
+          max-height: 600px;
+        }
+        @include breakpoint(mobile) {
+          height: auto;
+        }
         .div-detail-row {
           display: flex;
           flex-direction: row;
@@ -150,7 +154,7 @@
             }
             @include breakpoint(an_order) {
               font-size: 14px;
-             }
+            }
           }
         }
 
@@ -176,13 +180,13 @@
       width: 120px;
       @include breakpoint(tablet) {
         height: 100px;
-      width: 120px;
+        width: 120px;
       }
-        @include breakpoint(mobile) {
+      @include breakpoint(mobile) {
         height: 100%;
-      width: 100%;
+        width: 100%;
       }
-      @media screen and (max-width:500px) {
+      @media screen and (max-width: 500px) {
         height: 65px;
         max-width: 90px;
       }
@@ -246,21 +250,18 @@
       }
       @include breakpoint(an_order) {
         width: 520px;
-    }
+      }
     }
     .box {
       margin: 25px auto !important;
       .carousel-container {
-         height: 560px !important ;
-         @include breakpoint(tablet) {
-          
-          height: auto !important
-         
+        height: 560px !important ;
+        @include breakpoint(tablet) {
+          height: auto !important;
         }
-        @media screen and (max-width:500px) {
-           max-height : 250px !important;
-           height: 250px !important;
-           
+        @media screen and (max-width: 500px) {
+          max-height: 250px !important;
+          height: 250px !important;
         }
       }
       .carousel-image {
@@ -277,11 +278,11 @@
         @include breakpoint(mobile) {
           height: 100%;
         }
-        @media screen and (max-width:500px) {
+        @media screen and (max-width: 500px) {
           height: 100%;
         }
         @include breakpoint(an_order) {
-            width: 520px;
+          width: 520px;
         }
       }
       @include breakpoint(tablet) {

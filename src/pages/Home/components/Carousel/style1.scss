@@ -1,0 +1,56 @@
+@import '../../../../scss/variable';
+
+.embla {
+  overflow: hidden;
+  position: relative;
+  margin-top: 88px;
+
+  &__container {
+    display: flex;
+    cursor: grab;
+  }
+
+  &__slide {
+    flex: 0 0 101%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & img {
+      width: 80%;
+      display: block;
+      border-radius: 20px;
+    }
+  }
+
+  &__pagination {
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.pagination {
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 100em;
+    border: none;
+    outline: none;
+    background-color: #ffffff;
+  }
+
+  &__dot-selected {
+    background-color: $primary-color;
+    width: 24px;
+    height: 8px;
+    border: none;
+    outline: none;
+    border-radius: 18px;
+  }
+}

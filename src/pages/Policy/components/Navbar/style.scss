@@ -3,7 +3,7 @@
 
 .navbar {
   width: 100%;
-  padding: 20px 180px;
+  // padding: 20px 180px;
   display: flex;
   align-items: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
@@ -15,16 +15,15 @@
   position: fixed;
   justify-content: start;
 
-  @include breakpoint(tablet) {
-    padding: 8px 31px;
+  // @include breakpoint(tablet) {
+  //   padding: 8px 31px;
 
-    position: absolute;
-  }
-  @include breakpoint(mobile) {
-    padding: 8px 10px;
-    position: absolute;
-  
-  }
+  //   position: absolute;
+  // }
+  // @include breakpoint(mobile) {
+  //   padding: 8px 10px;
+  //   position: absolute;
+  // }
 
   &__quote {
     color: $primary-color;

@@ -35,28 +35,168 @@
   display: flex;
   justify-content: space-between;
   margin-left: 24px;
-
-  & > div {
-    display: flex;
-    align-items: center;
-    & > span {
-      margin-left: 8px;
-    }
-  }
 }
 
 .navbar {
   padding: 20px 180px;
-  // These properies will cause the other navbar
-  // in the neighbors components
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
   height: 88px;
   border-bottom: 2px solid $primary-color;
   position: relative;
   @include breakpoint(mobile) {
+    padding: 6px 20px;
+    max-height: 64px;
+
+    .navbar-links {
+      display: none;
+    }
+
+    .navbar__actions {
+      height: 100%;
+      .actions-features {
+        margin: 0;
+        height: 100%;
+        &__icon {
+          height: 100%;
+
+          margin-left: 4px;
+          padding: 12px;
+          margin: 4px;
+          .feature-icon {
+            font-size: 50px;
+          }
+          &:hover {
+            background-color: $btn-hover;
+          }
+        }
+
+        .navbar-iconBar {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .actions-post {
+        display: none;
+      }
+
+      .actions-login {
+        // display: none;
+        .btn {
+          width: 70px;
+          .login__avatar {
+            width: 40px;
+            height: 40px;
+          }
+          .login__center {
+            span {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint(tablet) {
+    max-height: 64px;
     padding: 20px 10px;
+
+    .navbar-links {
+      display: none;
+    }
+
+    .navbar__actions {
+      height: 100%;
+      .actions-features {
+        margin: 0;
+        height: 100%;
+        &__icon {
+          height: 100%;
+
+          margin-left: 4px;
+          padding: 12px;
+          margin: 4px;
+          .feature-icon {
+            font-size: 50px;
+          }
+          &:hover {
+            background-color: $btn-hover;
+          }
+        }
+
+        .navbar-iconBar {
+          display: flex;
+          align-items: center;
+          padding: 0 12px;
+        }
+      }
+
+      .actions-post {
+        display: none;
+      }
+
+      .actions-login {
+        // display: none;
+        .btn {
+          width: 70px;
+          .login__avatar {
+            width: 40px;
+            height: 40px;
+          }
+          .login__center {
+            span {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint(largeTablet) {
+    padding: 20px 40px;
+    .navbar-links {
+      display: none;
+    }
+
+    .navbar__actions {
+      height: 100%;
+      .actions-features {
+        margin: 0;
+        height: 100%;
+        &__icon {
+          height: 100%;
+
+          margin-left: 4px;
+          padding: 12px;
+          margin: 4px;
+          .feature-icon {
+            font-size: 50px;
+          }
+          &:hover {
+            background-color: $btn-hover;
+          }
+        }
+
+        .navbar-iconBar {
+          display: flex;
+          align-items: center;
+          padding: 0 12px;
+        }
+      }
+
+      // .actions-post {
+      //   display: none;
+      // }
+
+      // .actions-login {
+      //   display: none;
+      // }
+    }
+  }
+
+  @include breakpoint(destop) {
+    padding: 20px 60px;
   }
 
   &-links {
@@ -75,7 +215,7 @@
   &__actions {
     display: flex;
     align-items: center;
-   // display: none;
+    // display: none;
   }
 
   &-post {
@@ -139,7 +279,6 @@
   display: flex;
   align-items: center;
   margin-right: 32px;
- 
 
   &__icon {
     line-height: 16px;
@@ -151,6 +290,9 @@
       margin-left: 28px;
     }
   }
+  .navbar-iconBar {
+    display: none;
+  }
 }
 
 .actions-post button > span {
@@ -159,7 +301,6 @@
   color: #ffffff;
   white-space: nowrap;
 }
-
 
 .login {
   &__icon {
@@ -170,7 +311,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-left: 10px;
+    justify-content: center;
     :last-child {
       color: $primary-color;
       font-size: 12px;
@@ -185,5 +326,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+.subnav-chooses__carreer {
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #ccc;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: ccc;
+    border-radius: 20px;
+    border: 100px solid #1b87f5;
+  }
+  .list-locations {
   }
 }

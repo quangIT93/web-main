@@ -16,4 +16,4 @@ console.log(routes)
 console.log(context)
 
 export { routes }
-export default RouteProps;
+export default RouteProps

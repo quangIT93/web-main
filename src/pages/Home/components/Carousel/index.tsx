@@ -1,60 +1,38 @@
-import React from 'react'
-import useEmblaCarousel from 'embla-carousel-react'
-import AutoPlay from 'embla-carousel-autoplay'
-import './style.scss'
+import React, { useState, useEffect, useCallback } from 'react'
+import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
+import { DotButton, PrevButton, NextButton } from './components'
+import imageByIndex from './ImageIndex'
+import Autoplay from 'embla-carousel-autoplay'
 
-interface DotPaginationProsp {
-  selected: boolean
-  onClick: () => void
+type PropType = {
+  slides: number[]
+  options?: EmblaOptionsType
 }
 
-const DotPagination: React.FC<DotPaginationProsp> = ({ selected, onClick }) => {
-  return (
-    <button
-      onClick={onClick}
-      style={{ transition: 'all 0.3s ease-outk' }}
-      className={selected ? 'pagination__dot-selected' : 'pagination__dot'}
-    />
-  )
-}
-
-interface EmblaCarouselItemProps {
-  imageLink: string
-  description: string
-}
-
-const EmblaCarouselItem: React.FC<EmblaCarouselItemProps> = ({
-  imageLink,
-  description,
-}) => {
-  return (
-    <div className="embla__slide">
-      <img src={imageLink} alt={description} />
-    </div>
-  )
-}
-
-const EmblaCaroysel: React.FC = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState<number>(-1)
-  const scrollSnaps = [0, 0, 0]
+const EmblaCarousel: React.FC<PropType> = (props) => {
+  const { slides, options } = props
+  //   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
+  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
   const emblaContainerRef = React.useRef<HTMLDivElement>(null)
-  const [viewPortRef, emblaApi] = useEmblaCarousel(
-    {
-      loop: true,
-      align: 'center',
-    },
-    [AutoPlay({ delay: 5000 })]
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
+    Autoplay({ delay: 3000, stopOnInteraction: false }),
+  ])
+  const scrollPrev = useCallback(
+    () => emblaApi && emblaApi.scrollPrev(),
+    [emblaApi]
   )
-
-  const scrollTo = (index: number) => {
-    if (emblaApi) {
-      emblaApi.scrollTo(index)
-    }
-  }
-
-  const onSelect = () => {
-    if (emblaApi) setSelectedIndex(emblaApi.selectedScrollSnap)
-  }
+  const scrollNext = useCallback(
+    () => emblaApi && emblaApi.scrollNext(),
+    [emblaApi]
+  )
+  const scrollTo = useCallback(
+    (index: number) => emblaApi && emblaApi.scrollTo(index),
+    [emblaApi]
+  )
 
   const handleMouseEvent = () => {
     const { current: emblaContainerEl } = emblaContainerRef
@@ -62,6 +40,8 @@ const EmblaCaroysel: React.FC = () => {
     if (emblaContainerEl) {
       emblaContainerEl.addEventListener('mousedown', () => {
         emblaContainerEl.style.cursor = 'grabbing'
+        console.log(emblaApi)
+        emblaApi?.clickAllowed()
       })
 
       emblaContainerEl.addEventListener('mouseup', () => {
@@ -74,38 +54,66 @@ const EmblaCaroysel: React.FC = () => {
     handleMouseEvent()
 
     if (emblaApi) {
-      setSelectedIndex(emblaApi.selectedScrollSnap)
-      emblaApi.on('select', onSelect)
+      setScrollSnaps(emblaApi.scrollSnapList())
+      //   setSelectedIndex(emblaApi.selectedScrollSnap)
+      //   onSelect()
+      //   emblaApi.on('select', onSelect)
     }
   }, [emblaApi])
 
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+    setPrevBtnEnabled(emblaApi.canScrollPrev())
+    setNextBtnEnabled(emblaApi.canScrollNext())
+  }, [emblaApi, setSelectedIndex])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    setScrollSnaps(emblaApi.scrollSnapList())
+    emblaApi.on('select', onSelect)
+    emblaApi.on('reInit', onSelect)
+  }, [emblaApi, setScrollSnaps, onSelect])
+
   return (
-    <div className="embla" ref={viewPortRef}>
-      <div ref={emblaContainerRef} className="embla__container">
-        <EmblaCarouselItem
-          imageLink="/images/banner.png"
-          description="Banner about HiJob"
-        />
-        <EmblaCarouselItem
-          imageLink="/images/project-manager.png"
-          description="Hire Project manager"
-        />
-        <EmblaCarouselItem
-          imageLink="/images/project-manager.png"
-          description="Hire Project manager"
-        />
+    <>
+      <div className="embla">
+        <div className="embla__viewport" ref={emblaRef}>
+          <div
+            className="embla__container"
+            ref={emblaContainerRef}
+            style={{ marginLeft: '1px' }}
+          >
+            {slides.map((index) => (
+              <div className="embla__slide" key={index}>
+                <div className="embla__slide__number">
+                  <span>{index + 1}</span>
+                </div>
+                <img
+                  className="embla__slide__img"
+                  src={imageByIndex(index)}
+                  alt="Your alt text"
+                />
+              </div>
+            ))}
+          </div>
+          <PrevButton onClick={scrollPrev} enabled={prevBtnEnabled} />
+          <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />
+        </div>
+
+        <div className="embla__dots">
+          {scrollSnaps.map((_, index) => (
+            <DotButton
+              key={index}
+              selected={index === selectedIndex}
+              onClick={() => scrollTo(index)}
+            />
+          ))}
+        </div>
       </div>
-      <div className="embla__pagination">
-        {scrollSnaps.map((_, index: number) => (
-          <DotPagination
-            key={index}
-            selected={index === selectedIndex}
-            onClick={() => scrollTo(index)}
-          />
-        ))}
-      </div>
-    </div>
+    </>
   )
 }
 
-export default EmblaCaroysel
+export default EmblaCarousel
