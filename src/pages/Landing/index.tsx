@@ -11,6 +11,7 @@ import './style.scss'
 
 const Landing: React.FC = () => {
   console.log('Home page here')
+
   const { isOpen, toggle } = useModal();
   React.useEffect(() => {
 

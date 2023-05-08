@@ -2,16 +2,19 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { routes } from './pages/routes'
 import { Layout } from './components'
+import { Provider } from 'react-redux';
+import { store } from './store';
 // import firebase config
 import { initializeApp } from "firebase/app";
-import {firebaseConfig} from "./config/firebase/firebaseConfig"
-import { getAnalytics} from "firebase/analytics";
+import { firebaseConfig } from "./config/firebase/firebaseConfig"
+import { getAnalytics } from "firebase/analytics";
 import './App.scss'
 import ScrollObserver from './utils/ScrollObserver'
 const NotFound = React.lazy(() => import('./pages/NotFound'))
 
+
 // Initialize Firebase
-const app= initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
 getAnalytics(app);
 
 
@@ -20,24 +23,27 @@ interface RouteProps {
   component: React.ReactNode
 }
 
+
 const App: React.FC = () => {
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
-      <BrowserRouter>
-        <ScrollObserver>
-          <Layout>
-            <Routes>
-              {/* @ts-ignore */}
-              {
-                routes.map(({ path, component: component }: RouteProps) => {
-                  return <Route path={path} element={component} key={path} />
-                })
-              }
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-        </ScrollObserver>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <ScrollObserver>
+            <Layout>
+              <Routes>
+                {/* @ts-ignore */}
+                {
+                  routes.map(({ path, component: component }: RouteProps) => {
+                    return <Route path={path} element={component} key={path} />
+                  })
+                }
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
+          </ScrollObserver>
+        </BrowserRouter>
+      </Provider>
     </React.Suspense>
   )
 }

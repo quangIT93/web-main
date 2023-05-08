@@ -7,6 +7,11 @@ const postApi = {
         return axiosClient.get(URL);
     },
 
+    getPostByThemeId: (themeId: number, limit:Number,threshold:Number) => {
+        const URL = `posts/theme?tid=${themeId}&limit=${limit}&threshold=${threshold}`;
+        return axiosClient.get(URL);
+    },
+
 
 }
 
