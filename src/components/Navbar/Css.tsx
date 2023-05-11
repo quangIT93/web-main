@@ -32,25 +32,29 @@ export const Left = styled('div')({
   display: 'flex',
   alignItems: 'center',
   height: '70px',
+  justifyContent: "space-between"
 })
 
 export const SearchContainer = styled('div')({
-  border: '0.5px solid lightgray',
+  // border: '0.5px solid lightgray',
   display: 'flex',
   alignItems: 'center',
   marginLeft: '25px',
   padding: '10px 10px 10px 15px',
   borderRadius: '20px',
-  width: '400px',
+  width: '350px',
   justifyContent: 'space-between',
   cursor: 'pointer',
   background: '#fff',
-  boxShadow: '1px 1px 2px black',
+  // boxShadow: '1px 1px 2px black',
   color: '#979797',
   fontSize: '12px',
   '&:hover': {
     background: '#e8f5ff',
   },
+  backgroundColor: "#F3F8FB",
+  height: 55
+
 })
 
 export const Input = styled.input({

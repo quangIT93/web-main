@@ -21,7 +21,7 @@
     flex-wrap: wrap-reverse;
     justify-content: center;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     padding-right: 80px;
   }
 }
@@ -47,7 +47,7 @@
     width: calc(100vw - 10px);
     //  position: inherit;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     height: auto;
     width: calc(100vw - 850px);
     object-fit: cover;
@@ -91,7 +91,7 @@
     ////
     margin-right: 00px;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     ////
     margin-right: 55px;
   }
@@ -111,7 +111,7 @@
     font-weight: 600;
     text-align: center;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     font-size: 30px;
     font-weight: 600;
   }

@@ -1,12 +1,26 @@
+@import '../../scss/mixins';
 .profile {
   display: flex;
   align-items: center;
   flex-direction: column;
-
+  width: 100%;
+  .footer-right {
+    @include breakpoint(mobile) {
+      margin-top: 0px;
+    }
+  }
   .container {
     width: 80%;
     padding: 50px 00px;
     margin-top: 100px;
+    @include breakpoint(mobile) {
+      width: 95%;
+      padding: 0px;
+    }
+    @include breakpoint(tablet) {
+      width: 95%;
+      padding: 0px;
+    }
     .div-profile-avatar {
       width: 100%;
     }
@@ -36,15 +50,15 @@
         .left {
           p {
             color: #aaaaaa;
-            font-size: 17px;
-            margin-top: 5px;
+            font-size: 16px;
+            margin-top: 7px;
           }
         }
         .right {
           margin-left: 15px;
           p {
-            font-size: 17px;
-            margin-top: 5px;
+            font-size: 16px;
+            margin-top: 7px;
           }
         }
       }
@@ -54,7 +68,7 @@
         .btn {
           border: 0.5px solid #001424;
           border-radius: 10px;
-          height: 45px;
+          height: 42px;
         }
       }
     }

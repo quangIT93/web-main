@@ -337,7 +337,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             />
           </SearchContainer>
         </Left>
-        <Center>
+        {/* <Center>
           <ItemCenter>Trang chủ</ItemCenter>
           <ItemCenter onClick={handleClickArrowJob}>
             Công việc
@@ -355,7 +355,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               <KeyboardArrowDownOutlinedIcon />
             )}
           </ItemCenter>
-        </Center>
+        </Center> */}
         <Right>
           {/* <Button
             variant="contained"
@@ -514,26 +514,26 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                   position.length === 0
                     ? 'Chọn địa điểm'
                     : position.map((v, i) => (
-                        <span
-                          key={i}
-                          style={{
-                            padding: '4px 8px',
-                            background: '#ccc',
-                            borderRadius: '12px',
-                            // maxWidth: '120px',
-                            // minWidth: '90px',
-                            textAlign: 'center',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            fontSize: '12px',
-                            alignItems: 'center',
-                            marginRight: '12px',
-                          }}
-                        >
-                          {`${v}`}
-                          <CloseIcon sx={{ fontSize: '20px' }} />
-                        </span>
-                      ))
+                      <span
+                        key={i}
+                        style={{
+                          padding: '4px 8px',
+                          background: '#ccc',
+                          borderRadius: '12px',
+                          // maxWidth: '120px',
+                          // minWidth: '90px',
+                          textAlign: 'center',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          fontSize: '12px',
+                          alignItems: 'center',
+                          marginRight: '12px',
+                        }}
+                      >
+                        {`${v}`}
+                        <CloseIcon sx={{ fontSize: '20px' }} />
+                      </span>
+                    ))
 
                   // `${position[0]} - ${position[1]} - ${position[2]}`
                 }

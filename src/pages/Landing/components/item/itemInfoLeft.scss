@@ -18,7 +18,7 @@
     padding: 0px;
     margin-bottom: 10px;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     padding-right: 50px;
   }
 }
@@ -54,7 +54,7 @@
     //////
     margin-left: 00px;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     margin-left: 50px;
     height: calc(100vw - 900px);
   }
@@ -74,7 +74,7 @@
     font-weight: 600;
     text-align: center;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     font-size: 30px;
     font-weight: 600;
   }
@@ -116,7 +116,7 @@
     width: 100%;
   }
 
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     font-size: 17px;
     // text-align: center;
     padding: 10px;

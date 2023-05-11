@@ -62,6 +62,9 @@
     @include breakpoint(largeTablet) {
       max-width: 98%;
     }
+    @include breakpoint(destop) {
+      max-width: 98%;
+    }
 
     h3 {
       color: #001424;
@@ -103,6 +106,10 @@
         margin-left: 15px;
         max-width: 350px;
       }
+      @include breakpoint(destop) {
+        margin-left: 15px;
+        max-width: 350px;
+      }
 
       .title {
         width: 100%;
@@ -115,6 +122,9 @@
           color: #001424;
           margin-bottom: 5px;
           @include breakpoint(largeTablet) {
+            font-size: 17px;
+          }
+          @include breakpoint(destop) {
             font-size: 17px;
           }
         }
@@ -149,6 +159,9 @@
               font-size: 14px;
             }
             @include breakpoint(largeTablet) {
+              font-size: 14px;
+            }
+            @include breakpoint(destop) {
               font-size: 14px;
             }
           }
@@ -247,6 +260,9 @@
       @include breakpoint(largeTablet) {
         width: 520px;
       }
+      @include breakpoint(destop) {
+        width: 520px;
+      }
     }
     .box {
       margin: 25px auto !important;
@@ -278,6 +294,9 @@
           height: 100%;
         }
         @include breakpoint(largeTablet) {
+          width: 520px;
+        }
+        @include breakpoint(destop) {
           width: 520px;
         }
       }
@@ -316,6 +335,10 @@
         display: none;
       }
       @include breakpoint(largeTablet) {
+        margin-left: 15px;
+        max-width: 350px;
+      }
+      @include breakpoint(destop) {
         margin-left: 15px;
         max-width: 350px;
       }

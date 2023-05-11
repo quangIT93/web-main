@@ -8,9 +8,11 @@ import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import { Button, Space } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
+import Footer from "../../components/Footer/index"
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer/index';
+import ItemApply from './components/Item'
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
     width: 22,
@@ -19,6 +21,78 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
     backgroundColor: "white"
 }));
 const Profile: React.FC = () => {
+
+    const dataTest = {
+        "code": 200,
+        "success": true,
+        "data": {
+            "id": "a9e5bc4d-823f-4acc-9356-f9e53c611eaf",
+            "name": "Nguyen The Truong",
+            "birthday": "2001-06-09T17:00:00.000Z",
+            "address": {
+                "id": 225,
+                "name": "Hải Dương"
+            },
+            "gender": 1,
+            "introduction": "My intro",
+            "phone": "0919004743",
+            "email": "truong@gmail.com",
+            "avatar": "https://gig-app-upload.s3.ap-southeast-1.amazonaws.com/1a635477-97a2-4d53-80c5-c56be5729fe5-hou-china-6.jpg",
+            "facebook": "facebook.com",
+            "linkedin": "linkedin.com",
+            "categories": [
+                {
+                    "child_category_id": 25,
+                    "child_category": "Hiệu chỉnh",
+                    "parent_category_id": 1,
+                    "parent_category": "Công việc giấy tờ, sổ sách"
+                }
+            ],
+            "locations": [
+                {
+                    "district_id": 1451,
+                    "district": "Quận 9",
+                    "province_id": 202,
+                    "province": "Hồ Chí Minh"
+                },
+                {
+                    "district_id": 1655,
+                    "district": "Thành phố Bạc Liêu",
+                    "province_id": 200,
+                    "province": "Bạc Liêu"
+                }
+            ],
+            "educations": [
+                {
+                    "id": 5,
+                    "company_name": "TDT University - Vietnam",
+                    "major": "Computer Science",
+                    "start_date": "2019-09-09T17:00:00.000Z",
+                    "end_date": "2023-06-11T17:00:00.000Z",
+                    "extra_information": "Nothing to tell"
+                }
+            ],
+            "experiences": [
+                {
+                    "id": 3,
+                    "title": "Student",
+                    "company_name": "TDT University",
+                    "start_date": "2019-09-09T17:00:00.000Z",
+                    "end_date": "2023-06-11T17:00:00.000Z",
+                    "extra_information": "Nothing to tell"
+                },
+                {
+                    "id": 3,
+                    "title": "Student",
+                    "company_name": "TDT University",
+                    "start_date": "2019-09-09T17:00:00.000Z",
+                    "end_date": "2023-06-11T17:00:00.000Z",
+                    "extra_information": "Nothing to tell"
+                }
+            ]
+        },
+        "message": "Successfully"
+    }
 
     const state = useSelector((state: RootState) => state.post)
 
@@ -80,19 +154,13 @@ const Profile: React.FC = () => {
 
                             <p >Ngày sinh</p>
 
-                            <p >Ngày sinh</p>
-
-                            <p >Ngày sinh</p>
                         </div>
                         <div className='div-detail-row right'>
-                            <p>dsf</p>
-                            <p>dsf</p>
+                            <p>{dataTest.data.birthday}</p>
+                            <p>{dataTest.data.gender == 1 ? "Nam" : "Nu"}</p>
 
-                            <p>dsf</p>
+                            <p>{dataTest.data.address.name}</p>
 
-                            <p>dsf</p>
-
-                            <p>dsf</p>
                         </div>
                     </div>
                 </div>
@@ -116,18 +184,18 @@ const Profile: React.FC = () => {
 
                             <p >Ngày sinh</p>
 
-                            <p >Ngày sinh</p>
+
                         </div>
                         <div className='div-detail-row right'>
 
-                            <p>dsf</p>
-                            <p>dsf</p>
+                            <p>{dataTest.data.phone}</p>
+                            <p>{dataTest.data.email}</p>
 
-                            <p>dsf</p>
+                            <p>{dataTest.data.facebook}</p>
 
-                            <p>dsf</p>
+                            <p>{dataTest.data.linkedin}</p>
 
-                            <p>dsf</p>
+
                         </div>
                     </div>
                 </div>
@@ -144,10 +212,12 @@ const Profile: React.FC = () => {
                     </div>
                     <Space wrap className='item-info-work' >
 
-                        <Button className='btn' type="text">Nha Hang</Button>
-                        <Button className='btn' type="text">Phuc Vu</Button>
-                        <Button className='btn' type="text">Tai Chinh</Button>
-                        <Button className='btn' type="text">Text Button</Button>
+
+                        {
+                            dataTest.data.categories.map((item, index) =>
+                                <Button key={index} className='btn' type="text">{item.parent_category}</Button>
+                            )
+                        }
 
                     </Space>
                 </div>
@@ -162,14 +232,52 @@ const Profile: React.FC = () => {
 
                     </div>
                     <Space wrap className='item-info-work' >
-                        <Button className='btn' type="text">Nha Hang</Button>
-                        <Button className='btn' type="text">Phuc Vu</Button>
-                        <Button className='btn' type="text">Tai Chinh</Button>
-                        <Button className='btn' type="text">Text Button</Button>
+                        {
+                            dataTest.data.locations.map((item, index) =>
+                                <Button key={index} className='btn' type="text">{item.district}</Button>
+                            )
+                        }
                     </Space>
                 </div>
+
+                <div className='div-profile-info'>
+                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                        <h3>Thông tin cá nhân</h3>
+                    </div>
+                    <ItemApply item={dataTest.data.educations[0]} />
+
+                    <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+                        <Space style={{ alignItems: "center" }}>
+                            <PlusCircleOutlined size={10} style={{ color: "#0D99FF" }} />
+
+                            <p style={{ color: '#0D99FF', fontSize: "14px" }}>Them</p>
+                        </Space>
+                    </div>
+
+                </div>
+                <div className='div-profile-info'>
+                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                        <h3>Thông tin cá nhân</h3>
+                    </div>
+                    {
+                        dataTest.data.experiences.map((item, index) =>
+                            <ItemApply typeItem='experiences' key={index} item={item} />
+                        )
+                    }
+
+                    <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+                        <Space style={{ alignItems: "center" }}>
+                            <PlusCircleOutlined size={10} style={{ color: "#0D99FF" }} />
+
+                            <p style={{ color: '#0D99FF', fontSize: "14px" }}>Them</p>
+                        </Space>
+                    </div>
+
+                </div>
             </div>
+            <Footer />
         </div>
+
     )
 }
 

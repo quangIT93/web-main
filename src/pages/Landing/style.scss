@@ -1,7 +1,4 @@
 @import '../../scss//mixins';
-.home__main {
-  padding-inline: 180px;
-}
 
 .div-info-app {
   flex-direction: column;
@@ -26,6 +23,27 @@
     // margin-left: -20px;
   }
 }
+.home {
+  .banner {
+    background-image: url('../../img//langdingPage//Background.png');
+    width: auto;
+    position: unset;
+    padding-top: 90px;
+    @include breakpoint(mobile) {
+      padding-bottom: 10px;
+      position: relative;
+      padding-right: 20px;
+      padding-top: 30px;
+    }
+    @include breakpoint(tablet) {
+      padding-bottom: 10px;
+      position: relative;
+      padding-right: 20px;
+      padding-top: 30px;
+    }
+  }
+}
+
 .logo_hi_job {
   height: 200px;
   width: auto;
@@ -156,7 +174,7 @@
       height: 190px;
       width: auto;
     }
-    @include breakpoint(an_order) {
+    @include breakpoint(largeTablet) {
       height: 400px;
       width: auto;
     }
@@ -179,7 +197,7 @@
     margin-left: -150px;
     margin-top: 50px;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     margin-left: -360px;
     margin-top: 50px;
   }

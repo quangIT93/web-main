@@ -5,6 +5,9 @@
   margin-top: 88px;
   height: 600px;
   position: relative;
+  @media screen and (max-width: 1200px) {
+    padding: 0 10px;
+  }
 }
 .embla__viewport {
   overflow: hidden;
@@ -34,7 +37,7 @@
   width: 100%;
   border-radius: 20px;
 
-  //   object-fit: cover;
+  object-fit: cover;
 }
 .embla__slide__number {
   width: 4.6rem;

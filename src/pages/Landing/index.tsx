@@ -15,23 +15,23 @@ const Landing: React.FC = () => {
   const { isOpen, toggle } = useModal()
   React.useEffect(() => {
     // toggle()
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'scroll'
-    }
-  }, [isOpen])
+    // if (isOpen) {
+    //   document.body.style.overflow = 'hidden'
+    // } else {
+    //   document.body.style.overflow = 'scroll'
+    // }
+  }, [])
   return (
     <div className="home">
-      {/* <Navbar /> */}
+      <NaviBar />
       <div
         style={{
           flexDirection: 'row',
           alignContent: 'center',
           justifyContent: 'space-between',
           display: 'flex',
-          marginTop: '88px',
-          paddingTop: '24px',
+
+
         }}
         className="banner"
       >
@@ -133,7 +133,7 @@ const Landing: React.FC = () => {
         />
       </div>
 
-      <Popup isOpen={isOpen} toggle={toggle}></Popup>
+      {/* <Popup isOpen={isOpen} toggle={toggle}></Popup> */}
       <Footer />
     </div>
   )

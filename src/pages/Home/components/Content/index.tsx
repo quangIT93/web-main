@@ -16,7 +16,7 @@ import Stack from '@mui/material/Stack'
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
 
-const ImageCpn = () => {}
+const ImageCpn = () => { }
 
 const Content = () => {
   const [page, setPage] = React.useState(1)
@@ -47,7 +47,7 @@ const Content = () => {
                   srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                   alt={item.title}
                   loading="lazy"
-                  style={{ width: '160px', maxWidth: 'auto', height: '152px' }}
+                  style={{ width: '160px', maxWidth: 'auto', height: '152px', borderRadius: "10px" }}
                 />
                 <div style={{ padding: '0', marginLeft: '12px' }}>
                   <Typography

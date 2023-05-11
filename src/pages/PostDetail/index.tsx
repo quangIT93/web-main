@@ -65,7 +65,7 @@ const Detail: React.FC = () => {
   React.useEffect(() => {
     getPostById()
   }, [])
-  console.log('state1', state.post)
+
 
   // set size for Breadcrumb
   React.useEffect(() => {
