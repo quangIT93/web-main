@@ -363,7 +363,10 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <Logo />
           <SearchContainer onClick={handleClickInput}>
             {/* <Input placeholder="Search" /> */}
-            Nhập công việc mà bạn muốn tìm kiếm...
+            <div className='div-search'>
+              Nhập công việc mà bạn muốn tìm kiếm...
+            </div>
+
             <SearchIcon
               style={{
                 color: 'gray',
