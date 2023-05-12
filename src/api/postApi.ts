@@ -11,6 +11,16 @@ const postApi = {
         const URL = `posts/theme?tid=${themeId}&limit=${limit}&threshold=${threshold}`;
         return axiosClient.get(URL);
     },
+    getPostNewest: (pcid:Number, ccid?:[]|null,dtid?:[]|null,limit?:Number,threshold?:Number) => {
+        
+     const URL = `posts/newest?pcid=
+        ${pcid? pcid:""}
+        &ccid=${ccid? ccid:[]}
+        &dtid=${dtid?dtid:[]}
+        &limit=${limit}
+        &threshold=${threshold ? threshold :""}`;
+        return axiosClient.get(URL);
+    },
 
 
 }

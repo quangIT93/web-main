@@ -15,10 +15,13 @@
       border: 1px solid #ccc;
     }
   }
+  .css-9c7bob-MuiButtonBase-root-MuiTab-root {
+    border-bottom: 1px solid #dcdcdc;
+  }
 }
 .home {
   .css-6uhm6c {
-    @media screen and (min-width: 600px) and (max-width: 1200px) {
+    @media screen and (min-width: 0px) and (max-width: 1200px) {
       max-width: 100%;
       margin: 0px 10px;
     }
@@ -27,9 +30,12 @@
     @media screen and (min-width: 600px) {
       max-width: 100%;
     }
+    @media screen and (min-width: 0px) {
+      max-width: 100%;
+    }
   }
   .css-8hgn5 {
-    @media screen and (min-width: 600px) and (max-width: 1200px) {
+    @media screen and (min-width: 0px) and (max-width: 1200px) {
       max-width: 100%;
       margin: 0px 10px;
     }

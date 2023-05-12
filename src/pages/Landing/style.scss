@@ -5,6 +5,9 @@
   width: 40%;
   display: flex;
   justify-content: center;
+  @include breakpoint(largeTablet) {
+    width: 100%;
+  }
 }
 .div-qrcode {
   //  background-image: url("../../img/langdingPage/image_42.png ");

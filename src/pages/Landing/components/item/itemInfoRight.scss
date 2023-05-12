@@ -48,8 +48,13 @@
     //  position: inherit;
   }
   @include breakpoint(largeTablet) {
-    height: auto;
-    width: calc(100vw - 850px);
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+  }
+  @include breakpoint(destop) {
+    height: 300px;
+    width: 300px;
     object-fit: cover;
   }
 }
@@ -94,6 +99,7 @@
   @include breakpoint(largeTablet) {
     ////
     margin-right: 55px;
+    height: 200px;
   }
 }
 .div-content-right > #div-content > p {
@@ -138,6 +144,9 @@
   @include breakpoint(tablet) {
     width: 100%;
   }
+  @include breakpoint(largeTablet) {
+    width: 450px;
+  }
 }
 #div-describe-right > p {
   font-size: 17px;
@@ -153,6 +162,10 @@
     font-size: 17px;
     text-align: center;
     padding: 10px;
+    margin-left: 0px;
+  }
+  @include breakpoint(largeTablet) {
+    font-size: 14px;
     margin-left: 0px;
   }
 }

@@ -1,15 +1,12 @@
 
 import React from 'react'
 // @ts-ignore
-
-
 import { Link } from 'react-router-dom'
 import "./style.scss"
 
 interface SuggestItemProps {
     content?: string
     describe?: string
-
     imgBackground?: string
 
 }

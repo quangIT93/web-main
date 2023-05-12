@@ -27,7 +27,6 @@
 }
 
 .btn__login {
-  width: 160px;
   border: 0.5px solid $gray-border-btn;
   font-weight: 400px;
   padding-block: 5px;
@@ -312,15 +311,20 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    margin: 0px 10px;
+    @include breakpoint(tablet) {
+      display: none;
+    }
     :last-child {
-      color: $primary-color;
-      font-size: 12px;
+      color: black;
+      font-size: 15px;
+      font-weight: bold;
     }
   }
 
   &__avatar {
-    background-color: $primary-color;
-    width: 38px;
+    //   background-color: $primary-color;
+    width: 40px;
     height: 38px;
     border-radius: 100em;
     display: flex;
@@ -343,5 +347,48 @@
     border: 100px solid #1b87f5;
   }
   .list-locations {
+  }
+}
+.nav {
+  @include breakpoint(tablet) {
+    padding: 0px 10px !important;
+  }
+
+  @include breakpoint(mobile) {
+    padding: 0px 10px !important;
+  }
+  .div-search {
+    @include breakpoint(tablet) {
+      display: none;
+    }
+    @include breakpoint(mobile) {
+      display: none;
+    }
+  }
+  .css-1fvt452 {
+    @include breakpoint(tablet) {
+      width: auto;
+      background-color: white;
+      margin-right: 10px;
+      &:hover {
+        background-color: #ffffff;
+      }
+    }
+    @include breakpoint(mobile) {
+      width: auto;
+      background-color: white;
+      margin-right: 10px;
+      &:hover {
+        background-color: #ffffff;
+      }
+    }
+  }
+  .css-10lnyhw {
+    @include breakpoint(tablet) {
+      flex: none;
+    }
+    @include breakpoint(mobile) {
+      flex: none;
+    }
   }
 }

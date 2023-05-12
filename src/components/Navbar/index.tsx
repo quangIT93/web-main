@@ -8,6 +8,7 @@ import { Logo } from '#components'
 import { SearchIcon } from '#components'
 // @ts-ignore
 
+
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined'
 
 import { Collapse } from '@mui/material'
@@ -25,8 +26,9 @@ import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import ListItemText from '@mui/material/ListItemText'
 // @ts-ignore
-
+import { EditIcon } from '#components'
 import Slider from '@mui/material/Slider'
+
 
 // import icon
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
@@ -37,6 +39,13 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined'
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined'
 import CloseIcon from '@mui/icons-material/Close'
+import {
+  FormOutlined,
+  UserOutlined,
+  RightOutlined
+} from '@ant-design/icons';
+
+import { Avatar } from 'antd';
 
 import {
   Container,
@@ -60,30 +69,30 @@ import {
 import { dataLocation, locationProp, careerProp, datacareer } from './data'
 
 const buttons = [
-  <Button
-    key="one"
-    style={{
-      marginLeft: '8px',
-      width: '120px',
-      border: '1px solid black',
-      padding: '12px',
-    }}
-  >
-    Đăng nhập
-  </Button>,
-  <Button
-    key="two"
-    style={{
-      marginLeft: '8px',
-      width: '120px',
-      border: '1px solid black',
-      padding: '12px',
-    }}
-  >
-    Đăng ký
-  </Button>,
+  <button className="btn btn__post">
+    <FormOutlined style={{ color: "white" }} />
+    <span style={{ marginLeft: 10, color: "white" }}>Đăng bài</span>
+  </button>,
+  <div className="actions-login">
+    <button className="btn btn__login">
+      <div style={{ display: "flex" }}>
+        <div className="login__avatar">
+          <Avatar style={{ backgroundColor: '#0D99FF' }} icon={<UserOutlined />} />
+
+        </div>
+        <div className="login__center">
+          <span>Đăng nhập</span>
+        </div>
+      </div>
+      <div className="login__icon">
+        <RightOutlined />
+      </div>
+    </button>
+
+  </div>
+  ,
 ]
-// import './style.scss'
+
 
 // const preventDefault = (event: React.SyntheticEvent) => event.preventDefault()
 
@@ -328,7 +337,10 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <Logo />
           <SearchContainer onClick={handleClickInput}>
             {/* <Input placeholder="Search" /> */}
-            Nhập công việc mà bạn muốn tìm kiếm...
+            <div className='div-search'>
+              Nhập công việc mà bạn muốn tìm kiếm...
+            </div>
+
             <SearchIcon
               style={{
                 color: 'gray',
@@ -383,85 +395,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           >
             <ButtonGroup sx={{ margin: '0' }}>
               {buttons}
-
-              <Button
-                variant="contained"
-                style={{
-                  marginLeft: '16px',
-                  borderRadius: '30px',
-                  width: '80px',
-                  background: 'white',
-                }}
-                onClick={handleClickLogin}
-              >
-                <Person2OutlinedIcon
-                  // fontSize="large"
-                  sx={{
-                    fontSize: '40px',
-                    borderRadius: '50%',
-                    background: 'blue',
-                    padding: '4px',
-                    color: 'white',
-                  }}
-                />
-                {openLogin ? (
-                  <ExpandLess sx={{ color: '#000' }} />
-                ) : (
-                  <ExpandMore sx={{ color: '#000' }} />
-                )}
-                <Collapse
-                  in={openLogin}
-                  timeout="auto"
-                  unmountOnExit
-                  sx={collapse}
-                >
-                  <List
-                    sx={{
-                      width: '100%',
-                      maxWidth: 360,
-                      bgcolor: 'red',
-                    }}
-                    component="nav"
-                    aria-labelledby="nested-list-subheader"
-                    subheader={
-                      <Person2OutlinedIcon
-                        component="div"
-                        id="nested-list-subheader"
-                      >
-                        Nested List Items
-                      </Person2OutlinedIcon>
-                    }
-                  >
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <Person2OutlinedIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Sent mail" />
-                    </ListItemButton>
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <Person2OutlinedIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Drafts" />
-                    </ListItemButton>
-                    <ListItemButton onClick={handleClickLogin}>
-                      <ListItemIcon>
-                        <Person2OutlinedIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Inbox" />
-                      {openLogin ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={openLogin} timeout="auto" unmountOnExit>
-                      <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>{/* <StarBorder /> */}</ListItemIcon>
-                          <ListItemText primary="Starred" />
-                        </ListItemButton>
-                      </List>
-                    </Collapse>
-                  </List>
-                </Collapse>
-              </Button>
             </ButtonGroup>
           </Box>
         </Right>

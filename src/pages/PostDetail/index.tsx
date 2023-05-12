@@ -37,6 +37,20 @@ interface ItemCategories {
   child_category?: string
   parent_category_id: Number
 }
+
+interface PostNewest {
+  id?: Number
+  status?: Number,
+  account_id?: string,
+  title?: string,
+  company_name?: string,
+  is_date_period?: number,
+  start_date?: number,
+  end_date?: number,
+  start_time?: number,
+  image?: string
+
+}
 // page view details post
 const Detail: React.FC = () => {
   // test redux
@@ -54,18 +68,27 @@ const Detail: React.FC = () => {
 
   const [width, setWidth] = React.useState<Number>(1050)
   const [post, setPost] = React.useState<AxiosResponse | null>(null)
+  const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(null)
   const [automatic, setAutomatic] = React.useState<Boolean>(false)
 
   const getPostById = async () => {
-    const result = await postApi.getById(Number(searchParams.get('post-id')))
-    if (result) {
-      setPost(result)
+    try {
+      const result = await postApi.getById(Number(searchParams.get('post-id')))
+      if (result) {
+        setPost(result)
+      }
+      const list = post?.data.categories.map((category: any) => category.child_category_id)
+      const postNewest = await postApi.getPostNewest(result?.data.categories[0].parent_category_id, list, null, 5)
+      setPostNewest(postNewest)
+    } catch (error) {
+      console.error(error)
     }
+
+
   }
   React.useEffect(() => {
     getPostById()
   }, [])
-
 
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -104,38 +127,7 @@ const Detail: React.FC = () => {
     },
   ]
 
-  const dataSuggest = [
-    {
-      content: 'Quản Lý /Giám Sát Vận Hành Dịch Vụ Rạp Chiếu Phim',
-      imgBackground:
-        'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-6010e05a-44c7-4785-973a-03bef018a0b4.jpg',
-      describe: 'AI Works',
-    },
-    {
-      content: 'Phục vụ bàn lương 6tr/tháng',
-      imgBackground:
-        'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-6010e05a-44c7-4785-973a-03bef018a0b4.jpg',
-      describe: 'AI Works',
-    },
-    {
-      content: 'Phục vụ bàn lương 6tr/tháng',
-      imgBackground:
-        'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-6010e05a-44c7-4785-973a-03bef018a0b4.jpg',
-      describe: 'AI Works',
-    },
-    {
-      content: 'Phục vụ bàn lương 6tr/tháng',
-      imgBackground:
-        'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-6010e05a-44c7-4785-973a-03bef018a0b4.jpg',
-      describe: 'AI Works',
-    },
-    {
-      content: 'Phục vụ bàn lương 6tr/tháng',
-      imgBackground:
-        'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-6010e05a-44c7-4785-973a-03bef018a0b4.jpg',
-      describe: 'AI Works',
-    },
-  ]
+
   const onclick = async () => {
     //  window.open(`${post?.data.share_link}`)
     //test redux
@@ -337,12 +329,12 @@ const Detail: React.FC = () => {
               <div className="div-suggest">
                 <h3>Việc làm tương tự </h3>
                 <div className="item">
-                  {dataSuggest.map((item, index) => (
+                  {postNewest?.data.posts.map((item: PostNewest, index: null | number) => (
                     <ItemSuggest
                       key={index}
-                      content={item.content}
-                      imgBackground={item.imgBackground}
-                      describe={item.describe}
+                      content={item.title}
+                      imgBackground={item.image}
+                      describe={item.company_name}
                     />
                   ))}
                 </div>
