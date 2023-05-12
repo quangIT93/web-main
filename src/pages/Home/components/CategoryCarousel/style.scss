@@ -1,3 +1,4 @@
+@import '../../../../scss/mixins';
 .tabs {
   display: flex;
   align-items: center;
@@ -17,6 +18,11 @@
   }
   .css-9c7bob-MuiButtonBase-root-MuiTab-root {
     border-bottom: 1px solid #dcdcdc;
+  }
+  .MuiTabs-scrollButtons {
+    @include breakpoint(mobile) {
+      display: none;
+    }
   }
 }
 .home {

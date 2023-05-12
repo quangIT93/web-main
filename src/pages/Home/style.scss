@@ -9,20 +9,20 @@
   @media screen and (max-width: 1200px) {
     padding-inline: 10px;
 
-    @include breakpoint(tablet) {
-      padding: 0 40px;
-    }
+    // @include breakpoint(tablet) {
+    //   padding: 0 0px;
+    // }
 
-    @include breakpoint(mobile) {
-      padding: 0 20px;
-    }
+    // @include breakpoint(mobile) {
+    //   padding: 0 20px;
+    // }
 
-    @include breakpoint(largeTablet) {
-      padding: 0 40px;
-    }
+    // @include breakpoint(largeTablet) {
+    //   padding: 0 40px;
+    // }
 
-    @include breakpoint(destop) {
-      padding: 0 20px;
-    }
+    // @include breakpoint(destop) {
+    //   padding: 0 20px;
+    // }
   }
 }

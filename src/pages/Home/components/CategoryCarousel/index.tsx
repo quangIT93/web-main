@@ -52,7 +52,7 @@ const CategoryCarousel: React.FC<PropState> = ({ height, hideSlider }) => {
         zIndex: 1,
         border: 'none',
         // borderBottom: '1px solid #aaa',
-        boxShadow: '0px 1px 2px #aaa',
+        // boxShadow: '0px 1px 2px #aaa',
         // transition: 'top 0.5s',
       }}
       className="tabs"

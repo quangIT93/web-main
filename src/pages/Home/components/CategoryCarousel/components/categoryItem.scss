@@ -1,0 +1,9 @@
+@import '../../../../../scss/mixins';
+.test {
+  .img-category {
+    @include breakpoint(mobile) {
+      height: 30px !important ;
+      width: 30px !important;
+    }
+  }
+}

@@ -391,4 +391,18 @@
       flex: none;
     }
   }
+  .div-nav-center {
+    display: none;
+    @include breakpoint(mobile) {
+      display: block;
+      flex: none;
+      margin-right: 10px;
+    }
+  }
+
+  .div-nav-right {
+    @include breakpoint(mobile) {
+      display: none;
+    }
+  }
 }

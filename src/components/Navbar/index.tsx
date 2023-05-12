@@ -42,7 +42,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import {
   FormOutlined,
   UserOutlined,
-  RightOutlined
+  RightOutlined,
+  BarsOutlined
 } from '@ant-design/icons';
 
 import { Avatar } from 'antd';
@@ -189,6 +190,14 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [openLocation, setOpenLocation] = React.useState(false)
   const [openCareer, setOpenCareer] = React.useState(false)
   const [openSalary, setOpenSalary] = React.useState(false)
+  const [showTap, setshowTap] = React.useState(false)
+
+
+
+  // handle show tap on screen mobile
+  const handleTap = () => {
+    setshowTap(!showTap)
+  }
 
   const handleClickLogin = () => {
     setOpenLogin(!openLogin)
@@ -375,26 +384,10 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             />
           </SearchContainer>
         </Left>
-        {/* <Center>
-          <ItemCenter>Trang chủ</ItemCenter>
-          <ItemCenter onClick={handleClickArrowJob}>
-            Công việc
-            {openSubJob ? (
-              <KeyboardArrowUpOutlinedIcon />
-            ) : (
-              <KeyboardArrowDownOutlinedIcon />
-            )}
-          </ItemCenter>
-          <ItemCenter onClick={handleClickArrowHistory}>
-            Lịch sử
-            {openSubHistory ? (
-              <KeyboardArrowUpOutlinedIcon />
-            ) : (
-              <KeyboardArrowDownOutlinedIcon />
-            )}
-          </ItemCenter>
-        </Center> */}
-        <Right>
+        <Center className='div-nav-center'>
+          <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
+        </Center>
+        <Right className='div-nav-right' >
           {/* <Button
             variant="contained"
             startIcon={<AdsClickIcon />}

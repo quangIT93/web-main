@@ -21,9 +21,13 @@ const ImageCpn = () => { }
 
 const Content = () => {
   const [page, setPage] = React.useState(1)
+
+
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
   }
+
+
   return (
     <Box sx={{ flexGrow: 1 }} className='item-post' >
       <h2 style={{ marginBottom: 15 }}> Công việc mới nhất </h2>
@@ -52,7 +56,7 @@ const Content = () => {
                   srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                   alt={item.title}
                   loading="lazy"
-                  style={{ width: '160px', maxWidth: 'auto', height: '152px' }}
+                  style={{ width: '150px', maxWidth: 'auto', height: '130px', borderRadius: 10 }}
                 />
                 <div style={{ padding: '0', marginLeft: '12px' }}>
                   <Typography
