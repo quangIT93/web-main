@@ -78,7 +78,10 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
   return (
     <>
-      <div className="embla">
+      <div
+        className="embla"
+        // style={{ position: 'fixed', top: '-100%' }}
+      >
         <div className="embla__viewport" ref={emblaRef}>
           <div
             className="embla__container"

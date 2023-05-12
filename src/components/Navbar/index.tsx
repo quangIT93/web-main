@@ -165,10 +165,11 @@ interface propsCloseSlider {
   openCollapse: boolean
   setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
   setHeight: React.Dispatch<React.SetStateAction<number>>
+  height: number
 }
 
 const Navbar: React.FC<propsCloseSlider> = (props) => {
-  const { openCollapse, setOpenCollapse, setHeight } = props
+  const { openCollapse, setOpenCollapse, setHeight, height } = props
   // console.log(openCollapse)
 
   // const [hidenNavPost, setHiddenNavPost] = useState('')
@@ -208,7 +209,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   }
 
   const handleClickArrowLocation = (e: any) => {
-    console.log(e.target)
     e.stopPropagation()
 
     if (
@@ -256,16 +256,23 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   function handleClickAddSalary() {
     // setOpenSalary(false)
-    console.log(salary)
+
     setSalary(value)
   }
 
   // event checkboxPosition
 
-  const [checkedState, setCheckedState] = useState<string[]>([])
+  const [checkedSaveCheckboxPositon, setCheckedSaveCheckboxPositon] = useState<
+    string[]
+  >([])
+  const [checkedSaveCheckboxCareer, setCheckedSaveCheckboxCareer] = useState<
+    string[]
+  >([])
 
   const [position, setPosition] = React.useState<string[]>([])
+  const [carreer, setCareer] = React.useState<string[]>([])
 
+  // xử lý khi có checked vào checkbox position thì nó lưu nó vào checkedSaveCheckboxPositon
   const handleOnChangeCheckboxPosition = (
     index: number,
     e: React.ChangeEvent<HTMLInputElement>
@@ -273,19 +280,44 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     const currentValue = e.target.value
 
     // Nếu phần tử đã có trong mảng, loại bỏ nó
-    if (checkedState.includes(currentValue)) {
-      setCheckedState((prevState) =>
+    if (checkedSaveCheckboxPositon.includes(currentValue)) {
+      setCheckedSaveCheckboxPositon((prevState) =>
         prevState.filter((value) => value !== currentValue)
       )
     }
     // Nếu phần tử chưa có trong mảng, thêm vào
     else {
-      setCheckedState((prevState) => [...prevState, currentValue])
+      setCheckedSaveCheckboxPositon((prevState) => [...prevState, currentValue])
     }
   }
 
+  const handleOnChangeCheckboxCareer = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const currentValue = e.target.value
+    console.log(currentValue)
+
+    // Nếu phần tử đã có trong mảng, loại bỏ nó
+    if (checkedSaveCheckboxCareer.includes(currentValue)) {
+      setCheckedSaveCheckboxCareer((prevState) =>
+        prevState.filter((value) => value !== currentValue)
+      )
+    }
+    // Nếu phần tử chưa có trong mảng, thêm vào
+    else {
+      setCheckedSaveCheckboxCareer((prevState) => [...prevState, currentValue])
+    }
+  }
+
+  // áp dụng chọn địa điểm
   const handleClickCheckboxPosition = () => {
-    setPosition(checkedState)
+    setPosition(checkedSaveCheckboxPositon)
+  }
+
+  // áp dụng chọn ngành
+  const handleClickCheckboxCareer = () => {
+    setCareer(checkedSaveCheckboxPositon)
   }
 
   // event career
@@ -310,25 +342,19 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   const ref = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const divElement = ref.current
-    if (divElement) {
-      const handleTransitionEnd = () => {
-        // Khi transition kết thúc, lấy chiều cao của phần tử
-        // const height = divElement.offsetHeight;
-        setHeight(divElement?.offsetHeight)
-        // console.log('Chiều cao của phần tử:', height)
-      }
-
-      // Thêm event listener cho sự kiện transitionend
-      divElement.addEventListener('transitionend', handleTransitionEnd)
-
-      // Xóa event listener khi component unmount
-      return () => {
-        divElement.removeEventListener('transitionend', handleTransitionEnd)
-      }
+  const handleCollapseEntered = () => {
+    if (ref.current) {
+      const height = ref.current.clientHeight
+      setHeight(height)
     }
-  }, [ref.current?.offsetHeight, setHeight])
+  }
+
+  const handleCollapseExited = () => {
+    if (ref.current) {
+      const height = ref.current.clientHeight
+      setHeight(0)
+    }
+  }
 
   return (
     <Container className="nav" ref={ref}>
@@ -337,10 +363,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <Logo />
           <SearchContainer onClick={handleClickInput}>
             {/* <Input placeholder="Search" /> */}
-            <div className='div-search'>
-              Nhập công việc mà bạn muốn tìm kiếm...
-            </div>
-
+            Nhập công việc mà bạn muốn tìm kiếm...
             <SearchIcon
               style={{
                 color: 'gray',
@@ -403,11 +426,14 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         in={openCollapse}
         timeout="auto"
         unmountOnExit
+        onEnter={handleCollapseEntered}
+        onExited={handleCollapseExited}
         sx={{
           // backgroundColor: '#ccc',
           width: '100%',
           boxSizing: 'border-box',
           borderTop: '1px solid #ccc',
+          padding: '0 180px',
         }}
       >
         <NavSearch>
@@ -554,7 +580,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                           onChange={(e) =>
                             handleOnChangeCheckboxPosition(index1, e)
                           }
-                          checked={checkedState.includes(name) ? true : false}
+                          checked={
+                            checkedSaveCheckboxPositon.includes(name)
+                              ? true
+                              : false
+                          }
                         />
                       </label>
                     ))}
@@ -612,7 +642,43 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <ChoosesCarreer>
             <WrapChooseLocation onClick={handleClickArrowCarreer}>
               <BusinessCenterOutlinedIcon sx={{ marginRight: '8px' }} />
-              <span style={{ width: '260px' }}>Chọn ngành nghề</span>
+              <div
+                style={{
+                  width: '260px',
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  overflowX: 'hidden',
+                }}
+              >
+                {
+                  carreer.length === 0
+                    ? 'Chọn ngành nghề'
+                    : carreer.map((v, i) => (
+                      <span
+                        key={i}
+                        style={{
+                          padding: '4px 8px',
+                          background: '#ccc',
+                          borderRadius: '12px',
+                          // maxWidth: '120px',
+                          // minWidth: '90px',
+                          textAlign: 'center',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          fontSize: '12px',
+                          alignItems: 'center',
+                          marginRight: '12px',
+                        }}
+                      >
+                        {`${v}`}
+                        <CloseIcon sx={{ fontSize: '20px' }} />
+                      </span>
+                    ))
+
+                  // `${position[0]} - ${position[1]} - ${position[2]}`
+                }
+              </div>
               {openCareer ? (
                 <KeyboardArrowDownOutlinedIcon />
               ) : (
@@ -632,12 +698,13 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                 marginTop: '24px',
                 minWidth: '400px',
                 borderRadius: '12px',
-                // overflow: 'hidden',
+                overflow: 'hidden',
                 boxShadow: '1px 1px 5px #000',
                 height: '400px',
                 zIndex: 1,
               }}
               className="subnav-chooses__carreer"
+              onClick={(e: any) => e.stopPropagation()}
             >
               <h3 style={{ padding: '12px 24px', textAlign: 'center' }}>
                 Địa điểm
@@ -653,9 +720,9 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                   margin: '0 24px',
                 }}
               >
-                {datacareer.map((carreers: careerProp, index) => (
+                {datacareer.map((careers: careerProp, index1) => (
                   <li
-                    key={index}
+                    key={index1}
                     style={{
                       padding: '4px 0 24px',
                       listStyle: 'none',
@@ -669,11 +736,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                         color: '#1b87f5 ',
                       }}
                     >
-                      {carreers.career}
+                      {careers.career}
                     </h4>
-                    {carreers.jobs.map((name: string, index) => (
+                    {careers.jobs.map((name: string, index2) => (
                       <label
-                        key={index}
+                        key={index2}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -692,6 +759,15 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                             marginRight: '4px',
                           }}
                           id={name}
+                          value={name}
+                          onChange={(e) =>
+                            handleOnChangeCheckboxCareer(index1, e)
+                          }
+                          checked={
+                            checkedSaveCheckboxPositon.includes(name)
+                              ? true
+                              : false
+                          }
                         />
                       </label>
                     ))}
@@ -736,9 +812,10 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                     background: '#0D99FF',
                     borderRadius: '10px',
                     outline: 'none',
-                    color: 'white',
                     border: 'none',
+                    color: 'white',
                   }}
+                  onClick={handleClickCheckboxCareer}
                 >
                   Áp dụng
                 </button>

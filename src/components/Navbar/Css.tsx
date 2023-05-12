@@ -6,9 +6,9 @@ export const accent = {
 } // #e040fb (alternative method)
 
 export const Container = styled('div')({
-  minHeight: '88px',
-  boxShadow: '1px 1px 5px black',
-  padding: '0px 180px',
+  padding: '0 24px',
+  minHeight: '70px',
+  boxShadow: '0px 1px 3px #aaa',
   zIndex: '10',
   position: 'fixed',
   width: '100%',
@@ -20,8 +20,7 @@ export const Container = styled('div')({
 
 export const Wrapper = styled('div')({
   //   padding: '10px 20px',
-
-  minHeight: '88px',
+  minHeight: '70px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -107,7 +106,7 @@ export const NavSearch = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '24px 0',
+  padding: '12px 0',
 })
 
 export const InputSearh = styled.input({
@@ -140,7 +139,7 @@ export const NavFilter = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
-  paddingBottom: '24px',
+  paddingBottom: '12px',
 })
 
 export const ChoosesCarreer = styled('div')({
