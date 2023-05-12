@@ -25,20 +25,24 @@ const Content = () => {
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
+      <h1>Công việc mới nhất</h1>
       <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
         {itemData.map((item, index) => (
-          <Grid item xs={12} sm={4} md={6} key={index}>
+          <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
             <Card
               sx={{
                 minWidth: '100%',
                 display: 'flex',
                 padding: '12px',
-                border: '1px solid',
+                borderBottom: '1px solid #aaa',
+                borderTop: '1px solid #aaa',
                 cursor: 'pointer',
                 '&:hover': {
                   background: '#e8f5ff',
                   transition: 'all 0.3s linear',
                 },
+                boxShadow: 'none',
+                borderRadius: 'unset',
               }}
             >
               <ImageListItem key={item.img} sx={{ flex: 1, display: 'flex' }}>
@@ -47,14 +51,14 @@ const Content = () => {
                   srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                   alt={item.title}
                   loading="lazy"
-                  style={{ width: '160px', maxWidth: 'auto', height: '152px' }}
+                  style={{ width: '120px', maxWidth: 'auto', height: '120px' }}
                 />
                 <div style={{ padding: '0', marginLeft: '12px' }}>
                   <Typography
                     gutterBottom
                     variant="h6"
                     component="div"
-                    sx={{ fontSize: '20px', margin: 0 }}
+                    sx={{ fontSize: '16px', margin: 0 }}
                   >
                     Phục vụ nhà hàng
                   </Typography>
@@ -62,7 +66,7 @@ const Content = () => {
                     gutterBottom
                     variant="h1"
                     component="div"
-                    sx={{ fontSize: '16px' }}
+                    sx={{ fontSize: '12px' }}
                   >
                     Nhà hàng xxx
                   </Typography>
@@ -97,7 +101,7 @@ const Content = () => {
                       justifyContent: 'center',
                     }}
                   >
-                    <RoomOutlinedIcon />
+                    <RoomOutlinedIcon sx={{ fontSize: '14px' }} />
                     <Typography variant="body2" color="text.secondary">
                       Lizards are a widespread
                     </Typography>

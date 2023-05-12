@@ -23,9 +23,9 @@ interface StatePropsCloseSlider {
   openCollapse: boolean
   setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
   setHeight: React.Dispatch<React.SetStateAction<number>>
+  height: number
 }
 const Home: React.FC = () => {
-  console.log('Home page here')
   const [openCollapse, setOpenCollapse] = React.useState(false)
   const [height, setHeight] = React.useState<number>(0)
 
@@ -33,6 +33,7 @@ const Home: React.FC = () => {
     openCollapse,
     setOpenCollapse,
     setHeight,
+    height,
   }
 
   const [hideSlider, setHideSlider] = useState<boolean>(false)
@@ -41,7 +42,7 @@ const Home: React.FC = () => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
       const threshold = 600 // Ngưỡng scroll khi slider sẽ bị ẩn
-      console.log(window.scrollY)
+
       // console.log('hideSlider', hideSlider)
 
       if (scrollPosition >= threshold) {
@@ -60,12 +61,10 @@ const Home: React.FC = () => {
     }
   }, [])
 
-  console.log('hideSlider', hideSlider)
-
   return (
     <div className="home">
       <Navbar {...statePropsCloseSlider} />
-      {!openCollapse && height <= 240 ? (
+      {!openCollapse && height < 70 ? (
         <EmblaCarousel slides={SLIDES} options={OPTIONS} />
       ) : (
         <></>
@@ -73,7 +72,7 @@ const Home: React.FC = () => {
       <div
         className="home__main"
         style={
-          height > 245 || hideSlider ? { marginTop: `${height + 90}px` } : {}
+          height > 70 || hideSlider ? { marginTop: `${height + 255}px` } : {}
         }
       >
         <CategoryCarousel height={height} hideSlider={hideSlider} />
@@ -86,4 +85,4 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+export default React.memo(Home)

@@ -1,5 +1,23 @@
+@import '../../scss/variable';
+@import '../../scss/mixins';
 .home__main {
-  padding-inline: 180px;
+  padding: 0 180px;
+  margin: 0 auto;
   transition: all l;
   margin-bottom: 36px;
+  @include breakpoint(tablet) {
+    padding: 0 40px;
+  }
+
+  @include breakpoint(mobile) {
+    padding: 0 20px;
+  }
+
+  @include breakpoint(largeTablet) {
+    padding: 0 40px;
+  }
+
+  @include breakpoint(destop) {
+    padding: 0 20px;
+  }
 }
