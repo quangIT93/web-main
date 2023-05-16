@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 export enum ActionType {
     SET_POST_ID = "set_post_id",
-    SET_POST_THEME_ID = "set_post_theme_id",
+    SET_POST_THEME = "set_post_theme",
     SET_PROVINCE = "set_province",
     SET_DISTRICTS = "set_districts"
 }

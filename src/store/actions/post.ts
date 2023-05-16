@@ -9,7 +9,7 @@ export  const setPost = (data:AxiosResponse) => ({
 });
 
 export  const setPostByTheme = (data:AxiosResponse) => ({
-  type: ActionType.SET_POST_THEME_ID,
+  type: ActionType.SET_POST_THEME,
   payload:{
     postTheme:data,
   } 
