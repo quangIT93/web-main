@@ -9,128 +9,227 @@ import Grid from '@mui/material/Grid'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 
+// @ts-ignore
+import moment from 'moment'
+import 'intl'
+import 'intl/locale-data/jsonp/en'
+
+import { useNavigate } from "react-router-dom";
+import { MouseEvent, MouseEventHandler } from 'react';
+
+
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
 
 // import component
 import ListCompanyCarousel from '../ListCompanyCarousel'
+// import redux
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../../store/index'
+import { RootState } from '../../../store/reducer'
+
+import postApi from 'api/postApi'
 
 import './style.scss'
+import { time } from 'console'
+
+
+// interface item post themes
+
+interface PostTheme {
+  id: number,
+  post_id: Number,
+  title: string,
+  company_name: string
+  image: string,
+  ward: string
+  district: string
+  province: string
+  end_time: number
+  start_time: number
+  salary_max: number
+  salary_min: number
+  salary_type: string
+}
 
 const ThemesJob: React.FC = () => {
   const [page, setPage] = React.useState(1)
+  const [automatic, setAutomatic] = React.useState<Boolean>(false)
+
+  const navigate = useNavigate();
+
+  // state redux
+  const { post } = useSelector((state: RootState) => state)
+  const dispatch = useDispatch()
+  const { setPostByTheme } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
   }
+
+
+
+  // handle click post details
+
+  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+
+    navigate(`/post-detail?post-id=${id}`);
+
+  }
+
+  // get post by theme id
+  const getPostByThemeId = async () => {
+    try {
+      const result = await postApi.getPostByThemeId(109, 19, null)
+      if (result) {
+        setPostByTheme(result)
+
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  React.useEffect(() => {
+    getPostByThemeId()
+  }, [])
+
+  setTimeout(() => {
+    setAutomatic(true)
+  }, 500)
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <h1>Công việc mới nhất</h1>
-      <ListCompanyCarousel />
-      <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
-        {itemData.map((item, index) => (
-          <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-            <Card
-              sx={{
-                minWidth: '100%',
-                display: 'flex',
-                padding: '12px',
-                cursor: 'pointer',
-                '&:hover': {
-                  background: '#e8f5ff',
-                  transition: 'all 0.3s linear',
-                },
-                boxShadow: 'none',
-                borderRadius: 'unset',
-              }}
+    <>
+      {
+        automatic && (
+          <Box sx={{ flexGrow: 1 }}>
+            <h1>Công việc mới nhất</h1>
+            <ListCompanyCarousel />
+            <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
+              {post.data.posts.map((item: PostTheme, index: number) => (
+                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                  <Card
+                    sx={{
+                      minWidth: '100%',
+                      display: 'flex',
+                      padding: '12px',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        background: '#e8f5ff',
+                        transition: 'all 0.3s linear',
+                      },
+                      boxShadow: 'none',
+                      borderRadius: 'unset',
+                    }}
+                    onClick={(e) => {
+                      handleClickItem(e, item.id)
+                    }}
+                  >
+                    <ImageListItem key={item.image} sx={{ flex: 1, display: 'flex' }}>
+                      <img
+                        src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={item.title}
+                        loading="lazy"
+                        style={{ width: '120px', maxWidth: 'auto', height: '120px', borderRadius: 10 }}
+                      />
+                      <div style={{ padding: '0', marginLeft: '12px' }}>
+                        <Typography
+                          gutterBottom
+                          variant="h6"
+                          component="div"
+                          sx={{ fontSize: '16px', margin: 0 }}
+                        >
+                          {item?.title}
+                        </Typography>
+                        <Typography
+                          gutterBottom
+                          variant="h1"
+                          component="div"
+                          sx={{ fontSize: '12px' }}
+                        >
+                          {item.company_name}
+                        </Typography>
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <RoomOutlinedIcon />
+                          <Typography variant="body2" color="text.secondary">
+                            {`${item.district}, ${item.province}`}
+                          </Typography>
+                        </div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <RoomOutlinedIcon />
+                          <Typography variant="body2" color="text.secondary">
+                            {moment(new Date(item.start_time)).format(
+                              'HH:mm'
+                            )}{' '}
+                            -{' '}
+                            {moment(new Date(item.end_time)).format('HH:mm')}
+                          </Typography>
+                        </div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <RoomOutlinedIcon sx={{ fontSize: '14px' }} />
+                          <Typography variant="body2" color="text.secondary">
+                            {new Intl.NumberFormat('en-US').format(
+                              item.salary_min
+                            )}{' '}
+                            -{' '}
+                            {new Intl.NumberFormat('en-US').format(
+                              item.salary_max
+                            ) + `/${item.salary_type}`}
+                          </Typography>
+                        </div>
+                      </div>
+                    </ImageListItem>
+                    <CardActions sx={{ position: 'relative' }}>
+                      <BookmarkBorderOutlinedIcon
+                        sx={{ position: 'absolute', top: 0, right: 0 }}
+                      />
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            <Stack
+              spacing={2}
+              sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}
             >
-              <ImageListItem key={item.img} sx={{ flex: 1, display: 'flex' }}>
-                <img
-                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
-                  style={{ width: '120px', maxWidth: 'auto', height: '120px' }}
-                />
-                <div style={{ padding: '0', marginLeft: '12px' }}>
-                  <Typography
-                    gutterBottom
-                    variant="h6"
-                    component="div"
-                    sx={{ fontSize: '16px', margin: 0 }}
-                  >
-                    Phục vụ nhà hàng
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    variant="h1"
-                    component="div"
-                    sx={{ fontSize: '12px' }}
-                  >
-                    Nhà hàng xxx
-                  </Typography>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <RoomOutlinedIcon />
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread
-                    </Typography>
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <RoomOutlinedIcon />
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread
-                    </Typography>
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <RoomOutlinedIcon sx={{ fontSize: '14px' }} />
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread
-                    </Typography>
-                  </div>
-                </div>
-              </ImageListItem>
-              <CardActions sx={{ position: 'relative' }}>
-                <BookmarkBorderOutlinedIcon
-                  sx={{ position: 'absolute', top: 0, right: 0 }}
-                />
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      <Stack
-        spacing={2}
-        sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}
-      >
-        {/* <Pagination count={10} shape="rounded" /> */}
-        Test page: {page}
-        <Pagination
-          count={10}
-          variant="outlined"
-          shape="rounded"
-          page={page}
-          onChange={handleChange}
-        />
-      </Stack>
-    </Box>
+              {/* <Pagination count={10} shape="rounded" /> */}
+              Test page: {page}
+              <Pagination
+                count={10}
+                variant="outlined"
+                shape="rounded"
+                page={page}
+                onChange={handleChange}
+              />
+            </Stack>
+          </Box>
+        )
+      }
+
+    </>
+
   )
 }
 

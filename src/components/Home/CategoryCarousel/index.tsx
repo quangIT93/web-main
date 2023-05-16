@@ -4,14 +4,24 @@ import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import './style.scss'
 
-import { categories } from './dataCategory'
+// import { categories } from './dataCategory'
+import { AxiosResponse } from 'axios'
 
 import CategoryItem from './components/CategoryItem'
+import categoriesApi from '../../../api/categoriesApi'
 
 interface PropState {
   height: number
   hideSlider: boolean
   windowWidth: boolean
+}
+
+// interface item category
+interface CategoryItem {
+  id: number,
+  name: string,
+  default_post_image: string
+  image: string
 }
 
 const CategoryCarousel: React.FC<PropState> = ({
@@ -24,6 +34,8 @@ const CategoryCarousel: React.FC<PropState> = ({
 
   // const {height} = height
 
+  const [categories, setCategories] = React.useState<AxiosResponse | null>(null)
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
@@ -31,6 +43,22 @@ const CategoryCarousel: React.FC<PropState> = ({
   console.log('windowWidth', windowWidth)
   console.log('hideSlider', hideSlider)
   console.log('height', height)
+
+  const getAllParentCategories = async () => {
+    try {
+      const result = await categoriesApi.getAllParentCategories()
+      if (result) {
+        setCategories(result)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+
+
+  }
+  React.useEffect(() => {
+    getAllParentCategories()
+  }, [])
 
   return (
     <Box
@@ -43,22 +71,22 @@ const CategoryCarousel: React.FC<PropState> = ({
           height > 60 && !windowWidth
             ? `${height + 121}px`
             : hideSlider
-            ? '71px'
-            : '',
+              ? '71px'
+              : '',
         margin:
           height > 60 && !windowWidth
             ? '0 180px'
             : hideSlider
-            ? '0 180px'
-            : '24px 0',
+              ? '0 180px'
+              : '24px 0',
         paddingTop:
           height > 60 && !windowWidth
             ? '0px'
             : height > 60 && windowWidth && !hideSlider
-            ? '71px'
-            : hideSlider
-            ? '0'
-            : '',
+              ? '71px'
+              : hideSlider
+                ? '0'
+                : '',
 
         right: 0,
         left: 0,
@@ -71,7 +99,7 @@ const CategoryCarousel: React.FC<PropState> = ({
       className="tabs"
     >
       <Tabs
-        value={value}
+        value={value == 0 ? categories?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"
@@ -81,11 +109,12 @@ const CategoryCarousel: React.FC<PropState> = ({
       >
         {/* <Tab label="Item One">sád</Tab> */}
 
-        {categories.map((v, index) => {
+        {categories?.data.map((item: CategoryItem, index: number) => {
           return (
             <Tab
               key={index}
-              label={<CategoryItem content={v.name} imageLink={v.image} />}
+              value={item.id}
+              label={<CategoryItem content={item.name} imageLink={item.image} />}
               sx={{
                 color: 'black',
                 display: 'flex',

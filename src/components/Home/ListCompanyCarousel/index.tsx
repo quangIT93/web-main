@@ -2,18 +2,67 @@ import React from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
+import { AxiosResponse } from 'axios'
+// import api
+import themeApi from '../../../api/themesApi'
+import postApi from 'api/postApi'
+
+// import redux
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../../store/index'
+import { RootState } from '../../../store/reducer'
 
 // IMPORT dataimg
 import { dataImageThemesJob } from './dataImageThemesJob'
 
 import './style.scss'
 
-const ListCompanyCarousel: React.FC = () => {
-  const [value, setValue] = React.useState(0)
+interface ItemTheme {
+  id: number
+  title: string,
+  image: string,
+  number_of_posts: Number
+}
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
+const ListCompanyCarousel: React.FC = () => {
+  const [value, setValue] = React.useState<Number>(0)
+  const [listThemes, setListThemes] = React.useState<AxiosResponse | null>(null)
+
+  const dispatch = useDispatch()
+  const { setPostByTheme } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
+
+  const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
+    try {
+      setValue(newValue)
+      const result = await postApi.getPostByThemeId(newValue, 19, null)
+      if (result) {
+        setPostByTheme(result)
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
   }
+
+  const getThemesEnable = async () => {
+    try {
+      const result = await themeApi.getThemesEnable()
+      if (result) {
+        setListThemes(result)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+
+
+  }
+  React.useEffect(() => {
+    getThemesEnable()
+  }, [])
   return (
     <Box
       sx={{
@@ -24,7 +73,7 @@ const ListCompanyCarousel: React.FC = () => {
       }}
     >
       <Tabs
-        value={value}
+        value={value == 0 ? listThemes?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"
@@ -32,18 +81,21 @@ const ListCompanyCarousel: React.FC = () => {
         aria-label="simple tabs example"
         className="tabThemeJob"
       >
-        {dataImageThemesJob.map((dataTheme, index) => (
+        {listThemes?.data.map((item: ItemTheme, index: number) => (
           <Tab
             key={index}
+
+            value={item.id}
             label={
               <div>
                 <img
-                  src={dataTheme.img}
+                  src={item.image}
                   alt="amhr bị lỗi"
                   style={{
                     width: '160px',
                     height: '160px',
                     borderRadius: '10px',
+                    objectFit: "cover"
                   }}
                 />
               </div>

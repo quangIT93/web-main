@@ -51,6 +51,13 @@ interface PostNewest {
   image?: string
 
 }
+// state props
+interface StatePropsCloseSlider {
+  openCollapse: boolean
+  setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
+  setHeight: React.Dispatch<React.SetStateAction<number>>
+  height: number
+}
 // page view details post
 const Detail: React.FC = () => {
   // test redux
@@ -70,6 +77,19 @@ const Detail: React.FC = () => {
   const [post, setPost] = React.useState<AxiosResponse | null>(null)
   const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(null)
   const [automatic, setAutomatic] = React.useState<Boolean>(false)
+
+  // prosps navbar
+  const [openCollapse, setOpenCollapse] = React.useState(false)
+
+  const [height, setHeight] = React.useState<number>(0)
+
+  const statePropsCloseSlider: StatePropsCloseSlider = {
+    openCollapse,
+    setOpenCollapse,
+    setHeight,
+    height,
+  }
+
 
   const getPostById = async () => {
     try {
@@ -153,7 +173,7 @@ const Detail: React.FC = () => {
     <>
       {automatic && (
         <div className="detail">
-          {/* <NaviBar /> */}
+          <NaviBar {...statePropsCloseSlider} />
           <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
@@ -185,7 +205,7 @@ const Detail: React.FC = () => {
             <div className="detail-container">
               <div ref={componentRef}>
                 <Carousel
-                  data={post?.data.images ? post.data.images : data}
+                  data={post?.data.images.length > 0 ? post?.data.images : data}
                   time={2000}
                   width="850px"
                   height="500px"

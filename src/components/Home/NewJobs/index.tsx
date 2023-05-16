@@ -48,7 +48,7 @@ const NewJobs: React.FC = () => {
                   srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                   alt={item.title}
                   loading="lazy"
-                  style={{ width: '120px', maxWidth: 'auto', height: '120px' }}
+                  style={{ width: '120px', maxWidth: 'auto', height: '120px', borderRadius: 10 }}
                 />
                 <div style={{ padding: '0', marginLeft: '12px' }}>
                   <Typography
