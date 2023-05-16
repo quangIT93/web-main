@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
@@ -83,6 +83,18 @@ const ModalFilter: React.FC<PropsModalFilter> = (props) => {
     windowWidth,
   } = props
 
+  const [openFilterLocation, setOpenFilterLocation] = useState(false)
+
+  const handleClickShowFilterLocation = () => {
+    if (!openFilterLocation) {
+      // setOpenCareer(true)
+      // setOpenSalary(false)
+      setOpenFilterLocation(true)
+    } else {
+      setOpenFilterLocation(false)
+    }
+  }
+
   const handleClose = () => {
     setOpenModalFilter(false)
   }
@@ -99,7 +111,7 @@ const ModalFilter: React.FC<PropsModalFilter> = (props) => {
           <h2 id="parent-modal-title">Bộ lọc</h2>
           <ChoosesCarreer>
             <WrapChooseLocation
-              onClick={handleClickArrowLocation}
+              onClick={handleClickShowFilterLocation}
               className="choose-locations"
             >
               <div
@@ -181,14 +193,14 @@ const ModalFilter: React.FC<PropsModalFilter> = (props) => {
                   </>
                 )}
               </div>
-              {openLocation ? (
+              {openFilterLocation ? (
                 <KeyboardArrowDownOutlinedIcon />
               ) : (
                 <KeyboardArrowUpOutlinedIcon />
               )}
             </WrapChooseLocation>
             <PositionFilterSubnav
-              openLocation={openLocation}
+              openLocation={openFilterLocation}
               setPosition={setPosition}
             />
           </ChoosesCarreer>
