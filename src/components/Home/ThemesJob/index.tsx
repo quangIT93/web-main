@@ -1,36 +1,32 @@
 import React from 'react'
-import { styled } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
 import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
 import ImageListItem from '@mui/material/ImageListItem'
-import CardMedia from '@mui/material/CardMedia'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
-import { url } from 'inspector'
+// import { url } from 'inspector'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
-import "./style.scss"
 
-const ImageCpn = () => { }
+// import component
+import ListCompanyCarousel from '../ListCompanyCarousel'
 
-const Content = () => {
+import './style.scss'
+
+const ThemesJob: React.FC = () => {
   const [page, setPage] = React.useState(1)
-
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
   }
-
-
   return (
-    <Box sx={{ flexGrow: 1 }} className='item-post' >
-      <h2 style={{ marginBottom: 15 }}> Công việc mới nhất </h2>
+    <Box sx={{ flexGrow: 1 }}>
+      <h1>Công việc mới nhất</h1>
+      <ListCompanyCarousel />
       <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
         {itemData.map((item, index) => (
           <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -39,8 +35,6 @@ const Content = () => {
                 minWidth: '100%',
                 display: 'flex',
                 padding: '12px',
-                borderBottom: '1px solid #aaa',
-                borderTop: '1px solid #aaa',
                 cursor: 'pointer',
                 '&:hover': {
                   background: '#e8f5ff',
@@ -56,7 +50,7 @@ const Content = () => {
                   srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                   alt={item.title}
                   loading="lazy"
-                  style={{ width: '150px', maxWidth: 'auto', height: '130px', borderRadius: 10 }}
+                  style={{ width: '120px', maxWidth: 'auto', height: '120px' }}
                 />
                 <div style={{ padding: '0', marginLeft: '12px' }}>
                   <Typography
@@ -140,7 +134,7 @@ const Content = () => {
   )
 }
 
-export default Content
+export default ThemesJob
 
 const itemData = [
   {

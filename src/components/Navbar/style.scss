@@ -398,6 +398,12 @@
       flex: none;
       margin-right: 10px;
     }
+
+    @include breakpoint(tablet) {
+      display: block;
+      flex: none;
+      margin-right: 10px;
+    }
   }
 
   .div-nav-right {

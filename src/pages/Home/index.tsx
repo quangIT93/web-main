@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import { Navbar } from '#components'
-import CategoryCarousel from './components/CategoryCarousel'
-// import EmblaCarousel from
-import EmblaCarousel from './components/Carousel'
-import BreadcrumbsCpn from './components/Breadcrumbs'
-import Content from './components/Content'
+
+// @ts-ignore
+import { Breadcrumbs } from '#components'
+// @ts-ignore
+import { Carousel } from '#components'
+// @ts-ignore
+import { NewJobs } from '#components'
+// @ts-ignore
+import { ThemesJob } from '#components'
+// @ts-ignore
+import { CategoryCarousel } from '#components'
 
 import { EmblaOptionsType } from 'embla-carousel-react'
 
@@ -25,8 +31,10 @@ interface StatePropsCloseSlider {
   setHeight: React.Dispatch<React.SetStateAction<number>>
   height: number
 }
+
 const Home: React.FC = () => {
   const [openCollapse, setOpenCollapse] = React.useState(false)
+
   const [height, setHeight] = React.useState<number>(0)
 
   const statePropsCloseSlider: StatePropsCloseSlider = {
@@ -37,13 +45,14 @@ const Home: React.FC = () => {
   }
 
   const [hideSlider, setHideSlider] = useState<boolean>(false)
+  // thay đổi width setState
+  const [windowWidth, setWindowWidth] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
-      const threshold = 600 // Ngưỡng scroll khi slider sẽ bị ẩn
-
-      // console.log('hideSlider', hideSlider)
+      // console.log('scrollPosition', scrollPosition)
+      const threshold = 316 // Ngưỡng scroll khi slider sẽ bị ẩn
 
       if (scrollPosition >= threshold) {
         setHideSlider(true)
@@ -61,24 +70,59 @@ const Home: React.FC = () => {
     }
   }, [])
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 784) {
+        console.log('setState')
+        setWindowWidth(true)
+      } else {
+        setWindowWidth(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const updateWindowWidth = () => {
+    if (window.innerWidth < 784) {
+      setWindowWidth(true)
+    } else {
+      setWindowWidth(false)
+    }
+  }
+
+  useEffect(() => {
+    updateWindowWidth()
+  }, [])
+
   return (
     <div className="home">
       <Navbar {...statePropsCloseSlider} />
       {!openCollapse && height < 70 ? (
-        <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+        <Carousel slides={SLIDES} options={OPTIONS} />
       ) : (
         <></>
       )}
       <div
         className="home__main"
         style={
-          height > 70 || hideSlider ? { marginTop: `${height + 255}px` } : {}
+          height > 70 || (hideSlider && !windowWidth)
+            ? { marginTop: `${height + 255}px` }
+            : { marginTop: 0 }
         }
       >
-        <CategoryCarousel height={height} hideSlider={hideSlider} />
-        <BreadcrumbsCpn />
-        <Content />
-        <Content />
+        <CategoryCarousel
+          height={height}
+          hideSlider={hideSlider}
+          windowWidth={windowWidth}
+        />
+        <Breadcrumbs />
+        <NewJobs />
+        <ThemesJob />
       </div>
       <Footer />
     </div>

@@ -1,6 +1,6 @@
 import React, { lazy } from 'react'
 import Home from '.'
-import RouteProps from '../../../routes'
+import RouteProps from '../../../pages/routes'
 
 interface Props {
   path: string

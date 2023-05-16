@@ -1,5 +1,11 @@
 import styled from '@emotion/styled'
-import { colors } from '@mui/material'
+
+import '../../scss/_mixins.scss'
+import breakpoints from '../../scss/breakpoints'
+
+const { mobile, tablet, desktop, laptop, largeDesktop } = breakpoints
+
+// import { colors } from '@mui/material'
 
 export const accent = {
   color: 'black',
@@ -31,7 +37,7 @@ export const Left = styled('div')({
   display: 'flex',
   alignItems: 'center',
   height: '70px',
-  justifyContent: "space-between"
+  justifyContent: 'space-between',
 })
 
 export const SearchContainer = styled('div')({
@@ -51,9 +57,8 @@ export const SearchContainer = styled('div')({
   '&:hover': {
     background: '#e8f5ff',
   },
-  backgroundColor: "#F3F8FB",
-  height: 55
-
+  backgroundColor: '#F3F8FB',
+  height: 55,
 })
 
 export const Input = styled.input({
@@ -142,22 +147,63 @@ export const NavFilter = styled('div')({
   paddingBottom: '12px',
 })
 
-export const ChoosesCarreer = styled('div')({
+export const ChoosesCarreer = styled('div')(({ theme }) => ({
   border: '1px solid #ccc',
-  minWidth: '260px',
+  width: '260px',
   padding: '8px',
   borderRadius: '8px',
   display: 'flex',
   alignItems: 'center',
   cursor: 'pointer',
   position: 'relative',
-})
+
+  //  Additional styles for screens with a maximum width of 768px */
+  [`@media (max-width: ${mobile})`]: {
+    /* Additional styles for screens with a maximum width of the specified breakpoint */
+  },
+
+  [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
+    width: '220px',
+
+    /* Additional styles for screens with a maximum width of the specified breakpoint */
+  },
+
+  [`@media (min-width: ${tablet}) and (max-width: ${laptop})`]: {
+    width: '260px',
+    gap: '12px',
+
+    /* Additional styles for screens with a maximum width of the specified breakpoint */
+  },
+
+  [`@media (min-width: ${laptop}) and (max-width: ${desktop})`]: {
+    width: '300px',
+
+    /* Additional styles for screens with a maximum width of the specified breakpoint */
+  },
+
+  [`@media (min-width: ${desktop}) and (max-width: ${largeDesktop})`]: {
+    width: '280px',
+
+    /* Additional styles for screens with a maximum width of the specified breakpoint */
+  },
+
+  [`@media (min-width: ${largeDesktop})`]: {
+    width: '300px',
+
+    /* Additional styles for screens with a maximum width of the specified breakpoint */
+  },
+}))
 
 export const WrapChooseLocation = styled('div')({
   display: 'flex',
   alignItems: 'center',
   cursor: 'pointer',
   position: 'relative',
+  justifyContent: 'space-between',
+  width: '100%',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
 })
 
 export const SubNavChoosesCarreer = styled('div')({
@@ -165,7 +211,7 @@ export const SubNavChoosesCarreer = styled('div')({
   top: '100%',
   background: '#ccc',
   padding: '12px 24px',
-  minWidth: '360px',
+  // minWidth: '360px',
   borderRadius: '12px',
   maxHeight: '400px',
   overflow: 'hidden',
@@ -191,5 +237,19 @@ export const Language = styled.span({
 export const hoverButton = {
   '&:hover': {
     background: '$primary',
+  },
+}
+
+export const collapseCssFilter = {
+  width: '100%',
+  boxSizing: 'border-box',
+  borderTop: '1px solid #ccc',
+  padding: '0 180px',
+  '@media (max-width: 1200px)': {
+    padding: 0,
+  },
+
+  '@media (max-width: 784px)': {
+    display: 'none',
   },
 }

@@ -8,27 +8,14 @@ import { Logo } from '#components'
 import { SearchIcon } from '#components'
 // @ts-ignore
 
-
-import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined'
+// import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined'
 
 import { Collapse } from '@mui/material'
 // import styled from '@emotion/styled'
 import './style.scss'
 
-// import Badge from '@mui/material/Badge'
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import ButtonGroup from '@mui/material/ButtonGroup'
-import ExpandLess from '@mui/icons-material/ExpandLess'
-import ExpandMore from '@mui/icons-material/ExpandMore'
-import ListItemText from '@mui/material/ListItemText'
-// @ts-ignore
-import { EditIcon } from '#components'
-import Slider from '@mui/material/Slider'
-
 
 // import icon
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
@@ -39,14 +26,21 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined'
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined'
 import CloseIcon from '@mui/icons-material/Close'
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import {
   FormOutlined,
   UserOutlined,
   RightOutlined,
-  BarsOutlined
-} from '@ant-design/icons';
+  BarsOutlined,
+} from '@ant-design/icons'
 
-import { Avatar } from 'antd';
+// import component
+import SalaryFilterSubnav from './components/SalaryFilterSubnav'
+import PositionFilterSubnav from './components/PositionFilterSubnav'
+import CareerFilterSubnav from './components/CareerFilterSubnav'
+
+import { Avatar } from 'antd'
 
 import {
   Container,
@@ -55,7 +49,6 @@ import {
   Left,
   Right,
   Center,
-  ItemCenter,
   NavSearch,
   InputSearh,
   NavSearchButton,
@@ -63,23 +56,22 @@ import {
   NavFilter,
   ChoosesCarreer,
   WrapChooseLocation,
-  // SubNavChoosesCarreer,
-  collapse,
+  collapseCssFilter,
 } from './Css'
-
-import { dataLocation, locationProp, careerProp, datacareer } from './data'
 
 const buttons = [
   <button className="btn btn__post">
-    <FormOutlined style={{ color: "white" }} />
-    <span style={{ marginLeft: 10, color: "white" }}>Đăng bài</span>
+    <FormOutlined style={{ color: 'white' }} />
+    <span style={{ marginLeft: 10, color: 'white' }}>Đăng bài</span>
   </button>,
   <div className="actions-login">
     <button className="btn btn__login">
-      <div style={{ display: "flex" }}>
+      <div style={{ display: 'flex' }}>
         <div className="login__avatar">
-          <Avatar style={{ backgroundColor: '#0D99FF' }} icon={<UserOutlined />} />
-
+          <Avatar
+            style={{ backgroundColor: '#0D99FF' }}
+            icon={<UserOutlined />}
+          />
         </div>
         <div className="login__center">
           <span>Đăng nhập</span>
@@ -89,132 +81,32 @@ const buttons = [
         <RightOutlined />
       </div>
     </button>
-
-  </div>
-  ,
+  </div>,
 ]
 
-
-// const preventDefault = (event: React.SyntheticEvent) => event.preventDefault()
-
-// const dataLocation: locationProp[] = [
-//   {
-//     id: '1',
-//     city: 'Thành Phố Hồ Chí Minh',
-//     district: [
-//       'Quận 1',
-//       'Quận 2',
-//       'Quận 3',
-//       'Quận 4',
-//       'Quận 5',
-//       'Quận 6',
-//       'Quận 7',
-//       'Quận 8',
-//       'Quận 9',
-//       'Quận 10',
-//       'Quận 11',
-//       'Quận 12',
-//       'Tân Bình',
-//       'Tân Phú',
-//       'Phú Nhuận',
-//     ],
-//   },
-//   {
-//     id: '1',
-//     city: 'Hà Nội',
-//     district: [
-//       'Quận 1',
-//       'Quận 2',
-//       'Quận 3',
-//       'Quận 4',
-//       'Quận 5',
-//       'Quận 6',
-//       'Quận 7',
-//       'Quận 8',
-//       'Quận 9',
-//       'Quận 10',
-//       'Quận 11',
-//       'Quận 12',
-//       'Tân Bình',
-//       'Tân Phú',
-//       'Phú Nhuận',
-//     ],
-//   },
-//   {
-//     id: '1',
-//     city: 'Bình Dương',
-//     district: [
-//       'Quận 1',
-//       'Quận 2',
-//       'Quận 3',
-//       'Quận 4',
-//       'Quận 5',
-//       'Quận 6',
-//       'Quận 7',
-//       'Quận 8',
-//       'Quận 9',
-//       'Quận 10',
-//       'Quận 11',
-//       'Quận 12',
-//       'Tân Bình',
-//       'Tân Phú',
-//       'Phú Nhuận',
-//     ],
-//   },
-// ]
 interface propsCloseSlider {
   openCollapse: boolean
   setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
   setHeight: React.Dispatch<React.SetStateAction<number>>
-  height: number
+  // height: number
 }
 
 const Navbar: React.FC<propsCloseSlider> = (props) => {
-  const { openCollapse, setOpenCollapse, setHeight, height } = props
-  // console.log(openCollapse)
-
-  // const [hidenNavPost, setHiddenNavPost] = useState('')
-  // const handleNavPost = () => {
-  //   if (!hidenNavPost) {
-  //     setHiddenNavPost('hidenNavPost')
-  //     document.body.style.overflow = 'hidden'
-  //   } else {
-  //     setHiddenNavPost('')
-  //     document.body.style.overflow = 'scroll'
-  //   }
-  // }
-  const [openSubJob, setOpenSubJob] = React.useState(false)
-  const [openSubHistory, setOpenSubHistory] = React.useState(false)
-  const [openLogin, setOpenLogin] = React.useState(false)
-  // const [openCollapse, setOpenCollapse] = React.useState(false)
+  const { openCollapse, setOpenCollapse, setHeight } = props
+  const [salary, setSalary] = React.useState<number[]>([])
   const [openLocation, setOpenLocation] = React.useState(false)
   const [openCareer, setOpenCareer] = React.useState(false)
   const [openSalary, setOpenSalary] = React.useState(false)
   const [showTap, setshowTap] = React.useState(false)
-
-
-
+  // thay đổi width setState
+  const [windowWidth, setWindowWidth] = useState(false)
   // handle show tap on screen mobile
   const handleTap = () => {
     setshowTap(!showTap)
   }
 
-  const handleClickLogin = () => {
-    setOpenLogin(!openLogin)
-  }
-
   const handleClickInput = () => {
     setOpenCollapse(!openCollapse)
-  }
-
-  const handleClickArrowJob = () => {
-    if (!openSubJob) return setOpenSubJob(true)
-    setOpenSubJob(false)
-  }
-
-  const handleClickArrowHistory = () => {
-    if (!openSubHistory) return setOpenSubHistory(true)
-    setOpenSubHistory(false)
   }
 
   const handleClickArrowLocation = (e: any) => {
@@ -251,88 +143,15 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       setOpenSalary(false)
     }
   }
-  // event change salary
-  function valuetext(value: number) {
-    return `${value}`
-  }
-
-  const [value, setValue] = React.useState<number[]>([0, 100000000])
-  const [salary, setSalary] = React.useState<number[]>([])
-
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[])
-  }
-
-  function handleClickAddSalary() {
-    // setOpenSalary(false)
-
-    setSalary(value)
-  }
-
-  // event checkboxPosition
-
-  const [checkedSaveCheckboxPositon, setCheckedSaveCheckboxPositon] = useState<
-    string[]
-  >([])
-  const [checkedSaveCheckboxCareer, setCheckedSaveCheckboxCareer] = useState<
-    string[]
-  >([])
 
   const [position, setPosition] = React.useState<string[]>([])
   const [carreer, setCareer] = React.useState<string[]>([])
 
-  // xử lý khi có checked vào checkbox position thì nó lưu nó vào checkedSaveCheckboxPositon
-  const handleOnChangeCheckboxPosition = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const currentValue = e.target.value
-
-    // Nếu phần tử đã có trong mảng, loại bỏ nó
-    if (checkedSaveCheckboxPositon.includes(currentValue)) {
-      setCheckedSaveCheckboxPositon((prevState) =>
-        prevState.filter((value) => value !== currentValue)
-      )
-    }
-    // Nếu phần tử chưa có trong mảng, thêm vào
-    else {
-      setCheckedSaveCheckboxPositon((prevState) => [...prevState, currentValue])
-    }
-  }
-
-  const handleOnChangeCheckboxCareer = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const currentValue = e.target.value
-    console.log(currentValue)
-
-    // Nếu phần tử đã có trong mảng, loại bỏ nó
-    if (checkedSaveCheckboxCareer.includes(currentValue)) {
-      setCheckedSaveCheckboxCareer((prevState) =>
-        prevState.filter((value) => value !== currentValue)
-      )
-    }
-    // Nếu phần tử chưa có trong mảng, thêm vào
-    else {
-      setCheckedSaveCheckboxCareer((prevState) => [...prevState, currentValue])
-    }
-  }
-
   // áp dụng chọn địa điểm
-  const handleClickCheckboxPosition = () => {
-    setPosition(checkedSaveCheckboxPositon)
-  }
-
-  // áp dụng chọn ngành
-  const handleClickCheckboxCareer = () => {
-    setCareer(checkedSaveCheckboxPositon)
-  }
 
   // event career
   useEffect(() => {
     const handleClickCloseTabLocation = (event: any) => {
-      // console.log(document.querySelector(`.nav`)?.clientHeight)
       event.preventDefault()
 
       if (
@@ -354,16 +173,34 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const handleCollapseEntered = () => {
     if (ref.current) {
       const height = ref.current.clientHeight
+
       setHeight(height)
     }
   }
 
   const handleCollapseExited = () => {
     if (ref.current) {
-      const height = ref.current.clientHeight
       setHeight(0)
     }
   }
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1200) {
+        setWindowWidth(true)
+      } else {
+        setWindowWidth(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  console.log(windowWidth)
 
   return (
     <Container className="nav" ref={ref}>
@@ -372,7 +209,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <Logo />
           <SearchContainer onClick={handleClickInput}>
             {/* <Input placeholder="Search" /> */}
-            <div className='div-search'>
+            <div className="div-search">
               Nhập công việc mà bạn muốn tìm kiếm...
             </div>
 
@@ -384,10 +221,10 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             />
           </SearchContainer>
         </Left>
-        <Center className='div-nav-center'>
+        <Center className="div-nav-center">
           <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
         </Center>
-        <Right className='div-nav-right' >
+        <Right className="div-nav-right">
           {/* <Button
             variant="contained"
             startIcon={<AdsClickIcon />}
@@ -412,9 +249,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               },
             }}
           >
-            <ButtonGroup sx={{ margin: '0' }}>
-              {buttons}
-            </ButtonGroup>
+            <ButtonGroup sx={{ margin: '0' }}>{buttons}</ButtonGroup>
           </Box>
         </Right>
       </Wrapper>
@@ -424,13 +259,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         unmountOnExit
         onEnter={handleCollapseEntered}
         onExited={handleCollapseExited}
-        sx={{
-          // backgroundColor: '#ccc',
-          width: '100%',
-          boxSizing: 'border-box',
-          borderTop: '1px solid #ccc',
-          padding: '0 180px',
-        }}
+        sx={collapseCssFilter}
       >
         <NavSearch>
           <InputSearh placeholder="Tên công việc, vị trí bạn muốn ứng tuyển..." />
@@ -453,30 +282,55 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               onClick={handleClickArrowLocation}
               className="choose-locations"
             >
-              <LocationOnOutlinedIcon
-                sx={{ marginRight: '8px', overflow: 'hidden' }}
-              />
               <div
                 style={{
-                  width: '260px',
+                  // width: '260px',
                   display: 'flex',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                   overflowX: 'hidden',
                 }}
               >
-                {
-                  position.length === 0
-                    ? 'Chọn địa điểm'
-                    : position.map((v, i) => (
+                <LocationOnOutlinedIcon
+                  sx={{ marginRight: '8px', overflow: 'hidden' }}
+                />
+                {position.length === 0 ? (
+                  <span
+                    style={{
+                      padding: '4px 8px',
+                    }}
+                  >
+                    Chọn địa điểm
+                  </span>
+                ) : position.length <= 2 ? (
+                  position.map((v, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        padding: '4px 8px',
+                        background: '#ccc',
+                        borderRadius: '12px',
+                        textAlign: 'center',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        fontSize: '12px',
+                        alignItems: 'center',
+                        marginRight: '4px',
+                      }}
+                    >
+                      {`${v}`}
+                      <CloseIcon sx={{ fontSize: '20px' }} />
+                    </span>
+                  ))
+                ) : (
+                  <>
+                    {position.slice(0, windowWidth ? 1 : 2).map((v, i) => (
                       <span
                         key={i}
                         style={{
                           padding: '4px 8px',
                           background: '#ccc',
                           borderRadius: '12px',
-                          // maxWidth: '120px',
-                          // minWidth: '90px',
                           textAlign: 'center',
                           display: 'flex',
                           justifyContent: 'space-between',
@@ -488,10 +342,24 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                         {`${v}`}
                         <CloseIcon sx={{ fontSize: '20px' }} />
                       </span>
-                    ))
-
-                  // `${position[0]} - ${position[1]} - ${position[2]}`
-                }
+                    ))}
+                    <span
+                      style={{
+                        padding: '2px',
+                        background: '#ccc',
+                        borderRadius: '50%',
+                        textAlign: 'center',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        fontSize: '12px',
+                        alignItems: 'center',
+                        marginRight: '12px',
+                      }}
+                    >
+                      <MoreHorizIcon />
+                    </span>
+                  </>
+                )}
               </div>
               {openLocation ? (
                 <KeyboardArrowDownOutlinedIcon />
@@ -499,158 +367,33 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                 <KeyboardArrowUpOutlinedIcon />
               )}
             </WrapChooseLocation>
-            <Collapse
-              in={openLocation}
-              timeout="auto"
-              unmountOnExit
-              sx={{
-                position: 'absolute',
-                top: '100%',
-                background: '#fff',
-                // padding: '12px 24px',
-                marginTop: '24px',
-                minWidth: '400px',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                boxShadow: '1px 1px 5px #000',
-                height: '400px',
-                zIndex: 1,
-              }}
-              className="subnav-chooses__carreer"
-              onClick={(e: any) => e.stopPropagation()}
-            >
-              <h3 style={{ padding: '12px 24px', textAlign: 'center' }}>
-                Địa điểm
-              </h3>
-
-              <ul
-                className="list-locations"
-                style={{
-                  height: '300px',
-                  borderTop: '1px solid #ccc',
-                  borderBottom: '1px solid #ccc',
-                  overflowY: 'scroll',
-                  margin: '0 24px',
-                }}
-              >
-                {dataLocation.map((location: locationProp, index1) => (
-                  <li
-                    key={index1}
-                    style={{
-                      padding: '4px 0 24px',
-                      listStyle: 'none',
-                    }}
-                    className="list-location"
-                  >
-                    <h4
-                      style={{
-                        padding: '6px 0',
-                        borderBottom: '1px solid #ccc',
-                        color: '#1b87f5 ',
-                      }}
-                    >
-                      {location.city}
-                    </h4>
-                    {location.district.map((name: string, index2) => (
-                      <label
-                        key={index2}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '6px',
-                          borderBottom: '1px solid #ccc',
-                        }}
-                        htmlFor={name}
-                      >
-                        {name}
-                        <input
-                          type="checkbox"
-                          style={{
-                            width: '20px',
-                            height: '20px',
-                            marginRight: '4px',
-                          }}
-                          id={name}
-                          value={name}
-                          onChange={(e) =>
-                            handleOnChangeCheckboxPosition(index1, e)
-                          }
-                          checked={
-                            checkedSaveCheckboxPositon.includes(name)
-                              ? true
-                              : false
-                          }
-                        />
-                      </label>
-                    ))}
-                  </li>
-                ))}
-              </ul>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  margin: '0px 24px',
-                  padding: '24px 0',
-                  gap: '10px',
-                  flexDirection: 'row',
-                }}
-              >
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    justifyContent: 'center',
-                    padding: '12px 24px',
-                    width: '108px',
-                    height: '48px',
-                    borderRadius: '10px',
-                    outline: 'none',
-                    border: 'none',
-                  }}
-                >
-                  Huỷ
-                </button>
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    justifyContent: 'center',
-                    padding: '12px 24px',
-                    width: '108px',
-                    height: '48px',
-                    background: '#0D99FF',
-                    borderRadius: '10px',
-                    outline: 'none',
-                    border: 'none',
-                    color: 'white',
-                  }}
-                  onClick={handleClickCheckboxPosition}
-                >
-                  Áp dụng
-                </button>
-              </div>
-            </Collapse>
+            <PositionFilterSubnav
+              openLocation={openLocation}
+              setPosition={setPosition}
+            />
           </ChoosesCarreer>
           <ChoosesCarreer>
             <WrapChooseLocation onClick={handleClickArrowCarreer}>
-              <BusinessCenterOutlinedIcon sx={{ marginRight: '8px' }} />
               <div
                 style={{
-                  width: '260px',
+                  width: '100%',
                   display: 'flex',
-                  justifyContent: 'flex-start',
                   alignItems: 'center',
                   overflowX: 'hidden',
                 }}
               >
+                <BusinessCenterOutlinedIcon sx={{ marginRight: '8px' }} />
                 {
-                  carreer.length === 0
-                    ? 'Chọn ngành nghề'
-                    : carreer.map((v, i) => (
+                  carreer.length === 0 ? (
+                    <span
+                      style={{
+                        padding: '4px 8px',
+                      }}
+                    >
+                      Chọn ngành nghề
+                    </span>
+                  ) : carreer.length <= 2 ? (
+                    carreer.map((v, i) => (
                       <span
                         key={i}
                         style={{
@@ -671,10 +414,49 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                         <CloseIcon sx={{ fontSize: '20px' }} />
                       </span>
                     ))
+                  ) : (
+                    <>
+                      {carreer.slice(0, 2).map((v, i) => (
+                        <span
+                          key={i}
+                          style={{
+                            padding: '4px 8px',
+                            background: '#ccc',
+                            borderRadius: '12px',
+                            textAlign: 'center',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            fontSize: '12px',
+                            alignItems: 'center',
+                            marginRight: '12px',
+                          }}
+                        >
+                          {`${v}`}
+                          <CloseIcon sx={{ fontSize: '20px' }} />
+                        </span>
+                      ))}
+                      <span
+                        style={{
+                          padding: '2px',
+                          background: '#ccc',
+                          borderRadius: '12px',
+                          textAlign: 'center',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          fontSize: '12px',
+                          alignItems: 'center',
+                          marginRight: '12px',
+                        }}
+                      >
+                        <MoreHorizIcon />
+                      </span>
+                    </>
+                  )
 
                   // `${position[0]} - ${position[1]} - ${position[2]}`
                 }
               </div>
+
               {openCareer ? (
                 <KeyboardArrowDownOutlinedIcon />
               ) : (
@@ -682,146 +464,19 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               )}
             </WrapChooseLocation>
 
-            <Collapse
-              in={openCareer}
-              timeout="auto"
-              unmountOnExit
-              sx={{
-                position: 'absolute',
-                top: '100%',
-                background: '#fff',
-                // padding: '12px 24px',
-                marginTop: '24px',
-                minWidth: '400px',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                boxShadow: '1px 1px 5px #000',
-                height: '400px',
-                zIndex: 1,
-              }}
-              className="subnav-chooses__carreer"
-              onClick={(e: any) => e.stopPropagation()}
-            >
-              <h3 style={{ padding: '12px 24px', textAlign: 'center' }}>
-                Địa điểm
-              </h3>
-
-              <ul
-                className="list-locations"
-                style={{
-                  height: '300px',
-                  borderTop: '1px solid #ccc',
-                  borderBottom: '1px solid #ccc',
-                  overflowY: 'scroll',
-                  margin: '0 24px',
-                }}
-              >
-                {datacareer.map((careers: careerProp, index1) => (
-                  <li
-                    key={index1}
-                    style={{
-                      padding: '4px 0 24px',
-                      listStyle: 'none',
-                    }}
-                    className="list-location"
-                  >
-                    <h4
-                      style={{
-                        padding: '6px 0',
-                        borderBottom: '1px solid #ccc',
-                        color: '#1b87f5 ',
-                      }}
-                    >
-                      {careers.career}
-                    </h4>
-                    {careers.jobs.map((name: string, index2) => (
-                      <label
-                        key={index2}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '6px',
-                          borderBottom: '1px solid #ccc',
-                        }}
-                        htmlFor={name}
-                      >
-                        {name}
-                        <input
-                          type="checkbox"
-                          style={{
-                            width: '20px',
-                            height: '20px',
-                            marginRight: '4px',
-                          }}
-                          id={name}
-                          value={name}
-                          onChange={(e) =>
-                            handleOnChangeCheckboxCareer(index1, e)
-                          }
-                          checked={
-                            checkedSaveCheckboxPositon.includes(name)
-                              ? true
-                              : false
-                          }
-                        />
-                      </label>
-                    ))}
-                  </li>
-                ))}
-              </ul>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  margin: '0px 24px',
-                  padding: '24px 0',
-                  gap: '10px',
-                  flexDirection: 'row',
-                }}
-              >
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    justifyContent: 'center',
-                    padding: '12px 24px',
-                    width: '108px',
-                    height: '48px',
-                    borderRadius: '10px',
-                    outline: 'none',
-                    border: 'none',
-                  }}
-                >
-                  Huỷ
-                </button>
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    justifyContent: 'center',
-                    padding: '12px 24px',
-                    width: '108px',
-                    height: '48px',
-                    background: '#0D99FF',
-                    borderRadius: '10px',
-                    outline: 'none',
-                    border: 'none',
-                    color: 'white',
-                  }}
-                  onClick={handleClickCheckboxCareer}
-                >
-                  Áp dụng
-                </button>
-              </div>
-            </Collapse>
+            <CareerFilterSubnav setCareer={setCareer} openCareer={openCareer} />
           </ChoosesCarreer>
           <ChoosesCarreer>
             <WrapChooseLocation onClick={handleClickArrowSalary}>
-              <AttachMoneyOutlinedIcon sx={{ marginRight: '8px' }} />
-              <span style={{ width: '260px' }}>
+              <span
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '4px 8px',
+                }}
+              >
+                <AttachMoneyOutlinedIcon sx={{ marginRight: '8px' }} />
                 {salary.length === 0
                   ? 'Chọn mức lương'
                   : `${salary[0].toLocaleString()} - ${salary[1].toLocaleString()}`}
@@ -834,109 +489,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             </WrapChooseLocation>
           </ChoosesCarreer>
         </NavFilter>
-        <Collapse
-          in={openSalary}
-          timeout="auto"
-          unmountOnExit
-          sx={{
-            background: '#fff',
-            minWidth: '100%',
-            overflow: 'hidden',
-          }}
-          className="subnav-chooses-__carreer"
-        >
-          <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              paddingTop: '12px',
-            }}
-          >
-            <div className="rangeSalary" style={{ display: 'flex' }}>
-              <p style={{ flex: '3', textAlign: 'center' }}>
-                Lương từ
-                <span style={{ color: 'black', fontWeight: '600' }}>
-                  {' '}
-                  {value[0].toLocaleString()}{' '}
-                </span>
-                đến
-                <span style={{ color: 'black', fontWeight: '600' }}>
-                  {' '}
-                  {value[1].toLocaleString()}{' '}
-                </span>
-              </p>
-              <div className="wrapRadiSalary" style={{ flex: '1' }}>
-                <input type="radio" id="html" />
-                <label htmlFor="html" style={{ paddingLeft: '8px' }}>
-                  VND
-                </label>
-                <input type="radio" id="css" />
-                <label htmlFor="css" style={{ paddingLeft: '8px' }}>
-                  USD
-                </label>
-              </div>
-            </div>
-            <Slider
-              getAriaLabel={() => 'Minimum distance'}
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              getAriaValueText={valuetext}
-              min={0}
-              max={100000000}
-              step={1000000}
-              sx={{ width: '50%', margin: '0 auto' }}
-            />
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                margin: '0px 24px',
-                padding: '24px 0',
-                gap: '10px',
-                flexDirection: 'row',
-              }}
-            >
-              <button
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  justifyContent: 'center',
-                  padding: '12px 24px',
-                  width: '108px',
-                  height: '48px',
-                  borderRadius: '10px',
-                  outline: 'none',
-                  border: 'none',
-                }}
-              >
-                Huỷ
-              </button>
-              <button
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  justifyContent: 'center',
-                  padding: '12px 24px',
-                  width: '108px',
-                  height: '48px',
-                  background: '#0D99FF',
-                  borderRadius: '10px',
-                  outline: 'none',
-                  color: 'white',
-                  border: 'none',
-                }}
-                onClick={handleClickAddSalary}
-              >
-                Áp dụng
-              </button>
-            </div>
-          </Box>
-        </Collapse>
+        {/* filter salary */}
+        <SalaryFilterSubnav setSalary={setSalary} openSalary={openSalary} />
       </Collapse>
     </Container>
   )
