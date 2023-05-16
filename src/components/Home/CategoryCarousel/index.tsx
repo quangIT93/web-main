@@ -91,7 +91,7 @@ const CategoryCarousel: React.FC<PropState> = ({
                 display: 'flex',
                 alignItems: 'flex-start',
                 justifyContent: 'flex-start',
-                margin: 0,
+                marginTop: '12px',
                 maxWidth: '120px',
               }}
             />

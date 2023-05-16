@@ -7,7 +7,7 @@ import { Logo } from '#components'
 // @ts-ignore
 import { SearchIcon } from '#components'
 // @ts-ignore
-
+import { ModalFilter } from '#components'
 // import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined'
 
 import { Collapse } from '@mui/material'
@@ -26,8 +26,8 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined'
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined'
 import CloseIcon from '@mui/icons-material/Close'
-
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+
 import {
   FormOutlined,
   UserOutlined,
@@ -105,11 +105,14 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     setshowTap(!showTap)
   }
 
+  //  MOdalFilter
+  const [openModalFilter, setOpenModalFilter] = React.useState(false)
+
   const handleClickInput = () => {
     setOpenCollapse(!openCollapse)
   }
 
-  const handleClickArrowLocation = (e: any) => {
+  const handleClickArrowLocation = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
 
     if (
@@ -200,7 +203,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     }
   }, [])
 
-  console.log(windowWidth)
+  // handle Show modal Filter
+  const handleShowModalFilter = () => {
+    if (!openModalFilter) return setOpenModalFilter(true)
+    setOpenModalFilter(false)
+  }
 
   return (
     <Container className="nav" ref={ref}>
@@ -264,13 +271,27 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         <NavSearch>
           <InputSearh placeholder="Tên công việc, vị trí bạn muốn ứng tuyển..." />
           <NavSearchButton>
-            <SearchButton style={{ backgroundColor: '#48a5f2', color: '#fff' }}>
+            <SearchButton
+              style={{
+                backgroundColor: '#48a5f2',
+                color: '#fff',
+                cursor: 'pointer',
+              }}
+            >
               <SearchOutlinedIcon
-                sx={{ marginRight: '2px', fontSize: '18px', color: '#fff' }}
+                sx={{
+                  marginRight: '2px',
+                  fontSize: '18px',
+                  color: '#fff',
+                  cursor: 'pointer',
+                }}
               />
               Tìm kiếm
             </SearchButton>
-            <SearchButton>
+            <SearchButton
+              style={{ cursor: 'pointer' }}
+              onClick={handleShowModalFilter}
+            >
               <TuneOutlinedIcon sx={{ marginRight: '2px', fontSize: '18px' }} />
               Lọc
             </SearchButton>
@@ -492,6 +513,16 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         {/* filter salary */}
         <SalaryFilterSubnav setSalary={setSalary} openSalary={openSalary} />
       </Collapse>
+      <ModalFilter
+        openModalFilter={openModalFilter}
+        setOpenModalFilter={setOpenModalFilter}
+        setOpenLocation={setOpenLocation}
+        openLocation={openLocation}
+        setPosition={setPosition}
+        position={position}
+        handleClickArrowLocation={handleClickArrowLocation}
+        windowWidth={windowWidth}
+      />
     </Container>
   )
 }

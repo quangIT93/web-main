@@ -121,10 +121,11 @@ const Home: React.FC = () => {
           windowWidth={windowWidth}
         />
         <Breadcrumbs />
+
         <NewJobs />
         <ThemesJob />
       </div>
-      <Footer />
+      <Footer windowWidth={windowWidth} />
     </div>
   )
 }
