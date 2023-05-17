@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import breakpoints from '../../scss/breakpoints'
+
+import { Link } from 'react-router-dom'
+
+const { mobile, tablet } = breakpoints
+
 const WrapFooter = styled('div')({
   position: 'fixed',
   bottom: 0,
@@ -11,6 +17,16 @@ const WrapFooter = styled('div')({
   borderTop: '1px solid #ccc',
   zIndex: '2',
   height: '36px',
+
+  [`@media (max-width: ${mobile})`]: {
+    height: '70px',
+    position: 'unset',
+  },
+
+  [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
+    position: 'unset',
+    height: '70px',
+  },
 })
 const PolicyFooter = styled('div')({
   display: 'flex',
@@ -32,11 +48,23 @@ const Visibility = styled('div')({
   left: 0,
   right: 0,
   width: '100%',
+  [`@media (max-width: ${mobile})`]: {
+    position: 'unset',
+  },
+
+  [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
+    position: 'unset',
+  },
 })
 
-const Footer = () => {
+interface PropsFooter {
+  windowWidth: boolean
+}
+
+const Footer: React.FC<PropsFooter> = (props) => {
+  const { windowWidth } = props
   const [open, setOpen] = React.useState(false)
-  const [position, setPosition] = React.useState('0')
+  // const [position, setPosition] = React.useState('0')
 
   const handleClickOpen = (
     e:
@@ -45,39 +73,35 @@ const Footer = () => {
   ) => {
     // e.isPropagationStopped()
     console.log('click', open)
-    if (!open) return setOpen(true)
-    setOpen(false)
+    if (!open && !windowWidth) {
+      return setOpen(true)
+    } else if (open && !windowWidth) {
+      setOpen(false)
+    }
   }
+
+  useEffect(() => {
+    if (windowWidth) {
+      return setOpen(true)
+    }
+  }, [])
+
+  console.log(windowWidth)
 
   return (
     <WrapFooter>
-      <PolicyFooter id="div-policy-footer" onClick={handleClickOpen}>
-        <a href="/policy">
-          <p>Chính sách sử dụng</p>
-        </a>
-        <div id="div-policy-footer-right">
-          <div style={{ flexDirection: 'row', display: 'flex' }}>
-            <p style={{ color: '#575757' }}>Tổng đài CSKH: </p>
-            <p style={{ color: '#AAAAAA', marginLeft: '5px' }}>
-              (028) 35358983
-            </p>
-            <p style={{ color: '#575757', marginLeft: '2px' }}>
-              (1.000 đồng/phút)
-            </p>
-          </div>
-          <p style={{ color: '#575757' }}>Email: neoworks.vn@gmail.com</p>
-        </div>
-      </PolicyFooter>
       <Visibility
         style={
-          open
+          open && !windowWidth
             ? {
                 transform: 'translateY(calc(-100% - 36px))',
               }
-            : {
+            : !open && !windowWidth
+            ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
+            : { transform: 'none' }
         }
       >
         <CloseOutlinedIcon
@@ -106,7 +130,10 @@ const Footer = () => {
                 marginBottom: 10,
               }}
             >
-              <img src={require('../../img/langdingPage/logoHiJob.png')} />
+              <img
+                src={require('../../img/langdingPage/logoHiJob.png')}
+                alt="ảnh bị lỗi"
+              />
             </div>
 
             <h3>Kết nối tài năng</h3>
@@ -117,11 +144,11 @@ const Footer = () => {
           </div>
           <div className="footer-center">
             <h4>Về HiJob</h4>
-            <a href="/policy#about-us">Về HiJob</a>
+            <Link to="/policy#about-us">Về HiJob</Link>
 
-            <a href="/policy#privacy-policy"> Chính sách bảo mật </a>
+            <Link to="/policy#privacy-policy"> Chính sách bảo mật </Link>
 
-            <a href="/policy#terms-of-use"> Điều khoản sử dụng </a>
+            <Link to="/policy#terms-of-use"> Điều khoản sử dụng </Link>
           </div>
           <div className="footer-right">
             <div className="right-top">
@@ -129,50 +156,82 @@ const Footer = () => {
               <div className="div-img-footer">
                 <img
                   src={require('../../img/langdingPage/QRcode-ggplay.png')}
+                  alt="ảnh bị lỗi"
                 />
                 <img
                   style={{ marginLeft: 10 }}
                   src={require('../../img/langdingPage/QRcode-appstore.png')}
+                  alt="ảnh bị lỗi"
                 />
               </div>
               <div className="div-link-app">
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+                <Link
+                  to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
                   target="_blank"
                 >
                   <img
                     id="img-gallery"
                     src={require('../../img/langdingPage/image 43.png')}
+                    alt="ảnh bị lỗi"
                   />
-                </a>
-                <a
-                  href="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+                </Link>
+                <Link
+                  to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
                   target="_blank"
                 >
-                  <img src={require('../../img/langdingPage/image 45.png')} />
-                </a>
+                  <img
+                    src={require('../../img/langdingPage/image 45.png')}
+                    alt="ảnh bị lỗi"
+                  />
+                </Link>
               </div>
             </div>
             <div className="div-socal-link">
               <h4 style={{ color: '#0D99FF' }}>LIÊN KẾT</h4>
               <div id="div-img-socal">
-                <a href="https://www.facebook.com/hijobOfficial/">
-                  <img src={require('../../img/langdingPage/imagefb.png')} />
-                </a>
-                <a href="#">
+                <Link to="https://www.facebook.com/hijobOfficial/">
+                  <img
+                    src={require('../../img/langdingPage/imagefb.png')}
+                    alt="ảnh bị lỗi"
+                  />
+                </Link>
+                <Link to="#">
                   <img
                     id="img-gallery"
                     src={require('../../img/langdingPage/imagein.png')}
+                    alt="ảnh bị lỗi"
                   />
-                </a>
-                <a href="#">
-                  <img src={require('../../img/langdingPage/imageyou.png')} />
-                </a>
+                </Link>
+                <Link to="#">
+                  <img
+                    src={require('../../img/langdingPage/imageyou.png')}
+                    alt="ảnh bị lỗi"
+                  />
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </Visibility>
+      <PolicyFooter id="div-policy-footer" onClick={handleClickOpen}>
+        <Link to="/policy">
+          <p>Chính sách sử dụng</p>
+        </Link>
+        <div id="div-policy-footer-right">
+          <div style={{ flexDirection: 'row', display: 'flex' }}>
+            <p style={{ color: '#575757' }}>Tổng đài CSKH: </p>
+            <p style={{ color: '#AAAAAA', marginLeft: '5px' }}>
+              (028) 35358983
+            </p>
+            <p style={{ color: '#575757', marginLeft: '2px' }}>
+              (1.000 đồng/phút)
+            </p>
+          </div>
+        </div>
+        <p style={{ color: '#575757', fontSize: '12px' }}>
+          Email: neoworks.vn@gmail.com
+        </p>
+      </PolicyFooter>
     </WrapFooter>
   )
 }

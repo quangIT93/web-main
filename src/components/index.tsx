@@ -8,6 +8,7 @@ export { default as Breadcrumbs } from './Home/Breadcrumbs'
 export { default as NewJobs } from './Home/NewJobs'
 export { default as ThemesJob } from './Home/ThemesJob'
 export { default as Carousel } from './Home/Carousel'
+export { default as ModalFilter } from './Home/ModalFilter'
 
 export {
   AvatarIcon,

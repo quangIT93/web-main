@@ -27,12 +27,14 @@ interface PropState {
   height: number
   hideSlider: boolean
   windowWidth: boolean
+  valueJob: number
+  onChange: (newValue: string) => void
 }
 
 // interface item category
 interface CategoryItem {
-  id: number,
-  name: string,
+  id: number
+  name: string
   default_post_image: string
   image: string
 }
@@ -41,6 +43,8 @@ const CategoryCarousel: React.FC<PropState> = ({
   height,
   hideSlider,
   windowWidth,
+  valueJob,
+  onChange,
 }) => {
   const [value, setValue] = React.useState(0)
   // const positionRef = React.useRef(0)
@@ -57,21 +61,22 @@ const CategoryCarousel: React.FC<PropState> = ({
 
   const [categories, setCategories] = React.useState<AxiosResponse | null>(null)
 
-  const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
     try {
-      setValue(newValue)
+      setValue(newValue.id)
+      onChange(newValue.name)
 
       const themeId = searchParams.get('theme-id')
       if (themeId) {
-        setSearchParams({ "theme-id": `${themeId}`, "categories-id": `${newValue == 1 ? "all" : newValue}` })
+        setSearchParams({ "theme-id": `${themeId}`, "categories-id": `${newValue.id == 1 ? "all" : newValue.id}` })
       } else {
-        setSearchParams({ "categories-id": `${newValue == 1 ? "all" : newValue}` })
+        setSearchParams({ "categories-id": `${newValue.id == 1 ? "all" : newValue.id}` })
       }
       var result
-      if (newValue == 1) {
+      if (newValue.id == 1) {
         result = await postApi.getPostNewest(null, null, null, 19)
       } else {
-        result = await postApi.getPostNewest(Number(newValue), null, null, 19)
+        result = await postApi.getPostNewest(Number(newValue.id), null, null, 19)
       }
 
 
@@ -84,10 +89,6 @@ const CategoryCarousel: React.FC<PropState> = ({
     }
   }
 
-  console.log('windowWidth', windowWidth)
-  console.log('hideSlider', hideSlider)
-  console.log('height', height)
-
   const getAllParentCategories = async () => {
     try {
       const result = await categoriesApi.getAllParentCategories()
@@ -97,8 +98,6 @@ const CategoryCarousel: React.FC<PropState> = ({
     } catch (error) {
       console.error(error)
     }
-
-
   }
   React.useEffect(() => {
     getAllParentCategories()
@@ -143,7 +142,9 @@ const CategoryCarousel: React.FC<PropState> = ({
       className="tabs"
     >
       <Tabs
-        value={value == 0 ? categories?.data[0].id : value}
+        value={value == 0 ? {
+          id: categories?.data[0].id
+        } : { id: value }}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"
@@ -157,14 +158,19 @@ const CategoryCarousel: React.FC<PropState> = ({
           return (
             <Tab
               key={index}
-              value={item.id}
-              label={<CategoryItem content={item.name} imageLink={item.image} />}
+              value={{
+                name: item.name,
+                id: item.id
+              }}
+              label={
+                <CategoryItem content={item.name} imageLink={item.image} />
+              }
               sx={{
                 color: 'black',
                 display: 'flex',
                 alignItems: 'flex-start',
                 justifyContent: 'flex-start',
-                margin: 0,
+                marginTop: '12px',
                 maxWidth: '120px',
               }}
             />

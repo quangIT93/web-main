@@ -1,0 +1,23 @@
+.choose-filter {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  .choose-filter_top {
+    display: flex;
+    justify-content: space-between;
+    button {
+      width: 100%;
+    }
+  }
+
+  .choose-filter_bottom {
+    padding: 12px 0;
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.filter-name {
+  text-align: center;
+}
