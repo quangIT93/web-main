@@ -2,6 +2,10 @@ import React from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
+import Button from '@mui/material/Button'
+
 import './style.scss'
 
 // import { categories } from './dataCategory'
@@ -21,7 +25,6 @@ import { actionCreators } from '../../../store/index'
 import { RootState } from '../../../store/reducer'
 
 import CategoryItem from './components/CategoryItem'
-
 
 interface PropState {
   height: number
@@ -54,38 +57,47 @@ const CategoryCarousel: React.FC<PropState> = ({
   const [searchParams, setSearchParams] = useSearchParams()
 
   const dispatch = useDispatch()
-  const { setPostNewest } = bindActionCreators(
-    actionCreators,
-    dispatch
-  )
+  const { setPostNewest } = bindActionCreators(actionCreators, dispatch)
 
   const [categories, setCategories] = React.useState<AxiosResponse | null>(null)
 
   const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
     try {
-      setValue(newValue.id)
-      onChange(newValue.name)
+      setOpenBackdrop(true) // Mở backdrop
+      const selectedCategory = categories?.data.find(
+        (item: any) => item.id === newValue
+      )
+      if (selectedCategory) {
+        const { id, name } = selectedCategory
+        setValue(id)
+        onChange(name)
+      }
 
       const themeId = searchParams.get('theme-id')
       if (themeId) {
-        setSearchParams({ "theme-id": `${themeId}`, "categories-id": `${newValue.id == 1 ? "all" : newValue.id}` })
+        setSearchParams({
+          'theme-id': `${themeId}`,
+          'categories-id': `${newValue == 1 ? 'all' : newValue}`,
+        })
       } else {
-        setSearchParams({ "categories-id": `${newValue.id == 1 ? "all" : newValue.id}` })
+        setSearchParams({
+          'categories-id': `${newValue == 1 ? 'all' : newValue}`,
+        })
       }
       var result
-      if (newValue.id == 1) {
+      if (newValue == 1) {
         result = await postApi.getPostNewest(null, null, null, 19)
       } else {
-        result = await postApi.getPostNewest(Number(newValue.id), null, null, 19)
+        result = await postApi.getPostNewest(Number(newValue), null, null, 19)
       }
-
-
 
       if (result) {
         setPostNewest(result)
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      setOpenBackdrop(false) // Đóng backdrop sau khi API call hoàn thành
     }
   }
 
@@ -102,6 +114,14 @@ const CategoryCarousel: React.FC<PropState> = ({
   React.useEffect(() => {
     getAllParentCategories()
   }, [])
+  console.log('valueTabs', value)
+  const [openBackdrop, setOpenBackdrop] = React.useState(false)
+  const handleClose = () => {
+    setOpenBackdrop(false)
+  }
+  const handleOpen = () => {
+    setOpenBackdrop(true)
+  }
 
   return (
     <Box
@@ -114,22 +134,22 @@ const CategoryCarousel: React.FC<PropState> = ({
           height > 60 && !windowWidth
             ? `${height + 121}px`
             : hideSlider
-              ? '71px'
-              : '',
+            ? '71px'
+            : '',
         margin:
           height > 60 && !windowWidth
             ? '0 180px'
             : hideSlider
-              ? '0 180px'
-              : '24px 0',
+            ? '0 180px'
+            : '24px 0',
         paddingTop:
           height > 60 && !windowWidth
             ? '0px'
             : height > 60 && windowWidth && !hideSlider
-              ? '71px'
-              : hideSlider
-                ? '0'
-                : '',
+            ? '71px'
+            : hideSlider
+            ? '0'
+            : '',
 
         right: 0,
         left: 0,
@@ -142,9 +162,7 @@ const CategoryCarousel: React.FC<PropState> = ({
       className="tabs"
     >
       <Tabs
-        value={value == 0 ? {
-          id: categories?.data[0].id
-        } : { id: value }}
+        value={value == 0 ? categories?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"
@@ -158,10 +176,7 @@ const CategoryCarousel: React.FC<PropState> = ({
           return (
             <Tab
               key={index}
-              value={{
-                name: item.name,
-                id: item.id
-              }}
+              value={item.id}
               label={
                 <CategoryItem content={item.name} imageLink={item.image} />
               }
@@ -177,6 +192,13 @@ const CategoryCarousel: React.FC<PropState> = ({
           )
         })}
       </Tabs>
+      <Backdrop
+        sx={{ color: '#0d99ff ', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Box>
   )
 }
