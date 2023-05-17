@@ -18,10 +18,18 @@ function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
   console.info('You clicked a breadcrumb.')
 }
 
-const BreadcrumbsCpn: React.FC = () => {
+interface PropsBreadcrums {
+  valueJob: string
+}
+
+const BreadcrumbsCpn: React.FC<PropsBreadcrums> = (props) => {
+  const { valueJob } = props
   const [open, setOpen] = React.useState(false)
 
-  const handleClick = () => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+  ) => {
+    event.isPropagationStopped()
     setOpen(!open)
   }
 
@@ -31,24 +39,6 @@ const BreadcrumbsCpn: React.FC = () => {
     setChecked(event.target.checked)
   }
   const breadcrumbs = [
-    <Link
-      underline="hover"
-      key="1"
-      color="inherit"
-      href="/"
-      onClick={handleClick}
-      sx={{
-        border: '1px solid #ccc',
-        padding: '4px 12px',
-        borderRadius: '12px',
-        '&:hover': {
-          background: '#e8f5ff',
-          textDecoration: 'none',
-        },
-      }}
-    >
-      Home
-    </Link>,
     <Typography
       key="3"
       color="text.primary"
@@ -56,11 +46,29 @@ const BreadcrumbsCpn: React.FC = () => {
       sx={{
         position: 'relative',
         cursor: 'pointer',
-        border: '1px solid #ccc',
         padding: '4px 12px',
         borderRadius: '12px',
         display: 'flex',
         alignItems: 'center',
+        border: '1px solid #0D99FF',
+        color: '#0D99FF',
+      }}
+    >
+      {valueJob}
+    </Typography>,
+    <Typography
+      key="3"
+      color="text.primary"
+      onClick={handleClick}
+      sx={{
+        position: 'relative',
+        cursor: 'pointer',
+        padding: '4px 12px',
+        borderRadius: '12px',
+        display: 'flex',
+        alignItems: 'center',
+        border: '1px solid #0D99FF',
+        color: '#0D99FF',
       }}
     >
       Tất cả
@@ -95,73 +103,7 @@ const BreadcrumbsCpn: React.FC = () => {
             alignItems: 'center',
           }}
           padding={0}
-        >
-          {/* <ul
-            className="list-locations"
-            style={{
-              height: '300px',
-              borderTop: '1px solid #ccc',
-              borderBottom: '1px solid #ccc',
-              overflowY: 'scroll',
-              margin: '0 24px',
-            }}
-          >
-            {dataLocation.map((location: locationProp, index1) => (
-              <li
-                key={index1}
-                style={{
-                  padding: '4px 0 24px',
-                  listStyle: 'none',
-                }}
-                className="list-location"
-              >
-                <h4
-                  style={{
-                    padding: '6px 0',
-                    borderBottom: '1px solid #ccc',
-                    color: '#1b87f5 ',
-                  }}
-                >
-                  {location.city}
-                </h4>
-                {location.district.map((name: string, index2) => (
-                  <label
-                    key={index2}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '6px',
-                      borderBottom: '1px solid #ccc',
-                    }}
-                    htmlFor={name}
-                  >
-                    {name}
-                    <input
-                      type="checkbox"
-                      style={{
-                        width: '20px',
-                        height: '20px',
-                        marginRight: '4px',
-                      }}
-                      id={name}
-                      value={name}
-                      onChange={(e) =>
-                        handleOnChangeCheckboxPosition(index1, e)
-                      }
-                      checked={checkedState.includes(name) ? true : false}
-                    />
-                  </label>
-                ))}
-              </li>
-            ))}
-          </ul> */}
-          <Checkbox
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ 'aria-label': 'controlled' }}
-          />
-        </Box>
+        ></Box>
       </Collapse>
     </Stack>
   )

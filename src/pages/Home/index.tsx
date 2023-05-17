@@ -37,6 +37,8 @@ const Home: React.FC = () => {
 
   const [height, setHeight] = React.useState<number>(0)
 
+  const [valueJob, setValueJob] = React.useState('Tất cả')
+
   const statePropsCloseSlider: StatePropsCloseSlider = {
     openCollapse,
     setOpenCollapse,
@@ -99,6 +101,14 @@ const Home: React.FC = () => {
     updateWindowWidth()
   }, [])
 
+  // handleChange job from category to Breadcrumbs
+  const handleChange = (newValue: string) => {
+    // Cập nhật giá trị trong thành phần cha
+    setValueJob(newValue)
+  }
+
+  console.log('setValueJob', valueJob)
+
   return (
     <div className="home">
       <Navbar {...statePropsCloseSlider} />
@@ -119,8 +129,10 @@ const Home: React.FC = () => {
           height={height}
           hideSlider={hideSlider}
           windowWidth={windowWidth}
+          valueJob={valueJob}
+          onChange={handleChange}
         />
-        <Breadcrumbs />
+        <Breadcrumbs valueJob={valueJob} />
 
         <NewJobs />
         <ThemesJob />

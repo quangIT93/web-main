@@ -148,7 +148,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   }
 
   const [position, setPosition] = React.useState<string[]>([])
-  const [carreer, setCareer] = React.useState<string[]>([])
+  const [career, setCareer] = React.useState<string[]>([])
 
   // áp dụng chọn địa điểm
 
@@ -405,7 +405,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               >
                 <BusinessCenterOutlinedIcon sx={{ marginRight: '8px' }} />
                 {
-                  carreer.length === 0 ? (
+                  career.length === 0 ? (
                     <span
                       style={{
                         padding: '4px 8px',
@@ -413,8 +413,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                     >
                       Chọn ngành nghề
                     </span>
-                  ) : carreer.length <= 2 ? (
-                    carreer.map((v, i) => (
+                  ) : career.length <= 2 ? (
+                    career.map((v, i) => (
                       <span
                         key={i}
                         style={{
@@ -437,7 +437,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                     ))
                   ) : (
                     <>
-                      {carreer.slice(0, 2).map((v, i) => (
+                      {career.slice(0, 2).map((v, i) => (
                         <span
                           key={i}
                           style={{
@@ -522,6 +522,10 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         position={position}
         handleClickArrowLocation={handleClickArrowLocation}
         windowWidth={windowWidth}
+        setCareer={setCareer}
+        career={career}
+        salary={salary}
+        setSalary={setSalary}
       />
     </Container>
   )

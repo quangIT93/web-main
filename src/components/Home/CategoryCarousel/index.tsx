@@ -14,12 +14,14 @@ interface PropState {
   height: number
   hideSlider: boolean
   windowWidth: boolean
+  valueJob: number
+  onChange: (newValue: number) => void
 }
 
 // interface item category
 interface CategoryItem {
-  id: number,
-  name: string,
+  id: number
+  name: string
   default_post_image: string
   image: string
 }
@@ -28,21 +30,14 @@ const CategoryCarousel: React.FC<PropState> = ({
   height,
   hideSlider,
   windowWidth,
+  valueJob,
+  onChange,
 }) => {
-  const [value, setValue] = React.useState(0)
-  // const positionRef = React.useRef(0)
-
-  // const {height} = height
-
   const [categories, setCategories] = React.useState<AxiosResponse | null>(null)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
+    onChange(newValue)
   }
-
-  console.log('windowWidth', windowWidth)
-  console.log('hideSlider', hideSlider)
-  console.log('height', height)
 
   const getAllParentCategories = async () => {
     try {
@@ -53,8 +48,6 @@ const CategoryCarousel: React.FC<PropState> = ({
     } catch (error) {
       console.error(error)
     }
-
-
   }
   React.useEffect(() => {
     getAllParentCategories()
@@ -71,22 +64,22 @@ const CategoryCarousel: React.FC<PropState> = ({
           height > 60 && !windowWidth
             ? `${height + 121}px`
             : hideSlider
-              ? '71px'
-              : '',
+            ? '71px'
+            : '',
         margin:
           height > 60 && !windowWidth
             ? '0 180px'
             : hideSlider
-              ? '0 180px'
-              : '24px 0',
+            ? '0 180px'
+            : '24px 0',
         paddingTop:
           height > 60 && !windowWidth
             ? '0px'
             : height > 60 && windowWidth && !hideSlider
-              ? '71px'
-              : hideSlider
-                ? '0'
-                : '',
+            ? '71px'
+            : hideSlider
+            ? '0'
+            : '',
 
         right: 0,
         left: 0,
@@ -99,7 +92,7 @@ const CategoryCarousel: React.FC<PropState> = ({
       className="tabs"
     >
       <Tabs
-        value={value == 0 ? categories?.data[0].id : value}
+        value={valueJob == 0 ? categories?.data[0].id : valueJob}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"
@@ -113,8 +106,10 @@ const CategoryCarousel: React.FC<PropState> = ({
           return (
             <Tab
               key={index}
-              value={item.id}
-              label={<CategoryItem content={item.name} imageLink={item.image} />}
+              value={item.name}
+              label={
+                <CategoryItem content={item.name} imageLink={item.image} />
+              }
               sx={{
                 color: 'black',
                 display: 'flex',
