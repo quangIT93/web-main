@@ -7,8 +7,21 @@ import './style.scss'
 // import { categories } from './dataCategory'
 import { AxiosResponse } from 'axios'
 
-import CategoryItem from './components/CategoryItem'
+// import api
+import postApi from 'api/postApi'
 import categoriesApi from '../../../api/categoriesApi'
+
+// @ts-ignore
+import { useSearchParams } from 'react-router-dom'
+
+// import redux
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../../store/index'
+import { RootState } from '../../../store/reducer'
+
+import CategoryItem from './components/CategoryItem'
+
 
 interface PropState {
   height: number
@@ -34,10 +47,41 @@ const CategoryCarousel: React.FC<PropState> = ({
 
   // const {height} = height
 
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const dispatch = useDispatch()
+  const { setPostNewest } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
+
   const [categories, setCategories] = React.useState<AxiosResponse | null>(null)
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
+  const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
+    try {
+      setValue(newValue)
+
+      const themeId = searchParams.get('theme-id')
+      if (themeId) {
+        setSearchParams({ "theme-id": `${themeId}`, "categories-id": `${newValue == 1 ? "all" : newValue}` })
+      } else {
+        setSearchParams({ "categories-id": `${newValue == 1 ? "all" : newValue}` })
+      }
+      var result
+      if (newValue == 1) {
+        result = await postApi.getPostNewest(null, null, null, 19)
+      } else {
+        result = await postApi.getPostNewest(Number(newValue), null, null, 19)
+      }
+
+
+
+      if (result) {
+        setPostNewest(result)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   console.log('windowWidth', windowWidth)

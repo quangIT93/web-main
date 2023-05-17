@@ -1,4 +1,4 @@
-import { ActionType } from "../types";
+import { ActionType } from "../../types";
 import { AxiosResponse } from "axios"
 
 export  const setPost = (data:AxiosResponse) => ({

@@ -4,17 +4,17 @@ import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import { AxiosResponse } from 'axios'
 // import api
-import themeApi from '../../../api/themesApi'
 import postApi from 'api/postApi'
+
+
+// @ts-ignore
+import { useSearchParams } from 'react-router-dom'
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../../store/index'
 import { RootState } from '../../../store/reducer'
-
-// IMPORT dataimg
-import { dataImageThemesJob } from './dataImageThemesJob'
 
 import './style.scss'
 
@@ -25,43 +25,41 @@ interface ItemTheme {
   number_of_posts: Number
 }
 
-const ListCompanyCarousel: React.FC = () => {
+interface PropsThemesType {
+  setThemeId?: (value: number) => void
+  listTheme: AxiosResponse | null
+}
+const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   const [value, setValue] = React.useState<Number>(0)
-  const [listThemes, setListThemes] = React.useState<AxiosResponse | null>(null)
+
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const dispatch = useDispatch()
   const { setPostByTheme } = bindActionCreators(
     actionCreators,
     dispatch
   )
-
+  // get post by theme id when click theme item
   const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
     try {
       setValue(newValue)
+      const categoryId = searchParams.get('categories-id')
+      if (categoryId) {
+        setSearchParams({ "theme-id": `${newValue}`, "categories-id": `${Number(categoryId) == 1 ? "all" : categoryId}` })
+      } else {
+        setSearchParams({ "theme-id": `${newValue}` })
+      }
+
       const result = await postApi.getPostByThemeId(newValue, 19, null)
       if (result) {
         setPostByTheme(result)
       }
-
     } catch (error) {
       console.log(error)
     }
   }
-
-  const getThemesEnable = async () => {
-    try {
-      const result = await themeApi.getThemesEnable()
-      if (result) {
-        setListThemes(result)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-
-
-  }
   React.useEffect(() => {
-    getThemesEnable()
+
   }, [])
   return (
     <Box
@@ -73,7 +71,7 @@ const ListCompanyCarousel: React.FC = () => {
       }}
     >
       <Tabs
-        value={value == 0 ? listThemes?.data[0].id : value}
+        value={value == 0 ? listTheme?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"
@@ -81,7 +79,7 @@ const ListCompanyCarousel: React.FC = () => {
         aria-label="simple tabs example"
         className="tabThemeJob"
       >
-        {listThemes?.data.map((item: ItemTheme, index: number) => (
+        {listTheme?.data.map((item: ItemTheme, index: number) => (
           <Tab
             key={index}
 

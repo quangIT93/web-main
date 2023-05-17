@@ -1,4 +1,4 @@
-import { ActionType , PostTypes } from "../types"
+import { ActionType , PostTypes } from "../../types"
 import { AxiosResponse } from "axios"
 
 const initialState ={

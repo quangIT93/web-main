@@ -16,12 +16,12 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ content,
     imgBackground, }) => {
 
     return (
-        <div>
+        <div style={{ borderBottom: "0.5px solid #AAAAAA", width: "95%", paddingBottom: 10 }}>
             <div className='div-item-suggest'>
                 <img src={imgBackground} />
                 <div className='title-job-suggest' >
-                    <h4>{content}</h4>
-                    <p style={{ color: "#575757" }}>{describe}</p>
+                    <h5>{content}</h5>
+                    <p style={{ color: "#575757", fontSize: 13 }}>{describe}</p>
                 </div>
             </div>
 

@@ -97,8 +97,9 @@ const Detail: React.FC = () => {
       if (result) {
         setPost(result)
       }
-      const list = post?.data.categories.map((category: any) => category.child_category_id)
-      const postNewest = await postApi.getPostNewest(result?.data.categories[0].parent_category_id, list, null, 5)
+      const list = result?.data.categories.map((category: any) => category.child_category_id)
+      console.log("child", list)
+      const postNewest = await postApi.getPostNewest(result?.data.categories[0].parent_category_id, list, null, 6)
       setPostNewest(postNewest)
     } catch (error) {
       console.error(error)
