@@ -8,4 +8,11 @@ export  const setPostNewest = (data:AxiosResponse) => ({
   } 
 });
 
+export  const setPostNewestMore = (data:AxiosResponse) => ({
+  type: ActionType.GET_POST_NEWEST_MORE,
+  payload:{
+    postNewestMore:data,
+  } 
+});
+
 

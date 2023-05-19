@@ -2,6 +2,8 @@ import React from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 import { AxiosResponse } from 'axios'
 // import api
 import postApi from 'api/postApi'
@@ -9,6 +11,8 @@ import postApi from 'api/postApi'
 
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom'
+
+import { Space } from 'antd';
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,7 +26,7 @@ interface ItemTheme {
   id: number
   title: string,
   image: string,
-  number_of_posts: Number
+  number_of_posts: number
 }
 
 interface PropsThemesType {
@@ -31,8 +35,10 @@ interface PropsThemesType {
 }
 const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   const [value, setValue] = React.useState<Number>(0)
+  const [openBackdrop, setOpenBackdrop] = React.useState(false)
 
   const [searchParams, setSearchParams] = useSearchParams()
+
 
   const dispatch = useDispatch()
   const { setPostByTheme } = bindActionCreators(
@@ -43,6 +49,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
     try {
       setValue(newValue)
+      setOpenBackdrop(!openBackdrop)
       const categoryId = searchParams.get('categories-id')
       if (categoryId) {
         setSearchParams({ "theme-id": `${newValue}`, "categories-id": `${Number(categoryId) == 1 ? "all" : categoryId}` })
@@ -53,10 +60,17 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       const result = await postApi.getPostByThemeId(newValue, 19, null)
       if (result) {
         setPostByTheme(result)
+        // set backdrop
+        setOpenBackdrop(false)
+
       }
     } catch (error) {
       console.log(error)
     }
+  }
+  // handle close backdrop
+  const handleClose = () => {
+    setOpenBackdrop(false)
   }
   React.useEffect(() => {
 
@@ -85,7 +99,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
 
             value={item.id}
             label={
-              <div>
+              <div style={{}}>
                 <img
                   src={item.image}
                   alt="amhr bị lỗi"
@@ -96,11 +110,24 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                     objectFit: "cover"
                   }}
                 />
+                <div className='div-info-themes-item' >
+                  <Space size={3} direction={"vertical"} style={{ width: 150 }} >
+                    <h5>{item.title}</h5>
+                    <h6>{`${item.number_of_posts} viec lam`}</h6>
+                  </Space>
+                </div>
               </div>
             }
           />
         ))}
       </Tabs>
+      <Backdrop
+        sx={{ color: '#0d99ff ', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Box>
   )
 }

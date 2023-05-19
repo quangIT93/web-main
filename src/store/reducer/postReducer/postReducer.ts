@@ -1,8 +1,10 @@
 import { ActionType , PostTypes } from "../../types"
 import { AxiosResponse } from "axios"
 
-const initialState ={
-  data:{}
+const initialState :any ={
+  data:{
+    posts:[]
+  }
 };
 export default (state = initialState, { type, payload }: PostTypes) => {
     switch (type) {
@@ -10,6 +12,9 @@ export default (state = initialState, { type, payload }: PostTypes) => {
         return payload.post;
       case ActionType.SET_POST_THEME:
         return payload.postTheme
+      case ActionType.GET_POST_THEME_MORE:
+        state.data.posts.push(...payload.postThemeMore.data.posts)
+        return state;
       default:
         return state;
     }

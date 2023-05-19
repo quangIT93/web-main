@@ -59,11 +59,13 @@ const CategoryCarousel: React.FC<PropState> = ({
   const dispatch = useDispatch()
   const { setPostNewest } = bindActionCreators(actionCreators, dispatch)
 
+  const listRef = React.useRef<HTMLUListElement | null>(null)
   const [categories, setCategories] = React.useState<AxiosResponse | null>(null)
 
   const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
     try {
       setOpenBackdrop(true) // Mở backdrop
+      window.scrollTo(0, 300)
       const selectedCategory = categories?.data.find(
         (item: any) => item.id === newValue
       )
@@ -125,6 +127,7 @@ const CategoryCarousel: React.FC<PropState> = ({
 
   return (
     <Box
+      ref={listRef}
       sx={{
         maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
         bgcolor: 'white',
@@ -142,6 +145,7 @@ const CategoryCarousel: React.FC<PropState> = ({
             : hideSlider
             ? '0 180px'
             : '0',
+
         paddingTop:
           height > 60 && !windowWidth
             ? '0px'

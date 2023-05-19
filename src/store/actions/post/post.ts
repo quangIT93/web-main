@@ -15,3 +15,10 @@ export  const setPostByTheme = (data:AxiosResponse) => ({
   } 
 });
 
+export  const setPostThemeMore = (data:AxiosResponse) => ({
+  type: ActionType.GET_POST_THEME_MORE,
+  payload:{
+    postThemeMore:data,
+  } 
+});
+

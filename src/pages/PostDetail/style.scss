@@ -173,6 +173,7 @@
           width: 90%;
           margin: 20px auto;
           height: 45px;
+          margin-bottom: 0px;
           @include breakpoint(mobile) {
             display: none;
           }
