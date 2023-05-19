@@ -59,11 +59,13 @@ const CategoryCarousel: React.FC<PropState> = ({
   const dispatch = useDispatch()
   const { setPostNewest } = bindActionCreators(actionCreators, dispatch)
 
+  const listRef = React.useRef<HTMLUListElement | null>(null);
   const [categories, setCategories] = React.useState<AxiosResponse | null>(null)
 
   const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
     try {
       setOpenBackdrop(true) // Mở backdrop
+      window.scrollTo(0, 300)
       const selectedCategory = categories?.data.find(
         (item: any) => item.id === newValue
       )
@@ -94,6 +96,7 @@ const CategoryCarousel: React.FC<PropState> = ({
       if (result) {
         setPostNewest(result)
       }
+
     } catch (error) {
       console.log(error)
     } finally {
@@ -124,7 +127,7 @@ const CategoryCarousel: React.FC<PropState> = ({
   }
 
   return (
-    <Box
+    <Box ref={listRef}
       sx={{
         maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
         bgcolor: 'white',
@@ -134,22 +137,22 @@ const CategoryCarousel: React.FC<PropState> = ({
           height > 60 && !windowWidth
             ? `${height + 121}px`
             : hideSlider
-            ? '71px'
-            : '',
+              ? '71px'
+              : '',
         margin:
           height > 60 && !windowWidth
             ? '0 180px'
             : hideSlider
-            ? '0 180px'
-            : '24px 0',
+              ? '0 180px'
+              : '24px 0',
         paddingTop:
           height > 60 && !windowWidth
             ? '0px'
             : height > 60 && windowWidth && !hideSlider
-            ? '71px'
-            : hideSlider
-            ? '0'
-            : '',
+              ? '71px'
+              : hideSlider
+                ? '0'
+                : '',
 
         right: 0,
         left: 0,

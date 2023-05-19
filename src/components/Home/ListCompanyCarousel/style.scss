@@ -1,5 +1,16 @@
 .tabThemeJob {
   position: relative;
+  .div-info-themes-item {
+    text-align: center;
+    margin-top: -55px;
+    position: absolute;
+    width: 85%;
+  }
+  .MuiButtonBase-root.MuiButtonBase-root {
+    color: white;
+    font-weight: bold;
+    text-transform: none;
+  }
 }
 
 .tabThemeJob > {
