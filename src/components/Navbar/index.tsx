@@ -59,40 +59,16 @@ import {
   collapseCssFilter,
 } from './Css'
 
-const buttons = [
-  <button className="btn btn__post">
-    <FormOutlined style={{ color: 'white' }} />
-    <span style={{ marginLeft: 10, color: 'white' }}>Đăng bài</span>
-  </button>,
-  <div className="actions-login">
-    <button className="btn btn__login">
-      <div style={{ display: 'flex' }}>
-        <div className="login__avatar">
-          <Avatar
-            style={{ backgroundColor: '#0D99FF' }}
-            icon={<UserOutlined />}
-          />
-        </div>
-        <div className="login__center">
-          <span>Đăng nhập</span>
-        </div>
-      </div>
-      <div className="login__icon">
-        <RightOutlined />
-      </div>
-    </button>
-  </div>,
-]
-
 interface propsCloseSlider {
   openCollapse: boolean
   setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
   setHeight: React.Dispatch<React.SetStateAction<number>>
   // height: number
+  setOpenModalLogin: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Navbar: React.FC<propsCloseSlider> = (props) => {
-  const { openCollapse, setOpenCollapse, setHeight } = props
+  const { openCollapse, setOpenCollapse, setHeight, setOpenModalLogin } = props
   const [salary, setSalary] = React.useState<number[]>([])
   const [openLocation, setOpenLocation] = React.useState(false)
   const [openCareer, setOpenCareer] = React.useState(false)
@@ -100,6 +76,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [showTap, setshowTap] = React.useState(false)
   // thay đổi width setState
   const [windowWidth, setWindowWidth] = useState(false)
+
   // handle show tap on screen mobile
   const handleTap = () => {
     setshowTap(!showTap)
@@ -208,6 +185,35 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     if (!openModalFilter) return setOpenModalFilter(true)
     setOpenModalFilter(false)
   }
+
+  // login
+  const handleClickLogin = () => {
+    setOpenModalLogin(true)
+  }
+  const buttons = [
+    <button className="btn btn__post">
+      <FormOutlined style={{ color: 'white' }} />
+      <span style={{ marginLeft: 10, color: 'white' }}>Đăng bài</span>
+    </button>,
+    <div className="actions-login" onClick={handleClickLogin}>
+      <button className="btn btn__login">
+        <div style={{ display: 'flex' }}>
+          <div className="login__avatar">
+            <Avatar
+              style={{ backgroundColor: '#0D99FF' }}
+              icon={<UserOutlined />}
+            />
+          </div>
+          <div className="login__center">
+            <span>Đăng nhập</span>
+          </div>
+        </div>
+        <div className="login__icon">
+          <RightOutlined />
+        </div>
+      </button>
+    </div>,
+  ]
 
   return (
     <Container className="nav" ref={ref}>

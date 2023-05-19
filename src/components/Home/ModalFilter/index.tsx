@@ -28,11 +28,13 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  // border: '2px solid #000',
+  borer: 'none',
   boxShadow: 24,
   pt: 2,
   px: 4,
   pb: 3,
+  borderRadius: '20px',
 }
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } }
@@ -150,6 +152,7 @@ const ModalFilter: React.FC<PropsModalFilter> = (props) => {
         onClose={handleClose}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
+        style={{ borderRadius: '20px' }}
       >
         <Box sx={{ ...style, width: 680 }}>
           <h2 id="parent-modal-title" className="filter-name">
@@ -228,15 +231,15 @@ const ModalFilter: React.FC<PropsModalFilter> = (props) => {
               />
             </RadioGroup>
           </FormControl>
-          <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <FormControlLabel
-              label="Child 1"
+              label="Làm việc cuối tuần"
               control={
                 <Checkbox checked={checked[0]} onChange={handleChange2} />
               }
             />
             <FormControlLabel
-              label="Child 2"
+              label="Làm việc từ xa"
               control={
                 <Checkbox checked={checked[1]} onChange={handleChange3} />
               }

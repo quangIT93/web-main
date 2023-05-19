@@ -141,7 +141,7 @@ const CategoryCarousel: React.FC<PropState> = ({
             ? '0 180px'
             : hideSlider
             ? '0 180px'
-            : '24px 0',
+            : '0',
         paddingTop:
           height > 60 && !windowWidth
             ? '0px'

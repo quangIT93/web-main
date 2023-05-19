@@ -40,16 +40,15 @@ interface ItemCategories {
 
 interface PostNewest {
   id?: Number
-  status?: Number,
-  account_id?: string,
-  title?: string,
-  company_name?: string,
-  is_date_period?: number,
-  start_date?: number,
-  end_date?: number,
-  start_time?: number,
+  status?: Number
+  account_id?: string
+  title?: string
+  company_name?: string
+  is_date_period?: number
+  start_date?: number
+  end_date?: number
+  start_time?: number
   image?: string
-
 }
 // state props
 interface StatePropsCloseSlider {
@@ -57,6 +56,7 @@ interface StatePropsCloseSlider {
   setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
   setHeight: React.Dispatch<React.SetStateAction<number>>
   height: number
+  setOpenModalLogin: React.Dispatch<React.SetStateAction<boolean>>
 }
 // page view details post
 const Detail: React.FC = () => {
@@ -83,13 +83,13 @@ const Detail: React.FC = () => {
 
   const [height, setHeight] = React.useState<number>(0)
 
-  const statePropsCloseSlider: StatePropsCloseSlider = {
-    openCollapse,
-    setOpenCollapse,
-    setHeight,
-    height,
-  }
-
+  // const statePropsCloseSlider: StatePropsCloseSlider = {
+  //   openCollapse,
+  //   setOpenCollapse,
+  //   setHeight,
+  //   height,
+  //   setOpenModalLogin,
+  // }
 
   const getPostById = async () => {
     try {
@@ -97,15 +97,20 @@ const Detail: React.FC = () => {
       if (result) {
         setPost(result)
       }
-      const list = result?.data.categories.map((category: any) => category.child_category_id)
-      console.log("child", list)
-      const postNewest = await postApi.getPostNewest(result?.data.categories[0].parent_category_id, list, null, 6)
+      const list = result?.data.categories.map(
+        (category: any) => category.child_category_id
+      )
+      console.log('child', list)
+      const postNewest = await postApi.getPostNewest(
+        result?.data.categories[0].parent_category_id,
+        list,
+        null,
+        6
+      )
       setPostNewest(postNewest)
     } catch (error) {
       console.error(error)
     }
-
-
   }
   React.useEffect(() => {
     getPostById()
@@ -148,7 +153,6 @@ const Detail: React.FC = () => {
     },
   ]
 
-
   const onclick = async () => {
     //  window.open(`${post?.data.share_link}`)
     //test redux
@@ -174,7 +178,7 @@ const Detail: React.FC = () => {
     <>
       {automatic && (
         <div className="detail">
-          <NaviBar {...statePropsCloseSlider} />
+          {/* <NaviBar {...statePropsCloseSlider} /> */}
           <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
@@ -350,14 +354,16 @@ const Detail: React.FC = () => {
               <div className="div-suggest">
                 <h3>Việc làm tương tự </h3>
                 <div className="item">
-                  {postNewest?.data.posts.map((item: PostNewest, index: null | number) => (
-                    <ItemSuggest
-                      key={index}
-                      content={item.title}
-                      imgBackground={item.image}
-                      describe={item.company_name}
-                    />
-                  ))}
+                  {postNewest?.data.posts.map(
+                    (item: PostNewest, index: null | number) => (
+                      <ItemSuggest
+                        key={index}
+                        content={item.title}
+                        imgBackground={item.image}
+                        describe={item.company_name}
+                      />
+                    )
+                  )}
                 </div>
               </div>
             </div>

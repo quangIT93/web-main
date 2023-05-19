@@ -121,26 +121,30 @@
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
 }
 .embla__button--prev {
   left: 1.6rem;
   border-radius: 50%;
   border: 1px solid #ccc;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
   &:hover {
-    background-color: rgb(72, 165, 242, 0.9);
+    // background-color: rgb(72, 165, 242, 0.9);
+    background-color: #e8e7e7;
   }
 }
 .embla__button--next {
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.3);
+  // background-color: rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  color: #000000;
   border: 1px solid #ccc;
   border-radius: 50%;
   right: 1.6rem;
   &:hover {
-    background-color: rgb(72, 165, 242, 0.9);
+    // background-color: rgb(72, 165, 242, 0.9);
+    background-color: #e8e7e7;
   }
 }
 .embla__button:disabled {
@@ -150,5 +154,5 @@
   width: 65%;
   height: 65%;
   font-size: 30px;
-  color: wheat;
+  color: #000000;
 }

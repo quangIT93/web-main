@@ -49,11 +49,11 @@ const ModalFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             </span>
           </p>
           <div className="wrapRadiSalary" style={{ flex: '1' }}>
-            <input type="radio" id="html" />
+            <input type="radio" id="html" style={{ marginLeft: '16px' }} />
             <label htmlFor="html" style={{ paddingLeft: '8px' }}>
               VND
             </label>
-            <input type="radio" id="css" />
+            <input type="radio" id="css" style={{ marginLeft: '16px' }} />
             <label htmlFor="css" style={{ paddingLeft: '8px' }}>
               USD
             </label>
