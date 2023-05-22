@@ -1,9 +1,9 @@
 import axiosClient from './axiosClient'
 // api/productApi.js
 const signInEmailApi = {
-  signInEmail: (email: String) => {
+  signInEmail: (email: string) => {
     const URL = `sign-in/email`
-    return axiosClient.post(URL, { email: email })
+    return axiosClient.post(URL, { email }) // Truyền email vào body của request
   },
 
   verifyOtp: (email: String, otp: string) => {

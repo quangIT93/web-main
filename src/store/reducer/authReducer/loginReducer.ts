@@ -16,7 +16,11 @@ export default (state = initialState, { type, payload }: LoginPayload) => {
           result: payload.data,
         }
       }
-      return state
+      return {
+        ...state,
+        isLoggedIn: false,
+        result: {},
+      }
 
     default:
       return state

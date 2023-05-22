@@ -1,8 +1,14 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../../store/index'
 import { RootState } from '../../../store/reducer'
+import { getProfile } from 'store/reducer/profileReducer/getProfileReducer'
+
+import {
+  signInEmail,
+  verifyOtp,
+} from '../../../store/reducer/authReducer/signGmailReducer'
 
 import signInEmailApi from 'api/authApi'
 import OtpInput from 'react-otp-input'
@@ -81,37 +87,26 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     setIsValidEmail(isEmailValid(value))
   }
 
-  const { auth } = useSelector((state: RootState) => state)
-
+  const authState = useSelector((state: RootState) => state.auth)
+  // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
   const handleLogin = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    // Thực hiện xử lý đăng nhập, ví dụ: gửi dữ liệu đăng nhập đến server
     try {
       e.preventDefault()
       if (isValidEmail) {
         if (invalid) {
           setInvalid(false)
         } else {
-          // Gửi dữ liệu hoặc thực hiện các xử lý khác
-
-          const result = await signInEmailApi.signInEmail(loginData.email)
-          if (result) {
-            ActionSignInEmail(result)
-            setIsEmailVerified(true)
-            if (result.data.success) {
-            } else {
-              setInvalid(true)
-              setTimeout(() => {
-                setInvalid(false)
-              }, 3000)
-            }
-          }
+          await dispatch(signInEmail(loginData.email) as any)
+          setIsEmailVerified(true)
+          // Gửi yêu cầu đăng nhập và chờ kết quả trả về
         }
       } else {
         setInvalid(true)
       }
     } catch (error: any) {
+      console.log(error.response?.data)
       if (!error.response?.data.success) {
         setInvalid(true)
         setTimeout(() => {
@@ -134,6 +129,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     setResendCode(false)
   }
 
+  const handleBackOtp = () => {
+    setIsEmailVerified(true)
+    // setResendCode(false)
+  }
+
   const handleLoginOtp = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -142,13 +142,58 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
       if (isInputFilled) {
         // Thực hiện hành động khi button được click
-        const result = await signInEmailApi.verifyOtp(loginData.email, otp)
+        console.log('isInputFilled', isInputFilled)
+        await dispatch(verifyOtp({ email: loginData.email, otp }) as any)
+        setOpenModalLogin(false)
       } else {
       }
     } catch (error) {
       console.log(error)
     }
   }
+
+  // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
+  useEffect(() => {
+    if (authState.isLoggedIn) {
+      console.log('Xác thực nhận email thành công', authState)
+      // Thực hiện các hành động sau khi xác thực thành công
+      setIsEmailVerified(true)
+    } else {
+      console.log('Lỗi xác nhận email thành công', authState)
+      // Thực hiện các hành động sau khi xác thực thất bại
+    }
+  }, [authState.isLoggedIn])
+
+  // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
+  useEffect(() => {
+    const fetchDataProfile = async () => {
+      if (authState.isverifyOtp) {
+        console.log('Xác thực OTP thành công', authState)
+        // Thực hiện các hành động sau khi xác thực thành công
+        localStorage.setItem(
+          'accountId',
+          authState && authState.accountId ? authState.accountId : ''
+        )
+        localStorage.setItem(
+          'accessToken',
+          authState && authState.accessToken ? authState.accessToken : ''
+        )
+        localStorage.setItem(
+          'refreshToken',
+          authState && authState.refreshToken ? authState.refreshToken : ''
+        )
+
+        await dispatch(getProfile() as any)
+
+        setOpenModalLogin(false)
+      } else {
+        console.log('Lỗi xác thực OTP', authState)
+        // Thực hiện các hành động sau khi xác thực thất bại
+      }
+    }
+
+    fetchDataProfile()
+  }, [authState.isverifyOtp])
 
   const handleResendCode = () => {
     setResendCode(true)
@@ -178,64 +223,76 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           Đăng nhập
         </Typography>
         {!isEmailVerified && (
-          <form>
-            <div className="wrapLogin">
-              <label htmlFor="username">Email</label>
-              <input
-                type="text"
-                id="username"
-                name="email"
-                value={loginData.email}
-                onChange={handleInputChange}
-                placeholder="Nhập email của bạn..."
-              />
-              <small className={!invalid ? 'alert' : 'alert error'}>
-                Email không đúng cú pháp vui lòng nhập lại
-              </small>
-            </div>
-            <p className="text-sent_otp">
-              Mã xác nhận sẽ được gửi vào số điện thoại bạn đăng nhập.
-            </p>
-            <button
-              type="button"
-              onClick={handleLogin}
-              className="button-login"
-            >
-              Login
-            </button>
-            <div className="line-with-text">
-              <span className="line"></span>
-              <span className="text">Hoặc</span>
-              <span className="line"></span>
-            </div>
-            <div className="bnt-login_google bnt-login">
-              <img
-                src="loginLogo/facebookOriginal.png"
-                alt=""
-                width={30}
-                height={30}
-              />
-              <p className="text-login ">Đăng nhập bằng tài khoản Facebook</p>
-            </div>
-            <div className="bnt-login_google bnt-login">
-              <img
-                src="loginLogo/googleOriginal.png"
-                alt=""
-                width={30}
-                height={30}
-              />
-              <p className="text-login">Đăng nhập bằng tài khoản Google</p>
-            </div>
-            <div className="bnt-login_google bnt-login">
-              <img
-                src="loginLogo/logoApple.png"
-                alt=""
-                width={30}
-                height={30}
-              />
-              <p className="text-login">Đăng nhập bằng tài khoản AppleID</p>
-            </div>
-          </form>
+          <>
+            <KeyboardArrowLeftOutlinedIcon
+              className="icon-left_login"
+              sx={{
+                width: '2rem',
+                height: '2rem',
+                cursor: 'pointer',
+                fontWeight: '300',
+              }}
+              onClick={handleBackOtp}
+            />
+            <form>
+              <div className="wrapLogin">
+                <label htmlFor="username">Email</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="email"
+                  value={loginData.email}
+                  onChange={handleInputChange}
+                  placeholder="Nhập email của bạn..."
+                />
+                <small className={!invalid ? 'alert' : 'alert error'}>
+                  Email không đúng cú pháp vui lòng nhập lại
+                </small>
+              </div>
+              <p className="text-sent_otp">
+                Mã xác nhận sẽ được gửi vào số điện thoại bạn đăng nhập.
+              </p>
+              <button
+                type="button"
+                onClick={handleLogin}
+                className="button-login"
+              >
+                Login
+              </button>
+              <div className="line-with-text">
+                <span className="line"></span>
+                <span className="text">Hoặc</span>
+                <span className="line"></span>
+              </div>
+              <div className="bnt-login_google bnt-login">
+                <img
+                  src="loginLogo/facebookOriginal.png"
+                  alt=""
+                  width={30}
+                  height={30}
+                />
+                <p className="text-login ">Đăng nhập bằng tài khoản Facebook</p>
+              </div>
+              <div className="bnt-login_google bnt-login">
+                <img
+                  src="loginLogo/googleOriginal.png"
+                  alt=""
+                  width={30}
+                  height={30}
+                />
+                <p className="text-login">Đăng nhập bằng tài khoản Google</p>
+              </div>
+              <div className="bnt-login_google bnt-login">
+                <img
+                  src="loginLogo/logoApple.png"
+                  alt=""
+                  width={30}
+                  height={30}
+                />
+                <p className="text-login">Đăng nhập bằng tài khoản AppleID</p>
+              </div>
+            </form>
+          </>
         )}
 
         {isEmailVerified && (

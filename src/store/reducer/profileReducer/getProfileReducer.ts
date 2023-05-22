@@ -1,0 +1,66 @@
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
+import profileApi from '../../../api/profileApi'
+import { RootState } from '..'
+interface ProfileState {
+  profile: any | null
+  error: string | null
+}
+
+const initialState: ProfileState = {
+  profile: null,
+  error: null,
+}
+
+export const getProfile = createAsyncThunk(
+  'profile/getProfile',
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken')
+      // Gọi API để lấy thông tin profile với accessToken đã có
+      console.log('accessToken', accessToken)
+      if (accessToken) {
+        const response = await profileApi.getProfile()
+        console.log(response)
+        return response.data
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data?.message)
+      } else {
+        return rejectWithValue('An error occurred')
+      }
+    }
+  }
+)
+
+const profileSlice = createSlice({
+  name: 'profile',
+  initialState,
+  reducers: {
+    resetProfileState: (state) => {
+      state.profile = null
+      state.error = null
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      getProfile.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.profile = action.payload
+        state.error = null
+      }
+    )
+
+    builder.addCase(
+      getProfile.rejected,
+      (state, action: PayloadAction<unknown>) => {
+        state.profile = null
+        state.error = action.payload as string
+      }
+    )
+  },
+})
+
+export const { resetProfileState } = profileSlice.actions
+export default profileSlice.reducer

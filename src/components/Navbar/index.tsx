@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 // @ts-ignore
 // import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 // @ts-ignore
 import { Logo } from '#components'
@@ -59,6 +60,9 @@ import {
   collapseCssFilter,
 } from './Css'
 
+import { getProfile } from 'store/reducer/profileReducer/getProfileReducer'
+import { RootState } from '../../store/reducer'
+
 interface propsCloseSlider {
   openCollapse: boolean
   setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
@@ -76,7 +80,10 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [showTap, setshowTap] = React.useState(false)
   // thay đổi width setState
   const [windowWidth, setWindowWidth] = useState(false)
+  const dispatch = useDispatch()
 
+  const dataProfile: any = useSelector((data: RootState) => data.profile)
+  console.log('dataProfile', dataProfile)
   // handle show tap on screen mobile
   const handleTap = () => {
     setshowTap(!showTap)
@@ -205,7 +212,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             />
           </div>
           <div className="login__center">
-            <span>Đăng nhập</span>
+            {localStorage.getItem('accessToken') && dataProfile?.profile ? (
+              <span>{dataProfile.profile.name}</span>
+            ) : (
+              <span>Đăng nhập</span>
+            )}
           </div>
         </div>
         <div className="login__icon">
