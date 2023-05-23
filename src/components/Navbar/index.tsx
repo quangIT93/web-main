@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 // import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
+import { useNavigate } from "react-router-dom";
 // @ts-ignore
 import { Logo } from '#components'
 // @ts-ignore
@@ -78,12 +79,15 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [openCareer, setOpenCareer] = React.useState(false)
   const [openSalary, setOpenSalary] = React.useState(false)
   const [showTap, setshowTap] = React.useState(false)
+
+  const navigate = useNavigate();
+
   // thay đổi width setState
   const [windowWidth, setWindowWidth] = useState(false)
   const dispatch = useDispatch()
 
   const dataProfile: any = useSelector((data: RootState) => data.profile)
-  console.log('dataProfile', dataProfile)
+  //console.log('dataProfile', dataProfile)
   // handle show tap on screen mobile
   const handleTap = () => {
     setshowTap(!showTap)
@@ -155,6 +159,16 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       window.removeEventListener('click', handleClickCloseTabLocation)
   }, [])
 
+  // fecth data profile with accesstoken
+  const fecthDataProfile = async () => {
+    await dispatch(getProfile() as any)
+
+  }
+
+  useEffect(() => {
+    fecthDataProfile()
+  }, [localStorage.getItem("accessToken")])
+
   const ref = useRef<HTMLDivElement>(null)
 
   const handleCollapseEntered = () => {
@@ -198,7 +212,9 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     setOpenModalLogin(true)
   }
   const buttons = [
-    <button className="btn btn__post">
+    <button className="btn btn__post" onClick={() => {
+      //  navigate('/profile')  
+    }} >
       <FormOutlined style={{ color: 'white' }} />
       <span style={{ marginLeft: 10, color: 'white' }}>Đăng bài</span>
     </button>,

@@ -94,9 +94,9 @@ const Profile: React.FC = () => {
     message: 'Successfully',
   }
 
-  const state = useSelector((state: RootState) => state.post)
+  const dataProfile: any = useSelector((state: RootState) => state.profile)
 
-  console.log(state)
+  console.log(dataProfile)
 
   return (
     <div className="profile">

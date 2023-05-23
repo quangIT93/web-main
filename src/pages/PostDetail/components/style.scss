@@ -1,4 +1,13 @@
 @import '../../../scss/mixins';
+.div-suggest-include {
+  margin-left: 10px;
+  padding-left: 5px;
+  &:hover {
+    background-color: #cccccc;
+  }
+  border-radius: 5px;
+  cursor: pointer;
+}
 .div-item-suggest {
   display: flex;
   flex-direction: row;

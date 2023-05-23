@@ -161,7 +161,7 @@ const ThemesJob: React.FC = () => {
                       padding: '12px',
                       cursor: 'pointer',
                       '&:hover': {
-                        background: '#e8f5ff',
+                        background: '#E7E7ED',
                         transition: 'all 0.3s linear',
                       },
                       boxShadow: 'none',

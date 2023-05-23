@@ -13,7 +13,9 @@ import locationApi from '../../api/locaitonApi'
 import ItemSuggest from './components/ItemSuggest'
 // @ts-ignore
 import { Carousel } from 'react-carousel-minimal'
-import { Button, Breadcrumb } from 'antd'
+import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd'
+//@ts-ignore
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -26,6 +28,7 @@ import {
   DollarOutlined,
   CalendarOutlined,
   CreditCardOutlined,
+  SyncOutlined
 } from '@ant-design/icons'
 
 import './style.scss'
@@ -60,13 +63,15 @@ interface StatePropsCloseSlider {
 }
 // page view details post
 const Detail: React.FC = () => {
+  const { Search } = Input;
   // test redux
-  const state = useSelector((state: RootState) => state)
+  const state = useSelector((state: RootState) => state.profile)
   const dispatch = useDispatch()
   const { setPostByTheme, setProvince } = bindActionCreators(
     actionCreators,
     dispatch
   )
+
 
   const componentRef = React.useRef<HTMLDivElement>(null)
   const componentRefJob = React.useRef<HTMLDivElement>(null)
@@ -83,6 +88,8 @@ const Detail: React.FC = () => {
 
   const [height, setHeight] = React.useState<number>(0)
 
+  const [api, contextHolder] = notification.useNotification();
+
   // const statePropsCloseSlider: StatePropsCloseSlider = {
   //   openCollapse,
   //   setOpenCollapse,
@@ -90,6 +97,18 @@ const Detail: React.FC = () => {
   //   height,
   //   setOpenModalLogin,
   // }
+
+  const openNotification = () => {
+    api.info({
+      message: `Mở hoặc tải app để ứng tuyển công việc`,
+      description: <Input addonBefore="Link" addonAfter={<CopyToClipboard text={post?.data.share_link} >
+        <Tooltip trigger="click" placement="topRight" title={"Đã copy link "} arrow={true}><div style={{ cursor: "pointer" }}>Copy</div></Tooltip>
+      </CopyToClipboard>}
+        defaultValue={post?.data.share_link} />,
+      placement: "topRight"
+
+    });
+  };
 
   const getPostById = async () => {
     try {
@@ -160,6 +179,8 @@ const Detail: React.FC = () => {
     // const listLo = await locationApi.getAllProvines("vi")
     // setPostByTheme(result)
     // setProvince(listLo)
+    openNotification()
+    //console.log("e")
   }
 
   const captionStyle = {
@@ -230,7 +251,7 @@ const Detail: React.FC = () => {
                   style={{
                     textAlign: 'center',
                     maxWidth: '850px',
-                    maxHeight: '560px',
+                    maxHeight: '590px',
                   }}
                 />
               </div>
@@ -263,22 +284,7 @@ const Detail: React.FC = () => {
                       </h4>
                     </div>
                   </div>
-                  <div className="div-detail-row">
-                    <CalendarOutlined style={{ color: '#575757' }} />
-                    <div style={{ marginLeft: '10px' }}>
-                      {' '}
-                      <p>Thời gian làm việc</p>
-                      <h4>
-                        {moment(new Date(post?.data.start_date)).format(
-                          'DD/MM/yyyy'
-                        )}{' '}
-                        -{' '}
-                        {moment(new Date(post?.data.end_date)).format(
-                          'DD/MM/yyyy'
-                        )}
-                      </h4>
-                    </div>
-                  </div>
+
                   <div className="div-detail-row">
                     <CalendarOutlined style={{ color: '#575757' }} />
                     <div style={{ marginLeft: '10px' }}>
@@ -321,13 +327,24 @@ const Detail: React.FC = () => {
                       )}
                     </div>
                   </div>
-                  <Button
-                    onClick={onclick}
-                    className="btn-apply"
-                    type={'primary'}
-                  >
-                    Ứng tuyển
-                  </Button>
+                  <div className="div-detail-row">
+                    <SyncOutlined style={{ color: '#575757' }} />
+
+                    <p style={{ marginLeft: 10, fontStyle: "italic" }}>{`Cập nhật  ${post?.data.created_at_text}`} </p>
+
+
+                  </div>
+                  <>
+                    {contextHolder}
+                    <Button
+                      onClick={onclick}
+                      className="btn-apply"
+                      type={'primary'}
+                    >
+                      Ứng tuyển
+                    </Button>
+                  </>
+
                 </div>
               </div>
               <div className="div-description-mo">
@@ -352,7 +369,7 @@ const Detail: React.FC = () => {
                 </Button>
               </div>
               <div className="div-suggest">
-                <h3>Việc làm tương tự </h3>
+                <h3 style={{ paddingLeft: 10 }}>Việc làm tương tự </h3>
                 <div className="item">
                   {postNewest?.data.posts.map(
                     (item: PostNewest, index: null | number) => (
@@ -361,6 +378,7 @@ const Detail: React.FC = () => {
                         content={item.title}
                         imgBackground={item.image}
                         describe={item.company_name}
+                        postId={item.id}
                       />
                     )
                   )}
