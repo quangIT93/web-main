@@ -4,6 +4,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { useNavigate } from "react-router-dom";
+
+import { Link } from 'react-router-dom'
+
 // @ts-ignore
 import { Logo } from '#components'
 // @ts-ignore
@@ -87,7 +90,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const dispatch = useDispatch()
 
   const dataProfile: any = useSelector((data: RootState) => data.profile)
-  //console.log('dataProfile', dataProfile)
+
   // handle show tap on screen mobile
   const handleTap = () => {
     setshowTap(!showTap)
@@ -213,10 +216,12 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   }
   const buttons = [
     <button className="btn btn__post" onClick={() => {
-      //  navigate('/profile')  
+      navigate('/post')
     }} >
       <FormOutlined style={{ color: 'white' }} />
-      <span style={{ marginLeft: 10, color: 'white' }}>Đăng bài</span>
+      <p style={{ marginLeft: 10, color: 'white' }}>
+        Đăng bài
+      </p>
     </button>,
     <div className="actions-login" onClick={handleClickLogin}>
       <button className="btn btn__login">

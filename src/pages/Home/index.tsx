@@ -16,7 +16,7 @@ import { CategoryCarousel } from '#components'
 import { EmblaOptionsType } from 'embla-carousel-react'
 
 import ModalLogin from '#components/Home/ModalLogin'
-
+import { useHomeState } from './HomeState'
 import './style.scss'
 import Footer from '../../components/Footer/Footer'
 
@@ -27,7 +27,7 @@ const OPTIONS: EmblaOptionsType = {
 const SLIDE_COUNT = 3
 const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
 
-interface StatePropsCloseSlider {
+export interface StatePropsCloseSlider {
   openCollapse: boolean
   setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
   setHeight: React.Dispatch<React.SetStateAction<number>>
@@ -36,24 +36,27 @@ interface StatePropsCloseSlider {
 }
 
 const Home: React.FC = () => {
-  const [openCollapse, setOpenCollapse] = React.useState(false)
-
-  const [height, setHeight] = React.useState<number>(0)
-
   const [valueJob, setValueJob] = React.useState('Tất cả')
-
-  const [openModalLogin, setOpenModalLogin] = useState(false)
 
   const [hideSlider, setHideSlider] = useState<boolean>(false)
   // thay đổi width setState
   const [windowWidth, setWindowWidth] = useState(false)
+
+  const {
+    openCollapse,
+    setOpenCollapse,
+    height,
+    setHeight,
+    openModalLogin,
+    setOpenModalLogin,
+  } = useHomeState()
 
   const statePropsCloseSlider: StatePropsCloseSlider = {
     openCollapse,
     setOpenCollapse,
     setHeight,
     height,
-    setOpenModalLogin, // Cung cấp giá trị setOpenModalLogin từ component cha
+    setOpenModalLogin,
   }
 
   useEffect(() => {

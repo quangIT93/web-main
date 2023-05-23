@@ -129,7 +129,7 @@ const ModalFilter: React.FC<PropsModalFilter> = (props) => {
   const handleClose = () => {
     setOpenModalFilter(false)
   }
-  console.log('label', label)
+
   // handle Checked
   const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked([event.target.checked, checked[1]])
@@ -144,7 +144,7 @@ const ModalFilter: React.FC<PropsModalFilter> = (props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value)
   }
-  console.log(selectedValue)
+
   return (
     <div>
       <Modal
