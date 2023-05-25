@@ -2,47 +2,112 @@ import React, { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-import FormValues from '../index'
+import FormValues from '../../../pages/Post/index'
 
 // data
-import { provinces, districts, wards } from '../data/data'
+import locationApi from '../../../api/locationApi'
+import { wards } from '../../../pages/Post/data/data'
 
 interface IPostAddress {
-  setSelectedDistrict: React.Dispatch<React.SetStateAction<string | null>>
-  setSelectedProvince: React.Dispatch<React.SetStateAction<string | null>>
+  setSelectedDistrict: React.Dispatch<React.SetStateAction<any>>
+  setSelectedProvince: React.Dispatch<React.SetStateAction<any>>
+  setWardId: React.Dispatch<React.SetStateAction<any>>
+  wardId: string
   selectedDistrict: any
   selectedProvince: any
-  setSelectedWard: any
-  selectedWard: any
+  setAddress: React.Dispatch<React.SetStateAction<string>>
+  address: string
 }
+
 const PostAddress: React.FC<IPostAddress> = (props) => {
+  const [dataProvinces, setDataProvinces] = useState<any>(null)
+  const [dataDistrict, setDataDistrict] = useState<any>(null)
+  const [selectedWard, setSelectedWard] = useState<any>('')
   const {
     setSelectedDistrict,
     setSelectedProvince,
+    setWardId,
     selectedDistrict,
     selectedProvince,
-    setSelectedWard,
-    selectedWard,
+    wardId,
+    address,
+    setAddress,
   } = props
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
   }
 
+  // get All locations by location id
+  const getAllLocations = async () => {
+    try {
+      const allLocation = await locationApi.getAllProvinces()
+
+      if (allLocation) {
+        setDataProvinces(allLocation.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // get All locations by location id
+  const getAllProvinces = async () => {
+    try {
+      const allLocation = await locationApi.getAllProvinces()
+
+      if (allLocation) {
+        setDataProvinces(allLocation.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // get All locations by location id
+  const getDataDistrict = async () => {
+    try {
+      if (selectedProvince) {
+        const districts = await locationApi.getDistrictsById(
+          selectedProvince.id
+        )
+        if (districts) {
+          setDataDistrict(districts.data)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  React.useEffect(() => {
+    getAllProvinces()
+    getAllLocations()
+    // delete param when back to page
+  }, [])
+
+  React.useEffect(() => {
+    getDataDistrict()
+    // delete param when back to page
+  }, [selectedProvince])
+
   const handleProvinceChange = (event: any, value: any) => {
-    console.log(value)
-    setSelectedDistrict(null)
+    setSelectedDistrict('')
+    setSelectedWard('')
     setSelectedProvince(value)
   }
 
   const handleDistrictChange = (event: any, value: any) => {
-    console.log('handleDistrictChange', value)
     setSelectedDistrict(value)
   }
 
+  const handleChangeWardId = (e: any, value: any) => {
+    setSelectedWard(value)
+    setWardId(value.id)
+  }
+
   const handleChangeAddress = (e: any) => {
-    setSelectedWard(e.target.value)
-    console.log('setSelectedWard', e.target.value)
+    setAddress(e.target.value)
   }
   return (
     <div className="post-address">
@@ -57,9 +122,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             Thành Phố *:
           </Typography>
           <Autocomplete
-            options={provinces}
-            getOptionLabel={(option) => option.name}
-            value={selectedProvince}
+            options={dataProvinces ? dataProvinces : []}
+            getOptionLabel={(option: any) => option?.name || ''}
+            value={selectedProvince || null}
             onChange={handleProvinceChange}
             renderInput={(params) => (
               <TextField {...params} placeholder="Tỉnh/TP" size="small" />
@@ -76,11 +141,11 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             Quận *:
           </Typography>
           <Autocomplete
-            options={districts}
-            getOptionLabel={(option) => option.full_name}
-            value={selectedDistrict}
+            options={dataDistrict ? dataDistrict : []}
+            getOptionLabel={(option: any) => option?.full_name || ''}
+            value={selectedDistrict || null}
             onChange={handleDistrictChange}
-            renderInput={(params) => (
+            renderInput={(params: any) => (
               <TextField {...params} placeholder="Quận/Huyện" size="small" />
             )}
           />
@@ -97,12 +162,12 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             Phường/Xã *:
           </Typography>
           <Autocomplete
-            options={provinces}
-            getOptionLabel={(option) => option.name}
-            value={selectedProvince}
-            onChange={handleProvinceChange}
+            options={wards}
+            getOptionLabel={(option: any) => option?.full_name || ''}
+            value={selectedWard || null}
+            onChange={handleChangeWardId}
             renderInput={(params) => (
-              <TextField {...params} placeholder="Tỉnh/TP" size="small" />
+              <TextField {...params} placeholder="Phường/Xã" size="small" />
             )}
           />
         </div>
@@ -119,7 +184,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             type="text"
             id="jobTitle"
             name="title"
-            value={selectedWard}
+            value={address}
             onChange={handleChangeAddress}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}

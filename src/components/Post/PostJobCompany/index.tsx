@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 
 import TextField from '@mui/material/TextField'
 
-import FormValues from '../index'
+import FormValues from '../../../pages/Post/index'
 
 interface PropsPostCompanyJob {
   setFormValues: React.Dispatch<React.SetStateAction<any>>

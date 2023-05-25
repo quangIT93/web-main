@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 // import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 import { Link } from 'react-router-dom'
 
@@ -83,7 +83,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [openSalary, setOpenSalary] = React.useState(false)
   const [showTap, setshowTap] = React.useState(false)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   // thay đổi width setState
   const [windowWidth, setWindowWidth] = useState(false)
@@ -146,7 +146,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   // event career
   useEffect(() => {
     const handleClickCloseTabLocation = (event: any) => {
-      event.preventDefault()
+      // event.preventDefault()
 
       if (
         event.target !== document.querySelector(`.choose-locations`) ||
@@ -165,12 +165,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   // fecth data profile with accesstoken
   const fecthDataProfile = async () => {
     await dispatch(getProfile() as any)
-
   }
 
   useEffect(() => {
     fecthDataProfile()
-  }, [localStorage.getItem("accessToken")])
+  }, [localStorage.getItem('accessToken')])
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -215,14 +214,12 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     setOpenModalLogin(true)
   }
   const buttons = [
-    <button className="btn btn__post" onClick={() => {
-      navigate('/post')
-    }} >
-      <FormOutlined style={{ color: 'white' }} />
-      <p style={{ marginLeft: 10, color: 'white' }}>
-        Đăng bài
-      </p>
-    </button>,
+    <Link to="/post" target="_blank">
+      <button className="btn btn__post">
+        <FormOutlined style={{ color: 'white' }} />
+        <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
+      </button>
+    </Link>,
     <div className="actions-login" onClick={handleClickLogin}>
       <button className="btn btn__login">
         <div style={{ display: 'flex' }}>

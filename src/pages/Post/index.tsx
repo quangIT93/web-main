@@ -1,19 +1,11 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react'
+import dayjs, { Dayjs } from 'dayjs'
+
 // @ts-ignore
 import { Navbar } from '#components'
+//@ts-ignore
 import { useHomeState } from '../Home/HomeState'
 import { StatePropsCloseSlider } from 'pages/Home'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import PostFilterSalary from './components/PostFilterSalary'
-import Autocomplete from '@mui/material/Autocomplete'
 import { AutocompleteInputChangeReason } from '@mui/material/Autocomplete'
 import 'react-phone-number-input/style.css'
 
@@ -24,33 +16,25 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 
 // import component
-import PostJobCompany from './components/PostJobCompany'
-import PostAddress from './components/PostAddress'
-import PostTypeJob from './components/PostTypeJob'
-
+import PostFilterSalary from '../../components/Post/PostFilterSalary'
+import PostJobCompany from '../../components/Post/PostJobCompany'
+import PostAddress from '../../components/Post/PostAddress'
+import PostTypeJob from '../../components/Post/PostTypeJob'
+import ModalPost from '#components/Post/ModalPost'
+import PostPeriodDate from '#components/Post/PostPeriodDate'
+import RecruitmentTime from '#components/Post/RecruitmentTime'
+import StyleWork from '#components/Post/StyleWork'
+import SalaryType from '#components/Post/SalaryType'
+import Description from '#components/Post/Description'
+import PostImage from '#components/Post/PostImage'
+import PostCategoryIds from '#components/Post/PostCategoryIds'
+//@ts-ignore
+import { styleLabel } from '#components/Post/CssPost'
 import './style.scss'
 
-const posts = {
-  id: 15,
-  status: 0,
-  account_id: '4d207f7c-d443-476b-af9a-b59da47560a9',
-  title: 'Title',
-  company_name: 'AIWorks',
-  is_date_period: 1,
-  start_date: 1668043800000,
-  end_date: 1668907800000,
-  start_time: 1668043800000,
-  end_time: 1668043800000,
-  salary: 5000,
-  salary_type: 'Giờ',
-  created_at: 1669772817000,
-  image:
-    'https://gig-app-upload.s3.ap-southeast-1.amazonaws.com/896aff4a-8c90-4891-8bce-43be9ec5606b-7edfc0ed-1899-44ee-85ec-a05fb3d07260-kali-logo-16x9-1.png',
-  province_id: 202,
-  province: 'Hồ Chí Minh',
-  district_id: 1448,
-  district: 'Quận 6',
-}
+// import data
+import postApi from 'api/postApi'
+import { Form } from 'antd'
 
 const posts1 = {
   title: '',
@@ -82,12 +66,6 @@ interface ICategoryIds {
   name: string
 }
 
-interface IImage {
-  id: string
-  images: number
-  status: 0 | 1
-}
-
 export interface FormValues {
   title: string
   companyName: string
@@ -110,30 +88,22 @@ export interface FormValues {
   email: string
   expiredDate: number
   categoryIds: ICategoryIds[]
-  images: IImage[]
+  images: string[]
 }
-
-interface Option {
-  label: string
-  value: string
-}
-
-const options: Option[] = [
-  { label: 'Option 1', value: 'option1' },
-  { label: 'Option 2', value: 'option2' },
-  { label: 'Option 3', value: 'option3' },
-]
 
 interface IPostAddress {
   setSelectedDistrict: React.Dispatch<React.SetStateAction<string | null>>
   setSelectedProvince: React.Dispatch<React.SetStateAction<string>>
 }
 
+interface Option {
+  id: string
+  name: string
+  image: string
+  default_post_image: string
+}
+
 const Post: React.FC = () => {
-  const styleLabel = {
-    fontWeight: 600,
-    color: '#000000',
-  }
   const [formValues, setFormValues] = useState<FormValues>({
     title: '',
     companyName: '',
@@ -161,45 +131,26 @@ const Post: React.FC = () => {
 
   const [titleJob, setTitleJob] = useState<string>('')
   const [companyName, setCompanyName] = useState<string>('')
-  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null)
-  const [selectedProvince, setSelectedProvince] = useState<string | null>(null)
-  const [selectedWard, setSelectedWard] = useState<string | null>('')
-  const [typeJob, setTypeJob] = useState(0)
-
-  const [salary, setSalary] = React.useState<number[]>([])
-  const [openSalary, setOpenSalary] = React.useState<boolean>(false)
+  const [selectedDistrict, setSelectedDistrict] = useState<string | null>('')
+  const [selectedProvince, setSelectedProvince] = useState<string | null>('')
+  const [typeJob, setTypeJob] = useState(1)
+  const [isPeriodDate, setIsPeriodDate] = useState<number>(0)
+  const [startTime, setStartTime] = React.useState<any>(dayjs('2023-01-01'))
+  const [endTime, setEndTime] = React.useState<any>(dayjs('2023-01-30'))
+  const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0)
+  const [isRemotely, setIsRemotely] = React.useState<number>(0)
+  const [salary, setSalary] = React.useState<number[]>([0, 100000000])
+  const [moneyType, setMoneyType] = React.useState<number>(0)
+  const [salaryType, setSalaryType] = React.useState<number>(0)
+  const [description, setDescription] = React.useState<string>('')
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([])
-
+  const [address, setAddress] = useState<string>('')
+  const [wardId, setWardId] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [selectedImages, setSelectedImages] = useState<string[]>([])
 
-  const handleOptionChange = (
-    event: React.ChangeEvent<{}>,
-    values: Option[]
-  ) => {
-    // if(event.target.value)
-
-    setSelectedOptions(values)
-  }
-
-  const handleInputChange = (
-    event: React.ChangeEvent<{}>,
-    value: string,
-    reason: AutocompleteInputChangeReason
-  ) => {
-    const newInputValue = (event?.target as HTMLInputElement)?.value
-    if (newInputValue) {
-      const updatedOptions = [...options]
-      const existingOption = updatedOptions.find(
-        (option) => option.value === newInputValue
-      )
-      if (!existingOption) {
-        // Thêm tùy chọn mới vào danh sách tùy chọn
-        updatedOptions.push({ label: newInputValue, value: newInputValue })
-        // Cập nhật danh sách tùy chọn
-        setSelectedOptions(updatedOptions)
-      }
-    }
-  }
+  // modal
+  const [openModalPost, setOpenModalPost] = React.useState(false)
 
   const handlePhoneNumberChange = (value: string) => {
     setPhoneNumber(value)
@@ -213,8 +164,6 @@ const Post: React.FC = () => {
     openModalLogin,
     setOpenModalLogin,
   } = useHomeState()
-
-  const [selectedImages, setSelectedImages] = useState<File[]>([])
 
   const statePropsCloseSlider: StatePropsCloseSlider = {
     openCollapse,
@@ -233,32 +182,47 @@ const Post: React.FC = () => {
       ...prevValues,
       title: titleJob,
       companyName: companyName,
-      wardId: selectedWard,
+      wardId: wardId,
       jobTypeId: typeJob,
+      isDatePeriod: isPeriodDate,
+      startTime,
+      endTime,
+      salaryMin: salary[0],
+      salaryMax: salary[1],
+      isWorkingWeekend,
+      isRemotely,
+      moneyType,
+      salaryType,
+      description,
+      address,
+      images: selectedImages,
+      categoryIds: selectedOptions,
 
       // Các trường khác bạn muốn cập nhật tương tự
     }))
-    console.log('formValues', formValues)
+    if (formValues) createNewPost()
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }))
-  }
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-
-    if (files) {
-      const selectedFiles = Array.from(files)
-      setSelectedImages(selectedFiles)
+  // post newPost
+  const createNewPost = async () => {
+    try {
+      const areAllFieldsFilled = Object.values(formValues).every(
+        (fieldValue) => fieldValue !== ''
+      )
+      if (areAllFieldsFilled) {
+        console.log('cho phep submit')
+        // const result = await postApi.createPost(formValues)
+        // if (result) {
+        //   setOpenModalPost(true)
+        // }
+      } else {
+        console.log('Vui long nhap day du thong tin')
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
-
-  // test
+  console.log('form', formValues)
 
   return (
     <div className="post">
@@ -276,75 +240,35 @@ const Post: React.FC = () => {
             setSelectedProvince={setSelectedProvince}
             selectedDistrict={selectedDistrict}
             selectedProvince={selectedProvince}
-            setSelectedWard={setSelectedWard}
-            selectedWard={selectedWard}
+            setWardId={setWardId}
+            wardId={wardId}
+            setAddress={setAddress}
+            address={address}
           />
-          <div className="postImages">
-            <input
-              type="file"
-              multiple
-              onChange={handleImageChange}
-              id="chooseImg"
-            />
 
-            <div>
-              {selectedImages.map((image, index) => (
-                <img
-                  key={index}
-                  src={URL.createObjectURL(image)}
-                  alt={`Image ${index}`}
-                />
-              ))}
-            </div>
-          </div>
+          <PostImage
+            selectedImages={selectedImages}
+            setSelectedImages={setSelectedImages}
+          />
+
           <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob} />
-
-          <FormControl sx={{ marginTop: '24px' }}>
-            <FormLabel
-              id="demo-row-radio-buttons-group-label"
-              component="legend"
-              sx={styleLabel}
-            >
-              Thời gian làm việc *:
-            </FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-            >
-              <FormControlLabel
-                value="LimitedTime"
-                control={<Radio id="limited-time-radio" />}
-                label="Có giới hạn thời gian"
-                htmlFor="limited-time-radio"
-              />
-              <FormControlLabel
-                value="UnlimitedTime"
-                control={<Radio id="limited-time-radio1" />}
-                label="Không giới hạn thời gian"
-                htmlFor="limited-time-radio1"
-              />
-            </RadioGroup>
-          </FormControl>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <FormControlLabel
-              label="Làm việc cuối tuần"
-              control={
-                <Checkbox
-                // checked={checked[0]} onChange={handleChange2}
-                />
-              }
-            />
-            <FormControlLabel
-              label="Làm việc từ xa"
-              control={
-                <Checkbox
-                // checked={checked[1]} onChange={handleChange3}
-                />
-              }
-            />
-          </Box>
-          <Box sx={{ display: 'flex', marginTop: '24px' }}>
+          <PostPeriodDate
+            setIsPeriodDate={setIsPeriodDate}
+            isPeriodDate={isPeriodDate}
+          />
+          <StyleWork
+            isWorkingWeekend={isWorkingWeekend}
+            isRemotely={isRemotely}
+            setIsWorkingWeekend={setIsWorkingWeekend}
+            setIsRemotely={setIsRemotely}
+          />
+          <RecruitmentTime
+            startTime={startTime}
+            endTime={endTime}
+            setStartTime={setStartTime}
+            setEndTime={setEndTime}
+          />
+          {/* <Box sx={{ display: 'flex', marginTop: '24px' }}>
             <div className="work-hours">
               <Typography
                 sx={styleLabel}
@@ -399,121 +323,21 @@ const Post: React.FC = () => {
                 sx={{ width: '100%' }}
               />
             </div>
-          </Box>
-          <Box sx={{ marginTop: '24px' }}>
-            <Typography
-              sx={styleLabel}
-              variant="body1"
-              component="label"
-              htmlFor="jobTitle"
-            >
-              Danh mục nghề *:
-            </Typography>
-            <Autocomplete
-              multiple // Cho phép chọn nhiều option
-              options={options}
-              getOptionLabel={(option) => option.label}
-              value={selectedOptions}
-              onChange={handleOptionChange}
-              // isOptionEqualToValue={isOptionEqualToValue}
-              onInputChange={handleInputChange}
-              style={{ marginTop: '4px' }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  // label="Select options"
-                  type="text"
-                  size="small"
-                  id="jobs"
-                />
-              )}
-            />
-          </Box>
+          </Box> */}
 
-          <PostFilterSalary setSalary={setSalary} openSalary={openSalary} />
-          <Box sx={{ marginTop: '24px' }}>
-            <FormControl sx={{ width: '100%' }}>
-              <FormLabel
-                id="demo-row-radio-buttons-group-label"
-                sx={styleLabel}
-              >
-                Trả lương theo *:
-              </FormLabel>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-                // value={selectedValue}
-                // onChange={handleChange}
-                sx={{ display: 'flex', flexDirection: 'column' }}
-              >
-                <FormControlLabel
-                  value="time"
-                  control={<Radio />}
-                  label="Giờ"
-                />
-                <FormControlLabel
-                  value="day"
-                  control={<Radio />}
-                  label="Ngày"
-                />
-                <FormControlLabel
-                  value="week"
-                  control={<Radio />}
-                  label="Tuần"
-                />
-                <FormControlLabel
-                  value="month"
-                  control={<Radio />}
-                  label="Tháng"
-                />
-                <FormControlLabel
-                  value="work"
-                  control={<Radio />}
-                  label="Công việc"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Box>
-          <Box sx={{ marginTop: '24px' }}>
-            {/* <Typography
-              sx={styleLabel}
-              variant="body1"
-              component="label"
-              htmlFor="startTime"
-            > */}
-            Số điện thoại liên hệ *:
-            {/* </Typography>
-            <PhoneInput
-              international
-              defaultCountry="VN"
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
-              style={{ marginTop: '4px' }}
-            /> */}
-          </Box>
-          <Box sx={{ marginTop: '24px' }}>
-            <Typography
-              sx={styleLabel}
-              variant="body1"
-              component="label"
-              htmlFor="startTime"
-            >
-              Mô tả công việc *:
-            </Typography>
-            <TextField
-              // className={classes.textarea}
-              sx={{ width: '100%', marginTop: '4px' }}
-              multiline
-              rows={6}
-              // label="Một số đặc điểm nhận diện công ty"
-              placeholder="Một số đặc điểm nhận diện công ty:
-              Tên công ty, địa chỉ, hình thức, mặt hàng kinh doanh
-              Vị trí, yêu cầu công việc
-              Mô tả yêu cầu kỹ năng, bằng cấp nếu có"
-            />
-          </Box>
+          <PostFilterSalary
+            setSalary={setSalary}
+            salary={salary}
+            setMoneyType={setMoneyType}
+            moneyType={moneyType}
+          />
 
+          <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
+          <PostCategoryIds
+            selectedOptions={selectedOptions}
+            setSelectedOptions={setSelectedOptions}
+          />
+          <Description setDescription={setDescription} />
           <button
             type="submit"
             onClick={handleSubmit}
@@ -523,6 +347,10 @@ const Post: React.FC = () => {
           </button>
         </form>
       </div>
+      <ModalPost
+        openModalPost={openModalPost}
+        setOpenModalPost={setOpenModalPost}
+      />
     </div>
   )
 }

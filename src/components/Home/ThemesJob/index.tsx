@@ -6,7 +6,7 @@ import ImageListItem from '@mui/material/ImageListItem'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 // import { url } from 'inspector'
-import Pagination from '@mui/material/Pagination'
+// import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { AxiosResponse } from 'axios'
 import Backdrop from '@mui/material/Backdrop'
@@ -22,7 +22,7 @@ import { MouseEvent, MouseEventHandler } from 'react'
 
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom'
-import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
+// import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
 
 // import component
@@ -38,7 +38,7 @@ import postApi from 'api/postApi'
 import themeApi from '../../../api/themesApi'
 
 import './style.scss'
-import { time } from 'console'
+
 // import icon
 import {
   EnvironmentFilled,

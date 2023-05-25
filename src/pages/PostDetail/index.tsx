@@ -3,19 +3,22 @@ import React from 'react'
 import moment from 'moment'
 import 'intl'
 import 'intl/locale-data/jsonp/en'
-import NaviBar from '../../components/Navbar/index'
+import NavBar from '../../components/Navbar/index'
 import { AxiosResponse } from 'axios'
 import Footer from '../../components/Footer/index'
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom'
 import postApi from '../../api/postApi'
-import locationApi from '../../api/locaitonApi'
+import locationApi from '../../api/locationApi'
 import ItemSuggest from './components/ItemSuggest'
 // @ts-ignore
 import { Carousel } from 'react-carousel-minimal'
 import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd'
 //@ts-ignore
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+//@ts-ignore
+import { useHomeState } from '../Home/HomeState'
+import { StatePropsCloseSlider } from 'pages/Home'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -28,7 +31,7 @@ import {
   DollarOutlined,
   CalendarOutlined,
   CreditCardOutlined,
-  SyncOutlined
+  SyncOutlined,
 } from '@ant-design/icons'
 
 import './style.scss'
@@ -41,6 +44,7 @@ interface ItemCategories {
   parent_category_id: Number
 }
 
+// state props
 interface PostNewest {
   id?: Number
   status?: Number
@@ -53,17 +57,9 @@ interface PostNewest {
   start_time?: number
   image?: string
 }
-// state props
-interface StatePropsCloseSlider {
-  openCollapse: boolean
-  setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
-  setHeight: React.Dispatch<React.SetStateAction<number>>
-  height: number
-  setOpenModalLogin: React.Dispatch<React.SetStateAction<boolean>>
-}
 // page view details post
 const Detail: React.FC = () => {
-  const { Search } = Input;
+  const { Search } = Input
   // test redux
   const state = useSelector((state: RootState) => state.profile)
   const dispatch = useDispatch()
@@ -72,6 +68,14 @@ const Detail: React.FC = () => {
     dispatch
   )
 
+  const {
+    openCollapse,
+    setOpenCollapse,
+    height,
+    setHeight,
+    openModalLogin,
+    setOpenModalLogin,
+  } = useHomeState()
 
   const componentRef = React.useRef<HTMLDivElement>(null)
   const componentRefJob = React.useRef<HTMLDivElement>(null)
@@ -83,32 +87,40 @@ const Detail: React.FC = () => {
   const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(null)
   const [automatic, setAutomatic] = React.useState<Boolean>(false)
 
-  // prosps navbar
-  const [openCollapse, setOpenCollapse] = React.useState(false)
+  const [api, contextHolder] = notification.useNotification()
 
-  const [height, setHeight] = React.useState<number>(0)
-
-  const [api, contextHolder] = notification.useNotification();
-
-  // const statePropsCloseSlider: StatePropsCloseSlider = {
-  //   openCollapse,
-  //   setOpenCollapse,
-  //   setHeight,
-  //   height,
-  //   setOpenModalLogin,
-  // }
+  const statePropsCloseSlider: StatePropsCloseSlider = {
+    openCollapse,
+    setOpenCollapse,
+    setHeight,
+    height,
+    setOpenModalLogin,
+  }
 
   const openNotification = () => {
     api.info({
       message: `Mở hoặc tải app để ứng tuyển công việc`,
-      description: <Input addonBefore="Link" addonAfter={<CopyToClipboard text={post?.data.share_link} >
-        <Tooltip trigger="click" placement="topRight" title={"Đã copy link "} arrow={true}><div style={{ cursor: "pointer" }}>Copy</div></Tooltip>
-      </CopyToClipboard>}
-        defaultValue={post?.data.share_link} />,
-      placement: "topRight"
-
-    });
-  };
+      description: (
+        <Input
+          addonBefore="Link"
+          addonAfter={
+            <CopyToClipboard text={post?.data.share_link}>
+              <Tooltip
+                trigger="click"
+                placement="topRight"
+                title={'Đã copy link '}
+                arrow={true}
+              >
+                <div style={{ cursor: 'pointer' }}>Copy</div>
+              </Tooltip>
+            </CopyToClipboard>
+          }
+          defaultValue={post?.data.share_link}
+        />
+      ),
+      placement: 'topRight',
+    })
+  }
 
   const getPostById = async () => {
     try {
@@ -199,7 +211,7 @@ const Detail: React.FC = () => {
     <>
       {automatic && (
         <div className="detail">
-          {/* <NaviBar {...statePropsCloseSlider} /> */}
+          <NavBar {...statePropsCloseSlider} />
           <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
@@ -330,9 +342,9 @@ const Detail: React.FC = () => {
                   <div className="div-detail-row">
                     <SyncOutlined style={{ color: '#575757' }} />
 
-                    <p style={{ marginLeft: 10, fontStyle: "italic" }}>{`Cập nhật  ${post?.data.created_at_text}`} </p>
-
-
+                    <p style={{ marginLeft: 10, fontStyle: 'italic' }}>
+                      {`Cập nhật  ${post?.data.created_at_text}`}{' '}
+                    </p>
                   </div>
                   <>
                     {contextHolder}
@@ -344,7 +356,6 @@ const Detail: React.FC = () => {
                       Ứng tuyển
                     </Button>
                   </>
-
                 </div>
               </div>
               <div className="div-description-mo">

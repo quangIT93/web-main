@@ -147,7 +147,7 @@ export const NavFilter = styled('div')({
   paddingBottom: '12px',
 })
 
-export const ChoosesCarreer = styled('div')(({ theme }) => ({
+export const ChoosesCarreer = styled('div')(({}) => ({
   border: '1px solid #ccc',
   width: '260px',
   padding: '8px',
