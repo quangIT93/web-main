@@ -7,13 +7,12 @@ import TextField from '@mui/material/TextField'
 import FormValues from '../../../pages/Post/index'
 
 interface PropsPostCompanyJob {
-  setFormValues: React.Dispatch<React.SetStateAction<any>>
   setTitleJob: React.Dispatch<React.SetStateAction<any>>
   setCompanyName: React.Dispatch<React.SetStateAction<any>>
 }
 
 const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
-  const { setFormValues, setTitleJob, setCompanyName } = props
+  const { setTitleJob, setCompanyName } = props
 
   const handleChangeTitleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleJob(e.target.value)

@@ -5,7 +5,12 @@ import { FormValues } from '../pages/Post'
 const postApi = {
   createPost: (newPost: FormValues) => {
     const URL = `posts`
-    return axiosClient.post(URL, newPost)
+    return axiosClient.post(URL, newPost, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        ' Content-Type': 'multipart/form-data',
+      },
+    })
   },
 
   getById: (params: number) => {

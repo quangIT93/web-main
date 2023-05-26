@@ -1,4 +1,9 @@
 .wrapTimeDay {
   display: flex;
   flex-direction: column;
+  width: 30%;
+
+  input {
+    padding: 12px;
+  }
 }

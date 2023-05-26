@@ -241,6 +241,33 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <RightOutlined />
         </div>
       </button>
+      <div className="sub-login">
+        <div className="sub-login_info">
+          <img src="" alt="" />
+          <div>
+            <h2>Thái Minh Quang</h2>
+            <span>vanan.iworks@gmail.com</span>
+          </div>
+        </div>
+        <div className="sub-login_items">
+          <div className="sub-login_item">
+            <BusinessCenterOutlinedIcon />
+            <span>Cập nhật thông tin</span>
+          </div>
+          <div className="sub-login_item">
+            <BusinessCenterOutlinedIcon />
+            <span>Lịch sử</span>
+          </div>
+          <div className="sub-login_item">
+            <BusinessCenterOutlinedIcon />
+            <span>Đổi mật khẩu</span>
+          </div>
+          <div className="sub-login_item">
+            <BusinessCenterOutlinedIcon />
+            <span>Đăng xuất</span>
+          </div>
+        </div>
+      </div>
     </div>,
   ]
 

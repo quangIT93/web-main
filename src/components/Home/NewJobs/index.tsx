@@ -262,7 +262,7 @@ const NewJobs: React.FC = () => {
               <CaretDownFilled />
             </Space>
           </Stack>
-          <Backdrop
+          {/* <Backdrop
             sx={{
               color: '#0d99ff ',
               zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -271,7 +271,7 @@ const NewJobs: React.FC = () => {
             onClick={handleClose}
           >
             <CircularProgress color="inherit" />
-          </Backdrop>
+          </Backdrop> */}
         </Box>
         // )
       }

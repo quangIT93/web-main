@@ -28,6 +28,7 @@ import SalaryType from '#components/Post/SalaryType'
 import Description from '#components/Post/Description'
 import PostImage from '#components/Post/PostImage'
 import PostCategoryIds from '#components/Post/PostCategoryIds'
+import PostTime from '#components/Post/PostTime'
 //@ts-ignore
 import { styleLabel } from '#components/Post/CssPost'
 import './style.scss'
@@ -36,29 +37,34 @@ import './style.scss'
 import postApi from 'api/postApi'
 import { Form } from 'antd'
 
-const posts1 = {
+const initPost = {
   title: '',
   companyName: '',
-  wardId: '',
+  provinceId: null,
+  districtId: null,
+  wardId: null,
   address: '',
+  latitude: null,
+  longitude: null,
   isDatePeriod: 0,
-  startDate: 0,
-  endDate: 0,
-  startTime: 0,
-  endTime: 0,
+  startDate: null,
+  endDate: null,
+  startTime: new Date(1970, 0, 2, 0, 0).getTime(),
+  endTime: new Date(1970, 0, 2, 0, 0).getTime(),
   isWorkingWeekend: 0,
   isRemotely: 0,
-  salaryMin: 0,
-  salaryMax: 0,
-  salaryType: 0,
-  moneyType: 0,
-  jobTypeId: 0,
+  salaryMin: 1000,
+  salaryMax: 1000,
+  salaryType: 1,
+  moneyType: 1,
   description: '',
   phoneNumber: '',
-  email: '',
-  expiredDate: 0,
-  categoryIds: [],
+  categories: [],
   images: [],
+  jobTypeId: null,
+  companyResourceId: null,
+  url: '',
+  email: '',
 }
 
 interface ICategoryIds {
@@ -69,11 +75,15 @@ interface ICategoryIds {
 export interface FormValues {
   title: string
   companyName: string
+  provinceId: string | null
+  districtId: string | null
   wardId: string | null
   address: string
   isDatePeriod: number
-  startDate: number
-  endDate: number
+  startDate: number | null
+  endDate: number | null
+  latitude: number
+  longitude: number
   startTime: number
   endTime: number
   isWorkingWeekend: number
@@ -82,13 +92,14 @@ export interface FormValues {
   salaryMax: number
   salaryType: number
   moneyType: number
-  jobTypeId: number
+  jobTypeId: number | null
   description: string
   phoneNumber: string
   email: string
-  expiredDate: number
-  categoryIds: ICategoryIds[]
+  categoryIds: string[]
   images: string[]
+  // companyResourceId: string
+  url: null
 }
 
 interface IPostAddress {
@@ -104,30 +115,35 @@ interface Option {
 }
 
 const Post: React.FC = () => {
-  const [formValues, setFormValues] = useState<FormValues>({
+  const formValues = {
     title: '',
     companyName: '',
-    wardId: '',
+    provinceId: null,
+    districtId: null,
+    wardId: null,
     address: '',
+    latitude: null,
+    longitude: null,
     isDatePeriod: 0,
-    startDate: 0,
-    endDate: 0,
-    startTime: 0,
-    endTime: 0,
+    startDate: null,
+    endDate: null,
+    startTime: new Date(1970, 0, 2, 0, 0).getTime(),
+    endTime: new Date(1970, 0, 2, 0, 0).getTime(),
     isWorkingWeekend: 0,
     isRemotely: 0,
-    salaryMin: 0,
-    salaryMax: 0,
-    salaryType: 0,
-    moneyType: 0,
-    jobTypeId: 0,
+    salaryMin: 1000,
+    salaryMax: 1000,
+    salaryType: 1,
+    moneyType: 1,
     description: '',
     phoneNumber: '',
-    email: '',
-    expiredDate: 0,
-    categoryIds: [],
+    categories: [],
     images: [],
-  })
+    jobTypeId: null,
+    // companyResourceId: null,
+    url: null,
+    email: '',
+  }
 
   const [titleJob, setTitleJob] = useState<string>('')
   const [companyName, setCompanyName] = useState<string>('')
@@ -135,8 +151,18 @@ const Post: React.FC = () => {
   const [selectedProvince, setSelectedProvince] = useState<string | null>('')
   const [typeJob, setTypeJob] = useState(1)
   const [isPeriodDate, setIsPeriodDate] = useState<number>(0)
-  const [startTime, setStartTime] = React.useState<any>(dayjs('2023-01-01'))
-  const [endTime, setEndTime] = React.useState<any>(dayjs('2023-01-30'))
+  const [startTime, setStartTime] = React.useState<any>(
+    new Date(1970, 0, 2, 0, 0).getTime()
+  )
+  const [endTime, setEndTime] = React.useState<any>(
+    new Date(1970, 0, 2, 0, 0).getTime()
+  )
+  const [startDate, setStartDate] = React.useState<any>(
+    new Date(1970, 0, 2, 0, 0).getTime()
+  )
+  const [endDate, setEndDate] = React.useState<any>(
+    new Date(1970, 0, 2, 0, 0).getTime()
+  )
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0)
   const [isRemotely, setIsRemotely] = React.useState<number>(0)
   const [salary, setSalary] = React.useState<number[]>([0, 100000000])
@@ -148,7 +174,9 @@ const Post: React.FC = () => {
   const [wardId, setWardId] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [selectedImages, setSelectedImages] = useState<string[]>([])
-
+  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([])
+  const [latitude, SetLatitude] = useState<number>(10.761955)
+  const [longitude, SetLongitude] = useState<number>(106.70183)
   // modal
   const [openModalPost, setOpenModalPost] = React.useState(false)
 
@@ -178,43 +206,65 @@ const Post: React.FC = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent
   ) => {
     e.preventDefault()
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      title: titleJob,
-      companyName: companyName,
-      wardId: wardId,
-      jobTypeId: typeJob,
-      isDatePeriod: isPeriodDate,
-      startTime,
-      endTime,
-      salaryMin: salary[0],
-      salaryMax: salary[1],
-      isWorkingWeekend,
-      isRemotely,
-      moneyType,
-      salaryType,
-      description,
-      address,
-      images: selectedImages,
-      categoryIds: selectedOptions,
+    const formData = new FormData()
+    formData.append('title', titleJob)
+    formData.append('companyName', companyName)
+    formData.append('wardId', wardId)
+    formData.append('jobTypeId', String(typeJob))
+    formData.append('isDatePeriod', String(isPeriodDate))
+    formData.append('startDate', startDate)
+    formData.append('endDate', endDate)
+    formData.append('startTime', startTime)
+    formData.append('endTime', endTime)
+    formData.append('salaryMin', String(salary[0]))
+    formData.append('salaryMax', String(salary[1]))
+    formData.append('isWorkingWeekend', String(isWorkingWeekend))
+    formData.append('isRemotely', String(isRemotely))
+    formData.append('moneyType', String(moneyType))
+    formData.append('salaryType', String(salaryType))
+    formData.append('description', description.trim())
+    formData.append('address', String(address))
+    console.log('selectedFiles', selectedFiles)
+    const x = ['354']
 
-      // Các trường khác bạn muốn cập nhật tương tự
-    }))
-    if (formValues) createNewPost()
+    x.forEach((category: any) => {
+      formData.append('categoryIds', category)
+    })
+
+    selectedFiles.forEach((image: any) => {
+      formData.append('images', image.image)
+    })
+
+    // NEW FIELD
+    formData.append('email', formValues.email)
+    // formData.append('companyResourceId', String(formValues.companyResourceId))
+    formData.append('url', String(formValues.url))
+    formData.append('latitude', String(latitude))
+    formData.append('longitude', String(longitude))
+
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`)
+    }
+
+    if (formData) {
+      createNewPost(formData)
+    }
   }
 
   // post newPost
-  const createNewPost = async () => {
+  const createNewPost = async (formData: any) => {
     try {
-      const areAllFieldsFilled = Object.values(formValues).every(
+      const areAllFieldsFilled = Object.values(formData).every(
         (fieldValue) => fieldValue !== ''
       )
+
       if (areAllFieldsFilled) {
         console.log('cho phep submit')
-        // const result = await postApi.createPost(formValues)
-        // if (result) {
-        //   setOpenModalPost(true)
-        // }
+        const result = await postApi.createPost(formData)
+        if (result) {
+          console.log('resultresult', result)
+          // setOpenModalPost(true)
+        }
       } else {
         console.log('Vui long nhap day du thong tin')
       }
@@ -222,7 +272,6 @@ const Post: React.FC = () => {
       console.error(error)
     }
   }
-  console.log('form', formValues)
 
   return (
     <div className="post">
@@ -231,7 +280,6 @@ const Post: React.FC = () => {
         <h1>Tạo bài đăng tuyển dụng</h1>
         <form onSubmit={handleSubmit}>
           <PostJobCompany
-            setFormValues={setFormValues}
             setTitleJob={setTitleJob}
             setCompanyName={setCompanyName}
           />
@@ -249,6 +297,8 @@ const Post: React.FC = () => {
           <PostImage
             selectedImages={selectedImages}
             setSelectedImages={setSelectedImages}
+            selectedFiles={selectedFiles}
+            setSelectedFiles={setSelectedFiles}
           />
 
           <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob} />
@@ -262,11 +312,17 @@ const Post: React.FC = () => {
             setIsWorkingWeekend={setIsWorkingWeekend}
             setIsRemotely={setIsRemotely}
           />
-          <RecruitmentTime
+          <PostTime
             startTime={startTime}
             endTime={endTime}
             setStartTime={setStartTime}
             setEndTime={setEndTime}
+          />
+          <RecruitmentTime
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
           />
           {/* <Box sx={{ display: 'flex', marginTop: '24px' }}>
             <div className="work-hours">
