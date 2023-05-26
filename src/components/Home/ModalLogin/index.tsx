@@ -183,7 +183,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true)
         }
       }
-    } catch (error) {}
+    } catch (error) { }
 
     console.log('facebook', response)
   }
@@ -266,7 +266,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
   return (
     <Modal
-      open={openModalLogin && !localStorage.getItem('accessToken')}
+      open={openModalLogin}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -373,7 +373,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
-                // cookiePolicy={'single_host_origin'}
+              // cookiePolicy={'single_host_origin'}
               />
 
               <div

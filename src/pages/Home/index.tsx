@@ -151,10 +151,10 @@ const Home: React.FC = () => {
         <ThemesJob />
       </div>
       <Footer windowWidth={windowWidth} />
-      <ModalLogin
+      {/* <ModalLogin
         openModalLogin={openModalLogin}
         setOpenModalLogin={setOpenModalLogin}
-      />
+      /> */}
     </div>
   )
 }

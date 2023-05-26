@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { useNavigate } from 'react-router-dom'
 
+import ModalLogin from "../../components/Home/ModalLogin"
+
 import { Link } from 'react-router-dom'
 
 // @ts-ignore
@@ -47,6 +49,8 @@ import CareerFilterSubnav from './components/CareerFilterSubnav'
 
 import { Avatar } from 'antd'
 
+import profileApi from 'api/profileApi'
+
 import {
   Container,
   Wrapper,
@@ -76,12 +80,15 @@ interface propsCloseSlider {
 }
 
 const Navbar: React.FC<propsCloseSlider> = (props) => {
-  const { openCollapse, setOpenCollapse, setHeight, setOpenModalLogin } = props
+  const { openCollapse, setOpenCollapse, setHeight } = props
   const [salary, setSalary] = React.useState<number[]>([])
   const [openLocation, setOpenLocation] = React.useState(false)
   const [openCareer, setOpenCareer] = React.useState(false)
   const [openSalary, setOpenSalary] = React.useState(false)
   const [showTap, setshowTap] = React.useState(false)
+
+  const [openModalLogin, setOpenModalLogin] = React.useState(false)
+  const [openInfoUser, setOpenInfoUser] = React.useState(false)
 
   const navigate = useNavigate()
 
@@ -153,6 +160,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         event.target !== document.querySelector(`.subnav-chooses__carreer`)
       ) {
         setOpenLocation(false)
+        // setOpenInfoUser(!openInfoUser)
       }
     }
 
@@ -169,6 +177,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   useEffect(() => {
     fecthDataProfile()
+    console.log("test access")
   }, [localStorage.getItem('accessToken')])
 
   const ref = useRef<HTMLDivElement>(null)
@@ -210,8 +219,18 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   }
 
   // login
-  const handleClickLogin = () => {
-    setOpenModalLogin(true)
+  const handleClickLogin = async () => {
+    const response = await profileApi.getProfile()
+
+
+    if (response.data) {
+      console.log("re", response.data)
+      setOpenInfoUser(!openInfoUser)
+    } else {
+      setOpenInfoUser(false)
+      setOpenModalLogin(true)
+    }
+
   }
   const buttons = [
     <Link to="/post" target="_blank">
@@ -241,38 +260,45 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <RightOutlined />
         </div>
       </button>
-      <div className="sub-login">
-        <div className="sub-login_info">
-          <img src="" alt="" />
-          <div>
-            <h2>Thái Minh Quang</h2>
-            <span>vanan.iworks@gmail.com</span>
+      {
+        openInfoUser && (
+          <div className="sub-login">
+            <div className="sub-login_info">
+              <img src="" alt="" />
+              <div>
+                <h2>Thái Minh Quang</h2>
+                <span>vanan.iworks@gmail.com</span>
+              </div>
+            </div>
+            <div className="sub-login_items">
+              <div className="sub-login_item">
+                <BusinessCenterOutlinedIcon />
+                <span>Cập nhật thông tin</span>
+              </div>
+              <div className="sub-login_item">
+                <BusinessCenterOutlinedIcon />
+                <span>Lịch sử</span>
+              </div>
+              <div className="sub-login_item">
+                <BusinessCenterOutlinedIcon />
+                <span>Đổi mật khẩu</span>
+              </div>
+              <div className="sub-login_item">
+                <BusinessCenterOutlinedIcon />
+                <span>Đăng xuất</span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="sub-login_items">
-          <div className="sub-login_item">
-            <BusinessCenterOutlinedIcon />
-            <span>Cập nhật thông tin</span>
-          </div>
-          <div className="sub-login_item">
-            <BusinessCenterOutlinedIcon />
-            <span>Lịch sử</span>
-          </div>
-          <div className="sub-login_item">
-            <BusinessCenterOutlinedIcon />
-            <span>Đổi mật khẩu</span>
-          </div>
-          <div className="sub-login_item">
-            <BusinessCenterOutlinedIcon />
-            <span>Đăng xuất</span>
-          </div>
-        </div>
-      </div>
+        )
+      }
+
     </div>,
   ]
 
   return (
     <Container className="nav" ref={ref}>
+      <ModalLogin openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin} />
       <Wrapper>
         <Left>
           <Logo />

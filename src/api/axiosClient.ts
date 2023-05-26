@@ -42,21 +42,23 @@ axiosClient.interceptors.response.use(
         axios.post(`${BASE_URL}/reset-access-token`,{
           refreshToken: refreshToken,
         }).then(response => {
+          console.log("axios",response)
 
           if(response.status === 200){
             localStorage.setItem(
               'accessToken',
-              response.data.accessToken
+              response.data.data.accessToken
           );
           originalRequest.headers[
             'Authorization'
-        ] = `Bearer ${response.data.accessToken}`;
+        ] = `Bearer ${response.data.data.accessToken}`;
 
         return axios(originalRequest);
           }
-        }).catch(() => {
-          localStorage.clear();
-          window.location.reload();
+        }).catch((error) => {
+          // localStorage.clear();
+          // window.location.reload();
+          console.log("dfsd")
       });
     }
 
