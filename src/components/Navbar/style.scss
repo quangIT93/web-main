@@ -407,6 +407,35 @@
   }
 
   .div-nav-right {
+    .actions-login {
+      position: relative;
+      .sub-login {
+        position: absolute;
+        background-color: #ffffff;
+        box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.25);
+        padding: 24px;
+        right: 0px;
+        margin-top: 12px;
+        border-radius: 20px;
+        width: 308px;
+
+        .sub-login_info {
+        }
+
+        .sub-login_items {
+          margin-top: 24px;
+          .sub-login_item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            span {
+              padding-left: 8px;
+            }
+          }
+        }
+      }
+    }
+
     @include breakpoint(mobile) {
       display: none;
     }

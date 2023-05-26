@@ -1,0 +1,19 @@
+.wrap-time_left,
+.wrap-time_right {
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  width: 30%;
+}
+
+.wrap-time_right {
+  padding-left: 16px;
+}
+
+.MuiInputBase-input.MuiOutlinedInput-input.Mui-readOnly {
+  padding: 12px;
+}
+
+.MuiDialogContent-root.css-9yjdhh-MuiDialogContent-root {
+  height: 500px;
+}

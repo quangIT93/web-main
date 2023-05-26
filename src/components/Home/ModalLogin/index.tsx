@@ -14,11 +14,11 @@ import signInEmailApi from 'api/authApi'
 //@ts-ignore
 import OtpInput from 'react-otp-input'
 //@ts-ignore
-import FacebookLogin from '@greatsumini/react-facebook-login';
-import { FacebookLoginClient } from '@greatsumini/react-facebook-login';
-import GoogleLogin from '@leecheuk/react-google-login';
+import FacebookLogin from '@greatsumini/react-facebook-login'
+import { FacebookLoginClient } from '@greatsumini/react-facebook-login'
+import GoogleLogin from '@leecheuk/react-google-login'
 
-import { gapi } from 'gapi-script';
+import { gapi } from 'gapi-script'
 
 // import component
 import CountdownTimer from './components/CountdownTimer'
@@ -65,7 +65,6 @@ interface AuthReponse {
   accountId: string | null
   accessToken: string | null
   refreshToken: string | null
-
 }
 
 const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
@@ -75,9 +74,13 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     return email.trim() !== '' && emailRegex.test(email)
   }
   // app id facebook
-  const appId = process.env.REACT_APP_FACEBOOK_APP_ID ? process.env.REACT_APP_FACEBOOK_APP_ID : ""
+  const appId = process.env.REACT_APP_FACEBOOK_APP_ID
+    ? process.env.REACT_APP_FACEBOOK_APP_ID
+    : ''
   // id google client
-  const googleClient = process.env.REACT_APP_GOOGLE_CLIENT_ID ? process.env.REACT_APP_GOOGLE_CLIENT_ID : ""
+  const googleClient = process.env.REACT_APP_GOOGLE_CLIENT_ID
+    ? process.env.REACT_APP_GOOGLE_CLIENT_ID
+    : ''
 
   const dispatch = useDispatch()
   const { ActionSignInEmail } = bindActionCreators(actionCreators, dispatch)
@@ -174,24 +177,22 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // handle login facebook
   const responseFacebook = async (response: any) => {
     try {
-      if (response.userID != "") {
+      if (response.userID != '') {
         const result = await authApi.signInFacebook(response.accessToken)
         if (result) {
           fetchDataProfile(result.data, true)
         }
       }
-    } catch (error) {
+    } catch (error) {}
 
-    }
-
-    console.log("facebook", response);
+    console.log('facebook', response)
   }
 
   const responseGoogle = async (response: any) => {
     try {
-      if (response.tokenId != "") {
-        const result = await authApi.signInGoogle(response.tokenObj.id_token
-        )
+      if (response.tokenId != '') {
+        console.log('response.tokenID', response.tokenId)
+        const result = await authApi.signInGoogle(response.tokenObj.id_token)
         console.log(result)
         if (result) {
           fetchDataProfile(result.data, true)
@@ -201,8 +202,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       console.log(error)
     }
 
-    console.log("gg", response);
-
+    console.log('gg', response)
   }
 
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
@@ -219,7 +219,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
   // isVerifiedOtp facebook and google =true
   const fetchDataProfile = async (auth: AuthReponse, isVerifyOtp?: boolean) => {
-
     if (isVerifyOtp) {
       console.log('Xác thực OTP thành công', authState)
       // Thực hiện các hành động sau khi xác thực thành công
@@ -243,7 +242,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       console.log('Lỗi xác thực ', authState)
       // Thực hiện các hành động sau khi xác thực thất bại
     }
-
   }
 
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
@@ -251,17 +249,16 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     fetchDataProfile(authState, authState.isverifyOtp)
   }, [authState.isverifyOtp])
 
-
   useEffect(() => {
-    FacebookLoginClient.init({ appId });
+    FacebookLoginClient.init({ appId })
     const start = () => {
       gapi.client.init({
         clientId: googleClient,
-        scope: ""
+        scope: '',
       })
     }
     gapi.load('client:auth2', start)
-  }, []);
+  }, [])
 
   const handleResendCode = () => {
     setResendCode(true)
@@ -269,7 +266,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
   return (
     <Modal
-      open={openModalLogin}
+      open={openModalLogin && !localStorage.getItem('accessToken')}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -338,22 +335,28 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 autoLoad={false}
                 onSuccess={responseFacebook}
                 render={(renderProps: any) => (
-                  <div className="bnt-login_google bnt-login" onClick={renderProps.onClick}>
+                  <div
+                    className="bnt-login_google bnt-login"
+                    onClick={renderProps.onClick}
+                  >
                     <img
                       src="loginLogo/facebookOriginal.png"
                       alt=""
                       width={30}
                       height={30}
                     />
-                    <p className="text-login ">Đăng nhập bằng tài khoản Facebook</p>
+                    <p className="text-login ">
+                      Đăng nhập bằng tài khoản Facebook
+                    </p>
                   </div>
                 )}
               />
               <GoogleLogin
                 clientId={googleClient}
-                scope='profile email'
-                render={renderProps => (
-                  <div className="bnt-login_google bnt-login"
+                scope="profile email"
+                render={(renderProps) => (
+                  <div
+                    className="bnt-login_google bnt-login"
                     onClick={renderProps.onClick}
                   >
                     <img
@@ -362,22 +365,25 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                       width={30}
                       height={30}
                     />
-                    <p className="text-login">Đăng nhập bằng tài khoản Google</p>
+                    <p className="text-login">
+                      Đăng nhập bằng tài khoản Google
+                    </p>
                   </div>
                 )}
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
-              // cookiePolicy={'single_host_origin'}
+                // cookiePolicy={'single_host_origin'}
               />
 
-
-
-              <div className="bnt-login_google bnt-login" onClick={(e) => {
-                FacebookLoginClient.getLoginStatus((response) => {
-                  console.log('logout completed!', response);
-                })
-              }}>
+              <div
+                className="bnt-login_google bnt-login"
+                onClick={(e) => {
+                  FacebookLoginClient.getLoginStatus((response) => {
+                    console.log('logout completed!', response)
+                  })
+                }}
+              >
                 <img
                   src="loginLogo/logoApple.png"
                   alt=""

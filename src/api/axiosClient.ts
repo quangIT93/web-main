@@ -26,13 +26,12 @@ axiosClient.interceptors.request.use(async (config) => {
 
 axiosClient.interceptors.response.use(
   (response) => {
-    console.log(response)
     if (response && response.data) {
       return response.data
     }
 
     const accessToken = window.localStorage.getItem('accessToken') || ''
-    console.log('accessToken', accessToken)
+
     response.headers.Authorization = `Bearer ${accessToken}`
     return response
   },
