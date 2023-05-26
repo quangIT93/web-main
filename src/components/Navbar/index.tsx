@@ -220,11 +220,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   // login
   const handleClickLogin = async () => {
-    const response = await profileApi.getProfile()
-
-
-    if (response.data) {
-      console.log("re", response.data)
+    // await fecthDataProfile()
+    if (dataProfile.profile) {
       setOpenInfoUser(!openInfoUser)
     } else {
       setOpenInfoUser(false)
