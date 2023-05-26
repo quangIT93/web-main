@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack'
 import { AxiosResponse } from 'axios'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 // @ts-ignore
 import moment from 'moment'
@@ -47,7 +48,7 @@ import {
   CaretDownFilled,
 } from '@ant-design/icons'
 
-import { Space } from 'antd'
+import { Space, Tooltip } from 'antd'
 // interface item post themes
 
 interface PostTheme {
@@ -64,6 +65,13 @@ interface PostTheme {
   salary_max: number
   salary_min: number
   salary_type: string
+  resource: {
+    company_icon: string
+  }
+  job_type: {
+    job_type_name: string
+  }
+  created_at_text: string
 }
 
 const ThemesJob: React.FC = () => {
@@ -183,7 +191,7 @@ const ThemesJob: React.FC = () => {
                         style={{
                           width: '120px',
                           maxWidth: 'auto',
-                          maxHeight: '120px',
+                          maxHeight: '150px',
                           borderRadius: 10,
                           height: '100% ',
                         }}
@@ -192,22 +200,26 @@ const ThemesJob: React.FC = () => {
                         style={{ padding: '0', marginLeft: '12px' }}
                         className="div-cart-item-post"
                       >
-                        <Typography
-                          gutterBottom
-                          variant="h6"
-                          component="div"
-                          sx={{ fontSize: '16px', margin: 0 }}
-                        >
-                          {item?.title}
-                        </Typography>
-                        <Typography
-                          gutterBottom
-                          variant="h1"
-                          component="div"
-                          sx={{ fontSize: '12px' }}
-                        >
-                          {item.company_name}
-                        </Typography>
+                        <Tooltip placement="top" title={item.title} >
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            component="div"
+                            sx={{ fontSize: '15px', margin: 0, fontWeight: "bold" }}
+                          >
+                            {item?.title.length > 37 ? `${item.title.substring(0, 35)} ...` : item.title}
+                          </Typography>
+                        </Tooltip>
+                        <Tooltip placement="top" title={item.company_name} >
+                          <Typography
+                            gutterBottom
+                            variant="h1"
+                            component="div"
+                            sx={{ fontSize: '12px' }}
+                          >
+                            {item?.company_name.length > 37 ? `${item.company_name.substring(0, 37)} ...` : item.company_name}
+                          </Typography>
+                        </Tooltip>
                         <div
                           style={{
                             display: 'flex',
@@ -240,7 +252,7 @@ const ThemesJob: React.FC = () => {
                             justifyContent: 'center',
                           }}
                         >
-                          <EuroCircleFilled className="icon-cart-item-post" />
+                          <AttachMoneyIcon sx={{ fontSize: 20, marginLeft: "-2px", marginRight: "2px", color: "#575757" }} />
                           <Typography variant="body2" color="text.secondary">
                             {new Intl.NumberFormat('en-US').format(
                               item.salary_min
@@ -251,13 +263,23 @@ const ThemesJob: React.FC = () => {
                             ) + `/${item.salary_type}`}
                           </Typography>
                         </div>
+                        <div
+                          style={{
+                            marginTop: 5
+                          }}
+                        >
+                          <p style={{ color: "#AAAAAA", fontSize: 13, fontStyle: "italic" }}>{item.created_at_text}</p>
+                        </div>
                       </div>
                     </ImageListItem>
-                    <CardActions sx={{ position: 'relative' }}>
+                    <Space style={{ justifyContent: "space-between" }} direction='vertical' align='center'>
                       <BookmarkBorderOutlinedIcon
-                        sx={{ position: 'absolute', top: 0, right: 0 }}
+                        sx={{ top: 0, right: 0 }}
                       />
-                    </CardActions>
+                      <img className='img-resource-company' src={item.resource.company_icon} />
+                      <p style={{ fontSize: 13, fontStyle: "italic" }}>{item.job_type.job_type_name}</p>
+
+                    </Space>
                   </Card>
                 </Grid>
               ))}
@@ -293,7 +315,7 @@ const ThemesJob: React.FC = () => {
             <Backdrop
               sx={{
                 color: '#0d99ff ',
-                zIndex: (theme) => theme.zIndex.drawer + 1,
+                zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
               onClick={handleClose}

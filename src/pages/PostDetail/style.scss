@@ -89,7 +89,7 @@
       padding: 20px 20px;
       border-radius: 10px;
       box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
-      height: 590px;
+      height: 630px;
       @include breakpoint(tablet) {
         width: 48%;
         margin-left: 0px;
@@ -115,10 +115,10 @@
         width: 100%;
         h3 {
           color: #575757;
-          font-size: 16px;
+          font-size: 14px;
         }
         h2 {
-          font-size: 18px;
+          font-size: 16px;
           color: #001424;
           margin-bottom: 5px;
           @include breakpoint(largeTablet) {
@@ -150,11 +150,12 @@
           margin-top: 10px;
           p {
             color: #575757;
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 5px;
           }
-          h4 {
+          h5 {
             color: #001424;
+            font-size: 14px;
             @include breakpoint(tablet) {
               font-size: 14px;
             }
@@ -280,7 +281,7 @@
       .carousel-image {
         vertical-align: middle;
         width: 700px;
-        height: 590px;
+        height: 630px;
 
         @include breakpoint(tablet) {
           width: 750px;

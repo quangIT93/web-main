@@ -19,7 +19,7 @@ const signInEmailApi = {
   signInGoogle: (idToken:string) => {
     const URL = `sign-in/google`
     return axiosClient.post(URL, { idToken:idToken,
-      isIOS:true })
+      isWeb:true })
   },
 }
 

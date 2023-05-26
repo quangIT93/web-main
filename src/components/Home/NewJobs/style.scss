@@ -48,7 +48,7 @@
   font-size: 15px;
 }
 .MuiTypography-h1 {
-  font-size: 16px !important;
+  font-size: 15px !important;
   @include breakpoint(mobile) {
     font-size: 12px !important;
   }
@@ -69,4 +69,8 @@
   p {
     color: #575757;
   }
+}
+.img-resource-company {
+  height: 40px;
+  border-radius: 5px;
 }

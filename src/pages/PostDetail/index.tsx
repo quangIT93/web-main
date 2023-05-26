@@ -32,6 +32,8 @@ import {
   CalendarOutlined,
   CreditCardOutlined,
   SyncOutlined,
+  DesktopOutlined,
+  SlidersOutlined
 } from '@ant-design/icons'
 
 import './style.scss'
@@ -127,6 +129,7 @@ const Detail: React.FC = () => {
       const result = await postApi.getById(Number(searchParams.get('post-id')))
       if (result) {
         setPost(result)
+        console.log("post detail", result)
       }
       const list = result?.data.categories.map(
         (category: any) => category.child_category_id
@@ -279,7 +282,15 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Địa chỉ</p>
-                      <h4>{post?.data.address}</h4>
+                      <h5>{post?.data.address}</h5>
+                    </div>
+                  </div>
+                  <div className="div-detail-row">
+                    <SlidersOutlined style={{ color: '#575757' }} />
+                    <div style={{ marginLeft: '10px' }}>
+                      {' '}
+                      <p>Loại công viêc</p>
+                      <h5>{post?.data.job_type.job_type_name}</h5>
                     </div>
                   </div>
                   <div className="div-detail-row">
@@ -287,13 +298,13 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Giờ làm việc</p>
-                      <h4>
+                      <h5>
                         {moment(new Date(post?.data.start_time)).format(
                           'HH:mm'
                         )}{' '}
                         -{' '}
                         {moment(new Date(post?.data.end_time)).format('HH:mm')}
-                      </h4>
+                      </h5>
                     </div>
                   </div>
 
@@ -302,11 +313,11 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Làm việc cuối tuần</p>
-                      <h4>
+                      <h5>
                         {post?.data.is_working_weekend == 0
-                          ? 'Có làm việc cuối tuần'
-                          : 'Khong làm việc cuối tuần'}
-                      </h4>
+                          ?
+                          'Không làm việc cuối tuần' : 'Có làm việc cuối tuần'}
+                      </h5>
                     </div>
                   </div>
                   <div className="div-detail-row">
@@ -314,7 +325,7 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Mức lương</p>
-                      <h4>
+                      <h5>
                         {new Intl.NumberFormat('en-US').format(
                           post?.data.salary_min
                         ) + ` ${post?.data.money_type_text}`}{' '}
@@ -322,7 +333,7 @@ const Detail: React.FC = () => {
                         {new Intl.NumberFormat('en-US').format(
                           post?.data.salary_max
                         ) + ` ${post?.data.money_type_text}`}
-                      </h4>
+                      </h5>
                     </div>
                   </div>
                   <div className="div-detail-row">
@@ -332,19 +343,30 @@ const Detail: React.FC = () => {
                       <p>Danh mục</p>
                       {post?.data.categories.map(
                         (item: ItemCategories, index: null | number) => (
-                          <h4 key={index}>
+                          <h5 key={index}>
                             {item.parent_category}/{item.child_category}
-                          </h4>
+                          </h5>
                         )
                       )}
                     </div>
                   </div>
                   <div className="div-detail-row">
-                    <SyncOutlined style={{ color: '#575757' }} />
-
-                    <p style={{ marginLeft: 10, fontStyle: 'italic' }}>
-                      {`Cập nhật  ${post?.data.created_at_text}`}{' '}
-                    </p>
+                    <DesktopOutlined style={{ color: '#575757' }} />
+                    <div style={{ marginLeft: '10px' }}>
+                      {' '}
+                      <p>Làm việc từ xa</p>
+                      <h5>{post?.data.is_remotely == 0 ? "Không làm việc từ xa" : "Có làm việc từ xa"}</h5>
+                    </div>
+                  </div>
+                  <div className="div-detail-row">
+                    <DesktopOutlined style={{ color: '#575757' }} />
+                    <div style={{ marginLeft: '10px' }}>
+                      {' '}
+                      <p>Thời gian hết hạn</p>
+                      <h5>{post?.data.expired_date ? moment(new Date(post?.data.expired_date)).format(
+                        'DD/MM/yyyy'
+                      ) : "Không thời hạn"}</h5>
+                    </div>
                   </div>
                   <>
                     {contextHolder}
