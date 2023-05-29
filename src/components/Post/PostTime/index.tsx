@@ -22,15 +22,13 @@ interface IPostTime {
 const PostTime: React.FC<IPostTime> = (props) => {
   const { startTime, endTime, setStartTime, setEndTime } = props
   const handleChangeStartTime = (newValue: any, e: any) => {
-    // console.log(e.target.value)
-    console.log('e.target.valuetimeeee', newValue)
     setStartTime(new Date(newValue._d).getTime())
   }
 
   const handleChangeEndTime = (newValue: any, e: any) => {
     setEndTime(new Date(newValue._d).getTime())
   }
-  console.log('endTime', moment(endTime))
+
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <DemoContainer
@@ -49,7 +47,7 @@ const PostTime: React.FC<IPostTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Thời gian bắt đầu *:
+            Giờ làm việc *:
           </Typography>
           <MobileTimePicker
             ampm={false}
@@ -60,15 +58,7 @@ const PostTime: React.FC<IPostTime> = (props) => {
             value={moment(new Date(startTime))}
           />
         </div>
-        <div className="wrap-time_right">
-          <Typography
-            sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="endTime"
-          >
-            Thời gian kết thúc *:
-          </Typography>
+        <div className="wrap-time_right" style={{ paddingTop: '24px' }}>
           <MobileTimePicker
             ampm={false}
             ampmInClock={true}

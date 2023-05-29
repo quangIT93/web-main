@@ -1,0 +1,18 @@
+.ant-cascader-checkbox {
+  // display: none;
+}
+
+.ant-cascader-menus {
+  display: flex;
+  .ant-cascader-menu {
+    min-width: 320px;
+  }
+}
+
+.ant-cascader-menus {
+  .ant-cascader-menu:first-child {
+    .ant-cascader-checkbox {
+      display: none;
+    }
+  }
+}

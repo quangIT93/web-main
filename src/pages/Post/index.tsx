@@ -1,19 +1,11 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react'
-import dayjs, { Dayjs } from 'dayjs'
 
+import { toast } from 'react-toastify'
 // @ts-ignore
 import { Navbar } from '#components'
 //@ts-ignore
 import { useHomeState } from '../Home/HomeState'
 import { StatePropsCloseSlider } from 'pages/Home'
-import { AutocompleteInputChangeReason } from '@mui/material/Autocomplete'
-import 'react-phone-number-input/style.css'
-
-//import PhoneInput from 'react-phone-number-input'
-
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
 
 // import component
 import PostFilterSalary from '../../components/Post/PostFilterSalary'
@@ -27,10 +19,13 @@ import StyleWork from '#components/Post/StyleWork'
 import SalaryType from '#components/Post/SalaryType'
 import Description from '#components/Post/Description'
 import PostImage from '#components/Post/PostImage'
-import PostCategoryIds from '#components/Post/PostCategoryIds'
+// import PostCategoryIds from '#components/Post/PostCategoryIds'
 import PostTime from '#components/Post/PostTime'
-//@ts-ignore
-import { styleLabel } from '#components/Post/CssPost'
+import EditText from '#components/Post/EditText'
+import PostNumberPhone from '#components/Post/PostNumberPhone'
+
+import PostCategoryId from '#components/Post/PostCategoryId'
+
 import './style.scss'
 
 // import data
@@ -102,11 +97,6 @@ export interface FormValues {
   url: null
 }
 
-interface IPostAddress {
-  setSelectedDistrict: React.Dispatch<React.SetStateAction<string | null>>
-  setSelectedProvince: React.Dispatch<React.SetStateAction<string>>
-}
-
 interface Option {
   id: string
   name: string
@@ -127,8 +117,8 @@ const Post: React.FC = () => {
     isDatePeriod: 0,
     startDate: null,
     endDate: null,
-    startTime: new Date(1970, 0, 2, 0, 0).getTime(),
-    endTime: new Date(1970, 0, 2, 0, 0).getTime(),
+    startTime: new Date(2023, 0, 2, 0, 0).getTime(),
+    endTime: new Date(2023, 0, 2, 0, 0).getTime(),
     isWorkingWeekend: 0,
     isRemotely: 0,
     salaryMin: 1000,
@@ -147,10 +137,9 @@ const Post: React.FC = () => {
 
   const [titleJob, setTitleJob] = useState<string>('')
   const [companyName, setCompanyName] = useState<string>('')
-  const [selectedDistrict, setSelectedDistrict] = useState<string | null>('')
-  const [selectedProvince, setSelectedProvince] = useState<string | null>('')
+
   const [typeJob, setTypeJob] = useState(1)
-  const [isPeriodDate, setIsPeriodDate] = useState<number>(0)
+  const [isPeriodDate, setIsPeriodDate] = useState<number>(1)
   const [startTime, setStartTime] = React.useState<any>(
     new Date(1970, 0, 2, 0, 0).getTime()
   )
@@ -158,31 +147,27 @@ const Post: React.FC = () => {
     new Date(1970, 0, 2, 0, 0).getTime()
   )
   const [startDate, setStartDate] = React.useState<any>(
-    new Date(1970, 0, 2, 0, 0).getTime()
+    new Date(2023, 4, 1, 0, 0).getTime()
   )
   const [endDate, setEndDate] = React.useState<any>(
-    new Date(1970, 0, 2, 0, 0).getTime()
+    new Date(2023, 4, 30, 0, 0).getTime()
   )
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0)
   const [isRemotely, setIsRemotely] = React.useState<number>(0)
-  const [salary, setSalary] = React.useState<number[]>([0, 100000000])
-  const [moneyType, setMoneyType] = React.useState<number>(0)
-  const [salaryType, setSalaryType] = React.useState<number>(0)
+  const [salary, setSalary] = React.useState<number[]>([500000, 100000000])
+  const [moneyType, setMoneyType] = React.useState<number>(1)
+  const [salaryType, setSalaryType] = React.useState<number>(1)
   const [description, setDescription] = React.useState<string>('')
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([])
+  const [categoriesId, setCategoriesId] = useState<string[]>([])
   const [address, setAddress] = useState<string>('')
   const [wardId, setWardId] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [selectedImages, setSelectedImages] = useState<string[]>([])
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([])
   const [latitude, SetLatitude] = useState<number>(10.761955)
   const [longitude, SetLongitude] = useState<number>(106.70183)
   // modal
   const [openModalPost, setOpenModalPost] = React.useState(false)
-
-  const handlePhoneNumberChange = (value: string) => {
-    setPhoneNumber(value)
-  }
 
   const {
     openCollapse,
@@ -200,7 +185,7 @@ const Post: React.FC = () => {
     height,
     setOpenModalLogin,
   }
-
+  console.log('phone', phoneNumber)
   // submit
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent
@@ -224,10 +209,9 @@ const Post: React.FC = () => {
     formData.append('salaryType', String(salaryType))
     formData.append('description', description.trim())
     formData.append('address', String(address))
-    console.log('selectedFiles', selectedFiles)
-    const x = ['354']
+    formData.append('phoneNumber', String(phoneNumber))
 
-    x.forEach((category: any) => {
+    categoriesId.forEach((category: any) => {
       formData.append('categoryIds', category)
     })
 
@@ -238,13 +222,13 @@ const Post: React.FC = () => {
     // NEW FIELD
     formData.append('email', formValues.email)
     // formData.append('companyResourceId', String(formValues.companyResourceId))
-    formData.append('url', String(formValues.url))
+    // formData.append('url', String(formValues.url))
     formData.append('latitude', String(latitude))
     formData.append('longitude', String(longitude))
 
-    // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}, ${pair[1]}`)
-    // }
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`)
+    }
 
     if (formData) {
       createNewPost(formData)
@@ -253,6 +237,7 @@ const Post: React.FC = () => {
 
   // post newPost
   const createNewPost = async (formData: any) => {
+    let toastId = toast.loading('Please wait...')
     try {
       const areAllFieldsFilled = Object.values(formData).every(
         (fieldValue) => fieldValue !== ''
@@ -263,16 +248,32 @@ const Post: React.FC = () => {
         const result = await postApi.createPost(formData)
         if (result) {
           console.log('resultresult', result)
-          // setOpenModalPost(true)
+          setOpenModalPost(true)
+          return toast.update(toastId, {
+            render: 'Tạo bài đăng thành công',
+            type: toast.TYPE.SUCCESS,
+            closeButton: true,
+            closeOnClick: true,
+            autoClose: 4000,
+            isLoading: false,
+          })
         }
       } else {
         console.log('Vui long nhap day du thong tin')
       }
     } catch (error) {
       console.error(error)
+      return toast.update(toastId, {
+        render: 'Tạo bài đăng thất bại',
+        type: toast.TYPE.ERROR,
+        closeButton: true,
+        closeOnClick: true,
+        autoClose: 4000,
+        isLoading: false,
+      })
     }
   }
-
+  console.log('isPeriodDate', isPeriodDate)
   return (
     <div className="post">
       <Navbar {...statePropsCloseSlider} />
@@ -284,19 +285,12 @@ const Post: React.FC = () => {
             setCompanyName={setCompanyName}
           />
           <PostAddress
-            setSelectedDistrict={setSelectedDistrict}
-            setSelectedProvince={setSelectedProvince}
-            selectedDistrict={selectedDistrict}
-            selectedProvince={selectedProvince}
             setWardId={setWardId}
-            wardId={wardId}
             setAddress={setAddress}
             address={address}
           />
 
           <PostImage
-            selectedImages={selectedImages}
-            setSelectedImages={setSelectedImages}
             selectedFiles={selectedFiles}
             setSelectedFiles={setSelectedFiles}
           />
@@ -306,6 +300,16 @@ const Post: React.FC = () => {
             setIsPeriodDate={setIsPeriodDate}
             isPeriodDate={isPeriodDate}
           />
+          {isPeriodDate === 1 ? (
+            <RecruitmentTime
+              startDate={startDate}
+              endDate={endDate}
+              setStartDate={setStartDate}
+              setEndDate={setEndDate}
+            />
+          ) : (
+            <></>
+          )}
           <StyleWork
             isWorkingWeekend={isWorkingWeekend}
             isRemotely={isRemotely}
@@ -318,68 +322,11 @@ const Post: React.FC = () => {
             setStartTime={setStartTime}
             setEndTime={setEndTime}
           />
-          <RecruitmentTime
-            startDate={startDate}
-            endDate={endDate}
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
+
+          <PostCategoryId
+            setCategoriesId={setCategoriesId}
+            categoriesId={categoriesId}
           />
-          {/* <Box sx={{ display: 'flex', marginTop: '24px' }}>
-            <div className="work-hours">
-              <Typography
-                sx={styleLabel}
-                variant="body1"
-                component="label"
-                htmlFor="startTime"
-              >
-                Giờ bắt đầu *:
-              </Typography>
-              <TextField
-                type="time"
-                id="startTime"
-                name="startTime"
-                size="small"
-                // value={formValues.startTime}
-                // onChange={handleChange}
-                style={{ marginTop: '4px' }}
-                InputProps={{
-                  inputProps: {
-                    step: 300, // Các giá trị thời gian sẽ được chia thành khoảng cách 5 phút
-                    min: '11:00', // Thời gian bắt đầu là 11:00
-                    max: '16:59', // Thời gian kết thúc là 16:59
-                  },
-                }}
-                sx={{ width: '100%' }}
-              />
-            </div>
-            <div className="work-hours" style={{ marginLeft: '12px' }}>
-              <Typography
-                sx={styleLabel}
-                variant="body1"
-                component="label"
-                htmlFor="endTime"
-              >
-                Giờ kết thúc *:
-              </Typography>
-              <TextField
-                type="time"
-                id="endTime"
-                name="endTime"
-                size="small"
-                style={{ marginTop: '4px' }}
-                // value={formValues.endTime}
-                // onChange={handleChange}
-                InputProps={{
-                  inputProps: {
-                    step: 300, // Các giá trị thời gian sẽ được chia thành khoảng cách 5 phút
-                    min: '11:01', // Thời gian bắt đầu là 11:01 (để tránh trùng với giờ bắt đầu)
-                    max: '17:00', // Thời gian kết thúc là 17:00
-                  },
-                }}
-                sx={{ width: '100%' }}
-              />
-            </div>
-          </Box> */}
 
           <PostFilterSalary
             setSalary={setSalary}
@@ -389,11 +336,9 @@ const Post: React.FC = () => {
           />
 
           <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
-          <PostCategoryIds
-            selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
-          />
+          <PostNumberPhone setPhoneNumber={setPhoneNumber} />
           <Description setDescription={setDescription} />
+          {/* <EditText /> */}
           <button
             type="submit"
             onClick={handleSubmit}

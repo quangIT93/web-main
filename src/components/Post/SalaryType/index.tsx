@@ -31,15 +31,11 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
           onChange={handleChangeSalaryType}
           sx={{ display: 'flex', flexDirection: 'column' }}
         >
-          <FormControlLabel value={0} control={<Radio />} label="Giờ" />
-          <FormControlLabel value={1} control={<Radio />} label="Ngày" />
-          <FormControlLabel value={2} control={<Radio />} label="Tuần" />
-          <FormControlLabel value={3} control={<Radio />} label="Tháng" />
-          <FormControlLabel
-            value="work"
-            control={<Radio />}
-            label="Công việc"
-          />
+          <FormControlLabel value={1} control={<Radio />} label="Giờ" />
+          <FormControlLabel value={2} control={<Radio />} label="Ngày" />
+          <FormControlLabel value={3} control={<Radio />} label="Tuần" />
+          <FormControlLabel value={4} control={<Radio />} label="Tháng" />
+          <FormControlLabel value={5} control={<Radio />} label="Công việc" />
         </RadioGroup>
       </FormControl>
     </Box>
