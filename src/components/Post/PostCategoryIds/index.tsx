@@ -64,9 +64,6 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
     getAllParentCategories()
   }, [])
 
-  console.log('categories', categories)
-  console.log('selectedOptions', selectedOptions)
-
   const handleInputChange = (
     event: React.ChangeEvent<{}>,
     value: string,
@@ -118,7 +115,13 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
         onInputChange={handleInputChange}
         style={{ marginTop: '4px' }}
         renderInput={(params) => (
-          <TextField {...params} type="text" size="small" id="jobs" />
+          <TextField
+            {...params}
+            type="text"
+            size="small"
+            id="jobs"
+            placeholder="Chọn"
+          />
         )}
       />
     </Box>

@@ -40,12 +40,12 @@ const ModalFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             Lương từ
             <span style={{ color: 'black', fontWeight: '600' }}>
               {' '}
-              {value[0].toLocaleString()}{' '}
+              {value[0].toLocaleString()}
             </span>
             đến
             <span style={{ color: 'black', fontWeight: '600' }}>
               {' '}
-              {value[1].toLocaleString()}{' '}
+              {value[1].toLocaleString()}
             </span>
           </p>
           <div className="wrapRadiSalary" style={{ flex: '1' }}>

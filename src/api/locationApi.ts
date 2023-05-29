@@ -15,6 +15,11 @@ const locationApi = {
     const URL = `locations/d?pid=${idProvince}`
     return axiosClient.get(URL)
   },
+
+  getWardsId: (idWard: string, lang: string | null) => {
+    const URL = `locations/w?did=${idWard}&lang${lang ? lang : 'vi'}`
+    return axiosClient.get(URL)
+  },
 }
 
 export default locationApi

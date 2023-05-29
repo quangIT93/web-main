@@ -1,5 +1,5 @@
 import React from 'react'
-import {  Box, Slider } from '@mui/material'
+import { Box, Slider } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControl from '@mui/material/FormControl'

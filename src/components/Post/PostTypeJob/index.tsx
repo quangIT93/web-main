@@ -37,8 +37,9 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
         }}
       >
         <FormControlLabel value={1} control={<Radio />} label="Fulltime" />
-        <FormControlLabel value={0} control={<Radio />} label="Part-time" />
-        <FormControlLabel value={-1} control={<Radio />} label="Remote" />
+        <FormControlLabel value={2} control={<Radio />} label="Part-time" />
+        <FormControlLabel value={3} control={<Radio />} label="Remote" />
+        <FormControlLabel value={4} control={<Radio />} label="Freelance" />
       </RadioGroup>
     </FormControl>
   )

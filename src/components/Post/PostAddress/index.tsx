@@ -6,50 +6,38 @@ import FormValues from '../../../pages/Post/index'
 
 // data
 import locationApi from '../../../api/locationApi'
-import { wards } from '../../../pages/Post/data/data'
 
 interface IPostAddress {
-  setSelectedDistrict: React.Dispatch<React.SetStateAction<any>>
-  setSelectedProvince: React.Dispatch<React.SetStateAction<any>>
   setWardId: React.Dispatch<React.SetStateAction<any>>
-  wardId: string
-  selectedDistrict: any
-  selectedProvince: any
   setAddress: React.Dispatch<React.SetStateAction<string>>
   address: string
 }
 
 const PostAddress: React.FC<IPostAddress> = (props) => {
+  const { setWardId, address, setAddress } = props
+  const [selectedDistrict, setSelectedDistrict] = useState<any>(null)
+  const [selectedProvince, setSelectedProvince] = useState<any>(null)
   const [dataProvinces, setDataProvinces] = useState<any>(null)
   const [dataDistrict, setDataDistrict] = useState<any>(null)
-  const [selectedWard, setSelectedWard] = useState<any>('')
-  const {
-    setSelectedDistrict,
-    setSelectedProvince,
-    setWardId,
-    selectedDistrict,
-    selectedProvince,
-    wardId,
-    address,
-    setAddress,
-  } = props
+  const [dataWard, setDataWard] = useState<any>(null)
+  const [selectedWard, setSelectedWard] = useState<any>(null)
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
   }
 
   // get All locations by location id
-  const getAllLocations = async () => {
-    try {
-      const allLocation = await locationApi.getAllProvinces()
+  // const getAllLocations = async () => {
+  //   try {
+  //     const allLocation = await locationApi.getAllProvinces()
 
-      if (allLocation) {
-        setDataProvinces(allLocation.data)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  //     if (allLocation) {
+  //       setDataProvinces(allLocation.data)
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   // get All locations by location id
   const getAllProvinces = async () => {
@@ -63,6 +51,8 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       console.log(error)
     }
   }
+
+  // get All locations by location id
 
   // get All locations by location id
   const getDataDistrict = async () => {
@@ -80,9 +70,23 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     }
   }
 
+  // get All ward by ward id
+  const getDataWard = async () => {
+    try {
+      if (selectedDistrict) {
+        const allward = await locationApi.getWardsId(selectedDistrict.id, '')
+        if (allward) {
+          setDataWard(allward.data)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   React.useEffect(() => {
     getAllProvinces()
-    getAllLocations()
+    // getAllLocations()
     // delete param when back to page
   }, [])
 
@@ -91,10 +95,16 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     // delete param when back to page
   }, [selectedProvince])
 
+  React.useEffect(() => {
+    getDataWard()
+    // delete param when back to page
+  }, [selectedDistrict])
+
   const handleProvinceChange = (event: any, value: any) => {
-    setSelectedDistrict('')
-    setSelectedWard('')
+    setSelectedDistrict(null)
+    setSelectedWard(null)
     setSelectedProvince(value)
+    setDataWard([])
   }
 
   const handleDistrictChange = (event: any, value: any) => {
@@ -162,7 +172,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             Phường/Xã *:
           </Typography>
           <Autocomplete
-            options={wards}
+            options={dataWard ? dataWard : []}
             getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedWard || null}
             onChange={handleChangeWardId}

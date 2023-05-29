@@ -116,7 +116,6 @@ const CategoryCarousel: React.FC<PropState> = ({
   React.useEffect(() => {
     getAllParentCategories()
   }, [])
-  console.log('valueTabs', value)
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
   const handleClose = () => {
     setOpenBackdrop(false)
