@@ -58,13 +58,13 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           value={moneyType}
         >
           <FormControlLabel
-            value={0}
+            value={1}
             control={<Radio id="limited-time-radio" />}
             label="VND"
             htmlFor="limited-time-radio"
           />
           <FormControlLabel
-            value={1}
+            value={2}
             control={<Radio id="limited-time-radio1" />}
             label="USD"
             htmlFor="limited-time-radio1"

@@ -36,7 +36,7 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
         value={isPeriodDate}
       >
         <FormControlLabel
-          value={2}
+          value={0}
           control={<Radio id="limited-time-radio1" />}
           label="Không thời hạn"
           htmlFor="limited-time-radio1"
