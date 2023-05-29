@@ -19,9 +19,15 @@ const signInEmailApi = {
   signInGoogle: (idToken: string) => {
     const URL = `sign-in/google`
 
-    return axiosClient.post(URL, { idToken:idToken,
-      isWeb:true })
-    }
+    return axiosClient.post(URL, {
+      idToken: idToken,
+      isWeb: true
+    })
+  },
+  signOut: (refreshToken: string) => {
+    const URL = `sign-out`
+    return axiosClient.post(URL, { refreshToken: refreshToken, })
+  }
 
 }
 

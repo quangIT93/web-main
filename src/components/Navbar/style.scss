@@ -420,11 +420,19 @@
         width: 308px;
 
         .sub-login_info {
+          margin-left: -10px;
         }
 
         .sub-login_items {
           margin-top: 24px;
           .sub-login_item {
+            cursor: pointer;
+            &:hover {
+              background-color: #ccc;
+              border-radius: 10px;
+              padding: 10px;
+              font-weight: bold;
+            }
             display: flex;
             align-items: center;
             margin-bottom: 12px;

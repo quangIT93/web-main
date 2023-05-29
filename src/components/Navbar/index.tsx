@@ -40,6 +40,10 @@ import {
   UserOutlined,
   RightOutlined,
   BarsOutlined,
+  SyncOutlined,
+  ClockCircleOutlined,
+  LogoutOutlined,
+  KeyOutlined
 } from '@ant-design/icons'
 
 // import component
@@ -47,9 +51,9 @@ import SalaryFilterSubnav from './components/SalaryFilterSubnav'
 import PositionFilterSubnav from './components/PositionFilterSubnav'
 import CareerFilterSubnav from './components/CareerFilterSubnav'
 
-import { Avatar } from 'antd'
+import { Avatar, Space } from 'antd'
 
-import profileApi from 'api/profileApi'
+import authApi from 'api/authApi'
 
 import {
   Container,
@@ -177,7 +181,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   useEffect(() => {
     fecthDataProfile()
-    console.log("test access")
+
   }, [localStorage.getItem('accessToken')])
 
   const ref = useRef<HTMLDivElement>(null)
@@ -220,22 +224,55 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   // login
   const handleClickLogin = async () => {
-    // await fecthDataProfile()
-    if (dataProfile.profile) {
-      setOpenInfoUser(!openInfoUser)
-    } else {
-      setOpenInfoUser(false)
+    const accessToken = localStorage.getItem('accessToken')
+    if (!accessToken) {
       setOpenModalLogin(true)
+    } else {
+      await fecthDataProfile()
+      setTimeout(() => {
+        if (dataProfile.profile) {
+          setOpenInfoUser(!openInfoUser)
+        } else {
+          setOpenInfoUser(false)
+          setOpenModalLogin(true)
+        }
+      }, 600)
+    }
+  }
+
+  // handle logout 
+  const handleLogout = async () => {
+    try {
+      console.log("d")
+      const refreshToken = localStorage.getItem("refreshToken")
+
+
+      if (refreshToken) {
+        localStorage.clear();
+        window.location.replace("/home")
+        await authApi.signOut(refreshToken)
+
+      }
+    } catch (error) {
+      console.log(error)
     }
 
   }
+
+
   const buttons = [
-    <Link to="/post" target="_blank">
-      <button className="btn btn__post">
-        <FormOutlined style={{ color: 'white' }} />
-        <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
-      </button>
-    </Link>,
+
+    <button className="btn btn__post" onClick={() => {
+      if (dataProfile.profile && localStorage.getItem("refreshToken")) {
+        window.open("/post", "_parent")
+      } else {
+        setOpenModalLogin(true)
+      }
+    }}>
+      <FormOutlined style={{ color: 'white' }} />
+      <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
+    </button>
+    ,
     <div className="actions-login" onClick={handleClickLogin}>
       <button className="btn btn__login">
         <div style={{ display: 'flex' }}>
@@ -243,6 +280,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             <Avatar
               style={{ backgroundColor: '#0D99FF' }}
               icon={<UserOutlined />}
+              src={dataProfile.profile?.avatar ? dataProfile.profile.avatar : ''}
+
             />
           </div>
           <div className="login__center">
@@ -260,28 +299,35 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       {
         openInfoUser && (
           <div className="sub-login">
-            <div className="sub-login_info">
-              <img src="" alt="" />
+            <Space className="sub-login_info">
+              <Avatar
+                style={{ backgroundColor: '#0D99FF' }}
+                icon={<UserOutlined style={{ fontSize: 30 }}
+
+                />}
+                size={50}
+                src={dataProfile.profile?.avatar ? dataProfile.profile.avatar : null}
+              />
               <div>
-                <h2>Thái Minh Quang</h2>
-                <span>vanan.iworks@gmail.com</span>
+                <h2>{dataProfile.profile.name}</h2>
+                <span>{dataProfile.profile.email}</span>
               </div>
-            </div>
+            </Space>
             <div className="sub-login_items">
               <div className="sub-login_item">
-                <BusinessCenterOutlinedIcon />
+                <SyncOutlined />
                 <span>Cập nhật thông tin</span>
               </div>
               <div className="sub-login_item">
-                <BusinessCenterOutlinedIcon />
+                <ClockCircleOutlined />
                 <span>Lịch sử</span>
               </div>
               <div className="sub-login_item">
-                <BusinessCenterOutlinedIcon />
+                <KeyOutlined />
                 <span>Đổi mật khẩu</span>
               </div>
-              <div className="sub-login_item">
-                <BusinessCenterOutlinedIcon />
+              <div className="sub-login_item" onClick={handleLogout} >
+                <  LogoutOutlined />
                 <span>Đăng xuất</span>
               </div>
             </div>

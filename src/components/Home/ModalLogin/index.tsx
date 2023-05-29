@@ -34,6 +34,8 @@ import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeft
 
 //import api
 import authApi from '../../../api/authApi'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // import login from action
 
@@ -99,7 +101,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [showOTPModal, setShowOTPModal] = useState(false)
   const [otp, setOTP] = useState('')
-  const [resendCode, setResendCode] = useState(false)
+  const [resendCode, setResendCode] = useState(true)
+  const [openBackdrop, setOpenBackdrop] = React.useState(false)
 
   const handleClose = () => setOpenModalLogin(false)
 
@@ -156,6 +159,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     // setResendCode(false)
   }
 
+  const handleCloseBackDrop = () => {
+    setOpenBackdrop(false)
+  }
+
   const handleLoginOtp = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -177,7 +184,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // handle login facebook
   const responseFacebook = async (response: any) => {
     try {
-      if (response.userID != '') {
+      setOpenBackdrop(true)
+      if (response.userID) {
         const result = await authApi.signInFacebook(response.accessToken)
         if (result) {
           fetchDataProfile(result.data, true)
@@ -188,9 +196,16 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     console.log('facebook', response)
   }
 
+  // check response failed from facebook and google
+  const responseFailFacebookAndGoogle = () => {
+    setOpenBackdrop(false)
+  }
+
+  // handle login google
   const responseGoogle = async (response: any) => {
     try {
-      if (response.tokenId != '') {
+      setOpenBackdrop(true)
+      if (response.tokenId) {
         console.log('response.tokenID', response.tokenId)
         const result = await authApi.signInGoogle(response.tokenObj.id_token)
         console.log(result)
@@ -200,10 +215,13 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       }
     } catch (error) {
       console.log(error)
+      setOpenBackdrop(false)
     }
 
     console.log('gg', response)
   }
+
+
 
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
   useEffect(() => {
@@ -219,6 +237,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
   // isVerifiedOtp facebook and google =true
   const fetchDataProfile = async (auth: AuthReponse, isVerifyOtp?: boolean) => {
+
     if (isVerifyOtp) {
       console.log('Xác thực OTP thành công', authState)
       // Thực hiện các hành động sau khi xác thực thành công
@@ -238,6 +257,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       await dispatch(getProfile() as any)
 
       setOpenModalLogin(false)
+      setOpenBackdrop(false)
+
     } else {
       console.log('Lỗi xác thực ', authState)
       // Thực hiện các hành động sau khi xác thực thất bại
@@ -315,7 +336,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 </small>
               </div>
               <p className="text-sent_otp">
-                Mã xác nhận sẽ được gửi vào số điện thoại bạn đăng nhập.
+                Mã xác nhận sẽ được gửi vào email bạn đăng nhập.
               </p>
               <button
                 type="button"
@@ -334,6 +355,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 appId={appId}
                 autoLoad={false}
                 onSuccess={responseFacebook}
+                onFail={responseFailFacebookAndGoogle}
                 render={(renderProps: any) => (
                   <div
                     className="bnt-login_google bnt-login"
@@ -372,11 +394,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 )}
                 buttonText="Login"
                 onSuccess={responseGoogle}
-                onFailure={responseGoogle}
+                onFailure={responseFailFacebookAndGoogle}
               // cookiePolicy={'single_host_origin'}
               />
 
-              <div
+              {/* <div
                 className="bnt-login_google bnt-login"
                 onClick={(e) => {
                   FacebookLoginClient.getLoginStatus((response) => {
@@ -391,8 +413,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   height={30}
                 />
                 <p className="text-login">Đăng nhập bằng tài khoản AppleID</p>
-              </div>
+              </div> */}
             </form>
+
           </>
         )}
 
@@ -439,7 +462,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 Gửi lại mã{' '}
               </p>
               {!resendCode ? (
-                <p className="resend-otp_countDown">(00:00)</p>
+                <p className="resend-otp_countDown"></p>
               ) : (
                 <CountdownTimer
                   resendCode={resendCode}
@@ -449,6 +472,16 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             </div>
           </div>
         )}
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          }}
+          open={openBackdrop}
+          onClick={handleCloseBackDrop}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </Box>
     </Modal>
   )

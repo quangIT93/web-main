@@ -18,7 +18,7 @@ export const getProfile = createAsyncThunk(
     try {
       const accessToken = localStorage.getItem('accessToken')
       // Gọi API để lấy thông tin profile với accessToken đã có
-      console.log('accessToken', accessToken)
+     
       if (accessToken) {
         const response = await profileApi.getProfile()
         console.log(response)

@@ -6,9 +6,9 @@ import queryString from 'query-string'
 // Please have a look at here `https://github.com/axios/axios#request-
 //config` for the full list of configs
 const BASE_URL =
-  process.env.NODE_ENV === 'development'
+  process.env.REACT_APP_URL_HIJOB
     ? process.env.REACT_APP_URL_HIJOB
-    : process.env.PUBLIC_URL
+    : process.env.REACT_APP_URL_HIJOB_RSV
 
 const axiosClient = axios.create({
   // baseURL: process.env.REACT_APP_API_URL,
@@ -38,27 +38,25 @@ axiosClient.interceptors.response.use(
   (error) => {
     let originalRequest = error.config;
     let refreshToken = localStorage.getItem('refreshToken');
-    if(refreshToken && error.response.status===403 || error.response.status===401){
-        axios.post(`${BASE_URL}/reset-access-token`,{
-          refreshToken: refreshToken,
-        }).then(response => {
-          console.log("axios",response)
+    if (refreshToken && error.response.status === 403 || refreshToken && error.response.status === 401) {
+      axios.post(`${BASE_URL}/reset-access-token`, {
+        refreshToken: refreshToken,
+      }).then(response => {
 
-          if(response.status === 200){
-            localStorage.setItem(
-              'accessToken',
-              response.data.data.accessToken
+        if (response.status === 200) {
+          localStorage.setItem(
+            'accessToken',
+            response.data.data.accessToken
           );
           originalRequest.headers[
             'Authorization'
-        ] = `Bearer ${response.data.data.accessToken}`;
+          ] = `Bearer ${response.data.data.accessToken}`;
 
-        return axios(originalRequest);
-          }
-        }).catch((error) => {
-          // localStorage.clear();
-          // window.location.reload();
-          console.log("dfsd")
+          return axios(originalRequest);
+        }
+      }).catch((error) => {
+        // localStorage.clear();
+        // window.location.reload();
       });
     }
 

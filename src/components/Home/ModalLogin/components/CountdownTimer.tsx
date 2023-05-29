@@ -8,7 +8,7 @@ interface PropsCountDown {
 const CountdownTimer: React.FC<PropsCountDown> = (props) => {
   const { resendCode, setResendCode } = props
 
-  const [seconds, setSeconds] = useState(10)
+  const [seconds, setSeconds] = useState(180)
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined = undefined
@@ -42,7 +42,7 @@ const CountdownTimer: React.FC<PropsCountDown> = (props) => {
 
   return (
     <p className="resend-otp_countDown" style={{ color: '#5d5d5d ' }}>
-      ({formatTime(seconds)})
+      {" sau " + formatTime(seconds)}
     </p>
   )
 }

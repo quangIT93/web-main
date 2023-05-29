@@ -107,13 +107,13 @@ const ThemesJob: React.FC = () => {
 
     const threshold = post.data.posts[post.data.posts.length - 1].id
     const result = await postApi.getPostByThemeId(Number(themeId), 9, threshold)
-    console.log('res', result)
+
     if (result) {
       setPostThemeMore(result)
 
       setOpenBackdrop(false)
     }
-    console.log(post)
+
   }
 
   // handle click post details
@@ -312,7 +312,7 @@ const ThemesJob: React.FC = () => {
                 <CaretDownFilled />
               </Space>
             </Stack>
-            {/* <Backdrop
+            <Backdrop
               sx={{
                 color: '#0d99ff ',
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
@@ -321,7 +321,7 @@ const ThemesJob: React.FC = () => {
               onClick={handleClose}
             >
               <CircularProgress color="inherit" />
-            </Backdrop> */}
+            </Backdrop>
           </>
         )}
       </>
