@@ -169,6 +169,10 @@ const Post: React.FC = () => {
   // modal
   const [openModalPost, setOpenModalPost] = React.useState(false)
 
+  // check error
+  const [titleError, setTitleError] = useState(false)
+  const [companyError, setCompanyError] = useState(false)
+
   const {
     openCollapse,
     setOpenCollapse,
@@ -239,11 +243,7 @@ const Post: React.FC = () => {
   const createNewPost = async (formData: any) => {
     let toastId = toast.loading('Please wait...')
     try {
-      const areAllFieldsFilled = Object.values(formData).every(
-        (fieldValue) => fieldValue !== ''
-      )
-
-      if (areAllFieldsFilled) {
+      if (Array.from(formData.values()).some((value) => value !== '')) {
         console.log('cho phep submit')
         const result = await postApi.createPost(formData)
         if (result) {
@@ -252,9 +252,7 @@ const Post: React.FC = () => {
           return toast.update(toastId, {
             render: 'Tạo bài đăng thành công',
             type: toast.TYPE.SUCCESS,
-            closeButton: true,
-            closeOnClick: true,
-            autoClose: 4000,
+            autoClose: 1000,
             isLoading: false,
           })
         }
@@ -262,7 +260,10 @@ const Post: React.FC = () => {
         console.log('Vui long nhap day du thong tin')
       }
     } catch (error) {
-      console.error(error)
+      console.log('loixxxxxxxxxxxxxxxxxxxx')
+
+      console.error('error', error)
+
       return toast.update(toastId, {
         render: 'Tạo bài đăng thất bại',
         type: toast.TYPE.ERROR,
@@ -283,6 +284,8 @@ const Post: React.FC = () => {
           <PostJobCompany
             setTitleJob={setTitleJob}
             setCompanyName={setCompanyName}
+            titleError={titleError}
+            companyError={companyError}
           />
           <PostAddress
             setWardId={setWardId}

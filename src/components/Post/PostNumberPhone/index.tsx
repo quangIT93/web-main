@@ -31,14 +31,18 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         Số điện thoại liên hệ *:
       </Typography>
       <TextField
-        type="text"
+        type="number"
         id="company"
         name="company_name"
         // value={formValues.company_name}
         size="small"
+        inputProps={{
+          inputMode: 'numeric',
+          pattern: '[0-9]*',
+        }}
         onChange={handleChangeNumber}
         sx={{ width: '100%', marginTop: '4px' }}
-        placeholder="Số điện thoại liên hệ"
+        placeholder="Số điện thoại (0-***-***-***)"
       />
     </Box>
   )

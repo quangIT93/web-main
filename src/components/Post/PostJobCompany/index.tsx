@@ -9,10 +9,12 @@ import FormValues from '../../../pages/Post/index'
 interface PropsPostCompanyJob {
   setTitleJob: React.Dispatch<React.SetStateAction<any>>
   setCompanyName: React.Dispatch<React.SetStateAction<any>>
+  titleError: boolean
+  companyError: boolean
 }
 
 const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
-  const { setTitleJob, setCompanyName } = props
+  const { setTitleJob, setCompanyName, titleError, companyError } = props
 
   const handleChangeTitleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleJob(e.target.value)
@@ -46,6 +48,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '4px' }}
           placeholder="Tên công việc"
+          error={titleError} // Đánh dấu lỗi
         />
       </div>
       <div className="post-titleCompany post-title">
@@ -66,6 +69,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           onChange={handleChangeCompanyForm}
           sx={{ width: '100%', marginTop: '4px' }}
           placeholder="Tên công ty"
+          error={companyError} // Đánh dấu lỗi
         />
       </div>
     </div>
