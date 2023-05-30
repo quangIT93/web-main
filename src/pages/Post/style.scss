@@ -87,3 +87,12 @@
     }
   }
 }
+
+.Toastify {
+  position: relative;
+  bottom: 10%;
+}
+
+.Toastify__toast {
+  display: 'flex';
+}

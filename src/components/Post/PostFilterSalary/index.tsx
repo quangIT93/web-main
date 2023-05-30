@@ -18,9 +18,32 @@ interface PropsSalaryFilterSubnav {
 
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
   const { setSalary, salary, setMoneyType, moneyType } = props
+  const VND_TO_USD = 0.000043 // Conversion rate: 1 VND = 0.000043 USD
+  const USD_TO_VND = 23155
 
   const handleChange = (event: Event, newValue: number | number[]) => {
-    setSalary(newValue as number[])
+    let convertedValue: number[]
+
+    if (moneyType === 1) {
+      // Convert USD to VND
+      convertedValue = (newValue as number[]).map((value) =>
+        Math.round(value / USD_TO_VND)
+      )
+      console.log('salary', salary)
+      console.log('conv', convertedValue)
+      return setSalary(newValue as number[])
+
+      console.log('newValue', newValue)
+    } else {
+      // Convert VND to USD
+      convertedValue = (newValue as number[]).map((value) =>
+        Math.round(value / 23155)
+      )
+      console.log('conv', convertedValue)
+      console.log('newValue', newValue)
+      console.log('salary', salary)
+      return setSalary(newValue as number[])
+    }
   }
 
   // event change salary
@@ -30,7 +53,31 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMoneyType(Number(e.target.value))
+    let convertedValue: number[]
+    if (moneyType === 1) {
+      // Convert USD to VND
+
+      convertedValue = (salary as number[]).map((value) => {
+        console.log('value', value * VND_TO_USD)
+
+        return Math.round(value * VND_TO_USD)
+      })
+      return setSalary(convertedValue)
+
+      console.log(convertedValue)
+      console.log(salary)
+    } else {
+      convertedValue = (salary as number[]).map((value) => {
+        console.log('value', value * USD_TO_VND)
+        return Math.round(value * USD_TO_VND)
+      })
+      return setSalary(convertedValue)
+
+      console.log(convertedValue)
+      console.log(salary)
+    }
   }
+  console.log('moneyType', moneyType)
 
   return (
     <Box
@@ -81,11 +128,11 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
       >
         <p style={{ flex: '3' }}>
           Lương từ
-          <span style={{ color: 'black', fontWeight: '600' }}>
+          <span style={{ color: 'black', fontWeight: '600', margin: '0 4px' }}>
             {salary[0].toLocaleString()}
           </span>
           đến
-          <span style={{ color: 'black', fontWeight: '600' }}>
+          <span style={{ color: 'black', fontWeight: '600', margin: '0 4px' }}>
             {salary[1].toLocaleString()}
           </span>
         </p>
@@ -96,9 +143,9 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
         onChange={handleChange}
         valueLabelDisplay="auto"
         getAriaValueText={valuetext}
-        min={0}
-        max={100000000}
-        step={1000000}
+        min={moneyType === 1 ? 0 : 0}
+        max={moneyType === 1 ? 100000000 : 4300}
+        step={moneyType === 1 ? 1000000 : 100}
         sx={{ width: '80%', margin: '0 auto' }}
       />
     </Box>
