@@ -10,7 +10,7 @@ import RouteProps from '../routes'
 // }
 
 const route: RouteProps = {
-  path: '/home',
+  path: '/post/history',
   component: <HistoryPost />,
 }
 

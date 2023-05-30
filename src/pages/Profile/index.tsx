@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // @ts-ignore
 import Navbar from '../Policy/components/Navbar/index'
 
@@ -14,6 +14,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../store/reducer/index'
 import ItemApply from './components/Item'
 
+import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson'
+import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice'
+import ModalProfileContact from '#components/Profile/ModalProfileContact'
+import ModalProfileEducation from '#components/Profile/ModalProfileEducation'
+import ModalProfileLocation from '#components/Profile/ModalProfileLocation'
+import ModalProfileExperience from '#components/Profile/ModalProfileExperience'
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
   height: 22,
@@ -94,9 +100,58 @@ const Profile: React.FC = () => {
     message: 'Successfully',
   }
 
+  const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false)
+  const [openModalContact, setOpenModalContact] = useState(false)
+  const [openModalCareerObjective, setOpenModalCareerObjective] =
+    useState(false)
+  const [openModalLocation, setOpenModalLocation] = useState(false)
+  const [openModalEducation, setOpenModalEducation] = useState(false)
+  const [openModalExperience, setOpenModalExperience] = useState(false)
   const dataProfile: any = useSelector((state: RootState) => state.profile)
 
+  const [imageInfo, setImageInfo] = useState<string>('')
+  const [avatarUrl, setAvatarUrl] = useState<string>('')
   console.log(dataProfile)
+
+  const handleAvatarClick = () => {
+    // Khi click vào SmallAvatar, thực hiện hành động tương ứng
+    const fileInput = document.getElementById('avatar-input')
+    if (fileInput) {
+      fileInput.click()
+    }
+  }
+
+  const handleImageChange = async (e: any) => {
+    const file = e.target.files[0]
+    if (file) {
+      const imageUrl = await uploadImage(file)
+      // Cập nhật URL của ảnh mới vào trạng thái của component
+      setAvatarUrl(imageUrl)
+    }
+  }
+
+  const uploadImage = async (file: any) => {
+    try {
+      const formData = new FormData()
+      formData.append('image', file)
+
+      const response = await fetch('your-upload-image-api-endpoint', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        const imageUrl = data.imageUrl
+        return imageUrl
+      } else {
+        throw new Error('Failed to upload image')
+      }
+    } catch (error) {
+      console.error(error)
+      // Xử lý lỗi tải lên ảnh
+    }
+  }
 
   return (
     <div className="profile">
@@ -115,7 +170,24 @@ const Profile: React.FC = () => {
                 overlap="circular"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 badgeContent={
-                  <SmallAvatar alt="Remy Sharp" src="/logoH2.png" sizes="10" />
+                  <div style={{ position: 'relative' }}>
+                    <SmallAvatar
+                      alt="Remy Sharp"
+                      src="/logoH2.png"
+                      sizes="10"
+                      onClick={handleAvatarClick} // Xử lý click vào SmallAvatar
+                      sx={{ cursor: 'pointer' }}
+                    />
+
+                    <input
+                      id="avatar-input"
+                      type="file"
+                      name="images"
+                      hidden
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                  </div>
                 }
               >
                 <Avatar
@@ -168,10 +240,20 @@ const Profile: React.FC = () => {
             }}
           >
             <h3>Thông tin cá nhân</h3>
-            <Space>
+            <Space
+              style={{ cursor: 'pointer' }}
+              onClick={() => setOpenModalPersonalInfo(true)}
+            >
               <img src="/images/profile/pen.png" />
 
-              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+              <p
+                style={{
+                  color: '#0D99FF',
+                  fontSize: '14px',
+                }}
+              >
+                Sửa
+              </p>
             </Space>
           </div>
           <div className="info-detail">
@@ -198,8 +280,11 @@ const Profile: React.FC = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Thông tin cá nhân</h3>
-            <Space>
+            <h3>Thông tin liên hệ</h3>
+            <Space
+              style={{ cursor: 'pointer' }}
+              onClick={() => setOpenModalContact(true)}
+            >
               <img src="/images/profile/pen.png" />
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
@@ -233,8 +318,11 @@ const Profile: React.FC = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Thông tin cá nhân</h3>
-            <Space>
+            <h3>Lịch sử quan tâm</h3>
+            <Space
+              style={{ cursor: 'pointer' }}
+              onClick={() => setOpenModalCareerObjective(true)}
+            >
               <img src="/images/profile/pen.png" />
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
@@ -256,8 +344,11 @@ const Profile: React.FC = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Thông tin cá nhân</h3>
-            <Space>
+            <h3>Khu vực làm việc</h3>
+            <Space
+              style={{ cursor: 'pointer' }}
+              onClick={() => setOpenModalLocation(true)}
+            >
               <img src="/images/profile/pen.png" />
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
@@ -280,14 +371,18 @@ const Profile: React.FC = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Thông tin cá nhân</h3>
+            <h3>Trình độ học vấn</h3>
           </div>
-          <ItemApply item={dataTest.data.educations[0]} />
+          <ItemApply
+            item={dataTest.data.educations[0]}
+            setOpenModalEducation={setOpenModalEducation}
+            setOpenModalExperience={setOpenModalExperience}
+          />
 
           <div
             style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
           >
-            <Space style={{ alignItems: 'center' }}>
+            <Space style={{ alignItems: 'center', cursor: 'pointer' }}>
               <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
@@ -302,16 +397,22 @@ const Profile: React.FC = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Thông tin cá nhân</h3>
+            <h3>Kinh nghiệm làm việc</h3>
           </div>
           {dataTest.data.experiences.map((item, index) => (
-            <ItemApply typeItem="experiences" key={index} item={item} />
+            <ItemApply
+              typeItem="experiences"
+              key={index}
+              item={item}
+              setOpenModalEducation={setOpenModalEducation}
+              setOpenModalExperience={setOpenModalExperience}
+            />
           ))}
 
           <div
             style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
           >
-            <Space style={{ alignItems: 'center' }}>
+            <Space style={{ alignItems: 'center', cursor: 'pointer' }}>
               <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
               <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
@@ -320,6 +421,31 @@ const Profile: React.FC = () => {
         </div>
       </div>
       <Footer />
+      <ModalProfileInfoPerson
+        openModelPersonalInfo={openModelPersonalInfo}
+        setOpenModalPersonalInfo={setOpenModalPersonalInfo}
+      />
+
+      <ModalProfileContact
+        openModalContact={openModalContact}
+        setOpenModalContact={setOpenModalContact}
+      />
+      <ModalProfileCareerObjectice
+        openModalCareerObjective={openModalCareerObjective}
+        setOpenModalCareerObjective={setOpenModalCareerObjective}
+      />
+      <ModalProfileEducation
+        openModalEducation={openModalEducation}
+        setOpenModalEducation={setOpenModalEducation}
+      />
+      <ModalProfileLocation
+        openModalLocation={openModalLocation}
+        setOpenModalLocation={setOpenModalLocation}
+      />
+      <ModalProfileExperience
+        openModalExperience={openModalExperience}
+        setOpenModalExperience={setOpenModalExperience}
+      />
     </div>
   )
 }
