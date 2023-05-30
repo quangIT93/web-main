@@ -31,7 +31,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         Số điện thoại liên hệ *:
       </Typography>
       <TextField
-        type="text"
+        type="number"
         id="company"
         name="company_name"
         // value={formValues.company_name}
