@@ -18,7 +18,7 @@ const options: Option[] = [
     value: 'light',
     children: new Array(20)
       .fill(null)
-      .map((_, index) => ({ label: `Number ${index}`, value: index })),
+      .map((_, index) => ({ label: `Number ${index}`, value: index, disableCheckbox: true })),
   },
   {
     label: 'Bamboo',
@@ -46,45 +46,7 @@ const options: Option[] = [
     ],
   },
 ]
-const data = [
-  {
-    parent_category_id: 2,
-    parent_category: 'Văn phòng',
-    image:
-      'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/category/van-phong.png',
-    childs: [
-      { id: 354, name: 'Chăm sóc khách hàng' },
-      { id: 396, name: 'Kế toán' },
-      { id: 397, name: 'Nhân sự (HR)' },
-      // Other child options
-    ],
-  },
-  {
-    parent_category_id: 3,
-    parent_category: 'Khách sạn/Nhà hàng',
-    image:
-      'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/category/khach-san-nha-hang.png',
-    childs: [
-      { id: 384, name: 'Đầu bếp' },
-      { id: 359, name: 'Lễ tân' },
-      { id: 179, name: 'Nhân viên buồng phòng' },
-      // Other child options
-    ],
-  },
-  {
-    parent_category_id: 4,
-    parent_category: 'IT/Lập trình viên',
-    image:
-      'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/category/lap-trinh.png',
-    childs: [
-      { id: 442, name: 'Chuyên viên hỗ trợ' },
-      { id: 447, name: 'Chuyên Viên Phát Triển Game' },
-      { id: 401, name: 'Cyber security specialist' },
-      // Other child options
-    ],
-  },
-  // Other parent categories
-]
+
 
 interface ICategories {
   setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>
@@ -95,14 +57,24 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   const { setCategoriesId, categoriesId } = props
 
   const [dataCategories, setDataCategories] = React.useState<any>(null)
+  const [disable, setDisable] = React.useState<Boolean>(false)
   const onChange = (value: any) => {
-    const secondValues = value.map((item: any) => item[1])
-    console.log('value', value)
-    console.log('secondValues', secondValues)
-    if (secondValues.length <= 2) {
-      setCategoriesId(secondValues)
+    if (value.length > 1) {
+      setDisable(true)
+
+    } else {
+      setDisable(false)
+      const secondValues = value.map((item: any) => item[1])
+      console.log('value', value)
+      console.log('secondValues', secondValues)
+      if (secondValues.length <= 2) {
+        setCategoriesId(secondValues)
+      }
+
     }
+
   }
+
 
   const getCategories = async () => {
     try {
@@ -134,20 +106,24 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => ({
-                  value: child.id,
-                  label: child.name,
-                })),
-              }))
+              value: parentCategory.parent_category_id,
+              label: parentCategory.parent_category,
+              children: parentCategory.childs.map((child: any) => ({
+                value: child.id,
+                label: child.name,
+                disabled: disable
+              })),
+            }))
             : []
+
         }
         onChange={onChange}
         multiple
         maxTagCount="responsive"
         size="large"
         className="inputCategories"
+
+
       />
     </Box>
   )

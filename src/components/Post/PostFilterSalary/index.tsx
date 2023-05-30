@@ -95,7 +95,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           component="legend"
           sx={styleLabel}
         >
-          Thời gian làm việc *:
+          Loại tiền *:
         </FormLabel>
         <RadioGroup
           row

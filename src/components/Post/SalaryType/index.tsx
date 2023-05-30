@@ -7,6 +7,8 @@ import FormLabel from '@mui/material/FormLabel'
 import FormControlLabel from '@mui/material/FormControlLabel'
 //@ts-ignore
 import { styleLabel } from '#components/Post/CssPost'
+import { AxiosResponse } from 'axios'
+import siteApi from 'api/siteApi'
 
 interface ISalaryType {
   salaryType: number
@@ -17,6 +19,21 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
   const handleChangeSalaryType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSalaryType(Number(e.target.value))
   }
+
+  const [salary, setSalary] = React.useState<AxiosResponse | null>(null)
+
+  // call api get salaryType
+  const getSalaryType = async () => {
+    const result = await siteApi.getSalaryType()
+    if (result) {
+      setSalary(result)
+    }
+  }
+
+  React.useEffect(() => {
+    getSalaryType()
+  }, [])
+
   return (
     <Box sx={{ marginTop: '24px' }}>
       <FormControl sx={{ width: '100%' }}>
@@ -31,11 +48,11 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
           onChange={handleChangeSalaryType}
           sx={{ display: 'flex', flexDirection: 'column' }}
         >
-          <FormControlLabel value={1} control={<Radio />} label="Giờ" />
-          <FormControlLabel value={2} control={<Radio />} label="Ngày" />
-          <FormControlLabel value={3} control={<Radio />} label="Tuần" />
-          <FormControlLabel value={4} control={<Radio />} label="Tháng" />
-          <FormControlLabel value={5} control={<Radio />} label="Công việc" />
+          {salary?.data.map((item: any, i: number) => {
+
+            return <FormControlLabel key={i} value={item.id} control={<Radio />} label={`${item.value}`} />
+          })}
+
         </RadioGroup>
       </FormControl>
     </Box>

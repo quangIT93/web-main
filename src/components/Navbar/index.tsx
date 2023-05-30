@@ -223,21 +223,18 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   }
 
   // login
-  const handleClickLogin = async () => {
-    const accessToken = localStorage.getItem('accessToken')
-    if (!accessToken) {
-      setOpenModalLogin(true)
-    } else {
-      await fecthDataProfile()
-      setTimeout(() => {
-        if (dataProfile.profile) {
-          setOpenInfoUser(!openInfoUser)
-        } else {
-          setOpenInfoUser(false)
-          setOpenModalLogin(true)
-        }
-      }, 600)
-    }
+  const handleClickLogin = () => {
+
+    fecthDataProfile()
+    setTimeout(() => {
+      if (dataProfile.profile) {
+        setOpenInfoUser(!openInfoUser)
+      } else {
+        setOpenInfoUser(false)
+        setOpenModalLogin(true)
+      }
+    }, 600)
+
   }
 
   // handle logout 
@@ -249,6 +246,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
       if (refreshToken) {
         localStorage.clear();
+
         window.location.replace("/home")
         await authApi.signOut(refreshToken)
 
@@ -309,8 +307,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                 src={dataProfile.profile?.avatar ? dataProfile.profile.avatar : null}
               />
               <div>
-                <h2>{dataProfile.profile.name}</h2>
-                <span>{dataProfile.profile.email}</span>
+                <h2>{dataProfile?.profile?.name ? dataProfile.profile.name : ""}</h2>
+                <span>{dataProfile?.profile?.email ? dataProfile?.profile.email : ""}</span>
               </div>
             </Space>
             <div className="sub-login_items">

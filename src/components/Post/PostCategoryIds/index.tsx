@@ -69,12 +69,14 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
     value: string,
     reason: AutocompleteInputChangeReason
   ) => {
+
     const newInputValue = (event?.target as HTMLInputElement)?.id
     if (newInputValue) {
       const updatedOptions = [...options]
       const existingOption = updatedOptions.find(
         (option) => option.id === newInputValue
       )
+
       if (!existingOption) {
         // Thêm tùy chọn mới vào danh sách tùy chọn
         updatedOptions.push({
@@ -93,6 +95,7 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
     event: React.ChangeEvent<{}>,
     values: Option[]
   ) => {
+
     setSelectedOptions(values)
   }
 
