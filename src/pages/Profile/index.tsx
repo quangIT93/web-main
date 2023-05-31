@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // @ts-ignore
 import Navbar from '../Policy/components/Navbar/index'
 
@@ -20,13 +20,29 @@ import ModalProfileContact from '#components/Profile/ModalProfileContact'
 import ModalProfileEducation from '#components/Profile/ModalProfileEducation'
 import ModalProfileLocation from '#components/Profile/ModalProfileLocation'
 import ModalProfileExperience from '#components/Profile/ModalProfileExperience'
+// import data
+import {
+  getProfile,
+  resetProfileState,
+} from 'store/reducer/profileReducer/getProfileReducer'
+import profileApi from 'api/profileApi'
+
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
   height: 22,
   border: `2px solid ${theme.palette.background.paper}`,
   backgroundColor: 'white',
 }))
+
+interface ItemAppy {
+  company_name?: String
+  major?: String
+  start_date?: String
+  end_date?: String
+  extra_information?: String
+}
 const Profile: React.FC = () => {
+  const dispatch = useDispatch()
   const dataTest = {
     code: 200,
     success: true,
@@ -77,6 +93,14 @@ const Profile: React.FC = () => {
           end_date: '2023-06-11T17:00:00.000Z',
           extra_information: 'Nothing to tell',
         },
+        {
+          id: 5,
+          company_name: 'TDT University - Vietnam',
+          major: 'Computer Science',
+          start_date: '2019-09-09T17:00:00.000Z',
+          end_date: '2023-06-11T17:00:00.000Z',
+          extra_information: 'Nothing to tell',
+        },
       ],
       experiences: [
         {
@@ -100,6 +124,20 @@ const Profile: React.FC = () => {
     message: 'Successfully',
   }
 
+  // const [dataProfile, setDataProfile] = useState(null)
+
+  const { profile, error }: any = useSelector(
+    (state: RootState) => state.profile
+  )
+  useEffect(() => {
+    // Gọi action để lấy thông tin profile
+    dispatch<any>(getProfile())
+      .unwrap()
+      .catch((err: any) => {
+        console.log('Error:', err)
+      })
+    console.log('Error:')
+  }, [])
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false)
   const [openModalContact, setOpenModalContact] = useState(false)
   const [openModalCareerObjective, setOpenModalCareerObjective] =
@@ -107,11 +145,9 @@ const Profile: React.FC = () => {
   const [openModalLocation, setOpenModalLocation] = useState(false)
   const [openModalEducation, setOpenModalEducation] = useState(false)
   const [openModalExperience, setOpenModalExperience] = useState(false)
-  const dataProfile: any = useSelector((state: RootState) => state.profile)
 
   const [imageInfo, setImageInfo] = useState<string>('')
   const [avatarUrl, setAvatarUrl] = useState<string>('')
-  console.log(dataProfile)
 
   const handleAvatarClick = () => {
     // Khi click vào SmallAvatar, thực hiện hành động tương ứng
@@ -122,26 +158,32 @@ const Profile: React.FC = () => {
   }
 
   const handleImageChange = async (e: any) => {
-    const file = e.target.files[0]
-    if (file) {
-      const imageUrl = await uploadImage(file)
+    // const file = e.target.files[0]
+    const files = Array.from(e.target.files) // Chuyển đổi FileList thành mảng các đối tượng file
+    console.log('file', files)
+    if (files) {
+      const imageUrl = await uploadImage(e, files)
       // Cập nhật URL của ảnh mới vào trạng thái của component
       setAvatarUrl(imageUrl)
     }
   }
+  console.log('avatarURL', avatarUrl)
+  const uploadImage = async (e: any, files: any) => {
+    const formData = new FormData()
+    // files.forEach((file, index) => {
+    //   formData.append(`images[${index}]`, file)
+    // })
 
-  const uploadImage = async (file: any) => {
+    files.forEach((file: File) => {
+      if (file instanceof File) {
+        formData.append(`images`, file)
+      }
+    })
     try {
-      const formData = new FormData()
-      formData.append('image', file)
-
-      const response = await fetch('your-upload-image-api-endpoint', {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (response.ok) {
-        const data = await response.json()
+      const response = await profileApi.postAvatar(formData)
+      if (response) {
+        console.log('response', response)
+        const data = await response.data
         const imageUrl = data.imageUrl
         return imageUrl
       } else {
@@ -152,7 +194,7 @@ const Profile: React.FC = () => {
       // Xử lý lỗi tải lên ảnh
     }
   }
-
+  console.log('profile', profile)
   return (
     <div className="profile">
       <Navbar />
@@ -192,12 +234,12 @@ const Profile: React.FC = () => {
               >
                 <Avatar
                   style={{ height: '70px', width: '70px' }}
-                  alt="Travis Howard"
-                  src="https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-3eedf311-0479-4ecc-804e-ca810f1b7658.jpg"
+                  alt="Ảnh lỗi"
+                  src={profile?.avatar ? profile?.avatar : ''}
                 />
               </Badge>
               <div style={{ marginLeft: '10px' }}>
-                <h2>Trần Văn An</h2>
+                <h2>{profile?.name ? profile?.name : 'Chưa cập nhật'}</h2>
                 <div
                   style={{
                     display: 'flex',
@@ -225,10 +267,7 @@ const Profile: React.FC = () => {
               color: '#575757',
             }}
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            {profile?.introduction ? profile?.introduction : 'Chưa cập nhật'}
           </div>
         </div>
         <div className="div-profile-info">
@@ -259,15 +298,23 @@ const Profile: React.FC = () => {
           <div className="info-detail">
             <div className="div-detail-row left">
               <p>Ngày sinh</p>
-              <p>Ngày sinh</p>
-
-              <p>Ngày sinh</p>
+              <p>Giới tính</p>
+              <p>Địa điểm</p>
             </div>
             <div className="div-detail-row right">
-              <p>{dataTest.data.birthday}</p>
-              <p>{dataTest.data.gender == 1 ? 'Nam' : 'Nu'}</p>
-
-              <p>{dataTest.data.address.name}</p>
+              <p>{profile?.birthday ? profile?.birthday : 'Chưa cập nhật'}</p>
+              <p>
+                {profile?.gender
+                  ? profile?.gender === 0
+                    ? 'Nam'
+                    : 'Nu'
+                  : 'Nam'}
+              </p>
+              <p>
+                {profile?.address.name
+                  ? profile?.address.name
+                  : 'Chưa cập nhật'}
+              </p>
             </div>
           </div>
         </div>
@@ -292,20 +339,20 @@ const Profile: React.FC = () => {
           </div>
           <div className="info-detail">
             <div className="div-detail-row left">
-              <p>Ngày sinh</p>
-              <p>Ngày sinh</p>
+              <p>Số điện thoại</p>
+              <p>Email</p>
 
-              <p>Ngày sinh</p>
+              <p>Facebook</p>
 
-              <p>Ngày sinh</p>
+              <p>LinkedIn</p>
             </div>
             <div className="div-detail-row right">
-              <p>{dataTest.data.phone}</p>
-              <p>{dataTest.data.email}</p>
+              <p>{profile?.phone ? profile?.phone : 'Chưa cập nhật'}</p>
+              <p>{profile?.email ? profile?.email : 'Chưa cập nhật'}</p>
 
-              <p>{dataTest.data.facebook}</p>
+              <p>{profile?.facebook ? profile?.facebook : 'Chưa cập nhật'}</p>
 
-              <p>{dataTest.data.linkedin}</p>
+              <p>{profile?.linkedin ? profile?.linkedin : 'Chưa cập nhật'}</p>
             </div>
           </div>
         </div>
@@ -318,7 +365,7 @@ const Profile: React.FC = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Lịch sử quan tâm</h3>
+            <h3>Lĩnh vực quan tâm</h3>
             <Space
               style={{ cursor: 'pointer' }}
               onClick={() => setOpenModalCareerObjective(true)}
@@ -329,11 +376,13 @@ const Profile: React.FC = () => {
             </Space>
           </div>
           <Space wrap className="item-info-work">
-            {dataTest.data.categories.map((item, index) => (
-              <Button key={index} className="btn" type="text">
-                {item.parent_category}
-              </Button>
-            ))}
+            {profile?.categories.length !== 0
+              ? dataTest.data.categories.map((item, index) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.parent_category}
+                  </Button>
+                ))
+              : 'Chưa cập nhật'}
           </Space>
         </div>
         <div className="div-profile-info">
@@ -355,11 +404,13 @@ const Profile: React.FC = () => {
             </Space>
           </div>
           <Space wrap className="item-info-work">
-            {dataTest.data.locations.map((item, index) => (
-              <Button key={index} className="btn" type="text">
-                {item.district}
-              </Button>
-            ))}
+            {profile?.locations.length !== 0
+              ? dataTest.data.locations.map((item, index) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.district}
+                  </Button>
+                ))
+              : 'Chưa cập nhật'}
           </Space>
         </div>
 
@@ -373,11 +424,18 @@ const Profile: React.FC = () => {
           >
             <h3>Trình độ học vấn</h3>
           </div>
-          <ItemApply
-            item={dataTest.data.educations[0]}
-            setOpenModalEducation={setOpenModalEducation}
-            setOpenModalExperience={setOpenModalExperience}
-          />
+          {profile?.educations.length !== 0 ? (
+            profile?.educations.map((education: ItemAppy, index: number) => (
+              <ItemApply
+                item={education}
+                setOpenModalEducation={setOpenModalEducation}
+                setOpenModalExperience={setOpenModalExperience}
+                key={index}
+              />
+            ))
+          ) : (
+            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+          )}
 
           <div
             style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
@@ -399,15 +457,19 @@ const Profile: React.FC = () => {
           >
             <h3>Kinh nghiệm làm việc</h3>
           </div>
-          {dataTest.data.experiences.map((item, index) => (
-            <ItemApply
-              typeItem="experiences"
-              key={index}
-              item={item}
-              setOpenModalEducation={setOpenModalEducation}
-              setOpenModalExperience={setOpenModalExperience}
-            />
-          ))}
+          {profile?.experiences.length !== 0 ? (
+            profile?.experiences.map((item: any, index: number) => (
+              <ItemApply
+                typeItem="experiences"
+                key={index}
+                item={item}
+                setOpenModalEducation={setOpenModalEducation}
+                setOpenModalExperience={setOpenModalExperience}
+              />
+            ))
+          ) : (
+            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+          )}
 
           <div
             style={{ display: 'flex', width: '100%', justifyContent: 'center' }}

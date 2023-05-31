@@ -3,11 +3,9 @@ import React, { useEffect, useRef, useState } from 'react'
 // import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
-import ModalLogin from "../../components/Home/ModalLogin"
-
-import { Link } from 'react-router-dom'
+import ModalLogin from '../../components/Home/ModalLogin'
 
 // @ts-ignore
 import { Logo } from '#components'
@@ -43,7 +41,7 @@ import {
   SyncOutlined,
   ClockCircleOutlined,
   LogoutOutlined,
-  KeyOutlined
+  KeyOutlined,
 } from '@ant-design/icons'
 
 // import component
@@ -181,7 +179,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   useEffect(() => {
     fecthDataProfile()
-
   }, [localStorage.getItem('accessToken')])
 
   const ref = useRef<HTMLDivElement>(null)
@@ -224,7 +221,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   // login
   const handleClickLogin = () => {
-
     fecthDataProfile()
     setTimeout(() => {
       if (dataProfile.profile) {
@@ -234,43 +230,39 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         setOpenModalLogin(true)
       }
     }, 600)
-
   }
 
-  // handle logout 
+  // handle logout
   const handleLogout = async () => {
     try {
-      console.log("d")
-      const refreshToken = localStorage.getItem("refreshToken")
-
+      console.log('d')
+      const refreshToken = localStorage.getItem('refreshToken')
 
       if (refreshToken) {
-        localStorage.clear();
+        localStorage.clear()
 
-        window.location.replace("/home")
+        window.location.replace('/home')
         await authApi.signOut(refreshToken)
-
       }
     } catch (error) {
       console.log(error)
     }
-
   }
 
-
   const buttons = [
-
-    <button className="btn btn__post" onClick={() => {
-      if (dataProfile.profile && localStorage.getItem("refreshToken")) {
-        window.open("/post", "_parent")
-      } else {
-        setOpenModalLogin(true)
-      }
-    }}>
+    <button
+      className="btn btn__post"
+      onClick={() => {
+        if (dataProfile.profile && localStorage.getItem('refreshToken')) {
+          window.open('/post', '_parent')
+        } else {
+          setOpenModalLogin(true)
+        }
+      }}
+    >
       <FormOutlined style={{ color: 'white' }} />
       <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
-    </button>
-    ,
+    </button>,
     <div className="actions-login" onClick={handleClickLogin}>
       <button className="btn btn__login">
         <div style={{ display: 'flex' }}>
@@ -278,8 +270,9 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             <Avatar
               style={{ backgroundColor: '#0D99FF' }}
               icon={<UserOutlined />}
-              src={dataProfile.profile?.avatar ? dataProfile.profile.avatar : ''}
-
+              src={
+                dataProfile.profile?.avatar ? dataProfile.profile.avatar : ''
+              }
             />
           </div>
           <div className="login__center">
@@ -294,52 +287,57 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <RightOutlined />
         </div>
       </button>
-      {
-        openInfoUser && (
-          <div className="sub-login">
-            <Space className="sub-login_info">
-              <Avatar
-                style={{ backgroundColor: '#0D99FF' }}
-                icon={<UserOutlined style={{ fontSize: 30 }}
-
-                />}
-                size={50}
-                src={dataProfile.profile?.avatar ? dataProfile.profile.avatar : null}
-              />
-              <div>
-                <h2>{dataProfile?.profile?.name ? dataProfile.profile.name : ""}</h2>
-                <span>{dataProfile?.profile?.email ? dataProfile?.profile.email : ""}</span>
-              </div>
-            </Space>
-            <div className="sub-login_items">
-              <div className="sub-login_item">
-                <SyncOutlined />
-                <span>Cập nhật thông tin</span>
-              </div>
-              <div className="sub-login_item">
+      {openInfoUser && (
+        <div className="sub-login">
+          <Space className="sub-login_info">
+            <Avatar
+              style={{ backgroundColor: '#0D99FF' }}
+              icon={<UserOutlined style={{ fontSize: 30 }} />}
+              size={50}
+              src={
+                dataProfile.profile?.avatar ? dataProfile.profile.avatar : null
+              }
+            />
+            <div>
+              <h2>
+                {dataProfile?.profile?.name ? dataProfile.profile.name : ''}
+              </h2>
+              <span>
+                {dataProfile?.profile?.email ? dataProfile?.profile.email : ''}
+              </span>
+            </div>
+          </Space>
+          <div className="sub-login_items">
+            <div className="sub-login_item">
+              <SyncOutlined />
+              <span>Cập nhật thông tin</span>
+            </div>
+            <div className="sub-login_item">
+              <Link to="/profile">
                 <ClockCircleOutlined />
                 <span>Lịch sử</span>
-              </div>
-              <div className="sub-login_item">
-                <KeyOutlined />
-                <span>Đổi mật khẩu</span>
-              </div>
-              <div className="sub-login_item" onClick={handleLogout} >
-                <  LogoutOutlined />
-                <span>Đăng xuất</span>
-              </div>
+              </Link>
+            </div>
+            <div className="sub-login_item">
+              <KeyOutlined />
+              <span>Đổi mật khẩu</span>
+            </div>
+            <div className="sub-login_item" onClick={handleLogout}>
+              <LogoutOutlined />
+              <span>Đăng xuất</span>
             </div>
           </div>
-        )
-      }
-
+        </div>
+      )}
     </div>,
   ]
 
   return (
     <Container className="nav" ref={ref}>
-      <ModalLogin openModalLogin={openModalLogin}
-        setOpenModalLogin={setOpenModalLogin} />
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
       <Wrapper>
         <Left>
           <Logo />

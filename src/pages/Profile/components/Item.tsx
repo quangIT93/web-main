@@ -25,6 +25,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({
   setOpenModalExperience,
   setOpenModalEducation,
 }) => {
+  console.log('item', item)
   return (
     <div className="div-apply-item">
       <div className="div-item-left">
@@ -59,7 +60,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({
             : () => setOpenModalEducation(true)
         }
       >
-        <img src="/images/profile/pen.png" />
+        <img src="/images/profile/pen.png" alt="s" />
 
         <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
       </Space>

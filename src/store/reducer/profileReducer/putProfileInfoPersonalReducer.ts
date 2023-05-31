@@ -2,25 +2,43 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import profileApi from '../../../api/profileApi'
 import { RootState } from '..'
+
+interface IInfoPersonal {
+  name: string
+  birthday: number
+  gender: number
+  address: number
+  introduction: string
+}
+
 interface ProfileState {
-  profile: any | null
+  data: IInfoPersonal | null
   error: string | null
 }
 
 const initialState: ProfileState = {
-  profile: null,
+  data: null,
   error: null,
 }
 
-export const getProfile = createAsyncThunk(
-  'profiles/s',
-  async (_, { getState, rejectWithValue }) => {
+export const putProfileInfoPersonal = createAsyncThunk(
+  'profile/getProfile',
+  async (
+    { name, birthday, gender, address, introduction }: IInfoPersonal,
+    { getState, rejectWithValue }
+  ) => {
     try {
       const accessToken = localStorage.getItem('accessToken')
       // Gọi API để lấy thông tin profile với accessToken đã có
 
       if (accessToken) {
-        const response = await profileApi.getProfile()
+        const response = await profileApi.putProfilePersonal({
+          name,
+          birthday,
+          gender,
+          address,
+          introduction,
+        })
         console.log(response)
         return response.data
       }
@@ -35,27 +53,27 @@ export const getProfile = createAsyncThunk(
 )
 
 const profileSlice = createSlice({
-  name: 'profile',
+  name: 'putProfilePersonal',
   initialState,
   reducers: {
     resetProfileState: (state) => {
-      state.profile = null
+      state.data = null
       state.error = null
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
-      getProfile.fulfilled,
+      putProfileInfoPersonal.fulfilled,
       (state, action: PayloadAction<any>) => {
-        state.profile = action.payload
+        state.data = action.payload
         state.error = null
       }
     )
 
     builder.addCase(
-      getProfile.rejected,
+      putProfileInfoPersonal.rejected,
       (state, action: PayloadAction<unknown>) => {
-        state.profile = null
+        state.data = null
         state.error = action.payload as string
       }
     )
