@@ -6,6 +6,7 @@ import provincesReducer from './provincesReducer'
 import authReducer from './authReducer/signGmailReducer'
 
 import getProfileReducer from './profileReducer/getProfileReducer'
+import putProfileInfoPersonalReducer from './profileReducer/putProfileInfoPersonalReducer'
 
 const reducers = combineReducers({
   post: postReducer,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   postNewest: postNewestReducer,
   auth: authReducer,
   profile: getProfileReducer,
+  putProfileInfoPersonal: putProfileInfoPersonalReducer,
 })
 
 export default reducers
