@@ -10,9 +10,24 @@ import moment from 'moment'
 import Autocomplete from '@mui/material/Autocomplete'
 import Button from '@mui/material/Button'
 // data
-import locationApi from '../../../api/locationApi'
-
+import profileApi from 'api/profileApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../../store/reducer/index'
+import {
+  getProfile,
+  resetProfileState,
+} from 'store/reducer/profileReducer/getProfileReducer'
 import './style.scss'
+
+interface InfoContact {
+  phone: string
+  email: string
+  facebook: string
+  linkedin: string
+
+}
+
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -33,12 +48,57 @@ const styleChildBox = {
 interface IModalProfileContact {
   openModalContact: boolean
   setOpenModalContact: React.Dispatch<React.SetStateAction<boolean>>
+  profile: any
 }
 
 const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
-  const { openModalContact, setOpenModalContact } = props
+  const { openModalContact, setOpenModalContact, profile } = props
+  const [phone, setPhone] = useState(profile.phone ? profile.phone : "")
+  const [email, setEmail] = useState(profile.email ? profile.email : "")
+  const [fb, setFB] = useState(profile.facebook ? profile.facebook : "")
+  const [linkIn, setLinkIn] = useState(profile.facebook ? profile.facebook : "")
 
   const handleClose = () => setOpenModalContact(false)
+  const dispatch = useDispatch()
+
+  const handleSetPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value)
+  }
+
+  const handleSetEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+  }
+
+  const handleSetFB = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFB(e.target.value)
+  }
+
+  const handleLinkIn = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLinkIn(e.target.value)
+  }
+
+  // handle update information contact
+  const handleSubmit = async () => {
+
+    try {
+      const info: InfoContact = {
+        phone: phone,
+        email: email,
+        facebook: fb,
+        linkedin: linkIn
+      }
+      console.log(info)
+      const result = await profileApi.updateContact(info)
+      if (result) {
+        await dispatch(getProfile() as any)
+        setOpenModalContact(false)
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   return (
     <Modal
@@ -70,12 +130,13 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             type="text"
             id="nameProfile"
             name="title"
-            //   value={formValues.title}
-            // onChange={handleChangeTitleForm}
+            value={phone}
+            onChange={handleSetPhone}
+
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Số điện thoại"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -92,12 +153,12 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             type="text"
             id="nameProfile"
             name="title"
-            //   value={formValues.title}
-            // onChange={handleChangeTitleForm}
+            value={email}
+            onChange={handleSetEmail}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Email"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -114,12 +175,12 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             type="text"
             id="nameProfile"
             name="title"
-            //   value={formValues.title}
-            // onChange={handleChangeTitleForm}
+            value={fb}
+            onChange={handleSetFB}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Facebook"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -136,16 +197,16 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             type="text"
             id="nameProfile"
             name="title"
-            //   value={formValues.title}
-            // onChange={handleChangeTitleForm}
+            value={linkIn}
+            onChange={handleLinkIn}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Linkedin"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" fullWidth onClick={handleSubmit}>
           Lưu thông tin
         </Button>
       </Box>

@@ -11,8 +11,15 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Button from '@mui/material/Button'
 // data
 import locationApi from '../../../api/locationApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../../store/reducer/index'
+import {
+  getProfile,
+  resetProfileState,
+} from 'store/reducer/profileReducer/getProfileReducer'
 
 import './style.scss'
+import profileApi from 'api/profileApi'
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -33,15 +40,31 @@ const styleChildBox = {
 interface IModalProfileInfoPerson {
   openModelPersonalInfo: boolean
   setOpenModalPersonalInfo: React.Dispatch<React.SetStateAction<boolean>>
+  profile: any
+}
+interface IInfoPersonal {
+  name: string
+  birthday: number
+  gender: number
+  address: number
+  introduction: string
 }
 
 const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
-  const { openModelPersonalInfo, setOpenModalPersonalInfo } = props
-  const [dateOfBirth, setDateOfBirth] = React.useState(null)
-  const [gender, setGender] = React.useState('Nam')
-  const [day, setDay] = useState(moment()) // Giá trị mặc định là ngày hiện tại
-  const [dataProvinces, setDataProvinces] = useState<any>(null)
-  const [selectedProvince, setSelectedProvince] = useState<any>(null)
+  const { openModelPersonalInfo, setOpenModalPersonalInfo, profile } = props
+  const [gender, setGender] = React.useState(profile?.gender != null ? profile.gender == 0 ? "Nam" : "Nữ" : null)
+  const [day, setDay] = useState(profile.birthday ? moment(new Date(profile.birthday)) : moment()) // Giá trị mặc định là ngày hiện tại
+  const [dataProvinces, setDataProvinces] = useState<any>()
+  const [selectedProvince, setSelectedProvince] = useState<any>(profile?.address ? profile?.address : null)
+  const [name, setName] = useState(profile.name)
+  const [introduction, setIntroduction] = useState(profile.introduction)
+
+  const dispatch = useDispatch()
+
+
+  const handleSetFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value)
+  }
 
   const getAllProvinces = async () => {
     try {
@@ -55,27 +78,59 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     }
   }
 
+
   React.useEffect(() => {
     getAllProvinces()
     // getAllLocations()
     // delete param when back to page
   }, [])
 
+
   const handleDateChange = (date: any) => {
-    setDay(date)
+    setDay(date._d)
+
   }
   const handleClose = () => setOpenModalPersonalInfo(false)
 
   const handleChange = (event: any) => {
     setGender(event.target.value)
+    //  console.log(event.target.value)
   }
 
   const handleProvinceChange = (event: any, value: any) => {
     setSelectedProvince(value)
+    // console.log("value: ", value)
   }
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value)
+    setIntroduction(e.target.value)
+  }
+  // handle update information user
+  const handleSubmit = async () => {
+    const data = new Date(day.toString()).getTime();
+    console.log(new Date(data))
+    try {
+      const info: IInfoPersonal = {
+        name: name,
+        birthday: new Date(day.toString()).getTime(),
+        gender: gender === "Nam" ? 0 : 1,
+        address: selectedProvince.id,
+        introduction: introduction
+      }
+      console.log(info)
+      const result = await profileApi.putProfilePersonal(info)
+      if (result) {
+        await dispatch(getProfile() as any)
+        setOpenModalPersonalInfo(false)
+      }
+
+      console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
+
+
   }
 
   return (
@@ -108,12 +163,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             type="text"
             id="nameProfile"
             name="title"
-            //   value={formValues.title}
-            // onChange={handleChangeTitleForm}
+            value={name}
+            onChange={handleSetFullName}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Họ và tên"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -129,14 +184,15 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             select
             id="sex"
             value={gender}
+            // defaultValue={gender}
             onChange={handleChange}
             variant="outlined"
             placeholder="Giới tính"
             size="small"
             sx={{ width: '100%' }}
           >
-            <MenuItem value="male">Nam</MenuItem>
-            <MenuItem value="female">Nữ</MenuItem>
+            <MenuItem value="Nam">Nam</MenuItem>
+            <MenuItem value="Nữ">Nữ</MenuItem>
           </TextField>
         </Box>
         <Box sx={styleChildBox}>
@@ -162,6 +218,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             options={dataProvinces ? dataProvinces : []}
             getOptionLabel={(option: any) => option?.name || ''}
             value={selectedProvince || null}
+            defaultValue={dataProvinces}
             onChange={handleProvinceChange}
             renderInput={(params) => (
               <TextField {...params} placeholder="Tỉnh/TP" size="small" />
@@ -183,12 +240,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             sx={{ width: '100%', marginTop: '4px' }}
             multiline
             rows={4}
+            value={introduction}
             // label="Một số đặc điểm nhận diện công ty"
             placeholder="Giới thiệu bản thân với Nhà Tuyển dụng
             Nêu sở trường và mong muốn của bạn liên quan đến công việc để gây chú ý với Nhà Tuyển dụng"
           />
         </Box>
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" fullWidth onClick={handleSubmit}>
           Lưu thông tin
         </Button>
       </Box>

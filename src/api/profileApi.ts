@@ -9,6 +9,14 @@ interface IInfoPersonal {
   address: number
   introduction: string
 }
+
+interface InfoContact {
+  phone: string
+  email: string
+  facebook: string
+  linkedin: string
+
+}
 const profileApi = {
   getProfile: () => {
     const URL = `profiles/s`
@@ -23,7 +31,7 @@ const profileApi = {
     const URL = `profiles/avt`
     return axiosClient.put(
       URL,
-      { images },
+      images,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -37,14 +45,26 @@ const profileApi = {
     const URL = `profiles/per`
     return axiosClient.put(
       URL,
-      { infoPersonal },
+      infoPersonal,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          ' Content-Type': 'multipart/form-data',
         },
       }
     ) // Truyền email vào body của request
+  },
+
+  updateContact: (infoContact: InfoContact) => {
+    const URL = `profiles/con`
+    return axiosClient.put(
+      URL,
+      infoContact,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    )
   },
 }
 

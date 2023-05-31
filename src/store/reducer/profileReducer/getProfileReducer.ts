@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import profileApi from '../../../api/profileApi'
 import { RootState } from '..'
 interface ProfileState {
-  profile: any | null
+  profile: any
   error: string | null
 }
 

@@ -21,6 +21,8 @@ import './style.scss'
 
 import Box from '@mui/material/Box'
 import ButtonGroup from '@mui/material/ButtonGroup'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // import icon
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
@@ -52,6 +54,7 @@ import CareerFilterSubnav from './components/CareerFilterSubnav'
 import { Avatar, Space } from 'antd'
 
 import authApi from 'api/authApi'
+import profileApi from 'api/profileApi'
 
 import {
   Container,
@@ -91,6 +94,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false)
   const [openInfoUser, setOpenInfoUser] = React.useState(false)
+  const [openBackdrop, setOpenBackdrop] = React.useState(false)
+
 
   const navigate = useNavigate()
 
@@ -147,6 +152,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     }
   }
 
+  // handle close backdrop
+  const handleClose = () => {
+    setOpenBackdrop(false)
+  }
+
   const [position, setPosition] = React.useState<string[]>([])
   const [career, setCareer] = React.useState<string[]>([])
 
@@ -174,11 +184,26 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   // fecth data profile with accesstoken
   const fecthDataProfile = async () => {
+
     await dispatch(getProfile() as any)
   }
 
   useEffect(() => {
+    const fecthDataProfile = async () => {
+      try {
+        await profileApi.getProfile()
+
+      } catch (error) {
+        setOpenBackdrop(true)
+        setTimeout(() => {
+          dispatch(getProfile() as any)
+          setOpenBackdrop(false)
+        }, 1500)
+      }
+    }
+
     fecthDataProfile()
+    dispatch(getProfile() as any)
   }, [localStorage.getItem('accessToken')])
 
   const ref = useRef<HTMLDivElement>(null)
@@ -220,8 +245,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   }
 
   // login
-  const handleClickLogin = () => {
-    fecthDataProfile()
+  const handleClickLogin = async () => {
+    await fecthDataProfile()
     setTimeout(() => {
       if (dataProfile.profile) {
         setOpenInfoUser(!openInfoUser)
@@ -229,7 +254,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         setOpenInfoUser(false)
         setOpenModalLogin(true)
       }
-    }, 600)
+    }, 700)
   }
 
   // handle logout
@@ -338,6 +363,16 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         openModalLogin={openModalLogin}
         setOpenModalLogin={setOpenModalLogin}
       />
+      <Backdrop
+        sx={{
+          color: '#0d99ff ',
+          zIndex: (theme: any) => theme.zIndex.drawer + 1,
+        }}
+        open={openBackdrop}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Wrapper>
         <Left>
           <Logo />
