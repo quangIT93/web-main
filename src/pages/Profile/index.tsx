@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { StatePropsCloseSlider } from 'pages/Home'
+import { useHomeState } from '../Home/HomeState'
 // @ts-ignore
-import Navbar from '../Policy/components/Navbar/index'
-
+import { Navbar } from '#components'
 import './style.scss'
 import { styled } from '@mui/material/styles'
 import Badge from '@mui/material/Badge'
@@ -43,6 +44,23 @@ interface ItemAppy {
 }
 const Profile: React.FC = () => {
   const dispatch = useDispatch()
+
+  const {
+    openCollapse,
+    setOpenCollapse,
+    height,
+    setHeight,
+    openModalLogin,
+    setOpenModalLogin,
+  } = useHomeState()
+
+  const statePropsCloseSlider: StatePropsCloseSlider = {
+    openCollapse,
+    setOpenCollapse,
+    setHeight,
+    height,
+    setOpenModalLogin,
+  }
   const dataTest = {
     code: 200,
     success: true,
@@ -197,7 +215,7 @@ const Profile: React.FC = () => {
   console.log('profile', profile)
   return (
     <div className="profile">
-      <Navbar />
+      <Navbar {...statePropsCloseSlider} />
       <div className="container">
         <div className="div-profile-avatar">
           <div className="div-avatar">
@@ -423,6 +441,14 @@ const Profile: React.FC = () => {
             }}
           >
             <h3>Trình độ học vấn</h3>
+            <Space
+              style={{ cursor: 'pointer' }}
+              onClick={() => setOpenModalEducation(true)}
+            >
+              <img src="/images/profile/pen.png" />
+
+              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+            </Space>
           </div>
           {profile?.educations.length !== 0 ? (
             profile?.educations.map((education: ItemAppy, index: number) => (
@@ -456,6 +482,14 @@ const Profile: React.FC = () => {
             }}
           >
             <h3>Kinh nghiệm làm việc</h3>
+            <Space
+              style={{ cursor: 'pointer' }}
+              onClick={() => setOpenModalExperience(true)}
+            >
+              <img src="/images/profile/pen.png" />
+
+              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+            </Space>
           </div>
           {profile?.experiences.length !== 0 ? (
             profile?.experiences.map((item: any, index: number) => (

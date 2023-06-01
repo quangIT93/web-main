@@ -12,7 +12,7 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -184,24 +184,34 @@ const NewJobs: React.FC = () => {
                     <div
                       style={{ padding: '0', marginLeft: '12px' }}
                       className="div-cart-item-post"
-                    >  <Tooltip placement="top" title={item.title} >
+                    >
+                      {' '}
+                      <Tooltip placement="top" title={item.title}>
                         <Typography
                           gutterBottom
                           variant="h6"
                           component="div"
-                          sx={{ fontSize: '15px', margin: 0, fontWeight: "bold" }}
+                          sx={{
+                            fontSize: '15px',
+                            margin: 0,
+                            fontWeight: 'bold',
+                          }}
                         >
-                          {item?.title.length > 37 ? `${item.title.substring(0, 35)} ...` : item.title}
+                          {item?.title.length > 37
+                            ? `${item.title.substring(0, 35)} ...`
+                            : item.title}
                         </Typography>
                       </Tooltip>
-                      <Tooltip placement="top" title={item.company_name} >
+                      <Tooltip placement="top" title={item.company_name}>
                         <Typography
                           gutterBottom
                           variant="h1"
                           component="div"
                           sx={{ fontSize: '12px' }}
                         >
-                          {item?.company_name.length > 37 ? `${item.company_name.substring(0, 37)} ...` : item.company_name}
+                          {item?.company_name.length > 37
+                            ? `${item.company_name.substring(0, 37)} ...`
+                            : item.company_name}
                         </Typography>
                       </Tooltip>
                       <div
@@ -236,7 +246,14 @@ const NewJobs: React.FC = () => {
                           justifyContent: 'center',
                         }}
                       >
-                        <AttachMoneyIcon sx={{ fontSize: 20, marginLeft: "-2px", marginRight: "2px", color: "#575757" }} />
+                        <AttachMoneyIcon
+                          sx={{
+                            fontSize: 20,
+                            marginLeft: '-2px',
+                            marginRight: '2px',
+                            color: '#575757',
+                          }}
+                        />
                         <Typography variant="body2" color="text.secondary">
                           {new Intl.NumberFormat('en-US').format(
                             item.salary_min
@@ -249,21 +266,35 @@ const NewJobs: React.FC = () => {
                       </div>
                       <div
                         style={{
-                          marginTop: 5
+                          marginTop: 5,
                         }}
                       >
-                        <p style={{ color: "#AAAAAA", fontSize: 13, fontStyle: "italic" }}>{item.created_at_text}</p>
+                        <p
+                          style={{
+                            color: '#AAAAAA',
+                            fontSize: 13,
+                            fontStyle: 'italic',
+                          }}
+                        >
+                          {item.created_at_text}
+                        </p>
                       </div>
                     </div>
                   </ImageListItem>
 
-                  <Space style={{ justifyContent: "space-between" }} direction='vertical' align='center'>
-                    <BookmarkBorderOutlinedIcon
-                      sx={{ top: 0, right: 0 }}
+                  <Space
+                    style={{ justifyContent: 'space-between' }}
+                    direction="vertical"
+                    align="center"
+                  >
+                    <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} />
+                    <img
+                      className="img-resource-company"
+                      src={item.resource.company_icon}
                     />
-                    <img className='img-resource-company' src={item.resource.company_icon} />
-                    <p style={{ fontSize: 13, fontStyle: "italic" }}>{item.job_type.job_type_name}</p>
-
+                    <p style={{ fontSize: 13, fontStyle: 'italic' }}>
+                      {item.job_type.job_type_name}
+                    </p>
                   </Space>
                 </Card>
               </Grid>

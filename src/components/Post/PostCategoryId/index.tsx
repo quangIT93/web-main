@@ -18,7 +18,11 @@ const options: Option[] = [
     value: 'light',
     children: new Array(20)
       .fill(null)
-      .map((_, index) => ({ label: `Number ${index}`, value: index, disableCheckbox: true })),
+      .map((_, index) => ({
+        label: `Number ${index}`,
+        value: index,
+        disableCheckbox: true,
+      })),
   },
   {
     label: 'Bamboo',
@@ -47,7 +51,6 @@ const options: Option[] = [
   },
 ]
 
-
 interface ICategories {
   setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>
   categoriesId: string[]
@@ -61,7 +64,6 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   const onChange = (value: any) => {
     if (value.length > 1) {
       setDisable(true)
-
     } else {
       setDisable(false)
       const secondValues = value.map((item: any) => item[1])
@@ -70,11 +72,8 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
       if (secondValues.length <= 2) {
         setCategoriesId(secondValues)
       }
-
     }
-
   }
-
 
   const getCategories = async () => {
     try {
@@ -106,24 +105,21 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-              value: parentCategory.parent_category_id,
-              label: parentCategory.parent_category,
-              children: parentCategory.childs.map((child: any) => ({
-                value: child.id,
-                label: child.name,
-                disabled: disable
-              })),
-            }))
+                value: parentCategory.parent_category_id,
+                label: parentCategory.parent_category,
+                children: parentCategory.childs.map((child: any) => ({
+                  value: child.id,
+                  label: child.name,
+                  disabled: disable,
+                })),
+              }))
             : []
-
         }
         onChange={onChange}
         multiple
         maxTagCount="responsive"
         size="large"
         className="inputCategories"
-
-
       />
     </Box>
   )
