@@ -11,14 +11,20 @@ interface Option {
   children?: Option[]
   disableCheckbox?: boolean
 }
-const { SHOW_CHILD } = Cascader;
+
+const { SHOW_CHILD } = Cascader
+
 const options: Option[] = [
   {
     label: 'Light',
     value: 'light',
     children: new Array(20)
       .fill(null)
-      .map((_, index) => ({ label: `Number ${index}`, value: index, disableCheckbox: true })),
+      .map((_, index) => ({
+        label: `Number ${index}`,
+        value: index,
+        disableCheckbox: true,
+      })),
   },
   {
     label: 'Bamboo',
@@ -46,7 +52,6 @@ const options: Option[] = [
     ],
   },
 ]
-
 
 interface ICategories {
   setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>
@@ -101,6 +106,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
+
               value: parentCategory.parent_category_id,
               label: parentCategory.parent_category,
               children: parentCategory.childs.map((child: any) => {
@@ -122,8 +128,8 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
                 }
               }),
             }))
-            : []
 
+            : []
         }
         onChange={onChange}
         multiple

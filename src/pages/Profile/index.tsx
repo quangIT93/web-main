@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 // @ts-ignore
-import Navbar from '../Policy/components/Navbar/index'
-
+import { Navbar } from '#components'
+import { StatePropsCloseSlider } from 'pages/Home'
+import { useHomeState } from '../Home/HomeState'
 import './style.scss'
 import { styled } from '@mui/material/styles'
 import Badge from '@mui/material/Badge'
@@ -21,6 +22,7 @@ import ModalProfileContact from '#components/Profile/ModalProfileContact'
 import ModalProfileEducation from '#components/Profile/ModalProfileEducation'
 import ModalProfileLocation from '#components/Profile/ModalProfileLocation'
 import ModalProfileExperience from '#components/Profile/ModalProfileExperience'
+import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate'
 // import data
 import {
   getProfile,
@@ -42,7 +44,29 @@ interface ItemAppy {
   end_date?: String
   extra_information?: String
 }
+
+interface ICategories {
+  child_category_id: number
+  parent_category_id: number
+  parent_category: string
+  child_category: string
+}
 const Profile: React.FC = () => {
+  const {
+    openCollapse,
+    setOpenCollapse,
+    height,
+    setHeight,
+    openModalLogin,
+    setOpenModalLogin,
+  } = useHomeState()
+  const statePropsCloseSlider: StatePropsCloseSlider = {
+    openCollapse,
+    setOpenCollapse,
+    setHeight,
+    height,
+    setOpenModalLogin,
+  }
   const dispatch = useDispatch()
   const dataTest = {
     code: 200,
@@ -143,7 +167,6 @@ const Profile: React.FC = () => {
     setTimeout(() => {
       setLoading(false)
     }, 1500)
-
   }, [])
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false)
   const [openModalContact, setOpenModalContact] = useState(false)
@@ -151,6 +174,8 @@ const Profile: React.FC = () => {
     useState(false)
   const [openModalLocation, setOpenModalLocation] = useState(false)
   const [openModalEducation, setOpenModalEducation] = useState(false)
+  const [openModalEducationUpdate, setOpenModalEducationUpdate] =
+    useState(false)
   const [openModalExperience, setOpenModalExperience] = useState(false)
 
   const [imageInfo, setImageInfo] = useState<string>('')
@@ -168,19 +193,14 @@ const Profile: React.FC = () => {
   const handleImageChange = async (e: any) => {
     // const file = e.target.files[0]
     const files = Array.from(e.target.files) // Chuyển đổi FileList thành mảng các đối tượng file
-    console.log('file', files)
     if (files) {
       const imageUrl = await uploadImage(e, files)
       // Cập nhật URL của ảnh mới vào trạng thái của component
       setAvatarUrl(imageUrl)
     }
   }
-  console.log('avatarURL', avatarUrl)
   const uploadImage = async (e: any, files: any) => {
     const formData = new FormData()
-    // files.forEach((file, index) => {
-    //   formData.append(`images[${index}]`, file)
-    // })
 
     files.forEach((file: File) => {
       if (file instanceof File) {
@@ -189,10 +209,9 @@ const Profile: React.FC = () => {
     })
     try {
       const response = await profileApi.postAvatar(formData)
-      console.log('response', response)
+
       if (response) {
         dispatch(getProfile() as any)
-
 
         return profile.avatar
       } else {
@@ -206,10 +225,10 @@ const Profile: React.FC = () => {
   console.log('profile', profile)
   return (
     <div className="profile">
-      <Navbar />
+      <Navbar {...statePropsCloseSlider} />
 
       <div className="container">
-        <Skeleton loading={loading} active >
+        <Skeleton loading={loading} active>
           <div className="div-profile-avatar">
             <div className="div-avatar">
               <div
@@ -313,9 +332,11 @@ const Profile: React.FC = () => {
                 <p>Địa điểm</p>
               </div>
               <div className="div-detail-row right">
-                <p>{profile?.birthday ? moment(new Date(profile?.birthday)).format(
-                  'DD/MM/yyyy'
-                ) : 'Chưa cập nhật'}</p>
+                <p>
+                  {profile?.birthday
+                    ? moment(new Date(profile?.birthday)).format('DD/MM/yyyy')
+                    : 'Chưa cập nhật'}
+                </p>
                 <p>
                   {profile?.gender
                     ? profile?.gender === 0
@@ -390,11 +411,13 @@ const Profile: React.FC = () => {
             </div>
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
-                ? dataTest.data?.categories.map((item, index) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.parent_category}
-                  </Button>
-                ))
+                ? profile?.categories.map(
+                  (item: ICategories, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.child_category}
+                    </Button>
+                  )
+                )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -418,9 +441,9 @@ const Profile: React.FC = () => {
             </div>
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
-                ? dataTest.data.locations.map((item, index) => (
+                ? profile?.locations.map((item: any, index: number) => (
                   <Button key={index} className="btn" type="text">
-                    {item.district}
+                    {item?.district}
                   </Button>
                 ))
                 : 'Chưa cập nhật'}
@@ -436,6 +459,14 @@ const Profile: React.FC = () => {
               }}
             >
               <h3>Trình độ học vấn</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalEducationUpdate(true)}
+              >
+                <img src="/images/profile/pen.png" />
+
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+              </Space>
             </div>
             {profile?.educations?.length !== 0 ? (
               profile?.educations?.map((education: ItemAppy, index: number) => (
@@ -451,9 +482,16 @@ const Profile: React.FC = () => {
             )}
 
             <div
-              style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
+              style={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'center',
+              }}
             >
-              <Space style={{ alignItems: 'center', cursor: 'pointer' }}>
+              <Space
+                style={{ alignItems: 'center', cursor: 'pointer' }}
+                onClick={() => setOpenModalEducation(true)}
+              >
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
@@ -469,6 +507,14 @@ const Profile: React.FC = () => {
               }}
             >
               <h3>Kinh nghiệm làm việc</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalExperience(true)}
+              >
+                <img src="/images/profile/pen.png" />
+
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+              </Space>
             </div>
             {profile?.experiences?.length !== 0 ? (
               profile?.experiences?.map((item: any, index: number) => (
@@ -485,7 +531,11 @@ const Profile: React.FC = () => {
             )}
 
             <div
-              style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
+              style={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'center',
+              }}
             >
               <Space style={{ alignItems: 'center', cursor: 'pointer' }}>
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
@@ -508,25 +558,33 @@ const Profile: React.FC = () => {
           <ModalProfileCareerObjectice
             openModalCareerObjective={openModalCareerObjective}
             setOpenModalCareerObjective={setOpenModalCareerObjective}
+            categories={profile?.categories}
+          />
+          <ModalProfileEducationUpdate
+            openModalEducationUpdate={openModalEducationUpdate}
+            setOpenModalEducationUpdate={setOpenModalEducationUpdate}
+            typeItem="createEducation"
+            educations={profile?.educations}
           />
           <ModalProfileEducation
             openModalEducation={openModalEducation}
             setOpenModalEducation={setOpenModalEducation}
+            typeItem="updateEducation"
+            educations={profile?.educations}
           />
           <ModalProfileLocation
             openModalLocation={openModalLocation}
             setOpenModalLocation={setOpenModalLocation}
+            locations={profile?.locations}
           />
           <ModalProfileExperience
             openModalExperience={openModalExperience}
             setOpenModalExperience={setOpenModalExperience}
+            typeItem="createExperience"
           />
         </Skeleton>
-
       </div>
       <Footer />
-
-
     </div>
   )
 }

@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
-import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material'
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-// import { DatePicker } from '@mui/lab'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import moment from 'moment'
-import Autocomplete from '@mui/material/Autocomplete'
+import { Box, TextField, Modal, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 // data
 import profileApi from 'api/profileApi'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../store/reducer/index'
+
+
+
 import {
   getProfile,
   resetProfileState,
@@ -25,7 +21,9 @@ interface InfoContact {
   facebook: string
   linkedin: string
 
+
 }
+
 
 
 const style = {
@@ -79,7 +77,6 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
 
   // handle update information contact
   const handleSubmit = async () => {
-
     try {
       const info: InfoContact = {
         phone: phone,
@@ -93,12 +90,10 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         await dispatch(getProfile() as any)
         setOpenModalContact(false)
       }
-
     } catch (error) {
       console.log(error)
     }
   }
-
 
   return (
     <Modal
@@ -132,7 +127,6 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             name="title"
             value={phone}
             onChange={handleSetPhone}
-
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Số điện thoại"

@@ -1,5 +1,5 @@
 import React, { lazy } from 'react'
-import HistoryPost from '.'
+import History from '.'
 import RouteProps from '../routes'
 // import { RouteComponentProps } from 'react-router-dom'
 // import { RouteProps } from 'react-router-dom'
@@ -10,8 +10,8 @@ import RouteProps from '../routes'
 // }
 
 const route: RouteProps = {
-  path: '/post/history',
-  component: <HistoryPost />,
+  path: 'history',
+  component: <History />,
 }
 
 export default route

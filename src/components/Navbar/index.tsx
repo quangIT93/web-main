@@ -333,16 +333,18 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             </div>
           </Space>
           <div className="sub-login_items">
-            <div className="sub-login_item">
-              <SyncOutlined />
-              <span>Cập nhật thông tin</span>
-            </div>
-            <div className="sub-login_item">
-              <Link to="/profile">
+            <Link to="/profile">
+              <div className="sub-login_item">
+                <SyncOutlined />
+                <span>Cập nhật thông tin</span>
+              </div>
+            </Link>
+            <Link to="/history">
+              <div className="sub-login_item">
                 <ClockCircleOutlined />
                 <span>Lịch sử</span>
-              </Link>
-            </div>
+              </div>
+            </Link>
             <div className="sub-login_item">
               <KeyOutlined />
               <span>Đổi mật khẩu</span>

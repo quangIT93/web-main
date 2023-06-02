@@ -88,7 +88,6 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
 
   const handleDateChange = (date: any) => {
     setDay(date._d)
-
   }
   const handleClose = () => setOpenModalPersonalInfo(false)
 
