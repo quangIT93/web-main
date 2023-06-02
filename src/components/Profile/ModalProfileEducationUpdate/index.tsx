@@ -7,8 +7,15 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import moment from 'moment'
 import Autocomplete from '@mui/material/Autocomplete'
 import Button from '@mui/material/Button'
+
 // data
-import locationApi from '../../../api/locationApi'
+import profileApi from 'api/profileApi'
+import categoriesApi from '../../../api/categoriesApi'
+import { useDispatch } from 'react-redux'
+import {
+  getProfile,
+  resetProfileState,
+} from 'store/reducer/profileReducer/getProfileReducer'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -27,44 +34,122 @@ const styleChildBox = {
   marginBottom: '12px',
 }
 
-interface IModalProfileExperience {
-  openModalExperience: boolean
-  setOpenModalExperience: React.Dispatch<React.SetStateAction<boolean>>
-  typeItem: string
+interface IEducation {
+  educationId: number
+  companyName: string
+  major: string
+  startDate: number
+  endDate: number
+  extraInformation: string
 }
 
-const ModalProfileExperience: React.FC<IModalProfileExperience> = (props) => {
-  const { openModalExperience, setOpenModalExperience } = props
+interface IModalProfileEducationUpdate {
+  openModalEducationUpdate: boolean
+  setOpenModalEducationUpdate: React.Dispatch<React.SetStateAction<boolean>>
+  typeItem: string
+  educations: IEducation[]
+}
 
-  const handleClose = () => setOpenModalExperience(false)
+interface IInfoEducation {
+  educationId: number | null
+  companyName: string
+  major: string
+  startDate: number
+  endDate: number
+  extraInformation: string
+}
 
-  const [startTime, setStartTime] = React.useState<any>(
-    new Date(1970, 0, 2, 0, 0).getTime()
-  )
-  const [endTime, setEndTime] = React.useState<any>(
-    new Date(1970, 0, 2, 0, 0).getTime()
-  )
+const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
+  props
+) => {
+  const {
+    openModalEducationUpdate,
+    setOpenModalEducationUpdate,
+    typeItem,
+    educations,
+  } = props
+  // console.log('typeItem', typeItem)
+  const dispatch = useDispatch()
+
+  const [companyName, setCompanyName] = useState<string>('')
   const [startDate, setStartDate] = React.useState<any>(
-    new Date(2023, 4, 1, 0, 0).getTime()
+    new Date(2023, 4, 30, 0, 0).getTime()
   )
   const [endDate, setEndDate] = React.useState<any>(
     new Date(2023, 4, 30, 0, 0).getTime()
   )
+  const [major, setMajor] = useState<string>('')
 
-  const handleAddInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
+  const [extraInformation, setExtraInformation] = useState<string>('')
+
+  const [education, setEducation] = useState<IInfoEducation>({
+    educationId: null,
+    companyName: '',
+    major: '',
+    startDate: 0,
+    endDate: 0,
+    extraInformation: '',
+  })
+
+  console.log('school', companyName)
+  console.log('major', major)
+  console.log('extraInformation', extraInformation)
+
+  // console.log('endDate', endDate)
+
+  const handleClose = () => setOpenModalEducationUpdate(false)
+
+  // school
+  const handleChangeSchool = (e: any) => {
+    setCompanyName(e.target.value)
   }
 
+  // time
   const handleChangeStartTime = (newValue: any, e: any) => {
-    setStartDate(new Date(newValue.$d).getTime())
+    console.log('newDate', newValue._i)
+    setStartDate(newValue._i)
   }
 
   const handleChangeEndTime = (newValue: any, e: any) => {
+    console.log(
+      'new Date(newValue.$d).getTime()',
+      new Date(newValue.$d).getTime()
+    )
     setEndDate(new Date(newValue.$d).getTime())
+  }
+
+  // major
+  const handleChangeMajor = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setMajor(e.target.value)
+  }
+
+  const handleChangeExtraInfo = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setExtraInformation(e.target.value)
+  }
+
+  // submit
+
+  const handleSubmit = async () => {
+    try {
+      const result = await profileApi.updateProfileEducation(
+        {} as IInfoEducation
+      )
+      if (result) {
+        console.log('update thành công', result)
+        await dispatch(getProfile() as any)
+        setOpenModalEducationUpdate(false)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
   return (
     <Modal
-      open={openModalExperience}
+      open={openModalEducationUpdate}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -77,7 +162,7 @@ const ModalProfileExperience: React.FC<IModalProfileExperience> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Kinh nghiệm làm việc
+          Chỉnh sửa thông tin trình độ học vấn
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -86,17 +171,17 @@ const ModalProfileExperience: React.FC<IModalProfileExperience> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Chức danh *
+            Trường/Tổ chức *
           </Typography>
           <TextField
             type="text"
             id="nameProfile"
             name="title"
             //   value={formValues.title}
-            // onChange={handleChangeTitleForm}
+            onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Chức danh"
+            placeholder="Nhập tên trường hoặc tổ chức"
             // error={titleError} // Đánh dấu lỗi
           />
         </Box>
@@ -108,17 +193,17 @@ const ModalProfileExperience: React.FC<IModalProfileExperience> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Công ty/Tổ chức *
+            Chuyên ngành *
           </Typography>
           <TextField
             type="text"
             id="nameProfile"
             name="title"
             //   value={formValues.title}
-            // onChange={handleChangeTitleForm}
+            onChange={handleChangeMajor}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Công ty/Tổ chức"
+            placeholder="Ngành"
             // error={titleError} // Đánh dấu lỗi
           />
         </Box>
@@ -170,7 +255,7 @@ const ModalProfileExperience: React.FC<IModalProfileExperience> = (props) => {
           </Typography>
           <TextField
             // className={classes.textarea}
-            onChange={handleAddInfo}
+            onChange={handleChangeExtraInfo}
             sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
             multiline
             rows={4}
@@ -179,7 +264,7 @@ const ModalProfileExperience: React.FC<IModalProfileExperience> = (props) => {
           />
         </Box>
 
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" fullWidth onClick={handleSubmit}>
           Lưu thông tin
         </Button>
       </Box>
@@ -187,4 +272,4 @@ const ModalProfileExperience: React.FC<IModalProfileExperience> = (props) => {
   )
 }
 
-export default ModalProfileExperience
+export default ModalProfileEducationUpdate

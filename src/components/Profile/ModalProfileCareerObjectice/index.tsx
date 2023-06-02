@@ -7,46 +7,15 @@ import Button from '@mui/material/Button'
 import './style.scss'
 
 // data
+import profileApi from 'api/profileApi'
 import categoriesApi from '../../../api/categoriesApi'
+import { useDispatch } from 'react-redux'
 
+import {
+  getProfile,
+  resetProfileState,
+} from 'store/reducer/profileReducer/getProfileReducer'
 const { SHOW_PARENT } = TreeSelect
-
-// const treeData = [
-//   {
-//     title: 'Node1',
-//     value: '0-0',
-//     key: '0-0',
-//     children: [
-//       {
-//         title: 'Child Node1',
-//         value: '0-0-0',
-//         key: '0-0-0',
-//       },
-//     ],
-//   },
-//   {
-//     title: 'Node2',
-//     value: '0-1',
-//     key: '0-1',
-//     children: [
-//       {
-//         title: 'Child Node3',
-//         value: '0-1-0',
-//         key: '0-1-0',
-//       },
-//       {
-//         title: 'Child Node4',
-//         value: '0-1-1',
-//         key: '0-1-1',
-//       },
-//       {
-//         title: 'Child Node5',
-//         value: '0-1-2',
-//         key: '0-1-2',
-//       },
-//     ],
-//   },
-// ]
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -60,19 +29,33 @@ const style = {
   borderRadius: '10px',
   p: 4,
 }
+interface ICategories {
+  child_category_id: number
+  parent_category_id: number
+  parent_category: string
+  child_category: string
+}
 
 interface IModalProfileCareerObjectice {
   openModalCareerObjective: boolean
   setOpenModalCareerObjective: React.Dispatch<React.SetStateAction<boolean>>
+  categories: ICategories[]
 }
 
 const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   props
 ) => {
-  const { openModalCareerObjective, setOpenModalCareerObjective } = props
-  const [value, setValue] = useState(['354'])
+  const { openModalCareerObjective, setOpenModalCareerObjective, categories } =
+    props
+  const [value, setValue] = useState(
+    categories.map((v, i) => v.child_category_id.toString())
+  )
   const [dataCategories, setDataCategories] = React.useState<any>(null)
+  const [checkClick, setCheckList] = React.useState<boolean>(false)
+  const [childValue, setChildValue] = React.useState<string[]>([])
   const [treeData, setTransformedData] = React.useState<any>(null)
+  const dispatch = useDispatch()
+  const handleClose = () => setOpenModalCareerObjective(false)
 
   const getCategories = async () => {
     try {
@@ -88,13 +71,13 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   React.useEffect(() => {
     getCategories()
   }, [])
-  const onChange = (newValue: string[], selectedOptions: any[]) => {
+  const onChange = (
+    newValue: string[] | any,
+    selectedOptions: any[],
+    extra: any
+  ) => {
     setValue(newValue)
   }
-
-  console.log('dataCategories', dataCategories)
-  console.log('transformedData', treeData)
-  console.log('dataTree', treeData)
 
   React.useEffect(() => {
     if (dataCategories) {
@@ -112,27 +95,43 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
           }),
         }
       })
-      console.log('transformedData', transformedData)
+
       setTransformedData(transformedData)
     }
   }, [dataCategories])
 
-  const handleClose = () => setOpenModalCareerObjective(false)
+  const handleSubmit = async () => {
+    try {
+      const result = await profileApi.updateProfileCareer(
+        value.map((v) => parseInt(v))
+      )
+      if (result) {
+        console.log('update thành công', result)
+        await dispatch(getProfile() as any)
+        setOpenModalCareerObjective(false)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const tProps = {
     treeData,
     value,
-    onChange,
     treeCheckable: true,
-    treeCheckStrictly: false,
+    onChange,
+    // treeCheckStrictly: true,
     // Enable strict checking
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     placeholder: 'Please select',
     style: {
       width: '100%',
-      zIndex: '1301',
+      zIndex: '1302',
       margin: '12px auto',
     },
+
+    treeIcon: false,
   }
   return (
     <Modal
@@ -151,7 +150,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
           Lĩnh vực quan tâm
         </Typography>
         <TreeSelect {...tProps} />
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" fullWidth onClick={handleSubmit}>
           Lưu thông tin
         </Button>
       </Box>

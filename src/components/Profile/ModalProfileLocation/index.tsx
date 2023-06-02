@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -6,8 +6,36 @@ import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
+import OutlinedInput from '@mui/material/OutlinedInput'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemText from '@mui/material/ListItemText'
+import { SelectChangeEvent } from '@mui/material/Select'
+import Checkbox from '@mui/material/Checkbox'
+import Chip from '@mui/material/Chip'
+
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+
+import Collapse from '@mui/material/Collapse'
+import InboxIcon from '@mui/icons-material/MoveToInbox'
+
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+
+// data
+import profileApi from 'api/profileApi'
+import { useDispatch } from 'react-redux'
+
 // data
 import locationApi from '../../../api/locationApi'
+
+import {
+  getProfile,
+  resetProfileState,
+} from 'store/reducer/profileReducer/getProfileReducer'
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -24,20 +52,42 @@ const style = {
 interface IModalProfileLocation {
   openModalLocation: boolean
   setOpenModalLocation: React.Dispatch<React.SetStateAction<boolean>>
+  locations: number[]
+}
+
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
 }
 
 const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
-  const { openModalLocation, setOpenModalLocation } = props
-  const [dataProvinces, setDataProvinces] = React.useState<any>(null)
-  const [selectedProvince, setSelectedProvince] = React.useState<any>(null)
+  const { openModalLocation, setOpenModalLocation, locations } = props
+  const [dataAllLocation, setDataAllLocation] = React.useState<any>(null)
+  const [open, setOpen] = React.useState<any>([])
 
+  const [location, setLocation] = React.useState<any>(
+    locations.map((v: any, i) => v.district)
+  )
+
+  const [locationId, setLocationId] = React.useState<any>(
+    locations.map((v: any, i) => v.district_id)
+  )
+
+  const dispatch = useDispatch()
   const handleClose = () => setOpenModalLocation(false)
-  const getAllProvinces = async () => {
+  const allLocation = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces()
+      const allLocation = await locationApi.getAllLocation()
 
       if (allLocation) {
-        setDataProvinces(allLocation.data)
+        setDataAllLocation(allLocation.data)
       }
     } catch (error) {
       console.log(error)
@@ -45,15 +95,92 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   }
 
   React.useEffect(() => {
-    getAllProvinces()
+    allLocation()
     // getAllLocations()
     // delete param when back to page
   }, [])
 
-  console.log('dataProvinces', dataProvinces)
+  useEffect(() => {
+    if (dataAllLocation && dataAllLocation.length > 0) {
+      setOpen(Array(dataAllLocation.length).fill(false))
+    }
+  }, [dataAllLocation])
 
-  const handleProvinceChange = (event: any, value: any) => {
-    setSelectedProvince(value)
+  // console.log('dataAllLocation', dataAllLocation)
+
+  const handleClickProvince = (event: any, index: number) => {
+    event.stopPropagation()
+    const newOpen = open.map((value: boolean, i: number) =>
+      i === index ? !value : false
+    )
+    setOpen(newOpen)
+  }
+
+  const handleClickDistrict = (value: any) => {
+    setLocation((prevValues: number[]) => {
+      if (prevValues.includes(value.district)) {
+        // Nếu giá trị đã tồn tại, xoá nó khỏi
+        const newValues = prevValues.filter((item) => item !== value.district)
+        return newValues
+      } else {
+        // Nếu giá trị chưa tồn tại, thêm nó vào mảng
+        const newValues = [...prevValues, value.district]
+        return newValues
+      }
+    })
+
+    setLocationId((prevValuesId: number[]) => {
+      if (prevValuesId.includes(value.district_id)) {
+        // Nếu giá trị đã tồn tại, xoá nó khỏi
+        const newValues = prevValuesId.filter(
+          (item: number) => item !== value.district_id
+        )
+        return newValues
+      } else {
+        // Nếu giá trị chưa tồn tại, thêm nó vào mảng
+        const newValues = [...prevValuesId, value.district_id]
+        return newValues
+      }
+    })
+  }
+
+  const renderOptions = () => {
+    return dataAllLocation?.map((item: any, index: number) => (
+      <div key={index}>
+        <ListItemButton onClick={(event) => handleClickProvince(event, index)}>
+          <ListItemText primary={item.province_fullName} />
+          {open[index] ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open[index]} timeout="auto" unmountOnExit>
+          {item.districts.map((v: any, i: number) => (
+            <MenuItem
+              key={i}
+              value={v.district}
+              onClick={() => handleClickDistrict(v)}
+            >
+              <Checkbox checked={location.indexOf(v.district) > -1} />
+              <ListItemText primary={v.district} />
+            </MenuItem>
+          ))}
+        </Collapse>
+      </div>
+    ))
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const result = await profileApi.updateProfileLocation(
+        // value.map((v) => parseInt(v))
+        locationId
+      )
+      if (result) {
+        console.log('update thành công', result)
+        await dispatch(getProfile() as any)
+        setOpenModalLocation(false)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -72,21 +199,43 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         >
           Khu vực làm việc
         </Typography>
-        <Autocomplete
-          options={dataProvinces ? dataProvinces : []}
-          getOptionLabel={(option: any) => option?.name || ''}
-          value={selectedProvince || null}
-          onChange={handleProvinceChange}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              placeholder="Tỉnh/TP"
-              size="small"
-              sx={{ margin: '12px auto' }}
-            />
-          )}
-        />
-        <Button variant="contained" fullWidth>
+
+        <FormControl sx={{ width: '100%', margin: '12px auto' }} size="small">
+          <Select
+            multiple
+            displayEmpty
+            value={location}
+            input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
+            renderValue={(selected) => {
+              if (selected.length === 0) {
+                return (
+                  <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>
+                    Quận, Tỉnh/Thành Phố
+                  </p>
+                )
+              } else {
+                return (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: 0.5,
+                    }}
+                  >
+                    {selected.map((value: string, i: number) => (
+                      <Chip key={i} label={value} />
+                    ))}
+                  </Box>
+                )
+              }
+            }}
+            MenuProps={MenuProps}
+          >
+            {renderOptions()}
+          </Select>
+        </FormControl>
+
+        <Button variant="contained" fullWidth onClick={handleSubmit}>
           Lưu thông tin
         </Button>
       </Box>

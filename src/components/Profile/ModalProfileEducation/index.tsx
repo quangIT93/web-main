@@ -27,19 +27,27 @@ const styleChildBox = {
   marginBottom: '12px',
 }
 
+interface IEducation {
+  educationId: number
+  companyName: string
+  major: string
+  startDate: number
+  endDate: number
+  extraInformation: string
+}
+
 interface IModalProfileEducation {
   openModalEducation: boolean
   setOpenModalEducation: React.Dispatch<React.SetStateAction<boolean>>
+  typeItem: string
+  educations: IEducation[]
 }
 
 const ModalProfileEducation: React.FC<IModalProfileEducation> = (props) => {
-  const { openModalEducation, setOpenModalEducation } = props
-  const [startTime, setStartTime] = React.useState<any>(
-    new Date(1970, 0, 2, 0, 0).getTime()
-  )
-  const [endTime, setEndTime] = React.useState<any>(
-    new Date(1970, 0, 2, 0, 0).getTime()
-  )
+  const { openModalEducation, setOpenModalEducation, typeItem, educations } =
+    props
+  console.log('typeItem', typeItem)
+
   const [startDate, setStartDate] = React.useState<any>(
     new Date(2023, 4, 1, 0, 0).getTime()
   )
@@ -75,7 +83,7 @@ const ModalProfileEducation: React.FC<IModalProfileEducation> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Trình độ học vấn
+          Thêm trình độ học vấn
         </Typography>
         <Box sx={styleChildBox}>
           <Typography

@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { StatePropsCloseSlider } from 'pages/Home'
-import { useHomeState } from '../Home/HomeState'
 // @ts-ignore
 import { Navbar } from '#components'
+import { StatePropsCloseSlider } from 'pages/Home'
+import { useHomeState } from '../Home/HomeState'
 import './style.scss'
 import { styled } from '@mui/material/styles'
 import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
-import { Button, Space } from 'antd'
+import { Button, Space, Skeleton } from 'antd'
 import { PlusCircleOutlined } from '@ant-design/icons'
 import Footer from '../../components/Footer/index'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../store/reducer/index'
 import ItemApply from './components/Item'
+import moment from 'moment'
 
 import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson'
 import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice'
@@ -21,6 +22,7 @@ import ModalProfileContact from '#components/Profile/ModalProfileContact'
 import ModalProfileEducation from '#components/Profile/ModalProfileEducation'
 import ModalProfileLocation from '#components/Profile/ModalProfileLocation'
 import ModalProfileExperience from '#components/Profile/ModalProfileExperience'
+import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate'
 // import data
 import {
   getProfile,
@@ -42,9 +44,14 @@ interface ItemAppy {
   end_date?: String
   extra_information?: String
 }
-const Profile: React.FC = () => {
-  const dispatch = useDispatch()
 
+interface ICategories {
+  child_category_id: number
+  parent_category_id: number
+  parent_category: string
+  child_category: string
+}
+const Profile: React.FC = () => {
   const {
     openCollapse,
     setOpenCollapse,
@@ -53,7 +60,6 @@ const Profile: React.FC = () => {
     openModalLogin,
     setOpenModalLogin,
   } = useHomeState()
-
   const statePropsCloseSlider: StatePropsCloseSlider = {
     openCollapse,
     setOpenCollapse,
@@ -61,6 +67,7 @@ const Profile: React.FC = () => {
     height,
     setOpenModalLogin,
   }
+  const dispatch = useDispatch()
   const dataTest = {
     code: 200,
     success: true,
@@ -147,14 +154,19 @@ const Profile: React.FC = () => {
   const { profile, error }: any = useSelector(
     (state: RootState) => state.profile
   )
+
   useEffect(() => {
     // Gọi action để lấy thông tin profile
+    setLoading(true)
     dispatch<any>(getProfile())
       .unwrap()
       .catch((err: any) => {
         console.log('Error:', err)
       })
     console.log('Error:')
+    setTimeout(() => {
+      setLoading(false)
+    }, 1500)
   }, [])
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false)
   const [openModalContact, setOpenModalContact] = useState(false)
@@ -162,10 +174,13 @@ const Profile: React.FC = () => {
     useState(false)
   const [openModalLocation, setOpenModalLocation] = useState(false)
   const [openModalEducation, setOpenModalEducation] = useState(false)
+  const [openModalEducationUpdate, setOpenModalEducationUpdate] =
+    useState(false)
   const [openModalExperience, setOpenModalExperience] = useState(false)
 
   const [imageInfo, setImageInfo] = useState<string>('')
   const [avatarUrl, setAvatarUrl] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(true)
 
   const handleAvatarClick = () => {
     // Khi click vào SmallAvatar, thực hiện hành động tương ứng
@@ -178,19 +193,14 @@ const Profile: React.FC = () => {
   const handleImageChange = async (e: any) => {
     // const file = e.target.files[0]
     const files = Array.from(e.target.files) // Chuyển đổi FileList thành mảng các đối tượng file
-    console.log('file', files)
     if (files) {
       const imageUrl = await uploadImage(e, files)
       // Cập nhật URL của ảnh mới vào trạng thái của component
       setAvatarUrl(imageUrl)
     }
   }
-  console.log('avatarURL', avatarUrl)
   const uploadImage = async (e: any, files: any) => {
     const formData = new FormData()
-    // files.forEach((file, index) => {
-    //   formData.append(`images[${index}]`, file)
-    // })
 
     files.forEach((file: File) => {
       if (file instanceof File) {
@@ -199,11 +209,11 @@ const Profile: React.FC = () => {
     })
     try {
       const response = await profileApi.postAvatar(formData)
+
       if (response) {
-        console.log('response', response)
-        const data = await response.data
-        const imageUrl = data.imageUrl
-        return imageUrl
+        dispatch(getProfile() as any)
+
+        return profile.avatar
       } else {
         throw new Error('Failed to upload image')
       }
@@ -216,332 +226,365 @@ const Profile: React.FC = () => {
   return (
     <div className="profile">
       <Navbar {...statePropsCloseSlider} />
+
       <div className="container">
-        <div className="div-profile-avatar">
-          <div className="div-avatar">
+        <Skeleton loading={loading} active>
+          <div className="div-profile-avatar">
+            <div className="div-avatar">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <Badge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  badgeContent={
+                    <div style={{ position: 'relative' }}>
+                      <SmallAvatar
+                        alt="Remy Sharp"
+                        src="/logoH2.png"
+                        sizes="10"
+                        onClick={handleAvatarClick} // Xử lý click vào SmallAvatar
+                        sx={{ cursor: 'pointer' }}
+                      />
+
+                      <input
+                        id="avatar-input"
+                        type="file"
+                        name="images"
+                        hidden
+                        accept="image/*"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                  }
+                >
+                  <Avatar
+                    style={{ height: '70px', width: '70px' }}
+                    alt="Ảnh lỗi"
+                    src={profile?.avatar ? profile?.avatar : ''}
+                  />
+                </Badge>
+                <div style={{ marginLeft: '10px' }}>
+                  <h2>{profile?.name ? profile?.name : 'Chưa cập nhật'}</h2>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      marginTop: '5px',
+                    }}
+                  >
+                    <img src="/images/profile/HiCoin.png" />
+                    <p style={{ marginLeft: '5px' }}>0</p>
+                  </div>
+                </div>
+              </div>
+              <Button
+                type="primary"
+                icon={<PlusCircleOutlined />}
+                style={{ backgroundColor: '#FBBC04' }}
+              >
+                HiCoin
+              </Button>
+            </div>
+            <div
+              style={{
+                whiteSpace: 'pre-wrap',
+                marginTop: '20px',
+                color: '#575757',
+              }}
+            >
+              {profile?.introduction ? profile?.introduction : 'Chưa cập nhật'}
+            </div>
+          </div>
+          <div className="div-profile-info">
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center',
+                justifyContent: 'space-between',
               }}
             >
-              <Badge
-                overlap="circular"
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                badgeContent={
-                  <div style={{ position: 'relative' }}>
-                    <SmallAvatar
-                      alt="Remy Sharp"
-                      src="/logoH2.png"
-                      sizes="10"
-                      onClick={handleAvatarClick} // Xử lý click vào SmallAvatar
-                      sx={{ cursor: 'pointer' }}
-                    />
-
-                    <input
-                      id="avatar-input"
-                      type="file"
-                      name="images"
-                      hidden
-                      accept="image/*"
-                      onChange={handleImageChange}
-                    />
-                  </div>
-                }
+              <h3>Thông tin cá nhân</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalPersonalInfo(true)}
               >
-                <Avatar
-                  style={{ height: '70px', width: '70px' }}
-                  alt="Ảnh lỗi"
-                  src={profile?.avatar ? profile?.avatar : ''}
-                />
-              </Badge>
-              <div style={{ marginLeft: '10px' }}>
-                <h2>{profile?.name ? profile?.name : 'Chưa cập nhật'}</h2>
-                <div
+                <img src="/images/profile/pen.png" />
+
+                <p
                   style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    marginTop: '5px',
+                    color: '#0D99FF',
+                    fontSize: '14px',
                   }}
                 >
-                  <img src="/images/profile/HiCoin.png" />
-                  <p style={{ marginLeft: '5px' }}>0</p>
-                </div>
+                  Sửa
+                </p>
+              </Space>
+            </div>
+            <div className="info-detail">
+              <div className="div-detail-row left">
+                <p>Ngày sinh</p>
+                <p>Giới tính</p>
+                <p>Địa điểm</p>
+              </div>
+              <div className="div-detail-row right">
+                <p>
+                  {profile?.birthday
+                    ? moment(new Date(profile?.birthday)).format('DD/MM/yyyy')
+                    : 'Chưa cập nhật'}
+                </p>
+                <p>
+                  {profile?.gender
+                    ? profile?.gender === 0
+                      ? 'Nam'
+                      : 'Nu'
+                    : 'Nam'}
+                </p>
+                <p>
+                  {profile?.address?.name
+                    ? profile?.address?.name
+                    : 'Chưa cập nhật'}
+                </p>
               </div>
             </div>
-            <Button
-              type="primary"
-              icon={<PlusCircleOutlined />}
-              style={{ backgroundColor: '#FBBC04' }}
-            >
-              HiCoin
-            </Button>
           </div>
-          <div
-            style={{
-              whiteSpace: 'pre-wrap',
-              marginTop: '20px',
-              color: '#575757',
-            }}
-          >
-            {profile?.introduction ? profile?.introduction : 'Chưa cập nhật'}
-          </div>
-        </div>
-        <div className="div-profile-info">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <h3>Thông tin cá nhân</h3>
-            <Space
-              style={{ cursor: 'pointer' }}
-              onClick={() => setOpenModalPersonalInfo(true)}
-            >
-              <img src="/images/profile/pen.png" />
 
-              <p
-                style={{
-                  color: '#0D99FF',
-                  fontSize: '14px',
-                }}
+          <div className="div-profile-info">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h3>Thông tin liên hệ</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalContact(true)}
               >
-                Sửa
-              </p>
-            </Space>
-          </div>
-          <div className="info-detail">
-            <div className="div-detail-row left">
-              <p>Ngày sinh</p>
-              <p>Giới tính</p>
-              <p>Địa điểm</p>
+                <img src="/images/profile/pen.png" />
+
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+              </Space>
             </div>
-            <div className="div-detail-row right">
-              <p>{profile?.birthday ? profile?.birthday : 'Chưa cập nhật'}</p>
-              <p>
-                {profile?.gender
-                  ? profile?.gender === 0
-                    ? 'Nam'
-                    : 'Nu'
-                  : 'Nam'}
-              </p>
-              <p>
-                {profile?.address.name
-                  ? profile?.address.name
-                  : 'Chưa cập nhật'}
-              </p>
+            <div className="info-detail">
+              <div className="div-detail-row left">
+                <p>Số điện thoại</p>
+                <p>Email</p>
+
+                <p>Facebook</p>
+
+                <p>LinkedIn</p>
+              </div>
+              <div className="div-detail-row right">
+                <p>{profile?.phone ? profile?.phone : 'Chưa cập nhật'}</p>
+                <p>{profile?.email ? profile?.email : 'Chưa cập nhật'}</p>
+
+                <p>{profile?.facebook ? profile?.facebook : 'Chưa cập nhật'}</p>
+
+                <p>{profile?.linkedin ? profile?.linkedin : 'Chưa cập nhật'}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="div-profile-info">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <h3>Thông tin liên hệ</h3>
-            <Space
-              style={{ cursor: 'pointer' }}
-              onClick={() => setOpenModalContact(true)}
+          <div className="div-profile-info">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
             >
-              <img src="/images/profile/pen.png" />
+              <h3>Lĩnh vực quan tâm</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalCareerObjective(true)}
+              >
+                <img src="/images/profile/pen.png" />
 
-              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
-            </Space>
-          </div>
-          <div className="info-detail">
-            <div className="div-detail-row left">
-              <p>Số điện thoại</p>
-              <p>Email</p>
-
-              <p>Facebook</p>
-
-              <p>LinkedIn</p>
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+              </Space>
             </div>
-            <div className="div-detail-row right">
-              <p>{profile?.phone ? profile?.phone : 'Chưa cập nhật'}</p>
-              <p>{profile?.email ? profile?.email : 'Chưa cập nhật'}</p>
+            <Space wrap className="item-info-work">
+              {profile?.categories?.length !== 0
+                ? profile?.categories.map(
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    )
+                  )
+                : 'Chưa cập nhật'}
+            </Space>
+          </div>
+          <div className="div-profile-info">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h3>Khu vực làm việc</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalLocation(true)}
+              >
+                <img src="/images/profile/pen.png" />
 
-              <p>{profile?.facebook ? profile?.facebook : 'Chưa cập nhật'}</p>
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+              </Space>
+            </div>
+            <Space wrap className="item-info-work">
+              {profile?.locations?.length !== 0
+                ? profile?.locations.map((item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item?.district}
+                    </Button>
+                  ))
+                : 'Chưa cập nhật'}
+            </Space>
+          </div>
 
-              <p>{profile?.linkedin ? profile?.linkedin : 'Chưa cập nhật'}</p>
+          <div className="div-profile-info">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h3>Trình độ học vấn</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalEducationUpdate(true)}
+              >
+                <img src="/images/profile/pen.png" />
+
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+              </Space>
+            </div>
+            {profile?.educations?.length !== 0 ? (
+              profile?.educations?.map((education: ItemAppy, index: number) => (
+                <ItemApply
+                  item={education}
+                  setOpenModalEducation={setOpenModalEducation}
+                  setOpenModalExperience={setOpenModalExperience}
+                  key={index}
+                />
+              ))
+            ) : (
+              <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            )}
+
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'center',
+              }}
+            >
+              <Space
+                style={{ alignItems: 'center', cursor: 'pointer' }}
+                onClick={() => setOpenModalEducation(true)}
+              >
+                <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
+
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
+              </Space>
             </div>
           </div>
-        </div>
-
-        <div className="div-profile-info">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <h3>Lĩnh vực quan tâm</h3>
-            <Space
-              style={{ cursor: 'pointer' }}
-              onClick={() => setOpenModalCareerObjective(true)}
+          <div className="div-profile-info">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
             >
-              <img src="/images/profile/pen.png" />
+              <h3>Kinh nghiệm làm việc</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalExperience(true)}
+              >
+                <img src="/images/profile/pen.png" />
 
-              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
-            </Space>
-          </div>
-          <Space wrap className="item-info-work">
-            {profile?.categories.length !== 0
-              ? dataTest.data.categories.map((item, index) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.parent_category}
-                  </Button>
-                ))
-              : 'Chưa cập nhật'}
-          </Space>
-        </div>
-        <div className="div-profile-info">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <h3>Khu vực làm việc</h3>
-            <Space
-              style={{ cursor: 'pointer' }}
-              onClick={() => setOpenModalLocation(true)}
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+              </Space>
+            </div>
+            {profile?.experiences?.length !== 0 ? (
+              profile?.experiences?.map((item: any, index: number) => (
+                <ItemApply
+                  typeItem="experiences"
+                  key={index}
+                  item={item}
+                  setOpenModalEducation={setOpenModalEducation}
+                  setOpenModalExperience={setOpenModalExperience}
+                />
+              ))
+            ) : (
+              <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            )}
+
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'center',
+              }}
             >
-              <img src="/images/profile/pen.png" />
+              <Space style={{ alignItems: 'center', cursor: 'pointer' }}>
+                <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
-              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
-            </Space>
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
+              </Space>
+            </div>
           </div>
-          <Space wrap className="item-info-work">
-            {profile?.locations.length !== 0
-              ? dataTest.data.locations.map((item, index) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.district}
-                  </Button>
-                ))
-              : 'Chưa cập nhật'}
-          </Space>
-        </div>
+          <ModalProfileInfoPerson
+            openModelPersonalInfo={openModelPersonalInfo}
+            setOpenModalPersonalInfo={setOpenModalPersonalInfo}
+            profile={profile}
+          />
 
-        <div className="div-profile-info">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <h3>Trình độ học vấn</h3>
-            <Space
-              style={{ cursor: 'pointer' }}
-              onClick={() => setOpenModalEducation(true)}
-            >
-              <img src="/images/profile/pen.png" />
-
-              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
-            </Space>
-          </div>
-          {profile?.educations.length !== 0 ? (
-            profile?.educations.map((education: ItemAppy, index: number) => (
-              <ItemApply
-                item={education}
-                setOpenModalEducation={setOpenModalEducation}
-                setOpenModalExperience={setOpenModalExperience}
-                key={index}
-              />
-            ))
-          ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
-          )}
-
-          <div
-            style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
-          >
-            <Space style={{ alignItems: 'center', cursor: 'pointer' }}>
-              <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
-
-              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
-            </Space>
-          </div>
-        </div>
-        <div className="div-profile-info">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <h3>Kinh nghiệm làm việc</h3>
-            <Space
-              style={{ cursor: 'pointer' }}
-              onClick={() => setOpenModalExperience(true)}
-            >
-              <img src="/images/profile/pen.png" />
-
-              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
-            </Space>
-          </div>
-          {profile?.experiences.length !== 0 ? (
-            profile?.experiences.map((item: any, index: number) => (
-              <ItemApply
-                typeItem="experiences"
-                key={index}
-                item={item}
-                setOpenModalEducation={setOpenModalEducation}
-                setOpenModalExperience={setOpenModalExperience}
-              />
-            ))
-          ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
-          )}
-
-          <div
-            style={{ display: 'flex', width: '100%', justifyContent: 'center' }}
-          >
-            <Space style={{ alignItems: 'center', cursor: 'pointer' }}>
-              <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
-
-              <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
-            </Space>
-          </div>
-        </div>
+          <ModalProfileContact
+            openModalContact={openModalContact}
+            setOpenModalContact={setOpenModalContact}
+            profile={profile}
+          />
+          <ModalProfileCareerObjectice
+            openModalCareerObjective={openModalCareerObjective}
+            setOpenModalCareerObjective={setOpenModalCareerObjective}
+            categories={profile?.categories}
+          />
+          <ModalProfileEducationUpdate
+            openModalEducationUpdate={openModalEducationUpdate}
+            setOpenModalEducationUpdate={setOpenModalEducationUpdate}
+            typeItem="createEducation"
+            educations={profile?.educations}
+          />
+          <ModalProfileEducation
+            openModalEducation={openModalEducation}
+            setOpenModalEducation={setOpenModalEducation}
+            typeItem="updateEducation"
+            educations={profile?.educations}
+          />
+          <ModalProfileLocation
+            openModalLocation={openModalLocation}
+            setOpenModalLocation={setOpenModalLocation}
+            locations={profile?.locations}
+          />
+          <ModalProfileExperience
+            openModalExperience={openModalExperience}
+            setOpenModalExperience={setOpenModalExperience}
+            typeItem="createExperience"
+          />
+        </Skeleton>
       </div>
       <Footer />
-      <ModalProfileInfoPerson
-        openModelPersonalInfo={openModelPersonalInfo}
-        setOpenModalPersonalInfo={setOpenModalPersonalInfo}
-      />
-
-      <ModalProfileContact
-        openModalContact={openModalContact}
-        setOpenModalContact={setOpenModalContact}
-      />
-      <ModalProfileCareerObjectice
-        openModalCareerObjective={openModalCareerObjective}
-        setOpenModalCareerObjective={setOpenModalCareerObjective}
-      />
-      <ModalProfileEducation
-        openModalEducation={openModalEducation}
-        setOpenModalEducation={setOpenModalEducation}
-      />
-      <ModalProfileLocation
-        openModalLocation={openModalLocation}
-        setOpenModalLocation={setOpenModalLocation}
-      />
-      <ModalProfileExperience
-        openModalExperience={openModalExperience}
-        setOpenModalExperience={setOpenModalExperience}
-      />
     </div>
   )
 }

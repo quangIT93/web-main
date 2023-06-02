@@ -113,7 +113,7 @@ const NewJobs: React.FC = () => {
   }
   // handle close backdrop
   const handleClose = () => {
-    setOpenBackdrop(true)
+    setOpenBackdrop(false)
   }
 
   const getPostNewest = async () => {

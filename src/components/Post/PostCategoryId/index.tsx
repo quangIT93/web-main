@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Cascader } from 'antd'
 import categoriesApi from '../../../api/categoriesApi'
-
 import './style.scss'
 
 interface Option {
@@ -12,6 +11,7 @@ interface Option {
   children?: Option[]
   disableCheckbox?: boolean
 }
+const { SHOW_CHILD } = Cascader
 const options: Option[] = [
   {
     label: 'Light',
@@ -62,16 +62,15 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   const [dataCategories, setDataCategories] = React.useState<any>(null)
   const [disable, setDisable] = React.useState<Boolean>(false)
   const onChange = (value: any) => {
+    setDisable(false)
+    const secondValues = value.map((item: any) => item[1])
+    console.log('value', value)
+    console.log('secondValues', secondValues)
+    if (secondValues.length <= 2) {
+      setCategoriesId(secondValues)
+    }
     if (value.length > 1) {
       setDisable(true)
-    } else {
-      setDisable(false)
-      const secondValues = value.map((item: any) => item[1])
-      console.log('value', value)
-      console.log('secondValues', secondValues)
-      if (secondValues.length <= 2) {
-        setCategoriesId(secondValues)
-      }
     }
   }
 
@@ -89,6 +88,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   React.useEffect(() => {
     getCategories()
   }, [])
+
   console.log('categoriesId', categoriesId)
   return (
     <Box sx={{ marginTop: '24px' }}>
@@ -101,17 +101,29 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         Danh mục nghề *:
       </Typography>
       <Cascader
-        style={{ width: '100%', borderRadius: '2px' }}
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
                 value: parentCategory.parent_category_id,
                 label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => ({
-                  value: child.id,
-                  label: child.name,
-                  disabled: disable,
-                })),
+                children: parentCategory.childs.map((child: any) => {
+                  var dis = false
+                  //check id child  when disable = true
+                  if (disable) {
+                    dis = true
+                    for (const elem of categoriesId) {
+                      if (elem === child.id) {
+                        dis = false
+                        break
+                      }
+                    }
+                  }
+                  return {
+                    value: child.id,
+                    label: child.name,
+                    disabled: dis,
+                  }
+                }),
               }))
             : []
         }
@@ -120,6 +132,8 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         maxTagCount="responsive"
         size="large"
         className="inputCategories"
+        showCheckedStrategy={SHOW_CHILD}
+        style={{ width: '100%', borderRadius: '2px' }}
       />
     </Box>
   )

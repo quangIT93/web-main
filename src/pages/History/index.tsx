@@ -13,6 +13,8 @@ import { Space, Tooltip } from 'antd'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import Footer from '../../components/Footer/index'
+
 // import icon
 import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons'
 import './style.scss'
@@ -30,17 +32,17 @@ const dataItem = [
   {
     id: 1,
     title: 'Các công việc đã ứng tuyển',
-    childs: ['mục 1', 'mục 2', 'mục 3'],
+    childs: ['Tất cả', 'Đang chờ duyệt', 'Đã chờ duyệt'],
   },
   {
-    id: 1,
+    id: 2,
     title: 'Các công việc đã lưu',
-    childs: ['mục 1', 'mục 2', 'mục 3'],
+    childs: ['Tất cả'],
   },
   {
-    id: 1,
+    id: 3,
     title: 'Các công việc đã đăng tuyển',
-    childs: ['mục 1', 'mục 2', 'mục 3'],
+    childs: ['Tất cả', 'Chưa đóng', 'Đã đóng'],
   },
 ]
 const HistoryPost = () => {
@@ -52,7 +54,7 @@ const HistoryPost = () => {
     openModalLogin,
     setOpenModalLogin,
   } = useHomeState()
-  const [gender, setGender] = React.useState('Mới nhất')
+  const [newOld, setnewOld] = React.useState('Mới nhất')
   const [activeKey, setActiveKey] = React.useState<string | string[]>([])
   const [activeChild, setActiveChild] = React.useState('')
   const statePropsCloseSlider: StatePropsCloseSlider = {
@@ -67,7 +69,7 @@ const HistoryPost = () => {
     console.info('You clicked a breadcrumb.')
   }
   const handleChange = (event: any) => {
-    setGender(event.target.value)
+    setnewOld(event.target.value)
   }
 
   const breadcrumbs = [
@@ -119,47 +121,23 @@ const HistoryPost = () => {
         <Box sx={{ display: 'flex', padding: '12px 0' }}>
           <Box className="history-post_left">
             <Collapse accordion bordered={false} ghost={true}>
-              <Panel header="Các công việc đã ứng tuyển" key="1">
-                <div
-                  className={activeChild === '1-1' ? 'active-child' : ''}
-                  onClick={() => handleChildClick('1-1')}
-                >
-                  1
-                </div>
-                <div
-                  className={activeChild === '1-2' ? 'active-child' : ''}
-                  onClick={() => handleChildClick('1-2')}
-                >
-                  2
-                </div>
-                <div
-                  className={activeChild === '1-3' ? 'active-child' : ''}
-                  onClick={() => handleChildClick('1-3')}
-                >
-                  3
-                </div>
-              </Panel>
-              <Panel header="Các công việc đã lưu" key="2">
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-              </Panel>
-              <Panel header="Các công việc đã đăng tuyển" key="3">
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-              </Panel>
               {dataItem.map((item, index) => (
-                <Panel header={item.title} key={index}>
+                <Panel
+                  header={item.title}
+                  key={index}
+                  className="history-left_item"
+                >
                   {item.childs.map((child, idx) => (
                     <div
                       key={idx}
                       className={
-                        activeChild === idx.toString() ? 'active-child' : ''
+                        activeChild === `${index}-${idx}`
+                          ? 'active-child child-item'
+                          : 'child-item'
                       }
-                      onClick={() => handleChildClick(idx.toString())}
+                      onClick={() => handleChildClick(`${index}-${idx}`)}
                     >
-                      1
+                      {child}
                     </div>
                   ))}
                 </Panel>
@@ -175,11 +153,19 @@ const HistoryPost = () => {
                 alignItems: 'center',
               }}
             >
-              <Typography>5 đơn ứng tuyển đã gửi</Typography>
+              <Typography
+                sx={{
+                  fontWeight: '600',
+                  fontSize: '16px',
+                  lineHeight: '24px',
+                }}
+              >
+                5 đơn ứng tuyển đã gửi
+              </Typography>
               <TextField
                 select
                 id="sex"
-                value={gender}
+                value={newOld}
                 onChange={handleChange}
                 variant="outlined"
                 placeholder="Giới tính"
@@ -332,6 +318,7 @@ const HistoryPost = () => {
           </Box>
         </Box>
       </div>
+      <Footer />
     </div>
   )
 }

@@ -1,10 +1,8 @@
 .post-history {
   margin-top: 70px;
   .post-history_main {
-    padding: 50px 180px;
+    padding: 50px 180px 0 180px;
     margin: 0 auto;
-    transition: all l;
-    margin-bottom: 36px;
 
     .history-post_left {
       flex: 1;
@@ -20,4 +18,41 @@
 
 .active-child {
   background-color: #0d99ff;
+  color: #ffffff;
+}
+
+.ant-collapse-item.ant-collapse-item-active.history-left_item {
+  border-bottom: 1px solid #aaaaaa;
+}
+
+.ant-collapse-header {
+  border-bottom: 1px solid #aaaaaa;
+}
+.history-left_item {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  .child-item {
+    padding: 12px 12px 12px 48px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    transition: all 0.1.5s linear;
+  }
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-collapse-ghost
+  > .ant-collapse-item
+  > .ant-collapse-content
+  > .ant-collapse-content-box {
+  padding-block: 0;
+  padding: 0;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header {
+  padding: 12px;
 }
