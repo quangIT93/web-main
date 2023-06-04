@@ -17,8 +17,16 @@ interface InfoContact {
   linkedin: string
 }
 
-interface IInfoEducation {
-  educationId: number | null
+interface IInfoEducationCreate {
+  companyName: string
+  major: string
+  startDate: number
+  endDate: number
+  extraInformation: string
+}
+
+interface IInfoEducationUpdate {
+  educationId?: number | null
   companyName: string
   major: string
   startDate: number
@@ -88,7 +96,7 @@ const profileApi = {
       }
     )
   },
-  updateProfileEducation: (infoEducation: IInfoEducation) => {
+  updateProfileEducation: (infoEducation: IInfoEducationUpdate) => {
     const URL = `profiles/edu/u`
     return axiosClient.put(URL, infoEducation, {
       headers: {
@@ -96,14 +104,54 @@ const profileApi = {
       },
     })
   },
+  createProfileEducation: (infoEducation: IInfoEducationCreate) => {
+    const URL = `profiles/edu/c`
+    return axiosClient.put(URL, infoEducation, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  },
+  deleteProfileEducation: (educationId?: number | null) => {
+    const URL = `profiles/edu/d`
+    return axiosClient.put(
+      URL,
+      { educationId },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    )
+  },
 
-  updateProfileExperienceL: (infoExperience: any) => {
+  updateProfileExperience: (infoExperience: any) => {
     const URL = `profiles/exp/u`
     return axiosClient.put(URL, infoExperience, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     })
+  },
+  createProfileExperience: (infoEducation: any) => {
+    const URL = `profiles/exp/c`
+    return axiosClient.put(URL, infoEducation, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  },
+  deleteProfileExperience: (experienceId?: number | null) => {
+    const URL = `profiles/exp/d`
+    return axiosClient.put(
+      URL,
+      { experienceId },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    )
   },
 }
 

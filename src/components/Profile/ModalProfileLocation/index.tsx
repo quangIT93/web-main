@@ -73,11 +73,11 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const [open, setOpen] = React.useState<any>([])
 
   const [location, setLocation] = React.useState<any>(
-    locations.map((v: any, i) => v.district)
+    locations?.map((v: any, i) => v.district)
   )
 
   const [locationId, setLocationId] = React.useState<any>(
-    locations.map((v: any, i) => v.district_id)
+    locations?.map((v: any, i) => v.district_id)
   )
 
   const dispatch = useDispatch()
@@ -158,7 +158,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
               value={v.district}
               onClick={() => handleClickDistrict(v)}
             >
-              <Checkbox checked={location.indexOf(v.district) > -1} />
+              <Checkbox checked={location?.indexOf(v.district) > -1} />
               <ListItemText primary={v.district} />
             </MenuItem>
           ))}

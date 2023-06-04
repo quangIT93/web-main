@@ -43,10 +43,12 @@ interface IModalProfileContact {
 
 const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   const { openModalContact, setOpenModalContact, profile } = props
-  const [phone, setPhone] = useState(profile.phone ? profile.phone : '')
-  const [email, setEmail] = useState(profile.email ? profile.email : '')
-  const [fb, setFB] = useState(profile.facebook ? profile.facebook : '')
-  const [linkIn, setLinkIn] = useState(profile.facebook ? profile.facebook : '')
+  const [phone, setPhone] = useState(profile?.phone ? profile?.phone : '')
+  const [email, setEmail] = useState(profile?.email ? profile?.email : '')
+  const [fb, setFB] = useState(profile?.facebook ? profile?.facebook : '')
+  const [linkIn, setLinkIn] = useState(
+    profile?.facebook ? profile?.facebook : ''
+  )
 
   const handleClose = () => setOpenModalContact(false)
   const dispatch = useDispatch()

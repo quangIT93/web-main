@@ -48,7 +48,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const { openModalCareerObjective, setOpenModalCareerObjective, categories } =
     props
   const [value, setValue] = useState(
-    categories.map((v, i) => v.child_category_id.toString())
+    categories?.map((v, i) => v.child_category_id.toString())
   )
   const [dataCategories, setDataCategories] = React.useState<any>(null)
   const [checkClick, setCheckList] = React.useState<boolean>(false)

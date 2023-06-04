@@ -179,7 +179,7 @@ const HistoryPost = () => {
             <Box>
               <Grid spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
                 <Grid>
-                  {[1, 2, 3].map(() => (
+                  {[1, 2, 3].map((v, i) => (
                     <Card
                       sx={{
                         minWidth: '100%',
@@ -197,6 +197,7 @@ const HistoryPost = () => {
                       onClick={(e) => {
                         console.log('ádhajh')
                       }}
+                      key={i}
                     >
                       <ImageListItem sx={{ flex: 1, display: 'flex' }}>
                         <img

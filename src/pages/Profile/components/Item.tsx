@@ -1,31 +1,64 @@
-import React from 'react'
+import React, { useState } from 'react'
 // @ts-ignore
 
 import { Button, Space } from 'antd'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import Stack from '@mui/material/Stack'
 import './styleItem.scss'
+import moment from 'moment'
 
+// import component
+import ModalDeleteEducation from '#components/Profile/ModalDeleteEducation'
+import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate'
+import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate'
+import ModalDeleteExperience from '#components/Profile/ModalDeleteExperience'
 interface SuggestItemProps {
   typeItem?: string
   item?: ItemAppy
-  setOpenModalExperience: React.Dispatch<React.SetStateAction<boolean>>
-  setOpenModalEducation: React.Dispatch<React.SetStateAction<boolean>>
 }
 interface ItemAppy {
+  id?: number | null
   company_name?: String
   major?: String
-  start_date?: String
-  end_date?: String
-  extra_information?: String
+  start_date?: number
+  end_date?: number
+  extra_information?: string
   title?: String
 }
 
-const ItemInfoLeft: React.FC<SuggestItemProps> = ({
-  typeItem,
-  item,
-  setOpenModalExperience,
-  setOpenModalEducation,
-}) => {
-  console.log('item', item)
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
+
+const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
+  const [openModalDeleteEducation, setOpenModalDeleteEducation] =
+    useState(false)
+  const [openModalEducationUpdate, setOpenModalEducationUpdate] =
+    useState(false)
+  const [openModalDeleteExperience, setOpenModalDeleteExperience] =
+    useState(false)
+  const [openModalExperienceUpdate, setOpenModalExperienceUpdate] =
+    useState(false)
+
+  const handleDeleteEducation = (id?: number | null) => {
+    setOpenModalDeleteEducation(true)
+  }
+
+  const handleUpdateEducation = (id?: number | null) => {
+    setOpenModalEducationUpdate(true)
+  }
+
+  const handleDeleteExperience = (id?: number | null) => {
+    setOpenModalDeleteExperience(true)
+  }
+
+  const handleUpdateExperience = (id?: number | null) => {
+    setOpenModalExperienceUpdate(true)
+  }
   return (
     <div className="div-apply-item">
       <div className="div-item-left">
@@ -46,24 +79,67 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({
           <Space size={4} direction="vertical" style={{ marginLeft: 10 }}>
             <h3>{item?.company_name}</h3>
             <p>{typeItem == 'experiences' ? item?.title : item?.major}</p>
-            <p>{item?.end_date}</p>
-            <div style={{ whiteSpace: 'pre-wrap', marginTop: '15px' }}>
+            <p>
+              {`${moment(item?.start_date).year()}`} - {` `}
+              {`${moment(item?.end_date).year()}`}
+            </p>
+
+            <p style={{ whiteSpace: 'pre-wrap', marginTop: '15px' }}>
               {item?.extra_information}
-            </div>
+            </p>
           </Space>
         </div>
       </div>
-      <Space
-        onClick={
-          typeItem === 'experiences'
-            ? () => setOpenModalExperience(true)
-            : () => setOpenModalEducation(true)
-        }
-      >
-        <img src="/images/profile/pen.png" alt="s" />
+      <div className="div-item-right">
+        <Space
+          onClick={
+            typeItem === 'experiences'
+              ? () => handleDeleteExperience(item?.id)
+              : () => handleDeleteEducation(item?.id)
+          }
+          style={{ cursor: 'pointer', marginRight: '16px' }}
+        >
+          <p style={{ color: 'red', fontSize: '14px' }}>Xoá</p>
+        </Space>
 
-        <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
-      </Space>
+        <Space
+          onClick={
+            typeItem === 'experiences'
+              ? () => handleUpdateExperience(item?.id)
+              : () => handleUpdateEducation(item?.id)
+          }
+          style={{ cursor: 'pointer' }}
+        >
+          <img src="/images/profile/pen.png" alt="s" />
+
+          <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+        </Space>
+      </div>
+      <ModalDeleteEducation
+        openModalDeleteEducation={openModalDeleteEducation}
+        setOpenModalDeleteEducation={setOpenModalDeleteEducation}
+        educationId={item?.id}
+      />
+      <ModalProfileEducationUpdate
+        openModalEducationUpdate={openModalEducationUpdate}
+        setOpenModalEducationUpdate={setOpenModalEducationUpdate}
+        typeItem="updateEducation"
+        educationId={item?.id}
+        educationValue={item}
+      />
+
+      <ModalDeleteExperience
+        openModalDeleteExperience={openModalDeleteExperience}
+        setOpenModalDeleteExperience={setOpenModalDeleteExperience}
+        experienceId={item?.id}
+      />
+      <ModalProfileExperienceUpdate
+        openModalExperienceUpdate={openModalExperienceUpdate}
+        setOpenModalExperienceUpdate={setOpenModalExperienceUpdate}
+        typeItem="updateExperience"
+        experienceId={item?.id}
+        experienceValue={item}
+      />
     </div>
   )
 }

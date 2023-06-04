@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import moment from 'moment'
+
 // @ts-ignore
 import { Navbar } from '#components'
 import { StatePropsCloseSlider } from 'pages/Home'
@@ -9,19 +12,23 @@ import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
 import { Button, Space, Skeleton } from 'antd'
 import { PlusCircleOutlined } from '@ant-design/icons'
-import Footer from '../../components/Footer/index'
 
-import { useDispatch, useSelector } from 'react-redux'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import Stack from '@mui/material/Stack'
+
 import { RootState } from '../../store/reducer/index'
+
+import Footer from '../../components/Footer/index'
 import ItemApply from './components/Item'
-import moment from 'moment'
 
 import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson'
 import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice'
 import ModalProfileContact from '#components/Profile/ModalProfileContact'
-import ModalProfileEducation from '#components/Profile/ModalProfileEducation'
+import ModalProfileEducationCreate from '#components/Profile/ModalProfileEducationCreate'
 import ModalProfileLocation from '#components/Profile/ModalProfileLocation'
-import ModalProfileExperience from '#components/Profile/ModalProfileExperience'
+import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate'
+import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperienceCreate'
 import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate'
 // import data
 import {
@@ -29,6 +36,15 @@ import {
   resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer'
 import profileApi from 'api/profileApi'
+
+import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer'
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -38,11 +54,13 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 }))
 
 interface ItemAppy {
-  company_name?: String
-  major?: String
-  start_date?: String
-  end_date?: String
-  extra_information?: String
+  id?: number | null
+  company_name?: string
+  major?: string
+  start_date?: number
+  end_date?: number
+  extra_information?: string
+  title?: string
 }
 
 interface ICategories {
@@ -173,11 +191,11 @@ const Profile: React.FC = () => {
   const [openModalCareerObjective, setOpenModalCareerObjective] =
     useState(false)
   const [openModalLocation, setOpenModalLocation] = useState(false)
-  const [openModalEducation, setOpenModalEducation] = useState(false)
-  const [openModalEducationUpdate, setOpenModalEducationUpdate] =
+  const [openModalEducationCreate, setOpenModalEducationCreate] =
     useState(false)
-  const [openModalExperience, setOpenModalExperience] = useState(false)
 
+  const [openModalExperienceCreate, setOpenModalExperienceCreate] =
+    useState(false)
   const [imageInfo, setImageInfo] = useState<string>('')
   const [avatarUrl, setAvatarUrl] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(true)
@@ -222,7 +240,11 @@ const Profile: React.FC = () => {
       // Xử lý lỗi tải lên ảnh
     }
   }
-  console.log('profile', profile)
+  // console.log('profile', profile)
+
+  const alert = useSelector((state: any) => state.alertProfile.alert)
+  const handleClose = () => dispatch<any>(setAlert(false))
+  // console.log('alert', alert)
   return (
     <div className="profile">
       <Navbar {...statePropsCloseSlider} />
@@ -277,7 +299,7 @@ const Profile: React.FC = () => {
                       marginTop: '5px',
                     }}
                   >
-                    <img src="/images/profile/HiCoin.png" />
+                    <img src="/images/profile/HiCoin.png" alt="ảnh" />
                     <p style={{ marginLeft: '5px' }}>0</p>
                   </div>
                 </div>
@@ -313,7 +335,7 @@ const Profile: React.FC = () => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalPersonalInfo(true)}
               >
-                <img src="/images/profile/pen.png" />
+                <img src="/images/profile/pen.png" alt="ảnh" />
 
                 <p
                   style={{
@@ -366,7 +388,7 @@ const Profile: React.FC = () => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalContact(true)}
               >
-                <img src="/images/profile/pen.png" />
+                <img src="/images/profile/pen.png" alt="ảnh" />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
               </Space>
@@ -404,7 +426,7 @@ const Profile: React.FC = () => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalCareerObjective(true)}
               >
-                <img src="/images/profile/pen.png" />
+                <img src="/images/profile/pen.png" alt="ảnh" />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
               </Space>
@@ -434,7 +456,7 @@ const Profile: React.FC = () => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalLocation(true)}
               >
-                <img src="/images/profile/pen.png" />
+                <img src="/images/profile/pen.png" alt="ảnh" />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
               </Space>
@@ -459,23 +481,10 @@ const Profile: React.FC = () => {
               }}
             >
               <h3>Trình độ học vấn</h3>
-              <Space
-                style={{ cursor: 'pointer' }}
-                onClick={() => setOpenModalEducationUpdate(true)}
-              >
-                <img src="/images/profile/pen.png" />
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
-              </Space>
             </div>
             {profile?.educations?.length !== 0 ? (
               profile?.educations?.map((education: ItemAppy, index: number) => (
-                <ItemApply
-                  item={education}
-                  setOpenModalEducation={setOpenModalEducation}
-                  setOpenModalExperience={setOpenModalExperience}
-                  key={index}
-                />
+                <ItemApply item={education} key={index} />
               ))
             ) : (
               <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
@@ -490,7 +499,7 @@ const Profile: React.FC = () => {
             >
               <Space
                 style={{ alignItems: 'center', cursor: 'pointer' }}
-                onClick={() => setOpenModalEducation(true)}
+                onClick={() => setOpenModalEducationCreate(true)}
               >
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
@@ -498,6 +507,7 @@ const Profile: React.FC = () => {
               </Space>
             </div>
           </div>
+
           <div className="div-profile-info">
             <div
               style={{
@@ -507,24 +517,10 @@ const Profile: React.FC = () => {
               }}
             >
               <h3>Kinh nghiệm làm việc</h3>
-              <Space
-                style={{ cursor: 'pointer' }}
-                onClick={() => setOpenModalExperience(true)}
-              >
-                <img src="/images/profile/pen.png" />
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
-              </Space>
             </div>
             {profile?.experiences?.length !== 0 ? (
               profile?.experiences?.map((item: any, index: number) => (
-                <ItemApply
-                  typeItem="experiences"
-                  key={index}
-                  item={item}
-                  setOpenModalEducation={setOpenModalEducation}
-                  setOpenModalExperience={setOpenModalExperience}
-                />
+                <ItemApply typeItem="experiences" key={index} item={item} />
               ))
             ) : (
               <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
@@ -537,7 +533,10 @@ const Profile: React.FC = () => {
                 justifyContent: 'center',
               }}
             >
-              <Space style={{ alignItems: 'center', cursor: 'pointer' }}>
+              <Space
+                style={{ alignItems: 'center', cursor: 'pointer' }}
+                onClick={() => setOpenModalExperienceCreate(true)}
+              >
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
@@ -560,16 +559,11 @@ const Profile: React.FC = () => {
             setOpenModalCareerObjective={setOpenModalCareerObjective}
             categories={profile?.categories}
           />
-          <ModalProfileEducationUpdate
-            openModalEducationUpdate={openModalEducationUpdate}
-            setOpenModalEducationUpdate={setOpenModalEducationUpdate}
+
+          <ModalProfileEducationCreate
+            openModalEducationCreate={openModalEducationCreate}
+            setOpenModalEducationCreate={setOpenModalEducationCreate}
             typeItem="createEducation"
-            educations={profile?.educations}
-          />
-          <ModalProfileEducation
-            openModalEducation={openModalEducation}
-            setOpenModalEducation={setOpenModalEducation}
-            typeItem="updateEducation"
             educations={profile?.educations}
           />
           <ModalProfileLocation
@@ -577,11 +571,28 @@ const Profile: React.FC = () => {
             setOpenModalLocation={setOpenModalLocation}
             locations={profile?.locations}
           />
-          <ModalProfileExperience
-            openModalExperience={openModalExperience}
-            setOpenModalExperience={setOpenModalExperience}
+
+          <ModalProfileExperienceCreate
+            openModalExperienceCreate={openModalExperienceCreate}
+            setOpenModalExperienceCreate={setOpenModalExperienceCreate}
             typeItem="createExperience"
+            educations={profile?.educations}
           />
+          <Stack spacing={2} sx={{ width: '100%' }}>
+            <Snackbar
+              open={alert}
+              autoHideDuration={3000}
+              onClose={handleClose}
+            >
+              <Alert
+                onClose={handleClose}
+                severity="success"
+                sx={{ width: '100%' }}
+              >
+                Bạn đã xoá thông tin thành công!
+              </Alert>
+            </Snackbar>
+          </Stack>
         </Skeleton>
       </div>
       <Footer />

@@ -132,7 +132,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       console.log(error)
     }
   }
-
+  console.log('selectedProvince', selectedProvince)
+  console.log('dataProvinces', dataProvinces)
+  console.log('profile', profile)
   return (
     <Modal
       open={openModelPersonalInfo}
@@ -217,7 +219,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
           <Autocomplete
             options={dataProvinces ? dataProvinces : []}
             getOptionLabel={(option: any) => option?.name || ''}
-            value={selectedProvince || null}
+            value={
+              selectedProvince
+                ? dataProvinces?.find(
+                    (province: any) => province.id === selectedProvince.id
+                  )
+                : null
+            }
             defaultValue={dataProvinces}
             onChange={handleProvinceChange}
             renderInput={(params) => (
