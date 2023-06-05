@@ -44,6 +44,7 @@ import {
   ClockCircleOutlined,
   LogoutOutlined,
   KeyOutlined,
+  LoadingOutlined
 } from '@ant-design/icons'
 
 // import component
@@ -51,7 +52,7 @@ import SalaryFilterSubnav from './components/SalaryFilterSubnav'
 import PositionFilterSubnav from './components/PositionFilterSubnav'
 import CareerFilterSubnav from './components/CareerFilterSubnav'
 
-import { Avatar, Space } from 'antd'
+import { Avatar, Space, Spin } from 'antd'
 
 import authApi from 'api/authApi'
 import profileApi from 'api/profileApi'
@@ -95,6 +96,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [openModalLogin, setOpenModalLogin] = React.useState(false)
   const [openInfoUser, setOpenInfoUser] = React.useState(false)
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
+  const [spinning, setSpinning] = React.useState(false)
+  const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
 
 
   const navigate = useNavigate()
@@ -247,7 +250,14 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   // login
   const handleClickLogin = async () => {
     await fecthDataProfile()
+    if (openInfoUser) {
+      setSpinning(false)
+    } else {
+      setSpinning(true)
+    }
+
     setTimeout(() => {
+      setSpinning(false)
       if (dataProfile.profile) {
         setOpenInfoUser(!openInfoUser)
       } else {
@@ -312,50 +322,53 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <RightOutlined />
         </div>
       </button>
-      {openInfoUser && (
-        <div className="sub-login">
-          <Space className="sub-login_info">
-            <Avatar
-              style={{ backgroundColor: '#0D99FF' }}
-              icon={<UserOutlined style={{ fontSize: 30 }} />}
-              size={50}
-              src={
-                dataProfile.profile?.avatar ? dataProfile.profile.avatar : null
-              }
-            />
-            <div>
-              <h2>
-                {dataProfile?.profile?.name ? dataProfile.profile.name : ''}
-              </h2>
-              <span>
-                {dataProfile?.profile?.email ? dataProfile?.profile.email : ''}
-              </span>
-            </div>
-          </Space>
-          <div className="sub-login_items">
-            <Link to="/profile">
-              <div className="sub-login_item">
-                <SyncOutlined />
-                <span>Cập nhật thông tin</span>
+      <Spin indicator={antIcon} spinning={spinning} >
+        {openInfoUser && (
+          <div className="sub-login">
+            <Space className="sub-login_info">
+              <Avatar
+                style={{ backgroundColor: '#0D99FF' }}
+                icon={<UserOutlined style={{ fontSize: 30 }} />}
+                size={50}
+                src={
+                  dataProfile.profile?.avatar ? dataProfile.profile.avatar : null
+                }
+              />
+              <div>
+                <h2>
+                  {dataProfile?.profile?.name ? dataProfile.profile.name : ''}
+                </h2>
+                <span>
+                  {dataProfile?.profile?.email ? dataProfile?.profile.email : ''}
+                </span>
               </div>
-            </Link>
-            <Link to="/history">
+            </Space>
+            <div className="sub-login_items">
+              <Link to="/profile">
+                <div className="sub-login_item">
+                  <SyncOutlined />
+                  <span>Cập nhật thông tin</span>
+                </div>
+              </Link>
+              <Link to="/history">
+                <div className="sub-login_item">
+                  <ClockCircleOutlined />
+                  <span>Lịch sử</span>
+                </div>
+              </Link>
               <div className="sub-login_item">
-                <ClockCircleOutlined />
-                <span>Lịch sử</span>
+                <KeyOutlined />
+                <span>Đổi mật khẩu</span>
               </div>
-            </Link>
-            <div className="sub-login_item">
-              <KeyOutlined />
-              <span>Đổi mật khẩu</span>
-            </div>
-            <div className="sub-login_item" onClick={handleLogout}>
-              <LogoutOutlined />
-              <span>Đăng xuất</span>
+              <div className="sub-login_item" onClick={handleLogout}>
+                <LogoutOutlined />
+                <span>Đăng xuất</span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </Spin>
+
     </div>,
   ]
 

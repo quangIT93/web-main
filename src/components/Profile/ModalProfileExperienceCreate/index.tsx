@@ -33,42 +33,38 @@ const styleChildBox = {
   marginBottom: '12px',
 }
 
-interface IEducation {
-  id?: number | null
-  company_name?: string
-  major?: string
-  start_date?: number
-  end_date?: number
-  extra_information?: string
-  title?: string
-}
-
-interface IModalProfileEducationUpdate {
-  openModalEducationUpdate: boolean
-  setOpenModalEducationUpdate: React.Dispatch<React.SetStateAction<boolean>>
-  typeItem: string
-  educationId?: number | null
-  educationValue: any
-}
-
-interface IInfoEducation {
-  educationId?: number | null
+interface IExperience {
+  id: number | null
   companyName: string
-  major: string
+  title: string
   startDate: number
   endDate: number
   extraInformation: string
 }
 
-const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
+interface IModalProfileExperienceCreate {
+  openModalExperienceCreate: boolean
+  setOpenModalExperienceCreate: React.Dispatch<React.SetStateAction<boolean>>
+  typeItem: string
+  educations: IExperience[]
+}
+
+interface IInfoExperience {
+  companyName: string
+  title: string
+  startDate: number
+  endDate: number
+  extraInformation: string
+}
+
+const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
   props
 ) => {
   const {
-    openModalEducationUpdate,
-    setOpenModalEducationUpdate,
+    openModalExperienceCreate,
+    setOpenModalExperienceCreate,
     typeItem,
-    educationId,
-    educationValue,
+    educations,
   } = props
   // console.log('typeItem', typeItem)
   const dispatch = useDispatch()
@@ -81,33 +77,42 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   // )
   // const [major, setMajor] = useState<string>('')
   // const [extraInformation, setExtraInformation] = useState<string>('')
-  const [education, setEducation] = useState<IInfoEducation>({
-    educationId: educationId,
-    companyName: educationValue.company_name,
-    major: educationValue.major,
-    startDate: educationValue.start_date,
-    endDate: educationValue.end_date,
-    extraInformation: educationValue.extra_information,
+  const [experience, setExperience] = useState<IInfoExperience>({
+    companyName: '',
+    title: '',
+    startDate: new Date(2017, 4, 1, 0, 0).getTime(),
+    endDate: new Date(2023, 4, 30, 0, 0).getTime(),
+    extraInformation: '',
   })
-  console.log('educationValue', educationValue)
-  const handleClose = () => setOpenModalEducationUpdate(false)
+
+  // console.log('endDate', endDate)
+
+  const handleClose = () => setOpenModalExperienceCreate(false)
 
   // school
   const handleChangeSchool = (e: any) => {
-    setEducation((preValue) => {
+    setExperience((preValue) => {
       return { ...preValue, companyName: e.target.value }
     })
   }
 
   // time
   const handleChangeStartTime = (newValue: any, e: any) => {
-    setEducation((preValue) => {
-      return { ...preValue, startDate: new Date(newValue._d).getTime() }
+    setExperience((preValue) => {
+      return {
+        ...preValue,
+        startDate: new Date(newValue._d).getTime(),
+      }
     })
   }
 
   const handleChangeEndTime = (newValue: any, e: any) => {
-    setEducation((preValue) => {
+    // console.log(
+    //   'new Date(newValue.$d).getTime()',
+    //   new Date(newValue.$d).getTime()
+    // )
+
+    setExperience((preValue) => {
       return {
         ...preValue,
         endDate: new Date(newValue._d).getTime(),
@@ -116,18 +121,18 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   }
 
   // major
-  const handleChangeMajor = (
+  const handleChangeTitle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setEducation((preValue) => {
-      return { ...preValue, major: e.target.value }
+    setExperience((preValue) => {
+      return { ...preValue, title: e.target.value }
     })
   }
 
   const handleChangeExtraInfo = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setEducation((preValue) => {
+    setExperience((preValue) => {
       return { ...preValue, extraInformation: e.target.value }
     })
   }
@@ -136,11 +141,11 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
   const handleSubmit = async () => {
     try {
-      const result = await profileApi.updateProfileEducation(education)
+      const result = await profileApi.createProfileExperience(experience)
       if (result) {
         console.log('update thành công', result)
         await dispatch(getProfile() as any)
-        setOpenModalEducationUpdate(false)
+        setOpenModalExperienceCreate(false)
       }
     } catch (error) {
       console.log(error)
@@ -148,7 +153,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   }
   return (
     <Modal
-      open={openModalEducationUpdate}
+      open={openModalExperienceCreate}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -161,7 +166,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Thêm thông tin trình độ học vấn
+          Thêm thông tin kinh nghiệm làm việc
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -170,21 +175,20 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Trường/Tổ chức *
+            Chức danh *
           </Typography>
           <TextField
             type="text"
             id="nameProfile"
             name="title"
-            value={education.companyName}
-            onChange={handleChangeSchool}
+            //   value={formValues.title}
+            onChange={handleChangeTitle}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Nhập tên trường hoặc tổ chức"
+            placeholder="Chức danh"
             // error={titleError} // Đánh dấu lỗi
           />
         </Box>
-
         <Box sx={styleChildBox}>
           <Typography
             // sx={styleLabel}
@@ -192,20 +196,21 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chuyên ngành *
+            Công ty/Tổ chức *
           </Typography>
           <TextField
             type="text"
             id="nameProfile"
             name="title"
-            value={education.major}
-            onChange={handleChangeMajor}
+            //   value={formValues.title}
+            onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Ngành"
+            placeholder="Nhập tên công ty hoặc tổ chức"
             // error={titleError} // Đánh dấu lỗi
           />
         </Box>
+
         <Box sx={styleChildBox}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
@@ -222,7 +227,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   Thời gian bắt đầu *:
                 </Typography>
                 <DatePicker
-                  value={moment(education.startDate)}
+                  value={moment(experience.startDate)}
                   onChange={handleChangeStartTime}
                 />
               </div>
@@ -236,7 +241,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   Thời gian kết thúc *:
                 </Typography>
                 <DatePicker
-                  value={moment(education.endDate)}
+                  value={moment(experience.endDate)}
                   onChange={handleChangeEndTime}
                 />
               </div>
@@ -254,7 +259,6 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           </Typography>
           <TextField
             // className={classes.textarea}
-            value={education.extraInformation}
             onChange={handleChangeExtraInfo}
             sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
             multiline
@@ -272,4 +276,4 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   )
 }
 
-export default React.memo(ModalProfileEducationUpdate)
+export default ModalProfileExperienceCreate

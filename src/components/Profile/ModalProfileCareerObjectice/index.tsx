@@ -15,7 +15,7 @@ import {
   getProfile,
   resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer'
-const { SHOW_PARENT } = TreeSelect
+const { SHOW_CHILD } = TreeSelect
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -48,7 +48,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const { openModalCareerObjective, setOpenModalCareerObjective, categories } =
     props
   const [value, setValue] = useState(
-    categories.map((v, i) => v.child_category_id.toString())
+    categories?.map((v, i) => v.child_category_id.toString())
   )
   const [dataCategories, setDataCategories] = React.useState<any>(null)
   const [checkClick, setCheckList] = React.useState<boolean>(false)
@@ -73,9 +73,9 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   }, [])
   const onChange = (
     newValue: string[] | any,
-    selectedOptions: any[],
-    extra: any
+
   ) => {
+
     setValue(newValue)
   }
 
@@ -123,7 +123,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     // treeCheckStrictly: true,
     // Enable strict checking
     // Disable the "All" checkbox at the root level
-    showCheckedStrategy: SHOW_PARENT,
+    showCheckedStrategy: SHOW_CHILD,
     placeholder: 'Please select',
     style: {
       width: '100%',

@@ -271,7 +271,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   }, [authState.isverifyOtp])
 
   useEffect(() => {
-    FacebookLoginClient.init({ appId })
+
     const start = () => {
       gapi.client.init({
         clientId: googleClient,
