@@ -7,6 +7,8 @@ export enum ActionType {
   SET_DISTRICTS = 'set_districts',
   SET_POST_NEWEST = 'set_post_newest',
   GET_POST_NEWEST_MORE = 'get_post_newest_more',
+  GET_PROFILE_USER = 'get_profile_user',
+
 }
 
 export enum AuthActionType {
@@ -31,6 +33,13 @@ export interface LocationTypes {
   payload: {
     province: AxiosResponse
     distrisct: AxiosResponse
+  }
+}
+
+export interface ProfileType {
+  type: string
+  payload: {
+    profile: any
   }
 }
 

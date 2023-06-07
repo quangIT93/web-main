@@ -1,17 +1,16 @@
 import React from 'react'
 import dayjs from 'dayjs'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { TimePicker } from '@mui/x-date-pickers/TimePicker'
-import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker'
-import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker'
 import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker'
 import { styleLabel } from '../CssPost'
 import Typography from '@mui/material/Typography'
 import moment from 'moment'
 import './style.scss'
+import { SwapRightOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
+
 
 interface IPostTime {
   startTime: any
@@ -49,24 +48,26 @@ const PostTime: React.FC<IPostTime> = (props) => {
           >
             Giờ làm việc *:
           </Typography>
-          <MobileTimePicker
-            ampm={false}
-            ampmInClock={true}
-            defaultValue={moment(new Date(startTime))}
-            // sx={{ width: '80%' }}
-            onChange={handleChangeStartTime}
-            value={moment(new Date(startTime))}
-          />
-        </div>
-        <div className="wrap-time_right" style={{ paddingTop: '24px' }}>
-          <MobileTimePicker
-            ampm={false}
-            ampmInClock={true}
-            defaultValue={moment(new Date(endTime))}
-            // sx={{ width: '30%' }}
-            value={moment(new Date(endTime))}
-            onChange={handleChangeEndTime}
-          />
+          <Space direction='horizontal' wrap={true} size={[100, 8]} style={{ width: "100%" }} >
+            <StaticTimePicker
+              ampm={false}
+              ampmInClock={true}
+              defaultValue={moment(new Date(startTime))}
+              //sx={{ width: '80%' }}
+              onChange={handleChangeStartTime}
+              value={moment(new Date(startTime))}
+            />
+            <SwapRightOutlined className='icon-time' style={{ fontSize: 35 }} />
+            <StaticTimePicker
+              ampm={false}
+              ampmInClock={true}
+              defaultValue={moment(new Date(endTime))}
+              // sx={{ width: '30%' }}
+              value={moment(new Date(endTime))}
+              onChange={handleChangeEndTime}
+            />
+          </Space>
+
         </div>
       </DemoContainer>
     </LocalizationProvider>

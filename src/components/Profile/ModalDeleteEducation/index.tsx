@@ -3,8 +3,12 @@ import { Box, Modal, Typography, Button } from '@mui/material'
 
 // data
 import profileApi from 'api/profileApi'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer'
+import { RootState } from 'store/reducer'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from 'store/index'
+
 
 import {
   getProfile,
@@ -37,6 +41,10 @@ const ModalDelete: React.FC<IModalProfileDeleteEducation> = (props) => {
   const { openModalDeleteEducation, setOpenModalDeleteEducation, educationId } =
     props
   const dispatch = useDispatch()
+  const { setProfileUser } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
 
   const handleClose = () => setOpenModalDeleteEducation(false)
 
@@ -45,7 +53,7 @@ const ModalDelete: React.FC<IModalProfileDeleteEducation> = (props) => {
       const result = await profileApi.deleteProfileEducation(educationId)
       if (result) {
         console.log('xoá thành công', result)
-        await dispatch(getProfile() as any)
+
         await dispatch(setAlert(true))
         setOpenModalDeleteEducation(false)
       }

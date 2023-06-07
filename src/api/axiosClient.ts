@@ -38,7 +38,7 @@ axiosClient.interceptors.response.use(
   (error) => {
     let originalRequest = error.config;
     let refreshToken = localStorage.getItem('refreshToken');
-    if (refreshToken && error.response.status === 403 || error.response.status === 401) {
+    if (refreshToken && error.response.status === 403 || refreshToken && error.response.status === 401) {
       axios.post(`${BASE_URL}/reset-access-token`, {
         refreshToken: refreshToken,
       }).then(response => {

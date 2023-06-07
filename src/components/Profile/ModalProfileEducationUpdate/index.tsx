@@ -139,7 +139,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       const result = await profileApi.updateProfileEducation(education)
       if (result) {
         console.log('update thành công', result)
-        await dispatch(getProfile() as any)
+
         setOpenModalEducationUpdate(false)
       }
     } catch (error) {
@@ -181,7 +181,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Nhập tên trường hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -203,7 +203,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Ngành"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>

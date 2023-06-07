@@ -157,6 +157,33 @@ const profileApi = {
       }
     )
   },
+
+  createCV: (file: any) => {
+    const URL = `profiles/cv`
+    return axiosClient.post(URL, file, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+  },
+
+  deleteCV: () => {
+    const URL = `profiles/cv`
+    return axiosClient.delete(URL, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, }
+    })
+  },
+
+  updateCV: (file: any) => {
+    const URL = `profiles/cv`
+    return axiosClient.put(URL, file, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+  },
 }
 
 export default profileApi

@@ -144,7 +144,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
       const result = await profileApi.createProfileExperience(experience)
       if (result) {
         console.log('update thành công', result)
-        await dispatch(getProfile() as any)
+
         setOpenModalExperienceCreate(false)
       }
     } catch (error) {
@@ -186,7 +186,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Chức danh"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -207,7 +207,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Nhập tên công ty hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 

@@ -10,8 +10,9 @@ import './style.scss'
 import { styled } from '@mui/material/styles'
 import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
-import { Button, Space, Skeleton } from 'antd'
-import { PlusCircleOutlined } from '@ant-design/icons'
+import { Button, Space, Skeleton, Upload, message, Popconfirm } from 'antd'
+import { PlusCircleOutlined, UploadOutlined } from '@ant-design/icons'
+import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
 
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
@@ -30,12 +31,17 @@ import ModalProfileLocation from '#components/Profile/ModalProfileLocation'
 import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate'
 import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperienceCreate'
 import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate'
+import CVItem from '#components/Profile/CV'
+
 // import data
 import {
   getProfile,
   resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer'
 import profileApi from 'api/profileApi'
+
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../store/index'
 
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer'
 
@@ -85,107 +91,17 @@ const Profile: React.FC = () => {
     height,
     setOpenModalLogin,
   }
-  const dispatch = useDispatch()
-  const dataTest = {
-    code: 200,
-    success: true,
-    data: {
-      id: 'a9e5bc4d-823f-4acc-9356-f9e53c611eaf',
-      name: 'Nguyen The Truong',
-      birthday: '2001-06-09T17:00:00.000Z',
-      address: {
-        id: 225,
-        name: 'Hải Dương',
-      },
-      gender: 1,
-      introduction: 'My intro',
-      phone: '0919004743',
-      email: 'truong@gmail.com',
-      avatar:
-        'https://gig-app-upload.s3.ap-southeast-1.amazonaws.com/1a635477-97a2-4d53-80c5-c56be5729fe5-hou-china-6.jpg',
-      facebook: 'facebook.com',
-      linkedin: 'linkedin.com',
-      categories: [
-        {
-          child_category_id: 25,
-          child_category: 'Hiệu chỉnh',
-          parent_category_id: 1,
-          parent_category: 'Công việc giấy tờ, sổ sách',
-        },
-      ],
-      locations: [
-        {
-          district_id: 1451,
-          district: 'Quận 9',
-          province_id: 202,
-          province: 'Hồ Chí Minh',
-        },
-        {
-          district_id: 1655,
-          district: 'Thành phố Bạc Liêu',
-          province_id: 200,
-          province: 'Bạc Liêu',
-        },
-      ],
-      educations: [
-        {
-          id: 5,
-          company_name: 'TDT University - Vietnam',
-          major: 'Computer Science',
-          start_date: '2019-09-09T17:00:00.000Z',
-          end_date: '2023-06-11T17:00:00.000Z',
-          extra_information: 'Nothing to tell',
-        },
-        {
-          id: 5,
-          company_name: 'TDT University - Vietnam',
-          major: 'Computer Science',
-          start_date: '2019-09-09T17:00:00.000Z',
-          end_date: '2023-06-11T17:00:00.000Z',
-          extra_information: 'Nothing to tell',
-        },
-      ],
-      experiences: [
-        {
-          id: 3,
-          title: 'Student',
-          company_name: 'TDT University',
-          start_date: '2019-09-09T17:00:00.000Z',
-          end_date: '2023-06-11T17:00:00.000Z',
-          extra_information: 'Nothing to tell',
-        },
-        {
-          id: 3,
-          title: 'Student',
-          company_name: 'TDT University',
-          start_date: '2019-09-09T17:00:00.000Z',
-          end_date: '2023-06-11T17:00:00.000Z',
-          extra_information: 'Nothing to tell',
-        },
-      ],
-    },
-    message: 'Successfully',
-  }
 
+  const dispatch = useDispatch()
+  const { setProfileUser } = bindActionCreators(actionCreators, dispatch)
   // const [dataProfile, setDataProfile] = useState(null)
 
-  const { profile, error }: any = useSelector(
-    (state: RootState) => state.profile
-  )
+  // const { profile, error }: any = useSelector(
+  //   (state: RootState) => state.profile
+  // )
 
-  useEffect(() => {
-    // Gọi action để lấy thông tin profile
-    setLoading(true)
-    dispatch<any>(getProfile())
-      .unwrap()
-      .catch((err: any) => {
-        console.log('Error:', err)
-      })
-    console.log('Error:')
-    setTimeout(() => {
-      setLoading(false)
-    }, 1500)
-  }, [])
+  const profile = useSelector((state: RootState) => state.profileUser)
+
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false)
   const [openModalContact, setOpenModalContact] = useState(false)
   const [openModalCareerObjective, setOpenModalCareerObjective] =
@@ -198,13 +114,132 @@ const Profile: React.FC = () => {
     useState(false)
   const [imageInfo, setImageInfo] = useState<string>('')
   const [avatarUrl, setAvatarUrl] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true)
+  const [uploading, setUploading] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [checkRemove, setCheckRemove] = useState(2)
+  const [fileList, setFileList] = useState<UploadFile[]>([])
+
+
+  const fecthDataProfile = async () => {
+    try {
+      const result = await profileApi.getProfile()
+      if (result) {
+        setProfileUser(result.data)
+        setLoading(false)
+      }
+    } catch (error) {
+      setLoading(false)
+    }
+  }
+
+  // fecth data 
+  useEffect(() => {
+    // Gọi action để lấy thông tin profile
+    setLoading(true)
+    // dispatch<any>(getProfile())
+    //   .unwrap()
+    //   .catch((err: any) => {
+
+    //   })
+    fecthDataProfile()
+  }, [])
+
+  useEffect(() => {
+    // Gọi action để lấy thông tin profile
+    fecthDataProfile()
+  }, [openModelPersonalInfo, openModalContact, openModalCareerObjective,
+    openModalLocation, openModalEducationCreate, openModalExperienceCreate
+  ])
 
   const handleAvatarClick = () => {
     // Khi click vào SmallAvatar, thực hiện hành động tương ứng
     const fileInput = document.getElementById('avatar-input')
     if (fileInput) {
       fileInput.click()
+    }
+  }
+
+  // props upload cv
+  const props: UploadProps = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file)
+      const newFileList = fileList.slice()
+      newFileList.splice(index, 1)
+      setFileList(newFileList)
+
+      return true
+    },
+    beforeUpload: (file) => {
+      console.log('file', file)
+      const isPNG = file.type === 'application/pdf'
+      var checFileSize = true
+      if (!isPNG) {
+        message.error(`${file.name} khong phai la file pdf`)
+      } else if (file.size > 1024 * 1024 * 5) {
+        checFileSize = false
+        message.error(`File lon hon 5mb`)
+      } else {
+        setFileList([file])
+        return false
+      }
+      return isPNG || Upload.LIST_IGNORE || checFileSize
+    },
+    maxCount: 1,
+    listType: 'picture',
+    fileList,
+  }
+
+  // confirm delete cv
+  const confirm = async () => {
+    try {
+      const result = await profileApi.deleteCV()
+      if (result) {
+        const result = await profileApi.getProfile()
+        if (result) {
+          setProfileUser(result.data)
+        }
+        setOpen(false)
+        setFileList([])
+        message.success('Xoa CV thanh cong.')
+      }
+    } catch (error) { }
+  }
+
+  // cancel delete cv
+  const cancel = () => {
+    setOpen(false)
+    message.error('Cancel.')
+  }
+
+  // handle upload cv
+  const handleUpload = async () => {
+    const formData = new FormData()
+    console.log(fileList)
+    formData.append('pdf', fileList[0] as RcFile)
+    setUploading(true)
+    var mess = ''
+    var result
+    try {
+      if (profile.cv_url) {
+        result = await profileApi.updateCV(formData)
+        mess = 'Cap nhat CV thanh cong'
+      } else {
+        result = await profileApi.createCV(formData)
+        mess = 'Them CV thanh cong'
+      }
+      console.log(result)
+      if (result) {
+        const result = await profileApi.getProfile()
+        if (result) {
+          setProfileUser(result.data)
+          setFileList([])
+          setUploading(false)
+          message.success(`${mess}`)
+        }
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -217,6 +252,8 @@ const Profile: React.FC = () => {
       setAvatarUrl(imageUrl)
     }
   }
+
+  // upload avatar
   const uploadImage = async (e: any, files: any) => {
     const formData = new FormData()
 
@@ -227,10 +264,8 @@ const Profile: React.FC = () => {
     })
     try {
       const response = await profileApi.postAvatar(formData)
-
       if (response) {
         dispatch(getProfile() as any)
-
         return profile.avatar
       } else {
         throw new Error('Failed to upload image')
@@ -250,10 +285,8 @@ const Profile: React.FC = () => {
       <Navbar {...statePropsCloseSlider} />
 
       <div className="container">
-        <Skeleton loading={loading} active>
-
+        <Skeleton className='skeleton-item' avatar loading={loading} active>
           <div className="div-profile-avatar">
-
             <div className="div-avatar">
               <div
                 style={{
@@ -326,8 +359,7 @@ const Profile: React.FC = () => {
           </div>
         </Skeleton>
 
-        <Skeleton loading={loading} active>
-
+        <Skeleton className='skeleton-item' loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -342,7 +374,6 @@ const Profile: React.FC = () => {
                 onClick={() => setOpenModalPersonalInfo(true)}
               >
                 <img src="/images/profile/pen.png" alt="ảnh" />
-
                 <p
                   style={{
                     color: '#0D99FF',
@@ -382,8 +413,7 @@ const Profile: React.FC = () => {
           </div>
         </Skeleton>
 
-        <Skeleton loading={loading} active>
-
+        <Skeleton className='skeleton-item' loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -423,7 +453,87 @@ const Profile: React.FC = () => {
           </div>
         </Skeleton>
 
-        <Skeleton loading={loading} active>
+        <Skeleton className='skeleton-item' loading={loading} active>
+          <div className="div-profile-info">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h3>CV/ Resume</h3>
+            </div>
+            <Space
+              wrap
+              size={20}
+              direction="vertical"
+              style={{ marginTop: 20 }}
+            >
+              <Upload {...props}>
+                <Button
+                  style={{
+                    backgroundColor: '#0D99FF',
+                    color: 'white',
+                    height: 40,
+                    marginBottom: 20,
+                  }}
+                  icon={<UploadOutlined style={{ fontSize: 18 }} />}
+                >
+                  {profile.cv_url ? 'Cap nhat CV (.pdf)' : 'Tải lên CV (.pdf)'}{' '}
+                </Button>
+              </Upload>
+
+              <Space
+                align="center"
+                style={{ marginLeft: 0 }}
+                direction="vertical"
+              >
+                {profile.cv_url && fileList?.length == 0 ? (
+                  <Popconfirm
+                    title="Xoa CV"
+                    description="Ban muon xoa CV nay"
+                    open={open}
+                    onConfirm={confirm}
+                    onCancel={cancel}
+                    okText="Co"
+                    cancelText="Khong"
+                  >
+                    <CVItem
+                      url={profile.cv_url}
+                      open={open}
+                      setOpen={setOpen}
+                    />
+                  </Popconfirm>
+                ) : (
+                  fileList?.length <= 0 && (
+                    <Space direction="vertical" align="center">
+                      <p>Bạn chưa có CV/ Resume để ứng tuyển cùng HiJob!</p>
+                      <img style={{ width: 200 }} src="/cv3 1.png" alt="ảnh" />
+                    </Space>
+                  )
+                )}
+                <Button
+                  type="primary"
+                  onClick={handleUpload}
+                  disabled={fileList?.length === 0}
+                  loading={uploading}
+                  style={{
+                    marginTop: 16,
+                    width: 300,
+                    height: 40,
+                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                      }`,
+                  }}
+                >
+                  {uploading ? 'Dang luu' : 'Luu CV'}
+                </Button>
+              </Space>
+            </Space>
+          </div>
+        </Skeleton>
+
+        <Skeleton className='skeleton-item' loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -444,7 +554,7 @@ const Profile: React.FC = () => {
             </div>
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
-                ? profile?.categories.map(
+                ? profile?.categories?.map(
                   (item: ICategories, index: number) => (
                     <Button key={index} className="btn" type="text">
                       {item.child_category}
@@ -455,7 +565,7 @@ const Profile: React.FC = () => {
             </Space>
           </div>
         </Skeleton>
-        <Skeleton loading={loading} active>
+        <Skeleton className='skeleton-item' loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -476,7 +586,7 @@ const Profile: React.FC = () => {
             </div>
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
-                ? profile?.locations.map((item: any, index: number) => (
+                ? profile?.locations?.map((item: any, index: number) => (
                   <Button key={index} className="btn" type="text">
                     {item?.district}
                   </Button>
@@ -485,7 +595,7 @@ const Profile: React.FC = () => {
             </Space>
           </div>
         </Skeleton>
-        <Skeleton loading={loading} active>
+        <Skeleton className='skeleton-item' loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -522,8 +632,7 @@ const Profile: React.FC = () => {
             </div>
           </div>
         </Skeleton>
-        <Skeleton loading={loading} active>
-
+        <Skeleton className='skeleton-item' loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -597,11 +706,7 @@ const Profile: React.FC = () => {
           />
         </Skeleton>
         <Stack spacing={2} sx={{ width: '100%' }}>
-          <Snackbar
-            open={alert}
-            autoHideDuration={3000}
-            onClose={handleClose}
-          >
+          <Snackbar open={alert} autoHideDuration={3000} onClose={handleClose}>
             <Alert
               onClose={handleClose}
               severity="success"
@@ -611,7 +716,6 @@ const Profile: React.FC = () => {
             </Alert>
           </Snackbar>
         </Stack>
-
       </div>
       <Footer />
     </div>

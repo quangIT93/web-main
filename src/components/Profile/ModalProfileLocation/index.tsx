@@ -24,6 +24,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox'
 
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
+import { message, Space } from 'antd';
 
 // data
 import profileApi from 'api/profileApi'
@@ -169,13 +170,14 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
 
   const handleSubmit = async () => {
     try {
+      if (locationId.length > 3) {
+        message.warning("Chon 3 khu vuc lam viec")
+        return
+      }
       const result = await profileApi.updateProfileLocation(
         // value.map((v) => parseInt(v))
-        locationId
-      )
+        locationId)
       if (result) {
-        console.log('update thành công', result)
-        await dispatch(getProfile() as any)
         setOpenModalLocation(false)
       }
     } catch (error) {

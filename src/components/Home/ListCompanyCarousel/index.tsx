@@ -38,8 +38,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
 
   const [searchParams, setSearchParams] = useSearchParams()
-
-
   const dispatch = useDispatch()
   const { setPostByTheme } = bindActionCreators(
     actionCreators,
@@ -72,9 +70,32 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   const handleClose = () => {
     setOpenBackdrop(false)
   }
-  React.useEffect(() => {
+  const getPostNewestByThemeId = async () => {
+    try {
+      const themeId = searchParams.get(`theme-id`)
+        ? searchParams.get(`theme-id`)
+        : listTheme?.data[0].id
+      console.log("themeId: ", themeId)
+      var result
+      if (themeId) {
+        setOpenBackdrop(true)
+        result = await postApi.getPostByThemeId(Number(themeId), 19, null)
+      }
 
-  }, [])
+      if (result) {
+        setPostByTheme(result)
+        setOpenBackdrop(false)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  React.useEffect(() => {
+    getPostNewestByThemeId()
+    setValue(Number(searchParams.get('theme-id')))
+  }, [searchParams.get('theme-id')])
+
+
   return (
     <Box
       sx={{

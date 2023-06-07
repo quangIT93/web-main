@@ -6,7 +6,8 @@ import profileApi from 'api/profileApi'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../store/reducer/index'
-
+import { bindActionCreators } from 'redux'
+import { actionCreators } from 'store/index'
 
 
 import {
@@ -55,11 +56,15 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   const [email, setEmail] = useState(profile?.email ? profile?.email : '')
   const [fb, setFB] = useState(profile?.facebook ? profile?.facebook : '')
   const [linkIn, setLinkIn] = useState(
-    profile?.facebook ? profile?.facebook : ''
+    profile?.linkedin ? profile?.linkedin : ''
   )
 
   const handleClose = () => setOpenModalContact(false)
   const dispatch = useDispatch()
+  const { setProfileUser } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
 
   const handleSetPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(e.target.value)
@@ -89,7 +94,6 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
       console.log(info)
       const result = await profileApi.updateContact(info)
       if (result) {
-        await dispatch(getProfile() as any)
         setOpenModalContact(false)
       }
     } catch (error) {

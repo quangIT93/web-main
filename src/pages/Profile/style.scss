@@ -38,6 +38,9 @@
       border-radius: 10px;
       margin-top: 30px;
       padding: 15px 20px;
+      h3 {
+        color: #001424;
+      }
 
       .info-detail {
         display: flex;
@@ -66,11 +69,14 @@
         margin-top: 20px;
 
         .btn {
-          border: 0.5px solid #001424;
+          border: 0.5px solid #aaaaaa;
           border-radius: 10px;
           height: 42px;
         }
       }
     }
   }
+}
+.skeleton-item {
+  margin-bottom: 20px;
 }

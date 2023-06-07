@@ -25,12 +25,13 @@ import EditText from '#components/Post/EditText'
 import PostNumberPhone from '#components/Post/PostNumberPhone'
 
 import PostCategoryId from '#components/Post/PostCategoryId'
+import Footer from '../../components/Footer/index'
 
 import './style.scss'
 
 // import data
 import postApi from 'api/postApi'
-import { Form } from 'antd'
+import { Form, message } from 'antd'
 
 const initPost = {
   title: '',
@@ -141,16 +142,16 @@ const Post: React.FC = () => {
   const [typeJob, setTypeJob] = useState(1)
   const [isPeriodDate, setIsPeriodDate] = useState<number>(1)
   const [startTime, setStartTime] = React.useState<any>(
-    new Date(1970, 0, 2, 0, 0).getTime()
+    new Date(1970, 0, 2, 7, 0).getTime()
   )
   const [endTime, setEndTime] = React.useState<any>(
-    new Date(1970, 0, 2, 0, 0).getTime()
+    new Date(1970, 0, 2, 17, 0).getTime()
   )
   const [startDate, setStartDate] = React.useState<any>(
-    new Date(2023, 4, 1, 0, 0).getTime()
+    new Date().getTime()
   )
   const [endDate, setEndDate] = React.useState<any>(
-    new Date(2023, 4, 30, 0, 0).getTime()
+    new Date().getTime()
   )
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0)
   const [isRemotely, setIsRemotely] = React.useState<number>(0)
@@ -166,12 +167,17 @@ const Post: React.FC = () => {
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([])
   const [latitude, SetLatitude] = useState<number>(10.761955)
   const [longitude, SetLongitude] = useState<number>(106.70183)
+
+  const [salaryMin, setSalaryMin] = React.useState<number>(0)
+  const [salaryMax, setSalaryMax] = React.useState<number>(0)
   // modal
   const [openModalPost, setOpenModalPost] = React.useState(false)
 
   // check error
   const [titleError, setTitleError] = useState(false)
   const [companyError, setCompanyError] = useState(false)
+
+  const [messageApi, contextHolder] = message.useMessage();
 
   const {
     openCollapse,
@@ -205,8 +211,8 @@ const Post: React.FC = () => {
     formData.append('endDate', endDate)
     formData.append('startTime', startTime)
     formData.append('endTime', endTime)
-    formData.append('salaryMin', String(salary[0]))
-    formData.append('salaryMax', String(salary[1]))
+    formData.append('salaryMin', String(salaryMin.toString().replace(",", "")))
+    formData.append('salaryMax', String(salaryMax).toString().replace(",", ""))
     formData.append('isWorkingWeekend', String(isWorkingWeekend))
     formData.append('isRemotely', String(isRemotely))
     formData.append('moneyType', String(moneyType))
@@ -239,45 +245,88 @@ const Post: React.FC = () => {
     }
   }
 
+  // valid values form data
+  const validValue = () => {
+
+    if (titleJob == "") {
+      return {
+        message: "Vui lòng nhập tên công việc",
+        checkForm: false
+      }
+    }
+    if (companyName == "") {
+      return {
+        message: "Vui lòng nhập tên công ty",
+        checkForm: false
+      }
+    }
+    if (address == '') {
+      return {
+        message: "Vui lòng nhập dia chi",
+        checkForm: false
+      }
+    }
+    if (wardId == '') {
+      return {
+        message: "Vui lòng chọn tỉnh thành phố",
+        checkForm: false
+      }
+    }
+    if (categoriesId.length <= 0) {
+      return {
+        message: "Vui lòng chọn danh mục nghề nghiệp",
+        checkForm: false
+      }
+    }
+    if (phoneNumber == "" || phoneNumber.length < 10) {
+      return {
+        message: "Số điện thoại sai định dạng",
+        checkForm: false
+      }
+    }
+    if (description == "") {
+      return {
+        message: "Vui lòng nhập mô tả công việc",
+        checkForm: false
+      }
+    }
+
+    return {
+      message: "",
+      checkForm: true
+    }
+  }
+
   // post newPost
   const createNewPost = async (formData: any) => {
-    let toastId = toast.loading('Please wait...')
+    // valid value form data
+    const { message, checkForm } = validValue()
     try {
-      if (Array.from(formData.values()).some((value) => value !== '')) {
-        console.log('cho phep submit')
-        const result = await postApi.createPost(formData)
-        if (result) {
-          console.log('resultresult', result)
-          setOpenModalPost(true)
-          return toast.update(toastId, {
-            render: 'Tạo bài đăng thành công',
-            type: toast.TYPE.SUCCESS,
-            autoClose: 1000,
-            isLoading: false,
-          })
+      if (checkForm) {
+        if (Array.from(formData.values()).some((value) => value !== '')) {
+          console.log('cho phep submit')
+          const result = await postApi.createPost(formData)
+          if (result) {
+            console.log('resultresult', result)
+            setOpenModalPost(true)
+          }
         }
       } else {
-        console.log('Vui long nhap day du thong tin')
+        messageApi.open({
+          type: 'error',
+          content: message,
+        });
       }
     } catch (error) {
       console.log('loixxxxxxxxxxxxxxxxxxxx')
-
       console.error('error', error)
-
-      return toast.update(toastId, {
-        render: 'Tạo bài đăng thất bại',
-        type: toast.TYPE.ERROR,
-        closeButton: true,
-        closeOnClick: true,
-        autoClose: 4000,
-        isLoading: false,
-      })
     }
   }
   console.log('isPeriodDate', isPeriodDate)
   return (
     <div className="post">
       <Navbar {...statePropsCloseSlider} />
+      {contextHolder}
       <div className="post-main">
         <h1>Tạo bài đăng tuyển dụng</h1>
         <form onSubmit={handleSubmit}>
@@ -336,10 +385,14 @@ const Post: React.FC = () => {
             salary={salary}
             setMoneyType={setMoneyType}
             moneyType={moneyType}
+            salaryMin={salaryMin}
+            setSalaryMin={setSalaryMin}
+            salaryMax={salaryMax}
+            setSalaryMax={setSalaryMax}
           />
 
           <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
-          <PostNumberPhone setPhoneNumber={setPhoneNumber} />
+          <PostNumberPhone phone={phoneNumber} setPhoneNumber={setPhoneNumber} />
           <Description setDescription={setDescription} />
           {/* <EditText /> */}
           <button
@@ -351,6 +404,7 @@ const Post: React.FC = () => {
           </button>
         </form>
       </div>
+      <Footer />
       <ModalPost
         openModalPost={openModalPost}
         setOpenModalPost={setOpenModalPost}

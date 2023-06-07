@@ -359,7 +359,7 @@ const Detail: React.FC = () => {
                     </div>
                   </div>
                   <div className="div-detail-row">
-                    <DesktopOutlined style={{ color: '#575757' }} />
+                    <ClockCircleOutlined style={{ color: '#575757' }} />
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Thời gian hết hạn</p>

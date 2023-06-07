@@ -76,6 +76,8 @@ import {
 
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer'
 import { RootState } from '../../store/reducer'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../store/index'
 
 interface propsCloseSlider {
   openCollapse: boolean
@@ -104,9 +106,20 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   // thay đổi width setState
   const [windowWidth, setWindowWidth] = useState(false)
-  const dispatch = useDispatch()
 
-  const dataProfile: any = useSelector((data: RootState) => data.profile)
+  // use redux
+
+  const dispatch = useDispatch()
+  const { setProfileUser } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
+
+  //const dataProfile: any = useSelector((data: RootState) => data.profile)
+
+  const dataProfile = useSelector((state: RootState) => state.profileUser)
+
+  console.log("data", dataProfile)
 
   // handle show tap on screen mobile
   const handleTap = () => {
@@ -186,28 +199,51 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   }, [])
 
   // fecth data profile with accesstoken
-  const fecthDataProfile = async () => {
+  const fecthDataProfileUser = async () => {
+    try {
+      await dispatch(getProfile() as any)
 
-    await dispatch(getProfile() as any)
+      const result = await profileApi.getProfile()
+      if (result) {
+        setProfileUser(result.data)
+      }
+    } catch (error) {
+
+      // error authentication
+      setOpenBackdrop(true)
+      if (!localStorage.getItem('accessToken')) {
+        setOpenBackdrop(false)
+        return
+      }
+      const result = await profileApi.getProfile()
+      if (result) {
+
+        setProfileUser(result.data)
+        setOpenBackdrop(false)
+      }
+      await dispatch(getProfile() as any)
+
+    }
   }
+  // fecth data user when access token changes
+  const fecthDataProfileWhileAccecsToken = async () => {
+    const result = await profileApi.getProfile()
+    if (result) {
+      setProfileUser(result.data)
+      setOpenBackdrop(false)
+    }
+  }
+  useEffect(() => {
+    fecthDataProfileWhileAccecsToken()
+
+
+  }, [localStorage.getItem('accessToken')])
+
 
   useEffect(() => {
-    const fecthDataProfile = async () => {
-      try {
-        await profileApi.getProfile()
-
-      } catch (error) {
-        setOpenBackdrop(true)
-        setTimeout(() => {
-          dispatch(getProfile() as any)
-          setOpenBackdrop(false)
-        }, 1500)
-      }
-    }
-
-    fecthDataProfile()
+    fecthDataProfileUser()
     dispatch(getProfile() as any)
-  }, [localStorage.getItem('accessToken')])
+  }, [])
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -249,22 +285,33 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   // login
   const handleClickLogin = async () => {
-    await fecthDataProfile()
-    if (openInfoUser) {
-      setSpinning(false)
-    } else {
-      setSpinning(true)
-    }
+    try {
 
-    setTimeout(() => {
-      setSpinning(false)
-      if (dataProfile.profile) {
+      if (openInfoUser) {
+        setSpinning(false)
         setOpenInfoUser(!openInfoUser)
       } else {
+        setSpinning(true)
+      }
+
+      const result = await profileApi.getProfile()
+      if (result) {
+        setProfileUser(result.data)
+        setSpinning(false)
+        setOpenInfoUser(!openInfoUser)
+      }
+    } catch (error) {
+      console.log(error)
+      if (!localStorage.getItem("accessToken")) {
+        setSpinning(false)
         setOpenInfoUser(false)
         setOpenModalLogin(true)
+      } else {
+        setSpinning(false)
+        setOpenInfoUser(!openInfoUser)
       }
-    }, 700)
+
+    }
   }
 
   // handle logout
@@ -288,7 +335,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     <button
       className="btn btn__post"
       onClick={() => {
-        if (dataProfile.profile && localStorage.getItem('refreshToken')) {
+        if (dataProfile && localStorage.getItem('refreshToken')) {
           window.open('/post', '_parent')
         } else {
           setOpenModalLogin(true)
@@ -306,13 +353,13 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               style={{ backgroundColor: '#0D99FF' }}
               icon={<UserOutlined />}
               src={
-                dataProfile.profile?.avatar ? dataProfile.profile.avatar : ''
+                dataProfile.avatar ? dataProfile.avatar : ''
               }
             />
           </div>
           <div className="login__center">
-            {localStorage.getItem('accessToken') && dataProfile?.profile ? (
-              <span>{dataProfile.profile.name}</span>
+            {localStorage.getItem('accessToken') && dataProfile ? (
+              <span>{dataProfile.name}</span>
             ) : (
               <span>Đăng nhập</span>
             )}
@@ -331,15 +378,15 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                 icon={<UserOutlined style={{ fontSize: 30 }} />}
                 size={50}
                 src={
-                  dataProfile.profile?.avatar ? dataProfile.profile.avatar : null
+                  dataProfile?.avatar ? dataProfile.avatar : null
                 }
               />
               <div>
                 <h2>
-                  {dataProfile?.profile?.name ? dataProfile.profile.name : ''}
+                  {dataProfile?.name ? dataProfile.name : ''}
                 </h2>
                 <span>
-                  {dataProfile?.profile?.email ? dataProfile?.profile.email : ''}
+                  {dataProfile?.email ? dataProfile?.email : ''}
                 </span>
               </div>
             </Space>
@@ -351,7 +398,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                 </div>
               </Link>
               <Link to="/history">
-                <div className="sub-login_item">
+                <div className="sub-login_item"
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
+                >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
                 </div>

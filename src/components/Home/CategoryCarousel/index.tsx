@@ -74,7 +74,6 @@ const CategoryCarousel: React.FC<PropState> = ({
         setValue(id)
         onChange(name)
       }
-
       const themeId = searchParams.get('theme-id')
       if (themeId) {
         setSearchParams({
@@ -113,9 +112,37 @@ const CategoryCarousel: React.FC<PropState> = ({
       console.error(error)
     }
   }
+
+  const getPostNewestByCategori = async () => {
+    try {
+      setOpenBackdrop(true)
+      const themeId = searchParams.get('categories-id')
+      var result
+      if (themeId == "all") {
+
+        result = await postApi.getPostNewest(null, null, null, 19)
+      } else {
+        result = await postApi.getPostNewest(Number(themeId), null, null, 19)
+      }
+      if (result) {
+        setPostNewest(result)
+        setOpenBackdrop(false)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   React.useEffect(() => {
     getAllParentCategories()
   }, [])
+
+
+  React.useEffect(() => {
+    getPostNewestByCategori()
+    setValue(Number(searchParams.get('categories-id')))
+  }, [searchParams.get('categories-id')])
+
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
   const handleClose = () => {
     setOpenBackdrop(false)
@@ -136,23 +163,23 @@ const CategoryCarousel: React.FC<PropState> = ({
           height > 60 && !windowWidth
             ? `${height + 121}px`
             : hideSlider
-            ? '71px'
-            : '',
+              ? '71px'
+              : '',
         margin:
           height > 60 && !windowWidth
             ? '0 180px'
             : hideSlider
-            ? '0 180px'
-            : '0',
+              ? '0 180px'
+              : '0',
 
         paddingTop:
           height > 60 && !windowWidth
             ? '0px'
             : height > 60 && windowWidth && !hideSlider
-            ? '71px'
-            : hideSlider
-            ? '0'
-            : '',
+              ? '71px'
+              : hideSlider
+                ? '0'
+                : '',
 
         right: 0,
         left: 0,

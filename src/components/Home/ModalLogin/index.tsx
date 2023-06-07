@@ -34,6 +34,7 @@ import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeft
 
 //import api
 import authApi from '../../../api/authApi'
+import profileApi from '../../../api/profileApi'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 
@@ -85,7 +86,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     : ''
 
   const dispatch = useDispatch()
-  const { ActionSignInEmail } = bindActionCreators(actionCreators, dispatch)
+  const { ActionSignInEmail, setProfileUser } = bindActionCreators(actionCreators, dispatch)
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
   })
@@ -255,6 +256,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       )
 
       await dispatch(getProfile() as any)
+      const result = await profileApi.getProfile()
+      if (result) {
+        setProfileUser(result.data)
+      }
+
 
       setOpenModalLogin(false)
       setOpenBackdrop(false)

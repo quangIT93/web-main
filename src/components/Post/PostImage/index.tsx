@@ -140,6 +140,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
                 style={{
                   height: '150px',
                   width: '150px',
+                  objectFit: "cover"
                 }}
               />
               <div
@@ -161,7 +162,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             </div>
           ))}
         </Box>
-        <Typography variant="body1" color="#ccc" p="1rem 0">
+        <Typography variant="body1" color="#ccc" p="1rem 0" sx={{ fontStyle: "italic" }}>
           Có thể tải tối đa 5 ảnh, mỗi ảnh không quá 10MB. (Định dạng cho phép:
           jpeg, jpg, png)
         </Typography>

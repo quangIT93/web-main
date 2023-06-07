@@ -4,6 +4,8 @@ import postNewestReducer from './postReducer/postNewest'
 import provincesReducer from './provincesReducer'
 
 import authReducer from './authReducer/signGmailReducer'
+import profileUser from './profileReducer/profileReducer'
+
 
 import getProfileReducer from './profileReducer/getProfileReducer'
 import putProfileInfoPersonalReducer from './profileReducer/putProfileInfoPersonalReducer'
@@ -13,6 +15,7 @@ const reducers = combineReducers({
   post: postReducer,
   provice: provincesReducer,
   postNewest: postNewestReducer,
+  profileUser: profileUser,
   auth: authReducer,
   profile: getProfileReducer,
   putProfileInfoPersonal: putProfileInfoPersonalReducer,

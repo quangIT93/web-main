@@ -5,21 +5,41 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import FormControlLabel from '@mui/material/FormControlLabel'
-
+import { Input, Space } from 'antd';
 //@ts-ignore
+import 'intl'
+import 'intl/locale-data/jsonp/en'
 import { styleLabel } from '#components/Post/CssPost'
 
 interface PropsSalaryFilterSubnav {
   setSalary: (value: number[]) => void
   salary: number[]
-  setMoneyType: React.Dispatch<React.SetStateAction<number>>
+  setMoneyType: React.Dispatch<React.SetStateAction<any>>
   moneyType: number
+  setSalaryMin: React.Dispatch<React.SetStateAction<any>>
+  salaryMin: number
+  setSalaryMax: React.Dispatch<React.SetStateAction<any>>
+  salaryMax: number
 }
 
+
+
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
-  const { setSalary, salary, setMoneyType, moneyType } = props
+  const { setSalary, salary, setMoneyType, moneyType, setSalaryMax, setSalaryMin, salaryMax, salaryMin } = props
   const VND_TO_USD = 0.000043 // Conversion rate: 1 VND = 0.000043 USD
   const USD_TO_VND = 23155
+
+
+  const handleChangesalaryMin = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSalaryMin(e.target.value.replace(",", ""))
+  }
+  const handleChangesalaryMax = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSalaryMax(e.target.value.replace(",", ""))
+  }
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     let convertedValue: number[]
@@ -118,7 +138,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           />
         </RadioGroup>
       </FormControl>
-      <div
+      {/* <div
         className="rangeSalary"
         style={{
           display: 'flex',
@@ -147,7 +167,24 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
         max={moneyType === 1 ? 100000000 : 4300}
         step={moneyType === 1 ? 1000000 : 100}
         sx={{ width: '80%', margin: '0 auto' }}
-      />
+      /> */}
+      <Space size={50} style={{ marginTop: 10 }}>
+        <Space direction='vertical'>
+          <p>Luong toi thieu</p>
+          <Input style={{ height: 40 }} maxLength={12} placeholder="Luong toi thieu" onChange={handleChangesalaryMin} value={new Intl.NumberFormat('en-US').format(
+            Number(salaryMin.toString().replace(",", "")))} />
+        </Space>
+
+        <Space direction='vertical'>
+          <p>Luong toi da</p>
+          <Input style={{ height: 40 }} maxLength={12} placeholder="Luong toi da" onChange={handleChangesalaryMax} value={new Intl.NumberFormat('en-US').format(
+            Number(salaryMax.toString().replace(",", "")))} />
+        </Space>
+
+
+
+
+      </Space>
     </Box>
   )
 }

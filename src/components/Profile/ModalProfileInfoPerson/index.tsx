@@ -53,11 +53,11 @@ interface IInfoPersonal {
 const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const { openModelPersonalInfo, setOpenModalPersonalInfo, profile } = props
   const [gender, setGender] = React.useState(profile?.gender != null ? profile.gender == 0 ? "Nam" : "Nữ" : null)
-  const [day, setDay] = useState(profile.birthday ? moment(new Date(profile.birthday)) : moment()) // Giá trị mặc định là ngày hiện tại
+  const [day, setDay] = useState(profile?.birthday ? moment(new Date(profile?.birthday)) : moment()) // Giá trị mặc định là ngày hiện tại
   const [dataProvinces, setDataProvinces] = useState<any>()
   const [selectedProvince, setSelectedProvince] = useState<any>(profile?.address ? profile?.address : null)
-  const [name, setName] = useState(profile.name)
-  const [introduction, setIntroduction] = useState(profile.introduction)
+  const [name, setName] = useState(profile?.name)
+  const [introduction, setIntroduction] = useState(profile?.introduction)
 
   const dispatch = useDispatch()
 
@@ -120,19 +120,14 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       console.log(info)
       const result = await profileApi.putProfilePersonal(info)
       if (result) {
-        await dispatch(getProfile() as any)
         setOpenModalPersonalInfo(false)
       }
-
-      console.log(result)
     } catch (error) {
       console.log(error)
     }
 
 
   }
-  console.log('selectedProvince', selectedProvince)
-  console.log('dataProvinces', dataProvinces)
   console.log('profile', profile)
   return (
     <Modal
@@ -221,8 +216,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             value={
               selectedProvince
                 ? dataProvinces?.find(
-                    (province: any) => province.id === selectedProvince.id
-                  )
+                  (province: any) => province.id === selectedProvince.id
+                )
                 : null
             }
             defaultValue={dataProvinces}
