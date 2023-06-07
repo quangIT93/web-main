@@ -1,0 +1,43 @@
+.subs-icon_moreOutlined {
+  display: flex;
+  flex-direction: column;
+  top: 30%;
+  right: 10px;
+  width: 260px;
+  border-radius: 5px;
+  position: relative;
+
+  .sub-icon_moreOutlined {
+    padding: 12px 20px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 8px;
+    color: #000000;
+    border-radius: 5px;
+    background-color: #ffffff;
+
+    :first-child {
+      margin-right: 4px;
+    }
+  }
+
+  .sub-edit_post {
+    &:hover {
+      background-color: #0d99ff;
+      transition: all linear 0.3s;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+
+  .sub-close_post {
+    &:hover {
+      background-color: red;
+      transition: all linear 0.3s;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+}

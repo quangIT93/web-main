@@ -43,6 +43,18 @@ const postApi = {
       `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}`
     return axiosClient.get(URL)
   },
+  updateStatusPost: (id: number, status: number) => {
+    const URL = `/posts/sta`
+    return axiosClient.put(
+      URL,
+      { id, status },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    )
+  },
 }
 
 export default postApi

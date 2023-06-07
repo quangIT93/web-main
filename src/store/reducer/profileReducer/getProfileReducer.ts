@@ -21,7 +21,7 @@ export const getProfile = createAsyncThunk(
 
       if (accessToken) {
         const response = await profileApi.getProfile()
-        console.log(response)
+
         return response.data
       }
     } catch (error) {

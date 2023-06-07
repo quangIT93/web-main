@@ -101,7 +101,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [spinning, setSpinning] = React.useState(false)
   const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
 
-
   const navigate = useNavigate()
 
   // thay đổi width setState
@@ -335,8 +334,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     <button
       className="btn btn__post"
       onClick={() => {
-        if (dataProfile && localStorage.getItem('refreshToken')) {
-          window.open('/post', '_parent')
+        if (dataProfile.profile && localStorage.getItem('refreshToken')) {
+          window.open('/post', '_blank')
         } else {
           setOpenModalLogin(true)
         }

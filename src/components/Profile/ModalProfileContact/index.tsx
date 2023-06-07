@@ -128,7 +128,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             Số điện thoại *
           </Typography>
           <TextField
-            type="text"
+            type="number"
             id="nameProfile"
             name="title"
             value={phone}

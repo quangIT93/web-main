@@ -1,0 +1,18 @@
+###/api/v1/history/recruiter/applications
+GET https://aiworks.vn/api/v1/history/recruiter/23894/applications?limit=10
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NTk0OTk5NiwiZXhwIjoxNjg1OTUzNTk2fQ.L33TDqXdjI_-XuWOg6Dik6syX5qrTm6ipmCWd34HVNk
+
+###Get information and candidates count of all posted jobs history/recruiter/title job
+GET https://aiworks.vn/api/v1/history/recruiter/applications?threshold=0&limit=10
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NjAyMzE5NywiZXhwIjoxNjg2MDI2Nzk3fQ.Z86YtoLf8lEoZNqA-DWnkzsNn7y-sHwbFmq0ecmUTQo
+
+###Get a job application history/recruiter/application
+GET https://aiworks.vn/api/v1/history/recruiter/23894/applications/673
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NjAzNTM3OSwiZXhwIjoxNjg2MDM4OTc5fQ.1xNIsIXimOeym6a-NEPiVoltUphjlVgzS75Oj8Keqb8
+###Get all posted jobs history/recruiter/posts job
+GET https://aiworks.vn/api/v1/history/recruiter/posts?threshold=0&limit=10
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NjAyMzE5NywiZXhwIjoxNjg2MDI2Nzk3fQ.Z86YtoLf8lEoZNqA-DWnkzsNn7y-sHwbFmq0ecmUTQo
