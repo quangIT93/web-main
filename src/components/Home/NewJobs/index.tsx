@@ -84,6 +84,8 @@ const NewJobs: React.FC = () => {
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`)
   }
+
+  console.log('po', postNewest)
   // handle change paginaton
   const handleChange = async (
     event: React.ChangeEvent<unknown>,

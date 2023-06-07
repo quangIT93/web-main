@@ -39,7 +39,7 @@ export const putProfileInfoPersonal = createAsyncThunk(
           address,
           introduction,
         })
-        console.log(response)
+
         return response.data
       }
     } catch (error) {

@@ -170,7 +170,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Họ và tên"
-            // error={titleError} // Đánh dấu lỗi
+            error={!name} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -192,6 +192,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             placeholder="Giới tính"
             size="small"
             sx={{ width: '100%' }}
+            error={!gender} // Đánh dấu lỗi
           >
             <MenuItem value="Nam">Nam</MenuItem>
             <MenuItem value="Nữ">Nữ</MenuItem>
@@ -229,7 +230,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             defaultValue={dataProvinces}
             onChange={handleProvinceChange}
             renderInput={(params) => (
-              <TextField {...params} placeholder="Tỉnh/TP" size="small" />
+              <TextField
+                {...params}
+                placeholder="Tỉnh/TP"
+                size="small"
+                error={!selectedProvince}
+              />
             )}
           />
         </Box>
@@ -252,6 +258,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             // label="Một số đặc điểm nhận diện công ty"
             placeholder="Giới thiệu bản thân với Nhà Tuyển dụng
             Nêu sở trường và mong muốn của bạn liên quan đến công việc để gây chú ý với Nhà Tuyển dụng"
+            error={!introduction} // Đánh dấu lỗi
           />
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>

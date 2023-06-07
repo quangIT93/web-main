@@ -50,5 +50,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxL
   ]
 }
 
+###
+POST https://aiworks.vn/api/v1/application/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NTk0OTk5NiwiZXhwIjoxNjg1OTUzNTk2fQ.L33TDqXdjI_-XuWOg6Dik6syX5qrTm6ipmCWd34HVNk
 
+{
+  "postId": 23886
+}
 
+###
+POST https://aiworks.vn/api/v1/bookmarks
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NTk0OTk5NiwiZXhwIjoxNjg1OTUzNTk2fQ.L33TDqXdjI_-XuWOg6Dik6syX5qrTm6ipmCWd34HVNk
+
+{
+  "postId": 23888
+}
+
+###
+GET https://aiworks.vn/api/v1/history/recruiter/23894/applications?limit=10
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NTk0OTk5NiwiZXhwIjoxNjg1OTUzNTk2fQ.L33TDqXdjI_-XuWOg6Dik6syX5qrTm6ipmCWd34HVNk
+
+###
+GET https://aiworks.vn/api/v1/history/recruiter/23894/applications/673
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NjAyMzE5NywiZXhwIjoxNjg2MDI2Nzk3fQ.Z86YtoLf8lEoZNqA-DWnkzsNn7y-sHwbFmq0ecmUTQo

@@ -96,7 +96,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [openInfoUser, setOpenInfoUser] = React.useState(false)
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
 
-
   const navigate = useNavigate()
 
   // thay đổi width setState
@@ -184,7 +183,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
 
   // fecth data profile with accesstoken
   const fecthDataProfile = async () => {
-
     await dispatch(getProfile() as any)
   }
 
@@ -192,7 +190,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     const fecthDataProfile = async () => {
       try {
         await profileApi.getProfile()
-
       } catch (error) {
         setOpenBackdrop(true)
         setTimeout(() => {
@@ -279,7 +276,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       className="btn btn__post"
       onClick={() => {
         if (dataProfile.profile && localStorage.getItem('refreshToken')) {
-          window.open('/post', '_parent')
+          window.open('/post', '_blank')
         } else {
           setOpenModalLogin(true)
         }
@@ -333,13 +330,13 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             </div>
           </Space>
           <div className="sub-login_items">
-            <Link to="/profile">
+            <Link to="/profile" target="_blank">
               <div className="sub-login_item">
                 <SyncOutlined />
                 <span>Cập nhật thông tin</span>
               </div>
             </Link>
-            <Link to="/history">
+            <Link to="/history" target="_blank">
               <div className="sub-login_item">
                 <ClockCircleOutlined />
                 <span>Lịch sử</span>

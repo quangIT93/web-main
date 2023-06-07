@@ -116,7 +116,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             Số điện thoại *
           </Typography>
           <TextField
-            type="text"
+            type="number"
             id="nameProfile"
             name="title"
             value={phone}
@@ -124,7 +124,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Số điện thoại"
-            // error={titleError} // Đánh dấu lỗi
+            error={!phone || (phone.length !== 10 && phone.length !== 11)} // Đánh dấu lỗi
           />
         </Box>
 
@@ -146,7 +146,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Email"
-            // error={titleError} // Đánh dấu lỗi
+            error={!email} // Đánh dấu lỗi
           />
         </Box>
 
@@ -168,7 +168,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Facebook"
-            // error={titleError} // Đánh dấu lỗi
+            error={!fb} // Đánh dấu lỗi
           />
         </Box>
 
@@ -190,7 +190,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Linkedin"
-            // error={titleError} // Đánh dấu lỗi
+            error={!linkIn} // Đánh dấu lỗi
           />
         </Box>
 
