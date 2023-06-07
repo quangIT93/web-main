@@ -129,6 +129,7 @@ const HistoryPost = () => {
     console.log('index', index)
     setItemLeft(index)
     setActiveChild(`${index}-0`)
+    setShowDetailPosted(false)
   }, [])
 
   return (

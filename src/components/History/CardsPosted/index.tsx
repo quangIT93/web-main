@@ -7,14 +7,20 @@ import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlin
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { Box, Typography, MenuItem, TextField, Button } from '@mui/material'
-import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons'
+import {
+  EnvironmentFilled,
+  ClockCircleFilled,
+  MoreOutlined,
+} from '@ant-design/icons'
 import { useSearchParams } from 'react-router-dom'
 import { Skeleton } from 'antd'
 import { Col, Row } from 'antd'
 
 // import data
 import historyRecruiter from 'api/historyRecruiter'
-import DetailPosted from './DetailPosted'
+import DetailPosted from '../DetailPosted'
+
+import './style.scss'
 
 interface ICardsApplied {
   activeChild: string
@@ -65,7 +71,11 @@ const CardsPosted: React.FC<ICardsApplied> = (props) => {
   }
   console.log('dataPosted', dataPosted)
 
-  const handleShowDetail = (posted: any) => {
+  const handleShowDetail = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    posted: any
+  ) => {
+    event.stopPropagation()
     setShowDetailPosted(true)
     setDetailPosted(posted)
   }
@@ -137,7 +147,7 @@ const CardsPosted: React.FC<ICardsApplied> = (props) => {
                     borderRadius: '5px',
                     margin: '8px 0',
                   }}
-                  onClick={(e) => handleShowDetail(posted)}
+                  onClick={(event) => handleShowDetail(event, posted)}
                   key={i}
                 >
                   <ImageListItem sx={{ flex: 1, display: 'flex' }}>
@@ -244,22 +254,6 @@ const CardsPosted: React.FC<ICardsApplied> = (props) => {
                       </div>
                     </div>
                   </ImageListItem>
-
-                  <Space
-                    style={{ justifyContent: 'space-between' }}
-                    direction="vertical"
-                    align="center"
-                  >
-                    <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} />
-                    <img
-                      className="img-resource-company"
-                      src={posted.resource.company_icon}
-                      alt="anh icon"
-                    />
-                    <p style={{ fontSize: 13, fontStyle: 'italic' }}>
-                      {posted.job_type.job_type_name}
-                    </p>
-                  </Space>
                 </Card>
               ))}
             </Skeleton>

@@ -7,10 +7,15 @@ import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlin
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { Box, Typography, MenuItem, TextField, Button } from '@mui/material'
-import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons'
+import {
+  EnvironmentFilled,
+  ClockCircleFilled,
+  MoreOutlined,
+} from '@ant-design/icons'
+
+import SubIcon from '../CardsPosted/SubIcon'
 
 import { Skeleton } from 'antd'
-import { Col, Row } from 'antd'
 
 // import data
 import historyRecruiter from 'api/historyRecruiter'
@@ -30,7 +35,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
   const { detailPosted } = props
   const [dataCandidates, setDadaCandidates] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
-
+  const [status, setStatus] = useState(detailPosted.status)
   const getAllCandidates = async () => {
     try {
       const result = await historyRecruiter.GetAllApplicationsOfAJob(
@@ -46,7 +51,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
       console.log('error', error)
     }
   }
-
+  console.log('status', status)
   useEffect(() => {
     let isMounted = true
     setLoading(true)
@@ -64,9 +69,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
   const handleClickPost = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     detailPosted: any
-  ) => {
-    console.log('detailPosted', detailPosted)
-  }
+  ) => {}
 
   const handleClickCandidate = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -78,150 +81,198 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
       `/candidate-detail?post-id=${postId}&application_id=${applicationId}`
     )
   }
-
+  console.log('detailPosted', detailPosted)
   return (
     <Box>
       <Card
-        sx={{
-          minWidth: '100%',
-          display: 'flex',
-          padding: '12px',
-          cursor: 'pointer',
-          '&:hover': {
-            background: '#E7E7ED',
-            transition: 'all 0.3s linear',
-          },
-          boxShadow: 'none',
-          borderRadius: '5px',
-          margin: '8px 0',
-        }}
+        sx={{ background: '#D5EDFF', padding: '12px', margin: '8px 0' }}
         onClick={(e) => handleClickPost(e, detailPosted)}
       >
-        <ImageListItem sx={{ flex: 1, display: 'flex' }}>
-          <img
-            src={`${detailPosted?.image}?w=164&h=164&fit=crop&auto=format`}
-            srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-            alt="anh job"
-            loading="lazy"
-            style={{
-              width: '120px',
-              maxWidth: 'auto',
-              height: '100%',
-              maxHeight: 150,
-              borderRadius: 10,
-            }}
-          />
-          <div
-            style={{ padding: '0', marginLeft: '12px' }}
-            className="div-cart-item-post"
-          >
-            <Tooltip placement="top" title="àhakj">
-              <Typography
-                gutterBottom
-                variant="h6"
-                component="div"
-                sx={{
-                  fontSize: '15px',
-                  margin: 0,
-                  fontWeight: 'bold',
-                }}
-              >
-                {detailPosted?.company_name}
-              </Typography>
-            </Tooltip>
-            <Tooltip placement="top" title="j j  j jj">
-              <Typography
-                gutterBottom
-                variant="h1"
-                component="div"
-                sx={{ fontSize: '12px' }}
-              >
-                {detailPosted?.title}
-              </Typography>
-            </Tooltip>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                justifyContent: 'center',
-              }}
-            >
-              <EnvironmentFilled className="icon-cart-item-post" />
-              <Typography variant="body2" color="text.secondary">
-                {detailPosted?.district}, {detailPosted?.province}
-              </Typography>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <ClockCircleFilled className="icon-cart-item-post" />
-              <Typography variant="body2" color="text.secondary">
-                {moment(detailPosted?.start_time).format('HH:mm')} :{' '}
-                {moment(detailPosted?.end_time).format('HH:mm')}
-              </Typography>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <AttachMoneyIcon
-                sx={{
-                  fontSize: 20,
-                  marginLeft: '-2px',
-                  marginRight: '2px',
-                  color: '#575757',
-                }}
-              />
-              <Typography variant="body2" color="text.secondary">
-                {detailPosted?.salary_min} - {detailPosted?.salary_max}/
-                {detailPosted?.salary_type}
-              </Typography>
-            </div>
-            <div
-              style={{
-                marginTop: 5,
-              }}
-            >
-              <p
-                style={{
-                  color: '#AAAAAA',
-                  fontSize: 13,
-                  fontStyle: 'italic',
-                }}
-              >
-                {detailPosted?.created_at_text}
-              </p>
-            </div>
-          </div>
-        </ImageListItem>
+        <Box
+          sx={{
+            minWidth: '100%',
+            display: 'flex',
+            padding: '12px',
 
-        <Space
-          style={{ justifyContent: 'space-between' }}
-          direction="vertical"
-          align="center"
+            boxShadow: 'none',
+            borderRadius: '5px',
+          }}
         >
-          <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} />
-          <img
-            className="img-resource-company"
-            src={detailPosted?.resource.company_icon}
-            alt="anh icon"
-          />
-          <p style={{ fontSize: 13, fontStyle: 'italic' }}>
-            {detailPosted?.job_type.job_type_name}
+          <ImageListItem sx={{ flex: 1, display: 'flex' }}>
+            <img
+              src={`${detailPosted?.image}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt="anh job"
+              loading="lazy"
+              style={{
+                width: '120px',
+                maxWidth: 'auto',
+                height: '100%',
+                maxHeight: 150,
+                borderRadius: 10,
+              }}
+            />
+            <div
+              style={{ padding: '0', marginLeft: '12px' }}
+              className="div-cart-item-post"
+            >
+              <Tooltip placement="top" title="àhakj">
+                <Typography
+                  gutterBottom
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    fontSize: '15px',
+                    margin: 0,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {detailPosted?.company_name}
+                </Typography>
+              </Tooltip>
+              <Tooltip placement="top" title="j j  j jj">
+                <Typography
+                  gutterBottom
+                  variant="h1"
+                  component="div"
+                  sx={{ fontSize: '12px' }}
+                >
+                  {detailPosted?.title}
+                </Typography>
+              </Tooltip>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                }}
+              >
+                <EnvironmentFilled className="icon-cart-item-post" />
+                <Typography variant="body2" color="text.secondary">
+                  {detailPosted?.district}, {detailPosted?.province}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <ClockCircleFilled className="icon-cart-item-post" />
+                <Typography variant="body2" color="text.secondary">
+                  {moment(detailPosted?.start_time).format('HH:mm')} :{' '}
+                  {moment(detailPosted?.end_time).format('HH:mm')}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <AttachMoneyIcon
+                  sx={{
+                    fontSize: 20,
+                    marginLeft: '-2px',
+                    marginRight: '2px',
+                    color: '#575757',
+                  }}
+                />
+                <Typography variant="body2" color="text.secondary">
+                  {detailPosted?.salary_min} - {detailPosted?.salary_max}/
+                  {detailPosted?.salary_type}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  marginTop: 5,
+                }}
+              >
+                <p
+                  style={{
+                    color: '#AAAAAA',
+                    fontSize: 13,
+                    fontStyle: 'italic',
+                  }}
+                >
+                  {detailPosted?.created_at_text}
+                </p>
+              </div>
+            </div>
+          </ImageListItem>
+
+          <Space direction="vertical" align="center">
+            <SubIcon postId={detailPosted.id} setStatus={setStatus} />
+          </Space>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <p
+            style={{
+              color: '#001424',
+              fontSize: 13,
+              fontStyle: 'italic',
+            }}
+          >
+            {' '}
+            Đã đăng vào: {moment(detailPosted?.start_date).format('DD/MM/YY')}
           </p>
-        </Space>
+          <p
+            style={{
+              margin: '0 24px',
+              background: '#0D99FF',
+              padding: '4px 12px',
+              borderRadius: '15px',
+              color: '#ffffff',
+            }}
+          >
+            {dataCandidates?.applications.length} đơn ứng tuyển
+          </p>
+
+          {status === 1 ? (
+            <p
+              style={{
+                background: '#0D99FF',
+                padding: '4px 12px',
+                borderRadius: '15px',
+                color: '#ffffff',
+              }}
+            >
+              Đang tuyển
+            </p>
+          ) : status === 3 ? (
+            <p
+              style={{
+                background: '#aaaaaa',
+                padding: '4px 12px',
+                borderRadius: '15px',
+                color: '#ffffff',
+              }}
+            >
+              Đã đóng
+            </p>
+          ) : (
+            <p
+              style={{
+                background: '#aaaaaa',
+                padding: '4px 12px',
+                borderRadius: '15px',
+                color: '#ffffff',
+              }}
+            >
+              Không chấp nhận
+            </p>
+          )}
+        </Box>
       </Card>
       <Box>
-        <h3 style={{ margin: '12px 0' }}>
-          Những người đã ứng tuyển ({dataCandidates?.applications.length})
-        </h3>
+        <h3 style={{ margin: '12px 0' }}>Danh sách các ứng viên</h3>
         {dataCandidates?.applications.map((candidate: any, index: number) => (
           <Card
             sx={{
