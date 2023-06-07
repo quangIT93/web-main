@@ -334,7 +334,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
     <button
       className="btn btn__post"
       onClick={() => {
-        if (dataProfile.profile && localStorage.getItem('refreshToken')) {
+        if (dataProfile && localStorage.getItem('refreshToken')) {
           window.open('/post', '_blank')
         } else {
           setOpenModalLogin(true)
