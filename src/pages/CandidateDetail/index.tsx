@@ -35,9 +35,11 @@ import Avatar from '@mui/material/Avatar'
 import { Button, Skeleton } from 'antd'
 
 import ItemApply from '../../pages/Profile/components/Item'
-
-import appplicationApi from 'api/appplication'
-
+// import component
+import RejectedApplication from '#components/CandidateDetail/RejectedApplication'
+import SeenApplication from '#components/CandidateDetail/SeenApplication'
+import ApprovedApplication from '#components/CandidateDetail/ApprovedApplication'
+import RecuitApplication from '#components/CandidateDetail/RecuitApplication'
 import './style.scss'
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -84,14 +86,25 @@ const CandidateDetail: React.FC = () => {
   const [dataPost, setDataPost] = useState<any>(null)
   const [dataCandidate, setDataCandidate] = useState<any>(null)
   const [statusApplication, setStatusApplication] = useState<number>(
+    // 1
     dataCandidate?.applicationProfile?.application_status
   )
   console.log('search')
+  // when dataCandidate changed, statusApplication change
+  useEffect(() => {
+    if (dataCandidate) {
+      setStatusApplication(
+        dataCandidate?.applicationProfile?.application_status
+      )
+    }
+  }, [dataCandidate])
   const getPostById = async () => {
     try {
       const postId = parseInt(searchParams.get('post-id') ?? '')
       const candidateId = parseInt(searchParams.get('application_id') ?? '')
       const result = await postApi.getById(postId)
+      console.log(result, 'search')
+
       if (result) {
         setDataPost(result.data)
       }
@@ -109,6 +122,7 @@ const CandidateDetail: React.FC = () => {
   }
   console.log('data', dataPost)
   console.log('candidate', dataCandidate)
+  console.log('candidateStatus', statusApplication)
   useEffect(() => {
     let isMounted = true
     setLoading(true)
@@ -130,32 +144,33 @@ const CandidateDetail: React.FC = () => {
     console.log('click pi')
   }
 
-  const handleClickReject = async () => {
-    console.log('rejected appli')
-    const candidateId = parseInt(searchParams.get('application_id') ?? '')
-    try {
-      const result = await appplicationApi.updateApplication(candidateId, 3)
-      if (result) {
-        setStatusApplication(3)
-      }
-    } catch (error) {
-      console.log(error)
+  const SeenApply = useMemo(() => {
+    if (statusApplication === 1 || statusApplication === 0) {
+      return <SeenApplication setStatusApplication={setStatusApplication} />
     }
-  }
+    return null
+  }, [statusApplication, setStatusApplication])
 
-  const handleClickApproved = async () => {
-    const candidateId = parseInt(searchParams.get('application_id') ?? '')
-    console.log('approved appli')
-    try {
-      const result = await appplicationApi.updateApplication(candidateId, 2)
-      if (result) {
-        console.log('Duyệt hồ sơ', result)
-        setStatusApplication(2)
-      }
-    } catch (error) {
-      console.log(error)
+  const ApprovedApply = useMemo(() => {
+    if (statusApplication === 2) {
+      return <ApprovedApplication setStatusApplication={setStatusApplication} />
     }
-  }
+    return null
+  }, [statusApplication, setStatusApplication])
+
+  const RejectedApply = useMemo(() => {
+    if (statusApplication === 3) {
+      return <RejectedApplication />
+    }
+    return null
+  }, [statusApplication, setStatusApplication])
+
+  const RecruitApply = useMemo(() => {
+    if (statusApplication === 4) {
+      return <RecuitApplication />
+    }
+    return null
+  }, [statusApplication, setStatusApplication])
 
   return (
     <div className="candidate-detail">
@@ -163,17 +178,22 @@ const CandidateDetail: React.FC = () => {
       <Box className="containerCandidate">
         <Skeleton loading={loading} active>
           <Card
-            sx={{ background: '#D5EDFF', padding: '12px', margin: '8px 0' }}
+            sx={{
+              background: '#D5EDFF',
+              padding: '12px',
+              margin: '8px 0',
+              display: 'flex',
+              justifyContent: 'space-between',
+              minWidth: '100%',
+              borderRadius: '5px',
+            }}
             onClick={(e) => handleClickPost(e, dataPost)}
           >
             <Box
               sx={{
-                minWidth: '100%',
                 display: 'flex',
-                padding: '12px',
-
+                flexDirection: 'column',
                 boxShadow: 'none',
-                borderRadius: '5px',
               }}
             >
               <ImageListItem sx={{ flex: 1, display: 'flex' }}>
@@ -280,63 +300,81 @@ const CandidateDetail: React.FC = () => {
                   </div>
                 </div>
               </ImageListItem>
-
-              {/* <Space direction="vertical" align="center">
-                <SubIcon />
-              </Space> */}
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <p
-                style={{
-                  color: '#001424',
-                  fontSize: 13,
-                  fontStyle: 'italic',
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
               >
-                Đã đăng vào: {moment(dataPost?.start_date).format('DD/MM/YY')}
-              </p>
-              {dataPost?.status === 1 ? (
                 <p
                   style={{
-                    background: '#0D99FF',
-                    padding: '4px 12px',
-                    borderRadius: '15px',
-                    color: '#ffffff',
-                    marginLeft: '100px',
+                    color: '#001424',
+                    fontSize: 13,
+                    fontStyle: 'italic',
                   }}
                 >
-                  Đang tuyển
+                  Đã đăng vào: {moment(dataPost?.start_date).format('DD/MM/YY')}
                 </p>
-              ) : dataPost?.status === 3 ? (
-                <p
-                  style={{
-                    background: '#aaaaaa',
-                    padding: '4px 12px',
-                    borderRadius: '15px',
-                    color: '#ffffff',
-                    marginLeft: '100px',
-                  }}
-                >
-                  Đã đóng
-                </p>
-              ) : (
-                <p
-                  style={{
-                    background: '#aaaaaa',
-                    padding: '4px 12px',
-                    borderRadius: '15px',
-                    color: '#ffffff',
-                  }}
-                >
-                  Không chấp nhận
-                </p>
-              )}
+                {dataPost?.status === 1 ? (
+                  <p
+                    style={{
+                      background: '#0D99FF',
+                      padding: '4px 12px',
+                      borderRadius: '15px',
+                      color: '#ffffff',
+                      marginLeft: '100px',
+                    }}
+                  >
+                    Đang tuyển
+                  </p>
+                ) : dataPost?.status === 3 ? (
+                  <p
+                    style={{
+                      background: '#aaaaaa',
+                      padding: '4px 12px',
+                      borderRadius: '15px',
+                      color: '#ffffff',
+                      marginLeft: '100px',
+                    }}
+                  >
+                    Đã đóng
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      background: '#aaaaaa',
+                      padding: '4px 12px',
+                      borderRadius: '15px',
+                      color: '#ffffff',
+                    }}
+                  >
+                    Không chấp nhận
+                  </p>
+                )}
+              </Box>
             </Box>
+            <Space
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignContent: 'space-between',
+                justifyContent: 'space-between',
+              }}
+              direction="vertical"
+              align="center"
+            >
+              {/* <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} /> */}
+              <img
+                className="img-resource-company"
+                src={dataPost?.resource.company_icon}
+                alt="anh icon"
+              />
+              <p
+                style={{ fontSize: 13, fontStyle: 'italic', padding: '4px 0' }}
+              >
+                {dataPost?.job_type.job_type_name}
+              </p>
+            </Space>
           </Card>
           <Box sx={{ marginTop: '36px' }}>
             <div className="div-profile-avatar">
@@ -418,33 +456,10 @@ const CandidateDetail: React.FC = () => {
                         justifyContent: 'center',
                       }}
                     ></Button>
-                    <Button
-                      type="primary"
-                      style={{
-                        backgroundColor: '#BD3131',
-                        padding: '20px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        margin: '0 8px',
-                      }}
-                      onClick={handleClickReject}
-                    >
-                      Từ chối hồ sơ
-                    </Button>
-                    <Button
-                      type="primary"
-                      style={{
-                        backgroundColor: '#5CB365',
-                        padding: '20px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                      onClick={handleClickApproved}
-                    >
-                      Duyệt hồ sơ
-                    </Button>
+                    {ApprovedApply}
+                    {RejectedApply}
+                    {SeenApply}
+                    {RecruitApply}
                   </Box>
                 </Box>
               </div>

@@ -3,6 +3,7 @@ import axiosClient from './axiosClient'
 const appplicationApi = {
   updateApplication: (id: number, status: number) => {
     const URL = `application/update`
+
     return axiosClient.put(
       URL,
       { id, status },

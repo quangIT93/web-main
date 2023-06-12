@@ -24,10 +24,18 @@ interface PropsSalaryFilterSubnav {
 }
 
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
-  const { setSalary, salary, setMoneyType, moneyType, setSalaryMax, setSalaryMin, salaryMax, salaryMin } = props
+  const {
+    setSalary,
+    salary,
+    setMoneyType,
+    moneyType,
+    setSalaryMax,
+    setSalaryMin,
+    salaryMax,
+    salaryMin,
+  } = props
   const VND_TO_USD = 0.000043 // Conversion rate: 1 VND = 0.000043 USD
   const USD_TO_VND = 23155
-
 
   const handleChangesalaryMin = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -60,19 +68,14 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
       convertedValue = (newValue as number[]).map((value) =>
         Math.round(value / USD_TO_VND)
       )
-      console.log('salary', salary)
-      console.log('conv', convertedValue)
-      return setSalary(newValue as number[])
 
-      console.log('newValue', newValue)
+      return setSalary(newValue as number[])
     } else {
       // Convert VND to USD
       convertedValue = (newValue as number[]).map((value) =>
         Math.round(value / 23155)
       )
-      console.log('conv', convertedValue)
-      console.log('newValue', newValue)
-      console.log('salary', salary)
+
       return setSalary(newValue as number[])
     }
   }

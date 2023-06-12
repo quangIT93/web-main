@@ -1,0 +1,22 @@
+.edit-post_address {
+  display: flex;
+  padding: 24px 0;
+  flex-direction: column;
+
+  .edit-post_addressBottom,
+  .edit-post_addressTop {
+    gap: 32px;
+    align-items: flex-end;
+    display: flex;
+    .edit-post_titleAddress {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+  }
+
+  .edit-post_addressBottom {
+    padding-top: 24px;
+  }
+}

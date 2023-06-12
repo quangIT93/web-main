@@ -8,9 +8,8 @@ import { styleLabel } from '../CssPost'
 import Typography from '@mui/material/Typography'
 import moment from 'moment'
 import './style.scss'
-import { SwapRightOutlined } from '@ant-design/icons';
-import { Space } from 'antd';
-
+import { SwapRightOutlined } from '@ant-design/icons'
+import { Space } from 'antd'
 
 interface IPostTime {
   startTime: any
@@ -37,7 +36,11 @@ const PostTime: React.FC<IPostTime> = (props) => {
           'DesktopTimePicker',
           'StaticTimePicker',
         ]}
-        sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
       >
         <div className="wrap-time_left">
           <Typography
@@ -48,7 +51,12 @@ const PostTime: React.FC<IPostTime> = (props) => {
           >
             Giờ làm việc *:
           </Typography>
-          <Space direction='horizontal' wrap={true} size={[100, 8]} style={{ width: "100%" }} >
+          <Space
+            direction="horizontal"
+            wrap={true}
+            size={[100, 8]}
+            style={{ width: '100%' }}
+          >
             <StaticTimePicker
               ampm={false}
               ampmInClock={true}
@@ -57,7 +65,7 @@ const PostTime: React.FC<IPostTime> = (props) => {
               onChange={handleChangeStartTime}
               value={moment(new Date(startTime))}
             />
-            <SwapRightOutlined className='icon-time' style={{ fontSize: 35 }} />
+            <SwapRightOutlined className="icon-time" style={{ fontSize: 35 }} />
             <StaticTimePicker
               ampm={false}
               ampmInClock={true}
@@ -67,7 +75,6 @@ const PostTime: React.FC<IPostTime> = (props) => {
               onChange={handleChangeEndTime}
             />
           </Space>
-
         </div>
       </DemoContainer>
     </LocalizationProvider>

@@ -1,25 +1,27 @@
 import React from 'react'
 
-import { Box } from '@mui/material'
 import { Button } from 'antd'
-const ApprovedApplication = () => {
+
+const RecuitApplication = () => {
   return (
-    <Box>
+    <>
       <Button
         type="primary"
         style={{
-          backgroundColor: '#0d99ff',
+          backgroundColor: '#aaaaaa',
           padding: '20px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           width: '100%',
+          marginLeft: '8px',
+          cursor: 'default',
         }}
       >
-        Hồ sơ đã được duyệt
+        Đã tuyển ứng viên này
       </Button>
-    </Box>
+    </>
   )
 }
 
-export default ApprovedApplication
+export default RecuitApplication

@@ -7,6 +7,8 @@ import { AutocompleteInputChangeReason } from '@mui/material/Autocomplete'
 import { AxiosResponse } from 'axios'
 import categoriesApi from '../../../api/categoriesApi'
 
+import './style.scss'
+
 interface Option {
   id: string
   name: string
@@ -69,7 +71,6 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
     value: string,
     reason: AutocompleteInputChangeReason
   ) => {
-
     const newInputValue = (event?.target as HTMLInputElement)?.id
     if (newInputValue) {
       const updatedOptions = [...options]
@@ -95,7 +96,6 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
     event: React.ChangeEvent<{}>,
     values: Option[]
   ) => {
-
     setSelectedOptions(values)
   }
 
@@ -110,13 +110,14 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
         Danh mục nghề *:
       </Typography>
       <Autocomplete
-        multiple // Cho phép chọn nhiều option
+        open={true}
+        multiple
         options={categories}
         getOptionLabel={(option) => option.name}
         value={selectedOptions}
         onChange={handleOptionChange}
         onInputChange={handleInputChange}
-        style={{ marginTop: '4px' }}
+        // sx={{ marginTop: '4px', maxWidth: '10%' }} // Thay đổi style ở đây
         renderInput={(params) => (
           <TextField
             {...params}

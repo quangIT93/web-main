@@ -18,6 +18,7 @@ const postApi = {
     return axiosClient.get(URL)
   },
 
+
   getPostByThemeId: (
     themeId: number,
     limit: Number,
@@ -58,6 +59,10 @@ const postApi = {
     postId: number,
   ) => {
     const URL = `posts/related/${postId}`
+    return axiosClient.get(URL)
+  },
+  getPostbyId: (params: number) => {
+    const URL = `posts/${params}`
     return axiosClient.get(URL)
   },
 }
