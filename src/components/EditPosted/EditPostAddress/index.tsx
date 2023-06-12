@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Typography from '@mui/material/Typography'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
@@ -101,7 +101,14 @@ const EditPostAddress: React.FC<IEditPostAddress> = (props) => {
     setSelectedProvince(value)
     // setDataWard([])
   }
+
+  useCallback(() => {
+    const handleDistrictChange = (event: any, value: any) => {
+      setSelectedDistrict(value)
+    }
+  }, [])
   console.log('selectedProvince', selectedProvince)
+  console.log('selectDistrict', selectedDistrict)
   console.log('dataProvinces', dataProvinces)
   console.log('province', province)
   return (
@@ -148,8 +155,8 @@ const EditPostAddress: React.FC<IEditPostAddress> = (props) => {
           <Autocomplete
             options={dataDistrict ? dataDistrict : []}
             getOptionLabel={(option: any) => option?.full_name || ''}
-            // value={selectedDistrict || null}
-            // onChange={handleDistrictChange}
+            value={selectedDistrict || null}
+            onChange={handleDistrictChange}
             renderInput={(params: any) => (
               <TextField {...params} placeholder="Quận/Huyện" size="small" />
             )}

@@ -31,7 +31,6 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
     getTypeJob()
   }, [])
 
-
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTypeJob(Number(e.target.value))
   }
@@ -53,10 +52,15 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
         }}
       >
         {jobTypes?.data.map((item: any, i: number) => {
-
-          return <FormControlLabel key={i} value={item.id} control={<Radio />} label={`${item.name}`} />
+          return (
+            <FormControlLabel
+              key={i}
+              value={item.id}
+              control={<Radio />}
+              label={`${item.name}`}
+            />
+          )
         })}
-
       </RadioGroup>
     </FormControl>
   )
