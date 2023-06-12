@@ -11,10 +11,8 @@ import Button from '@mui/material/Button'
 // data
 import profileApi from 'api/profileApi'
 import { useDispatch } from 'react-redux'
-import {
-  getProfile,
-  resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from 'store/index'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -70,15 +68,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   } = props
   // console.log('typeItem', typeItem)
   const dispatch = useDispatch()
-  // const [companyName, setCompanyName] = useState<string>('')
-  // const [startDate, setStartDate] = React.useState<any>(
-  //   new Date(2023, 4, 30, 0, 0).getTime()
-  // )
-  // const [endDate, setEndDate] = React.useState<any>(
-  //   new Date(2023, 4, 30, 0, 0).getTime()
-  // )
-  // const [major, setMajor] = useState<string>('')
-  // const [extraInformation, setExtraInformation] = useState<string>('')
+
+  const { setProfileUser } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
+
   const [experience, setExperience] = useState<IInfoExperience>({
     experienceId,
     companyName: experienceValue.company_name,
@@ -87,9 +82,6 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
     endDate: experienceValue.end_date,
     extraInformation: experienceValue.extra_information,
   })
-
-  console.log('experience', experience)
-  console.log('experienceValue', experienceValue)
 
   const handleClose = () => setOpenModalExperienceUpdate(false)
 
@@ -147,7 +139,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
     try {
       const result = await profileApi.updateProfileExperience(experience)
       if (result) {
-
+        const profile = await profileApi.getProfile()
+        if (profile) {
+          setProfileUser(profile.data)
+        }
         setOpenModalExperienceUpdate(false)
       }
     } catch (error) {

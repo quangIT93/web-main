@@ -1,5 +1,5 @@
 import axiosClient from './axiosClient'
-// api/productApi.js
+
 const appplicationApi = {
   updateApplication: (id: number, status: number) => {
     const URL = `application/update`
@@ -12,7 +12,13 @@ const appplicationApi = {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }
-    ) // Truyền email vào body của request
+    )
+  },
+  applyAplication: (postId: Number) => {
+    const URL = `application/create`
+    return axiosClient.post(
+      URL, { postId }
+    )
   },
 }
 export default appplicationApi

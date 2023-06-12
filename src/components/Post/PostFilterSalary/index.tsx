@@ -5,7 +5,8 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { Input, Space } from 'antd'
+import { Input, Space } from 'antd';
+import Typography from '@mui/material/Typography'
 //@ts-ignore
 import 'intl'
 import 'intl/locale-data/jsonp/en'
@@ -39,12 +40,24 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
   const handleChangesalaryMin = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setSalaryMin(e.target.value.replace(',', ''))
+    const inputValue = e.target.value.replace(",", "")
+    const reg = /[0-9]+$/;
+
+    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+
+      setSalaryMin(inputValue.replace(",", ""))
+    }
+
   }
   const handleChangesalaryMax = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setSalaryMax(e.target.value.replace(',', ''))
+    const inputValue = e.target.value.replace(",", "")
+    const reg = /[0-9]+$/;
+    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+      setSalaryMax(inputValue.replace(",", ""))
+
+    }
   }
 
   const handleChange = (event: Event, newValue: number | number[]) => {
@@ -85,17 +98,12 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
       })
       return setSalary(convertedValue)
 
-      console.log(convertedValue)
-      console.log(salary)
     } else {
       convertedValue = (salary as number[]).map((value) => {
         console.log('value', value * USD_TO_VND)
         return Math.round(value * USD_TO_VND)
       })
       return setSalary(convertedValue)
-
-      console.log(convertedValue)
-      console.log(salary)
     }
   }
   console.log('moneyType', moneyType)
@@ -170,30 +178,30 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
         sx={{ width: '80%', margin: '0 auto' }}
       /> */}
       <Space size={50} style={{ marginTop: 10 }}>
-        <Space direction="vertical">
-          <p>Luong toi thieu</p>
-          <Input
-            style={{ height: 40 }}
-            maxLength={12}
-            placeholder="Luong toi thieu"
-            onChange={handleChangesalaryMin}
-            value={new Intl.NumberFormat('en-US').format(
-              Number(salaryMin.toString().replace(',', ''))
-            )}
-          />
+        <Space direction='vertical'>
+          <Typography
+            sx={styleLabel}
+            variant="body1"
+            component="label"
+            htmlFor="jobTitle"
+          >
+            Lương tối thiểu*:
+          </Typography>
+          <Input style={{ height: 40 }} maxLength={15} placeholder="Luong toi thieu" onChange={handleChangesalaryMin} value={new Intl.NumberFormat('en-US').format(
+            Number(salaryMin.toString().replace(",", "")))} />
         </Space>
 
-        <Space direction="vertical">
-          <p>Luong toi da</p>
-          <Input
-            style={{ height: 40 }}
-            maxLength={12}
-            placeholder="Luong toi da"
-            onChange={handleChangesalaryMax}
-            value={new Intl.NumberFormat('en-US').format(
-              Number(salaryMax.toString().replace(',', ''))
-            )}
-          />
+        <Space direction='vertical'>
+          <Typography
+            sx={styleLabel}
+            variant="body1"
+            component="label"
+            htmlFor="jobTitle"
+          >
+            Lương tối đa *:
+          </Typography>
+          <Input style={{ height: 40 }} maxLength={15} placeholder="Luong toi da" onChange={handleChangesalaryMax} value={new Intl.NumberFormat('en-US').format(
+            Number(salaryMax.toString().replace(",", "")))} />
         </Space>
       </Space>
     </Box>

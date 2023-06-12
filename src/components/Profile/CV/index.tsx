@@ -22,7 +22,7 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen }) => {
     <Space>
       <div style={{ backgroundColor: "#F1F0F0", padding: 10, borderRadius: 10, cursor: "pointer" }}
         onClick={() => {
-          window.open('https://cnm1.s3.ap-southeast-1.amazonaws.com/N23_Poster_KLKTPM.pdf')
+          window.open(`${url}`)
         }}
       >
 

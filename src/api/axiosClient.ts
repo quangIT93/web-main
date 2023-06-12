@@ -10,6 +10,7 @@ const BASE_URL =
     ? process.env.REACT_APP_URL_HIJOB
     : process.env.REACT_APP_URL_HIJOB_RSV
 
+const accessToken = localStorage.getItem('accessToken');
 const axiosClient = axios.create({
   // baseURL: process.env.REACT_APP_API_URL,
   baseURL: BASE_URL,
@@ -17,12 +18,29 @@ const axiosClient = axios.create({
     'content-type': 'application/json',
   },
   paramsSerializer: (params) => queryString.stringify(params),
+
 })
 
-axiosClient.interceptors.request.use(async (config) => {
+// if (accessToken) {
+//   axiosClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+// }
+
+axiosClient.interceptors.request.use(
+  (config) => {
+    if (accessToken) {
+      // axiosClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    } else {
+      delete config.headers.Authorization;
+    }
+    return config;
+  },
+  (error) => {
+    Promise.reject(error.response || error.message);
+  }
   // Handle token here ...
-  return config
-})
+
+)
 
 axiosClient.interceptors.response.use(
   (response) => {
@@ -51,12 +69,13 @@ axiosClient.interceptors.response.use(
           originalRequest.headers[
             'Authorization'
           ] = `Bearer ${response.data.data.accessToken}`;
+          window.location.reload();
 
           return axios(originalRequest);
         }
       }).catch((error) => {
         // localStorage.clear();
-        // window.location.reload();
+        //window.location.reload();
       });
     }
 

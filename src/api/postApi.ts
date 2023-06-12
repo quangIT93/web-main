@@ -18,14 +18,14 @@ const postApi = {
     return axiosClient.get(URL)
   },
 
+
   getPostByThemeId: (
     themeId: number,
     limit: Number,
     threshold: Number | null
   ) => {
-    const URL = `posts/theme?tid=${themeId}&limit=${limit}&threshold=${
-      threshold ? threshold : ''
-    }`
+    const URL = `posts/theme?tid=${themeId}&limit=${limit}&threshold=${threshold ? threshold : ''
+      }`
     return axiosClient.get(URL)
   },
   getPostNewest: (
@@ -38,8 +38,8 @@ const postApi = {
     const URL =
       `posts/newest?` +
       `${pcid ? `pcid=${pcid}` : ``}` +
-      `${ccid ? `&ccid=${ccid}` : ``}` +
-      `${dtid ? `&ccid=${dtid}` : ``}` +
+      `${ccid ? `&${ccid.map((n, index) => `ccid[${index}]=${n}`).join('&')}` : ``}` +
+      `${dtid ? `&${dtid.map((n, index) => `dtid[${index}]=${n}`).join('&')}` : ``}` +
       `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}`
     return axiosClient.get(URL)
   },
@@ -55,9 +55,14 @@ const postApi = {
       }
     )
   },
-
-  getPostbyId: (postId: number) => {
-    const URL = `/posts/${postId}`
+  getPostRelated: (
+    postId: number,
+  ) => {
+    const URL = `posts/related/${postId}`
+    return axiosClient.get(URL)
+  },
+  getPostbyId: (params: number) => {
+    const URL = `posts/${params}`
     return axiosClient.get(URL)
   },
 }

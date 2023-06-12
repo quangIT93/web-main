@@ -88,6 +88,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       }
     } catch (error) {
       console.error(error)
+      setOpenBackdrop(false)
     }
   }
   React.useEffect(() => {
@@ -117,7 +118,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         {listTheme?.data.map((item: ItemTheme, index: number) => (
           <Tab
             key={index}
-
             value={item.id}
             label={
               <div style={{}}>
@@ -134,7 +134,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                 <div className='div-info-themes-item' >
                   <Space size={3} direction={"vertical"} style={{ width: 150 }} >
                     <h5>{item.title}</h5>
-                    <h6>{`${item.number_of_posts} viec lam`}</h6>
+                    <h6>{`${item.number_of_posts} việc làm`}</h6>
                   </Space>
                 </div>
               </div>

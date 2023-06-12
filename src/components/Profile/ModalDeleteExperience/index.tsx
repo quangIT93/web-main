@@ -6,11 +6,9 @@ import profileApi from 'api/profileApi'
 import { useDispatch } from 'react-redux'
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer'
 
-import {
-  getProfile,
-  resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
-import alertProfile from 'store/reducer/profileReducer/alertProfileReducer'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from 'store/index'
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -39,7 +37,13 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
     setOpenModalDeleteExperience,
     experienceId,
   } = props
+
   const dispatch = useDispatch()
+  const { setProfileUser } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
+
 
   const handleClose = () => setOpenModalDeleteExperience(false)
 
@@ -47,8 +51,10 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
     try {
       const result = await profileApi.deleteProfileExperience(experienceId)
       if (result) {
-        console.log('xoá thành công', result)
-        await dispatch(getProfile() as any)
+        const profile = await profileApi.getProfile()
+        if (profile) {
+          setProfileUser(profile.data)
+        }
         await dispatch(setAlert(true))
         setOpenModalDeleteExperience(false)
       }
@@ -84,7 +90,7 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
             onClick={handleSubmitDelete}
             color="error"
           >
-            Delete
+            Xóa
           </Button>
 
           <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>

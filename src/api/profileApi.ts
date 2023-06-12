@@ -37,6 +37,7 @@ interface IInfoEducationUpdate {
 const profileApi = {
   getProfile: () => {
     const URL = `profiles/s`
+
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -71,6 +72,7 @@ const profileApi = {
       },
     })
   },
+
   updateProfileLocation: (locationIds: string[]) => {
     const URL = `profiles/loc`
     return axiosClient.put(

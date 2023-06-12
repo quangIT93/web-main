@@ -222,8 +222,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     console.log('gg', response)
   }
 
-
-
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
   useEffect(() => {
     if (authState.isLoggedIn) {
@@ -260,10 +258,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       if (result) {
         setProfileUser(result.data)
       }
-
-
       setOpenModalLogin(false)
       setOpenBackdrop(false)
+      window.location.reload()
 
     } else {
       console.log('Lỗi xác thực ', authState)
