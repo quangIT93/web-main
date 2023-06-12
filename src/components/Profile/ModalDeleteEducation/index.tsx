@@ -9,12 +9,6 @@ import { RootState } from 'store/reducer'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from 'store/index'
 
-
-import {
-  getProfile,
-  resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
-import alertProfile from 'store/reducer/profileReducer/alertProfileReducer'
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -53,7 +47,10 @@ const ModalDelete: React.FC<IModalProfileDeleteEducation> = (props) => {
       const result = await profileApi.deleteProfileEducation(educationId)
       if (result) {
         console.log('xoá thành công', result)
-
+        const profile = await profileApi.getProfile()
+        if (profile) {
+          setProfileUser(profile.data)
+        }
         await dispatch(setAlert(true))
         setOpenModalDeleteEducation(false)
       }
@@ -89,7 +86,7 @@ const ModalDelete: React.FC<IModalProfileDeleteEducation> = (props) => {
             onClick={handleSubmitDelete}
             color="error"
           >
-            Delete
+            Xóa
           </Button>
 
           <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>

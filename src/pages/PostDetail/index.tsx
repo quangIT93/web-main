@@ -10,6 +10,7 @@ import Footer from '../../components/Footer/index'
 import { useSearchParams } from 'react-router-dom'
 import postApi from '../../api/postApi'
 import locationApi from '../../api/locationApi'
+import appplicationApi from 'api/appplication'
 import ItemSuggest from './components/ItemSuggest'
 // @ts-ignore
 import { Carousel } from 'react-carousel-minimal'
@@ -31,9 +32,11 @@ import {
   DollarOutlined,
   CalendarOutlined,
   CreditCardOutlined,
-  SyncOutlined,
+  CheckCircleFilled,
   DesktopOutlined,
-  SlidersOutlined
+  SlidersOutlined,
+  FormOutlined,
+  ExclamationCircleFilled
 } from '@ant-design/icons'
 
 import './style.scss'
@@ -59,6 +62,9 @@ interface PostNewest {
   start_time?: number
   image?: string
 }
+const ACCESS_TOKEN = localStorage.getItem('accessToken')
+
+
 // page view details post
 const Detail: React.FC = () => {
   const { Search } = Input
@@ -89,6 +95,11 @@ const Detail: React.FC = () => {
   const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(null)
   const [automatic, setAutomatic] = React.useState<Boolean>(false)
 
+  const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển')
+  const [backgroundButton, setBackgroundButton] = React.useState<string>("#0D99FF")
+  const [checkPostUser, setCheckPostUser] = React.useState<Boolean>(false)
+  const [checkApply, setCheckApply] = React.useState<boolean>(false)
+
   const [api, contextHolder] = notification.useNotification()
 
   const statePropsCloseSlider: StatePropsCloseSlider = {
@@ -98,15 +109,16 @@ const Detail: React.FC = () => {
     height,
     setOpenModalLogin,
   }
+  const POST_ID = Number(searchParams.get('post-id'));
 
   const openNotification = () => {
     api.info({
-      message: `Mở hoặc tải app để ứng tuyển công việc`,
+      message: `Ứng tuyển thành công - Chia sẻ công việc ?`,
       description: (
         <Input
           addonBefore="Link"
           addonAfter={
-            <CopyToClipboard text={post?.data.share_link}>
+            <CopyToClipboard text={window.location.href}>
               <Tooltip
                 trigger="click"
                 placement="topRight"
@@ -117,31 +129,73 @@ const Detail: React.FC = () => {
               </Tooltip>
             </CopyToClipboard>
           }
-          defaultValue={post?.data.share_link}
+          defaultValue={window.location.href}
         />
       ),
       placement: 'topRight',
+      icon: <CheckCircleFilled style={{ color: "green" }} />
     })
   }
 
+  // message if user login yet
+  const CheckWasLogin = () => {
+    api.info({
+      message: `Không thể thực hiện thao tác`,
+      description: "Vui lòng đăng nhập để thực hiện thao tác",
+      placement: 'top',
+      icon: <ExclamationCircleFilled style={{ color: "red" }} />
+    })
+  }
+
+
+  // get post by id-post
   const getPostById = async () => {
     try {
-      const result = await postApi.getById(Number(searchParams.get('post-id')))
+      const accountId = localStorage.getItem("accountId")
+
+      const result = await postApi.getById(POST_ID)
       if (result) {
-        setPost(result)
+
         console.log("post detail", result)
       }
       const list = result?.data.categories.map(
-        (category: any) => category.child_category_id
+        (category: any) => Number(category.child_category_id)
       )
       console.log('child', list)
-      const postNewest = await postApi.getPostNewest(
-        result?.data.categories[0].parent_category_id,
-        list,
-        null,
-        6
+
+      // check  application status
+      if (result.data.account_id === accountId) {
+        setTextButton("Chỉnh sửa bài tuyển dụng")
+        setBackgroundButton("black")
+        setCheckPostUser(true)
+      } else if (result.data.status == 3) {
+        setTextButton("Bài đăng đã đóng")
+        setBackgroundButton("gray")
+        result.data.applied = true
+      } else
+        if (result.data.application_status == 1) {
+          setTextButton("Đã ứng tuyển")
+          setBackgroundButton("gray")
+        } else if (result.data.application_status == 2) {
+          setTextButton("Hồ sơ được phê duyệt")
+          setBackgroundButton("#0D99FF")
+        } else if (result.data.application_status == 3) {
+          setTextButton("Hồ sơ bị từ chối")
+          setBackgroundButton("#BD3131")
+        } else if (result.data.application_status == 4) {
+          setTextButton("Hồ sơ được chấp nhận")
+          setBackgroundButton("#5CB265")
+        }
+      setPost(result)
+      setCheckApply(result.data.applied)
+
+      // get post related by id post
+      const postNewest = await postApi.getPostRelated(
+        POST_ID
       )
+      //setPost related
       setPostNewest(postNewest)
+
     } catch (error) {
       console.error(error)
     }
@@ -160,7 +214,6 @@ const Detail: React.FC = () => {
     }
 
     window.addEventListener('resize', handleWindowResize)
-
     return () => {
       window.removeEventListener('resize', handleWindowResize)
     }
@@ -187,15 +240,31 @@ const Detail: React.FC = () => {
     },
   ]
 
+  // handle click button
   const onclick = async () => {
     //  window.open(`${post?.data.share_link}`)
-    //test redux
-    // const result = await postApi.getPostByThemeId(20, 10, 0)
-    // const listLo = await locationApi.getAllProvines("vi")
-    // setPostByTheme(result)
-    // setProvince(listLo)
-    openNotification()
-    //console.log("e")
+
+    try {
+      if (!ACCESS_TOKEN) {
+        CheckWasLogin()
+        return
+      }
+      // navigate to edit post
+      if (checkPostUser) {
+        window.open('#')
+        return
+      }
+      const result = await appplicationApi.applyAplication(POST_ID)
+
+      if (result) {
+        openNotification()
+        setTextButton("Đã ứng tuyển")
+        setBackgroundButton("gray")
+        setCheckApply(true)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const captionStyle = {
@@ -209,7 +278,7 @@ const Detail: React.FC = () => {
 
   setTimeout(() => {
     setAutomatic(true)
-  }, 500)
+  }, 700)
   return (
     <>
       {automatic && (
@@ -374,8 +443,16 @@ const Detail: React.FC = () => {
                       onClick={onclick}
                       className="btn-apply"
                       type={'primary'}
+                      disabled={checkApply}
+                      style={{
+                        fontSize: 16,
+                        backgroundColor: `${backgroundButton}`,
+                        color: "white",
+                        fontWeight: "normal"
+                      }}
+                      icon={checkPostUser ? <FormOutlined /> : null}
                     >
-                      Ứng tuyển
+                      {textButton}
                     </Button>
                   </>
                 </div>
@@ -397,8 +474,16 @@ const Detail: React.FC = () => {
                   onClick={onclick}
                   className="btn-apply btn-for-mo"
                   type={'primary'}
+                  disabled={checkApply}
+                  style={{
+                    fontSize: 16,
+                    backgroundColor: `${backgroundButton}`,
+                    color: "white",
+                    fontWeight: "normal"
+                  }}
+                  icon={checkPostUser ? <FormOutlined /> : null}
                 >
-                  Ứng tuyển
+                  {textButton}
                 </Button>
               </div>
               <div className="div-suggest">

@@ -278,6 +278,12 @@ const Post: React.FC = () => {
         checkForm: false
       }
     }
+    if (salaryMax == 0 || salaryMin == 0) {
+      return {
+        message: "Vui lòng nhập mức lương",
+        checkForm: false
+      }
+    }
     if (phoneNumber == "" || phoneNumber.length < 10) {
       return {
         message: "Số điện thoại sai định dạng",
@@ -341,12 +347,10 @@ const Post: React.FC = () => {
             setAddress={setAddress}
             address={address}
           />
-
           <PostImage
             selectedFiles={selectedFiles}
             setSelectedFiles={setSelectedFiles}
           />
-
           <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob} />
           <PostPeriodDate
             setIsPeriodDate={setIsPeriodDate}

@@ -480,7 +480,7 @@ const Profile: React.FC = () => {
                   }}
                   icon={<UploadOutlined style={{ fontSize: 18 }} />}
                 >
-                  {profile.cv_url ? 'Cap nhat CV (.pdf)' : 'Tải lên CV (.pdf)'}{' '}
+                  {profile.cv_url ? 'Cập nhật CV (.pdf)' : 'Tải lên CV (.pdf)'}{' '}
                 </Button>
               </Upload>
 
@@ -491,13 +491,13 @@ const Profile: React.FC = () => {
               >
                 {profile.cv_url && fileList?.length == 0 ? (
                   <Popconfirm
-                    title="Xoa CV"
-                    description="Ban muon xoa CV nay"
+                    title="Xóa CV"
+                    description="Bạn có muốn xóa CV này"
                     open={open}
                     onConfirm={confirm}
                     onCancel={cancel}
-                    okText="Co"
-                    cancelText="Khong"
+                    okText="Có"
+                    cancelText="Không"
                   >
                     <CVItem
                       url={profile.cv_url}
@@ -526,7 +526,7 @@ const Profile: React.FC = () => {
                       }`,
                   }}
                 >
-                  {uploading ? 'Dang luu' : 'Luu CV'}
+                  {uploading ? 'Đang Lưu' : 'Lưu CV'}
                 </Button>
               </Space>
             </Space>
@@ -627,7 +627,7 @@ const Profile: React.FC = () => {
               >
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Thêm</p>
               </Space>
             </div>
           </div>
@@ -664,7 +664,7 @@ const Profile: React.FC = () => {
               >
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Them</p>
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>Thêm</p>
               </Space>
             </div>
           </div>

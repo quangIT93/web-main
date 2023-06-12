@@ -107,7 +107,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [windowWidth, setWindowWidth] = useState(false)
 
   // use redux
-
   const dispatch = useDispatch()
   const { setProfileUser } = bindActionCreators(
     actionCreators,
@@ -117,9 +116,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   //const dataProfile: any = useSelector((data: RootState) => data.profile)
 
   const dataProfile = useSelector((state: RootState) => state.profileUser)
-
-  console.log("data", dataProfile)
-
   // handle show tap on screen mobile
   const handleTap = () => {
     setshowTap(!showTap)
@@ -190,9 +186,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         // setOpenInfoUser(!openInfoUser)
       }
     }
-
     window.addEventListener('click', handleClickCloseTabLocation)
-
     return () =>
       window.removeEventListener('click', handleClickCloseTabLocation)
   }, [])
@@ -208,19 +202,20 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       }
     } catch (error) {
 
+      setOpenBackdrop(false)
       // error authentication
-      setOpenBackdrop(true)
-      if (!localStorage.getItem('accessToken')) {
-        setOpenBackdrop(false)
-        return
-      }
-      const result = await profileApi.getProfile()
-      if (result) {
+      // setOpenBackdrop(true)
+      // if (!localStorage.getItem('accessToken')) {
+      //   setOpenBackdrop(false)
+      //   return
+      // }
+      // const result = await profileApi.getProfile()
+      // if (result) {
 
-        setProfileUser(result.data)
-        setOpenBackdrop(false)
-      }
-      await dispatch(getProfile() as any)
+      //   setProfileUser(result.data)
+      //   setOpenBackdrop(false)
+      // }
+      // await dispatch(getProfile() as any)
 
     }
   }
@@ -232,11 +227,9 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       setOpenBackdrop(false)
     }
   }
-  useEffect(() => {
-    fecthDataProfileWhileAccecsToken()
-
-
-  }, [localStorage.getItem('accessToken')])
+  // useEffect(() => {
+  //   fecthDataProfileWhileAccecsToken()
+  // }, [localStorage.getItem('accessToken')])
 
 
   useEffect(() => {
@@ -285,31 +278,36 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   // login
   const handleClickLogin = async () => {
     try {
-
       if (openInfoUser) {
         setSpinning(false)
         setOpenInfoUser(!openInfoUser)
       } else {
         setSpinning(true)
       }
-
-      const result = await profileApi.getProfile()
+      var result = null
+      if (localStorage.getItem("accessToken")) {
+        result = await profileApi.getProfile()
+      }
       if (result) {
+        console.log(result)
         setProfileUser(result.data)
         setSpinning(false)
         setOpenInfoUser(!openInfoUser)
+      } else {
+        setOpenModalLogin(true)
+        setSpinning(false)
       }
     } catch (error) {
       console.log(error)
-      if (!localStorage.getItem("accessToken")) {
-        setSpinning(false)
-        setOpenInfoUser(false)
-        setOpenModalLogin(true)
-      } else {
-        setSpinning(false)
-        setOpenInfoUser(!openInfoUser)
-      }
-
+      // if (!localStorage.getItem("accessToken")) {
+      //   setSpinning(false)
+      //   setOpenInfoUser(false)
+      //   setOpenModalLogin(true)
+      // } else {
+      //   setSpinning(false)
+      //   setOpenInfoUser(!openInfoUser)
+      // }
+      setSpinning(false)
     }
   }
 
@@ -320,10 +318,12 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       const refreshToken = localStorage.getItem('refreshToken')
 
       if (refreshToken) {
-        localStorage.clear()
 
-        window.location.replace('/home')
-        await authApi.signOut(refreshToken)
+        const result = await authApi.signOut(refreshToken)
+        if (result) {
+          window.location.replace('/home')
+          localStorage.clear()
+        }
       }
     } catch (error) {
       console.log(error)

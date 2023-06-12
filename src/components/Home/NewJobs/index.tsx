@@ -12,6 +12,7 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
+import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 
 // import redux
@@ -21,6 +22,7 @@ import { actionCreators } from '../../../store/index'
 import { RootState } from '../../../store/reducer'
 // import api
 import postApi from 'api/postApi'
+import bookMarkApi from 'api/bookMarkApi'
 
 import moment from 'moment'
 import 'intl'
@@ -64,6 +66,7 @@ interface PostNewest {
     job_type_name: string
   }
   created_at_text: string
+  bookmarked: boolean
 }
 const NewJobs: React.FC = () => {
   const [page, setPage] = React.useState(1)
@@ -80,6 +83,9 @@ const NewJobs: React.FC = () => {
     actionCreators,
     dispatch
   )
+
+  const [checkBookMark, setCheckBookMark] = React.useState(true)
+
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`)
@@ -107,6 +113,7 @@ const NewJobs: React.FC = () => {
       9,
       thersholdId
     )
+    console.log("newest: ", result)
 
     if (result) {
       setPostNewestMore(result)
@@ -122,17 +129,20 @@ const NewJobs: React.FC = () => {
     try {
       setOpenBackdrop(true)
       const result = await postApi.getPostNewest(null, null, null, 19)
+      console.log("result: ", result)
       if (result) {
         setPostNewest(result)
+        console.log(result)
 
         // set loading
         setOpenBackdrop(false)
-        console.log(result)
       }
     } catch (error) {
+      setOpenBackdrop(false)
       console.log(error)
     }
   }
+
   React.useEffect(() => {
     getPostNewest()
     // delete param when back to page
@@ -161,135 +171,160 @@ const NewJobs: React.FC = () => {
                     },
                     boxShadow: 'none',
                     borderRadius: '5px',
-                  }}
-                  onClick={(e) => {
-                    handleClickItem(e, item.id)
+                    justifyContent: 'space-between'
                   }}
                 >
-                  <ImageListItem
-                    key={item.image}
-                    sx={{ flex: 1, display: 'flex' }}
-                  >
-                    <img
-                      src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
-                      srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      alt={item.title}
-                      loading="lazy"
-                      style={{
-                        width: '120px',
-                        maxWidth: 'auto',
-                        height: '100%',
-                        maxHeight: 150,
-                        borderRadius: 10,
-                      }}
-                    />
-                    <div
-                      style={{ padding: '0', marginLeft: '12px' }}
-                      className="div-cart-item-post"
+                  <div onClick={(e) => {
+                    handleClickItem(e, item.id)
+                  }} >
+                    <ImageListItem
+                      key={item.image}
+                      sx={{ flex: 1, display: 'flex' }}
                     >
-                      {' '}
-                      <Tooltip placement="top" title={item.title}>
-                        <Typography
-                          gutterBottom
-                          variant="h6"
-                          component="div"
-                          sx={{
-                            fontSize: '15px',
-                            margin: 0,
-                            fontWeight: 'bold',
-                          }}
-                        >
-                          {item?.title.length > 37
-                            ? `${item.title.substring(0, 35)} ...`
-                            : item.title}
-                        </Typography>
-                      </Tooltip>
-                      <Tooltip placement="top" title={item.company_name}>
-                        <Typography
-                          gutterBottom
-                          variant="h1"
-                          component="div"
-                          sx={{ fontSize: '12px' }}
-                        >
-                          {item?.company_name.length > 37
-                            ? `${item.company_name.substring(0, 37)} ...`
-                            : item.company_name}
-                        </Typography>
-                      </Tooltip>
-                      <div
+                      <img
+                        src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={item.title}
+                        loading="lazy"
                         style={{
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          justifyContent: 'center',
+                          width: '120px',
+                          maxWidth: 'auto',
+                          height: '100%',
+                          maxHeight: 150,
+                          borderRadius: 10,
+                          minHeight: 120
                         }}
-                      >
-                        <EnvironmentFilled className="icon-cart-item-post" />
-                        <Typography variant="body2" color="text.secondary">
-                          {`${item.district}, ${item.province}`}
-                        </Typography>
-                      </div>
+                      />
                       <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
+                        style={{ padding: '0', marginLeft: '12px' }}
+                        className="div-cart-item-post"
                       >
-                        <ClockCircleFilled className="icon-cart-item-post" />
-                        <Typography variant="body2" color="text.secondary">
-                          {moment(new Date(item.start_time)).format('HH:mm')} -{' '}
-                          {moment(new Date(item.end_time)).format('HH:mm')}
-                        </Typography>
-                      </div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <AttachMoneyIcon
-                          sx={{
-                            fontSize: 20,
-                            marginLeft: '-2px',
-                            marginRight: '2px',
-                            color: '#575757',
-                          }}
-                        />
-                        <Typography variant="body2" color="text.secondary">
-                          {new Intl.NumberFormat('en-US').format(
-                            item.salary_min
-                          )}{' '}
-                          -{' '}
-                          {new Intl.NumberFormat('en-US').format(
-                            item.salary_max
-                          ) + `/${item.salary_type}`}
-                        </Typography>
-                      </div>
-                      <div
-                        style={{
-                          marginTop: 5,
-                        }}
-                      >
-                        <p
+                        {' '}
+                        <Tooltip placement="top" title={item.title}>
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            component="div"
+                            sx={{
+                              fontSize: '15px',
+                              margin: 0,
+                              fontWeight: 'bold',
+                            }}
+                          >
+                            {item?.title.length > 43
+                              ? `${item.title.substring(0, 43)} ...`
+                              : item.title}
+                          </Typography>
+                        </Tooltip>
+                        <Tooltip placement="top" title={item.company_name}>
+                          <Typography
+                            gutterBottom
+                            variant="h1"
+                            component="div"
+                            sx={{ fontSize: '12px' }}
+                          >
+                            {item?.company_name.length > 42
+                              ? `${item.company_name.substring(0, 42)} ...`
+                              : item.company_name}
+                          </Typography>
+                        </Tooltip>
+                        <div
                           style={{
-                            color: '#AAAAAA',
-                            fontSize: 13,
-                            fontStyle: 'italic',
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            justifyContent: 'center',
                           }}
                         >
-                          {item.created_at_text}
-                        </p>
+                          <EnvironmentFilled className="icon-cart-item-post" />
+                          <Typography variant="body2" color="text.secondary">
+                            {`${item.district}, ${item.province}`}
+                          </Typography>
+                        </div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <ClockCircleFilled className="icon-cart-item-post" />
+                          <Typography variant="body2" color="text.secondary">
+                            {moment(new Date(item.start_time)).format('HH:mm')} -{' '}
+                            {moment(new Date(item.end_time)).format('HH:mm')}
+                          </Typography>
+                        </div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <AttachMoneyIcon
+                            sx={{
+                              fontSize: 20,
+                              marginLeft: '-2px',
+                              marginRight: '2px',
+                              color: '#575757',
+                            }}
+                          />
+                          <Typography variant="body2" color="text.secondary">
+                            {new Intl.NumberFormat('en-US').format(
+                              item.salary_min
+                            )}{' '}
+                            -{' '}
+                            {new Intl.NumberFormat('en-US').format(
+                              item.salary_max
+                            ) + `/${item.salary_type}`}
+                          </Typography>
+                        </div>
+                        <div
+                          style={{
+                            marginTop: 5,
+                          }}
+                        >
+                          <p
+                            style={{
+                              color: '#AAAAAA',
+                              fontSize: 13,
+                              fontStyle: 'italic',
+                            }}
+                          >
+                            {item.created_at_text}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </ImageListItem>
+                    </ImageListItem>
+                  </div>
 
                   <Space
-                    style={{ justifyContent: 'space-between' }}
+                    style={{ justifyContent: 'space-between', width: 100 }}
                     direction="vertical"
                     align="center"
                   >
-                    <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} />
+                    <div onClick={async (e) => {
+                      try {
+                        if (item.bookmarked) {
+                          const result = await bookMarkApi.deleteBookMark(item.id)
+                          item.bookmarked = false
+                          if (result) {
+                            setCheckBookMark(!checkBookMark)
+                          }
+                        } else {
+                          const result = await bookMarkApi.createBookMark(item.id)
+                          item.bookmarked = true
+                          if (result) {
+                            setCheckBookMark(!checkBookMark)
+                          }
+                        }
+                      } catch (error) {
+                        console.log(error)
+                      }
+                    }}>
+                      {item.bookmarked ?
+                        <TurnedInIcon sx={{ top: 0, right: 0, color: "#0d99ff" }} /> :
+                        <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0, color: "" }} />}
+                    </div>
                     <img
                       className="img-resource-company"
                       src={item.resource.company_icon}
@@ -313,7 +348,7 @@ const NewJobs: React.FC = () => {
                 handleChange(e, page)
               }}
             >
-              <p>Xem them</p>
+              <p>Xem thêm</p>
               <CaretDownFilled />
             </Space>
           </Stack>

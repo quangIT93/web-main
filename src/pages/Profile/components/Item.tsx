@@ -84,9 +84,9 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
               {`${moment(item?.end_date).year()}`}
             </p>
 
-            <p style={{ whiteSpace: 'pre-wrap', marginTop: '15px' }}>
+            <div style={{ whiteSpace: 'pre-wrap', marginTop: '15px', color: "#575757" }}>
               {item?.extra_information}
-            </p>
+            </div>
           </Space>
         </div>
       </div>
@@ -99,7 +99,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           }
           style={{ cursor: 'pointer', marginRight: '16px' }}
         >
-          <p style={{ color: 'red', fontSize: '14px' }}>Xoá</p>
+          <p style={{ color: 'gray', fontSize: '14px' }}>Xoá</p>
         </Space>
 
         <Space

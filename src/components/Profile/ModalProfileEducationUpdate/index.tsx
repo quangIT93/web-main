@@ -11,10 +11,9 @@ import Button from '@mui/material/Button'
 // data
 import profileApi from 'api/profileApi'
 import { useDispatch } from 'react-redux'
-import {
-  getProfile,
-  resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
+
+import { bindActionCreators } from 'redux'
+import { actionCreators } from 'store/index'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -72,15 +71,11 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   } = props
   // console.log('typeItem', typeItem)
   const dispatch = useDispatch()
-  // const [companyName, setCompanyName] = useState<string>('')
-  // const [startDate, setStartDate] = React.useState<any>(
-  //   new Date(2023, 4, 30, 0, 0).getTime()
-  // )
-  // const [endDate, setEndDate] = React.useState<any>(
-  //   new Date(2023, 4, 30, 0, 0).getTime()
-  // )
-  // const [major, setMajor] = useState<string>('')
-  // const [extraInformation, setExtraInformation] = useState<string>('')
+  const { setProfileUser } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
+
   const [education, setEducation] = useState<IInfoEducation>({
     educationId: educationId,
     companyName: educationValue.company_name,
@@ -89,7 +84,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
     endDate: educationValue.end_date,
     extraInformation: educationValue.extra_information,
   })
-  console.log('educationValue', educationValue)
+
   const handleClose = () => setOpenModalEducationUpdate(false)
 
   // school
@@ -138,8 +133,11 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
     try {
       const result = await profileApi.updateProfileEducation(education)
       if (result) {
-        console.log('update thành công', result)
 
+        const profile = await profileApi.getProfile()
+        if (profile) {
+          setProfileUser(profile.data)
+        }
         setOpenModalEducationUpdate(false)
       }
     } catch (error) {
