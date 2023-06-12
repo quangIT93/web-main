@@ -431,17 +431,16 @@
           margin-top: 24px;
           .sub-login_item {
             cursor: pointer;
-            padding: 5px;
+            padding: 16px;
             &:hover {
-              padding: 10px;
               background-color: #ccc;
               border-radius: 10px;
-
               font-weight: bold;
+              transition: 0.3s linear all;
             }
             display: flex;
             align-items: center;
-            margin-bottom: 12px;
+            // margin-bottom: 12px;
             span {
               padding-left: 8px;
             }

@@ -5,7 +5,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { Input, Space } from 'antd';
+import { Input, Space } from 'antd'
 //@ts-ignore
 import 'intl'
 import 'intl/locale-data/jsonp/en'
@@ -22,23 +22,29 @@ interface PropsSalaryFilterSubnav {
   salaryMax: number
 }
 
-
-
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
-  const { setSalary, salary, setMoneyType, moneyType, setSalaryMax, setSalaryMin, salaryMax, salaryMin } = props
+  const {
+    setSalary,
+    salary,
+    setMoneyType,
+    moneyType,
+    setSalaryMax,
+    setSalaryMin,
+    salaryMax,
+    salaryMin,
+  } = props
   const VND_TO_USD = 0.000043 // Conversion rate: 1 VND = 0.000043 USD
   const USD_TO_VND = 23155
-
 
   const handleChangesalaryMin = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setSalaryMin(e.target.value.replace(",", ""))
+    setSalaryMin(e.target.value.replace(',', ''))
   }
   const handleChangesalaryMax = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setSalaryMax(e.target.value.replace(",", ""))
+    setSalaryMax(e.target.value.replace(',', ''))
   }
 
   const handleChange = (event: Event, newValue: number | number[]) => {
@@ -49,19 +55,14 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
       convertedValue = (newValue as number[]).map((value) =>
         Math.round(value / USD_TO_VND)
       )
-      console.log('salary', salary)
-      console.log('conv', convertedValue)
-      return setSalary(newValue as number[])
 
-      console.log('newValue', newValue)
+      return setSalary(newValue as number[])
     } else {
       // Convert VND to USD
       convertedValue = (newValue as number[]).map((value) =>
         Math.round(value / 23155)
       )
-      console.log('conv', convertedValue)
-      console.log('newValue', newValue)
-      console.log('salary', salary)
+
       return setSalary(newValue as number[])
     }
   }
@@ -169,21 +170,31 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
         sx={{ width: '80%', margin: '0 auto' }}
       /> */}
       <Space size={50} style={{ marginTop: 10 }}>
-        <Space direction='vertical'>
+        <Space direction="vertical">
           <p>Luong toi thieu</p>
-          <Input style={{ height: 40 }} maxLength={12} placeholder="Luong toi thieu" onChange={handleChangesalaryMin} value={new Intl.NumberFormat('en-US').format(
-            Number(salaryMin.toString().replace(",", "")))} />
+          <Input
+            style={{ height: 40 }}
+            maxLength={12}
+            placeholder="Luong toi thieu"
+            onChange={handleChangesalaryMin}
+            value={new Intl.NumberFormat('en-US').format(
+              Number(salaryMin.toString().replace(',', ''))
+            )}
+          />
         </Space>
 
-        <Space direction='vertical'>
+        <Space direction="vertical">
           <p>Luong toi da</p>
-          <Input style={{ height: 40 }} maxLength={12} placeholder="Luong toi da" onChange={handleChangesalaryMax} value={new Intl.NumberFormat('en-US').format(
-            Number(salaryMax.toString().replace(",", "")))} />
+          <Input
+            style={{ height: 40 }}
+            maxLength={12}
+            placeholder="Luong toi da"
+            onChange={handleChangesalaryMax}
+            value={new Intl.NumberFormat('en-US').format(
+              Number(salaryMax.toString().replace(',', ''))
+            )}
+          />
         </Space>
-
-
-
-
       </Space>
     </Box>
   )

@@ -120,7 +120,6 @@ const Profile: React.FC = () => {
   const [checkRemove, setCheckRemove] = useState(2)
   const [fileList, setFileList] = useState<UploadFile[]>([])
 
-
   const fecthDataProfile = async () => {
     try {
       const result = await profileApi.getProfile()
@@ -133,7 +132,7 @@ const Profile: React.FC = () => {
     }
   }
 
-  // fecth data 
+  // fecth data
   useEffect(() => {
     // Gọi action để lấy thông tin profile
     setLoading(true)
@@ -148,8 +147,13 @@ const Profile: React.FC = () => {
   useEffect(() => {
     // Gọi action để lấy thông tin profile
     fecthDataProfile()
-  }, [openModelPersonalInfo, openModalContact, openModalCareerObjective,
-    openModalLocation, openModalEducationCreate, openModalExperienceCreate
+  }, [
+    openModelPersonalInfo,
+    openModalContact,
+    openModalCareerObjective,
+    openModalLocation,
+    openModalEducationCreate,
+    openModalExperienceCreate,
   ])
 
   const handleAvatarClick = () => {
@@ -203,7 +207,7 @@ const Profile: React.FC = () => {
         setFileList([])
         message.success('Xoa CV thanh cong.')
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   // cancel delete cv
@@ -285,7 +289,7 @@ const Profile: React.FC = () => {
       <Navbar {...statePropsCloseSlider} />
 
       <div className="container">
-        <Skeleton className='skeleton-item' avatar loading={loading} active>
+        <Skeleton className="skeleton-item" avatar loading={loading} active>
           <div className="div-profile-avatar">
             <div className="div-avatar">
               <div
@@ -359,7 +363,7 @@ const Profile: React.FC = () => {
           </div>
         </Skeleton>
 
-        <Skeleton className='skeleton-item' loading={loading} active>
+        <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -413,7 +417,7 @@ const Profile: React.FC = () => {
           </div>
         </Skeleton>
 
-        <Skeleton className='skeleton-item' loading={loading} active>
+        <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -453,7 +457,7 @@ const Profile: React.FC = () => {
           </div>
         </Skeleton>
 
-        <Skeleton className='skeleton-item' loading={loading} active>
+        <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -522,8 +526,9 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                      }`,
+                    backgroundColor: `${
+                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                    }`,
                   }}
                 >
                   {uploading ? 'Dang luu' : 'Luu CV'}
@@ -533,7 +538,7 @@ const Profile: React.FC = () => {
           </div>
         </Skeleton>
 
-        <Skeleton className='skeleton-item' loading={loading} active>
+        <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -555,17 +560,17 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                  (item: ICategories, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.child_category}
-                    </Button>
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    )
                   )
-                )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
         </Skeleton>
-        <Skeleton className='skeleton-item' loading={loading} active>
+        <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -587,15 +592,15 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.district}
-                  </Button>
-                ))
+                    <Button key={index} className="btn" type="text">
+                      {item?.district}
+                    </Button>
+                  ))
                 : 'Chưa cập nhật'}
             </Space>
           </div>
         </Skeleton>
-        <Skeleton className='skeleton-item' loading={loading} active>
+        <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -632,7 +637,7 @@ const Profile: React.FC = () => {
             </div>
           </div>
         </Skeleton>
-        <Skeleton className='skeleton-item' loading={loading} active>
+        <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{

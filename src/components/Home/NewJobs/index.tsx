@@ -293,6 +293,7 @@ const NewJobs: React.FC = () => {
                     <img
                       className="img-resource-company"
                       src={item.resource.company_icon}
+                      alt="ảnh"
                     />
                     <p style={{ fontSize: 13, fontStyle: 'italic' }}>
                       {item.job_type.job_type_name}

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-import FormValues from '../../../pages/Post/index'
 
 // data
 import locationApi from '../../../api/locationApi'

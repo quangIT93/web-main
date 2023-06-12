@@ -40,4 +40,13 @@
       cursor: pointer;
     }
   }
+
+  .sub-open_post {
+    &:hover {
+      background-color: #0d99ff;
+      transition: all linear 0.3s;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
 }

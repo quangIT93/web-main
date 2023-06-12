@@ -1,24 +1,26 @@
 import React from 'react'
 
-import { Box } from '@mui/material'
 import { Button } from 'antd'
-const RejectedApplication = () => {
+
+const RejectedApplication: React.FC = () => {
   return (
-    <Box>
+    <>
       <Button
         type="primary"
         style={{
-          backgroundColor: '#0d99ff',
+          backgroundColor: '#bd3131',
           padding: '20px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           width: '100%',
+          marginLeft: '8px',
+          cursor: 'default',
         }}
       >
-        Hồ sơ đã bị từ chối
+        Đã từ chối hồ sơ
       </Button>
-    </Box>
+    </>
   )
 }
 

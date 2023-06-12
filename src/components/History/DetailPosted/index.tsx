@@ -31,19 +31,81 @@ interface IDetailPosted {
   detailPosted: any
 }
 
+const statusCandidates = [
+  {
+    id: 1,
+    statusId: 0,
+    statusName: '',
+    background: '#0d99ff',
+    position: '0%',
+    borderRadius: '50%',
+    width: '16px',
+    height: '16px',
+    padding: '0px',
+  },
+  {
+    id: 2,
+    statusId: 1,
+    statusName: 'Đã xem',
+    background: '#aaaaaa',
+    position: '60%',
+    borderRadius: '15px',
+    width: 'unset',
+    height: 'unset',
+    padding: '4px 16px',
+  },
+  {
+    id: 3,
+    statusId: 2,
+    statusName: 'Đã được duyệt',
+    background: '#5cb265',
+    position: '60%',
+    borderRadius: '15px',
+    width: 'unset',
+    height: 'unset',
+    padding: '4px 16px',
+  },
+  {
+    id: 4,
+    statusId: 3,
+    statusName: 'Đã từ chối',
+    background: '#BD3131',
+    position: '60%',
+    borderRadius: '15px',
+    width: 'unset',
+    height: 'unset',
+    padding: '4px 16px',
+  },
+  {
+    id: 5,
+    statusId: 4,
+    statusName: 'Đã tuyển ứng viên',
+    background: '#0d99ff',
+    position: '60%',
+    borderRadius: '15px',
+    width: 'unset',
+    height: 'unset',
+    padding: '4px 16px',
+  },
+]
+
 const DetailPosted: React.FC<IDetailPosted> = (props) => {
   const { detailPosted } = props
   const [dataCandidates, setDadaCandidates] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
-  const [status, setStatus] = useState(detailPosted.status)
+  const [status, setStatus] = useState(detailPosted?.status)
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const getAllCandidates = async () => {
     try {
       const result = await historyRecruiter.GetAllApplicationsOfAJob(
-        detailPosted.post_id,
+        detailPosted?.post_id,
         10,
         0
       )
-      console.log('result', result)
+      console.log('load data detailPosted', result)
       if (result) {
         setDadaCandidates(result.data)
       }
@@ -51,7 +113,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
       console.log('error', error)
     }
   }
-  console.log('status', status)
+
   useEffect(() => {
     let isMounted = true
     setLoading(true)
@@ -81,7 +143,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
       `/candidate-detail?post-id=${postId}&application_id=${applicationId}`
     )
   }
-  console.log('detailPosted', detailPosted)
+  console.log('render detailPosted', dataCandidates)
+
   return (
     <Box>
       <Card
@@ -204,7 +267,11 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
           </ImageListItem>
 
           <Space direction="vertical" align="center">
-            <SubIcon postId={detailPosted.id} setStatus={setStatus} />
+            <SubIcon
+              postId={detailPosted?.id}
+              setStatus={setStatus}
+              status={status}
+            />
           </Space>
         </Box>
         <Box
@@ -238,8 +305,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
           {status === 1 ? (
             <p
               style={{
-                background: '#0D99FF',
-                padding: '4px 12px',
+                background: '#5CB265',
+                padding: '4px 16px',
                 borderRadius: '15px',
                 color: '#ffffff',
               }}
@@ -250,7 +317,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
             <p
               style={{
                 background: '#aaaaaa',
-                padding: '4px 12px',
+                padding: '4px 16px',
                 borderRadius: '15px',
                 color: '#ffffff',
               }}
@@ -261,7 +328,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
             <p
               style={{
                 background: '#aaaaaa',
-                padding: '4px 12px',
+                padding: '4px 16px',
                 borderRadius: '15px',
                 color: '#ffffff',
               }}
@@ -275,21 +342,25 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
         <h3 style={{ margin: '12px 0' }}>Danh sách các ứng viên</h3>
         {dataCandidates?.applications.map((candidate: any, index: number) => (
           <Card
+            key={index}
             sx={{
               minWidth: '100%',
               display: 'flex',
               padding: '12px',
               cursor: 'pointer',
               '&:hover': {
-                background: '#E7E7ED',
+                background: '#e5e5fb',
                 transition: 'all 0.3s linear',
               },
               boxShadow: 'none',
               borderRadius: '5px',
               margin: '8px 0',
+              background: `${
+                candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
+              }`,
             }}
             onClick={(e) =>
-              handleClickCandidate(e, candidate.id, detailPosted.id)
+              handleClickCandidate(e, candidate.id, detailPosted?.id)
             }
           >
             <div className="image-cadidate_wrap">
@@ -300,13 +371,46 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               />
             </div>
             <Box sx={{ marginLeft: '12px' }}>
-              <Typography
-                variant="h6"
-                color="text.secondary"
-                sx={{ marginLeft: '12px' }}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  position: 'relative',
+                }}
               >
-                {candidate.name}
-              </Typography>
+                <Typography
+                  variant="h6"
+                  color="text.secondary"
+                  sx={{ marginLeft: '12px' }}
+                >
+                  {candidate.name}
+                </Typography>
+
+                {statusCandidates.map((statusCandidate, index) => {
+                  if (
+                    candidate?.application_status === statusCandidate.statusId
+                  ) {
+                    return (
+                      <p
+                        key={index}
+                        style={{
+                          background: `${statusCandidate.background}`,
+                          padding: `${statusCandidate.padding}`,
+                          borderRadius: `${statusCandidate.borderRadius}`,
+                          color: '#ffffff',
+                          position: 'absolute',
+                          right: `${statusCandidate.position}`,
+                          width: `${statusCandidate.width}`,
+                          height: `${statusCandidate.height}`,
+                        }}
+                      >
+                        {statusCandidate.statusName}
+                      </p>
+                    )
+                  }
+                  return null
+                })}
+              </div>
               <div className="item-candidate">
                 <PersonIcon fontSize="small" className="icon-candidate" />
                 <p>

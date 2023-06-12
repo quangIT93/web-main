@@ -44,7 +44,7 @@ import {
   ClockCircleOutlined,
   LogoutOutlined,
   KeyOutlined,
-  LoadingOutlined
+  LoadingOutlined,
 } from '@ant-design/icons'
 
 // import component
@@ -109,16 +109,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   // use redux
 
   const dispatch = useDispatch()
-  const { setProfileUser } = bindActionCreators(
-    actionCreators,
-    dispatch
-  )
+  const { setProfileUser } = bindActionCreators(actionCreators, dispatch)
 
   //const dataProfile: any = useSelector((data: RootState) => data.profile)
 
   const dataProfile = useSelector((state: RootState) => state.profileUser)
-
-  console.log("data", dataProfile)
 
   // handle show tap on screen mobile
   const handleTap = () => {
@@ -207,7 +202,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         setProfileUser(result.data)
       }
     } catch (error) {
-
       // error authentication
       setOpenBackdrop(true)
       if (!localStorage.getItem('accessToken')) {
@@ -216,12 +210,10 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       }
       const result = await profileApi.getProfile()
       if (result) {
-
         setProfileUser(result.data)
         setOpenBackdrop(false)
       }
       await dispatch(getProfile() as any)
-
     }
   }
   // fecth data user when access token changes
@@ -234,10 +226,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   }
   useEffect(() => {
     fecthDataProfileWhileAccecsToken()
-
-
   }, [localStorage.getItem('accessToken')])
-
 
   useEffect(() => {
     fecthDataProfileUser()
@@ -285,7 +274,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   // login
   const handleClickLogin = async () => {
     try {
-
       if (openInfoUser) {
         setSpinning(false)
         setOpenInfoUser(!openInfoUser)
@@ -301,7 +289,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       }
     } catch (error) {
       console.log(error)
-      if (!localStorage.getItem("accessToken")) {
+      if (!localStorage.getItem('accessToken')) {
         setSpinning(false)
         setOpenInfoUser(false)
         setOpenModalLogin(true)
@@ -309,7 +297,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         setSpinning(false)
         setOpenInfoUser(!openInfoUser)
       }
-
     }
   }
 
@@ -351,9 +338,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             <Avatar
               style={{ backgroundColor: '#0D99FF' }}
               icon={<UserOutlined />}
-              src={
-                dataProfile.avatar ? dataProfile.avatar : ''
-              }
+              src={dataProfile.avatar ? dataProfile.avatar : ''}
             />
           </div>
           <div className="login__center">
@@ -368,7 +353,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <RightOutlined />
         </div>
       </button>
-      <Spin indicator={antIcon} spinning={spinning} >
+      <Spin indicator={antIcon} spinning={spinning}>
         {openInfoUser && (
           <div className="sub-login">
             <Space className="sub-login_info">
@@ -376,17 +361,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                 style={{ backgroundColor: '#0D99FF' }}
                 icon={<UserOutlined style={{ fontSize: 30 }} />}
                 size={50}
-                src={
-                  dataProfile?.avatar ? dataProfile.avatar : null
-                }
+                src={dataProfile?.avatar ? dataProfile.avatar : null}
               />
               <div>
-                <h2>
-                  {dataProfile?.name ? dataProfile.name : ''}
-                </h2>
-                <span>
-                  {dataProfile?.email ? dataProfile?.email : ''}
-                </span>
+                <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
+                <span>{dataProfile?.email ? dataProfile?.email : ''}</span>
               </div>
             </Space>
             <div className="sub-login_items">
@@ -397,10 +376,11 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
                 </div>
               </Link>
               <Link to="/history">
-                <div className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                <div
+                  className="sub-login_item"
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -418,7 +398,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           </div>
         )}
       </Spin>
-
     </div>,
   ]
 
@@ -441,19 +420,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       <Wrapper>
         <Left>
           <Logo />
-          <SearchContainer onClick={handleClickInput}>
-            {/* <Input placeholder="Search" /> */}
-            <div className="div-search">
-              Nhập công việc mà bạn muốn tìm kiếm...
-            </div>
-
-            <SearchIcon
-              style={{
-                color: 'gray',
-                fontSize: 16,
-              }}
-            />
-          </SearchContainer>
         </Left>
         <Center className="div-nav-center">
           <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />

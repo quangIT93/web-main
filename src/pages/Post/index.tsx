@@ -147,12 +147,8 @@ const Post: React.FC = () => {
   const [endTime, setEndTime] = React.useState<any>(
     new Date(1970, 0, 2, 17, 0).getTime()
   )
-  const [startDate, setStartDate] = React.useState<any>(
-    new Date().getTime()
-  )
-  const [endDate, setEndDate] = React.useState<any>(
-    new Date().getTime()
-  )
+  const [startDate, setStartDate] = React.useState<any>(new Date().getTime())
+  const [endDate, setEndDate] = React.useState<any>(new Date().getTime())
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0)
   const [isRemotely, setIsRemotely] = React.useState<number>(0)
   const [salary, setSalary] = React.useState<number[]>([500000, 100000000])
@@ -167,17 +163,14 @@ const Post: React.FC = () => {
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([])
   const [latitude, SetLatitude] = useState<number>(10.761955)
   const [longitude, SetLongitude] = useState<number>(106.70183)
-
   const [salaryMin, setSalaryMin] = React.useState<number>(0)
   const [salaryMax, setSalaryMax] = React.useState<number>(0)
   // modal
   const [openModalPost, setOpenModalPost] = React.useState(false)
-
   // check error
   const [titleError, setTitleError] = useState(false)
   const [companyError, setCompanyError] = useState(false)
-
-  const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage()
 
   const {
     openCollapse,
@@ -211,8 +204,8 @@ const Post: React.FC = () => {
     formData.append('endDate', endDate)
     formData.append('startTime', startTime)
     formData.append('endTime', endTime)
-    formData.append('salaryMin', String(salaryMin.toString().replace(",", "")))
-    formData.append('salaryMax', String(salaryMax).toString().replace(",", ""))
+    formData.append('salaryMin', String(salaryMin.toString().replace(',', '')))
+    formData.append('salaryMax', String(salaryMax).toString().replace(',', ''))
     formData.append('isWorkingWeekend', String(isWorkingWeekend))
     formData.append('isRemotely', String(isRemotely))
     formData.append('moneyType', String(moneyType))
@@ -247,53 +240,52 @@ const Post: React.FC = () => {
 
   // valid values form data
   const validValue = () => {
-
-    if (titleJob == "") {
+    if (titleJob == '') {
       return {
-        message: "Vui lòng nhập tên công việc",
-        checkForm: false
+        message: 'Vui lòng nhập tên công việc',
+        checkForm: false,
       }
     }
-    if (companyName == "") {
+    if (companyName == '') {
       return {
-        message: "Vui lòng nhập tên công ty",
-        checkForm: false
+        message: 'Vui lòng nhập tên công ty',
+        checkForm: false,
       }
     }
     if (address == '') {
       return {
-        message: "Vui lòng nhập dia chi",
-        checkForm: false
+        message: 'Vui lòng nhập dia chi',
+        checkForm: false,
       }
     }
     if (wardId == '') {
       return {
-        message: "Vui lòng chọn tỉnh thành phố",
-        checkForm: false
+        message: 'Vui lòng chọn tỉnh thành phố',
+        checkForm: false,
       }
     }
     if (categoriesId.length <= 0) {
       return {
-        message: "Vui lòng chọn danh mục nghề nghiệp",
-        checkForm: false
+        message: 'Vui lòng chọn danh mục nghề nghiệp',
+        checkForm: false,
       }
     }
-    if (phoneNumber == "" || phoneNumber.length < 10) {
+    if (phoneNumber == '' || phoneNumber.length < 10) {
       return {
-        message: "Số điện thoại sai định dạng",
-        checkForm: false
+        message: 'Số điện thoại sai định dạng',
+        checkForm: false,
       }
     }
-    if (description == "") {
+    if (description == '') {
       return {
-        message: "Vui lòng nhập mô tả công việc",
-        checkForm: false
+        message: 'Vui lòng nhập mô tả công việc',
+        checkForm: false,
       }
     }
 
     return {
-      message: "",
-      checkForm: true
+      message: '',
+      checkForm: true,
     }
   }
 
@@ -315,7 +307,7 @@ const Post: React.FC = () => {
         messageApi.open({
           type: 'error',
           content: message,
-        });
+        })
       }
     } catch (error) {
       console.log('loixxxxxxxxxxxxxxxxxxxx')
@@ -392,7 +384,10 @@ const Post: React.FC = () => {
           />
 
           <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
-          <PostNumberPhone phone={phoneNumber} setPhoneNumber={setPhoneNumber} />
+          <PostNumberPhone
+            phone={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
+          />
           <Description setDescription={setDescription} />
           {/* <EditText /> */}
           <button
