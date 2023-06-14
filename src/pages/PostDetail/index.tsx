@@ -251,7 +251,7 @@ const Detail: React.FC = () => {
       }
       // navigate to edit post
       if (checkPostUser) {
-        window.open('#')
+        window.open(`edit-posted/?postId=${POST_ID}`)
         return
       }
       const result = await appplicationApi.applyAplication(POST_ID)

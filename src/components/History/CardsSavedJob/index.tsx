@@ -29,8 +29,9 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const getAllPosted = async (newCount: number) => {
     try {
       const result = await historyBookmark.getAllBookmark(0, newCount)
-      console.log('result', result)
+      console.log('resultpostSave', result)
       if (result) {
+
         setDataBookmarks(result.data)
       }
     } catch (error) {
