@@ -3,6 +3,7 @@ import moment, { Moment } from 'moment'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import { Space, Tooltip } from 'antd'
+import { message } from 'antd'
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { Box, Typography, MenuItem, TextField, Button } from '@mui/material'
@@ -32,6 +33,8 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [newOld, setnewOld] = React.useState('Mới nhất')
   const [count, setCount] = useState(5)
+
+  const [messageApi, contextHolder] = message.useMessage()
   //   getData
   const getAllPosted = async (newCount: number) => {
     try {
@@ -60,11 +63,35 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
     }
   }, [showDetailPosted])
 
+  const validCount = () => {
+    if (dataPosted.length < count) {
+      return {
+        message: 'Đã hết công việc để hiển thị',
+        checkForm: false,
+      }
+    }
+    return {
+      message: '',
+      checkForm: true,
+    }
+  }
+
   // click Button
   const handleAddItem = async () => {
+    const { message, checkForm } = validCount()
     const newCount = count + 6
-    setCount(newCount)
-    await getAllPosted(newCount)
+    setnewOld('Mới nhất')
+    if (!checkForm) {
+      setCount(14)
+      await messageApi.open({
+        type: 'error',
+        content: message,
+      })
+      await getAllPosted(20)
+    } else {
+      setCount(newCount)
+      await getAllPosted(newCount)
+    }
   }
 
   const handleShowDetail = (
@@ -104,6 +131,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
   console.log('render cardPostedAll', dataPosted)
   return (
     <>
+      {contextHolder}
       <Box
         sx={{
           display: 'flex',

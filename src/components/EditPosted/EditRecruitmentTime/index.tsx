@@ -12,9 +12,27 @@ import { TextField } from '@mui/material'
 import { styleLabel } from '../CssEditPost'
 import './style.scss'
 
-const EditRecruitmentTime = () => {
-  const [startDate, setStartDate] = useState<number>(1)
-  const [endDate, setEndDate] = useState<number>(1)
+interface IEditRecruitmentTime {
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
+  editDataPosted: any
+}
+
+const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
+  const { setEditDataPosted, editDataPosted } = props
+
+  const handleChangeStartTime = (newValue: any, e: any) => {
+    setEditDataPosted((preValue: any) => ({
+      ...preValue,
+      startDate: new Date(newValue._d).getTime(),
+    }))
+  }
+
+  const handleChangeEndTime = (newValue: any, e: any) => {
+    setEditDataPosted((preValue: any) => ({
+      ...preValue,
+      endDate: new Date(newValue._d).getTime(),
+    }))
+  }
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <DemoContainer
@@ -31,8 +49,8 @@ const EditRecruitmentTime = () => {
             Ngày bắt đầu *:
           </Typography>
           <DatePicker
-          // value={moment(startDate)}
-          // onChange={handleChangeStartTime}
+            value={moment(editDataPosted.startDate)}
+            onChange={handleChangeStartTime}
           />
         </div>
         <div className="wrapTimeDay">
@@ -45,8 +63,8 @@ const EditRecruitmentTime = () => {
             Ngày kết thúc *:
           </Typography>
           <DatePicker
-          //   value={moment(endDate)}
-          //   onChange={handleChangeEndTime}
+            value={moment(editDataPosted.endDate)}
+            onChange={handleChangeEndTime}
           />
         </div>
       </DemoContainer>

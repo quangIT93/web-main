@@ -82,7 +82,7 @@ const EditPostFilterSalary = () => {
       console.log(salary)
     }
   }
-  console.log('moneyType', moneyType)
+
   return (
     <Box
       sx={{

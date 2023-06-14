@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import moment, { Moment } from 'moment'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import { Space, Tooltip } from 'antd'
+import { Space, Tooltip, message } from 'antd'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
@@ -25,6 +25,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const [dataBookmarks, setDataBookmarks] = useState<any>(null)
   const [newOld, setnewOld] = React.useState('Mới nhất')
   const [count, setCount] = useState(5)
+
+  const [messageApi, contextHolder] = message.useMessage()
 
   const getAllPosted = async (newCount: number) => {
     try {
@@ -58,11 +60,35 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   }
   console.log('dataPosted', dataBookmarks)
 
+  const validCount = () => {
+    if (dataBookmarks.length < count) {
+      return {
+        message: 'Đã hết công việc để hiển thị',
+        checkForm: false,
+      }
+    }
+    return {
+      message: '',
+      checkForm: true,
+    }
+  }
+
   // click button
   const handleClickAddItem = async () => {
     const newCount = count + 6
-    setCount(newCount)
-    await getAllPosted(newCount)
+    const { message, checkForm } = validCount()
+    setnewOld('Mới nhất')
+    if (!checkForm) {
+      setCount(14)
+      await messageApi.open({
+        type: 'error',
+        content: message,
+      })
+      await getAllPosted(20)
+    } else {
+      setCount(newCount)
+      await getAllPosted(newCount)
+    }
   }
 
   // click card
@@ -94,6 +120,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   }, [newOld, count])
   return (
     <>
+      {contextHolder}
       <Box
         sx={{
           display: 'flex',

@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Button, Typography } from '@mui/material'
+import axios from 'axios'
+// import { blobToBase64 } from 'blob-util'
+
 //@ts-ignore
 import imageCompression from 'browser-image-compression'
 import { validatePostImages } from 'validations'
@@ -12,9 +15,46 @@ import { useMediaQuery } from '@mui/material'
 
 import './style.scss'
 
-const EditPostImage = () => {
+interface IEditPostImage {
+  editDataPosted: any
+}
+
+const EditPostImage: React.FC<IEditPostImage> = (props) => {
+  const { editDataPosted } = props
+
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([])
   const [selectedImages, setSelectedImages] = React.useState<string[]>([])
+
+  useEffect(() => {
+    setSelectedImages(
+      editDataPosted?.images?.map((image: any) => {
+        return image.image
+      })
+    )
+  }, [editDataPosted])
+
+  // useEffect(() => {
+  //   const imageUrls = [
+  //     'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/35924/1686651928327-651ae6ef-89d3-41dd-8dcc-6f1a8a9a78fb.jpg',
+  //     'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/35924/1686651928327-651ae6ef-89d3-41dd-8dcc-6f1a8a9a78fb.jpg',
+  //   ]
+  //   const fetchImageFiles = async () => {
+  //     if (selectedFiles.length > 0) return
+
+  //     const files = await Promise.all(
+  //       imageUrls.map(async (imageUrl) => {
+  //         const response = await axios.get(imageUrl, { responseType: 'blob' })
+  //         const blob = response.data
+  //         const file = new File([blob], 'image.jpg', { type: blob.type })
+  //         return file
+  //       })
+  //     )
+
+  //     setSelectedFiles(files)
+  //   }
+
+  //   fetchImageFiles()
+  // }, [selectedImages])
 
   const options = {
     maxSizeMB: 1,
@@ -25,18 +65,19 @@ const EditPostImage = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const files = event.target.files
+
     const imagesUpload: any = Array.from(
       event.target.files ? event.target.files : []
     )
 
     const imagesToCheck =
       selectedFiles.length + imagesUpload.length > 5
-        ? imagesUpload.slice(0, 5 - selectedImages.length)
+        ? imagesUpload.slice(0, 5 - selectedImages?.length)
         : imagesUpload
-
+    console.log('imageTocheck', imagesToCheck)
     console.log(
       ' imagesUpload.slice(0, 5 - selectedImages.length)',
-      imagesUpload.slice(0, 5 - selectedImages.length)
+      imagesUpload.slice(0, 5 - selectedImages?.length)
     )
     console.log(' imagesToCheck', imagesToCheck)
     console.log(' imagesToCheck.length', imagesToCheck.length)
@@ -100,7 +141,7 @@ const EditPostImage = () => {
   }
 
   const handleDeleteImage = (index: number) => {
-    setSelectedImages((prevImages) => {
+    setSelectedImages((prevImages: any) => {
       const updatedImages = [...prevImages]
       updatedImages.splice(index, 1)
       return updatedImages
@@ -111,11 +152,12 @@ const EditPostImage = () => {
       return updatedFiles
     })
   }
+
   return (
     <div className="edit-post_image">
       <Box p="0rem 0">
         <Box sx={{ display: 'flex', minWidth: '150px', minHeight: '150px' }}>
-          {selectedImages.map((image, index) => (
+          {selectedImages?.map((image: any, index: number) => (
             <div
               className="item-editPost_image"
               style={{
@@ -126,6 +168,7 @@ const EditPostImage = () => {
                 height: '150px',
                 width: '150px',
               }}
+              key={index}
             >
               <img
                 key={index}
@@ -177,7 +220,7 @@ const EditPostImage = () => {
         <Button
           variant="outlined"
           component="label"
-          disabled={selectedImages.length === 5}
+          disabled={selectedImages?.length === 5}
         >
           Tải ảnh
           <input

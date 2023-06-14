@@ -11,18 +11,32 @@ const styleLabel = {
 }
 
 interface IEditPostJobCompany {
-  companyName: string
-  title: string
+  setEditDataPosted: any
+  editDataPosted: any
 }
 
 const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
-  const { companyName, title } = props
+  const { setEditDataPosted, editDataPosted } = props
 
-  const [companyEditName, setCompanyEditName] = useState(companyName)
-  const [companyEditTitle, setCompanyEditTitle] = useState(title)
+  const handleEditJobName = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = e.target
+    setEditDataPosted((preValue: any) => ({
+      ...preValue,
+      title: value,
+    }))
+  }
 
-  console.log('company', companyName)
-  console.log('title', title)
+  const handleEditCompanyName = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = e.target
+    setEditDataPosted((preValue: any) => ({
+      ...preValue,
+      company_name: value,
+    }))
+  }
 
   return (
     <div className="edit-post_jobCompany">
@@ -39,8 +53,8 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           type="text"
           id="editJob"
           name="title"
-          value={companyEditTitle}
-          //   onChange={handleChangeTitleForm}
+          value={editDataPosted?.title}
+          onChange={handleEditJobName}
           size="small"
           sx={{ width: '100%', marginTop: '4px' }}
           placeholder="Tên công việc"
@@ -54,14 +68,14 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          Tên công việc *
+          Tên công ty *
         </Typography>
         <TextField
           type="text"
           id="editCompany"
           name="title"
-          value={companyEditName}
-          //   onChange={handleChangeTitleForm}
+          value={editDataPosted?.company_name}
+          onChange={handleEditCompanyName}
           size="small"
           sx={{ width: '100%', marginTop: '4px' }}
           placeholder="Tên công việc"
