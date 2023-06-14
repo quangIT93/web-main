@@ -18,13 +18,11 @@ const options: Option[] = [
   {
     label: 'Light',
     value: 'light',
-    children: new Array(20)
-      .fill(null)
-      .map((_, index) => ({
-        label: `Number ${index}`,
-        value: index,
-        disableCheckbox: true,
-      })),
+    children: new Array(20).fill(null).map((_, index) => ({
+      label: `Number ${index}`,
+      value: index,
+      disableCheckbox: true,
+    })),
   },
   {
     label: 'Bamboo',
@@ -91,7 +89,6 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     getCategories()
   }, [])
 
-  console.log('categoriesId', categoriesId)
   return (
     <Box sx={{ marginTop: '24px' }}>
       <Typography
@@ -106,29 +103,27 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-
-              value: parentCategory.parent_category_id,
-              label: parentCategory.parent_category,
-              children: parentCategory.childs.map((child: any) => {
-                var dis = false;
-                //check id child  when disable = true 
-                if (disable) {
-                  dis = true
-                  for (const elem of categoriesId) {
-                    if (elem === child.id) {
-                      dis = false
-                      break;
+                value: parentCategory.parent_category_id,
+                label: parentCategory.parent_category,
+                children: parentCategory.childs.map((child: any) => {
+                  var dis = false
+                  //check id child  when disable = true
+                  if (disable) {
+                    dis = true
+                    for (const elem of categoriesId) {
+                      if (elem === child.id) {
+                        dis = false
+                        break
+                      }
                     }
                   }
-                }
-                return {
-                  value: child.id,
-                  label: child.name,
-                  disabled: dis,
-                }
-              }),
-            }))
-
+                  return {
+                    value: child.id,
+                    label: child.name,
+                    disabled: dis,
+                  }
+                }),
+              }))
             : []
         }
         onChange={onChange}

@@ -17,21 +17,23 @@ import './style.scss'
 
 interface IEditPostImage {
   editDataPosted: any
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
+  dataPosted: any
 }
 
 const EditPostImage: React.FC<IEditPostImage> = (props) => {
-  const { editDataPosted } = props
+  const { editDataPosted, setEditDataPosted, dataPosted } = props
 
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([])
-  const [selectedImages, setSelectedImages] = React.useState<string[]>([])
+  const [selectedImages, setSelectedImages] = React.useState<any[]>([])
 
-  useEffect(() => {
-    setSelectedImages(
-      editDataPosted?.images?.map((image: any) => {
-        return image.image
-      })
-    )
-  }, [editDataPosted])
+  // useEffect(() => {
+  //   setSelectedImages(
+  //     editDataPosted?.images?.map((image: any) => {
+  //       return image.image
+  //     })
+  //   )
+  // }, [editDataPosted])
 
   // useEffect(() => {
   //   const imageUrls = [
@@ -110,14 +112,25 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               preview: window.URL.createObjectURL(image),
             })),
           ])
+
+          setEditDataPosted((preValue: any) => ({
+            ...preValue,
+            images: [
+              ...preValue.images,
+              ...compressedImages.map((image: any) => ({
+                image,
+                preview: window.URL.createObjectURL(image),
+              })),
+            ],
+          }))
         } catch (error) {
           console.log(error)
         }
       }
     }
 
-    if (files) {
-      const newImages: string[] = []
+    if (files && dataPosted) {
+      const newImages: any[] = []
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
@@ -125,10 +138,14 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
 
         reader.onload = () => {
           const imageDataURL = reader.result as string
-          newImages.push(imageDataURL)
+          newImages.push({
+            id: null,
+            image: imageDataURL,
+            status: null,
+          })
 
           if (newImages.length === files.length) {
-            setSelectedImages((prevImages: string[]) => [
+            setSelectedImages((prevImages: any) => [
               ...prevImages,
               ...newImages,
             ])
@@ -140,19 +157,62 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     }
   }
 
-  const handleDeleteImage = (index: number) => {
+  useEffect(() => {
+    if (selectedFiles) {
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        images: [...selectedFiles],
+      }))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (dataPosted) {
+      setSelectedImages(dataPosted)
+    }
+  }, [])
+
+  console.log('image', selectedImages)
+  console.log('file', selectedFiles)
+  // console.log('file', selectedFiles.)
+
+  const handleDeleteImage = (index: number, id: number | null) => {
+    console.log('index', index)
+    console.log('id', id)
     setSelectedImages((prevImages: any) => {
       const updatedImages = [...prevImages]
       updatedImages.splice(index, 1)
       return updatedImages
     })
-    setSelectedFiles((prevFiles) => {
+    setSelectedFiles((prevFiles: any) => {
       const updatedFiles = [...prevFiles]
-      updatedFiles.splice(index, 1)
+      updatedFiles.splice(index - dataPosted.length - 1, 1)
       return updatedFiles
     })
-  }
 
+    setEditDataPosted((preValue: any) => {
+      const updatedFiles = [...preValue.images]
+      updatedFiles.splice(index - dataPosted.length - 1, 1)
+
+      return {
+        ...preValue,
+        images: updatedFiles,
+      }
+    })
+
+    if (id) {
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        deletedImages: [
+          ...preValue.deletedImages,
+          { id: id, image: selectedImages[index]?.image },
+        ],
+      }))
+    }
+
+    console.log('selectedImagesIndex', typeof selectedImages[index].image)
+  }
+  console.log('editDataPosted', editDataPosted)
   return (
     <div className="edit-post_image">
       <Box p="0rem 0">
@@ -172,7 +232,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
             >
               <img
                 key={index}
-                src={image}
+                src={image.image}
                 alt={`ảnh bị lỗi`}
                 style={{
                   height: '150px',
@@ -182,7 +242,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               />
               <div
                 className="deleteButton"
-                onClick={() => handleDeleteImage(index)}
+                onClick={() => handleDeleteImage(index, image.id)}
                 style={{
                   position: 'absolute',
                   top: '6px',

@@ -11,30 +11,50 @@ import 'intl'
 import 'intl/locale-data/jsonp/en'
 import { styleLabel } from '../CssEditPost'
 
-const EditPostFilterSalary = () => {
-  const [salary, setSalary] = useState<number[]>([])
-  const [moneyType, setMoneyType] = useState<any>(1)
-  const [salaryMax, setSalaryMax] = useState<any>(1)
-  const [salaryMin, setSalaryMin] = useState<any>(1)
+interface IEditPostFilterSalary {
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
+  editDataPosted: any
+}
 
+const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
+  const { setEditDataPosted, editDataPosted } = props
+
+  const [salary, setSalary] = useState<number[]>([])
   const VND_TO_USD = 0.000043 // Conversion rate: 1 VND = 0.000043 USD
   const USD_TO_VND = 23155
+
+  console.log('edit', editDataPosted)
 
   const handleChangesalaryMin = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setSalaryMin(e.target.value.replace(',', ''))
+    const inputValue = e.target.value.replace(',', '')
+    const reg = /[0-9]+$/
+
+    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        salaryMin: inputValue.replace(',', ''),
+      }))
+    }
   }
   const handleChangesalaryMax = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setSalaryMax(e.target.value.replace(',', ''))
+    const inputValue = e.target.value.replace(',', '')
+    const reg = /[0-9]+$/
+    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        salaryMax: inputValue.replace(',', ''),
+      }))
+    }
   }
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     let convertedValue: number[]
 
-    if (moneyType === 1) {
+    if (editDataPosted.moneyType === 1) {
       // Convert USD to VND
       convertedValue = (newValue as number[]).map((value) =>
         Math.round(value / USD_TO_VND)
@@ -57,9 +77,12 @@ const EditPostFilterSalary = () => {
   }
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMoneyType(Number(e.target.value))
+    setEditDataPosted((preValue: any) => ({
+      ...preValue,
+      moneyType: Number(e.target.value),
+    }))
     let convertedValue: number[]
-    if (moneyType === 1) {
+    if (editDataPosted.moneyType === 1) {
       // Convert USD to VND
 
       convertedValue = (salary as number[]).map((value) => {
@@ -94,31 +117,27 @@ const EditPostFilterSalary = () => {
       }}
     >
       <FormControl sx={{ marginTop: '24px' }}>
-        <FormLabel
-          id="demo-row-radio-buttons-group-label"
-          component="legend"
-          sx={styleLabel}
-        >
+        <FormLabel id="salaryFilter" component="legend" sx={styleLabel}>
           Loại tiền *:
         </FormLabel>
         <RadioGroup
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
+          name="salaryFilter"
           onChange={handleChangeMoneyType}
-          value={moneyType}
+          value={editDataPosted.moneyType}
         >
           <FormControlLabel
             value={1}
-            control={<Radio id="limited-time-radio" />}
+            control={<Radio id="typeSalaryVND" />}
             label="VND"
-            htmlFor="limited-time-radio"
+            htmlFor="typeSalaryVND"
           />
           <FormControlLabel
             value={2}
-            control={<Radio id="limited-time-radio1" />}
+            control={<Radio id="typeSalaryUSD" />}
             label="USD"
-            htmlFor="limited-time-radio1"
+            htmlFor="typeSalaryUSD"
           />
         </RadioGroup>
       </FormControl>
@@ -161,7 +180,7 @@ const EditPostFilterSalary = () => {
             placeholder="Luong toi thieu"
             onChange={handleChangesalaryMin}
             value={new Intl.NumberFormat('en-US').format(
-              Number(salaryMin.toString().replace(',', ''))
+              Number(editDataPosted?.salaryMin?.toString().replace(',', ''))
             )}
           />
         </Space>
@@ -174,7 +193,7 @@ const EditPostFilterSalary = () => {
             placeholder="Luong toi da"
             onChange={handleChangesalaryMax}
             value={new Intl.NumberFormat('en-US').format(
-              Number(salaryMax.toString().replace(',', ''))
+              Number(editDataPosted?.salaryMax?.toString().replace(',', ''))
             )}
           />
         </Space>

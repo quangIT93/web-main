@@ -40,22 +40,23 @@ export interface FormValues {
   endDate: number | null
   // latitude: number
   // longitude: number
-  // startTime: number
-  // endTime: number
-  // isWorkingWeekend: number
-  // isRemotely: number
-  // salaryMin: number
-  // salaryMax: number
-  // salaryType: number
-  // moneyType: number
+  startTime: number
+  endTime: number
+  isWorkingWeekend: number
+  isRemotely: number
+  salaryMin: number
+  salaryMax: number
+  moneyType: number
+  salaryType: number
   jobTypeId: number | null
-  // description: string
+  description: string
   // phoneNumber: string
   // email: string
-  // categoryIds: string[]
-  // images: string[]
+  categoryIds: string[]
+  images: string[]
   // // companyResourceId: string
   // url: null
+  deletedImages: any[]
 }
 
 const EditPosted = () => {
@@ -94,22 +95,23 @@ const EditPosted = () => {
     isDatePeriod: 0,
     startDate: null,
     endDate: null,
-    // startTime: new Date(2023, 0, 2, 0, 0).getTime(),
-    // endTime: new Date(2023, 0, 2, 0, 0).getTime(),
-    // isWorkingWeekend: 0,
-    // isRemotely: 0,
-    // salaryMin: 1000,
-    // salaryMax: 1000,
-    // salaryType: 1,
-    // moneyType: 1,
-    // description: '',
+    startTime: null,
+    endTime: null,
+    isWorkingWeekend: 0,
+    isRemotely: 0,
+    salaryMin: 1000,
+    salaryMax: 1000,
+    moneyType: 1,
+    salaryType: 1,
+    description: '',
     // phoneNumber: '',
-    // categories: [],
-    // images: [],
+    categoryIds: [],
+    images: [],
     jobTypeId: null,
     // // companyResourceId: null,
     // url: null,
     // email: '',
+    deletedImages: [],
   })
 
   const [editDataPosted, setEditDataPosted] = useState<FormValues | null>(
@@ -129,6 +131,26 @@ const EditPosted = () => {
         jobTypeId: dataPostById.job_type.job_type_id,
         endDate: dataPostById.end_date,
         startDate: dataPostById.start_date,
+        startTime: dataPostById.start_time,
+        endTime: dataPostById.end_time,
+        categoryIds: dataPostById.categories.map(
+          (cata: any) => cata.child_category_id
+        ),
+        salaryMax: dataPostById.salary_max,
+
+        salaryMin: dataPostById.salary_min,
+
+        moneyType: dataPostById.money_type,
+
+        salaryType: dataPostById.salary_type_id,
+
+        phoneNumber: dataPostById.phone_contact.replace('+84', '0'),
+
+        description: dataPostById.description,
+
+        images: [],
+
+        deletedImages: [],
       }))
     }
   }, [dataPostById])
@@ -160,7 +182,8 @@ const EditPosted = () => {
 
   const handleSubmit = () => {}
   console.log('dataPostById', dataPostById)
-  console.log('edit', editDataPosted)
+  console.log('editDataPosted', editDataPosted)
+
   return (
     <div className="edit-posted">
       <Navbar {...statePropsCloseSlider} />
@@ -179,7 +202,11 @@ const EditPosted = () => {
               editDataPosted={editDataPosted}
             />
 
-            <EditPostImage editDataPosted={editDataPosted} />
+            <EditPostImage
+              editDataPosted={editDataPosted}
+              setEditDataPosted={setEditDataPosted}
+              dataPosted={dataPostById?.images}
+            />
 
             <EditPostTypeJob
               setEditDataPosted={setEditDataPosted}
@@ -198,20 +225,48 @@ const EditPosted = () => {
             ) : (
               <></>
             )}
+            {editDataPosted?.startTime ? (
+              <EditStyleWork
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={editDataPosted}
+              />
+            ) : (
+              <></>
+            )}
 
-            <EditStyleWork />
+            <EditPostTime
+              setEditDataPosted={setEditDataPosted}
+              editDataPosted={editDataPosted}
+            />
+            {editDataPosted?.categoryIds?.length != 0 && dataPostById ? (
+              <EditPostCategoryId
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={editDataPosted}
+                dataPost={dataPostById?.categories}
+              />
+            ) : (
+              <></>
+            )}
 
-            <EditPostTime />
+            <EditPostFilterSalary
+              setEditDataPosted={setEditDataPosted}
+              editDataPosted={editDataPosted}
+            />
 
-            <EditPostCategoryId />
+            <EditSalaryType
+              setEditDataPosted={setEditDataPosted}
+              editDataPosted={editDataPosted}
+            />
 
-            <EditPostFilterSalary />
+            <EditPostNumberPhone
+              setEditDataPosted={setEditDataPosted}
+              editDataPosted={editDataPosted}
+            />
 
-            <EditSalaryType />
-
-            <EditPostNumberPhone />
-
-            <EditDescription />
+            <EditDescription
+              setEditDataPosted={setEditDataPosted}
+              editDataPosted={editDataPosted}
+            />
 
             <button
               type="submit"

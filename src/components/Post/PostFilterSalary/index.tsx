@@ -5,7 +5,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { Input, Space } from 'antd';
+import { Input, Space } from 'antd'
 import Typography from '@mui/material/Typography'
 //@ts-ignore
 import 'intl'
@@ -40,23 +40,20 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
   const handleChangesalaryMin = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const inputValue = e.target.value.replace(",", "")
-    const reg = /[0-9]+$/;
+    const inputValue = e.target.value.replace(',', '')
+    const reg = /[0-9]+$/
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-
-      setSalaryMin(inputValue.replace(",", ""))
+      setSalaryMin(inputValue.replace(',', ''))
     }
-
   }
   const handleChangesalaryMax = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const inputValue = e.target.value.replace(",", "")
-    const reg = /[0-9]+$/;
+    const inputValue = e.target.value.replace(',', '')
+    const reg = /[0-9]+$/
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-      setSalaryMax(inputValue.replace(",", ""))
-
+      setSalaryMax(inputValue.replace(',', ''))
     }
   }
 
@@ -97,7 +94,6 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
         return Math.round(value * VND_TO_USD)
       })
       return setSalary(convertedValue)
-
     } else {
       convertedValue = (salary as number[]).map((value) => {
         console.log('value', value * USD_TO_VND)
@@ -147,38 +143,9 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           />
         </RadioGroup>
       </FormControl>
-      {/* <div
-        className="rangeSalary"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          margin: '12px 16px',
-        }}
-      >
-        <p style={{ flex: '3' }}>
-          Lương từ
-          <span style={{ color: 'black', fontWeight: '600', margin: '0 4px' }}>
-            {salary[0].toLocaleString()}
-          </span>
-          đến
-          <span style={{ color: 'black', fontWeight: '600', margin: '0 4px' }}>
-            {salary[1].toLocaleString()}
-          </span>
-        </p>
-      </div>
-      <Slider
-        getAriaLabel={() => 'Minimum distance'}
-        value={salary}
-        onChange={handleChange}
-        valueLabelDisplay="auto"
-        getAriaValueText={valuetext}
-        min={moneyType === 1 ? 0 : 0}
-        max={moneyType === 1 ? 100000000 : 4300}
-        step={moneyType === 1 ? 1000000 : 100}
-        sx={{ width: '80%', margin: '0 auto' }}
-      /> */}
+
       <Space size={50} style={{ marginTop: 10 }}>
-        <Space direction='vertical'>
+        <Space direction="vertical">
           <Typography
             sx={styleLabel}
             variant="body1"
@@ -187,11 +154,18 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           >
             Lương tối thiểu*:
           </Typography>
-          <Input style={{ height: 40 }} maxLength={15} placeholder="Luong toi thieu" onChange={handleChangesalaryMin} value={new Intl.NumberFormat('en-US').format(
-            Number(salaryMin.toString().replace(",", "")))} />
+          <Input
+            style={{ height: 40 }}
+            maxLength={15}
+            placeholder="Luong toi thieu"
+            onChange={handleChangesalaryMin}
+            value={new Intl.NumberFormat('en-US').format(
+              Number(salaryMin.toString().replace(',', ''))
+            )}
+          />
         </Space>
 
-        <Space direction='vertical'>
+        <Space direction="vertical">
           <Typography
             sx={styleLabel}
             variant="body1"
@@ -200,8 +174,15 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
           >
             Lương tối đa *:
           </Typography>
-          <Input style={{ height: 40 }} maxLength={15} placeholder="Luong toi da" onChange={handleChangesalaryMax} value={new Intl.NumberFormat('en-US').format(
-            Number(salaryMax.toString().replace(",", "")))} />
+          <Input
+            style={{ height: 40 }}
+            maxLength={15}
+            placeholder="Luong toi da"
+            onChange={handleChangesalaryMax}
+            value={new Intl.NumberFormat('en-US').format(
+              Number(salaryMax.toString().replace(',', ''))
+            )}
+          />
         </Space>
       </Space>
     </Box>
