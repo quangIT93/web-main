@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import moment, { Moment } from 'moment'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import { Space, Tooltip } from 'antd'
+import { Space, Tooltip, message } from 'antd'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
@@ -25,6 +25,8 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
   const [dataApplied, setDataApplied] = useState<any>(null)
   const [newOld, setnewOld] = React.useState('Mới nhất')
   const [count, setCount] = useState(5)
+
+  const [messageApi, contextHolder] = message.useMessage()
 
   const getAllPending = async (newCount: number) => {
     try {
@@ -60,10 +62,34 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
     setnewOld(event.target.value)
   }
 
+  const validCount = () => {
+    if (dataApplied.length < count) {
+      return {
+        message: 'Đã hết công việc để hiển thị',
+        checkForm: false,
+      }
+    }
+    return {
+      message: '',
+      checkForm: true,
+    }
+  }
+
   const handleClickAddItem = async () => {
-    const newCount = count + 4
-    setCount(newCount)
-    await getAllPending(newCount)
+    const newCount = count + 6
+    const { message, checkForm } = validCount()
+    setnewOld('Mới nhất')
+    if (!checkForm) {
+      setCount(14)
+      await messageApi.open({
+        type: 'error',
+        content: message,
+      })
+      await getAllPending(20)
+    } else {
+      setCount(newCount)
+      await getAllPending(newCount)
+    }
   }
 
   // click card
@@ -96,6 +122,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
   }, [newOld, count])
   return (
     <>
+      {contextHolder}
       <Box
         sx={{
           display: 'flex',

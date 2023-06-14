@@ -7,28 +7,36 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 //@ts-ignore
 import { styleLabel } from '#components/Post/CssPost'
 
-const EditPostPeriodDate = () => {
-  const [isPeriodDate, setIsPeriodDate] = useState<number>(1)
+interface IEditPostPeriodDate {
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
+  editDataPosted: any
+}
+
+const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
+  const { setEditDataPosted, editDataPosted } = props
+
+  const [isDatePeriod, setIsPeriodDate] = useState<number>(1)
 
   const handleChangePeriodDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPeriodDate(Number(e.target.value))
+    setEditDataPosted((preValue: any) => {
+      return {
+        ...preValue,
+        isDatePeriod: Number(e.target.value),
+      }
+    })
   }
 
-  return (
+  return editDataPosted ? (
     <FormControl sx={{ marginTop: '24px' }}>
-      <FormLabel
-        id="demo-row-radio-buttons-group-label"
-        component="legend"
-        sx={styleLabel}
-      >
+      <FormLabel id="limit-time" component="legend" sx={styleLabel}>
         Thời gian làm việc *:
       </FormLabel>
       <RadioGroup
         row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
+        aria-labelledby="limit-time"
+        name="limit-time"
         onChange={handleChangePeriodDate}
-        value={isPeriodDate}
+        value={Number(editDataPosted?.isDatePeriod)}
       >
         <FormControlLabel
           value={0}
@@ -44,6 +52,8 @@ const EditPostPeriodDate = () => {
         />
       </RadioGroup>
     </FormControl>
+  ) : (
+    <></>
   )
 }
 

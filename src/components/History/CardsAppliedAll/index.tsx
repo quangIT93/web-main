@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import moment, { Moment } from 'moment'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import { Space, Tooltip } from 'antd'
+import { Space, Tooltip, message } from 'antd'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
@@ -26,6 +26,8 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   const [newOld, setnewOld] = React.useState('Mới nhất')
   const [count, setCount] = useState(5)
 
+  const [messageApi, contextHolder] = message.useMessage()
+
   const getAllApproved = async (newCount: number) => {
     try {
       const result = await historyApplicator.getAllSubmitedApplied(
@@ -33,7 +35,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
         newCount,
         0
       )
-      console.log('result', result)
+
       if (result) {
         setDataApplied(result.data)
       }
@@ -60,10 +62,34 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
     setnewOld(event.target.value)
   }
 
+  const validCount = () => {
+    if (dataApplied.length < count) {
+      return {
+        message: 'Đã hết công việc để hiển thị',
+        checkForm: false,
+      }
+    }
+    return {
+      message: '',
+      checkForm: true,
+    }
+  }
+
   const handleClickAddItem = async () => {
-    const newCount = count + 4
-    setCount(newCount)
-    await getAllApproved(newCount)
+    const newCount = count + 6
+    const { message, checkForm } = validCount()
+    setnewOld('Mới nhất')
+    if (!checkForm) {
+      setCount(14)
+      await messageApi.open({
+        type: 'error',
+        content: message,
+      })
+      await getAllApproved(20)
+    } else {
+      setCount(newCount)
+      await getAllApproved(newCount)
+    }
   }
 
   // click card
@@ -90,12 +116,12 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
 
         return 0
       })
-
       setDataApplied(sorted)
     }
   }, [newOld, count])
   return (
     <>
+      {contextHolder}
       <Box
         sx={{
           display: 'flex',

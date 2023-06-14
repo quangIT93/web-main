@@ -8,7 +8,10 @@ import FormLabel from '@mui/material/FormLabel'
 import siteApi from 'api/siteApi'
 import { AxiosResponse } from 'axios'
 
-interface IEditPostTypeJob {}
+interface IEditPostTypeJob {
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
+  editDataPosted: any
+}
 
 const styleLabel = {
   fontWeight: 600,
@@ -16,8 +19,9 @@ const styleLabel = {
 }
 
 const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
+  const { editDataPosted, setEditDataPosted } = props
+
   const [jobTypes, setJobTypes] = useState<AxiosResponse | null>(null)
-  const [typeJob, setTypeJob] = useState<number>(1)
 
   const getTypeJob = async () => {
     const result = await siteApi.getJobType()
@@ -30,6 +34,14 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
     getTypeJob()
   }, [])
 
+  const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('e.target.value', e.target.value)
+    setEditDataPosted((preValue: any) => ({
+      ...preValue,
+      jobTypeId: Number(e.target.value),
+    }))
+  }
+
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>
       <FormLabel id="editPostTypeJob" sx={styleLabel}>
@@ -39,8 +51,12 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
         row
         aria-labelledby="editPostTypeJob"
         name="editPostTypeJob"
-        // value={typeJob}
-        // onChange={handleChaneTypeJob}
+        value={Number(
+          !editDataPosted?.jobTypeId
+            ? editDataPosted?.job_type?.job_type_id
+            : editDataPosted?.jobTypeId
+        )}
+        onChange={handleChaneTypeJob}
         sx={{
           display: 'flex',
           flexDirection: 'column',
