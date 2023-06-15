@@ -39,7 +39,6 @@ const EditSalaryType: React.FC<ISalaryType> = (props) => {
     getSalaryType()
   }, [])
 
-  console.log('salary', salary)
   return (
     <Box sx={{ marginTop: '24px' }}>
       <FormControl sx={{ width: '100%' }}>

@@ -58,7 +58,7 @@ const EditPostNumberPhone: React.FC<IEditPostNumberPhone> = (props) => {
     color: '#000000',
   }
   return (
-    <Box>
+    <Box sx={{ marginTop: '24px' }}>
       <Typography
         sx={styleLabel}
         variant="body1"

@@ -54,10 +54,11 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             id="modal-modal-title"
             variant="h6"
             component="h4"
-            sx={{ margin: '24px 0', fontSize: "15px" }}
+            sx={{ margin: '24px 0', fontSize: '15px' }}
           >
             Bạn có thể theo dõi bài đăng tuyển của mình thông qua:
           </Typography>
+
           {/* <h4
             style={{ color: '#0d99ff ', textAlign: 'center', margin: '12px' }}
           >
@@ -77,7 +78,10 @@ const ModalPost: React.FC<IModalPost> = (props) => {
               src={require('../../../img/langdingPage/QRcode-appstore.png')}
             />
           </div>
-          <div className="div-link-app" style={{ justifyContent: "space-around" }}>
+          <div
+            className="div-link-app"
+            style={{ justifyContent: 'space-around' }}
+          >
             <Link
               to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
               target="_blank"
@@ -107,8 +111,11 @@ const ModalPost: React.FC<IModalPost> = (props) => {
               className="btn-apply"
               type={'primary'}
               style={{
-                width: 320, marginTop: 10, height: 40, fontWeight: "bold",
-                backgroundColor: "#0d99ff"
+                width: 320,
+                marginTop: 10,
+                height: 40,
+                fontWeight: 'bold',
+                backgroundColor: '#0d99ff',
               }}
             >
               Tiếp tục đăng bài

@@ -97,7 +97,9 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
       cata.parent_category_id,
       cata.child_category_id,
     ])
-    setDisable(true)
+    if (dataPost.length === 2) {
+      setDisable(true)
+    }
     setDefaultValue(array)
   }, [])
 

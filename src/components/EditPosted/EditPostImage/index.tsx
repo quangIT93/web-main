@@ -27,37 +27,6 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([])
   const [selectedImages, setSelectedImages] = React.useState<any[]>([])
 
-  // useEffect(() => {
-  //   setSelectedImages(
-  //     editDataPosted?.images?.map((image: any) => {
-  //       return image.image
-  //     })
-  //   )
-  // }, [editDataPosted])
-
-  // useEffect(() => {
-  //   const imageUrls = [
-  //     'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/35924/1686651928327-651ae6ef-89d3-41dd-8dcc-6f1a8a9a78fb.jpg',
-  //     'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/35924/1686651928327-651ae6ef-89d3-41dd-8dcc-6f1a8a9a78fb.jpg',
-  //   ]
-  //   const fetchImageFiles = async () => {
-  //     if (selectedFiles.length > 0) return
-
-  //     const files = await Promise.all(
-  //       imageUrls.map(async (imageUrl) => {
-  //         const response = await axios.get(imageUrl, { responseType: 'blob' })
-  //         const blob = response.data
-  //         const file = new File([blob], 'image.jpg', { type: blob.type })
-  //         return file
-  //       })
-  //     )
-
-  //     setSelectedFiles(files)
-  //   }
-
-  //   fetchImageFiles()
-  // }, [selectedImages])
-
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 840,
@@ -72,17 +41,15 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       event.target.files ? event.target.files : []
     )
 
+    // console.log('imagesUpload', imagesUpload)
+    // console.log('selectedFiles', selectedFiles)
+    // console.log('selectedImages', selectedImages)
+
     const imagesToCheck =
       selectedFiles.length + imagesUpload.length > 5
         ? imagesUpload.slice(0, 5 - selectedImages?.length)
         : imagesUpload
-    console.log('imageTocheck', imagesToCheck)
-    console.log(
-      ' imagesUpload.slice(0, 5 - selectedImages.length)',
-      imagesUpload.slice(0, 5 - selectedImages?.length)
-    )
-    console.log(' imagesToCheck', imagesToCheck)
-    console.log(' imagesToCheck.length', imagesToCheck.length)
+
     if (imagesToCheck.length > 0) {
       const validateImagesReply = validatePostImages(imagesToCheck)
       if (validateImagesReply.isError) {
@@ -102,8 +69,8 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
             })
           )
 
-          console.log('Original image ::: ', imagesUpload)
-          console.log('Compressed image ::: ', compressedImages)
+          // console.log('Original image ::: ', imagesUpload)
+          // console.log('Compressed image ::: ', compressedImages)
 
           setSelectedFiles((prevState) => [
             ...prevState,
@@ -172,10 +139,6 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     }
   }, [])
 
-  console.log('image', selectedImages)
-  console.log('file', selectedFiles)
-  // console.log('file', selectedFiles.)
-
   const handleDeleteImage = (index: number, id: number | null) => {
     console.log('index', index)
     console.log('id', id)
@@ -199,20 +162,16 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
         images: updatedFiles,
       }
     })
-
-    if (id) {
+    console.log('images', editDataPosted.deletedImages)
+    console.log('id', id)
+    if (id && !editDataPosted.deletedImages.includes(id)) {
       setEditDataPosted((preValue: any) => ({
         ...preValue,
-        deletedImages: [
-          ...preValue.deletedImages,
-          { id: id, image: selectedImages[index]?.image },
-        ],
+        deletedImages: [...preValue.deletedImages, { id: id }],
       }))
     }
-
-    console.log('selectedImagesIndex', typeof selectedImages[index].image)
   }
-  console.log('editDataPosted', editDataPosted)
+
   return (
     <div className="edit-post_image">
       <Box p="0rem 0">
