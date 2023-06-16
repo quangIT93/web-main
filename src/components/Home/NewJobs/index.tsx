@@ -68,7 +68,10 @@ interface PostNewest {
   created_at_text: string
   bookmarked: boolean
 }
-const NewJobs: React.FC = () => {
+interface StateProps {
+  handleLoadingW: () => void
+}
+const NewJobs: React.FC<StateProps> = ({ handleLoadingW = () => { } }) => {
   const [page, setPage] = React.useState(1)
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
 
@@ -136,6 +139,7 @@ const NewJobs: React.FC = () => {
 
         // set loading
         setOpenBackdrop(false)
+        handleLoadingW()
       }
     } catch (error) {
       setOpenBackdrop(false)
@@ -359,7 +363,7 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-            onClick={handleClose}
+          //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

@@ -91,27 +91,27 @@ const HistoryPost = () => {
       {ItemLeft === dataItem[0].id - 1
         ? dataItem[0].title
         : ItemLeft === dataItem[1].id - 1
-        ? dataItem[1].title
-        : dataItem[2].title}
+          ? dataItem[1].title
+          : dataItem[2].title}
     </Typography>,
     <Typography key="3" color="text.primary">
       {activeChild === '0-0'
         ? 'Tất cả'
         : activeChild === '0-1'
-        ? 'Đã được duyệt'
-        : activeChild === '0-2'
-        ? 'Đang chờ duyệt'
-        : ''}
+          ? 'Đã được duyệt'
+          : activeChild === '0-2'
+            ? 'Đang chờ duyệt'
+            : ''}
 
       {activeChild === '1-0' ? 'Tất cả' : ''}
 
       {activeChild === '2-0'
         ? 'Tất cả'
         : activeChild === '2-1'
-        ? 'Chưa đóng'
-        : activeChild === '2-2'
-        ? 'Đã đóng'
-        : ''}
+          ? 'Chưa đóng'
+          : activeChild === '2-2'
+            ? 'Đã đóng'
+            : ''}
     </Typography>,
   ]
   const CardsPost = useMemo(() => {
@@ -170,15 +170,14 @@ const HistoryPost = () => {
         </Box>
         <Box sx={{ display: 'flex', gap: '12px' }}>
           <Box className="history-post_left">
-            <Collapse accordion bordered={false} ghost={true}>
+            <Collapse defaultActiveKey={['0', '0']} accordion bordered={false} ghost={true}>
               {dataItem.map((item: any, index: number) => (
                 <Panel
                   header={
                     <div
                       onClick={() => handleClickSubTitle(index)}
-                      className={`${
-                        ItemLeft === index ? 'activeItem' : ''
-                      } panel-title_text`}
+                      className={`${ItemLeft === index ? 'activeItem' : ''
+                        } panel-title_text`}
                     >
                       {item.title}
                     </div>

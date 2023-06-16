@@ -23,6 +23,8 @@ import historyRecruiter from 'api/historyRecruiter'
 import { StatePropsCloseSlider } from 'pages/Home'
 import { useHomeState } from '../Home/HomeState'
 import Footer from '../../components/Footer/index'
+import 'intl'
+import 'intl/locale-data/jsonp/en'
 
 // import icon
 
@@ -40,6 +42,7 @@ import RejectedApplication from '#components/CandidateDetail/RejectedApplication
 import SeenApplication from '#components/CandidateDetail/SeenApplication'
 import ApprovedApplication from '#components/CandidateDetail/ApprovedApplication'
 import RecuitApplication from '#components/CandidateDetail/RecuitApplication'
+import CVItem from '#components/Profile/CV'
 import './style.scss'
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -89,6 +92,7 @@ const CandidateDetail: React.FC = () => {
     // 1
     dataCandidate?.applicationProfile?.application_status
   )
+  const [open, setOpen] = useState(false)
   console.log('search')
   // when dataCandidate changed, statusApplication change
   useEffect(() => {
@@ -172,6 +176,8 @@ const CandidateDetail: React.FC = () => {
     return null
   }, [statusApplication, setStatusApplication])
 
+
+
   return (
     <div className="candidate-detail">
       <Navbar {...statePropsCloseSlider} />
@@ -220,7 +226,7 @@ const CandidateDetail: React.FC = () => {
                       variant="h6"
                       component="div"
                       sx={{
-                        fontSize: '15px',
+                        fontSize: '18px',
                         margin: 0,
                         fontWeight: 'bold',
                       }}
@@ -279,8 +285,13 @@ const CandidateDetail: React.FC = () => {
                       }}
                     />
                     <Typography variant="body2" color="text.secondary">
-                      {dataPost?.salary_min} - {dataPost?.salary_max}/
-                      {dataPost?.salary_type}
+                      {new Intl.NumberFormat('en-US').format(
+                        dataPost?.salary_min
+                      )}{` ${dataPost?.money_type_text} `}
+                      -{' '}
+                      {new Intl.NumberFormat('en-US').format(
+                        dataPost?.salary_max
+                      ) + ` ${dataPost?.money_type_text} ` + `/${dataPost?.salary_type}`}
                     </Typography>
                   </div>
                   <div
@@ -323,6 +334,7 @@ const CandidateDetail: React.FC = () => {
                       borderRadius: '15px',
                       color: '#ffffff',
                       marginLeft: '100px',
+                      fontStyle: "italic"
                     }}
                   >
                     Đang tuyển
@@ -335,6 +347,7 @@ const CandidateDetail: React.FC = () => {
                       borderRadius: '15px',
                       color: '#ffffff',
                       marginLeft: '100px',
+                      fontStyle: "italic"
                     }}
                   >
                     Đã đóng
@@ -346,6 +359,7 @@ const CandidateDetail: React.FC = () => {
                       padding: '4px 12px',
                       borderRadius: '15px',
                       color: '#ffffff',
+                      fontStyle: "italic"
                     }}
                   >
                     Không chấp nhận
@@ -376,7 +390,8 @@ const CandidateDetail: React.FC = () => {
               </p>
             </Space>
           </Card>
-          <Box sx={{ marginTop: '36px' }}>
+          <p style={{ marginTop: 20, fontSize: 20, fontWeight: "bold", textDecoration: "underline" }}>Hồ sơ ứng viên</p>
+          <Box sx={{ marginTop: '10px' }}>
             <div className="div-profile-avatar">
               <div className="div-avatar">
                 <div
@@ -389,30 +404,10 @@ const CandidateDetail: React.FC = () => {
                   <Badge
                     overlap="circular"
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                    badgeContent={
-                      <div style={{ position: 'relative' }}>
-                        <SmallAvatar
-                          alt="Remy Sharp"
-                          src="/logoH2.png"
-                          sizes="10"
-                          // onClick={handleAvatarClick} // Xử lý click vào SmallAvatar
-                          sx={{ cursor: 'pointer' }}
-                        />
-
-                        <input
-                          id="avatar-input"
-                          type="file"
-                          name="images"
-                          hidden
-                          accept="image/*"
-                          // onChange={handleImageChange}
-                        />
-                      </div>
-                    }
                   >
                     <Avatar
                       style={{ height: '70px', width: '70px' }}
-                      alt="Ảnh lỗi"
+                      alt="U"
                       src={
                         dataCandidate?.applicationProfile?.avatar
                           ? dataCandidate?.applicationProfile?.avatar
@@ -426,16 +421,7 @@ const CandidateDetail: React.FC = () => {
                         ? dataCandidate?.applicationProfile?.name
                         : 'Chưa cập nhật'}
                     </h2>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        marginTop: '5px',
-                      }}
-                    >
-                      <img src="/images/profile/HiCoin.png" alt="ảnh" />
-                      <p style={{ marginLeft: '5px' }}>0</p>
-                    </div>
+
                   </div>
                 </div>
                 <Box>
@@ -495,8 +481,8 @@ const CandidateDetail: React.FC = () => {
                   <p>
                     {dataCandidate?.applicationProfile?.birthday
                       ? moment(
-                          new Date(dataCandidate?.applicationProfile?.birthday)
-                        ).format('DD/MM/yyyy')
+                        new Date(dataCandidate?.applicationProfile?.birthday)
+                      ).format('DD/MM/yyyy')
                       : 'Chưa cập nhật'}
                   </p>
                   <p>
@@ -569,17 +555,41 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
+                <h3>CV/ Resume</h3>
+              </div>
+              <Space wrap className="item-info-work">
+                {
+                  dataCandidate?.applicationProfile?.cv_url ?
+                    <CVItem
+                      url={dataCandidate?.applicationProfile?.cv_url}
+                      open={open}
+                      setOpen={setOpen}
+                      isProfile={false}
+                    /> : <>Chưa cập nhật</>
+                }
+
+              </Space>
+            </div>
+
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
                 <h3>Lĩnh vực quan tâm</h3>
               </div>
               <Space wrap className="item-info-work">
                 {dataCandidate?.categories?.length !== 0
                   ? dataCandidate?.categories?.map(
-                      (item: ICategories, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item.child_category}
-                        </Button>
-                      )
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
                     )
+                  )
                   : 'Chưa cập nhật'}
               </Space>
             </div>
@@ -596,12 +606,12 @@ const CandidateDetail: React.FC = () => {
               <Space wrap className="item-info-work">
                 {dataCandidate?.locations?.length !== 0
                   ? dataCandidate?.locations?.map(
-                      (item: any, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item?.district}
-                        </Button>
-                      )
+                    (item: any, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item?.district}
+                      </Button>
                     )
+                  )
                   : 'Chưa cập nhật'}
               </Space>
             </div>

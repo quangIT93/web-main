@@ -14,6 +14,8 @@ import {
 } from '@ant-design/icons'
 import { useSearchParams } from 'react-router-dom'
 import { Skeleton } from 'antd'
+import 'intl'
+import 'intl/locale-data/jsonp/en'
 
 // api
 import historyRecruiter from 'api/historyRecruiter'
@@ -112,8 +114,8 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
   useEffect(() => {
     if (dataPosted) {
       const sorted = [...dataPosted]?.sort((a: any, b: any): any => {
-        const dateA = parseInt(a.created_at_text[0])
-        const dateB = parseInt(b.created_at_text[0])
+        const dateA = parseInt(a.created_at)
+        const dateB = parseInt(b.created_at)
 
         if (newOld === 'Mới nhất') {
           return dateB - dateA // Sắp xếp từ cũ đến mới
@@ -164,7 +166,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
       </Box>
 
       {!showDetailPosted ? (
-        <Box>
+        <div className='history-post'>
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
             <Skeleton loading={loading} active>
               {dataPosted?.map((posted: any, i: number) => (
@@ -217,7 +219,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                             variant="h6"
                             component="div"
                             sx={{
-                              fontSize: '15px',
+                              fontSize: '18px',
                               margin: 0,
                               fontWeight: 'bold',
                             }}
@@ -276,8 +278,13 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                             }}
                           />
                           <Typography variant="body2" color="text.secondary">
-                            {posted.salary_min} - {posted.salary_max}/
-                            {posted.salary_type}
+                            {new Intl.NumberFormat('en-US').format(
+                              posted?.salary_min
+                            )}{` ${posted?.money_type_text} `}
+                            -{' '}
+                            {new Intl.NumberFormat('en-US').format(
+                              posted?.salary_max
+                            ) + ` ${posted?.money_type_text} ` + `/${posted?.salary_type}`}
                           </Typography>
                         </div>
                         <div
@@ -312,8 +319,8 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                         }}
                       >
                         Đã đăng vào:{' '}
-                        {posted?.start_date != null
-                          ? moment(posted?.start_date).format('DD/MM/YY')
+                        {posted?.created_at != null
+                          ? moment(posted?.created_at).format('DD/MM/YY')
                           : 'Chưa cập nhật'}
                       </p>
 
@@ -336,6 +343,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                             borderRadius: '15px',
                             color: '#ffffff',
                             marginLeft: '30px',
+                            fontStyle: "italic"
                           }}
                         >
                           Đang tuyển
@@ -348,6 +356,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                             borderRadius: '15px',
                             color: '#ffffff',
                             marginLeft: '30px',
+                            fontStyle: "italic"
                           }}
                         >
                           Đã đóng
@@ -409,7 +418,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
               Xem thêm
             </Button>
           </Box>
-        </Box>
+        </div>
       ) : (
         <DetailPosted detailPosted={detailPosted} />
       )}

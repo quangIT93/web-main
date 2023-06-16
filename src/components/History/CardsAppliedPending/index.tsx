@@ -10,7 +10,9 @@ import { Box, Typography, MenuItem, TextField, Button } from '@mui/material'
 import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons'
 
 import { Skeleton } from 'antd'
-import { Col, Row } from 'antd'
+
+import 'intl'
+import 'intl/locale-data/jsonp/en'
 
 // import data
 import historyApplicator from 'api/historyApplicator'
@@ -105,8 +107,8 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
   useEffect(() => {
     if (dataApplied) {
       const sorted = [...dataApplied]?.sort((a: any, b: any): any => {
-        const dateA = parseInt(a.created_at_text[0])
-        const dateB = parseInt(b.created_at_text[0])
+        const dateA = parseInt(a.created_at)
+        const dateB = parseInt(b.created_at)
 
         if (newOld === 'Mới nhất') {
           return dateB - dateA // Sắp xếp từ cũ đến mới
@@ -261,8 +263,13 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                           }}
                         />
                         <Typography variant="body2" color="text.secondary">
-                          {posted.salary_min} - {posted.salary_max}/
-                          {posted.salary_type}
+                          {new Intl.NumberFormat('en-US').format(
+                            posted?.salary_min
+                          )}{` ${posted?.money_type_text} `}
+                          -{' '}
+                          {new Intl.NumberFormat('en-US').format(
+                            posted?.salary_max
+                          ) + ` ${posted?.money_type_text} ` + `/${posted?.salary_type}`}
                         </Typography>
                       </div>
                       <div
@@ -299,8 +306,8 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                       }}
                     >
                       Đã đăng vào:{' '}
-                      {posted?.start_date != null
-                        ? moment(posted?.start_date).format('DD/MM/YY')
+                      {posted?.created_at != null
+                        ? moment(posted?.created_at).format('DD/MM/YY')
                         : 'Chưa cập nhật'}
                     </p>
                     {posted?.application_status <= 1 ? (

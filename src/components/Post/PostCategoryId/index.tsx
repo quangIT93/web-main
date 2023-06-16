@@ -106,7 +106,6 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-
               value: parentCategory.parent_category_id,
               label: parentCategory.parent_category,
               children: parentCategory.childs.map((child: any) => {
@@ -128,7 +127,6 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
                 }
               }),
             }))
-
             : []
         }
         onChange={onChange}

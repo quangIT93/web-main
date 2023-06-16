@@ -14,6 +14,8 @@ import {
 } from '@ant-design/icons'
 import { useSearchParams } from 'react-router-dom'
 import { Skeleton } from 'antd'
+import 'intl'
+import 'intl/locale-data/jsonp/en'
 
 // api
 import historyRecruiter from 'api/historyRecruiter'
@@ -115,8 +117,8 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
   useEffect(() => {
     if (dataPosted) {
       const sorted = [...dataPosted]?.sort((a: any, b: any): any => {
-        const dateA = parseInt(a.created_at_text[0])
-        const dateB = parseInt(b.created_at_text[0])
+        const dateA = parseInt(a.created_at)
+        const dateB = parseInt(b.created_at)
 
         if (newOld === 'Mới nhất') {
           return dateB - dateA // Sắp xếp từ cũ đến mới
@@ -132,6 +134,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
   }, [newOld])
 
   console.log('render cardPostedAll')
+  console.log("data posted: ", dataPosted)
   return (
     <>
       {contextHolder}
@@ -167,7 +170,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
       </Box>
 
       {!showDetailPosted ? (
-        <Box>
+        <div className='history-post'>
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
             <Skeleton loading={loading} active>
               {dataPosted?.map((posted: any, i: number) => (
@@ -220,7 +223,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                             variant="h6"
                             component="div"
                             sx={{
-                              fontSize: '15px',
+                              fontSize: '18px',
                               margin: 0,
                               fontWeight: 'bold',
                             }}
@@ -228,7 +231,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                             {posted.company_name}
                           </Typography>
                         </Tooltip>
-                        <Tooltip placement="top" title="j j  j jj">
+                        <Tooltip placement="top" title={posted.title}>
                           <Typography
                             gutterBottom
                             variant="h1"
@@ -279,8 +282,13 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                             }}
                           />
                           <Typography variant="body2" color="text.secondary">
-                            {posted.salary_min} - {posted.salary_max}/
-                            {posted.salary_type}
+                            {new Intl.NumberFormat('en-US').format(
+                              posted?.salary_min
+                            )}{` ${posted?.money_type_text} `}
+                            -{' '}
+                            {new Intl.NumberFormat('en-US').format(
+                              posted?.salary_max
+                            ) + ` ${posted?.money_type_text} ` + `/${posted?.salary_type}`}
                           </Typography>
                         </div>
                         <div
@@ -315,8 +323,8 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                         }}
                       >
                         Đã đăng vào:{' '}
-                        {posted?.start_date != null
-                          ? moment(posted?.start_date).format('DD/MM/YY')
+                        {posted?.created_at != null
+                          ? moment(posted?.created_at).format('DD/MM/YY')
                           : 'Chưa cập nhật'}
                       </p>
 
@@ -339,6 +347,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                             borderRadius: '15px',
                             color: '#ffffff',
                             marginLeft: '30px',
+                            fontStyle: "italic"
                           }}
                         >
                           Đang tuyển
@@ -351,6 +360,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                             borderRadius: '15px',
                             color: '#ffffff',
                             marginLeft: '30px',
+                            fontStyle: "italic"
                           }}
                         >
                           Đã đóng
@@ -412,7 +422,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
               Xem thêm
             </Button>
           </Box>
-        </Box>
+        </div>
       ) : (
         <DetailPosted detailPosted={detailPosted} />
       )}

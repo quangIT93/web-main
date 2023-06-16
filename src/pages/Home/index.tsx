@@ -35,7 +35,9 @@ export interface StatePropsCloseSlider {
   setOpenModalLogin: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+
 const Home: React.FC = () => {
+
   const [valueJob, setValueJob] = React.useState('Tất cả')
 
   const [hideSlider, setHideSlider] = useState<boolean>(false)
@@ -58,6 +60,17 @@ const Home: React.FC = () => {
     height,
     setOpenModalLogin,
   }
+
+  const [isLoading, setIsLoading] = React.useState(false);
+
+
+
+
+  const handleLoading = () => {
+    setIsLoading(true);
+  }
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -121,8 +134,11 @@ const Home: React.FC = () => {
   const handleClickShowModalLogin = (openModal: boolean) => {
     setOpenModalLogin(openModal)
   }
+  console.log(isLoading)
 
   return (
+
+
     <div className="home">
       <Navbar {...statePropsCloseSlider} />
       {!openCollapse && height < 70 ? (
@@ -147,14 +163,14 @@ const Home: React.FC = () => {
         />
         <Breadcrumbs valueJob={valueJob} />
 
-        <NewJobs />
+        <NewJobs handleLoadingW={handleLoading} />
         <ThemesJob />
       </div>
       <Footer windowWidth={windowWidth} />
       {/* <ModalLogin
-        openModalLogin={openModalLogin}
-        setOpenModalLogin={setOpenModalLogin}
-      /> */}
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        /> */}
     </div>
   )
 }

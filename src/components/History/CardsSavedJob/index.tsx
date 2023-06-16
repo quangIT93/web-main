@@ -9,11 +9,15 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { Box, Typography, MenuItem, TextField, Button } from '@mui/material'
 import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons'
 
+
 import { Skeleton } from 'antd'
-import { Col, Row } from 'antd'
+
+import 'intl'
+import 'intl/locale-data/jsonp/en'
 
 // import data
 import historyBookmark from 'api/historyBookmark'
+import bookMarkApi from 'api/bookMarkApi'
 
 interface ICardsApplied {
   activeChild: string
@@ -34,7 +38,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
       console.log('resultpostSave', result)
       if (result) {
 
-        setDataBookmarks(result.data)
+        setDataBookmarks(result.data.reverse())
       }
     } catch (error) {
       console.log('error', error)
@@ -99,22 +103,36 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
     window.open(`/post-detail?post-id=${bookmarkId}`)
   }
 
+  const handleDeleteBookmark = async (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    index: number, bookmarkId: number
+  ) => {
+    const result = await bookMarkApi.deleteBookMark(bookmarkId)
+
+    if (result) {
+      setDataBookmarks((prev: any) => {
+        const newData = [...prev]
+        newData.splice(index, 1)
+        return newData
+      }
+      )
+    }
+  }
+
   // Sắp xếp mảng dữ liệu khi state `oldDate` thay đổi
   useEffect(() => {
     if (dataBookmarks) {
       const sorted = [...dataBookmarks]?.sort((a: any, b: any): any => {
-        const dateA = parseInt(a.created_at_text[0])
-        const dateB = parseInt(b.created_at_text[0])
+        const dateA = parseInt(a.created_at)
+        const dateB = parseInt(b.created_at)
 
-        if (newOld === 'Mới nhất') {
+        if (newOld == 'Mới nhất') {
           return dateB - dateA // Sắp xếp từ cũ đến mới
         } else if (newOld === 'Cũ nhất') {
           return dateA - dateB // Sắp xếp từ mới đến cũ
         }
-
         return 0
       })
-
       setDataBookmarks(sorted)
     }
   }, [newOld, count])
@@ -152,7 +170,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
         </TextField>
       </Box>
 
-      <Box>
+      <div className='history-post'>
         <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
           <Skeleton loading={loading} active>
             {dataBookmarks?.map((dataBookmark: any, i: number) => (
@@ -172,10 +190,12 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                   margin: '8px 0',
                   cursor: 'pointer',
                 }}
-                onClick={(e) => handleClickCard(e, dataBookmark.id)}
+
                 key={i}
               >
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <div onClick={(e) => handleClickCard(e, dataBookmark.id)} style={{ display: 'flex', flexDirection: 'column' }}
+
+                >
                   <ImageListItem sx={{ flex: 1, display: 'flex' }}>
                     <img
                       src={`${dataBookmark.image}?w=164&h=164&fit=crop&auto=format`}
@@ -205,7 +225,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                             fontWeight: 'bold',
                           }}
                         >
-                          {dataBookmark.company_name}
+                          {dataBookmark.title}
                         </Typography>
                       </Tooltip>
                       <Tooltip placement="top" title="j j  j jj">
@@ -215,7 +235,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                           component="div"
                           sx={{ fontSize: '12px' }}
                         >
-                          {dataBookmark.title}
+                          {dataBookmark.company_name}
                         </Typography>
                       </Tooltip>
                       <div
@@ -259,8 +279,13 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                           }}
                         />
                         <Typography variant="body2" color="text.secondary">
-                          {dataBookmark.salary_min} - {dataBookmark.salary_max}/
-                          {dataBookmark.salary_type}
+                          {new Intl.NumberFormat('en-US').format(
+                            dataBookmark?.salary_min
+                          )}{` ${dataBookmark?.money_type_text} `}
+                          -{' '}
+                          {new Intl.NumberFormat('en-US').format(
+                            dataBookmark?.salary_max
+                          ) + ` ${dataBookmark?.money_type_text} ` + `/${dataBookmark?.salary_type}`}
                         </Typography>
                       </div>
                       <div
@@ -295,8 +320,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                       }}
                     >
                       Đã đăng vào:{' '}
-                      {dataBookmark?.start_date != null
-                        ? moment(dataBookmark?.start_date).format('DD/MM/YY')
+                      {dataBookmark?.created_at != null
+                        ? moment(dataBookmark?.created_at).format('DD/MM/YY')
                         : 'Chưa cập nhật'}
                     </p>
                     {dataBookmark?.status === 1 ? (
@@ -307,6 +332,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                           borderRadius: '15px',
                           color: '#ffffff',
                           marginLeft: '100px',
+                          fontStyle: "italic"
                         }}
                       >
                         Đang tuyển
@@ -319,6 +345,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                           borderRadius: '15px',
                           color: '#ffffff',
                           marginLeft: '100px',
+                          fontStyle: "italic"
                         }}
                       >
                         Đã đóng
@@ -331,13 +358,14 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                           borderRadius: '15px',
                           color: '#ffffff',
                           marginLeft: '100px',
+                          fontStyle: "italic"
                         }}
                       >
                         Không chấp nhận
                       </p>
                     )}
                   </Box>
-                </Box>
+                </div>
                 <Space
                   style={{
                     display: 'flex',
@@ -348,19 +376,23 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                   direction="vertical"
                   align="center"
                 >
-                  <BookmarkIcon
-                    sx={{
-                      top: 0,
-                      right: 0,
-                      color: '#0d99ff',
-                      fontSize: '32px',
-                    }}
-                  />
+
+                  <div onClick={(e) => handleDeleteBookmark(e, i, dataBookmark.id)}>
+                    <BookmarkIcon
+                      sx={{
+                        top: 0,
+                        right: 0,
+                        color: '#0d99ff',
+                        fontSize: '32px',
+                      }}
+                    />
+                  </div>
                   <img
                     className="img-resource-company"
                     src={dataBookmark.resource.company_icon}
                     alt="anh icon"
                   />
+
                   <p
                     style={{
                       fontSize: 13,
@@ -387,7 +419,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
             Xem thêm
           </Button>
         </Box>
-      </Box>
+      </div>
     </>
   )
 }
