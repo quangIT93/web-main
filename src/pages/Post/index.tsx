@@ -25,6 +25,9 @@ import EditText from '#components/Post/EditText'
 import PostNumberPhone from '#components/Post/PostNumberPhone'
 
 import PostCategoryId from '#components/Post/PostCategoryId'
+
+import PostSalaryType from '#components/Post/PostSalaryType'
+
 import Footer from '../../components/Footer/index'
 
 import './style.scss'
@@ -225,7 +228,7 @@ const Post: React.FC = () => {
     // NEW FIELD
     formData.append('email', formValues.email)
     // formData.append('companyResourceId', String(formValues.companyResourceId))
-    // formData.append('url', String(formValues.url))
+    // formData.append('url', Str1q 1q  1q  1q  1qing(formValues.url))
     formData.append('latitude', String(latitude))
     formData.append('longitude', String(longitude))
 
@@ -272,11 +275,11 @@ const Post: React.FC = () => {
     }
     if (salaryMax == 0 || salaryMin == 0) {
       return {
-        message: "Vui lòng nhập mức lương",
-        checkForm: false
+        message: 'Vui lòng nhập mức lương',
+        checkForm: false,
       }
     }
-    if (phoneNumber == "" || phoneNumber.length < 10) {
+    if (phoneNumber == '' || phoneNumber.length < 10) {
       return {
         message: 'Số điện thoại sai định dạng',
         checkForm: false,
@@ -376,18 +379,22 @@ const Post: React.FC = () => {
             categoriesId={categoriesId}
           />
 
-          <PostFilterSalary
-            setSalary={setSalary}
-            salary={salary}
+          <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
+
+          <PostSalaryType
             setMoneyType={setMoneyType}
             moneyType={moneyType}
+            salaryType={salaryType}
+          />
+
+          <PostFilterSalary
             salaryMin={salaryMin}
             setSalaryMin={setSalaryMin}
             salaryMax={salaryMax}
             setSalaryMax={setSalaryMax}
+            salaryType={salaryType}
           />
 
-          <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
           <PostNumberPhone
             phone={phoneNumber}
             setPhoneNumber={setPhoneNumber}

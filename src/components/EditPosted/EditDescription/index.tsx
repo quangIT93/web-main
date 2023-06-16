@@ -5,7 +5,20 @@ import TextField from '@mui/material/TextField'
 //@ts-ignore
 import { styleLabel } from '../CssEditPost'
 
-const EditDescription = () => {
+interface IEditDescription {
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
+  editDataPosted: any
+}
+
+const EditDescription: React.FC<IEditDescription> = (props) => {
+  const { setEditDataPosted, editDataPosted } = props
+
+  const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditDataPosted((preValue: any) => ({
+      ...preValue,
+      description: e.target.value,
+    }))
+  }
   return (
     <Box sx={{ marginTop: '24px' }}>
       <Typography
@@ -18,7 +31,8 @@ const EditDescription = () => {
       </Typography>
       <TextField
         // className={classes.textarea}
-        // onChange={handleChangeDescription}
+        value={editDataPosted?.description}
+        onChange={handleChangeDescription}
         sx={{ width: '100%', marginTop: '4px' }}
         multiline
         rows={6}

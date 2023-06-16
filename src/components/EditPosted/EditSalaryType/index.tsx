@@ -11,14 +11,18 @@ import { AxiosResponse } from 'axios'
 import siteApi from 'api/siteApi'
 
 interface ISalaryType {
-  salaryType: number
-  setSalaryType: React.Dispatch<React.SetStateAction<number>>
+  editDataPosted: any
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
 }
 
-const EditSalaryType = () => {
-  const [salaryType, setSalaryType] = useState<number | null>(null)
+const EditSalaryType: React.FC<ISalaryType> = (props) => {
+  const { editDataPosted, setEditDataPosted } = props
+
   const handleChangeSalaryType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSalaryType(Number(e.target.value))
+    setEditDataPosted((preValue: any) => ({
+      ...preValue,
+      salaryType: Number(e.target.value),
+    }))
   }
 
   const [salary, setSalary] = React.useState<AxiosResponse | null>(null)
@@ -34,6 +38,7 @@ const EditSalaryType = () => {
   React.useEffect(() => {
     getSalaryType()
   }, [])
+
   return (
     <Box sx={{ marginTop: '24px' }}>
       <FormControl sx={{ width: '100%' }}>
@@ -44,7 +49,7 @@ const EditSalaryType = () => {
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
           name="row-radio-buttons-group"
-          value={salaryType}
+          value={editDataPosted?.salaryType}
           onChange={handleChangeSalaryType}
           sx={{ display: 'flex', flexDirection: 'column' }}
         >

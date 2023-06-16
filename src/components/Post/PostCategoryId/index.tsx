@@ -18,13 +18,11 @@ const options: Option[] = [
   {
     label: 'Light',
     value: 'light',
-    children: new Array(20)
-      .fill(null)
-      .map((_, index) => ({
-        label: `Number ${index}`,
-        value: index,
-        disableCheckbox: true,
-      })),
+    children: new Array(20).fill(null).map((_, index) => ({
+      label: `Number ${index}`,
+      value: index,
+      disableCheckbox: true,
+    })),
   },
   {
     label: 'Bamboo',
@@ -91,7 +89,6 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     getCategories()
   }, [])
 
-  console.log('categoriesId', categoriesId)
   return (
     <Box sx={{ marginTop: '24px' }}>
       <Typography
