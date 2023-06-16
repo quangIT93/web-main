@@ -43,10 +43,10 @@ export interface FormValues {
   isDatePeriod: number
   startDate: number | null
   endDate: number | null
-  latitude: number
-  longitude: number
-  startTime: number
-  endTime: number
+  latitude: number | null
+  longitude: number | null
+  startTime: number | null
+  endTime: number | null
   isWorkingWeekend: number
   isRemotely: number
   salaryMin: number
@@ -88,7 +88,7 @@ const EditPosted = () => {
 
   const [dataPostById, setDataPostById] = useState<any>(null)
 
-  const [formValues, setFormValues] = useState<any>({
+  const [editDataPosted, setEditDataPosted] = useState<FormValues | null>({
     id: '',
     title: '',
     company_name: '',
@@ -120,17 +120,13 @@ const EditPosted = () => {
     deletedImages: [],
   })
 
-  const [editDataPosted, setEditDataPosted] = useState<FormValues | null>(
-    formValues
-  )
-
   const [openModalEditPost, setOpenModalEditPost] = React.useState(false)
 
   const postId = parseInt(searchParams.get('postId') ?? '')
 
   useEffect(() => {
     if (dataPostById) {
-      setFormValues((prevFormValues: any) => ({
+      setEditDataPosted((prevFormValues: any) => ({
         ...prevFormValues,
         id: dataPostById.id,
         isDatePeriod: dataPostById.is_date_period,
@@ -163,11 +159,12 @@ const EditPosted = () => {
     }
   }, [dataPostById])
 
-  React.useEffect(() => {
-    setEditDataPosted(formValues)
-  }, [formValues])
-
   const [messageApi, contextHolder] = message.useMessage()
+  const memoizedEditDataPosted = React.useMemo(
+    () => editDataPosted,
+    [editDataPosted]
+  )
+
   const getDataPosted = async () => {
     try {
       const result = await postApi.getPostbyId(postId)
@@ -363,34 +360,34 @@ const EditPosted = () => {
           <form action="">
             <EditPostJobCompany
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
             />
 
             <EditPostAddress
               dataPostById={dataPostById}
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
             />
 
             <EditPostImage
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
               setEditDataPosted={setEditDataPosted}
               dataPosted={dataPostById?.images}
             />
 
             <EditPostTypeJob
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
             />
 
             <EditPostPeriodDate
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
             />
             {editDataPosted?.isDatePeriod === 1 ? (
               <EditRecruitmentTime
                 setEditDataPosted={setEditDataPosted}
-                editDataPosted={editDataPosted}
+                editDataPosted={memoizedEditDataPosted}
               />
             ) : (
               <></>
@@ -398,7 +395,7 @@ const EditPosted = () => {
             {editDataPosted?.startTime ? (
               <EditStyleWork
                 setEditDataPosted={setEditDataPosted}
-                editDataPosted={editDataPosted}
+                editDataPosted={memoizedEditDataPosted}
               />
             ) : (
               <></>
@@ -406,40 +403,40 @@ const EditPosted = () => {
 
             <EditPostTime
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
             />
             <EditPostCategoryId
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
               dataPost={dataPostById?.categories}
             />
 
             <EditSalaryType
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
             />
 
             <EditPostTypeSalary
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
               salaryType={editDataPosted?.salaryType}
             />
 
             <EditPostFilterSalary
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
               salaryType={editDataPosted?.salaryType}
               dataOld={dataPostById}
             />
 
             <EditPostNumberPhone
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
             />
 
             <EditDescription
               setEditDataPosted={setEditDataPosted}
-              editDataPosted={editDataPosted}
+              editDataPosted={memoizedEditDataPosted}
             />
 
             <button
