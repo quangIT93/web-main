@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import moment, { Moment } from 'moment'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import { Space, Tooltip, message } from 'antd'
+import { Space, Tooltip, message, Button } from 'antd'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { Box, Typography, MenuItem, TextField, Button } from '@mui/material'
+import { Box, Typography, MenuItem, TextField, } from '@mui/material'
 import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons'
 
 import Nodata from 'utils/NoDataPage'
+import sortData from 'utils/SortDataHistory/sortData'
 
 import { Skeleton } from 'antd'
 import { Col, Row } from 'antd'
@@ -30,19 +31,21 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   const [dataApplied, setDataApplied] = useState<any>(null)
   const [newOld, setnewOld] = React.useState('Mới nhất')
   const [count, setCount] = useState(5)
-
+  const [lastPostId, setLastPostId] = useState(0)
+  const [uploading, setUploading] = useState(false)
   const [messageApi, contextHolder] = message.useMessage()
 
-  const getAllApproved = async (newCount: number) => {
+  const getAllApproved = async () => {
     try {
       const result = await historyApplicator.getAllSubmitedApplied(
-        0,
-        newCount,
-        0
+        null,
+        5,
+        1
       )
-
+      console.log('result', result)
       if (result) {
         setDataApplied(result.data)
+        setLastPostId(result.data[result.data.length - 1].id)
       }
     } catch (error) {
       console.log('error', error)
@@ -52,7 +55,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   useEffect(() => {
     let isMounted = true
     setLoading(true)
-    getAllApproved(5).then(() => {
+    getAllApproved().then(() => {
       if (isMounted) {
         setLoading(false)
       }
@@ -65,35 +68,36 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value)
-  }
-
-  const validCount = () => {
-    if (dataApplied.length < count) {
-      return {
-        message: 'Đã hết công việc để hiển thị',
-        checkForm: false,
-      }
-    }
-    return {
-      message: '',
-      checkForm: true,
-    }
+    setDataApplied(sortData.sortDataByDate(event.target.value, dataApplied))
   }
 
   const handleClickAddItem = async () => {
-    const newCount = count + 6
-    const { message, checkForm } = validCount()
-    setnewOld('Mới nhất')
-    if (!checkForm) {
-      setCount(14)
-      await messageApi.open({
-        type: 'error',
-        content: message,
-      })
-      await getAllApproved(20)
-    } else {
-      setCount(newCount)
-      await getAllApproved(newCount)
+    try {
+      setUploading(true)
+      const result = await historyApplicator.getAllSubmitedApplied(
+        lastPostId,
+        5, 1)
+      if (result) {
+        setUploading(false)
+        if (result.data.length == 0) {
+          messageApi.open({
+            type: 'error',
+            content: 'Đã hết công việc để hiển thị',
+          })
+          return
+        }
+        setLastPostId(result.data[result.data.length - 1].id)
+        setDataApplied((prev: any) => {
+          const array = [
+            ...prev,
+            ...result.data
+          ]
+          return sortData.sortDataByDate(newOld, array)
+        }
+        )
+      }
+    } catch (error) {
+
     }
   }
 
@@ -107,24 +111,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   }
   console.log('application', dataApplied)
 
-  // Sắp xếp mảng dữ liệu khi state `oldDate` thay đổi
-  useEffect(() => {
-    if (dataApplied) {
-      const sorted = [...dataApplied]?.sort((a: any, b: any): any => {
-        const dateA = parseInt(a.created_at)
-        const dateB = parseInt(b.created_at)
 
-        if (newOld === 'Mới nhất') {
-          return dateB - dateA // Sắp xếp từ cũ đến mới
-        } else if (newOld === 'Cũ nhất') {
-          return dateA - dateB // Sắp xếp từ mới đến cũ
-        }
-
-        return 0
-      })
-      setDataApplied(sorted)
-    }
-  }, [newOld, count])
   return (
     <>
       {contextHolder}
@@ -203,7 +190,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
                           style={{ padding: '0', marginLeft: '12px' }}
                           className="div-cart-item-post"
                         >
-                          <Tooltip placement="top" title="àhakj">
+                          <Tooltip placement="top" title={posted.company_name}>
                             <Typography
                               gutterBottom
                               variant="h6"
@@ -217,7 +204,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
                               {posted.company_name}
                             </Typography>
                           </Tooltip>
-                          <Tooltip placement="top" title="j j  j jj">
+                          <Tooltip placement="top" title={posted.title}>
                             <Typography
                               gutterBottom
                               variant="h1"
@@ -248,8 +235,11 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
                           >
                             <ClockCircleFilled className="icon-cart-item-post" />
                             <Typography variant="body2" color="text.secondary">
-                              {moment(dataApplied?.start_time).format('HH:mm')} :{' '}
-                              {moment(dataApplied?.end_time).format('HH:mm')}
+                              {moment(new Date(posted?.start_time)).format(
+                                'HH:mm'
+                              )}{' '}
+                              -{' '}
+                              {moment(new Date(posted?.end_time)).format('HH:mm')}
                             </Typography>
                           </div>
                           <div
@@ -378,7 +368,13 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
                   justifyContent: 'center',
                 }}
               >
-                <Button variant="contained" onClick={handleClickAddItem}>
+                <Button style={{
+                  width: 130,
+                  height: 40,
+                  backgroundColor: `#0D99FF`,
+                  color: '#FFFFFF',
+                  fontWeight: "bold"
+                }} loading={uploading} onClick={handleClickAddItem}>
                   Xem thêm
                 </Button>
               </Box>

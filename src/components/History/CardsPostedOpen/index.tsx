@@ -3,10 +3,10 @@ import moment, { Moment } from 'moment'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import { Space, Tooltip } from 'antd'
-import { message } from 'antd'
+import { message, Button } from 'antd'
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { Box, Typography, MenuItem, TextField, Button } from '@mui/material'
+import { Box, Typography, MenuItem, TextField } from '@mui/material'
 import {
   EnvironmentFilled,
   ClockCircleFilled,
@@ -17,6 +17,9 @@ import { Skeleton } from 'antd'
 import 'intl'
 import 'intl/locale-data/jsonp/en'
 import Nodata from 'utils/NoDataPage'
+
+import sortData from 'utils/SortDataHistory/sortData'
+
 
 // api
 import historyRecruiter from 'api/historyRecruiter'
@@ -34,17 +37,20 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   const [dataPosted, setDataPosted] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [newOld, setnewOld] = React.useState('Mới nhất')
-  const [count, setCount] = useState(5)
+  const [lastPostId, setLastPostId] = useState(0)
+
+  const [uploading, setUploading] = useState(false)
 
   const [messageApi, contextHolder] = message.useMessage()
 
   //   getData
   const getAllPosted = async (newCount: number) => {
     try {
-      const result = await historyRecruiter.getAllPosted(0, newCount, 1)
+      const result = await historyRecruiter.getAllPosted(newCount, 5, 1)
 
       if (result) {
         setDataPosted(result.data)
+        setLastPostId(result.data[result.data.length - 1].id)
       }
     } catch (error) {
       console.log('error', error)
@@ -54,7 +60,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   useEffect(() => {
     let isMounted = true
     setLoading(true)
-    getAllPosted(5).then(() => {
+    getAllPosted(0).then(() => {
       if (isMounted) {
         setLoading(false)
       }
@@ -65,36 +71,39 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
     }
   }, [showDetailPosted])
 
-  const validCount = () => {
-    if (dataPosted.length < count) {
-      return {
-        message: 'Đã hết công việc để hiển thị',
-        checkForm: false,
-      }
-    }
-    return {
-      message: '',
-      checkForm: true,
-    }
-  }
+
 
   // click Button
   const handleAddItem = async () => {
-    // valid value form data
-    const { message, checkForm } = validCount()
-    const newCount = count + 6
-    setnewOld('Mới nhất')
-    if (!checkForm) {
-      setCount(14)
-      await messageApi.open({
-        type: 'error',
-        content: message,
-      })
-      await getAllPosted(20)
-    } else {
-      setCount(newCount)
-      await getAllPosted(newCount)
+
+    try {
+      setUploading(true)
+      const result = await historyRecruiter.getAllPosted(
+        lastPostId,
+        5, 3)
+      if (result) {
+        setUploading(false)
+        if (result.data.length == 0) {
+          messageApi.open({
+            type: 'error',
+            content: 'Đã hết công việc để hiển thị',
+          })
+          return
+        }
+        setLastPostId(result.data[result.data.length - 1].id)
+        setDataPosted((prev: any) => {
+          const array = [
+            ...prev,
+            ...result.data
+          ]
+          return sortData.sortDataByDate(newOld, array)
+        }
+        )
+      }
+    } catch (error) {
+
     }
+
   }
 
   const handleShowDetail = (
@@ -109,27 +118,9 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value)
+    setDataPosted(sortData.sortDataByDate(event.target.value, dataPosted))
   }
 
-  // Sắp xếp mảng dữ liệu khi state `oldDate` thay đổi
-  useEffect(() => {
-    if (dataPosted) {
-      const sorted = [...dataPosted]?.sort((a: any, b: any): any => {
-        const dateA = parseInt(a.created_at)
-        const dateB = parseInt(b.created_at)
-
-        if (newOld === 'Mới nhất') {
-          return dateB - dateA // Sắp xếp từ cũ đến mới
-        } else if (newOld === 'Cũ nhất') {
-          return dateA - dateB // Sắp xếp từ mới đến cũ
-        }
-
-        return 0
-      })
-
-      setDataPosted(sorted)
-    }
-  }, [newOld, count])
 
   console.log('render cardPostedAll')
   return (
@@ -167,9 +158,6 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
       </Box>
 
       {!showDetailPosted ? <>
-
-
-
         <Skeleton loading={loading} active>
           {
             dataPosted?.length > 0 ?
@@ -265,8 +253,11 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                             >
                               <ClockCircleFilled className="icon-cart-item-post" />
                               <Typography variant="body2" color="text.secondary">
-                                {moment(dataPosted?.start_time).format('HH:mm')} :{' '}
-                                {moment(dataPosted?.end_time).format('HH:mm')}
+                                {moment(new Date(posted?.start_time)).format(
+                                  'HH:mm'
+                                )}{' '}
+                                -{' '}
+                                {moment(new Date(posted?.end_time)).format('HH:mm')}
                               </Typography>
                             </div>
                             <div
@@ -411,7 +402,6 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                       </Space>
                     </Card>
                   ))}
-
                 </Grid>
                 <Box
                   sx={{
@@ -421,7 +411,13 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                     justifyContent: 'center',
                   }}
                 >
-                  <Button variant="contained" onClick={handleAddItem}>
+                  <Button style={{
+                    width: 130,
+                    height: 40,
+                    backgroundColor: `#0D99FF`,
+                    color: '#FFFFFF',
+                    fontWeight: "bold"
+                  }} loading={uploading} onClick={handleAddItem}>
                     Xem thêm
                   </Button>
                 </Box>

@@ -273,9 +273,20 @@ const Post: React.FC = () => {
         checkForm: false,
       }
     }
-    if (salaryMax == 0 || salaryMin == 0) {
+    if (
+      (Number(salaryMax) === 0 &&
+        salaryType !== 6) ||
+      (Number(salaryMin) === 0 &&
+        salaryType !== 6)
+    ) {
       return {
         message: 'Vui lòng nhập mức lương',
+        checkForm: false,
+      }
+    }
+    if (Number(salaryMax) < Number(salaryMin)) {
+      return {
+        message: 'Lương tối đa phải lớn hơn lương tối thiểu',
         checkForm: false,
       }
     }

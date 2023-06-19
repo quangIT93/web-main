@@ -103,8 +103,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     try {
       const result = await historyRecruiter.GetAllApplicationsOfAJob(
         detailPosted?.post_id,
-        10,
-        0
+        5,
+        null
       )
       console.log('load data detailPosted', result)
       if (result) {
@@ -225,8 +225,11 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               >
                 <ClockCircleFilled className="icon-cart-item-post" />
                 <Typography variant="body2" color="text.secondary">
-                  {moment(detailPosted?.start_time).format('HH:mm')} :{' '}
-                  {moment(detailPosted?.end_time).format('HH:mm')}
+                  {moment(new Date(detailPosted?.start_time)).format(
+                    'HH:mm'
+                  )}{' '}
+                  -{' '}
+                  {moment(new Date(detailPosted?.end_time)).format('HH:mm')}
                 </Typography>
               </div>
               <div

@@ -2,11 +2,11 @@ import React, { useEffect, useState, useMemo } from 'react'
 import moment, { Moment } from 'moment'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import { Space, Tooltip } from 'antd'
+import { Space, Tooltip, Button } from 'antd'
 import { message } from 'antd'
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { Box, Typography, MenuItem, TextField, Button } from '@mui/material'
+import { Box, Typography, MenuItem, TextField } from '@mui/material'
 import {
   EnvironmentFilled,
   ClockCircleFilled,
@@ -17,11 +17,15 @@ import { Skeleton } from 'antd'
 import 'intl'
 import 'intl/locale-data/jsonp/en'
 
+import sortData from 'utils/SortDataHistory/sortData'
+
 // api
 import historyRecruiter from 'api/historyRecruiter'
 
+
 // import component
 import DetailPosted from '../DetailPosted'
+import NoData from 'utils/NoDataPage'
 
 interface ICardsPostedAll {
   setShowDetailPosted: React.Dispatch<React.SetStateAction<boolean>>
@@ -34,20 +38,23 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
   const [dataPosted, setDataPosted] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [newOld, setnewOld] = React.useState('Mới nhất')
-  const [count, setCount] = useState(5)
+
+  const [uploading, setUploading] = useState(false)
+  const [lastPostId, setLastPostId] = useState(0)
 
   const [messageApi, contextHolder] = message.useMessage()
   //   getData
-  const getAllPosted = async (newCount: number) => {
+  const getAllPosted = async (postID: number) => {
     try {
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
-        0,
-        newCount
+        postID,
+        5
       )
 
       if (result) {
         setDataPosted(result.data)
         console.log('load data cardPostedAll recruiter', result)
+        setLastPostId(result.data[result.data.length - 1].id)
       }
     } catch (error) {
       console.log('error', error)
@@ -57,7 +64,8 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
   useEffect(() => {
     let isMounted = true
     setLoading(true)
-    getAllPosted(5).then(() => {
+    // setCount(5)
+    getAllPosted(0).then(() => {
       if (isMounted) {
         setLoading(false)
       }
@@ -68,37 +76,40 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
     }
   }, [showDetailPosted])
 
-  const validCount = () => {
-    if (dataPosted.length < count) {
-      return {
-        message: 'Đã hết công việc để hiển thị',
-        checkForm: false,
-      }
-    }
-    return {
-      message: '',
-      checkForm: true,
-    }
-  }
 
   // click Button
   const handleAddItem = async () => {
-    const { message, checkForm } = validCount()
-    const newCount = count + 6
-    setnewOld('Mới nhất')
-    if (!checkForm) {
-      setCount(14)
-      await messageApi.open({
-        type: 'error',
-        content: message,
-      })
-      await getAllPosted(20)
-    } else {
-      setCount(newCount)
-      await getAllPosted(newCount)
-    }
-  }
 
+    try {
+      setUploading(true)
+      const result = await historyRecruiter.GetInformationAndCandidatesCount(
+        lastPostId,
+        5
+      )
+      if (result) {
+        setUploading(false)
+        if (result.data.length == 0) {
+          messageApi.open({
+            type: 'error',
+            content: 'Đã hết công việc để hiển thị',
+          })
+          return
+        }
+        setLastPostId(result.data[result.data.length - 1].id)
+        setDataPosted((prev: any) => {
+          const array = [
+            ...prev,
+            ...result.data
+          ]
+          return sortData.sortDataByDate(newOld, array)
+        }
+        )
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
   const handleShowDetail = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     posted: any
@@ -111,27 +122,9 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value)
+
+    setDataPosted(sortData.sortDataByDate(event.target.value, dataPosted))
   }
-
-  // Sắp xếp mảng dữ liệu khi state `oldDate` thay đổi
-  useEffect(() => {
-    if (dataPosted) {
-      const sorted = [...dataPosted]?.sort((a: any, b: any): any => {
-        const dateA = parseInt(a.created_at)
-        const dateB = parseInt(b.created_at)
-
-        if (newOld === 'Mới nhất') {
-          return dateB - dateA // Sắp xếp từ cũ đến mới
-        } else if (newOld === 'Cũ nhất') {
-          return dateA - dateB // Sắp xếp từ mới đến cũ
-        }
-
-        return 0
-      })
-
-      setDataPosted(sorted)
-    }
-  }, [newOld])
 
   console.log('render cardPostedAll')
   console.log("data posted: ", dataPosted)
@@ -169,263 +162,278 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
         </TextField>
       </Box>
 
-      {!showDetailPosted ? (
-        <div className='history-post'>
-          <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-            <Skeleton loading={loading} active>
-              {dataPosted?.map((posted: any, i: number) => (
-                <Card
-                  sx={{
-                    background: '#ffffff',
-                    '&:hover': {
-                      background: '#E7E7ED',
-                      transition: 'all 0.3s linear',
-                    },
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    padding: '12px',
-                    minWidth: '100%',
-                    boxShadow: 'none',
+      {!showDetailPosted ?
+        <>
+          <Skeleton loading={loading} active>
+            {
+              dataPosted?.length > 0 ? <div className='history-post'>
+                <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
 
-                    margin: '8px 0',
-                    cursor: 'pointer',
-                  }}
-                  onClick={(event) => handleShowDetail(event, posted)}
-                  key={i}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <ImageListItem sx={{ flex: 1, display: 'flex' }}>
-                      <img
-                        src={`${posted.image}?w=164&h=164&fit=crop&auto=format`}
-                        srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                        alt="anh job"
-                        loading="lazy"
-                        style={{
-                          width: '120px',
-                          maxWidth: 'auto',
-                          height: '100%',
-                          maxHeight: 150,
-                          borderRadius: 10,
+                  {dataPosted?.map((posted: any, i: number) => (
+                    <Card
+                      sx={{
+                        background: '#ffffff',
+                        '&:hover': {
+                          background: '#E7E7ED',
+                          transition: 'all 0.3s linear',
+                        },
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        padding: '12px',
+                        minWidth: '100%',
+                        boxShadow: 'none',
+
+                        margin: '8px 0',
+                        cursor: 'pointer',
+                      }}
+                      onClick={(event) => handleShowDetail(event, posted)}
+                      key={i}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
                         }}
-                      />
-                      <div
-                        style={{ padding: '0', marginLeft: '12px' }}
-                        className="div-cart-item-post"
                       >
-                        <Tooltip placement="top" title="àhakj">
-                          <Typography
-                            gutterBottom
-                            variant="h6"
-                            component="div"
-                            sx={{
-                              fontSize: '18px',
-                              margin: 0,
-                              fontWeight: 'bold',
-                            }}
-                          >
-                            {posted.company_name}
-                          </Typography>
-                        </Tooltip>
-                        <Tooltip placement="top" title={posted.title}>
-                          <Typography
-                            gutterBottom
-                            variant="h1"
-                            component="div"
-                            sx={{ fontSize: '12px' }}
-                          >
-                            {posted.title}
-                          </Typography>
-                        </Tooltip>
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <EnvironmentFilled className="icon-cart-item-post" />
-                          <Typography variant="body2" color="text.secondary">
-                            {posted.district}, {posted.province}
-                          </Typography>
-                        </div>
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <ClockCircleFilled className="icon-cart-item-post" />
-                          <Typography variant="body2" color="text.secondary">
-                            {moment(dataPosted?.start_time).format('HH:mm')} :{' '}
-                            {moment(dataPosted?.end_time).format('HH:mm')}
-                          </Typography>
-                        </div>
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <AttachMoneyIcon
-                            sx={{
-                              fontSize: 20,
-                              marginLeft: '-2px',
-                              marginRight: '2px',
-                              color: '#575757',
+                        <ImageListItem sx={{ flex: 1, display: 'flex' }}>
+                          <img
+                            src={`${posted.image}?w=164&h=164&fit=crop&auto=format`}
+                            srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                            alt="anh job"
+                            loading="lazy"
+                            style={{
+                              width: '120px',
+                              maxWidth: 'auto',
+                              height: '100%',
+                              maxHeight: 150,
+                              borderRadius: 10,
                             }}
                           />
-                          <Typography variant="body2" color="text.secondary">
-                            {new Intl.NumberFormat('en-US').format(
-                              posted?.salary_min
-                            )}{` ${posted?.money_type_text} `}
-                            -{' '}
-                            {new Intl.NumberFormat('en-US').format(
-                              posted?.salary_max
-                            ) + ` ${posted?.money_type_text} ` + `/${posted?.salary_type}`}
-                          </Typography>
-                        </div>
-                        <div
-                          style={{
-                            marginTop: 5,
+                          <div
+                            style={{ padding: '0', marginLeft: '12px' }}
+                            className="div-cart-item-post"
+                          >
+                            <Tooltip placement="top" title={posted.title}>
+                              <Typography
+                                gutterBottom
+                                variant="h6"
+                                component="div"
+                                sx={{
+                                  fontSize: '18px',
+                                  margin: 0,
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                {posted.title}
+                              </Typography>
+                            </Tooltip>
+                            <Tooltip placement="top" title={posted.company_name}>
+                              <Typography
+                                gutterBottom
+                                variant="h1"
+                                component="div"
+                                sx={{ fontSize: '12px' }}
+                              >
+                                {posted.company_name}
+                              </Typography>
+                            </Tooltip>
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                justifyContent: 'center',
+                              }}
+                            >
+                              <EnvironmentFilled className="icon-cart-item-post" />
+                              <Typography variant="body2" color="text.secondary">
+                                {posted.district}, {posted.province}
+                              </Typography>
+                            </div>
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                              }}
+                            >
+                              <ClockCircleFilled className="icon-cart-item-post" />
+                              <Typography variant="body2" color="text.secondary">
+                                {moment(new Date(posted?.start_time)).format(
+                                  'HH:mm'
+                                )}{' '}
+                                -{' '}
+                                {moment(new Date(posted?.end_time)).format('HH:mm')}
+                              </Typography>
+                            </div>
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                              }}
+                            >
+                              <AttachMoneyIcon
+                                sx={{
+                                  fontSize: 20,
+                                  marginLeft: '-2px',
+                                  marginRight: '2px',
+                                  color: '#575757',
+                                }}
+                              />
+                              <Typography variant="body2" color="text.secondary">
+                                {new Intl.NumberFormat('en-US').format(
+                                  posted?.salary_min
+                                )}{` ${posted?.money_type_text} `}
+                                -{' '}
+                                {new Intl.NumberFormat('en-US').format(
+                                  posted?.salary_max
+                                ) + ` ${posted?.money_type_text} ` + `/${posted?.salary_type}`}
+                              </Typography>
+                            </div>
+                            <div
+                              style={{
+                                marginTop: 5,
+                              }}
+                            >
+                              <p
+                                style={{
+                                  color: '#AAAAAA',
+                                  fontSize: 13,
+                                  fontStyle: 'italic',
+                                }}
+                              >
+                                {posted.created_at_text}
+                              </p>
+                            </div>
+                          </div>
+                        </ImageListItem>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginTop: '12px',
                           }}
                         >
                           <p
                             style={{
-                              color: '#AAAAAA',
+                              color: '#001424',
                               fontSize: 13,
                               fontStyle: 'italic',
                             }}
                           >
-                            {posted.created_at_text}
+                            Đã đăng vào:{' '}
+                            {posted?.created_at != null
+                              ? moment(posted?.created_at).format('DD/MM/YY')
+                              : 'Chưa cập nhật'}
                           </p>
-                        </div>
-                      </div>
-                    </ImageListItem>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginTop: '12px',
-                      }}
-                    >
-                      <p
-                        style={{
-                          color: '#001424',
-                          fontSize: 13,
-                          fontStyle: 'italic',
-                        }}
-                      >
-                        Đã đăng vào:{' '}
-                        {posted?.created_at != null
-                          ? moment(posted?.created_at).format('DD/MM/YY')
-                          : 'Chưa cập nhật'}
-                      </p>
 
-                      <p
+                          <p
+                            style={{
+                              background: '#5cb265',
+                              padding: '4px 12px',
+                              borderRadius: '15px',
+                              color: '#ffffff',
+                              marginLeft: '30px',
+                            }}
+                          >
+                            {posted?.num_of_application} hồ sơ ứng tuyển
+                          </p>
+                          {posted?.status === 1 ? (
+                            <p
+                              style={{
+                                background: '#0D99FF',
+                                padding: '4px 12px',
+                                borderRadius: '15px',
+                                color: '#ffffff',
+                                marginLeft: '30px',
+                                fontStyle: "italic"
+                              }}
+                            >
+                              Đang tuyển
+                            </p>
+                          ) : posted?.status === 3 ? (
+                            <p
+                              style={{
+                                background: '#aaaaaa',
+                                padding: '4px 12px',
+                                borderRadius: '15px',
+                                color: '#ffffff',
+                                marginLeft: '30px',
+                                fontStyle: "italic"
+                              }}
+                            >
+                              Đã đóng
+                            </p>
+                          ) : (
+                            <p
+                              style={{
+                                background: '#aaaaaa',
+                                padding: '4px 12px',
+                                borderRadius: '15px',
+                                color: '#ffffff',
+                                marginLeft: '30px',
+                              }}
+                            >
+                              Không chấp nhận
+                            </p>
+                          )}
+                        </Box>
+                      </Box>
+                      <Space
                         style={{
-                          background: '#5cb265',
-                          padding: '4px 12px',
-                          borderRadius: '15px',
-                          color: '#ffffff',
-                          marginLeft: '30px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignContent: 'space-between',
+                          justifyContent: 'space-between',
                         }}
+                        direction="vertical"
+                        align="center"
                       >
-                        {posted?.num_of_application} hồ sơ ứng tuyển
-                      </p>
-                      {posted?.status === 1 ? (
+                        {/* <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} /> */}
+                        <img
+                          className="img-resource-company"
+                          src={posted.resource.company_icon}
+                          alt="anh icon"
+                        />
                         <p
                           style={{
-                            background: '#0D99FF',
-                            padding: '4px 12px',
-                            borderRadius: '15px',
-                            color: '#ffffff',
-                            marginLeft: '30px',
-                            fontStyle: "italic"
+                            fontSize: 13,
+                            fontStyle: 'italic',
+                            padding: '4px 0',
                           }}
                         >
-                          Đang tuyển
+                          {posted.job_type.job_type_name}
                         </p>
-                      ) : posted?.status === 3 ? (
-                        <p
-                          style={{
-                            background: '#aaaaaa',
-                            padding: '4px 12px',
-                            borderRadius: '15px',
-                            color: '#ffffff',
-                            marginLeft: '30px',
-                            fontStyle: "italic"
-                          }}
-                        >
-                          Đã đóng
-                        </p>
-                      ) : (
-                        <p
-                          style={{
-                            background: '#aaaaaa',
-                            padding: '4px 12px',
-                            borderRadius: '15px',
-                            color: '#ffffff',
-                            marginLeft: '30px',
-                          }}
-                        >
-                          Không chấp nhận
-                        </p>
-                      )}
-                    </Box>
-                  </Box>
-                  <Space
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignContent: 'space-between',
-                      justifyContent: 'space-between',
-                    }}
-                    direction="vertical"
-                    align="center"
-                  >
-                    {/* <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} /> */}
-                    <img
-                      className="img-resource-company"
-                      src={posted.resource.company_icon}
-                      alt="anh icon"
-                    />
-                    <p
-                      style={{
-                        fontSize: 13,
-                        fontStyle: 'italic',
-                        padding: '4px 0',
-                      }}
-                    >
-                      {posted.job_type.job_type_name}
-                    </p>
-                  </Space>
-                </Card>
-              ))}
-            </Skeleton>
-          </Grid>
-          <Box
-            sx={{
-              margin: '12px auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Button variant="contained" onClick={handleAddItem}>
-              Xem thêm
-            </Button>
-          </Box>
-        </div>
-      ) : (
-        <DetailPosted detailPosted={detailPosted} />
-      )}
+                      </Space>
+                    </Card>
+                  ))}
+
+                </Grid>
+                <Box
+                  sx={{
+                    margin: '12px auto',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Button style={{
+                    width: 130,
+                    height: 40,
+                    backgroundColor: `#0D99FF`,
+                    color: '#FFFFFF',
+                    fontWeight: 'bold',
+                  }} loading={uploading} onClick={handleAddItem}>
+                    Xem thêm
+                  </Button>
+                </Box>
+              </div> : <NoData />
+            }
+          </Skeleton>
+        </>
+        : (
+          <DetailPosted detailPosted={detailPosted} />
+        )}
     </>
   )
 }

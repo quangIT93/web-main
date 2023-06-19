@@ -29,7 +29,7 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
 
         <Space>
           <p style={{ color: "#575757" }} >
-            {url.substring(102)}
+            {url.substring(url.lastIndexOf('/') + 1, url.length)}
           </p>
 
           <FilePdfOutlined style={{ fontSize: 20, color: "#575757" }} />

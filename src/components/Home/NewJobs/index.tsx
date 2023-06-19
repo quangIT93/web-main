@@ -116,7 +116,14 @@ const NewJobs: React.FC<StateProps> = ({ handleLoadingW = () => { } }) => {
       9,
       thersholdId
     )
-    console.log("newest: ", result)
+
+    // const array = [1, 2, 3]
+    // // const e = createSearchParams({ name: `${array}` })
+    // setSearchParams({ 'name': `${array}` })
+    // // console.log("newest: ", result)
+    // const test = searchParams.get('name')?.toString().split(",").map(Number)
+    // console.log(test)
+    // //    window.open(`/home?${e}`)
 
     if (result) {
       setPostNewestMore(result)

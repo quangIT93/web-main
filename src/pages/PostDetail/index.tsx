@@ -394,15 +394,21 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Mức lương</p>
-                      <h5>
-                        {new Intl.NumberFormat('en-US').format(
-                          post?.data.salary_min
-                        ) + ` ${post?.data.money_type_text}`}{' '}
-                        -{' '}
-                        {new Intl.NumberFormat('en-US').format(
-                          post?.data.salary_max
-                        ) + ` ${post?.data.money_type_text}`}
-                      </h5>
+                      {
+                        post?.data.salary_type_id == 6 ?
+                          <h5>
+                            {post?.data.salary_type}
+                          </h5> :
+                          <h5>
+                            {new Intl.NumberFormat('en-US').format(
+                              post?.data.salary_min
+                            ) + ` ${post?.data.money_type_text}`}{' '}
+                            -{' '}
+                            {new Intl.NumberFormat('en-US').format(
+                              post?.data.salary_max
+                            ) + ` ${post?.data.money_type_text}`}
+                          </h5>
+                      }
                     </div>
                   </div>
                   <div className="div-detail-row">
