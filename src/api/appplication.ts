@@ -2,7 +2,7 @@ import axiosClient from './axiosClient'
 
 const appplicationApi = {
   updateApplication: (id: number, status: number) => {
-    const URL = `application/update`
+    const URL = `/v1/application/update`
 
     return axiosClient.put(
       URL,
@@ -15,10 +15,8 @@ const appplicationApi = {
     )
   },
   applyAplication: (postId: Number) => {
-    const URL = `application/create`
-    return axiosClient.post(
-      URL, { postId }
-    )
+    const URL = `/v1/application/create`
+    return axiosClient.post(URL, { postId })
   },
 }
 export default appplicationApi

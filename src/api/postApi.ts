@@ -36,7 +36,7 @@ const postApi = {
     threshold?: Number
   ) => {
     const URL =
-      `posts/newest?` +
+      `/v1/posts/newest?` +
       `${pcid ? `pcid=${pcid}` : ``}` +
       `${
         ccid
@@ -52,7 +52,7 @@ const postApi = {
     return axiosClient.get(URL)
   },
   updateStatusPost: (id: number, status: number) => {
-    const URL = `/posts/sta`
+    const URL = `/v1/posts/sta`
     return axiosClient.put(
       URL,
       { id, status },
@@ -64,15 +64,15 @@ const postApi = {
     )
   },
   getPostRelated: (postId: number) => {
-    const URL = `posts/related/${postId}`
+    const URL = `/v1/posts/related/${postId}`
     return axiosClient.get(URL)
   },
   getPostbyId: (params: number) => {
-    const URL = `posts/${params}`
+    const URL = `/v1/posts/${params}`
     return axiosClient.get(URL)
   },
   updatePostedInfo: (updatePost: FormValues) => {
-    const URL = `posts/inf`
+    const URL = `/v1/posts/inf`
 
     return axiosClient.put(URL, updatePost, {
       headers: {

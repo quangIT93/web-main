@@ -36,7 +36,7 @@ interface IInfoEducationUpdate {
 
 const profileApi = {
   getProfile: () => {
-    const URL = `profiles/s`
+    const URL = `/v1/profiles/s`
 
     return axiosClient.get(URL, {
       headers: {
@@ -46,7 +46,7 @@ const profileApi = {
   },
 
   postAvatar: (images: any) => {
-    const URL = `profiles/avt`
+    const URL = `/v1/profiles/avt`
     return axiosClient.put(URL, images, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -56,7 +56,7 @@ const profileApi = {
   },
 
   putProfilePersonal: (infoPersonal: IInfoPersonal) => {
-    const URL = `profiles/per`
+    const URL = `/v1/profiles/per`
     return axiosClient.put(URL, infoPersonal, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -65,7 +65,7 @@ const profileApi = {
   },
 
   updateContact: (infoContact: InfoContact) => {
-    const URL = `profiles/con`
+    const URL = `/v1/profiles/con`
     return axiosClient.put(URL, infoContact, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -74,7 +74,7 @@ const profileApi = {
   },
 
   updateProfileLocation: (locationIds: string[]) => {
-    const URL = `profiles/loc`
+    const URL = `/v1/profiles/loc`
     return axiosClient.put(
       URL,
 
@@ -89,7 +89,7 @@ const profileApi = {
   },
   updateProfileCareer: (categoryIds: Number[]) => {
     console.log('cate', categoryIds)
-    const URL = `profiles/cat`
+    const URL = `/v1/profiles/cat`
     return axiosClient.put(
       URL,
 
@@ -103,7 +103,7 @@ const profileApi = {
     )
   },
   updateProfileEducation: (infoEducation: IInfoEducationUpdate) => {
-    const URL = `profiles/edu/u`
+    const URL = `/v1/profiles/edu/u`
     return axiosClient.put(URL, infoEducation, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -111,7 +111,7 @@ const profileApi = {
     })
   },
   createProfileEducation: (infoEducation: IInfoEducationCreate) => {
-    const URL = `profiles/edu/c`
+    const URL = `/v1/profiles/edu/c`
     return axiosClient.put(URL, infoEducation, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -119,7 +119,7 @@ const profileApi = {
     })
   },
   deleteProfileEducation: (educationId?: number | null) => {
-    const URL = `profiles/edu/d`
+    const URL = `/v1/profiles/edu/d`
     return axiosClient.put(
       URL,
       { educationId },
@@ -132,7 +132,7 @@ const profileApi = {
   },
 
   updateProfileExperience: (infoExperience: any) => {
-    const URL = `profiles/exp/u`
+    const URL = `/v1/profiles/exp/u`
     return axiosClient.put(URL, infoExperience, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -140,7 +140,7 @@ const profileApi = {
     })
   },
   createProfileExperience: (infoEducation: any) => {
-    const URL = `profiles/exp/c`
+    const URL = `/v1/profiles/exp/c`
     return axiosClient.put(URL, infoEducation, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -148,7 +148,7 @@ const profileApi = {
     })
   },
   deleteProfileExperience: (experienceId?: number | null) => {
-    const URL = `profiles/exp/d`
+    const URL = `/v1/profiles/exp/d`
     return axiosClient.put(
       URL,
       { experienceId },
@@ -161,7 +161,7 @@ const profileApi = {
   },
 
   createCV: (file: any) => {
-    const URL = `profiles/cv`
+    const URL = `/v1/profiles/cv`
     return axiosClient.post(URL, file, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -171,14 +171,16 @@ const profileApi = {
   },
 
   deleteCV: () => {
-    const URL = `profiles/cv`
+    const URL = `/v1/profiles/cv`
     return axiosClient.delete(URL, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, }
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
     })
   },
 
   updateCV: (file: any) => {
-    const URL = `profiles/cv`
+    const URL = `/v1/profiles/cv`
     return axiosClient.put(URL, file, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

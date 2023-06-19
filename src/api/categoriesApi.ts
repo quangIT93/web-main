@@ -2,17 +2,17 @@ import axiosClient from './axiosClient'
 // api/productApi.js
 const categoriesApi = {
   getAllParentCategories: () => {
-    const URL = `/categories/p`
+    const URL = `/v1/categories/p`
     return axiosClient.get(URL)
   },
 
   getAllCategorise: () => {
-    const URL = `/categories`
+    const URL = `/v1/categories`
     return axiosClient.get(URL)
   },
 
   getAllChildCategories: (id: number) => {
-    const URL = `/categories/c?pid=${id}`
+    const URL = `/v1/categories/c?pid=${id}`
     return axiosClient.get(URL)
   },
 }
