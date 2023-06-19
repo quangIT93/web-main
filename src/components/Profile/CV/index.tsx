@@ -11,11 +11,12 @@ import './style.scss'
 
 interface Url_CV {
   url: string
-  open: boolean
+  open?: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  isProfile: boolean
 }
 
-const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen }) => {
+const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
 
   return (
 
@@ -28,17 +29,20 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen }) => {
 
         <Space>
           <p style={{ color: "#575757" }} >
-            {url.substring(57)}
+            {url.substring(url.lastIndexOf('/') + 1, url.length)}
           </p>
 
           <FilePdfOutlined style={{ fontSize: 20, color: "#575757" }} />
         </Space>
       </div>
-      <Tooltip placement="right" title={'Xoa CV'} style={{ fontSize: 5 }} >
-        <DeleteOutlined onClick={() => {
-          setOpen(true)
-        }} className='icon-remove' />
-      </Tooltip>
+      {
+        isProfile && (<Tooltip placement="right" title={'Xoa CV'} style={{ fontSize: 5 }} >
+          <DeleteOutlined onClick={() => {
+            setOpen(true)
+          }} className='icon-remove' />
+        </Tooltip>)
+      }
+
 
     </Space>
 

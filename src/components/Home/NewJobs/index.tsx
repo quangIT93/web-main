@@ -73,7 +73,10 @@ interface PostNewest {
   created_at_text: string
   bookmarked: boolean
 }
-const NewJobs: React.FC = () => {
+interface StateProps {
+  handleLoadingW: () => void
+}
+const NewJobs: React.FC<StateProps> = ({ handleLoadingW = () => {} }) => {
   const [page, setPage] = React.useState(1)
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
 
@@ -126,6 +129,14 @@ const NewJobs: React.FC = () => {
       thersholdId
     )
 
+    // const array = [1, 2, 3]
+    // // const e = createSearchParams({ name: `${array}` })
+    // setSearchParams({ 'name': `${array}` })
+    // // console.log("newest: ", result)
+    // const test = searchParams.get('name')?.toString().split(",").map(Number)
+    // console.log(test)
+    // //    window.open(`/home?${e}`)
+
     if (result) {
       setPostNewestMore(result)
       setOpenBackdrop(false)
@@ -147,6 +158,7 @@ const NewJobs: React.FC = () => {
 
         // set loading
         setOpenBackdrop(false)
+        handleLoadingW()
       }
     } catch (error) {
       setOpenBackdrop(false)
@@ -384,7 +396,7 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-            onClick={handleClose}
+            //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

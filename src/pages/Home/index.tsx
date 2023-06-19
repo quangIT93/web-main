@@ -62,6 +62,12 @@ const Home: React.FC = () => {
     setOpenModalLogin,
   }
 
+  const [isLoading, setIsLoading] = React.useState(false)
+
+  const handleLoading = () => {
+    setIsLoading(true)
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
@@ -126,6 +132,7 @@ const Home: React.FC = () => {
   const handleClickShowModalLogin = (openModal: boolean) => {
     setOpenModalLogin(openModal)
   }
+  console.log(isLoading)
 
   return (
     <div className="home">
@@ -152,14 +159,14 @@ const Home: React.FC = () => {
         />
         <Breadcrumbs valueJob={valueJob} />
 
-        <NewJobs />
+        <NewJobs handleLoadingW={handleLoading} />
         <ThemesJob />
       </div>
       <Footer windowWidth={windowWidth} />
       {/* <ModalLogin
-        openModalLogin={openModalLogin}
-        setOpenModalLogin={setOpenModalLogin}
-      /> */}
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        /> */}
     </div>
   )
 }

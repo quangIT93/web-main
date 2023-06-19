@@ -2,7 +2,7 @@ import axiosClient from './axiosClient'
 // api/productApi.js
 const historyRecruiter = {
   getAllPosted: (page: number, limit: number, status: number) => {
-    const URL = `/history/recruiter/posts?page=${page}&limit=${limit}&status=${status}`
+    const URL = `/history/recruiter/posts?threshold=${page}&limit=${limit}&status=${status}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -12,9 +12,9 @@ const historyRecruiter = {
   GetAllApplicationsOfAJob: (
     post_id: number,
     limit: number,
-    threshold: number | undefined
+    threshold: number | null
   ) => {
-    const URL = `/history/recruiter/${post_id}/applications?limit=${limit}`
+    const URL = `/history/recruiter/${post_id}/applications?${threshold ? `threshold=${threshold}` : ''}limit=${limit}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -22,7 +22,7 @@ const historyRecruiter = {
     })
   },
   GetInformationAndCandidatesCount: (threshold: number, limit: number) => {
-    const URL = `/history/recruiter/applications?threshold${threshold}&limit=${limit}`
+    const URL = `/history/recruiter/applications?threshold=${threshold}&limit=${limit}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
