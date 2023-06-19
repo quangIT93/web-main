@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState, useCallback } from 'react'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
@@ -6,43 +6,199 @@ import Stack from '@mui/material/Stack'
 
 import Collapse from '@mui/material/Collapse'
 import Box from '@mui/material/Box'
+import { FormGroup, FormControlLabel, Checkbox } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 
-import Checkbox from '@mui/material/Checkbox'
 import { NumberOutlined } from '@ant-design/icons'
 
-function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-  event.preventDefault()
-  console.info('You clicked a breadcrumb.')
-}
+// import component
+
+// import COntext
+import { HomeValueContext } from 'context/HomeValueContextProvider'
+
+// import redux
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../../store/index'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../../store/reducer'
+// import api
+import categoriesApi from '../../../api/categoriesApi'
+import postApi from 'api/postApi'
+import './style.scss'
 
 interface PropsBreadcrums {
-  valueJob: string
+  valueJob: any
 }
 
 const BreadcrumbsCpn: React.FC<PropsBreadcrums> = (props) => {
   const { valueJob } = props
-  const [open, setOpen] = React.useState(false)
+  // Contexts
+  const {
+    setChildCateloriesArray,
+    childCateloriesArray,
+  }: {
+    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>
+    childCateloriesArray: number[]
+  } = useContext(HomeValueContext)
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-  ) => {
+  const [open, setOpen] = React.useState(false)
+  // const [checked, setChecked] = React.useState(true)
+  const [childCatelories, setChildCatelories] = React.useState<any>(null)
+
+  const [checkedItems, setCheckedItems] = useState<any>(null)
+
+  const [arrayChild, setArrayChild] = useState<any>([])
+
+  // state redux
+  const { postNewest } = useSelector((state: RootState) => state)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const dispatch = useDispatch()
+
+  const MAX_CHECKED_ITEMS = 3
+
+  const [checkItemsCount, setCheckItemsCount] = React.useState<number>(0)
+
+  const { setPostNewest } = bindActionCreators(actionCreators, dispatch)
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.isPropagationStopped()
     setOpen(!open)
   }
 
-  const [checked, setChecked] = React.useState(true)
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setChecked(event.target.checked)
+  // }
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked)
+  const getAllChildCategoriesById = async () => {
+    try {
+      const result = await categoriesApi.getAllChildCategories(valueJob?.id)
+      if (result) {
+        setChildCatelories(result.data)
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+  useEffect(() => {
+    getAllChildCategoriesById()
+  }, [valueJob?.id])
+
+  useEffect(() => {
+    setCheckedItems(
+      childCatelories?.map((childCatelorie: any) => ({
+        id: childCatelorie.id,
+        name: childCatelorie.name,
+        checked: false,
+      }))
+    )
+  }, [childCatelories])
+
+  useEffect(() => {
+    setArrayChild([])
+  }, [searchParams.get('categories-id')])
+
+  const handleClickChoose = async () => {
+    setOpen(false)
+
+    const array = checkedItems
+      .map((checkedItem: any) => {
+        if (checkedItem?.checked === true) {
+          return { id: checkedItem?.id, name: checkedItem?.name }
+        }
+        return null
+      })
+      .filter((filterArrayId: any | null) => filterArrayId !== null)
+
+    setArrayChild(array)
+
+    setChildCateloriesArray(
+      array.map((arr: { id: number; name: string }) => arr.id)
+    )
+    const thersholdId =
+      postNewest.data.posts[postNewest.data.posts.length - 1].id
+
+    try {
+      const result = await postApi.getPostNewest(
+        Number(valueJob?.id),
+        array.map((arr: { id: number; name: string }) => arr.id),
+        null,
+        9,
+        thersholdId
+      )
+      if (result) {
+        setPostNewest(result)
+        // setOpenBackdrop(false)
+      }
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  // handle limit checkbox
+  useEffect(() => {
+    if (checkedItems) {
+      const checkedCount: number = Object.values(
+        checkedItems as { id: number; name: string; checked: boolean }[]
+      ).filter((item: { id: number; name: string; checked: boolean }) => {
+        return item.checked === true
+      }).length
+      setCheckItemsCount(checkedCount)
+    }
+  }, [checkedItems])
+
+  // handle Close checkbox breadcrumb
+  // useEffect(() => {
+  //   if (childCateloriesArray?.length !== checkedItems?.length && open === false)
+  //     setCheckedItems(childCateloriesArray)
+  // }, [open])
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked, value } = event.target
+
+    setCheckedItems((prevCheckedItems: any) => {
+      const updatedCheckedItems = [...prevCheckedItems]
+      const itemIndex = updatedCheckedItems.findIndex(
+        (item) => item.id === parseInt(name)
+      )
+
+      if (itemIndex !== -1) {
+        updatedCheckedItems[itemIndex] = {
+          ...updatedCheckedItems[itemIndex],
+          checked,
+        }
+      }
+
+      return updatedCheckedItems
+    })
+  }
+
+  const handleOutsideClick = (event: any) => {
+    if (
+      !event.target.closest('.collapse-breadcrumbs') &&
+      !event.target.closest('.button-breadcrumb') &&
+      !event.target.closest('.icon-breadcrumb')
+    ) {
+      setOpen(false)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('click', handleOutsideClick)
+    return () => {
+      window.removeEventListener('click', handleOutsideClick)
+    }
+  }, [])
+
   const breadcrumbs = [
     <Typography
       key="3"
       color="text.primary"
-      onClick={handleClick}
       sx={{
         position: 'relative',
         cursor: 'pointer',
@@ -54,26 +210,45 @@ const BreadcrumbsCpn: React.FC<PropsBreadcrums> = (props) => {
         color: '#0D99FF',
       }}
     >
-      {valueJob}
+      {valueJob?.parentName}
     </Typography>,
-    <Typography
-      key="3"
-      color="text.primary"
-      onClick={handleClick}
-      sx={{
-        position: 'relative',
-        cursor: 'pointer',
-        padding: '4px 12px',
-        borderRadius: '12px',
-        display: 'flex',
-        alignItems: 'center',
-        border: '1px solid #0D99FF',
-        color: '#0D99FF',
-      }}
-    >
-      Tất cả
-      {open ? <ExpandLess /> : <ExpandMore />}
-    </Typography>,
+    valueJob?.id === 1 ? (
+      <></>
+    ) : (
+      <div
+        key="3"
+        style={{
+          position: 'relative',
+        }}
+        className="button-breadcrumb"
+        onClick={(e) => handleClick(e)}
+      >
+        <Typography
+          color="text.primary"
+          sx={{
+            cursor: 'pointer',
+            padding: '4px 12px',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            border: '1px solid #0D99FF',
+            color: '#0D99FF',
+          }}
+        >
+          {arrayChild?.length === 0
+            ? 'Tất cả'
+            : arrayChild?.map(
+                (value: { id: number; name: string }, index: number) =>
+                  `${value.name} ${index !== arrayChild.length - 1 ? '/ ' : ''}`
+              )}
+          {open ? (
+            <ExpandLess className="icon-breadcrumb" />
+          ) : (
+            <ExpandMore className="icon-breadcrumb" />
+          )}
+        </Typography>
+      </div>
+    ),
   ]
 
   return (
@@ -81,29 +256,55 @@ const BreadcrumbsCpn: React.FC<PropsBreadcrums> = (props) => {
       <Breadcrumbs separator="" aria-label="breadcrumb">
         {breadcrumbs}
       </Breadcrumbs>
+
       <Collapse
         in={open}
         // timeout="auto"
         // unmountOnExit
         unmountOnExit
-        sx={{
-          position: 'absolute',
-          top: '100%',
-          left: '84px',
-          background: '#ccc',
-          zIndex: 1,
-          borderRadius: '12px',
-          padding: '4px 24px',
-        }}
+        className="collapse-breadcrumbs"
       >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-          padding={0}
-        ></Box>
+        <Typography className="header-breabcrumb_text">Danh sách</Typography>
+        <Box padding={0} className="box-breadcrumbs">
+          <FormGroup>
+            {childCatelories?.map((childCatelorie: any, index: number) => (
+              <FormControlLabel
+                key={childCatelorie?.id}
+                sx={{
+                  padding: '4px 24px',
+                }}
+                control={
+                  <Checkbox
+                    checked={
+                      checkedItems
+                        ? checkedItems[index]?.checked || false
+                        : false
+                    }
+                    onChange={handleCheckboxChange}
+                    name={childCatelorie?.id.toString()}
+                    value={childCatelorie?.name.toString()}
+                    disabled={
+                      checkedItems
+                        ? !checkedItems[index]?.checked &&
+                          checkItemsCount >= MAX_CHECKED_ITEMS
+                        : false
+                    }
+                  />
+                }
+                label={childCatelorie?.name}
+              />
+            ))}
+          </FormGroup>
+        </Box>
+        <div className="wrapBtn-breadcrumb_nav">
+          <button
+            type="submit"
+            className="btn-breadcrumb_nav"
+            onClick={handleClickChoose}
+          >
+            Chọn
+          </button>
+        </div>
       </Collapse>
     </Stack>
   )

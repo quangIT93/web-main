@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
@@ -24,14 +24,16 @@ import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../../store/index'
 import { RootState } from '../../../store/reducer'
 
+// import COntext
+import { HomeValueContext } from 'context/HomeValueContextProvider'
+
 import CategoryItem from './components/CategoryItem'
 
 interface PropState {
   height: number
   hideSlider: boolean
   windowWidth: boolean
-  valueJob: number
-  onChange: (newValue: string) => void
+  onChange: (newValue: string, id: number) => void
 }
 
 // interface item category
@@ -46,9 +48,17 @@ const CategoryCarousel: React.FC<PropState> = ({
   height,
   hideSlider,
   windowWidth,
-  valueJob,
   onChange,
 }) => {
+  // Contexts
+  const {
+    setChildCateloriesArray,
+    childCateloriesArray,
+  }: {
+    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>
+    childCateloriesArray: number[]
+  } = useContext(HomeValueContext)
+
   const [value, setValue] = React.useState(0)
   // const positionRef = React.useRef(0)
 
@@ -66,13 +76,14 @@ const CategoryCarousel: React.FC<PropState> = ({
     try {
       setOpenBackdrop(true) // Mở backdrop
       window.scrollTo(0, 300)
+
       const selectedCategory = categories?.data.find(
         (item: any) => item.id === newValue
       )
       if (selectedCategory) {
         const { id, name } = selectedCategory
         setValue(id)
-        onChange(name)
+        onChange(name, id)
       }
       const themeId = searchParams.get('theme-id')
       if (themeId) {
@@ -118,8 +129,7 @@ const CategoryCarousel: React.FC<PropState> = ({
       setOpenBackdrop(true)
       const themeId = searchParams.get('categories-id')
       var result
-      if (themeId == "all") {
-
+      if (themeId == 'all') {
         result = await postApi.getPostNewest(null, null, null, 19)
       } else {
         result = await postApi.getPostNewest(Number(themeId), null, null, 19)
@@ -137,10 +147,10 @@ const CategoryCarousel: React.FC<PropState> = ({
     getAllParentCategories()
   }, [])
 
-
   React.useEffect(() => {
     getPostNewestByCategori()
     setValue(Number(searchParams.get('categories-id')))
+    setChildCateloriesArray([])
   }, [searchParams.get('categories-id')])
 
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
@@ -163,27 +173,27 @@ const CategoryCarousel: React.FC<PropState> = ({
           height > 60 && !windowWidth
             ? `${height + 121}px`
             : hideSlider
-              ? '71px'
-              : '',
+            ? '71px'
+            : '',
         margin:
           height > 60 && !windowWidth
             ? '0 180px'
             : hideSlider
-              ? '0 180px'
-              : '0',
+            ? '0 180px'
+            : '0',
 
         paddingTop:
           height > 60 && !windowWidth
             ? '0px'
             : height > 60 && windowWidth && !hideSlider
-              ? '71px'
-              : hideSlider
-                ? '0'
-                : '',
+            ? '71px'
+            : hideSlider
+            ? '0'
+            : '',
 
         right: 0,
         left: 0,
-        zIndex: 1,
+        zIndex: 2,
         border: 'none',
         // borderBottom: '1px solid #aaa',
         // boxShadow: '0px 1px 2px #aaa',

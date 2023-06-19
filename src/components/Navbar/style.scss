@@ -396,7 +396,6 @@
     }
   }
   .div-nav-center {
-    display: none;
     @include breakpoint(mobile) {
       display: block;
       flex: none;
@@ -411,6 +410,21 @@
   }
 
   .div-nav-right {
+    .tabBar-right {
+      display: none;
+      @include breakpoint(mobile) {
+        display: block;
+        flex: none;
+        margin-right: 10px;
+      }
+
+      @include breakpoint(tablet) {
+        display: block;
+        flex: none;
+        margin-right: 10px;
+      }
+    }
+
     .actions-login {
       position: relative;
       .sub-login {

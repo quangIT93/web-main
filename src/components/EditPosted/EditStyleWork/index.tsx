@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import Box from '@mui/material/Box'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
@@ -58,4 +58,4 @@ const EditStyleWork: React.FC<IEditStyleWork> = (props) => {
   )
 }
 
-export default EditStyleWork
+export default memo(EditStyleWork)

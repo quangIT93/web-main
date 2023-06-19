@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControl from '@mui/material/FormControl'
@@ -57,4 +57,4 @@ const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
   )
 }
 
-export default EditPostPeriodDate
+export default memo(EditPostPeriodDate)

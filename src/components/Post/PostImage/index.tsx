@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 //@ts-ignore
 import imageCompression from 'browser-image-compression'
@@ -140,7 +140,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
                 style={{
                   height: '150px',
                   width: '150px',
-                  objectFit: "cover"
+                  objectFit: 'cover',
                 }}
               />
               <div
@@ -162,7 +162,12 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             </div>
           ))}
         </Box>
-        <Typography variant="body1" color="#ccc" p="1rem 0" sx={{ fontStyle: "italic" }}>
+        <Typography
+          variant="body1"
+          color="#ccc"
+          p="1rem 0"
+          sx={{ fontStyle: 'italic' }}
+        >
           Có thể tải tối đa 5 ảnh, mỗi ảnh không quá 10MB. (Định dạng cho phép:
           jpeg, jpg, png)
         </Typography>
@@ -195,4 +200,4 @@ const PostImage: React.FC<PostImageProps> = (props) => {
   )
 }
 
-export default PostImage
+export default memo(PostImage)

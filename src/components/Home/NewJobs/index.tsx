@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
 import CardActions from '@mui/material/CardActions'
@@ -12,7 +12,7 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
+import TurnedInIcon from '@mui/icons-material/TurnedIn'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 
 // import redux
@@ -23,6 +23,9 @@ import { RootState } from '../../../store/reducer'
 // import api
 import postApi from 'api/postApi'
 import bookMarkApi from 'api/bookMarkApi'
+
+// import context
+import { HomeValueContext } from 'context/HomeValueContextProvider'
 
 import moment from 'moment'
 import 'intl'
@@ -44,6 +47,8 @@ import { Space, Tooltip } from 'antd'
 import './style.scss'
 //@ts-ignore
 import { maxHeight } from '@mui/system'
+
+import ChildCateloriesArray from 'context/HomeValueContextProvider'
 
 interface PostNewest {
   id: number
@@ -86,12 +91,19 @@ const NewJobs: React.FC = () => {
 
   const [checkBookMark, setCheckBookMark] = React.useState(true)
 
+  const {
+    setChildCateloriesArray,
+    childCateloriesArray,
+  }: {
+    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>
+    childCateloriesArray: number[]
+  } = useContext(HomeValueContext)
+
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`)
   }
 
-  console.log('po', postNewest)
   // handle change paginaton
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
@@ -108,12 +120,11 @@ const NewJobs: React.FC = () => {
 
     const result = await postApi.getPostNewest(
       Number(categoryId),
-      null,
+      childCateloriesArray,
       null,
       9,
       thersholdId
     )
-    console.log("newest: ", result)
 
     if (result) {
       setPostNewestMore(result)
@@ -129,7 +140,7 @@ const NewJobs: React.FC = () => {
     try {
       setOpenBackdrop(true)
       const result = await postApi.getPostNewest(null, null, null, 19)
-      console.log("result: ", result)
+      console.log('result: ', result)
       if (result) {
         setPostNewest(result)
         console.log(result)
@@ -171,12 +182,14 @@ const NewJobs: React.FC = () => {
                     },
                     boxShadow: 'none',
                     borderRadius: '5px',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
                   }}
                 >
-                  <div onClick={(e) => {
-                    handleClickItem(e, item.id)
-                  }} >
+                  <div
+                    onClick={(e) => {
+                      handleClickItem(e, item.id)
+                    }}
+                  >
                     <ImageListItem
                       key={item.image}
                       sx={{ flex: 1, display: 'flex' }}
@@ -192,7 +205,7 @@ const NewJobs: React.FC = () => {
                           height: '100%',
                           maxHeight: 150,
                           borderRadius: 10,
-                          minHeight: 120
+                          minHeight: 120,
                         }}
                       />
                       <div
@@ -249,8 +262,8 @@ const NewJobs: React.FC = () => {
                         >
                           <ClockCircleFilled className="icon-cart-item-post" />
                           <Typography variant="body2" color="text.secondary">
-                            {moment(new Date(item.start_time)).format('HH:mm')} -{' '}
-                            {moment(new Date(item.end_time)).format('HH:mm')}
+                            {moment(new Date(item.start_time)).format('HH:mm')}{' '}
+                            - {moment(new Date(item.end_time)).format('HH:mm')}
                           </Typography>
                         </div>
                         <div
@@ -302,28 +315,40 @@ const NewJobs: React.FC = () => {
                     direction="vertical"
                     align="center"
                   >
-                    <div onClick={async (e) => {
-                      try {
-                        if (item.bookmarked) {
-                          const result = await bookMarkApi.deleteBookMark(item.id)
-                          item.bookmarked = false
-                          if (result) {
-                            setCheckBookMark(!checkBookMark)
+                    <div
+                      onClick={async (e) => {
+                        try {
+                          if (item.bookmarked) {
+                            const result = await bookMarkApi.deleteBookMark(
+                              item.id
+                            )
+                            item.bookmarked = false
+                            if (result) {
+                              setCheckBookMark(!checkBookMark)
+                            }
+                          } else {
+                            const result = await bookMarkApi.createBookMark(
+                              item.id
+                            )
+                            item.bookmarked = true
+                            if (result) {
+                              setCheckBookMark(!checkBookMark)
+                            }
                           }
-                        } else {
-                          const result = await bookMarkApi.createBookMark(item.id)
-                          item.bookmarked = true
-                          if (result) {
-                            setCheckBookMark(!checkBookMark)
-                          }
+                        } catch (error) {
+                          console.log(error)
                         }
-                      } catch (error) {
-                        console.log(error)
-                      }
-                    }}>
-                      {item.bookmarked ?
-                        <TurnedInIcon sx={{ top: 0, right: 0, color: "#0d99ff" }} /> :
-                        <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0, color: "" }} />}
+                      }}
+                    >
+                      {item.bookmarked ? (
+                        <TurnedInIcon
+                          sx={{ top: 0, right: 0, color: '#0d99ff' }}
+                        />
+                      ) : (
+                        <BookmarkBorderOutlinedIcon
+                          sx={{ top: 0, right: 0, color: '' }}
+                        />
+                      )}
                     </div>
                     <img
                       className="img-resource-company"

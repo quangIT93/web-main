@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -78,4 +78,4 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
   )
 }
 
-export default EditPostTypeJob
+export default memo(EditPostTypeJob)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { Box } from '@mui/material'
 
 import Typography from '@mui/material/Typography'
@@ -80,4 +80,4 @@ const EditPostNumberPhone: React.FC<IEditPostNumberPhone> = (props) => {
   )
 }
 
-export default EditPostNumberPhone
+export default memo(EditPostNumberPhone)

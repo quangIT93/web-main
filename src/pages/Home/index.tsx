@@ -36,7 +36,10 @@ export interface StatePropsCloseSlider {
 }
 
 const Home: React.FC = () => {
-  const [valueJob, setValueJob] = React.useState('Tất cả')
+  const [valueJob, setValueJob] = React.useState<any>({
+    id: 1,
+    parentName: 'Tất cả',
+  })
 
   const [hideSlider, setHideSlider] = useState<boolean>(false)
   // thay đổi width setState
@@ -111,12 +114,14 @@ const Home: React.FC = () => {
   }, [])
 
   // handleChange job from category to Breadcrumbs
-  const handleChange = (newValue: string) => {
+  const handleChange = (newValue: string, id: number) => {
     // Cập nhật giá trị trong thành phần cha
-    setValueJob(newValue)
-  }
 
-  console.log('setValueJob', valueJob)
+    setValueJob({
+      parentName: newValue,
+      id,
+    })
+  }
 
   const handleClickShowModalLogin = (openModal: boolean) => {
     setOpenModalLogin(openModal)

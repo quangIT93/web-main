@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Cascader } from 'antd'
@@ -156,4 +156,4 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
   )
 }
 
-export default EditPostCategoryId
+export default memo(EditPostCategoryId)

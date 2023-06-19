@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack'
 import { AxiosResponse } from 'axios'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 
 // @ts-ignore
 import moment from 'moment'
@@ -25,7 +25,7 @@ import { MouseEvent, MouseEventHandler } from 'react'
 import { useSearchParams } from 'react-router-dom'
 // import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
+import TurnedInIcon from '@mui/icons-material/TurnedIn'
 
 // import component
 import ListCompanyCarousel from '../ListCompanyCarousel'
@@ -117,7 +117,6 @@ const ThemesJob: React.FC = () => {
 
       setOpenBackdrop(false)
     }
-
   }
 
   // handle click post details
@@ -134,7 +133,7 @@ const ThemesJob: React.FC = () => {
   const getPostByThemeId = async () => {
     try {
       const result = await themeApi.getThemesEnable()
-      console.log("result", result)
+      console.log('result', result)
       if (result) {
         setListThem(result)
 
@@ -147,7 +146,6 @@ const ThemesJob: React.FC = () => {
     } catch (error) {
       setAutomatic(true)
       console.log(error)
-
     }
   }
   React.useEffect(() => {
@@ -167,12 +165,9 @@ const ThemesJob: React.FC = () => {
 
   // }, [localStorage.getItem("accessToken")])
 
-
-
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <h2>Công việc mới nhất</h2>
+      <h2>Công việc theo chủ đề</h2>
 
       <ListCompanyCarousel listTheme={listTheme} />
       <>
@@ -195,9 +190,11 @@ const ThemesJob: React.FC = () => {
                       borderRadius: 'unset',
                     }}
                   >
-                    <div onClick={(e) => {
-                      handleClickItem(e, item.id)
-                    }}>
+                    <div
+                      onClick={(e) => {
+                        handleClickItem(e, item.id)
+                      }}
+                    >
                       <ImageListItem
                         key={item.image}
                         sx={{ flex: 1, display: 'flex' }}
@@ -213,31 +210,39 @@ const ThemesJob: React.FC = () => {
                             maxHeight: '150px',
                             borderRadius: 10,
                             height: '100% ',
-                            minHeight: "120px"
+                            minHeight: '120px',
                           }}
                         />
                         <div
                           style={{ padding: '0', marginLeft: '12px' }}
                           className="div-cart-item-post"
                         >
-                          <Tooltip placement="top" title={item.title} >
+                          <Tooltip placement="top" title={item.title}>
                             <Typography
                               gutterBottom
                               variant="h6"
                               component="div"
-                              sx={{ fontSize: '15px', margin: 0, fontWeight: "bold" }}
+                              sx={{
+                                fontSize: '15px',
+                                margin: 0,
+                                fontWeight: 'bold',
+                              }}
                             >
-                              {item?.title.length > 43 ? `${item.title.substring(0, 43)} ...` : item.title}
+                              {item?.title.length > 43
+                                ? `${item.title.substring(0, 43)} ...`
+                                : item.title}
                             </Typography>
                           </Tooltip>
-                          <Tooltip placement="top" title={item.company_name} >
+                          <Tooltip placement="top" title={item.company_name}>
                             <Typography
                               gutterBottom
                               variant="h1"
                               component="div"
                               sx={{ fontSize: '12px' }}
                             >
-                              {item?.company_name.length > 42 ? `${item.company_name.substring(0, 42)} ...` : item.company_name}
+                              {item?.company_name.length > 42
+                                ? `${item.company_name.substring(0, 42)} ...`
+                                : item.company_name}
                             </Typography>
                           </Tooltip>
                           <div
@@ -261,8 +266,11 @@ const ThemesJob: React.FC = () => {
                           >
                             <ClockCircleFilled className="icon-cart-item-post" />
                             <Typography variant="body2" color="text.secondary">
-                              {moment(new Date(item.start_time)).format('HH:mm')}{' '}
-                              - {moment(new Date(item.end_time)).format('HH:mm')}
+                              {moment(new Date(item.start_time)).format(
+                                'HH:mm'
+                              )}{' '}
+                              -{' '}
+                              {moment(new Date(item.end_time)).format('HH:mm')}
                             </Typography>
                           </div>
                           <div
@@ -272,7 +280,14 @@ const ThemesJob: React.FC = () => {
                               justifyContent: 'center',
                             }}
                           >
-                            <AttachMoneyIcon sx={{ fontSize: 20, marginLeft: "-2px", marginRight: "2px", color: "#575757" }} />
+                            <AttachMoneyIcon
+                              sx={{
+                                fontSize: 20,
+                                marginLeft: '-2px',
+                                marginRight: '2px',
+                                color: '#575757',
+                              }}
+                            />
                             <Typography variant="body2" color="text.secondary">
                               {new Intl.NumberFormat('en-US').format(
                                 item.salary_min
@@ -285,46 +300,74 @@ const ThemesJob: React.FC = () => {
                           </div>
                           <div
                             style={{
-                              marginTop: 5
+                              marginTop: 5,
                             }}
                           >
-                            <p style={{ color: "#AAAAAA", fontSize: 13, fontStyle: "italic" }}>{item.created_at_text}</p>
+                            <p
+                              style={{
+                                color: '#AAAAAA',
+                                fontSize: 13,
+                                fontStyle: 'italic',
+                              }}
+                            >
+                              {item.created_at_text}
+                            </p>
                           </div>
                         </div>
                       </ImageListItem>
                     </div>
 
-                    <Space style={{ justifyContent: "space-between" }} direction='vertical' align='center'>
-                      <div onClick={async (e) => {
-                        try {
-                          if (!localStorage.getItem("accessToken")) {
-                            return
-                          }
-                          if (item.bookmarked) {
-                            const result = await bookMarkApi.deleteBookMark(item.id)
-                            item.bookmarked = false
-                            if (result) {
-                              setCheckBookMark(!checkBookMark)
+                    <Space
+                      style={{ justifyContent: 'space-between' }}
+                      direction="vertical"
+                      align="center"
+                    >
+                      <div
+                        onClick={async (e) => {
+                          try {
+                            if (!localStorage.getItem('accessToken')) {
+                              return
                             }
-                          } else {
-                            const result = await bookMarkApi.createBookMark(item.id)
-                            item.bookmarked = true
-                            if (result) {
-                              setCheckBookMark(!checkBookMark)
+                            if (item.bookmarked) {
+                              const result = await bookMarkApi.deleteBookMark(
+                                item.id
+                              )
+                              item.bookmarked = false
+                              if (result) {
+                                setCheckBookMark(!checkBookMark)
+                              }
+                            } else {
+                              const result = await bookMarkApi.createBookMark(
+                                item.id
+                              )
+                              item.bookmarked = true
+                              if (result) {
+                                setCheckBookMark(!checkBookMark)
+                              }
                             }
+                          } catch (error) {
+                            console.log(error)
                           }
-                        } catch (error) {
-                          console.log(error)
-                        }
-                      }}>
-                        {item.bookmarked ?
-                          <TurnedInIcon sx={{ top: 0, right: 0, color: "#0d99ff" }} /> :
-                          <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0, color: "" }} />}
+                        }}
+                      >
+                        {item.bookmarked ? (
+                          <TurnedInIcon
+                            sx={{ top: 0, right: 0, color: '#0d99ff' }}
+                          />
+                        ) : (
+                          <BookmarkBorderOutlinedIcon
+                            sx={{ top: 0, right: 0, color: '' }}
+                          />
+                        )}
                       </div>
 
-                      <img className='img-resource-company' src={item.resource.company_icon} />
-                      <p style={{ fontSize: 13, fontStyle: "italic" }}>{item.job_type.job_type_name}</p>
-
+                      <img
+                        className="img-resource-company"
+                        src={item.resource.company_icon}
+                      />
+                      <p style={{ fontSize: 13, fontStyle: 'italic' }}>
+                        {item.job_type.job_type_name}
+                      </p>
                     </Space>
                   </Card>
                 </Grid>

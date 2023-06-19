@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControl from '@mui/material/FormControl'
@@ -52,4 +52,4 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
   )
 }
 
-export default PostPeriodDate
+export default memo(PostPeriodDate)

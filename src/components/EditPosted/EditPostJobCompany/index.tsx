@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 // import component UI
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
@@ -86,4 +86,4 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
   )
 }
 
-export default EditPostJobCompany
+export default memo(EditPostJobCompany)

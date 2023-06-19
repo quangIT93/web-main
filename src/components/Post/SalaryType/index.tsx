@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Box } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -49,14 +49,19 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
           sx={{ display: 'flex', flexDirection: 'column' }}
         >
           {salary?.data.map((item: any, i: number) => {
-
-            return <FormControlLabel key={i} value={item.id} control={<Radio />} label={`${item.value}`} />
+            return (
+              <FormControlLabel
+                key={i}
+                value={item.id}
+                control={<Radio />}
+                label={`${item.value}`}
+              />
+            )
           })}
-
         </RadioGroup>
       </FormControl>
     </Box>
   )
 }
 
-export default SalaryType
+export default memo(SalaryType)

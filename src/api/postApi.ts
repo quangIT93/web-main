@@ -30,7 +30,7 @@ const postApi = {
   },
   getPostNewest: (
     pcid?: Number | null,
-    ccid?: [] | null,
+    ccid?: number[] | null,
     dtid?: [] | null,
     limit?: Number,
     threshold?: Number
@@ -40,12 +40,12 @@ const postApi = {
       `${pcid ? `pcid=${pcid}` : ``}` +
       `${
         ccid
-          ? `&${ccid.map((n, index) => `ccid[${index}]=${n}`).join('&')}`
+          ? `&${ccid?.map((n, index) => `ccid[${index}]=${n}`).join('&')}`
           : ``
       }` +
       `${
         dtid
-          ? `&${dtid.map((n, index) => `dtid[${index}]=${n}`).join('&')}`
+          ? `&${dtid?.map((n, index) => `dtid[${index}]=${n}`).join('&')}`
           : ``
       }` +
       `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}`

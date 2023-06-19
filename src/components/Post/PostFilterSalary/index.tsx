@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import { Box, Slider } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -171,4 +171,4 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
   )
 }
 
-export default PostFilterSalary
+export default memo(PostFilterSalary)

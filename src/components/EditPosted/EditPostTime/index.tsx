@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import dayjs from 'dayjs'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
@@ -85,4 +85,4 @@ const EditPostTime: React.FC<IEditPostTime> = (props) => {
   )
 }
 
-export default EditPostTime
+export default memo(EditPostTime)

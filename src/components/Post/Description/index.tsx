@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
@@ -40,4 +40,4 @@ const Description: React.FC<IDescription> = (props) => {
   )
 }
 
-export default Description
+export default memo(Description)

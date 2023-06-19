@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -66,4 +66,4 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
   )
 }
 
-export default PostTypeJob
+export default memo(PostTypeJob)

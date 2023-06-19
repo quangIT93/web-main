@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 
 import Typography from '@mui/material/Typography'
 
@@ -76,4 +76,4 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
   )
 }
 
-export default PostJobCompany
+export default memo(PostJobCompany)

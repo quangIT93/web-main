@@ -270,4 +270,4 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
   )
 })
 
-export default EditPostAddress
+export default memo(EditPostAddress)

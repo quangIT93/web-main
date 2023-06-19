@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { Box } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -69,4 +69,4 @@ const EditSalaryType: React.FC<ISalaryType> = (props) => {
   )
 }
 
-export default EditSalaryType
+export default memo(EditSalaryType)

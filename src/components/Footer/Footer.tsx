@@ -86,8 +86,6 @@ const Footer: React.FC<PropsFooter> = (props) => {
     }
   }, [])
 
-  console.log(windowWidth)
-
   return (
     <WrapFooter>
       <Visibility

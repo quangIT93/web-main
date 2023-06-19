@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Cascader } from 'antd'
@@ -138,4 +138,4 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   )
 }
 
-export default CheckboxesTags
+export default memo(CheckboxesTags)

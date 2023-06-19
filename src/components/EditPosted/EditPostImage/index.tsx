@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import axios from 'axios'
 // import { blobToBase64 } from 'blob-util'
@@ -256,4 +256,4 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
   )
 }
 
-export default EditPostImage
+export default memo(EditPostImage)

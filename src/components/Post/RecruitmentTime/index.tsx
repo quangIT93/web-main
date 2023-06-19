@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
@@ -65,4 +65,4 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
   )
 }
 
-export default RecruitmentTime
+export default memo(RecruitmentTime)

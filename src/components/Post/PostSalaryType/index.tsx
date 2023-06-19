@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Box, Slider } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -80,4 +80,4 @@ const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
   )
 }
 
-export default PostSalaryType
+export default memo(PostSalaryType)

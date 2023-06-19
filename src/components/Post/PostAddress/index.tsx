@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import Typography from '@mui/material/Typography'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
@@ -118,6 +118,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   const handleChangeAddress = (e: any) => {
     setAddress(e.target.value)
   }
+  console.log('render address')
   return (
     <div className="post-address">
       <div className="post-address_top">
@@ -205,4 +206,4 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   )
 }
 
-export default PostAddress
+export default memo(PostAddress)

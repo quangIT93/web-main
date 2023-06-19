@@ -51,6 +51,7 @@ import {
 import SalaryFilterSubnav from './components/SalaryFilterSubnav'
 import PositionFilterSubnav from './components/PositionFilterSubnav'
 import CareerFilterSubnav from './components/CareerFilterSubnav'
+import SearchInput from './SearchInput'
 
 import { Avatar, Space, Spin } from 'antd'
 
@@ -198,7 +199,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         setProfileUser(result.data)
       }
     } catch (error) {
-
       setOpenBackdrop(false)
       // error authentication
       // setOpenBackdrop(true)
@@ -213,7 +213,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       //   setOpenBackdrop(false)
       // }
       // await dispatch(getProfile() as any)
-
     }
   }
   // fecth data user when access token changes
@@ -281,7 +280,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         setSpinning(true)
       }
       var result = null
-      if (localStorage.getItem("accessToken")) {
+      if (localStorage.getItem('accessToken')) {
         result = await profileApi.getProfile()
       }
       if (result) {
@@ -314,7 +313,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       const refreshToken = localStorage.getItem('refreshToken')
 
       if (refreshToken) {
-
         const result = await authApi.signOut(refreshToken)
         if (result) {
           window.location.replace('/home')
@@ -387,9 +385,9 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -431,9 +429,13 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
           <Logo />
         </Left>
         <Center className="div-nav-center">
-          <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
+          {/* <div>assssssssssssssssssssssssssssssss</div> */}
+          <SearchInput />
         </Center>
         <Right className="div-nav-right">
+          <div className="tabBar-right">
+            <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
+          </div>
           {/* <Button
             variant="contained"
             startIcon={<AdsClickIcon />}

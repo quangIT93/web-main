@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { Box, Slider } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -135,4 +135,4 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
   )
 }
 
-export default EditPostFilterSalary
+export default memo(EditPostFilterSalary)
