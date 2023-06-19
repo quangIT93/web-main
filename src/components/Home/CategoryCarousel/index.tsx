@@ -161,44 +161,47 @@ const CategoryCarousel: React.FC<PropState> = ({
     setOpenBackdrop(true)
   }
 
+  console.log('height', height)
+  console.log('windowWidth', windowWidth)
   return (
     <Box
       ref={listRef}
-      sx={{
-        maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
-        bgcolor: 'white',
-        position:
-          height > 60 && !windowWidth ? `fixed` : hideSlider ? 'fixed' : '',
-        top:
-          height > 60 && !windowWidth
-            ? `${height + 121}px`
-            : hideSlider
-            ? '71px'
-            : '',
-        margin:
-          height > 60 && !windowWidth
-            ? '0 180px'
-            : hideSlider
-            ? '0 180px'
-            : '0',
+      // sx={{
+      //   maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
+      //   bgcolor: 'white',
+      //   // position:
+      //   //   height > 60 && !windowWidth ? `fixed` : hideSlider ? 'fixed' : '',
+      //   position: hideSlider ? 'fixed' : '',
+      //   top:
+      //     height > 60 && !windowWidth
+      //       ? `${height + 121}px`
+      //       : hideSlider
+      //       ? '71px'
+      //       : '',
+      //   margin:
+      //     height > 60 && !windowWidth
+      //       ? '0 180px'
+      //       : hideSlider
+      //       ? '0 180px'
+      //       : '0',
 
-        paddingTop:
-          height > 60 && !windowWidth
-            ? '0px'
-            : height > 60 && windowWidth && !hideSlider
-            ? '71px'
-            : hideSlider
-            ? '0'
-            : '',
+      //   paddingTop:
+      //     height > 60 && !windowWidth
+      //       ? '0px'
+      //       : height > 60 && windowWidth && !hideSlider
+      //       ? '71px'
+      //       : hideSlider
+      //       ? '0'
+      //       : '',
 
-        right: 0,
-        left: 0,
-        zIndex: 2,
-        border: 'none',
-        // borderBottom: '1px solid #aaa',
-        // boxShadow: '0px 1px 2px #aaa',
-        // transition: 'top 0.5s',
-      }}
+      //   right: 0,
+      //   left: 0,
+      //   zIndex: 2,
+      //   border: 'none',
+      //   // borderBottom: '1px solid #aaa',
+      //   // boxShadow: '0px 1px 2px #aaa',
+      //   // transition: 'top 0.5s',
+      // }}
       className="tabs"
     >
       <Tabs

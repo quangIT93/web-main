@@ -4,7 +4,7 @@ import { FormValues } from '../pages/Post'
 
 const postApi = {
   createPost: (newPost: FormValues) => {
-    const URL = `posts`
+    const URL = `/v1/posts`
     return axiosClient.post(URL, newPost, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -14,7 +14,7 @@ const postApi = {
   },
 
   getById: (params: number) => {
-    const URL = `posts/${params}`
+    const URL = `/v1/posts/${params}`
     return axiosClient.get(URL)
   },
 
@@ -23,7 +23,7 @@ const postApi = {
     limit: Number,
     threshold: Number | null
   ) => {
-    const URL = `posts/theme?tid=${themeId}&limit=${limit}&threshold=${
+    const URL = `/v1/posts/theme?tid=${themeId}&limit=${limit}&threshold=${
       threshold ? threshold : ''
     }`
     return axiosClient.get(URL)

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 // @ts-ignore
 // import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -28,12 +28,12 @@ import CircularProgress from '@mui/material/CircularProgress'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
-import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined'
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined'
 import CloseIcon from '@mui/icons-material/Close'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined'
 
 import {
   FormOutlined,
@@ -46,6 +46,8 @@ import {
   KeyOutlined,
   LoadingOutlined,
 } from '@ant-design/icons'
+
+import { Button } from 'antd'
 
 // import component
 import SalaryFilterSubnav from './components/SalaryFilterSubnav'
@@ -80,6 +82,9 @@ import { RootState } from '../../store/reducer'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../store/index'
 
+// import Context
+import { HomeValueContext } from 'context/HomeValueContextProvider'
+
 interface propsCloseSlider {
   openCollapse: boolean
   setOpenCollapse: React.Dispatch<React.SetStateAction<boolean>>
@@ -90,6 +95,19 @@ interface propsCloseSlider {
 
 const Navbar: React.FC<propsCloseSlider> = (props) => {
   const { openCollapse, setOpenCollapse, setHeight } = props
+
+  const {
+    openCollapseFilter,
+    setOpenCollapseFilter,
+    setHeightNavbar,
+    heightNavbar,
+  }: {
+    openCollapseFilter: boolean
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+    heightNavbar: number
+    setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+  } = useContext(HomeValueContext)
+
   const [salary, setSalary] = React.useState<number[]>([])
   const [openLocation, setOpenLocation] = React.useState(false)
   const [openCareer, setOpenCareer] = React.useState(false)
@@ -237,14 +255,15 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const handleCollapseEntered = () => {
     if (ref.current) {
       const height = ref.current.clientHeight
-
       setHeight(height)
+      setHeightNavbar(height)
     }
   }
 
   const handleCollapseExited = () => {
     if (ref.current) {
       setHeight(0)
+      setHeightNavbar(0)
     }
   }
 
@@ -431,6 +450,9 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         <Center className="div-nav-center">
           {/* <div>assssssssssssssssssssssssssssssss</div> */}
           <SearchInput />
+          <Button onClick={() => setOpenCollapse(!openCollapse)}>
+            <TuneOutlinedIcon />
+          </Button>
         </Center>
         <Right className="div-nav-right">
           <div className="tabBar-right">

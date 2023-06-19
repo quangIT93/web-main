@@ -137,19 +137,14 @@ const Home: React.FC = () => {
   return (
     <div className="home">
       <Navbar {...statePropsCloseSlider} />
-      {!openCollapse && height < 70 ? (
+      {/* {!openCollapse && height < 70 ? (
         <Carousel slides={SLIDES} options={OPTIONS} />
-      ) : (
-        <></>
-      )}
-      <div
-        className="home__main"
-        style={
-          height > 70 || (hideSlider && !windowWidth)
-            ? { marginTop: `${height + 255}px` }
-            : { marginTop: 0 }
-        }
-      >
+        ) : (
+          <></>
+          )} */}
+      <Carousel slides={SLIDES} options={OPTIONS} />
+
+      <div className="home__main">
         <CategoryCarousel
           height={height}
           hideSlider={hideSlider}
