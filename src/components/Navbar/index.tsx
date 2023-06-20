@@ -44,7 +44,7 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons'
 
-import { Button } from 'antd'
+
 
 // import component
 import SalaryFilterSubnav from './components/SalaryFilterSubnav'
@@ -52,7 +52,7 @@ import PositionFilterSubnav from './components/PositionFilterSubnav'
 import CareerFilterSubnav from './components/CareerFilterSubnav'
 import SearchInput from './SearchInput'
 
-import { Avatar, Space, Spin } from 'antd'
+import { Avatar, Button, Space, Spin } from 'antd'
 
 import authApi from 'api/authApi'
 import profileApi from 'api/profileApi'
@@ -90,15 +90,17 @@ const Navbar: React.FC = () => {
     // setHeightNavbar,
     SetRefNav,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
-  } = useContext(HomeValueContext)
+    {
+      openCollapseFilter: boolean
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
+    } = useContext(HomeValueContext)
 
   const [showTap, setshowTap] = React.useState(false)
+
+  const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false)
   const [openInfoUser, setOpenInfoUser] = React.useState(false)
@@ -161,17 +163,6 @@ const Navbar: React.FC = () => {
       // await dispatch(getProfile() as any)
     }
   }
-  // fecth data user when access token changes
-  const fecthDataProfileWhileAccecsToken = async () => {
-    const result = await profileApi.getProfile()
-    if (result) {
-      setProfileUser(result.data)
-      setOpenBackdrop(false)
-    }
-  }
-  // useEffect(() => {
-  //   fecthDataProfileWhileAccecsToken()
-  // }, [localStorage.getItem('accessToken')])
 
   useEffect(() => {
     fecthDataProfileUser()
@@ -218,6 +209,12 @@ const Navbar: React.FC = () => {
   const handleShowModalFilter = () => {
     if (!openModalFilter) return setOpenModalFilter(true)
     setOpenModalFilter(false)
+  }
+
+  const handleSearch = () => {
+    const encode = encodeURIComponent(`${valueSearchInput}`)
+
+    window.open(`/search-results?q=${encode}`, "_parent")
   }
 
   // login
@@ -335,9 +332,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -380,7 +377,9 @@ const Navbar: React.FC = () => {
         </Left>
         <Center className="div-nav-center">
           {/* <div>assssssssssssssssssssssssssssssss</div> */}
-          <SearchInput />
+          <SearchInput value={valueSearchInput} setValue={setValueSearchInput} />
+          <Button onClick={handleSearch}>Tim Kiem</Button>
+
           <Button onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
             <TuneOutlinedIcon />
           </Button>

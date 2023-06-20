@@ -67,7 +67,7 @@ const ACCESS_TOKEN = localStorage.getItem('accessToken')
 const Detail: React.FC = () => {
   const { Search } = Input
   // test redux
-  const state = useSelector((state: RootState) => state.profile)
+  const userProfile = useSelector((state: RootState) => state.profileUser)
   const dispatch = useDispatch()
   const { setPostByTheme, setProvince } = bindActionCreators(
     actionCreators,
@@ -96,7 +96,7 @@ const Detail: React.FC = () => {
 
   const openNotification = () => {
     api.info({
-      message: `Ứng tuyển thành công - Chia sẻ công việc ?`,
+      message: <>Ứng tuyển công việc thành công <br /> Bạn muốn chia sẻ công việc ?</>,
       description: (
         <Input
           addonBefore="Link"
@@ -231,6 +231,18 @@ const Detail: React.FC = () => {
         window.open(`edit-posted/?postId=${POST_ID}`)
         return
       }
+      if (!userProfile.name || !userProfile.address || !userProfile.birthday || userProfile.gender === null || userProfile.gender === undefined || !userProfile.phone || !userProfile.email) {
+        console.log("user", userProfile)
+        api.info({
+          message: `Cập nhật thông tin`,
+          description: "Vui lòng cập nhật thông tin để ứng tuyển công việc",
+          placement: 'top',
+          icon: <ExclamationCircleFilled style={{ color: "red" }} />
+        })
+        return
+
+      }
+
       const result = await appplicationApi.applyAplication(POST_ID)
 
       if (result) {
@@ -268,11 +280,7 @@ const Detail: React.FC = () => {
                   separator=">"
                   items={[
                     {
-                      title: 'HiJob',
-                    },
-                    {
-                      title: 'Viec lam',
-                      href: '',
+                      title: <a href="/home">HiJob</a>,
                     },
                     {
                       title: `${post?.data.title}`,

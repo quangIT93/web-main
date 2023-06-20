@@ -394,9 +394,9 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -439,7 +439,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         </Left>
         <Center className="div-nav-center">
           {/* <div>assssssssssssssssssssssssssssssss</div> */}
-          <SearchInput />
+          {/* <SearchInput /> */}
           <Button onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
             <TuneOutlinedIcon />
           </Button>
