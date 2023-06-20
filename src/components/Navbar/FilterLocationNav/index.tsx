@@ -14,6 +14,7 @@ interface Option {
   children?: Option[]
   disableCheckbox?: boolean
 }
+const { SHOW_CHILD } = Cascader
 
 const FilterLocationNav: React.FC = () => {
   const [dataLocations, setDataLocations] = React.useState<any>(null)
@@ -80,10 +81,10 @@ const FilterLocationNav: React.FC = () => {
     const secondValues = value.map((item: any) => item[1])
     console.log('value', value)
     console.log('secondValues', secondValues)
-    if (secondValues.length <= 2) {
+    if (secondValues.length <= 3) {
       setLocId(secondValues)
     }
-    if (value.length > 1) {
+    if (value.length > 2) {
       setDisable(true)
     }
   }
@@ -125,6 +126,7 @@ const FilterLocationNav: React.FC = () => {
         onChange={onChange}
         changeOnSelect
         className="inputFilterLocationNav"
+        showCheckedStrategy={SHOW_CHILD}
       />
     </>
   )

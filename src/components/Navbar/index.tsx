@@ -15,6 +15,7 @@ import { SearchIcon } from '#components'
 import { ModalFilter } from '#components'
 
 import FilterLocationNav from './FilterLocationNav'
+import FilterCateloriesNav from './FilterCateloriesNav'
 
 // import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined'
 
@@ -426,6 +427,7 @@ const Navbar: React.FC = () => {
       >
         <div className="filter-wrap_top">
           <FilterLocationNav />
+          <FilterCateloriesNav />
         </div>
         <div>áldkjakl;sjdl;kạd s ada sd ád ád á d ád</div>
         <div>áldkjakl;sjdl;kạd s ada sd ád ád á d ád</div>
