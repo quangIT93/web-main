@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import breakpoints from '../../scss/breakpoints'
@@ -57,13 +57,10 @@ const Visibility = styled('div')({
   },
 })
 
-interface PropsFooter {
-  windowWidth: boolean
-}
-
-const Footer: React.FC<PropsFooter> = (props) => {
-  const { windowWidth } = props
+const Footer: React.FC = () => {
   const [open, setOpen] = React.useState(false)
+
+  const [windowWidth, setWindowWidth] = useState(false)
   // const [position, setPosition] = React.useState('0')
 
   const handleClickOpen = (
@@ -79,6 +76,18 @@ const Footer: React.FC<PropsFooter> = (props) => {
       setOpen(false)
     }
   }
+
+  const updateWindowWidth = () => {
+    if (window.innerWidth < 784) {
+      setWindowWidth(true)
+    } else {
+      setWindowWidth(false)
+    }
+  }
+
+  useEffect(() => {
+    updateWindowWidth()
+  }, [windowWidth])
 
   useEffect(() => {
     if (windowWidth) {

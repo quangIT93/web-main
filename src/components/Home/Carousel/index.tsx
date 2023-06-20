@@ -1,16 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, memo, useMemo } from 'react'
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
 import { DotButton, PrevButton, NextButton } from './components'
 import imageByIndex from './ImageIndex'
 import Autoplay from 'embla-carousel-autoplay'
 
-type PropType = {
-  slides: number[]
-  options?: EmblaOptionsType
-}
+const EmblaCarousel: React.FC = () => {
+  const SLIDE_COUNT = 3
+  const slides = useMemo(() => {
+    // Tính toán giá trị result dựa trên dep1 và dep2
+    // ...
+    return Array.from(Array(SLIDE_COUNT).keys())
+  }, [SLIDE_COUNT])
 
-const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props
+  const options: EmblaOptionsType = {
+    loop: true,
+    align: 'center',
+  }
+  console.log('render carolsale')
   //   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
@@ -119,4 +125,4 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   )
 }
 
-export default EmblaCarousel
+export default memo(EmblaCarousel)

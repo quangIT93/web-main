@@ -73,15 +73,16 @@ interface PostNewest {
   created_at_text: string
   bookmarked: boolean
 }
-interface StateProps {
-  handleLoadingW: () => void
-}
-const NewJobs: React.FC<StateProps> = ({ handleLoadingW = () => { } }) => {
+
+const NewJobs: React.FC = () => {
   const [page, setPage] = React.useState(1)
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
 
   const listRef = React.useRef<HTMLUListElement | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
+
+  const [isLoading, setIsLoading] = React.useState(false)
+
   const navigate = useNavigate()
 
   // state redux
@@ -158,7 +159,7 @@ const NewJobs: React.FC<StateProps> = ({ handleLoadingW = () => { } }) => {
 
         // set loading
         setOpenBackdrop(false)
-        handleLoadingW()
+        setIsLoading(true)
       }
     } catch (error) {
       setOpenBackdrop(false)

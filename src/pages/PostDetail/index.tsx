@@ -18,7 +18,6 @@ import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd'
 //@ts-ignore
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 //@ts-ignore
-import { useHomeState } from '../Home/HomeState'
 import { StatePropsCloseSlider } from 'pages/Home'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -36,7 +35,7 @@ import {
   DesktopOutlined,
   SlidersOutlined,
   FormOutlined,
-  ExclamationCircleFilled
+  ExclamationCircleFilled,
 } from '@ant-design/icons'
 
 import './style.scss'
@@ -64,7 +63,6 @@ interface PostNewest {
 }
 const ACCESS_TOKEN = localStorage.getItem('accessToken')
 
-
 // page view details post
 const Detail: React.FC = () => {
   const { Search } = Input
@@ -75,15 +73,6 @@ const Detail: React.FC = () => {
     actionCreators,
     dispatch
   )
-
-  const {
-    openCollapse,
-    setOpenCollapse,
-    height,
-    setHeight,
-    openModalLogin,
-    setOpenModalLogin,
-  } = useHomeState()
 
   const componentRef = React.useRef<HTMLDivElement>(null)
   const componentRefJob = React.useRef<HTMLDivElement>(null)
@@ -96,20 +85,14 @@ const Detail: React.FC = () => {
   const [automatic, setAutomatic] = React.useState<Boolean>(false)
 
   const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển')
-  const [backgroundButton, setBackgroundButton] = React.useState<string>("#0D99FF")
+  const [backgroundButton, setBackgroundButton] =
+    React.useState<string>('#0D99FF')
   const [checkPostUser, setCheckPostUser] = React.useState<Boolean>(false)
   const [checkApply, setCheckApply] = React.useState<boolean>(false)
 
   const [api, contextHolder] = notification.useNotification()
 
-  const statePropsCloseSlider: StatePropsCloseSlider = {
-    openCollapse,
-    setOpenCollapse,
-    setHeight,
-    height,
-    setOpenModalLogin,
-  }
-  const POST_ID = Number(searchParams.get('post-id'));
+  const POST_ID = Number(searchParams.get('post-id'))
 
   const openNotification = () => {
     api.info({
@@ -133,7 +116,7 @@ const Detail: React.FC = () => {
         />
       ),
       placement: 'topRight',
-      icon: <CheckCircleFilled style={{ color: "green" }} />
+      icon: <CheckCircleFilled style={{ color: 'green' }} />,
     })
   }
 
@@ -141,61 +124,55 @@ const Detail: React.FC = () => {
   const CheckWasLogin = () => {
     api.info({
       message: `Không thể thực hiện thao tác`,
-      description: "Vui lòng đăng nhập để thực hiện thao tác",
+      description: 'Vui lòng đăng nhập để thực hiện thao tác',
       placement: 'top',
-      icon: <ExclamationCircleFilled style={{ color: "red" }} />
+      icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
     })
   }
-
 
   // get post by id-post
   const getPostById = async () => {
     try {
-      const accountId = localStorage.getItem("accountId")
+      const accountId = localStorage.getItem('accountId')
 
       const result = await postApi.getById(POST_ID)
       if (result) {
-
-        console.log("post detail", result)
+        console.log('post detail', result)
       }
-      const list = result?.data.categories.map(
-        (category: any) => Number(category.child_category_id)
+      const list = result?.data.categories.map((category: any) =>
+        Number(category.child_category_id)
       )
       console.log('child', list)
 
       // check  application status
       if (result.data.account_id === accountId) {
-        setTextButton("Chỉnh sửa bài tuyển dụng")
-        setBackgroundButton("black")
+        setTextButton('Chỉnh sửa bài tuyển dụng')
+        setBackgroundButton('black')
         setCheckPostUser(true)
       } else if (result.data.status == 3) {
-        setTextButton("Bài đăng đã đóng")
-        setBackgroundButton("gray")
+        setTextButton('Bài đăng đã đóng')
+        setBackgroundButton('gray')
         result.data.applied = true
-      } else
-        if (result.data.application_status == 1) {
-          setTextButton("Đã ứng tuyển")
-          setBackgroundButton("gray")
-        } else if (result.data.application_status == 2) {
-          setTextButton("Hồ sơ được phê duyệt")
-          setBackgroundButton("#0D99FF")
-        } else if (result.data.application_status == 3) {
-          setTextButton("Hồ sơ bị từ chối")
-          setBackgroundButton("#BD3131")
-        } else if (result.data.application_status == 4) {
-          setTextButton("Hồ sơ được chấp nhận")
-          setBackgroundButton("#5CB265")
-        }
+      } else if (result.data.application_status == 1) {
+        setTextButton('Đã ứng tuyển')
+        setBackgroundButton('gray')
+      } else if (result.data.application_status == 2) {
+        setTextButton('Hồ sơ được phê duyệt')
+        setBackgroundButton('#0D99FF')
+      } else if (result.data.application_status == 3) {
+        setTextButton('Hồ sơ bị từ chối')
+        setBackgroundButton('#BD3131')
+      } else if (result.data.application_status == 4) {
+        setTextButton('Hồ sơ được chấp nhận')
+        setBackgroundButton('#5CB265')
+      }
       setPost(result)
       setCheckApply(result.data.applied)
 
       // get post related by id post
-      const postNewest = await postApi.getPostRelated(
-        POST_ID
-      )
+      const postNewest = await postApi.getPostRelated(POST_ID)
       //setPost related
       setPostNewest(postNewest)
-
     } catch (error) {
       console.error(error)
     }
@@ -270,8 +247,8 @@ const Detail: React.FC = () => {
 
       if (result) {
         openNotification()
-        setTextButton("Đã ứng tuyển")
-        setBackgroundButton("gray")
+        setTextButton('Đã ứng tuyển')
+        setBackgroundButton('gray')
         setCheckApply(true)
       }
     } catch (error) {
@@ -295,7 +272,7 @@ const Detail: React.FC = () => {
     <>
       {automatic && (
         <div className="detail">
-          <NavBar {...statePropsCloseSlider} />
+          <NavBar />
           <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
@@ -392,8 +369,8 @@ const Detail: React.FC = () => {
                       <p>Làm việc cuối tuần</p>
                       <h5>
                         {post?.data.is_working_weekend == 0
-                          ?
-                          'Không làm việc cuối tuần' : 'Có làm việc cuối tuần'}
+                          ? 'Không làm việc cuối tuần'
+                          : 'Có làm việc cuối tuần'}
                       </h5>
                     </div>
                   </div>
@@ -402,21 +379,19 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Mức lương</p>
-                      {
-                        post?.data.salary_type_id == 6 ?
-                          <h5>
-                            {post?.data.salary_type}
-                          </h5> :
-                          <h5>
-                            {new Intl.NumberFormat('en-US').format(
-                              post?.data.salary_min
-                            ) + ` ${post?.data.money_type_text}`}{' '}
-                            -{' '}
-                            {new Intl.NumberFormat('en-US').format(
-                              post?.data.salary_max
-                            ) + ` ${post?.data.money_type_text}`}
-                          </h5>
-                      }
+                      {post?.data.salary_type_id == 6 ? (
+                        <h5>{post?.data.salary_type}</h5>
+                      ) : (
+                        <h5>
+                          {new Intl.NumberFormat('en-US').format(
+                            post?.data.salary_min
+                          ) + ` ${post?.data.money_type_text}`}{' '}
+                          -{' '}
+                          {new Intl.NumberFormat('en-US').format(
+                            post?.data.salary_max
+                          ) + ` ${post?.data.money_type_text}`}
+                        </h5>
+                      )}
                     </div>
                   </div>
                   <div className="div-detail-row">
@@ -438,7 +413,11 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Làm việc từ xa</p>
-                      <h5>{post?.data.is_remotely == 0 ? "Không làm việc từ xa" : "Có làm việc từ xa"}</h5>
+                      <h5>
+                        {post?.data.is_remotely == 0
+                          ? 'Không làm việc từ xa'
+                          : 'Có làm việc từ xa'}
+                      </h5>
                     </div>
                   </div>
                   <div className="div-detail-row">
@@ -446,9 +425,13 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Thời gian hết hạn</p>
-                      <h5>{post?.data.expired_date ? moment(new Date(post?.data.expired_date)).format(
-                        'DD/MM/yyyy'
-                      ) : "Không thời hạn"}</h5>
+                      <h5>
+                        {post?.data.expired_date
+                          ? moment(new Date(post?.data.expired_date)).format(
+                              'DD/MM/yyyy'
+                            )
+                          : 'Không thời hạn'}
+                      </h5>
                     </div>
                   </div>
                   <>
@@ -461,8 +444,8 @@ const Detail: React.FC = () => {
                       style={{
                         fontSize: 16,
                         backgroundColor: `${backgroundButton}`,
-                        color: "white",
-                        fontWeight: "normal"
+                        color: 'white',
+                        fontWeight: 'normal',
                       }}
                       icon={checkPostUser ? <FormOutlined /> : null}
                     >
@@ -492,8 +475,8 @@ const Detail: React.FC = () => {
                   style={{
                     fontSize: 16,
                     backgroundColor: `${backgroundButton}`,
-                    color: "white",
-                    fontWeight: "normal"
+                    color: 'white',
+                    fontWeight: 'normal',
                   }}
                   icon={checkPostUser ? <FormOutlined /> : null}
                 >

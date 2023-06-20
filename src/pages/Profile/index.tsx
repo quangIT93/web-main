@@ -4,14 +4,17 @@ import moment from 'moment'
 
 // @ts-ignore
 import { Navbar } from '#components'
-import { StatePropsCloseSlider } from 'pages/Home'
-import { useHomeState } from '../Home/HomeState'
+
 import './style.scss'
 import { styled } from '@mui/material/styles'
 import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
 import { Button, Space, Skeleton, Upload, message, Popconfirm } from 'antd'
-import { PlusCircleOutlined, UploadOutlined, InstagramFilled } from '@ant-design/icons'
+import {
+  PlusCircleOutlined,
+  UploadOutlined,
+  InstagramFilled,
+} from '@ant-design/icons'
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
 
 import Snackbar from '@mui/material/Snackbar'
@@ -70,22 +73,6 @@ interface ICategories {
   child_category: string
 }
 const Profile: React.FC = () => {
-  const {
-    openCollapse,
-    setOpenCollapse,
-    height,
-    setHeight,
-    openModalLogin,
-    setOpenModalLogin,
-  } = useHomeState()
-  const statePropsCloseSlider: StatePropsCloseSlider = {
-    openCollapse,
-    setOpenCollapse,
-    setHeight,
-    height,
-    setOpenModalLogin,
-  }
-
   const dispatch = useDispatch()
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch)
   // const [dataProfile, setDataProfile] = useState(null)
@@ -280,7 +267,8 @@ const Profile: React.FC = () => {
   // console.log('alert', alert)
   return (
     <div className="profile">
-      <Navbar {...statePropsCloseSlider} />
+      <Navbar />
+
       <div className="container">
         <Skeleton className="skeleton-item" avatar loading={loading} active>
           <div className="div-profile-avatar">
@@ -304,7 +292,10 @@ const Profile: React.FC = () => {
                         onClick={handleAvatarClick} // Xử lý click vào SmallAvatar
                         sx={{ cursor: 'pointer' }}
                       /> */}
-                      <InstagramFilled onClick={handleAvatarClick} style={{ fontSize: 25, color: "gray" }} />
+                      <InstagramFilled
+                        onClick={handleAvatarClick}
+                        style={{ fontSize: 25, color: 'gray' }}
+                      />
 
                       <input
                         id="avatar-input"

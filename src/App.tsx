@@ -12,6 +12,9 @@ import { firebaseConfig } from './config/firebase/firebaseConfig'
 import { getAnalytics } from 'firebase/analytics'
 import './App.scss'
 import ScrollObserver from './utils/ScrollObserver'
+// import context
+import HomeContextProvider from 'context/HomeContextProvider'
+
 const NotFound = React.lazy(() => import('./pages/NotFound'))
 
 // Initialize Firebase
@@ -28,17 +31,19 @@ const App: React.FC = () => {
     <React.Suspense fallback={<div>Loading...</div>}>
       <Provider store={store}>
         <BrowserRouter>
-          <ScrollObserver>
-            <Layout>
-              <Routes>
-                {/* @ts-ignore */}
-                {routes.map(({ path, component: component }: RouteProps) => {
-                  return <Route path={path} element={component} key={path} />
-                })}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Layout>
-          </ScrollObserver>
+          <HomeContextProvider>
+            <ScrollObserver>
+              <Layout>
+                <Routes>
+                  {/* @ts-ignore */}
+                  {routes.map(({ path, component: component }: RouteProps) => {
+                    return <Route path={path} element={component} key={path} />
+                  })}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Layout>
+            </ScrollObserver>
+          </HomeContextProvider>
         </BrowserRouter>
       </Provider>
     </React.Suspense>

@@ -33,7 +33,7 @@ import 'intl'
 import 'intl/locale-data/jsonp/en'
 // @ts-ignore
 import { Navbar } from '#components'
-import { StatePropsCloseSlider } from 'pages/Home'
+
 import { useHomeState } from '../Home/HomeState'
 
 import {
@@ -87,13 +87,7 @@ const NewJobs: React.FC = () => {
 
         setOpenModalLogin,
     } = useHomeState()
-    const statePropsCloseSlider: StatePropsCloseSlider = {
-        openCollapse,
-        setOpenCollapse,
-        setHeight,
-        height,
-        setOpenModalLogin,
-    }
+
 
     const [page, setPage] = React.useState(2)
     const [openBackdrop, setOpenBackdrop] = React.useState(false)
@@ -208,7 +202,7 @@ const NewJobs: React.FC = () => {
 
     return (
         <>
-            <Navbar {...statePropsCloseSlider} />
+            <Navbar />
 
             <div className="search-result">
                 {

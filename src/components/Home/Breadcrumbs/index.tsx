@@ -16,9 +16,6 @@ import { NumberOutlined } from '@ant-design/icons'
 
 // import component
 
-// import COntext
-import { HomeValueContext } from 'context/HomeValueContextProvider'
-
 // import redux
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../../store/index'
@@ -29,19 +26,22 @@ import categoriesApi from '../../../api/categoriesApi'
 import postApi from 'api/postApi'
 import './style.scss'
 
-interface PropsBreadcrums {
-  valueJob: any
-}
+// import context
+import { HomeValueContext } from 'context/HomeValueContextProvider'
+import { IvalueJobChild } from 'context/HomeValueContextProvider'
 
-const BreadcrumbsCpn: React.FC<PropsBreadcrums> = (props) => {
-  const { valueJob } = props
+const BreadcrumbsCpn: React.FC = () => {
   // Contexts
   const {
     setChildCateloriesArray,
     childCateloriesArray,
+    valueJobChild,
+    setValueJobChild,
   }: {
     setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>
     childCateloriesArray: number[]
+    valueJobChild: IvalueJobChild
+    setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>
   } = useContext(HomeValueContext)
 
   const [open, setOpen] = React.useState(false)
@@ -76,7 +76,9 @@ const BreadcrumbsCpn: React.FC<PropsBreadcrums> = (props) => {
 
   const getAllChildCategoriesById = async () => {
     try {
-      const result = await categoriesApi.getAllChildCategories(valueJob?.id)
+      const result = await categoriesApi.getAllChildCategories(
+        valueJobChild?.id
+      )
       if (result) {
         setChildCatelories(result.data)
       }
@@ -87,7 +89,7 @@ const BreadcrumbsCpn: React.FC<PropsBreadcrums> = (props) => {
 
   useEffect(() => {
     getAllChildCategoriesById()
-  }, [valueJob?.id])
+  }, [valueJobChild?.id])
 
   useEffect(() => {
     setCheckedItems(
@@ -125,7 +127,7 @@ const BreadcrumbsCpn: React.FC<PropsBreadcrums> = (props) => {
 
     try {
       const result = await postApi.getPostNewest(
-        Number(valueJob?.id),
+        Number(valueJobChild?.id),
         array.map((arr: { id: number; name: string }) => arr.id),
         null,
         9,
@@ -210,9 +212,9 @@ const BreadcrumbsCpn: React.FC<PropsBreadcrums> = (props) => {
         color: '#0D99FF',
       }}
     >
-      {valueJob?.parentName}
+      {valueJobChild?.parentName}
     </Typography>,
-    valueJob?.id === 1 ? (
+    valueJobChild?.id === 1 ? (
       <></>
     ) : (
       <div

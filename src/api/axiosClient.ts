@@ -5,12 +5,11 @@ import queryString from 'query-string'
 
 // Please have a look at here `https://github.com/axios/axios#request-
 //config` for the full list of configs
-const BASE_URL =
-  process.env.REACT_APP_URL_HIJOB
-    ? process.env.REACT_APP_URL_HIJOB
-    : process.env.REACT_APP_URL_HIJOB_RSV
+const BASE_URL = process.env.REACT_APP_URL_HIJOB
+  ? process.env.REACT_APP_URL_HIJOB
+  : process.env.REACT_APP_URL_HIJOB_RSV
 
-const accessToken = localStorage.getItem('accessToken');
+const accessToken = localStorage.getItem('accessToken')
 const axiosClient = axios.create({
   // baseURL: process.env.REACT_APP_API_URL,
   baseURL: BASE_URL,
@@ -18,7 +17,6 @@ const axiosClient = axios.create({
     'content-type': 'application/json',
   },
   paramsSerializer: (params) => queryString.stringify(params),
-
 })
 
 // if (accessToken) {
@@ -29,17 +27,16 @@ axiosClient.interceptors.request.use(
   (config) => {
     if (accessToken) {
       // axiosClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.Authorization = `Bearer ${accessToken}`
     } else {
-      delete config.headers.Authorization;
+      delete config.headers.Authorization
     }
-    return config;
+    return config
   },
   (error) => {
-    Promise.reject(error.response || error.message);
+    Promise.reject(error.response || error.message)
   }
   // Handle token here ...
-
 )
 
 axiosClient.interceptors.response.use(
@@ -71,12 +68,13 @@ axiosClient.interceptors.response.use(
           ] = `Bearer ${response.data.data.accessToken}`;
           window.location.reload();
 
-          return axios(originalRequest);
+          return axios(originalRequest)
         }
-      }).catch((error) => {
-        // localStorage.clear();
-        //window.location.reload();
-      });
+      })
+        .catch((error) => {
+          // localStorage.clear();
+          //window.location.reload();
+        })
     }
 
     throw error
