@@ -44,8 +44,6 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons'
 
-
-
 // import component
 import SalaryFilterSubnav from './components/SalaryFilterSubnav'
 import PositionFilterSubnav from './components/PositionFilterSubnav'
@@ -90,13 +88,13 @@ const Navbar: React.FC = () => {
     // setHeightNavbar,
     SetRefNav,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
-    } = useContext(HomeValueContext)
+  {
+    openCollapseFilter: boolean
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
+  } = useContext(HomeValueContext)
 
   const [showTap, setshowTap] = React.useState(false)
 
@@ -214,7 +212,7 @@ const Navbar: React.FC = () => {
   const handleSearch = () => {
     const encode = encodeURIComponent(`${valueSearchInput}`)
 
-    window.open(`/search-results?q=${encode}`, "_parent")
+    window.open(`/search-results?q=${encode}`, '_parent')
   }
 
   // login
@@ -332,9 +330,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -377,7 +375,10 @@ const Navbar: React.FC = () => {
         </Left>
         <Center className="div-nav-center">
           {/* <div>assssssssssssssssssssssssssssssss</div> */}
-          <SearchInput value={valueSearchInput} setValue={setValueSearchInput} />
+          <SearchInput
+            value={valueSearchInput}
+            setValue={setValueSearchInput}
+          />
           <Button onClick={handleSearch}>Tim Kiem</Button>
 
           <Button onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
@@ -428,12 +429,6 @@ const Navbar: React.FC = () => {
           <FilterLocationNav />
           <FilterCateloriesNav />
         </div>
-        <div>áldkjakl;sjdl;kạd s ada sd ád ád á d ád</div>
-        <div>áldkjakl;sjdl;kạd s ada sd ád ád á d ád</div>
-        <div>áldkjakl;sjdl;kạd s ada sd ád ád á d ád</div>
-        <div>áldkjakl;sjdl;kạd s ada sd ád ád á d ád</div>
-        <div>áldkjakl;sjdl;kạd s ada sd ád ád á d ád</div>
-        <div>áldkjakl;sjdl;kạd s ada sd ád ád á d ád</div>
       </Collapse>
     </Container>
   )
