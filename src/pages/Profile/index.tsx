@@ -52,12 +52,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
 
-const SmallAvatar = styled(Avatar)(({ theme }) => ({
-  width: 22,
-  height: 22,
-  border: `2px solid ${theme.palette.background.paper}`,
-  backgroundColor: 'white',
-}))
 
 interface ItemAppy {
   id?: number | null
@@ -287,7 +281,6 @@ const Profile: React.FC = () => {
   return (
     <div className="profile">
       <Navbar {...statePropsCloseSlider} />
-
       <div className="container">
         <Skeleton className="skeleton-item" avatar loading={loading} active>
           <div className="div-profile-avatar">

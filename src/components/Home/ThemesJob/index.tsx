@@ -228,8 +228,8 @@ const ThemesJob: React.FC = () => {
                                 fontWeight: 'bold',
                               }}
                             >
-                              {item?.title.length > 43
-                                ? `${item.title.substring(0, 43)} ...`
+                              {item?.title.length > 38
+                                ? `${item.title.substring(0, 38)} ...`
                                 : item.title}
                             </Typography>
                           </Tooltip>
@@ -240,8 +240,8 @@ const ThemesJob: React.FC = () => {
                               component="div"
                               sx={{ fontSize: '12px' }}
                             >
-                              {item?.company_name.length > 42
-                                ? `${item.company_name.substring(0, 42)} ...`
+                              {item?.company_name.length > 38
+                                ? `${item.company_name.substring(0, 38)} ...`
                                 : item.company_name}
                             </Typography>
                           </Tooltip>

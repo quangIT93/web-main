@@ -53,7 +53,7 @@ import PositionFilterSubnav from './components/PositionFilterSubnav'
 import CareerFilterSubnav from './components/CareerFilterSubnav'
 import SearchInput from './SearchInput'
 
-import { Avatar, Space, Spin } from 'antd'
+import { Avatar, Button, Space, Spin } from 'antd'
 
 import authApi from 'api/authApi'
 import profileApi from 'api/profileApi'
@@ -95,6 +95,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const [openCareer, setOpenCareer] = React.useState(false)
   const [openSalary, setOpenSalary] = React.useState(false)
   const [showTap, setshowTap] = React.useState(false)
+
+  const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false)
   const [openInfoUser, setOpenInfoUser] = React.useState(false)
@@ -215,17 +217,6 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
       // await dispatch(getProfile() as any)
     }
   }
-  // fecth data user when access token changes
-  const fecthDataProfileWhileAccecsToken = async () => {
-    const result = await profileApi.getProfile()
-    if (result) {
-      setProfileUser(result.data)
-      setOpenBackdrop(false)
-    }
-  }
-  // useEffect(() => {
-  //   fecthDataProfileWhileAccecsToken()
-  // }, [localStorage.getItem('accessToken')])
 
   useEffect(() => {
     fecthDataProfileUser()
@@ -268,6 +259,12 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   const handleShowModalFilter = () => {
     if (!openModalFilter) return setOpenModalFilter(true)
     setOpenModalFilter(false)
+  }
+
+  const handleSearch = () => {
+    const encode = encodeURIComponent(`${valueSearchInput}`)
+
+    window.open(`/search-results?q=${encode}`, "_parent")
   }
 
   // login
@@ -385,9 +382,9 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -430,7 +427,8 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
         </Left>
         <Center className="div-nav-center">
           {/* <div>assssssssssssssssssssssssssssssss</div> */}
-          <SearchInput />
+          <SearchInput value={valueSearchInput} setValue={setValueSearchInput} />
+          <Button onClick={handleSearch}>Tim Kiem</Button>
         </Center>
         <Right className="div-nav-right">
           <div className="tabBar-right">
