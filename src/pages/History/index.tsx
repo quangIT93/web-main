@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback, useEffect } from 'react'
-import { StatePropsCloseSlider } from 'pages/Home'
-import { useHomeState } from '../Home/HomeState'
+
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
@@ -45,24 +44,10 @@ const dataItem = [
   },
 ]
 const HistoryPost = () => {
-  const {
-    openCollapse,
-    setOpenCollapse,
-    height,
-    setHeight,
-    openModalLogin,
-    setOpenModalLogin,
-  } = useHomeState()
   const [activeChild, setActiveChild] = React.useState('0-0')
   const [ItemLeft, setItemLeft] = React.useState<null | number>(0)
   const [showDetailPosted, setShowDetailPosted] = React.useState<boolean>(false)
-  const statePropsCloseSlider: StatePropsCloseSlider = {
-    openCollapse,
-    setOpenCollapse,
-    setHeight,
-    height,
-    setOpenModalLogin,
-  }
+
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     // event.preventDefault()
     console.info('You clicked a breadcrumb.')
@@ -91,27 +76,27 @@ const HistoryPost = () => {
       {ItemLeft === dataItem[0].id - 1
         ? dataItem[0].title
         : ItemLeft === dataItem[1].id - 1
-          ? dataItem[1].title
-          : dataItem[2].title}
+        ? dataItem[1].title
+        : dataItem[2].title}
     </Typography>,
     <Typography key="3" color="text.primary">
       {activeChild === '0-0'
         ? 'Tất cả'
         : activeChild === '0-1'
-          ? 'Đã được duyệt'
-          : activeChild === '0-2'
-            ? 'Đang chờ duyệt'
-            : ''}
+        ? 'Đã được duyệt'
+        : activeChild === '0-2'
+        ? 'Đang chờ duyệt'
+        : ''}
 
       {activeChild === '1-0' ? 'Tất cả' : ''}
 
       {activeChild === '2-0'
         ? 'Tất cả'
         : activeChild === '2-1'
-          ? 'Chưa đóng'
-          : activeChild === '2-2'
-            ? 'Đã đóng'
-            : ''}
+        ? 'Chưa đóng'
+        : activeChild === '2-2'
+        ? 'Đã đóng'
+        : ''}
     </Typography>,
   ]
   const CardsPost = useMemo(() => {
@@ -158,7 +143,7 @@ const HistoryPost = () => {
 
   return (
     <div className="post-history">
-      <Navbar {...statePropsCloseSlider} />
+      <Navbar />
       <div className="post-history_main">
         <Box>
           <Breadcrumbs
@@ -170,14 +155,20 @@ const HistoryPost = () => {
         </Box>
         <Box sx={{ display: 'flex', gap: '12px' }}>
           <Box className="history-post_left">
-            <Collapse defaultActiveKey={['0', '0']} accordion bordered={false} ghost={true}>
+            <Collapse
+              defaultActiveKey={['0', '0']}
+              accordion
+              bordered={false}
+              ghost={true}
+            >
               {dataItem.map((item: any, index: number) => (
                 <Panel
                   header={
                     <div
                       onClick={() => handleClickSubTitle(index)}
-                      className={`${ItemLeft === index ? 'activeItem' : ''
-                        } panel-title_text`}
+                      className={`${
+                        ItemLeft === index ? 'activeItem' : ''
+                      } panel-title_text`}
                     >
                       {item.title}
                     </div>

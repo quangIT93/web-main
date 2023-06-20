@@ -4,14 +4,17 @@ import moment from 'moment'
 
 // @ts-ignore
 import { Navbar } from '#components'
-import { StatePropsCloseSlider } from 'pages/Home'
-import { useHomeState } from '../Home/HomeState'
+
 import './style.scss'
 import { styled } from '@mui/material/styles'
 import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
 import { Button, Space, Skeleton, Upload, message, Popconfirm } from 'antd'
-import { PlusCircleOutlined, UploadOutlined, InstagramFilled } from '@ant-design/icons'
+import {
+  PlusCircleOutlined,
+  UploadOutlined,
+  InstagramFilled,
+} from '@ant-design/icons'
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
 
 import Snackbar from '@mui/material/Snackbar'
@@ -76,22 +79,6 @@ interface ICategories {
   child_category: string
 }
 const Profile: React.FC = () => {
-  const {
-    openCollapse,
-    setOpenCollapse,
-    height,
-    setHeight,
-    openModalLogin,
-    setOpenModalLogin,
-  } = useHomeState()
-  const statePropsCloseSlider: StatePropsCloseSlider = {
-    openCollapse,
-    setOpenCollapse,
-    setHeight,
-    height,
-    setOpenModalLogin,
-  }
-
   const dispatch = useDispatch()
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch)
   // const [dataProfile, setDataProfile] = useState(null)
@@ -207,7 +194,7 @@ const Profile: React.FC = () => {
         setFileList([])
         message.success('Xoa CV thanh cong.')
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   // cancel delete cv
@@ -286,7 +273,7 @@ const Profile: React.FC = () => {
   // console.log('alert', alert)
   return (
     <div className="profile">
-      <Navbar {...statePropsCloseSlider} />
+      <Navbar />
 
       <div className="container">
         <Skeleton className="skeleton-item" avatar loading={loading} active>
@@ -311,7 +298,10 @@ const Profile: React.FC = () => {
                         onClick={handleAvatarClick} // Xử lý click vào SmallAvatar
                         sx={{ cursor: 'pointer' }}
                       /> */}
-                      <InstagramFilled onClick={handleAvatarClick} style={{ fontSize: 25, color: "gray" }} />
+                      <InstagramFilled
+                        onClick={handleAvatarClick}
+                        style={{ fontSize: 25, color: 'gray' }}
+                      />
 
                       <input
                         id="avatar-input"
@@ -528,8 +518,9 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                      }`,
+                    backgroundColor: `${
+                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                    }`,
                   }}
                 >
                   {uploading ? 'Đang Lưu' : 'Lưu CV'}
@@ -561,12 +552,12 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                  (item: ICategories, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.child_category}
-                    </Button>
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    )
                   )
-                )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -593,10 +584,10 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.district}
-                  </Button>
-                ))
+                    <Button key={index} className="btn" type="text">
+                      {item?.district}
+                    </Button>
+                  ))
                 : 'Chưa cập nhật'}
             </Space>
           </div>

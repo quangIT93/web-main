@@ -4,8 +4,6 @@ import { toast } from 'react-toastify'
 // @ts-ignore
 import { Navbar } from '#components'
 //@ts-ignore
-import { useHomeState } from '../Home/HomeState'
-import { StatePropsCloseSlider } from 'pages/Home'
 
 // import component
 import PostFilterSalary from '../../components/Post/PostFilterSalary'
@@ -175,22 +173,6 @@ const Post: React.FC = () => {
   const [companyError, setCompanyError] = useState(false)
   const [messageApi, contextHolder] = message.useMessage()
 
-  const {
-    openCollapse,
-    setOpenCollapse,
-    height,
-    setHeight,
-    openModalLogin,
-    setOpenModalLogin,
-  } = useHomeState()
-
-  const statePropsCloseSlider: StatePropsCloseSlider = {
-    openCollapse,
-    setOpenCollapse,
-    setHeight,
-    height,
-    setOpenModalLogin,
-  }
   console.log('phone', phoneNumber)
   // submit
   const handleSubmit = (
@@ -274,10 +256,8 @@ const Post: React.FC = () => {
       }
     }
     if (
-      (Number(salaryMax) === 0 &&
-        salaryType !== 6) ||
-      (Number(salaryMin) === 0 &&
-        salaryType !== 6)
+      (Number(salaryMax) === 0 && salaryType !== 6) ||
+      (Number(salaryMin) === 0 && salaryType !== 6)
     ) {
       return {
         message: 'Vui lòng nhập mức lương',
@@ -337,7 +317,7 @@ const Post: React.FC = () => {
   console.log('isPeriodDate', isPeriodDate)
   return (
     <div className="post">
-      <Navbar {...statePropsCloseSlider} />
+      <Navbar />
       {contextHolder}
       <div className="post-main">
         <h1>Tạo bài đăng tuyển dụng</h1>

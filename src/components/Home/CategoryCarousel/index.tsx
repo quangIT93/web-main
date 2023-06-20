@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, memo } from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
@@ -24,17 +24,13 @@ import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../../store/index'
 import { RootState } from '../../../store/reducer'
 
-// import COntext
+// import context
 import { HomeValueContext } from 'context/HomeValueContextProvider'
+import { IvalueJobChild } from 'context/HomeValueContextProvider'
 
 import CategoryItem from './components/CategoryItem'
 
-interface PropState {
-  height: number
-  hideSlider: boolean
-  windowWidth: boolean
-  onChange: (newValue: string, id: number) => void
-}
+type DivRef = React.RefObject<HTMLUListElement> | null
 
 // interface item category
 interface CategoryItem {
@@ -44,19 +40,26 @@ interface CategoryItem {
   image: string
 }
 
-const CategoryCarousel: React.FC<PropState> = ({
-  height,
-  hideSlider,
-  windowWidth,
-  onChange,
-}) => {
+const CategoryCarousel: React.FC = () => {
   // Contexts
   const {
     setChildCateloriesArray,
     childCateloriesArray,
+    valueJobChild,
+    setValueJobChild,
+    setRefCatelories,
+    setRefCatelory,
+    navTouchCatelory,
+    openCollapseFilter,
   }: {
     setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>
     childCateloriesArray: number[]
+    valueJobChild: IvalueJobChild
+    setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>
+    setRefCatelories: React.Dispatch<React.SetStateAction<number>>
+    setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>
+    navTouchCatelory: boolean
+    openCollapseFilter: boolean
   } = useContext(HomeValueContext)
 
   const [value, setValue] = React.useState(0)
@@ -70,6 +73,7 @@ const CategoryCarousel: React.FC<PropState> = ({
   const { setPostNewest } = bindActionCreators(actionCreators, dispatch)
 
   const listRef = React.useRef<HTMLUListElement | null>(null)
+
   const [categories, setCategories] = React.useState<AxiosResponse | null>(null)
 
   const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
@@ -83,7 +87,10 @@ const CategoryCarousel: React.FC<PropState> = ({
       if (selectedCategory) {
         const { id, name } = selectedCategory
         setValue(id)
-        onChange(name, id)
+        setValueJobChild({
+          parentName: name,
+          id,
+        })
       }
       const themeId = searchParams.get('theme-id')
       if (themeId) {
@@ -148,6 +155,10 @@ const CategoryCarousel: React.FC<PropState> = ({
   }, [])
 
   React.useEffect(() => {
+    setRefCatelory(listRef.current ? listRef : null)
+  }, [listRef])
+
+  React.useEffect(() => {
     getPostNewestByCategori()
     setValue(Number(searchParams.get('categories-id')))
     setChildCateloriesArray([])
@@ -161,11 +172,28 @@ const CategoryCarousel: React.FC<PropState> = ({
     setOpenBackdrop(true)
   }
 
-  console.log('height', height)
-  console.log('windowWidth', windowWidth)
+  console.log('navTouchCatelory', navTouchCatelory)
+  console.log('openCollapseFilter', openCollapseFilter)
+
   return (
     <Box
       ref={listRef}
+      sx={{
+        maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
+
+        position: navTouchCatelory ? 'fixed' : '',
+        top:
+          navTouchCatelory && !openCollapseFilter
+            ? '71px'
+            : navTouchCatelory && openCollapseFilter
+            ? '178px'
+            : '',
+        zIndex: navTouchCatelory ? ' 2' : '',
+        margin: navTouchCatelory ? '0 180px' : '0',
+        right: 0,
+        left: 0,
+        background: '#ffffff',
+      }}
       // sx={{
       //   maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
       //   bgcolor: 'white',
@@ -246,4 +274,4 @@ const CategoryCarousel: React.FC<PropState> = ({
   )
 }
 
-export default CategoryCarousel
+export default memo(CategoryCarousel)

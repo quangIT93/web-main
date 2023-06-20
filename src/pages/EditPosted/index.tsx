@@ -8,7 +8,6 @@ import { Form, message } from 'antd'
 // import component
 // @ts-ignore
 import { Navbar } from '#components'
-import { StatePropsCloseSlider } from 'pages/Home'
 import EditPostJobCompany from '#components/EditPosted/EditPostJobCompany'
 import EditPostAddress from '#components/EditPosted/EditPostAddress'
 import EditPostImage from '#components/EditPosted/EditPostImage'
@@ -65,23 +64,6 @@ export interface FormValues {
 }
 
 const EditPosted = () => {
-  const {
-    openCollapse,
-    setOpenCollapse,
-    height,
-    setHeight,
-    openModalLogin,
-    setOpenModalLogin,
-  } = useHomeState()
-
-  const statePropsCloseSlider: StatePropsCloseSlider = {
-    openCollapse,
-    setOpenCollapse,
-    setHeight,
-    height,
-    setOpenModalLogin,
-  }
-
   const [loading, setLoading] = useState<boolean>(true)
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -353,7 +335,7 @@ const EditPosted = () => {
   return (
     <div className="edit-posted">
       {contextHolder}
-      <Navbar {...statePropsCloseSlider} />
+      <Navbar />
       <div className="edit-posted_main">
         <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
         <Skeleton loading={loading} active>
