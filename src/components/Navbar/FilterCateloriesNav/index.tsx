@@ -79,9 +79,10 @@ const FilterCateloriesNav = () => {
         multiple
         maxTagCount="responsive"
         size="large"
-        className="inputCategories"
+        className="inputCategories input-filter_nav"
         showCheckedStrategy={SHOW_CHILD}
         style={{ width: '100%', borderRadius: '2px' }}
+        placeholder="Chọn danh mục ngành nghề"
       />
     </>
   )

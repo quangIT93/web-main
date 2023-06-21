@@ -51,26 +51,27 @@ axiosClient.interceptors.response.use(
     return response
   },
   (error) => {
-    let originalRequest = error.config;
-    let refreshToken = localStorage.getItem('refreshToken');
-    if (refreshToken && error.response.status === 403 || refreshToken && error.response.status === 401) {
-      axios.post(`${BASE_URL}v1/reset-access-token`, {
-        refreshToken: refreshToken,
-      }).then(response => {
+    let originalRequest = error.config
+    let refreshToken = localStorage.getItem('refreshToken')
+    if (
+      (refreshToken && error.response.status === 403) ||
+      (refreshToken && error.response.status === 401)
+    ) {
+      axios
+        .post(`${BASE_URL}/v1/reset-access-token`, {
+          refreshToken: refreshToken,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            localStorage.setItem('accessToken', response.data.data.accessToken)
+            originalRequest.headers[
+              'Authorization'
+            ] = `Bearer ${response.data.data.accessToken}`
+            window.location.reload()
 
-        if (response.status === 200) {
-          localStorage.setItem(
-            'accessToken',
-            response.data.data.accessToken
-          );
-          originalRequest.headers[
-            'Authorization'
-          ] = `Bearer ${response.data.data.accessToken}`;
-          window.location.reload();
-
-          return axios(originalRequest)
-        }
-      })
+            return axios(originalRequest)
+          }
+        })
         .catch((error) => {
           // localStorage.clear();
           //window.location.reload();

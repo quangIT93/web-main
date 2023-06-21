@@ -14,9 +14,6 @@ import { SearchIcon } from '#components'
 // @ts-ignore
 import { ModalFilter } from '#components'
 
-import FilterLocationNav from './FilterLocationNav'
-import FilterCateloriesNav from './FilterCateloriesNav'
-
 // import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined'
 
 import { Collapse } from '@mui/material'
@@ -49,6 +46,12 @@ import SalaryFilterSubnav from './components/SalaryFilterSubnav'
 import PositionFilterSubnav from './components/PositionFilterSubnav'
 import CareerFilterSubnav from './components/CareerFilterSubnav'
 import SearchInput from './SearchInput'
+import FilterLocationNav from './FilterLocationNav'
+import FilterCateloriesNav from './FilterCateloriesNav'
+import FilterTypeJob from './FilterTypeJob'
+import FilterTypeSalary from './FilterTypeSalary'
+import FilterSalary from './FilterSalary'
+import FilterTimeJob from './FilterTimeJob'
 
 import { Avatar, Button, Space, Spin } from 'antd'
 
@@ -428,6 +431,14 @@ const Navbar: React.FC = () => {
         <div className="filter-wrap_top">
           <FilterLocationNav />
           <FilterCateloriesNav />
+          <FilterTypeJob />
+        </div>
+        <div className="filter-wrap_bottom">
+          <FilterTypeSalary />
+
+          <FilterSalary />
+
+          <FilterTimeJob />
         </div>
       </Collapse>
     </Container>

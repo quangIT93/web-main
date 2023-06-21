@@ -1,9 +1,11 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, ReactNode } from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Cascader } from 'antd'
 import categoriesApi from '../../../api/categoriesApi'
 import './style.scss'
+
+import { EnvironmentOutlined } from '@ant-design/icons'
 
 // import api
 import locationApi from 'api/locationApi'
@@ -95,6 +97,8 @@ const FilterLocationNav: React.FC = () => {
         multiple
         maxTagCount="responsive"
         size="large"
+        placeholder="Chọn địa điểm"
+        inputIcon={<EnvironmentOutlined />}
         options={
           dataLocations
             ? dataLocations.map((dataLocation: any) => ({
@@ -125,7 +129,7 @@ const FilterLocationNav: React.FC = () => {
         }
         onChange={onChange}
         changeOnSelect
-        className="inputFilterLocationNav"
+        className="inputFilterLocationNav input-filter_nav"
         showCheckedStrategy={SHOW_CHILD}
       />
     </>

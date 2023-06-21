@@ -360,6 +360,11 @@
     gap: 12px;
   }
 
+  .filter-wrap_bottom {
+    display: flex;
+    gap: 12px;
+  }
+
   // end filter
 
   @include breakpoint(tablet) {
