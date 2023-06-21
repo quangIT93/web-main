@@ -11,68 +11,10 @@ interface Option {
   children?: Option[]
   disableCheckbox?: boolean
 }
-
 const { SHOW_CHILD } = Cascader
 
-const options: Option[] = [
-  {
-    label: 'Light',
-    value: 'light',
-    children: new Array(20).fill(null).map((_, index) => ({
-      label: `Number ${index}`,
-      value: index,
-      disableCheckbox: true,
-    })),
-  },
-  {
-    label: 'Bamboo',
-    value: 'bamboo',
-    children: [
-      {
-        label: 'Little',
-        value: 'little',
-        children: [
-          {
-            label: 'Toy Fish',
-            value: 'fish',
-            disableCheckbox: true,
-          },
-          {
-            label: 'Toy Cards',
-            value: 'cards',
-          },
-          {
-            label: 'Toy Bird',
-            value: 'bird',
-          },
-        ],
-      },
-    ],
-  },
-]
-
-interface ICategories {
-  setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>
-  categoriesId: string[]
-}
-
-const CheckboxesTags: React.FC<ICategories> = (props) => {
-  const { setCategoriesId, categoriesId } = props
-
-  const [dataCategories, setDataCategories] = React.useState<any>(null)
-  const [disable, setDisable] = React.useState<Boolean>(false)
-  const onChange = (value: any) => {
-    setDisable(false)
-    const secondValues = value.map((item: any) => item[1])
-    console.log('value', value)
-    console.log('secondValues', secondValues)
-    if (secondValues.length <= 2) {
-      setCategoriesId(secondValues)
-    }
-    if (value.length > 1) {
-      setDisable(true)
-    }
-  }
+const FilterCateloriesNav = () => {
+  const [categoriesId, setCategoriesId] = useState<string[]>([])
 
   const getCategories = async () => {
     try {
@@ -89,16 +31,23 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     getCategories()
   }, [])
 
+  const [dataCategories, setDataCategories] = React.useState<any>(null)
+  const [disable, setDisable] = React.useState<Boolean>(false)
+  const onChange = (value: any) => {
+    setDisable(false)
+    const secondValues = value.map((item: any) => item[1])
+    console.log('value', value)
+    console.log('secondValues', secondValues)
+    if (secondValues.length <= 2) {
+      setCategoriesId(secondValues)
+    }
+    if (value.length > 1) {
+      setDisable(true)
+    }
+  }
+
   return (
-    <Box sx={{ marginTop: '24px' }}>
-      <Typography
-        sx={{ fontWeight: 600, color: '#000000' }}
-        variant="body1"
-        component="label"
-        htmlFor="jobTitle"
-      >
-        Danh mục nghề *:
-      </Typography>
+    <>
       <Cascader
         options={
           dataCategories
@@ -130,12 +79,13 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         multiple
         maxTagCount="responsive"
         size="large"
-        className="inputCategories"
+        className="inputCategories input-filter_nav"
         showCheckedStrategy={SHOW_CHILD}
         style={{ width: '100%', borderRadius: '2px' }}
+        placeholder="Chọn danh mục ngành nghề"
       />
-    </Box>
+    </>
   )
 }
 
-export default memo(CheckboxesTags)
+export default FilterCateloriesNav

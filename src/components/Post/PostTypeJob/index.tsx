@@ -34,6 +34,8 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTypeJob(Number(e.target.value))
   }
+  console.log('loai cong viec', typeJob)
+
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>
       <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>

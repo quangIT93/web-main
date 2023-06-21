@@ -1,0 +1,36 @@
+.activeSalary {
+  .ant-collapse-item {
+    .ant-collapse-header {
+      .ant-collapse-header-text {
+        color: black !important;
+      }
+    }
+  }
+}
+
+.inputFilterSalary {
+  width: 100% !important;
+  position: relative;
+  .ant-collapse-header {
+    height: 39.6px !important;
+    border-radius: 5px !important;
+    background-color: #f3f8fb !important;
+    .ant-collapse-expand-icon {
+      svg {
+        color: black !important;
+      }
+    }
+
+    .ant-collapse-header-text {
+      color: #00000040 !important;
+    }
+  }
+
+  .ant-collapse-content {
+    position: absolute;
+    color: black;
+
+    width: 100%;
+    left: -12px;
+  }
+}

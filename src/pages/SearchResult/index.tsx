@@ -25,7 +25,6 @@ import postApi from 'api/postApi'
 import bookMarkApi from 'api/bookMarkApi'
 import searchApi from 'api/searchApi'
 
-
 import Footer from '../../components/Footer/index'
 
 import moment from 'moment'
@@ -37,17 +36,17 @@ import { Navbar } from '#components'
 import { useHomeState } from '../Home/HomeState'
 
 import {
-    useNavigate,
-    createSearchParams,
-    useSearchParams,
+  useNavigate,
+  createSearchParams,
+  useSearchParams,
 } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 // import icon
 import {
-    EnvironmentFilled,
-    ClockCircleFilled,
-    EuroCircleFilled,
-    CaretDownFilled,
+  EnvironmentFilled,
+  ClockCircleFilled,
+  EuroCircleFilled,
+  CaretDownFilled,
 } from '@ant-design/icons'
 
 import { Space, Tooltip } from 'antd'
@@ -55,407 +54,418 @@ import { Space, Tooltip } from 'antd'
 import './style.scss'
 
 interface PostNewest {
-    id: number
-    post_id: Number
-    title: string
-    company_name: string
-    image: string
-    ward: string
-    district: string
-    province: string
-    end_time: number
-    start_time: number
-    salary_max: number
-    salary_min: number
-    salary_type: string
-    resource: {
-        company_icon: string
-    }
-    job_type: {
-        job_type_name: string
-    }
-    created_at_text: string
-    bookmarked: boolean
+  id: number
+  post_id: Number
+  title: string
+  company_name: string
+  image: string
+  ward: string
+  district: string
+  province: string
+  end_time: number
+  start_time: number
+  salary_max: number
+  salary_min: number
+  salary_type: string
+  resource: {
+    company_icon: string
+  }
+  job_type: {
+    job_type_name: string
+  }
+  created_at_text: string
+  bookmarked: boolean
 }
 
 const NewJobs: React.FC = () => {
-    const {
-        openCollapse,
-        setOpenCollapse,
-        height,
-        setHeight,
+  const {
+    openCollapse,
+    setOpenCollapse,
+    height,
+    setHeight,
 
-        setOpenModalLogin,
-    } = useHomeState()
+    setOpenModalLogin,
+  } = useHomeState()
 
+  const [page, setPage] = React.useState(2)
+  const [openBackdrop, setOpenBackdrop] = React.useState(false)
+  const [searchData, setSearchData] = React.useState<any>()
 
-    const [page, setPage] = React.useState(2)
-    const [openBackdrop, setOpenBackdrop] = React.useState(false)
-    const [searchData, setSearchData] = React.useState<any>()
+  const listRef = React.useRef<HTMLUListElement | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
 
-    const listRef = React.useRef<HTMLUListElement | null>(null)
-    const [searchParams, setSearchParams] = useSearchParams()
-    const navigate = useNavigate()
+  // state redux
+  // const { postNewest } = useSelector((state: RootState) => state)
+  // const dispatch = useDispatch()
+  // const { setPostNewest, setPostNewestMore } = bindActionCreators(
+  //     actionCreators,
+  //     dispatch
+  // )
 
-    // state redux
-    // const { postNewest } = useSelector((state: RootState) => state)
-    // const dispatch = useDispatch()
-    // const { setPostNewest, setPostNewestMore } = bindActionCreators(
-    //     actionCreators,
-    //     dispatch
-    // )
+  const [checkBookMark, setCheckBookMark] = React.useState(true)
+  const QUERY = decodeURIComponent(`${searchParams.get('q')}`)
 
-    const [checkBookMark, setCheckBookMark] = React.useState(true)
-    const QUERY = decodeURIComponent(`${searchParams.get('q')}`)
+  // handle click post details
+  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+    window.open(`/post-detail?post-id=${id}`)
+  }
 
-    // handle click post details
-    const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-        window.open(`/post-detail?post-id=${id}`)
-    }
+  // handle change paginaton
+  const handleChange = async (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    // listRef.current?.scrollIntoView();
+    // const array = [1, 2, 3]
+    // // const e = createSearchParams({ name: `${array}` })
+    // setSearchParams({ 'name': `${array}` })
+    // // console.log("newest: ", result)
+    // const test = searchParams.get('name')?.toString().split(",").map(Number)
+    // console.log(test)
+    // //    window.open(`/home?${e}`)
 
-    // handle change paginaton
-    const handleChange = async (
-        event: React.ChangeEvent<unknown>,
-        value: number
-    ) => {
-
-
-        // listRef.current?.scrollIntoView();
-        // const array = [1, 2, 3]
-        // // const e = createSearchParams({ name: `${array}` })
-        // setSearchParams({ 'name': `${array}` })
-        // // console.log("newest: ", result)
-        // const test = searchParams.get('name')?.toString().split(",").map(Number)
-        // console.log(test)
-        // //    window.open(`/home?${e}`)
-
-
-
-        const result = await searchApi.getSearchByQueryV2(
-            QUERY,
-            page,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        )
-        if (result) {
-            console.log(result)
-            setSearchData((prev: any) => {
-                return {
-                    posts: [
-                        ...prev.posts,
-                        ...result.data.posts
-                    ],
-                    total: result.data.total
-                }
-            })
-            setPage(page + 1)
-        }
-    }
-    // handle close backdrop
-    const handleClose = () => {
-        setOpenBackdrop(false)
-    }
-
-
-    const getPostSearch = async () => {
-        try {
-            const result = await searchApi.getSearchByQueryV2(
-                QUERY,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            )
-            if (result) {
-                console.log(result)
-                setSearchData(result.data)
-            }
-
-        } catch (error) {
-            setOpenBackdrop(false)
-            console.log(error)
-        }
-    }
-
-    React.useEffect(() => {
-        getPostSearch()
-    }, [])
-
-    return (
-        <>
-            <Navbar />
-
-            <div className="search-result">
-                {
-                    // automatic && (
-                    <Box sx={{ flexGrow: 1 }} ref={listRef}>
-                        <p style={{ display: "flex", flexDirection: "row", margin: "20px 0" }}>Tìm thấy <h4 style={{ margin: "0 10px" }}>{searchData?.total}</h4> công việc phù hợp</p>
-                        {
-                            searchData?.posts.length > 0 ?
-                                <>
-                                    <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
-                                        {searchData?.posts.map((item: PostNewest, index: number) => (
-                                            <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                                                <Card
-                                                    sx={{
-                                                        minWidth: '100%',
-                                                        display: 'flex',
-                                                        padding: '12px',
-                                                        cursor: 'pointer',
-                                                        '&:hover': {
-                                                            background: '#E7E7ED',
-                                                            transition: 'all 0.3s linear',
-                                                        },
-                                                        boxShadow: 'none',
-                                                        borderRadius: '5px',
-                                                        justifyContent: 'space-between',
-                                                    }}
-                                                >
-                                                    <div
-                                                        onClick={(e) => {
-                                                            handleClickItem(e, item.id)
-                                                        }}
-                                                    >
-                                                        <ImageListItem
-                                                            key={item.image}
-                                                            sx={{ flex: 1, display: 'flex' }}
-                                                        >
-                                                            <img
-                                                                src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
-                                                                srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                                                alt={item.title}
-                                                                loading="lazy"
-                                                                style={{
-                                                                    width: '120px',
-                                                                    maxWidth: 'auto',
-                                                                    height: '100%',
-                                                                    maxHeight: 150,
-                                                                    borderRadius: 10,
-                                                                    minHeight: 120,
-                                                                }}
-                                                            />
-                                                            <div
-                                                                style={{ padding: '0', marginLeft: '12px' }}
-                                                                className="div-cart-item-post"
-                                                            >
-                                                                {' '}
-                                                                <Tooltip placement="top" title={item.title}>
-                                                                    <Typography
-                                                                        gutterBottom
-                                                                        variant="h6"
-                                                                        component="div"
-                                                                        sx={{
-                                                                            fontSize: '15px',
-                                                                            margin: 0,
-                                                                            fontWeight: 'bold',
-                                                                        }}
-                                                                    >
-                                                                        {item?.title.length > 38
-                                                                            ? `${item.title.substring(0, 38)} ...`
-                                                                            : item.title}
-                                                                    </Typography>
-                                                                </Tooltip>
-                                                                <Tooltip placement="top" title={item.company_name}>
-                                                                    <Typography
-                                                                        gutterBottom
-                                                                        variant="h1"
-                                                                        component="div"
-                                                                        sx={{ fontSize: '12px' }}
-                                                                    >
-                                                                        {item?.company_name.length > 38
-                                                                            ? `${item.company_name.substring(0, 38)} ...`
-                                                                            : item.company_name}
-                                                                    </Typography>
-                                                                </Tooltip>
-                                                                <div
-                                                                    style={{
-                                                                        display: 'flex',
-                                                                        alignItems: 'flex-start',
-                                                                        justifyContent: 'center',
-                                                                    }}
-                                                                >
-                                                                    <EnvironmentFilled className="icon-cart-item-post" />
-                                                                    <Typography
-                                                                        variant="body2"
-                                                                        color="text.secondary"
-                                                                    >
-                                                                        {`${item.district}, ${item.province}`}
-                                                                    </Typography>
-                                                                </div>
-                                                                <div
-                                                                    style={{
-                                                                        display: 'flex',
-                                                                        alignItems: 'center',
-                                                                        justifyContent: 'center',
-                                                                    }}
-                                                                >
-                                                                    <ClockCircleFilled className="icon-cart-item-post" />
-                                                                    <Typography
-                                                                        variant="body2"
-                                                                        color="text.secondary"
-                                                                    >
-                                                                        {moment(new Date(item.start_time)).format(
-                                                                            'HH:mm'
-                                                                        )}{' '}
-                                                                        -{' '}
-                                                                        {moment(new Date(item.end_time)).format(
-                                                                            'HH:mm'
-                                                                        )}
-                                                                    </Typography>
-                                                                </div>
-                                                                <div
-                                                                    style={{
-                                                                        display: 'flex',
-                                                                        alignItems: 'center',
-                                                                        justifyContent: 'center',
-                                                                    }}
-                                                                >
-                                                                    <AttachMoneyIcon
-                                                                        sx={{
-                                                                            fontSize: 20,
-                                                                            marginLeft: '-2px',
-                                                                            marginRight: '2px',
-                                                                            color: '#575757',
-                                                                        }}
-                                                                    />
-                                                                    <Typography
-                                                                        variant="body2"
-                                                                        color="text.secondary"
-                                                                    >
-                                                                        {new Intl.NumberFormat('en-US').format(
-                                                                            item.salary_min
-                                                                        )}{' '}
-                                                                        -{' '}
-                                                                        {new Intl.NumberFormat('en-US').format(
-                                                                            item.salary_max
-                                                                        ) + `/${item.salary_type}`}
-                                                                    </Typography>
-                                                                </div>
-                                                                <div
-                                                                    style={{
-                                                                        marginTop: 5,
-                                                                    }}
-                                                                >
-                                                                    <p
-                                                                        style={{
-                                                                            color: '#AAAAAA',
-                                                                            fontSize: 13,
-                                                                            fontStyle: 'italic',
-                                                                        }}
-                                                                    >
-                                                                        {item.created_at_text}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </ImageListItem>
-                                                    </div>
-
-                                                    <Space
-                                                        style={{ justifyContent: 'space-between', width: 100 }}
-                                                        direction="vertical"
-                                                        align="center"
-                                                    >
-                                                        <div
-                                                            onClick={async (e) => {
-                                                                try {
-                                                                    if (item.bookmarked) {
-                                                                        const result = await bookMarkApi.deleteBookMark(
-                                                                            item.id
-                                                                        )
-                                                                        item.bookmarked = false
-                                                                        if (result) {
-                                                                            setCheckBookMark(!checkBookMark)
-                                                                        }
-                                                                    } else {
-                                                                        const result = await bookMarkApi.createBookMark(
-                                                                            item.id
-                                                                        )
-                                                                        item.bookmarked = true
-                                                                        if (result) {
-                                                                            setCheckBookMark(!checkBookMark)
-                                                                        }
-                                                                    }
-                                                                } catch (error) {
-                                                                    console.log(error)
-                                                                }
-                                                            }}
-                                                        >
-                                                            {item.bookmarked ? (
-                                                                <TurnedInIcon
-                                                                    sx={{ top: 0, right: 0, color: '#0d99ff' }}
-                                                                />
-                                                            ) : (
-                                                                <BookmarkBorderOutlinedIcon
-                                                                    sx={{ top: 0, right: 0, color: '' }}
-                                                                />
-                                                            )}
-                                                        </div>
-                                                        <img
-                                                            className="img-resource-company"
-                                                            src={item.resource.company_icon}
-                                                            alt="ảnh"
-                                                        />
-                                                        <p style={{ fontSize: 13, fontStyle: 'italic' }}>
-                                                            {item.job_type.job_type_name}
-                                                        </p>
-                                                    </Space>
-                                                </Card>
-                                            </Grid>
-                                        ))}
-                                    </Grid>
-                                    <Stack
-                                        spacing={2}
-                                        sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}
-                                    >
-                                        {/* <Pagination count={10} shape="rounded" /> */}
-                                        <Space
-                                            className="div-hover-more"
-                                            onClick={(e) => {
-                                                handleChange(e, page)
-                                            }}
-                                        >
-                                            <p>Xem thêm</p>
-                                            <CaretDownFilled />
-                                        </Space>
-                                    </Stack>
-                                </> : <></>
-                        }
-                        <Backdrop
-                            sx={{
-                                color: '#0d99ff ',
-                                zIndex: (theme: any) => theme.zIndex.drawer + 1,
-                            }}
-                            open={openBackdrop}
-                        //  onClick={handleClose}
-                        >
-                            <CircularProgress color="inherit" />
-                        </Backdrop>
-                    </Box>
-                    // )
-                }
-            </div>
-
-            <Footer />
-        </>
+    const result = await searchApi.getSearchByQueryV2(
+      QUERY,
+      page,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     )
+    if (result) {
+      console.log(result)
+      setSearchData((prev: any) => {
+        return {
+          posts: [...prev.posts, ...result.data.posts],
+          total: result.data.total,
+        }
+      })
+      setPage(page + 1)
+    }
+  }
+  // handle close backdrop
+  const handleClose = () => {
+    setOpenBackdrop(false)
+  }
+
+  const getPostSearch = async () => {
+    try {
+      const result = await searchApi.getSearchByQueryV2(
+        QUERY,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      )
+      if (result) {
+        console.log(result)
+        setSearchData(result.data)
+      }
+    } catch (error) {
+      setOpenBackdrop(false)
+      console.log(error)
+    }
+  }
+
+  React.useEffect(() => {
+    getPostSearch()
+  }, [])
+
+  return (
+    <>
+      <Navbar />
+
+      <div className="search-result">
+        {
+          // automatic && (
+          <Box sx={{ flexGrow: 1 }} ref={listRef}>
+            <p
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                margin: '20px 0',
+              }}
+            >
+              Tìm thấy <h4 style={{ margin: '0 10px' }}>{searchData?.total}</h4>{' '}
+              công việc phù hợp
+            </p>
+            {searchData?.posts.length > 0 ? (
+              <>
+                <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
+                  {searchData?.posts.map((item: PostNewest, index: number) => (
+                    <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                      <Card
+                        sx={{
+                          minWidth: '100%',
+                          display: 'flex',
+                          padding: '12px',
+                          cursor: 'pointer',
+                          '&:hover': {
+                            background: '#E7E7ED',
+                            transition: 'all 0.3s linear',
+                          },
+                          boxShadow: 'none',
+                          borderRadius: '5px',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <div
+                          onClick={(e) => {
+                            handleClickItem(e, item.id)
+                          }}
+                        >
+                          <ImageListItem
+                            key={item.image}
+                            sx={{ flex: 1, display: 'flex' }}
+                          >
+                            <img
+                              src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
+                              srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                              alt={item.title}
+                              loading="lazy"
+                              style={{
+                                width: '120px',
+                                maxWidth: 'auto',
+                                height: '100%',
+                                maxHeight: 150,
+                                borderRadius: 10,
+                                minHeight: 120,
+                              }}
+                            />
+                            <div
+                              style={{ padding: '0', marginLeft: '12px' }}
+                              className="div-cart-item-post"
+                            >
+                              {' '}
+                              <Tooltip placement="top" title={item.title}>
+                                <Typography
+                                  gutterBottom
+                                  variant="h6"
+                                  component="div"
+                                  sx={{
+                                    fontSize: '15px',
+                                    margin: 0,
+                                    fontWeight: 'bold',
+                                  }}
+                                >
+                                  {item?.title.length > 38
+                                    ? `${item.title.substring(0, 38)} ...`
+                                    : item.title}
+                                </Typography>
+                              </Tooltip>
+                              <Tooltip
+                                placement="top"
+                                title={item.company_name}
+                              >
+                                <Typography
+                                  gutterBottom
+                                  variant="h1"
+                                  component="div"
+                                  sx={{ fontSize: '12px' }}
+                                >
+                                  {item?.company_name.length > 38
+                                    ? `${item.company_name.substring(
+                                        0,
+                                        38
+                                      )} ...`
+                                    : item.company_name}
+                                </Typography>
+                              </Tooltip>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'flex-start',
+                                  justifyContent: 'center',
+                                }}
+                              >
+                                <EnvironmentFilled className="icon-cart-item-post" />
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                >
+                                  {`${item.district}, ${item.province}`}
+                                </Typography>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                }}
+                              >
+                                <ClockCircleFilled className="icon-cart-item-post" />
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                >
+                                  {moment(new Date(item.start_time)).format(
+                                    'HH:mm'
+                                  )}{' '}
+                                  -{' '}
+                                  {moment(new Date(item.end_time)).format(
+                                    'HH:mm'
+                                  )}
+                                </Typography>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                }}
+                              >
+                                <AttachMoneyIcon
+                                  sx={{
+                                    fontSize: 20,
+                                    marginLeft: '-2px',
+                                    marginRight: '2px',
+                                    color: '#575757',
+                                  }}
+                                />
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                >
+                                  {new Intl.NumberFormat('en-US').format(
+                                    item.salary_min
+                                  )}{' '}
+                                  -{' '}
+                                  {new Intl.NumberFormat('en-US').format(
+                                    item.salary_max
+                                  ) + `/${item.salary_type}`}
+                                </Typography>
+                              </div>
+                              <div
+                                style={{
+                                  marginTop: 5,
+                                }}
+                              >
+                                <p
+                                  style={{
+                                    color: '#AAAAAA',
+                                    fontSize: 13,
+                                    fontStyle: 'italic',
+                                  }}
+                                >
+                                  {item.created_at_text}
+                                </p>
+                              </div>
+                            </div>
+                          </ImageListItem>
+                        </div>
+
+                        <Space
+                          style={{
+                            justifyContent: 'space-between',
+                            width: 100,
+                          }}
+                          direction="vertical"
+                          align="center"
+                        >
+                          <div
+                            onClick={async (e) => {
+                              try {
+                                if (item.bookmarked) {
+                                  const result =
+                                    await bookMarkApi.deleteBookMark(item.id)
+                                  item.bookmarked = false
+                                  if (result) {
+                                    setCheckBookMark(!checkBookMark)
+                                  }
+                                } else {
+                                  const result =
+                                    await bookMarkApi.createBookMark(item.id)
+                                  item.bookmarked = true
+                                  if (result) {
+                                    setCheckBookMark(!checkBookMark)
+                                  }
+                                }
+                              } catch (error) {
+                                console.log(error)
+                              }
+                            }}
+                          >
+                            {item.bookmarked ? (
+                              <TurnedInIcon
+                                sx={{ top: 0, right: 0, color: '#0d99ff' }}
+                              />
+                            ) : (
+                              <BookmarkBorderOutlinedIcon
+                                sx={{ top: 0, right: 0, color: '' }}
+                              />
+                            )}
+                          </div>
+                          <img
+                            className="img-resource-company"
+                            src={item.resource.company_icon}
+                            alt="ảnh"
+                          />
+                          <p style={{ fontSize: 13, fontStyle: 'italic' }}>
+                            {item.job_type.job_type_name}
+                          </p>
+                        </Space>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+                <Stack
+                  spacing={2}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    margin: '24px 0',
+                  }}
+                >
+                  {/* <Pagination count={10} shape="rounded" /> */}
+                  <Space
+                    className="div-hover-more"
+                    onClick={(e) => {
+                      handleChange(e, page)
+                    }}
+                  >
+                    <p>Xem thêm</p>
+                    <CaretDownFilled />
+                  </Space>
+                </Stack>
+              </>
+            ) : (
+              <></>
+            )}
+            <Backdrop
+              sx={{
+                color: '#0d99ff ',
+                zIndex: (theme: any) => theme.zIndex.drawer + 1,
+              }}
+              open={openBackdrop}
+              //  onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          </Box>
+          // )
+        }
+      </div>
+
+      <Footer />
+    </>
+  )
 }
 export default NewJobs

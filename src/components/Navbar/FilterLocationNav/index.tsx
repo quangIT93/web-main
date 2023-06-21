@@ -1,9 +1,11 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, ReactNode } from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Cascader } from 'antd'
 import categoriesApi from '../../../api/categoriesApi'
 import './style.scss'
+
+import { EnvironmentOutlined } from '@ant-design/icons'
 
 // import api
 import locationApi from 'api/locationApi'
@@ -14,6 +16,7 @@ interface Option {
   children?: Option[]
   disableCheckbox?: boolean
 }
+const { SHOW_CHILD } = Cascader
 
 const FilterLocationNav: React.FC = () => {
   const [dataLocations, setDataLocations] = React.useState<any>(null)
@@ -79,10 +82,10 @@ const FilterLocationNav: React.FC = () => {
     const secondValues = value.map((item: any) => item[1])
     console.log('value', value)
     console.log('secondValues', secondValues)
-    if (secondValues.length <= 2) {
+    if (secondValues.length <= 3) {
       setLocId(secondValues)
     }
-    if (value.length > 1) {
+    if (value.length > 2) {
       setDisable(true)
     }
   }
@@ -93,6 +96,8 @@ const FilterLocationNav: React.FC = () => {
         multiple
         maxTagCount="responsive"
         size="large"
+        placeholder="Chọn địa điểm"
+        inputIcon={<EnvironmentOutlined />}
         options={
           dataLocations
             ? dataLocations.map((dataLocation: any) => ({
@@ -123,7 +128,8 @@ const FilterLocationNav: React.FC = () => {
         }
         onChange={onChange}
         changeOnSelect
-        className="inputFilterLocationNav"
+        className="inputFilterLocationNav input-filter_nav"
+        showCheckedStrategy={SHOW_CHILD}
       />
     </>
   )
