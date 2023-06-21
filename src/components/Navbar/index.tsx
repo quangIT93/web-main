@@ -81,6 +81,7 @@ import { actionCreators } from '../../store/index'
 // import Context
 import { HomeValueContext } from 'context/HomeValueContextProvider'
 import { DivRef1 } from 'context/HomeValueContextProvider'
+import { useSearchParams } from 'react-router-dom'
 
 const Navbar: React.FC = () => {
   const {
@@ -108,6 +109,7 @@ const Navbar: React.FC = () => {
   const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
 
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   // thay đổi width setState
   const [windowWidth, setWindowWidth] = useState(false)
@@ -211,9 +213,15 @@ const Navbar: React.FC = () => {
   }
 
   const handleSearch = () => {
-    const encode = encodeURIComponent(`${valueSearchInput}`)
+    var encode = ''
 
-    window.open(`/search-results?q=${encode}`, "_parent")
+    if (!valueSearchInput && searchParams.get('q')) {
+      encode = encodeURIComponent(`${searchParams.get('q')}`)
+
+    } else {
+      encode = encodeURIComponent(`${valueSearchInput}`)
+    }
+    window.open(`/search-results?q=${encode}`, "_self")
   }
 
   // login

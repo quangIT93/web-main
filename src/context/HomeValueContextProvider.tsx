@@ -27,23 +27,23 @@ export const HomeValueContext = React.createContext<{
   navTouchCatelory: boolean
 }>({
   childCateloriesArray: [],
-  setChildCateloriesArray: () => {},
+  setChildCateloriesArray: () => { },
   openCollapseFilter: false,
-  setOpenCollapseFilter: () => {},
+  setOpenCollapseFilter: () => { },
   // heightNavbar: 0,
   // setHeightNavbar: () => {},
   openModalLoginNavbar: false,
-  setOpenModalLoginNavbar: () => {},
+  setOpenModalLoginNavbar: () => { },
   valueJobChild: {
     id: 1,
     parentName: 'Tất cả',
   },
-  setValueJobChild: () => {},
+  setValueJobChild: () => { },
   refCatelories: 0,
-  setRefCatelories: () => {},
-  setRefCatelory: () => {},
-  SetRefNav: () => {},
-  setNavTouchCatelory: () => {},
+  setRefCatelories: () => { },
+  setRefCatelory: () => { },
+  SetRefNav: () => { },
+  setNavTouchCatelory: () => { },
   navTouchCatelory: false,
 })
 
@@ -85,15 +85,14 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
         openCollapseFilter === false
           ? (window.scrollY || document.documentElement.scrollTop) + 71
           : (window.scrollY || document.documentElement.scrollTop) + 71 + 116
-      console.log('currentScrollTop', currentScrollTop)
-      console.log('prevScrollTop', prevScrollTop)
+
 
       if (currentScrollTop > prevScrollTop) {
-        console.log('Scrolling down')
+
         setNavTouchCatelory(true)
         // Thực hiện hành động khi croll xuống trước đầu element 2
       } else if (currentScrollTop <= prevScrollTop) {
-        console.log('Scrolling up')
+
         setNavTouchCatelory(false)
         // Thực hiện hành động khi croll lên trúng đầu element 2
       }

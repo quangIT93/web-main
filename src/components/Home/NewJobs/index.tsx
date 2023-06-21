@@ -130,13 +130,29 @@ const NewJobs: React.FC = () => {
       thersholdId
     )
 
-    // const array = [1, 2, 3]
-    // // const e = createSearchParams({ name: `${array}` })
-    // setSearchParams({ 'name': `${array}` })
+    // const params = new URLSearchParams();
+
+    // const array = [[1, 3], [2, 3], [3]]
+    // const e = createSearchParams({ name: `${array}` })
+    // //setSearchParams({ 'name': `${array}` })
+    // array.forEach((item, index) => {
+    //   params.append(`name`, `${item}`)
+
+    // })
+    // console.log(params.toString())
+    // setSearchParams(params.toString())
     // // console.log("newest: ", result)
     // const test = searchParams.get('name')?.toString().split(",").map(Number)
-    // console.log(test)
+    // console.log(searchParams.getAll('name'))
+    // const testPa = searchParams.getAll('name').map(e => {
+    //   console.log("e", e.split(","))
+    //   return e.split(",").map(Number)
+    // })
+    // console.log(testPa)
     // //    window.open(`/home?${e}`)
+
+
+
 
     if (result) {
       setPostNewestMore(result)
