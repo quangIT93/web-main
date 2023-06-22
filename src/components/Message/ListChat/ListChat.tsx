@@ -31,7 +31,7 @@ interface Message {
 const ListChat = () => {
   const [message, setMessage] = useState('')
   const [receivedMessages, setReceivedMessages] = useState<Message[]>([])
-  const [serverMessages, setServerMessages] = useState<Message[]>([])
+  const [sendMessages, setSendMessages] = useState<Message[]>([])
   const [allListChat, setAllListChat] = useState<any>([])
 
   const [isConnected, setIsConnected] = useState(false)
@@ -51,7 +51,7 @@ const ListChat = () => {
   const getAllListChat = async () => {
     try {
       const result = await messageApi.getChatMessage(
-        '3cf7d551-6cb5-46b3-a682-ca1556c66fec',
+        userInfoChat.user_id,
         23894
       )
       if (result) {
@@ -64,7 +64,7 @@ const ListChat = () => {
 
   useEffect(() => {
     getAllListChat()
-  }, [isConnected])
+  }, [receivedMessages, sendMessages, userInfoChat])
 
   useEffect(() => {
     try {
@@ -91,13 +91,13 @@ const ListChat = () => {
 
       socket.current.on('server-send-message-to-receiver', (data: any) => {
         console.log('dataaaaa', data)
-        // setReceivedMessages
+        setReceivedMessages((prevReceive: any[]) => [...prevReceive, data])
       })
 
       socket.current.on('server-send-message-was-sent', (data: any) => {
         console.log('data', data)
         // nhaanj tin nhan ve khi
-        setServerMessages((prevServers: any[]) => [...prevServers, data])
+        setSendMessages((prevSend: any[]) => [...prevSend, data])
       })
 
       // socket.current.on('server-send-error-message', (data: any) => {
@@ -112,10 +112,15 @@ const ListChat = () => {
     }
   }, [])
 
+  console.log('receive', receivedMessages)
+  console.log('send', sendMessages)
+  console.log('allListChat', allListChat)
+  console.log('userInfoChat', userInfoChat)
+
   const handleSendMessage = () => {
     // const socket = io('https://aiworks.vn')
     socket.current.emit('client-send-message', {
-      receiverId: '3cf7d551-6cb5-46b3-a682-ca1556c66fec',
+      receiverId: userInfoChat.user_id,
       message: message,
       createdAt: 1685870032000,
       type: 'text',
@@ -146,7 +151,18 @@ const ListChat = () => {
           </span>
         </div>
       </div>
-      <div className="list-content_chat">káhdjkahdjashdkjahsdk</div>
+      <div className="list-content_chat">
+        {allListChat.map((chat: any) => (
+          <div className="content-chat">
+            {/* <img
+              src={userInfoChat.avatar}
+              alt=""
+              className="content-chat_img"
+            /> */}
+            <span>{chat.message}</span>
+          </div>
+        ))}
+      </div>
 
       <div className="inputs-chat">
         <Input

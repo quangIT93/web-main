@@ -47,6 +47,15 @@
 
   .list-content_chat {
     height: 100%;
+    .content-chat {
+      .content-chat_img {
+        width: 30px;
+        height: 30px;
+      }
+
+      span {
+      }
+    }
   }
 
   .inputs-chat {
