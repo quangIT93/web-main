@@ -1,7 +1,7 @@
 .message-page {
   margin-top: 70px;
   .message-page_main {
-    padding: 50px 180px 0 180px;
+    padding: 20px 180px 0 180px;
     margin: 12px auto;
 
     .header-message {
@@ -11,8 +11,10 @@
 
     .wrap-content_message {
       display: flex;
-      border: 1px solid #aaaaaa;
+      box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
       border-radius: 8px;
+      height: 100%;
+      margin-top: 12px;
       .message-page_left {
         flex: 2;
       }

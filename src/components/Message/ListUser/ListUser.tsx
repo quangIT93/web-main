@@ -1,11 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { AudioOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons'
 import { Input, Space } from 'antd'
+
+import messageApi from 'api/messageApi'
+
+import { listUser, listMessage, countUnRead } from './data'
 import './style.scss'
+import { ChatContext } from 'context/ChatContextProvider'
+
 const { Search } = Input
 const ListUserChat = () => {
-  const onSearch = (value: string) => console.log(value)
+  const [listUserChat, setStateUserChat] = useState<any>([])
+  const { setUserInfoChat } = useContext(ChatContext)
 
+  const getAllUserChat = async () => {
+    try {
+      const result = await messageApi.getUserChated()
+      console.log('result', result)
+      if (result) {
+        setStateUserChat(result.data)
+      }
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getAllUserChat()
+  }, [])
+
+  const handleClickUserInfo = (user: any) => {
+    console.log('click', user)
+    setUserInfoChat(user)
+  }
+
+  console.log('allUserChat', listUserChat)
+
+  const onSearch = (value: string) => console.log(value)
   return (
     <>
       <div className="header-list_userChat">
@@ -20,6 +51,25 @@ const ListUserChat = () => {
             <EditOutlined />
             <SettingOutlined />
           </div>
+        </div>
+
+        <div className="list-infoUser">
+          {listUserChat.map((user: any, index: number) => (
+            <div
+              className="wrap-userInfo"
+              key={index}
+              onClick={() => handleClickUserInfo(user)}
+            >
+              <div className="wrap-avatar_userChat">
+                <img src={user.avatar} alt="" />
+              </div>
+              <div className="info-user_chat">
+                <h4>{user.name}</h4>
+                <h5>{user.post_title}</h5>
+                <p>{user.message}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>

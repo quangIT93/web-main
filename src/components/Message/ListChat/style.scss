@@ -1,0 +1,79 @@
+.list-chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+  //   overflow: hidden;
+  //   height: 400px;
+  .header-list_chat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.8px solid #dcdcdc;
+    flex-grow: 0; // Không mở rộng chiều cao
+    flex-shrink: 0;
+    .wrap-img_chat {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      img {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+      }
+      .wrap-infoUser_chat {
+        margin-left: 12px;
+        h4 {
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 24px;
+        }
+
+        span {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 18px;
+          color: #575757;
+        }
+      }
+    }
+
+    .wrap-icon_chat {
+      span {
+        padding: 12px;
+      }
+    }
+  }
+
+  .list-content_chat {
+    height: 100%;
+  }
+
+  .inputs-chat {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    input {
+      padding: 12px 110px 12px 12px;
+    }
+
+    .input-chatIcon {
+      position: absolute;
+      cursor: pointer;
+    }
+
+    .input-chatIcon:nth-child(2) {
+      right: 70px;
+    }
+
+    .input-chatIcon:nth-child(3) {
+      right: 40px;
+    }
+
+    .input-chatIcon:nth-child(4) {
+      right: 10px;
+    }
+  }
+}

@@ -334,87 +334,88 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
   }
 
   const buttons = [
-    <button
-      className="btn btn__post"
-      onClick={() => {
-        if (dataProfile && localStorage.getItem('refreshToken')) {
-          window.open('/post', '_blank')
-        } else {
-          setOpenModalLogin(true)
-        }
-      }}
-    >
-      <FormOutlined style={{ color: 'white' }} />
-      <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
-    </button>,
-    <div className="actions-login" onClick={handleClickLogin}>
-      <button className="btn btn__login">
-        <div style={{ display: 'flex' }}>
-          <div className="login__avatar">
-            <Avatar
-              style={{ backgroundColor: '#0D99FF' }}
-              icon={<UserOutlined />}
-              src={dataProfile.avatar ? dataProfile.avatar : ''}
-            />
-          </div>
-          <div className="login__center">
-            {localStorage.getItem('accessToken') && dataProfile ? (
-              <span>{dataProfile.name}</span>
-            ) : (
-              <span>Đăng nhập</span>
-            )}
-          </div>
-        </div>
-        <div className="login__icon">
-          <RightOutlined />
-        </div>
-      </button>
-      <Spin indicator={antIcon} spinning={spinning}>
-        {openInfoUser && (
-          <div className="sub-login">
-            <Space className="sub-login_info">
-              <Avatar
-                style={{ backgroundColor: '#0D99FF' }}
-                icon={<UserOutlined style={{ fontSize: 30 }} />}
-                size={50}
-                src={dataProfile?.avatar ? dataProfile.avatar : null}
-              />
-              <div>
-                <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
-                <span>{dataProfile?.email ? dataProfile?.email : ''}</span>
-              </div>
-            </Space>
-            <div className="sub-login_items">
-              <Link to="/profile">
-                <div className="sub-login_item">
-                  <SyncOutlined />
-                  <span>Cập nhật thông tin</span>
-                </div>
-              </Link>
-              <Link to="/history">
-                <div
-                  className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
-                >
-                  <ClockCircleOutlined />
-                  <span>Lịch sử</span>
-                </div>
-              </Link>
-              <div className="sub-login_item">
-                <KeyOutlined />
-                <span>Đổi mật khẩu</span>
-              </div>
-              <div className="sub-login_item" onClick={handleLogout}>
-                <LogoutOutlined />
-                <span>Đăng xuất</span>
-              </div>
-            </div>
-          </div>
-        )}
-      </Spin>
-    </div>,
+    // <button
+    //   className="btn btn__post"
+    //   onClick={() => {
+    //     if (dataProfile && localStorage.getItem('refreshToken')) {
+    //       window.open('/post', '_blank')
+    //     } else {
+    //       setOpenModalLogin(true)
+    //     }
+    //   }}
+    // >
+    //   <FormOutlined style={{ color: 'white' }} />
+    //   <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
+    // </button>,
+    // <div className="actions-login" onClick={handleClickLogin}>
+    //   <button className="btn btn__login">
+    //     <div style={{ display: 'flex' }}>
+    //       <div className="login__avatar">
+    //         <Avatar
+    //           style={{ backgroundColor: '#0D99FF' }}
+    //           icon={<UserOutlined />}
+    //           src={dataProfile.avatar ? dataProfile.avatar : ''}
+    //         />
+    //       </div>
+    //       <div className="login__center">
+    //         {localStorage.getItem('accessToken') && dataProfile ? (
+    //           <span>{dataProfile.name}</span>
+    //         ) : (
+    //           <span>Đăng nhập</span>
+    //         )}
+    //       </div>
+    //     </div>
+    //     <div className="login__icon">
+    //       <RightOutlined />
+    //     </div>
+    //   </button>
+    //   <Spin indicator={antIcon} spinning={spinning}>
+    //     {openInfoUser && (
+    //       <div className="sub-login">
+    //         <Space className="sub-login_info">
+    //           <Avatar
+    //             style={{ backgroundColor: '#0D99FF' }}
+    //             icon={<UserOutlined style={{ fontSize: 30 }} />}
+    //             size={50}
+    //             src={dataProfile?.avatar ? dataProfile.avatar : null}
+    //           />
+    //           <div>
+    //             <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
+    //             <span>{dataProfile?.email ? dataProfile?.email : ''}</span>
+    //           </div>
+    //         </Space>
+    //         <div className="sub-login_items">
+    //           <Link to="/profile">
+    //             <div className="sub-login_item">
+    //               <SyncOutlined />
+    //               <span>Cập nhật thông tin</span>
+    //             </div>
+    //           </Link>
+    //           <Link to="/history">
+    //             <div
+    //               className="sub-login_item"
+    //               // onClick={() => {
+    //               //   window.open('/history', "_top")
+    //               // }}
+    //             >
+    //               <ClockCircleOutlined />
+    //               <span>Lịch sử</span>
+    //             </div>
+    //           </Link>
+    //           <div className="sub-login_item">
+    //             <KeyOutlined />
+    //             <span>Đổi mật khẩu</span>
+    //           </div>
+    //           <div className="sub-login_item" onClick={handleLogout}>
+    //             <LogoutOutlined />
+    //             <span>Đăng xuất</span>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     )}
+    //   </Spin>
+    // </div>,
+    <div>sadasd</div>,
   ]
 
   return (
@@ -513,7 +514,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
             </SearchButton>
           </NavSearchButton>
         </NavSearch>
-        <NavFilter>
+        {/* <NavFilter>
           <ChoosesCarreer>
             <WrapChooseLocation
               onClick={handleClickArrowLocation}
@@ -725,7 +726,7 @@ const Navbar: React.FC<propsCloseSlider> = (props) => {
               )}
             </WrapChooseLocation>
           </ChoosesCarreer>
-        </NavFilter>
+        </NavFilter> */}
         {/* filter salary */}
         <SalaryFilterSubnav setSalary={setSalary} openSalary={openSalary} />
       </Collapse>

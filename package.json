@@ -85,6 +85,7 @@
     "sass": "^1.59.2",
     "sass-loader": "^12.3.0",
     "semver": "^7.3.5",
+    "socket.io-client": "^4.6.2",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
     "swiper": "^9.1.1",

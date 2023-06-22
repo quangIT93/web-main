@@ -6,7 +6,7 @@ import ListUserChat from '#components/Message/ListUser/ListUser'
 import HeaderMessage from '#components/Message/HeaderMessage'
 // @ts-ignore
 import Navbar from '#components/Navbar'
-
+import Footer from '#components/Footer'
 // import ui antd
 import { Typography } from 'antd'
 
@@ -19,9 +19,9 @@ const Message = () => {
     <div className="message-page">
       <Navbar />
       <div className="message-page_main">
-        <div className="header-message">
+        {/* <div className="header-message">
           <HeaderMessage />
-        </div>
+        </div> */}
         <div className="wrap-content_message">
           <div className="message-page_left">
             <ListUserChat />
@@ -32,6 +32,7 @@ const Message = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

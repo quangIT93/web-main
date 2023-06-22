@@ -2,7 +2,8 @@ export const listUser = [
   {
     user_id: '1',
     name: 'Nguyễn Hạo',
-    avatar: 'https://thanh-avatar',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
     is_sender: false,
     message: 'Đây là 1 đoạn chat',
     type: 'text',
@@ -13,10 +14,12 @@ export const listUser = [
   },
   {
     user_id: '2',
-    name: 'Thái Quang',
-    avatar: 'https://thanh-avatar',
+    name: 'Thái Quang Thái Quang Thái Quang Thái Quang Thái Quang',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
     is_sender: false,
-    message: 'Đây là 1 đoạn chat',
+    message:
+      'Đây là 1 đoạn chat Đây là 1 đoạn chat Đây là 1 đoạn chat Đây là 1 đoạn chat Đây là 1 đoạn chat',
     type: 'text',
     status: 0,
     post_id: 242,
@@ -26,7 +29,8 @@ export const listUser = [
   {
     user_id: '3',
     name: 'Trần Thăng',
-    avatar: 'https://thanh-avatar',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
     is_sender: true,
     message: 'Đây là 1 đoạn chat',
     type: 'text',
@@ -38,7 +42,8 @@ export const listUser = [
   {
     user_id: '4',
     name: 'Võ Thanh',
-    avatar: 'https://thanh-avatar',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
     is_sender: true,
     message: 'Đây là 1 đoạn chat',
     type: 'text',
@@ -50,7 +55,86 @@ export const listUser = [
   {
     user_id: '5',
     name: 'Nguyễn Bảo',
-    avatar: 'https://thanh-avatar',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
+    is_sender: false,
+    message: 'Đây là 1 đoạn chat',
+    type: 'text',
+    status: 0,
+    post_id: 242,
+    post_title: 'Crack win',
+    created_at: 1675837375680,
+  },
+  {
+    user_id: '5',
+    name: 'Nguyễn Bảo',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
+    is_sender: false,
+    message: 'Đây là 1 đoạn chat',
+    type: 'text',
+    status: 0,
+    post_id: 242,
+    post_title: 'Crack win',
+    created_at: 1675837375680,
+  },
+  {
+    user_id: '5',
+    name: 'Nguyễn Bảo',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
+    is_sender: false,
+    message: 'Đây là 1 đoạn chat',
+    type: 'text',
+    status: 0,
+    post_id: 242,
+    post_title: 'Crack win',
+    created_at: 1675837375680,
+  },
+  {
+    user_id: '5',
+    name: 'Nguyễn Bảo',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
+    is_sender: false,
+    message: 'Đây là 1 đoạn chat',
+    type: 'text',
+    status: 0,
+    post_id: 242,
+    post_title: 'Crack win',
+    created_at: 1675837375680,
+  },
+  {
+    user_id: '5',
+    name: 'Nguyễn Bảo',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
+    is_sender: false,
+    message: 'Đây là 1 đoạn chat',
+    type: 'text',
+    status: 0,
+    post_id: 242,
+    post_title: 'Crack win',
+    created_at: 1675837375680,
+  },
+  {
+    user_id: '5',
+    name: 'Nguyễn Bảo',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
+    is_sender: false,
+    message: 'Đây là 1 đoạn chat',
+    type: 'text',
+    status: 0,
+    post_id: 242,
+    post_title: 'Crack win',
+    created_at: 1675837375680,
+  },
+  {
+    user_id: '5',
+    name: 'Nguyễn Bảo',
+    avatar:
+      'https://ephoto360.com/uploads/w450/2023/05/11/tao-anh-ghep-canh-dong-hoa-cuc-truc-tuyen_a1200.jpg',
     is_sender: false,
     message: 'Đây là 1 đoạn chat',
     type: 'text',
