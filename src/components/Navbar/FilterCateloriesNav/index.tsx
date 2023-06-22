@@ -4,14 +4,12 @@ import Box from '@mui/material/Box'
 import { Cascader, Divider, Typography, Button } from 'antd'
 import categoriesApi from '../../../api/categoriesApi'
 import './style.scss'
+import { useSearchParams } from 'react-router-dom'
 
 const { Text } = Typography
 
-interface Option {
-  value: string | number
-  label: string
-  children?: Option[]
-  disableCheckbox?: boolean
+interface DistrictProps {
+  setListCate: Function
 }
 const { SHOW_CHILD } = Cascader
 
@@ -21,18 +19,25 @@ const DropdownRender = (menus: React.ReactNode) => (
     {menus}
     <Divider style={{ margin: 0 }} />
     <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
-      <Button type="default" onClick={() => {}}>
+      <Button type="default" onClick={() => { }}>
         Huỷ
       </Button>
-      <Button type="primary" onClick={() => {}}>
+      <Button type="primary" onClick={() => { }}>
         Áp dụng
       </Button>
     </div>
   </div>
 )
 
-const FilterCateloriesNav = () => {
+const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
   const [categoriesId, setCategoriesId] = useState<string[]>([])
+
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const listCate = searchParams.getAll('categories-ids').map((dis) =>
+    dis.split(",")).map((category) => category.map(Number))
+
+
 
   const getCategories = async () => {
     try {
@@ -40,6 +45,8 @@ const FilterCateloriesNav = () => {
       if (result) {
         setDataCategories(result.data)
       }
+      console.log(listCate)
+      setListCate(listCate)
     } catch (error) {
       console.error(error)
     }
@@ -51,6 +58,8 @@ const FilterCateloriesNav = () => {
 
   const [dataCategories, setDataCategories] = React.useState<any>(null)
   const [disable, setDisable] = React.useState<Boolean>(false)
+
+
   const onChange = (value: any) => {
     setDisable(false)
     const secondValues = value.map((item: any) => item[1])
@@ -58,6 +67,7 @@ const FilterCateloriesNav = () => {
     console.log('secondValues', secondValues)
     if (secondValues.length <= 2) {
       setCategoriesId(secondValues)
+      setListCate(value)
     }
     if (value.length > 1) {
       setDisable(true)
@@ -71,30 +81,31 @@ const FilterCateloriesNav = () => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false
-                        break
-                      }
+              value: parentCategory.parent_category_id,
+              label: parentCategory.parent_category,
+              children: parentCategory.childs.map((child: any) => {
+                var dis = false
+                //check id child  when disable = true
+                if (disable) {
+                  dis = true
+                  for (const elem of categoriesId) {
+                    if (elem === child.id) {
+                      dis = false
+                      break
                     }
                   }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  }
-                }),
-              }))
+                }
+                return {
+                  value: child.id,
+                  label: child.name,
+                  disabled: dis,
+                }
+              }),
+            }))
             : []
         }
         onChange={onChange}
+        defaultValue={listCate}
         multiple
         maxTagCount="responsive"
         size="large"

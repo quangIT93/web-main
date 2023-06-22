@@ -58,7 +58,7 @@ axiosClient.interceptors.response.use(
       (refreshToken && error.response.status === 401)
     ) {
       axios
-        .post(`${BASE_URL}/v1/reset-access-token`, {
+        .post(`${BASE_URL}v1/reset-access-token`, {
           refreshToken: refreshToken,
         })
         .then((response) => {

@@ -65,13 +65,7 @@ import {
   Left,
   Right,
   Center,
-  NavSearch,
-  InputSearh,
-  NavSearchButton,
-  SearchButton,
-  NavFilter,
-  ChoosesCarreer,
-  WrapChooseLocation,
+
   collapseCssFilter,
 } from './Css'
 
@@ -83,6 +77,7 @@ import { actionCreators } from '../../store/index'
 // import Context
 import { HomeValueContext } from 'context/HomeValueContextProvider'
 import { DivRef1 } from 'context/HomeValueContextProvider'
+import { useSearchParams } from 'react-router-dom'
 
 const Navbar: React.FC = () => {
   const {
@@ -91,26 +86,45 @@ const Navbar: React.FC = () => {
     // setHeightNavbar,
     SetRefNav,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
-  } = useContext(HomeValueContext)
+    {
+      openCollapseFilter: boolean
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
+    } = useContext(HomeValueContext)
 
   const [showTap, setshowTap] = React.useState(false)
 
-  const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
+
+  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false)
   const [openInfoUser, setOpenInfoUser] = React.useState(false)
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
   const [spinning, setSpinning] = React.useState(false)
+
+  // value search
+  const [salaryType, setSalaryType] = React.useState<any>()
+  const [jobType, setJobType] = React.useState<any>()
+  const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
+  const [listDis, setListDis] = useState<[]>([])
+  const [listCate, setListCate] = useState<[]>([])
+
+
+  // value query
+
+  const QUERY = searchParams.get('q')
+  const SALARY_TYPE = Number(searchParams.get('sal-type'))
+  const JOB_TYPE = Number(searchParams.get('job-type'))
+  const DIS_IDS = searchParams.getAll('dis-ids').map((disId) => disId.split(",")).map((dis) => dis[1])
+
+  // params url
+  const params = new URLSearchParams();
+  const paramsCate = new URLSearchParams();
+
   const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
-
-  const navigate = useNavigate()
-
   // thay đổi width setState
   const [windowWidth, setWindowWidth] = useState(false)
 
@@ -212,10 +226,47 @@ const Navbar: React.FC = () => {
     setOpenModalFilter(false)
   }
 
+  // handle click search button
   const handleSearch = () => {
-    const encode = encodeURIComponent(`${valueSearchInput}`)
+    var encode
+    var job_type = jobType
+    var salary_type = salaryType
+    var list_dis = listDis
+    var list_cate = listCate
 
-    window.open(`/search-results?q=${encode}`, '_parent')
+    if (list_dis.length > 0) {
+      list_dis.forEach((item, index) => {
+        params.append(`dis-ids`, `${item}`)
+      })
+    }
+    if (list_cate.length > 0) {
+      list_cate.forEach((item, index) => {
+        paramsCate.append(`categories-ids`, `${item}`)
+      })
+    }
+
+    if (!valueSearchInput && QUERY) {
+      encode = encodeURIComponent(`${QUERY}`)
+
+    } else {
+      encode = encodeURIComponent(`${valueSearchInput}`)
+    }
+    if (!jobType && JOB_TYPE) {
+      job_type = JOB_TYPE
+
+    }
+    if (!salaryType && SALARY_TYPE) {
+      salary_type = SALARY_TYPE
+    }
+
+    console.log("jobtype", params.toString())
+
+    window.open(`/search-results?${encode !== 'undefined' ? `q=${encode}` : ""}` +
+      `${salary_type ? `&sal-type=${salary_type}` : ""}` +
+      `${job_type ? `&job-type=${job_type}` : ""}` +
+      `${list_dis.length > 0 ? `&${params.toString()}` : ""}` +
+      `${list_cate.length > 0 ? `&${paramsCate.toString()}` : ""}`
+      , "_self")
   }
 
   // login
@@ -333,9 +384,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -391,7 +442,7 @@ const Navbar: React.FC = () => {
           <Button
             onClick={() => window.open(`/message`, '_blank')}
             type="link"
-            // style={{ marginRight: '12px' }}
+          // style={{ marginRight: '12px' }}
           >
             <ChatIcon />
           </Button>
@@ -431,18 +482,19 @@ const Navbar: React.FC = () => {
       <Collapse
         in={openCollapseFilter}
         timeout={800}
-        unmountOnExit
+        // unmountOnExit
         onEnter={handleCollapseEntered}
         onExited={handleCollapseExited}
         sx={collapseCssFilter}
       >
         <div className="filter-wrap_top">
-          <FilterLocationNav />
-          <FilterCateloriesNav />
-          <FilterTypeJob />
+          <FilterLocationNav setListDis={setListDis} />
+          <FilterCateloriesNav setListCate={setListCate} />
+          <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
         </div>
         <div className="filter-wrap_bottom">
-          <FilterTypeSalary />
+          <FilterTypeSalary setSalaryType={setSalaryType} />
+
           <FilterSalary />
           <FilterTimeJob />
         </div>

@@ -130,14 +130,6 @@ const NewJobs: React.FC = () => {
       thersholdId
     )
 
-    // const array = [1, 2, 3]
-    // // const e = createSearchParams({ name: `${array}` })
-    // setSearchParams({ 'name': `${array}` })
-    // // console.log("newest: ", result)
-    // const test = searchParams.get('name')?.toString().split(",").map(Number)
-    // console.log(test)
-    // //    window.open(`/home?${e}`)
-
     if (result) {
       setPostNewestMore(result)
       setOpenBackdrop(false)
@@ -237,8 +229,8 @@ const NewJobs: React.FC = () => {
                               fontWeight: 'bold',
                             }}
                           >
-                            {item?.title.length > 38
-                              ? `${item.title.substring(0, 38)} ...`
+                            {item?.title.length > 50
+                              ? `${item.title.substring(0, 50)} ...`
                               : item.title}
                           </Typography>
                         </Tooltip>
@@ -249,8 +241,8 @@ const NewJobs: React.FC = () => {
                             component="div"
                             sx={{ fontSize: '12px' }}
                           >
-                            {item?.company_name.length > 38
-                              ? `${item.company_name.substring(0, 38)} ...`
+                            {item?.company_name.length > 50
+                              ? `${item.company_name.substring(0, 50)} ...`
                               : item.company_name}
                           </Typography>
                         </Tooltip>

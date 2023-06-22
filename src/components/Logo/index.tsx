@@ -4,7 +4,7 @@ import './style.scss'
 
 const Logo: React.FC = () => {
   return (
-    <Link to="/home">
+    <Link to="/home" reloadDocument>
       <div className="logo">
         <img src="/logoHiJobfull.png" width={80} height={68} />
       </div>

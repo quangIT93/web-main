@@ -93,7 +93,8 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [data, setData] = useState<SelectProps['options']>([])
   const [fetching, setFet] = useState(false)
-
+  const [loading, setLoading] = useState(false)
+  const QUERY = searchParams.get('q')
   const handleSearch = (newValue: string | undefined) => {
     setValue(currentValue)
     fetch(newValue, setData, setFet)
@@ -102,7 +103,8 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
   const getSuggestKeyWord = async () => {
     try {
       var response = null
-      if (localStorage.getItem('accessToken')) {
+      setLoading(true)
+      if (localStorage.getItem("accessToken")) {
         const result = await searchApi.getHistoryKeyWord(10)
         if (result) {
           response = result.data.listHistorySearch
@@ -120,6 +122,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
         }))
 
         setData(data)
+        setLoading(false)
       }
     } catch (error) {
       console.error(error)
@@ -128,11 +131,27 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
 
   React.useEffect(() => {
     getSuggestKeyWord()
+
   }, [])
 
   const handleChange = (newValue: string) => {
     setValue(newValue)
   }
+
+  const handleOnFocus = () => {
+    getSuggestKeyWord()
+  }
+
+  // handle press enter
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+
+    if (e.key === "Enter") {
+      if (QUERY && !currentValue && !value) {
+        window.open(`/search-results?q=${encodeURIComponent(`${QUERY}`)}`, "_parent")
+      } else window.open(`/search-results?q=${encodeURIComponent(`${value}`)}`, "_parent")
+    }
+  }
+
 
   return (
     <Select
@@ -140,14 +159,15 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
       autoClearSearchValue
       size="large"
       value={value}
-      defaultValue={searchParams.get('q') ? searchParams.get('q') : null}
+      defaultValue={QUERY ? QUERY : null}
       placeholder="Tìm kiếm công việc"
-      //    style={{ width: '500px', height: 70 }}
+
       defaultActiveFirstOption={false}
       showArrow={false}
       filterOption={false}
       onSearch={handleSearch}
       onChange={handleChange}
+      loading={loading}
       notFoundContent={fetching ? <Spin size="small" /> : null}
       options={(data || []).map((d) => ({
         value: d.value,
@@ -155,6 +175,8 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
       }))}
       className="search-input-nav"
       virtual={false}
+      onFocus={handleOnFocus}
+      onInputKeyDown={handleKeyPress}
     />
   )
 }
