@@ -10,7 +10,7 @@ import ModalLogin from '../../components/Home/ModalLogin'
 // @ts-ignore
 import { Logo } from '#components'
 // @ts-ignore
-import { SearchIcon } from '#components'
+import { ChatIcon } from '#components'
 // @ts-ignore
 import { ModalFilter } from '#components'
 
@@ -387,6 +387,14 @@ const Navbar: React.FC = () => {
           <Button onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
             <TuneOutlinedIcon />
           </Button>
+
+          <Button
+            onClick={() => window.open(`/message`, '_blank')}
+            type="link"
+            // style={{ marginRight: '12px' }}
+          >
+            <ChatIcon />
+          </Button>
         </Center>
         <Right className="div-nav-right">
           <div className="tabBar-right">
@@ -422,8 +430,8 @@ const Navbar: React.FC = () => {
       </Wrapper>
       <Collapse
         in={openCollapseFilter}
-        // timeout="auto"
-        // unmountOnExit
+        timeout={800}
+        unmountOnExit
         onEnter={handleCollapseEntered}
         onExited={handleCollapseExited}
         sx={collapseCssFilter}
@@ -435,10 +443,13 @@ const Navbar: React.FC = () => {
         </div>
         <div className="filter-wrap_bottom">
           <FilterTypeSalary />
-
           <FilterSalary />
-
           <FilterTimeJob />
+        </div>
+
+        <div className="btn-filter_nav">
+          <Button type="default">Đặt Lại</Button>
+          <Button type="primary">Xác Nhận</Button>
         </div>
       </Collapse>
     </Container>

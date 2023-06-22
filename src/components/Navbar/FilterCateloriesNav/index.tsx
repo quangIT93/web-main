@@ -1,9 +1,11 @@
 import React, { useState, memo } from 'react'
-import Typography from '@mui/material/Typography'
+
 import Box from '@mui/material/Box'
-import { Cascader } from 'antd'
+import { Cascader, Divider, Typography, Button } from 'antd'
 import categoriesApi from '../../../api/categoriesApi'
 import './style.scss'
+
+const { Text } = Typography
 
 interface Option {
   value: string | number
@@ -12,6 +14,22 @@ interface Option {
   disableCheckbox?: boolean
 }
 const { SHOW_CHILD } = Cascader
+
+const DropdownRender = (menus: React.ReactNode) => (
+  <div style={{ width: '100%' }}>
+    <Text className="title-filter_location">Chọn danh mục nghề nghiệp</Text>
+    {menus}
+    <Divider style={{ margin: 0 }} />
+    <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+      <Button type="default" onClick={() => {}}>
+        Huỷ
+      </Button>
+      <Button type="primary" onClick={() => {}}>
+        Áp dụng
+      </Button>
+    </div>
+  </div>
+)
 
 const FilterCateloriesNav = () => {
   const [categoriesId, setCategoriesId] = useState<string[]>([])
@@ -49,6 +67,7 @@ const FilterCateloriesNav = () => {
   return (
     <>
       <Cascader
+        dropdownRender={DropdownRender}
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({

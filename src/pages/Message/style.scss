@@ -1,0 +1,25 @@
+.message-page {
+  margin-top: 70px;
+  .message-page_main {
+    padding: 50px 180px 0 180px;
+    margin: 12px auto;
+
+    .header-message {
+      display: flex;
+      align-items: center;
+    }
+
+    .wrap-content_message {
+      display: flex;
+      border: 1px solid #aaaaaa;
+      border-radius: 8px;
+      .message-page_left {
+        flex: 2;
+      }
+
+      .message-page_right {
+        flex: 4;
+      }
+    }
+  }
+}

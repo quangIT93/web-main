@@ -1,8 +1,8 @@
 import React, { useState, memo, ReactNode } from 'react'
-import Typography from '@mui/material/Typography'
+
 import Box from '@mui/material/Box'
-import { Cascader } from 'antd'
-import categoriesApi from '../../../api/categoriesApi'
+import { Cascader, Divider, Typography, Button } from 'antd'
+
 import './style.scss'
 
 import { EnvironmentOutlined } from '@ant-design/icons'
@@ -10,6 +10,7 @@ import { EnvironmentOutlined } from '@ant-design/icons'
 // import api
 import locationApi from 'api/locationApi'
 
+const { Text } = Typography
 interface Option {
   value: string | number
   label: string
@@ -17,6 +18,22 @@ interface Option {
   disableCheckbox?: boolean
 }
 const { SHOW_CHILD } = Cascader
+
+const DropdownRender = (menus: React.ReactNode) => (
+  <div style={{ width: '100%' }}>
+    <Text className="title-filter_location">Chọn địa điểm</Text>
+    {menus}
+    <Divider style={{ margin: 0 }} />
+    <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+      <Button type="default" onClick={() => {}}>
+        Huỷ
+      </Button>
+      <Button type="primary" onClick={() => {}}>
+        Áp dụng
+      </Button>
+    </div>
+  </div>
+)
 
 const FilterLocationNav: React.FC = () => {
   const [dataLocations, setDataLocations] = React.useState<any>(null)
@@ -99,6 +116,7 @@ const FilterLocationNav: React.FC = () => {
         size="large"
         placeholder="Chọn địa điểm"
         inputIcon={<EnvironmentOutlined />}
+        dropdownRender={DropdownRender}
         options={
           dataLocations
             ? dataLocations.map((dataLocation: any) => ({

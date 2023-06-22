@@ -37,7 +37,9 @@ const BreadcrumbsCpn: React.FC = () => {
     childCateloriesArray,
     valueJobChild,
     setValueJobChild,
+    navTouchCatelory,
   }: {
+    navTouchCatelory: boolean
     setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>
     childCateloriesArray: number[]
     valueJobChild: IvalueJobChild
@@ -254,7 +256,13 @@ const BreadcrumbsCpn: React.FC = () => {
   ]
 
   return (
-    <Stack spacing={2} sx={{ margin: '24px', position: 'relative' }}>
+    <Stack
+      spacing={2}
+      sx={{
+        marginTop: navTouchCatelory ? '170px' : '24px',
+        position: 'relative',
+      }}
+    >
       <Breadcrumbs separator="" aria-label="breadcrumb">
         {breadcrumbs}
       </Breadcrumbs>

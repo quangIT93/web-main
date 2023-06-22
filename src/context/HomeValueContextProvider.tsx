@@ -84,7 +84,7 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
       const currentScrollTop =
         openCollapseFilter === false
           ? (window.scrollY || document.documentElement.scrollTop) + 71
-          : (window.scrollY || document.documentElement.scrollTop) + 71 + 116
+          : (window.scrollY || document.documentElement.scrollTop) + 71 + 158
       console.log('currentScrollTop', currentScrollTop)
       console.log('prevScrollTop', prevScrollTop)
 
