@@ -104,8 +104,15 @@ const NewJobs: React.FC = () => {
   // )
 
   const [checkBookMark, setCheckBookMark] = React.useState(true)
+
+
+  // query value
   const QUERY = decodeURIComponent(`${searchParams.get('q')}`)
   const SALARY_TYPE = Number(searchParams.get('sal-type'))
+  const JOB_TYPE = Number(searchParams.get('job-type')) ? [Number(searchParams.get('job-type'))] : []
+
+  const LIST_DIS_ID = searchParams.getAll('dis-ids').map((disId) => disId.split(",")).map((dis) => dis[1])
+  const LIST_CATEGORIES_ID = searchParams.getAll('categories-ids').map((cateId) => cateId.split(",")).map((dis) => dis[1]).map(Number)
 
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -138,9 +145,9 @@ const NewJobs: React.FC = () => {
       null,
       null,
       null,
-      null,
-      null,
-      null,
+      JOB_TYPE,
+      LIST_CATEGORIES_ID,
+      LIST_DIS_ID,
       SALARY_TYPE
     )
     if (result) {
@@ -172,11 +179,13 @@ const NewJobs: React.FC = () => {
         null,
         null,
         null,
-        null,
-        [],
-        [],
+        JOB_TYPE,
+        LIST_CATEGORIES_ID,
+        LIST_DIS_ID,
         SALARY_TYPE
       )
+
+
       if (result) {
         console.log(result)
         setSearchData(result.data)
@@ -268,8 +277,8 @@ const NewJobs: React.FC = () => {
                                     fontWeight: 'bold',
                                   }}
                                 >
-                                  {item?.title.length > 38
-                                    ? `${item.title.substring(0, 38)} ...`
+                                  {item?.title.length > 50
+                                    ? `${item.title.substring(0, 50)} ...`
                                     : item.title}
                                 </Typography>
                               </Tooltip>
@@ -283,10 +292,10 @@ const NewJobs: React.FC = () => {
                                   component="div"
                                   sx={{ fontSize: '12px' }}
                                 >
-                                  {item?.company_name.length > 38
+                                  {item?.company_name.length > 50
                                     ? `${item.company_name.substring(
                                       0,
-                                      38
+                                      50
                                     )} ...`
                                     : item.company_name}
                                 </Typography>

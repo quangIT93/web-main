@@ -65,13 +65,7 @@ import {
   Left,
   Right,
   Center,
-  NavSearch,
-  InputSearh,
-  NavSearchButton,
-  SearchButton,
-  NavFilter,
-  ChoosesCarreer,
-  WrapChooseLocation,
+
   collapseCssFilter,
 } from './Css'
 
@@ -103,6 +97,8 @@ const Navbar: React.FC = () => {
   const [showTap, setshowTap] = React.useState(false)
 
 
+  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false)
   const [openInfoUser, setOpenInfoUser] = React.useState(false)
@@ -110,15 +106,25 @@ const Navbar: React.FC = () => {
   const [spinning, setSpinning] = React.useState(false)
 
   // value search
-  const [salaryType, setSalaryType] = React.useState()
-  const [jobType, setJobType] = React.useState()
+  const [salaryType, setSalaryType] = React.useState<any>()
+  const [jobType, setJobType] = React.useState<any>()
   const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
+  const [listDis, setListDis] = useState<[]>([])
+  const [listCate, setListCate] = useState<[]>([])
+
+
+  // value query
+
+  const QUERY = searchParams.get('q')
+  const SALARY_TYPE = Number(searchParams.get('sal-type'))
+  const JOB_TYPE = Number(searchParams.get('job-type'))
+  const DIS_IDS = searchParams.getAll('dis-ids').map((disId) => disId.split(",")).map((dis) => dis[1])
+
+  // params url
+  const params = new URLSearchParams();
+  const paramsCate = new URLSearchParams();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
-
-  const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
-
   // thay đổi width setState
   const [windowWidth, setWindowWidth] = useState(false)
 
@@ -220,19 +226,46 @@ const Navbar: React.FC = () => {
     setOpenModalFilter(false)
   }
 
+  // handle click search button
   const handleSearch = () => {
     var encode
+    var job_type = jobType
+    var salary_type = salaryType
+    var list_dis = listDis
+    var list_cate = listCate
 
-    if (!valueSearchInput && searchParams.get('q')) {
-      encode = encodeURIComponent(`${searchParams.get('q')}`)
+    if (list_dis.length > 0) {
+      list_dis.forEach((item, index) => {
+        params.append(`dis-ids`, `${item}`)
+      })
+    }
+    if (list_cate.length > 0) {
+      list_cate.forEach((item, index) => {
+        paramsCate.append(`categories-ids`, `${item}`)
+      })
+    }
+
+    if (!valueSearchInput && QUERY) {
+      encode = encodeURIComponent(`${QUERY}`)
 
     } else {
       encode = encodeURIComponent(`${valueSearchInput}`)
     }
-    console.log("jobtype", jobType)
+    if (!jobType && JOB_TYPE) {
+      job_type = JOB_TYPE
+
+    }
+    if (!salaryType && SALARY_TYPE) {
+      salary_type = SALARY_TYPE
+    }
+
+    console.log("jobtype", params.toString())
 
     window.open(`/search-results?${encode !== 'undefined' ? `q=${encode}` : ""}` +
-      `${salaryType ? `&sal-type=${salaryType}` : ""}`
+      `${salary_type ? `&sal-type=${salary_type}` : ""}` +
+      `${job_type ? `&job-type=${job_type}` : ""}` +
+      `${list_dis.length > 0 ? `&${params.toString()}` : ""}` +
+      `${list_cate.length > 0 ? `&${paramsCate.toString()}` : ""}`
       , "_self")
   }
 
@@ -449,14 +482,14 @@ const Navbar: React.FC = () => {
       <Collapse
         in={openCollapseFilter}
         timeout={800}
-        unmountOnExit
+        // unmountOnExit
         onEnter={handleCollapseEntered}
         onExited={handleCollapseExited}
         sx={collapseCssFilter}
       >
         <div className="filter-wrap_top">
-          <FilterLocationNav />
-          <FilterCateloriesNav />
+          <FilterLocationNav setListDis={setListDis} />
+          <FilterCateloriesNav setListCate={setListCate} />
           <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
         </div>
         <div className="filter-wrap_bottom">

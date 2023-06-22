@@ -130,30 +130,6 @@ const NewJobs: React.FC = () => {
       thersholdId
     )
 
-    // const params = new URLSearchParams();
-
-    // const array = [[1, 3], [2, 3], [3]]
-    // const e = createSearchParams({ name: `${array}` })
-    // //setSearchParams({ 'name': `${array}` })
-    // array.forEach((item, index) => {
-    //   params.append(`name`, `${item}`)
-
-    // })
-    // console.log(params.toString())
-    // setSearchParams(params.toString())
-    // // console.log("newest: ", result)
-    // const test = searchParams.get('name')?.toString().split(",").map(Number)
-    // console.log(searchParams.getAll('name'))
-    // const testPa = searchParams.getAll('name').map(e => {
-    //   console.log("e", e.split(","))
-    //   return e.split(",").map(Number)
-    // })
-    // console.log(testPa)
-    // //    window.open(`/home?${e}`)
-
-
-
-
     if (result) {
       setPostNewestMore(result)
       setOpenBackdrop(false)
@@ -253,8 +229,8 @@ const NewJobs: React.FC = () => {
                               fontWeight: 'bold',
                             }}
                           >
-                            {item?.title.length > 38
-                              ? `${item.title.substring(0, 38)} ...`
+                            {item?.title.length > 50
+                              ? `${item.title.substring(0, 50)} ...`
                               : item.title}
                           </Typography>
                         </Tooltip>
@@ -265,8 +241,8 @@ const NewJobs: React.FC = () => {
                             component="div"
                             sx={{ fontSize: '12px' }}
                           >
-                            {item?.company_name.length > 38
-                              ? `${item.company_name.substring(0, 38)} ...`
+                            {item?.company_name.length > 50
+                              ? `${item.company_name.substring(0, 50)} ...`
                               : item.company_name}
                           </Typography>
                         </Tooltip>

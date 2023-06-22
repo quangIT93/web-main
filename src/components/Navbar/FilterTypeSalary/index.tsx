@@ -3,6 +3,7 @@ import { Select, Space, Radio } from 'antd'
 import { EnvironmentOutlined } from '@ant-design/icons'
 import type { RadioChangeEvent } from 'antd';
 import siteApi from 'api/siteApi'
+import { useSearchParams } from 'react-router-dom'
 
 import './style.scss'
 
@@ -10,10 +11,12 @@ const CustomOption = ({
   data,
   setValue,
   setValueRender,
+  salaryType
 }: {
   data: any
   setValue: Function
   setValueRender: Function
+  salaryType: number
 }) => {
   console.log('Custom option', data)
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
@@ -24,7 +27,7 @@ const CustomOption = ({
   };
 
   return (
-    <Radio.Group style={{ width: "100%", }} name="radiogroup" onChange={onChange} >
+    <Radio.Group style={{ width: "100%", }} name="radiogroup" onChange={onChange} defaultValue={salaryType} >
       <Space direction="vertical" style={{ width: "100%" }}>
         {
           data?.map((value: any, index: number) => {
@@ -44,20 +47,27 @@ interface SalaryFilter {
 const { Option } = Select
 const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
 
-
+  const [searchParams, setSearchParams] = useSearchParams()
   const [data, setData] = React.useState()
   const [valueRender, setValueRender] = React.useState<any>()
 
+  const SALARY_TYPE = Number(searchParams.get('sal-type'))
 
   const getTypeSalary = async () => {
     const result = await siteApi.getSalaryType()
 
     if (result) {
       setData(result.data)
+      if (SALARY_TYPE) {
+        const value = result.data.find((item: any) => item.id == SALARY_TYPE)
+        setValueRender(value)
+      }
+
     }
   }
   React.useEffect(() => {
     getTypeSalary()
+
   }, [])
 
 
@@ -77,7 +87,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
         placeholder="Trả lương theo"
       >
         <Option className='type-salary' value="1" label="Jack">
-          <CustomOption data={data} setValue={setSalaryType} setValueRender={setValueRender} />
+          <CustomOption salaryType={SALARY_TYPE} data={data} setValue={setSalaryType} setValueRender={setValueRender} />
         </Option>
       </Select>
     </>

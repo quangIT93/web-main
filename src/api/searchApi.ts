@@ -5,7 +5,6 @@ import axiosClient from './axiosClient'
 const searchApi = {
   getSearchByFilter: () => {
     const URL = `/v1/search/filter`
-
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -36,7 +35,7 @@ const searchApi = {
     salary_max: number | null,
     start_date: number | null,
     end_date: number | null,
-    jobTypeId: number[] | null,
+    jobTypeId: number[] | [],
     category_ids: number[] | null,
     district_ids: string[] | null,
     salary_type: number | null
@@ -54,12 +53,14 @@ const searchApi = {
       `${salary_max ? `&salary_max=${salary_max}` : ``}` +
       `${start_date ? `&start_date=${start_date}` : ``}` +
       `${end_date ? `&end_date=${end_date}` : ``}` +
-      `${jobTypeId ? `&jobTypeId=${jobTypeId}` : ``}` +
-      `${district_ids ? `&district_ids=${district_ids}` : ``}` +
-      `${category_ids ? `&category_ids=${category_ids}` : ``}` +
+      `${jobTypeId.length > 0 ? `&jobTypeId=${jobTypeId}` : ``}` +
+      `${district_ids != null ? `${district_ids.length > 0 ?
+        `&${district_ids?.map((n, index) => `district_ids[${index}]=${n}`).join('&')}` : `&district_ids`}` : ``}` +
+      `${category_ids != null ? `${category_ids.length > 0 ?
+        `&${category_ids?.map((n, index) => `category_ids[${index}]=${n}`).join('&')}` : `&category_ids`}` : ``}` +
       `${salary_type ? `&salary_type=${salary_type}` : ``}`
 
-    return axiosClient.get(URL,)
+    return axiosClient.get(URL)
   },
 }
 export default searchApi

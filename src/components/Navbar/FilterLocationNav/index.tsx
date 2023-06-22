@@ -6,16 +6,14 @@ import { Cascader, Divider, Typography, Button } from 'antd'
 import './style.scss'
 
 import { EnvironmentOutlined } from '@ant-design/icons'
+import { useSearchParams } from 'react-router-dom'
 
 // import api
 import locationApi from 'api/locationApi'
 
 const { Text } = Typography
-interface Option {
-  value: string | number
-  label: string
-  children?: Option[]
-  disableCheckbox?: boolean
+interface DistrictProps {
+  setListDis: Function
 }
 const { SHOW_CHILD } = Cascader
 
@@ -25,27 +23,34 @@ const DropdownRender = (menus: React.ReactNode) => (
     {menus}
     <Divider style={{ margin: 0 }} />
     <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
-      <Button type="default" onClick={() => {}}>
+      <Button type="default" onClick={() => { }}>
         Huỷ
       </Button>
-      <Button type="primary" onClick={() => {}}>
+      <Button type="primary" onClick={() => { }}>
         Áp dụng
       </Button>
     </div>
   </div>
 )
 
-const FilterLocationNav: React.FC = () => {
+const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
   const [dataLocations, setDataLocations] = React.useState<any>(null)
   const [dataDistrict, setDataDistrict] = React.useState<any>(null)
   const [disable, setDisable] = React.useState<Boolean>(false)
   const [locId, setLocId] = useState<string[]>([])
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const listLocation = searchParams.getAll('dis-ids').map((dis) =>
+    dis.split(","))
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation()
       if (result) {
         setDataLocations(result.data)
       }
+
+      setListDis(listLocation)
+
     } catch (error) {
       console.error(error)
     }
@@ -53,45 +58,9 @@ const FilterLocationNav: React.FC = () => {
 
   React.useEffect(() => {
     getAllLocaitions()
+    console.log(listLocation)
   }, [])
 
-
-  const options: Option[] = [
-    {
-      label: 'Light',
-      value: 'light',
-      children: new Array(20).fill(null).map((_, index) => ({
-        label: `Number ${index}`,
-        value: index,
-        disableCheckbox: true,
-      })),
-    },
-    {
-      label: 'Bamboo',
-      value: 'bamboo',
-      children: [
-        {
-          label: 'Little',
-          value: 'little',
-          children: [
-            {
-              label: 'Toy Fish',
-              value: 'fish',
-              disableCheckbox: true,
-            },
-            {
-              label: 'Toy Cards',
-              value: 'cards',
-            },
-            {
-              label: 'Toy Bird',
-              value: 'bird',
-            },
-          ],
-        },
-      ],
-    },
-  ]
 
   const onChange = (value: any) => {
     // Xử lý giá trị thay đổi
@@ -101,6 +70,7 @@ const FilterLocationNav: React.FC = () => {
     console.log('secondValues', secondValues)
     if (secondValues.length <= 3) {
       setLocId(secondValues)
+      setListDis(value)
     }
     if (value.length > 2) {
       setDisable(true)
@@ -116,6 +86,7 @@ const FilterLocationNav: React.FC = () => {
         placeholder="Chọn địa điểm"
         inputIcon={<EnvironmentOutlined />}
         dropdownRender={DropdownRender}
+        defaultValue={listLocation}
         options={
           dataLocations
             ? dataLocations.map((dataLocation: any) => ({
@@ -133,7 +104,6 @@ const FilterLocationNav: React.FC = () => {
                       }
                     }
                   }
-
                   return {
                     value: child.district_id,
                     label: child.district,
