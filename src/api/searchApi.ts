@@ -43,7 +43,7 @@ const searchApi = {
   ) => {
     const URL =
       `/v2/search?` +
-      `${q ? `q=${q}` : ``}` +
+      `${q !== 'null' ? `q=${q}` : ``}` +
       `${page ? `&page=${page}` : ``}` +
       `${money_type ? `&money_type=${money_type}` : ``}` +
       `${is_working_weekend ? `&is_working_weekend=${is_working_weekend}` : ``

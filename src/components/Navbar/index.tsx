@@ -102,12 +102,18 @@ const Navbar: React.FC = () => {
 
   const [showTap, setshowTap] = React.useState(false)
 
-  const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
+
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false)
   const [openInfoUser, setOpenInfoUser] = React.useState(false)
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
   const [spinning, setSpinning] = React.useState(false)
+
+  // value search
+  const [salaryType, setSalaryType] = React.useState()
+  const [jobType, setJobType] = React.useState()
+  const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
+
   const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
 
   const navigate = useNavigate()
@@ -215,7 +221,7 @@ const Navbar: React.FC = () => {
   }
 
   const handleSearch = () => {
-    var encode = ''
+    var encode
 
     if (!valueSearchInput && searchParams.get('q')) {
       encode = encodeURIComponent(`${searchParams.get('q')}`)
@@ -223,7 +229,11 @@ const Navbar: React.FC = () => {
     } else {
       encode = encodeURIComponent(`${valueSearchInput}`)
     }
-    window.open(`/search-results?q=${encode}`, "_self")
+    console.log("jobtype", jobType)
+
+    window.open(`/search-results?${encode !== 'undefined' ? `q=${encode}` : ""}` +
+      `${salaryType ? `&sal-type=${salaryType}` : ""}`
+      , "_self")
   }
 
   // login
@@ -439,10 +449,10 @@ const Navbar: React.FC = () => {
         <div className="filter-wrap_top">
           <FilterLocationNav />
           <FilterCateloriesNav />
-          <FilterTypeJob />
+          <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
         </div>
         <div className="filter-wrap_bottom">
-          <FilterTypeSalary />
+          <FilterTypeSalary setSalaryType={setSalaryType} />
 
           <FilterSalary />
 

@@ -105,11 +105,13 @@ const NewJobs: React.FC = () => {
 
   const [checkBookMark, setCheckBookMark] = React.useState(true)
   const QUERY = decodeURIComponent(`${searchParams.get('q')}`)
+  const SALARY_TYPE = Number(searchParams.get('sal-type'))
 
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`)
   }
+  console.log(typeof (QUERY))
 
   // handle change paginaton
   const handleChange = async (
@@ -139,7 +141,7 @@ const NewJobs: React.FC = () => {
       null,
       null,
       null,
-      null
+      SALARY_TYPE
     )
     if (result) {
       console.log(result)
@@ -171,9 +173,9 @@ const NewJobs: React.FC = () => {
         null,
         null,
         null,
-        null,
-        null,
-        null
+        [],
+        [],
+        SALARY_TYPE
       )
       if (result) {
         console.log(result)
@@ -283,9 +285,9 @@ const NewJobs: React.FC = () => {
                                 >
                                   {item?.company_name.length > 38
                                     ? `${item.company_name.substring(
-                                        0,
-                                        38
-                                      )} ...`
+                                      0,
+                                      38
+                                    )} ...`
                                     : item.company_name}
                                 </Typography>
                               </Tooltip>
@@ -455,7 +457,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
