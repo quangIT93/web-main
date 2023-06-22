@@ -181,3 +181,7 @@ form {
     color: #000000;
   }
 }
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-spin-nested-loading {
+  z-index: 10;
+}

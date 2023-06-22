@@ -1,0 +1,25 @@
+.header-list_userChat {
+  .title-header_listUserChat {
+    margin: 12px;
+  }
+  .header-listSearch_userChat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .searh-user_chat {
+      width: 200px;
+      border-radius: 8px;
+      margin-left: 12px;
+    }
+
+    .edit-setting_icon {
+      display: flex;
+      align-items: center;
+      margin-right: 12px;
+
+      span {
+        padding: 8px;
+      }
+    }
+  }
+}

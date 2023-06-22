@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { Collapse, Radio, Input, Button, Checkbox } from 'antd'
-
+import type { DatePickerProps } from 'antd'
+import { DatePicker, Space } from 'antd'
+import { Collapse, Radio, Input, Button, Checkbox, Typography } from 'antd'
 import './style.scss'
+
+const { Text } = Typography
 
 const { Panel } = Collapse
 
@@ -25,7 +28,13 @@ const FilterTimeJob = () => {
   const handleCheckboxChange = (checkedValues: any) => {
     setCheckboxValues(checkedValues)
   }
+  const onChangeStartDate: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(date, dateString)
+  }
 
+  const onChangeEndDate: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(date, dateString)
+  }
   return (
     <Collapse
       className={`inputFilterTimeJob input-filter_nav ${
@@ -38,13 +47,20 @@ const FilterTimeJob = () => {
         }
         key="1"
       >
-        <Radio.Group value={selectedValue} onChange={handleRadioChange}>
+        <Text className="title-filter_timeJob">Thời gian làm việc</Text>
+
+        <Radio.Group
+          value={selectedValue}
+          onChange={handleRadioChange}
+          className="inputFilter-grouptimeJob_radio"
+        >
           <Radio value="option1">Không thời hạn</Radio>
           <Radio value="option2">Có thời hạn</Radio>
         </Radio.Group>
-        <br />
-        <Input value={inputValue} onChange={handleInputChange} />
-        <Input value={inputValue} onChange={handleInputChange} />
+        <div className="group-input_dateJob">
+          <DatePicker onChange={onChangeStartDate} />
+          <DatePicker onChange={onChangeEndDate} />
+        </div>
 
         <Checkbox.Group
           onChange={handleCheckboxChange}
@@ -53,9 +69,14 @@ const FilterTimeJob = () => {
           <Checkbox value="checkbox1">Làm việc cuối tuần </Checkbox>
           <Checkbox value="checkbox2">Làm việc từ xa</Checkbox>
         </Checkbox.Group>
-        <Button type="primary" onClick={handleConfirm}>
-          Confirm
-        </Button>
+        <div className="wrap-button_filter">
+          <Button type="default" onClick={handleConfirm}>
+            Huỷ
+          </Button>
+          <Button type="primary" onClick={handleConfirm}>
+            Áp dụng
+          </Button>
+        </div>
       </Panel>
     </Collapse>
   )

@@ -11,6 +11,8 @@
 .inputFilterTimeJob {
   width: 100% !important;
   position: relative;
+  z-index: 3;
+
   .ant-collapse-header {
     height: 39.6px !important;
     border-radius: 12px !important;
@@ -34,6 +36,35 @@
     left: -12px;
     .filter-job_checkboxGroup {
       display: flex;
+      margin-bottom: 12px;
+    }
+
+    .title-filter_timeJob {
+      display: block;
+      text-align: center;
+      text-align: center;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #000000;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 12px;
+    }
+
+    .inputFilter-grouptimeJob_radio {
+      width: 100%;
+      margin: 12px 0;
+    }
+
+    .group-input_dateJob {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .wrap-button_filter {
+      display: flex;
+      justify-content: space-evenly;
     }
   }
 }

@@ -25,27 +25,33 @@ import { HomeContext } from 'context/HomeContextProvider'
 import { IvalueJobChild } from 'context/HomeValueContextProvider'
 
 const Home: React.FC = () => {
-  // const {
-  //   openCollapseFilter,
-  //   setOpenCollapseFilter,
-  //   setHeightNavbar,
-  //   heightNavbar,
-  //   valueJobChild,
-  //   setValueJobChild,
-  // }: {
-  //   openCollapseFilter: boolean
-  //   setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
-  //   heightNavbar: number
-  //   setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-  //   valueJobChild: IvalueJobChild
-  //   setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>
-  // } = useContext(HomeValueContext)
+  const {
+    openCollapseFilter,
+  }: // setOpenCollapseFilter,
+  // setHeightNavbar,
+  // heightNavbar,
+  // valueJobChild,
+  // setValueJobChild,
+  {
+    openCollapseFilter: boolean
+    // setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    // valueJobChild: IvalueJobChild
+    // setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>
+  } = useContext(HomeValueContext)
 
   // handleChange job from category to Breadcrumbs
 
   return (
     <div className="home">
-      <Navbar />
+      <div
+        className={`modal-navbar ${
+          openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
+      >
+        <Navbar />
+      </div>
       <Carousel />
 
       <div className="home__main">

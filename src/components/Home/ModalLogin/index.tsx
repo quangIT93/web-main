@@ -86,7 +86,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     : ''
 
   const dispatch = useDispatch()
-  const { ActionSignInEmail, setProfileUser } = bindActionCreators(actionCreators, dispatch)
+  const { ActionSignInEmail, setProfileUser } = bindActionCreators(
+    actionCreators,
+    dispatch
+  )
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
   })
@@ -192,7 +195,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true)
         }
       }
-    } catch (error) { }
+    } catch (error) {}
 
     console.log('facebook', response)
   }
@@ -236,7 +239,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
   // isVerifiedOtp facebook and google =true
   const fetchDataProfile = async (auth: AuthReponse, isVerifyOtp?: boolean) => {
-
     if (isVerifyOtp) {
       console.log('Xác thực OTP thành công', authState)
       // Thực hiện các hành động sau khi xác thực thành công
@@ -261,7 +263,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       setOpenModalLogin(false)
       setOpenBackdrop(false)
       window.location.reload()
-
     } else {
       console.log('Lỗi xác thực ', authState)
       // Thực hiện các hành động sau khi xác thực thất bại
@@ -274,7 +275,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   }, [authState.isverifyOtp])
 
   useEffect(() => {
-
     const start = () => {
       gapi.client.init({
         clientId: googleClient,
@@ -294,6 +294,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      sx={{ zIndex: 100000 }}
     >
       <Box sx={style}>
         <Typography
@@ -398,7 +399,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-              // cookiePolicy={'single_host_origin'}
+                // cookiePolicy={'single_host_origin'}
               />
 
               {/* <div
@@ -418,7 +419,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 <p className="text-login">Đăng nhập bằng tài khoản AppleID</p>
               </div> */}
             </form>
-
           </>
         )}
 
