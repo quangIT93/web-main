@@ -665,3 +665,37 @@ export const SendIcon: React.FC = () => {
     </svg>
   )
 }
+
+export const SeenIcon: React.FC = () => {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_8332_168397)">
+        <path
+          d="M18.3346 9.2333V9.99997C18.3336 11.797 17.7517 13.5455 16.6757 14.9848C15.5998 16.4241 14.0874 17.477 12.3641 17.9866C10.6408 18.4961 8.79902 18.4349 7.11336 17.8121C5.4277 17.1894 3.98851 16.0384 3.01044 14.5309C2.03236 13.0233 1.56779 11.24 1.68603 9.4469C1.80427 7.65377 2.49897 5.94691 3.66654 4.58086C4.8341 3.21482 6.41196 2.26279 8.16479 1.86676C9.91763 1.47073 11.7515 1.65192 13.393 2.3833"
+          stroke="#3DADFF"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M18.3333 3.33337L10 11.675L7.5 9.17504"
+          stroke="#3DADFF"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_8332_168397">
+          <rect width="20" height="20" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  )
+}

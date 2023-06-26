@@ -433,6 +433,12 @@ const CandidateDetail: React.FC = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}
+                      onClick={() =>
+                        window.open(
+                          `/message?post_id=${searchParams.get('post-id')} `,
+                          '_blank'
+                        )
+                      }
                     ></Button>
                     {ApprovedApply}
                     {RejectedApply}
