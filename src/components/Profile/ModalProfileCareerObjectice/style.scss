@@ -1,0 +1,17 @@
+.ant-select-tree-list-holder-inner {
+  .ant-select-tree-treenode {
+    .ant-select-tree-checkbox {
+    }
+  }
+}
+
+.ant-select-dropdown {
+  z-index: 1301;
+}
+
+.ant-tree-checkbox-wrapper:not(.ant-tree-checkbox-wrapper-disabled):not(
+    .ant-tree-checkbox-wrapper-halfChecked
+  ):not(.ant-tree-checkbox-wrapper-checked)
+  > .ant-tree-checkbox {
+  display: none;
+}

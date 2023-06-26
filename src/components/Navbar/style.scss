@@ -1,5 +1,6 @@
 @import '../../scss/variable';
 @import '../../scss/mixins';
+
 .btn {
   height: 48px;
   border: none;
@@ -26,7 +27,6 @@
 }
 
 .btn__login {
-  width: 160px;
   border: 0.5px solid $gray-border-btn;
   font-weight: 400px;
   padding-block: 5px;
@@ -34,42 +34,220 @@
   display: flex;
   justify-content: space-between;
   margin-left: 24px;
-
-  & > div {
-    display: flex;
-    align-items: center;
-    & > span {
-      margin-left: 8px;
-    }
-  }
 }
 
 .navbar {
   padding: 20px 180px;
-  // These properies will cause the other navbar 
-  // in the neighbors components
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
+  height: 88px;
+  border-bottom: 2px solid $primary-color;
+  position: relative;
   @include breakpoint(mobile) {
+    padding: 6px 20px;
+    max-height: 64px;
+
+    .navbar-links {
+      display: none;
+    }
+
+    .navbar__actions {
+      height: 100%;
+      .actions-features {
+        margin: 0;
+        height: 100%;
+        &__icon {
+          height: 100%;
+
+          margin-left: 4px;
+          padding: 12px;
+          margin: 4px;
+          .feature-icon {
+            font-size: 50px;
+          }
+          &:hover {
+            background-color: $btn-hover;
+          }
+        }
+
+        .navbar-iconBar {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .actions-post {
+        display: none;
+      }
+
+      .actions-login {
+        // display: none;
+        .btn {
+          width: 70px;
+          .login__avatar {
+            width: 40px;
+            height: 40px;
+          }
+          .login__center {
+            span {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint(tablet) {
+    max-height: 64px;
     padding: 20px 10px;
+
+    .navbar-links {
+      display: none;
+    }
+
+    .navbar__actions {
+      height: 100%;
+      .actions-features {
+        margin: 0;
+        height: 100%;
+        &__icon {
+          height: 100%;
+
+          margin-left: 4px;
+          padding: 12px;
+          margin: 4px;
+          .feature-icon {
+            font-size: 50px;
+          }
+          &:hover {
+            background-color: $btn-hover;
+          }
+        }
+
+        .navbar-iconBar {
+          display: flex;
+          align-items: center;
+          padding: 0 12px;
+        }
+      }
+
+      .actions-post {
+        display: none;
+      }
+
+      .actions-login {
+        // display: none;
+        .btn {
+          width: 70px;
+          .login__avatar {
+            width: 40px;
+            height: 40px;
+          }
+          .login__center {
+            span {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint(largeTablet) {
+    padding: 20px 40px;
+    .navbar-links {
+      display: none;
+    }
+
+    .navbar__actions {
+      height: 100%;
+      .actions-features {
+        margin: 0;
+        height: 100%;
+        &__icon {
+          height: 100%;
+
+          margin-left: 4px;
+          padding: 12px;
+          margin: 4px;
+          .feature-icon {
+            font-size: 50px;
+          }
+          &:hover {
+            background-color: $btn-hover;
+          }
+        }
+
+        .navbar-iconBar {
+          display: flex;
+          align-items: center;
+          padding: 0 12px;
+        }
+      }
+
+      // .actions-post {
+      //   display: none;
+      // }
+
+      // .actions-login {
+      //   display: none;
+      // }
+    }
+  }
+
+  @include breakpoint(destop) {
+    padding: 20px 60px;
   }
 
   &-links {
     list-style-type: none;
-   // margin-left: 82px;
+    // margin-left: 82px;
     display: flex;
     align-items: center;
     color: $text-color;
+    height: 100%;
+    .links__item__homepage {
+      display: flex;
+      align-items: center;
+    }
   }
 
   &__actions {
     display: flex;
     align-items: center;
+    // display: none;
+  }
+
+  &-post {
+    position: absolute;
+    top: 100%;
+    background-color: $white;
+    left: 0;
+    border-top: 1px solid $primary-color;
+    width: 100%;
+    // height: 100%;
+    padding: 24px 180px;
+    display: none;
+  }
+
+  &-post.hidenNavPost {
+    display: block;
+  }
+
+  &-post::after {
+    position: absolute;
+    content: '';
+    background-color: $modal-color;
+    top: 100%;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-height: 100vh;
   }
 }
 
 .navbar-links .links__item {
+  height: 100%;
   a {
     display: inline-block;
     text-decoration: none;
@@ -87,7 +265,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  position: relative;
   & > span {
     margin-left: 6px;
     display: flex;
@@ -106,10 +284,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    cursor: pointer;
     &:not(:first-child) {
       margin-left: 28px;
     }
+  }
+  .navbar-iconBar {
+    display: none;
   }
 }
 
@@ -125,13 +306,209 @@
     padding-right: 10px;
   }
 
+  &__center {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0px 10px;
+    @include breakpoint(tablet) {
+      display: none;
+    }
+    :last-child {
+      color: black;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
   &__avatar {
-    background-color: $primary-color;
-    width: 38px;
+    //   background-color: $primary-color;
+    width: 40px;
     height: 38px;
     border-radius: 100em;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+.subnav-chooses__carreer {
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #ccc;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: ccc;
+    border-radius: 20px;
+    border: 100px solid #1b87f5;
+  }
+  .list-locations {
+  }
+}
+.nav {
+  .ant-spin {
+    margin-top: 30px;
+  }
+
+  // start filter
+  .filter-wrap_top {
+    display: flex;
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  .filter-wrap_bottom {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 8px;
+  }
+
+  .btn-filter_nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 24px;
+    margin-bottom: 24px;
+    button {
+      padding: 20px 50px;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  // end filter
+
+  @include breakpoint(tablet) {
+    padding: 0px 10px !important;
+  }
+
+  @include breakpoint(mobile) {
+    padding: 0px 10px !important;
+  }
+  .div-search {
+    @include breakpoint(tablet) {
+      display: none;
+    }
+    @include breakpoint(mobile) {
+      display: none;
+    }
+  }
+  .css-1fvt452 {
+    @include breakpoint(tablet) {
+      width: auto;
+      background-color: white;
+      margin-right: 10px;
+      &:hover {
+        background-color: #ffffff;
+      }
+    }
+    @include breakpoint(mobile) {
+      width: auto;
+      background-color: white;
+      margin-right: 10px;
+      &:hover {
+        background-color: #ffffff;
+      }
+    }
+  }
+  .css-10lnyhw {
+    flex: 1.5;
+    @include breakpoint(destop) {
+      flex: 4;
+    }
+
+    @include breakpoint(largeTablet) {
+      flex: none;
+    }
+
+    @include breakpoint(tablet) {
+      flex: none;
+    }
+    @include breakpoint(mobile) {
+      flex: none;
+    }
+  }
+  .div-nav-center {
+    button {
+      padding: 20px 16px;
+      display: flex;
+      align-items: center;
+      border-radius: 8px;
+      margin-left: 12px;
+    }
+
+    @include breakpoint(mobile) {
+      display: block;
+      flex: none;
+      margin-right: 10px;
+    }
+
+    @include breakpoint(tablet) {
+      display: block;
+      flex: none;
+      margin-right: 10px;
+    }
+  }
+
+  .div-nav-right {
+    .tabBar-right {
+      display: none;
+      @include breakpoint(mobile) {
+        display: block;
+        flex: none;
+        margin-right: 10px;
+      }
+
+      @include breakpoint(tablet) {
+        display: block;
+        flex: none;
+        margin-right: 10px;
+      }
+    }
+
+    .actions-login {
+      position: relative;
+      .sub-login {
+        position: absolute;
+        background-color: #ffffff;
+        box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.25);
+        padding: 24px;
+        right: 0px;
+        margin-top: 12px;
+        border-radius: 20px;
+        width: 308px;
+
+        .sub-login_info {
+          margin-left: -10px;
+        }
+
+        .sub-login_items {
+          margin-top: 24px;
+          .sub-login_item {
+            cursor: pointer;
+            padding: 16px;
+            &:hover {
+              background-color: #ccc;
+              border-radius: 10px;
+              font-weight: bold;
+              transition: 0.3s linear all;
+            }
+            display: flex;
+            align-items: center;
+            // margin-bottom: 12px;
+            span {
+              padding-left: 8px;
+            }
+          }
+        }
+      }
+    }
+
+    @include breakpoint(mobile) {
+      display: none;
+    }
   }
 }

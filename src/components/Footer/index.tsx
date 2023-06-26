@@ -6,7 +6,7 @@ import './style.scss'
 
 const Footer: React.FC = () => {
     return (
-        <div>
+        <div style={{ width: "100%" }}>
             <div className='container-footer'>
                 <div className='footer-left'>
                     <div style={{ display: "flex", justifyContent: "center", width: "40%", marginBottom: 10 }}>

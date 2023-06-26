@@ -1,0 +1,63 @@
+.activeSalary {
+  .ant-collapse-item {
+    .ant-collapse-header {
+      .ant-collapse-header-text {
+        color: black !important;
+      }
+    }
+  }
+}
+
+.inputFilterSalary {
+  width: 100% !important;
+  position: relative;
+  z-index: 3;
+  .ant-collapse-header {
+    height: 39.6px !important;
+    border-radius: 5px !important;
+    background-color: #f3f8fb !important;
+    .ant-collapse-expand-icon {
+      svg {
+        color: black !important;
+      }
+    }
+
+    .ant-collapse-header-text {
+      color: #00000040 !important;
+    }
+  }
+
+  .ant-collapse-content {
+    position: absolute;
+    color: black;
+
+    width: 100%;
+    left: -12px;
+
+    .title-filterSalary {
+      display: block;
+      text-align: center;
+      text-align: center;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #000000;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 12px;
+    }
+
+    .inputFilter-groupSalary_radio {
+      width: 100%;
+      margin: 12px 0;
+    }
+
+    .input-text_salary {
+      margin-bottom: 12px;
+    }
+
+    .wrap-button_filter {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+}

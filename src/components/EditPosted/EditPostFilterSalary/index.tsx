@@ -1,0 +1,138 @@
+import React, { useState, useEffect, memo } from 'react'
+import { Box, Slider } from '@mui/material'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import { Input, Space } from 'antd'
+import Typography from '@mui/material/Typography'
+
+//@ts-ignore
+import 'intl'
+import 'intl/locale-data/jsonp/en'
+import { styleLabel } from '../CssEditPost'
+
+interface IEditPostFilterSalary {
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
+  editDataPosted: any
+  salaryType?: number
+  dataOld: any
+}
+
+const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
+  const { setEditDataPosted, editDataPosted, salaryType, dataOld } = props
+
+  const [valueSalaryMax, setValueSalaryMax] = useState(dataOld.salary_max)
+  const [valueSalaryMin, setValueSalaryMin] = useState(dataOld.salary_min)
+
+  const handleChangesalaryMin = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setValueSalaryMin(e.target.value.replace(',', ''))
+
+    const inputValue = e.target.value.replace(',', '')
+    const reg = /[0-9]+$/
+
+    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        salaryMin: inputValue.replace(',', ''),
+      }))
+    }
+  }
+  const handleChangesalaryMax = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setValueSalaryMax(e.target.value.replace(',', ''))
+
+    const inputValue = e.target.value.replace(',', '')
+    const reg = /[0-9]+$/
+    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        salaryMax: inputValue.replace(',', ''),
+      }))
+    }
+  }
+
+  useEffect(() => {
+    if (salaryType === 6) {
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        salaryMax: 0,
+        salaryMin: 0,
+      }))
+    } else {
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        salaryMax: valueSalaryMax.toString().replace(',', ''),
+        salaryMin: valueSalaryMin.toString().replace(',', ''),
+      }))
+    }
+  }, [salaryType])
+
+  return (
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        padding: '12px 0',
+      }}
+    >
+      <Space size={50} style={{ marginTop: 10 }}>
+        <Space direction="vertical">
+          <Typography
+            sx={{
+              ...styleLabel,
+              opacity: salaryType === 6 ? 0.5 : 1, // Thiết lập opacity thành 0.5 nếu salaryType === 6
+            }}
+            variant="body1"
+            component="label"
+            htmlFor="jobTitle"
+          >
+            Lương tối thiểu*:
+          </Typography>
+          <Input
+            style={{ height: 40 }}
+            maxLength={12}
+            placeholder="Luong toi thieu"
+            onChange={handleChangesalaryMin}
+            value={new Intl.NumberFormat('en-US').format(
+              Number(editDataPosted?.salaryMin?.toString().replace(',', ''))
+            )}
+            disabled={salaryType === 6}
+          />
+        </Space>
+
+        <Space direction="vertical">
+          <Typography
+            sx={{
+              ...styleLabel,
+              opacity: salaryType === 6 ? 0.5 : 1, // Thiết lập opacity thành 0.5 nếu salaryType === 6
+            }}
+            variant="body1"
+            component="label"
+            htmlFor="jobTitle"
+          >
+            Lương tối đa *:
+          </Typography>
+          <Input
+            style={{ height: 40 }}
+            maxLength={12}
+            placeholder="Luong toi da"
+            onChange={handleChangesalaryMax}
+            value={new Intl.NumberFormat('en-US').format(
+              Number(editDataPosted?.salaryMax?.toString().replace(',', ''))
+            )}
+            disabled={salaryType === 6}
+          />
+        </Space>
+      </Space>
+    </Box>
+  )
+}
+
+export default memo(EditPostFilterSalary)

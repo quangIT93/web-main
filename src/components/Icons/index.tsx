@@ -222,3 +222,446 @@ export const BellIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
     </svg>
   )
 }
+
+export const AllIcon: React.FC<SizeProps> = ({ width = 40, height = 40 }) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      color="red"
+      viewBox="0 0 50 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <rect width="50" height="50" fill="url(#pattern0)" />
+      <defs>
+        <pattern
+          id="pattern0"
+          patternContentUnits="objectBoundingBox"
+          width="1"
+          height="1"
+        >
+          <use xlinkHref="#image0_6874_79453" transform="scale(0.01)" />
+        </pattern>
+        <image
+          id="image0_6874_79453"
+          width="100"
+          height="100"
+          xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAcESURBVHgB7Z2Ndds2EMf/7QTqBL1MEHeCohPUGxidoM4EYiewM4GUCdJOIGeCtBNYG9iZoOEFuAAkQYmgKH5I93sPjxYFQCCAOxwOAA0oiqIoiqIow/MDlgeV4bYMb8tgyrDygXktw74M/5bhUxme/GflDJgy7Mrwf2b46NMqA2FQbYiXMmzKYMtwgyAd8H9z/Hu4hogbhtMQlJNYI1ToM1xFrzLSUxkKn1Ya8x5KNlzp3KOlMR6R1xB1qAzbKL81lCxE3XCPNhiOe2ijZPOAoKIIw2MRGkXV1xEsgmQQzoeNfucGShJCGHzH6LmP/rd2UJKIRfUZ48BGwov/TQOlAleOSAdhPCxUSpJYTFMxs5OSHzEP7vz1A8blNfpNA+U70ksJ42OgaqsCm51jDuZ1Vggm8OTMQWXFrvMpEJc9l4MwMXNoEPLXPZTZDOpTs/dXwsRogzjIX/dQJh/UgeBsPMXFfzFMbeVIh3jGDJiDyoqtHIPxEW/vf5gBcxlD/vFXg/ERL8HfUL5jENTWmHqcEMYPglJBdpYUGI8Nwo4UpYbBuFJCUOk4ikjJuR198fpLAaUVQvD8rnE+ZFfLLEzduWNwvq068X6vc+1quUgsht8CSnDeAN1t0hPe4S7qi3uzRT9YKta1vAhKLwhh8I0bhjqmjRtCdsLP2l+1lPMhFq5yKbrHZ0D2cC4PWdziyv4ZbhyK4z6V4S9/VQbEovsZETm2YLAglniCSrBl+B1OEsjfY0l5gpMa9k3tsTCW0iAGzir61V+pe9Jvqm0xR9zm3CAGzhPL1lZqIN778IrqBgny15uWdNw4LD0foCuER6mbqLF19YjuFlacn0E44lbPdwfdIJck1RA8iSsw/JzBoHqaShqGoHzjT1QbYqxeS3ASF89zhvIKLBJC1YSdSn0QnCTG6vHq3CoGQSr4eovpIVSl5WqOu7GKiqVibq6MAufzNs8OfkB52ALz5SpO6y6lMQSLC1ZfBstqDCGWlIsZ6AnLXr+W07r8DLN23R/Cwg3YHGSV7iOWizzDxgf+/ICFQGi6wpe+SkdIu/gLLADuQdKbZOJXYPlYhIaQv2dxDO4YMl4YXNY5cAv3LLIHOH7O2WJQ3e8UnwNf7IDoEWm3/rMM9o+YMVLITXRPHmTJtjyheajHYAFqKyXGYsufS23F3uJzWT4W6WcY/C0QuSuGBFcBKfXD99hJuC/Dm9p96UWsf18Tafnee+Sv4BGa20HfoZ8asXBLxCmM/60/4NZSBP4dro892ne0fKqlGQxC1RvaFlKqqeiQ7hn5WISBVv7uI4lr9CsfoVuddPZm50gIZ8qTO16Tft8SRzYUpDBon4uwqmFJ+uVA+hQ7ny/3XG4UmU3/hLwXEfBEj10j3Jm+JL6X3SypPAnt6/cGbl8AnxAbfInB4LAU9OUhypcy0hGaA+0O/con6XYYbgLLjSTSczZLrMBwy52E6ophgTwsmiqqrwERV94z+u8jFuI1H5Y+whmxqBa+jxe0vpHaIJ/6vICRI9ax1HSFUH358hr5rFDtZI8Yaf5FqA5mOYWPB9C+m5/jiqfad6mGyqFAPx8cofrC5sHHjC4UyOuRBqHAp4xDFu2qaYh5DyFf/3/GAOPQEDsXxUL5Dcd3l1u4sWcLZxnVkbnMMe4QrKttIg9ucLaI3h3Jh+OwVbdHe1mf4J7tGCJNbzDhjkhCnvsgjr9KfNfFpu+iTnYZ+bRZZZsD36XYZsZPcqqEWBzu8Sm4sgyaEiWz3kNzGeGLj79v+X7ly/YWh2nzLjDSabr2eAP3bE/oJlFnQXpiXc2s4R6Ie3G9xxQIZnOMOCZ5oCeMgxgYz7X7BsFkjWHVLM9cL+fknm1Cc0Dneyl1sUEovKR7SeQ31jlALm9s4ha171PqKp5bxGrTRnF2GEBt9cUi+JGYOzTnFhbVOYvxcaXgppYnob853RWD4+apfE9Izy1YUuIGFS+zxekWXm+2CL0/dn/U5xaEYBJKJcsD2pa8iyj+SWZkjYcO+RKqTsG48QzayynSklKBo2BQFd9jc4sCTZGnA/HjyqirhlwIzV5+iLraPdQpCE3rcIOJsHCF7ToQmyi+6RCfcLo7g5DvpuE0W7iydhkPWCM8+vgFruBVgQWaBkRXYqvo4itqTPq+jlzGL4MFsJTXxBq43r1HvltCXh84ibPvUuFBsstgnMIgPe9RTkCsmLa1F5Ye6pDeQDkZg8O2fX0ORIk4BfpLmFJD1FXdtic0/yVr25zFQNXWYKTUzR2acwtC2p0hDL6p7RrhMSNWVzxWHHLTMAXSayaL2Is7dwoEdRXvDDnmpqFE3FukXepKBrI+/oJ817y4M2JpmcwTe0lsUXUK5ro/LKpOSoJyMm1bNbuyGiAPRVEURVEURVEURVGujq+VRhEdBeF/sgAAAABJRU5ErkJggg=="
+        />
+      </defs>
+    </svg>
+  )
+}
+
+export const ServiceIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return (
+    <svg
+      width="51"
+      height="50"
+      viewBox="0 0 51 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <rect x="0.5" width="50" height="50" fill="url(#pattern0)" />
+      <defs>
+        <pattern
+          id="pattern0"
+          patternContentUnits="objectBoundingBox"
+          width="1"
+          height="1"
+        >
+          <use xlinkHref="#image0_6874_82212" transform="scale(0.01)" />
+        </pattern>
+        <image
+          id="image0_6874_82212"
+          width="100"
+          height="100"
+          xlinkHref="data:image/png;base64,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"
+        />
+      </defs>
+    </svg>
+  )
+}
+
+export const BeautifyIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return (
+    <svg
+      width="51"
+      height="50"
+      viewBox="0 0 51 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <rect x="0.5" width="50" height="50" fill="url(#pattern0)" />
+      <defs>
+        <pattern
+          id="pattern0"
+          patternContentUnits="objectBoundingBox"
+          width="1"
+          height="1"
+        >
+          <use xlinkHref="#image0_6874_82219" transform="scale(0.01)" />
+        </pattern>
+        <image
+          id="image0_6874_82219"
+          width="100"
+          height="100"
+          xlinkHref="data:image/png;base64,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"
+        />
+      </defs>
+    </svg>
+  )
+}
+
+export const DeliveryIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return (
+    <svg
+      width="51"
+      height="50"
+      viewBox="0 0 51 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <rect x="0.5" width="50" height="50" fill="url(#pattern0)" />
+      <defs>
+        <pattern
+          id="pattern0"
+          patternContentUnits="objectBoundingBox"
+          width="1"
+          height="1"
+        >
+          <use xlinkHref="#image0_6874_82226" transform="scale(0.01)" />
+        </pattern>
+        <image
+          id="image0_6874_82226"
+          width="100"
+          height="100"
+          xlinkHref="data:image/png;base64,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"
+        />
+      </defs>
+    </svg>
+  )
+}
+
+export const HotelIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
+  return (
+    <svg
+      width="51"
+      height="50"
+      viewBox="0 0 51 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <rect x="0.5" width="50" height="50" fill="url(#pattern0)" />
+      <defs>
+        <pattern
+          id="pattern0"
+          patternContentUnits="objectBoundingBox"
+          width="1"
+          height="1"
+        >
+          <use xlinkHref="#image0_6874_82240" transform="scale(0.01)" />
+        </pattern>
+        <image
+          id="image0_6874_82240"
+          width="100"
+          height="100"
+          xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAATZSURBVHgB7Z2Pkdw0FMY/GAq4DhAVEDoQFQQqQFQQqCBKBRkqyFIBdGCngoMK1qkg28HFb2xFvl2vJEuyLfneb+aN586W16dvn/48PfkAhmEYhmGYCbK397099va5t6cEo/L/9KbALOYN0gVw2bm3X8B4Eb01sBVHnqExeMpD4D30WFZf/f4VBu84T+7/FsxdBGxlpXyDNeYFmbvmCewpswhYMchDQr1hDg2/INPrPid+3iExYjwiHY0wQYhmwbVV8+2CaxUGD+l6+xXb8m48/oaDs0QQ07FS5XTYlra3C4YvxKGbrVBBqEMVGIQ4YR8u41HgwIQK8no8/oX96MYjewiGuQHRglmV7wKvM4L8h3URsE0SfdZlcu7h6llKocP2ferXyVlONG6HsqfJZ8mr66cz99KM5kgfkKF/C/WQrehgm8XLzDmBW8/ZG/JY8l412qm3P7HyM5oAokA+NJZN9hrMe04JCDz37jMi6yq0Uzd9R2ntdyl0GLzjB1hP/oAIQgX5OB5fg3HR9fbzeJS9/YGVoDYyd4BPY1mTdUb+ZnMtJCLrK9RDqINqx5u/x/aI0eg5OpRPC1tfCgtYEsv6HUOFKGwf5DOf9y/q4e/xuGozT22iGUmkiqIR1mQJ2FGeRD1Mm/lV0ciztKrhF0TA9h1Ro5ad2azf03g+5lZY3tlL2HX4ORSsZ5xRZ1BxsSDfIB6J23BBi6HT/YR4vscQ7n+Y3JMWxEqanYdiJohmfrIJCs8zUHLZI+rPzTJ/S7B3p3jINfShNJMXSGszO1hPqxmqC/pSUZTjJzC7Q815rYORwyFgmysBZleo6aamir2jAASsGGaEtYicnXrNiMDrLrgdfpvBDIVI1PhzBxv1ZQKQGIKkZuKW02grhUAkL81DJObXvjuE8YDbOYWJQNOaEQU/WzBBkEdMkxI06gpWHgozJyAhVlvFY8IwnkH9BecE7IwCT9CKwoyiNJjdUbBNFVMADQZBFJjdMevZ3HcUgsQgRoPKWJIGVBNyPP6PyjiqID+OxxaVcVRBTLypxsSIIBTWSWR4aZYlceMtgCe2rBadH63GG5igXC3JameUOSFUsMl/ChE0Y2GOkOaDkgCpThtEYFysxjTOkjH1ul1Bxsndej3qsLdaWJDCYEEKI8eLA6TjXMgmf4k4LvC/6sNs6o/B9+wmHyu2fBS+Tl3APQGScOMr77KQYWOTcH/pubdMKH+3XnN4SOs4F/INaRGHzzuIlGjvJeB86zmfHR72rgMPe2uBBSkMFqQwWJDCYEEKgwUpDBakMFiQwmBBCiM1dEIBNtfy7gnu7WK+8i46+F97rhCfSnqC+9kF3OviJ6yw6ZODi/eRCeVXCy5SAO2d43yHtPJIuDdBb3X7iDi6gPMpf3sUHFxcBw4u1gILUhgsSGGwIIXBghQGC1IYLEhh5Mg6odwk334Hmpxpx3kKn5T6nxdocnm6+l3I89I/dQnJjHlGDkEoHiU913Se868C7rEXczP9kOeNStDzvS/rKeA6XwYf0cEtSkqG4dp0uH32kOd1ZS6G1Ovdghw6yQ+HTmqBBSkMFqQwfIKYTon3GG6ETxAzjuZduPlQ43HxHIWQsCOCmvaplwjV3Rsk7lMnNOLXpdnmTSMRBX7XSQ5rwG+4YxiGYZiXwRekZUoEGNcSyAAAAABJRU5ErkJggg=="
+        />
+      </defs>
+    </svg>
+  )
+}
+
+export const EditorIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return <></>
+}
+
+export const TutorIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
+  return <></>
+}
+
+export const TranslationIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return <></>
+}
+
+export const CleaningIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.2 4H9.30001L8.70001 6.3L8.10001 4H7.10001C7.30001 4.6 7.50001 5.1 7.70001 5.7C8.00001 6.5 8.20001 7.2 8.20001 7.6V10H9.10001V7.6L10.2 4ZM12.6 8.5V7C12.6 6.5 12.5 6.2 12.3 5.9C12.1 5.6 11.8 5.5 11.4 5.5C11 5.5 10.7 5.7 10.5 6C10.3 6.2 10.2 6.5 10.2 7V8.6C10.2 9.1 10.3 9.4 10.5 9.6C10.7 9.9 11 10 11.4 10C11.8 10 12.1 9.8 12.3 9.5C12.5 9.4 12.6 9 12.6 8.5ZM11.8 8.7C11.8 9.1 11.7 9.3 11.4 9.3C11.1 9.3 11 9.1 11 8.7V6.8C11 6.4 11.1 6.2 11.4 6.2C11.7 6.2 11.8 6.4 11.8 6.8V8.7ZM15.6 10V5.5H14.8V8.9C14.6 9.2 14.5 9.3 14.3 9.3C14.2 9.3 14.1 9.2 14.1 9.1C14.1 9.1 14.1 9 14.1 8.8V5.5H13.3V9C13.3 9.3 13.3 9.5 13.4 9.7C13.4 9.9 13.6 10 13.9 10C14.2 10 14.5 9.8 14.8 9.5V10H15.6Z"
+        fill="#1C2E45"
+        fill-opacity="0.6"
+      />
+      <path
+        d="M16 14.5C15.7 14.5 15.6 14.7 15.6 15.1V15.5H16.4V15.1C16.4 14.7 16.3 14.5 16 14.5Z"
+        fill="#1C2E45"
+        fill-opacity="0.6"
+      />
+      <path
+        d="M13.1 14.5C13 14.5 12.8 14.6 12.7 14.7V17.4C12.8 17.5 13 17.6 13.1 17.6C13.3 17.6 13.4 17.4 13.4 17V15.1C13.4 14.7 13.3 14.5 13.1 14.5Z"
+        fill="#1C2E45"
+        fill-opacity="0.6"
+      />
+      <path
+        d="M18 12.3C17.8 11.6 17.2 11 16.6 11C15 10.8 13.3 10.8 11.6 10.8C9.9 10.8 8.3 10.8 6.6 11C6 11 5.4 11.6 5.2 12.3C5 13.3 5 14.4 5 15.4C5 16.4 5 17.5 5.2 18.5C5.4 19.2 5.9 19.7 6.6 19.8C8.3 20 9.9 20 11.6 20C13.3 20 14.9 20 16.6 19.8C17.3 19.7 17.9 19.2 18 18.5C18.2 17.5 18.2 16.4 18.2 15.4C18.2 14.4 18.2 13.3 18 12.3ZM8.8 13.2H7.8V18.3H6.9V13.2H6V12.3H8.8V13.2ZM11.2 18.3H10.4V17.8C10.1 18.2 9.8 18.3 9.5 18.3C9.2 18.3 9.1 18.2 9 18C9 17.9 8.9 17.7 8.9 17.3V13.8H9.7V17C9.7 17.2 9.7 17.3 9.7 17.3C9.7 17.4 9.8 17.5 9.9 17.5C10.1 17.5 10.2 17.4 10.4 17.1V13.8H11.2V18.3ZM14.2 16.9C14.2 17.3 14.2 17.6 14.1 17.8C14 18.1 13.8 18.3 13.5 18.3C13.2 18.3 12.9 18.1 12.7 17.8V18.2H11.9V12.3H12.7V14.2C13 13.9 13.2 13.7 13.5 13.7C13.8 13.7 14 13.9 14.1 14.2C14.2 14.4 14.2 14.7 14.2 15.1V16.9ZM17.2 16.2H15.6V17C15.6 17.4 15.7 17.6 16 17.6C16.2 17.6 16.3 17.5 16.4 17.3C16.4 17.3 16.4 17.1 16.4 16.8H17.2V16.9C17.2 17.2 17.2 17.3 17.2 17.4C17.2 17.6 17.1 17.7 17 17.9C16.8 18.2 16.5 18.4 16 18.4C15.6 18.4 15.3 18.2 15 17.9C14.8 17.7 14.7 17.3 14.7 16.9V15.4C14.7 14.9 14.8 14.6 14.9 14.4C15.1 14.1 15.4 13.9 15.9 13.9C16.3 13.9 16.6 14.1 16.8 14.4C17 14.6 17 15 17 15.4V16.2H17.2Z"
+        fill="#1C2E45"
+        fill-opacity="0.6"
+      />
+    </svg>
+  )
+}
+
+export const DesignIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return <></>
+}
+
+export const ProgrammerIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return <></>
+}
+
+export const CinematographyIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return <></>
+}
+
+export const EventIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
+  return <></>
+}
+
+export const CarePetIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return <></>
+}
+
+export const SportIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
+  return <></>
+}
+
+export const LawIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
+  return <></>
+}
+
+export const ConsultantIcon: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return <></>
+}
+
+export const Handicraft: React.FC<SizeProps> = ({
+  width = 16,
+  height = 16,
+}) => {
+  return <></>
+}
+
+export const MaidJob: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
+  return <></>
+}
+
+export const DotIcon: React.FC = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_8335_169120)">
+        <path
+          d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+          stroke="black"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M12 12.9375C12.5178 12.9375 12.9375 12.5178 12.9375 12C12.9375 11.4822 12.5178 11.0625 12 11.0625C11.4822 11.0625 11.0625 11.4822 11.0625 12C11.0625 12.5178 11.4822 12.9375 12 12.9375Z"
+          fill="black"
+        />
+        <path
+          d="M7.875 12.9375C8.39277 12.9375 8.8125 12.5178 8.8125 12C8.8125 11.4822 8.39277 11.0625 7.875 11.0625C7.35723 11.0625 6.9375 11.4822 6.9375 12C6.9375 12.5178 7.35723 12.9375 7.875 12.9375Z"
+          fill="black"
+        />
+        <path
+          d="M16.125 12.9375C16.6428 12.9375 17.0625 12.5178 17.0625 12C17.0625 11.4822 16.6428 11.0625 16.125 11.0625C15.6072 11.0625 15.1875 11.4822 15.1875 12C15.1875 12.5178 15.6072 12.9375 16.125 12.9375Z"
+          fill="black"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_8335_169120">
+          <rect width="24" height="24" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
+export const VideoIcon: React.FC = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_8335_169099)">
+        <path
+          d="M18 6H3C2.58579 6 2.25 6.33579 2.25 6.75V17.25C2.25 17.6642 2.58579 18 3 18H18C18.4142 18 18.75 17.6642 18.75 17.25V6.75C18.75 6.33579 18.4142 6 18 6Z"
+          stroke="black"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M18.75 10.5L23.25 7.5V16.5L18.75 13.5"
+          stroke="black"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_8335_169099">
+          <rect width="24" height="24" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
+export const CallIcon: React.FC = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M4.35917 5.06069C4.36117 5.06069 4.31117 5.11269 4.24817 5.17469C4.00617 5.40969 3.50517 5.89869 3.50012 6.92169C3.49217 8.35269 4.43317 11.0097 8.96417 15.5397C13.4742 20.0477 16.1272 20.9997 17.5612 20.9997H17.5822C18.6052 20.9947 19.0932 20.4927 19.3292 20.2517C19.4012 20.1777 19.4592 20.1237 19.5002 20.0897C20.4962 19.0877 21.0062 18.3417 21.0012 17.8637C20.9942 17.3757 20.3872 16.7987 19.5482 16.0007C19.2812 15.7467 18.9912 15.4707 18.6852 15.1647C17.8922 14.3737 17.4992 14.5087 16.6352 14.8127C15.4402 15.2317 13.8002 15.8017 11.2522 13.2527C8.70017 10.7027 9.27117 9.06469 9.68917 7.86969C9.99117 7.00569 10.1292 6.61169 9.33517 5.81769C9.02417 5.50769 8.74517 5.21369 8.48817 4.94369C7.69517 4.10969 7.12317 3.50669 6.63817 3.49969H6.63017C6.15117 3.49969 5.40717 4.01169 4.35417 5.06469C4.35717 5.06169 4.35817 5.06069 4.35917 5.06069ZM17.5622 22.4997C15.0702 22.4997 11.8212 20.5157 7.90417 16.6007C3.97217 12.6697 1.98517 9.41069 2.00008 6.91369C2.00917 5.26369 2.87417 4.41869 3.19917 4.10169C3.21617 4.08069 3.27417 4.02369 3.29417 4.00369C4.72817 2.56869 5.69517 1.98869 6.65717 1.99954C7.77417 2.01469 8.56917 2.85069 9.57517 3.90969C9.82417 4.17169 10.0942 4.45669 10.3952 4.75669C11.8552 6.21669 11.4392 7.40769 11.1052 8.36369C10.7412 9.40669 10.4262 10.3067 12.3122 12.1927C14.2002 14.0787 15.1002 13.7637 16.1392 13.3967C17.0962 13.0627 18.2842 12.6447 19.7462 14.1047C20.0422 14.4007 20.3232 14.6677 20.5822 14.9147C21.6462 15.9257 22.4862 16.7247 22.5004 17.8447C22.5122 18.7997 21.9322 19.7727 20.5002 21.2057L19.8662 20.7757L20.4022 21.2997C20.0852 21.6247 19.2412 22.4907 17.5902 22.4997H17.5622Z"
+        fill="black"
+      />
+    </svg>
+  )
+}
+
+export const LocationIcon: React.FC = () => {
+  return (
+    <svg
+      width="33"
+      height="33"
+      viewBox="0 0 33 33"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask
+        id="mask0_8688_180294"
+        // style="mask-type:alpha"
+        maskUnits="userSpaceOnUse"
+        x="4"
+        y="5"
+        width="25"
+        height="25"
+      >
+        <rect x="4" y="5" width="25" height="25" fill="#D9D9D9" />
+      </mask>
+      <g mask="url(#mask0_8688_180294)">
+        <path
+          d="M16.5987 26.4565C16.4098 26.7223 16.0151 26.7223 15.8262 26.4565L10.2327 18.5857C6.78079 13.7284 10.2536 7 16.2125 7V7C22.1713 7 25.6441 13.7284 22.1922 18.5857L16.5987 26.4565Z"
+          stroke="#575757"
+          strokeWidth="1.5"
+        />
+        <circle
+          cx="16.0013"
+          cy="14.3333"
+          r="3.33333"
+          stroke="#575757"
+          strokeWidth="1.5"
+        />
+      </g>
+    </svg>
+  )
+}
+
+export const ImageIcon: React.FC = () => {
+  return (
+    <svg
+      width="33"
+      height="33"
+      viewBox="0 0 33 33"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M21.0115 6.96411C22.5907 6.96411 23.953 7.49152 24.9498 8.49036C25.9919 9.5334 26.5635 11.0508 26.5615 12.7637L26.563 19.6351C26.5647 19.6616 26.565 19.6881 26.5639 19.7145L26.5615 20.7632C26.5615 24.2312 24.3291 26.5618 21.0065 26.5618H12.5149C9.19529 26.5618 6.96484 24.2312 6.96484 20.7632V12.7627C6.96484 9.29474 9.19529 6.96411 12.5149 6.96411H21.0115ZM21.2831 17.603C20.7056 17.603 20.0279 18.5586 19.4278 19.4023C18.6048 20.5612 17.7533 21.7604 16.4706 21.7604C15.6034 21.7604 14.8088 21.4265 14.1086 21.1308C12.9948 20.6614 12.49 20.5111 11.996 20.9177C11.007 21.7326 10.0299 23.2166 9.5809 23.9468C10.2896 24.6774 11.2963 25.0886 12.5149 25.0886H21.0065C23.4865 25.0886 25.0883 23.3914 25.0883 20.7632L25.0883 19.9785L25.0657 19.9546C24.2059 19.0688 22.7212 17.603 21.2831 17.603ZM21.0115 8.43733H12.5149C10.039 8.43733 8.43806 10.1355 8.43806 12.7627V20.7632C8.43806 21.4199 8.53799 22.0184 8.72653 22.5469C9.29489 21.6887 10.1533 20.5269 11.06 19.7804C12.2896 18.7688 13.6136 19.3247 14.6802 19.7735C15.3078 20.0377 15.901 20.2872 16.4706 20.2872C16.9931 20.2872 17.6482 19.364 18.2277 18.5498C19.032 17.4144 19.9454 16.1298 21.2831 16.1298C22.7511 16.1298 24.0808 17.0319 25.0894 17.9272L25.0883 12.7627C25.0903 11.424 24.6817 10.3063 23.9078 9.53143C23.1928 8.81545 22.192 8.43733 21.0115 8.43733ZM13.6994 11.0788C15.1048 11.0798 16.2481 12.223 16.249 13.6275V13.6284C16.249 15.0339 15.1058 16.1771 13.6994 16.1771C12.293 16.1771 11.1498 15.0339 11.1498 13.6284C11.1498 12.222 12.293 11.0788 13.6994 11.0788ZM13.6984 12.552C13.1052 12.552 12.623 13.0342 12.623 13.6284C12.623 14.2217 13.1052 14.7039 13.6994 14.7039C14.2926 14.7039 14.7758 14.2217 14.7758 13.6294C14.7748 13.0352 14.2916 12.553 13.6984 12.552Z"
+        fill="#575757"
+      />
+    </svg>
+  )
+}
+
+export const SendIcon: React.FC = () => {
+  return (
+    <svg
+      width="33"
+      height="33"
+      viewBox="0 0 33 33"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.7218 9.05101L26.0768 16.617C26.1605 16.6583 26.231 16.7222 26.2803 16.8014C26.3296 16.8807 26.3557 16.9722 26.3557 17.0655C26.3557 17.1589 26.3296 17.2503 26.2803 17.3296C26.231 17.4089 26.1605 17.4727 26.0768 17.514L10.7208 25.08C10.6347 25.1223 10.5384 25.1389 10.4432 25.128C10.3479 25.117 10.2579 25.0789 10.1837 25.0182C10.1095 24.9575 10.0543 24.8768 10.0247 24.7856C9.99514 24.6945 9.99237 24.5967 10.0168 24.504L11.5378 18.759C11.5624 18.666 11.6134 18.5822 11.6845 18.5174C11.7556 18.4527 11.8439 18.4098 11.9388 18.394L18.8198 17.247C18.8608 17.2402 18.8994 17.2233 18.9323 17.1978C18.9651 17.1723 18.991 17.1391 19.0078 17.101L19.0258 17.041C19.0351 16.9854 19.0254 16.9283 18.9981 16.8789C18.9709 16.8295 18.9278 16.7908 18.8758 16.769L18.8198 16.753L11.9008 15.6C11.8061 15.584 11.718 15.5411 11.6471 15.4763C11.5761 15.4116 11.5253 15.3278 11.5008 15.235L10.0168 9.62801C9.99212 9.53525 9.99469 9.43736 10.0242 9.34602C10.0537 9.25468 10.1088 9.17376 10.1831 9.11292C10.2573 9.05209 10.3475 9.0139 10.4428 9.00292C10.5382 8.99194 10.6346 9.00863 10.7208 9.05101H10.7218Z"
+        fill="#0D99FF"
+      />
+    </svg>
+  )
+}

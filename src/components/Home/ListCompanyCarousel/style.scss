@@ -1,0 +1,42 @@
+.tabThemeJob {
+  position: relative;
+  .div-info-themes-item {
+    text-align: center;
+    margin-top: -55px;
+    position: absolute;
+    width: 85%;
+  }
+  .MuiButtonBase-root.MuiButtonBase-root {
+    color: white;
+    font-weight: bold;
+    text-transform: none;
+  }
+}
+
+.tabThemeJob > {
+  :last-child,
+  :first-child {
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    svg {
+      width: 40px;
+      height: 40px;
+      //   background-color: #aaa;
+      border-radius: 50%;
+      color: #ffffff;
+    }
+  }
+
+  :last-child {
+    right: 0px;
+    padding-right: 12px;
+  }
+
+  :first-child {
+    left: 0px;
+    padding-left: 12px;
+  }
+}

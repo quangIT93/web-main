@@ -1,3 +1,41 @@
+@import '../../scss/variable';
+@import '../../scss/mixins';
+.home {
+  .show-modal_navbar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(1, 1, 1, 0.5);
+
+    z-index: 10;
+  }
+}
+
 .home__main {
-  padding-inline: 180px;
+  padding: 0 180px;
+  margin: 0 auto;
+  transition: all l;
+  margin-bottom: 36px;
+
+  @media screen and (max-width: 1200px) {
+    padding-inline: 10px;
+
+    // @include breakpoint(tablet) {
+    //   padding: 0 0px;
+    // }
+
+    // @include breakpoint(mobile) {
+    //   padding: 0 20px;
+    // }
+
+    // @include breakpoint(largeTablet) {
+    //   padding: 0 40px;
+    // }
+
+    // @include breakpoint(destop) {
+    //   padding: 0 20px;
+    // }
+  }
 }

@@ -1,11 +1,58 @@
+@import '../../../scss/mixins';
+.div-suggest-include {
+  margin-left: 10px;
+  padding-left: 5px;
+  &:hover {
+    background-color: #cccccc;
+  }
+  border-radius: 5px;
+  cursor: pointer;
+}
 .div-item-suggest {
   display: flex;
   flex-direction: row;
   margin-top: 10px;
+  .title-job-suggest {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    @include breakpoint(tablet) {
+      width: 200px;
+    }
+    @include breakpoint(mobile) {
+      width: 200px;
+    }
+    h4 {
+      @include breakpoint(tablet) {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      @include breakpoint(mobile) {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+    }
+    p {
+      @include breakpoint(tablet) {
+        font-size: 12px;
+      }
+      @include breakpoint(mobile) {
+        font-size: 12px;
+      }
+    }
+  }
   img {
-    height: auto;
+    height: 80px;
     width: 80px;
     border-radius: 5px;
     object-fit: cover;
+    @include breakpoint(tablet) {
+      width: 70px;
+    }
+    @include breakpoint(mobile) {
+      width: 70px;
+    }
   }
 }

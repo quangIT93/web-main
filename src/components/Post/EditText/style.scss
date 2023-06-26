@@ -1,0 +1,32 @@
+.demo-wrapper.rdw-editor-wrapper {
+  .rdw-editor-toolbar {
+    display: flex;
+    width: 100%;
+    .rdw-inline-wrapper {
+      display: flex;
+    }
+
+    .rdw-list-wrapper {
+      display: flex;
+    }
+
+    .rdw-text-align-wrapper {
+      display: flex;
+    }
+
+    .rdw-colorpicker-wrapper {
+    }
+
+    .rdw-link-wrapper {
+      display: flex;
+    }
+
+    .rdw-history-wrapper {
+      display: flex;
+    }
+  }
+
+  .rdw-editor-toolbar:only-child {
+    padding: 12px;
+  }
+}

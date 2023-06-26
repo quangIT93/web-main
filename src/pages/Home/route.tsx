@@ -2,14 +2,15 @@ import React, { lazy } from 'react'
 import Home from '.'
 import RouteProps from '../routes'
 
-interface Props {
-  path: string
-  componenet: React.ReactNode
-}
+import HomeValueContextProvider from 'context/HomeValueContextProvider'
 
-const route: Props = {
+const route: RouteProps = {
   path: '/home',
-  componenet: <Home />,
+  component: (
+    <HomeValueContextProvider>
+      <Home />
+    </HomeValueContextProvider>
+  ),
 }
 
 export default route

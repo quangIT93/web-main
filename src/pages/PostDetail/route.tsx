@@ -3,7 +3,7 @@ import Detail from '.'
 import RouteProps from '../routes'
 const route: RouteProps = {
     path: '/post-detail',
-    component: <></>,
+    component: <Detail />,
 }
 
 export default route

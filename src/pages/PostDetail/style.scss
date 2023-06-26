@@ -1,18 +1,82 @@
+@import '../../scss/mixins';
 .detail {
-  padding-top: 90px;
+  // .actions-features{
+  //   display: none;
+  // }
+
+  // .navbar__actions{
+  //   @include breakpoint(tablet) {
+  //     display: none;
+  //   }
+  //   @include breakpoint(mobile) {
+  //     display: none;
+  //   }
+  // }
+  padding-top: 110px;
+  @include breakpoint(tablet) {
+    padding-top: 80px;
+  }
+
+  @include breakpoint(mobile) {
+    padding-top: 80px;
+  }
+
+  .div-include-breadcrumb {
+    display: flex;
+    justify-content: center;
+    @include breakpoint(tablet) {
+      justify-content: space-evenly;
+    }
+    @include breakpoint(mobile) {
+      justify-content: space-evenly;
+    }
+
+    .job-breadcrumb {
+      width: 75%;
+      // text-align: center;
+      margin-bottom: -10px;
+      display: flex;
+      justify-content: center;
+
+      @include breakpoint(tablet) {
+        width: 90% !important  ;
+      }
+      @include breakpoint(mobile) {
+        width: 90% !important  ;
+      }
+    }
+  }
+
   .detail-container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     max-width: 75%;
     height: 100%;
+    @include breakpoint(tablet) {
+      max-width: 97%;
+    }
+    @include breakpoint(mobile) {
+      max-width: 97%;
+    }
+    @include breakpoint(largeTablet) {
+      max-width: 98%;
+    }
+    @include breakpoint(destop) {
+      max-width: 98%;
+    }
+
+    h3 {
+      color: #001424;
+    }
 
     .thumbnails {
       position: sticky;
-      margin-top: -100px;
+      margin-top: -90px;
+
       justify-content: center;
       .active-thumbnail {
-        border: #ffff solid 3px;
+        border: #0d99ff solid 3px;
       }
     }
     .div-job-title {
@@ -22,66 +86,237 @@
       margin-top: 25px;
       margin-left: 40px;
       background-color: #f3f8fb;
-      padding: 10px 20px;
+      padding: 20px 20px;
       border-radius: 10px;
       box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+      height: 630px;
+      @include breakpoint(tablet) {
+        width: 48%;
+        margin-left: 0px;
+        margin-top: 20px;
+        height: auto;
+      }
+      @include breakpoint(mobile) {
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 30px;
+        height: auto;
+      }
+      @include breakpoint(largeTablet) {
+        margin-left: 15px;
+        max-width: 350px;
+      }
+      @include breakpoint(destop) {
+        margin-left: 15px;
+        max-width: 350px;
+      }
 
       .title {
         width: 100%;
         h3 {
           color: #575757;
-          //  font-size: 16px;
+          font-size: 14px;
         }
         h2 {
-          //  font-size: 16px;
+          font-size: 16px;
           color: #001424;
+          margin-bottom: 5px;
+          @include breakpoint(largeTablet) {
+            font-size: 17px;
+          }
+          @include breakpoint(destop) {
+            font-size: 17px;
+          }
         }
       }
 
       .job-title-details {
         margin-top: 10px;
-
+        display: flex;
+        flex-direction: column;
+        height: 85%;
+        justify-content: space-around;
+        @include breakpoint(tablet) {
+          height: 85%;
+          justify-content: space-evenly;
+          max-height: 600px;
+        }
+        @include breakpoint(mobile) {
+          height: auto;
+        }
         .div-detail-row {
           display: flex;
           flex-direction: row;
           margin-top: 10px;
           p {
             color: #575757;
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 5px;
           }
-          h4 {
+          h5 {
             color: #001424;
+            font-size: 14px;
+            @include breakpoint(tablet) {
+              font-size: 14px;
+            }
+            @include breakpoint(largeTablet) {
+              font-size: 14px;
+            }
+            @include breakpoint(destop) {
+              font-size: 14px;
+            }
           }
+        }
+
+        .btn-apply {
+          background-color: #0d99ff;
+          font-size: 17px;
+          width: 90%;
+          margin: 20px auto;
+          height: 45px;
+          margin-bottom: 0px;
+          @include breakpoint(mobile) {
+            display: none;
+          }
+          // @include breakpoint(tablet) {
+          //   display: none;
+          // }
         }
       }
     }
     .thumbnail {
       margin: 0 5px;
       object-fit: cover;
+      height: 100px;
+      width: 120px;
+      border: gray 0.5px solid;
+
+      @include breakpoint(tablet) {
+        height: 100px;
+        width: 120px;
+      }
+      @include breakpoint(mobile) {
+        height: 100%;
+        width: 100%;
+      }
+      @media screen and (max-width: 500px) {
+        height: 65px;
+        max-width: 90px;
+      }
+    }
+    .div-description-mo {
+      display: flex;
+      height: auto;
+      flex-direction: column;
+      border-radius: 20px;
+      @include breakpoint(tablet) {
+        width: 48%;
+        margin-left: 15px;
+        margin-top: 20px;
+      }
+      // padding-bottom: 40px;
+      @include breakpoint(mobile) {
+        margin-bottom: -100px;
+        width: 100%;
+      }
+      .btn-for-mo {
+        display: none;
+        @include breakpoint(mobile) {
+          display: block;
+          background-color: #0d99ff;
+          font-size: 17px;
+          width: 90%;
+          margin: 20px auto;
+          height: 80px;
+        }
+        // @include breakpoint(tablet) {
+        //   display: block;
+        //   background-color: #0d99ff;
+        //   font-size: 17px;
+        //   width: 90%;
+        //   margin: 20px auto;
+        //   height: 60px;
+        // }
+      }
     }
 
     .description {
       max-width: 850px;
       padding: 20px 10px;
-      padding-bottom: 40px;
+      // padding-bottom: 40px;
       width: 700px;
       border: 1px solid white;
       box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
-      margin: 20px 0px;
-      border-radius: 5px;
-      height: auto;
+      margin-top: 25px;
+      border-radius: 10px;
+      height: 100%;
+
+      @include breakpoint(tablet) {
+        width: 100%;
+
+        margin-top: 0px;
+      }
+      @include breakpoint(mobile) {
+        width: 100%;
+
+        margin-top: 30px;
+      }
+      @include breakpoint(largeTablet) {
+        width: 520px;
+      }
+      @include breakpoint(destop) {
+        width: 520px;
+      }
     }
     .box {
       margin: 25px auto !important;
+      .carousel-container {
+        height: 560px !important ;
+        @include breakpoint(tablet) {
+          height: auto !important;
+        }
+        @media screen and (max-width: 500px) {
+          max-height: 250px !important;
+          height: 250px !important;
+        }
+      }
       .carousel-image {
         vertical-align: middle;
         width: 700px;
+        height: 630px;
+
+        @include breakpoint(tablet) {
+          width: 750px;
+          height: 100%;
+          max-height: 550px;
+          height: 520px;
+        }
+        @include breakpoint(mobile) {
+          height: 100%;
+        }
+        @media screen and (max-width: 500px) {
+          height: 100%;
+        }
+        @include breakpoint(largeTablet) {
+          width: 520px;
+        }
+        @include breakpoint(destop) {
+          width: 520px;
+        }
+      }
+      @include breakpoint(tablet) {
+        width: 100%;
+        height: 100%;
+      }
+      @include breakpoint(mobile) {
+        width: 100%;
         height: 100%;
       }
     }
     // .carousel-container {
-    //   max-height: 350px !important;
+    //   // @include breakpoint(tablet) {
+    //   //   max-height: 350px !important;
+    //   // }
     // }
 
     .div-suggest {
@@ -90,10 +325,27 @@
       //height: 90%;
       margin-top: 25px;
       margin-left: 40px;
-      background-color: #f3f8fb;
-      padding: 10px 20px;
+
+      padding-top: 10px;
       border-radius: 10px;
       height: auto;
+
+      box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+      @include breakpoint(tablet) {
+        width: 100%;
+        margin-left: 0px;
+      }
+      @include breakpoint(mobile) {
+        display: none;
+      }
+      @include breakpoint(largeTablet) {
+        margin-left: 15px;
+        max-width: 350px;
+      }
+      @include breakpoint(destop) {
+        margin-left: 15px;
+        max-width: 350px;
+      }
     }
 
     .item {
@@ -101,6 +353,12 @@
       flex-direction: column;
       margin-top: 10px;
       align-items: flex-start;
+      @include breakpoint(tablet) {
+        padding: 0px 10px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
     }
   }
 }

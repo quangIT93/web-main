@@ -1,0 +1,71 @@
+@import '../../../scss/mixins';
+.ant-cascader-checkbox {
+  // display: none;
+}
+
+.ant-cascader-menus {
+  display: flex;
+  .ant-cascader-menu {
+    min-width: 320px;
+  }
+}
+
+.ant-cascader-menus {
+  .ant-cascader-menu:first-child {
+    .ant-cascader-checkbox {
+      display: none;
+    }
+  }
+}
+
+.ant-select-dropdown {
+  .ant-cascader-menus {
+    .ant-cascader-menu {
+      @include breakpoint(mobile) {
+        max-width: 100px;
+        min-width: 170px;
+      }
+
+      @include breakpoint(tablet) {
+        max-width: 130px;
+        min-width: 230px;
+      }
+
+      @include breakpoint(tablet) {
+        max-width: 130px;
+      }
+      .ant-cascader-menu-item-expand {
+        .ant-cascader-menu-item-content {
+          @include breakpoint(tablet) {
+            font-size: 10px;
+          }
+
+          @include breakpoint(mobile) {
+            font-size: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+
+      .ant-cascader-menu-item {
+        .ant-cascader-menu-item-content {
+          @include breakpoint(tablet) {
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          @include breakpoint(mobile) {
+            font-size: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+}

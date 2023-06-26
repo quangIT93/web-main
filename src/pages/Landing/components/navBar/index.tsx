@@ -1,34 +1,27 @@
 import React from 'react'
-import { Link, } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import '../navBar/style.scss'
-
-
 
 const Navbar: React.FC = () => {
   return (
     <nav className="navibar">
+      <a href="#" className="logoTitle">
+        neoworks
+      </a>
 
-      <a href='#' className='logoTitle'>neoworks</a>
-
-      <div className='div-space'>
-
-      </div>
+      <div className="div-space"></div>
       <ul className="navbar-links">
         <li className="links__item">
-          <Link to="#">Trang chủ</Link>
+          <Link to="/home">Trang chủ</Link>
         </li>
         <li className="links__item links">
-          <a href='#us'>
-            Về chúng tôi</a>
-
+          <a href="#us">Về chúng tôi</a>
         </li>
         <li className="links__item links">
-          <a href='#career'> Neoworks Career </a>
-
+          <a href="#career"> Neoworks Career </a>
         </li>
       </ul>
-
 
       {/* <div className="navbar__actions">
         <div className="actions-features">

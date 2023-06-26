@@ -18,8 +18,13 @@
     padding: 0px;
     margin-bottom: 10px;
   }
-  @include breakpoint(an_order) {
-    padding-right: 50px;
+  @include breakpoint(largeTablet) {
+    padding-left: 00px;
+    padding: 50px 50px;
+  }
+  @include breakpoint(destop) {
+    padding: 50px 50px;
+    padding-left: 0px;
   }
 }
 .div-img > img {
@@ -54,9 +59,9 @@
     //////
     margin-left: 00px;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     margin-left: 50px;
-    height: calc(100vw - 900px);
+    height: 200px;
   }
 }
 
@@ -74,7 +79,7 @@
     font-weight: 600;
     text-align: center;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     font-size: 30px;
     font-weight: 600;
   }
@@ -99,6 +104,9 @@
   @include breakpoint(tablet) {
     width: 100%;
   }
+  @include breakpoint(largeTablet) {
+    width: 400px;
+  }
 }
 #div-describe > p {
   font-size: 17px;
@@ -116,10 +124,11 @@
     width: 100%;
   }
 
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     font-size: 17px;
     // text-align: center;
     padding: 10px;
+    width: 100%;
   }
 }
 .btn-contract {

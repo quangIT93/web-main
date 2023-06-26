@@ -1,0 +1,36 @@
+.edit-posted {
+  margin-top: 70px;
+  .edit-posted_main {
+    padding: 50px 180px;
+    margin: 0 auto;
+    transition: all l;
+    margin-bottom: 36px;
+    @media screen and (max-width: 1200px) {
+      padding-inline: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 24px;
+      margin-bottom: 32px;
+    }
+
+    .btn-edit_submitForm {
+      margin-top: 24px;
+      border-radius: 5px;
+      align-items: center;
+      width: 100%;
+      background-color: #0d99ff;
+      color: #ffffff;
+      border: none;
+      outline: none;
+      padding: 16px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 18px;
+      cursor: pointer;
+    }
+  }
+}

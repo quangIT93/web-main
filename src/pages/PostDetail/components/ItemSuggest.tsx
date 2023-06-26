@@ -1,29 +1,33 @@
 
 import React from 'react'
 // @ts-ignore
-
-
 import { Link } from 'react-router-dom'
 import "./style.scss"
+import { useNavigate } from "react-router-dom";
 
-interface CategoryCarouselItemProps {
+interface SuggestItemProps {
     content?: string
     describe?: string
-
     imgBackground?: string
+    postId?: Number
 
 }
 
-const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({ content,
+const ItemInfoLeft: React.FC<SuggestItemProps> = ({ content,
     describe,
-    imgBackground, }) => {
-
+    imgBackground, postId }) => {
+    const navigate = useNavigate();
     return (
-        <div>
+        <div onClick={() => {
+            window.open(`/post-detail?post-id=${postId}`)
+        }
+
+        } className='div-suggest-include' style={{ borderBottom: "0.5px solid #AAAAAA", width: "95%", paddingBottom: 10 }}>
             <div className='div-item-suggest'>
-                <img src={"https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-6010e05a-44c7-4785-973a-03bef018a0b4.jpg"} />
-                <div style={{ marginLeft: "10px" }}> <p>Thời gian làm việc</p>
-                    <h4>Quận 1, Hồ Chí Minh</h4>
+                <img src={imgBackground} />
+                <div className='title-job-suggest' >
+                    <h5>{content}</h5>
+                    <p style={{ color: "#575757", fontSize: 13 }}>{describe}</p>
                 </div>
             </div>
 

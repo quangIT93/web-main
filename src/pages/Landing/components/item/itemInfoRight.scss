@@ -21,7 +21,7 @@
     flex-wrap: wrap-reverse;
     justify-content: center;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     padding-right: 80px;
   }
 }
@@ -47,9 +47,14 @@
     width: calc(100vw - 10px);
     //  position: inherit;
   }
-  @include breakpoint(an_order) {
-    height: auto;
-    width: calc(100vw - 850px);
+  @include breakpoint(largeTablet) {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+  }
+  @include breakpoint(destop) {
+    height: 300px;
+    width: 300px;
     object-fit: cover;
   }
 }
@@ -91,9 +96,10 @@
     ////
     margin-right: 00px;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     ////
     margin-right: 55px;
+    height: 200px;
   }
 }
 .div-content-right > #div-content > p {
@@ -111,7 +117,7 @@
     font-weight: 600;
     text-align: center;
   }
-  @include breakpoint(an_order) {
+  @include breakpoint(largeTablet) {
     font-size: 30px;
     font-weight: 600;
   }
@@ -138,6 +144,9 @@
   @include breakpoint(tablet) {
     width: 100%;
   }
+  @include breakpoint(largeTablet) {
+    width: 450px;
+  }
 }
 #div-describe-right > p {
   font-size: 17px;
@@ -153,6 +162,10 @@
     font-size: 17px;
     text-align: center;
     padding: 10px;
+    margin-left: 0px;
+  }
+  @include breakpoint(largeTablet) {
+    font-size: 14px;
     margin-left: 0px;
   }
 }

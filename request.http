@@ -1,0 +1,79 @@
+POST https://neoworks.vn/api/v1/sign-in/email
+Content-Type: application/json
+
+{
+    "email": "quangbk5493@gmail.com"
+}
+
+
+###
+
+POST https://neoworks.vn/api/v1/sign-in/email/verify
+Content-Type: application/json
+
+{
+    "email": "quangbk5493@gmail.com",
+    "otp": "844465"
+   
+}
+
+###
+
+GET https://neoworks.vn/api/v1/profiles/s
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVxsw.eyJpZ231ImM1MWQ5OGI5LWM5NzktNDA2NC1hMDNiLTVhMWMxZjVkZDc0YyIsInJvbGUiOjAsImlhdCI6MTY4NDM5NzEzMCwiZXhwIjoxNjg0NDAwNzMwfQ.lFnLodnvcjcw0FuCwqfbVJIjwA9vDri2cbv6h4khMPY
+
+
+###
+
+GET https://neoworks.vn/api/v1/profiles/s
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NTY3MDkwMywiZXhwIjoxNjg1Njc0NTAzfQ.p2HvgW_Q6ewTudRMflQl3D-xluXjffoHdnP7GVmKHaQ
+###
+GET https://neoworks.vn/api/v1/posts/0
+Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM1MWQ5OGI5LWM5NzktNDA2NC1hMDNiLTVhMWMxZjVkZDc0YyIsInJvbGUiOjAsImlhdCI6MTY4NDM5NzEzMCwiZXhwIjoxNjg0NDAwNzMwfQ.lFnLodnvcjcw0FuCwqfbVJIjwA9vDri2cbv6h4khMPY
+
+
+
+
+
+###
+PUT https://aiworks.vn/api/v1/profiles/loc
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NTY3NDgwNywiZXhwIjoxNjg1Njc4NDA3fQ.M2CrTGqB80wXKCdMkpiDgOEYkQ7G5I8ahuUN9Z-Lapg
+
+{
+  "locationIds": [
+    769,
+    760
+  ]
+}
+
+###
+POST https://aiworks.vn/api/v1/application/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NTk0OTk5NiwiZXhwIjoxNjg1OTUzNTk2fQ.L33TDqXdjI_-XuWOg6Dik6syX5qrTm6ipmCWd34HVNk
+
+{
+  "postId": 23886
+}
+
+###
+POST https://aiworks.vn/api/v1/bookmarks
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NTk0OTk5NiwiZXhwIjoxNjg1OTUzNTk2fQ.L33TDqXdjI_-XuWOg6Dik6syX5qrTm6ipmCWd34HVNk
+
+{
+  "postId": 23888
+}
+
+###
+GET https://aiworks.vn/api/v1/history/recruiter/23894/applications?limit=10
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NTk0OTk5NiwiZXhwIjoxNjg1OTUzNTk2fQ.L33TDqXdjI_-XuWOg6Dik6syX5qrTm6ipmCWd34HVNk
+
+###
+GET https://aiworks.vn/api/v1/history/recruiter/23894/applications/673
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NjAyMzE5NywiZXhwIjoxNjg2MDI2Nzk3fQ.Z86YtoLf8lEoZNqA-DWnkzsNn7y-sHwbFmq0ecmUTQo
