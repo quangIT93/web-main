@@ -1,36 +1,43 @@
-.header-list_userChat {
+.list_userChat {
   border-right: 0.8px solid #dcdcdc;
 
-  height: 480px;
-  overflow: hidden;
-  .title-header_listUserChat {
-    margin: 12px;
-  }
-  .header-listSearch_userChat {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .searh-user_chat {
-      width: 100%;
-      border-radius: 8px;
-      margin-left: 12px;
-    }
+  // height: 520px;
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: unset;
 
-    .edit-setting_icon {
+  .header-list_userChat {
+    border-bottom: 1px solid #dcdcdc;
+    .title-header_listUserChat {
+      margin: 12px 24px 0 16px;
+    }
+    .header-listSearch_userChat {
       display: flex;
       align-items: center;
-      margin-right: 12px;
+      justify-content: space-between;
+      .searh-user_chat {
+        width: 100%;
+        border-radius: 8px;
+        margin: 12px 24px 24px 16px;
+      }
 
-      span {
-        padding: 8px;
+      .edit-setting_icon {
+        display: flex;
+        align-items: center;
+        margin-right: 12px;
+
+        span {
+          padding: 8px;
+        }
       }
     }
   }
 
   .list-infoUser {
-    margin: 12px 0;
+    margin: 0;
     overflow-y: scroll;
-    height: 480px;
+    height: 100%;
+    // height: 520px;
     .wrap-userInfo {
       display: flex;
       padding: 12px;
@@ -65,7 +72,7 @@
           white-space: nowrap;
           font-size: 16px;
           line-height: 24px;
-          width: 220px;
+          width: 280px;
         }
 
         h5 {
@@ -74,15 +81,18 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          width: 220px;
+          width: 280px;
         }
 
         p {
           font-size: 10px;
           line-height: 15px;
           color: #575757;
-          width: 220px;
-          word-wrap: break-word;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 280px;
+          // word-wrap: break-word;
         }
       }
     }

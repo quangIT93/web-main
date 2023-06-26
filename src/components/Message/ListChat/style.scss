@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 12px;
+  padding: 12px 24px;
+  width: 100%;
   //   overflow: hidden;
   //   height: 400px;
   .header-list_chat {
@@ -47,13 +48,142 @@
 
   .list-content_chat {
     height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    // margin: 24px 0;
+    // padding: 24px 0px;
+    padding: 24px 21px 24px 0;
+    margin: 0 0px 0 0px;
+    overflow-y: scroll;
+    // height: 450px;
+    /* Sét cứng cuộn đến phần cuối */
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    .img {
+      width: 30px;
+      height: 30px;
+    }
+
     .content-chat {
-      .content-chat_img {
-        width: 30px;
-        height: 30px;
+      align-self: flex-end;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-bottom: 8px;
+
+      // .content-chat_img {
+      //   width: 30px;
+      //   height: 30px;
+      //   border-radius: 50%;
+      //   // order: 2;
+      // }
+      .wrap-date_chat {
+        // align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 12px;
+        width: 100%;
+        .horizontal-line {
+          // border: none;
+          border-top: 1px solid #000;
+          width: 100%;
+          height: 0;
+        }
+
+        .date-chat {
+          background-color: #aaaaaa;
+          padding: 4px 12px;
+          border-radius: 12px;
+          color: #ffffff;
+          width: 220px;
+          text-align: center;
+        }
       }
 
-      span {
+      .wrap-text_chat {
+        align-self: flex-end;
+        max-width: 550px;
+        .text-chat {
+          // order: 1;
+
+          background-color: #0d99ff;
+          color: #ffffff;
+          border-radius: 8px;
+          padding: 8px 12px;
+          display: block;
+          overflow-wrap: break-word;
+        }
+
+        .text-chat.text-chat_hidden {
+          display: none;
+        }
+
+        small {
+          // align-self: center;
+          margin-top: 8px;
+          color: #aaaaaa;
+        }
+      }
+    }
+
+    .content-chat2 {
+      align-self: flex-start;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      // .content-chat_img2 {
+      //   width: 30px;
+      //   height: 30px;
+      //   border-radius: 50%;
+      // }
+      .wrap-date_chat {
+        // align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 12px;
+        width: 100%;
+        .horizontal-line {
+          // border: none;
+          border-top: 1px solid #000;
+          width: 100%;
+          height: 0;
+        }
+
+        .date-chat {
+          background-color: #aaaaaa;
+          padding: 4px 12px;
+          border-radius: 24px;
+          color: #ffffff;
+          width: 220px;
+          text-align: center;
+        }
+      }
+
+      .wrap-text_chat2 {
+        align-self: flex-start;
+        max-width: 550px;
+        .text-chat {
+          background-color: #f3f3f3;
+          color: #000000;
+          border-radius: 8px;
+          padding: 8px 12px;
+          display: block;
+          overflow-wrap: break-word;
+        }
+        .text-chat.text-chat_hidden {
+          display: none;
+        }
+
+        small {
+          // align-self: center;
+          margin-top: 8px;
+          color: #aaaaaa;
+        }
       }
     }
   }
@@ -73,16 +203,31 @@
       cursor: pointer;
     }
 
-    .input-chatIcon:nth-child(2) {
+    .input-chatIcon:nth-child(3) {
       right: 70px;
     }
 
-    .input-chatIcon:nth-child(3) {
+    .input-chatIcon:nth-child(4) {
       right: 40px;
     }
 
-    .input-chatIcon:nth-child(4) {
+    .input-chatIcon:nth-child(5) {
       right: 10px;
+    }
+  }
+
+  // img right
+
+  .wrap-img_chat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: auto;
+    flex-direction: column;
+    img {
+      height: auto;
+      width: auto;
     }
   }
 }

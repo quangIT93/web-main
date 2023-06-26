@@ -67,7 +67,7 @@ const PositionFilterSubnav: React.FC<PropsLocationFilterSubnav> = (props) => {
       onClick={(e: any) => e.stopPropagation()}
     >
       <h3 style={{ padding: '12px 24px', textAlign: 'center' }}>Địa điểm</h3>
-
+      {/* 
       <ul
         className="list-locations"
         style={{
@@ -173,7 +173,7 @@ const PositionFilterSubnav: React.FC<PropsLocationFilterSubnav> = (props) => {
         >
           Áp dụng
         </button>
-      </div>
+      </div> */}
     </Collapse>
   )
 }

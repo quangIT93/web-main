@@ -64,7 +64,7 @@ const CareerFilterSubnav: React.FC<PropsLocationFilterSubnav> = (props) => {
     >
       <h3 style={{ padding: '12px 24px', textAlign: 'center' }}>Địa điểm</h3>
 
-      <ul
+      {/* <ul
         className="list-locations"
         style={{
           height: '300px',
@@ -169,7 +169,7 @@ const CareerFilterSubnav: React.FC<PropsLocationFilterSubnav> = (props) => {
         >
           Áp dụng
         </button>
-      </div>
+      </div> */}
     </Collapse>
   )
 }

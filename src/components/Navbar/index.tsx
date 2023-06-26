@@ -26,7 +26,6 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 
 // import icon
-
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined'
 
 import {
@@ -53,10 +52,11 @@ import FilterTypeSalary from './FilterTypeSalary'
 import FilterSalary from './FilterSalary'
 import FilterTimeJob from './FilterTimeJob'
 
-import { Avatar, Button, Space, Spin } from 'antd'
+import { Avatar, Button, Space, Spin, Badge } from 'antd'
 
 import authApi from 'api/authApi'
 import profileApi from 'api/profileApi'
+import messageApi from 'api/messageApi'
 
 import {
   Container,
@@ -65,7 +65,6 @@ import {
   Left,
   Right,
   Center,
-
   collapseCssFilter,
 } from './Css'
 
@@ -86,16 +85,15 @@ const Navbar: React.FC = () => {
     // setHeightNavbar,
     SetRefNav,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
-    } = useContext(HomeValueContext)
+  {
+    openCollapseFilter: boolean
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
+  } = useContext(HomeValueContext)
 
   const [showTap, setshowTap] = React.useState(false)
-
 
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -112,17 +110,21 @@ const Navbar: React.FC = () => {
   const [listDis, setListDis] = useState<[]>([])
   const [listCate, setListCate] = useState<[]>([])
 
+  const [countChat, setCountChat] = useState<number>(0)
 
   // value query
 
   const QUERY = searchParams.get('q')
   const SALARY_TYPE = Number(searchParams.get('sal-type'))
   const JOB_TYPE = Number(searchParams.get('job-type'))
-  const DIS_IDS = searchParams.getAll('dis-ids').map((disId) => disId.split(",")).map((dis) => dis[1])
+  const DIS_IDS = searchParams
+    .getAll('dis-ids')
+    .map((disId) => disId.split(','))
+    .map((dis) => dis[1])
 
   // params url
-  const params = new URLSearchParams();
-  const paramsCate = new URLSearchParams();
+  const params = new URLSearchParams()
+  const paramsCate = new URLSearchParams()
 
   const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
   // thay đổi width setState
@@ -182,6 +184,20 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     fecthDataProfileUser()
     dispatch(getProfile() as any)
+  }, [])
+
+  // get count unread
+  const getCountUnread = async () => {
+    try {
+      const result = await messageApi.getUnread()
+      if (result) {
+        setCountChat(result.data.quantity)
+      }
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    getCountUnread()
   }, [])
 
   const ref = React.useRef<HTMLDivElement | null>(null)
@@ -247,26 +263,26 @@ const Navbar: React.FC = () => {
 
     if (!valueSearchInput && QUERY) {
       encode = encodeURIComponent(`${QUERY}`)
-
     } else {
       encode = encodeURIComponent(`${valueSearchInput}`)
     }
     if (!jobType && JOB_TYPE) {
       job_type = JOB_TYPE
-
     }
     if (!salaryType && SALARY_TYPE) {
       salary_type = SALARY_TYPE
     }
 
-    console.log("jobtype", params.toString())
+    console.log('jobtype', params.toString())
 
-    window.open(`/search-results?${encode !== 'undefined' ? `q=${encode}` : ""}` +
-      `${salary_type ? `&sal-type=${salary_type}` : ""}` +
-      `${job_type ? `&job-type=${job_type}` : ""}` +
-      `${list_dis.length > 0 ? `&${params.toString()}` : ""}` +
-      `${list_cate.length > 0 ? `&${paramsCate.toString()}` : ""}`
-      , "_self")
+    window.open(
+      `/search-results?${encode !== 'undefined' ? `q=${encode}` : ''}` +
+        `${salary_type ? `&sal-type=${salary_type}` : ''}` +
+        `${job_type ? `&job-type=${job_type}` : ''}` +
+        `${list_dis.length > 0 ? `&${params.toString()}` : ''}` +
+        `${list_cate.length > 0 ? `&${paramsCate.toString()}` : ''}`,
+      '_self'
+    )
   }
 
   // login
@@ -384,9 +400,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -439,13 +455,15 @@ const Navbar: React.FC = () => {
             <TuneOutlinedIcon />
           </Button>
 
-          <Button
-            onClick={() => window.open(`/message`, '_blank')}
-            type="link"
-          // style={{ marginRight: '12px' }}
-          >
-            <ChatIcon />
-          </Button>
+          <Badge count={countChat}>
+            <Button
+              onClick={() => window.open(`/message`, '_blank')}
+              type="link"
+              style={{ border: '1px solid #aaaaaa' }}
+            >
+              <ChatIcon />
+            </Button>
+          </Badge>
         </Center>
         <Right className="div-nav-right">
           <div className="tabBar-right">

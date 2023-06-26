@@ -509,7 +509,7 @@ export const DotIcon: React.FC = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_8335_169120)">
+      <g clipPath="url(#clip0_8335_169120)">
         <path
           d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
           stroke="black"
@@ -548,7 +548,7 @@ export const VideoIcon: React.FC = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_8335_169099)">
+      <g clipPath="url(#clip0_8335_169099)">
         <path
           d="M18 6H3C2.58579 6 2.25 6.33579 2.25 6.75V17.25C2.25 17.6642 2.58579 18 3 18H18C18.4142 18 18.75 17.6642 18.75 17.25V6.75C18.75 6.33579 18.4142 6 18 6Z"
           stroke="black"

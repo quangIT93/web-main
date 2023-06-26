@@ -37,7 +37,7 @@ const SalaryFilterSubnav: React.FC<PropsSalaryFilterSubnav> = (props) => {
       }}
       className="subnav-chooses-__carreer"
     >
-      <Box
+      {/* <Box
         sx={{
           width: '100%',
           display: 'flex',
@@ -127,7 +127,7 @@ const SalaryFilterSubnav: React.FC<PropsSalaryFilterSubnav> = (props) => {
             Áp dụng
           </button>
         </div>
-      </Box>
+      </Box> */}
     </Collapse>
   )
 }

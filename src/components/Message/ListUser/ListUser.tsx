@@ -11,7 +11,7 @@ import { ChatContext } from 'context/ChatContextProvider'
 const { Search } = Input
 const ListUserChat = () => {
   const [listUserChat, setStateUserChat] = useState<any>([])
-  const { setUserInfoChat } = useContext(ChatContext)
+  const { setUserInfoChat, sendMessages } = useContext(ChatContext)
 
   const getAllUserChat = async () => {
     try {
@@ -27,29 +27,29 @@ const ListUserChat = () => {
 
   useEffect(() => {
     getAllUserChat()
-  }, [])
+  }, [sendMessages])
 
   const handleClickUserInfo = (user: any) => {
     console.log('click', user)
     setUserInfoChat(user)
   }
 
-  console.log('allUserChat', listUserChat)
-
   const onSearch = (value: string) => console.log(value)
   return (
     <>
-      <div className="header-list_userChat">
-        <h4 className="title-header_listUserChat">Tin nhắn</h4>
-        <div className="header-listSearch_userChat">
-          <Search
-            className="searh-user_chat"
-            placeholder="input search text"
-            onSearch={onSearch}
-          />
-          <div className="edit-setting_icon">
+      <div className="list_userChat">
+        <div className="header-list_userChat">
+          <h4 className="title-header_listUserChat">Tin nhắn</h4>
+          <div className="header-listSearch_userChat">
+            <Search
+              className="searh-user_chat"
+              placeholder="input search text"
+              onSearch={onSearch}
+            />
+            {/* <div className="edit-setting_icon">
             <EditOutlined />
             <SettingOutlined />
+          </div> */}
           </div>
         </div>
 
