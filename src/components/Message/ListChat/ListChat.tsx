@@ -23,7 +23,6 @@ import {
 import './style.scss'
 
 import { ChatContext } from 'context/ChatContextProvider'
-
 interface Message {
   receiverId: string
   message: string
@@ -52,6 +51,7 @@ const ListChat = () => {
 
   let socket = useRef<any>()
   const listRef = useRef<HTMLDivElement>(null)
+  const bottomRef = useRef<HTMLDivElement>(null)
   const imageInputRef = useRef<any>(null)
 
   const previousDate = useRef<string | null>(null)
@@ -152,8 +152,9 @@ const ListChat = () => {
 
   // console.log('receive', receivedMessages)
   // console.log('send', sendMessages)
-  console.log('allListChat', allListChat)
+  // console.log('allListChat', allListChat)
   // console.log('userInfoChat', userInfoChat)
+  // console.log('searchParams.get("post_id")', searchParams.get('post_id'))
 
   // message function
   const handleSendMessage = () => {
@@ -208,12 +209,16 @@ const ListChat = () => {
 
   // Khi dữ liệu allListChat được cập nhật, cuộn xuống cuối cùng
   useEffect(() => {
-    if (listRef.current) {
+    if (bottomRef.current) {
       setTimeout(() => {
-        if (listRef.current) {
-          listRef.current.scrollTop = listRef.current.scrollHeight
+        if (bottomRef.current) {
+          // return (listRef.current.scrollTop = listRef.current.scrollHeight)
+          bottomRef.current.scrollIntoView({ behavior: 'smooth' })
+          // return () => {
+          //   listRef.current.scrollTop = listRef.current.scrollHeight
+          // }
         }
-      }, 100)
+      }, 0)
     }
   }, [allListChat])
 
@@ -300,6 +305,7 @@ const ListChat = () => {
                       {new Date(chat.created_at).getMinutes()}
                     </small>
                   </div>
+                  <div ref={bottomRef} style={{ display: 'none' }} />
                 </div>
               )
             } else {
@@ -347,6 +353,7 @@ const ListChat = () => {
                       {new Date(chat.created_at).getMinutes()}
                     </small>
                   </div>
+                  <div ref={bottomRef} style={{ display: 'none' }} />
                 </div>
               )
             }
@@ -358,7 +365,7 @@ const ListChat = () => {
             placeholder="Nhập đoạn chat của bạn"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
           />
           <input
             type="file"

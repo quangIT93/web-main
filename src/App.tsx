@@ -14,7 +14,7 @@ import './App.scss'
 import ScrollObserver from './utils/ScrollObserver'
 // import context
 import HomeContextProvider from 'context/HomeContextProvider'
-
+import ChatContextProvider from 'context/ChatContextProvider'
 const NotFound = React.lazy(() => import('./pages/NotFound'))
 
 // Initialize Firebase
@@ -32,17 +32,23 @@ const App: React.FC = () => {
       <Provider store={store}>
         <BrowserRouter>
           <HomeContextProvider>
-            <ScrollObserver>
-              <Layout>
-                <Routes>
-                  {/* @ts-ignore */}
-                  {routes.map(({ path, component: component }: RouteProps) => {
-                    return <Route path={path} element={component} key={path} />
-                  })}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Layout>
-            </ScrollObserver>
+            <ChatContextProvider>
+              <ScrollObserver>
+                <Layout>
+                  <Routes>
+                    {/* @ts-ignore */}
+                    {routes.map(
+                      ({ path, component: component }: RouteProps) => {
+                        return (
+                          <Route path={path} element={component} key={path} />
+                        )
+                      }
+                    )}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Layout>
+              </ScrollObserver>
+            </ChatContextProvider>
           </HomeContextProvider>
         </BrowserRouter>
       </Provider>

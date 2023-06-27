@@ -23,7 +23,7 @@ type ParentComponentProps = {
 interface Message {
   receiverId: string
   message: string
-  // createdAt: number
+  createdAt: number
   type: string
   postId: number
 }

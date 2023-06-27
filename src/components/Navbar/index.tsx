@@ -75,6 +75,7 @@ import { actionCreators } from '../../store/index'
 
 // import Context
 import { HomeValueContext } from 'context/HomeValueContextProvider'
+import { ChatContext } from 'context/ChatContextProvider'
 import { DivRef1 } from 'context/HomeValueContextProvider'
 import { useSearchParams } from 'react-router-dom'
 
@@ -92,6 +93,8 @@ const Navbar: React.FC = () => {
     // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
     SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
   } = useContext(HomeValueContext)
+
+  const { receivedMessages, sendMessages } = useContext(ChatContext)
 
   const [showTap, setshowTap] = React.useState(false)
 
@@ -193,12 +196,16 @@ const Navbar: React.FC = () => {
       if (result) {
         setCountChat(result.data.quantity)
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log('error', error)
+    }
   }
-
+  console.log('receivedMessages', receivedMessages)
   useEffect(() => {
+    console.log('tinh lai count', countChat)
+
     getCountUnread()
-  }, [])
+  }, [receivedMessages, sendMessages])
 
   const ref = React.useRef<HTMLDivElement | null>(null)
 

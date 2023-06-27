@@ -6,6 +6,7 @@ import { AudioOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons'
 import { Input, Space } from 'antd'
 
 import messageApi from 'api/messageApi'
+import historyRecruiter from 'api/historyRecruiter'
 
 import { listUser, listMessage, countUnRead } from './data'
 import './style.scss'
@@ -21,10 +22,14 @@ const ListUserChat = () => {
   const {
     setUserInfoChat,
     setReceivedMessages,
+    setSendMessages,
     userInfoChat,
     sendMessages,
     receivedMessages,
   } = useContext(ChatContext)
+
+  console.log('sendMessages', sendMessages)
+  console.log('receivedMessages', receivedMessages)
 
   const getAllUserChat = async () => {
     try {
@@ -42,14 +47,68 @@ const ListUserChat = () => {
     getAllUserChat()
   }, [sendMessages, receivedMessages])
 
+  const getApplicationByIdAndPost = async () => {
+    try {
+      const result = await historyRecruiter.GetAJobApplication(
+        Number(searchParams.get('post_id')),
+        searchParams.get('application_id') ?? ''
+      )
+
+      if (result.data) {
+        setUserInfoChat({
+          user_id: result.data.applicationProfile.account_id,
+          name: result.data.applicationProfile.name,
+          avatar: result.data.applicationProfile.avatar,
+          isOnline: null,
+        })
+      }
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getApplicationByIdAndPost()
+  }, [searchParams.get('post_id'), searchParams.get('user_id')])
+
   const handleClickUserInfo = (user: any) => {
     console.log('click', user)
-    setSearchParams({ post_id: user.post_id })
-    setReceivedMessages([])
-    setUserInfoChat(user)
+    setSearchParams({ post_id: user.post_id, user_id: user.user_id })
     getAllUserChat()
+    setReceivedMessages([
+      {
+        receiverId: '',
+        message: '',
+        createdAt: 0,
+        type: '',
+        postId: 0,
+      },
+    ])
+    setSendMessages([
+      {
+        receiverId: userInfoChat.user_id,
+        message: '',
+        createdAt: 0,
+        type: '',
+        postId: Number(searchParams.get('post_id')),
+      },
+    ])
   }
-  console.log('userInfoChat', userInfoChat)
+
+  useEffect(() => {
+    listUserChat.map((userChat: any) => {
+      if (userChat.user_id === searchParams.get('user_id')) {
+        setUserInfoChat({
+          user_id: userChat.user_id,
+          name: userChat.name,
+          avatar: userChat.avatar,
+          isOnline: null,
+        })
+      }
+      return null
+    })
+  }, [searchParams.get('user_id'), listUserChat])
+
   console.log('tin nhan duoc nhan', receivedMessages)
   console.log('tin nhan da gui', sendMessages)
   const onSearch = (value: string) => console.log(value)

@@ -89,7 +89,7 @@ const CandidateDetail: React.FC = () => {
   const getPostById = async () => {
     try {
       const postId = parseInt(searchParams.get('post-id') ?? '')
-      const candidateId = parseInt(searchParams.get('application_id') ?? '')
+      const candidateId = searchParams.get('application_id') ?? ''
       const result = await postApi.getById(postId)
       console.log(result, 'search')
 
@@ -435,7 +435,13 @@ const CandidateDetail: React.FC = () => {
                       }}
                       onClick={() =>
                         window.open(
-                          `/message?post_id=${searchParams.get('post-id')} `,
+                          `/message?post_id=${searchParams.get(
+                            'post-id'
+                          )}&user_id=${
+                            dataCandidate.applicationProfile.account_id
+                          }&application_id=${searchParams.get(
+                            'application_id'
+                          )} `,
                           '_blank'
                         )
                       }
