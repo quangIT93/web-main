@@ -1,55 +1,93 @@
 import React, { useState } from 'react'
 import type { DatePickerProps } from 'antd'
 import { DatePicker, Space } from 'antd'
-import { Collapse, Radio, Input, Button, Checkbox, Typography } from 'antd'
+import { Collapse, Radio, Input, Button, Typography } from 'antd'
+
+import Box from '@mui/material/Box'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+
 import './style.scss'
+import { AnyMxRecord } from 'dns'
 
 const { Text } = Typography
 
 const { Panel } = Collapse
 
-const FilterTimeJob = () => {
-  const [selectedValue, setSelectedValue] = useState('')
-  const [inputValue, setInputValue] = useState('')
-  const [checkboxValues, setCheckboxValues] = useState([])
-  const handleRadioChange = (e: any) => {
-    setSelectedValue(e.target.value)
-  }
+interface IFilterTimeJob {
+  setIsWorkingWeekend: React.Dispatch<React.SetStateAction<number>>
+  setIsRemotely: React.Dispatch<React.SetStateAction<number>>
+  isRemotely: number
+  isWorkingWeekend: number
+}
 
-  const handleInputChange = (e: any) => {
-    setInputValue(e.target.value)
-  }
+const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
+  const { setIsWorkingWeekend, isWorkingWeekend, isRemotely, setIsRemotely } =
+    props
+
+  // const [selectedValue, setSelectedValue] = useState('')
+  // const [inputValue, setInputValue] = useState('')
+  const [checkboxIsWeekend, setCheckboxIsWeekend] = useState(0)
+  const [checksetIsRemotely, setChecksetIsRemotely] = useState(0)
+
+  // const handleRadioChange = (e: any) => {
+  //   setSelectedValue(e.target.value)
+  // }
+
+  // const handleInputChange = (e: any) => {
+  //   setInputValue(e.target.value)
+  // }
 
   const handleConfirm = () => {
-    console.log(`Selected value: ${selectedValue}`)
-    console.log(`Input value: ${inputValue}`)
+    // console.log(`Selected value: ${selectedValue}`)
+    // console.log(`Input value: ${inputValue}`)
+    setIsWorkingWeekend(checkboxIsWeekend)
+    setIsRemotely(checksetIsRemotely)
   }
 
-  const handleCheckboxChange = (checkedValues: any) => {
-    setCheckboxValues(checkedValues)
-  }
-  const onChangeStartDate: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
+  // const onChangeStartDate: DatePickerProps['onChange'] = (date, dateString) => {
+  //   console.log(date, dateString)
+  // }
+
+  // const onChangeEndDate: DatePickerProps['onChange'] = (date, dateString) => {
+  //   console.log(date, dateString)
+  // }
+
+  const handleWeekendChange = (e: any) => {
+    if (e.target.checked) {
+      setCheckboxIsWeekend(1)
+    } else {
+      setCheckboxIsWeekend(0)
+    }
   }
 
-  const onChangeEndDate: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString)
+  const handleRemoteChange = (e: any) => {
+    if (e.target.checked) {
+      setChecksetIsRemotely(1)
+    } else {
+      setChecksetIsRemotely(0)
+    }
   }
   return (
     <Collapse
       className={`inputFilterTimeJob input-filter_nav ${
-        inputValue ? 'activeTimeJob' : ''
+        isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
       }`}
     >
       <Panel
         header={
-          inputValue ? `${inputValue} - ${inputValue}` : `Thời gian làm việc`
+          isRemotely || isWorkingWeekend
+            ? `${isWorkingWeekend ? 'Làm việc cuối tuần' : ''} 
+            ${isWorkingWeekend && isRemotely ? '-' : ''}
+            
+            ${isRemotely ? 'Làm việc từ xa' : ''}`
+            : `Thời gian làm việc`
         }
         key="1"
       >
         <Text className="title-filter_timeJob">Thời gian làm việc</Text>
 
-        <Radio.Group
+        {/* <Radio.Group
           value={selectedValue}
           onChange={handleRadioChange}
           className="inputFilter-grouptimeJob_radio"
@@ -60,15 +98,28 @@ const FilterTimeJob = () => {
         <div className="group-input_dateJob">
           <DatePicker onChange={onChangeStartDate} />
           <DatePicker onChange={onChangeEndDate} />
-        </div>
+        </div> */}
 
-        <Checkbox.Group
-          onChange={handleCheckboxChange}
-          className="filter-job_checkboxGroup"
-        >
-          <Checkbox value="checkbox1">Làm việc cuối tuần </Checkbox>
-          <Checkbox value="checkbox2">Làm việc từ xa</Checkbox>
-        </Checkbox.Group>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <FormControlLabel
+            label="Làm việc cuối tuần"
+            control={
+              <Checkbox
+                checked={checkboxIsWeekend === 0 ? false : true}
+                onChange={handleWeekendChange}
+              />
+            }
+          />
+          <FormControlLabel
+            label="Làm việc từ xa"
+            control={
+              <Checkbox
+                checked={checksetIsRemotely === 0 ? false : true}
+                onChange={handleRemoteChange}
+              />
+            }
+          />
+        </Box>
         <div className="wrap-button_filter">
           <Button type="default" onClick={handleConfirm}>
             Huỷ

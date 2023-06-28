@@ -77,11 +77,11 @@ const ListUserChat = () => {
     getAllUserChat()
     setReceivedMessages([
       {
-        receiverId: '',
+        receiverId: userInfoChat.user_id,
         message: '',
         createdAt: 0,
         type: '',
-        postId: 0,
+        postId: Number(searchParams.get('post_id')),
       },
     ])
     setSendMessages([

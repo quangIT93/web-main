@@ -105,20 +105,34 @@ const NewJobs: React.FC = () => {
 
   const [checkBookMark, setCheckBookMark] = React.useState(true)
 
-
   // query value
   const QUERY = decodeURIComponent(`${searchParams.get('q')}`)
   const SALARY_TYPE = Number(searchParams.get('sal-type'))
-  const JOB_TYPE = Number(searchParams.get('job-type')) ? [Number(searchParams.get('job-type'))] : []
+  const MONEY_TYPE = Number(searchParams.get('money_type'))
+  const SALARY_MIN = Number(searchParams.get('salary_min'))
+  const SALARY_MAX = Number(searchParams.get('salary_max'))
+  const IS_WORKING_WEEKEND = Number(searchParams.get('is_working_weekend'))
+  const IS_REMOTELY = Number(searchParams.get('is_remotely'))
 
-  const LIST_DIS_ID = searchParams.getAll('dis-ids').map((disId) => disId.split(",")).map((dis) => dis[1])
-  const LIST_CATEGORIES_ID = searchParams.getAll('categories-ids').map((cateId) => cateId.split(",")).map((dis) => dis[1]).map(Number)
+  const JOB_TYPE = Number(searchParams.get('job-type'))
+    ? [Number(searchParams.get('job-type'))]
+    : []
+
+  const LIST_DIS_ID = searchParams
+    .getAll('dis-ids')
+    .map((disId) => disId.split(','))
+    .map((dis) => dis[1])
+  const LIST_CATEGORIES_ID = searchParams
+    .getAll('categories-ids')
+    .map((cateId) => cateId.split(','))
+    .map((dis) => dis[1])
+    .map(Number)
 
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`)
   }
-  console.log(typeof (QUERY))
+  console.log(typeof QUERY)
 
   // handle change paginaton
   const handleChange = async (
@@ -137,17 +151,17 @@ const NewJobs: React.FC = () => {
     const result = await searchApi.getSearchByQueryV2(
       QUERY,
       page,
+      MONEY_TYPE, // 1
+      IS_WORKING_WEEKEND,
+      IS_REMOTELY,
+      null,
+      SALARY_MIN, //6000000
+      SALARY_MAX, //12000000
       null,
       null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      JOB_TYPE,
-      LIST_CATEGORIES_ID,
-      LIST_DIS_ID,
+      JOB_TYPE, // all
+      LIST_CATEGORIES_ID, // if user have token
+      LIST_DIS_ID, //  if user have token
       SALARY_TYPE
     )
     if (result) {
@@ -171,12 +185,12 @@ const NewJobs: React.FC = () => {
       const result = await searchApi.getSearchByQueryV2(
         QUERY,
         null,
+        MONEY_TYPE,
+        IS_WORKING_WEEKEND,
+        IS_REMOTELY,
         null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        SALARY_MIN,
+        SALARY_MAX,
         null,
         null,
         JOB_TYPE,
@@ -184,7 +198,6 @@ const NewJobs: React.FC = () => {
         LIST_DIS_ID,
         SALARY_TYPE
       )
-
 
       if (result) {
         console.log(result)
@@ -294,9 +307,9 @@ const NewJobs: React.FC = () => {
                                 >
                                   {item?.company_name.length > 50
                                     ? `${item.company_name.substring(
-                                      0,
-                                      50
-                                    )} ...`
+                                        0,
+                                        50
+                                      )} ...`
                                     : item.company_name}
                                 </Typography>
                               </Tooltip>
@@ -466,7 +479,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

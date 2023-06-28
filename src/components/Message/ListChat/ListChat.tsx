@@ -51,7 +51,6 @@ const ListChat = () => {
 
   let socket = useRef<any>()
   const listRef = useRef<HTMLDivElement>(null)
-  const bottomRef = useRef<HTMLDivElement>(null)
   const imageInputRef = useRef<any>(null)
 
   const previousDate = useRef<string | null>(null)
@@ -209,16 +208,12 @@ const ListChat = () => {
 
   // Khi dữ liệu allListChat được cập nhật, cuộn xuống cuối cùng
   useEffect(() => {
-    if (bottomRef.current) {
+    if (listRef.current) {
       setTimeout(() => {
-        if (bottomRef.current) {
-          // return (listRef.current.scrollTop = listRef.current.scrollHeight)
-          bottomRef.current.scrollIntoView({ behavior: 'smooth' })
-          // return () => {
-          //   listRef.current.scrollTop = listRef.current.scrollHeight
-          // }
+        if (listRef.current) {
+          listRef.current.scrollTop = listRef.current.scrollHeight
         }
-      }, 0)
+      }, 100)
     }
   }, [allListChat])
 
@@ -305,7 +300,6 @@ const ListChat = () => {
                       {new Date(chat.created_at).getMinutes()}
                     </small>
                   </div>
-                  <div ref={bottomRef} style={{ display: 'none' }} />
                 </div>
               )
             } else {
@@ -353,7 +347,6 @@ const ListChat = () => {
                       {new Date(chat.created_at).getMinutes()}
                     </small>
                   </div>
-                  <div ref={bottomRef} style={{ display: 'none' }} />
                 </div>
               )
             }

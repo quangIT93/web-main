@@ -42,16 +42,11 @@ const Home: React.FC = () => {
   } = useContext(HomeValueContext)
 
   // handleChange job from category to Breadcrumbs
-
+  console.log('opnecolappseFilter', openCollapseFilter)
   return (
     <div className="home">
-      <div
-        className={`modal-navbar ${
-          openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
-      >
-        <Navbar />
-      </div>
+      <Navbar />
+
       <Carousel />
 
       <div className="home__main">

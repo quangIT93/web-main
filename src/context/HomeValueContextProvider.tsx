@@ -27,23 +27,23 @@ export const HomeValueContext = React.createContext<{
   navTouchCatelory: boolean
 }>({
   childCateloriesArray: [],
-  setChildCateloriesArray: () => { },
+  setChildCateloriesArray: () => {},
   openCollapseFilter: false,
-  setOpenCollapseFilter: () => { },
+  setOpenCollapseFilter: () => {},
   // heightNavbar: 0,
   // setHeightNavbar: () => {},
   openModalLoginNavbar: false,
-  setOpenModalLoginNavbar: () => { },
+  setOpenModalLoginNavbar: () => {},
   valueJobChild: {
     id: 1,
     parentName: 'Tất cả',
   },
-  setValueJobChild: () => { },
+  setValueJobChild: () => {},
   refCatelories: 0,
-  setRefCatelories: () => { },
-  setRefCatelory: () => { },
-  SetRefNav: () => { },
-  setNavTouchCatelory: () => { },
+  setRefCatelories: () => {},
+  setRefCatelory: () => {},
+  SetRefNav: () => {},
+  setNavTouchCatelory: () => {},
   navTouchCatelory: false,
 })
 
@@ -86,13 +86,10 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
           ? (window.scrollY || document.documentElement.scrollTop) + 71
           : (window.scrollY || document.documentElement.scrollTop) + 71 + 116
 
-
       if (currentScrollTop > prevScrollTop) {
-
         setNavTouchCatelory(true)
         // Thực hiện hành động khi croll xuống trước đầu element 2
       } else if (currentScrollTop <= prevScrollTop) {
-
         setNavTouchCatelory(false)
         // Thực hiện hành động khi croll lên trúng đầu element 2
       }

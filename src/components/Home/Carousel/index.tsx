@@ -1,32 +1,41 @@
-import React, { useState, useEffect, useCallback, memo, useMemo } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  memo,
+  useMemo,
+  useRef,
+} from 'react'
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
 import { DotButton, PrevButton, NextButton } from './components'
-import imageByIndex from './ImageIndex'
+// import imageByIndex from './ImageIndex'
 import Autoplay from 'embla-carousel-autoplay'
 
-const EmblaCarousel: React.FC = () => {
-  const SLIDE_COUNT = 3
-  const slides = useMemo(() => {
-    // Tính toán giá trị result dựa trên dep1 và dep2
-    // ...
-    return Array.from(Array(SLIDE_COUNT).keys())
-  }, [SLIDE_COUNT])
+// import Api
+import bannersApi from 'api/apiBanner'
 
+const EmblaCarousel: React.FC = () => {
   const options: EmblaOptionsType = {
     loop: true,
     align: 'center',
   }
-  console.log('render carolsale')
+
   //   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+
+  const [dataBanners, setDataBanners] = useState<any>([])
+
   const emblaContainerRef = React.useRef<HTMLDivElement>(null)
 
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
     Autoplay({ delay: 3000, stopOnInteraction: false }),
   ])
+
+  console.log('render carolsale')
+
   const scrollPrev = useCallback(
     () => emblaApi && emblaApi.scrollPrev(),
     [emblaApi]
@@ -40,6 +49,32 @@ const EmblaCarousel: React.FC = () => {
     [emblaApi]
   )
 
+  const getBannersApi = async () => {
+    const result = await bannersApi.getBannersApi()
+    try {
+      if (result) setDataBanners(result.data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getBannersApi()
+  }, [])
+
+  const SLIDE_COUNT = dataBanners ? dataBanners.length : 10
+  const slides = useMemo(() => {
+    // Tính toán giá trị result dựa trên dep1 và dep2
+    // ...
+    console.log('data Banner', dataBanners)
+    return Array.from(Array(SLIDE_COUNT).keys())
+  }, [dataBanners])
+
+  const imageByIndex = (index: number): any =>
+    dataBanners[index % dataBanners.length]
+
+  console.log('data Banner', imageByIndex(1))
+  console.log('slides', slides)
   const handleMouseEvent = () => {
     const { current: emblaContainerEl } = emblaContainerRef
 
@@ -92,7 +127,7 @@ const EmblaCarousel: React.FC = () => {
           <div
             className="embla__container"
             ref={emblaContainerRef}
-            style={{ marginLeft: '1px' }}
+            style={{ marginLeft: '1px', borderRadius: '20px' }}
           >
             {slides.map((index) => (
               <div className="embla__slide" key={index}>
@@ -101,8 +136,8 @@ const EmblaCarousel: React.FC = () => {
                 </div>
                 <img
                   className="embla__slide__img"
-                  src={imageByIndex(index)}
-                  alt="Your alt text"
+                  src={imageByIndex(index) ? imageByIndex(index).image : ''}
+                  alt={`ảnh banner`}
                 />
               </div>
             ))}

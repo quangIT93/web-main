@@ -94,7 +94,12 @@ const Navbar: React.FC = () => {
     SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
   } = useContext(HomeValueContext)
 
-  const { receivedMessages, sendMessages } = useContext(ChatContext)
+  const {
+    receivedMessages,
+    sendMessages,
+    setReceivedMessages,
+    setSendMessages,
+  } = useContext(ChatContext)
 
   const [showTap, setshowTap] = React.useState(false)
 
@@ -112,6 +117,14 @@ const Navbar: React.FC = () => {
   const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
   const [listDis, setListDis] = useState<[]>([])
   const [listCate, setListCate] = useState<[]>([])
+  const [typeMoney, setTypeMoney] = useState<number>(1)
+  const [salaryMin, setSalaryMin] = useState<number | null>(0)
+  const [salaryMax, setSalaryMax] = useState<number | null>(0)
+  // const [timeJob, setTimeJob] = useState()
+  // const [dateBegin, setDateBegin] = useState()
+  // const [dateEnd, setDateEnd] = useState()
+  const [isRemotely, setIsRemotely] = useState<number>(0)
+  const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0)
 
   const [countChat, setCountChat] = useState<number>(0)
 
@@ -200,14 +213,14 @@ const Navbar: React.FC = () => {
       console.log('error', error)
     }
   }
-  console.log('receivedMessages', receivedMessages)
-  useEffect(() => {
-    console.log('tinh lai count', countChat)
 
+  useEffect(() => {
     getCountUnread()
-  }, [receivedMessages, sendMessages])
+  }, [receivedMessages, sendMessages, setReceivedMessages, setReceivedMessages])
 
   const ref = React.useRef<HTMLDivElement | null>(null)
+  const refLogin = React.useRef<HTMLDivElement | null>(null)
+  const refInfoUser = React.useRef<HTMLDivElement | null>(null)
 
   const handleCollapseEntered = () => {
     if (ref.current) {
@@ -243,6 +256,20 @@ const Navbar: React.FC = () => {
     }
   }, [])
 
+  // useEffect(() => {
+  //   const handleOutsideClick = (e: any) => {
+  //     if (!ref?.current?.contains(e.target)) {
+  //       setOpenCollapseFilter(false)
+  //     }
+  //   }
+
+  //   window.addEventListener('click', handleOutsideClick)
+
+  //   return () => {
+  //     window.removeEventListener('click', handleOutsideClick)
+  //   }
+  // }, [])
+
   // handle Show modal Filter
   const handleShowModalFilter = () => {
     if (!openModalFilter) return setOpenModalFilter(true)
@@ -253,9 +280,14 @@ const Navbar: React.FC = () => {
   const handleSearch = () => {
     var encode
     var job_type = jobType
+    var money_type = typeMoney
     var salary_type = salaryType
+    var salary_min = salaryMin
+    var salary_max = salaryMax
     var list_dis = listDis
     var list_cate = listCate
+    var is_working_weekend = isWorkingWeekend
+    var is_remotely = isRemotely
 
     if (list_dis.length > 0) {
       list_dis.forEach((item, index) => {
@@ -280,20 +312,27 @@ const Navbar: React.FC = () => {
       salary_type = SALARY_TYPE
     }
 
-    console.log('jobtype', params.toString())
+    // console.log('jobtype', params.toString())
 
     window.open(
       `/search-results?${encode !== 'undefined' ? `q=${encode}` : ''}` +
         `${salary_type ? `&sal-type=${salary_type}` : ''}` +
         `${job_type ? `&job-type=${job_type}` : ''}` +
         `${list_dis.length > 0 ? `&${params.toString()}` : ''}` +
-        `${list_cate.length > 0 ? `&${paramsCate.toString()}` : ''}`,
+        `${list_cate.length > 0 ? `&${paramsCate.toString()}` : ''}` +
+        `${salary_min ? `&salary_min=${salary_min}` : ''}` +
+        `${salary_max ? `&salary_max=${salary_max}` : ''}` +
+        `${
+          is_working_weekend ? `&is_working_weekend=${is_working_weekend}` : ''
+        }` +
+        `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
+        `${money_type ? `&money_type=${money_type}` : ''}`,
       '_self'
     )
   }
 
   // login
-  const handleClickLogin = async () => {
+  const handleClickLogin = async (e: any) => {
     try {
       if (openInfoUser) {
         setSpinning(false)
@@ -328,6 +367,27 @@ const Navbar: React.FC = () => {
     }
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      // console.log('e.tảtget', refInfoUser?.current)
+      // console.log('e.tảtget', refInfoUser?.current?.contains(event.target))
+      // console.log('e.tảtget', refLogin?.current?.contains(event.target))
+      if (refInfoUser.current && !refInfoUser.current.contains(event.target)) {
+        setOpenInfoUser(false)
+      }
+
+      if (refLogin.current && !refLogin.current.contains(event.target)) {
+        setOpenInfoUser(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
+
   // handle logout
   const handleLogout = async () => {
     try {
@@ -360,7 +420,7 @@ const Navbar: React.FC = () => {
       <FormOutlined style={{ color: 'white' }} />
       <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
     </button>,
-    <div className="actions-login" onClick={handleClickLogin}>
+    <div className="actions-login" onClick={handleClickLogin} ref={refLogin}>
       <button className="btn btn__login">
         <div style={{ display: 'flex' }}>
           <div className="login__avatar">
@@ -384,7 +444,7 @@ const Navbar: React.FC = () => {
       </button>
       <Spin indicator={antIcon} spinning={spinning}>
         {openInfoUser && (
-          <div className="sub-login">
+          <div className="sub-login" ref={refInfoUser}>
             <Space className="sub-login_info">
               <Avatar
                 style={{ backgroundColor: '#0D99FF' }}
@@ -431,52 +491,63 @@ const Navbar: React.FC = () => {
   ]
 
   return (
-    <Container className="nav" ref={ref}>
-      <ModalLogin
-        openModalLogin={openModalLogin}
-        setOpenModalLogin={setOpenModalLogin}
-      />
-      <Backdrop
-        sx={{
-          color: '#0d99ff ',
-          zIndex: (theme: any) => theme.zIndex.drawer + 1,
-        }}
-        open={openBackdrop}
-        onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Wrapper>
-        <Left>
-          <Logo />
-        </Left>
-        <Center className="div-nav-center">
-          {/* <div>assssssssssssssssssssssssssssssss</div> */}
-          <SearchInput
-            value={valueSearchInput}
-            setValue={setValueSearchInput}
-          />
-          <Button onClick={handleSearch}>Tim Kiem</Button>
+    <div
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
+    >
+      <Container className="nav" ref={ref}>
+        <ModalLogin
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        />
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          }}
+          open={openBackdrop}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <Wrapper>
+          <Left>
+            <Logo />
+          </Left>
+          <Center className="div-nav-center">
+            {/* <div>assssssssssssssssssssssssssssssss</div> */}
+            <SearchInput
+              value={valueSearchInput}
+              setValue={setValueSearchInput}
+            />
+            <Button onClick={handleSearch}>Tim Kiem</Button>
 
-          <Button onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
-            <TuneOutlinedIcon />
-          </Button>
-
-          <Badge count={countChat}>
-            <Button
-              onClick={() => window.open(`/message`, '_blank')}
-              type="link"
-              style={{ border: '1px solid #aaaaaa' }}
-            >
-              <ChatIcon />
+            <Button onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
+              <TuneOutlinedIcon />
             </Button>
-          </Badge>
-        </Center>
-        <Right className="div-nav-right">
-          <div className="tabBar-right">
-            <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
-          </div>
-          {/* <Button
+
+            <Badge count={countChat}>
+              <Button
+                onClick={() => {
+                  if (dataProfile && localStorage.getItem('refreshToken')) {
+                    window.open(`/message`, '_blank')
+                  } else {
+                    setOpenModalLogin(true)
+                  }
+                }}
+                type="link"
+                style={{ border: '1px solid #aaaaaa' }}
+              >
+                <ChatIcon />
+              </Button>
+            </Badge>
+          </Center>
+          <Right className="div-nav-right">
+            <div className="tabBar-right">
+              <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
+            </div>
+            {/* <Button
             variant="contained"
             startIcon={<AdsClickIcon />}
             style={{ marginRight: '25px' }}
@@ -490,46 +561,58 @@ const Navbar: React.FC = () => {
             </Collapse>
           </Button> */}
 
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              '& > *': {
-                m: 1,
-              },
-            }}
-          >
-            <ButtonGroup sx={{ margin: '0' }}>{buttons}</ButtonGroup>
-          </Box>
-        </Right>
-      </Wrapper>
-      <Collapse
-        in={openCollapseFilter}
-        timeout={800}
-        // unmountOnExit
-        onEnter={handleCollapseEntered}
-        onExited={handleCollapseExited}
-        sx={collapseCssFilter}
-      >
-        <div className="filter-wrap_top">
-          <FilterLocationNav setListDis={setListDis} />
-          <FilterCateloriesNav setListCate={setListCate} />
-          <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
-        </div>
-        <div className="filter-wrap_bottom">
-          <FilterTypeSalary setSalaryType={setSalaryType} />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                '& > *': {
+                  m: 1,
+                },
+              }}
+            >
+              <ButtonGroup sx={{ margin: '0' }}>{buttons}</ButtonGroup>
+            </Box>
+          </Right>
+        </Wrapper>
+        <Collapse
+          in={openCollapseFilter}
+          timeout={800}
+          // unmountOnExit
+          onEnter={handleCollapseEntered}
+          onExited={handleCollapseExited}
+          sx={collapseCssFilter}
+        >
+          <div className="filter-wrap_top">
+            <FilterLocationNav setListDis={setListDis} />
+            <FilterCateloriesNav setListCate={setListCate} />
+            <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
+          </div>
+          <div className="filter-wrap_bottom">
+            <FilterTypeSalary setSalaryType={setSalaryType} />
+            <FilterSalary
+              typeMoney={typeMoney}
+              setTypeMoney={setTypeMoney}
+              salaryMin={salaryMin}
+              salaryMax={salaryMax}
+              setSalaryMin={setSalaryMin}
+              setSalaryMax={setSalaryMax}
+            />
+            <FilterTimeJob
+              setIsWorkingWeekend={setIsWorkingWeekend}
+              isWorkingWeekend={isWorkingWeekend}
+              isRemotely={isRemotely}
+              setIsRemotely={setIsRemotely}
+            />
+          </div>
 
-          <FilterSalary />
-          <FilterTimeJob />
-        </div>
-
-        <div className="btn-filter_nav">
-          <Button type="default">Đặt Lại</Button>
-          <Button type="primary">Xác Nhận</Button>
-        </div>
-      </Collapse>
-    </Container>
+          <div className="btn-filter_nav">
+            <Button type="default">Đặt Lại</Button>
+            <Button type="primary">Xác Nhận</Button>
+          </div>
+        </Collapse>
+      </Container>
+    </div>
   )
 }
 

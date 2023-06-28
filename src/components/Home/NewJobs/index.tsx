@@ -171,7 +171,7 @@ const NewJobs: React.FC = () => {
       {
         // automatic && (
         <Box sx={{ flexGrow: 1 }} ref={listRef}>
-          <h2>Công việc mới nhất</h2>
+          <h2 style={{ margin: '12px 0' }}>Công việc mới nhất</h2>
           <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
             {postNewest.data.posts.map((item: PostNewest, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>

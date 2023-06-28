@@ -14,6 +14,7 @@ import './App.scss'
 import ScrollObserver from './utils/ScrollObserver'
 // import context
 import HomeContextProvider from 'context/HomeContextProvider'
+import HomeValueContextProvider from 'context/HomeValueContextProvider'
 import ChatContextProvider from 'context/ChatContextProvider'
 const NotFound = React.lazy(() => import('./pages/NotFound'))
 
@@ -31,7 +32,7 @@ const App: React.FC = () => {
     <React.Suspense fallback={<div>Loading...</div>}>
       <Provider store={store}>
         <BrowserRouter>
-          <HomeContextProvider>
+          <HomeValueContextProvider>
             <ChatContextProvider>
               <ScrollObserver>
                 <Layout>
@@ -49,7 +50,7 @@ const App: React.FC = () => {
                 </Layout>
               </ScrollObserver>
             </ChatContextProvider>
-          </HomeContextProvider>
+          </HomeValueContextProvider>
         </BrowserRouter>
       </Provider>
     </React.Suspense>

@@ -73,8 +73,9 @@ axiosClient.interceptors.response.use(
           }
         })
         .catch((error) => {
+          localStorage.clear()
           // localStorage.clear();
-          //window.location.reload();
+          window.location.reload()
         })
     }
 
