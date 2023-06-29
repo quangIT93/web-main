@@ -104,7 +104,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
     try {
       var response = null
       setLoading(true)
-      if (localStorage.getItem("accessToken")) {
+      if (localStorage.getItem('accessToken')) {
         const result = await searchApi.getHistoryKeyWord(10)
         if (result) {
           response = result.data.listHistorySearch
@@ -131,7 +131,6 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
 
   React.useEffect(() => {
     getSuggestKeyWord()
-
   }, [])
 
   const handleChange = (newValue: string) => {
@@ -144,14 +143,19 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
 
   // handle press enter
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       if (QUERY && !currentValue && !value) {
-        window.open(`/search-results?q=${encodeURIComponent(`${QUERY}`)}`, "_parent")
-      } else window.open(`/search-results?q=${encodeURIComponent(`${value}`)}`, "_parent")
+        window.open(
+          `/search-results?q=${encodeURIComponent(`${QUERY}`)}`,
+          '_parent'
+        )
+      } else
+        window.open(
+          `/search-results?q=${encodeURIComponent(`${value}`)}`,
+          '_parent'
+        )
     }
   }
-
 
   return (
     <Select
@@ -161,7 +165,6 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
       value={value}
       defaultValue={QUERY ? QUERY : null}
       placeholder="Tìm kiếm công việc"
-
       defaultActiveFirstOption={false}
       showArrow={false}
       filterOption={false}

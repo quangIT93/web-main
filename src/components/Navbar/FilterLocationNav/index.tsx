@@ -21,15 +21,15 @@ const DropdownRender = (menus: React.ReactNode) => (
   <div style={{ width: '100%' }}>
     <Text className="title-filter_location">Chọn địa điểm</Text>
     {menus}
-    <Divider style={{ margin: 0 }} />
-    <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
-      <Button type="default" onClick={() => { }}>
+    <Divider style={{ margin: 5 }} />
+    {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+      <Button type="default" onClick={() => {}}>
         Huỷ
       </Button>
-      <Button type="primary" onClick={() => { }}>
+      <Button type="primary" onClick={() => {}}>
         Áp dụng
       </Button>
-    </div>
+    </div> */}
   </div>
 )
 
@@ -40,8 +40,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
   const [locId, setLocId] = useState<string[]>([])
 
   const [searchParams, setSearchParams] = useSearchParams()
-  const listLocation = searchParams.getAll('dis-ids').map((dis) =>
-    dis.split(","))
+  const listLocation = searchParams
+    .getAll('dis-ids')
+    .map((dis) => dis.split(','))
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation()
@@ -50,7 +51,6 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
       }
 
       setListDis(listLocation)
-
     } catch (error) {
       console.error(error)
     }
@@ -59,8 +59,10 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
   React.useEffect(() => {
     getAllLocaitions()
     console.log(listLocation)
+    if (listLocation.length >= 3) {
+      setDisable(true)
+    }
   }, [])
-
 
   const onChange = (value: any) => {
     // Xử lý giá trị thay đổi
@@ -68,7 +70,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
     const secondValues = value.map((item: any) => item[1])
     console.log('value', value)
     console.log('secondValues', secondValues)
-    if (secondValues.length <= 3) {
+    if (secondValues.length <= 3 && listLocation.length <= 3) {
       setLocId(secondValues)
       setListDis(value)
     }
@@ -90,28 +92,28 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
         options={
           dataLocations
             ? dataLocations.map((dataLocation: any) => ({
-              value: dataLocation.province_id,
-              label: dataLocation.province_fullName,
-              children: dataLocation.districts.map(
-                (child: { district_id: string; district: string }) => {
-                  var dis = false
-                  if (disable) {
-                    dis = true
-                    for (const elem of locId) {
-                      if (elem === child.district_id) {
-                        dis = false
-                        break
+                value: dataLocation.province_id,
+                label: dataLocation.province_fullName,
+                children: dataLocation.districts.map(
+                  (child: { district_id: string; district: string }) => {
+                    var dis = false
+                    if (disable) {
+                      dis = true
+                      for (const elem of locId) {
+                        if (elem === child.district_id) {
+                          dis = false
+                          break
+                        }
                       }
                     }
+                    return {
+                      value: child.district_id,
+                      label: child.district,
+                      disabled: dis,
+                    }
                   }
-                  return {
-                    value: child.district_id,
-                    label: child.district,
-                    disabled: dis,
-                  }
-                }
-              ),
-            }))
+                ),
+              }))
             : []
         }
         onChange={onChange}

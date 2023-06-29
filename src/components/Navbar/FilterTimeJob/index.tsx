@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
 import type { DatePickerProps } from 'antd'
 import { DatePicker, Space } from 'antd'
 import { Collapse, Radio, Input, Button, Typography } from 'antd'
@@ -29,6 +31,23 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   // const [inputValue, setInputValue] = useState('')
   const [checkboxIsWeekend, setCheckboxIsWeekend] = useState(0)
   const [checksetIsRemotely, setChecksetIsRemotely] = useState(0)
+  const [collapseOpen, setCollapseOpen] = useState(false)
+  const collapseRef = useRef<any>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const is_working_weekend = Number(searchParams.get('is_working_weekend'))
+  const is_remotely = Number(searchParams.get('is_remotely'))
+
+  useEffect(() => {
+    if (is_working_weekend) {
+      setIsWorkingWeekend(is_working_weekend)
+      setCheckboxIsWeekend(is_working_weekend)
+    }
+
+    if (is_remotely) {
+      setIsRemotely(is_remotely)
+      setChecksetIsRemotely(is_remotely)
+    }
+  }, [is_working_weekend, is_remotely])
 
   // const handleRadioChange = (e: any) => {
   //   setSelectedValue(e.target.value)
@@ -43,6 +62,13 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
     // console.log(`Input value: ${inputValue}`)
     setIsWorkingWeekend(checkboxIsWeekend)
     setIsRemotely(checksetIsRemotely)
+  }
+
+  const handleConfirmCancel = () => {
+    setIsWorkingWeekend(0)
+    setIsRemotely(0)
+    setCheckboxIsWeekend(0)
+    setChecksetIsRemotely(0)
   }
 
   // const onChangeStartDate: DatePickerProps['onChange'] = (date, dateString) => {
@@ -68,11 +94,30 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
       setChecksetIsRemotely(0)
     }
   }
+
+  useEffect(() => {
+    const handleOutsideClick = (e: any) => {
+      if (!collapseRef.current.contains(e.target)) {
+        setCollapseOpen(false)
+      } else {
+        setCollapseOpen(true)
+      }
+    }
+
+    window.addEventListener('click', handleOutsideClick)
+
+    return () => {
+      window.removeEventListener('click', handleOutsideClick)
+    }
+  }, [])
+
   return (
     <Collapse
       className={`inputFilterTimeJob input-filter_nav ${
         isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
       }`}
+      activeKey={collapseOpen ? '1' : ''}
+      ref={collapseRef}
     >
       <Panel
         header={
@@ -121,7 +166,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
           />
         </Box>
         <div className="wrap-button_filter">
-          <Button type="default" onClick={handleConfirm}>
+          <Button type="default" onClick={handleConfirmCancel}>
             Huỷ
           </Button>
           <Button type="primary" onClick={handleConfirm}>

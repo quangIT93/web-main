@@ -31,7 +31,7 @@ const EmblaCarousel: React.FC = () => {
   const emblaContainerRef = React.useRef<HTMLDivElement>(null)
 
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    Autoplay({ delay: 3000, stopOnInteraction: false }),
+    Autoplay({ delay: 4000, stopOnInteraction: false }),
   ])
 
   console.log('render carolsale')
@@ -62,19 +62,20 @@ const EmblaCarousel: React.FC = () => {
     getBannersApi()
   }, [])
 
-  const SLIDE_COUNT = dataBanners ? dataBanners.length : 10
+  const SLIDE_COUNT = dataBanners.length
+  const slideCount = useRef(dataBanners.length)
+
+  slideCount.current = dataBanners.length
   const slides = useMemo(() => {
     // Tính toán giá trị result dựa trên dep1 và dep2
     // ...
-    console.log('data Banner', dataBanners)
-    return Array.from(Array(SLIDE_COUNT).keys())
-  }, [dataBanners])
+
+    return Array.from(Array(15).keys())
+  }, [])
 
   const imageByIndex = (index: number): any =>
     dataBanners[index % dataBanners.length]
 
-  console.log('data Banner', imageByIndex(1))
-  console.log('slides', slides)
   const handleMouseEvent = () => {
     const { current: emblaContainerEl } = emblaContainerRef
 
@@ -129,7 +130,7 @@ const EmblaCarousel: React.FC = () => {
             ref={emblaContainerRef}
             style={{ marginLeft: '1px', borderRadius: '20px' }}
           >
-            {slides.map((index) => (
+            {slides?.map((value: any, index: number) => (
               <div className="embla__slide" key={index}>
                 <div className="embla__slide__number">
                   <span>{index + 1}</span>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
 import CardActions from '@mui/material/CardActions'
@@ -20,10 +20,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from 'store/index'
 import { RootState } from 'store/reducer'
+
+import { getProfile } from 'store/reducer/profileReducer/getProfileReducer'
 // import api
 import postApi from 'api/postApi'
 import bookMarkApi from 'api/bookMarkApi'
 import searchApi from 'api/searchApi'
+import profileApi from 'api/profileApi'
 
 import Footer from '../../components/Footer/index'
 
@@ -93,20 +96,24 @@ const NewJobs: React.FC = () => {
 
   const listRef = React.useRef<HTMLUListElement | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const [checkBookMark, setCheckBookMark] = React.useState(true)
 
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   // const { setPostNewest, setPostNewestMore } = bindActionCreators(
   //     actionCreators,
   //     dispatch
   // )
 
-  const [checkBookMark, setCheckBookMark] = React.useState(true)
+  const { setProfileUser } = bindActionCreators(actionCreators, dispatch)
+
+  const dataProfile = useSelector((state: RootState) => state.profileUser)
 
   // query value
   const QUERY = decodeURIComponent(`${searchParams.get('q')}`)
+  console.log('query', QUERY)
   const SALARY_TYPE = Number(searchParams.get('sal-type'))
   const MONEY_TYPE = Number(searchParams.get('money_type'))
   const SALARY_MIN = Number(searchParams.get('salary_min'))
@@ -114,9 +121,11 @@ const NewJobs: React.FC = () => {
   const IS_WORKING_WEEKEND = Number(searchParams.get('is_working_weekend'))
   const IS_REMOTELY = Number(searchParams.get('is_remotely'))
 
-  const JOB_TYPE = Number(searchParams.get('job-type'))
-    ? [Number(searchParams.get('job-type'))]
-    : []
+  const JOB_TYPE =
+    Number(searchParams.get('job-type')) &&
+    Number(searchParams.get('job-type'))! !== 5
+      ? [Number(searchParams.get('job-type'))]
+      : []
 
   const LIST_DIS_ID = searchParams
     .getAll('dis-ids')
@@ -127,7 +136,8 @@ const NewJobs: React.FC = () => {
     .map((cateId) => cateId.split(','))
     .map((dis) => dis[1])
     .map(Number)
-
+  console.log('catelories', LIST_CATEGORIES_ID)
+  console.log('LIST_DIS_ID', LIST_DIS_ID)
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`)
@@ -147,24 +157,100 @@ const NewJobs: React.FC = () => {
     // const test = searchParams.get('name')?.toString().split(",").map(Number)
     // console.log(test)
     // //    window.open(`/home?${e}`)
-
     const result = await searchApi.getSearchByQueryV2(
       QUERY,
       page,
-      MONEY_TYPE, // 1
-      IS_WORKING_WEEKEND,
-      IS_REMOTELY,
+      !dataProfile && !MONEY_TYPE //không có profile và value
+        ? 1
+        : !dataProfile && MONEY_TYPE //không có profile nhưng có value
+        ? MONEY_TYPE
+        : dataProfile && !MONEY_TYPE //Có profile nhưng không có value
+        ? 1 // Lấy profile
+        : dataProfile && MONEY_TYPE // Có profile và value
+        ? MONEY_TYPE
+        : 1,
+      !dataProfile && !IS_WORKING_WEEKEND //không có profile và value
+        ? null
+        : !dataProfile && IS_WORKING_WEEKEND //không có profile nhưng có value
+        ? IS_WORKING_WEEKEND
+        : dataProfile && !IS_WORKING_WEEKEND //Có profile nhưng không có value
+        ? null // Lấy profile
+        : dataProfile && IS_WORKING_WEEKEND // Có profile và value
+        ? IS_WORKING_WEEKEND
+        : null,
+      !dataProfile && !IS_REMOTELY //không có profile và value
+        ? null
+        : !dataProfile && IS_REMOTELY //không có profile nhưng có value
+        ? IS_REMOTELY
+        : dataProfile && !IS_REMOTELY //Có profile nhưng không có value
+        ? null // Lấy profile
+        : dataProfile && IS_REMOTELY // Có profile và value
+        ? IS_REMOTELY
+        : null,
       null,
-      SALARY_MIN, //6000000
-      SALARY_MAX, //12000000
+      !dataProfile && !SALARY_MIN //không có profile và value
+        ? 6000000
+        : !dataProfile && SALARY_MIN //không có profile nhưng có value
+        ? SALARY_MIN
+        : dataProfile && !SALARY_MIN //Có profile nhưng không có value
+        ? 6000000 // Lấy profile
+        : dataProfile && SALARY_MIN // Có profile và value
+        ? SALARY_MIN
+        : 6000000,
+      !dataProfile && !SALARY_MAX //không có profile và value
+        ? 12000000
+        : !dataProfile && SALARY_MAX //không có profile nhưng có value
+        ? SALARY_MAX
+        : dataProfile && !SALARY_MAX //Có profile nhưng không có value
+        ? 12000000 // Lấy profile
+        : dataProfile && SALARY_MAX // Có profile và value
+        ? SALARY_MAX
+        : 12000000,
       null,
       null,
-      JOB_TYPE, // all
-      LIST_CATEGORIES_ID, // if user have token
-      LIST_DIS_ID, //  if user have token
-      SALARY_TYPE
+      !dataProfile && !JOB_TYPE //không có profile và value
+        ? []
+        : !dataProfile && JOB_TYPE //không có profile nhưng có value
+        ? JOB_TYPE
+        : dataProfile && !JOB_TYPE //Có profile nhưng không có value
+        ? [] // Lấy profile
+        : dataProfile && JOB_TYPE // Có profile và value
+        ? JOB_TYPE
+        : [],
+      !dataProfile && !LIST_CATEGORIES_ID //không có profile và value
+        ? []
+        : !dataProfile && LIST_CATEGORIES_ID //không có profile nhưng có value
+        ? LIST_CATEGORIES_ID
+        : dataProfile && !LIST_CATEGORIES_ID //Có profile nhưng không có value
+        ? dataProfile.categories.map(
+            (categorie: any) => categorie.child_category_id
+          ) || null // Lấy profile
+        : dataProfile && LIST_CATEGORIES_ID // Có profile và value
+        ? LIST_CATEGORIES_ID
+        : [],
+      !dataProfile && !LIST_DIS_ID //không có profile và value
+        ? []
+        : !dataProfile && LIST_DIS_ID //không có profile nhưng có value
+        ? LIST_DIS_ID
+        : dataProfile && !LIST_DIS_ID //Có profile nhưng không có value
+        ? dataProfile.locations.map((location: any) => location.district_id) ||
+          null // Lấy profile
+        : dataProfile && LIST_DIS_ID // Có profile và value
+        ? LIST_DIS_ID
+        : [],
+      !dataProfile && !SALARY_TYPE //không có profile và value
+        ? null
+        : !dataProfile && SALARY_TYPE //không có profile nhưng có value
+        ? SALARY_TYPE
+        : dataProfile && !SALARY_TYPE //Có profile nhưng không có value
+        ? null // Lấy profile
+        : dataProfile && SALARY_TYPE // Có profile và value
+        ? SALARY_TYPE
+        : null
     )
-    if (result) {
+
+    //
+    if (result && result?.data?.posts.length !== 0) {
       console.log(result)
       setSearchData((prev: any) => {
         return {
@@ -173,30 +259,123 @@ const NewJobs: React.FC = () => {
         }
       })
       setPage(page + 1)
+    } else {
+      console.log('da het data', result)
     }
   }
+  console.log('SALARY_MIN', SALARY_MIN)
+  console.log('dataProfile', dataProfile)
   // handle close backdrop
   const handleClose = () => {
     setOpenBackdrop(false)
   }
+
+  const fetchDataProfileUser = async () => {
+    try {
+      await dispatch(getProfile() as any)
+      const result = await profileApi.getProfile()
+      if (result) {
+        setProfileUser(result.data)
+      }
+    } catch (error) {
+      // Xử lý lỗi
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchDataProfileUser()
+  }, [])
 
   const getPostSearch = async () => {
     try {
       const result = await searchApi.getSearchByQueryV2(
         QUERY,
         null,
-        MONEY_TYPE,
-        IS_WORKING_WEEKEND,
-        IS_REMOTELY,
+        !dataProfile && !MONEY_TYPE //không có profile và value
+          ? 1
+          : !dataProfile && MONEY_TYPE //không có profile nhưng có value
+          ? MONEY_TYPE
+          : dataProfile && !MONEY_TYPE //Có profile nhưng không có value
+          ? 1 // Lấy profile
+          : dataProfile && MONEY_TYPE // Có profile và value
+          ? MONEY_TYPE
+          : 1,
+        !dataProfile && !IS_WORKING_WEEKEND //không có profile và value
+          ? null
+          : !dataProfile && IS_WORKING_WEEKEND //không có profile nhưng có value
+          ? IS_WORKING_WEEKEND
+          : dataProfile && !IS_WORKING_WEEKEND //Có profile nhưng không có value
+          ? null // Lấy profile
+          : dataProfile && IS_WORKING_WEEKEND // Có profile và value
+          ? IS_WORKING_WEEKEND
+          : null,
+        !dataProfile && !IS_REMOTELY //không có profile và value
+          ? null
+          : !dataProfile && IS_REMOTELY //không có profile nhưng có value
+          ? IS_REMOTELY
+          : dataProfile && !IS_REMOTELY //Có profile nhưng không có value
+          ? null // Lấy profile
+          : dataProfile && IS_REMOTELY // Có profile và value
+          ? IS_REMOTELY
+          : null,
         null,
-        SALARY_MIN,
-        SALARY_MAX,
+        !dataProfile && !SALARY_MIN //không có profile và value
+          ? 6000000
+          : !dataProfile && SALARY_MIN //không có profile nhưng có value
+          ? SALARY_MIN
+          : dataProfile && !SALARY_MIN //Có profile nhưng không có value
+          ? 6000000 // Lấy profile
+          : dataProfile && SALARY_MIN // Có profile và value
+          ? SALARY_MIN
+          : 6000000,
+        !dataProfile && !SALARY_MAX //không có profile và value
+          ? 12000000
+          : !dataProfile && SALARY_MAX //không có profile nhưng có value
+          ? SALARY_MAX
+          : dataProfile && !SALARY_MAX //Có profile nhưng không có value
+          ? 12000000 // Lấy profile
+          : dataProfile && SALARY_MAX // Có profile và value
+          ? SALARY_MAX
+          : 12000000,
         null,
         null,
-        JOB_TYPE,
-        LIST_CATEGORIES_ID,
-        LIST_DIS_ID,
-        SALARY_TYPE
+        !dataProfile && !JOB_TYPE //không có profile và value
+          ? []
+          : !dataProfile && JOB_TYPE //không có profile nhưng có value
+          ? JOB_TYPE
+          : dataProfile && !JOB_TYPE //Có profile nhưng không có value
+          ? [] // Lấy profile
+          : dataProfile && JOB_TYPE // Có profile và value
+          ? JOB_TYPE
+          : [],
+        !dataProfile && !LIST_CATEGORIES_ID //không có profile và value
+          ? []
+          : !dataProfile && LIST_CATEGORIES_ID //không có profile nhưng có value
+          ? LIST_CATEGORIES_ID
+          : dataProfile && !LIST_CATEGORIES_ID //Có profile nhưng không có value
+          ? [] // Lấy profile
+          : dataProfile && LIST_CATEGORIES_ID // Có profile và value
+          ? LIST_CATEGORIES_ID
+          : [],
+        !dataProfile && !LIST_DIS_ID //không có profile và value
+          ? []
+          : !dataProfile && LIST_DIS_ID //không có profile nhưng có value
+          ? LIST_DIS_ID
+          : dataProfile && !LIST_DIS_ID //Có profile nhưng không có value
+          ? [] // Lấy profile
+          : dataProfile && LIST_DIS_ID // Có profile và value
+          ? LIST_DIS_ID
+          : [],
+        !dataProfile && !SALARY_TYPE //không có profile và value
+          ? null
+          : !dataProfile && SALARY_TYPE //không có profile nhưng có value
+          ? SALARY_TYPE
+          : dataProfile && !SALARY_TYPE //Có profile nhưng không có value
+          ? null // Lấy profile
+          : dataProfile && SALARY_TYPE // Có profile và value
+          ? SALARY_TYPE
+          : null
       )
 
       if (result) {
@@ -213,6 +392,8 @@ const NewJobs: React.FC = () => {
     getPostSearch()
   }, [])
 
+  console.log('profile')
+
   return (
     <>
       <Navbar />
@@ -228,7 +409,10 @@ const NewJobs: React.FC = () => {
                 margin: '20px 0',
               }}
             >
-              Tìm thấy <h4 style={{ margin: '0 10px' }}>{searchData?.total}</h4>{' '}
+              Tìm thấy{' '}
+              <h4 style={{ margin: '0 10px' }}>
+                {searchData ? searchData?.total : 0}
+              </h4>{' '}
               công việc phù hợp
             </p>
             {searchData?.posts.length > 0 ? (

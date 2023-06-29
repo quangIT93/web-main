@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import { Select, Space, Radio } from 'antd'
 import { EnvironmentOutlined } from '@ant-design/icons'
-import type { RadioChangeEvent } from 'antd';
+import type { RadioChangeEvent } from 'antd'
 import siteApi from 'api/siteApi'
 import { useSearchParams } from 'react-router-dom'
 
@@ -11,7 +11,7 @@ const CustomOption = ({
   data,
   setValue,
   setValueRender,
-  salaryType
+  salaryType,
 }: {
   data: any
   setValue: Function
@@ -20,20 +20,27 @@ const CustomOption = ({
 }) => {
   console.log('Custom option', data)
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
-    console.log('radio3 checked', value);
+    console.log('radio3 checked', value)
     setValue(value)
     const valueRender = data.find((item: any) => item.id == value)
     setValueRender(valueRender)
-  };
+  }
 
   return (
-    <Radio.Group style={{ width: "100%", }} name="radiogroup" onChange={onChange} defaultValue={salaryType} >
-      <Space direction="vertical" style={{ width: "100%" }}>
-        {
-          data?.map((value: any, index: number) => {
-            return <Radio key={index} style={{ width: "100%" }} value={value.id}>{value.value}</Radio>
-          })
-        }
+    <Radio.Group
+      style={{ width: '100%' }}
+      name="radiogroup"
+      onChange={onChange}
+      defaultValue={salaryType}
+    >
+      <Space direction="vertical" style={{ width: '100%' }}>
+        {data?.map((value: any, index: number) => {
+          return (
+            <Radio key={index} style={{ width: '100%' }} value={value.id}>
+              {value.value}
+            </Radio>
+          )
+        })}
       </Space>
     </Radio.Group>
   )
@@ -43,10 +50,8 @@ interface SalaryFilter {
   setSalaryType: Function
 }
 
-
 const { Option } = Select
 const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
-
   const [searchParams, setSearchParams] = useSearchParams()
   const [data, setData] = React.useState()
   const [valueRender, setValueRender] = React.useState<any>()
@@ -59,21 +64,16 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
     if (result) {
       setData(result.data)
       if (SALARY_TYPE) {
-        const value = result.data.find((item: any) => item.id == SALARY_TYPE)
+        const value = result.data.find((item: any) => item.id === SALARY_TYPE)
         setValueRender(value)
       }
-
     }
   }
   React.useEffect(() => {
     getTypeSalary()
-
   }, [])
 
-
-  const handleChange = (value1: string) => {
-
-  }
+  const handleChange = (value1: string) => {}
   return (
     <>
       <Select
@@ -86,8 +86,13 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
         size="large"
         placeholder="Trả lương theo"
       >
-        <Option className='type-salary' value="1" label="Jack">
-          <CustomOption salaryType={SALARY_TYPE} data={data} setValue={setSalaryType} setValueRender={setValueRender} />
+        <Option className="type-salary" value="1" label="Jack">
+          <CustomOption
+            salaryType={SALARY_TYPE}
+            data={data}
+            setValue={setSalaryType}
+            setValueRender={setValueRender}
+          />
         </Option>
       </Select>
     </>

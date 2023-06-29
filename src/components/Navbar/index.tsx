@@ -117,9 +117,9 @@ const Navbar: React.FC = () => {
   const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
   const [listDis, setListDis] = useState<[]>([])
   const [listCate, setListCate] = useState<[]>([])
-  const [typeMoney, setTypeMoney] = useState<number>(1)
-  const [salaryMin, setSalaryMin] = useState<number | null>(0)
-  const [salaryMax, setSalaryMax] = useState<number | null>(0)
+  const [typeMoney, setTypeMoney] = useState<number | null>(1)
+  const [salaryMin, setSalaryMin] = useState<number | null>(null)
+  const [salaryMax, setSalaryMax] = useState<number | null>(null)
   // const [timeJob, setTimeJob] = useState()
   // const [dateBegin, setDateBegin] = useState()
   // const [dateEnd, setDateEnd] = useState()
@@ -275,10 +275,10 @@ const Navbar: React.FC = () => {
     if (!openModalFilter) return setOpenModalFilter(true)
     setOpenModalFilter(false)
   }
-
+  console.log('')
   // handle click search button
   const handleSearch = () => {
-    var encode
+    var encode: any
     var job_type = jobType
     var money_type = typeMoney
     var salary_type = salaryType
@@ -308,12 +308,25 @@ const Navbar: React.FC = () => {
     if (!jobType && JOB_TYPE) {
       job_type = JOB_TYPE
     }
+    // else if (jobType && jobType === 5 && JOB_TYPE) {
+    //   console.log('ko parma 22222222222', JOB_TYPE)
+    //   console.log('ko parma', jobType)
+
+    //   job_type = null
+    // } else if (jobType && jobType !== 5) {
+    //   console.log('ko parma 33333333333', JOB_TYPE)
+    //   console.log('cko parma', jobType)
+
+    //   job_type = jobType
+    // } else {
+    //   job_type = null
+    // }
+
     if (!salaryType && SALARY_TYPE) {
       salary_type = SALARY_TYPE
     }
 
     // console.log('jobtype', params.toString())
-
     window.open(
       `/search-results?${encode !== 'undefined' ? `q=${encode}` : ''}` +
         `${salary_type ? `&sal-type=${salary_type}` : ''}` +
@@ -404,6 +417,13 @@ const Navbar: React.FC = () => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const handleResetValue = () => {
+    setJobType(null)
+    setListDis([])
+    setSalaryMax(null)
+    setSalaryMin(null)
   }
 
   const buttons = [
@@ -591,6 +611,7 @@ const Navbar: React.FC = () => {
           <div className="filter-wrap_bottom">
             <FilterTypeSalary setSalaryType={setSalaryType} />
             <FilterSalary
+              salaryType={salaryType}
               typeMoney={typeMoney}
               setTypeMoney={setTypeMoney}
               salaryMin={salaryMin}
@@ -607,8 +628,10 @@ const Navbar: React.FC = () => {
           </div>
 
           <div className="btn-filter_nav">
-            <Button type="default">Đặt Lại</Button>
-            <Button type="primary">Xác Nhận</Button>
+            {/* <Button type="default" onClick={handleResetValue}>
+              Đặt Lại
+            </Button> */}
+            {/* <Button type="primary">Xác Nhận</Button> */}
           </div>
         </Collapse>
       </Container>
