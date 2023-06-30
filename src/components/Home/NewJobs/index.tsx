@@ -205,9 +205,8 @@ const NewJobs: React.FC = () => {
                         alt={item.title}
                         loading="lazy"
                         style={{
-                          width: '120px',
-                          maxWidth: 'auto',
-                          height: '100%',
+                          maxWidth: '120px',
+                          height: '120px',
                           maxHeight: 150,
                           borderRadius: 10,
                           minHeight: 120,
@@ -227,6 +226,10 @@ const NewJobs: React.FC = () => {
                               fontSize: '15px',
                               margin: 0,
                               fontWeight: 'bold',
+                              whiteSpace: 'nowrap',
+                              width: '100%',
+                              textOverflow: 'ellipsis',
+                              overflow: 'hidden',
                             }}
                           >
                             {item?.title.length > 50
@@ -239,7 +242,13 @@ const NewJobs: React.FC = () => {
                             gutterBottom
                             variant="h1"
                             component="div"
-                            sx={{ fontSize: '12px' }}
+                            sx={{
+                              fontSize: '12px',
+                              whiteSpace: 'nowrap',
+                              width: '100%',
+                              textOverflow: 'ellipsis',
+                              overflow: 'hidden',
+                            }}
                           >
                             {item?.company_name.length > 50
                               ? `${item.company_name.substring(0, 50)} ...`

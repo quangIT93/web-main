@@ -26,7 +26,7 @@ const Category = (props: CurrentCategoryActiveProps) => {
     return (
       <aside className="policy__category">
         <ul>
-          <CategoryItem isActive={true} link="about-us" content="Về Hi Job" />
+          <CategoryItem isActive={true} link="about-us" content="Về HiJob" />
           <CategoryItem
             isActive={false}
             link="privacy-policy"
@@ -44,7 +44,7 @@ const Category = (props: CurrentCategoryActiveProps) => {
     return (
       <aside className="policy__category">
         <ul>
-          <CategoryItem isActive={false} link="about-us" content="Về Hi Job" />
+          <CategoryItem isActive={false} link="about-us" content="Về HiJob" />
           <CategoryItem
             isActive={true}
             link="privacy-policy"
@@ -62,7 +62,7 @@ const Category = (props: CurrentCategoryActiveProps) => {
     return (
       <aside className="policy__category">
         <ul>
-          <CategoryItem isActive={false} link="about-us" content="Về Hi Job" />
+          <CategoryItem isActive={false} link="about-us" content="Về HiJob" />
           <CategoryItem
             isActive={false}
             link="privacy-policy"

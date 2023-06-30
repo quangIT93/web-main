@@ -59,9 +59,10 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
   React.useEffect(() => {
     getAllLocaitions()
     console.log(listLocation)
-    if (listLocation.length >= 3) {
-      setDisable(true)
-    }
+    // if (listLocation.length > 3) {
+    //   setDisable(true)
+    // }
+    onChange(listLocation)
   }, [])
 
   const onChange = (value: any) => {
@@ -125,4 +126,4 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
   )
 }
 
-export default FilterLocationNav
+export default memo(FilterLocationNav)

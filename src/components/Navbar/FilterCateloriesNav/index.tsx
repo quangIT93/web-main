@@ -53,9 +53,11 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
 
   React.useEffect(() => {
     getCategories()
-    if (listCate.length >= 2) {
-      setDisable(true)
-    }
+    // if (listCate.length > 2) {
+    //   setDisable(true)
+    // }
+
+    onChange(listCate)
   }, [])
 
   const [dataCategories, setDataCategories] = React.useState<any>(null)

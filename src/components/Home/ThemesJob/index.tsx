@@ -205,12 +205,9 @@ const ThemesJob: React.FC = () => {
                           alt={item.title}
                           loading="lazy"
                           style={{
-                            width: '120px',
-                            maxWidth: 'auto',
-                            maxHeight: '150px',
+                            maxWidth: '120px',
+                            maxHeight: '120px',
                             borderRadius: 10,
-                            height: '100% ',
-                            minHeight: '120px',
                           }}
                         />
                         <div
@@ -226,6 +223,10 @@ const ThemesJob: React.FC = () => {
                                 fontSize: '15px',
                                 margin: 0,
                                 fontWeight: 'bold',
+                                whiteSpace: 'nowrap',
+                                width: '100%',
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
                               }}
                             >
                               {item?.title.length > 50
@@ -238,7 +239,13 @@ const ThemesJob: React.FC = () => {
                               gutterBottom
                               variant="h1"
                               component="div"
-                              sx={{ fontSize: '12px' }}
+                              sx={{
+                                fontSize: '12px',
+                                whiteSpace: 'nowrap',
+                                width: '100%',
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                              }}
                             >
                               {item?.company_name.length > 50
                                 ? `${item.company_name.substring(0, 50)} ...`
@@ -407,7 +414,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //   onClick={handleClose}
+              //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

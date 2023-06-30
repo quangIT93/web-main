@@ -95,10 +95,12 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
   const [fetching, setFet] = useState(false)
   const [loading, setLoading] = useState(false)
   const QUERY = searchParams.get('q')
-  const handleSearch = (newValue: string | undefined) => {
-    setValue(currentValue)
+  const handleSearch = async (newValue: string | undefined) => {
     fetch(newValue, setData, setFet)
+    setValue(currentValue)
   }
+
+  console.log('value', value)
   // get keyWords suggests
   const getSuggestKeyWord = async () => {
     try {
@@ -163,7 +165,8 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
       autoClearSearchValue
       size="large"
       value={value}
-      defaultValue={QUERY ? QUERY : null}
+      // defaultValue={QUERY ? QUERY : null}
+      defaultValue={null}
       placeholder="Tìm kiếm công việc"
       defaultActiveFirstOption={false}
       showArrow={false}

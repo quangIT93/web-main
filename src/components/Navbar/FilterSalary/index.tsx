@@ -135,10 +135,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
         setSalaryMin(0)
       }
 
-      // if (salaryMax || salaryMin) {
-      //   setSalaryMin(6000000)
-      //   setSalaryMax(12000000)
-      // }
+      if (!salaryMax && !salaryMin) {
+        setSalaryMin(6000000)
+        setSalaryMax(12000000)
+      }
     }
 
     setTypeMoney(selectedValue)
@@ -152,21 +152,23 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       setInputValueMin('0')
     }
 
-    if (!salaryMax || !salaryMin) {
+    if (!salaryMax && !salaryMin) {
       setSalaryMax(12000000)
       setSalaryMin(6000000)
+      setInputValueMax('12000000')
+      setInputValueMin('6000000')
     }
   }, [salaryType])
 
   const handleCancleValue = () => {
     // console.log(`Selected value: ${selectedValue}`)
     // console.log(`Input value: ${inputValue}`)
-    setSalaryMax(null)
-    setSalaryMin(null)
+    setSalaryMax(12000000)
+    setSalaryMin(6000000)
     setTypeMoney(1)
 
-    setInputValueMax(null)
-    setInputValueMin(null)
+    setInputValueMax('12000000')
+    setInputValueMin('6000000')
     setSelectedValue(1)
   }
 
@@ -238,7 +240,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           disabled={salaryType === 6}
         />
         <Input
-          maxLength={11}
+          maxLength={selectedValue === 1 ? 11 : 5}
           // value={inputValueMax ? inputValueMax : Salary_Max ? Salary_Max : ''}
           value={
             inputValueMax
