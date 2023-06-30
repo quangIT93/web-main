@@ -32,7 +32,7 @@ const Modal = (props: ModalType) => {
                       <h3 className="text-title">
                         Ứng tuyển nhiều công việc hấp dẫn
                       </h3>
-                      <h2 className="text-title">Tải ứng dụng Hi Job ngay!</h2>
+                      <h2 className="text-title">Tải ứng dụng HiJob ngay!</h2>
                     </div>
                     <div id="div-popup-content-bottom">
                       <div>

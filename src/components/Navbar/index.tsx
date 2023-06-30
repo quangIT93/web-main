@@ -217,7 +217,8 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     getCountUnread()
   }, [receivedMessages, sendMessages, setReceivedMessages, setReceivedMessages])
-
+  console.log('receivedMessages', receivedMessages)
+  console.log('sendMessages', sendMessages)
   const ref = React.useRef<HTMLDivElement | null>(null)
   const refLogin = React.useRef<HTMLDivElement | null>(null)
   const refInfoUser = React.useRef<HTMLDivElement | null>(null)

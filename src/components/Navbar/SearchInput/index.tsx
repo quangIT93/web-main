@@ -153,7 +153,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
         )
       } else
         window.open(
-          `/search-results?q=${encodeURIComponent(`${value}`)}`,
+          `/search-results?q=${encodeURIComponent(`${currentValue}`)}`,
           '_parent'
         )
     }
@@ -165,8 +165,8 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
       autoClearSearchValue
       size="large"
       value={value}
-      // defaultValue={QUERY ? QUERY : null}
-      defaultValue={null}
+      defaultValue={QUERY ? QUERY : null}
+      // defaultValue={null}
       placeholder="Tìm kiếm công việc"
       defaultActiveFirstOption={false}
       showArrow={false}

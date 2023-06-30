@@ -206,10 +206,8 @@ const NewJobs: React.FC = () => {
                         loading="lazy"
                         style={{
                           maxWidth: '120px',
-                          height: '120px',
-                          maxHeight: 150,
+                          maxHeight: '120px',
                           borderRadius: 10,
-                          minHeight: 120,
                         }}
                       />
                       <div

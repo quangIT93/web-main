@@ -187,7 +187,8 @@ const ThemesJob: React.FC = () => {
                         transition: 'all 0.3s linear',
                       },
                       boxShadow: 'none',
-                      borderRadius: 'unset',
+                      borderRadius: '5px',
+                      justifyContent: 'space-between',
                     }}
                   >
                     <div
@@ -204,11 +205,6 @@ const ThemesJob: React.FC = () => {
                           srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                           alt={item.title}
                           loading="lazy"
-                          style={{
-                            maxWidth: '120px',
-                            maxHeight: '120px',
-                            borderRadius: 10,
-                          }}
                         />
                         <div
                           style={{ padding: '0', marginLeft: '12px' }}

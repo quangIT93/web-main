@@ -144,7 +144,7 @@ const Footer: React.FC = () => {
             </div>
 
             <h3>Kết nối tài năng</h3>
-            <p>Công ty TNHH Neo Works., LTD</p>
+            <p>Công ty TNHH NeoWorks., LTD</p>
             <p>Địa chỉ: 79 Quốc Hương, P. Thảo Điền, Quận 2, TP HCM</p>
             <p>Đại diện pháp luật: Kim Dongha</p>
             <p>Chức vụ: Giám đốc</p>
