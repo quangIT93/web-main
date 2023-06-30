@@ -96,8 +96,8 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
   const [loading, setLoading] = useState(false)
   const QUERY = searchParams.get('q')
   const handleSearch = async (newValue: string | undefined) => {
-    fetch(newValue, setData, setFet)
     setValue(currentValue)
+    fetch(newValue, setData, setFet)
   }
 
   console.log('value', value)
