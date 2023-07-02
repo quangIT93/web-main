@@ -1,10 +1,10 @@
 import React, { useEffect, FormEvent, useState } from 'react'
-import { useHomeState } from '../Home/HomeState'
+// import { useHomeState } from '../Home/HomeState'
 import { useSearchParams } from 'react-router-dom'
 import Footer from '../../components/Footer/index'
 
 import { Skeleton } from 'antd'
-import { Form, message } from 'antd'
+import { message } from 'antd'
 // import component
 // @ts-ignore
 import { Navbar } from '#components'
@@ -29,7 +29,7 @@ import './style.scss'
 
 // inport Api
 import postApi from 'api/postApi'
-import { ConsoleSqlOutlined } from '@ant-design/icons'
+// import { ConsoleSqlOutlined } from '@ant-design/icons'
 
 export interface FormValues {
   id: string
@@ -221,13 +221,12 @@ const EditPosted = () => {
     formData.append('latitude', String(editDataPosted?.latitude))
     formData.append('longitude', String(editDataPosted?.longitude))
 
-    for (const pair of formData.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`)
-    }
+    // for (const pair of formData.entries()) {
+    //   console.log(`${pair[0]}, ${pair[1]}`)
+    // }
 
     if (formData) {
       createNewPost(formData)
-      console.log('formData', formData)
     }
   }
 
@@ -313,10 +312,8 @@ const EditPosted = () => {
     try {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
-          console.log('cho phep submit')
           const result = await postApi.updatePostedInfo(formData)
           if (result) {
-            console.log('resultresult', result)
             setOpenModalEditPost(true)
           }
         }
@@ -327,7 +324,6 @@ const EditPosted = () => {
         })
       }
     } catch (error) {
-      console.log('loixxxxxxxxxxxxxxxxxxxx')
       console.error('error', error)
     }
   }

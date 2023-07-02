@@ -6,6 +6,7 @@ import type { SelectProps } from 'antd'
 import searchApi from 'api/searchApi'
 import './style.scss'
 import { Spin } from 'antd'
+import { CloseOutlined } from '@ant-design/icons'
 
 import {
   useNavigate,
@@ -19,8 +20,8 @@ let currentValue: string | undefined
 // fetch data keywords
 const fetch = (
   value: string | undefined,
-  callback: Function,
-  setFetching: Function
+  callback: Function
+  // setFetching: Function
 ) => {
   if (timeout) {
     clearTimeout(timeout)
@@ -63,7 +64,7 @@ const fetch = (
             })
           }
         })
-        setFetching(false)
+        // setFetching(false)
         callback(array)
       }
     }
@@ -71,7 +72,7 @@ const fetch = (
 
   // check value search then fetching data
   if (value != '') {
-    setFetching(true)
+    // setFetching(true)
     timeout = setTimeout(fake, 300)
   } else {
     searchApi.getSuggestKeyWord(10).then((result) => {
@@ -92,16 +93,31 @@ interface SearchProps {
 const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [data, setData] = useState<SelectProps['options']>([])
-  const [fetching, setFet] = useState(false)
+  // const [fetching, setFet] = useState(false)
   const [loading, setLoading] = useState(false)
   const QUERY = searchParams.get('q')
   const handleSearch = async (newValue: string | undefined) => {
-    setValue(currentValue)
-    fetch(newValue, setData, setFet)
+    fetch(
+      newValue,
+      setData
+      // , setFet
+    )
+    // console.log('newValue1111', newValue)
   }
 
-  console.log('value', value)
+  React.useEffect(() => {
+    if (currentValue) {
+      console.log('ádadasd', currentValue)
+      setValue(currentValue)
+    }
+  }, [currentValue])
+  // console.log('value', value)
+  // console.log('currentValue', currentValue)
   // get keyWords suggests
+  React.useEffect(() => {
+    setValue(QUERY as any)
+  }, [])
+
   const getSuggestKeyWord = async () => {
     try {
       var response = null
@@ -136,12 +152,29 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
   }, [])
 
   const handleChange = (newValue: string) => {
+    console.log('newValue', newValue)
     setValue(newValue)
   }
 
+  const disableScroll = () => {
+    document.body.style.overflow = 'hidden'
+  }
+
+  const enableScroll = () => {
+    document.body.style.overflow = ''
+  }
+
   const handleOnFocus = () => {
+    // console.log('fcccccccccuss')
+    // disableScroll()
     getSuggestKeyWord()
   }
+
+  // const handleOnBlur = () => {
+  //   console.log('bbbbbbbbblur')
+  //   // Xử lý logic khác (nếu có)
+  //   enableScroll()
+  // }
 
   // handle press enter
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -159,6 +192,30 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
     }
   }
 
+  const handleClickItem = (value: string) => {
+    setValue(currentValue)
+    fetch(
+      value,
+      setData
+      // , setFet
+    )
+  }
+
+  const handleClearItem = () => {
+    getSuggestKeyWord()
+  }
+
+  const dropdownRender: any = (data || []).map((d: any, index: number) => (
+    <div
+      key={index}
+      style={{ display: 'flex', justifyContent: 'space-between' }}
+      onClick={() => handleClickItem(d.value)}
+    >
+      {d.value}
+      <CloseOutlined />
+    </div>
+  ))
+
   return (
     <Select
       showSearch
@@ -174,7 +231,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
       onSearch={handleSearch}
       onChange={handleChange}
       loading={loading}
-      notFoundContent={fetching ? <Spin size="small" /> : null}
+      // notFoundContent={fetching ? <Spin size="small" /> : null}
       options={(data || []).map((d) => ({
         value: d.value,
         label: d.text,
@@ -183,8 +240,14 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
       virtual={false}
       onFocus={handleOnFocus}
       onInputKeyDown={handleKeyPress}
+      allowClear={true}
+      // onBlur={handleOnBlur}
+      removeIcon={<CloseOutlined />}
+      menuItemSelectedIcon={<Spin size="small">dec</Spin>}
+      dropdownRender={() => dropdownRender}
+      onClear={handleClearItem}
     />
   )
 }
 
-export default SearchInput
+export default React.memo(SearchInput)

@@ -126,8 +126,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
     setDataPosted(sortData.sortDataByDate(event.target.value, dataPosted))
   }
 
-  console.log('render cardPostedAll')
-  console.log("data posted: ", dataPosted)
+
   return (
     <>
       {contextHolder}

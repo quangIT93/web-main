@@ -58,7 +58,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
 
   React.useEffect(() => {
     getAllLocaitions()
-    console.log(listLocation)
+
     // if (listLocation.length > 3) {
     //   setDisable(true)
     // }
@@ -69,8 +69,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
     // Xử lý giá trị thay đổi
     setDisable(false)
     const secondValues = value.map((item: any) => item[1])
-    console.log('value', value)
-    console.log('secondValues', secondValues)
+
     if (secondValues.length <= 3 && listLocation.length <= 3) {
       setLocId(secondValues)
       setListDis(value)

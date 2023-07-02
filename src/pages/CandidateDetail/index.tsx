@@ -77,7 +77,7 @@ const CandidateDetail: React.FC = () => {
     dataCandidate?.applicationProfile?.application_status
   )
   const [open, setOpen] = useState(false)
-  console.log('search')
+
   // when dataCandidate changed, statusApplication change
   useEffect(() => {
     if (dataCandidate) {
@@ -91,7 +91,6 @@ const CandidateDetail: React.FC = () => {
       const postId = parseInt(searchParams.get('post-id') ?? '')
       const candidateId = searchParams.get('application_id') ?? ''
       const result = await postApi.getById(postId)
-      console.log(result, 'search')
 
       if (result) {
         setDataPost(result.data)
@@ -108,9 +107,7 @@ const CandidateDetail: React.FC = () => {
       console.log('error', error)
     }
   }
-  console.log('data', dataPost)
-  console.log('candidate', dataCandidate)
-  console.log('candidateStatus', statusApplication)
+
   useEffect(() => {
     let isMounted = true
     setLoading(true)

@@ -44,7 +44,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
       if (result) {
         setDataCategories(result.data)
       }
-      console.log(listCate)
+
       setListCate(listCate)
     } catch (error) {
       console.error(error)
@@ -66,9 +66,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
   const onChange = (value: any) => {
     setDisable(false)
     const secondValues = value.map((item: any) => item[1])
-    console.log('value', value)
-    console.log('secondValues', secondValues)
-    console.log('listCate', listCate)
+
     if (secondValues.length <= 3 && listCate.length <= 3) {
       setCategoriesId(secondValues)
       setListCate(value)

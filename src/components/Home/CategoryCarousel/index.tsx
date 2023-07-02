@@ -172,9 +172,6 @@ const CategoryCarousel: React.FC = () => {
     setOpenBackdrop(true)
   }
 
-  console.log('navTouchCatelory', navTouchCatelory)
-  console.log('openCollapseFilter', openCollapseFilter)
-
   return (
     <Box
       ref={listRef}

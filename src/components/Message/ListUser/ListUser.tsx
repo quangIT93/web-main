@@ -28,13 +28,10 @@ const ListUserChat = () => {
     receivedMessages,
   } = useContext(ChatContext)
 
-  console.log('sendMessages', sendMessages)
-  console.log('receivedMessages', receivedMessages)
-
   const getAllUserChat = async () => {
     try {
       const result = await messageApi.getUserChated()
-      console.log('result', result)
+      // console.log('result', result)
       if (result) {
         setStateUserChat(result.data)
       }
@@ -72,7 +69,6 @@ const ListUserChat = () => {
   }, [searchParams.get('post_id'), searchParams.get('user_id')])
 
   const handleClickUserInfo = (user: any) => {
-    console.log('click', user)
     setSearchParams({ post_id: user.post_id, user_id: user.user_id })
     getAllUserChat()
     setReceivedMessages([
@@ -109,8 +105,8 @@ const ListUserChat = () => {
     })
   }, [searchParams.get('user_id'), listUserChat])
 
-  console.log('tin nhan duoc nhan', receivedMessages)
-  console.log('tin nhan da gui', sendMessages)
+  // console.log('tin nhan duoc nhan', receivedMessages)
+  // console.log('tin nhan da gui', sendMessages)
   const onSearch = (value: string) => console.log(value)
   return (
     <>

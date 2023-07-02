@@ -91,7 +91,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         facebook: fb,
         linkedin: linkIn
       }
-      console.log(info)
+  
       const result = await profileApi.updateContact(info)
       if (result) {
         setOpenModalContact(false)

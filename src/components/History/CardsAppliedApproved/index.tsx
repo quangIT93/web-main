@@ -41,7 +41,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
         5,
         1
       )
-      console.log('result', result)
+
       if (result) {
         setDataApplied(result.data)
         setLastPostId(result.data[result.data.length - 1].id)
@@ -106,7 +106,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     postId: number
   ) => {
-    console.log('postId', postId)
+
     window.open(`/post-detail?post-id=${postId}`)
   }
 

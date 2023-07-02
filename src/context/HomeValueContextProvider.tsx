@@ -103,17 +103,9 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
   }, [prevScrollTop, openCollapseFilter])
 
   useEffect(() => {
-    console.log(
-      refCatelory?.current
-        ? refCatelory?.current?.getBoundingClientRect().top
-        : 0
-    )
     setPrevScrollTop(Number(refCatelory?.current?.getBoundingClientRect().top))
   }, [refCatelory])
 
-  console.log('refCatelories', refCatelories)
-  console.log('refNav', refNav?.current?.getBoundingClientRect())
-  console.log('refNav', refNav?.current?.scrollHeight)
   const homeValueContextData = {
     childCateloriesArray,
     setChildCateloriesArray,

@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
       | React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     // e.isPropagationStopped()
-    console.log('click', open)
+
     if (!open && !windowWidth) {
       return setOpen(true)
     } else if (open && !windowWidth) {

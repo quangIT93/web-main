@@ -71,11 +71,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   React.useEffect(() => {
     getCategories()
   }, [])
-  const onChange = (
-    newValue: string[] | any,
-
-  ) => {
-
+  const onChange = (newValue: string[] | any) => {
     setValue(newValue)
   }
 
@@ -106,7 +102,6 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
         value.map((v) => parseInt(v))
       )
       if (result) {
-        console.log('update thành công', result)
         await dispatch(getProfile() as any)
         setOpenModalCareerObjective(false)
       }

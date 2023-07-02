@@ -20,7 +20,6 @@ const CustomOption = ({
 }) => {
   console.log('Custom option', data)
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
-    console.log('radio3 checked', value)
     setValue(value)
     const valueRender = data.find((item: any) => item.id == value)
     setValueRender(valueRender)

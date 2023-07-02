@@ -20,7 +20,7 @@ const EditText = () => {
 
   const handleTextareaChange = (e: any) => {
     const html = e.target.value
-    console.log('html', html)
+    // console.log('html', html)
     // Convert HTML to editor content state if needed
     // Implement your logic here
   }

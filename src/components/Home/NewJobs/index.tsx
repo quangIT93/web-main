@@ -144,10 +144,9 @@ const NewJobs: React.FC = () => {
     try {
       setOpenBackdrop(true)
       const result = await postApi.getPostNewest(null, null, null, 19)
-      console.log('result: ', result)
+
       if (result) {
         setPostNewest(result)
-        console.log(result)
 
         // set loading
         setOpenBackdrop(false)
@@ -165,7 +164,7 @@ const NewJobs: React.FC = () => {
     // searchParams.delete("theme-id")
     // setSearchParams(searchParams)
   }, [])
-  console.log('newJob', NewJobs)
+
   return (
     <>
       {

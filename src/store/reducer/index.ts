@@ -6,10 +6,11 @@ import provincesReducer from './provincesReducer'
 import authReducer from './authReducer/signGmailReducer'
 import profileUser from './profileReducer/profileReducer'
 
-
 import getProfileReducer from './profileReducer/getProfileReducer'
 import putProfileInfoPersonalReducer from './profileReducer/putProfileInfoPersonalReducer'
 import alertProfileReducer from './profileReducer/alertProfileReducer'
+
+import navbarSlice from './navbarReducer/navbarSlice'
 
 const reducers = combineReducers({
   post: postReducer,
@@ -20,6 +21,8 @@ const reducers = combineReducers({
   profile: getProfileReducer,
   putProfileInfoPersonal: putProfileInfoPersonalReducer,
   alertProfile: alertProfileReducer,
+  //quản lý state navbar
+  navbarState: navbarSlice,
 })
 
 export default reducers

@@ -64,8 +64,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   const onChange = (value: any) => {
     setDisable(false)
     const secondValues = value.map((item: any) => item[1])
-    console.log('value', value)
-    console.log('secondValues', secondValues)
+
     if (secondValues.length <= 2) {
       setCategoriesId(secondValues)
     }

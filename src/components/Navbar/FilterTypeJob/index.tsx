@@ -19,24 +19,19 @@ const CustomOption = ({
   jobType: number
 }) => {
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
-    console.log('radio3 checked', value)
-
     const valueRender = data.find((item: any) => item.id === value)
-    console.log('data', data)
-    console.log('value', value)
+
     setValueRender(valueRender)
-    console.log('valueRender', valueRender)
-    console.log('jobType', jobType)
 
     setValue(value)
   }
-
+  console.log('jobType', jobType)
   return (
     <Radio.Group
       style={{ width: '100%' }}
       name="radiogroup"
       onChange={onChange}
-      defaultValue={5}
+      defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -69,6 +64,8 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
     const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data]
     if (updatedData) {
       setData(updatedData)
+      console.log('TYPE_JOB', TYPE_JOB)
+      console.log('data', data)
       if (TYPE_JOB) {
         const value = updatedData.find((item: any) => item.id === TYPE_JOB)
         setValueRender(value)

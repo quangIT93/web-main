@@ -201,7 +201,7 @@ const BreadcrumbsCpn: React.FC = () => {
 
   const breadcrumbs = [
     <Typography
-      key="3"
+      key="2"
       color="text.primary"
       sx={{
         position: 'relative',
@@ -217,7 +217,7 @@ const BreadcrumbsCpn: React.FC = () => {
       {valueJobChild?.parentName}
     </Typography>,
     valueJobChild?.id === 1 ? (
-      <></>
+      <React.Fragment key="3"></React.Fragment>
     ) : (
       <div
         key="3"
@@ -242,8 +242,11 @@ const BreadcrumbsCpn: React.FC = () => {
           {arrayChild?.length === 0
             ? 'Tất cả'
             : arrayChild?.map(
-                (value: { id: number; name: string }, index: number) =>
-                  `${value.name} ${index !== arrayChild.length - 1 ? '/ ' : ''}`
+                (value: { id: number; name: string }, index: number) => (
+                  <div key={index}>
+                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                  </div>
+                )
               )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
@@ -279,12 +282,13 @@ const BreadcrumbsCpn: React.FC = () => {
           <FormGroup>
             {childCatelories?.map((childCatelorie: any, index: number) => (
               <FormControlLabel
-                key={childCatelorie?.id}
+                key={index}
                 sx={{
                   padding: '4px 24px',
                 }}
                 control={
                   <Checkbox
+                    key={index}
                     checked={
                       checkedItems
                         ? checkedItems[index]?.checked || false

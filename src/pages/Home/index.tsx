@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { memo } from 'react'
 // @ts-ignore
 import { Navbar } from '#components'
 
@@ -13,36 +13,18 @@ import { ThemesJob } from '#components'
 // @ts-ignore
 import { CategoryCarousel } from '#components'
 
-import ModalLogin from '#components/Home/ModalLogin'
-import { useHomeState } from './HomeState'
+// import ModalLogin from '#components/Home/ModalLogin'
+// import { useHomeState } from './HomeState'
 import './style.scss'
 import Footer from '../../components/Footer/Footer'
 
 // import context
-import { HomeValueContext } from 'context/HomeValueContextProvider'
-import { HomeContext } from 'context/HomeContextProvider'
+// import { HomeValueContext } from 'context/HomeValueContextProvider'
+// import { HomeContext } from 'context/HomeContextProvider'
 
-import { IvalueJobChild } from 'context/HomeValueContextProvider'
+// import { IvalueJobChild } from 'context/HomeValueContextProvider'
 
 const Home: React.FC = () => {
-  const {
-    openCollapseFilter,
-  }: // setOpenCollapseFilter,
-  // setHeightNavbar,
-  // heightNavbar,
-  // valueJobChild,
-  // setValueJobChild,
-  {
-    openCollapseFilter: boolean
-    // setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    // valueJobChild: IvalueJobChild
-    // setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>
-  } = useContext(HomeValueContext)
-
-  // handleChange job from category to Breadcrumbs
-  console.log('opnecolappseFilter', openCollapseFilter)
   return (
     <div className="home">
       <Navbar />
@@ -61,4 +43,4 @@ const Home: React.FC = () => {
   )
 }
 
-export default React.memo(Home)
+export default memo(Home)

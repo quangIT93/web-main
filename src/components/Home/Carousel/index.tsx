@@ -34,7 +34,7 @@ const EmblaCarousel: React.FC = () => {
     Autoplay({ delay: 4000, stopOnInteraction: false }),
   ])
 
-  console.log('render carolsale')
+
 
   const scrollPrev = useCallback(
     () => emblaApi && emblaApi.scrollPrev(),
@@ -82,7 +82,7 @@ const EmblaCarousel: React.FC = () => {
     if (emblaContainerEl) {
       emblaContainerEl.addEventListener('mousedown', () => {
         emblaContainerEl.style.cursor = 'grabbing'
-        console.log(emblaApi)
+
         emblaApi?.clickAllowed()
       })
 

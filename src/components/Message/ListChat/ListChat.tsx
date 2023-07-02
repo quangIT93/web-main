@@ -186,7 +186,6 @@ const ListChat = () => {
 
   const handleImageUpload = (e: any) => {
     const selectedImage = e.target.files
-    console.log('file', selectedImage)
 
     if (selectedImage) {
       const formData = new FormData()

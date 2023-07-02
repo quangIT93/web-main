@@ -30,7 +30,6 @@ const SeenApplication: React.FC<ISeenApplication> = (props) => {
   const handleClose = () => setOpenReject(false)
 
   const handleClickReject = async () => {
-    console.log('rejected appli')
     const candidateId = parseInt(searchParams.get('application_id') ?? '')
     try {
       const result = await appplicationApi.updateApplication(candidateId, 3)
@@ -44,11 +43,10 @@ const SeenApplication: React.FC<ISeenApplication> = (props) => {
 
   const handleClickApproved = async () => {
     const candidateId = parseInt(searchParams.get('application_id') ?? '')
-    console.log('approved appli')
+
     try {
       const result = await appplicationApi.updateApplication(candidateId, 2)
       if (result) {
-        console.log('Duyệt hồ sơ', result)
         setStatusApplication(2)
       }
     } catch (error) {

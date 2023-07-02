@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
-import CardActions from '@mui/material/CardActions'
+
 import ImageListItem from '@mui/material/ImageListItem'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 // import { url } from 'inspector'
-import Pagination from '@mui/material/Pagination'
+
 import Stack from '@mui/material/Stack'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -23,7 +23,7 @@ import { RootState } from 'store/reducer'
 
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer'
 // import api
-import postApi from 'api/postApi'
+// import postApi from 'api/postApi'
 import bookMarkApi from 'api/bookMarkApi'
 import searchApi from 'api/searchApi'
 import profileApi from 'api/profileApi'
@@ -36,19 +36,19 @@ import 'intl/locale-data/jsonp/en'
 // @ts-ignore
 import { Navbar } from '#components'
 
-import { useHomeState } from '../Home/HomeState'
+// import { useHomeState } from '../Home/HomeState'
 
 import {
-  useNavigate,
-  createSearchParams,
+  // useNavigate,
+  // createSearchParams,
   useSearchParams,
 } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
+// import { AxiosResponse } from 'axios'
 // import icon
 import {
   EnvironmentFilled,
   ClockCircleFilled,
-  EuroCircleFilled,
+  // EuroCircleFilled,
   CaretDownFilled,
 } from '@ant-design/icons'
 
@@ -81,14 +81,14 @@ interface PostNewest {
 }
 
 const NewJobs: React.FC = () => {
-  const {
-    openCollapse,
-    setOpenCollapse,
-    height,
-    setHeight,
+  // const {
+  //   openCollapse,
+  //   setOpenCollapse,
+  //   height,
+  //   setHeight,
 
-    setOpenModalLogin,
-  } = useHomeState()
+  //   setOpenModalLogin,
+  // } = useHomeState()
 
   const [page, setPage] = React.useState(2)
   const [openBackdrop, setOpenBackdrop] = React.useState(false)
@@ -113,7 +113,7 @@ const NewJobs: React.FC = () => {
 
   // query value
   const QUERY = decodeURIComponent(`${searchParams.get('q')}`)
-  console.log('query', QUERY)
+
   const SALARY_TYPE = Number(searchParams.get('sal-type'))
   const MONEY_TYPE = Number(searchParams.get('money_type'))
   const SALARY_MIN = Number(searchParams.get('salary_min'))
@@ -136,13 +136,11 @@ const NewJobs: React.FC = () => {
     .map((cateId) => cateId.split(','))
     .map((dis) => dis[1])
     .map(Number)
-  console.log('catelories', LIST_CATEGORIES_ID)
-  console.log('LIST_DIS_ID', LIST_DIS_ID)
+
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`)
   }
-  console.log(typeof QUERY)
 
   // handle change paginaton
   const handleChange = async (
@@ -157,101 +155,124 @@ const NewJobs: React.FC = () => {
     // const test = searchParams.get('name')?.toString().split(",").map(Number)
     // console.log(test)
     // //    window.open(`/home?${e}`)
+    // const result = await searchApi.getSearchByQueryV2(
+    //   !dataProfile && !QUERY //không có profile và value
+    //     ? ''
+    //     : !dataProfile && QUERY //không có profile nhưng có value
+    //     ? QUERY
+    //     : dataProfile && !QUERY //Có profile nhưng không có value
+    //     ? '' // Lấy profile
+    //     : dataProfile && QUERY // Có profile và value
+    //     ? QUERY
+    //     : '',
+    //   page,
+    //   !dataProfile && !MONEY_TYPE //không có profile và value
+    //     ? 1
+    //     : !dataProfile && MONEY_TYPE //không có profile nhưng có value
+    //     ? MONEY_TYPE
+    //     : dataProfile && !MONEY_TYPE //Có profile nhưng không có value
+    //     ? 1 // Lấy profile
+    //     : dataProfile && MONEY_TYPE // Có profile và value
+    //     ? MONEY_TYPE
+    //     : 1,
+    //   !dataProfile && !IS_WORKING_WEEKEND //không có profile và value
+    //     ? null
+    //     : !dataProfile && IS_WORKING_WEEKEND //không có profile nhưng có value
+    //     ? IS_WORKING_WEEKEND
+    //     : dataProfile && !IS_WORKING_WEEKEND //Có profile nhưng không có value
+    //     ? null // Lấy profile
+    //     : dataProfile && IS_WORKING_WEEKEND // Có profile và value
+    //     ? IS_WORKING_WEEKEND
+    //     : null,
+    //   !dataProfile && !IS_REMOTELY //không có profile và value
+    //     ? null
+    //     : !dataProfile && IS_REMOTELY //không có profile nhưng có value
+    //     ? IS_REMOTELY
+    //     : dataProfile && !IS_REMOTELY //Có profile nhưng không có value
+    //     ? null // Lấy profile
+    //     : dataProfile && IS_REMOTELY // Có profile và value
+    //     ? IS_REMOTELY
+    //     : null,
+    //   null,
+    //   !dataProfile && !SALARY_MIN //không có profile và value
+    //     ? 6000000
+    //     : !dataProfile && SALARY_MIN //không có profile nhưng có value
+    //     ? SALARY_MIN
+    //     : dataProfile && !SALARY_MIN //Có profile nhưng không có value
+    //     ? 6000000 // Lấy profile
+    //     : dataProfile && SALARY_MIN // Có profile và value
+    //     ? SALARY_MIN
+    //     : 6000000,
+    //   !dataProfile && !SALARY_MAX //không có profile và value
+    //     ? 12000000
+    //     : !dataProfile && SALARY_MAX //không có profile nhưng có value
+    //     ? SALARY_MAX
+    //     : dataProfile && !SALARY_MAX //Có profile nhưng không có value
+    //     ? 12000000 // Lấy profile
+    //     : dataProfile && SALARY_MAX // Có profile và value
+    //     ? SALARY_MAX
+    //     : 12000000,
+    //   null,
+    //   null,
+    //   !dataProfile && !JOB_TYPE //không có profile và value
+    //     ? []
+    //     : !dataProfile && JOB_TYPE //không có profile nhưng có value
+    //     ? JOB_TYPE
+    //     : dataProfile && !JOB_TYPE //Có profile nhưng không có value
+    //     ? [] // Lấy profile
+    //     : dataProfile && JOB_TYPE // Có profile và value
+    //     ? JOB_TYPE
+    //     : [],
+    //   !dataProfile && LIST_CATEGORIES_ID.length === 0 //không có profile và value
+    //     ? null
+    //     : !dataProfile && LIST_CATEGORIES_ID //không có profile nhưng có value
+    //     ? LIST_CATEGORIES_ID
+    //     : dataProfile && LIST_CATEGORIES_ID.length === 0 //Có profile nhưng không có value
+    //     ? dataProfile.categories.map(
+    //         (categorie: any) => categorie.child_category_id
+    //       ) || null // Lấy profile
+    //     : dataProfile && LIST_CATEGORIES_ID // Có profile và value
+    //     ? LIST_CATEGORIES_ID
+    //     : null,
+    //   !dataProfile && !LIST_DIS_ID //không có profile và value
+    //     ? []
+    //     : !dataProfile && LIST_DIS_ID //không có profile nhưng có value
+    //     ? LIST_DIS_ID
+    //     : dataProfile && !LIST_DIS_ID //Có profile nhưng không có value
+    //     ? dataProfile.locations.map((location: any) => location.district_id) ||
+    //       null // Lấy profile
+    //     : dataProfile && LIST_DIS_ID // Có profile và value
+    //     ? LIST_DIS_ID
+    //     : [],
+    //   !dataProfile && !SALARY_TYPE //không có profile và value
+    //     ? null
+    //     : !dataProfile && SALARY_TYPE //không có profile nhưng có value
+    //     ? SALARY_TYPE
+    //     : dataProfile && !SALARY_TYPE //Có profile nhưng không có value
+    //     ? null // Lấy profile
+    //     : dataProfile && SALARY_TYPE // Có profile và value
+    //     ? SALARY_TYPE
+    //     : null
+    // )
     const result = await searchApi.getSearchByQueryV2(
       QUERY,
       page,
-      !dataProfile && !MONEY_TYPE //không có profile và value
-        ? 1
-        : !dataProfile && MONEY_TYPE //không có profile nhưng có value
-        ? MONEY_TYPE
-        : dataProfile && !MONEY_TYPE //Có profile nhưng không có value
-        ? 1 // Lấy profile
-        : dataProfile && MONEY_TYPE // Có profile và value
-        ? MONEY_TYPE
-        : 1,
-      !dataProfile && !IS_WORKING_WEEKEND //không có profile và value
-        ? null
-        : !dataProfile && IS_WORKING_WEEKEND //không có profile nhưng có value
-        ? IS_WORKING_WEEKEND
-        : dataProfile && !IS_WORKING_WEEKEND //Có profile nhưng không có value
-        ? null // Lấy profile
-        : dataProfile && IS_WORKING_WEEKEND // Có profile và value
-        ? IS_WORKING_WEEKEND
-        : null,
-      !dataProfile && !IS_REMOTELY //không có profile và value
-        ? null
-        : !dataProfile && IS_REMOTELY //không có profile nhưng có value
-        ? IS_REMOTELY
-        : dataProfile && !IS_REMOTELY //Có profile nhưng không có value
-        ? null // Lấy profile
-        : dataProfile && IS_REMOTELY // Có profile và value
-        ? IS_REMOTELY
-        : null,
+      MONEY_TYPE,
+      IS_WORKING_WEEKEND,
+      IS_REMOTELY,
       null,
-      !dataProfile && !SALARY_MIN //không có profile và value
-        ? 6000000
-        : !dataProfile && SALARY_MIN //không có profile nhưng có value
-        ? SALARY_MIN
-        : dataProfile && !SALARY_MIN //Có profile nhưng không có value
-        ? 6000000 // Lấy profile
-        : dataProfile && SALARY_MIN // Có profile và value
-        ? SALARY_MIN
-        : 6000000,
-      !dataProfile && !SALARY_MAX //không có profile và value
-        ? 12000000
-        : !dataProfile && SALARY_MAX //không có profile nhưng có value
-        ? SALARY_MAX
-        : dataProfile && !SALARY_MAX //Có profile nhưng không có value
-        ? 12000000 // Lấy profile
-        : dataProfile && SALARY_MAX // Có profile và value
-        ? SALARY_MAX
-        : 12000000,
+      SALARY_MIN,
+      SALARY_MAX,
       null,
       null,
-      !dataProfile && !JOB_TYPE //không có profile và value
-        ? []
-        : !dataProfile && JOB_TYPE //không có profile nhưng có value
-        ? JOB_TYPE
-        : dataProfile && !JOB_TYPE //Có profile nhưng không có value
-        ? [] // Lấy profile
-        : dataProfile && JOB_TYPE // Có profile và value
-        ? JOB_TYPE
-        : [],
-      !dataProfile && !LIST_CATEGORIES_ID //không có profile và value
-        ? []
-        : !dataProfile && LIST_CATEGORIES_ID //không có profile nhưng có value
-        ? LIST_CATEGORIES_ID
-        : dataProfile && !LIST_CATEGORIES_ID //Có profile nhưng không có value
-        ? dataProfile.categories.map(
-            (categorie: any) => categorie.child_category_id
-          ) || null // Lấy profile
-        : dataProfile && LIST_CATEGORIES_ID // Có profile và value
-        ? LIST_CATEGORIES_ID
-        : [],
-      !dataProfile && !LIST_DIS_ID //không có profile và value
-        ? []
-        : !dataProfile && LIST_DIS_ID //không có profile nhưng có value
-        ? LIST_DIS_ID
-        : dataProfile && !LIST_DIS_ID //Có profile nhưng không có value
-        ? dataProfile.locations.map((location: any) => location.district_id) ||
-          null // Lấy profile
-        : dataProfile && LIST_DIS_ID // Có profile và value
-        ? LIST_DIS_ID
-        : [],
-      !dataProfile && !SALARY_TYPE //không có profile và value
-        ? null
-        : !dataProfile && SALARY_TYPE //không có profile nhưng có value
-        ? SALARY_TYPE
-        : dataProfile && !SALARY_TYPE //Có profile nhưng không có value
-        ? null // Lấy profile
-        : dataProfile && SALARY_TYPE // Có profile và value
-        ? SALARY_TYPE
-        : null
+      JOB_TYPE,
+      LIST_CATEGORIES_ID,
+      LIST_DIS_ID,
+      SALARY_TYPE
     )
 
     //
     if (result && result?.data?.posts.length !== 0) {
-      console.log(result)
       setSearchData((prev: any) => {
         return {
           posts: [...prev.posts, ...result.data.posts],
@@ -263,8 +284,7 @@ const NewJobs: React.FC = () => {
       console.log('da het data', result)
     }
   }
-  console.log('SALARY_MIN', SALARY_MIN)
-  console.log('dataProfile', dataProfile)
+
   // handle close backdrop
   const handleClose = () => {
     setOpenBackdrop(false)
@@ -289,98 +309,117 @@ const NewJobs: React.FC = () => {
 
   const getPostSearch = async () => {
     try {
-      const result = await searchApi.getSearchByQueryV2(
-        QUERY,
-        null,
-        !dataProfile && !MONEY_TYPE //không có profile và value
-          ? 1
-          : !dataProfile && MONEY_TYPE //không có profile nhưng có value
-          ? MONEY_TYPE
-          : dataProfile && !MONEY_TYPE //Có profile nhưng không có value
-          ? 1 // Lấy profile
-          : dataProfile && MONEY_TYPE // Có profile và value
-          ? MONEY_TYPE
-          : 1,
-        !dataProfile && !IS_WORKING_WEEKEND //không có profile và value
-          ? null
-          : !dataProfile && IS_WORKING_WEEKEND //không có profile nhưng có value
-          ? IS_WORKING_WEEKEND
-          : dataProfile && !IS_WORKING_WEEKEND //Có profile nhưng không có value
-          ? null // Lấy profile
-          : dataProfile && IS_WORKING_WEEKEND // Có profile và value
-          ? IS_WORKING_WEEKEND
-          : null,
-        !dataProfile && !IS_REMOTELY //không có profile và value
-          ? null
-          : !dataProfile && IS_REMOTELY //không có profile nhưng có value
-          ? IS_REMOTELY
-          : dataProfile && !IS_REMOTELY //Có profile nhưng không có value
-          ? null // Lấy profile
-          : dataProfile && IS_REMOTELY // Có profile và value
-          ? IS_REMOTELY
-          : null,
-        null,
-        !dataProfile && !SALARY_MIN //không có profile và value
-          ? 6000000
-          : !dataProfile && SALARY_MIN //không có profile nhưng có value
-          ? SALARY_MIN
-          : dataProfile && !SALARY_MIN //Có profile nhưng không có value
-          ? 6000000 // Lấy profile
-          : dataProfile && SALARY_MIN // Có profile và value
-          ? SALARY_MIN
-          : 6000000,
-        !dataProfile && !SALARY_MAX //không có profile và value
-          ? 12000000
-          : !dataProfile && SALARY_MAX //không có profile nhưng có value
-          ? SALARY_MAX
-          : dataProfile && !SALARY_MAX //Có profile nhưng không có value
-          ? 12000000 // Lấy profile
-          : dataProfile && SALARY_MAX // Có profile và value
-          ? SALARY_MAX
-          : 12000000,
-        null,
-        null,
-        !dataProfile && !JOB_TYPE //không có profile và value
-          ? []
-          : !dataProfile && JOB_TYPE //không có profile nhưng có value
-          ? JOB_TYPE
-          : dataProfile && !JOB_TYPE //Có profile nhưng không có value
-          ? [] // Lấy profile
-          : dataProfile && JOB_TYPE // Có profile và value
-          ? JOB_TYPE
-          : [],
-        !dataProfile && !LIST_CATEGORIES_ID //không có profile và value
-          ? []
-          : !dataProfile && LIST_CATEGORIES_ID //không có profile nhưng có value
-          ? LIST_CATEGORIES_ID
-          : dataProfile && !LIST_CATEGORIES_ID //Có profile nhưng không có value
-          ? [] // Lấy profile
-          : dataProfile && LIST_CATEGORIES_ID // Có profile và value
-          ? LIST_CATEGORIES_ID
-          : [],
-        !dataProfile && !LIST_DIS_ID //không có profile và value
-          ? []
-          : !dataProfile && LIST_DIS_ID //không có profile nhưng có value
-          ? LIST_DIS_ID
-          : dataProfile && !LIST_DIS_ID //Có profile nhưng không có value
-          ? [] // Lấy profile
-          : dataProfile && LIST_DIS_ID // Có profile và value
-          ? LIST_DIS_ID
-          : [],
-        !dataProfile && !SALARY_TYPE //không có profile và value
-          ? null
-          : !dataProfile && SALARY_TYPE //không có profile nhưng có value
-          ? SALARY_TYPE
-          : dataProfile && !SALARY_TYPE //Có profile nhưng không có value
-          ? null // Lấy profile
-          : dataProfile && SALARY_TYPE // Có profile và value
-          ? SALARY_TYPE
-          : null
-      )
+      if (dataProfile) {
+        // const result = await searchApi.getSearchByQueryV2(
+        //   QUERY,
+        //   null,
+        //   !dataProfile && !MONEY_TYPE //không có profile và value
+        //     ? 1
+        //     : !dataProfile && MONEY_TYPE //không có profile nhưng có value
+        //     ? MONEY_TYPE
+        //     : dataProfile && !MONEY_TYPE //Có profile nhưng không có value
+        //     ? 1 // Lấy profile
+        //     : dataProfile && MONEY_TYPE // Có profile và value
+        //     ? MONEY_TYPE
+        //     : 1,
+        //   !dataProfile && !IS_WORKING_WEEKEND //không có profile và value
+        //     ? null
+        //     : !dataProfile && IS_WORKING_WEEKEND //không có profile nhưng có value
+        //     ? IS_WORKING_WEEKEND
+        //     : dataProfile && !IS_WORKING_WEEKEND //Có profile nhưng không có value
+        //     ? null // Lấy profile
+        //     : dataProfile && IS_WORKING_WEEKEND // Có profile và value
+        //     ? IS_WORKING_WEEKEND
+        //     : null,
+        //   !dataProfile && !IS_REMOTELY //không có profile và value
+        //     ? null
+        //     : !dataProfile && IS_REMOTELY //không có profile nhưng có value
+        //     ? IS_REMOTELY
+        //     : dataProfile && !IS_REMOTELY //Có profile nhưng không có value
+        //     ? null // Lấy profile
+        //     : dataProfile && IS_REMOTELY // Có profile và value
+        //     ? IS_REMOTELY
+        //     : null,
+        //   null,
+        //   !dataProfile && !SALARY_MIN //không có profile và value
+        //     ? 6000000
+        //     : !dataProfile && SALARY_MIN //không có profile nhưng có value
+        //     ? SALARY_MIN
+        //     : dataProfile && !SALARY_MIN //Có profile nhưng không có value
+        //     ? 6000000 // Lấy profile
+        //     : dataProfile && SALARY_MIN // Có profile và value
+        //     ? SALARY_MIN
+        //     : 6000000,
+        //   !dataProfile && !SALARY_MAX //không có profile và value
+        //     ? 12000000
+        //     : !dataProfile && SALARY_MAX //không có profile nhưng có value
+        //     ? SALARY_MAX
+        //     : dataProfile && !SALARY_MAX //Có profile nhưng không có value
+        //     ? 12000000 // Lấy profile
+        //     : dataProfile && SALARY_MAX // Có profile và value
+        //     ? SALARY_MAX
+        //     : 12000000,
+        //   null,
+        //   null,
+        //   !dataProfile && !JOB_TYPE //không có profile và value
+        //     ? []
+        //     : !dataProfile && JOB_TYPE //không có profile nhưng có value
+        //     ? JOB_TYPE
+        //     : dataProfile && !JOB_TYPE //Có profile nhưng không có value
+        //     ? [] // Lấy profile
+        //     : dataProfile && JOB_TYPE // Có profile và value
+        //     ? JOB_TYPE
+        //     : [],
+        //   !dataProfile && LIST_CATEGORIES_ID.length === 0 //không có profile và value
+        //     ? []
+        //     : !dataProfile && LIST_CATEGORIES_ID //không có profile nhưng có value
+        //     ? LIST_CATEGORIES_ID
+        //     : dataProfile && LIST_CATEGORIES_ID.length === 0 //Có profile nhưng không có value
+        //     ? dataProfile.categories.map(
+        //         (categorie: any) => categorie.child_category_id
+        //       ) // Lấy profile
+        //     : dataProfile && LIST_CATEGORIES_ID // Có profile và value
+        //     ? LIST_CATEGORIES_ID
+        //     : [],
+        //   !dataProfile && !LIST_DIS_ID //không có profile và value
+        //     ? []
+        //     : !dataProfile && LIST_DIS_ID //không có profile nhưng có value
+        //     ? LIST_DIS_ID
+        //     : dataProfile && !LIST_DIS_ID //Có profile nhưng không có value
+        //     ? [] // Lấy profile
+        //     : dataProfile && LIST_DIS_ID // Có profile và value
+        //     ? LIST_DIS_ID
+        //     : [],
+        //   !dataProfile && !SALARY_TYPE //không có profile và value
+        //     ? null
+        //     : !dataProfile && SALARY_TYPE //không có profile nhưng có value
+        //     ? SALARY_TYPE
+        //     : dataProfile && !SALARY_TYPE //Có profile nhưng không có value
+        //     ? null // Lấy profile
+        //     : dataProfile && SALARY_TYPE // Có profile và value
+        //     ? SALARY_TYPE
+        //     : null
+        // )
 
-      if (result) {
-        console.log(result)
-        setSearchData(result.data)
+        const result = await searchApi.getSearchByQueryV2(
+          QUERY,
+          null,
+          MONEY_TYPE,
+          IS_WORKING_WEEKEND,
+          IS_REMOTELY,
+          null,
+          SALARY_MIN,
+          SALARY_MAX,
+          null,
+          null,
+          JOB_TYPE,
+          LIST_CATEGORIES_ID,
+          LIST_DIS_ID,
+          SALARY_TYPE
+        )
+        if (result) {
+          setSearchData(result.data)
+        }
       }
     } catch (error) {
       setOpenBackdrop(false)
@@ -390,9 +429,7 @@ const NewJobs: React.FC = () => {
 
   React.useEffect(() => {
     getPostSearch()
-  }, [])
-
-  console.log('profile')
+  }, [dataProfile])
 
   return (
     <>
@@ -402,7 +439,7 @@ const NewJobs: React.FC = () => {
         {
           // automatic && (
           <Box sx={{ flexGrow: 1 }} ref={listRef}>
-            <p
+            <div
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -412,9 +449,9 @@ const NewJobs: React.FC = () => {
               Tìm thấy{' '}
               <h4 style={{ margin: '0 10px' }}>
                 {searchData ? searchData?.total : 0}
-              </h4>{' '}
+              </h4>
               công việc phù hợp
-            </p>
+            </div>
             {searchData?.posts.length > 0 ? (
               <>
                 <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>

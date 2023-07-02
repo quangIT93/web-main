@@ -136,8 +136,6 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
     try {
       const result = await profileApi.createProfileEducation(education)
       if (result) {
-        console.log('update thành công', result)
-
         setOpenModalEducationCreate(false)
       }
     } catch (error) {
@@ -179,7 +177,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Nhập tên trường hoặc tổ chức"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -201,7 +199,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Ngành"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>

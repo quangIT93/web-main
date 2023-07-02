@@ -67,11 +67,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     }
   }, [Salary_Max, Salary_Min, Salary_Max])
 
-  console.log('moneyType', typeMoney)
-  console.log('max', salaryMax)
-  console.log('min', salaryMin)
-  console.log('min', Salary_Min)
-
   const handleRadioChange = (e: any) => {
     setSelectedValue(e.target.value)
   }
@@ -187,7 +182,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       window.removeEventListener('click', handleOutsideClick)
     }
   }, [])
-  console.log('salaryType', salaryType)
+
   return (
     <Collapse
       className={`inputFilterSalary input-filter_nav ${
