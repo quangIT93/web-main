@@ -77,7 +77,7 @@ const CandidateDetail: React.FC = () => {
     dataCandidate?.applicationProfile?.application_status
   )
   const [open, setOpen] = useState(false)
-  console.log('search')
+
   // when dataCandidate changed, statusApplication change
   useEffect(() => {
     if (dataCandidate) {
@@ -89,9 +89,8 @@ const CandidateDetail: React.FC = () => {
   const getPostById = async () => {
     try {
       const postId = parseInt(searchParams.get('post-id') ?? '')
-      const candidateId = parseInt(searchParams.get('application_id') ?? '')
+      const candidateId = searchParams.get('application_id') ?? ''
       const result = await postApi.getById(postId)
-      console.log(result, 'search')
 
       if (result) {
         setDataPost(result.data)
@@ -108,9 +107,7 @@ const CandidateDetail: React.FC = () => {
       console.log('error', error)
     }
   }
-  console.log('data', dataPost)
-  console.log('candidate', dataCandidate)
-  console.log('candidateStatus', statusApplication)
+
   useEffect(() => {
     let isMounted = true
     setLoading(true)
@@ -433,6 +430,18 @@ const CandidateDetail: React.FC = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}
+                      onClick={() =>
+                        window.open(
+                          `/message?post_id=${searchParams.get(
+                            'post-id'
+                          )}&user_id=${
+                            dataCandidate.applicationProfile.account_id
+                          }&application_id=${searchParams.get(
+                            'application_id'
+                          )} `,
+                          '_blank'
+                        )
+                      }
                     ></Button>
                     {ApprovedApply}
                     {RejectedApply}

@@ -41,7 +41,26 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-around;
-  width: 450px;
+  width: 340px;
+  @include breakpoint(mobile) {
+    font-size: 13px;
+  }
+
+  @include breakpoint(tablet) {
+    font-size: 13px;
+  }
+
+  @include breakpoint(largeTablet) {
+    width: 300px !important;
+  }
+
+  @include breakpoint(destop) {
+    width: 280px !important;
+  }
+
+  @include breakpoint(an_order) {
+    width: 340px !important;
+  }
 }
 .icon-cart-item-post {
   color: #575757;

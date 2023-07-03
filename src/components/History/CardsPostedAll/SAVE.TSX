@@ -48,11 +48,9 @@ const CardsPosted: React.FC<ICardsApplied> = (props) => {
         0,
         newCount
       )
-      console.log('result', result)
 
       if (result) {
         setDataPosted(result.data)
-        console.log('result', result.data)
       }
     } catch (error) {
       console.log('error', error)

@@ -144,10 +144,9 @@ const NewJobs: React.FC = () => {
     try {
       setOpenBackdrop(true)
       const result = await postApi.getPostNewest(null, null, null, 19)
-      console.log('result: ', result)
+
       if (result) {
         setPostNewest(result)
-        console.log(result)
 
         // set loading
         setOpenBackdrop(false)
@@ -165,13 +164,13 @@ const NewJobs: React.FC = () => {
     // searchParams.delete("theme-id")
     // setSearchParams(searchParams)
   }, [])
-  console.log('newJob', NewJobs)
+
   return (
     <>
       {
         // automatic && (
         <Box sx={{ flexGrow: 1 }} ref={listRef}>
-          <h2>Công việc mới nhất</h2>
+          <h2 style={{ margin: '12px 0' }}>Công việc mới nhất</h2>
           <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
             {postNewest.data.posts.map((item: PostNewest, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -205,12 +204,9 @@ const NewJobs: React.FC = () => {
                         alt={item.title}
                         loading="lazy"
                         style={{
-                          width: '120px',
-                          maxWidth: 'auto',
-                          height: '100%',
-                          maxHeight: 150,
+                          maxWidth: '120px',
+                          maxHeight: '120px',
                           borderRadius: 10,
-                          minHeight: 120,
                         }}
                       />
                       <div
@@ -227,6 +223,10 @@ const NewJobs: React.FC = () => {
                               fontSize: '15px',
                               margin: 0,
                               fontWeight: 'bold',
+                              whiteSpace: 'nowrap',
+                              width: '100%',
+                              textOverflow: 'ellipsis',
+                              overflow: 'hidden',
                             }}
                           >
                             {item?.title.length > 50
@@ -239,7 +239,13 @@ const NewJobs: React.FC = () => {
                             gutterBottom
                             variant="h1"
                             component="div"
-                            sx={{ fontSize: '12px' }}
+                            sx={{
+                              fontSize: '12px',
+                              whiteSpace: 'nowrap',
+                              width: '100%',
+                              textOverflow: 'ellipsis',
+                              overflow: 'hidden',
+                            }}
                           >
                             {item?.company_name.length > 50
                               ? `${item.company_name.substring(0, 50)} ...`

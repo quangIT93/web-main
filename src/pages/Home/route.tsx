@@ -6,11 +6,7 @@ import HomeValueContextProvider from 'context/HomeValueContextProvider'
 
 const route: RouteProps = {
   path: '/home',
-  component: (
-    <HomeValueContextProvider>
-      <Home />
-    </HomeValueContextProvider>
-  ),
+  component: <Home />,
 }
 
 export default route

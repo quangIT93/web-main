@@ -9,7 +9,7 @@ import Footer from '../../components/Footer/index'
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom'
 import postApi from '../../api/postApi'
-import locationApi from '../../api/locationApi'
+// import locationApi from '../../api/locationApi'
 import appplicationApi from 'api/appplication'
 import ItemSuggest from './components/ItemSuggest'
 // @ts-ignore
@@ -18,11 +18,14 @@ import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd'
 //@ts-ignore
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 //@ts-ignore
-import { StatePropsCloseSlider } from 'pages/Home'
+// import { StatePropsCloseSlider } from 'pages/Home'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { actionCreators } from '../../store/index'
+import {
+  // useDispatch,
+  useSelector,
+} from 'react-redux'
+// import { bindActionCreators } from 'redux'
+// import { actionCreators } from '../../store/index'
 import { RootState } from '../../store/reducer'
 
 import {
@@ -65,14 +68,14 @@ const ACCESS_TOKEN = localStorage.getItem('accessToken')
 
 // page view details post
 const Detail: React.FC = () => {
-  const { Search } = Input
+  // const { Search } = Input
   // test redux
   const userProfile = useSelector((state: RootState) => state.profileUser)
-  const dispatch = useDispatch()
-  const { setPostByTheme, setProvince } = bindActionCreators(
-    actionCreators,
-    dispatch
-  )
+  // const dispatch = useDispatch()
+  // const { setPostByTheme, setProvince } = bindActionCreators(
+  //   actionCreators,
+  //   dispatch
+  // )
 
   const componentRef = React.useRef<HTMLDivElement>(null)
   const componentRefJob = React.useRef<HTMLDivElement>(null)
@@ -96,7 +99,11 @@ const Detail: React.FC = () => {
 
   const openNotification = () => {
     api.info({
-      message: <>Ứng tuyển công việc thành công <br /> Bạn muốn chia sẻ công việc ?</>,
+      message: (
+        <>
+          Ứng tuyển công việc thành công <br /> Bạn muốn chia sẻ công việc ?
+        </>
+      ),
       description: (
         <Input
           addonBefore="Link"
@@ -139,30 +146,30 @@ const Detail: React.FC = () => {
       if (result) {
         console.log('post detail', result)
       }
-      const list = result?.data.categories.map((category: any) =>
-        Number(category.child_category_id)
-      )
-      console.log('child', list)
+      // const list = result?.data.categories.map((category: any) =>
+      //   Number(category.child_category_id)
+      // )
+      // console.log('child', list)
 
       // check  application status
       if (result.data.account_id === accountId) {
         setTextButton('Chỉnh sửa bài tuyển dụng')
         setBackgroundButton('black')
         setCheckPostUser(true)
-      } else if (result.data.status == 3) {
+      } else if (result.data.status === 3) {
         setTextButton('Bài đăng đã đóng')
         setBackgroundButton('gray')
         result.data.applied = true
-      } else if (result.data.application_status == 1) {
+      } else if (result.data.application_status === 1) {
         setTextButton('Đã ứng tuyển')
         setBackgroundButton('gray')
-      } else if (result.data.application_status == 2) {
+      } else if (result.data.application_status === 2) {
         setTextButton('Hồ sơ được phê duyệt')
         setBackgroundButton('#0D99FF')
-      } else if (result.data.application_status == 3) {
+      } else if (result.data.application_status === 3) {
         setTextButton('Hồ sơ bị từ chối')
         setBackgroundButton('#BD3131')
-      } else if (result.data.application_status == 4) {
+      } else if (result.data.application_status === 4) {
         setTextButton('Hồ sơ được chấp nhận')
         setBackgroundButton('#5CB265')
       }
@@ -231,16 +238,23 @@ const Detail: React.FC = () => {
         window.open(`edit-posted/?postId=${POST_ID}`)
         return
       }
-      if (!userProfile.name || !userProfile.address || !userProfile.birthday || userProfile.gender === null || userProfile.gender === undefined || !userProfile.phone || !userProfile.email) {
-        console.log("user", userProfile)
+      if (
+        !userProfile.name ||
+        !userProfile.address ||
+        !userProfile.birthday ||
+        userProfile.gender === null ||
+        userProfile.gender === undefined ||
+        !userProfile.phone ||
+        !userProfile.email
+      ) {
+        console.log('user', userProfile)
         api.info({
           message: `Cập nhật thông tin`,
-          description: "Vui lòng cập nhật thông tin để ứng tuyển công việc",
+          description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
           placement: 'top',
-          icon: <ExclamationCircleFilled style={{ color: "red" }} />
+          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
         })
         return
-
       }
 
       const result = await appplicationApi.applyAplication(POST_ID)
@@ -368,7 +382,7 @@ const Detail: React.FC = () => {
                       {' '}
                       <p>Làm việc cuối tuần</p>
                       <h5>
-                        {post?.data.is_working_weekend == 0
+                        {post?.data.is_working_weekend === 0
                           ? 'Không làm việc cuối tuần'
                           : 'Có làm việc cuối tuần'}
                       </h5>
@@ -379,7 +393,7 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Mức lương</p>
-                      {post?.data.salary_type_id == 6 ? (
+                      {post?.data.salary_type_id === 6 ? (
                         <h5>{post?.data.salary_type}</h5>
                       ) : (
                         <h5>
@@ -414,7 +428,7 @@ const Detail: React.FC = () => {
                       {' '}
                       <p>Làm việc từ xa</p>
                       <h5>
-                        {post?.data.is_remotely == 0
+                        {post?.data.is_remotely === 0
                           ? 'Không làm việc từ xa'
                           : 'Có làm việc từ xa'}
                       </h5>

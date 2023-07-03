@@ -51,7 +51,6 @@ const SubIcon: React.FC<ISubicon> = (props) => {
     }
   }
 
-  console.log('status', status)
   return (
     <div className="subs-icon_moreOutlined">
       <div

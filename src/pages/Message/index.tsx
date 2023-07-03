@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 // import component
 import ListChat from '#components/Message/ListChat/ListChat'
@@ -12,12 +12,15 @@ import { Typography } from 'antd'
 
 import './style.scss'
 
+import { HomeValueContext } from 'context/HomeValueContextProvider'
 const { Text } = Typography
 
 const Message = () => {
+  const { openCollapseFilter } = useContext(HomeValueContext)
   return (
     <div className="message-page">
       <Navbar />
+
       <div className="message-page_main">
         {/* <div className="header-message">
           <HeaderMessage />

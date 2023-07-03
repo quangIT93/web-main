@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect } from 'react'
+import React, { useMemo, useCallback } from 'react'
 
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
@@ -17,7 +17,7 @@ import CardsSavedJob from '#components/History/CardsSavedJob'
 import './style.scss'
 // @ts-ignore
 import { Navbar } from '#components'
-import Item from 'antd/es/list/Item'
+// import Item from 'antd/es/list/Item'
 
 const { Panel } = Collapse
 const text = `
@@ -139,7 +139,6 @@ const HistoryPost = () => {
     setActiveChild(`${index}-0`)
     setShowDetailPosted(false)
   }, [])
-  console.log('render history')
 
   return (
     <div className="post-history">

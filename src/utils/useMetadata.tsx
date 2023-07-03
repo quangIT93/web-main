@@ -6,11 +6,11 @@ interface MetaProps {
 }
 
 export const useMetadata = (props: MetaProps) => {
-  console.log('Just render the useMetadata')
+  // console.log('Just render the useMetadata')
   React.useEffect(() => {
     const title = document.head.querySelector('title')
 
-    console.log('title :>> ', title)
+    // console.log('title :>> ', title)
 
     if (!title || title.textContent !== props.title) {
       const title = document.head.querySelector('title')

@@ -8,11 +8,10 @@ import { AxiosResponse } from 'axios'
 // import api
 import postApi from 'api/postApi'
 
-
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom'
 
-import { Space } from 'antd';
+import { Space } from 'antd'
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,8 +23,8 @@ import './style.scss'
 
 interface ItemTheme {
   id: number
-  title: string,
-  image: string,
+  title: string
+  image: string
   number_of_posts: number
 }
 
@@ -39,20 +38,23 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
 
   const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useDispatch()
-  const { setPostByTheme } = bindActionCreators(
-    actionCreators,
-    dispatch
-  )
+  const { setPostByTheme } = bindActionCreators(actionCreators, dispatch)
   // get post by theme id when click theme item
-  const handleChange = async (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = async (
+    event: React.SyntheticEvent,
+    newValue: number
+  ) => {
     try {
       setValue(newValue)
       setOpenBackdrop(!openBackdrop)
       const categoryId = searchParams.get('categories-id')
       if (categoryId) {
-        setSearchParams({ "theme-id": `${newValue}`, "categories-id": `${Number(categoryId) == 1 ? "all" : categoryId}` })
+        setSearchParams({
+          'theme-id': `${newValue}`,
+          'categories-id': `${Number(categoryId) == 1 ? 'all' : categoryId}`,
+        })
       } else {
-        setSearchParams({ "theme-id": `${newValue}` })
+        setSearchParams({ 'theme-id': `${newValue}` })
       }
 
       const result = await postApi.getPostByThemeId(newValue, 19, null)
@@ -60,7 +62,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         setPostByTheme(result)
         // set backdrop
         setOpenBackdrop(false)
-
       }
     } catch (error) {
       console.log(error)
@@ -75,7 +76,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       const themeId = searchParams.get(`theme-id`)
         ? searchParams.get(`theme-id`)
         : listTheme?.data[0].id
-      console.log("themeId: ", themeId)
+
       var result
       if (themeId) {
         setOpenBackdrop(true)
@@ -95,7 +96,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     getPostNewestByThemeId()
     setValue(Number(searchParams.get('theme-id')))
   }, [searchParams.get('theme-id')])
-
 
   return (
     <Box
@@ -128,11 +128,11 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                     width: '160px',
                     height: '160px',
                     borderRadius: '10px',
-                    objectFit: "cover"
+                    objectFit: 'cover',
                   }}
                 />
-                <div className='div-info-themes-item' >
-                  <Space size={3} direction={"vertical"} style={{ width: 150 }} >
+                <div className="div-info-themes-item">
+                  <Space size={3} direction={'vertical'} style={{ width: 150 }}>
                     <h5>{item.title}</h5>
                     <h6>{`${item.number_of_posts} việc làm`}</h6>
                   </Space>

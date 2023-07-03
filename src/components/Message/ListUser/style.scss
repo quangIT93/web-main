@@ -9,7 +9,12 @@
   .header-list_userChat {
     border-bottom: 1px solid #dcdcdc;
     .title-header_listUserChat {
-      margin: 12px 24px 0 16px;
+      margin: 21px 24px 21px 16px;
+      font-size: 24px;
+      font-family: Montserrat;
+      font-weight: 700;
+      line-height: 30px;
+      color: #000000;
     }
     .header-listSearch_userChat {
       display: flex;
@@ -49,10 +54,11 @@
         transition: 0.3s all linear;
       }
       .wrap-avatar_userChat {
-        width: 52px;
+        min-width: 52px;
         height: 52px;
         display: flex;
         align-items: center;
+        position: relative;
         img {
           border-radius: 50%;
           width: 52px;
@@ -60,6 +66,21 @@
           object-fit: cover;
           flex-grow: 0; // Không mở rộng chiều cao
           flex-shrink: 0;
+        }
+
+        .user-online {
+          position: absolute;
+          right: 0;
+          border-radius: 50%;
+          width: 10px;
+          background-color: #aaaaaa;
+          height: 10px;
+          bottom: 5px;
+          border: 1px solid #ffffff;
+        }
+
+        .user-online.user-online_true {
+          background-color: #34a853;
         }
       }
 
@@ -72,7 +93,7 @@
           white-space: nowrap;
           font-size: 16px;
           line-height: 24px;
-          width: 280px;
+          width: 210px;
         }
 
         h5 {
@@ -81,7 +102,7 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          width: 280px;
+          width: 210px;
         }
 
         p {
@@ -91,10 +112,45 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          width: 280px;
+          width: 210px;
           // word-wrap: break-word;
         }
       }
+
+      .info-chat_icon {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+        justify-content: space-between;
+
+        small {
+          color: #aaa;
+          font-size: 10px;
+          line-height: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          white-space: nowrap;
+        }
+
+        .count-message_readed,
+        .count-message_receive {
+          display: flex;
+          align-self: flex-end;
+          color: #ffffff;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+        }
+
+        .count-message_receive {
+          background-color: #0d99ff;
+        }
+      }
+    }
+
+    .wrap-userInfo.readed-message {
+      background-color: #d4edff;
     }
   }
 }

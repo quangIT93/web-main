@@ -1,6 +1,6 @@
 import React, { useEffect, memo } from 'react'
 import { Box, Button, Typography } from '@mui/material'
-import axios from 'axios'
+
 // import { blobToBase64 } from 'blob-util'
 
 //@ts-ignore
@@ -9,9 +9,6 @@ import { validatePostImages } from 'validations'
 //@ts-ignore
 import { toast } from 'react-toastify'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
-
-import { useTheme } from '@mui/material/styles'
-import { useMediaQuery } from '@mui/material'
 
 import './style.scss'
 
@@ -53,7 +50,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     if (imagesToCheck.length > 0) {
       const validateImagesReply = validatePostImages(imagesToCheck)
       if (validateImagesReply.isError) {
-        console.log('::: Invalid images')
+        // console.log('::: Invalid images')
         return toast.warn('Ảnh không đúng định dạng')
       } else {
         try {
@@ -140,8 +137,6 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
   }, [])
 
   const handleDeleteImage = (index: number, id: number | null) => {
-    console.log('index', index)
-    console.log('id', id)
     setSelectedImages((prevImages: any) => {
       const updatedImages = [...prevImages]
       updatedImages.splice(index, 1)
@@ -162,8 +157,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
         images: updatedFiles,
       }
     })
-    console.log('images', editDataPosted.deletedImages)
-    console.log('id', id)
+
     if (id && !editDataPosted.deletedImages.includes(id)) {
       setEditDataPosted((preValue: any) => ({
         ...preValue,

@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react'
+import React, { useState, FormEvent, useContext } from 'react'
 
 import { toast } from 'react-toastify'
 // @ts-ignore
@@ -27,6 +27,9 @@ import PostCategoryId from '#components/Post/PostCategoryId'
 import PostSalaryType from '#components/Post/PostSalaryType'
 
 import Footer from '../../components/Footer/index'
+
+// import context
+import { HomeValueContext } from 'context/HomeValueContextProvider'
 
 import './style.scss'
 
@@ -107,6 +110,8 @@ interface Option {
 }
 
 const Post: React.FC = () => {
+  const { openCollapseFilter } = useContext(HomeValueContext)
+
   const formValues = {
     title: '',
     companyName: '',
@@ -173,7 +178,6 @@ const Post: React.FC = () => {
   const [companyError, setCompanyError] = useState(false)
   const [messageApi, contextHolder] = message.useMessage()
 
-  console.log('phone', phoneNumber)
   // submit
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent
@@ -214,9 +218,9 @@ const Post: React.FC = () => {
     formData.append('latitude', String(latitude))
     formData.append('longitude', String(longitude))
 
-    for (const pair of formData.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`)
-    }
+    // for (const pair of formData.entries()) {
+    //   console.log(`${pair[0]}, ${pair[1]}`)
+    // }
 
     if (formData) {
       createNewPost(formData)
@@ -296,10 +300,8 @@ const Post: React.FC = () => {
     try {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
-          console.log('cho phep submit')
           const result = await postApi.createPost(formData)
           if (result) {
-            console.log('resultresult', result)
             setOpenModalPost(true)
           }
         }
@@ -310,14 +312,14 @@ const Post: React.FC = () => {
         })
       }
     } catch (error) {
-      console.log('loixxxxxxxxxxxxxxxxxxxx')
       console.error('error', error)
     }
   }
-  console.log('isPeriodDate', isPeriodDate)
+
   return (
     <div className="post">
       <Navbar />
+
       {contextHolder}
       <div className="post-main">
         <h1>Tạo bài đăng tuyển dụng</h1>

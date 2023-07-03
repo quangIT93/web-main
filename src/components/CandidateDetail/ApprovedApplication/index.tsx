@@ -31,11 +31,10 @@ const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
 
   const handleClickApproveApplication = async () => {
     const candidateId = parseInt(searchParams.get('application_id') ?? '')
-    console.log('approved appli')
+
     try {
       const result = await appplicationApi.updateApplication(candidateId, 3)
       if (result) {
-        console.log('Duyệt hồ sơ', result)
         setStatusApplication(3)
       }
     } catch (error) {
@@ -45,11 +44,10 @@ const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
 
   const handleClickPassRecruitment = async () => {
     const candidateId = parseInt(searchParams.get('application_id') ?? '')
-    console.log('approved appli')
+
     try {
       const result = await appplicationApi.updateApplication(candidateId, 4)
       if (result) {
-        console.log('Duyệt hồ sơ', result)
         setStatusApplication(4)
       }
     } catch (error) {

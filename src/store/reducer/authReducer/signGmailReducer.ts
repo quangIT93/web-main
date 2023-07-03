@@ -24,7 +24,7 @@ export const signInEmail = createAsyncThunk(
   async (email: string, { rejectWithValue }) => {
     try {
       const response = await signInEmailApi.signInEmail(email)
-      console.log('response', response)
+
       return response.data
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -44,7 +44,7 @@ export const verifyOtp = createAsyncThunk(
   ) => {
     try {
       const response = await signInEmailApi.verifyOtp(email, otp)
-      console.log('response.data', response.data)
+
       return response.data
     } catch (error) {
       console.log(error)

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 // @ts-ignore
 // import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import ModalLogin from '../../components/Home/ModalLogin'
 
@@ -12,7 +12,7 @@ import { Logo } from '#components'
 // @ts-ignore
 import { ChatIcon } from '#components'
 // @ts-ignore
-import { ModalFilter } from '#components'
+// import { ModalFilter } from '#components'
 
 // import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined'
 
@@ -41,9 +41,9 @@ import {
 } from '@ant-design/icons'
 
 // import component
-import SalaryFilterSubnav from './components/SalaryFilterSubnav'
-import PositionFilterSubnav from './components/PositionFilterSubnav'
-import CareerFilterSubnav from './components/CareerFilterSubnav'
+// import SalaryFilterSubnav from './components/SalaryFilterSubnav'
+// import PositionFilterSubnav from './components/PositionFilterSubnav'
+// import CareerFilterSubnav from './components/CareerFilterSubnav'
 import SearchInput from './SearchInput'
 import FilterLocationNav from './FilterLocationNav'
 import FilterCateloriesNav from './FilterCateloriesNav'
@@ -61,7 +61,7 @@ import messageApi from 'api/messageApi'
 import {
   Container,
   Wrapper,
-  SearchContainer,
+  // SearchContainer,
   Left,
   Right,
   Center,
@@ -75,8 +75,11 @@ import { actionCreators } from '../../store/index'
 
 // import Context
 import { HomeValueContext } from 'context/HomeValueContextProvider'
+import { ChatContext } from 'context/ChatContextProvider'
 import { DivRef1 } from 'context/HomeValueContextProvider'
 import { useSearchParams } from 'react-router-dom'
+
+// import redux
 
 const Navbar: React.FC = () => {
   const {
@@ -93,9 +96,16 @@ const Navbar: React.FC = () => {
     SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
   } = useContext(HomeValueContext)
 
+  const {
+    receivedMessages,
+    sendMessages,
+    setReceivedMessages,
+    // setSendMessages,
+  } = useContext(ChatContext)
+
   const [showTap, setshowTap] = React.useState(false)
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false)
@@ -109,8 +119,18 @@ const Navbar: React.FC = () => {
   const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
   const [listDis, setListDis] = useState<[]>([])
   const [listCate, setListCate] = useState<[]>([])
+  const [typeMoney, setTypeMoney] = useState<number | null>(1)
+  const [salaryMin, setSalaryMin] = useState<number | null>(null)
+  const [salaryMax, setSalaryMax] = useState<number | null>(null)
+  // const [timeJob, setTimeJob] = useState()
+  // const [dateBegin, setDateBegin] = useState()
+  // const [dateEnd, setDateEnd] = useState()
+  const [isRemotely, setIsRemotely] = useState<number>(0)
+  const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0)
 
   const [countChat, setCountChat] = useState<number>(0)
+
+  // use Redux manage state
 
   // value query
 
@@ -120,7 +140,11 @@ const Navbar: React.FC = () => {
   const DIS_IDS = searchParams
     .getAll('dis-ids')
     .map((disId) => disId.split(','))
-    .map((dis) => dis[1])
+  // .map((dis) => dis[1])
+  const CATE_IDS = searchParams
+    .getAll('categories-ids')
+    .map((disId) => disId.split(','))
+  // .map((dis) => dis[1])
 
   // params url
   const params = new URLSearchParams()
@@ -128,7 +152,7 @@ const Navbar: React.FC = () => {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
   // thay đổi width setState
-  const [windowWidth, setWindowWidth] = useState(false)
+  // const [windowWidth, setWindowWidth] = useState(false)
 
   // use redux
   const dispatch = useDispatch()
@@ -143,7 +167,7 @@ const Navbar: React.FC = () => {
   }
 
   //  MOdalFilter
-  const [openModalFilter, setOpenModalFilter] = React.useState(false)
+  // const [openModalFilter, setOpenModalFilter] = React.useState(false)
 
   // const handleClickInput = () => {
   //   setOpenCollapse(!openCollapse)
@@ -160,7 +184,7 @@ const Navbar: React.FC = () => {
       await dispatch(getProfile() as any)
 
       const result = await profileApi.getProfile()
-      if (result) {
+      if (dataProfile) {
         setProfileUser(result.data)
       }
     } catch (error) {
@@ -183,7 +207,7 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     fecthDataProfileUser()
-    dispatch(getProfile() as any)
+    // dispatch(getProfile() as any)
   }, [])
 
   // get count unread
@@ -193,18 +217,23 @@ const Navbar: React.FC = () => {
       if (result) {
         setCountChat(result.data.quantity)
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   useEffect(() => {
     getCountUnread()
-  }, [])
-
+  }, [receivedMessages, sendMessages, setReceivedMessages, setReceivedMessages])
+  // console.log('receivedMessages', receivedMessages)
+  // console.log('sendMessages', sendMessages)
   const ref = React.useRef<HTMLDivElement | null>(null)
+  const refLogin = React.useRef<HTMLDivElement | null>(null)
+  const refInfoUser = React.useRef<HTMLDivElement | null>(null)
 
   const handleCollapseEntered = () => {
     if (ref.current) {
-      const height = ref.current.getBoundingClientRect().height
+      // const height = ref.current.getBoundingClientRect().height
       SetRefNav(ref)
       // setHeightNavbar(height)
     }
@@ -212,7 +241,7 @@ const Navbar: React.FC = () => {
 
   const handleCollapseExited = () => {
     if (ref.current) {
-      const height = ref.current.getBoundingClientRect().height
+      // const height = ref.current.getBoundingClientRect().height
 
       // setHeightNavbar(height)
       SetRefNav(ref)
@@ -220,73 +249,157 @@ const Navbar: React.FC = () => {
   }
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 1200) {
-        setWindowWidth(true)
-      } else {
-        setWindowWidth(false)
-      }
-    }
+    // const handleResize = () => {
+    //   if (window.innerWidth < 1200) {
+    //     setWindowWidth(true)
+    //   } else {
+    //     setWindowWidth(false)
+    //   }
+    // }
     SetRefNav(ref)
 
-    window.addEventListener('resize', handleResize)
+    // window.addEventListener('resize', handleResize)
 
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
+    // return () => {
+    //   window.removeEventListener('resize', handleResize)
+    // }
+  }, [SetRefNav])
+
+  // useEffect(() => {
+  //   const handleOutsideClick = (e: any) => {
+  //     if (!ref?.current?.contains(e.target)) {
+  //       setOpenCollapseFilter(false)
+  //     }
+  //   }
+
+  //   window.addEventListener('click', handleOutsideClick)
+
+  //   return () => {
+  //     window.removeEventListener('click', handleOutsideClick)
+  //   }
+  // }, [])
 
   // handle Show modal Filter
-  const handleShowModalFilter = () => {
-    if (!openModalFilter) return setOpenModalFilter(true)
-    setOpenModalFilter(false)
-  }
+  // const handleShowModalFilter = async () => {
+  //   if (!openModalFilter) return setOpenModalFilter(true)
+  //   setOpenModalFilter(false)
+  // }
 
   // handle click search button
-  const handleSearch = () => {
-    var encode
+  const handleSearch = (event: any, valueSearchInput: string | undefined) => {
+    event.preventDefault()
+    var encode: any
     var job_type = jobType
+    var money_type = typeMoney
     var salary_type = salaryType
+    var salary_min = salaryMin
+    var salary_max = salaryMax
     var list_dis = listDis
     var list_cate = listCate
+    var is_working_weekend = isWorkingWeekend
+    var is_remotely = isRemotely
 
     if (list_dis.length > 0) {
-      list_dis.forEach((item, index) => {
+      list_dis.forEach((item) => {
         params.append(`dis-ids`, `${item}`)
       })
+    } else if (list_dis.length === 0 && DIS_IDS.length > 0) {
+      ;[].forEach((item) => {
+        params.append(`dis-ids`, `${item}`)
+      })
+    } else if (dataProfile.id && DIS_IDS.length === 0) {
+      dataProfile.locations.forEach((item: any) => {
+        params.append(`dis-ids`, `${[item.province_id, item.district_id]}`)
+      })
     }
+    // lấy từ profile qua
     if (list_cate.length > 0) {
       list_cate.forEach((item, index) => {
         paramsCate.append(`categories-ids`, `${item}`)
       })
+    } else if (list_cate.length === 0 && CATE_IDS.length > 0) {
+      ;[].forEach((item) => {
+        paramsCate.append(`categories-ids`, `${item}`)
+      })
+    } else if (dataProfile.id && CATE_IDS.length === 0) {
+      dataProfile.categories.forEach((item: any) => {
+        paramsCate.append(
+          `categories-ids`,
+          `${[item.parent_category_id, item.child_category_id]}`
+        )
+      })
     }
 
-    if (!valueSearchInput && QUERY) {
-      encode = encodeURIComponent(`${QUERY}`)
-    } else {
+    if (valueSearchInput === '' && QUERY) {
+      encode = encodeURIComponent(`${''}`)
+    } else if (!valueSearchInput && QUERY) {
       encode = encodeURIComponent(`${valueSearchInput}`)
+    } else if (valueSearchInput && QUERY) {
+      encode = encodeURIComponent(`${valueSearchInput}`)
+    } else if (valueSearchInput && !QUERY) {
+      encode = encodeURIComponent(`${valueSearchInput}`)
+    } else if (!valueSearchInput && !QUERY) {
+      encode = encodeURIComponent(``)
     }
     if (!jobType && JOB_TYPE) {
       job_type = JOB_TYPE
     }
+    console.log('params-DIS', params)
+    // console.log('paramsCate-DIS', paramsCate)
+    console.log('list_dis-list_dis', list_dis)
+    console.log('list_cate-list_cate', list_cate)
+    console.log('DIS_IDS-DIS_IDS', DIS_IDS)
+    console.log('CATE_IDS-CATE_IDS', CATE_IDS)
+    console.log('dataProfiledataProfile', dataProfile)
+    console.log('dataProfiledataProfile', dataProfile.categories[0])
+
+    // console.log('vvvvvvv', valueSearchInput)
+    // console.log('encode', encode)
+    // else if (jobType && jobType === 5 && JOB_TYPE) {
+    //   console.log('ko parma 22222222222', JOB_TYPE)
+    //   console.log('ko parma', jobType)
+
+    //   job_type = null
+    // } else if (jobType && jobType !== 5) {
+    //   console.log('ko parma 33333333333', JOB_TYPE)
+    //   console.log('cko parma', jobType)
+
+    //   job_type = jobType
+    // } else {
+    //   job_type = null
+    // }
+
     if (!salaryType && SALARY_TYPE) {
       salary_type = SALARY_TYPE
     }
 
-    console.log('jobtype', params.toString())
-
-    window.open(
-      `/search-results?${encode !== 'undefined' ? `q=${encode}` : ''}` +
-        `${salary_type ? `&sal-type=${salary_type}` : ''}` +
-        `${job_type ? `&job-type=${job_type}` : ''}` +
-        `${list_dis.length > 0 ? `&${params.toString()}` : ''}` +
-        `${list_cate.length > 0 ? `&${paramsCate.toString()}` : ''}`,
-      '_self'
-    )
+    setTimeout(() => {
+      window.open(
+        `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}` +
+          `${salary_type ? `&sal-type=${salary_type}` : ''}` +
+          `${job_type ? `&job-type=${job_type}` : ''}` +
+          `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
+          `${
+            list_cate.length > 0
+              ? `&${paramsCate.toString()}`
+              : `&${paramsCate.toString()}`
+          }` +
+          `${salary_min ? `&salary_min=${salary_min}` : ''}` +
+          `${salary_max ? `&salary_max=${salary_max}` : ''}` +
+          `${
+            is_working_weekend
+              ? `&is_working_weekend=${is_working_weekend}`
+              : ''
+          }` +
+          `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
+          `${money_type ? `&money_type=${money_type}` : ''}`,
+        '_self'
+      )
+    }, 1)
   }
 
   // login
-  const handleClickLogin = async () => {
+  const handleClickLogin = async (e: any) => {
     try {
       if (openInfoUser) {
         setSpinning(false)
@@ -299,7 +412,6 @@ const Navbar: React.FC = () => {
         result = await profileApi.getProfile()
       }
       if (result) {
-        console.log(result)
         setProfileUser(result.data)
         setSpinning(false)
         setOpenInfoUser(!openInfoUser)
@@ -321,10 +433,31 @@ const Navbar: React.FC = () => {
     }
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      // console.log('e.tảtget', refInfoUser?.current)
+      // console.log('e.tảtget', refInfoUser?.current?.contains(event.target))
+      // console.log('e.tảtget', refLogin?.current?.contains(event.target))
+      if (refInfoUser.current && !refInfoUser.current.contains(event.target)) {
+        setOpenInfoUser(false)
+      }
+
+      if (refLogin.current && !refLogin.current.contains(event.target)) {
+        setOpenInfoUser(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
+
   // handle logout
   const handleLogout = async () => {
     try {
-      console.log('d')
+      console.log('logout thành công')
       const refreshToken = localStorage.getItem('refreshToken')
 
       if (refreshToken) {
@@ -339,8 +472,22 @@ const Navbar: React.FC = () => {
     }
   }
 
+  const handleResetValue = () => {
+    setJobType(null)
+    setListDis([])
+    setListCate([])
+    setSalaryMax(null)
+    setSalaryMin(null)
+    setTypeMoney(1)
+    setSalaryType('')
+
+    setIsWorkingWeekend(0)
+    setIsRemotely(0)
+  }
+
   const buttons = [
     <button
+      key="1"
       className="btn btn__post"
       onClick={() => {
         if (dataProfile && localStorage.getItem('refreshToken')) {
@@ -353,7 +500,12 @@ const Navbar: React.FC = () => {
       <FormOutlined style={{ color: 'white' }} />
       <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
     </button>,
-    <div className="actions-login" onClick={handleClickLogin}>
+    <div
+      className="actions-login"
+      onClick={handleClickLogin}
+      ref={refLogin}
+      key="2"
+    >
       <button className="btn btn__login">
         <div style={{ display: 'flex' }}>
           <div className="login__avatar">
@@ -377,7 +529,7 @@ const Navbar: React.FC = () => {
       </button>
       <Spin indicator={antIcon} spinning={spinning}>
         {openInfoUser && (
-          <div className="sub-login">
+          <div className="sub-login" ref={refInfoUser}>
             <Space className="sub-login_info">
               <Avatar
                 style={{ backgroundColor: '#0D99FF' }}
@@ -424,52 +576,65 @@ const Navbar: React.FC = () => {
   ]
 
   return (
-    <Container className="nav" ref={ref}>
-      <ModalLogin
-        openModalLogin={openModalLogin}
-        setOpenModalLogin={setOpenModalLogin}
-      />
-      <Backdrop
-        sx={{
-          color: '#0d99ff ',
-          zIndex: (theme: any) => theme.zIndex.drawer + 1,
-        }}
-        open={openBackdrop}
-        onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Wrapper>
-        <Left>
-          <Logo />
-        </Left>
-        <Center className="div-nav-center">
-          {/* <div>assssssssssssssssssssssssssssssss</div> */}
-          <SearchInput
-            value={valueSearchInput}
-            setValue={setValueSearchInput}
-          />
-          <Button onClick={handleSearch}>Tim Kiem</Button>
-
-          <Button onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
-            <TuneOutlinedIcon />
-          </Button>
-
-          <Badge count={countChat}>
-            <Button
-              onClick={() => window.open(`/message`, '_blank')}
-              type="link"
-              style={{ border: '1px solid #aaaaaa' }}
-            >
-              <ChatIcon />
+    <div
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
+    >
+      <Container className="nav" ref={ref}>
+        <ModalLogin
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        />
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          }}
+          open={openBackdrop}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <Wrapper>
+          <Left>
+            <Logo />
+          </Left>
+          <Center className="div-nav-center">
+            {/* <div>assssssssssssssssssssssssssssssss</div> */}
+            <SearchInput
+              value={valueSearchInput}
+              setValue={setValueSearchInput}
+            />
+            <Button onClick={(event) => handleSearch(event, valueSearchInput)}>
+              Tim Kiem
             </Button>
-          </Badge>
-        </Center>
-        <Right className="div-nav-right">
-          <div className="tabBar-right">
-            <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
-          </div>
-          {/* <Button
+
+            <Button onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
+              <TuneOutlinedIcon />
+            </Button>
+
+            <Badge count={countChat}>
+              <Button
+                onClick={() => {
+                  if (dataProfile && localStorage.getItem('refreshToken')) {
+                    window.open(`/message`, '_blank')
+                  } else {
+                    setOpenModalLogin(true)
+                  }
+                }}
+                type="link"
+                style={{ border: '1px solid #aaaaaa' }}
+              >
+                <ChatIcon />
+              </Button>
+            </Badge>
+          </Center>
+          <Right className="div-nav-right">
+            <div className="tabBar-right">
+              <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
+            </div>
+            {/* <Button
             variant="contained"
             startIcon={<AdsClickIcon />}
             style={{ marginRight: '25px' }}
@@ -483,46 +648,66 @@ const Navbar: React.FC = () => {
             </Collapse>
           </Button> */}
 
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              '& > *': {
-                m: 1,
-              },
-            }}
-          >
-            <ButtonGroup sx={{ margin: '0' }}>{buttons}</ButtonGroup>
-          </Box>
-        </Right>
-      </Wrapper>
-      <Collapse
-        in={openCollapseFilter}
-        timeout={800}
-        // unmountOnExit
-        onEnter={handleCollapseEntered}
-        onExited={handleCollapseExited}
-        sx={collapseCssFilter}
-      >
-        <div className="filter-wrap_top">
-          <FilterLocationNav setListDis={setListDis} />
-          <FilterCateloriesNav setListCate={setListCate} />
-          <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
-        </div>
-        <div className="filter-wrap_bottom">
-          <FilterTypeSalary setSalaryType={setSalaryType} />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                '& > *': {
+                  m: 1,
+                },
+              }}
+            >
+              <ButtonGroup sx={{ margin: '0' }}>{buttons}</ButtonGroup>
+            </Box>
+          </Right>
+        </Wrapper>
+        <Collapse
+          in={openCollapseFilter}
+          timeout={800}
+          // unmountOnExit
+          onEnter={handleCollapseEntered}
+          onExited={handleCollapseExited}
+          sx={collapseCssFilter}
+        >
+          <div className="filter-wrap_top">
+            <FilterLocationNav setListDis={setListDis} />
+            <FilterCateloriesNav setListCate={setListCate} />
+            <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
+          </div>
+          <div className="filter-wrap_bottom">
+            <FilterTypeSalary setSalaryType={setSalaryType} />
+            <FilterSalary
+              salaryType={salaryType}
+              typeMoney={typeMoney}
+              setTypeMoney={setTypeMoney}
+              salaryMin={salaryMin}
+              salaryMax={salaryMax}
+              setSalaryMin={setSalaryMin}
+              setSalaryMax={setSalaryMax}
+            />
+            <FilterTimeJob
+              setIsWorkingWeekend={setIsWorkingWeekend}
+              isWorkingWeekend={isWorkingWeekend}
+              isRemotely={isRemotely}
+              setIsRemotely={setIsRemotely}
+            />
+          </div>
 
-          <FilterSalary />
-          <FilterTimeJob />
-        </div>
-
-        <div className="btn-filter_nav">
-          <Button type="default">Đặt Lại</Button>
-          <Button type="primary">Xác Nhận</Button>
-        </div>
-      </Collapse>
-    </Container>
+          <div className="btn-filter_nav">
+            {/* <Button type="default" onClick={handleResetValue}>
+              Đặt Lại
+            </Button> */}
+            <Button
+              type="primary"
+              onClick={(e) => handleSearch(e, valueSearchInput)}
+            >
+              Áp dụng
+            </Button>
+          </div>
+        </Collapse>
+      </Container>
+    </div>
   )
 }
 

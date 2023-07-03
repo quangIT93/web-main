@@ -88,7 +88,6 @@ const profileApi = {
     )
   },
   updateProfileCareer: (categoryIds: Number[]) => {
-    console.log('cate', categoryIds)
     const URL = `/v1/profiles/cat`
     return axiosClient.put(
       URL,

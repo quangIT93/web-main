@@ -52,15 +52,20 @@ interface IInfoPersonal {
 
 const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const { openModelPersonalInfo, setOpenModalPersonalInfo, profile } = props
-  const [gender, setGender] = React.useState(profile?.gender != null ? profile.gender == 0 ? "Nam" : "Nữ" : null)
-  const [day, setDay] = useState(profile?.birthday ? moment(new Date(profile?.birthday)) : moment()) // Giá trị mặc định là ngày hiện tại
+  const [gender, setGender] = React.useState(
+    profile?.gender != null ? (profile.gender == 0 ? 'Nam' : 'Nữ') : null
+  )
+  const [day, setDay] = useState(
+    profile?.birthday ? moment(new Date(profile?.birthday)) : moment()
+  ) // Giá trị mặc định là ngày hiện tại
   const [dataProvinces, setDataProvinces] = useState<any>()
-  const [selectedProvince, setSelectedProvince] = useState<any>(profile?.address ? profile?.address : null)
+  const [selectedProvince, setSelectedProvince] = useState<any>(
+    profile?.address ? profile?.address : null
+  )
   const [name, setName] = useState(profile?.name)
   const [introduction, setIntroduction] = useState(profile?.introduction)
 
   const dispatch = useDispatch()
-
 
   const handleSetFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
@@ -78,13 +83,11 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     }
   }
 
-
   React.useEffect(() => {
     getAllProvinces()
     // getAllLocations()
     // delete param when back to page
   }, [])
-
 
   const handleDateChange = (date: any) => {
     setDay(date._d)
@@ -102,22 +105,21 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   }
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
     setIntroduction(e.target.value)
   }
   // handle update information user
   const handleSubmit = async () => {
-    const data = new Date(day.toString()).getTime();
-    console.log(new Date(data))
+    // const data = new Date(day.toString()).getTime()
+
     try {
       const info: IInfoPersonal = {
         name: name,
         birthday: new Date(day.toString()).getTime(),
-        gender: gender === "Nam" ? 0 : 1,
+        gender: gender === 'Nam' ? 0 : 1,
         address: selectedProvince.id,
-        introduction: introduction
+        introduction: introduction,
       }
-      console.log(info)
+
       const result = await profileApi.putProfilePersonal(info)
       if (result) {
         setOpenModalPersonalInfo(false)
@@ -125,10 +127,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     } catch (error) {
       console.log(error)
     }
-
-
   }
-  console.log('profile', profile)
+
   return (
     <Modal
       open={openModelPersonalInfo}
@@ -164,7 +164,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Họ và tên"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -217,8 +217,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             value={
               selectedProvince
                 ? dataProvinces?.find(
-                  (province: any) => province.id === selectedProvince.id
-                )
+                    (province: any) => province.id === selectedProvince.id
+                  )
                 : null
             }
             defaultValue={dataProvinces}

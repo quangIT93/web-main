@@ -5,11 +5,15 @@ export const ChatContext = createContext<{
   setUserInfoChat: React.Dispatch<React.SetStateAction<any>>
   setSendMessages: React.Dispatch<React.SetStateAction<Message[]>>
   sendMessages: Message[]
+  receivedMessages: Message[]
+  setReceivedMessages: React.Dispatch<React.SetStateAction<Message[]>>
 }>({
   userInfoChat: [],
   setUserInfoChat: () => {},
   sendMessages: [],
+  receivedMessages: [],
   setSendMessages: () => {},
+  setReceivedMessages: () => {},
 })
 
 type ParentComponentProps = {
@@ -19,7 +23,7 @@ type ParentComponentProps = {
 interface Message {
   receiverId: string
   message: string
-  // createdAt: number
+  createdAt: number
   type: string
   postId: number
 }
@@ -27,11 +31,15 @@ interface Message {
 const ChatContextProvider = ({ children }: ParentComponentProps) => {
   const [userInfoChat, setUserInfoChat] = useState<any>([])
   const [sendMessages, setSendMessages] = useState<Message[]>([])
+  const [receivedMessages, setReceivedMessages] = useState<Message[]>([])
+
   const valueChatContext = {
     userInfoChat,
     setUserInfoChat,
     sendMessages,
     setSendMessages,
+    setReceivedMessages,
+    receivedMessages,
   }
   return (
     <ChatContext.Provider value={valueChatContext}>

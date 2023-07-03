@@ -77,7 +77,7 @@ const Policy: React.FC = () => {
         <div className="policy__content">
           <section id="about-us">
             <h2 ref={titleOneRef} className="`content__title`">
-              Về Hi Job
+              Về HiJob
             </h2>
             <span className="content__additional-info">Sứ mệnh</span>
             <span className="content__additional-info">Mục tiêu</span>
@@ -87,9 +87,9 @@ const Policy: React.FC = () => {
               Chính sách bảo mật
             </h2>
             <p className="content__body">
-              Chào mừng bạn đến với ứng dụng tìm việc làm Hi Job, được vận hành
-              bởi Công ty TNHH Ai Works (sau đây có thể được gọi là “Ai Works”
-              hoặc “Chúng tôi”). Hi Job cam kết tôn trọng và cam kết bảo vệ dữ
+              Chào mừng bạn đến với ứng dụng tìm việc làm HiJob, được vận hành
+              bởi Công ty TNHH NeoWorks (sau đây có thể được gọi là “NeoWorks”
+              hoặc “Chúng tôi”). HiJob cam kết tôn trọng và cam kết bảo vệ dữ
               liệu cá nhân của người dùng. Chúng tôi cam kết sẽ thực hiện các
               biện pháp liên quan để bảo vệ dữ liệu cá nhân của người dùng tuân
               theo các quy định pháp luật áp dụng về bảo mật thông tin/dữ liệu
@@ -209,7 +209,7 @@ const Policy: React.FC = () => {
             <p className="content__body">
               1.4 Nếu bạn liên kết tài khoản của bạn trên Nền tảng của chúng tôi
               với tài khoản mạng xã hội của bạn hoặc sử dụng một số tính năng
-              mạng xã hội nào của Hi Job, chúng tôi có thể truy cập dữ liệu cá
+              mạng xã hội nào của HiJob, chúng tôi có thể truy cập dữ liệu cá
               nhân về bạn mà bạn đã tự nguyện cung cấp cho các nhà cung cấp dịch
               vụ tài khoản mạng xã hội theo chính sách của họ và chúng tôi sẽ
               quản lý, sử dụng các dữ liệu cá nhân này của bạn theo Quy chế
@@ -423,9 +423,9 @@ const Policy: React.FC = () => {
               Điều khoản sử dụng
             </h2>
             <p className="content__body">
-              Chào mừng bạn đến với ứng dụng tìm việc làm Hi Job, được vận hành
-              bởi Công ty TNHH Ai Works (sau đây có thể được gọi là “Ai Works”
-              hoặc “Chúng tôi”). Hi Job cam kết tôn trọng và cam kết bảo vệ dữ
+              Chào mừng bạn đến với ứng dụng tìm việc làm HiJob, được vận hành
+              bởi Công ty TNHH NeoWorks (sau đây có thể được gọi là “NeoWorks”
+              hoặc “Chúng tôi”). HiJob cam kết tôn trọng và cam kết bảo vệ dữ
               liệu cá nhân của người dùng. Chúng tôi cam kết sẽ thực hiện các
               biện pháp liên quan để bảo vệ dữ liệu cá nhân của người dùng tuân
               theo các quy định pháp luật áp dụng về bảo mật thông tin/dữ liệu
@@ -447,9 +447,9 @@ const Policy: React.FC = () => {
               đăng những thay đổi đó hoặc Quy chế Quyền riêng tư được sửa đổi
               trên Nền tảng của chúng tôi.
               <br />
-              Chào mừng bạn đến với ứng dụng tìm việc làm Hi Job, được vận hành
-              bởi Công ty TNHH Ai Works (sau đây có thể được gọi là “Ai Works”
-              hoặc “Chúng tôi”). Hi Job cam kết tôn trọng và cam kết bảo vệ dữ
+              Chào mừng bạn đến với ứng dụng tìm việc làm HiJob, được vận hành
+              bởi Công ty TNHH NeoWorks (sau đây có thể được gọi là “NeoWorks”
+              hoặc “Chúng tôi”). HiJob cam kết tôn trọng và cam kết bảo vệ dữ
               liệu cá nhân của người dùng. Chúng tôi cam kết sẽ thực hiện các
               biện pháp liên quan để bảo vệ dữ liệu cá nhân của người dùng tuân
               theo các quy định pháp luật áp dụng về bảo mật thông tin/dữ liệu
@@ -466,9 +466,9 @@ const Policy: React.FC = () => {
               SỬ DỤNG CÁC DỊCH VỤ CỦA CHÚNG TÔI HOẶC TRUY CẬP NỀN TẢNG CỦA CHÚNG
               TÔI.
               <br />
-              Chào mừng bạn đến với ứng dụng tìm việc làm Hi Job, được vận hành
-              bởi Công ty TNHH Ai Works (sau đây có thể được gọi là “Ai Works”
-              hoặc “Chúng tôi”). Hi Job cam kết tôn trọng và cam kết bảo vệ dữ
+              Chào mừng bạn đến với ứng dụng tìm việc làm HiJob, được vận hành
+              bởi Công ty TNHH NeoWorks (sau đây có thể được gọi là “NeoWorks”
+              hoặc “Chúng tôi”). HiJob cam kết tôn trọng và cam kết bảo vệ dữ
               liệu cá nhân của người dùng. Chúng tôi cam kết sẽ thực hiện các
               biện pháp liên quan để bảo vệ dữ liệu cá nhân của người dùng tuân
               theo các quy định pháp luật áp dụng về bảo mật thông tin/dữ liệu
@@ -487,15 +487,15 @@ const Policy: React.FC = () => {
               định trong Quy chế này. NẾU BẠN KHÔNG ĐỒNG Ý CHO PHÉP XỬ LÝ DỮ
               LIỆU CỦA BẠN NHƯ QUY ĐỊNH TRONG QUY CHẾ NÀY, VUI LÒNG KHÔNG SỬ
               DỤNG CÁC DỊCH VỤ CỦA CHÚNG TÔI HOẶC TRUY CẬP NỀN TẢNG CỦA CHÚNG
-              TÔI. Chào mừng bạn đến với ứng dụng tìm việc làm Hi Job, được vận
-              hành bởi Công ty TNHH Ai Works (sau đây có thể được gọi là “Ai
-              Works” hoặc “Chúng tôi”). Hi Job cam kết tôn trọng và cam kết bảo
-              vệ dữ liệu cá nhân của người dùng. Chúng tôi cam kết sẽ thực hiện
-              các biện pháp liên quan để bảo vệ dữ liệu cá nhân của người dùng
-              tuân theo các quy định pháp luật áp dụng về bảo mật thông tin/dữ
-              liệu cá nhân. Chính sách bảo mật này hay còn gọi là Quy chế quyền
-              riêng tư (sau đây được gọi chung là “Quy chế”) được lập nhằm quy
-              định cách thức chúng tôi thu thập, sử dụng, tiết lộ, lưu trữ
+              TÔI. Chào mừng bạn đến với ứng dụng tìm việc làm HiJob, được vận
+              hành bởi Công ty TNHH NeoWorks (sau đây có thể được gọi là
+              “NeoWorks” hoặc “Chúng tôi”). HiJob cam kết tôn trọng và cam kết
+              bảo vệ dữ liệu cá nhân của người dùng. Chúng tôi cam kết sẽ thực
+              hiện các biện pháp liên quan để bảo vệ dữ liệu cá nhân của người
+              dùng tuân theo các quy định pháp luật áp dụng về bảo mật thông
+              tin/dữ liệu cá nhân. Chính sách bảo mật này hay còn gọi là Quy chế
+              quyền riêng tư (sau đây được gọi chung là “Quy chế”) được lập nhằm
+              quy định cách thức chúng tôi thu thập, sử dụng, tiết lộ, lưu trữ
               và/hoặc xử lý dữ liệu khi bạn truy cập vào trang web HiJob.com của
               chúng tôi và tất cả các trang web phụ liên quan khác (“Nền tảng”).
               Bằng việc sử dụng các Dịch vụ, đăng ký Tài khoản với chúng tôi

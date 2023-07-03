@@ -197,7 +197,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       }
     } catch (error) {}
 
-    console.log('facebook', response)
+    // console.log('facebook', response)
   }
 
   // check response failed from facebook and google
@@ -210,9 +210,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     try {
       setOpenBackdrop(true)
       if (response.tokenId) {
-        console.log('response.tokenID', response.tokenId)
+        // console.log('response.tokenID', response.tokenId)
         const result = await authApi.signInGoogle(response.tokenObj.id_token)
-        console.log(result)
+        // console.log(result)
         if (result) {
           fetchDataProfile(result.data, true)
         }
@@ -222,7 +222,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       setOpenBackdrop(false)
     }
 
-    console.log('gg', response)
+    // console.log('gg', response)
   }
 
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
