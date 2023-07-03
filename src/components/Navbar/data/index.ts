@@ -89,3 +89,5 @@ export const datacareer: careerProp[] = [
     jobs: ['Nhà ở', 'Khách sạn', 'Khu dân cư', 'Công ty'],
   },
 ]
+
+const x = 1
