@@ -1,5 +1,6 @@
 @import '../../scss/variable';
 @import '../../scss/mixins';
+
 .home {
   .show-modal_navbar {
     position: fixed;
@@ -19,7 +20,11 @@
   transition: all l;
   margin-bottom: 36px;
 
-  @media screen and (max-width: 1200px) {
+  // @include breakpoint(destop) {
+  //   padding-inline: 10px;
+  // }
+
+  @media screen and (max-width: 1220px) {
     padding-inline: 10px;
 
     // @include breakpoint(tablet) {

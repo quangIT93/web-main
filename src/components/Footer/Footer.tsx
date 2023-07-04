@@ -20,11 +20,11 @@ const WrapFooter = styled('div')({
 
   [`@media (max-width: ${mobile})`]: {
     height: '70px',
-    position: 'unset',
+    // position: 'unset',
   },
 
   [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
-    position: 'unset',
+    // position: 'unset',
     height: '70px',
   },
 })
@@ -49,11 +49,11 @@ const Visibility = styled('div')({
   right: 0,
   width: '100%',
   [`@media (max-width: ${mobile})`]: {
-    position: 'unset',
+    // position: 'unset',
   },
 
   [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
-    position: 'unset',
+    // position: 'unset',
   },
 })
 

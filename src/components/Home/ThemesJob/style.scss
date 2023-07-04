@@ -28,13 +28,6 @@
   align-items: flex-start;
   justify-content: space-around;
   width: 340px;
-
-  .div-cart-item-post_text_overflow {
-    white-space: nowrap;
-    width: 90%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
 }
 
 .icon-cart-item-post {
@@ -50,4 +43,11 @@
   max-height: 120px !important;
   object-fit: cover;
   border-radius: 12px;
+
+  @include breakpoint(mobile) {
+    width: 90px !important;
+    height: 90px !important;
+    max-width: 90px !important;
+    max-height: 90px !important;
+  }
 }

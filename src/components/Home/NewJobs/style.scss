@@ -16,16 +16,20 @@
 }
 
 .MuiPaper-root {
+  // border: 0px;
+  // filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.15));
+
+  // box-shadow: none;
+  // height: 100%;
   border: 0px;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.15));
-
+  border-radius: 10px;
   box-shadow: none;
-  height: 100%;
 }
 
 .MuiImageListItem-img {
   @include breakpoint(mobile) {
-    max-height: 120px !important;
+    max-height: 90px !important;
     max-width: 90px;
   }
 }
@@ -59,22 +63,15 @@
   }
 
   @include breakpoint(largeTablet) {
-    width: 300px !important;
+    width: 220px !important;
   }
 
   @include breakpoint(destop) {
-    width: 280px !important;
+    width: 180px !important;
   }
 
   @include breakpoint(an_order) {
     width: 340px !important;
-  }
-
-  .div-cart-item-post_text_overflow {
-    white-space: nowrap;
-    width: 90%;
-    text-overflow: ellipsis;
-    overflow: hidden;
   }
 }
 
@@ -89,6 +86,10 @@
 
   @include breakpoint(mobile) {
     font-size: 12px !important;
+    white-space: nowrap;
+    width: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   color: #575757;
@@ -117,4 +118,12 @@
 .img-resource-company {
   height: 40px;
   border-radius: 5px;
+}
+
+@include breakpoint(mobile) {
+  .MuiGrid-item {
+    width: 100%;
+
+
+  }
 }
