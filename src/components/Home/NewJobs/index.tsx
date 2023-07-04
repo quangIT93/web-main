@@ -229,7 +229,7 @@ const NewJobs: React.FC = () => {
                               overflow: 'hidden',
                             }}
                           >
-                            {item?.title.length > 50
+                            {item?.title?.length > 50
                               ? `${item.title.substring(0, 50)} ...`
                               : item.title}
                           </Typography>
@@ -247,7 +247,7 @@ const NewJobs: React.FC = () => {
                               overflow: 'hidden',
                             }}
                           >
-                            {item?.company_name.length > 50
+                            {item?.company_name?.length > 50
                               ? `${item.company_name.substring(0, 50)} ...`
                               : item.company_name}
                           </Typography>
