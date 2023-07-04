@@ -281,7 +281,7 @@ const NewJobs: React.FC = () => {
                           style={{
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center',
+                            justifyContent: 'flex-start',
                           }}
                         >
                           <AttachMoneyIcon
@@ -292,7 +292,7 @@ const NewJobs: React.FC = () => {
                               color: '#575757',
                             }}
                           />
-                          <Typography variant="body2" color="text.secondary">
+                          <Typography variant="body2" color="text.secondary" className="div-cart-item-post_text_overflow">
                             {new Intl.NumberFormat('en-US').format(
                               item.salary_min
                             )}{' '}
@@ -395,7 +395,7 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-            //  onClick={handleClose}
+          //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
