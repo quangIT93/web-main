@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { styled } from '@mui/material/styles'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import breakpoints from '../../scss/breakpoints'
@@ -20,11 +20,11 @@ const WrapFooter = styled('div')({
 
   [`@media (max-width: ${mobile})`]: {
     height: '70px',
-    position: 'unset',
+    // position: 'unset',
   },
 
   [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
-    position: 'unset',
+    // position: 'unset',
     height: '70px',
   },
 })
@@ -49,11 +49,11 @@ const Visibility = styled('div')({
   right: 0,
   width: '100%',
   [`@media (max-width: ${mobile})`]: {
-    position: 'unset',
+    // position: 'unset',
   },
 
   [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
-    position: 'unset',
+    // position: 'unset',
   },
 })
 
@@ -62,6 +62,8 @@ const Footer: React.FC = () => {
 
   const [windowWidth, setWindowWidth] = useState(false)
   // const [position, setPosition] = React.useState('0')
+
+  const footerRef = React.useRef<HTMLDivElement | null>(null);
 
   const handleClickOpen = (
     e:
@@ -95,38 +97,37 @@ const Footer: React.FC = () => {
     }
   }, [])
 
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (footerRef.current && !footerRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
   return (
-    <WrapFooter>
+    <WrapFooter ref={footerRef}>
       <Visibility
         style={
           open && !windowWidth
             ? {
-                transform: 'translateY(calc(-100% - 36px))',
-              }
+              transform: 'translateY(calc(-100% - 36px))',
+            }
             : !open && !windowWidth
-            ? {
+              ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-            : { transform: 'none' }
+              : { transform: 'none' }
         }
       >
-        <CloseOutlinedIcon
-          sx={{
-            position: 'absolute',
-            right: '12px',
-            top: '12px',
-            cursor: 'pointer',
-            borderRadius: '50%',
-            border: '1px solid #ccc',
-            fontSize: '32px',
-            '&:hover': {
-              color: 'red',
-              background: '#AAAAAA',
-            },
-          }}
-          onClick={handleClickOpen}
-        />
         <div className="container-footer">
           <div className="footer-left">
             <div

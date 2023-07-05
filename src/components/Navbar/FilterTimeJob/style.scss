@@ -1,3 +1,6 @@
+@import '../../../scss/variable';
+@import '../../../scss/mixins';
+
 .activeTimeJob {
   .ant-collapse-item {
     .ant-collapse-header {
@@ -17,6 +20,7 @@
     height: 39.6px !important;
     border-radius: 12px !important;
     background-color: #f3f8fb !important;
+
     .ant-collapse-expand-icon {
       svg {
         color: black !important;
@@ -32,8 +36,13 @@
     position: absolute;
     color: black;
 
+    @include breakpoint(tablet) {
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+
     width: 100%;
     left: -12px;
+
     .filter-job_checkboxGroup {
       display: flex;
       margin: 12px;

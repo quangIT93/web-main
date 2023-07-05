@@ -1,0 +1,33 @@
+@import '../../../scss//mixins';
+
+.MuiTypography-h6 {
+    @include breakpoint(mobile) {
+        font-size: 12px;
+    }
+}
+
+.MuiTypography-h1 {
+    @include breakpoint(mobile) {
+        font-size: 10px;
+    }
+}
+
+.MuiImageListItem-root {
+    align-items: center;
+}
+
+.div-cart-props-post {
+    width: 100%;
+}
+
+// .MuiImageListItem-img {
+//     max-width: 120px;
+//     max-height: 120px;
+//     border-radius: 10;
+
+//     @include breakpoint(mobile) {
+//         width: 85px !important;
+//         height: 85px !important;
+
+//     }
+// }

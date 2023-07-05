@@ -3,15 +3,18 @@
 .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
   background-color: #0d99ff;
   color: white;
+
   &:hover {
     background-color: #0d99ff;
     color: white;
   }
 }
+
 .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root:hover {
   background-color: rgba(0, 0, 0, 0.1);
   //color: white;
 }
+
 .MuiPaper-root {
   border: 0px;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.15));
@@ -26,6 +29,7 @@
   justify-content: space-around;
   width: 340px;
 }
+
 .icon-cart-item-post {
   color: #575757;
   margin-right: 5px;
@@ -39,4 +43,11 @@
   max-height: 120px !important;
   object-fit: cover;
   border-radius: 12px;
+
+  @include breakpoint(mobile) {
+    width: 90px !important;
+    height: 90px !important;
+    max-width: 90px !important;
+    max-height: 90px !important;
+  }
 }

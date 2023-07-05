@@ -91,15 +91,15 @@ const Navbar: React.FC = () => {
     setOpenNotificate,
     openNotificate,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>
-    openNotificate: boolean
-  } = useContext(HomeValueContext)
+    {
+      openCollapseFilter: boolean
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>
+      openNotificate: boolean
+    } = useContext(HomeValueContext)
 
   const {
     receivedMessages,
@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
     // setSendMessages,
   } = useContext(ChatContext)
 
-  const [showTap, setshowTap] = React.useState(false)
+  const [showTap, setShowTap] = React.useState(false)
 
   // const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
   const dataProfile = useSelector((state: RootState) => state.profileUser)
   // handle show tap on screen mobile
   const handleTap = () => {
-    setshowTap(!showTap)
+    setShowTap(!showTap)
   }
 
   //  MOdalFilter
@@ -235,6 +235,7 @@ const Navbar: React.FC = () => {
   const ref = React.useRef<HTMLDivElement | null>(null)
   const refLogin = React.useRef<HTMLDivElement | null>(null)
   const refInfoUser = React.useRef<HTMLDivElement | null>(null)
+  const refTabBar = React.useRef<HTMLDivElement | null>(null)
 
   const handleCollapseEntered = () => {
     if (ref.current) {
@@ -373,23 +374,21 @@ const Navbar: React.FC = () => {
     setTimeout(() => {
       window.open(
         `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}` +
-          `${salary_type ? `&sal-type=${salary_type}` : ''}` +
-          `${job_type ? `&job-type=${job_type}` : ''}` +
-          `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
-          `${
-            list_cate.length > 0
-              ? `&${paramsCate.toString()}`
-              : `&${paramsCate.toString()}`
-          }` +
-          `${salary_min ? `&salary_min=${salary_min}` : ''}` +
-          `${salary_max ? `&salary_max=${salary_max}` : ''}` +
-          `${
-            is_working_weekend
-              ? `&is_working_weekend=${is_working_weekend}`
-              : ''
-          }` +
-          `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
-          `${money_type ? `&money_type=${money_type}` : ''}`,
+        `${salary_type ? `&sal-type=${salary_type}` : ''}` +
+        `${job_type ? `&job-type=${job_type}` : ''}` +
+        `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
+        `${list_cate.length > 0
+          ? `&${paramsCate.toString()}`
+          : `&${paramsCate.toString()}`
+        }` +
+        `${salary_min ? `&salary_min=${salary_min}` : ''}` +
+        `${salary_max ? `&salary_max=${salary_max}` : ''}` +
+        `${is_working_weekend
+          ? `&is_working_weekend=${is_working_weekend}`
+          : ''
+        }` +
+        `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
+        `${money_type ? `&money_type=${money_type}` : ''}`,
         '_self'
       )
     }, 1)
@@ -549,9 +548,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -574,9 +573,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -603,12 +601,11 @@ const Navbar: React.FC = () => {
               value={valueSearchInput}
               setValue={setValueSearchInput}
             />
-            <Button onClick={(event) => handleSearch(event, valueSearchInput)}>
-              {/* <SearchIcon /> */}
-              Tìm kiếm
+            <Button className="btn-search" onClick={(event) => handleSearch(event, valueSearchInput)}>
+              Tìm Kiếm
             </Button>
 
-            <Button onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
+            <Button className="btn-filter" onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
               <TuneOutlinedIcon />
             </Button>
 
@@ -633,9 +630,9 @@ const Navbar: React.FC = () => {
             </Button>
           </Center>
           <Right className="div-nav-right">
-            <div className="tabBar-right">
+            {/* <div className="tabBar-right">
               <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
-            </div>
+            </div> */}
             {/* <Button
             variant="contained"
             startIcon={<AdsClickIcon />}
@@ -672,6 +669,10 @@ const Navbar: React.FC = () => {
           onExited={handleCollapseExited}
           sx={collapseCssFilter}
         >
+          <SearchInput
+            value={valueSearchInput}
+            setValue={setValueSearchInput}
+          />
           <div className="filter-wrap_top">
             <FilterLocationNav setListDis={setListDis} />
             <FilterCateloriesNav setListCate={setListCate} />
@@ -694,6 +695,30 @@ const Navbar: React.FC = () => {
               isRemotely={isRemotely}
               setIsRemotely={setIsRemotely}
             />
+          </div>
+
+          <div className="filter-wrap_respone">
+            <FilterLocationNav setListDis={setListDis} />
+            <FilterCateloriesNav setListCate={setListCate} />
+            <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
+            <FilterTypeSalary setSalaryType={setSalaryType} />
+            <div className="filter-wrap-respone_bottom">
+              <FilterSalary
+                salaryType={salaryType}
+                typeMoney={typeMoney}
+                setTypeMoney={setTypeMoney}
+                salaryMin={salaryMin}
+                salaryMax={salaryMax}
+                setSalaryMin={setSalaryMin}
+                setSalaryMax={setSalaryMax}
+              />
+              <FilterTimeJob
+                setIsWorkingWeekend={setIsWorkingWeekend}
+                isWorkingWeekend={isWorkingWeekend}
+                isRemotely={isRemotely}
+                setIsRemotely={setIsRemotely}
+              />
+            </div>
           </div>
 
           <div className="btn-filter_nav">
