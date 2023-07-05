@@ -55,7 +55,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
 
-
 interface ItemAppy {
   id?: number | null
   company_name?: string
@@ -188,7 +187,7 @@ const Profile: React.FC = () => {
         setFileList([])
         message.success('Xoa CV thanh cong.')
       }
-    } catch (error) { }
+    } catch (error) {}
   }
 
   // cancel delete cv
@@ -265,6 +264,7 @@ const Profile: React.FC = () => {
   const alert = useSelector((state: any) => state.alertProfile.alert)
   const handleClose = () => dispatch<any>(setAlert(false))
   // console.log('alert', alert)
+
   return (
     <div className="profile">
       <Navbar />
@@ -512,8 +512,9 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                      }`,
+                    backgroundColor: `${
+                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                    }`,
                   }}
                 >
                   {uploading ? 'Đang Lưu' : 'Lưu CV'}
@@ -545,12 +546,12 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                  (item: ICategories, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.child_category}
-                    </Button>
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    )
                   )
-                )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -577,10 +578,10 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.district}
-                  </Button>
-                ))
+                    <Button key={index} className="btn" type="text">
+                      {item?.district}
+                    </Button>
+                  ))
                 : 'Chưa cập nhật'}
             </Space>
           </div>
