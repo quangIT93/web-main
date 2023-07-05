@@ -237,14 +237,14 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
         label: d.text,
       }))}
       className="search-input-nav"
-      virtual={false}
+      virtual={true}
       onFocus={handleOnFocus}
       onInputKeyDown={handleKeyPress}
       allowClear={true}
       // onBlur={handleOnBlur}
       removeIcon={<CloseOutlined />}
       menuItemSelectedIcon={<Spin size="small">dec</Spin>}
-      dropdownRender={() => dropdownRender}
+      // dropdownRender={() => dropdownRender}
       onClear={handleClearItem}
     />
   )

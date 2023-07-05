@@ -10,7 +10,7 @@ import ModalLogin from '../../components/Home/ModalLogin'
 // @ts-ignore
 import { Logo } from '#components'
 // @ts-ignore
-import { ChatIcon } from '#components'
+import { ChatIcon, BellIcon, SearchIcon } from '#components'
 // @ts-ignore
 // import { ModalFilter } from '#components'
 
@@ -51,6 +51,7 @@ import FilterTypeJob from './FilterTypeJob'
 import FilterTypeSalary from './FilterTypeSalary'
 import FilterSalary from './FilterSalary'
 import FilterTimeJob from './FilterTimeJob'
+import Notificate from './Notificate'
 
 import { Avatar, Button, Space, Spin, Badge } from 'antd'
 
@@ -87,6 +88,8 @@ const Navbar: React.FC = () => {
     setOpenCollapseFilter,
     // setHeightNavbar,
     SetRefNav,
+    setOpenNotificate,
+    openNotificate,
   }: // setRefNav,
     {
       openCollapseFilter: boolean
@@ -94,6 +97,8 @@ const Navbar: React.FC = () => {
       // heightNavbar: number
       // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
       SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>
+      openNotificate: boolean
     } = useContext(HomeValueContext)
 
   const {
@@ -627,6 +632,10 @@ const Navbar: React.FC = () => {
                 <ChatIcon />
               </Button>
             </Badge>
+
+            <Button onClick={() => setOpenNotificate(!openNotificate)}>
+              <BellIcon />
+            </Button>
           </Center>
           <Right className="div-nav-right">
             {/* <div className="tabBar-right">
@@ -662,7 +671,7 @@ const Navbar: React.FC = () => {
         </Wrapper>
         <Collapse
           in={openCollapseFilter}
-          timeout={800}
+          timeout={600}
           // unmountOnExit
           onEnter={handleCollapseEntered}
           onExited={handleCollapseExited}
@@ -732,6 +741,7 @@ const Navbar: React.FC = () => {
             </Button>
           </div>
         </Collapse>
+        {openNotificate ? <Notificate /> : <></>}
       </Container>
     </div>
   )

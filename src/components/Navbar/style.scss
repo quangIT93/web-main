@@ -24,6 +24,10 @@
   padding-block: 14px;
   padding-left: 20px;
   padding-right: 26px;
+
+  @include breakpoint(mobile) {
+    display: none;
+  }
 }
 
 .btn__login {
@@ -95,8 +99,6 @@
           }
 
           .login__center {
-            display: none;
-
             span {
               display: none;
             }
@@ -396,6 +398,11 @@
   }
 
   .MuiCollapse-wrapperInner {
+    @include breakpoint(mobile) {
+      height: 90% !important;
+      overflow-y: scroll !important;
+    }
+
     .search-input-nav {
       @include breakpoint(mobile) {
         width: 100% !important;

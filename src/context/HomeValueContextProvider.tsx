@@ -25,6 +25,8 @@ export const HomeValueContext = React.createContext<{
   setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>
   setNavTouchCatelory: React.Dispatch<React.SetStateAction<boolean>>
   navTouchCatelory: boolean
+  setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>
+  openNotificate: boolean
 }>({
   childCateloriesArray: [],
   setChildCateloriesArray: () => {},
@@ -45,6 +47,8 @@ export const HomeValueContext = React.createContext<{
   SetRefNav: () => {},
   setNavTouchCatelory: () => {},
   navTouchCatelory: false,
+  setOpenNotificate: () => {},
+  openNotificate: false,
 })
 
 type ParentComponentProps = {
@@ -55,6 +59,8 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
   const [childCateloriesArray, setChildCateloriesArray] = useState<number[]>([])
 
   const [openCollapseFilter, setOpenCollapseFilter] = useState<boolean>(false)
+
+  const [openNotificate, setOpenNotificate] = useState(false)
 
   // const [heightNavbar, setHeightNavbar] = useState<number>(0)
 
@@ -123,6 +129,8 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
     SetRefNav,
     setNavTouchCatelory,
     navTouchCatelory,
+    setOpenNotificate,
+    openNotificate,
   }
 
   return (
