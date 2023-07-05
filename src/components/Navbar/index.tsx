@@ -349,14 +349,6 @@ const Navbar: React.FC = () => {
     if (!jobType && JOB_TYPE) {
       job_type = JOB_TYPE
     }
-    console.log('params-DIS', params)
-    // console.log('paramsCate-DIS', paramsCate)
-    console.log('list_dis-list_dis', list_dis)
-    console.log('list_cate-list_cate', list_cate)
-    console.log('DIS_IDS-DIS_IDS', DIS_IDS)
-    console.log('CATE_IDS-CATE_IDS', CATE_IDS)
-    console.log('dataProfiledataProfile', dataProfile)
-    console.log('dataProfiledataProfile', dataProfile.categories[0])
 
     // console.log('vvvvvvv', valueSearchInput)
     // console.log('encode', encode)

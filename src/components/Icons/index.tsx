@@ -720,74 +720,17 @@ export const CateIcon: React.FC = () => {
 export const CreateKeywordIcon: React.FC = () => {
   return (
     <svg
-      width="75"
-      height="75"
-      viewBox="0 0 75 75"
+      width="40"
+      height="40"
+      viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g filter="url(#filter0_dd_9121_185867)">
-        <circle cx="36.5" cy="36.5" r="22.5" fill="#252525" />
-      </g>
+      <circle cx="30" cy="30" r="30" fill="#252525" />
       <path
-        d="M48.75 37C48.75 37.1989 48.671 37.3897 48.5303 37.5303C48.3897 37.671 48.1989 37.75 48 37.75H37.75V48C37.75 48.1989 37.671 48.3897 37.5303 48.5303C37.3897 48.671 37.1989 48.75 37 48.75C36.8011 48.75 36.6103 48.671 36.4697 48.5303C36.329 48.3897 36.25 48.1989 36.25 48V37.75H26C25.8011 37.75 25.6103 37.671 25.4697 37.5303C25.329 37.3897 25.25 37.1989 25.25 37C25.25 36.8011 25.329 36.6103 25.4697 36.4697C25.6103 36.329 25.8011 36.25 26 36.25H36.25V26C36.25 25.8011 36.329 25.6103 36.4697 25.4697C36.6103 25.329 36.8011 25.25 37 25.25C37.1989 25.25 37.3897 25.329 37.5303 25.4697C37.671 25.6103 37.75 25.8011 37.75 26V36.25H48C48.1989 36.25 48.3897 36.329 48.5303 36.4697C48.671 36.6103 48.75 36.8011 48.75 37Z"
+        d="M46.5234 30C46.5234 30.2797 46.4123 30.548 46.2145 30.7458C46.0167 30.9436 45.7485 31.0547 45.4687 31.0547H31.0547V45.4687C31.0547 45.7485 30.9436 46.0167 30.7458 46.2145C30.548 46.4123 30.2797 46.5234 30 46.5234C29.7203 46.5234 29.452 46.4123 29.2542 46.2145C29.0564 46.0167 28.9453 45.7485 28.9453 45.4687V31.0547H14.5312C14.2515 31.0547 13.9833 30.9436 13.7855 30.7458C13.5877 30.548 13.4766 30.2797 13.4766 30C13.4766 29.7203 13.5877 29.452 13.7855 29.2542C13.9833 29.0564 14.2515 28.9453 14.5312 28.9453H28.9453V14.5312C28.9453 14.2515 29.0564 13.9833 29.2542 13.7855C29.452 13.5877 29.7203 13.4766 30 13.4766C30.2797 13.4766 30.548 13.5877 30.7458 13.7855C30.9436 13.9833 31.0547 14.2515 31.0547 14.5312V28.9453H45.4687C45.7485 28.9453 46.0167 29.0564 46.2145 29.2542C46.4123 29.452 46.5234 29.7203 46.5234 30Z"
         fill="white"
       />
-      <defs>
-        <filter
-          id="filter0_dd_9121_185867"
-          x="0"
-          y="0"
-          width="75"
-          height="75"
-          filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
-        >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dx="1" dy="1" />
-          <feGaussianBlur stdDeviation="7.5" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0.0391667 0 0 0 0 0.391667 0 0 0 0.15 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_9121_185867"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dy="1" />
-          <feGaussianBlur stdDeviation="2.5" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0.0650001 0 0 0 0 0.65 0 0 0 0.1 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect1_dropShadow_9121_185867"
-            result="effect2_dropShadow_9121_185867"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect2_dropShadow_9121_185867"
-            result="shape"
-          />
-        </filter>
-      </defs>
     </svg>
   )
 }

@@ -120,7 +120,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       }
     }
   }
-
+  console.log('selectedFiles', selectedFiles)
   useEffect(() => {
     if (selectedFiles) {
       setEditDataPosted((preValue: any) => ({

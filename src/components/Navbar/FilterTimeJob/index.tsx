@@ -97,7 +97,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
   useEffect(() => {
     const handleOutsideClick = (e: any) => {
-      if (!collapseRef.current.contains(e.target)) {
+      if (collapseRef && !collapseRef?.current?.contains(e.target)) {
         setCollapseOpen(false)
       } else {
         setCollapseOpen(true)

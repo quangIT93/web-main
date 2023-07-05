@@ -313,7 +313,12 @@
 
   .create-keyword {
     position: absolute;
-    bottom: 0;
-    right: 10px;
+    bottom: 20px;
+    right: 36px;
+    cursor: pointer;
+    border-radius: 50%;
+    svg {
+      border-radius: 505;
+    }
   }
 }

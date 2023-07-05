@@ -238,7 +238,7 @@ const Notificate = () => {
             </div>
 
             {dataNotificationKeyword ? (
-              dataNotificationKeyword.keywords.map((dataKeyword: any) => (
+              dataNotificationKeyword?.keywords?.map((dataKeyword: any) => (
                 <div className="wrap-content_keyword">
                   <div className="content_keyword">
                     <h3>{dataKeyword.keyword}</h3>
@@ -284,7 +284,7 @@ const Notificate = () => {
           </div>
         )}
       </div>
-      <div className="create-keyword">
+      <div className="create-keyword" onClick={() => console.log('click icon')}>
         <CreateKeywordIcon />
       </div>
     </div>

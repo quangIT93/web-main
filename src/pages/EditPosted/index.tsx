@@ -205,7 +205,7 @@ const EditPosted = () => {
     editDataPosted?.categoryIds.forEach((category: any) => {
       formData.append('categoryIds', category)
     })
-
+    console.log('editDataPosted', editDataPosted)
     editDataPosted?.images.forEach((image: any) => {
       formData.append('images', image.image)
     })
@@ -221,9 +221,9 @@ const EditPosted = () => {
     formData.append('latitude', String(editDataPosted?.latitude))
     formData.append('longitude', String(editDataPosted?.longitude))
 
-    // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}, ${pair[1]}`)
-    // }
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`)
+    }
 
     if (formData) {
       createNewPost(formData)

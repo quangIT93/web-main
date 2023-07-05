@@ -169,7 +169,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
   useEffect(() => {
     const handleOutsideClick = (e: any) => {
-      if (!collapseRef.current.contains(e.target)) {
+      if (collapseRef && !collapseRef?.current?.contains(e.target)) {
         setCollapseOpen(false)
       } else {
         setCollapseOpen(true)
