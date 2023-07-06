@@ -67,6 +67,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     }
   }, [Salary_Max, Salary_Min, Salary_Max])
 
+  console.log("param", Salary_Min);
+  console.log("input", salaryMin);
+
+
   const handleRadioChange = (e: any) => {
     setSelectedValue(e.target.value)
   }
@@ -185,9 +189,8 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
   return (
     <Collapse
-      className={`inputFilterSalary input-filter_nav ${
-        inputValueMin || salaryMax ? 'activeSalary' : ''
-      }`}
+      className={`inputFilterSalary input-filter_nav ${inputValueMin || salaryMax ? 'activeSalary' : ''
+        }`}
       activeKey={collapseOpen ? '1' : ''}
       ref={collapseRef}
     >
@@ -195,10 +198,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
         header={
           salaryMax || salaryMin
             ? `${new Intl.NumberFormat('en-US').format(
-                Number(salaryMin?.toString().replace(',', ''))
-              )} - ${new Intl.NumberFormat('en-US').format(
-                Number(salaryMax?.toString().replace(',', ''))
-              )}`
+              Number(salaryMin?.toString().replace(',', ''))
+            )} - ${new Intl.NumberFormat('en-US').format(
+              Number(salaryMax?.toString().replace(',', ''))
+            )}`
             : `Mức lương`
         }
         key="1"
@@ -219,13 +222,13 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           value={
             inputValueMin
               ? new Intl.NumberFormat('en-US').format(
-                  Number(inputValueMin.toString().replace(',', ''))
-                )
+                Number(inputValueMin.toString().replace(',', ''))
+              )
               : Salary_Min
-              ? new Intl.NumberFormat('en-US').format(
+                ? new Intl.NumberFormat('en-US').format(
                   Number(Salary_Min.toString().replace(',', ''))
                 )
-              : new Intl.NumberFormat('en-US').format(
+                : new Intl.NumberFormat('en-US').format(
                   Number('6000000'.replace(',', ''))
                 )
           }
@@ -240,13 +243,13 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           value={
             inputValueMax
               ? new Intl.NumberFormat('en-US').format(
-                  Number(inputValueMax.toString().replace(',', ''))
-                )
+                Number(inputValueMax.toString().replace(',', ''))
+              )
               : Salary_Max
-              ? new Intl.NumberFormat('en-US').format(
+                ? new Intl.NumberFormat('en-US').format(
                   Number(Salary_Max.toString().replace(',', ''))
                 )
-              : new Intl.NumberFormat('en-US').format(
+                : new Intl.NumberFormat('en-US').format(
                   Number('12000000'.replace(',', ''))
                 )
           }

@@ -32,12 +32,13 @@ import {
   FormOutlined,
   UserOutlined,
   RightOutlined,
-  BarsOutlined,
+  MenuOutlined,
   SyncOutlined,
   ClockCircleOutlined,
   LogoutOutlined,
   KeyOutlined,
   LoadingOutlined,
+  CloseOutlined
 } from '@ant-design/icons'
 
 // import component
@@ -52,6 +53,7 @@ import FilterTypeSalary from './FilterTypeSalary'
 import FilterSalary from './FilterSalary'
 import FilterTimeJob from './FilterTimeJob'
 import Notificate from './Notificate'
+import PostButton from './PostButton'
 
 import { Avatar, Button, Space, Spin, Badge } from 'antd'
 
@@ -230,12 +232,14 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     getCountUnread()
   }, [receivedMessages, sendMessages, setReceivedMessages, setReceivedMessages])
+
+  console.log(receivedMessages, sendMessages);
+
   // console.log('receivedMessages', receivedMessages)
   // console.log('sendMessages', sendMessages)
   const ref = React.useRef<HTMLDivElement | null>(null)
   const refLogin = React.useRef<HTMLDivElement | null>(null)
   const refInfoUser = React.useRef<HTMLDivElement | null>(null)
-  const refTabBar = React.useRef<HTMLDivElement | null>(null)
 
   const handleCollapseEntered = () => {
     if (ref.current) {
@@ -564,10 +568,91 @@ const Navbar: React.FC = () => {
                   <span>Lịch sử</span>
                 </div>
               </Link>
-              <div className="sub-login_item">
+              {/* <div className="sub-login_item">
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
+              </div> */}
+              <div className="sub-login_item" onClick={handleLogout}>
+                <LogoutOutlined />
+                <span>Đăng xuất</span>
               </div>
+            </div>
+          </div>
+        )}
+      </Spin>
+    </div>,
+  ]
+
+  const menu = [
+    <Button key="1" className="btn-filter" onClick={() => setOpenCollapseFilter(!openCollapseFilter)}>
+      <TuneOutlinedIcon />
+    </Button>,
+
+    <Badge key="2" count={countChat} className="box-right-responsive_badge">
+      <Button
+        onClick={() => {
+          if (dataProfile && localStorage.getItem('refreshToken')) {
+            window.open(`/message`, '_blank')
+          } else {
+            setOpenModalLogin(true)
+          }
+        }}
+        type="link"
+      >
+        <ChatIcon />
+      </Button>
+    </Badge>,
+
+    <Button key="3" className="btn-notice" onClick={() => setOpenNotificate(!openNotificate)}>
+      <BellIcon />
+    </Button>,
+
+    <div
+      className="menu"
+      onClick={handleClickLogin}
+      ref={refLogin}
+      key="4"
+    >
+      <Button className="menu-button">
+        <MenuOutlined style={{ fontSize: '1.5em' }} />
+      </Button>
+      <Spin indicator={antIcon} spinning={spinning}>
+        {openInfoUser && (
+          <div className="sub-login" ref={refInfoUser}>
+            <Space className="sub-login_info">
+              <Avatar
+                style={{ backgroundColor: '#0D99FF' }}
+                icon={<UserOutlined style={{ fontSize: 30 }} />}
+                size={50}
+                src={dataProfile?.avatar ? dataProfile.avatar : null}
+              />
+              <div>
+                <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
+                <span>{dataProfile?.email ? dataProfile?.email : ''}</span>
+              </div>
+            </Space>
+            <div className="sub-login_items">
+              <Link to="/profile">
+                <div className="sub-login_item">
+                  <SyncOutlined />
+                  <span>Cập nhật thông tin</span>
+                </div>
+              </Link>
+              <Link to="/history">
+                <div
+                  className="sub-login_item"
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
+                >
+                  <ClockCircleOutlined />
+                  <span>Lịch sử</span>
+                </div>
+              </Link>
+              {/* <div className="sub-login_item">
+                <KeyOutlined />
+                <span>Đổi mật khẩu</span>
+              </div> */}
               <div className="sub-login_item" onClick={handleLogout}>
                 <LogoutOutlined />
                 <span>Đăng xuất</span>
@@ -617,7 +702,7 @@ const Navbar: React.FC = () => {
               <TuneOutlinedIcon />
             </Button>
 
-            <Badge count={countChat}>
+            <Badge count={countChat} className="btn-badge">
               <Button
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
@@ -627,33 +712,33 @@ const Navbar: React.FC = () => {
                   }
                 }}
                 type="link"
-                style={{ border: '1px solid #aaaaaa' }}
+                style={{ border: '1px solid #d9d9d9' }}
               >
                 <ChatIcon />
               </Button>
             </Badge>
 
-            <Button onClick={() => setOpenNotificate(!openNotificate)}>
+            <Button className="btn-notice" onClick={() => setOpenNotificate(!openNotificate)}>
               <BellIcon />
             </Button>
           </Center>
           <Right className="div-nav-right">
-            {/* <div className="tabBar-right">
-              <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
-            </div> */}
-            {/* <Button
-            variant="contained"
-            startIcon={<AdsClickIcon />}
-            style={{ marginRight: '25px' }}
-            sx={boxSX}
-            onClick={handleClick}
-          >
-            Hãy nhấn vào
-            {open ? <ExpandLess /> : <ExpandMore />}
-            <Collapse in={open} timeout="auto" unmountOnExit sx={collapse}>
-              <Div>adjklasdjkla</Div>
-            </Collapse>
-          </Button> */}
+            <Box
+              className="box-right-responsive"
+              sx={{
+                display: 'none',
+                flexDirection: 'column',
+                alignItems: 'center',
+                '& > *': {
+                  m: 1,
+                },
+                [`@media (max-width: 426px)`]: {
+                  display: 'flex',
+                },
+              }}
+            >
+              <ButtonGroup sx={{ margin: '0', alignItems: 'center' }}>{menu}</ButtonGroup>
+            </Box>
 
             <Box
               sx={{
@@ -662,6 +747,9 @@ const Navbar: React.FC = () => {
                 alignItems: 'center',
                 '& > *': {
                   m: 1,
+                },
+                [`@media (max-width: 426px)`]: {
+                  display: 'none',
                 },
               }}
             >
@@ -742,6 +830,7 @@ const Navbar: React.FC = () => {
           </div>
         </Collapse>
         {openNotificate ? <Notificate /> : <></>}
+        <PostButton setOpenModalLogin={setOpenModalLogin} />
       </Container>
     </div>
   )

@@ -183,8 +183,8 @@ const CategoryCarousel: React.FC = () => {
           navTouchCatelory && !openCollapseFilter
             ? '71px'
             : navTouchCatelory && openCollapseFilter
-            ? '283px'
-            : '',
+              ? '283px'
+              : '',
         zIndex: navTouchCatelory ? ' 2' : '',
         margin: navTouchCatelory ? '0 180px' : '0',
         right: 0,
@@ -251,7 +251,7 @@ const CategoryCarousel: React.FC = () => {
               sx={{
                 color: 'black',
                 display: 'flex',
-                alignItems: 'flex-start',
+                alignItems: 'center',
                 justifyContent: 'flex-start',
                 marginTop: '12px',
                 maxWidth: '120px',

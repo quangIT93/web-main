@@ -200,7 +200,7 @@ export const SearchIcon: React.FC<SizeProps> = ({
   )
 }
 
-export const BellIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
+export const BellIcon: React.FC<SizeProps> = ({ width = 18, height = 18 }) => {
   return (
     <svg
       width={width}

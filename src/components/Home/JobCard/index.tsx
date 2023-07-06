@@ -76,7 +76,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                 justifyContent: 'space-between',
             }}
         >
-            <div
+            <div className="div-card-post-left"
                 onClick={(e) => {
                     handleClickItem(e, props.item.id)
                 }}
@@ -98,7 +98,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                     />
                     <div
                         style={{ padding: '0', marginLeft: '12px' }}
-                        className="div-cart-props-post"
+                        className="div-card-post-left_info"
                     >
                         {' '}
                         <Tooltip placement="top" title={props.item.title}>
@@ -111,7 +111,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                                     margin: 0,
                                     fontWeight: 'bold',
                                     whiteSpace: 'nowrap',
-                                    width: '60%',
+                                    width: '100%',
                                     textOverflow: 'ellipsis',
                                     overflow: 'hidden',
                                 }}
@@ -129,7 +129,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                                 sx={{
                                     fontSize: '12px',
                                     whiteSpace: 'nowrap',
-                                    width: '60%',
+                                    width: '100%',
                                     textOverflow: 'ellipsis',
                                     overflow: 'hidden',
                                 }}
@@ -146,11 +146,11 @@ const JobCard: React.FC<Iprops> = (props) => {
                                 justifyContent: 'flex-start',
                             }}
                         >
-                            <EnvironmentFilled className="icon-cart-props-post" />
+                            <EnvironmentFilled className="div-card-post-left_info__icon" />
                             <Typography variant="body2" color="text.secondary"
                                 sx={{
                                     whiteSpace: 'nowrap',
-                                    width: '60%',
+                                    width: '100%',
                                     textOverflow: 'ellipsis',
                                     overflow: 'hidden',
                                 }}
@@ -165,11 +165,11 @@ const JobCard: React.FC<Iprops> = (props) => {
                                 justifyContent: 'flex-start',
                             }}
                         >
-                            <ClockCircleFilled className="icon-cart-props-post" />
+                            <ClockCircleFilled className="div-card-post-left_info__icon" />
                             <Typography variant="body2" color="text.secondary"
                                 sx={{
                                     whiteSpace: 'nowrap',
-                                    width: '60%',
+                                    width: '100%',
                                     textOverflow: 'ellipsis',
                                     overflow: 'hidden',
                                 }}
@@ -192,11 +192,12 @@ const JobCard: React.FC<Iprops> = (props) => {
                                     marginRight: '2px',
                                     color: '#575757',
                                 }}
+                                className="div-card-post-left_info__icon"
                             />
                             <Typography variant="body2" color="text.secondary"
                                 sx={{
                                     whiteSpace: 'nowrap',
-                                    width: '60%',
+                                    width: '100%',
                                     textOverflow: 'ellipsis',
                                     overflow: 'hidden',
                                 }}
@@ -230,9 +231,10 @@ const JobCard: React.FC<Iprops> = (props) => {
             </div>
 
             <Space
-                style={{ justifyContent: 'space-between', width: 100 }}
+                style={{ justifyContent: 'space-between' }}
                 direction="vertical"
                 align="center"
+                className="div-card-post-right"
             >
                 <div
                     onClick={async (e) => {

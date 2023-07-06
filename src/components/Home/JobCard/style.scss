@@ -1,33 +1,78 @@
 @import '../../../scss//mixins';
 
-.MuiTypography-h6 {
+.div-card-post-left {
+    width: 80%;
+
+    .MuiTypography-h6 {
+        @include breakpoint(mobile) {
+            font-size: 12px;
+            width: 75% !important;
+        }
+
+        @include breakpoint(tablet) {
+            width: 90% !important
+        }
+
+        @include breakpoint(largeTablet) {
+            width: 90% !important;
+        }
+    }
+
+    .MuiTypography-h1 {
+        @include breakpoint(mobile) {
+            font-size: 10px;
+            width: 75% !important;
+        }
+
+        @include breakpoint(tablet) {
+            width: 90% !important
+        }
+
+        @include breakpoint(largeTablet) {
+            width: 90% !important
+        }
+    }
+
+    .MuiTypography-body2 {
+        @include breakpoint(mobile) {
+            font-size: 10px;
+            width: 65% !important;
+        }
+
+        @include breakpoint(tablet) {
+            width: 90% !important
+        }
+
+        @include breakpoint(largeTablet) {
+            width: 90% !important
+        }
+    }
+
+    .MuiImageListItem-root {
+        align-items: center;
+    }
+
     @include breakpoint(mobile) {
-        font-size: 12px;
+        width: 70%;
+    }
+
+    &_info {
+        width: 100%;
+
+        &__icon {
+            // font-size: small;
+        }
     }
 }
 
-.MuiTypography-h1 {
+.div-card-post-right {
+    width: 100px;
+
     @include breakpoint(mobile) {
-        font-size: 10px;
+        width: 30%;
+    }
+
+    @include breakpoint(largeTablet) {
+        width: 30%;
     }
 }
-
-.MuiImageListItem-root {
-    align-items: center;
-}
-
-.div-cart-props-post {
-    width: 100%;
-}
-
-// .MuiImageListItem-img {
-//     max-width: 120px;
-//     max-height: 120px;
-//     border-radius: 10;
-
-//     @include breakpoint(mobile) {
-//         width: 85px !important;
-//         height: 85px !important;
-
-//     }
-// }

@@ -19,12 +19,12 @@ const WrapFooter = styled('div')({
   height: '36px',
 
   [`@media (max-width: ${mobile})`]: {
-    height: '70px',
-    // position: 'unset',
+    height: '36px',
+    position: 'unset',
   },
 
   [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
-    // position: 'unset',
+    position: 'unset',
     height: '70px',
   },
 })
@@ -36,6 +36,14 @@ const PolicyFooter = styled('div')({
   padding: '10px',
   cursor: 'pointer',
   zIndex: '2',
+
+  // [`@media (max-width: ${mobile})`]: {
+  //   position: 'unset',
+  // },
+
+  // [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
+  //   position: 'unset',
+  // },
 })
 
 const Visibility = styled('div')({
@@ -48,12 +56,13 @@ const Visibility = styled('div')({
   left: 0,
   right: 0,
   width: '100%',
+
   [`@media (max-width: ${mobile})`]: {
-    // position: 'unset',
+    position: 'unset',
   },
 
   [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
-    // position: 'unset',
+    position: 'unset',
   },
 })
 
