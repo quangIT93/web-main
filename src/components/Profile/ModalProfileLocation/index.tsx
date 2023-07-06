@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import Autocomplete from '@mui/material/Autocomplete'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import React, { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
-import OutlinedInput from '@mui/material/OutlinedInput'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import ListItemText from '@mui/material/ListItemText'
-import { SelectChangeEvent } from '@mui/material/Select'
-import Checkbox from '@mui/material/Checkbox'
-import Chip from '@mui/material/Chip'
+import OutlinedInput from '@mui/material/OutlinedInput';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
 
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 
-import Collapse from '@mui/material/Collapse'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
+import Collapse from '@mui/material/Collapse';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
 
-import ExpandLess from '@mui/icons-material/ExpandLess'
-import ExpandMore from '@mui/icons-material/ExpandMore'
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import { message, Space } from 'antd';
 
 // data
-import profileApi from 'api/profileApi'
-import { useDispatch } from 'react-redux'
+import profileApi from 'api/profileApi';
+import { useDispatch } from 'react-redux';
 
 // data
-import locationApi from '../../../api/locationApi'
+import locationApi from '../../../api/locationApi';
 
 import {
   getProfile,
   resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
+} from 'store/reducer/profileReducer/getProfileReducer';
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -48,16 +48,16 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+};
 
 interface IModalProfileLocation {
-  openModalLocation: boolean
-  setOpenModalLocation: React.Dispatch<React.SetStateAction<boolean>>
-  locations: number[]
+  openModalLocation: boolean;
+  setOpenModalLocation: React.Dispatch<React.SetStateAction<boolean>>;
+  locations: number[];
 }
 
-const ITEM_HEIGHT = 48
-const ITEM_PADDING_TOP = 8
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
 
 const MenuProps = {
   PaperProps: {
@@ -66,89 +66,87 @@ const MenuProps = {
       width: 250,
     },
   },
-}
-
-
+};
 
 const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
-  const { openModalLocation, setOpenModalLocation, locations } = props
-  const [dataAllLocation, setDataAllLocation] = React.useState<any>(null)
-  const [open, setOpen] = React.useState<any>([])
+  const { openModalLocation, setOpenModalLocation, locations } = props;
+  const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
+  const [open, setOpen] = React.useState<any>([]);
 
   const [location, setLocation] = React.useState<any>(
-    locations?.map((v: any, i) => v.district)
-  )
+    locations?.map((v: any, i) => v.district),
+  );
 
   const [locationId, setLocationId] = React.useState<any>(
-    locations?.map((v: any, i) => v.district_id)
-  )
+    locations?.map((v: any, i) => v.district_id),
+  );
 
-  console.log("locations", locations)
-  console.log("location", location)
+  console.log('locations', locations);
+  console.log('location', location);
 
-  const dispatch = useDispatch()
-  const handleClose = () => setOpenModalLocation(false)
+  const dispatch = useDispatch();
+  const handleClose = () => setOpenModalLocation(false);
   const allLocation = async () => {
     try {
-      const allLocation = await locationApi.getAllLocation()
+      const allLocation = await locationApi.getAllLocation();
 
       if (allLocation) {
-        setDataAllLocation(allLocation.data)
+        setDataAllLocation(allLocation.data);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   React.useEffect(() => {
-    allLocation()
+    allLocation();
     // getAllLocations()
     // delete param when back to page
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (dataAllLocation && dataAllLocation.length > 0) {
-      setOpen(Array(dataAllLocation.length).fill(false))
+      setOpen(Array(dataAllLocation.length).fill(false));
     }
-  }, [dataAllLocation])
+  }, [dataAllLocation]);
 
   // console.log('dataAllLocation', dataAllLocation)
 
   const handleClickProvince = (event: any, index: number) => {
-    event.stopPropagation()
+    event.stopPropagation();
     const newOpen = open.map((value: boolean, i: number) =>
-      i === index ? !value : false
-    )
-    setOpen(newOpen)
-  }
+      i === index ? !value : false,
+    );
+    setOpen(newOpen);
+  };
 
   const handleClickDistrict = (value: any) => {
     setLocation((prevValues: number[]) => {
       if (prevValues.includes(value.district)) {
         // Nếu giá trị đã tồn tại, xoá nó khỏi
-        const newValues = prevValues.filter((item) => item !== value.district)
-        return newValues
+        const newValues = prevValues.filter((item) => item !== value.district);
+        return newValues;
       } else {
         // Nếu giá trị chưa tồn tại, thêm nó vào mảng
-        const newValues = [...prevValues, value.district]
-        return newValues
+        const newValues = [...prevValues, value.district];
+        return newValues;
       }
-    })
+    });
 
     setLocationId((prevValuesId: number[]) => {
       if (prevValuesId.includes(value.district_id)) {
         // Nếu giá trị đã tồn tại, xoá nó khỏi
         const newValues = prevValuesId.filter(
-          (item: number) => item !== value.district_id
-        )
-        return newValues
+          (item: number) => item !== value.district_id,
+        );
+        return newValues;
       } else {
         // Nếu giá trị chưa tồn tại, thêm nó vào mảng
-        const newValues = [...prevValuesId, value.district_id]
-        return newValues
+        const newValues = [...prevValuesId, value.district_id];
+        return newValues;
       }
-    })
-  }
+    });
+  };
 
   const renderOptions = () => {
     return dataAllLocation?.map((item: any, index: number) => (
@@ -170,25 +168,26 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
           ))}
         </Collapse>
       </div>
-    ))
-  }
+    ));
+  };
 
   const handleSubmit = async () => {
     try {
       if (locationId.length > 3) {
-        message.warning("Chon 3 khu vuc lam viec")
-        return
+        message.warning('Chon 3 khu vuc lam viec');
+        return;
       }
       const result = await profileApi.updateProfileLocation(
         // value.map((v) => parseInt(v))
-        locationId)
+        locationId,
+      );
       if (result) {
-        setOpenModalLocation(false)
+        setOpenModalLocation(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <Modal
@@ -214,14 +213,14 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
             value={location}
             input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
             renderValue={(selected) => {
-              console.log("selected", selected)
+              console.log('selected', selected);
 
               if (selected.length === 0) {
                 return (
                   <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>
                     Quận, Tỉnh/Thành Phố
                   </p>
-                )
+                );
               } else {
                 return (
                   <Box
@@ -235,7 +234,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
                       <Chip key={i} label={value} />
                     ))}
                   </Box>
-                )
+                );
               }
             }}
             MenuProps={MenuProps}
@@ -249,7 +248,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         </Button>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalProfileLocation
+export default ModalProfileLocation;

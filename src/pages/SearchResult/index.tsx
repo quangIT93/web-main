@@ -127,10 +127,11 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '640px',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
+  border: 'none',
+  outline: 'none',
+  borderRadius: '10px',
   p: 4,
 };
 
@@ -620,8 +621,7 @@ const NewJobs: React.FC = () => {
                 }}
                 onClick={handleShowCreateKeywork}
               >
-                <CreateKeywordIconSmall />
-                Thông tin từ khóa
+                <CreateKeywordIconSmall /> Thông tin từ khóa
               </div>
             </div>
 
@@ -956,23 +956,37 @@ const NewJobs: React.FC = () => {
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
-                  border: '1px solid red',
-                  // color: 'red',
-                }}
-                onClick={() => {}}
-                variant="outlined"
-              >
-                Hủy
-              </Button>
-              <Button
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
+                  borderRadius: '20px',
+                  width: '153px',
+                  padding: '12px 16px',
                 }}
                 onClick={() => {}}
                 variant="contained"
               >
                 Áp dụng
+              </Button>
+              <Button
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  borderRadius: '20px',
+                  width: '153px',
+                  padding: '12px 16px',
+                  // border: '1px solid transparent',
+                  color: 'red',
+                  border: '1px solid red',
+                  // background: 'red',
+
+                  '&:hover': {
+                    border: '1px solid red',
+                    color: '#ffffff',
+                    background: '#c60404',
+                  },
+                }}
+                onClick={() => {}}
+                variant="outlined"
+              >
+                Hủy
               </Button>
             </div>
           </Box>
