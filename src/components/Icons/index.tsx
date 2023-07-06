@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 interface SizeProps {
-  width: number
-  height: number
+  width: number;
+  height: number;
 }
 
 export const AvatarIcon: React.FC = () => {
@@ -27,8 +27,8 @@ export const AvatarIcon: React.FC = () => {
         fill="white"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const EmailIcon: React.FC<SizeProps> = ({ width = 24, height = 24 }) => {
   return (
@@ -48,8 +48,8 @@ export const EmailIcon: React.FC<SizeProps> = ({ width = 24, height = 24 }) => {
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const PhoneIcon: React.FC<SizeProps> = ({ width = 24, height = 24 }) => {
   return (
@@ -67,8 +67,8 @@ export const PhoneIcon: React.FC<SizeProps> = ({ width = 24, height = 24 }) => {
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const ArrowrightIcon: React.FC<SizeProps> = ({
   width = 7,
@@ -87,8 +87,8 @@ export const ArrowrightIcon: React.FC<SizeProps> = ({
         fill="#001424"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const EditIcon: React.FC<SizeProps> = ({ width = 21, height = 20 }) => {
   return (
@@ -110,8 +110,8 @@ export const EditIcon: React.FC<SizeProps> = ({ width = 21, height = 20 }) => {
         fill="white"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const ArrowdownIcon: React.FC = () => {
   return (
@@ -130,8 +130,8 @@ export const ArrowdownIcon: React.FC = () => {
         strokeLinejoin="round"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const ChatIcon: React.FC<SizeProps> = ({ width = 19, height = 18 }) => {
   return (
@@ -171,8 +171,8 @@ export const ChatIcon: React.FC<SizeProps> = ({ width = 19, height = 18 }) => {
         strokeWidth="0.5"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const SearchIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -197,8 +197,8 @@ export const SearchIcon: React.FC<SizeProps> = ({
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const BellIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
   return (
@@ -220,8 +220,8 @@ export const BellIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const AllIcon: React.FC<SizeProps> = ({ width = 40, height = 40 }) => {
   return (
@@ -252,8 +252,8 @@ export const AllIcon: React.FC<SizeProps> = ({ width = 40, height = 40 }) => {
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const ServiceIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -286,8 +286,8 @@ export const ServiceIcon: React.FC<SizeProps> = ({
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const BeautifyIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -320,8 +320,8 @@ export const BeautifyIcon: React.FC<SizeProps> = ({
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const DeliveryIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -354,8 +354,8 @@ export const DeliveryIcon: React.FC<SizeProps> = ({
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const HotelIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
   return (
@@ -385,26 +385,26 @@ export const HotelIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const EditorIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const TutorIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const TranslationIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const CleaningIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -439,66 +439,66 @@ export const CleaningIcon: React.FC<SizeProps> = ({
         fill-opacity="0.6"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const DesignIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const ProgrammerIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const CinematographyIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const EventIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const CarePetIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const SportIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const LawIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const ConsultantIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const Handicraft: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const MaidJob: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const DotIcon: React.FC = () => {
   return (
@@ -536,8 +536,8 @@ export const DotIcon: React.FC = () => {
         </clipPath>
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const VideoIcon: React.FC = () => {
   return (
@@ -570,8 +570,8 @@ export const VideoIcon: React.FC = () => {
         </clipPath>
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const CallIcon: React.FC = () => {
   return (
@@ -589,8 +589,8 @@ export const CallIcon: React.FC = () => {
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const LocationIcon: React.FC = () => {
   return (
@@ -627,8 +627,8 @@ export const LocationIcon: React.FC = () => {
         />
       </g>
     </svg>
-  )
-}
+  );
+};
 
 export const ImageIcon: React.FC = () => {
   return (
@@ -646,8 +646,8 @@ export const ImageIcon: React.FC = () => {
         fill="#575757"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const SendIcon: React.FC = () => {
   return (
@@ -663,8 +663,8 @@ export const SendIcon: React.FC = () => {
         fill="#0D99FF"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const SeenIcon: React.FC = () => {
   return (
@@ -697,8 +697,8 @@ export const SeenIcon: React.FC = () => {
         </clipPath>
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const CateIcon: React.FC = () => {
   return (
@@ -714,8 +714,8 @@ export const CateIcon: React.FC = () => {
         stroke="#575757"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const CreateKeywordIcon: React.FC = () => {
   return (
@@ -732,5 +732,33 @@ export const CreateKeywordIcon: React.FC = () => {
         fill="white"
       />
     </svg>
-  )
-}
+  );
+};
+
+export const CreateKeywordIconSmall: React.FC = () => {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 13 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="6.5" cy="6.5" r="6" stroke="#0D99FF" />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M9.75 6.59025H3.25V6.34951H9.75V6.59025Z"
+        fill="#0D99FF"
+        stroke="#0D99FF"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M6.50047 9.75L6.50047 3.25L6.74121 3.25L6.74121 9.75L6.50047 9.75Z"
+        fill="#0D99FF"
+        stroke="#0D99FF"
+      />
+    </svg>
+  );
+};

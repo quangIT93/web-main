@@ -68,6 +68,8 @@ const MenuProps = {
   },
 }
 
+
+
 const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const { openModalLocation, setOpenModalLocation, locations } = props
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null)
@@ -80,6 +82,9 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const [locationId, setLocationId] = React.useState<any>(
     locations?.map((v: any, i) => v.district_id)
   )
+
+  console.log("locations", locations)
+  console.log("location", location)
 
   const dispatch = useDispatch()
   const handleClose = () => setOpenModalLocation(false)
@@ -209,6 +214,8 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
             value={location}
             input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
             renderValue={(selected) => {
+              console.log("selected", selected)
+
               if (selected.length === 0) {
                 return (
                   <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>

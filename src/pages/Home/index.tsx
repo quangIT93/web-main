@@ -1,22 +1,22 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 // @ts-ignore
-import { Navbar } from '#components'
+import { Navbar } from '#components';
 
 // @ts-ignore
-import { Breadcrumbs } from '#components'
+import { Breadcrumbs } from '#components';
 // @ts-ignore
-import { Carousel } from '#components'
+import { Carousel } from '#components';
 // @ts-ignore
-import { NewJobs } from '#components'
+import { NewJobs } from '#components';
 // @ts-ignore
-import { ThemesJob } from '#components'
+import { ThemesJob } from '#components';
 // @ts-ignore
-import { CategoryCarousel } from '#components'
+import { CategoryCarousel } from '#components';
 
 // import ModalLogin from '#components/Home/ModalLogin'
 // import { useHomeState } from './HomeState'
-import './style.scss'
-import Footer from '../../components/Footer/Footer'
+import './style.scss';
+import Footer from '../../components/Footer/Footer';
 
 // import context
 // import { HomeValueContext } from 'context/HomeValueContextProvider'
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
     <div className="home">
       <Navbar />
 
-      <Carousel />
+      {/* <Carousel /> */}
 
       <div className="home__main">
         <CategoryCarousel />
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default memo(Home)
+export default memo(Home);
