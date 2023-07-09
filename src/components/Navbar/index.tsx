@@ -195,7 +195,7 @@ const Navbar: React.FC = () => {
       await dispatch(getProfile() as any);
 
       const result = await profileApi.getProfile();
-      if (dataProfile) {
+      if (result) {
         dispatch(getProfile() as any);
       }
     } catch (error) {
@@ -412,11 +412,11 @@ const Navbar: React.FC = () => {
 
   // login
   const handleClickLogin = async (e: any) => {
-    e.stopPropagation();
+    // e.stopPropagation();
     try {
       if (openInfoUser) {
         setSpinning(false);
-        // setOpenInfoUser(!openInfoUser);
+        setOpenInfoUser(!openInfoUser);
       } else {
         setSpinning(true);
       }
@@ -472,9 +472,11 @@ const Navbar: React.FC = () => {
     try {
       console.log('logout thành công');
       const refreshToken = localStorage.getItem('refreshToken');
+      console.log('refreshToken', refreshToken);
 
       if (refreshToken) {
         const result = await authApi.signOut(refreshToken);
+        console.log('result', result);
 
         if (result) {
           window.location.replace('/home');
@@ -603,10 +605,10 @@ const Navbar: React.FC = () => {
                 <span>Đăng xuất</span>
               </div>
 
-              <div className="sub-login_item">
+              {/* <div className="sub-login_item" onClick={handleLogout}>
                 <FlagVNIcon />
                 <span>Đổi ngôn ngữ</span>
-              </div>
+              </div> */}
             </div>
           </div>
         )}
