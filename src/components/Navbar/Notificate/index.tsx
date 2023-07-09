@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // import ReactHtmlParser from 'react-html-parser'
 
 import { Space, Tooltip, Input, Switch } from 'antd';
@@ -43,6 +43,8 @@ import './style.scss';
 // import fake data notificates
 import { notificates } from './data';
 
+import { HomeValueContext } from 'context/HomeValueContextProvider';
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 
@@ -56,6 +58,13 @@ const MenuProps = {
 };
 
 const Notificate = () => {
+  const {
+    setOpenNotificate,
+    openNotificate,
+  }: {
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+  } = React.useContext(HomeValueContext);
   const [dataNotification, setDataNotification] = useState<any>([]);
   const [dataNotificationKeyword, setDataNotificationkeyword] = useState<any>(
     [],
@@ -65,6 +74,8 @@ const Notificate = () => {
   const [activeKeyword, setActiveKeyword] = useState(false);
 
   const [input, setInput] = useState(true);
+
+  const refNotification = React.useRef<HTMLDivElement | null>(null);
 
   // const inputRef = useRef<InputRef>(null);
 
@@ -116,9 +127,29 @@ const Notificate = () => {
       console.log('error', error);
     }
   };
+  console.log('dataa', dataNotificationKeyword);
+
+  React.useEffect(() => {
+    const handleCLoseNotificate = (event: any) => {
+      event.stopPropagation();
+      if (
+        openNotificate &&
+        !event.target.closest('.notification') &&
+        !event.target.closest('.btn-notice')
+      ) {
+        setOpenNotificate(false);
+      }
+    };
+
+    document.addEventListener('click', handleCLoseNotificate);
+
+    return () => {
+      document.removeEventListener('click', handleCLoseNotificate);
+    };
+  }, []);
 
   return (
-    <div className="notification">
+    <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
           className={`top-notificate_system ${
@@ -332,4 +363,4 @@ const Notificate = () => {
   );
 };
 
-export default Notificate;
+export default React.memo(Notificate);

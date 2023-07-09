@@ -1,63 +1,67 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react';
 // @ts-ignore
 // import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-import ModalLogin from '../../components/Home/ModalLogin'
+import ModalLogin from '../../components/Home/ModalLogin';
 
 // @ts-ignore
-import { Logo } from '#components'
+import { Logo } from '#components';
 // @ts-ignore
-import { ChatIcon, BellIcon, SearchIcon } from '#components'
+import { ChatIcon, BellIcon, SearchIcon } from '#components';
+
+import { FlagVNIcon } from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
 
 // import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined'
 
-import { Collapse } from '@mui/material'
+import { Collapse } from '@mui/material';
 // import styled from '@emotion/styled'
-import './style.scss'
+import './style.scss';
 
-import Box from '@mui/material/Box'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import Backdrop from '@mui/material/Backdrop'
-import CircularProgress from '@mui/material/CircularProgress'
+import Box from '@mui/material/Box';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // import icon
-import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined'
+import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 
 import {
   FormOutlined,
   UserOutlined,
   RightOutlined,
-  BarsOutlined,
+  MenuOutlined,
   SyncOutlined,
   ClockCircleOutlined,
   LogoutOutlined,
   KeyOutlined,
   LoadingOutlined,
-} from '@ant-design/icons'
+  CloseOutlined,
+} from '@ant-design/icons';
 
 // import component
 // import SalaryFilterSubnav from './components/SalaryFilterSubnav'
 // import PositionFilterSubnav from './components/PositionFilterSubnav'
 // import CareerFilterSubnav from './components/CareerFilterSubnav'
-import SearchInput from './SearchInput'
-import FilterLocationNav from './FilterLocationNav'
-import FilterCateloriesNav from './FilterCateloriesNav'
-import FilterTypeJob from './FilterTypeJob'
-import FilterTypeSalary from './FilterTypeSalary'
-import FilterSalary from './FilterSalary'
-import FilterTimeJob from './FilterTimeJob'
-import Notificate from './Notificate'
+import SearchInput from './SearchInput';
+import FilterLocationNav from './FilterLocationNav';
+import FilterCateloriesNav from './FilterCateloriesNav';
+import FilterTypeJob from './FilterTypeJob';
+import FilterTypeSalary from './FilterTypeSalary';
+import FilterSalary from './FilterSalary';
+import FilterTimeJob from './FilterTimeJob';
+import Notificate from './Notificate';
+import PostButton from './PostButton';
 
-import { Avatar, Button, Space, Spin, Badge } from 'antd'
+import { Avatar, Button, Space, Spin, Badge } from 'antd';
 
-import authApi from 'api/authApi'
-import profileApi from 'api/profileApi'
-import messageApi from 'api/messageApi'
+import authApi from 'api/authApi';
+import profileApi from 'api/profileApi';
+import messageApi from 'api/messageApi';
 
 import {
   Container,
@@ -67,18 +71,19 @@ import {
   Right,
   Center,
   collapseCssFilter,
-} from './Css'
+} from './Css';
 
-import { getProfile } from 'store/reducer/profileReducer/getProfileReducer'
-import { RootState } from '../../store/reducer'
-import { bindActionCreators } from 'redux'
-import { actionCreators } from '../../store/index'
+import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
+
+import { RootState } from '../../store/reducer';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../store/index';
 
 // import Context
-import { HomeValueContext } from 'context/HomeValueContextProvider'
-import { ChatContext } from 'context/ChatContextProvider'
-import { DivRef1 } from 'context/HomeValueContextProvider'
-import { useSearchParams } from 'react-router-dom'
+import { HomeValueContext } from 'context/HomeValueContextProvider';
+import { ChatContext } from 'context/ChatContextProvider';
+import { DivRef1 } from 'context/HomeValueContextProvider';
+import { useSearchParams } from 'react-router-dom';
 
 // import redux
 
@@ -92,84 +97,85 @@ const Navbar: React.FC = () => {
     openNotificate,
   }: // setRefNav,
   {
-    openCollapseFilter: boolean
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
     // heightNavbar: number
     // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>
-    openNotificate: boolean
-  } = useContext(HomeValueContext)
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
     sendMessages,
     setReceivedMessages,
     // setSendMessages,
-  } = useContext(ChatContext)
+  } = useContext(ChatContext);
 
-  const [showTap, setShowTap] = React.useState(false)
+  const [showTap, setShowTap] = React.useState(false);
 
   // const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [openModalLogin, setOpenModalLogin] = React.useState(false)
-  const [openInfoUser, setOpenInfoUser] = React.useState(false)
-  const [openBackdrop, setOpenBackdrop] = React.useState(false)
-  const [spinning, setSpinning] = React.useState(false)
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const [openInfoUser, setOpenInfoUser] = React.useState(false);
+  const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  const [spinning, setSpinning] = React.useState(false);
 
   // value search
-  const [salaryType, setSalaryType] = React.useState<any>()
-  const [jobType, setJobType] = React.useState<any>()
-  const [valueSearchInput, setValueSearchInput] = useState<string | undefined>()
-  const [listDis, setListDis] = useState<[]>([])
-  const [listCate, setListCate] = useState<[]>([])
-  const [typeMoney, setTypeMoney] = useState<number | null>(1)
-  const [salaryMin, setSalaryMin] = useState<number | null>(null)
-  const [salaryMax, setSalaryMax] = useState<number | null>(null)
+  const [salaryType, setSalaryType] = React.useState<any>();
+  const [jobType, setJobType] = React.useState<any>();
+  const [valueSearchInput, setValueSearchInput] = useState<
+    string | undefined
+  >();
+  const [listDis, setListDis] = useState<[]>([]);
+  const [listCate, setListCate] = useState<[]>([]);
+  const [typeMoney, setTypeMoney] = useState<number | null>(1);
+  const [salaryMin, setSalaryMin] = useState<number | null>(null);
+  const [salaryMax, setSalaryMax] = useState<number | null>(null);
   // const [timeJob, setTimeJob] = useState()
   // const [dateBegin, setDateBegin] = useState()
   // const [dateEnd, setDateEnd] = useState()
-  const [isRemotely, setIsRemotely] = useState<number>(0)
-  const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0)
+  const [isRemotely, setIsRemotely] = useState<number>(0);
+  const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0);
 
-  const [countChat, setCountChat] = useState<number>(0)
+  const [countChat, setCountChat] = useState<number>(0);
 
   // use Redux manage state
 
   // value query
 
-  const QUERY = searchParams.get('q')
-  const SALARY_TYPE = Number(searchParams.get('sal-type'))
-  const JOB_TYPE = Number(searchParams.get('job-type'))
+  const QUERY = searchParams.get('q');
+  const SALARY_TYPE = Number(searchParams.get('sal-type'));
+  const JOB_TYPE = Number(searchParams.get('job-type'));
   const DIS_IDS = searchParams
     .getAll('dis-ids')
-    .map((disId) => disId.split(','))
+    .map((disId) => disId.split(','));
   // .map((dis) => dis[1])
   const CATE_IDS = searchParams
     .getAll('categories-ids')
-    .map((disId) => disId.split(','))
+    .map((disId) => disId.split(','));
   // .map((dis) => dis[1])
 
   // params url
-  const params = new URLSearchParams()
-  const paramsCate = new URLSearchParams()
+  const params = new URLSearchParams();
+  const paramsCate = new URLSearchParams();
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />
+  const antIcon = <LoadingOutlined style={{ fontSize: 30 }} spin />;
   // thay đổi width setState
   // const [windowWidth, setWindowWidth] = useState(false)
 
   // use redux
-  const dispatch = useDispatch()
-  const { setProfileUser } = bindActionCreators(actionCreators, dispatch)
+  const dispatch = useDispatch();
+  // const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+  // const dataProfile = useSelector((state: RootState) => state.profileUser);
 
-  //const dataProfile: any = useSelector((data: RootState) => data.profile)
-
-  const dataProfile = useSelector((state: RootState) => state.profileUser)
+  const dataProfile = useSelector((state: RootState) => state.profile.profile);
   // handle show tap on screen mobile
   const handleTap = () => {
-    setShowTap(!showTap)
-  }
+    setShowTap(!showTap);
+  };
 
   //  MOdalFilter
   // const [openModalFilter, setOpenModalFilter] = React.useState(false)
@@ -180,20 +186,20 @@ const Navbar: React.FC = () => {
 
   // handle close backdrop
   const handleClose = () => {
-    setOpenBackdrop(false)
-  }
+    setOpenBackdrop(false);
+  };
 
   // fecth data profile with accesstoken
   const fecthDataProfileUser = async () => {
     try {
-      await dispatch(getProfile() as any)
+      await dispatch(getProfile() as any);
 
-      const result = await profileApi.getProfile()
+      const result = await profileApi.getProfile();
       if (dataProfile) {
-        setProfileUser(result.data)
+        dispatch(getProfile() as any);
       }
     } catch (error) {
-      setOpenBackdrop(false)
+      setOpenBackdrop(false);
       // error authentication
       // setOpenBackdrop(true)
       // if (!localStorage.getItem('accessToken')) {
@@ -208,51 +214,59 @@ const Navbar: React.FC = () => {
       // }
       // await dispatch(getProfile() as any)
     }
-  }
+  };
 
   useEffect(() => {
-    fecthDataProfileUser()
+    fecthDataProfileUser();
     // dispatch(getProfile() as any)
-  }, [])
+  }, []);
 
   // get count unread
   const getCountUnread = async () => {
     try {
-      const result = await messageApi.getUnread()
+      const result = await messageApi.getUnread();
       if (result) {
-        setCountChat(result.data.quantity)
+        setCountChat(result.data.quantity);
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    getCountUnread()
-  }, [receivedMessages, sendMessages, setReceivedMessages, setReceivedMessages])
+    getCountUnread();
+  }, [
+    receivedMessages,
+    sendMessages,
+    setReceivedMessages,
+    setReceivedMessages,
+  ]);
+
+  console.log(receivedMessages, sendMessages);
+
   // console.log('receivedMessages', receivedMessages)
   // console.log('sendMessages', sendMessages)
-  const ref = React.useRef<HTMLDivElement | null>(null)
-  const refLogin = React.useRef<HTMLDivElement | null>(null)
-  const refInfoUser = React.useRef<HTMLDivElement | null>(null)
-  const refTabBar = React.useRef<HTMLDivElement | null>(null)
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  const refLogin = React.useRef<HTMLDivElement | null>(null);
+  const refInfoUser = React.useRef<HTMLDivElement | null>(null);
+  const bellRef = React.useRef<HTMLDivElement | null>(null);
 
   const handleCollapseEntered = () => {
     if (ref.current) {
       // const height = ref.current.getBoundingClientRect().height
-      SetRefNav(ref)
+      SetRefNav(ref);
       // setHeightNavbar(height)
     }
-  }
+  };
 
   const handleCollapseExited = () => {
     if (ref.current) {
       // const height = ref.current.getBoundingClientRect().height
 
       // setHeightNavbar(height)
-      SetRefNav(ref)
+      SetRefNav(ref);
     }
-  }
+  };
 
   useEffect(() => {
     // const handleResize = () => {
@@ -262,14 +276,14 @@ const Navbar: React.FC = () => {
     //     setWindowWidth(false)
     //   }
     // }
-    SetRefNav(ref)
+    SetRefNav(ref);
 
     // window.addEventListener('resize', handleResize)
 
     // return () => {
     //   window.removeEventListener('resize', handleResize)
     // }
-  }, [SetRefNav])
+  }, [SetRefNav]);
 
   // useEffect(() => {
   //   const handleOutsideClick = (e: any) => {
@@ -293,62 +307,62 @@ const Navbar: React.FC = () => {
 
   // handle click search button
   const handleSearch = (event: any, valueSearchInput: string | undefined) => {
-    event.preventDefault()
-    var encode: any
-    var job_type = jobType
-    var money_type = typeMoney
-    var salary_type = salaryType
-    var salary_min = salaryMin
-    var salary_max = salaryMax
-    var list_dis = listDis
-    var list_cate = listCate
-    var is_working_weekend = isWorkingWeekend
-    var is_remotely = isRemotely
+    event.preventDefault();
+    var encode: any;
+    var job_type = jobType;
+    var money_type = typeMoney;
+    var salary_type = salaryType;
+    var salary_min = salaryMin;
+    var salary_max = salaryMax;
+    var list_dis = listDis;
+    var list_cate = listCate;
+    var is_working_weekend = isWorkingWeekend;
+    var is_remotely = isRemotely;
 
     if (list_dis.length > 0) {
       list_dis.forEach((item) => {
-        params.append(`dis-ids`, `${item}`)
-      })
+        params.append(`dis-ids`, `${item}`);
+      });
     } else if (list_dis.length === 0 && DIS_IDS.length > 0) {
-      ;[].forEach((item) => {
-        params.append(`dis-ids`, `${item}`)
-      })
+      [].forEach((item) => {
+        params.append(`dis-ids`, `${item}`);
+      });
     } else if (dataProfile.id && DIS_IDS.length === 0) {
       dataProfile.locations.forEach((item: any) => {
-        params.append(`dis-ids`, `${[item.province_id, item.district_id]}`)
-      })
+        params.append(`dis-ids`, `${[item.province_id, item.district_id]}`);
+      });
     }
     // lấy từ profile qua
     if (list_cate.length > 0) {
       list_cate.forEach((item, index) => {
-        paramsCate.append(`categories-ids`, `${item}`)
-      })
+        paramsCate.append(`categories-ids`, `${item}`);
+      });
     } else if (list_cate.length === 0 && CATE_IDS.length > 0) {
-      ;[].forEach((item) => {
-        paramsCate.append(`categories-ids`, `${item}`)
-      })
+      [].forEach((item) => {
+        paramsCate.append(`categories-ids`, `${item}`);
+      });
     } else if (dataProfile.id && CATE_IDS.length === 0) {
       dataProfile.categories.forEach((item: any) => {
         paramsCate.append(
           `categories-ids`,
-          `${[item.parent_category_id, item.child_category_id]}`
-        )
-      })
+          `${[item.parent_category_id, item.child_category_id]}`,
+        );
+      });
     }
 
     if (valueSearchInput === '' && QUERY) {
-      encode = encodeURIComponent(`${''}`)
+      encode = encodeURIComponent(`${''}`);
     } else if (!valueSearchInput && QUERY) {
-      encode = encodeURIComponent(`${valueSearchInput}`)
+      encode = encodeURIComponent(`${valueSearchInput}`);
     } else if (valueSearchInput && QUERY) {
-      encode = encodeURIComponent(`${valueSearchInput}`)
+      encode = encodeURIComponent(`${valueSearchInput}`);
     } else if (valueSearchInput && !QUERY) {
-      encode = encodeURIComponent(`${valueSearchInput}`)
+      encode = encodeURIComponent(`${valueSearchInput}`);
     } else if (!valueSearchInput && !QUERY) {
-      encode = encodeURIComponent(``)
+      encode = encodeURIComponent(``);
     }
     if (!jobType && JOB_TYPE) {
-      job_type = JOB_TYPE
+      job_type = JOB_TYPE;
     }
 
     // console.log('vvvvvvv', valueSearchInput)
@@ -368,7 +382,7 @@ const Navbar: React.FC = () => {
     // }
 
     if (!salaryType && SALARY_TYPE) {
-      salary_type = SALARY_TYPE
+      salary_type = SALARY_TYPE;
     }
 
     setTimeout(() => {
@@ -391,34 +405,35 @@ const Navbar: React.FC = () => {
           }` +
           `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
           `${money_type ? `&money_type=${money_type}` : ''}`,
-        '_self'
-      )
-    }, 1)
-  }
+        '_self',
+      );
+    }, 1);
+  };
 
   // login
   const handleClickLogin = async (e: any) => {
+    e.stopPropagation();
     try {
       if (openInfoUser) {
-        setSpinning(false)
-        setOpenInfoUser(!openInfoUser)
+        setSpinning(false);
+        // setOpenInfoUser(!openInfoUser);
       } else {
-        setSpinning(true)
+        setSpinning(true);
       }
-      var result = null
+      var result = null;
       if (localStorage.getItem('accessToken')) {
-        result = await profileApi.getProfile()
+        result = await profileApi.getProfile();
       }
       if (result) {
-        setProfileUser(result.data)
-        setSpinning(false)
-        setOpenInfoUser(!openInfoUser)
+        dispatch(getProfile() as any);
+        setSpinning(false);
+        setOpenInfoUser(!openInfoUser);
       } else {
-        setOpenModalLogin(true)
-        setSpinning(false)
+        setOpenModalLogin(true);
+        setSpinning(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       // if (!localStorage.getItem("accessToken")) {
       //   setSpinning(false)
       //   setOpenInfoUser(false)
@@ -427,9 +442,9 @@ const Navbar: React.FC = () => {
       //   setSpinning(false)
       //   setOpenInfoUser(!openInfoUser)
       // }
-      setSpinning(false)
+      setSpinning(false);
     }
-  }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -437,52 +452,72 @@ const Navbar: React.FC = () => {
       // console.log('e.tảtget', refInfoUser?.current?.contains(event.target))
       // console.log('e.tảtget', refLogin?.current?.contains(event.target))
       if (refInfoUser.current && !refInfoUser.current.contains(event.target)) {
-        setOpenInfoUser(false)
+        setOpenInfoUser(false);
       }
 
       if (refLogin.current && !refLogin.current.contains(event.target)) {
-        setOpenInfoUser(false)
+        setOpenInfoUser(false);
       }
-    }
+    };
 
-    document.addEventListener('click', handleClickOutside)
+    document.addEventListener('click', handleClickOutside);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   // handle logout
   const handleLogout = async () => {
     try {
-      console.log('logout thành công')
-      const refreshToken = localStorage.getItem('refreshToken')
+      console.log('logout thành công');
+      const refreshToken = localStorage.getItem('refreshToken');
 
       if (refreshToken) {
-        const result = await authApi.signOut(refreshToken)
+        const result = await authApi.signOut(refreshToken);
 
         if (result) {
-          window.location.replace('/home')
-          localStorage.clear()
+          window.location.replace('/home');
+          localStorage.clear();
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleResetValue = () => {
-    setJobType(null)
-    setListDis([])
-    setListCate([])
-    setSalaryMax(null)
-    setSalaryMin(null)
-    setTypeMoney(1)
-    setSalaryType('')
+    setJobType(null);
+    setListDis([]);
+    setListCate([]);
+    setSalaryMax(null);
+    setSalaryMin(null);
+    setTypeMoney(1);
+    setSalaryType('');
 
-    setIsWorkingWeekend(0)
-    setIsRemotely(0)
-  }
+    setIsWorkingWeekend(0);
+    setIsRemotely(0);
+  };
+
+  React.useEffect(() => {
+    const handleCloseFilter = (event: any) => {
+      event.stopPropagation();
+
+      if (
+        openCollapseFilter &&
+        event.target.closest('.show-modal_navbar') &&
+        !event.target.closest('.nav')
+      ) {
+        setOpenCollapseFilter(false);
+      }
+    };
+
+    window.addEventListener('click', handleCloseFilter);
+
+    return () => {
+      window.removeEventListener('click', handleCloseFilter);
+    };
+  }, [openCollapseFilter]);
 
   const buttons = [
     <button
@@ -490,9 +525,9 @@ const Navbar: React.FC = () => {
       className="btn btn__post"
       onClick={() => {
         if (dataProfile && localStorage.getItem('refreshToken')) {
-          window.open('/post', '_blank')
+          window.open('/post', '_blank');
         } else {
-          setOpenModalLogin(true)
+          setOpenModalLogin(true);
         }
       }}
     >
@@ -511,12 +546,12 @@ const Navbar: React.FC = () => {
             <Avatar
               style={{ backgroundColor: '#0D99FF' }}
               icon={<UserOutlined />}
-              src={dataProfile.avatar ? dataProfile.avatar : ''}
+              src={dataProfile?.avatar ? dataProfile.avatar : ''}
             />
           </div>
           <div className="login__center">
             {localStorage.getItem('accessToken') && dataProfile ? (
-              <span>{dataProfile.name}</span>
+              <span>{dataProfile?.name}</span>
             ) : (
               <span>Đăng nhập</span>
             )}
@@ -559,10 +594,99 @@ const Navbar: React.FC = () => {
                   <span>Lịch sử</span>
                 </div>
               </Link>
-              <div className="sub-login_item">
+              {/* <div className="sub-login_item">
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
+              </div> */}
+              <div className="sub-login_item" onClick={handleLogout}>
+                <LogoutOutlined />
+                <span>Đăng xuất</span>
               </div>
+
+              <div className="sub-login_item">
+                <FlagVNIcon />
+                <span>Đổi ngôn ngữ</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </Spin>
+    </div>,
+  ];
+
+  const menu = [
+    <Button
+      key="1"
+      className="btn-filter"
+      onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
+    >
+      <TuneOutlinedIcon />
+    </Button>,
+
+    <Badge key="2" count={countChat} className="box-right-responsive_badge">
+      <Button
+        onClick={() => {
+          if (dataProfile && localStorage.getItem('refreshToken')) {
+            window.open(`/message`, '_blank');
+          } else {
+            setOpenModalLogin(true);
+          }
+        }}
+        type="link"
+      >
+        <ChatIcon />
+      </Button>
+    </Badge>,
+
+    <Button
+      key="3"
+      className="btn-notice"
+      onClick={() => setOpenNotificate(!openNotificate)}
+    >
+      <BellIcon />
+    </Button>,
+
+    <div className="menu" onClick={handleClickLogin} ref={refLogin} key="4">
+      <Button className="menu-button">
+        <MenuOutlined style={{ fontSize: '1.5em' }} />
+      </Button>
+      <Spin indicator={antIcon} spinning={spinning}>
+        {openInfoUser && (
+          <div className="sub-login" ref={refInfoUser}>
+            <Space className="sub-login_info">
+              <Avatar
+                style={{ backgroundColor: '#0D99FF' }}
+                icon={<UserOutlined style={{ fontSize: 30 }} />}
+                size={50}
+                src={dataProfile?.avatar ? dataProfile.avatar : null}
+              />
+              <div>
+                <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
+                <span>{dataProfile?.email ? dataProfile?.email : ''}</span>
+              </div>
+            </Space>
+            <div className="sub-login_items">
+              <Link to="/profile">
+                <div className="sub-login_item">
+                  <SyncOutlined />
+                  <span>Cập nhật thông tin</span>
+                </div>
+              </Link>
+              <Link to="/history">
+                <div
+                  className="sub-login_item"
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
+                >
+                  <ClockCircleOutlined />
+                  <span>Lịch sử</span>
+                </div>
+              </Link>
+              {/* <div className="sub-login_item">
+                <KeyOutlined />
+                <span>Đổi mật khẩu</span>
+              </div> */}
               <div className="sub-login_item" onClick={handleLogout}>
                 <LogoutOutlined />
                 <span>Đăng xuất</span>
@@ -572,7 +696,7 @@ const Navbar: React.FC = () => {
         )}
       </Spin>
     </div>,
-  ]
+  ];
 
   return (
     <div
@@ -619,43 +743,49 @@ const Navbar: React.FC = () => {
               <TuneOutlinedIcon />
             </Button>
 
-            <Badge count={countChat}>
+            <Badge count={countChat} className="btn-badge">
               <Button
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
-                    window.open(`/message`, '_blank')
+                    window.open(`/message`, '_blank');
                   } else {
-                    setOpenModalLogin(true)
+                    setOpenModalLogin(true);
                   }
                 }}
                 type="link"
-                style={{ border: '1px solid #aaaaaa' }}
+                style={{ border: '1px solid #d9d9d9' }}
               >
                 <ChatIcon />
               </Button>
             </Badge>
 
-            <Button onClick={() => setOpenNotificate(!openNotificate)}>
+            <Button
+              className="btn-notice"
+              onClick={() => setOpenNotificate(!openNotificate)}
+              ref={bellRef}
+            >
               <BellIcon />
             </Button>
           </Center>
           <Right className="div-nav-right">
-            {/* <div className="tabBar-right">
-              <BarsOutlined style={{ fontSize: 25 }} onClick={handleTap} />
-            </div> */}
-            {/* <Button
-            variant="contained"
-            startIcon={<AdsClickIcon />}
-            style={{ marginRight: '25px' }}
-            sx={boxSX}
-            onClick={handleClick}
-          >
-            Hãy nhấn vào
-            {open ? <ExpandLess /> : <ExpandMore />}
-            <Collapse in={open} timeout="auto" unmountOnExit sx={collapse}>
-              <Div>adjklasdjkla</Div>
-            </Collapse>
-          </Button> */}
+            <Box
+              className="box-right-responsive"
+              sx={{
+                display: 'none',
+                flexDirection: 'column',
+                alignItems: 'center',
+                '& > *': {
+                  m: 1,
+                },
+                [`@media (max-width: 426px)`]: {
+                  display: 'flex',
+                },
+              }}
+            >
+              <ButtonGroup sx={{ margin: '0', alignItems: 'center' }}>
+                {menu}
+              </ButtonGroup>
+            </Box>
 
             <Box
               sx={{
@@ -665,6 +795,9 @@ const Navbar: React.FC = () => {
                 '& > *': {
                   m: 1,
                 },
+                [`@media (max-width: 426px)`]: {
+                  display: 'none',
+                },
               }}
             >
               <ButtonGroup sx={{ margin: '0' }}>{buttons}</ButtonGroup>
@@ -673,7 +806,7 @@ const Navbar: React.FC = () => {
         </Wrapper>
         <Collapse
           in={openCollapseFilter}
-          timeout={600}
+          // timeout={600}
           // unmountOnExit
           onEnter={handleCollapseEntered}
           onExited={handleCollapseExited}
@@ -744,9 +877,10 @@ const Navbar: React.FC = () => {
           </div>
         </Collapse>
         {openNotificate ? <Notificate /> : <></>}
+        <PostButton setOpenModalLogin={setOpenModalLogin} />
       </Container>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default React.memo(Navbar);

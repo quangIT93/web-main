@@ -20,9 +20,9 @@
   transition: all l;
   margin-bottom: 36px;
 
-  // @include breakpoint(destop) {
-  //   padding-inline: 10px;
-  // }
+  @media screen and (min-width:1025px) and (max-width: 1280px) {
+    padding-inline: 10px;
+  }
 
   @media screen and (max-width: 1220px) {
     padding-inline: 10px;

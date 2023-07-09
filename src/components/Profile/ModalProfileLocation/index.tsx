@@ -18,6 +18,7 @@ import Chip from '@mui/material/Chip';
 
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import { CloseOutlined } from '@ant-design/icons';
 
 import Collapse from '@mui/material/Collapse';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
@@ -197,6 +198,20 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
+        <div
+          style={{
+            position: 'absolute',
+            right: '20px',
+            top: '20px',
+            cursor: 'pointer',
+            // border: '1px solid',
+            borderRadius: '50%',
+            padding: '1px',
+          }}
+          onClick={handleClose}
+        >
+          <CloseOutlined style={{ fontSize: '30px' }} />
+        </div>
         <Typography
           id="modal-modal-title"
           variant="h6"

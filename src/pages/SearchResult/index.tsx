@@ -85,6 +85,8 @@ import {
 import { Space, Tooltip } from 'antd';
 
 import './style.scss';
+import { stringify } from 'query-string/base';
+import notificationKeywordApi from 'api/notificationKeyword';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -135,6 +137,19 @@ const style = {
   p: 4,
 };
 
+const styleSuccess = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '440px',
+  bgcolor: 'background.paper',
+  border: 'none',
+  outline: 'none',
+  borderRadius: '10px',
+  p: 4,
+};
+
 const NewJobs: React.FC = () => {
   // const {
   //   openCollapse,
@@ -175,8 +190,18 @@ const NewJobs: React.FC = () => {
     locations?.map((v: any, i: number) => v.district_id),
   );
 
-  const [valueDistrict, setValueDistrict] = React.useState<string>('');
+  const [valueDistrict, setValueDistrict] = React.useState<any>({
+    district: '',
+    district_id: '',
+    wards: [],
+  });
+  const [openModal, setOpenModal] = React.useState(false);
 
+  const [valueKeyword, setValueKeyword] = React.useState('');
+  const [districtId, setDistrictId] = React.useState<string>('');
+
+  const [oenModalCreateSuccess, setOpenModalCreateSuccess] =
+    React.useState(false);
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
   const dispatch = useDispatch();
@@ -420,9 +445,12 @@ const NewJobs: React.FC = () => {
   };
 
   const handleChangeCheckedRadio = (e: any) => {
-    console.log('value', e.target.value);
-    setValueDistrict(e.target.value);
+    console.log('value', JSON.parse(e.target.value));
+    setValueDistrict(JSON.parse(e.target.value));
+    setDistrictId(JSON.parse(e.target.value).district_id);
   };
+
+  console.log('districtId', districtId);
 
   const renderOptions = () => {
     return dataAllLocation?.map((item: any, index: number) => (
@@ -431,17 +459,22 @@ const NewJobs: React.FC = () => {
           <ListItemText primary={item.province_fullName} />
           {open[index] ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open[index]} timeout="auto" unmountOnExit>
+        <Collapse
+          in={open[index]}
+          timeout="auto"
+          unmountOnExit
+          sx={{ padding: '0 24px' }}
+        >
           <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
-            value={valueDistrict}
+            value={JSON.stringify(valueDistrict)}
             onChange={handleChangeCheckedRadio}
           >
             {item.districts.map((v: any, i: number) => (
               <FormControlLabel
                 key={v.district_id} // Thêm key cho FormControlLabel
-                value={`${v.district}, ${item.province_fullName}`}
+                value={JSON.stringify(v)}
                 control={<Radio />}
                 label={v.district}
               />
@@ -453,11 +486,38 @@ const NewJobs: React.FC = () => {
   };
 
   // openModal
-  const [openModal, setOpenModal] = React.useState(false);
   const handleShowCreateKeywork = () => setOpenModal(true);
   const handleCloseModalCreateKeyword = () => setOpenModal(false);
 
-  const handleChangeKeywordInput = () => {};
+  const handleChangeKeywordInput = (e: any) => {
+    console.log('value', e.target.value);
+    setValueKeyword(e.target.value);
+  };
+
+  const handleSubmitKeyword = async () => {
+    try {
+      const result = await notificationKeywordApi.createKeywordNotification(
+        valueKeyword,
+        districtId,
+      );
+      // const result = true;
+      if (result) {
+        setOpenModal(false);
+        setOpenModalCreateSuccess(true);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  // open Modal success
+  const handleCloseModalCreateSuccess = () => {
+    setOpenModalCreateSuccess(false);
+  };
+
+  const handleOpenNotification = () => {
+    setOpenModalCreateSuccess(false);
+  };
 
   const getPostSearch = async () => {
     try {
@@ -598,6 +658,8 @@ const NewJobs: React.FC = () => {
                 margin: '20px 0',
                 alignItems: 'center',
                 justifyContent: 'space-between',
+                // background: '#aaaaaa',
+                padding: '8px 0',
               }}
             >
               <div
@@ -618,10 +680,13 @@ const NewJobs: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   cursor: 'pointer',
+                  // textDecoration: 'underline',
                 }}
                 onClick={handleShowCreateKeywork}
               >
-                <CreateKeywordIconSmall /> Thông tin từ khóa
+                <CreateKeywordIconSmall />
+
+                <span style={{ marginLeft: '4px' }}>Tạo thông tin từ khóa</span>
               </div>
             </div>
 
@@ -894,27 +959,29 @@ const NewJobs: React.FC = () => {
 
             <TextField
               type="text"
-              id="company"
-              name="company_name"
-              // value={formValues.company_name}
+              id="districtId"
+              name="districtId"
+              value={valueKeyword}
               size="small"
               onChange={handleChangeKeywordInput}
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder="Tên công ty"
+              placeholder="Từ khóa"
               // error={companyError} // Đánh dấu lỗi
             />
 
-            <FormControl
-              sx={{ width: '100%', margin: '12px auto' }}
-              size="small"
-            >
+            <FormControl sx={{ width: '100%', marginTop: '12px' }} size="small">
               <Select
                 multiple
                 displayEmpty
-                value={[valueDistrict]}
+                value={[
+                  valueDistrict && valueDistrict?.length !== 0
+                    ? valueDistrict?.district
+                    : '',
+                ]}
                 input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
                 renderValue={(selected) => {
                   console.log('selected', selected);
+                  console.log('valueDistrict', valueDistrict);
                   if (selected.length === 0) {
                     return (
                       <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>
@@ -922,7 +989,7 @@ const NewJobs: React.FC = () => {
                       </p>
                     );
                   } else {
-                    return (
+                    return selected[0].length ? (
                       <Box
                         sx={{
                           display: 'flex',
@@ -932,10 +999,19 @@ const NewJobs: React.FC = () => {
                       >
                         {/* {selected.map((value: string, i: number) => (
                   ))} */}
-                        <Chip label={`${selected[0]}`} />
+
+                        {selected ? (
+                          <Chip label={selected[0] !== '' ? selected[0] : ''} />
+                        ) : (
+                          ''
+                        )}
 
                         {/* <p>{value}</p> */}
                       </Box>
+                    ) : (
+                      <i style={{ color: 'rgba(0, 0, 0, 0.35)' }}>
+                        Quận, Tỉnh/Thành Phố
+                      </i>
                     );
                   }
                 }}
@@ -945,6 +1021,52 @@ const NewJobs: React.FC = () => {
               </Select>
             </FormControl>
 
+            <FormControl sx={{ width: '100%', margin: '12px 0' }} size="small">
+              <Select
+                multiple
+                displayEmpty
+                value={['']}
+                input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
+                renderValue={(selected) => {
+                  console.log('selected', selected);
+                  console.log('valueDistrict', valueDistrict);
+                  if (selected.length === 0) {
+                    return (
+                      <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>
+                        Quận, Tỉnh/Thành Phố
+                      </p>
+                    );
+                  } else {
+                    return selected[0].length ? (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: 0.5,
+                        }}
+                      >
+                        {/* {selected.map((value: string, i: number) => (
+                  ))} */}
+
+                        {selected ? (
+                          <Chip label={selected[0] !== '' ? selected[0] : ''} />
+                        ) : (
+                          ''
+                        )}
+
+                        {/* <p>{value}</p> */}
+                      </Box>
+                    ) : (
+                      <i style={{ color: 'rgba(0, 0, 0, 0.35)' }}>
+                        Danh mục nghề nghiệp
+                      </i>
+                    );
+                  }
+                }}
+              >
+                {renderOptions()}
+              </Select>
+            </FormControl>
             <div
               style={{
                 display: 'flex',
@@ -960,7 +1082,7 @@ const NewJobs: React.FC = () => {
                   width: '153px',
                   padding: '12px 16px',
                 }}
-                onClick={() => {}}
+                onClick={handleSubmitKeyword}
                 variant="contained"
               >
                 Áp dụng
@@ -983,7 +1105,68 @@ const NewJobs: React.FC = () => {
                     background: '#c60404',
                   },
                 }}
-                onClick={() => {}}
+                onClick={() => setOpenModal(false)}
+                variant="outlined"
+              >
+                Hủy
+              </Button>
+            </div>
+          </Box>
+        </Modal>
+
+        <Modal
+          open={oenModalCreateSuccess}
+          onClose={handleCloseModalCreateSuccess}
+        >
+          <Box sx={styleSuccess}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Hoàn thành
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Bạn đã thành công thêm từ khoá, có thể các thông báo sẽ làm phiền,
+              bạn có thể tắt thông báo trong mục Thông báo từ khoá. Bạn có muốn
+              chuyển đến mục thông báo từ khoá không?
+            </Typography>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                marginTop: '12px',
+              }}
+            >
+              <Button
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  borderRadius: '20px',
+                  width: '153px',
+                  padding: '12px 16px',
+                }}
+                onClick={handleOpenNotification}
+                variant="contained"
+              >
+                Xác nhận
+              </Button>
+              <Button
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  borderRadius: '20px',
+                  width: '153px',
+                  padding: '12px 16px',
+                  // border: '1px solid transparent',
+                  color: 'red',
+                  border: '1px solid red',
+                  // background: 'red',
+
+                  '&:hover': {
+                    border: '1px solid red',
+                    color: '#ffffff',
+                    background: '#c60404',
+                  },
+                }}
+                onClick={() => setOpenModalCreateSuccess(false)}
                 variant="outlined"
               >
                 Hủy
@@ -997,4 +1180,4 @@ const NewJobs: React.FC = () => {
     </>
   );
 };
-export default NewJobs;
+export default React.memo(NewJobs);

@@ -204,7 +204,7 @@ const BreadcrumbsCpn: React.FC = () => {
       key="2"
       color="text.primary"
       sx={{
-        position: 'relative',
+        // position: 'relative',
         cursor: 'pointer',
         padding: '4px 12px',
         borderRadius: '12px',
@@ -212,6 +212,7 @@ const BreadcrumbsCpn: React.FC = () => {
         alignItems: 'center',
         border: '1px solid #0D99FF',
         color: '#0D99FF',
+        background: '#ffffff',
       }}
     >
       {valueJobChild?.parentName}
@@ -237,6 +238,7 @@ const BreadcrumbsCpn: React.FC = () => {
             alignItems: 'center',
             border: '1px solid #0D99FF',
             color: '#0D99FF',
+            background: '#ffffff',
           }}
         >
           {arrayChild?.length === 0
@@ -262,9 +264,18 @@ const BreadcrumbsCpn: React.FC = () => {
     <Stack
       spacing={2}
       sx={{
-        marginTop: navTouchCatelory ? '220px' : '24px',
+        marginTop: '238px',
         // marginTop: navTouchCatelory ? '170px' : '24px',
-        position: 'relative',
+        // position: 'relative',
+        position: 'fixed',
+        // sua
+        top: '-23px',
+        zIndex: '1',
+        background: '#ffffff',
+        padding: '16px 8px ',
+        left: 180,
+        right: 180,
+        borderBottom: '1px solid #e5e5e5',
       }}
     >
       <Breadcrumbs separator="" aria-label="breadcrumb">

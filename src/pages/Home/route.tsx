@@ -1,12 +1,12 @@
-import React, { lazy } from 'react'
-import Home from '.'
-import RouteProps from '../routes'
+import React, { lazy } from 'react';
+import Home from '.';
+import RouteProps from '../routes';
 
-import HomeValueContextProvider from 'context/HomeValueContextProvider'
+import HomeValueContextProvider from 'context/HomeValueContextProvider';
 
 const route: RouteProps = {
   path: '/home',
   component: <Home />,
-}
+};
 
-export default route
+export default route;

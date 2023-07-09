@@ -1,20 +1,21 @@
-import React, { useState } from 'react'
-import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import moment from 'moment'
-import Autocomplete from '@mui/material/Autocomplete'
-import Button from '@mui/material/Button'
+import React, { useState } from 'react';
+import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import moment from 'moment';
+import Autocomplete from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
+import { CloseOutlined } from '@ant-design/icons';
 
 // data
-import profileApi from 'api/profileApi'
-import { useDispatch } from 'react-redux'
+import profileApi from 'api/profileApi';
+import { useDispatch } from 'react-redux';
 import {
   getProfile,
   resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
+} from 'store/reducer/profileReducer/getProfileReducer';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -27,47 +28,47 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+};
 
 const styleChildBox = {
   marginBottom: '12px',
-}
+};
 
 interface IExperience {
-  id: number | null
-  companyName: string
-  title: string
-  startDate: number
-  endDate: number
-  extraInformation: string
+  id: number | null;
+  companyName: string;
+  title: string;
+  startDate: number;
+  endDate: number;
+  extraInformation: string;
 }
 
 interface IModalProfileExperienceCreate {
-  openModalExperienceCreate: boolean
-  setOpenModalExperienceCreate: React.Dispatch<React.SetStateAction<boolean>>
-  typeItem: string
-  educations: IExperience[]
+  openModalExperienceCreate: boolean;
+  setOpenModalExperienceCreate: React.Dispatch<React.SetStateAction<boolean>>;
+  typeItem: string;
+  educations: IExperience[];
 }
 
 interface IInfoExperience {
-  companyName: string
-  title: string
-  startDate: number
-  endDate: number
-  extraInformation: string
+  companyName: string;
+  title: string;
+  startDate: number;
+  endDate: number;
+  extraInformation: string;
 }
 
 const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
-  props
+  props,
 ) => {
   const {
     openModalExperienceCreate,
     setOpenModalExperienceCreate,
     typeItem,
     educations,
-  } = props
+  } = props;
   // console.log('typeItem', typeItem)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // const [companyName, setCompanyName] = useState<string>('')
   // const [startDate, setStartDate] = React.useState<any>(
   //   new Date(2023, 4, 30, 0, 0).getTime()
@@ -83,18 +84,18 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
     startDate: new Date(2017, 4, 1, 0, 0).getTime(),
     endDate: new Date(2023, 4, 30, 0, 0).getTime(),
     extraInformation: '',
-  })
+  });
 
   // console.log('endDate', endDate)
 
-  const handleClose = () => setOpenModalExperienceCreate(false)
+  const handleClose = () => setOpenModalExperienceCreate(false);
 
   // school
   const handleChangeSchool = (e: any) => {
     setExperience((preValue) => {
-      return { ...preValue, companyName: e.target.value }
-    })
-  }
+      return { ...preValue, companyName: e.target.value };
+    });
+  };
 
   // time
   const handleChangeStartTime = (newValue: any, e: any) => {
@@ -102,9 +103,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
       return {
         ...preValue,
         startDate: new Date(newValue._d).getTime(),
-      }
-    })
-  }
+      };
+    });
+  };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
     // console.log(
@@ -116,47 +117,68 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
       return {
         ...preValue,
         endDate: new Date(newValue._d).getTime(),
-      }
-    })
-  }
+      };
+    });
+  };
 
   // major
   const handleChangeTitle = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setExperience((preValue) => {
-      return { ...preValue, title: e.target.value }
-    })
-  }
+      return { ...preValue, title: e.target.value };
+    });
+  };
 
   const handleChangeExtraInfo = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setExperience((preValue) => {
-      return { ...preValue, extraInformation: e.target.value }
-    })
-  }
+      return { ...preValue, extraInformation: e.target.value };
+    });
+  };
 
   // submit
 
   const handleSubmit = async () => {
     try {
-      const result = await profileApi.createProfileExperience(experience)
+      const result = await profileApi.createProfileExperience(experience);
       if (result) {
-        setOpenModalExperienceCreate(false)
+        setOpenModalExperienceCreate(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
   return (
     <Modal
       open={openModalExperienceCreate}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      onKeyDown={handleKeyDown}
     >
       <Box sx={style}>
+        <div
+          style={{
+            position: 'absolute',
+            right: '20px',
+            top: '20px',
+            cursor: 'pointer',
+            // border: '1px solid',
+            borderRadius: '50%',
+            padding: '1px',
+          }}
+          onClick={handleClose}
+        >
+          <CloseOutlined style={{ fontSize: '30px' }} />
+        </div>
         <Typography
           id="modal-modal-title"
           variant="h6"
@@ -271,7 +293,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
         </Button>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalProfileExperienceCreate
+export default ModalProfileExperienceCreate;

@@ -1,8 +1,25 @@
+@import '../../scss/mixins';
+@import '../../scss/variable';
+
 .message-page {
   margin-top: 70px;
+
   .message-page_main {
-    padding: 20px 180px 0 180px;
+    padding: 20px 180px;
     margin: 12px auto;
+
+    @media screen and (min-width:1025px) and (max-width: 1280px) {
+      padding-inline: 24px 24px;
+    }
+
+    @include breakpoint(largeTablet) {
+      padding: 24px 24px;
+    }
+
+
+    @include breakpoint(tablet) {
+      padding: 20px 20px;
+    }
 
     .header-message {
       display: flex;
@@ -15,6 +32,7 @@
       border-radius: 8px;
       height: 540px;
       margin-top: 12px;
+
       .message-page_left {
         flex: 2;
         height: 100%;
@@ -27,6 +45,7 @@
     }
   }
 }
+
 ::-webkit-scrollbar {
   width: 3px;
 }

@@ -73,6 +73,7 @@ const CategoryCarousel: React.FC = () => {
   const { setPostNewest } = bindActionCreators(actionCreators, dispatch);
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
+  const refTab = React.useRef<HTMLUListElement | null>(null);
 
   const [categories, setCategories] = React.useState<AxiosResponse | null>(
     null,
@@ -175,6 +176,19 @@ const CategoryCarousel: React.FC = () => {
     setOpenBackdrop(true);
   };
 
+  const [startX, setStartX] = React.useState(0);
+  const handleDragStart = (e: any) => {
+    setStartX(e.clientX);
+  };
+  const handleDrop = (e: any) => {
+    const scrollElement = refTab.current;
+    const scrollAmount = e.clientX - startX;
+    if (scrollElement) {
+      scrollElement.scrollLeft += scrollAmount;
+    }
+  };
+  // scroll
+
   return (
     <Box
       ref={listRef}
@@ -194,23 +208,25 @@ const CategoryCarousel: React.FC = () => {
         // left: 0,
         // background: '#ffffff',
 
-        // position: 'fixed',
-        position: navTouchCatelory ? 'fixed' : '',
+        position: 'fixed',
+
+        // position: navTouchCatelory ? 'fixed' : '',
         // top: '71px',
-        top:
-          navTouchCatelory && !openCollapseFilter
-            ? '71px'
-            : navTouchCatelory && openCollapseFilter
-            ? '283px'
-            : '',
+        // top:
+        //   navTouchCatelory && !openCollapseFilter
+        //     ? '71px'
+        //     : navTouchCatelory && openCollapseFilter
+        //     ? '283px'
+        //     : '',
+
+        top: !openCollapseFilter ? '71px' : openCollapseFilter ? '283px' : '',
         zIndex: 2,
         // margin: '0 180px',
         // zIndex: navTouchCatelory ? ' 2' : '',
-        margin: navTouchCatelory ? '0 180px' : '60px 0 0 0',
+        margin: navTouchCatelory ? '0 180px' : '0px 180px 0 180px',
         right: 0,
         left: 0,
         background: '#ffffff',
-        boxShadow: '3px 1px 5px #aaaaaa',
       }}
       // sx={{
       //   maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
@@ -254,10 +270,15 @@ const CategoryCarousel: React.FC = () => {
         value={value == 0 ? categories?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
-        scrollButtons="auto"
+        scrollButtons={true}
         aria-label="scrollable auto tabs example"
         allowScrollButtonsMobile
         orientation="horizontal"
+        ref={refTab as any}
+        onDragStart={handleDragStart}
+        onDrop={handleDrop}
+        className="cateloryItemFilter"
+        sx={{ overflowX: 'hidden', scroll: 'auto', marginTop: '12px' }}
       >
         {/* <Tab label="Item One">sád</Tab> */}
 
@@ -272,10 +293,11 @@ const CategoryCarousel: React.FC = () => {
               sx={{
                 color: 'black',
                 display: 'flex',
-                alignItems: 'flex-start',
+                alignItems: 'center',
                 justifyContent: 'flex-start',
-                marginTop: '12px',
+                // marginTop: '12px',
                 maxWidth: '120px',
+                borderRadius: '5px',
               }}
             />
           );

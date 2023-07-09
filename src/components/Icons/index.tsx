@@ -200,7 +200,7 @@ export const SearchIcon: React.FC<SizeProps> = ({
   );
 };
 
-export const BellIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
+export const BellIcon: React.FC<SizeProps> = ({ width = 18, height = 18 }) => {
   return (
     <svg
       width={width}
@@ -595,8 +595,8 @@ export const CallIcon: React.FC = () => {
 export const LocationIcon: React.FC = () => {
   return (
     <svg
-      width="16"
-      height="16"
+      width="20"
+      height="20"
       viewBox="0 0 33 33"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -746,19 +746,130 @@ export const CreateKeywordIconSmall: React.FC = () => {
     >
       <circle cx="6.5" cy="6.5" r="6" stroke="#0D99FF" />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M9.75 6.59025H3.25V6.34951H9.75V6.59025Z"
         fill="#0D99FF"
         stroke="#0D99FF"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M6.50047 9.75L6.50047 3.25L6.74121 3.25L6.74121 9.75L6.50047 9.75Z"
         fill="#0D99FF"
         stroke="#0D99FF"
       />
+    </svg>
+  );
+};
+
+export const LocationHomeIcon: React.FC = () => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M6.125 1C8.3995 1 10.25 2.8645 10.25 5.1565C10.25 7.974 7.022 10.75 6.125 10.75C5.228 10.75 2 7.974 2 5.1565C2 2.8645 3.8505 1 6.125 1ZM6.125 1.75C4.264 1.75 2.75 3.2785 2.75 5.1565C2.75 7.546 5.562 9.874 6.125 9.998C6.688 9.8735 9.5 7.5455 9.5 5.1565C9.5 3.2785 7.986 1.75 6.125 1.75ZM6.1255 3.5C7.0215 3.5 7.7505 4.229 7.7505 5.1255C7.7505 6.0215 7.0215 6.75 6.1255 6.75C5.2295 6.75 4.5005 6.0215 4.5005 5.1255C4.5005 4.229 5.2295 3.5 6.1255 3.5ZM6.1255 4.25C5.643 4.25 5.2505 4.6425 5.2505 5.1255C5.2505 5.608 5.643 6 6.1255 6C6.608 6 7.0005 5.608 7.0005 5.1255C7.0005 4.6425 6.608 4.25 6.1255 4.25Z"
+        fill="#575757"
+      />
+    </svg>
+  );
+};
+
+export const DolaIcon: React.FC = () => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6 1V11"
+        stroke="#575757"
+        strokeWidth="0.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.5 2.5H4.75C4.28587 2.5 3.84075 2.68437 3.51256 3.01256C3.18437 3.34075 3 3.78587 3 4.25C3 4.71413 3.18437 5.15925 3.51256 5.48744C3.84075 5.81563 4.28587 6 4.75 6H7.25C7.71413 6 8.15925 6.18437 8.48744 6.51256C8.81563 6.84075 9 7.28587 9 7.75C9 8.21413 8.81563 8.65925 8.48744 8.98744C8.15925 9.31563 7.71413 9.5 7.25 9.5H3"
+        stroke="#575757"
+        strokeWidth="0.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const CameraIcon: React.FC = () => {
+  return (
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M6.27368 4.59231H17.7263C18.8588 4.58951 19.9459 5.03743 20.7476 5.83723C21.5494 6.63703 22 7.72298 22 8.85547V16.1186C22 17.2511 21.5494 18.3371 20.7476 19.1369C19.9459 19.9367 18.8588 20.3846 17.7263 20.3818H6.27368C5.1412 20.3846 4.05414 19.9367 3.25237 19.1369C2.45059 18.3371 2 17.2511 2 16.1186V8.85547C2 7.72298 2.45059 6.63703 3.25237 5.83723C4.05414 5.03743 5.1412 4.58951 6.27368 4.59231ZM17.7263 18.8028C19.1903 18.8032 20.3867 17.6348 20.4211 16.1713V8.85547C20.4153 7.37132 19.2105 6.17125 17.7263 6.17126H6.27368C4.78952 6.17125 3.58474 7.37132 3.57895 8.85547V16.1186C3.58474 17.6028 4.78952 18.8028 6.27368 18.8028H17.7263Z"
+        fill="#0D99FF"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M7.71582 12.7818C7.71582 10.4564 9.60094 8.57129 11.9263 8.57129C14.2518 8.57129 16.1369 10.4564 16.1369 12.7818C16.1369 15.1072 14.2518 16.9923 11.9263 16.9923C9.60094 16.9923 7.71582 15.1072 7.71582 12.7818ZM9.29477 12.7818C9.29477 14.2352 10.473 15.4134 11.9263 15.4134C13.3797 15.4134 14.5579 14.2352 14.5579 12.7818C14.5579 11.3284 13.3797 10.1502 11.9263 10.1502C10.473 10.1502 9.29477 11.3284 9.29477 12.7818Z"
+        fill="#0D99FF"
+      />
+      <rect
+        x="16.1367"
+        y="7.5083"
+        width="2.10526"
+        height="2.11579"
+        rx="0.5"
+        fill="#0D99FF"
+      />
+    </svg>
+  );
+};
+
+export const FlagVNIcon: React.FC = () => {
+  return (
+    <svg
+      width="24"
+      height="18"
+      viewBox="0 0 24 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_8464_173214)">
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M-0.75 1.5H24.75V17.25H-0.75V1.5Z"
+          fill="#EC0015"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M15.1078 13.2201L12.1328 11.1683L9.17773 13.2386L10.2734 9.86709L7.31836 7.78452L10.974 7.75376L12.1096 4.38843L13.2617 7.74453L16.9174 7.74761L13.9789 9.85171L15.1045 13.2232L15.1078 13.2201Z"
+          fill="#FFFF00"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_8464_173214">
+          <rect width="24" height="18" fill="white" />
+        </clipPath>
+      </defs>
     </svg>
   );
 };

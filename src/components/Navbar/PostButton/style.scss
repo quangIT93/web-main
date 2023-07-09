@@ -1,0 +1,21 @@
+@import "../../../scss/mixins";
+@import "../../../scss/variable";
+
+.post-button-responsive {
+    display: none;
+    width: 60px !important;
+    height: 60px !important;
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    // z-index: 2;
+    background-color: $primary-color;
+
+    @include breakpoint(mobile) {
+        display: block;
+    }
+
+    .anticon {
+        transform: scale(1.8) !important;
+    }
+}

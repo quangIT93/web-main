@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, memo } from 'react';
 import { Collapse, Radio, Input, Button, Typography } from 'antd';
 import { useSearchParams } from 'react-router-dom';
 
+import { DownOutlined } from '@ant-design/icons';
 //@ts-ignore
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -83,7 +84,9 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
   const handleInputChangeSalaryMax = (e: any) => {
     // setInputValueMax(e.target.value.replace(',', ''))
+
     const inputValue = e.target.value.replace(',', '');
+
     const reg = /[0-9]+$/;
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
@@ -95,9 +98,44 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     console.log(`Selected value: ${selectedValue}`);
     // console.log(`Input value: ${inputValue}`)
     const reg = /[0-9]+$/;
-
+    console.log('inputValueMax', inputValueMax);
+    console.log('inputValueMin', inputValueMin);
+    console.log('Salary_Max', Salary_Max);
+    console.log('Salary_Min', Salary_Min);
+    console.log('  Salary_Max < Salary_Min ', Salary_Max < Salary_Min);
+    console.log(
+      ' 2 ',
+      inputValueMin && !inputValueMax && Salary_Max < Number(inputValueMin),
+    );
+    console.log('  222 ', Salary_Max < Salary_Min);
+    console.log(
+      '  333',
+      inputValueMax && !inputValueMin && Number(inputValueMax) < Salary_Min,
+    );
     console.log('dieu kien', Number(inputValueMax) > Number(inputValueMin));
-    if (Number(inputValueMax) < Number(inputValueMin)) {
+
+    if (inputValueMin && !inputValueMax && Salary_Max < Number(inputValueMin)) {
+      console.log('vô');
+      setCheckSalary(true);
+      setTimeout(() => {
+        setCheckSalary(false);
+      }, 4000);
+    } else if (
+      inputValueMax &&
+      !inputValueMin &&
+      Number(inputValueMax) < Salary_Min
+    ) {
+      console.log('vô');
+      setCheckSalary(true);
+      setTimeout(() => {
+        setCheckSalary(false);
+      }, 4000);
+    } else if (
+      inputValueMax &&
+      inputValueMin &&
+      Number(inputValueMax) < Number(inputValueMin)
+    ) {
+      console.log('vô');
       setCheckSalary(true);
       setTimeout(() => {
         setCheckSalary(false);
@@ -148,13 +186,19 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       setInputValueMin('0');
     }
 
-    if (!salaryMax && !salaryMin) {
+    if (!salaryMax && !salaryMin && !Salary_Max && !Salary_Min) {
       setSalaryMax(12000000);
       setSalaryMin(6000000);
       setInputValueMax('12000000');
       setInputValueMin('6000000');
     }
   }, [salaryType]);
+  // console.log('paramMin', Salary_Min);
+  // console.log('paramMax', Salary_Max);
+  // console.log('salaryMax', salaryMax);
+  // console.log('salaryMin', salaryMin);
+  // console.log('inputValueMax', inputValueMax);
+  // console.log('inputValueMin', inputValueMin);
 
   const handleCancleValue = () => {
     // console.log(`Selected value: ${selectedValue}`)
@@ -170,12 +214,23 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
   useEffect(() => {
     const handleOutsideClick = (e: any) => {
-      if (collapseRef && !collapseRef?.current?.contains(e.target)) {
+      console.log('đâsdadasdasd', e.target.closest('.inputFilterSalary'));
+      console.log('đâsdadasdasd', e.target.closest('.submitValue'));
+      e.stopPropagation();
+      if (
+        // collapseRef &&
+        // !collapseRef?.current?.contains(e.target)
+        e.target.closest('.inputFilterSalary') &&
+        e.target.closest('.submitValue')
+      ) {
         setCollapseOpen(false);
-      } else {
+      } else if (!e.target.closest('.inputFilterSalary')) {
+        setCollapseOpen(false);
+      } else if (e.target.closest('.inputFilterSalary')) {
         setCollapseOpen(true);
       }
     };
+    // \ant-collapse-header
 
     window.addEventListener('click', handleOutsideClick);
 
@@ -191,6 +246,8 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       }`}
       activeKey={collapseOpen ? '1' : ''}
       ref={collapseRef}
+      expandIconPosition="end"
+      expandIcon={(panelProps) => <DownOutlined />}
     >
       <Panel
         header={
@@ -218,7 +275,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           maxLength={11}
           // value={inputValueMin ? inputValueMin : Salary_Min ? Salary_Min : ''}
           value={
-            inputValueMin
+            inputValueMin || inputValueMin === ''
               ? new Intl.NumberFormat('en-US').format(
                   Number(inputValueMin.toString().replace(',', '')),
                 )
@@ -227,7 +284,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
                   Number(Salary_Min.toString().replace(',', '')),
                 )
               : new Intl.NumberFormat('en-US').format(
-                  Number('0'.replace(',', '')),
+                  Number('6000000'.replace(',', '')),
                 )
           }
           onChange={handleInputChangeSalaryMin}
@@ -239,7 +296,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           maxLength={selectedValue === 1 ? 11 : 5}
           // value={inputValueMax ? inputValueMax : Salary_Max ? Salary_Max : ''}
           value={
-            inputValueMax
+            inputValueMax || inputValueMax === ''
               ? new Intl.NumberFormat('en-US').format(
                   Number(inputValueMax.toString().replace(',', '')),
                 )
@@ -267,7 +324,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           <Button type="default" onClick={handleCancleValue}>
             Đặt lại
           </Button>
-          <Button type="primary" onClick={handleSubmitValue}>
+          <Button
+            type="primary"
+            onClick={handleSubmitValue}
+            className="submitValue"
+          >
             Áp dụng
           </Button>
         </div>

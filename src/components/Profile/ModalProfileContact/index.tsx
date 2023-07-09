@@ -1,31 +1,27 @@
-import React, { useState } from 'react'
-import { Box, TextField, Modal, Typography } from '@mui/material'
-import Button from '@mui/material/Button'
+import React, { useState } from 'react';
+import { Box, TextField, Modal, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
 // data
-import profileApi from 'api/profileApi'
+import profileApi from 'api/profileApi';
 
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../store/reducer/index'
-import { bindActionCreators } from 'redux'
-import { actionCreators } from 'store/index'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from 'store/index';
+import { CloseOutlined } from '@ant-design/icons';
 
 import {
   getProfile,
   resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
-import './style.scss'
+} from 'store/reducer/profileReducer/getProfileReducer';
+import './style.scss';
 
 interface InfoContact {
-  phone: string
-  email: string
-  facebook: string
-  linkedin: string
-
-
+  phone: string;
+  email: string;
+  facebook: string;
+  linkedin: string;
 }
-
-
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -38,49 +34,46 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+};
 
 const styleChildBox = {
   marginBottom: '12px',
-}
+};
 
 interface IModalProfileContact {
-  openModalContact: boolean
-  setOpenModalContact: React.Dispatch<React.SetStateAction<boolean>>
-  profile: any
+  openModalContact: boolean;
+  setOpenModalContact: React.Dispatch<React.SetStateAction<boolean>>;
+  profile: any;
 }
 
 const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
-  const { openModalContact, setOpenModalContact, profile } = props
-  const [phone, setPhone] = useState(profile?.phone ? profile?.phone : '')
-  const [email, setEmail] = useState(profile?.email ? profile?.email : '')
-  const [fb, setFB] = useState(profile?.facebook ? profile?.facebook : '')
+  const { openModalContact, setOpenModalContact, profile } = props;
+  const [phone, setPhone] = useState(profile?.phone ? profile?.phone : '');
+  const [email, setEmail] = useState(profile?.email ? profile?.email : '');
+  const [fb, setFB] = useState(profile?.facebook ? profile?.facebook : '');
   const [linkIn, setLinkIn] = useState(
-    profile?.linkedin ? profile?.linkedin : ''
-  )
+    profile?.linkedin ? profile?.linkedin : '',
+  );
 
-  const handleClose = () => setOpenModalContact(false)
-  const dispatch = useDispatch()
-  const { setProfileUser } = bindActionCreators(
-    actionCreators,
-    dispatch
-  )
+  const handleClose = () => setOpenModalContact(false);
+  const dispatch = useDispatch();
+  const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
 
   const handleSetPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value)
-  }
+    setPhone(e.target.value);
+  };
 
   const handleSetEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
-  }
+    setEmail(e.target.value);
+  };
 
   const handleSetFB = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFB(e.target.value)
-  }
+    setFB(e.target.value);
+  };
 
   const handleLinkIn = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLinkIn(e.target.value)
-  }
+    setLinkIn(e.target.value);
+  };
 
   // handle update information contact
   const handleSubmit = async () => {
@@ -89,17 +82,23 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         phone: phone,
         email: email,
         facebook: fb,
-        linkedin: linkIn
-      }
-  
-      const result = await profileApi.updateContact(info)
+        linkedin: linkIn,
+      };
+
+      const result = await profileApi.updateContact(info);
       if (result) {
-        setOpenModalContact(false)
+        setOpenModalContact(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
 
   return (
     <Modal
@@ -107,8 +106,23 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      onKeyDown={handleKeyDown}
     >
       <Box sx={style}>
+        <div
+          style={{
+            position: 'absolute',
+            right: '20px',
+            top: '20px',
+            cursor: 'pointer',
+            // border: '1px solid',
+            borderRadius: '50%',
+            padding: '1px',
+          }}
+          onClick={handleClose}
+        >
+          <CloseOutlined style={{ fontSize: '30px' }} />
+        </div>
         <Typography
           id="modal-modal-title"
           variant="h6"
@@ -136,7 +150,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Số điện thoại"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -158,7 +172,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Email"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -180,7 +194,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Facebook"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -202,7 +216,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Linkedin"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -211,7 +225,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         </Button>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalProfileContact
+export default ModalProfileContact;

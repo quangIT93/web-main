@@ -19,6 +19,24 @@ const notificationKeywordApi = {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       })
+  },
+
+  createKeywordNotification: (keyword: string, district_id: string) => {
+    const URL = `/v1/notification/keyword`
+
+    return axiosClient.post(URL, {
+      keyword: keyword,
+      catelory_id: 5,
+      category_status: 1,
+      district_id: district_id,
+      district_status: 1
+    },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+ 
+        },
+      })
   }
 
 }
