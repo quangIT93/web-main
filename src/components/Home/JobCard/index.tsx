@@ -85,6 +85,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                     key={props.item.image}
                     sx={{ flex: 1, display: 'flex' }}
                 >
+                    {/* <div className="image-wrapper"> */}
                     <img
                         src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
                         srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -96,6 +97,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                             borderRadius: 10,
                         }}
                     />
+                    {/* </div> */}
                     <div
                         style={{ padding: '0', marginLeft: '12px' }}
                         className="div-card-post-left_info"

@@ -67,10 +67,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     }
   }, [Salary_Max, Salary_Min, Salary_Max])
 
-  console.log("param", Salary_Min);
-  console.log("input", salaryMin);
-
-
   const handleRadioChange = (e: any) => {
     setSelectedValue(e.target.value)
   }

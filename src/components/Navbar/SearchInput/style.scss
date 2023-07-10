@@ -1,31 +1,82 @@
-.search-input-nav {
-  width: 500px !important;
+@import '../../../scss/variable';
+@import '../../../scss/mixins';
+
+.search-input-wrapper {
+  position: relative;
+
+  .search-input-nav {
+    width: 500px !important;
 
 
-  @media screen and (min-width:1461px) and (max-width: 1540px) {
-    width: 425px !important;
+    @media screen and (min-width:1461px) and (max-width: 1540px) {
+      width: 425px !important;
+    }
+
+    @media screen and (min-width:1351px) and (max-width: 1460px) {
+      width: 300px !important;
+    }
+
+    @media screen and (min-width:1281px) and (max-width: 1350px) {
+      width: 250px !important;
+    }
+
+    @media screen and (min-width:1151px) and (max-width: 1280px) {
+      width: 350px !important;
+    }
+
+    @media screen and (min-width:1025px) and (max-width: 1150px) {
+      width: 250px !important;
+    }
+
+
+    .ant-select-selector {
+      background-color: #f3f8fb !important;
+      padding: 0 11px;
+      border-radius: 25px;
+      height: 50px !important;
+
+      span {
+        padding: 0 30px !important;
+        line-height: 50px !important;
+      }
+    }
+
+    .ant-select-clear {
+      margin-right: 50px;
+    }
   }
 
-  @media screen and (min-width:1351px) and (max-width: 1460px) {
-    width: 300px !important;
+  .search-input-wrapper-iconSearch {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    height: 80%;
+    padding: 11px !important;
+    border-radius: 50px !important;
+    margin-left: 5px !important;
+    background: $primary-color;
+    border: none;
+
+    @media screen and (max-width: 1024px) {
+      display: none !important;
+    }
   }
 
-  @media screen and (min-width:1281px) and (max-width: 1350px) {
-    width: 250px !important;
+  .search-input-wrapper-iconFilter {
+    position: absolute;
+    background: transparent;
+    top: 10%;
+    right: 0;
+    height: 80%;
+    padding: 11px !important;
+    border-radius: 50px !important;
+    margin-right: 5px !important;
+    border: none;
+
+    @media screen and (max-width: 1024px) {
+      display: none !important;
+    }
   }
-
-  @media screen and (min-width:1151px) and (max-width: 1280px) {
-    width: 350px !important;
-  }
-
-  @media screen and (min-width:1025px) and (max-width: 1150px) {
-    width: 250px !important;
-  }
-
-}
-
-.ant-select-selector {
-  background-color: #f3f8fb !important;
 }
 
 ::placeholder {

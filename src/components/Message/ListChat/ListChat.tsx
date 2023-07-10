@@ -18,6 +18,7 @@ import {
   LocationIcon,
   ImageIcon,
   SendIcon,
+  CloseIcon
 } from '#components/Icons'
 
 import './style.scss'
@@ -30,8 +31,15 @@ interface Message {
   type: string
   postId: number
 }
-const ListChat = () => {
+
+interface IOpenListChat {
+  setOpenListChat: (params: any) => any;
+  openListChat: boolean
+}
+
+const ListChat: React.FC<IOpenListChat> = (props) => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [windowWidth, setWindowWidth] = useState(false)
 
   const [message, setMessage] = useState('')
 
@@ -40,6 +48,22 @@ const ListChat = () => {
   const [image, setImage] = useState<File | null>(null)
   const [isConnected, setIsConnected] = useState(false)
   // const [previousDate, setPreviousDate] = useState<string | null>(null)
+
+  const updateWindowWidth = () => {
+    if (window.innerWidth <= 555) {
+      setWindowWidth(true)
+    } else {
+      setWindowWidth(false)
+    }
+  }
+
+  useEffect(() => {
+    updateWindowWidth();
+  }, [windowWidth])
+
+  const closeLitChat = () => {
+    props.setOpenListChat(false);
+  }
 
   const {
     userInfoChat,
@@ -218,15 +242,18 @@ const ListChat = () => {
 
   if (userInfoChat.length !== 0) {
     return (
-      <div className="list-chat">
+      <div
+        // className="list-chat"
+        className={`list-chat ${props.openListChat === true && windowWidth ? 'show-list-chat-responesive' : ''
+          }`}
+      >
         <div className="header-list_chat">
           <div className="wrap-img_Userchat">
             <div className="wrap_img">
               <img src={userInfoChat.avatar} alt="" />
               <span
-                className={`user-chat_online ${
-                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
-                }`}
+                className={`user-chat_online ${userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                  }`}
               ></span>
             </div>
             <div className="wrap-infoUser_chat">
@@ -246,6 +273,11 @@ const ListChat = () => {
             <CallIcon />
           </span> */}
             <span>{/* <DotIcon /> */}</span>
+          </div>
+          <div className="wrap-icon_close"
+            onClick={() => closeLitChat()}
+          >
+            <CloseIcon />
           </div>
         </div>
         <div className="list-content_chat" ref={listRef}>
@@ -276,11 +308,10 @@ const ListChat = () => {
                   )}
                   <div className="wrap-text_chat">
                     <span
-                      className={`text-chat ${
-                        chat.message === null || chat.message === ''
-                          ? 'text-chat_hidden'
-                          : ''
-                      }`}
+                      className={`text-chat ${chat.message === null || chat.message === ''
+                        ? 'text-chat_hidden'
+                        : ''
+                        }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -323,11 +354,10 @@ const ListChat = () => {
                   )}
                   <div className="wrap-text_chat2">
                     <span
-                      className={`text-chat ${
-                        chat.message === '' || chat.message === null
-                          ? 'text-chat_hidden'
-                          : ''
-                      }`}
+                      className={`text-chat ${chat.message === '' || chat.message === null
+                        ? 'text-chat_hidden'
+                        : ''
+                        }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message

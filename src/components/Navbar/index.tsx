@@ -693,6 +693,9 @@ const Navbar: React.FC = () => {
             <SearchInput
               value={valueSearchInput}
               setValue={setValueSearchInput}
+              setOpenCollapseFilter={setOpenCollapseFilter}
+              openCollapseFilter={openCollapseFilter}
+              handleSearchIcon={handleSearch}
             />
             <Button className="btn-search" onClick={(event) => handleSearch(event, valueSearchInput)}>
               Tìm Kiếm
@@ -768,6 +771,9 @@ const Navbar: React.FC = () => {
           <SearchInput
             value={valueSearchInput}
             setValue={setValueSearchInput}
+            setOpenCollapseFilter={setOpenCollapseFilter}
+            openCollapseFilter={openCollapseFilter}
+            handleSearchIcon={handleSearch}
           />
           <div className="filter-wrap_top">
             <FilterLocationNav setListDis={setListDis} />
