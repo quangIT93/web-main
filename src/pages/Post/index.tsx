@@ -26,7 +26,7 @@ import PostCategoryId from '#components/Post/PostCategoryId'
 
 import PostSalaryType from '#components/Post/PostSalaryType'
 
-import Footer from '../../components/Footer/index'
+import Footer from '../../components/Footer/Footer'
 
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider'

@@ -200,6 +200,7 @@ const NewJobs: React.FC = () => {
             sx={{
               color: '#0d99ff ',
               backgroundColor: 'transparent',
+              // boxShadow: 'none',
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}

@@ -304,7 +304,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           textAlign="center"
           sx={{
             fontWeight: '700',
-            fontSize: '24px',
+            fontSize: '24px !important',
             lineHeight: '24px',
             color: '#001424',
             margin: '12px 0',
@@ -325,36 +325,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               onClick={handleBackOtp}
             />
             <form>
-              <div className="wrapLogin">
-                <label htmlFor="username">Email</label>
-                <input
-                  type="text"
-                  id="username"
-                  name="email"
-                  value={loginData.email}
-                  onChange={handleInputChange}
-                  placeholder="Nhập email của bạn..."
-                />
-                <small className={!invalid ? 'alert' : 'alert error'}>
-                  Email không đúng cú pháp vui lòng nhập lại
-                </small>
-              </div>
-              <p className="text-sent_otp">
-                Mã xác nhận sẽ được gửi vào email bạn đăng nhập.
-              </p>
-              <button
-                type="button"
-                onClick={handleLogin}
-                className="button-login"
-              >
-                Login
-              </button>
-              <div className="line-with-text">
-                <span className="line"></span>
-                <span className="text">Hoặc</span>
-                <span className="line"></span>
-              </div>
-
               <FacebookLogin
                 appId={appId}
                 autoLoad={false}
@@ -401,6 +371,38 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 onFailure={responseFailFacebookAndGoogle}
               // cookiePolicy={'single_host_origin'}
               />
+
+              <div className="line-with-text">
+                <span className="line"></span>
+                <span className="text">Hoặc</span>
+                <span className="line"></span>
+              </div>
+
+              <div className="wrapLogin">
+                <label htmlFor="username">Email</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="email"
+                  value={loginData.email}
+                  onChange={handleInputChange}
+                  placeholder="Nhập email của bạn..."
+                />
+                <small className={!invalid ? 'alert' : 'alert error'}>
+                  Email không đúng cú pháp vui lòng nhập lại
+                </small>
+              </div>
+              <p className="text-sent_otp">
+                Mã xác nhận sẽ được gửi vào email bạn đăng nhập.
+              </p>
+              <button
+                type="button"
+                onClick={handleLogin}
+                className="button-login"
+              >
+                Login
+              </button>
+
 
               {/* <div
                 className="bnt-login_google bnt-login"

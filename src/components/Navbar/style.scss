@@ -468,16 +468,77 @@
       @include breakpoint(mobile) {
         width: 100% !important;
         margin-top: 20px;
+
+        .ant-select-selector {
+          border-radius: 8px !important;
+
+          .ant-select-selection-search {
+            padding: unset !important;
+          }
+
+          .ant-select-selection-item {
+            padding: unset !important;
+          }
+
+          .ant-select-selection-placeholder {
+            padding: unset !important;
+          }
+        }
+
+        .ant-select-clear {
+          margin-right: 0;
+        }
+
       }
 
       @include breakpoint(tablet) {
         width: 100% !important;
         margin-top: 20px;
+
+        .ant-select-selector {
+          border-radius: 8px !important;
+
+          .ant-select-selection-search {
+            padding: unset !important;
+          }
+
+          .ant-select-selection-item {
+            padding: unset !important;
+          }
+
+          .ant-select-selection-placeholder {
+            padding: unset !important;
+          }
+        }
+
+        .ant-select-clear {
+          margin-right: 0;
+        }
       }
 
       @include breakpoint(largeTablet) {
         width: 100% !important;
         margin-top: 20px;
+
+        .ant-select-selector {
+          border-radius: 8px !important;
+
+          .ant-select-selection-search {
+            padding: unset !important;
+          }
+
+          .ant-select-selection-item {
+            padding: unset !important;
+          }
+
+          .ant-select-selection-placeholder {
+            padding: unset !important;
+          }
+        }
+
+        .ant-select-clear {
+          margin-right: 0;
+        }
       }
 
       @include breakpoint(destop) {
