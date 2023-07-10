@@ -195,7 +195,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true)
         }
       }
-    } catch (error) {}
+    } catch (error) { }
 
     // console.log('facebook', response)
   }
@@ -399,7 +399,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-                // cookiePolicy={'single_host_origin'}
+              // cookiePolicy={'single_host_origin'}
               />
 
               {/* <div
@@ -478,6 +478,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
         <Backdrop
           sx={{
             color: '#0d99ff ',
+            backgroundColor: 'transparent',
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={openBackdrop}

@@ -304,7 +304,11 @@ const CategoryCarousel: React.FC = () => {
         })}
       </Tabs>
       <Backdrop
-        sx={{ color: '#0d99ff ', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          color: '#0d99ff ',
+          backgroundColor: 'transparent',
+          zIndex: (theme) => theme.zIndex.drawer + 1
+        }}
         open={openBackdrop}
         onClick={handleClose}
       >
