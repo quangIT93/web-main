@@ -6,7 +6,7 @@ import ListUserChat from '#components/Message/ListUser/ListUser'
 import HeaderMessage from '#components/Message/HeaderMessage'
 // @ts-ignore
 import Navbar from '#components/Navbar'
-import Footer from '#components/Footer'
+import Footer from '#components/Footer/Footer'
 // import ui antd
 import { Typography } from 'antd'
 

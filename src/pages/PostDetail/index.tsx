@@ -5,7 +5,7 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import NavBar from '../../components/Navbar/index';
 import { AxiosResponse } from 'axios';
-import Footer from '../../components/Footer/index';
+import Footer from '../../components/Footer/Footer';
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom';
 import postApi from '../../api/postApi';
@@ -41,6 +41,10 @@ import {
   ExclamationCircleFilled,
 } from '@ant-design/icons';
 
+import { SaveIcon, ShareIcon } from '#components/Icons';
+
+import { PostNewest } from '#components/Home/NewJobs';
+
 import './style.scss';
 
 interface ItemCategories {
@@ -52,18 +56,18 @@ interface ItemCategories {
 }
 
 // state props
-interface PostNewest {
-  id?: Number;
-  status?: Number;
-  account_id?: string;
-  title?: string;
-  company_name?: string;
-  is_date_period?: number;
-  start_date?: number;
-  end_date?: number;
-  start_time?: number;
-  image?: string;
-}
+// interface PostNewest {
+//   id?: Number;
+//   status?: Number;
+//   account_id?: string;
+//   title?: string;
+//   company_name?: string;
+//   is_date_period?: number;
+//   start_date?: number;
+//   end_date?: number;
+//   start_time?: number;
+//   image?: string;
+// }
 const ACCESS_TOKEN = localStorage.getItem('accessToken');
 
 // page view details post
@@ -308,12 +312,15 @@ const Detail: React.FC = () => {
   setTimeout(() => {
     setAutomatic(true);
   }, 700);
+
+  console.log(postNewest);
+
   return (
     <>
       {automatic && (
         <div className="detail">
           <NavBar />
-          <div className="div-include-breadcrumb">
+          {/* <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
                 <Breadcrumb
@@ -329,16 +336,17 @@ const Detail: React.FC = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
           <div
             style={{
               display: 'flex',
               justifyContent: 'center',
               paddingBottom: '30px',
+              marginBottom: '40px',
             }}
           >
             <div className="detail-container">
-              <div ref={componentRef}>
+              <div className="div-job-img" ref={componentRef}>
                 <Carousel
                   data={post?.data.images.length > 0 ? post?.data.images : data}
                   time={2000}
@@ -366,7 +374,17 @@ const Detail: React.FC = () => {
               </div>
               <div className="div-job-title" ref={componentRefJob}>
                 <div className="title">
-                  <h2>{post?.data.title}</h2>
+                  <div className="top-title">
+                    <h2>{post?.data.title}</h2>
+                    <div className="share-save-icon">
+                      <div className="share-job-icon">
+                        <ShareIcon width={24} height={24} />
+                      </div>
+                      <div className="save-job-icon">
+                        <SaveIcon width={24} height={24} />
+                      </div>
+                    </div>
+                  </div>
                   <h3>{post?.data.company_name}</h3>
                 </div>
                 <div className="job-title-details">
@@ -468,8 +486,8 @@ const Detail: React.FC = () => {
                       <h5>
                         {post?.data.expired_date
                           ? moment(new Date(post?.data.expired_date)).format(
-                              'DD/MM/yyyy',
-                            )
+                            'DD/MM/yyyy',
+                          )
                           : 'Không thời hạn'}
                       </h5>
                     </div>
@@ -526,15 +544,9 @@ const Detail: React.FC = () => {
               <div className="div-suggest">
                 <h3 style={{ paddingLeft: 10 }}>Việc làm tương tự </h3>
                 <div className="item">
-                  {postNewest?.data.posts.map(
+                  {postNewest?.data?.posts.map(
                     (item: PostNewest, index: null | number) => (
-                      <ItemSuggest
-                        key={index}
-                        content={item.title}
-                        imgBackground={item.image}
-                        describe={item.company_name}
-                        postId={item.id}
-                      />
+                      <ItemSuggest item={item} />
                     ),
                   )}
                 </div>

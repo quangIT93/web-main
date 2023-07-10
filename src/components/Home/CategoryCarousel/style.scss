@@ -111,5 +111,9 @@
       left: 0 !important;
       right: 0 !important;
     }
+
+    @include breakpoint(mobile) {
+      margin-top: 218px !important;
+    }
   }
 }

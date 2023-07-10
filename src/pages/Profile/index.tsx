@@ -24,7 +24,7 @@ import Stack from '@mui/material/Stack';
 
 import { RootState } from '../../store/reducer/index';
 
-import Footer from '../../components/Footer/index';
+import Footer from '../../components/Footer/Footer';
 import ItemApply from './components/Item';
 
 import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson';
@@ -189,7 +189,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success('Xóa CV thanh cong.');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -502,7 +502,7 @@ const Profile: React.FC = () => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-                // direction="vertical"
+              // direction="vertical"
               >
                 {profile.cv_url && fileList?.length == 0 ? (
                   <Popconfirm
@@ -538,9 +538,8 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${
-                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                    }`,
+                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                      }`,
                     alignItems: 'flex-start',
                   }}
                 >
@@ -573,12 +572,12 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                    (item: ICategories, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item.child_category}
-                      </Button>
-                    ),
-                  )
+                  (item: ICategories, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.child_category}
+                    </Button>
+                  ),
+                )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -605,10 +604,10 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item?.district}
-                    </Button>
-                  ))
+                  <Button key={index} className="btn" type="text">
+                    {item?.district}
+                  </Button>
+                ))
                 : 'Chưa cập nhật'}
             </Space>
           </div>
