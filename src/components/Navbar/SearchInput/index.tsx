@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Select } from 'antd';
-import jsonp from 'fetch-jsonp';
-import qs from 'qs';
-import type { SelectProps } from 'antd';
-import searchApi from 'api/searchApi';
-import './style.scss';
-import { Spin } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
+import React, { useState } from 'react'
+import { Select, Button } from 'antd'
+import jsonp from 'fetch-jsonp'
+import qs from 'qs'
+import type { SelectProps } from 'antd'
+import searchApi from 'api/searchApi'
+import './style.scss'
+import { Spin } from 'antd'
+import { CloseOutlined, SearchOutlined } from '@ant-design/icons'
+import { SearchIcon, FilterIcon } from '../../Icons/index'
 
 import {
   useNavigate,
@@ -86,13 +87,16 @@ const fetch = (
 };
 
 interface SearchProps {
-  value: string | undefined;
-  setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
+  value: string | undefined
+  setValue: React.Dispatch<React.SetStateAction<string | undefined>>
+  setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+  handleSearchIcon: (event: any, params: string | undefined) => any;
+  openCollapseFilter: boolean
 }
 
-const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [data, setData] = useState<SelectProps['options']>([]);
+const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFilter, openCollapseFilter, handleSearchIcon }) => {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [data, setData] = useState<SelectProps['options']>([])
   // const [fetching, setFet] = useState(false)
   const [loading, setLoading] = useState(false);
   const QUERY = searchParams.get('q');
@@ -217,37 +221,56 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue }) => {
   ));
 
   return (
-    <Select
-      showSearch
-      autoClearSearchValue
-      size="large"
-      value={value}
-      defaultValue={QUERY ? QUERY : null}
-      // defaultValue={null}
-      placeholder="Tìm kiếm công việc"
-      defaultActiveFirstOption={false}
-      showArrow={false}
-      filterOption={false}
-      onSearch={handleSearch}
-      onChange={handleChange}
-      loading={loading}
-      // notFoundContent={fetching ? <Spin size="small" /> : null}
-      options={(data || []).map((d) => ({
-        value: d.value,
-        label: d.text,
-      }))}
-      className="search-input-nav"
-      virtual={true}
-      onFocus={handleOnFocus}
-      onInputKeyDown={handleKeyPress}
-      allowClear={true}
-      // onBlur={handleOnBlur}
-      removeIcon={<CloseOutlined />}
-      menuItemSelectedIcon={<Spin size="small">dec</Spin>}
-      // dropdownRender={() => dropdownRender}
-      onClear={handleClearItem}
-    />
-  );
-};
+    <div className="search-input-wrapper">
+      <Select
+        showSearch
+        autoClearSearchValue
+        optionFilterProp="children"
+        size="large"
+        value={value}
+        defaultValue={QUERY ? QUERY : null}
+        // defaultValue={null}
+        placeholder="Tìm kiếm công việc"
+        defaultActiveFirstOption={false}
+        showArrow={false}
+        filterOption={false}
+        onSearch={handleSearch}
+        onChange={handleChange}
+        loading={loading}
+        // notFoundContent={fetching ? <Spin size="small" /> : null}
+        options={(data || []).map((d) => ({
+          value: d.value,
+          label: d.text,
+        }))}
+        className="search-input-nav"
+        virtual={true}
+        onFocus={handleOnFocus}
+        onInputKeyDown={handleKeyPress}
+        allowClear={true}
+        // onBlur={handleOnBlur}
+        removeIcon={<CloseOutlined />}
+        menuItemSelectedIcon={<Spin size="small">dec</Spin>}
+        // dropdownRender={() => dropdownRender}
+        onClear={handleClearItem}
+      />
+
+      <Button
+        className="search-input-wrapper-iconSearch"
+        shape="circle"
+        onClick={(event) => handleSearchIcon(event, value)}
+      >
+        <SearchIcon width={18} height={18} />
+      </Button>
+
+      <Button
+        className="search-input-wrapper-iconFilter"
+        shape="circle"
+        onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
+      >
+        <FilterIcon width={20} height={20} />
+      </Button>
+    </div>
+  )
+}
 
 export default React.memo(SearchInput);

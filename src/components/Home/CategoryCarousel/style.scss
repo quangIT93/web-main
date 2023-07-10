@@ -1,13 +1,19 @@
 @import '../../../scss/mixins';
+
 .tabs {
   display: flex;
   align-items: center;
-  .MuiTabScrollButton-horizontal {
+
+  @media screen and (max-width: 1281px) {
+    margin: 0 !important;
   }
+
+  .MuiTabScrollButton-horizontal {}
 
   .MuiTabs-scrollButtons {
     display: flex;
     align-items: center;
+
     svg {
       width: 30px;
       height: 30px;
@@ -16,11 +22,13 @@
       border: 1px solid #ccc;
     }
   }
+
   .MuiButtonBase-root {
     border-bottom: 1px solid #dcdcdc;
     flex: 1;
     min-width: 100px;
   }
+
   .MuiTabs-scrollButtons {
     @include breakpoint(mobile) {
       display: none;
@@ -32,7 +40,7 @@
     // overflow-x: hidden;
     // display: flex;
     // align-items: center;
-    
+
     //   &::-webkit-scrollbar {
     //     height: 8px;
     //   }
@@ -49,7 +57,8 @@
     //   &::-webkit-scrollbar-thumb:hover {
     //     background: #aaa;
     //   }
-    .MuiTabs-scrollButtons{
+    .MuiTabs-scrollButtons {
+
       &:last-child,
       &:first-child {
         position: absolute;
@@ -62,11 +71,12 @@
         //   background-color: #AAAAAA;
         // }
       }
+
       &:last-child {
 
         right: 0;
-    
-  
+
+
       }
 
       &:first-child {
@@ -79,25 +89,27 @@
     }
   }
 }
+
 .home {
   .MuiBox-root {
     @media screen and (min-width: 0px) and (max-width: 1200px) {
       max-width: 100%;
       margin: 0px 10px;
     }
-  }
-  .MuiBox-root {
+
     @media screen and (min-width: 600px) {
       max-width: 100%;
     }
+
     @media screen and (min-width: 0px) {
       max-width: 100%;
     }
   }
-  .MuiBox-root {
-    @media screen and (min-width: 0px) and (max-width: 1200px) {
-      max-width: 100%;
-      margin: 0px 10px;
+
+  .MuiStack-root {
+    @media screen and (max-width: 1281px) {
+      left: 0 !important;
+      right: 0 !important;
     }
   }
 }

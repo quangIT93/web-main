@@ -23,7 +23,11 @@ const ProtectedRoute = () => {
     return (
       <>
         <Backdrop
-          sx={{ color: 'red', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          sx={{
+            color: 'red',
+            backgroundColor: 'transparent',
+            zIndex: (theme) => theme.zIndex.drawer + 1
+          }}
           open={open}
           onClick={handleClose}
         >

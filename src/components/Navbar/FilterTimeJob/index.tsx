@@ -126,9 +126,8 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
   return (
     <Collapse
-      className={`inputFilterTimeJob input-filter_nav ${
-        isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
-      }`}
+      className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
+        }`}
       activeKey={collapseOpen ? '1' : ''}
       ref={collapseRef}
       expandIconPosition="end"

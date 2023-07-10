@@ -96,15 +96,15 @@ const Navbar: React.FC = () => {
     setOpenNotificate,
     openNotificate,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean;
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-  } = useContext(HomeValueContext);
+    {
+      openCollapseFilter: boolean;
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+    } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -388,23 +388,21 @@ const Navbar: React.FC = () => {
     setTimeout(() => {
       window.open(
         `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}` +
-          `${salary_type ? `&sal-type=${salary_type}` : ''}` +
-          `${job_type ? `&job-type=${job_type}` : ''}` +
-          `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
-          `${
-            list_cate.length > 0
-              ? `&${paramsCate.toString()}`
-              : `&${paramsCate.toString()}`
-          }` +
-          `${salary_min ? `&salary_min=${salary_min}` : ''}` +
-          `${salary_max ? `&salary_max=${salary_max}` : ''}` +
-          `${
-            is_working_weekend
-              ? `&is_working_weekend=${is_working_weekend}`
-              : ''
-          }` +
-          `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
-          `${money_type ? `&money_type=${money_type}` : ''}`,
+        `${salary_type ? `&sal-type=${salary_type}` : ''}` +
+        `${job_type ? `&job-type=${job_type}` : ''}` +
+        `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
+        `${list_cate.length > 0
+          ? `&${paramsCate.toString()}`
+          : `&${paramsCate.toString()}`
+        }` +
+        `${salary_min ? `&salary_min=${salary_min}` : ''}` +
+        `${salary_max ? `&salary_max=${salary_max}` : ''}` +
+        `${is_working_weekend
+          ? `&is_working_weekend=${is_working_weekend}`
+          : ''
+        }` +
+        `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
+        `${money_type ? `&money_type=${money_type}` : ''}`,
         '_self',
       );
     }, 1);
@@ -588,9 +586,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -677,9 +675,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -702,9 +700,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -714,6 +711,7 @@ const Navbar: React.FC = () => {
         <Backdrop
           sx={{
             color: '#0d99ff ',
+            backgroundColor: 'transparent',
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={openBackdrop}
@@ -730,6 +728,9 @@ const Navbar: React.FC = () => {
             <SearchInput
               value={valueSearchInput}
               setValue={setValueSearchInput}
+              setOpenCollapseFilter={setOpenCollapseFilter}
+              openCollapseFilter={openCollapseFilter}
+              handleSearchIcon={handleSearch}
             />
             <Button
               className="btn-search"
@@ -817,6 +818,9 @@ const Navbar: React.FC = () => {
           <SearchInput
             value={valueSearchInput}
             setValue={setValueSearchInput}
+            setOpenCollapseFilter={setOpenCollapseFilter}
+            openCollapseFilter={openCollapseFilter}
+            handleSearchIcon={handleSearch}
           />
           <div className="filter-wrap_top">
             <FilterLocationNav setListDis={setListDis} />

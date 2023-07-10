@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
 // import component
 import ListChat from '#components/Message/ListChat/ListChat'
@@ -17,6 +17,8 @@ const { Text } = Typography
 
 const Message = () => {
   const { openCollapseFilter } = useContext(HomeValueContext)
+  const [openListChat, setOpenListChat] = useState(false);
+
   return (
     <div className="message-page">
       <Navbar />
@@ -27,12 +29,27 @@ const Message = () => {
         </div> */}
         <div className="wrap-content_message">
           <div className="message-page_left">
-            <ListUserChat />
+            <ListUserChat setOpenListChat={setOpenListChat} openListChat={openListChat} />
           </div>
 
           <div className="message-page_right">
-            <ListChat />
+            <ListChat setOpenListChat={setOpenListChat} openListChat={openListChat} />
           </div>
+        </div>
+      </div>
+
+      <div className="message-page-main_responsive">
+        {/* <div className="header-message">
+          <HeaderMessage />
+        </div> */}
+        <div className="wrap-content-message_responsive">
+          {/* <div className="message-page-left_responsive"> */}
+          <ListUserChat setOpenListChat={setOpenListChat} openListChat={openListChat} />
+          {/* </div> */}
+
+          {/* <div className="message-page-right_responsive"> */}
+          <ListChat setOpenListChat={setOpenListChat} openListChat={openListChat} />
+          {/* </div> */}
         </div>
       </div>
       <Footer />

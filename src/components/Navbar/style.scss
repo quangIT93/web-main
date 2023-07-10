@@ -42,6 +42,7 @@
   display: flex;
   justify-content: space-between;
   margin-left: 24px;
+  margin-right: 20px;
 
   @include breakpoint(mobile) {
     margin-left: 0px;
@@ -420,13 +421,13 @@
       }
     }
 
-    @include breakpoint(destop) {
-      padding: 0 165px;
-    }
+    // @include breakpoint(destop) {
+    //   padding: 0 165px;
+    // }
 
-    @include breakpoint(an_order) {
-      padding: 0 165px;
-    }
+    // @include breakpoint(an_order) {
+    //   padding: 0 165px;
+    // }
   }
 
   // @include breakpoint(destop) {
@@ -450,6 +451,16 @@
     @include breakpoint(tablet) {
       height: 90% !important;
       overflow-y: scroll !important;
+    }
+
+    .search-input-wrapper {
+      @include breakpoint(an_order) {
+        display: none !important;
+      }
+
+      @include breakpoint(destop) {
+        display: none !important;
+      }
     }
 
     .search-input-nav {
@@ -607,13 +618,13 @@
   .css-10lnyhw {
     // flex: 1.5;
 
-    @media screen and (min-width: 1280px) and (max-width: 1628px) {
-      flex: 2.5;
-    }
+    // @media screen and (min-width: 1280px) and (max-width: 1628px) {
+    //   flex: 2.5;
+    // }
 
-    @include breakpoint(an_order) {
-      flex: 2;
-    }
+    // @include breakpoint(an_order) {
+    //   flex: 2;
+    // }
 
     @include breakpoint(largeTablet) {
       flex: none;
@@ -630,7 +641,7 @@
 
   .div-nav-center {
     button {
-      padding: 20px 16px;
+      padding: 24px 16px;
       display: flex;
       align-items: center;
       border-radius: 8px;
@@ -695,6 +706,26 @@
       }
 
       .btn-search {
+        display: none;
+      }
+    }
+
+    @include breakpoint(destop) {
+      .btn-search {
+        display: none;
+      }
+
+      .btn-filter {
+        display: none;
+      }
+    }
+
+    @include breakpoint(an_order) {
+      .btn-search {
+        display: none;
+      }
+
+      .btn-filter {
         display: none;
       }
     }

@@ -216,6 +216,7 @@ const ThemesJob: React.FC = () => {
             <Backdrop
               sx={{
                 color: '#0d99ff ',
+                backgroundColor: 'transparent',
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}

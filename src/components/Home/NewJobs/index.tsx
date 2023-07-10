@@ -199,10 +199,11 @@ const NewJobs: React.FC = () => {
           <Backdrop
             sx={{
               color: '#0d99ff ',
+              backgroundColor: 'transparent',
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-            //  onClick={handleClose}
+          //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

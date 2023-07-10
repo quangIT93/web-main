@@ -244,12 +244,12 @@ const BreadcrumbsCpn: React.FC = () => {
           {arrayChild?.length === 0
             ? 'Tất cả'
             : arrayChild?.map(
-                (value: { id: number; name: string }, index: number) => (
-                  <div key={index}>
-                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                  </div>
-                ),
-              )}
+              (value: { id: number; name: string }, index: number) => (
+                <div key={index}>
+                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                </div>
+              ),
+            )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -281,60 +281,81 @@ const BreadcrumbsCpn: React.FC = () => {
       <Breadcrumbs separator="" aria-label="breadcrumb">
         {breadcrumbs}
       </Breadcrumbs>
-
-      <Collapse
-        in={open}
-        // timeout="auto"
-        // unmountOnExit
-        unmountOnExit
-        className="collapse-breadcrumbs"
+      <Stack
+        spacing={2}
+        sx={{
+          marginTop: '238px',
+          // marginTop: navTouchCatelory ? '170px' : '24px',
+          // position: 'relative',
+          position: 'fixed',
+          // sua
+          top: '-23px',
+          zIndex: '1',
+          background: '#ffffff',
+          padding: '16px 8px ',
+          left: 180,
+          right: 180,
+          borderBottom: '1px solid #e5e5e5',
+        }}
       >
-        <Typography className="header-breabcrumb_text">Danh sách</Typography>
-        <Box padding={0} className="box-breadcrumbs">
-          <FormGroup>
-            {childCatelories?.map((childCatelorie: any, index: number) => (
-              <FormControlLabel
-                key={index}
-                sx={{
-                  padding: '4px 24px',
-                }}
-                control={
-                  <Checkbox
-                    key={index}
-                    checked={
-                      checkedItems
-                        ? checkedItems[index]?.checked || false
-                        : false
-                    }
-                    onChange={handleCheckboxChange}
-                    name={childCatelorie?.id.toString()}
-                    value={childCatelorie?.name.toString()}
-                    disabled={
-                      checkedItems
-                        ? !checkedItems[index]?.checked &&
+        <Breadcrumbs separator="" aria-label="breadcrumb">
+          {breadcrumbs}
+        </Breadcrumbs>
+
+        <Collapse
+          in={open}
+          // timeout="auto"
+          // unmountOnExit
+          unmountOnExit
+          className="collapse-breadcrumbs"
+        >
+          <Typography className="header-breabcrumb_text">Danh sách</Typography>
+          <Box padding={0} className="box-breadcrumbs">
+            <FormGroup>
+              {childCatelories?.map((childCatelorie: any, index: number) => (
+                <FormControlLabel
+                  key={index}
+                  sx={{
+                    padding: '4px 24px',
+                  }}
+                  control={
+                    <Checkbox
+                      key={index}
+                      checked={
+                        checkedItems
+                          ? checkedItems[index]?.checked || false
+                          : false
+                      }
+                      onChange={handleCheckboxChange}
+                      name={childCatelorie?.id.toString()}
+                      value={childCatelorie?.name.toString()}
+                      disabled={
+                        checkedItems
+                          ? !checkedItems[index]?.checked &&
                           checkItemsCount >= MAX_CHECKED_ITEMS
-                        : false
-                    }
-                  />
-                }
-                label={childCatelorie?.name}
-              />
-            ))}
-          </FormGroup>
-        </Box>
-        <div className="wrapBtn-breadcrumb_nav">
-          <button
-            type="submit"
-            className="btn-breadcrumb_nav"
-            onClick={handleClickChoose}
-          >
-            Chọn
-          </button>
-        </div>
-      </Collapse>
+                          : false
+                      }
+                    />
+                  }
+                  label={childCatelorie?.name}
+                />
+              ))}
+            </FormGroup>
+          </Box>
+          <div className="wrapBtn-breadcrumb_nav">
+            <button
+              type="submit"
+              className="btn-breadcrumb_nav"
+              onClick={handleClickChoose}
+            >
+              Chọn
+            </button>
+          </div>
+        </Collapse>
+      </Stack>
     </Stack>
-  );
-};
+  )
+}
 
 export default BreadcrumbsCpn;
 

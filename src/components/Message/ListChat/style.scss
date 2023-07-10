@@ -1,3 +1,6 @@
+@import '../../../scss/mixins';
+@import '../../../scss/variable';
+
 .list-chat {
   display: flex;
   flex-direction: column;
@@ -6,6 +9,17 @@
   width: 100%;
   //   overflow: hidden;
   //   height: 400px;
+
+  @media screen and (max-width: 555px) {
+    display: none;
+    height: 75%;
+  }
+
+  @include breakpoint(mobile) {
+    display: none;
+    height: 75%;
+  }
+
   .header-list_chat {
     display: flex;
     align-items: center;
@@ -13,14 +27,17 @@
     border-bottom: 0.8px solid #dcdcdc;
     flex-grow: 0; // Không mở rộng chiều cao
     flex-shrink: 0;
+
     .wrap-img_Userchat {
       display: flex;
       align-items: center;
       padding: 12px 0;
+
       .wrap_img {
         width: 48px;
         height: 48px;
         position: relative;
+
         img {
           width: 48px;
           height: 48px;
@@ -42,8 +59,10 @@
           background-color: #34a853;
         }
       }
+
       .wrap-infoUser_chat {
         margin-left: 12px;
+
         h4 {
           font-weight: 700;
           font-size: 16px;
@@ -64,6 +83,18 @@
         padding: 12px;
       }
     }
+
+    .wrap-icon_close {
+      display: none;
+
+      @media screen and (max-width: 555px) {
+        display: block;
+      }
+
+      @include breakpoint(mobile) {
+        display: block;
+      }
+    }
   }
 
   .list-content_chat {
@@ -81,6 +112,7 @@
     /* Sét cứng cuộn đến phần cuối */
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
+
     .img {
       width: 30px;
       height: 30px;
@@ -106,6 +138,7 @@
         align-items: center;
         margin: 12px;
         width: 100%;
+
         .horizontal-line {
           // border: none;
           border-top: 1px solid #000;
@@ -126,6 +159,9 @@
       .wrap-text_chat {
         align-self: flex-end;
         max-width: 550px;
+        display: flex;
+        flex-direction: column;
+
         .text-chat {
           // order: 1;
           background-color: #0d99ff;
@@ -174,6 +210,7 @@
         align-items: center;
         margin: 12px;
         width: 100%;
+
         .horizontal-line {
           // border: none;
           border-top: 1px solid #000;
@@ -194,6 +231,7 @@
       .wrap-text_chat2 {
         align-self: flex-start;
         max-width: 550px;
+
         .text-chat {
           background-color: #f3f3f3;
           color: #000000;
@@ -202,6 +240,7 @@
           display: block;
           overflow-wrap: break-word;
         }
+
         .text-chat.text-chat_hidden {
           display: none;
         }
@@ -229,6 +268,7 @@
     align-items: center;
 
     width: 100%;
+
     input {
       padding: 12px 110px 12px 12px;
     }
@@ -260,9 +300,23 @@
     height: 100%;
     width: auto;
     flex-direction: column;
+
     img {
       height: auto;
       width: auto;
     }
+  }
+}
+
+.show-list-chat-responesive {
+
+  @media screen and (max-width: 555px) {
+    display: block;
+    width: 100%;
+  }
+
+  @include breakpoint(mobile) {
+    display: block;
+    width: 100%;
   }
 }
