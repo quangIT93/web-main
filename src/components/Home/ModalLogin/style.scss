@@ -1,8 +1,18 @@
+@import "../../../scss/mixins";
+@import "../../../scss/variable";
+
+@include breakpoint(mobile) {
+  .css-7s2g8x {
+    width: 400px !important;
+  }
+}
+
 form {
   .wrapLogin {
     display: flex;
     // align-items: center;
     flex-direction: column;
+
     label {
       font-weight: 500;
       font-size: 14px;
@@ -65,6 +75,7 @@ form {
     /* x2 */
 
     color: #575757;
+
     .line {
       flex-grow: 1;
       border-top: 1px solid #dcdcdc;
@@ -100,12 +111,14 @@ form {
 
 .wrap-otp {
   position: relative;
+
   .icon-left_login {
     position: absolute;
     width: 30px;
     height: 30px;
     top: -40px;
   }
+
   .textOpt {
     text-align: center;
     font-weight: 400;
@@ -143,6 +156,7 @@ form {
     align-items: center;
     justify-content: center;
     padding-top: 12px;
+
     .resend-otp {
       text-align: center;
       font-weight: 400;

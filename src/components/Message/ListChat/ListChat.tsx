@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
 
+import { useSearchParams } from 'react-router-dom'
+
 import { Input } from 'antd'
 
 import io from 'socket.io-client'
@@ -16,12 +18,12 @@ import {
   LocationIcon,
   ImageIcon,
   SendIcon,
+  CloseIcon
 } from '#components/Icons'
 
 import './style.scss'
 
 import { ChatContext } from 'context/ChatContextProvider'
-
 interface Message {
   receiverId: string
   message: string
@@ -29,9 +31,17 @@ interface Message {
   type: string
   postId: number
 }
-const ListChat = () => {
+
+interface IOpenListChat {
+  setOpenListChat: (params: any) => any;
+  openListChat: boolean
+}
+
+const ListChat: React.FC<IOpenListChat> = (props) => {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [windowWidth, setWindowWidth] = useState(false)
+
   const [message, setMessage] = useState('')
-  const [receivedMessages, setReceivedMessages] = useState<Message[]>([])
 
   const [allListChat, setAllListChat] = useState<any>([])
   const [profileUser, setProfileUser] = useState<any>({})
@@ -39,8 +49,29 @@ const ListChat = () => {
   const [isConnected, setIsConnected] = useState(false)
   // const [previousDate, setPreviousDate] = useState<string | null>(null)
 
-  const { userInfoChat, setSendMessages, sendMessages } =
-    useContext(ChatContext)
+  const updateWindowWidth = () => {
+    if (window.innerWidth <= 555) {
+      setWindowWidth(true)
+    } else {
+      setWindowWidth(false)
+    }
+  }
+
+  useEffect(() => {
+    updateWindowWidth();
+  }, [windowWidth])
+
+  const closeLitChat = () => {
+    props.setOpenListChat(false);
+  }
+
+  const {
+    userInfoChat,
+    setSendMessages,
+    sendMessages,
+    receivedMessages,
+    setReceivedMessages,
+  } = useContext(ChatContext)
 
   let socket = useRef<any>()
   const listRef = useRef<HTMLDivElement>(null)
@@ -49,11 +80,15 @@ const ListChat = () => {
   const previousDate = useRef<string | null>(null)
 
   useEffect(() => {
-    socket.current = io('https://181f-14-161-42-152.ngrok-free.app/', {
-      extraHeaders: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    })
+    socket.current = io(
+      // 'https://181f-14-161-42-152.ngrok-free.app/',
+      'https://neoworks.vn',
+      {
+        extraHeaders: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    )
   }, [])
 
   const getAllListChat = async () => {
@@ -61,7 +96,7 @@ const ListChat = () => {
       const result = await messageApi.getChatMessage(
         userInfoChat.user_id,
         // 36353,
-        23894
+        Number(searchParams.get('post_id'))
       )
       if (result) {
         setAllListChat(result.data)
@@ -140,8 +175,9 @@ const ListChat = () => {
 
   // console.log('receive', receivedMessages)
   // console.log('send', sendMessages)
-  console.log('allListChat', allListChat)
-  console.log('userInfoChat', userInfoChat)
+  // console.log('allListChat', allListChat)
+  // console.log('userInfoChat', userInfoChat)
+  // console.log('searchParams.get("post_id")', searchParams.get('post_id'))
 
   // message function
   const handleSendMessage = () => {
@@ -152,7 +188,7 @@ const ListChat = () => {
         message: message,
         createdAt: Date.now(),
         type: 'text',
-        postId: 23894,
+        postId: searchParams.get('post_id'),
         // postId: 36353,
       })
 
@@ -173,18 +209,19 @@ const ListChat = () => {
   }
 
   const handleImageUpload = (e: any) => {
-    const selectedImage = e.target.files[0]
-    console.log('file', selectedImage)
+    const selectedImage = e.target.files
 
     if (selectedImage) {
       const formData = new FormData()
+
       formData.append('files', selectedImage)
+
       socket.current.emit('client-send-message', {
         receiverId: userInfoChat.user_id,
-        files: [formData],
+        files: Array.from(selectedImage),
         createdAt: Date.now(),
         type: 'image',
-        postId: 23894,
+        postId: searchParams.get('post_id'),
       })
     }
     setImage(selectedImage)
@@ -202,17 +239,30 @@ const ListChat = () => {
       }, 100)
     }
   }, [allListChat])
-  console.log('render message')
-  console.log('render date', new Date().toLocaleDateString())
+
   if (userInfoChat.length !== 0) {
     return (
-      <div className="list-chat">
+      <div
+        // className="list-chat"
+        className={`list-chat ${props.openListChat === true && windowWidth ? 'show-list-chat-responesive' : ''
+          }`}
+      >
         <div className="header-list_chat">
-          <div className="wrap-img_chat">
-            <img src={userInfoChat.avatar} alt="" />
+          <div className="wrap-img_Userchat">
+            <div className="wrap_img">
+              <img src={userInfoChat.avatar} alt="" />
+              <span
+                className={`user-chat_online ${userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                  }`}
+              ></span>
+            </div>
             <div className="wrap-infoUser_chat">
               <h4>{userInfoChat.name}</h4>
-              <span>Đang hoạt động</span>
+              {userInfoChat.is_online ? (
+                <span>Đang hoạt động</span>
+              ) : (
+                <span>offline</span>
+              )}
             </div>
           </div>
           <div className="wrap-icon_chat">
@@ -222,9 +272,12 @@ const ListChat = () => {
           <span>
             <CallIcon />
           </span> */}
-            <span>
-              <DotIcon />
-            </span>
+            <span>{/* <DotIcon /> */}</span>
+          </div>
+          <div className="wrap-icon_close"
+            onClick={() => closeLitChat()}
+          >
+            <CloseIcon />
           </div>
         </div>
         <div className="list-content_chat" ref={listRef}>
@@ -232,10 +285,7 @@ const ListChat = () => {
             const chatDate = new Date(chat.created_at).toLocaleDateString()
             let showDate = false
 
-            if (previousDate.current !== chatDate) {
-              previousDate.current = chatDate
-              showDate = true
-            }
+            // if()
 
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
@@ -258,21 +308,23 @@ const ListChat = () => {
                   )}
                   <div className="wrap-text_chat">
                     <span
-                      className={`text-chat ${
-                        chat.message === null || chat.message === ''
-                          ? 'text-chat_hidden'
-                          : ''
-                      }`}
+                      className={`text-chat ${chat.message === null || chat.message === ''
+                        ? 'text-chat_hidden'
+                        : ''
+                        }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
                         : null}
                     </span>
-
-                    <img
-                      src={chat.image !== null ? chat.image : null}
-                      alt={chat.image}
-                    />
+                    {chat.image !== null ? (
+                      <img
+                        src={chat.image !== null ? chat.image : null}
+                        alt={chat.image}
+                      />
+                    ) : (
+                      <></>
+                    )}
                     <small>
                       {new Date(chat.created_at).getHours()}:
                       {new Date(chat.created_at).getMinutes()}
@@ -302,16 +354,23 @@ const ListChat = () => {
                   )}
                   <div className="wrap-text_chat2">
                     <span
-                      className={`text-chat ${
-                        chat.message === '' || chat.message === null
-                          ? 'text-chat_hidden'
-                          : ''
-                      }`}
+                      className={`text-chat ${chat.message === '' || chat.message === null
+                        ? 'text-chat_hidden'
+                        : ''
+                        }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
                         : null}
                     </span>
+                    {chat.image !== null ? (
+                      <img
+                        src={chat.image !== null ? chat.image : null}
+                        alt={chat.image}
+                      />
+                    ) : (
+                      <></>
+                    )}
                     <small>
                       {new Date(chat.created_at).getHours()}:
                       {new Date(chat.created_at).getMinutes()}
@@ -328,7 +387,7 @@ const ListChat = () => {
             placeholder="Nhập đoạn chat của bạn"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
           />
           <input
             type="file"
@@ -337,9 +396,9 @@ const ListChat = () => {
             // multiple
             style={{ display: 'none' }}
           />
-          <span className="input-chatIcon">
+          {/* <span className="input-chatIcon">
             <LocationIcon />
-          </span>
+          </span> */}
           <span className="input-chatIcon" onClick={handleImageSelect}>
             <ImageIcon />
           </span>

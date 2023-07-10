@@ -35,7 +35,6 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
   }, [])
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('e.target.value', e.target.value)
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       jobTypeId: Number(e.target.value),

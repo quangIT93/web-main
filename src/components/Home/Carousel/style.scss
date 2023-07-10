@@ -13,12 +13,15 @@
   overflow: hidden;
   height: 100%;
   position: relative;
+  border-radius: 20px;
 }
 .embla__container {
   backface-visibility: hidden;
   display: flex;
   flex-direction: row;
   height: 100%;
+  border-radius: 20px;
+
   //   cursor: grab;
 }
 .embla__slide {
@@ -29,6 +32,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 20px;
 }
 .embla__slide__img {
   display: block;
@@ -37,7 +41,7 @@
   width: 100%;
   border-radius: 20px;
 
-  object-fit: cover;
+  object-fit: contain;
 }
 .embla__slide__number {
   width: 4.6rem;

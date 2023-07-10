@@ -31,7 +31,7 @@ const historyRecruiter = {
       },
     })
   },
-  GetAJobApplication: (post_id: number, application_id: number) => {
+  GetAJobApplication: (post_id: number, application_id: string) => {
     const URL = `/v1/history/recruiter/${post_id}/applications/${application_id}`
     return axiosClient.get(URL, {
       headers: {

@@ -1,11 +1,25 @@
+@import '../../../scss/mixins';
+@import '../../../scss/variable';
+
 .list-chat {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 12px 24px;
+  padding: 0px 24px 12px 24px;
   width: 100%;
   //   overflow: hidden;
   //   height: 400px;
+
+  @media screen and (max-width: 555px) {
+    display: none;
+    height: 75%;
+  }
+
+  @include breakpoint(mobile) {
+    display: none;
+    height: 75%;
+  }
+
   .header-list_chat {
     display: flex;
     align-items: center;
@@ -13,17 +27,42 @@
     border-bottom: 0.8px solid #dcdcdc;
     flex-grow: 0; // Không mở rộng chiều cao
     flex-shrink: 0;
-    .wrap-img_chat {
+
+    .wrap-img_Userchat {
       display: flex;
       align-items: center;
-      padding: 12px;
-      img {
+      padding: 12px 0;
+
+      .wrap_img {
         width: 48px;
         height: 48px;
-        border-radius: 50%;
+        position: relative;
+
+        img {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+        }
+
+        .user-chat_online {
+          position: absolute;
+          right: 0;
+          border-radius: 50%;
+          width: 10px;
+          background-color: #aaaaaa;
+          height: 10px;
+          bottom: 5px;
+          border: 1px solid #ffffff;
+        }
+
+        .user-chat_online.user-chat_onlineTrue {
+          background-color: #34a853;
+        }
       }
+
       .wrap-infoUser_chat {
         margin-left: 12px;
+
         h4 {
           font-weight: 700;
           font-size: 16px;
@@ -44,6 +83,18 @@
         padding: 12px;
       }
     }
+
+    .wrap-icon_close {
+      display: none;
+
+      @media screen and (max-width: 555px) {
+        display: block;
+      }
+
+      @include breakpoint(mobile) {
+        display: block;
+      }
+    }
   }
 
   .list-content_chat {
@@ -61,6 +112,7 @@
     /* Sét cứng cuộn đến phần cuối */
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
+
     .img {
       width: 30px;
       height: 30px;
@@ -86,6 +138,7 @@
         align-items: center;
         margin: 12px;
         width: 100%;
+
         .horizontal-line {
           // border: none;
           border-top: 1px solid #000;
@@ -106,9 +159,11 @@
       .wrap-text_chat {
         align-self: flex-end;
         max-width: 550px;
+        display: flex;
+        flex-direction: column;
+
         .text-chat {
           // order: 1;
-
           background-color: #0d99ff;
           color: #ffffff;
           border-radius: 8px;
@@ -125,6 +180,14 @@
           // align-self: center;
           margin-top: 8px;
           color: #aaaaaa;
+        }
+
+        img {
+          // width: 500px;
+          // height: auto;
+          // object-fit: contain;
+          height: 368px;
+          object-fit: contain;
         }
       }
     }
@@ -147,6 +210,7 @@
         align-items: center;
         margin: 12px;
         width: 100%;
+
         .horizontal-line {
           // border: none;
           border-top: 1px solid #000;
@@ -167,6 +231,7 @@
       .wrap-text_chat2 {
         align-self: flex-start;
         max-width: 550px;
+
         .text-chat {
           background-color: #f3f3f3;
           color: #000000;
@@ -175,6 +240,7 @@
           display: block;
           overflow-wrap: break-word;
         }
+
         .text-chat.text-chat_hidden {
           display: none;
         }
@@ -183,6 +249,14 @@
           // align-self: center;
           margin-top: 8px;
           color: #aaaaaa;
+        }
+
+        img {
+          // width: 500px;
+          // height: auto;
+          // object-fit: contain;
+          height: 368px;
+          object-fit: contain;
         }
       }
     }
@@ -194,6 +268,7 @@
     align-items: center;
 
     width: 100%;
+
     input {
       padding: 12px 110px 12px 12px;
     }
@@ -204,15 +279,15 @@
     }
 
     .input-chatIcon:nth-child(3) {
-      right: 70px;
-    }
-
-    .input-chatIcon:nth-child(4) {
       right: 40px;
     }
 
-    .input-chatIcon:nth-child(5) {
+    .input-chatIcon:nth-child(4) {
       right: 10px;
+    }
+
+    .input-chatIcon:nth-child(5) {
+      right: -20px;
     }
   }
 
@@ -225,9 +300,23 @@
     height: 100%;
     width: auto;
     flex-direction: column;
+
     img {
       height: auto;
       width: auto;
     }
+  }
+}
+
+.show-list-chat-responesive {
+
+  @media screen and (max-width: 555px) {
+    display: block;
+    width: 100%;
+  }
+
+  @include breakpoint(mobile) {
+    display: block;
+    width: 100%;
   }
 }

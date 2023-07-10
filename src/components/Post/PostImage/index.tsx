@@ -39,12 +39,12 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         ? imagesUpload.slice(0, 5 - selectedImages.length)
         : imagesUpload
 
-    console.log(
-      ' imagesUpload.slice(0, 5 - selectedImages.length)',
-      imagesUpload.slice(0, 5 - selectedImages.length)
-    )
-    console.log(' imagesToCheck', imagesToCheck)
-    console.log(' imagesToCheck.length', imagesToCheck.length)
+    // console.log(
+    //   ' imagesUpload.slice(0, 5 - selectedImages.length)',
+    //   imagesUpload.slice(0, 5 - selectedImages.length)
+    // )
+    // console.log(' imagesToCheck', imagesToCheck)
+    // console.log(' imagesToCheck.length', imagesToCheck.length)
     if (imagesToCheck.length > 0) {
       const validateImagesReply = validatePostImages(imagesToCheck)
       if (validateImagesReply.isError) {
@@ -63,10 +63,8 @@ const PostImage: React.FC<PostImageProps> = (props) => {
               )
             })
           )
-
-          console.log('Original image ::: ', imagesUpload)
-          console.log('Compressed image ::: ', compressedImages)
-
+          // console.log('Original image ::: ', imagesUpload)
+          // console.log('Compressed image ::: ', compressedImages)
           setSelectedFiles((prevState) => [
             ...prevState,
             ...compressedImages.map((image: any) => ({

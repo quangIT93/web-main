@@ -25,26 +25,30 @@ export const HomeValueContext = React.createContext<{
   setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>
   setNavTouchCatelory: React.Dispatch<React.SetStateAction<boolean>>
   navTouchCatelory: boolean
+  setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>
+  openNotificate: boolean
 }>({
   childCateloriesArray: [],
-  setChildCateloriesArray: () => { },
+  setChildCateloriesArray: () => {},
   openCollapseFilter: false,
-  setOpenCollapseFilter: () => { },
+  setOpenCollapseFilter: () => {},
   // heightNavbar: 0,
   // setHeightNavbar: () => {},
   openModalLoginNavbar: false,
-  setOpenModalLoginNavbar: () => { },
+  setOpenModalLoginNavbar: () => {},
   valueJobChild: {
     id: 1,
     parentName: 'Tất cả',
   },
-  setValueJobChild: () => { },
+  setValueJobChild: () => {},
   refCatelories: 0,
-  setRefCatelories: () => { },
-  setRefCatelory: () => { },
-  SetRefNav: () => { },
-  setNavTouchCatelory: () => { },
+  setRefCatelories: () => {},
+  setRefCatelory: () => {},
+  SetRefNav: () => {},
+  setNavTouchCatelory: () => {},
   navTouchCatelory: false,
+  setOpenNotificate: () => {},
+  openNotificate: false,
 })
 
 type ParentComponentProps = {
@@ -55,6 +59,8 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
   const [childCateloriesArray, setChildCateloriesArray] = useState<number[]>([])
 
   const [openCollapseFilter, setOpenCollapseFilter] = useState<boolean>(false)
+
+  const [openNotificate, setOpenNotificate] = useState(false)
 
   // const [heightNavbar, setHeightNavbar] = useState<number>(0)
 
@@ -86,13 +92,10 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
           ? (window.scrollY || document.documentElement.scrollTop) + 71
           : (window.scrollY || document.documentElement.scrollTop) + 71 + 116
 
-
       if (currentScrollTop > prevScrollTop) {
-
         setNavTouchCatelory(true)
         // Thực hiện hành động khi croll xuống trước đầu element 2
       } else if (currentScrollTop <= prevScrollTop) {
-
         setNavTouchCatelory(false)
         // Thực hiện hành động khi croll lên trúng đầu element 2
       }
@@ -106,17 +109,9 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
   }, [prevScrollTop, openCollapseFilter])
 
   useEffect(() => {
-    console.log(
-      refCatelory?.current
-        ? refCatelory?.current?.getBoundingClientRect().top
-        : 0
-    )
     setPrevScrollTop(Number(refCatelory?.current?.getBoundingClientRect().top))
   }, [refCatelory])
 
-  console.log('refCatelories', refCatelories)
-  console.log('refNav', refNav?.current?.getBoundingClientRect())
-  console.log('refNav', refNav?.current?.scrollHeight)
   const homeValueContextData = {
     childCateloriesArray,
     setChildCateloriesArray,
@@ -134,6 +129,8 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
     SetRefNav,
     setNavTouchCatelory,
     navTouchCatelory,
+    setOpenNotificate,
+    openNotificate,
   }
 
   return (

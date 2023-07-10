@@ -106,7 +106,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
         5,
         null
       )
-      console.log('load data detailPosted', result)
+
       if (result) {
         setDadaCandidates(result.data)
       }
@@ -132,7 +132,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
   const handleClickPost = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     detailPosted: any
-  ) => { }
+  ) => {}
 
   const handleClickCandidate = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -144,10 +144,9 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
       `/candidate-detail?post-id=${postId}&application_id=${applicationId}`
     )
   }
-  console.log('render detailPosted', dataCandidates)
 
   return (
-    <div className='history-post'>
+    <div className="history-post">
       <Card
         sx={{ background: '#D5EDFF', padding: '12px', margin: '8px 0' }}
         onClick={(e) => handleClickPost(e, detailPosted)}
@@ -225,10 +224,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               >
                 <ClockCircleFilled className="icon-cart-item-post" />
                 <Typography variant="body2" color="text.secondary">
-                  {moment(new Date(detailPosted?.start_time)).format(
-                    'HH:mm'
-                  )}{' '}
-                  -{' '}
+                  {moment(new Date(detailPosted?.start_time)).format('HH:mm')} -{' '}
                   {moment(new Date(detailPosted?.end_time)).format('HH:mm')}
                 </Typography>
               </div>
@@ -250,11 +246,13 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                 <Typography variant="body2" color="text.secondary">
                   {new Intl.NumberFormat('en-US').format(
                     detailPosted?.salary_min
-                  )}{` ${detailPosted?.money_type_text} `}
-                  -{' '}
+                  )}
+                  {` ${detailPosted?.money_type_text} `}-{' '}
                   {new Intl.NumberFormat('en-US').format(
                     detailPosted?.salary_max
-                  ) + ` ${detailPosted?.money_type_text} ` + `/${detailPosted?.salary_type}`}
+                  ) +
+                    ` ${detailPosted?.money_type_text} ` +
+                    `/${detailPosted?.salary_type}`}
                 </Typography>
               </div>
               <div
@@ -364,8 +362,9 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               boxShadow: 'none',
               borderRadius: '5px',
               margin: '8px 0',
-              background: `${candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
-                }`,
+              background: `${
+                candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
+              }`,
             }}
             onClick={(e) =>
               handleClickCandidate(e, candidate.id, detailPosted?.id)
@@ -410,8 +409,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                           right: `${statusCandidate.position}`,
                           width: `${statusCandidate.width}`,
                           height: `${statusCandidate.height}`,
-                          marginLeft: "60px",
-                          fontStyle: "italic  "
+                          marginLeft: '60px',
+                          fontStyle: 'italic  ',
                         }}
                       >
                         {statusCandidate.statusName}
@@ -455,10 +454,11 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
             justifyContent: 'center',
           }}
         >
-          {
-            dataCandidates?.length > 0 ? <Button variant="contained">Xem thêm</Button> : <></>
-          }
-
+          {dataCandidates?.length > 0 ? (
+            <Button variant="contained">Xem thêm</Button>
+          ) : (
+            <></>
+          )}
         </Box>
       </Box>
     </div>

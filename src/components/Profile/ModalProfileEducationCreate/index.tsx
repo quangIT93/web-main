@@ -1,20 +1,21 @@
-import React, { useState } from 'react'
-import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import moment from 'moment'
-import Autocomplete from '@mui/material/Autocomplete'
-import Button from '@mui/material/Button'
+import React, { useState } from 'react';
+import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import moment from 'moment';
+import Autocomplete from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
+import { CloseOutlined } from '@ant-design/icons';
 
 // data
-import profileApi from 'api/profileApi'
-import { useDispatch } from 'react-redux'
+import profileApi from 'api/profileApi';
+import { useDispatch } from 'react-redux';
 import {
   getProfile,
   resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
+} from 'store/reducer/profileReducer/getProfileReducer';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -27,47 +28,47 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+};
 
 const styleChildBox = {
   marginBottom: '12px',
-}
+};
 
 interface IEducation {
-  id: number | null
-  companyName: string
-  major: string
-  startDate: number
-  endDate: number
-  extraInformation: string
+  id: number | null;
+  companyName: string;
+  major: string;
+  startDate: number;
+  endDate: number;
+  extraInformation: string;
 }
 
 interface IModalProfileEducationCreate {
-  openModalEducationCreate: boolean
-  setOpenModalEducationCreate: React.Dispatch<React.SetStateAction<boolean>>
-  typeItem: string
-  educations: IEducation[]
+  openModalEducationCreate: boolean;
+  setOpenModalEducationCreate: React.Dispatch<React.SetStateAction<boolean>>;
+  typeItem: string;
+  educations: IEducation[];
 }
 
 interface IInfoEducation {
-  companyName: string
-  major: string
-  startDate: number
-  endDate: number
-  extraInformation: string
+  companyName: string;
+  major: string;
+  startDate: number;
+  endDate: number;
+  extraInformation: string;
 }
 
 const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
-  props
+  props,
 ) => {
   const {
     openModalEducationCreate,
     setOpenModalEducationCreate,
     typeItem,
     educations,
-  } = props
+  } = props;
   // console.log('typeItem', typeItem)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // const [companyName, setCompanyName] = useState<string>('')
   // const [startDate, setStartDate] = React.useState<any>(
   //   new Date(2023, 4, 30, 0, 0).getTime()
@@ -83,16 +84,16 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
     startDate: new Date(2017, 4, 1, 0, 0).getTime(),
     endDate: new Date(2023, 4, 30, 0, 0).getTime(),
     extraInformation: '',
-  })
+  });
 
-  const handleClose = () => setOpenModalEducationCreate(false)
+  const handleClose = () => setOpenModalEducationCreate(false);
 
   // school
   const handleChangeSchool = (e: any) => {
     setEducation((preValue) => {
-      return { ...preValue, companyName: e.target.value }
-    })
-  }
+      return { ...preValue, companyName: e.target.value };
+    });
+  };
 
   // time
   const handleChangeStartTime = (newValue: any, e: any) => {
@@ -100,58 +101,77 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       return {
         ...preValue,
         startDate: new Date(newValue._d).getTime(),
-      }
-    })
-  }
+      };
+    });
+  };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
     setEducation((preValue) => {
       return {
         ...preValue,
         endDate: new Date(newValue._d).getTime(),
-      }
-    })
-  }
+      };
+    });
+  };
 
   // major
   const handleChangeMajor = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setEducation((preValue) => {
-      return { ...preValue, major: e.target.value }
-    })
-  }
+      return { ...preValue, major: e.target.value };
+    });
+  };
 
   const handleChangeExtraInfo = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setEducation((preValue) => {
-      return { ...preValue, extraInformation: e.target.value }
-    })
-  }
+      return { ...preValue, extraInformation: e.target.value };
+    });
+  };
 
   // submit
 
   const handleSubmit = async () => {
     try {
-      const result = await profileApi.createProfileEducation(education)
+      const result = await profileApi.createProfileEducation(education);
       if (result) {
-        console.log('update thành công', result)
-
-        setOpenModalEducationCreate(false)
+        setOpenModalEducationCreate(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
   return (
     <Modal
       open={openModalEducationCreate}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      onKeyDown={handleKeyDown}
     >
       <Box sx={style}>
+        <div
+          style={{
+            position: 'absolute',
+            right: '20px',
+            top: '20px',
+            cursor: 'pointer',
+            // border: '1px solid',
+            borderRadius: '50%',
+            padding: '1px',
+          }}
+          onClick={handleClose}
+        >
+          <CloseOutlined style={{ fontSize: '30px' }} />
+        </div>
         <Typography
           id="modal-modal-title"
           variant="h6"
@@ -179,7 +199,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Nhập tên trường hoặc tổ chức"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -201,7 +221,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Ngành"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -266,7 +286,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
         </Button>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalProfileEducationCreate
+export default ModalProfileEducationCreate;

@@ -1,8 +1,34 @@
+@import '../../scss/mixins';
+@import '../../scss/variable';
+
 .message-page {
   margin-top: 70px;
+
   .message-page_main {
-    padding: 20px 180px 0 180px;
+    padding: 20px 180px;
     margin: 12px auto;
+
+    @media screen and (min-width:1025px) and (max-width: 1280px) {
+      padding-inline: 24px 24px;
+    }
+
+    @include breakpoint(largeTablet) {
+      padding: 24px 24px;
+    }
+
+
+    @include breakpoint(tablet) {
+      padding: 20px 20px;
+    }
+
+    @include breakpoint(mobile) {
+      padding: 20px 20px;
+      display: none;
+    }
+
+    @media screen and (max-width: 555px) {
+      display: none;
+    }
 
     .header-message {
       display: flex;
@@ -15,18 +41,76 @@
       border-radius: 8px;
       height: 540px;
       margin-top: 12px;
+
       .message-page_left {
         flex: 2;
         height: 100%;
+
+        @include breakpoint(tablet) {
+          width: 50%;
+        }
       }
 
       .message-page_right {
         flex: 4;
         height: 540px;
+
+        @include breakpoint(mobile) {
+          display: none !important;
+        }
+      }
+    }
+  }
+
+  .message-page-main_responsive {
+    display: none;
+    padding: 10px;
+    margin: 12px auto;
+
+    @include breakpoint(mobile) {
+      display: block;
+
+      .wrap-content-message_responsive {
+        display: flex;
+        box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        height: 540px;
+        margin-top: 12px;
+
+        .message-page-left_responsive {
+          height: 100%;
+          width: 100%;
+        }
+
+        .message-page-right_responsive {
+          display: none;
+        }
+      }
+    }
+
+    @media screen and (max-width: 555px) {
+      display: block;
+
+      .wrap-content-message_responsive {
+        display: flex;
+        box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        height: 540px;
+        margin-top: 12px;
+
+        .message-page-left_responsive {
+          height: 100%;
+          width: 100%;
+        }
+
+        .message-page-right_responsive {
+          display: none;
+        }
       }
     }
   }
 }
+
 ::-webkit-scrollbar {
   width: 3px;
 }

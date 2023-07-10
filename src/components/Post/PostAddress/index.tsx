@@ -118,7 +118,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   const handleChangeAddress = (e: any) => {
     setAddress(e.target.value)
   }
-  console.log('render address')
+
   return (
     <div className="post-address">
       <div className="post-address_top">

@@ -1,133 +1,134 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import moment from 'moment'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 
 // @ts-ignore
-import { Navbar } from '#components'
+import { Navbar } from '#components';
+import { CameraIcon } from '#components/Icons';
 
-import './style.scss'
-import { styled } from '@mui/material/styles'
-import Badge from '@mui/material/Badge'
-import Avatar from '@mui/material/Avatar'
-import { Button, Space, Skeleton, Upload, message, Popconfirm } from 'antd'
+import './style.scss';
+import { styled } from '@mui/material/styles';
+import Badge from '@mui/material/Badge';
+import Avatar from '@mui/material/Avatar';
+import { Button, Space, Skeleton, Upload, message, Popconfirm } from 'antd';
 import {
   PlusCircleOutlined,
   UploadOutlined,
   InstagramFilled,
-} from '@ant-design/icons'
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
+} from '@ant-design/icons';
+import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 
-import Snackbar from '@mui/material/Snackbar'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
-import Stack from '@mui/material/Stack'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
-import { RootState } from '../../store/reducer/index'
+import { RootState } from '../../store/reducer/index';
 
-import Footer from '../../components/Footer/index'
-import ItemApply from './components/Item'
+import Footer from '../../components/Footer/index';
+import ItemApply from './components/Item';
 
-import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson'
-import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice'
-import ModalProfileContact from '#components/Profile/ModalProfileContact'
-import ModalProfileEducationCreate from '#components/Profile/ModalProfileEducationCreate'
-import ModalProfileLocation from '#components/Profile/ModalProfileLocation'
-import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate'
-import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperienceCreate'
-import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate'
-import CVItem from '#components/Profile/CV'
+import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson';
+import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice';
+import ModalProfileContact from '#components/Profile/ModalProfileContact';
+import ModalProfileEducationCreate from '#components/Profile/ModalProfileEducationCreate';
+import ModalProfileLocation from '#components/Profile/ModalProfileLocation';
+import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate';
+import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperienceCreate';
+import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
+import CVItem from '#components/Profile/CV';
 
 // import data
 import {
   getProfile,
   resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
-import profileApi from 'api/profileApi'
+} from 'store/reducer/profileReducer/getProfileReducer';
+import profileApi from 'api/profileApi';
 
-import { bindActionCreators } from 'redux'
-import { actionCreators } from '../../store/index'
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../store/index';
 
-import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer'
+import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
-  ref
+  ref,
 ) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
-
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 interface ItemAppy {
-  id?: number | null
-  company_name?: string
-  major?: string
-  start_date?: number
-  end_date?: number
-  extra_information?: string
-  title?: string
+  id?: number | null;
+  company_name?: string;
+  major?: string;
+  start_date?: number;
+  end_date?: number;
+  extra_information?: string;
+  title?: string;
 }
 
 interface ICategories {
-  child_category_id: number
-  parent_category_id: number
-  parent_category: string
-  child_category: string
+  child_category_id: number;
+  parent_category_id: number;
+  parent_category: string;
+  child_category: string;
 }
 const Profile: React.FC = () => {
-  const dispatch = useDispatch()
-  const { setProfileUser } = bindActionCreators(actionCreators, dispatch)
+  const dispatch = useDispatch();
+  const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
   // const [dataProfile, setDataProfile] = useState(null)
 
   // const { profile, error }: any = useSelector(
   //   (state: RootState) => state.profile
   // )
 
-  const profile = useSelector((state: RootState) => state.profileUser)
-
-  const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false)
-  const [openModalContact, setOpenModalContact] = useState(false)
+  const profile = useSelector((state: RootState) => state.profileUser);
+  const profileUser = useSelector((state: RootState) => state.profile.profile);
+  console.log('profileUser', profileUser);
+  const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false);
+  const [openModalContact, setOpenModalContact] = useState(false);
   const [openModalCareerObjective, setOpenModalCareerObjective] =
-    useState(false)
-  const [openModalLocation, setOpenModalLocation] = useState(false)
+    useState(false);
+  const [openModalLocation, setOpenModalLocation] = useState(false);
   const [openModalEducationCreate, setOpenModalEducationCreate] =
-    useState(false)
+    useState(false);
 
   const [openModalExperienceCreate, setOpenModalExperienceCreate] =
-    useState(false)
-  const [imageInfo, setImageInfo] = useState<string>('')
-  const [avatarUrl, setAvatarUrl] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(true)
-  const [uploading, setUploading] = useState(false)
-  const [open, setOpen] = useState(false)
-  const [checkRemove, setCheckRemove] = useState(2)
-  const [fileList, setFileList] = useState<UploadFile[]>([])
+    useState(false);
+  const [imageInfo, setImageInfo] = useState<string>('');
+  const [avatarUrl, setAvatarUrl] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [uploading, setUploading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [checkRemove, setCheckRemove] = useState(2);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const fecthDataProfile = async () => {
     try {
-      const result = await profileApi.getProfile()
+      const result = await profileApi.getProfile();
       if (result) {
-        setProfileUser(result.data)
-        setLoading(false)
+        setProfileUser(result.data);
+        setLoading(false);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   // fecth data
   useEffect(() => {
     // Gọi action để lấy thông tin profile
-    setLoading(true)
-    // dispatch<any>(getProfile())
+    setLoading(true);
+    // dispatch<any>(getProfile());
     //   .unwrap()
     //   .catch((err: any) => {
 
     //   })
-    fecthDataProfile()
-  }, [])
+    fecthDataProfile();
+  }, []);
 
   useEffect(() => {
     // Gọi action để lấy thông tin profile
-    fecthDataProfile()
+    fecthDataProfile();
   }, [
     openModelPersonalInfo,
     openModalContact,
@@ -135,136 +136,141 @@ const Profile: React.FC = () => {
     openModalLocation,
     openModalEducationCreate,
     openModalExperienceCreate,
-  ])
+  ]);
 
   const handleAvatarClick = () => {
     // Khi click vào SmallAvatar, thực hiện hành động tương ứng
-    const fileInput = document.getElementById('avatar-input')
+    const fileInput = document.getElementById('avatar-input');
     if (fileInput) {
-      fileInput.click()
+      fileInput.click();
     }
-  }
+  };
 
   // props upload cv
   const props: UploadProps = {
     onRemove: (file) => {
-      const index = fileList.indexOf(file)
-      const newFileList = fileList.slice()
-      newFileList.splice(index, 1)
-      setFileList(newFileList)
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
 
-      return true
+      return true;
     },
     beforeUpload: (file) => {
-      console.log('file', file)
-      const isPNG = file.type === 'application/pdf'
-      var checFileSize = true
+      console.log('file', file);
+      const isPNG = file.type === 'application/pdf';
+      var checFileSize = true;
       if (!isPNG) {
-        message.error(`${file.name} khong phai la file pdf`)
+        message.error(`${file.name} khong phai la file pdf`);
       } else if (file.size > 1024 * 1024 * 5) {
-        checFileSize = false
-        message.error(`File lon hon 5mb`)
+        checFileSize = false;
+        message.error(`File lon hon 5mb`);
       } else {
-        setFileList([file])
-        return false
+        setFileList([file]);
+        return false;
       }
-      return isPNG || Upload.LIST_IGNORE || checFileSize
+      return isPNG || Upload.LIST_IGNORE || checFileSize;
     },
     maxCount: 1,
     listType: 'picture',
     fileList,
-  }
+  };
 
   // confirm delete cv
   const confirm = async () => {
     try {
-      const result = await profileApi.deleteCV()
+      const result = await profileApi.deleteCV();
       if (result) {
-        const result = await profileApi.getProfile()
+        const result = await profileApi.getProfile();
         if (result) {
-          setProfileUser(result.data)
+          setProfileUser(result.data);
         }
-        setOpen(false)
-        setFileList([])
-        message.success('Xoa CV thanh cong.')
+        setOpen(false);
+        setFileList([]);
+        message.success('Xóa CV thanh cong.');
       }
-    } catch (error) { }
-  }
+    } catch (error) {}
+  };
 
   // cancel delete cv
   const cancel = () => {
-    setOpen(false)
-    message.error('Cancel.')
-  }
+    setOpen(false);
+    message.error('Cancel.');
+  };
 
   // handle upload cv
   const handleUpload = async () => {
-    const formData = new FormData()
-    console.log(fileList)
-    formData.append('pdf', fileList[0] as RcFile)
-    setUploading(true)
-    var mess = ''
-    var result
+    const formData = new FormData();
+    console.log(fileList);
+    formData.append('pdf', fileList[0] as RcFile);
+    setUploading(true);
+    var mess = '';
+    var result;
     try {
       if (profile.cv_url) {
-        result = await profileApi.updateCV(formData)
-        mess = 'Cap nhat CV thanh cong'
+        result = await profileApi.updateCV(formData);
+        mess = 'Cập nhật CV thành công';
       } else {
-        result = await profileApi.createCV(formData)
-        mess = 'Them CV thanh cong'
+        result = await profileApi.createCV(formData);
+        mess = 'Thêm CV thành công';
       }
-      console.log(result)
+      console.log(result);
       if (result) {
-        const result = await profileApi.getProfile()
+        const result = await profileApi.getProfile();
         if (result) {
-          setProfileUser(result.data)
-          setFileList([])
-          setUploading(false)
-          message.success(`${mess}`)
+          setProfileUser(result.data);
+          setFileList([]);
+          setUploading(false);
+          message.success(`${mess}`);
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleImageChange = async (e: any) => {
     // const file = e.target.files[0]
-    const files = Array.from(e.target.files) // Chuyển đổi FileList thành mảng các đối tượng file
+    const files = Array.from(e.target.files); // Chuyển đổi FileList thành mảng các đối tượng file
     if (files) {
-      const imageUrl = await uploadImage(e, files)
+      const imageUrl = await uploadImage(e, files);
+      dispatch(getProfile() as any);
+      // window.location.reload();
+      // if (imageUrl)
       // Cập nhật URL của ảnh mới vào trạng thái của component
-      setAvatarUrl(imageUrl)
+      // setAvatarUrl(imageUrl);
     }
-  }
+  };
 
   // upload avatar
   const uploadImage = async (e: any, files: any) => {
-    const formData = new FormData()
+    const formData = new FormData();
 
     files.forEach((file: File) => {
       if (file instanceof File) {
-        formData.append(`images`, file)
+        formData.append(`images`, file);
       }
-    })
+    });
     try {
-      const response = await profileApi.postAvatar(formData)
+      const response = await profileApi.postAvatar(formData);
       if (response) {
-        dispatch(getProfile() as any)
-        return profile.avatar
+        dispatch(getProfile() as any);
+        return profile.avatar;
       } else {
-        throw new Error('Failed to upload image')
+        throw new Error('Failed to upload image');
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       // Xử lý lỗi tải lên ảnh
     }
-  }
-  // console.log('profile', profile)
+  };
+  console.log('profile', profile.avatar);
 
-  const alert = useSelector((state: any) => state.alertProfile.alert)
-  const handleClose = () => dispatch<any>(setAlert(false))
+  const alert = useSelector((state: any) => state.alertProfile.alert);
+
+  const handleClose = () => dispatch<any>(setAlert(false));
   // console.log('alert', alert)
+
   return (
     <div className="profile">
       <Navbar />
@@ -292,10 +298,26 @@ const Profile: React.FC = () => {
                         onClick={handleAvatarClick} // Xử lý click vào SmallAvatar
                         sx={{ cursor: 'pointer' }}
                       /> */}
-                      <InstagramFilled
+                      {/* <InstagramFilled
                         onClick={handleAvatarClick}
                         style={{ fontSize: 25, color: 'gray' }}
-                      />
+                      /> */}
+                      <div
+                        onClick={handleAvatarClick}
+                        style={{
+                          // fontSize: 25,
+                          color: 'gray',
+                          cursor: 'pointer',
+                          background: '#ffffff',
+                          // border: '1px solid #0d99ff ',
+
+                          borderRadius: '20px',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <CameraIcon />
+                      </div>
 
                       <input
                         id="avatar-input"
@@ -311,12 +333,12 @@ const Profile: React.FC = () => {
                   <Avatar
                     style={{ height: '70px', width: '70px' }}
                     alt="Ảnh lỗi"
-                    src={profile?.avatar ? profile?.avatar : ''}
+                    src={profileUser?.avatar ? profileUser?.avatar : ''}
                   />
                 </Badge>
                 <div style={{ marginLeft: '10px' }}>
                   <h2>{profile?.name ? profile?.name : 'Chưa cập nhật'}</h2>
-                  <div
+                  {/* <div
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
@@ -325,16 +347,16 @@ const Profile: React.FC = () => {
                   >
                     <img src="/images/profile/HiCoin.png" alt="ảnh" />
                     <p style={{ marginLeft: '5px' }}>0</p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
-              <Button
+              {/* <Button
                 type="primary"
                 icon={<PlusCircleOutlined />}
                 style={{ backgroundColor: '#FBBC04' }}
               >
                 HiCoin
-              </Button>
+              </Button> */}
             </div>
             <div
               style={{
@@ -389,7 +411,7 @@ const Profile: React.FC = () => {
                   {profile?.gender
                     ? profile?.gender === 0
                       ? 'Nam'
-                      : 'Nu'
+                      : 'Nữ'
                     : 'Nam'}
                 </p>
                 <p>
@@ -447,7 +469,7 @@ const Profile: React.FC = () => {
             <div
               style={{
                 display: 'flex',
-                flexDirection: 'row',
+                // flexDirection: 'row',
                 justifyContent: 'space-between',
               }}
             >
@@ -473,10 +495,14 @@ const Profile: React.FC = () => {
                 </Button>
               </Upload>
 
-              <Space
-                align="center"
-                style={{ marginLeft: 0 }}
-                direction="vertical"
+              <div
+                // align="center"
+                style={{
+                  marginLeft: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+                // direction="vertical"
               >
                 {profile.cv_url && fileList?.length == 0 ? (
                   <Popconfirm
@@ -512,13 +538,15 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                      }`,
+                    backgroundColor: `${
+                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                    }`,
+                    alignItems: 'flex-start',
                   }}
                 >
                   {uploading ? 'Đang Lưu' : 'Lưu CV'}
                 </Button>
-              </Space>
+              </div>
             </Space>
           </div>
         </Skeleton>
@@ -545,12 +573,12 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                  (item: ICategories, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.child_category}
-                    </Button>
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    ),
                   )
-                )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -577,10 +605,10 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.district}
-                  </Button>
-                ))
+                    <Button key={index} className="btn" type="text">
+                      {item?.district}
+                    </Button>
+                  ))
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -709,7 +737,7 @@ const Profile: React.FC = () => {
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

@@ -1,29 +1,32 @@
-import React from 'react'
+import React from 'react';
 // @ts-ignore
-import moment from 'moment'
-import 'intl'
-import 'intl/locale-data/jsonp/en'
-import NavBar from '../../components/Navbar/index'
-import { AxiosResponse } from 'axios'
-import Footer from '../../components/Footer/index'
+import moment from 'moment';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+import NavBar from '../../components/Navbar/index';
+import { AxiosResponse } from 'axios';
+import Footer from '../../components/Footer/index';
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom'
-import postApi from '../../api/postApi'
-import locationApi from '../../api/locationApi'
-import appplicationApi from 'api/appplication'
-import ItemSuggest from './components/ItemSuggest'
+import { useSearchParams } from 'react-router-dom';
+import postApi from '../../api/postApi';
+// import locationApi from '../../api/locationApi'
+import appplicationApi from 'api/appplication';
+import ItemSuggest from './components/ItemSuggest';
 // @ts-ignore
-import { Carousel } from 'react-carousel-minimal'
-import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd'
+import { Carousel } from 'react-carousel-minimal';
+import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
 //@ts-ignore
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 //@ts-ignore
-import { StatePropsCloseSlider } from 'pages/Home'
+// import { StatePropsCloseSlider } from 'pages/Home'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { actionCreators } from '../../store/index'
-import { RootState } from '../../store/reducer'
+import {
+  // useDispatch,
+  useSelector,
+} from 'react-redux';
+// import { bindActionCreators } from 'redux'
+// import { actionCreators } from '../../store/index'
+import { RootState } from '../../store/reducer';
 
 import {
   EnvironmentOutlined,
@@ -36,67 +39,73 @@ import {
   SlidersOutlined,
   FormOutlined,
   ExclamationCircleFilled,
-} from '@ant-design/icons'
+} from '@ant-design/icons';
 
-import './style.scss'
+import './style.scss';
 
 interface ItemCategories {
-  child_category_id?: Number
-  parent_category?: string
+  child_category_id?: Number;
+  parent_category?: string;
 
-  child_category?: string
-  parent_category_id: Number
+  child_category?: string;
+  parent_category_id: Number;
 }
 
 // state props
 interface PostNewest {
-  id?: Number
-  status?: Number
-  account_id?: string
-  title?: string
-  company_name?: string
-  is_date_period?: number
-  start_date?: number
-  end_date?: number
-  start_time?: number
-  image?: string
+  id?: Number;
+  status?: Number;
+  account_id?: string;
+  title?: string;
+  company_name?: string;
+  is_date_period?: number;
+  start_date?: number;
+  end_date?: number;
+  start_time?: number;
+  image?: string;
 }
-const ACCESS_TOKEN = localStorage.getItem('accessToken')
+const ACCESS_TOKEN = localStorage.getItem('accessToken');
 
 // page view details post
 const Detail: React.FC = () => {
-  const { Search } = Input
+  // const { Search } = Input
   // test redux
-  const userProfile = useSelector((state: RootState) => state.profileUser)
-  const dispatch = useDispatch()
-  const { setPostByTheme, setProvince } = bindActionCreators(
-    actionCreators,
-    dispatch
-  )
+  const userProfile = useSelector((state: RootState) => state.profileUser);
+  // const dispatch = useDispatch()
+  // const { setPostByTheme, setProvince } = bindActionCreators(
+  //   actionCreators,
+  //   dispatch
+  // )
 
-  const componentRef = React.useRef<HTMLDivElement>(null)
-  const componentRefJob = React.useRef<HTMLDivElement>(null)
+  const componentRef = React.useRef<HTMLDivElement>(null);
+  const componentRefJob = React.useRef<HTMLDivElement>(null);
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [width, setWidth] = React.useState<Number>(1050)
-  const [post, setPost] = React.useState<AxiosResponse | null>(null)
-  const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(null)
-  const [automatic, setAutomatic] = React.useState<Boolean>(false)
+  const [width, setWidth] = React.useState<Number>(1050);
+  const [post, setPost] = React.useState<AxiosResponse | null>(null);
+  const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(
+    null,
+  );
+  const [automatic, setAutomatic] = React.useState<Boolean>(false);
 
-  const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển')
+  const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển');
   const [backgroundButton, setBackgroundButton] =
-    React.useState<string>('#0D99FF')
-  const [checkPostUser, setCheckPostUser] = React.useState<Boolean>(false)
-  const [checkApply, setCheckApply] = React.useState<boolean>(false)
+    React.useState<string>('#0D99FF');
+  const [checkPostUser, setCheckPostUser] = React.useState<Boolean>(false);
+  const [checkApply, setCheckApply] = React.useState<boolean>(false);
 
-  const [api, contextHolder] = notification.useNotification()
+  const [api, contextHolder] = notification.useNotification();
 
-  const POST_ID = Number(searchParams.get('post-id'))
+  const POST_ID = Number(searchParams.get('post-id'));
 
   const openNotification = () => {
     api.info({
-      message: <>Ứng tuyển công việc thành công <br /> Bạn muốn chia sẻ công việc ?</>,
+      message: (
+        <>
+          Ứng tuyển công việc thành công <br /> Bạn muốn chia sẻ công việc ?
+        </>
+      ),
       description: (
         <Input
           addonBefore="Link"
@@ -117,8 +126,8 @@ const Detail: React.FC = () => {
       ),
       placement: 'topRight',
       icon: <CheckCircleFilled style={{ color: 'green' }} />,
-    })
-  }
+    });
+  };
 
   // message if user login yet
   const CheckWasLogin = () => {
@@ -127,74 +136,74 @@ const Detail: React.FC = () => {
       description: 'Vui lòng đăng nhập để thực hiện thao tác',
       placement: 'top',
       icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
-    })
-  }
+    });
+  };
 
   // get post by id-post
   const getPostById = async () => {
     try {
-      const accountId = localStorage.getItem('accountId')
+      const accountId = localStorage.getItem('accountId');
 
-      const result = await postApi.getById(POST_ID)
+      const result = await postApi.getById(POST_ID);
       if (result) {
-        console.log('post detail', result)
+        console.log('post detail', result);
       }
-      const list = result?.data.categories.map((category: any) =>
-        Number(category.child_category_id)
-      )
-      console.log('child', list)
+      // const list = result?.data.categories.map((category: any) =>
+      //   Number(category.child_category_id)
+      // )
+      // console.log('child', list)
 
       // check  application status
       if (result.data.account_id === accountId) {
-        setTextButton('Chỉnh sửa bài tuyển dụng')
-        setBackgroundButton('black')
-        setCheckPostUser(true)
-      } else if (result.data.status == 3) {
-        setTextButton('Bài đăng đã đóng')
-        setBackgroundButton('gray')
-        result.data.applied = true
-      } else if (result.data.application_status == 1) {
-        setTextButton('Đã ứng tuyển')
-        setBackgroundButton('gray')
-      } else if (result.data.application_status == 2) {
-        setTextButton('Hồ sơ được phê duyệt')
-        setBackgroundButton('#0D99FF')
-      } else if (result.data.application_status == 3) {
-        setTextButton('Hồ sơ bị từ chối')
-        setBackgroundButton('#BD3131')
-      } else if (result.data.application_status == 4) {
-        setTextButton('Hồ sơ được chấp nhận')
-        setBackgroundButton('#5CB265')
+        setTextButton('Chỉnh sửa bài tuyển dụng');
+        setBackgroundButton('black');
+        setCheckPostUser(true);
+      } else if (result.data.status === 3) {
+        setTextButton('Bài đăng đã đóng');
+        setBackgroundButton('gray');
+        result.data.applied = true;
+      } else if (result.data.application_status === 1) {
+        setTextButton('Đã ứng tuyển');
+        setBackgroundButton('gray');
+      } else if (result.data.application_status === 2) {
+        setTextButton('Hồ sơ được phê duyệt');
+        setBackgroundButton('#0D99FF');
+      } else if (result.data.application_status === 3) {
+        setTextButton('Hồ sơ bị từ chối');
+        setBackgroundButton('#BD3131');
+      } else if (result.data.application_status === 4) {
+        setTextButton('Hồ sơ được chấp nhận');
+        setBackgroundButton('#5CB265');
       }
-      setPost(result)
-      setCheckApply(result.data.applied)
+      setPost(result);
+      setCheckApply(result.data.applied);
 
       // get post related by id post
-      const postNewest = await postApi.getPostRelated(POST_ID)
+      const postNewest = await postApi.getPostRelated(POST_ID);
       //setPost related
-      setPostNewest(postNewest)
+      setPostNewest(postNewest);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
   React.useEffect(() => {
-    getPostById()
-  }, [])
+    getPostById();
+  }, []);
 
   // set size for Breadcrumb
   React.useEffect(() => {
     function handleWindowResize() {
       const w =
         Number(componentRef?.current?.offsetWidth) +
-        Number(componentRefJob?.current?.offsetWidth)
-      setWidth(w)
+        Number(componentRefJob?.current?.offsetWidth);
+      setWidth(w);
     }
 
-    window.addEventListener('resize', handleWindowResize)
+    window.addEventListener('resize', handleWindowResize);
     return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [])
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
 
   const data = [
     {
@@ -215,7 +224,7 @@ const Detail: React.FC = () => {
         'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-8ade830d-f957-4aaa-8fdd-c5035d81d529.jpg',
       status: 1,
     },
-  ]
+  ];
 
   // handle click button
   const onclick = async () => {
@@ -223,51 +232,58 @@ const Detail: React.FC = () => {
 
     try {
       if (!ACCESS_TOKEN) {
-        CheckWasLogin()
-        return
+        CheckWasLogin();
+        return;
       }
       // navigate to edit post
       if (checkPostUser) {
-        window.open(`edit-posted/?postId=${POST_ID}`)
-        return
+        window.open(`edit-posted/?postId=${POST_ID}`);
+        return;
       }
-      if (!userProfile.name || !userProfile.address || !userProfile.birthday || userProfile.gender === null || userProfile.gender === undefined || !userProfile.phone || !userProfile.email) {
-        console.log("user", userProfile)
+      if (
+        !userProfile.name ||
+        !userProfile.address ||
+        !userProfile.birthday ||
+        userProfile.gender === null ||
+        userProfile.gender === undefined ||
+        !userProfile.phone ||
+        !userProfile.email
+      ) {
+        console.log('user', userProfile);
         api.info({
           message: `Cập nhật thông tin`,
-          description: "Vui lòng cập nhật thông tin để ứng tuyển công việc",
+          description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
           placement: 'top',
-          icon: <ExclamationCircleFilled style={{ color: "red" }} />
-        })
-        return
-
+          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+        });
+        return;
       }
 
-      const result = await appplicationApi.applyAplication(POST_ID)
+      const result = await appplicationApi.applyAplication(POST_ID);
 
       if (result) {
-        openNotification()
-        setTextButton('Đã ứng tuyển')
-        setBackgroundButton('gray')
-        setCheckApply(true)
+        openNotification();
+        setTextButton('Đã ứng tuyển');
+        setBackgroundButton('gray');
+        setCheckApply(true);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const captionStyle = {
     fontSize: '2em',
     fontWeight: 'bold',
-  }
+  };
   const slideNumberStyle = {
     fontSize: '15px',
     fontWeight: 'bold',
-  }
+  };
 
   setTimeout(() => {
-    setAutomatic(true)
-  }, 700)
+    setAutomatic(true);
+  }, 700);
   return (
     <>
       {automatic && (
@@ -354,7 +370,7 @@ const Detail: React.FC = () => {
                       <p>Giờ làm việc</p>
                       <h5>
                         {moment(new Date(post?.data.start_time)).format(
-                          'HH:mm'
+                          'HH:mm',
                         )}{' '}
                         -{' '}
                         {moment(new Date(post?.data.end_time)).format('HH:mm')}
@@ -368,7 +384,7 @@ const Detail: React.FC = () => {
                       {' '}
                       <p>Làm việc cuối tuần</p>
                       <h5>
-                        {post?.data.is_working_weekend == 0
+                        {post?.data.is_working_weekend === 0
                           ? 'Không làm việc cuối tuần'
                           : 'Có làm việc cuối tuần'}
                       </h5>
@@ -379,16 +395,16 @@ const Detail: React.FC = () => {
                     <div style={{ marginLeft: '10px' }}>
                       {' '}
                       <p>Mức lương</p>
-                      {post?.data.salary_type_id == 6 ? (
+                      {post?.data.salary_type_id === 6 ? (
                         <h5>{post?.data.salary_type}</h5>
                       ) : (
                         <h5>
                           {new Intl.NumberFormat('en-US').format(
-                            post?.data.salary_min
+                            post?.data.salary_min,
                           ) + ` ${post?.data.money_type_text}`}{' '}
                           -{' '}
                           {new Intl.NumberFormat('en-US').format(
-                            post?.data.salary_max
+                            post?.data.salary_max,
                           ) + ` ${post?.data.money_type_text}`}
                         </h5>
                       )}
@@ -404,7 +420,7 @@ const Detail: React.FC = () => {
                           <h5 key={index}>
                             {item.parent_category}/{item.child_category}
                           </h5>
-                        )
+                        ),
                       )}
                     </div>
                   </div>
@@ -414,7 +430,7 @@ const Detail: React.FC = () => {
                       {' '}
                       <p>Làm việc từ xa</p>
                       <h5>
-                        {post?.data.is_remotely == 0
+                        {post?.data.is_remotely === 0
                           ? 'Không làm việc từ xa'
                           : 'Có làm việc từ xa'}
                       </h5>
@@ -428,7 +444,7 @@ const Detail: React.FC = () => {
                       <h5>
                         {post?.data.expired_date
                           ? moment(new Date(post?.data.expired_date)).format(
-                              'DD/MM/yyyy'
+                              'DD/MM/yyyy',
                             )
                           : 'Không thời hạn'}
                       </h5>
@@ -495,7 +511,7 @@ const Detail: React.FC = () => {
                         describe={item.company_name}
                         postId={item.id}
                       />
-                    )
+                    ),
                   )}
                 </div>
               </div>
@@ -505,7 +521,7 @@ const Detail: React.FC = () => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Detail
+export default Detail;

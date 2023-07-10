@@ -1,30 +1,30 @@
-import React, { useMemo, useCallback, useEffect } from 'react'
+import React, { useMemo, useCallback } from 'react';
 
-import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Link from '@mui/material/Link'
-import NavigateNextIcon from '@mui/icons-material/NavigateNext'
-import { Collapse } from 'antd'
-import { Box, Typography } from '@mui/material'
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { Collapse } from 'antd';
+import { Box, Typography } from '@mui/material';
 
 // import component
-import Footer from '../../components/Footer/index'
-import CardsPosted from '#components/History/CardsPosted'
-import CardsApplied from '#components/History/CardsApplied'
-import CardsSavedJob from '#components/History/CardsSavedJob'
+import Footer from '../../components/Footer/index';
+import CardsPosted from '#components/History/CardsPosted';
+import CardsApplied from '#components/History/CardsApplied';
+import CardsSavedJob from '#components/History/CardsSavedJob';
 
 // import icon
 
-import './style.scss'
+import './style.scss';
 // @ts-ignore
-import { Navbar } from '#components'
-import Item from 'antd/es/list/Item'
+import { Navbar } from '#components';
+// import Item from 'antd/es/list/Item'
 
-const { Panel } = Collapse
+const { Panel } = Collapse;
 const text = `
   A dog is a type of domesticated animal.
   Known for its loyalty and faithfulness,
   it can be found as a welcome guest in many households across the world.
-`
+`;
 
 const dataItem = [
   {
@@ -42,15 +42,16 @@ const dataItem = [
     title: 'Các công việc đã đăng tuyển',
     childs: ['Tất cả', 'Chưa đóng', 'Đã đóng'],
   },
-]
+];
 const HistoryPost = () => {
-  const [activeChild, setActiveChild] = React.useState('0-0')
-  const [ItemLeft, setItemLeft] = React.useState<null | number>(0)
-  const [showDetailPosted, setShowDetailPosted] = React.useState<boolean>(false)
+  const [activeChild, setActiveChild] = React.useState('0-0');
+  const [ItemLeft, setItemLeft] = React.useState<null | number>(0);
+  const [showDetailPosted, setShowDetailPosted] =
+    React.useState<boolean>(false);
 
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     // event.preventDefault()
-    console.info('You clicked a breadcrumb.')
+    console.info('You clicked a breadcrumb.');
   }
 
   const breadcrumbs = [
@@ -98,7 +99,7 @@ const HistoryPost = () => {
         ? 'Đã đóng'
         : ''}
     </Typography>,
-  ]
+  ];
   const CardsPost = useMemo(() => {
     if (ItemLeft === 2) {
       return (
@@ -107,39 +108,38 @@ const HistoryPost = () => {
           setShowDetailPosted={setShowDetailPosted}
           showDetailPosted={showDetailPosted}
         />
-      )
+      );
     }
-    return null
-  }, [ItemLeft, activeChild, showDetailPosted, setShowDetailPosted])
+    return null;
+  }, [ItemLeft, activeChild, showDetailPosted, setShowDetailPosted]);
 
   const CardsApply = useMemo(() => {
     if (ItemLeft === 0) {
-      return <CardsApplied activeChild={activeChild} />
+      return <CardsApplied activeChild={activeChild} />;
     }
-    return null
-  }, [ItemLeft, activeChild])
+    return null;
+  }, [ItemLeft, activeChild]);
 
   const CardsSave = useMemo(() => {
     if (ItemLeft === 1) {
-      return <CardsSavedJob activeChild={activeChild} />
+      return <CardsSavedJob activeChild={activeChild} />;
     }
-    return null
-  }, [ItemLeft, activeChild])
+    return null;
+  }, [ItemLeft, activeChild]);
 
   const handleChildClick = useCallback((childKey: string) => {
-    setActiveChild(childKey)
+    setActiveChild(childKey);
 
-    if (childKey === '2-0') setShowDetailPosted(false)
-    if (childKey === '2-1') setShowDetailPosted(false)
-    if (childKey === '2-2') setShowDetailPosted(false)
-  }, [])
+    if (childKey === '2-0') setShowDetailPosted(false);
+    if (childKey === '2-1') setShowDetailPosted(false);
+    if (childKey === '2-2') setShowDetailPosted(false);
+  }, []);
 
   const handleClickSubTitle = useCallback((index: number) => {
-    setItemLeft(index)
-    setActiveChild(`${index}-0`)
-    setShowDetailPosted(false)
-  }, [])
-  console.log('render history')
+    setItemLeft(index);
+    setActiveChild(`${index}-0`);
+    setShowDetailPosted(false);
+  }, []);
 
   return (
     <div className="post-history">
@@ -203,7 +203,7 @@ const HistoryPost = () => {
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default HistoryPost
+export default HistoryPost;

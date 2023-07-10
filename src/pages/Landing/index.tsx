@@ -1,26 +1,26 @@
 import React from 'react'
 // @ts-ignore
-
+import { Link } from 'react-router-dom'
 import NaviBar from '../Landing/components/navBar'
-import { Navbar } from '../../components'
+// import { Navbar } from '../../components'
 import ItemInfoLeft from '../Landing/components/item/itemInfoLeft'
 import ItemInfoRight from '../Landing/components/item/itemInfoRight'
-import Popup from './popup/index'
-import useModal from './popup/useModal'
+// import Popup from './popup/index'
+// import useModal from './popup/useModal'
 import Footer from '../../components/Footer/index'
 import './style.scss'
 
 const Landing: React.FC = () => {
-  console.log('Home page here')
-  const { isOpen, toggle } = useModal()
-  React.useEffect(() => {
-    // toggle()
-    // if (isOpen) {
-    //   document.body.style.overflow = 'hidden'
-    // } else {
-    //   document.body.style.overflow = 'scroll'
-    // }
-  }, [])
+  // console.log('Home page here')
+  // const { isOpen, toggle } = useModal()
+  // React.useEffect(() => {
+  // toggle()
+  // if (isOpen) {
+  //   document.body.style.overflow = 'hidden'
+  // } else {
+  //   document.body.style.overflow = 'scroll'
+  // }
+  // }, [])
   return (
     <div className="home">
       <NaviBar />
@@ -30,8 +30,6 @@ const Landing: React.FC = () => {
           alignContent: 'center',
           justifyContent: 'space-between',
           display: 'flex',
-
-
         }}
         className="banner"
       >
@@ -48,6 +46,7 @@ const Landing: React.FC = () => {
             className="logo_hi_job"
             style={{}}
             src={require('../../img/langdingPage/logoHiJob-nopadding.png')}
+            alt="Ảnh bị lỗi"
           />
           <div
             style={{ padding: 20, justifyContent: 'space-around' }}
@@ -73,38 +72,52 @@ const Landing: React.FC = () => {
               <img
                 className="img-qrcode"
                 src={require('../../img/langdingPage/QRcode-ggplay.png')}
+                alt="Ảnh bị lỗi"
               />
               <img
                 className="img-qrcode"
                 src={require('../../img/langdingPage/QRcode-appstore.png')}
+                alt="Ảnh bị lỗi"
               />
             </div>
             <div className="div-dow">
-              <a
-                href="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+              <Link
+                to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
                 target="_blank"
               >
-                <img src={require('../../img/langdingPage/image 43.png')} />
-              </a>
+                <img
+                  src={require('../../img/langdingPage/image 43.png')}
+                  alt="Ảnh bị lỗi"
+                />
+              </Link>
 
-              <a
-                href="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+              <Link
+                to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
                 target="_blank"
               >
-                <img src={require('../../img/langdingPage/image 45.png')} />
-              </a>
+                <img
+                  src={require('../../img/langdingPage/image 45.png')}
+                  alt="Ảnh bị lỗi"
+                />
+              </Link>
             </div>
           </div>
         </div>
         <div className="div-banner-right">
-          <img id="img-left" src={require('../../img/langdingPage/Home.png')} />
+          <img
+            id="img-left"
+            src={require('../../img/langdingPage/Home.png')}
+            alt="Ảnh bị lỗi"
+          />
           <img
             id="img-right"
             src={require('../../img/langdingPage/history2.png')}
+            alt="Ảnh bị lỗi"
           />
           <img
             id="img-center"
             src={require('../../img/langdingPage/Job Detail.png')}
+            alt="Ảnh bị lỗi"
           />
         </div>
         <div id="space-banner"></div>

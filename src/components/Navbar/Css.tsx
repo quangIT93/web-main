@@ -147,7 +147,7 @@ export const NavFilter = styled('div')({
   paddingBottom: '12px',
 })
 
-export const ChoosesCarreer = styled('div')(({}) => ({
+export const ChoosesCarreer = styled('div')(({ }) => ({
   border: '1px solid #ccc',
   width: '260px',
   padding: '8px',
@@ -250,6 +250,8 @@ export const collapseCssFilter = {
   },
 
   '@media (max-width: 784px)': {
-    display: 'none',
+    // display: 'flex',
+    // flexDirection: 'column',
+
   },
 }

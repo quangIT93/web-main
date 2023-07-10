@@ -111,7 +111,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
     posted: any
   ) => {
     event.stopPropagation()
-    console.log('click')
+
     setShowDetailPosted(true)
     setDetailPosted(posted)
   }
@@ -122,7 +122,6 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   }
 
 
-  console.log('render cardPostedAll')
   return (
     <>
       {contextHolder}
