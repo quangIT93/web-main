@@ -1,20 +1,24 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react';
 
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom';
 
-import { AudioOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons'
-import { Input, Space } from 'antd'
+import {
+  AudioOutlined,
+  EditOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
+import { Input, Space } from 'antd';
 
-import messageApi from 'api/messageApi'
-import historyRecruiter from 'api/historyRecruiter'
+import messageApi from 'api/messageApi';
+import historyRecruiter from 'api/historyRecruiter';
 
-import { listUser, listMessage, countUnRead } from './data'
-import './style.scss'
-import { ChatContext } from 'context/ChatContextProvider'
+import { listUser, listMessage, countUnRead } from './data';
+import './style.scss';
+import { ChatContext } from 'context/ChatContextProvider';
 
-import { SeenIcon } from '#components/Icons'
+import { SeenIcon } from '#components/Icons';
 
-const { Search } = Input
+const { Search } = Input;
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
@@ -22,10 +26,10 @@ interface IOpenListChat {
 }
 
 const ListUserChat: React.FC<IOpenListChat> = (props) => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [windowWidth, setWindowWidth] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [windowWidth, setWindowWidth] = useState(false);
 
-  const [listUserChat, setStateUserChat] = useState<any>([])
+  const [listUserChat, setStateUserChat] = useState<any>([]);
   const {
     setUserInfoChat,
     setReceivedMessages,
@@ -33,30 +37,30 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     userInfoChat,
     sendMessages,
     receivedMessages,
-  } = useContext(ChatContext)
+  } = useContext(ChatContext);
 
   const getAllUserChat = async () => {
     try {
-      const result = await messageApi.getUserChated()
+      const result = await messageApi.getUserChated();
       // console.log('result', result)
       if (result) {
-        setStateUserChat(result.data)
+        setStateUserChat(result.data);
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    getAllUserChat()
-  }, [sendMessages, receivedMessages])
+    getAllUserChat();
+  }, [sendMessages, receivedMessages]);
 
   const getApplicationByIdAndPost = async () => {
     try {
       const result = await historyRecruiter.GetAJobApplication(
         Number(searchParams.get('post_id')),
-        searchParams.get('application_id') ?? ''
-      )
+        searchParams.get('application_id') ?? '',
+      );
 
       if (result.data) {
         setUserInfoChat({
@@ -64,32 +68,32 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           name: result.data.applicationProfile.name,
           avatar: result.data.applicationProfile.avatar,
           isOnline: null,
-        })
+        });
       }
     } catch (error) {
-      console.log('error', error)
+      console.error('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    getApplicationByIdAndPost()
-  }, [searchParams.get('post_id'), searchParams.get('user_id')])
+    getApplicationByIdAndPost();
+  }, [searchParams.get('post_id'), searchParams.get('user_id')]);
 
   const updateWindowWidth = () => {
     if (window.innerWidth <= 555) {
-      setWindowWidth(true)
+      setWindowWidth(true);
     } else {
-      setWindowWidth(false)
+      setWindowWidth(false);
     }
-  }
+  };
 
   useEffect(() => {
     updateWindowWidth();
-  }, [windowWidth])
+  }, [windowWidth]);
 
   const handleClickUserInfo = (user: any) => {
-    setSearchParams({ post_id: user.post_id, user_id: user.user_id })
-    getAllUserChat()
+    setSearchParams({ post_id: user.post_id, user_id: user.user_id });
+    getAllUserChat();
     setReceivedMessages([
       {
         receiverId: userInfoChat.user_id,
@@ -98,7 +102,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         type: '',
         postId: Number(searchParams.get('post_id')),
       },
-    ])
+    ]);
     setSendMessages([
       {
         receiverId: userInfoChat.user_id,
@@ -107,16 +111,16 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         type: '',
         postId: Number(searchParams.get('post_id')),
       },
-    ])
+    ]);
 
     windowWidth && props.setOpenListChat(true);
 
     if (props.openListChat === true && windowWidth) {
       props.setOpenListChat(true);
-      let listChatElement = document.querySelector(".list_userChat");
-      listChatElement?.classList.add(".hide-list-userChat")
+      let listChatElement = document.querySelector('.list_userChat');
+      listChatElement?.classList.add('.hide-list-userChat');
     }
-  }
+  };
 
   useEffect(() => {
     listUserChat.map((userChat: any) => {
@@ -126,21 +130,22 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           name: userChat.name,
           avatar: userChat.avatar,
           isOnline: null,
-        })
+        });
       }
-      return null
-    })
-  }, [searchParams.get('user_id'), listUserChat])
+      return null;
+    });
+  }, [searchParams.get('user_id'), listUserChat]);
 
   // console.log('tin nhan duoc nhan', receivedMessages)
   // console.log('tin nhan da gui', sendMessages)
-  const onSearch = (value: string) => console.log(value)
+  const onSearch = (value: string) => console.log(value);
   return (
     <>
       <div
         // className="list_userChat"
-        className={`list_userChat ${props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
-          }`}
+        className={`list_userChat ${
+          props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
+        }`}
       >
         <div className="header-list_userChat">
           <h4 className="title-header_listUserChat">Tin nhắn</h4>
@@ -160,16 +165,18 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         <div className="list-infoUser">
           {listUserChat.map((user: any, index: number) => (
             <div
-              className={`wrap-userInfo ${userInfoChat.user_id === user.user_id ? 'readed-message' : ''
-                } `}
+              className={`wrap-userInfo ${
+                userInfoChat.user_id === user.user_id ? 'readed-message' : ''
+              } `}
               key={index}
               onClick={() => handleClickUserInfo(user)}
             >
               <div className="wrap-avatar_userChat">
                 <img src={user.avatar} alt="" />
                 <span
-                  className={`user-online ${user.is_online ? 'user-online_true' : ''
-                    }`}
+                  className={`user-online ${
+                    user.is_online ? 'user-online_true' : ''
+                  }`}
                 ></span>
               </div>
               <div className="info-user_chat">
@@ -192,7 +199,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ListUserChat
+export default ListUserChat;

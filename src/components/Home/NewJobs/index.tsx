@@ -20,6 +20,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
+// import compornent
+import ShowNotificativeSave from '../ShowNotificativeSave';
+import ShowCancleSave from '../ShowCancleSave';
 // import api
 import postApi from 'api/postApi';
 import bookMarkApi from 'api/bookMarkApi';
@@ -85,6 +88,8 @@ const NewJobs: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const [showNofySave, setShowNofySave] = React.useState(false);
 
   const navigate = useNavigate();
 
@@ -203,10 +208,17 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-          //  onClick={handleClose}
+            //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
+
+          <ShowNotificativeSave
+          // setShowNofySave={setShowNofySave}
+          // showNofySave={showNofySave}
+          />
+
+          <ShowCancleSave />
         </Box>
         // )
       }

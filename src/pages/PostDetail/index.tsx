@@ -70,7 +70,8 @@ const ACCESS_TOKEN = localStorage.getItem('accessToken');
 const Detail: React.FC = () => {
   // const { Search } = Input
   // test redux
-  const userProfile = useSelector((state: RootState) => state.profileUser);
+  // const userProfile = useSelector((state: RootState) => state.profileUser);
+  const userProfile = useSelector((state: RootState) => state.profile.profile);
   // const dispatch = useDispatch()
   // const { setPostByTheme, setProvince } = bindActionCreators(
   //   actionCreators,
@@ -186,6 +187,7 @@ const Detail: React.FC = () => {
       console.error(error);
     }
   };
+
   React.useEffect(() => {
     getPostById();
   }, []);
@@ -226,10 +228,17 @@ const Detail: React.FC = () => {
     },
   ];
 
+  // React.useEffect(() => {
+
+  // }, [])
+
   // handle click button
   const onclick = async () => {
     //  window.open(`${post?.data.share_link}`)
-
+    console.log('accessToken', ACCESS_TOKEN);
+    console.log('POST_ID', POST_ID);
+    console.log('checkPostUser', checkPostUser);
+    console.log('userProfile', userProfile);
     try {
       if (!ACCESS_TOKEN) {
         CheckWasLogin();
@@ -260,15 +269,30 @@ const Detail: React.FC = () => {
       }
 
       const result = await appplicationApi.applyAplication(POST_ID);
-
+      console.log('result', result);
       if (result) {
         openNotification();
         setTextButton('Đã ứng tuyển');
         setBackgroundButton('gray');
         setCheckApply(true);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      console.log('error', error.code);
+      console.log('error', error.status);
+      if (error.response.status === 400) {
+        api.info({
+          message: `Ứng tuyển không thành công!`,
+          description: 'Bạn đã ứng tuyển vị trí này',
+          placement: 'top',
+          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+        });
+        setTextButton('Đã ứng tuyển');
+        setBackgroundButton('gray');
+        setCheckApply(true);
+        openNotification();
+        return;
+      }
     }
   };
 
