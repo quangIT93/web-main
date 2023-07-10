@@ -3,6 +3,16 @@
 .div-card-post-left {
     width: 80%;
 
+    .div-card-post-left_info {
+        padding: 0;
+        margin-left: 12px;
+        display: flex;
+        flex-direction: column;
+        height: 120px;
+        justify-content: space-between;
+
+    }
+
     .MuiTypography-h6 {
         @include breakpoint(mobile) {
             font-size: 12px;
@@ -67,6 +77,7 @@
 
 .div-card-post-right {
     width: 100px;
+    align-items: flex-end;
 
     @include breakpoint(mobile) {
         width: 30%;

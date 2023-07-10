@@ -6,19 +6,32 @@
   margin: 0 !important;
   width: 30%;
 }
-.ant-space-item {
-  .MuiPickersLayout-actionBar {
-    display: none !important;
-  }
-  .MuiTypography-overline {
-    display: none;
-  }
-  .icon-time {
-    @include breakpoint(mobile) {
+
+.wrap-time_left {
+
+  .ant-space-item {
+    min-width: 30%;
+  
+    .MuiFormControl-root {
+      width: 100%;
+    }
+    .MuiPickersLayout-actionBar {
+      display: none !important;
+    }
+    .MuiTypography-overline {
       display: none;
     }
-    @include breakpoint(tablet) {
-      display: none;
+    .icon-time {
+      @include breakpoint(mobile) {
+        display: none;
+      }
+      @include breakpoint(tablet) {
+        display: none;
+      }
+    }
+  
+    input {
+      padding: 12px;
     }
   }
 }

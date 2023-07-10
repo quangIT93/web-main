@@ -1,74 +1,155 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 // import ReactHtmlParser from 'react-html-parser'
 
-import { Space, Tooltip, Input, Switch } from 'antd'
+import { Space, Tooltip, Input, Switch } from 'antd';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { styled, lighten, darken } from '@mui/system';
+// import {
+//   FormControl,
+//   InputLabel,
+//   Select,
+//   MenuItem,
+//   Checkbox,
+//   ListItemText,
+//   OutlinedInput,
+//   NativeSelect,
+//   ListSubheader,
+//   TextField,
+//   Accordion,
+//   AccordionSummary,
+//   AccordionDetails,
+//   Typography,
+//   Autocomplete,
+//   Box,
+//   Chip,
+//   ListItemButton,
+//   Collapse,
+//   RadioGroup,
+//   Radio,
+//   FormControlLabel,
+// } from '@mui/material';
+
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 // import Api
-import notificationApi from 'api/notification'
-import notificationKeywordApi from 'api/notificationKeyword'
+import notificationApi from 'api/notification';
+import notificationKeywordApi from 'api/notificationKeyword';
+import locationApi from '../../../api/locationApi';
 
-import { LocationIcon, CateIcon, CreateKeywordIcon } from '#components/Icons'
+import { LocationIcon, CateIcon, CreateKeywordIcon } from '#components/Icons';
 
-import './style.scss'
+import './style.scss';
 // import fake data notificates
-import { notificates } from './data'
-const Notificate = () => {
-  const [dataNotification, setDataNotification] = useState<any>([])
-  const [dataNotificationKeyword, setDataNotificationkeyword] = useState<any>(
-    []
-  )
-  const [activeSystem, setActiveSystem] = useState(true)
-  const [activeKeyword, setActiveKeyword] = useState(false)
+import { notificates } from './data';
 
-  const [input, setInput] = useState(true)
+import { HomeValueContext } from 'context/HomeValueContextProvider';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const Notificate = () => {
+  const {
+    setOpenNotificate,
+    openNotificate,
+  }: {
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+  } = React.useContext(HomeValueContext);
+  const [dataNotification, setDataNotification] = useState<any>([]);
+  const [dataNotificationKeyword, setDataNotificationkeyword] = useState<any>(
+    [],
+  );
+
+  const [activeSystem, setActiveSystem] = useState(true);
+  const [activeKeyword, setActiveKeyword] = useState(false);
+
+  const [input, setInput] = useState(true);
+
+  const refNotification = React.useRef<HTMLDivElement | null>(null);
 
   // const inputRef = useRef<InputRef>(null);
-  const sharedProps = {
-    style: { width: '100%' },
-    defaultValue: 'Ant Design love you!',
-    // ref: inputRef,
-  }
 
   const handleClickActiveSystem = () => {
-    setActiveSystem(true)
-    if (activeKeyword === true) setActiveKeyword(false)
-  }
+    setActiveSystem(true);
+    if (activeKeyword === true) setActiveKeyword(false);
+  };
 
   const handleClickActiveKeyword = () => {
-    setActiveKeyword(true)
-    if (activeSystem === true) setActiveSystem(false)
-  }
+    setActiveKeyword(true);
+    if (activeSystem === true) setActiveSystem(false);
+  };
   const getApiNotificate = async () => {
     try {
-      const result = await notificationApi.getNotificationV2()
+      const result = await notificationApi.getNotificationV2();
       if (result) {
-        setDataNotification(result.data)
+        setDataNotification(result.data);
       }
     } catch (error) {}
-  }
+  };
 
   useEffect(() => {
-    getApiNotificate()
-  }, [])
+    getApiNotificate();
+  }, []);
 
   const getApiNotificateKeyword = async () => {
     try {
-      const result = await notificationKeywordApi.getNotificationKeyword()
+      const result = await notificationKeywordApi.getNotificationKeyword();
       if (result) {
-        setDataNotificationkeyword(result.data)
+        setDataNotificationkeyword(result.data);
       }
     } catch (error) {}
-  }
+  };
 
   useEffect(() => {
-    getApiNotificateKeyword()
-  }, [])
+    getApiNotificateKeyword();
+  }, [input]);
 
-  console.log('dataNotification', dataNotification)
-  console.log('dataNotificationKeyword', dataNotificationKeyword)
+  const handleChangeStatusKeyword = async (id: number, status: number) => {
+    try {
+      const result = await notificationKeywordApi.putStatusNotification(
+        id,
+        status === 1 ? 0 : 1,
+      );
+      if (result) {
+        setInput(!input);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+  console.log('dataa', dataNotificationKeyword);
 
-  //   console.log('noti', notificationApi)
+  React.useEffect(() => {
+    const handleCLoseNotificate = (event: any) => {
+      event.stopPropagation();
+      if (
+        openNotificate &&
+        !event.target.closest('.notification') &&
+        !event.target.closest('.btn-notice')
+      ) {
+        setOpenNotificate(false);
+      }
+    };
+
+    document.addEventListener('click', handleCLoseNotificate);
+
+    return () => {
+      document.removeEventListener('click', handleCLoseNotificate);
+    };
+  }, []);
+
   return (
-    <div className="notification">
+    <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
           className={`top-notificate_system ${
@@ -133,8 +214,8 @@ const Notificate = () => {
                           <p>
                             {notificate.data.category.map(
                               (cate: any, index: number) => {
-                                return `${cate.child_category}${' '}`
-                              }
+                                return `${cate.child_category}${' '}`;
+                              },
                             )}
                           </p>
                         </li>
@@ -143,7 +224,7 @@ const Notificate = () => {
                         <div className="wrap-time">
                           <p>
                             {new Date(
-                              notificate.data.createdAt
+                              notificate.data.createdAt,
                             ).toLocaleTimeString([], {
                               hour: '2-digit',
                               minute: '2-digit',
@@ -151,7 +232,7 @@ const Notificate = () => {
                           </p>
                           <p>
                             {new Date(
-                              notificate.data.createdAt
+                              notificate.data.createdAt,
                             ).toLocaleDateString()}
                           </p>
                         </div>
@@ -159,19 +240,11 @@ const Notificate = () => {
                       </div>
                     </div>
                   </div>
-                )
+                );
               } else {
                 return (
                   <div key={index} className="wrap-notificate_system">
                     <h3>{notificate.content_app.title}</h3>
-                    {/* <div
-                      dangerouslySetInnerHTML={{
-                        __html: notificate.content.body,
-                      }}
-  
-                      
-                    /> */}
-
                     <h5
                       dangerouslySetInnerHTML={{
                         __html: notificate.content_app.body,
@@ -184,39 +257,23 @@ const Notificate = () => {
                           {
                             hour: '2-digit',
                             minute: '2-digit',
-                          }
+                          },
                         )}
                       </p>
                       <p>
                         {new Date(
-                          notificate.data.createdAt
+                          notificate.data.createdAt,
                         ).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
-                )
+                );
               }
-            }
-
-            // (
-            //   <div key={index}>
-            //     <div className="wrap-img">
-            //       <img src="" alt="" />
-            //     </div>
-            //     <div className="content-notificate">
-            //       <h3>{notificate.name}</h3>
-            //       <h5>{notificate.company_name}</h5>
-            //       <ul>
-            //         <li></li>
-            //         <li></li>
-            //       </ul>
-            //     </div>
-            //   </div>
-            // )
+            },
           )
         ) : (
           <div className="wrap-keyword">
-            <p>
+            {/* <p>
               Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh
               chóng qua:
             </p>
@@ -229,66 +286,81 @@ const Notificate = () => {
                 <input type="checkbox" name="app" id="app" value="app" />
                 <label htmlFor="app">APP</label>
               </div>
-            </div>
+            </div> */}
             <div className="count-keyword">
               <p>
-                Bạn đã lưu trữ được: <strong>3/10 </strong>
+                Bạn đã lưu trữ được:
+                <strong>{` ${dataNotificationKeyword?.keywords?.length}/10 `}</strong>
                 gợi ý công việc
               </p>
             </div>
 
             {dataNotificationKeyword ? (
-              dataNotificationKeyword.keywords.map((dataKeyword: any) => (
-                <div className="wrap-content_keyword">
-                  <div className="content_keyword">
-                    <h3>{dataKeyword.keyword}</h3>
-                    <ul>
-                      <li>
-                        <LocationIcon />
-                        <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p>
-                      </li>
-                      <li>
-                        <CateIcon />
-                        <p>{`${dataKeyword.category.name}`}</p>
-                      </li>
-                    </ul>
-                    <div className="wrap-time_keyword">
-                      <p>
-                        {new Date(dataKeyword.created_at).toLocaleTimeString(
-                          [],
-                          {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          }
-                        )}
-                      </p>
+              dataNotificationKeyword?.keywords?.map(
+                (dataKeyword: any, index: number) => (
+                  <div className="wrap-content_keyword" key={index}>
+                    <div className="content_keyword">
+                      <h3>{dataKeyword.keyword}</h3>
+                      <ul>
+                        <li>
+                          <LocationIcon />
+                          <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p>
+                        </li>
+                        <li>
+                          <CateIcon />
+                          <p>{`${dataKeyword.category.name}`}</p>
+                        </li>
+                      </ul>
+                      <div className="wrap-time_keyword">
+                        <p>
+                          {new Date(dataKeyword.created_at).toLocaleTimeString(
+                            [],
+                            {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            },
+                          )}
+                        </p>
 
-                      <p>
-                        {new Date(dataKeyword.created_at).toLocaleDateString()}
-                      </p>
+                        <p>
+                          {new Date(
+                            dataKeyword.created_at,
+                          ).toLocaleDateString()}
+                        </p>
+                      </div>
                     </div>
+                    <Switch
+                      checked={dataKeyword.status === 1 ? true : false}
+                      checkedChildren=""
+                      unCheckedChildren=""
+                      onChange={() =>
+                        handleChangeStatusKeyword(
+                          dataKeyword.id,
+                          dataKeyword.status,
+                        )
+                      }
+                    />
                   </div>
-                  <Switch
-                    checked={input}
-                    checkedChildren=""
-                    unCheckedChildren=""
-                    onChange={() => {
-                      setInput(!input)
-                    }}
-                  />
-                </div>
-              ))
+                ),
+              )
             ) : (
               <></>
             )}
           </div>
         )}
       </div>
-      <div className="create-keyword">
-        <CreateKeywordIcon />
-      </div>
+      {/* {activeKeyword ? (
+        <div
+          className="create-keyword"
+          onClick={() => setShowCreateNotification(!showCreateNotification)}
+        >
+          <CreateKeywordIcon />
+        </div>
+      ) : (
+        <></>
+      )} */}
     </div>
-  )
-}
+  );
+};
 
-export default Notificate
+export default React.memo(Notificate);

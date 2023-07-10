@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 interface SizeProps {
-  width: number
-  height: number
+  width: number;
+  height: number;
 }
 
 export const AvatarIcon: React.FC = () => {
@@ -27,8 +27,8 @@ export const AvatarIcon: React.FC = () => {
         fill="white"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const EmailIcon: React.FC<SizeProps> = ({ width = 24, height = 24 }) => {
   return (
@@ -48,8 +48,8 @@ export const EmailIcon: React.FC<SizeProps> = ({ width = 24, height = 24 }) => {
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const PhoneIcon: React.FC<SizeProps> = ({ width = 24, height = 24 }) => {
   return (
@@ -67,8 +67,8 @@ export const PhoneIcon: React.FC<SizeProps> = ({ width = 24, height = 24 }) => {
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const ArrowrightIcon: React.FC<SizeProps> = ({
   width = 7,
@@ -87,8 +87,8 @@ export const ArrowrightIcon: React.FC<SizeProps> = ({
         fill="#001424"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const EditIcon: React.FC<SizeProps> = ({ width = 21, height = 20 }) => {
   return (
@@ -110,8 +110,8 @@ export const EditIcon: React.FC<SizeProps> = ({ width = 21, height = 20 }) => {
         fill="white"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const ArrowdownIcon: React.FC = () => {
   return (
@@ -130,8 +130,8 @@ export const ArrowdownIcon: React.FC = () => {
         strokeLinejoin="round"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const ChatIcon: React.FC<SizeProps> = ({ width = 19, height = 18 }) => {
   return (
@@ -171,8 +171,8 @@ export const ChatIcon: React.FC<SizeProps> = ({ width = 19, height = 18 }) => {
         strokeWidth="0.5"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const SearchIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -197,8 +197,8 @@ export const SearchIcon: React.FC<SizeProps> = ({
         fill="white"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const BellIcon: React.FC<SizeProps> = ({ width = 18, height = 18 }) => {
   return (
@@ -220,8 +220,8 @@ export const BellIcon: React.FC<SizeProps> = ({ width = 18, height = 18 }) => {
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const AllIcon: React.FC<SizeProps> = ({ width = 40, height = 40 }) => {
   return (
@@ -252,8 +252,8 @@ export const AllIcon: React.FC<SizeProps> = ({ width = 40, height = 40 }) => {
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const ServiceIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -286,8 +286,8 @@ export const ServiceIcon: React.FC<SizeProps> = ({
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const BeautifyIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -320,8 +320,8 @@ export const BeautifyIcon: React.FC<SizeProps> = ({
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const DeliveryIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -354,8 +354,8 @@ export const DeliveryIcon: React.FC<SizeProps> = ({
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const HotelIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
   return (
@@ -385,26 +385,26 @@ export const HotelIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const EditorIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const TutorIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const TranslationIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const CleaningIcon: React.FC<SizeProps> = ({
   width = 16,
@@ -439,66 +439,66 @@ export const CleaningIcon: React.FC<SizeProps> = ({
         fill-opacity="0.6"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const DesignIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const ProgrammerIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const CinematographyIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const EventIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const CarePetIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const SportIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const LawIcon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const ConsultantIcon: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const Handicraft: React.FC<SizeProps> = ({
   width = 16,
   height = 16,
 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const MaidJob: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
-  return <></>
-}
+  return <></>;
+};
 
 export const DotIcon: React.FC = () => {
   return (
@@ -536,8 +536,8 @@ export const DotIcon: React.FC = () => {
         </clipPath>
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const VideoIcon: React.FC = () => {
   return (
@@ -570,8 +570,8 @@ export const VideoIcon: React.FC = () => {
         </clipPath>
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const CallIcon: React.FC = () => {
   return (
@@ -589,14 +589,14 @@ export const CallIcon: React.FC = () => {
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const LocationIcon: React.FC = () => {
   return (
     <svg
-      width="16"
-      height="16"
+      width="20"
+      height="20"
       viewBox="0 0 33 33"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -627,8 +627,8 @@ export const LocationIcon: React.FC = () => {
         />
       </g>
     </svg>
-  )
-}
+  );
+};
 
 export const ImageIcon: React.FC = () => {
   return (
@@ -646,8 +646,8 @@ export const ImageIcon: React.FC = () => {
         fill="#575757"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const SendIcon: React.FC = () => {
   return (
@@ -663,8 +663,8 @@ export const SendIcon: React.FC = () => {
         fill="#0D99FF"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const SeenIcon: React.FC = () => {
   return (
@@ -697,8 +697,8 @@ export const SeenIcon: React.FC = () => {
         </clipPath>
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const CateIcon: React.FC = () => {
   return (
@@ -714,79 +714,161 @@ export const CateIcon: React.FC = () => {
         stroke="#575757"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const CreateKeywordIcon: React.FC = () => {
   return (
     <svg
-      width="75"
-      height="75"
-      viewBox="0 0 75 75"
+      width="40"
+      height="40"
+      viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g filter="url(#filter0_dd_9121_185867)">
-        <circle cx="36.5" cy="36.5" r="22.5" fill="#252525" />
-      </g>
+      <circle cx="30" cy="30" r="30" fill="#252525" />
       <path
-        d="M48.75 37C48.75 37.1989 48.671 37.3897 48.5303 37.5303C48.3897 37.671 48.1989 37.75 48 37.75H37.75V48C37.75 48.1989 37.671 48.3897 37.5303 48.5303C37.3897 48.671 37.1989 48.75 37 48.75C36.8011 48.75 36.6103 48.671 36.4697 48.5303C36.329 48.3897 36.25 48.1989 36.25 48V37.75H26C25.8011 37.75 25.6103 37.671 25.4697 37.5303C25.329 37.3897 25.25 37.1989 25.25 37C25.25 36.8011 25.329 36.6103 25.4697 36.4697C25.6103 36.329 25.8011 36.25 26 36.25H36.25V26C36.25 25.8011 36.329 25.6103 36.4697 25.4697C36.6103 25.329 36.8011 25.25 37 25.25C37.1989 25.25 37.3897 25.329 37.5303 25.4697C37.671 25.6103 37.75 25.8011 37.75 26V36.25H48C48.1989 36.25 48.3897 36.329 48.5303 36.4697C48.671 36.6103 48.75 36.8011 48.75 37Z"
+        d="M46.5234 30C46.5234 30.2797 46.4123 30.548 46.2145 30.7458C46.0167 30.9436 45.7485 31.0547 45.4687 31.0547H31.0547V45.4687C31.0547 45.7485 30.9436 46.0167 30.7458 46.2145C30.548 46.4123 30.2797 46.5234 30 46.5234C29.7203 46.5234 29.452 46.4123 29.2542 46.2145C29.0564 46.0167 28.9453 45.7485 28.9453 45.4687V31.0547H14.5312C14.2515 31.0547 13.9833 30.9436 13.7855 30.7458C13.5877 30.548 13.4766 30.2797 13.4766 30C13.4766 29.7203 13.5877 29.452 13.7855 29.2542C13.9833 29.0564 14.2515 28.9453 14.5312 28.9453H28.9453V14.5312C28.9453 14.2515 29.0564 13.9833 29.2542 13.7855C29.452 13.5877 29.7203 13.4766 30 13.4766C30.2797 13.4766 30.548 13.5877 30.7458 13.7855C30.9436 13.9833 31.0547 14.2515 31.0547 14.5312V28.9453H45.4687C45.7485 28.9453 46.0167 29.0564 46.2145 29.2542C46.4123 29.452 46.5234 29.7203 46.5234 30Z"
         fill="white"
       />
+    </svg>
+  );
+};
+
+export const CreateKeywordIconSmall: React.FC = () => {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 13 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="6.5" cy="6.5" r="6" stroke="#0D99FF" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9.75 6.59025H3.25V6.34951H9.75V6.59025Z"
+        fill="#0D99FF"
+        stroke="#0D99FF"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M6.50047 9.75L6.50047 3.25L6.74121 3.25L6.74121 9.75L6.50047 9.75Z"
+        fill="#0D99FF"
+        stroke="#0D99FF"
+      />
+    </svg>
+  );
+};
+
+export const LocationHomeIcon: React.FC = () => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M6.125 1C8.3995 1 10.25 2.8645 10.25 5.1565C10.25 7.974 7.022 10.75 6.125 10.75C5.228 10.75 2 7.974 2 5.1565C2 2.8645 3.8505 1 6.125 1ZM6.125 1.75C4.264 1.75 2.75 3.2785 2.75 5.1565C2.75 7.546 5.562 9.874 6.125 9.998C6.688 9.8735 9.5 7.5455 9.5 5.1565C9.5 3.2785 7.986 1.75 6.125 1.75ZM6.1255 3.5C7.0215 3.5 7.7505 4.229 7.7505 5.1255C7.7505 6.0215 7.0215 6.75 6.1255 6.75C5.2295 6.75 4.5005 6.0215 4.5005 5.1255C4.5005 4.229 5.2295 3.5 6.1255 3.5ZM6.1255 4.25C5.643 4.25 5.2505 4.6425 5.2505 5.1255C5.2505 5.608 5.643 6 6.1255 6C6.608 6 7.0005 5.608 7.0005 5.1255C7.0005 4.6425 6.608 4.25 6.1255 4.25Z"
+        fill="#575757"
+      />
+    </svg>
+  );
+};
+
+export const DolaIcon: React.FC = () => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6 1V11"
+        stroke="#575757"
+        strokeWidth="0.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.5 2.5H4.75C4.28587 2.5 3.84075 2.68437 3.51256 3.01256C3.18437 3.34075 3 3.78587 3 4.25C3 4.71413 3.18437 5.15925 3.51256 5.48744C3.84075 5.81563 4.28587 6 4.75 6H7.25C7.71413 6 8.15925 6.18437 8.48744 6.51256C8.81563 6.84075 9 7.28587 9 7.75C9 8.21413 8.81563 8.65925 8.48744 8.98744C8.15925 9.31563 7.71413 9.5 7.25 9.5H3"
+        stroke="#575757"
+        strokeWidth="0.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const CameraIcon: React.FC = () => {
+  return (
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M6.27368 4.59231H17.7263C18.8588 4.58951 19.9459 5.03743 20.7476 5.83723C21.5494 6.63703 22 7.72298 22 8.85547V16.1186C22 17.2511 21.5494 18.3371 20.7476 19.1369C19.9459 19.9367 18.8588 20.3846 17.7263 20.3818H6.27368C5.1412 20.3846 4.05414 19.9367 3.25237 19.1369C2.45059 18.3371 2 17.2511 2 16.1186V8.85547C2 7.72298 2.45059 6.63703 3.25237 5.83723C4.05414 5.03743 5.1412 4.58951 6.27368 4.59231ZM17.7263 18.8028C19.1903 18.8032 20.3867 17.6348 20.4211 16.1713V8.85547C20.4153 7.37132 19.2105 6.17125 17.7263 6.17126H6.27368C4.78952 6.17125 3.58474 7.37132 3.57895 8.85547V16.1186C3.58474 17.6028 4.78952 18.8028 6.27368 18.8028H17.7263Z"
+        fill="#0D99FF"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M7.71582 12.7818C7.71582 10.4564 9.60094 8.57129 11.9263 8.57129C14.2518 8.57129 16.1369 10.4564 16.1369 12.7818C16.1369 15.1072 14.2518 16.9923 11.9263 16.9923C9.60094 16.9923 7.71582 15.1072 7.71582 12.7818ZM9.29477 12.7818C9.29477 14.2352 10.473 15.4134 11.9263 15.4134C13.3797 15.4134 14.5579 14.2352 14.5579 12.7818C14.5579 11.3284 13.3797 10.1502 11.9263 10.1502C10.473 10.1502 9.29477 11.3284 9.29477 12.7818Z"
+        fill="#0D99FF"
+      />
+      <rect
+        x="16.1367"
+        y="7.5083"
+        width="2.10526"
+        height="2.11579"
+        rx="0.5"
+        fill="#0D99FF"
+      />
+    </svg>
+  );
+};
+
+export const FlagVNIcon: React.FC = () => {
+  return (
+    <svg
+      width="24"
+      height="18"
+      viewBox="0 0 24 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_8464_173214)">
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M-0.75 1.5H24.75V17.25H-0.75V1.5Z"
+          fill="#EC0015"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M15.1078 13.2201L12.1328 11.1683L9.17773 13.2386L10.2734 9.86709L7.31836 7.78452L10.974 7.75376L12.1096 4.38843L13.2617 7.74453L16.9174 7.74761L13.9789 9.85171L15.1045 13.2232L15.1078 13.2201Z"
+          fill="#FFFF00"
+        />
+      </g>
       <defs>
-        <filter
-          id="filter0_dd_9121_185867"
-          x="0"
-          y="0"
-          width="75"
-          height="75"
-          filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
-        >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dx="1" dy="1" />
-          <feGaussianBlur stdDeviation="7.5" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0.0391667 0 0 0 0 0.391667 0 0 0 0.15 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_9121_185867"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dy="1" />
-          <feGaussianBlur stdDeviation="2.5" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0.0650001 0 0 0 0 0.65 0 0 0 0.1 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="effect1_dropShadow_9121_185867"
-            result="effect2_dropShadow_9121_185867"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect2_dropShadow_9121_185867"
-            result="shape"
-          />
-        </filter>
+        <clipPath id="clip0_8464_173214">
+          <rect width="24" height="18" fill="white" />
+        </clipPath>
       </defs>
     </svg>
   )

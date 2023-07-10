@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import '../navBar/style.scss'
+import '../navBar/style.scss';
 
 const Navbar: React.FC = () => {
   return (
@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
         </div>
       </div> */}
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

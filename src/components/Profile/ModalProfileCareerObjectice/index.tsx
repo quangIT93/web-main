@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import { TreeSelect } from 'antd'
-import Button from '@mui/material/Button'
-import './style.scss'
+import React, { useState, ReactNode } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { TreeSelect } from 'antd';
+import Button from '@mui/material/Button';
+import './style.scss';
+
+import { CloseOutlined } from '@ant-design/icons';
 
 // data
-import profileApi from 'api/profileApi'
-import categoriesApi from '../../../api/categoriesApi'
-import { useDispatch } from 'react-redux'
+import profileApi from 'api/profileApi';
+import categoriesApi from '../../../api/categoriesApi';
+import { useDispatch } from 'react-redux';
 
 import {
   getProfile,
   resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer'
-const { SHOW_CHILD } = TreeSelect
+} from 'store/reducer/profileReducer/getProfileReducer';
+const { SHOW_CHILD, SHOW_PARENT, SHOW_ALL, TreeNode } = TreeSelect;
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -28,52 +30,57 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+};
 interface ICategories {
-  child_category_id: number
-  parent_category_id: number
-  parent_category: string
-  child_category: string
+  child_category_id: number;
+  parent_category_id: number;
+  parent_category: string;
+  child_category: string;
 }
 
 interface IModalProfileCareerObjectice {
-  openModalCareerObjective: boolean
-  setOpenModalCareerObjective: React.Dispatch<React.SetStateAction<boolean>>
-  categories: ICategories[]
+  openModalCareerObjective: boolean;
+  setOpenModalCareerObjective: React.Dispatch<React.SetStateAction<boolean>>;
+  categories: ICategories[];
 }
 
 const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
-  props
+  props,
 ) => {
   const { openModalCareerObjective, setOpenModalCareerObjective, categories } =
-    props
+    props;
   const [value, setValue] = useState(
-    categories?.map((v, i) => v.child_category_id.toString())
-  )
-  const [dataCategories, setDataCategories] = React.useState<any>(null)
-  const [checkClick, setCheckList] = React.useState<boolean>(false)
-  const [childValue, setChildValue] = React.useState<string[]>([])
-  const [treeData, setTransformedData] = React.useState<any>(null)
-  const dispatch = useDispatch()
-  const handleClose = () => setOpenModalCareerObjective(false)
+    categories?.map((v, i) => v.child_category_id.toString()),
+  );
+  const [dataCategories, setDataCategories] = React.useState<any>(null);
+  const [originalValue, setOriginalValue] = useState<string[]>([]);
+  const [checkClick, setCheckList] = React.useState<boolean>(false);
+  const [childValue, setChildValue] = React.useState<string[]>([]);
+  const [treeData, setTransformedData] = React.useState<any>(null);
+  const dispatch = useDispatch();
+  const handleClose = () => setOpenModalCareerObjective(false);
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise()
+      const result = await categoriesApi.getAllCategorise();
       if (result) {
-        setDataCategories(result.data)
+        setDataCategories(result.data);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   React.useEffect(() => {
-    getCategories()
-  }, [])
+    getCategories();
+  }, []);
   const onChange = (newValue: string[] | any) => {
-    setValue(newValue)
-  }
+    console.log('newValue', newValue);
+
+    setValue(newValue);
+  };
+  console.log('value', value);
+  console.log('treeData', treeData);
 
   React.useEffect(() => {
     if (dataCategories) {
@@ -87,55 +94,112 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
               title: child.name,
               value: child.id.toString(),
               key: child.id.toString(),
-            }
+            };
           }),
-        }
-      })
+        };
+      });
 
-      setTransformedData(transformedData)
+      setTransformedData(transformedData);
     }
-  }, [dataCategories])
+  }, [dataCategories]);
+
+  React.useEffect(() => {
+    setValue(categories?.map((v, i) => v.child_category_id.toString()) || []);
+    setOriginalValue(
+      categories?.map((v, i) => v.child_category_id.toString()) || [],
+    );
+  }, [categories]);
 
   const handleSubmit = async () => {
     try {
       const result = await profileApi.updateProfileCareer(
-        value.map((v) => parseInt(v))
-      )
+        value.map((v) => parseInt(v)),
+      );
       if (result) {
-        await dispatch(getProfile() as any)
-        setOpenModalCareerObjective(false)
+        await dispatch(getProfile() as any);
+        setOpenModalCareerObjective(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  const tProps = {
-    treeData,
+  const renderTreeNode = (data: any) => {
+    return data?.map((node: any) => {
+      if (node.children) {
+        return {
+          ...node,
+          disableCheckbox: true,
+          selectable: true,
+          checkable: false,
+
+          // Set the value of disableCheckbox
+        };
+      }
+
+      console.log('nodeeeeeeeeeeeeeee', node);
+      return node.children;
+      // <TreeNode key={node.value} value={node.value} title={node.title} />
+    });
+  };
+
+  console.log('clock');
+  const tProps: any = {
+    // treeData,
+    treeData: renderTreeNode(treeData),
+    showCheckbox: true, // Ẩn checkbox cho tất cả các nút
+    // treeCheckStrictly: true,
+    // treeDefaultExpandAll: true,
+    // showSearch: true, // Chỉ cho phép chọn các nút lá
+    showSearch: true,
     value,
     treeCheckable: true,
-    onChange,
+    onChange: (newValue: string[]) => setValue(newValue),
     // treeCheckStrictly: true,
     // Enable strict checking
     // Disable the "All" checkbox at the root level
-    showCheckedStrategy: SHOW_CHILD,
+    showCheckedStrategy: SHOW_PARENT,
+    // treeDefaultExpandAll,
     placeholder: 'Please select',
     style: {
       width: '100%',
       zIndex: '1302',
       margin: '12px auto',
     },
-
+    size: 'Giờ làm việc large',
     treeIcon: false,
-  }
+    // dropdownRender: CustomRenderCatelory,
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
   return (
     <Modal
       open={openModalCareerObjective}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      onKeyDown={handleKeyDown}
     >
       <Box sx={style}>
+        <div
+          style={{
+            position: 'absolute',
+            right: '20px',
+            top: '20px',
+            cursor: 'pointer',
+            // border: '1px solid',
+            borderRadius: '50%',
+            padding: '1px',
+          }}
+          onClick={handleClose}
+        >
+          <CloseOutlined style={{ fontSize: '30px' }} />
+        </div>
         <Typography
           id="modal-modal-title"
           variant="h6"
@@ -150,7 +214,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
         </Button>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalProfileCareerObjectice
+export default ModalProfileCareerObjectice;

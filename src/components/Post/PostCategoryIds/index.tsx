@@ -1,24 +1,24 @@
-import React from 'react'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Autocomplete from '@mui/material/Autocomplete'
-import { AutocompleteInputChangeReason } from '@mui/material/Autocomplete'
-import { AxiosResponse } from 'axios'
-import categoriesApi from '../../../api/categoriesApi'
+import React from 'react';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { AutocompleteInputChangeReason } from '@mui/material/Autocomplete';
+import { AxiosResponse } from 'axios';
+import categoriesApi from '../../../api/categoriesApi';
 
-import './style.scss'
+import './style.scss';
 
 interface Option {
-  id: string
-  name: string
-  image: string
-  default_post_image: string
+  id: string;
+  name: string;
+  image: string;
+  default_post_image: string;
 }
 
 interface IPostCategoryIds {
-  selectedOptions: Option[]
-  setSelectedOptions: React.Dispatch<React.SetStateAction<Option[]>>
+  selectedOptions: Option[];
+  setSelectedOptions: React.Dispatch<React.SetStateAction<Option[]>>;
 }
 
 const options: Option[] = [
@@ -46,37 +46,37 @@ const options: Option[] = [
     image:
       'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/category/khach-san-nha-hang.png',
   },
-]
+];
 
 const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
-  const { selectedOptions, setSelectedOptions } = props
-  const [categories, setCategories] = React.useState<Option[]>([])
+  const { selectedOptions, setSelectedOptions } = props;
+  const [categories, setCategories] = React.useState<Option[]>([]);
 
   const getAllParentCategories = async () => {
     try {
-      const result = await categoriesApi.getAllParentCategories()
+      const result = await categoriesApi.getAllParentCategories();
       if (result) {
-        setCategories(result.data)
+        setCategories(result.data);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
   React.useEffect(() => {
-    getAllParentCategories()
-  }, [])
+    getAllParentCategories();
+  }, []);
 
   const handleInputChange = (
     event: React.ChangeEvent<{}>,
     value: string,
-    reason: AutocompleteInputChangeReason
+    reason: AutocompleteInputChangeReason,
   ) => {
-    const newInputValue = (event?.target as HTMLInputElement)?.id
+    const newInputValue = (event?.target as HTMLInputElement)?.id;
     if (newInputValue) {
-      const updatedOptions = [...options]
+      const updatedOptions = [...options];
       const existingOption = updatedOptions.find(
-        (option) => option.id === newInputValue
-      )
+        (option) => option.id === newInputValue,
+      );
 
       if (!existingOption) {
         // Thêm tùy chọn mới vào danh sách tùy chọn
@@ -85,19 +85,19 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
           name: newInputValue,
           default_post_image: newInputValue,
           image: newInputValue,
-        })
+        });
         // Cập nhật danh sách tùy chọn
-        setSelectedOptions(updatedOptions)
+        setSelectedOptions(updatedOptions);
       }
     }
-  }
+  };
 
   const handleOptionChange = (
     event: React.ChangeEvent<{}>,
-    values: Option[]
+    values: Option[],
   ) => {
-    setSelectedOptions(values)
-  }
+    setSelectedOptions(values);
+  };
 
   return (
     <Box sx={{ marginTop: '24px' }}>
@@ -122,14 +122,15 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
           <TextField
             {...params}
             type="text"
-            size="small"
+            size="medium"
             id="jobs"
             placeholder="Chọn"
+            sx={{ borderRadius: '20px' }}
           />
         )}
       />
     </Box>
-  )
-}
+  );
+};
 
-export default PostCategoryIds
+export default PostCategoryIds;

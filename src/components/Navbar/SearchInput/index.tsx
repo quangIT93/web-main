@@ -13,40 +13,40 @@ import {
   useNavigate,
   createSearchParams,
   useSearchParams,
-} from 'react-router-dom'
+} from 'react-router-dom';
 
-let timeout: ReturnType<typeof setTimeout> | null
-let currentValue: string | undefined
+let timeout: ReturnType<typeof setTimeout> | null;
+let currentValue: string | undefined;
 
 // fetch data keywords
 const fetch = (
   value: string | undefined,
-  callback: Function
+  callback: Function,
   // setFetching: Function
 ) => {
   if (timeout) {
-    clearTimeout(timeout)
-    timeout = null
+    clearTimeout(timeout);
+    timeout = null;
   }
 
-  currentValue = value
-  var response: any = null
+  currentValue = value;
+  var response: any = null;
 
   const fake = async () => {
-    const array: any[] = []
+    const array: any[] = [];
 
-    callback([])
+    callback([]);
 
     // check login user
     if (localStorage.getItem('accessToken')) {
-      const result = await searchApi.getHistoryKeyWord(20)
+      const result = await searchApi.getHistoryKeyWord(20);
       if (result) {
-        response = result.data.listHistorySearch
+        response = result.data.listHistorySearch;
       }
     } else {
-      const result = await searchApi.getSuggestKeyWord(20)
+      const result = await searchApi.getSuggestKeyWord(20);
       if (result) {
-        response = result.data
+        response = result.data;
       }
     }
 
@@ -62,29 +62,29 @@ const fetch = (
             array.push({
               value: item.keyword,
               text: item.keyword,
-            })
+            });
           }
-        })
+        });
         // setFetching(false)
-        callback(array)
+        callback(array);
       }
     }
-  }
+  };
 
   // check value search then fetching data
   if (value != '') {
     // setFetching(true)
-    timeout = setTimeout(fake, 300)
+    timeout = setTimeout(fake, 300);
   } else {
     searchApi.getSuggestKeyWord(10).then((result) => {
       const data = result.data.map((item: any) => ({
         value: item.keyword,
         text: item.keyword,
-      }))
-      callback(data)
-    })
+      }));
+      callback(data);
+    });
   }
-}
+};
 
 interface SearchProps {
   value: string | undefined
@@ -98,81 +98,81 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
   const [searchParams, setSearchParams] = useSearchParams()
   const [data, setData] = useState<SelectProps['options']>([])
   // const [fetching, setFet] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const QUERY = searchParams.get('q')
+  const [loading, setLoading] = useState(false);
+  const QUERY = searchParams.get('q');
   const handleSearch = async (newValue: string | undefined) => {
     fetch(
       newValue,
-      setData
+      setData,
       // , setFet
-    )
+    );
     // console.log('newValue1111', newValue)
-  }
+  };
 
   React.useEffect(() => {
     if (currentValue) {
-      console.log('ádadasd', currentValue)
-      setValue(currentValue)
+      console.log('ádadasd', currentValue);
+      setValue(currentValue);
     }
-  }, [currentValue])
+  }, [currentValue]);
   // console.log('value', value)
   // console.log('currentValue', currentValue)
   // get keyWords suggests
   React.useEffect(() => {
-    setValue(QUERY as any)
-  }, [])
+    setValue(QUERY as any);
+  }, []);
 
   const getSuggestKeyWord = async () => {
     try {
-      var response = null
-      setLoading(true)
+      var response = null;
+      setLoading(true);
       if (localStorage.getItem('accessToken')) {
-        const result = await searchApi.getHistoryKeyWord(10)
+        const result = await searchApi.getHistoryKeyWord(10);
         if (result) {
-          response = result.data.listHistorySearch
+          response = result.data.listHistorySearch;
         }
       } else {
-        const result = await searchApi.getSuggestKeyWord(10)
+        const result = await searchApi.getSuggestKeyWord(10);
         if (result) {
-          response = result.data
+          response = result.data;
         }
       }
       if (response) {
         const data = response.map((item: any) => ({
           value: item.keyword,
           text: item.keyword,
-        }))
+        }));
 
-        setData(data)
-        setLoading(false)
+        setData(data);
+        setLoading(false);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   React.useEffect(() => {
-    getSuggestKeyWord()
-  }, [])
+    getSuggestKeyWord();
+  }, []);
 
   const handleChange = (newValue: string) => {
-    console.log('newValue', newValue)
-    setValue(newValue)
-  }
+    console.log('newValue', newValue);
+    setValue(newValue);
+  };
 
   const disableScroll = () => {
-    document.body.style.overflow = 'hidden'
-  }
+    document.body.style.overflow = 'hidden';
+  };
 
   const enableScroll = () => {
-    document.body.style.overflow = ''
-  }
+    document.body.style.overflow = '';
+  };
 
   const handleOnFocus = () => {
     // console.log('fcccccccccuss')
     // disableScroll()
-    getSuggestKeyWord()
-  }
+    getSuggestKeyWord();
+  };
 
   // const handleOnBlur = () => {
   //   console.log('bbbbbbbbblur')
@@ -186,28 +186,28 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
       if (QUERY && !currentValue && !value) {
         window.open(
           `/search-results?q=${encodeURIComponent(`${QUERY}`)}`,
-          '_parent'
-        )
+          '_parent',
+        );
       } else
         window.open(
           `/search-results?q=${encodeURIComponent(`${currentValue}`)}`,
-          '_parent'
-        )
+          '_parent',
+        );
     }
-  }
+  };
 
   const handleClickItem = (value: string) => {
-    setValue(currentValue)
+    setValue(currentValue);
     fetch(
       value,
-      setData
+      setData,
       // , setFet
-    )
-  }
+    );
+  };
 
   const handleClearItem = () => {
-    getSuggestKeyWord()
-  }
+    getSuggestKeyWord();
+  };
 
   const dropdownRender: any = (data || []).map((d: any, index: number) => (
     <div
@@ -218,7 +218,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
       {d.value}
       <CloseOutlined />
     </div>
-  ))
+  ));
 
   return (
     <div className="search-input-wrapper">
@@ -273,4 +273,4 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
   )
 }
 
-export default React.memo(SearchInput)
+export default React.memo(SearchInput);

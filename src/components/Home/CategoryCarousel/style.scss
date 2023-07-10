@@ -25,11 +25,65 @@
 
   .MuiButtonBase-root {
     border-bottom: 1px solid #dcdcdc;
+    flex: 1;
+    min-width: 100px;
   }
 
   .MuiTabs-scrollButtons {
     @include breakpoint(mobile) {
       display: none;
+    }
+  }
+
+  .cateloryItemFilter {
+    // position: relative;
+    // overflow-x: hidden;
+    // display: flex;
+    // align-items: center;
+    
+    //   &::-webkit-scrollbar {
+    //     height: 8px;
+    //   }
+
+    //   &::-webkit-scrollbar-track {
+    //     background: transparent;
+    //   }
+
+    //   &::-webkit-scrollbar-thumb {
+    //     background: #ccc;
+    //     border-radius: 4px;
+    //   }
+
+    //   &::-webkit-scrollbar-thumb:hover {
+    //     background: #aaa;
+    //   }
+    .MuiTabs-scrollButtons{
+      &:last-child,
+      &:first-child {
+        position: absolute;
+        // background-color: red;
+        height: 132px;
+        min-width: 44px;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.1);
+        // &:hover {
+        //   background-color: #AAAAAA;
+        // }
+      }
+      &:last-child {
+
+        right: 0;
+    
+  
+      }
+
+      &:first-child {
+        left: 0;
+      }
+    }
+
+    .Mui-selected {
+      background-color: #e5e5e5;
     }
   }
 }

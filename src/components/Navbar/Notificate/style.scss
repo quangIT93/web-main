@@ -313,7 +313,29 @@
 
   .create-keyword {
     position: absolute;
-    bottom: 0;
-    right: 10px;
+    bottom: 20px;
+    right: 36px;
+    cursor: pointer;
+    border-radius: 50%;
+    svg {
+      border-radius: 505;
+    }
+  }
+
+  .modal-keyword_notification {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 368px;
+    height: 340px;
+    box-shadow: 1px 1px 5px #aaaaaa;
+    padding: 16px;
+    border-radius: 10px;
+    h3 {
+      color: #000000;
+      text-align: center;
+    }
   }
 }

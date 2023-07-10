@@ -8,7 +8,7 @@ const postApi = {
     return axiosClient.post(URL, newPost, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        ' Content-Type': 'multipart/form-data',
+        'Content-Type': 'multipart/form-data',
       },
     })
   },

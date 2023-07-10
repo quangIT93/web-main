@@ -1,53 +1,53 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import React, { useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import type { DatePickerProps } from 'antd'
-import { DatePicker, Space } from 'antd'
-import { Collapse, Radio, Input, Button, Typography } from 'antd'
+import type { DatePickerProps } from 'antd';
+import { DatePicker, Space } from 'antd';
+import { Collapse, Radio, Input, Button, Typography } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import Box from '@mui/material/Box';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
-import Box from '@mui/material/Box'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
+import './style.scss';
+import { AnyMxRecord } from 'dns';
 
-import './style.scss'
-import { AnyMxRecord } from 'dns'
+const { Text } = Typography;
 
-const { Text } = Typography
-
-const { Panel } = Collapse
+const { Panel } = Collapse;
 
 interface IFilterTimeJob {
-  setIsWorkingWeekend: React.Dispatch<React.SetStateAction<number>>
-  setIsRemotely: React.Dispatch<React.SetStateAction<number>>
-  isRemotely: number
-  isWorkingWeekend: number
+  setIsWorkingWeekend: React.Dispatch<React.SetStateAction<number>>;
+  setIsRemotely: React.Dispatch<React.SetStateAction<number>>;
+  isRemotely: number;
+  isWorkingWeekend: number;
 }
 
 const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   const { setIsWorkingWeekend, isWorkingWeekend, isRemotely, setIsRemotely } =
-    props
+    props;
 
   // const [selectedValue, setSelectedValue] = useState('')
   // const [inputValue, setInputValue] = useState('')
-  const [checkboxIsWeekend, setCheckboxIsWeekend] = useState(0)
-  const [checksetIsRemotely, setChecksetIsRemotely] = useState(0)
-  const [collapseOpen, setCollapseOpen] = useState(false)
-  const collapseRef = useRef<any>(null)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const is_working_weekend = Number(searchParams.get('is_working_weekend'))
-  const is_remotely = Number(searchParams.get('is_remotely'))
+  const [checkboxIsWeekend, setCheckboxIsWeekend] = useState(0);
+  const [checksetIsRemotely, setChecksetIsRemotely] = useState(0);
+  const [collapseOpen, setCollapseOpen] = useState(false);
+  const collapseRef = useRef<any>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const is_working_weekend = Number(searchParams.get('is_working_weekend'));
+  const is_remotely = Number(searchParams.get('is_remotely'));
 
   useEffect(() => {
     if (is_working_weekend) {
-      setIsWorkingWeekend(is_working_weekend)
-      setCheckboxIsWeekend(is_working_weekend)
+      setIsWorkingWeekend(is_working_weekend);
+      setCheckboxIsWeekend(is_working_weekend);
     }
 
     if (is_remotely) {
-      setIsRemotely(is_remotely)
-      setChecksetIsRemotely(is_remotely)
+      setIsRemotely(is_remotely);
+      setChecksetIsRemotely(is_remotely);
     }
-  }, [is_working_weekend, is_remotely])
+  }, [is_working_weekend, is_remotely]);
 
   // const handleRadioChange = (e: any) => {
   //   setSelectedValue(e.target.value)
@@ -57,19 +57,32 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   //   setInputValue(e.target.value)
   // }
 
-  const handleConfirm = () => {
+  const handleConfirm = (e: any) => {
+    e.stopPropagation();
     // console.log(`Selected value: ${selectedValue}`)
     // console.log(`Input value: ${inputValue}`)
-    setIsWorkingWeekend(checkboxIsWeekend)
-    setIsRemotely(checksetIsRemotely)
-  }
+    setIsWorkingWeekend(checkboxIsWeekend);
+    setIsRemotely(checksetIsRemotely);
+    if (
+      // collapseRef &&
+      // !collapseRef?.current?.contains(e.target)
+      e.target.closest('.inputFilterTimeJob') &&
+      e.target.closest('.submitValue')
+    ) {
+      setCollapseOpen(false);
+    } else if (!e.target.closest('.inputFilterTimeJob')) {
+      setCollapseOpen(false);
+    } else if (e.target.closest('.inputFilterTimeJob')) {
+      setCollapseOpen(true);
+    }
+  };
 
   const handleConfirmCancel = () => {
-    setIsWorkingWeekend(0)
-    setIsRemotely(0)
-    setCheckboxIsWeekend(0)
-    setChecksetIsRemotely(0)
-  }
+    setIsWorkingWeekend(0);
+    setIsRemotely(0);
+    setCheckboxIsWeekend(0);
+    setChecksetIsRemotely(0);
+  };
 
   // const onChangeStartDate: DatePickerProps['onChange'] = (date, dateString) => {
   //   console.log(date, dateString)
@@ -81,35 +94,35 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
   const handleWeekendChange = (e: any) => {
     if (e.target.checked) {
-      setCheckboxIsWeekend(1)
+      setCheckboxIsWeekend(1);
     } else {
-      setCheckboxIsWeekend(0)
+      setCheckboxIsWeekend(0);
     }
-  }
+  };
 
   const handleRemoteChange = (e: any) => {
     if (e.target.checked) {
-      setChecksetIsRemotely(1)
+      setChecksetIsRemotely(1);
     } else {
-      setChecksetIsRemotely(0)
+      setChecksetIsRemotely(0);
     }
-  }
+  };
 
   useEffect(() => {
     const handleOutsideClick = (e: any) => {
-      if (!collapseRef.current.contains(e.target)) {
-        setCollapseOpen(false)
+      if (collapseRef && !collapseRef?.current?.contains(e.target)) {
+        setCollapseOpen(false);
       } else {
-        setCollapseOpen(true)
+        setCollapseOpen(true);
       }
-    }
+    };
 
-    window.addEventListener('click', handleOutsideClick)
+    window.addEventListener('click', handleOutsideClick);
 
     return () => {
-      window.removeEventListener('click', handleOutsideClick)
-    }
-  }, [])
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   return (
     <Collapse
@@ -117,6 +130,8 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         }`}
       activeKey={collapseOpen ? '1' : ''}
       ref={collapseRef}
+      expandIconPosition="end"
+      expandIcon={(panelProps) => <DownOutlined />}
     >
       <Panel
         header={
@@ -168,13 +183,17 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
           <Button type="default" onClick={handleConfirmCancel}>
             Huỷ
           </Button>
-          <Button type="primary" onClick={handleConfirm}>
+          <Button
+            type="primary"
+            onClick={handleConfirm}
+            className="submitValue"
+          >
             Áp dụng
           </Button>
         </div>
       </Panel>
     </Collapse>
-  )
-}
+  );
+};
 
-export default FilterTimeJob
+export default FilterTimeJob;

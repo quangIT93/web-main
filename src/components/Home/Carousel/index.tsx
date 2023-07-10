@@ -5,118 +5,116 @@ import React, {
   memo,
   useMemo,
   useRef,
-} from 'react'
-import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
-import { DotButton, PrevButton, NextButton } from './components'
+} from 'react';
+import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
+import { DotButton, PrevButton, NextButton } from './components';
 // import imageByIndex from './ImageIndex'
-import Autoplay from 'embla-carousel-autoplay'
+import Autoplay from 'embla-carousel-autoplay';
 
 // import Api
-import bannersApi from 'api/apiBanner'
+import bannersApi from 'api/apiBanner';
 
 const EmblaCarousel: React.FC = () => {
   const options: EmblaOptionsType = {
     loop: true,
     align: 'center',
-  }
+  };
 
   //   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
-  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false)
-  const [nextBtnEnabled, setNextBtnEnabled] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
-  const [dataBanners, setDataBanners] = useState<any>([])
+  const [dataBanners, setDataBanners] = useState<any>([]);
 
-  const emblaContainerRef = React.useRef<HTMLDivElement>(null)
+  const emblaContainerRef = React.useRef<HTMLDivElement>(null);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
     Autoplay({ delay: 4000, stopOnInteraction: false }),
-  ])
-
-
+  ]);
 
   const scrollPrev = useCallback(
     () => emblaApi && emblaApi.scrollPrev(),
-    [emblaApi]
-  )
+    [emblaApi],
+  );
   const scrollNext = useCallback(
     () => emblaApi && emblaApi.scrollNext(),
-    [emblaApi]
-  )
+    [emblaApi],
+  );
   const scrollTo = useCallback(
     (index: number) => emblaApi && emblaApi.scrollTo(index),
-    [emblaApi]
-  )
+    [emblaApi],
+  );
 
   const getBannersApi = async () => {
-    const result = await bannersApi.getBannersApi()
+    const result = await bannersApi.getBannersApi();
     try {
-      if (result) setDataBanners(result.data)
+      if (result) setDataBanners(result.data);
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    getBannersApi()
-  }, [])
+    getBannersApi();
+  }, []);
 
-  const SLIDE_COUNT = dataBanners.length
-  const slideCount = useRef(dataBanners.length)
+  const SLIDE_COUNT = dataBanners.length;
+  const slideCount = useRef(dataBanners.length);
 
-  slideCount.current = dataBanners.length
+  slideCount.current = dataBanners.length;
   const slides = useMemo(() => {
     // Tính toán giá trị result dựa trên dep1 và dep2
     // ...
 
-    return Array.from(Array(15).keys())
-  }, [])
+    return Array.from(Array(15).keys());
+  }, []);
 
   const imageByIndex = (index: number): any =>
-    dataBanners[index % dataBanners.length]
+    dataBanners[index % dataBanners.length];
 
   const handleMouseEvent = () => {
-    const { current: emblaContainerEl } = emblaContainerRef
+    const { current: emblaContainerEl } = emblaContainerRef;
 
     if (emblaContainerEl) {
       emblaContainerEl.addEventListener('mousedown', () => {
-        emblaContainerEl.style.cursor = 'grabbing'
+        emblaContainerEl.style.cursor = 'grabbing';
 
-        emblaApi?.clickAllowed()
-      })
+        emblaApi?.clickAllowed();
+      });
 
       emblaContainerEl.addEventListener('mouseup', () => {
-        emblaContainerEl.style.cursor = 'grab'
-      })
+        emblaContainerEl.style.cursor = 'grab';
+      });
     }
-  }
+  };
 
   React.useEffect(() => {
-    handleMouseEvent()
+    handleMouseEvent();
 
     if (emblaApi) {
-      setScrollSnaps(emblaApi.scrollSnapList())
+      setScrollSnaps(emblaApi.scrollSnapList());
       //   setSelectedIndex(emblaApi.selectedScrollSnap)
       //   onSelect()
       //   emblaApi.on('select', onSelect)
     }
-  }, [emblaApi])
+  }, [emblaApi]);
 
   const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setSelectedIndex(emblaApi.selectedScrollSnap())
-    setPrevBtnEnabled(emblaApi.canScrollPrev())
-    setNextBtnEnabled(emblaApi.canScrollNext())
-  }, [emblaApi, setSelectedIndex])
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+    setPrevBtnEnabled(emblaApi.canScrollPrev());
+    setNextBtnEnabled(emblaApi.canScrollNext());
+  }, [emblaApi, setSelectedIndex]);
 
   useEffect(() => {
-    if (!emblaApi) return
-    onSelect()
-    setScrollSnaps(emblaApi.scrollSnapList())
-    emblaApi.on('select', onSelect)
-    emblaApi.on('reInit', onSelect)
-  }, [emblaApi, setScrollSnaps, onSelect])
+    if (!emblaApi) return;
+    onSelect();
+    setScrollSnaps(emblaApi.scrollSnapList());
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+  }, [emblaApi, setScrollSnaps, onSelect]);
 
   return (
     <>
@@ -158,7 +156,7 @@ const EmblaCarousel: React.FC = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default memo(EmblaCarousel)
+export default memo(EmblaCarousel);

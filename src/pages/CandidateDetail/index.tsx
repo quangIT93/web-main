@@ -1,162 +1,165 @@
-import React, { useMemo, useCallback, useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import React, { useMemo, useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 // materi
-import { Box, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material';
 
-import moment, { Moment } from 'moment'
-import Card from '@mui/material/Card'
-import { Space, Tooltip } from 'antd'
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
-import ImageListItem from '@mui/material/ImageListItem'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import moment, { Moment } from 'moment';
+import Card from '@mui/material/Card';
+import { Space, Tooltip } from 'antd';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import ImageListItem from '@mui/material/ImageListItem';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import {
   EnvironmentFilled,
   ClockCircleFilled,
   MessageOutlined,
-} from '@ant-design/icons'
+} from '@ant-design/icons';
 
 // import data// import api
-import postApi from 'api/postApi'
-import historyRecruiter from 'api/historyRecruiter'
+import postApi from 'api/postApi';
+import historyRecruiter from 'api/historyRecruiter';
 // import component
 
-import Footer from '../../components/Footer/index'
-import 'intl'
-import 'intl/locale-data/jsonp/en'
+import Footer from '../../components/Footer/index';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
 // import icon
 
 // @ts-ignore
-import { Navbar } from '#components'
+import { Navbar } from '#components';
 
-import { styled } from '@mui/material/styles'
-import Badge from '@mui/material/Badge'
-import Avatar from '@mui/material/Avatar'
-import { Button, Skeleton } from 'antd'
+import { styled } from '@mui/material/styles';
+import Badge from '@mui/material/Badge';
+import Avatar from '@mui/material/Avatar';
+import { Button, Skeleton } from 'antd';
 
-import ItemApply from '../../pages/Profile/components/Item'
+import ItemApply from '../../pages/Profile/components/Item';
 // import component
-import RejectedApplication from '#components/CandidateDetail/RejectedApplication'
-import SeenApplication from '#components/CandidateDetail/SeenApplication'
-import ApprovedApplication from '#components/CandidateDetail/ApprovedApplication'
-import RecuitApplication from '#components/CandidateDetail/RecuitApplication'
-import CVItem from '#components/Profile/CV'
-import './style.scss'
+import RejectedApplication from '#components/CandidateDetail/RejectedApplication';
+import SeenApplication from '#components/CandidateDetail/SeenApplication';
+import ApprovedApplication from '#components/CandidateDetail/ApprovedApplication';
+import RecuitApplication from '#components/CandidateDetail/RecuitApplication';
+import CVItem from '#components/Profile/CV';
+import './style.scss';
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
   height: 22,
   border: `2px solid ${theme.palette.background.paper}`,
   backgroundColor: 'white',
-}))
+}));
 
 interface ItemAppy {
-  id?: number | null
-  company_name?: string
-  major?: string
-  start_date?: number
-  end_date?: number
-  extra_information?: string
-  title?: string
+  id?: number | null;
+  company_name?: string;
+  major?: string;
+  start_date?: number;
+  end_date?: number;
+  extra_information?: string;
+  title?: string;
 }
 
 interface ICategories {
-  child_category_id: number
-  parent_category_id: number
-  parent_category: string
-  child_category: string
+  child_category_id: number;
+  parent_category_id: number;
+  parent_category: string;
+  child_category: string;
 }
 
 const CandidateDetail: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [dataPost, setDataPost] = useState<any>(null)
-  const [dataCandidate, setDataCandidate] = useState<any>(null)
+  const [loading, setLoading] = useState<boolean>(true);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [dataPost, setDataPost] = useState<any>(null);
+  const [dataCandidate, setDataCandidate] = useState<any>(null);
   const [statusApplication, setStatusApplication] = useState<number>(
     // 1
-    dataCandidate?.applicationProfile?.application_status
-  )
-  const [open, setOpen] = useState(false)
+    dataCandidate?.applicationProfile?.application_status,
+  );
+  const [open, setOpen] = useState(false);
 
   // when dataCandidate changed, statusApplication change
   useEffect(() => {
     if (dataCandidate) {
       setStatusApplication(
-        dataCandidate?.applicationProfile?.application_status
-      )
+        dataCandidate?.applicationProfile?.application_status,
+      );
     }
-  }, [dataCandidate])
+  }, [dataCandidate]);
   const getPostById = async () => {
     try {
-      const postId = parseInt(searchParams.get('post-id') ?? '')
-      const candidateId = searchParams.get('application_id') ?? ''
-      const result = await postApi.getById(postId)
+      const postId = parseInt(searchParams.get('post-id') ?? '');
+      const candidateId = searchParams.get('application_id') ?? '';
+      const result = await postApi.getById(postId);
 
       if (result) {
-        setDataPost(result.data)
+        setDataPost(result.data);
       }
       const detailCandidate = await historyRecruiter.GetAJobApplication(
         postId,
-        candidateId
-      )
+        candidateId,
+      );
 
       if (detailCandidate) {
-        setDataCandidate(detailCandidate.data)
+        setDataCandidate(detailCandidate.data);
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    let isMounted = true
-    setLoading(true)
+    let isMounted = true;
+    setLoading(true);
     getPostById().then(() => {
       if (isMounted) {
-        setLoading(false)
+        setLoading(false);
       }
-    })
+    });
 
     return () => {
-      isMounted = false // Đặt biến cờ thành false khi component unmounts để tránh lỗi
-    }
-  }, [])
+      isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
+    };
+  }, []);
 
   const handleClickPost = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    dataPost: any
+    dataPost: any,
   ) => {
-    console.log('click pi')
-  }
+    console.log('click pi');
+  };
 
   const SeenApply = useMemo(() => {
     if (statusApplication === 1 || statusApplication === 0) {
-      return <SeenApplication setStatusApplication={setStatusApplication} />
+      return <SeenApplication setStatusApplication={setStatusApplication} />;
     }
-    return null
-  }, [statusApplication, setStatusApplication])
+    return null;
+  }, [statusApplication, setStatusApplication]);
 
   const ApprovedApply = useMemo(() => {
     if (statusApplication === 2) {
-      return <ApprovedApplication setStatusApplication={setStatusApplication} />
+      return (
+        <ApprovedApplication setStatusApplication={setStatusApplication} />
+      );
     }
-    return null
-  }, [statusApplication, setStatusApplication])
+    return null;
+  }, [statusApplication, setStatusApplication]);
 
   const RejectedApply = useMemo(() => {
     if (statusApplication === 3) {
-      return <RejectedApplication />
+      return <RejectedApplication />;
     }
-    return null
-  }, [statusApplication, setStatusApplication])
+    return null;
+  }, [statusApplication, setStatusApplication]);
 
   const RecruitApply = useMemo(() => {
     if (statusApplication === 4) {
-      return <RecuitApplication />
+      return <RecuitApplication />;
     }
-    return null
-  }, [statusApplication, setStatusApplication])
+    return null;
+  }, [statusApplication, setStatusApplication]);
 
+  console.log('cv', dataCandidate?.applicationProfile?.cv_url);
   return (
     <div className="candidate-detail">
       <Navbar />
@@ -265,11 +268,11 @@ const CandidateDetail: React.FC = () => {
                     />
                     <Typography variant="body2" color="text.secondary">
                       {new Intl.NumberFormat('en-US').format(
-                        dataPost?.salary_min
+                        dataPost?.salary_min,
                       )}
                       {` ${dataPost?.money_type_text} `}-{' '}
                       {new Intl.NumberFormat('en-US').format(
-                        dataPost?.salary_max
+                        dataPost?.salary_max,
                       ) +
                         ` ${dataPost?.money_type_text} ` +
                         `/${dataPost?.salary_type}`}
@@ -433,13 +436,13 @@ const CandidateDetail: React.FC = () => {
                       onClick={() =>
                         window.open(
                           `/message?post_id=${searchParams.get(
-                            'post-id'
+                            'post-id',
                           )}&user_id=${
                             dataCandidate.applicationProfile.account_id
                           }&application_id=${searchParams.get(
-                            'application_id'
+                            'application_id',
                           )} `,
-                          '_blank'
+                          '_blank',
                         )
                       }
                     ></Button>
@@ -482,7 +485,7 @@ const CandidateDetail: React.FC = () => {
                   <p>
                     {dataCandidate?.applicationProfile?.birthday
                       ? moment(
-                          new Date(dataCandidate?.applicationProfile?.birthday)
+                          new Date(dataCandidate?.applicationProfile?.birthday),
                         ).format('DD/MM/yyyy')
                       : 'Chưa cập nhật'}
                   </p>
@@ -589,7 +592,7 @@ const CandidateDetail: React.FC = () => {
                         <Button key={index} className="btn" type="text">
                           {item.child_category}
                         </Button>
-                      )
+                      ),
                     )
                   : 'Chưa cập nhật'}
               </Space>
@@ -611,7 +614,7 @@ const CandidateDetail: React.FC = () => {
                         <Button key={index} className="btn" type="text">
                           {item?.district}
                         </Button>
-                      )
+                      ),
                     )
                   : 'Chưa cập nhật'}
               </Space>
@@ -631,7 +634,7 @@ const CandidateDetail: React.FC = () => {
                 dataCandidate?.educations?.map(
                   (education: ItemAppy, index: number) => (
                     <ItemApply item={education} key={index} />
-                  )
+                  ),
                 )
               ) : (
                 <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
@@ -677,7 +680,7 @@ const CandidateDetail: React.FC = () => {
       </Box>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default CandidateDetail
+export default CandidateDetail;

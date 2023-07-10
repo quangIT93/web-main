@@ -1,31 +1,31 @@
-import React, { memo } from 'react'
-import dayjs from 'dayjs'
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker'
-import { styleLabel } from '../CssPost'
-import Typography from '@mui/material/Typography'
-import moment from 'moment'
-import './style.scss'
-import { SwapRightOutlined } from '@ant-design/icons'
-import { Space } from 'antd'
-
+import React, { memo } from 'react';
+import dayjs from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
+import { styleLabel } from '../CssPost';
+import Typography from '@mui/material/Typography';
+import moment from 'moment';
+import './style.scss';
+import { SwapRightOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 interface IPostTime {
-  startTime: any
-  endTime: any
-  setStartTime: any
-  setEndTime: any
+  startTime: any;
+  endTime: any;
+  setStartTime: any;
+  setEndTime: any;
 }
 const PostTime: React.FC<IPostTime> = (props) => {
-  const { startTime, endTime, setStartTime, setEndTime } = props
+  const { startTime, endTime, setStartTime, setEndTime } = props;
   const handleChangeStartTime = (newValue: any, e: any) => {
-    setStartTime(new Date(newValue._d).getTime())
-  }
+    setStartTime(new Date(newValue._d).getTime());
+  };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
-    setEndTime(new Date(newValue._d).getTime())
-  }
+    setEndTime(new Date(newValue._d).getTime());
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -54,21 +54,21 @@ const PostTime: React.FC<IPostTime> = (props) => {
           <Space
             direction="horizontal"
             wrap={true}
-            size={[100, 8]}
+            size={[16, 8]}
             style={{ width: '100%' }}
           >
-            <StaticTimePicker
-              ampm={false}
-              ampmInClock={true}
+            <TimePicker
+              // ampm={false}
+              ampmInClock={false}
               defaultValue={moment(new Date(startTime))}
               //sx={{ width: '80%' }}
               onChange={handleChangeStartTime}
               value={moment(new Date(startTime))}
             />
-            <SwapRightOutlined className="icon-time" style={{ fontSize: 35 }} />
-            <StaticTimePicker
-              ampm={false}
-              ampmInClock={true}
+            {/* <SwapRightOutlined className="icon-time" style={{ fontSize: 35 }} /> */}
+            <TimePicker
+              // ampm={false}
+              ampmInClock={false}
               defaultValue={moment(new Date(endTime))}
               // sx={{ width: '30%' }}
               value={moment(new Date(endTime))}
@@ -78,7 +78,7 @@ const PostTime: React.FC<IPostTime> = (props) => {
         </div>
       </DemoContainer>
     </LocalizationProvider>
-  )
-}
+  );
+};
 
-export default memo(PostTime)
+export default memo(PostTime);
