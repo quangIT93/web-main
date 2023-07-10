@@ -40,7 +40,7 @@
     // overflow-x: hidden;
     // display: flex;
     // align-items: center;
-    
+
     //   &::-webkit-scrollbar {
     //     height: 8px;
     //   }
@@ -57,7 +57,8 @@
     //   &::-webkit-scrollbar-thumb:hover {
     //     background: #aaa;
     //   }
-    .MuiTabs-scrollButtons{
+    .MuiTabs-scrollButtons {
+
       &:last-child,
       &:first-child {
         position: absolute;
@@ -70,11 +71,12 @@
         //   background-color: #AAAAAA;
         // }
       }
+
       &:last-child {
 
         right: 0;
-    
-  
+
+
       }
 
       &:first-child {
@@ -94,9 +96,7 @@
       max-width: 100%;
       margin: 0px 10px;
     }
-  }
 
-  .MuiBox-root {
     @media screen and (min-width: 600px) {
       max-width: 100%;
     }
@@ -106,10 +106,10 @@
     }
   }
 
-  .MuiBox-root {
-    @media screen and (min-width: 0px) and (max-width: 1200px) {
-      max-width: 100%;
-      margin: 0px 10px;
+  .MuiStack-root {
+    @media screen and (max-width: 1281px) {
+      left: 0 !important;
+      right: 0 !important;
     }
   }
 }
