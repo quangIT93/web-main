@@ -33,7 +33,7 @@ const ShowNotificativeSave: React.FC = () => {
       <Stack spacing={2} sx={{ width: '100%' }}>
         <Snackbar
           open={alert}
-          autoHideDuration={3000}
+          autoHideDuration={1000000}
           onClose={handleClose}
           anchorOrigin={{
             vertical: 'top',

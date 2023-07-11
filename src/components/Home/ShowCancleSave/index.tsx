@@ -6,6 +6,8 @@ import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+import { setAlertCancleSave } from 'store/reducer/alertReducer';
+
 import './style.scss';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -23,16 +25,16 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 const ShowCancleSave: React.FC = () => {
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
-  const alert = useSelector((state: any) => state.alertProfile.alert);
+  const cancleSave = useSelector((state: any) => state.showAlert.alert);
 
   // const alert = false;
 
-  const handleClose = () => dispatch<any>(setAlert(false));
+  const handleClose = () => dispatch<any>(setAlertCancleSave(false));
   return (
     <div>
       <Stack spacing={2} sx={{ width: '100%' }}>
         <Snackbar
-          open={alert}
+          open={cancleSave}
           autoHideDuration={3000}
           onClose={handleClose}
           anchorOrigin={{
@@ -40,12 +42,8 @@ const ShowCancleSave: React.FC = () => {
             horizontal: 'center',
           }}
         >
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: '100%' }}
-          >
-            Bạn đã Lưu thành công!
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            Bạn đã xóa thành công!
           </Alert>
         </Snackbar>
       </Stack>

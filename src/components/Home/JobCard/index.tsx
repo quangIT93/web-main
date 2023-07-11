@@ -21,6 +21,7 @@ import {
 } from '@ant-design/icons';
 
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
 import { LocationHomeIcon, DolaIcon } from '#components/Icons';
 
@@ -276,6 +277,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                     props.item.bookmarked = false;
                     if (result) {
                       setCheckBookMark(!checkBookMark);
+                      dispatch<any>(setAlertCancleSave(true));
                     }
                   } else {
                     const result = await bookMarkApi.createBookMark(
