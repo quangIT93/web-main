@@ -38,11 +38,11 @@ const ShowCancleSave: React.FC = () => {
           autoHideDuration={3000}
           onClose={handleClose}
           anchorOrigin={{
-            vertical: 'top',
+            vertical: 'bottom',
             horizontal: 'center',
           }}
         >
-          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%', backgroundColor: '#000000' }}>
             Bạn đã xóa thành công!
           </Alert>
         </Snackbar>
