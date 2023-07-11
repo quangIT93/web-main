@@ -4,7 +4,7 @@ import moment from 'moment';
 
 // @ts-ignore
 import { Navbar } from '#components';
-import { CameraIcon } from '#components/Icons';
+import { CameraIcon, PencilIcon } from '#components/Icons';
 
 import './style.scss';
 import { styled } from '@mui/material/styles';
@@ -384,7 +384,9 @@ const Profile: React.FC = () => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalPersonalInfo(true)}
               >
-                <img src="/images/profile/pen.png" alt="ảnh" />
+                <div className="edit-icon">
+                  <PencilIcon width={15} height={15} />
+                </div>
                 <p
                   style={{
                     color: '#0D99FF',
@@ -438,7 +440,9 @@ const Profile: React.FC = () => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalContact(true)}
               >
-                <img src="/images/profile/pen.png" alt="ảnh" />
+                <div className="edit-icon">
+                  <PencilIcon width={15} height={15} />
+                </div>
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
               </Space>
@@ -564,7 +568,9 @@ const Profile: React.FC = () => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalCareerObjective(true)}
               >
-                <img src="/images/profile/pen.png" alt="ảnh" />
+                <div className="edit-icon">
+                  <PencilIcon width={15} height={15} />
+                </div>
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
               </Space>
@@ -596,7 +602,9 @@ const Profile: React.FC = () => {
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalLocation(true)}
               >
-                <img src="/images/profile/pen.png" alt="ảnh" />
+                <div className="edit-icon">
+                  <PencilIcon width={15} height={15} />
+                </div>
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
               </Space>

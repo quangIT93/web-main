@@ -46,7 +46,7 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Ngày bắt đầu *:
+            Ngày bắt đầu <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
             value={moment(editDataPosted.startDate)}
@@ -60,7 +60,7 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Ngày kết thúc *:
+            Ngày kết thúc <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
             value={moment(editDataPosted.endDate)}

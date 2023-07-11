@@ -57,6 +57,16 @@
     //   &::-webkit-scrollbar-thumb:hover {
     //     background: #aaa;
     //   }
+
+    .MuiTabs-flexContainer {
+      flex-wrap: nowrap;
+      gap: 10px;
+
+      .MuiButtonBase-root {
+        border-bottom: none;
+      }
+    }
+
     .MuiTabs-scrollButtons {
 
       &:last-child,

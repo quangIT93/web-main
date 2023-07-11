@@ -41,7 +41,7 @@ const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
             opacity: salaryType === 6 ? 0.5 : 1, // Thiết lập opacity thành 0.5 nếu salaryType === 6
           }}
         >
-          Loại tiền *:
+          Loại tiền <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row

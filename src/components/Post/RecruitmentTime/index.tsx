@@ -42,7 +42,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Ngày bắt đầu *:
+            Ngày bắt đầu <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
             value={moment(startDate)}
@@ -56,7 +56,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Ngày kết thúc *:
+            Ngày kết thúc <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker value={moment(endDate)} onChange={handleChangeEndTime} />
         </div>

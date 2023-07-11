@@ -37,7 +37,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          Tên công việc *
+          Tên công việc <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -58,7 +58,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="company"
         >
-          Công ty *:
+          Công ty <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"

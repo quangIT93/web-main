@@ -129,7 +129,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Thành Phố *:
+            Thành Phố <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataProvinces ? dataProvinces : []}
@@ -148,7 +148,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Quận *:
+            Quận <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataDistrict ? dataDistrict : []}
@@ -169,7 +169,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Phường/Xã *:
+            Phường/Xã <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataWard ? dataWard : []}
@@ -188,7 +188,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Địa chỉ *:
+            Địa chỉ <span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
             type="text"

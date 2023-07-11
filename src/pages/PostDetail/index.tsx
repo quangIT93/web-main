@@ -342,7 +342,6 @@ const Detail: React.FC = () => {
               display: 'flex',
               justifyContent: 'center',
               paddingBottom: '30px',
-              marginBottom: '40px',
             }}
           >
             <div className="detail-container">
