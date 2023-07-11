@@ -89,49 +89,53 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   }, [])
 
   return (
-    <Box sx={{ marginTop: '24px' }}>
+    <Box sx={{
+      marginTop: '24px',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
       <Typography
         sx={{ fontWeight: 600, color: '#000000' }}
         variant="body1"
         component="label"
         htmlFor="jobTitle"
       >
-        Danh mục nghề *:
+        Danh mục nghề <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false
-                        break
-                      }
+              value: parentCategory.parent_category_id,
+              label: parentCategory.parent_category,
+              children: parentCategory.childs.map((child: any) => {
+                var dis = false
+                //check id child  when disable = true
+                if (disable) {
+                  dis = true
+                  for (const elem of categoriesId) {
+                    if (elem === child.id) {
+                      dis = false
+                      break
                     }
                   }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  }
-                }),
-              }))
+                }
+                return {
+                  value: child.id,
+                  label: child.name,
+                  disabled: dis,
+                }
+              }),
+            }))
             : []
         }
         onChange={onChange}
         multiple
         maxTagCount="responsive"
         size="large"
-        className="inputCategories"
+        className="input-category-post"
         showCheckedStrategy={SHOW_CHILD}
-        style={{ width: '100%', borderRadius: '2px' }}
+        style={{ borderRadius: '2px' }}
       />
     </Box>
   )

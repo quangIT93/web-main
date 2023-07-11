@@ -26,7 +26,7 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
         component="legend"
         sx={styleLabel}
       >
-        Thời gian làm việc *:
+        Thời gian làm việc <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row

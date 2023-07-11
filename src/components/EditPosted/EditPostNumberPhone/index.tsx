@@ -43,7 +43,7 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder="Nhap so dien thoai"
+      placeholder="Nhập số điện thoại"
       maxLength={16}
     />
   )
@@ -65,7 +65,7 @@ const EditPostNumberPhone: React.FC<IEditPostNumberPhone> = (props) => {
         component="label"
         htmlFor="company"
       >
-        Số điện thoại liên hệ *:
+        Số điện thoại liên hệ <span style={{ color: 'red' }}>*</span>
       </Typography>
       <NumericInput
         style={{ width: '100%', height: 40 }}

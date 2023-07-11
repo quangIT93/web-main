@@ -414,6 +414,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                       height: 40,
                       backgroundColor: `#0D99FF`,
                       color: '#FFFFFF',
+                      marginBottom: '2rem', 
                       fontWeight: "bold"
                     }} loading={uploading} onClick={handleAddItem}>
                       Xem thêm

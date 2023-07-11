@@ -96,15 +96,15 @@ const Navbar: React.FC = () => {
     setOpenNotificate,
     openNotificate,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -195,7 +195,7 @@ const Navbar: React.FC = () => {
       await dispatch(getProfile() as any);
 
       const result = await profileApi.getProfile();
-      if (dataProfile) {
+      if (result) {
         dispatch(getProfile() as any);
       }
     } catch (error) {
@@ -229,7 +229,7 @@ const Navbar: React.FC = () => {
         setCountChat(result.data.quantity);
       }
     } catch (error) {
-      console.log('error', error);
+      console.error('error', error);
     }
   };
 
@@ -388,21 +388,23 @@ const Navbar: React.FC = () => {
     setTimeout(() => {
       window.open(
         `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}` +
-        `${salary_type ? `&sal-type=${salary_type}` : ''}` +
-        `${job_type ? `&job-type=${job_type}` : ''}` +
-        `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
-        `${list_cate.length > 0
-          ? `&${paramsCate.toString()}`
-          : `&${paramsCate.toString()}`
-        }` +
-        `${salary_min ? `&salary_min=${salary_min}` : ''}` +
-        `${salary_max ? `&salary_max=${salary_max}` : ''}` +
-        `${is_working_weekend
-          ? `&is_working_weekend=${is_working_weekend}`
-          : ''
-        }` +
-        `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
-        `${money_type ? `&money_type=${money_type}` : ''}`,
+          `${salary_type ? `&sal-type=${salary_type}` : ''}` +
+          `${job_type ? `&job-type=${job_type}` : ''}` +
+          `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
+          `${
+            list_cate.length > 0
+              ? `&${paramsCate.toString()}`
+              : `&${paramsCate.toString()}`
+          }` +
+          `${salary_min ? `&salary_min=${salary_min}` : ''}` +
+          `${salary_max ? `&salary_max=${salary_max}` : ''}` +
+          `${
+            is_working_weekend
+              ? `&is_working_weekend=${is_working_weekend}`
+              : ''
+          }` +
+          `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
+          `${money_type ? `&money_type=${money_type}` : ''}`,
         '_self',
       );
     }, 1);
@@ -410,11 +412,11 @@ const Navbar: React.FC = () => {
 
   // login
   const handleClickLogin = async (e: any) => {
-    e.stopPropagation();
+    // e.stopPropagation();
     try {
       if (openInfoUser) {
         setSpinning(false);
-        // setOpenInfoUser(!openInfoUser);
+        setOpenInfoUser(!openInfoUser);
       } else {
         setSpinning(true);
       }
@@ -470,9 +472,11 @@ const Navbar: React.FC = () => {
     try {
       console.log('logout thành công');
       const refreshToken = localStorage.getItem('refreshToken');
+      console.log('refreshToken', refreshToken);
 
       if (refreshToken) {
         const result = await authApi.signOut(refreshToken);
+        console.log('result', result);
 
         if (result) {
           window.location.replace('/home');
@@ -584,9 +588,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -601,10 +605,10 @@ const Navbar: React.FC = () => {
                 <span>Đăng xuất</span>
               </div>
 
-              <div className="sub-login_item">
+              {/* <div className="sub-login_item" onClick={handleLogout}>
                 <FlagVNIcon />
                 <span>Đổi ngôn ngữ</span>
-              </div>
+              </div> */}
             </div>
           </div>
         )}
@@ -673,9 +677,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -698,8 +702,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin

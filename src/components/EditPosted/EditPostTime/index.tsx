@@ -51,7 +51,7 @@ const EditPostTime: React.FC<IEditPostTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Giờ làm việc *:
+            Giờ làm việc <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Space
             direction="horizontal"

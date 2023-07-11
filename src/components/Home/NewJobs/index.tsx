@@ -14,12 +14,17 @@ import CircularProgress from '@mui/material/CircularProgress';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { NewJobIcon } from '#components/Icons';
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
+// import compornent
+
+import ShowCancleSave from '../../ShowCancleSave';
+import ShowNotificativeSave from '../../ShowNotificativeSave';
 // import api
 import postApi from 'api/postApi';
 import bookMarkApi from 'api/bookMarkApi';
@@ -85,6 +90,8 @@ const NewJobs: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const [showNofySave, setShowNofySave] = React.useState(false);
 
   const navigate = useNavigate();
 
@@ -172,8 +179,12 @@ const NewJobs: React.FC = () => {
     <>
       {
         // automatic && (
-        <Box sx={{ flexGrow: 1, marginTop: '300px' }} ref={listRef}>
-          <h2 style={{ margin: '12px 0' }}>Công việc mới nhất</h2>
+        <Box sx={{ flexGrow: 1, marginTop: '300px' }} className='new-job' ref={listRef}>
+          <div style={{display: 'flex', gap: '0.5rem', margin: '12px 0'}}>
+            <NewJobIcon width={25} height={25}/>
+            <h2>Công việc mới nhất</h2>
+          </div>
+         
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
             {postNewest.data.posts.map((item: PostNewest, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -200,13 +211,21 @@ const NewJobs: React.FC = () => {
             sx={{
               color: '#0d99ff ',
               backgroundColor: 'transparent',
+              // boxShadow: 'none',
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-          //  onClick={handleClose}
+            //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
+
+          <ShowNotificativeSave
+          // setShowNofySave={setShowNofySave}
+          // showNofySave={showNofySave}
+          />
+
+          <ShowCancleSave />
         </Box>
         // )
       }

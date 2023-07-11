@@ -40,7 +40,7 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder="Nhap so dien thoai"
+      placeholder="Nhập số điện thoại"
       maxLength={16}
     />
   )
@@ -59,14 +59,14 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
   }
 
   return (
-    <Box>
+    <Box sx={{ marginTop: "24px" }}>
       <Typography
         sx={styleLabel}
         variant="body1"
         component="label"
         htmlFor="company"
       >
-        Số điện thoại liên hệ *:
+        Số điện thoại liên hệ <span style={{ color: 'red' }}>*</span>
       </Typography>
       <NumericInput
         style={{ width: '100%', height: 40 }}

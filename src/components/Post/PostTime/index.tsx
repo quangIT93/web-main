@@ -49,7 +49,7 @@ const PostTime: React.FC<IPostTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Giờ làm việc *:
+            Giờ làm việc <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Space
             direction="horizontal"
@@ -65,6 +65,7 @@ const PostTime: React.FC<IPostTime> = (props) => {
               onChange={handleChangeStartTime}
               value={moment(new Date(startTime))}
             />
+            <div className='connect'>-</div>
             {/* <SwapRightOutlined className="icon-time" style={{ fontSize: 35 }} /> */}
             <TimePicker
               // ampm={false}

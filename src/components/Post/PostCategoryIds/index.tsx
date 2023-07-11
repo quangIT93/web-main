@@ -107,7 +107,7 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
         component="label"
         htmlFor="jobTitle"
       >
-        Danh mục nghề *:
+        Danh mục nghề <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Autocomplete
         open={true}

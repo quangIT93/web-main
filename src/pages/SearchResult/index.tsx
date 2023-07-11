@@ -57,7 +57,7 @@ import bookMarkApi from 'api/bookMarkApi';
 import searchApi from 'api/searchApi';
 import profileApi from 'api/profileApi';
 import locationApi from 'api/locationApi';
-import Footer from '../../components/Footer/index';
+import Footer from '../../components/Footer/Footer';
 
 import moment from 'moment';
 import 'intl';

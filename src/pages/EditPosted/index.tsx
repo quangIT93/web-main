@@ -1,7 +1,7 @@
 import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 import { useSearchParams } from 'react-router-dom';
-import Footer from '../../components/Footer/index';
+import Footer from '../../components/Footer/Footer';
 
 import { Skeleton } from 'antd';
 import { message } from 'antd';

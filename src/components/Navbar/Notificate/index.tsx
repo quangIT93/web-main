@@ -37,7 +37,12 @@ import notificationApi from 'api/notification';
 import notificationKeywordApi from 'api/notificationKeyword';
 import locationApi from '../../../api/locationApi';
 
-import { LocationIcon, CateIcon, CreateKeywordIcon } from '#components/Icons';
+import {
+  LocationIcon,
+  CateIcon,
+  CreateKeywordIcon,
+  LocationHomeIcon,
+} from '#components/Icons';
 
 import './style.scss';
 // import fake data notificates
@@ -203,7 +208,8 @@ const Notificate = () => {
                           title={`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
                         >
                           <li>
-                            <LocationIcon />
+                            {/* <LocationIcon /> */}
+                            <LocationHomeIcon />
                             <p>
                               {`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
                             </p>
@@ -303,7 +309,7 @@ const Notificate = () => {
                       <h3>{dataKeyword.keyword}</h3>
                       <ul>
                         <li>
-                          <LocationIcon />
+                          <LocationHomeIcon />
                           <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p>
                         </li>
                         <li>

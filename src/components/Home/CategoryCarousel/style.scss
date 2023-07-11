@@ -4,8 +4,16 @@
   display: flex;
   align-items: center;
 
-  @media screen and (max-width: 1281px) {
-    margin: 0 !important;
+  @media screen and (max-width: 1280px) and (min-width: 1221px) {
+    margin: 0 24px !important;
+  }
+
+  @media screen and (max-width: 1220px) and (min-width: 1201px) {
+    margin: 0 10px !important;
+  }
+
+  @media screen and (max-width: 1200px) {
+    margin: 0 20px !important;
   }
 
   .MuiTabScrollButton-horizontal {}
@@ -24,7 +32,7 @@
   }
 
   .MuiButtonBase-root {
-    border-bottom: 1px solid #dcdcdc;
+    // border-bottom: 1px solid #dcdcdc;
     flex: 1;
     min-width: 100px;
   }
@@ -57,6 +65,16 @@
     //   &::-webkit-scrollbar-thumb:hover {
     //     background: #aaa;
     //   }
+
+    .MuiTabs-flexContainer {
+      flex-wrap: nowrap;
+      gap: 10px;
+
+      .MuiButtonBase-root {
+        border-bottom: none;
+      }
+    }
+
     .MuiTabs-scrollButtons {
 
       &:last-child,
@@ -66,7 +84,7 @@
         height: 132px;
         min-width: 44px;
         z-index: 1;
-        background-color: rgba(0, 0, 0, 0.1);
+        // background-color: rgba(0, 0, 0, 0.1);
         // &:hover {
         //   background-color: #AAAAAA;
         // }
@@ -107,9 +125,23 @@
   }
 
   .MuiStack-root {
-    @media screen and (max-width: 1281px) {
-      left: 0 !important;
-      right: 0 !important;
+    @media screen and (max-width: 1280px) and (min-width: 1221px) {
+      left: 24px !important;
+      right: 24px !important;
+    }
+
+    @media screen and (max-width: 1220px) and (min-width: 1201px) {
+      left: 10px !important;
+      right: 10px !important;
+    }
+
+    @media screen and (max-width: 1200px) {
+      left: 20px !important;
+      right: 20px !important;
+    }
+
+    @include breakpoint(mobile) {
+      margin-top: 218px !important;
     }
   }
 }

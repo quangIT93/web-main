@@ -5,25 +5,41 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import NavBar from '../../components/Navbar/index';
 import { AxiosResponse } from 'axios';
-import Footer from '../../components/Footer/index';
+import Footer from '../../components/Footer/Footer';
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+// import api
 import postApi from '../../api/postApi';
+import bookMarkApi from 'api/bookMarkApi';
+
+// import redux
+// import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 // import locationApi from '../../api/locationApi'
 import appplicationApi from 'api/appplication';
 import ItemSuggest from './components/ItemSuggest';
+import ShowCancleSave from '#components/ShowCancleSave';
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
+
 // @ts-ignore
 import { Carousel } from 'react-carousel-minimal';
 import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
+
+import Box from '@mui/material/Box';
+
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
 //@ts-ignore
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 //@ts-ignore
 // import { StatePropsCloseSlider } from 'pages/Home'
 
-import {
-  // useDispatch,
-  useSelector,
-} from 'react-redux';
 // import { bindActionCreators } from 'redux'
 // import { actionCreators } from '../../store/index'
 import { RootState } from '../../store/reducer';
@@ -41,7 +57,42 @@ import {
   ExclamationCircleFilled,
 } from '@ant-design/icons';
 
+import { SaveIcon, ShareIcon } from '#components/Icons';
+
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import TurnedInIcon from '@mui/icons-material/TurnedIn';
+
+import { PostNewest } from '#components/Home/NewJobs';
+
 import './style.scss';
+
+const itemsShare = [
+  {
+    nameShare: 'Sao chép liên kết',
+    icon: 'icon',
+    source: '',
+  },
+  {
+    nameShare: 'Mail',
+    icon: 'icon',
+    source: '',
+  },
+  {
+    nameShare: 'Messenger',
+    icon: 'icon',
+    source: '',
+  },
+  {
+    nameShare: 'Facebook',
+    icon: 'icon',
+    source: '',
+  },
+  {
+    nameShare: 'Zalo',
+    icon: 'icon',
+    source: '',
+  },
+];
 
 interface ItemCategories {
   child_category_id?: Number;
@@ -51,26 +102,39 @@ interface ItemCategories {
   parent_category_id: Number;
 }
 
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'background.paper',
+  border: 'none',
+  outline: 'none',
+  borderRadius: '10px',
+  p: 4,
+};
 // state props
-interface PostNewest {
-  id?: Number;
-  status?: Number;
-  account_id?: string;
-  title?: string;
-  company_name?: string;
-  is_date_period?: number;
-  start_date?: number;
-  end_date?: number;
-  start_time?: number;
-  image?: string;
-}
+// interface PostNewest {
+//   id?: Number;
+//   status?: Number;
+//   account_id?: string;
+//   title?: string;
+//   company_name?: string;
+//   is_date_period?: number;
+//   start_date?: number;
+//   end_date?: number;
+//   start_time?: number;
+//   image?: string;
+// }
 const ACCESS_TOKEN = localStorage.getItem('accessToken');
 
 // page view details post
 const Detail: React.FC = () => {
   // const { Search } = Input
   // test redux
-  const userProfile = useSelector((state: RootState) => state.profileUser);
+  // const userProfile = useSelector((state: RootState) => state.profileUser);
+  const userProfile = useSelector((state: RootState) => state.profile.profile);
   // const dispatch = useDispatch()
   // const { setPostByTheme, setProvince } = bindActionCreators(
   //   actionCreators,
@@ -96,6 +160,12 @@ const Detail: React.FC = () => {
   const [checkApply, setCheckApply] = React.useState<boolean>(false);
 
   const [api, contextHolder] = notification.useNotification();
+
+  const [bookmarked, setBookmarked] = React.useState(false);
+
+  const [openModalShare, setOpenModalShare] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const POST_ID = Number(searchParams.get('post-id'));
 
@@ -146,49 +216,55 @@ const Detail: React.FC = () => {
 
       const result = await postApi.getById(POST_ID);
       if (result) {
-        console.log('post detail', result);
-      }
-      // const list = result?.data.categories.map((category: any) =>
-      //   Number(category.child_category_id)
-      // )
-      // console.log('child', list)
+        // const list = result?.data.categories.map((category: any) =>
+        //   Number(category.child_category_id)
+        // )
+        // console.log('child', list)
 
-      // check  application status
-      if (result.data.account_id === accountId) {
-        setTextButton('Chỉnh sửa bài tuyển dụng');
-        setBackgroundButton('black');
-        setCheckPostUser(true);
-      } else if (result.data.status === 3) {
-        setTextButton('Bài đăng đã đóng');
-        setBackgroundButton('gray');
-        result.data.applied = true;
-      } else if (result.data.application_status === 1) {
-        setTextButton('Đã ứng tuyển');
-        setBackgroundButton('gray');
-      } else if (result.data.application_status === 2) {
-        setTextButton('Hồ sơ được phê duyệt');
-        setBackgroundButton('#0D99FF');
-      } else if (result.data.application_status === 3) {
-        setTextButton('Hồ sơ bị từ chối');
-        setBackgroundButton('#BD3131');
-      } else if (result.data.application_status === 4) {
-        setTextButton('Hồ sơ được chấp nhận');
-        setBackgroundButton('#5CB265');
-      }
-      setPost(result);
-      setCheckApply(result.data.applied);
+        // check  application status
+        if (result.data.account_id === accountId) {
+          setTextButton('Chỉnh sửa bài tuyển dụng');
+          setBackgroundButton('black');
+          setCheckPostUser(true);
+        } else if (result.data.status === 3) {
+          setTextButton('Bài đăng đã đóng');
+          setBackgroundButton('gray');
+          result.data.applied = true;
+        } else if (result.data.application_status === 1) {
+          setTextButton('Đã ứng tuyển');
+          setBackgroundButton('gray');
+        } else if (result.data.application_status === 2) {
+          setTextButton('Hồ sơ được phê duyệt');
+          setBackgroundButton('#0D99FF');
+        } else if (result.data.application_status === 3) {
+          setTextButton('Hồ sơ bị từ chối');
+          setBackgroundButton('#BD3131');
+        } else if (result.data.application_status === 4) {
+          setTextButton('Hồ sơ được chấp nhận');
+          setBackgroundButton('#5CB265');
+        }
+        setPost(result);
+        setCheckApply(result.data.applied);
 
-      // get post related by id post
-      const postNewest = await postApi.getPostRelated(POST_ID);
-      //setPost related
-      setPostNewest(postNewest);
+        if (result.data.bookmarked) {
+          setBookmarked(true);
+        } else {
+          setBookmarked(false);
+        }
+
+        // get post related by id post
+        const postNewest = await postApi.getPostRelated(POST_ID);
+        //setPost related
+        setPostNewest(postNewest);
+      }
     } catch (error) {
       console.error(error);
     }
   };
+
   React.useEffect(() => {
     getPostById();
-  }, []);
+  }, [bookmarked]);
 
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -226,10 +302,17 @@ const Detail: React.FC = () => {
     },
   ];
 
+  // React.useEffect(() => {
+
+  // }, [])
+
   // handle click button
   const onclick = async () => {
     //  window.open(`${post?.data.share_link}`)
-
+    console.log('accessToken', ACCESS_TOKEN);
+    console.log('POST_ID', POST_ID);
+    console.log('checkPostUser', checkPostUser);
+    console.log('userProfile', userProfile);
     try {
       if (!ACCESS_TOKEN) {
         CheckWasLogin();
@@ -260,15 +343,30 @@ const Detail: React.FC = () => {
       }
 
       const result = await appplicationApi.applyAplication(POST_ID);
-
+      console.log('result', result);
       if (result) {
         openNotification();
         setTextButton('Đã ứng tuyển');
         setBackgroundButton('gray');
         setCheckApply(true);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      console.log('error', error.code);
+      console.log('error', error.status);
+      if (error.response.status === 400) {
+        api.info({
+          message: `Ứng tuyển không thành công!`,
+          description: 'Bạn đã ứng tuyển vị trí này',
+          placement: 'top',
+          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+        });
+        setTextButton('Đã ứng tuyển');
+        setBackgroundButton('gray');
+        setCheckApply(true);
+        openNotification();
+        return;
+      }
     }
   };
 
@@ -284,12 +382,69 @@ const Detail: React.FC = () => {
   setTimeout(() => {
     setAutomatic(true);
   }, 700);
+
+  console.log('postNewest', post);
+
+  const handleClickShare = () => {
+    setOpenModalShare(true);
+  };
+
+  const handleClickSave = async () => {
+    // const a = post?.data.bookmarked;
+    console.log('postMarked', post?.data.bookmarked);
+    console.log('bookmarked', bookmarked);
+    try {
+      if (post?.data.bookmarked && bookmarked) {
+        const result = await bookMarkApi.deleteBookMark(post?.data.id);
+
+        if (result) {
+          setBookmarked(!bookmarked);
+          dispatch<any>(setAlertCancleSave(true));
+        }
+      } else if (!post?.data.bookmarked && !bookmarked) {
+        const result = await bookMarkApi.createBookMark(post?.data.id);
+
+        if (result) {
+          dispatch<any>(setAlertSave(true));
+          setBookmarked(!bookmarked);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log('bookmarked', bookmarked);
+
+  const handleCloseModalShare = () => {
+    setOpenModalShare(false);
+  };
+
+  const handleClickShareSource = (nameShare: string) => {
+    // window.location.href = `mailto:${email}`;
+    if (nameShare === 'Mail') {
+      // window.location.href = `mailto:quangbk54@gmail.com`;
+      window.location.href = `mailto:?body=${encodeURIComponent(
+        post?.data.share_link,
+      )}`;
+    }
+    if (nameShare === 'Messenger') {
+      // fb-messenger://share/?link=${encodeURIComponent(linkToShare)}
+      // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
+      window.location.href = `https://fb-messenger://share`;
+      const messengerLink =
+        'fb-messenger://share?link=' +
+        encodeURIComponent('https://newsroom.fb.com/');
+      window.location.href = messengerLink;
+    }
+  };
+
   return (
     <>
       {automatic && (
         <div className="detail">
           <NavBar />
-          <div className="div-include-breadcrumb">
+          {/* <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
                 <Breadcrumb
@@ -305,16 +460,16 @@ const Detail: React.FC = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
           <div
             style={{
               display: 'flex',
               justifyContent: 'center',
-              paddingBottom: '30px',
+              paddingBottom: '70px',
             }}
           >
             <div className="detail-container">
-              <div ref={componentRef}>
+              <div className="div-job-img" ref={componentRef}>
                 <Carousel
                   data={post?.data.images.length > 0 ? post?.data.images : data}
                   time={2000}
@@ -342,7 +497,39 @@ const Detail: React.FC = () => {
               </div>
               <div className="div-job-title" ref={componentRefJob}>
                 <div className="title">
-                  <h2>{post?.data.title}</h2>
+                  <div className="top-title">
+                    <h2>{post?.data.title}</h2>
+                    <div className="share-save-icon">
+                      <div
+                        className="share-job-icon"
+                        onClick={handleClickShare}
+                      >
+                        <ShareIcon width={24} height={24} />
+                        {/* <div className="items-share">
+                          <Link
+                            to="#"
+                            onClick={() => {
+                              window.location.href = `mailto:kalsjkahsjkfasjfkajkshfjkashkj@gmail.com`;
+                            }}
+                          >
+                            send
+                          </Link>
+                        </div> */}
+                      </div>
+                      <div className="save-job-icon" onClick={handleClickSave}>
+                        {bookmarked ? (
+                          // <SaveIcon width={24} height={24} />
+                          <TurnedInIcon
+                            sx={{ color: '#0d99ff', fontSize: '32px' }}
+                          />
+                        ) : (
+                          <BookmarkBorderOutlinedIcon
+                            sx={{ fontSize: '32px' }}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
                   <h3>{post?.data.company_name}</h3>
                 </div>
                 <div className="job-title-details">
@@ -502,21 +689,56 @@ const Detail: React.FC = () => {
               <div className="div-suggest">
                 <h3 style={{ paddingLeft: 10 }}>Việc làm tương tự </h3>
                 <div className="item">
-                  {postNewest?.data.posts.map(
+                  {postNewest?.data?.posts.map(
                     (item: PostNewest, index: null | number) => (
-                      <ItemSuggest
-                        key={index}
-                        content={item.title}
-                        imgBackground={item.image}
-                        describe={item.company_name}
-                        postId={item.id}
-                      />
+                      <ItemSuggest item={item} />
                     ),
                   )}
                 </div>
               </div>
             </div>
           </div>
+          <ShowNotificativeSave
+          // setShowNofySave={setShowNofySave}
+          // showNofySave={showNofySave}
+          />
+          <ShowCancleSave />
+          <Modal
+            open={openModalShare}
+            onClose={handleCloseModalShare}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Chia sẻ công việc này
+              </Typography>
+              <div className="wrap-info_modalShare">
+                <div className="wrap-img_info">
+                  <div className="wrap-img">
+                    <img src={post?.data.image} alt={post?.data.company_name} />
+                  </div>
+                  <div>
+                    <Typography sx={{ ml: 2 }}>
+                      {post?.data.company_name}
+                    </Typography>
+                    <Typography sx={{ ml: 2 }}>{post?.data.title}</Typography>
+                  </div>
+                </div>
+              </div>
+              <div className="items-share">
+                {itemsShare.map((itemShare) => (
+                  <Link
+                    to={`/post-detail?post-id=${post?.data.id}`}
+                    className="item-share"
+                    onClick={() => handleClickShareSource(itemShare.nameShare)}
+                  >
+                    <span>{itemShare.nameShare}</span>
+                  </Link>
+                ))}
+              </div>
+            </Box>
+          </Modal>
           <Footer />
         </div>
       )}

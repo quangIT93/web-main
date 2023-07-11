@@ -1,11 +1,16 @@
+@import '../../../scss/mixins';
+@import '../../../scss/variable';
+
 .tabThemeJob {
   position: relative;
+
   .div-info-themes-item {
     text-align: center;
     margin-top: -55px;
     position: absolute;
     width: 85%;
   }
+
   .MuiButtonBase-root.MuiButtonBase-root {
     color: white;
     font-weight: bold;
@@ -13,7 +18,8 @@
   }
 }
 
-.tabThemeJob > {
+.tabThemeJob> {
+
   :last-child,
   :first-child {
     background-color: #ffffff;
@@ -21,6 +27,7 @@
     top: 0;
     bottom: 0;
     z-index: 1;
+
     svg {
       width: 30px;
       height: 30px;
@@ -41,4 +48,8 @@
     left: 0px;
     padding-left: 12px;
   }
+}
+
+.MuiTabs-indicator {
+  background-color: $primary-color !important;
 }

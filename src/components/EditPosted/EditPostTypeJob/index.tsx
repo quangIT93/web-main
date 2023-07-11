@@ -44,7 +44,7 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>
       <FormLabel id="editPostTypeJob" sx={styleLabel}>
-        Loại công việc *:
+        Loại công việc <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row

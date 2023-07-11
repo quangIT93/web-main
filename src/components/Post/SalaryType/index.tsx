@@ -38,7 +38,7 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
     <Box sx={{ marginTop: '24px' }}>
       <FormControl sx={{ width: '100%' }}>
         <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>
-          Trả lương theo *:
+          Trả lương theo <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row

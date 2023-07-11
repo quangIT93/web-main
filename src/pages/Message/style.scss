@@ -6,7 +6,6 @@
 
   .message-page_main {
     padding: 20px 180px;
-    margin: 12px auto;
 
     @media screen and (min-width:1025px) and (max-width: 1280px) {
       padding-inline: 24px 24px;
@@ -41,6 +40,7 @@
       border-radius: 8px;
       height: 540px;
       margin-top: 12px;
+      margin-bottom: 24px;
 
       .message-page_left {
         flex: 2;
@@ -53,7 +53,7 @@
 
       .message-page_right {
         flex: 4;
-        height: 540px;
+        height: 100%;
 
         @include breakpoint(mobile) {
           display: none !important;

@@ -29,7 +29,7 @@ const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
   return editDataPosted ? (
     <FormControl sx={{ marginTop: '24px' }}>
       <FormLabel id="limit-time" component="legend" sx={styleLabel}>
-        Thời gian làm việc *:
+        Thời gian làm việc <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row

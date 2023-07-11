@@ -34,7 +34,6 @@ const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
-        padding: '12px 0',
       }}
     >
       <FormControl sx={{ marginTop: '24px' }}>
@@ -47,7 +46,7 @@ const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
           }}
           color="warning"
         >
-          Loại tiền *:
+          Mức lương <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row

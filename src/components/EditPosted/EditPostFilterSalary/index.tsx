@@ -79,10 +79,9 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
-        padding: '12px 0',
       }}
     >
-      <Space size={50} style={{ marginTop: 10 }}>
+      <Space size={50} style={{ marginTop: 24 }}>
         <Space direction="vertical">
           <Typography
             sx={{
@@ -93,7 +92,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Lương tối thiểu*:
+            Lương tối thiểu <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}
@@ -117,7 +116,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Lương tối đa *:
+            Lương tối đa <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}

@@ -269,7 +269,7 @@ const BreadcrumbsCpn: React.FC = () => {
         // position: 'relative',
         position: 'fixed',
         // sua
-        top: '-23px',
+        top: '-25px',
         zIndex: '1',
         background: '#ffffff',
         padding: '16px 8px ',
