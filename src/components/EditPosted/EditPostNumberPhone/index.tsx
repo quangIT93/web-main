@@ -43,7 +43,7 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder="Nhap so dien thoai"
+      placeholder="Nhập số điện thoại"
       maxLength={16}
     />
   )

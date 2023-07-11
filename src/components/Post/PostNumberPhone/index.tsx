@@ -40,7 +40,7 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder="Nhap so dien thoai"
+      placeholder="Nhập số điện thoại"
       maxLength={16}
     />
   )
@@ -59,7 +59,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
   }
 
   return (
-    <Box>
+    <Box sx={{ marginTop: "24px" }}>
       <Typography
         sx={styleLabel}
         variant="body1"

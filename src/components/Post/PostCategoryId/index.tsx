@@ -89,7 +89,11 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   }, [])
 
   return (
-    <Box sx={{ marginTop: '24px' }}>
+    <Box sx={{
+      marginTop: '24px',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
       <Typography
         sx={{ fontWeight: 600, color: '#000000' }}
         variant="body1"
@@ -129,9 +133,9 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         multiple
         maxTagCount="responsive"
         size="large"
-        className="inputCategories"
+        className="input-category-post"
         showCheckedStrategy={SHOW_CHILD}
-        style={{ width: '100%', borderRadius: '2px' }}
+        style={{ borderRadius: '2px' }}
       />
     </Box>
   )

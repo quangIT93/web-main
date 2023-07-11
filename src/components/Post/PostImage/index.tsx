@@ -124,7 +124,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
               className="item-image"
               style={{
                 // padding: '12px',
-                border: '1px solid #ccc',
+                // border: '1px solid #ccc',
                 position: 'relative',
                 marginRight: '12px',
                 height: '150px',
@@ -166,7 +166,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          Có thể tải tối đa 5 ảnh, mỗi ảnh không quá 10MB. (Định dạng cho phép:
+          Có thể tải tối đa 5 ảnh, mỗi ảnh không quá 5MB. (Định dạng cho phép:
           jpeg, jpg, png)
         </Typography>
 

@@ -6,7 +6,7 @@ import type { SelectProps } from 'antd'
 import searchApi from 'api/searchApi'
 import './style.scss'
 import { Spin } from 'antd'
-import { CloseOutlined, SearchOutlined } from '@ant-design/icons'
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons'
 import { SearchIcon, FilterIcon } from '../../Icons/index'
 
 import {
@@ -249,7 +249,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
         allowClear={true}
         // onBlur={handleOnBlur}
         removeIcon={<CloseOutlined />}
-        menuItemSelectedIcon={<Spin size="small">dec</Spin>}
+        menuItemSelectedIcon={<CheckOutlined />}
         // dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
       />

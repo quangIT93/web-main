@@ -79,10 +79,9 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
-        padding: '12px 0',
       }}
     >
-      <Space size={50} style={{ marginTop: 10 }}>
+      <Space size={50} style={{ marginTop: 24 }}>
         <Space direction="vertical">
           <Typography
             sx={{
