@@ -7,6 +7,7 @@
   background: #ffffff;
   box-shadow: 2px 2px 5px #aaaaaa;
   width: 320px;
+
   .header-breabcrumb_text {
     cursor: pointer;
     display: flex;
@@ -28,11 +29,13 @@
     flex-direction: column;
     margin: 8px 16px;
   }
+
   .wrapBtn-breadcrumb_nav {
     margin: 16px auto;
     display: flex;
     align-items: center;
     justify-content: center;
+
     .btn-breadcrumb_nav {
       cursor: pointer;
       border-radius: 5px;
@@ -48,6 +51,7 @@
       line-height: 18px;
     }
   }
+
   ::-webkit-scrollbar {
     width: 3px;
   }
@@ -64,6 +68,6 @@
 }
 
 .css-pa55th-MuiStack-root>:not(style)+:not(style) {
-  margin-top: 118px !important;
-  
+  margin-top: 210px !important;
+
 }
