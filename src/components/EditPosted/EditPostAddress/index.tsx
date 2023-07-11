@@ -176,7 +176,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="addressTitle"
           >
-            Thành Phố *:
+            Thành Phố <span style={{ color: 'red' }}>*</span>
           </Typography>
 
           <Autocomplete
@@ -205,7 +205,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Quận *:
+            Quận <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataDistricts ? dataDistricts : []}
@@ -229,7 +229,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Phường/Xã *:
+            Phường/Xã <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataWards ? dataWards : []}
@@ -252,7 +252,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Địa chỉ *:
+            Địa chỉ <span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
             type="text"

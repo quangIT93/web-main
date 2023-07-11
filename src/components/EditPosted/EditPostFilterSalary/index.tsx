@@ -93,7 +93,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Lương tối thiểu*:
+            Lương tối thiểu <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}
@@ -117,7 +117,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Lương tối đa *:
+            Lương tối đa <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}

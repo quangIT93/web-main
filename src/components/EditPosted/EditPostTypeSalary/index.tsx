@@ -47,7 +47,7 @@ const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
           }}
           color="warning"
         >
-          Loại tiền *:
+          Loại tiền <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row

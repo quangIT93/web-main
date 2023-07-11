@@ -1,29 +1,36 @@
 @import '../../scss/mixins';
+
 .profile {
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 100%;
+
   .footer-right {
     @include breakpoint(mobile) {
       margin-top: 0px;
     }
   }
+
   .container {
     width: 80%;
     padding: 50px 00px;
     margin-top: 100px;
+
     @include breakpoint(mobile) {
       width: 95%;
       padding: 0px;
     }
+
     @include breakpoint(tablet) {
       width: 95%;
       padding: 0px;
     }
+
     .div-profile-avatar {
       width: 100%;
     }
+
     .div-avatar {
       display: flex;
       flex-direction: row;
@@ -35,9 +42,11 @@
     .div-profile-info {
       width: 100%;
       box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 10px;
       margin-top: 30px;
       padding: 15px 20px;
+
       h3 {
         color: #001424;
       }
@@ -45,11 +54,13 @@
       .info-detail {
         display: flex;
         flex-direction: row;
+
         .div-detail-row {
           display: flex;
           flex-direction: column;
           margin-top: 10px;
         }
+
         .left {
           p {
             color: #aaaaaa;
@@ -57,14 +68,17 @@
             margin-top: 7px;
           }
         }
+
         .right {
           margin-left: 15px;
+
           p {
             font-size: 16px;
             margin-top: 7px;
           }
         }
       }
+
       .item-info-work {
         margin-top: 20px;
 
@@ -77,6 +91,7 @@
     }
   }
 }
+
 .skeleton-item {
   margin-bottom: 20px;
 }

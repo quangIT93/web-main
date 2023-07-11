@@ -22,7 +22,7 @@ const Description: React.FC<IDescription> = (props) => {
         component="label"
         htmlFor="startTime"
       >
-        Mô tả công việc *:
+        Mô tả công việc <span style={{ color: 'red' }}>*</span>
       </Typography>
       <TextField
         // className={classes.textarea}
