@@ -12,6 +12,7 @@ import { AxiosResponse } from 'axios'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import { TopicJobIcon } from '#components/Icons'
 
 // @ts-ignore
 import moment from 'moment'
@@ -170,8 +171,11 @@ const ThemesJob: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <h2>Công việc theo chủ đề</h2>
-
+        <div style={{display: 'flex', gap: '0.5rem', margin: '5px 0'}}>
+            <TopicJobIcon width={25} height={25}/>
+            <h2>Công việc theo chủ đề</h2>
+        </div>
+      
       <ListCompanyCarousel listTheme={listTheme} />
       <>
         {automatic && (
