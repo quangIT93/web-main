@@ -20,8 +20,7 @@ import {
   CaretDownFilled,
 } from '@ant-design/icons';
 
-import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
-import { setAlertCancleSave } from 'store/reducer/alertReducer';
+import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
 import { LocationHomeIcon, DolaIcon } from '#components/Icons';
 
@@ -35,7 +34,7 @@ import HomeValueContextProvider, {
   HomeValueContext,
 } from 'context/HomeValueContextProvider';
 
-import ShowNotificativeSave from '../ShowNotificativeSave';
+import ShowNotificativeSave from '../../ShowNotificativeSave';
 interface IitemNewJob {
   item: {
     id: number;
@@ -285,7 +284,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                     );
                     props.item.bookmarked = true;
                     if (result) {
-                      dispatch<any>(setAlert(true));
+                      dispatch<any>(setAlertSave(true));
                       setCheckBookMark(!checkBookMark);
                     }
                   }

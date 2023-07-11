@@ -4,13 +4,14 @@ const showAlert = createSlice({
   name: 'alert',
   initialState: {
     alert: false,
+    cancalAlert: false
   },
   reducers: {
     setAlertSave: (state, action) => {
       state.alert = action.payload
       },
       setAlertCancleSave: (state, action) => {
-        state.alert = action.payload
+        state.cancalAlert = action.payload
       },
   },
 })

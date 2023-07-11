@@ -5,7 +5,6 @@ import Stack from '@mui/material/Stack';
 
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
-import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
 import './style.scss';
@@ -25,7 +24,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 const ShowCancleSave: React.FC = () => {
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
-  const cancleSave = useSelector((state: any) => state.showAlert.alert);
+  const cancleSave = useSelector((state: any) => state.showAlert.cancalAlert);
 
   // const alert = false;
 

@@ -8,22 +8,38 @@ import { AxiosResponse } from 'axios';
 import Footer from '../../components/Footer/Footer';
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+// import api
 import postApi from '../../api/postApi';
+import bookMarkApi from 'api/bookMarkApi';
+
+// import redux
+// import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 // import locationApi from '../../api/locationApi'
 import appplicationApi from 'api/appplication';
 import ItemSuggest from './components/ItemSuggest';
+import ShowCancleSave from '#components/ShowCancleSave';
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
+
 // @ts-ignore
 import { Carousel } from 'react-carousel-minimal';
 import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
+
+import Box from '@mui/material/Box';
+
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
 //@ts-ignore
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 //@ts-ignore
 // import { StatePropsCloseSlider } from 'pages/Home'
 
-import {
-  // useDispatch,
-  useSelector,
-} from 'react-redux';
 // import { bindActionCreators } from 'redux'
 // import { actionCreators } from '../../store/index'
 import { RootState } from '../../store/reducer';
@@ -43,9 +59,40 @@ import {
 
 import { SaveIcon, ShareIcon } from '#components/Icons';
 
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import TurnedInIcon from '@mui/icons-material/TurnedIn';
+
 import { PostNewest } from '#components/Home/NewJobs';
 
 import './style.scss';
+
+const itemsShare = [
+  {
+    nameShare: 'Sao chép liên kết',
+    icon: 'icon',
+    source: '',
+  },
+  {
+    nameShare: 'Mail',
+    icon: 'icon',
+    source: '',
+  },
+  {
+    nameShare: 'Messenger',
+    icon: 'icon',
+    source: '',
+  },
+  {
+    nameShare: 'Facebook',
+    icon: 'icon',
+    source: '',
+  },
+  {
+    nameShare: 'Zalo',
+    icon: 'icon',
+    source: '',
+  },
+];
 
 interface ItemCategories {
   child_category_id?: Number;
@@ -55,6 +102,18 @@ interface ItemCategories {
   parent_category_id: Number;
 }
 
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'background.paper',
+  border: 'none',
+  outline: 'none',
+  borderRadius: '10px',
+  p: 4,
+};
 // state props
 // interface PostNewest {
 //   id?: Number;
@@ -101,6 +160,12 @@ const Detail: React.FC = () => {
   const [checkApply, setCheckApply] = React.useState<boolean>(false);
 
   const [api, contextHolder] = notification.useNotification();
+
+  const [bookmarked, setBookmarked] = React.useState(false);
+
+  const [openModalShare, setOpenModalShare] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const POST_ID = Number(searchParams.get('post-id'));
 
@@ -151,42 +216,47 @@ const Detail: React.FC = () => {
 
       const result = await postApi.getById(POST_ID);
       if (result) {
-        console.log('post detail', result);
-      }
-      // const list = result?.data.categories.map((category: any) =>
-      //   Number(category.child_category_id)
-      // )
-      // console.log('child', list)
+        // const list = result?.data.categories.map((category: any) =>
+        //   Number(category.child_category_id)
+        // )
+        // console.log('child', list)
 
-      // check  application status
-      if (result.data.account_id === accountId) {
-        setTextButton('Chỉnh sửa bài tuyển dụng');
-        setBackgroundButton('black');
-        setCheckPostUser(true);
-      } else if (result.data.status === 3) {
-        setTextButton('Bài đăng đã đóng');
-        setBackgroundButton('gray');
-        result.data.applied = true;
-      } else if (result.data.application_status === 1) {
-        setTextButton('Đã ứng tuyển');
-        setBackgroundButton('gray');
-      } else if (result.data.application_status === 2) {
-        setTextButton('Hồ sơ được phê duyệt');
-        setBackgroundButton('#0D99FF');
-      } else if (result.data.application_status === 3) {
-        setTextButton('Hồ sơ bị từ chối');
-        setBackgroundButton('#BD3131');
-      } else if (result.data.application_status === 4) {
-        setTextButton('Hồ sơ được chấp nhận');
-        setBackgroundButton('#5CB265');
-      }
-      setPost(result);
-      setCheckApply(result.data.applied);
+        // check  application status
+        if (result.data.account_id === accountId) {
+          setTextButton('Chỉnh sửa bài tuyển dụng');
+          setBackgroundButton('black');
+          setCheckPostUser(true);
+        } else if (result.data.status === 3) {
+          setTextButton('Bài đăng đã đóng');
+          setBackgroundButton('gray');
+          result.data.applied = true;
+        } else if (result.data.application_status === 1) {
+          setTextButton('Đã ứng tuyển');
+          setBackgroundButton('gray');
+        } else if (result.data.application_status === 2) {
+          setTextButton('Hồ sơ được phê duyệt');
+          setBackgroundButton('#0D99FF');
+        } else if (result.data.application_status === 3) {
+          setTextButton('Hồ sơ bị từ chối');
+          setBackgroundButton('#BD3131');
+        } else if (result.data.application_status === 4) {
+          setTextButton('Hồ sơ được chấp nhận');
+          setBackgroundButton('#5CB265');
+        }
+        setPost(result);
+        setCheckApply(result.data.applied);
 
-      // get post related by id post
-      const postNewest = await postApi.getPostRelated(POST_ID);
-      //setPost related
-      setPostNewest(postNewest);
+        if (result.data.bookmarked) {
+          setBookmarked(true);
+        } else {
+          setBookmarked(false);
+        }
+
+        // get post related by id post
+        const postNewest = await postApi.getPostRelated(POST_ID);
+        //setPost related
+        setPostNewest(postNewest);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -194,7 +264,7 @@ const Detail: React.FC = () => {
 
   React.useEffect(() => {
     getPostById();
-  }, []);
+  }, [bookmarked]);
 
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -313,7 +383,61 @@ const Detail: React.FC = () => {
     setAutomatic(true);
   }, 700);
 
-  console.log(postNewest);
+  console.log('postNewest', post);
+
+  const handleClickShare = () => {
+    setOpenModalShare(true);
+  };
+
+  const handleClickSave = async () => {
+    // const a = post?.data.bookmarked;
+    console.log('postMarked', post?.data.bookmarked);
+    console.log('bookmarked', bookmarked);
+    try {
+      if (post?.data.bookmarked && bookmarked) {
+        const result = await bookMarkApi.deleteBookMark(post?.data.id);
+
+        if (result) {
+          setBookmarked(!bookmarked);
+          dispatch<any>(setAlertCancleSave(true));
+        }
+      } else if (!post?.data.bookmarked && !bookmarked) {
+        const result = await bookMarkApi.createBookMark(post?.data.id);
+
+        if (result) {
+          dispatch<any>(setAlertSave(true));
+          setBookmarked(!bookmarked);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log('bookmarked', bookmarked);
+
+  const handleCloseModalShare = () => {
+    setOpenModalShare(false);
+  };
+
+  const handleClickShareSource = (nameShare: string) => {
+    // window.location.href = `mailto:${email}`;
+    if (nameShare === 'Mail') {
+      // window.location.href = `mailto:quangbk54@gmail.com`;
+      window.location.href = `mailto:?body=${encodeURIComponent(
+        post?.data.share_link,
+      )}`;
+    }
+    if (nameShare === 'Messenger') {
+      // fb-messenger://share/?link=${encodeURIComponent(linkToShare)}
+      // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
+      window.location.href = `https://fb-messenger://share`;
+      const messengerLink =
+        'fb-messenger://share?link=' +
+        encodeURIComponent('https://newsroom.fb.com/');
+      window.location.href = messengerLink;
+    }
+  };
 
   return (
     <>
@@ -376,11 +500,33 @@ const Detail: React.FC = () => {
                   <div className="top-title">
                     <h2>{post?.data.title}</h2>
                     <div className="share-save-icon">
-                      <div className="share-job-icon">
+                      <div
+                        className="share-job-icon"
+                        onClick={handleClickShare}
+                      >
                         <ShareIcon width={24} height={24} />
+                        {/* <div className="items-share">
+                          <Link
+                            to="#"
+                            onClick={() => {
+                              window.location.href = `mailto:kalsjkahsjkfasjfkajkshfjkashkj@gmail.com`;
+                            }}
+                          >
+                            send
+                          </Link>
+                        </div> */}
                       </div>
-                      <div className="save-job-icon">
-                        <SaveIcon width={24} height={24} />
+                      <div className="save-job-icon" onClick={handleClickSave}>
+                        {bookmarked ? (
+                          // <SaveIcon width={24} height={24} />
+                          <TurnedInIcon
+                            sx={{ color: '#0d99ff', fontSize: '32px' }}
+                          />
+                        ) : (
+                          <BookmarkBorderOutlinedIcon
+                            sx={{ fontSize: '32px' }}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -485,8 +631,8 @@ const Detail: React.FC = () => {
                       <h5>
                         {post?.data.expired_date
                           ? moment(new Date(post?.data.expired_date)).format(
-                            'DD/MM/yyyy',
-                          )
+                              'DD/MM/yyyy',
+                            )
                           : 'Không thời hạn'}
                       </h5>
                     </div>
@@ -552,6 +698,47 @@ const Detail: React.FC = () => {
               </div>
             </div>
           </div>
+          <ShowNotificativeSave
+          // setShowNofySave={setShowNofySave}
+          // showNofySave={showNofySave}
+          />
+          <ShowCancleSave />
+          <Modal
+            open={openModalShare}
+            onClose={handleCloseModalShare}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Chia sẻ công việc này
+              </Typography>
+              <div className="wrap-info_modalShare">
+                <div className="wrap-img_info">
+                  <div className="wrap-img">
+                    <img src={post?.data.image} alt={post?.data.company_name} />
+                  </div>
+                  <div>
+                    <Typography sx={{ ml: 2 }}>
+                      {post?.data.company_name}
+                    </Typography>
+                    <Typography sx={{ ml: 2 }}>{post?.data.title}</Typography>
+                  </div>
+                </div>
+              </div>
+              <div className="items-share">
+                {itemsShare.map((itemShare) => (
+                  <Link
+                    to={`/post-detail?post-id=${post?.data.id}`}
+                    className="item-share"
+                    onClick={() => handleClickShareSource(itemShare.nameShare)}
+                  >
+                    <span>{itemShare.nameShare}</span>
+                  </Link>
+                ))}
+              </div>
+            </Box>
+          </Modal>
           <Footer />
         </div>
       )}
