@@ -8,6 +8,7 @@ import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { Box, Typography, MenuItem, TextField } from '@mui/material'
 import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons'
+import './style.scss'
 
 import { Skeleton } from 'antd'
 
@@ -186,6 +187,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                         loading="lazy"
                         style={{
                           width: '120px',
+                          marginRight: '1rem',
                           maxWidth: 'auto',
                           height: '100%',
                           maxHeight: 150,
@@ -413,6 +415,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                 style={{
                   width: 130,
                   height: 40,
+                  marginBottom: '2rem',
                   backgroundColor: `#0D99FF`,
                   color: '#FFFFFF',
                   fontWeight: 'bold',

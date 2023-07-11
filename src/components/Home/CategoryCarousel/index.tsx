@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
-
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import './style.scss';
 
 // import { categories } from './dataCategory'
@@ -189,6 +189,7 @@ const CategoryCarousel: React.FC = () => {
   };
   // scroll
 
+
   return (
     <Box
       ref={listRef}
@@ -267,39 +268,37 @@ const CategoryCarousel: React.FC = () => {
       className="tabs"
     >
       <Tabs
-        value={value == 0 ? categories?.data[0].id : value}
-        onChange={handleChange}
-        variant="scrollable"
-        scrollButtons={true}
-        aria-label="scrollable auto tabs example"
-        allowScrollButtonsMobile
-        orientation="horizontal"
-        ref={refTab as any}
-        onDragStart={handleDragStart}
-        onDrop={handleDrop}
-        className="cateloryItemFilter"
-        sx={{ overflowX: 'hidden', scroll: 'auto', marginTop: '12px' }}
+          value={value === 0 ? categories?.data[0].id : value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons={true}
+          aria-label="scrollable auto tabs example"
+          allowScrollButtonsMobile
+          orientation="horizontal"
+          ref={refTab as any}
+          onDragStart={handleDragStart}
+          onDrop={handleDrop}
+          className="cateloryItemFilter"
+          sx={{ overflowX: 'hidden', scroll: 'auto', marginTop: '12px' }}
       >
-        {/* <Tab label="Item One">sád</Tab> */}
 
         {categories?.data.map((item: CategoryItem, index: number) => {
           return (
-            <Tab
-              key={index}
-              value={item.id}
-              label={
-                <CategoryItem content={item.name} imageLink={item.image} />
-              }
-              sx={{
-                color: 'black',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                // marginTop: '12px',
-                maxWidth: '120px',
-                borderRadius: '5px',
-              }}
-            />
+              <Tab
+                key={index}
+                value={item.id}
+                label={
+                  <CategoryItem content={item.name} imageLink={item.image} />
+                }
+                sx={{
+                  color: 'black',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  maxWidth: '120px',
+                  borderRadius: '5px',
+                }}
+              />
           );
         })}
       </Tabs>

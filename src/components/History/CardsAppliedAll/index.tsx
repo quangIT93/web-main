@@ -371,6 +371,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
                   width: 130,
                   height: 40,
                   backgroundColor: `#0D99FF`,
+                  marginBottom: '2rem',
                   color: '#FFFFFF',
                   fontWeight: "bold"
                 }} loading={uploading} onClick={handleClickAddItem}>
