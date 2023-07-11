@@ -1,10 +1,44 @@
 @import '../../../scss/mixins';
+
+.input-category-post {
+  width: calc(35px + 60%);
+
+  // @include breakpoint(an_order) {
+  //   width: 61.6%;
+  // }
+
+  // @media screen and (max-width: 4000px) and (min-width: 2200px) {
+  //   width: 60%;
+  // }
+
+  // @media screen and (max-width: 2299px) and (min-width: 2300px) {
+  //   width: 62.4px
+  // }
+
+  // @include breakpoint(destop) {
+  //   width: 63.3%;
+  // }
+
+  // @include breakpoint(largeTablet) {
+  //   width: 63.5%;
+  // }
+
+  // @include breakpoint(tablet) {
+  //   width: 65%;
+  // }
+
+  // @include breakpoint(mobile) {
+  //   width: 51%;
+  // }
+}
+
 .ant-cascader-checkbox {
   // display: none;
 }
 
 .ant-cascader-menus {
   display: flex;
+
   .ant-cascader-menu {
     min-width: 320px;
   }
@@ -34,6 +68,7 @@
       @include breakpoint(tablet) {
         max-width: 130px;
       }
+
       .ant-cascader-menu-item-expand {
         .ant-cascader-menu-item-content {
           @include breakpoint(tablet) {

@@ -8,6 +8,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import Typography from '@mui/material/Typography'
 import moment from 'moment'
 import { TextField } from '@mui/material'
+import { Space } from 'antd';
 
 import { styleLabel } from '../CssEditPost'
 import './style.scss'
@@ -35,9 +36,11 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
   }
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
-      <DemoContainer
-        components={['DatePicker', 'DatePicker']}
-        sx={{ display: 'flex' }}
+      <Space
+        direction="horizontal"
+        wrap={true}
+        size={[16, 8]}
+        style={{ width: '100%' }}
       >
         <div className="wrapTimeDay">
           <Typography
@@ -53,6 +56,7 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             onChange={handleChangeStartTime}
           />
         </div>
+        <div className='connect'>-</div>
         <div className="wrapTimeDay">
           <Typography
             sx={styleLabel}
@@ -67,7 +71,7 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             onChange={handleChangeEndTime}
           />
         </div>
-      </DemoContainer>
+      </Space>
     </LocalizationProvider>
   )
 }

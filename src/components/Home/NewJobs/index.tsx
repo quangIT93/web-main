@@ -14,6 +14,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { NewJobIcon } from '#components/Icons';
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -178,8 +179,12 @@ const NewJobs: React.FC = () => {
     <>
       {
         // automatic && (
-        <Box sx={{ flexGrow: 1, marginTop: '300px' }} ref={listRef}>
-          <h2 style={{ margin: '12px 0' }}>Công việc mới nhất</h2>
+        <Box sx={{ flexGrow: 1, marginTop: '300px' }} className='new-job' ref={listRef}>
+          <div style={{display: 'flex', gap: '0.5rem', margin: '12px 0'}}>
+            <NewJobIcon width={25} height={25}/>
+            <h2>Công việc mới nhất</h2>
+          </div>
+         
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
             {postNewest.data.posts.map((item: PostNewest, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>

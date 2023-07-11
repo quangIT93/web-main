@@ -51,6 +51,28 @@
   }
 }
 
+.new-job{
+  @include breakpoint(mobile) {
+    margin-top: 18rem !important;
+  }
+
+  @include breakpoint(tablet) {
+    margin-top: 18rem !important;
+  }
+
+  @include breakpoint(largeTablet) {
+    margin-top: 18rem !important;
+  }
+  @include breakpoint(an_order) {
+    margin-top: 18rem !important;
+  }
+
+  @include breakpoint(destop){
+    margin-top: 18rem!important;
+  }
+}
+
+
 .div-cart-item-post {
   display: flex;
   flex-direction: column;
