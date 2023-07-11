@@ -431,11 +431,20 @@ const Detail: React.FC = () => {
     if (nameShare === 'Messenger') {
       // fb-messenger://share/?link=${encodeURIComponent(linkToShare)}
       // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
-      window.location.href = `https://fb-messenger://share`;
+
       const messengerLink =
         'fb-messenger://share?link=' +
         encodeURIComponent('https://newsroom.fb.com/');
       window.location.href = messengerLink;
+    }
+
+    if (nameShare === 'Facebook') {
+      const urlFb = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        post?.data.share_link,
+      )}`;
+      window.location.href = urlFb;
+    }
+    if (nameShare === 'Zalo') {
     }
   };
 
@@ -728,13 +737,13 @@ const Detail: React.FC = () => {
               </div>
               <div className="items-share">
                 {itemsShare.map((itemShare) => (
-                  <Link
-                    to={`/post-detail?post-id=${post?.data.id}`}
+                  <div
+                    // to={`/post-detail?post-id=${post?.data.id}`}
                     className="item-share"
                     onClick={() => handleClickShareSource(itemShare.nameShare)}
                   >
                     <span>{itemShare.nameShare}</span>
-                  </Link>
+                  </div>
                 ))}
               </div>
             </Box>
