@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_clean_structure_with_typescript=self.webpackChunkreact_clean_structure_with_typescript||[]).push([[675],{39675:function(t,e,c){c.r(e);c(72791);var r=c(31009),s=c(80184);e.default=function(){return(0,s.jsxs)("div",{className:"not-found",children:[(0,s.jsx)(r.wp,{}),(0,s.jsx)("strong",{children:"NotFound"})]})}}}]);
+//# sourceMappingURL=675.9e44af63.chunk.js.map
