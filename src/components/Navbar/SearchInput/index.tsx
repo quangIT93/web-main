@@ -6,9 +6,8 @@ import type { SelectProps } from 'antd'
 import searchApi from 'api/searchApi'
 import './style.scss'
 import { Spin } from 'antd'
-import { CloseOutlined, SearchOutlined } from '@ant-design/icons'
-import { SearchIcon, FilterIcon } from '../../Icons/index'
-
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons'
+import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index'
 import {
   useNavigate,
   createSearchParams,
@@ -92,9 +91,10 @@ interface SearchProps {
   setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
   handleSearchIcon: (event: any, params: string | undefined) => any;
   openCollapseFilter: boolean
+  checkSearch: boolean
 }
 
-const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFilter, openCollapseFilter, handleSearchIcon }) => {
+const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFilter, openCollapseFilter, handleSearchIcon , checkSearch}) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [data, setData] = useState<SelectProps['options']>([])
   // const [fetching, setFet] = useState(false)
@@ -111,7 +111,6 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
 
   React.useEffect(() => {
     if (currentValue) {
-      console.log('ádadasd', currentValue);
       setValue(currentValue);
     }
   }, [currentValue]);
@@ -190,7 +189,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
         );
       } else
         window.open(
-          `/search-results?q=${encodeURIComponent(`${currentValue}`)}`,
+          `/search-results?q=${encodeURIComponent(`${value}`)}`,
           '_parent',
         );
     }
@@ -221,7 +220,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
   ));
 
   return (
-    <div className="search-input-wrapper">
+    <div className='search-input-wrapper'>
       <Select
         showSearch
         autoClearSearchValue
@@ -267,7 +266,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
         shape="circle"
         onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
       >
-        <FilterIcon width={20} height={20} />
+        {(checkSearch && openCollapseFilter === false )  ? (<LightFilterIcon width={20} height={20} />) : (<FilterIcon width={20} height={20} />)}
       </Button>
     </div>
   )

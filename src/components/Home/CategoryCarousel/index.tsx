@@ -6,8 +6,11 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 
-import './style.scss';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+import './style.scss';
+import { TabScrollButton } from '@mui/material';
 // import { categories } from './dataCategory'
 import { AxiosResponse } from 'axios';
 
@@ -267,7 +270,7 @@ const CategoryCarousel: React.FC = () => {
       className="tabs"
     >
       <Tabs
-        value={value == 0 ? categories?.data[0].id : value}
+        value={value === 0 ? categories?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons={true}
@@ -275,8 +278,6 @@ const CategoryCarousel: React.FC = () => {
         allowScrollButtonsMobile
         orientation="horizontal"
         ref={refTab as any}
-        onDragStart={handleDragStart}
-        onDrop={handleDrop}
         className="cateloryItemFilter"
         sx={{ overflowX: 'hidden', scroll: 'auto', marginTop: '12px' }}
       >

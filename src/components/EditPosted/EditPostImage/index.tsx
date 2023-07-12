@@ -218,7 +218,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          Có thể tải tối đa 5 ảnh, mỗi ảnh không quá 10MB. (Định dạng cho phép:
+          Có thể tải tối đa 5 ảnh, mỗi ảnh không quá 5MB. (Định dạng cho phép:
           jpeg, jpg, png)
         </Typography>
 
