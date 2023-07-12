@@ -56,7 +56,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = (props) => {
             //     window.open(`/post-detail?post-id=${props.item.post_id}`)
             // }} 
 
-            className='div-suggest-include' style={{ width: "95%", paddingBottom: 10 }}>
+            className='div-suggest-include'>
             {/* <div className='div-item-suggest'>
                 <img src={props.item.image} />
                 <div className='title-job-suggest' >
