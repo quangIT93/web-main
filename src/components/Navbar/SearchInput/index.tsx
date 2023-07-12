@@ -7,8 +7,7 @@ import searchApi from 'api/searchApi';
 import './style.scss';
 import { Spin } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-import { SearchIcon, FilterIcon } from '../../Icons/index';
-
+import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index';
 import {
   useNavigate,
   createSearchParams,
@@ -92,6 +91,7 @@ interface SearchProps {
   setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
   handleSearchIcon: (event: any, params: string | undefined) => any;
   openCollapseFilter: boolean;
+  checkSearch: boolean;
 }
 
 const SearchInput: React.FC<SearchProps> = ({
@@ -100,6 +100,7 @@ const SearchInput: React.FC<SearchProps> = ({
   setOpenCollapseFilter,
   openCollapseFilter,
   handleSearchIcon,
+  checkSearch,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState<SelectProps['options']>([]);
@@ -119,7 +120,6 @@ const SearchInput: React.FC<SearchProps> = ({
 
   React.useEffect(() => {
     if (currentValue) {
-      console.log('ádadasd', currentValue);
       setValue(currentValue);
     }
   }, [currentValue]);
@@ -198,7 +198,7 @@ const SearchInput: React.FC<SearchProps> = ({
         );
       } else
         window.open(
-          `/search-results?q=${encodeURIComponent(`${currentValue}`)}`,
+          `/search-results?q=${encodeURIComponent(`${value}`)}`,
           '_parent',
         );
     }
@@ -275,7 +275,11 @@ const SearchInput: React.FC<SearchProps> = ({
         shape="circle"
         onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
       >
-        <FilterIcon width={20} height={20} />
+        {checkSearch && openCollapseFilter === false ? (
+          <LightFilterIcon width={20} height={20} />
+        ) : (
+          <FilterIcon width={20} height={20} />
+        )}
       </Button>
     </div>
   );

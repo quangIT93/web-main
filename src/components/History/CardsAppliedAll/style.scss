@@ -74,7 +74,7 @@
   height: 30px;
   padding: 0px 10px;
   cursor: pointer;
-  background-color: #575757;
+  background-color: rgb(13, 153, 255);
 
   // &:hover {
   //   background-color: #575757;
@@ -87,6 +87,10 @@
 
   p {
     color: white
+  }
+
+  .ant-space-item svg {
+    color: white !important;
   }
 }
 

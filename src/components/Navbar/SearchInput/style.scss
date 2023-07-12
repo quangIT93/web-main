@@ -4,6 +4,10 @@
 .search-input-wrapper {
   position: relative;
 
+  // .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.css-i4bv87-MuiSvgIcon-root{
+  //   color: red;
+  // }
+
   .search-input-nav {
     width: 500px !important;
 
@@ -77,6 +81,8 @@
       display: none !important;
     }
   }
+
+
 }
 .ant-select-clear
 {
