@@ -439,12 +439,14 @@ const Detail: React.FC = () => {
     }
 
     if (nameShare === 'Facebook') {
-      const urlFb = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      window.location.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         post?.data.share_link,
       )}`;
-      window.location.href = urlFb;
     }
     if (nameShare === 'Zalo') {
+      window.location.href = `zalo://app?link=${encodeURIComponent(
+        'https://example.com/',
+      )}`;
     }
   };
 
