@@ -36,14 +36,18 @@ const ShowNotificativeSave: React.FC = () => {
           autoHideDuration={3000}
           onClose={handleClose}
           anchorOrigin={{
-            vertical: 'top',
+            vertical: 'bottom',
             horizontal: 'center',
           }}
         >
           <Alert
             onClose={handleClose}
             severity="success"
-            sx={{ width: '100%' }}
+            sx={{
+              width: '100%',
+              backgroundColor: '#000000'
+
+            }}
           >
             Bạn đã Lưu thành công!
           </Alert>

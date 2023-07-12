@@ -128,9 +128,8 @@ const createPostValidation = (post) => {
   if (post.description.trim().length > 4000) {
     return {
       isError: true,
-      message: `Thông tin mô tả vượt quá 4000 kí tự (${
-        post.description.trim().length
-      })`,
+      message: `Thông tin mô tả vượt quá 4000 kí tự (${post.description.trim().length
+        })`,
       field: "description",
     };
   }

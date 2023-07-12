@@ -22,7 +22,7 @@ import {
 
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
-import { LocationHomeIcon, DolaIcon } from '#components/Icons';
+import { LocationHomeIcon, DolaIcon, SaveIconOutline, SaveIconFill } from '#components/Icons';
 
 import { Space, Tooltip } from 'antd';
 
@@ -300,11 +300,9 @@ const JobCard: React.FC<Iprops> = (props) => {
               }}
             >
               {props.item.bookmarked ? (
-                <TurnedInIcon sx={{ top: 0, right: 0, color: '#0d99ff' }} />
+                <SaveIconFill width={24} height={24} />
               ) : (
-                <BookmarkBorderOutlinedIcon
-                  sx={{ top: 0, right: 0, color: '' }}
-                />
+                <SaveIconOutline width={24} height={24} />
               )}
             </div>
             <div>

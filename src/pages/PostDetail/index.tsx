@@ -37,6 +37,7 @@ import { Carousel } from 'react-carousel-minimal';
 import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
 
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -63,7 +64,7 @@ import {
   ExclamationCircleFilled,
 } from '@ant-design/icons';
 
-import { SaveIcon, ShareIcon } from '#components/Icons';
+import { SaveIconOutline, SaveIconFill, ShareIcon } from '#components/Icons';
 
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
@@ -77,10 +78,14 @@ import {
   ZaloIcon,
   CopyIcon,
   MessagerIcon,
+  CompanyNameDetailPostIcon,
+  AddressDetailPostIcon,
+  ClockDetailPostIcon,
 } from '#components/Icons';
 
 import './style.scss';
 import ShowCopy from '#components/ShowCopy';
+import { height } from '@mui/system';
 
 const itemsShare = [
   {
@@ -483,6 +488,7 @@ const Detail: React.FC = () => {
   };
 
   console.log('copy link', copied);
+  console.log(post?.data);
 
   return (
     <>
@@ -506,51 +512,35 @@ const Detail: React.FC = () => {
               </div>
             </div>
           </div> */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingBottom: '70px',
-            }}
-          >
-            <div className="detail-container">
-              <div className="div-job-img" ref={componentRef}>
-                <Carousel
-                  data={post?.data.images.length > 0 ? post?.data.images : data}
-                  time={2000}
-                  width="850px"
-                  height="500px"
-                  captionStyle={captionStyle}
-                  radius="10px"
-                  slideNumber={true}
-                  slideNumberStyle={slideNumberStyle}
-                  captionPosition="bottom"
-                  automatic={false}
-                  // dots={true}
-                  pauseIconColor="white"
-                  pauseIconSize="40px"
-                  slideBackgroundColor="darkgrey"
-                  slideImageFit="cover"
-                  thumbnails={true}
-                  thumbnailWidth="100px"
-                  style={{
-                    textAlign: 'center',
-                    maxWidth: '850px',
-                    maxHeight: '590px',
-                  }}
-                />
+          <div className="title-container">
+            <div className="top-title">
+              <h2>{post?.data.title}</h2>
+              <img
+                src={post?.data.resource.company_icon}
+                alt={post?.data.resource.company_icon}
+              />
+            </div>
+            <div className="mid-title">
+              <div className="mid-title_companyName">
+                <CompanyNameDetailPostIcon width={24} height={24} />
+                <h3>{post?.data.company_name}</h3>
               </div>
-              <div className="div-job-title" ref={componentRefJob}>
-                <div className="title">
-                  <div className="top-title">
-                    <h2>{post?.data.title}</h2>
-                    <div className="share-save-icon">
-                      <div
-                        className="share-job-icon"
-                        onClick={handleClickShare}
-                      >
-                        <ShareIcon width={24} height={24} />
-                        {/* <div className="items-share">
+              <div className="mid-title_companyAddress">
+                <AddressDetailPostIcon width={24} height={24} />
+                <h3>{`${post?.data.district}, ${post?.data.province}`}</h3>
+              </div>
+            </div>
+            <div className="bot-title">
+              <div className="bot-title-createdTime">
+                <ClockDetailPostIcon width={24} height={24} />
+                <h3>
+                  {moment(new Date(post?.data.created_at)).format('HH:mm')}
+                </h3>
+              </div>
+              <div className="bot-title-actions">
+                <div className="share-job-icon" onClick={handleClickShare}>
+                  <ShareIcon width={24} height={24} />
+                  {/* <div className="items-share">
                           <Link
                             to="#"
                             onClick={() => {
@@ -560,165 +550,165 @@ const Detail: React.FC = () => {
                             send
                           </Link>
                         </div> */}
-                      </div>
-                      <div className="save-job-icon" onClick={handleClickSave}>
-                        {bookmarked ? (
-                          // <SaveIcon width={24} height={24} />
-                          <TurnedInIcon
-                            sx={{ color: '#0d99ff', fontSize: '32px' }}
-                          />
-                        ) : (
-                          <BookmarkBorderOutlinedIcon
-                            sx={{ fontSize: '32px' }}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  <h3>{post?.data.company_name}</h3>
+                  <h3>Chia sẻ</h3>
                 </div>
-                <div className="job-title-details">
-                  <h4>Thông tin việc làm</h4>
-                  <div className="div-detail-row">
-                    <EnvironmentOutlined style={{ color: '#575757' }} />
-                    <div style={{ marginLeft: '10px' }}>
-                      {' '}
-                      <p>Địa chỉ</p>
-                      <h5>{post?.data.address}</h5>
-                    </div>
+                <div className="save-job-icon" onClick={handleClickSave}>
+                  {bookmarked ? (
+                    // <SaveIcon width={24} height={24} />
+                    <SaveIconFill width={24} height={24} />
+                  ) : (
+                    <SaveIconOutline width={24} height={24} />
+                  )}
+                  <h3>Lưu</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="image-container" ref={componentRef}>
+            <Carousel
+              data={post?.data.images.length > 0 ? post?.data.images : data}
+              time={2000}
+              captionStyle={captionStyle}
+              radius="10px"
+              slideNumber={true}
+              slideNumberStyle={slideNumberStyle}
+              captionPosition="bottom"
+              automatic={false}
+              // dots={true}
+              pauseIconColor="white"
+              pauseIconSize="40px"
+              slideBackgroundColor="darkgrey"
+              slideImageFit="cover"
+              thumbnails={true}
+              thumbnailWidth="100px"
+              style={{
+                textAlign: 'center',
+              }}
+            />
+          </div>
+          <div className="detail-container">
+            <div className="div-job-title">
+              <div className="job-title-details">
+                <h4>Thông tin việc làm</h4>
+                <div className="div-detail-row">
+                  <EnvironmentOutlined style={{ color: '#575757' }} />
+                  <div style={{ marginLeft: '10px' }}>
+                    {' '}
+                    <p>Địa chỉ</p>
+                    <h5>{post?.data.address}</h5>
                   </div>
-                  <div className="div-detail-row">
-                    <SlidersOutlined style={{ color: '#575757' }} />
-                    <div style={{ marginLeft: '10px' }}>
-                      {' '}
-                      <p>Loại công viêc</p>
-                      <h5>{post?.data.job_type.job_type_name}</h5>
-                    </div>
+                </div>
+                <div className="div-detail-row">
+                  <SlidersOutlined style={{ color: '#575757' }} />
+                  <div style={{ marginLeft: '10px' }}>
+                    {' '}
+                    <p>Loại công viêc</p>
+                    <h5>{post?.data.job_type.job_type_name}</h5>
                   </div>
-                  <div className="div-detail-row">
-                    <ClockCircleOutlined style={{ color: '#575757' }} />
-                    <div style={{ marginLeft: '10px' }}>
-                      {' '}
-                      <p>Giờ làm việc</p>
+                </div>
+                <div className="div-detail-row">
+                  <ClockCircleOutlined style={{ color: '#575757' }} />
+                  <div style={{ marginLeft: '10px' }}>
+                    {' '}
+                    <p>Giờ làm việc</p>
+                    <h5>
+                      {moment(new Date(post?.data.start_time)).format('HH:mm')}{' '}
+                      - {moment(new Date(post?.data.end_time)).format('HH:mm')}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-row">
+                  <CalendarOutlined style={{ color: '#575757' }} />
+                  <div style={{ marginLeft: '10px' }}>
+                    {' '}
+                    <p>Làm việc cuối tuần</p>
+                    <h5>
+                      {post?.data.is_working_weekend === 0
+                        ? 'Không làm việc cuối tuần'
+                        : 'Có làm việc cuối tuần'}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-row">
+                  <DollarOutlined style={{ color: '#575757' }} />
+                  <div style={{ marginLeft: '10px' }}>
+                    {' '}
+                    <p>Mức lương</p>
+                    {post?.data.salary_type_id === 6 ? (
+                      <h5>{post?.data.salary_type}</h5>
+                    ) : (
                       <h5>
-                        {moment(new Date(post?.data.start_time)).format(
-                          'HH:mm',
-                        )}{' '}
+                        {new Intl.NumberFormat('en-US').format(
+                          post?.data.salary_min,
+                        ) + ` ${post?.data.money_type_text}`}{' '}
                         -{' '}
-                        {moment(new Date(post?.data.end_time)).format('HH:mm')}
+                        {new Intl.NumberFormat('en-US').format(
+                          post?.data.salary_max,
+                        ) + ` ${post?.data.money_type_text}`}
                       </h5>
-                    </div>
+                    )}
                   </div>
-
-                  <div className="div-detail-row">
-                    <CalendarOutlined style={{ color: '#575757' }} />
-                    <div style={{ marginLeft: '10px' }}>
-                      {' '}
-                      <p>Làm việc cuối tuần</p>
-                      <h5>
-                        {post?.data.is_working_weekend === 0
-                          ? 'Không làm việc cuối tuần'
-                          : 'Có làm việc cuối tuần'}
-                      </h5>
-                    </div>
-                  </div>
-                  <div className="div-detail-row">
-                    <DollarOutlined style={{ color: '#575757' }} />
-                    <div style={{ marginLeft: '10px' }}>
-                      {' '}
-                      <p>Mức lương</p>
-                      {post?.data.salary_type_id === 6 ? (
-                        <h5>{post?.data.salary_type}</h5>
-                      ) : (
-                        <h5>
-                          {new Intl.NumberFormat('en-US').format(
-                            post?.data.salary_min,
-                          ) + ` ${post?.data.money_type_text}`}{' '}
-                          -{' '}
-                          {new Intl.NumberFormat('en-US').format(
-                            post?.data.salary_max,
-                          ) + ` ${post?.data.money_type_text}`}
+                </div>
+                <div className="div-detail-row">
+                  <CreditCardOutlined style={{ color: '#575757' }} />
+                  <div style={{ marginLeft: '10px' }}>
+                    {' '}
+                    <p>Danh mục</p>
+                    {post?.data.categories.map(
+                      (item: ItemCategories, index: null | number) => (
+                        <h5 key={index}>
+                          {item.parent_category}/{item.child_category}
                         </h5>
-                      )}
-                    </div>
+                      ),
+                    )}
                   </div>
-                  <div className="div-detail-row">
-                    <CreditCardOutlined style={{ color: '#575757' }} />
-                    <div style={{ marginLeft: '10px' }}>
-                      {' '}
-                      <p>Danh mục</p>
-                      {post?.data.categories.map(
-                        (item: ItemCategories, index: null | number) => (
-                          <h5 key={index}>
-                            {item.parent_category}/{item.child_category}
-                          </h5>
-                        ),
-                      )}
-                    </div>
+                </div>
+                <div className="div-detail-row">
+                  <DesktopOutlined style={{ color: '#575757' }} />
+                  <div style={{ marginLeft: '10px' }}>
+                    {' '}
+                    <p>Làm việc từ xa</p>
+                    <h5>
+                      {post?.data.is_remotely === 0
+                        ? 'Không làm việc từ xa'
+                        : 'Có làm việc từ xa'}
+                    </h5>
                   </div>
-                  <div className="div-detail-row">
-                    <DesktopOutlined style={{ color: '#575757' }} />
-                    <div style={{ marginLeft: '10px' }}>
-                      {' '}
-                      <p>Làm việc từ xa</p>
-                      <h5>
-                        {post?.data.is_remotely === 0
-                          ? 'Không làm việc từ xa'
-                          : 'Có làm việc từ xa'}
-                      </h5>
-                    </div>
-                  </div>
-                  <div className="div-detail-row">
-                    <ClockCircleOutlined style={{ color: '#575757' }} />
-                    <div style={{ marginLeft: '10px' }}>
-                      {' '}
-                      <p>Thời gian hết hạn</p>
-                      <h5>
-                        {post?.data.expired_date
-                          ? moment(new Date(post?.data.expired_date)).format(
-                              'DD/MM/yyyy',
-                            )
-                          : 'Không thời hạn'}
-                      </h5>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    {contextHolder}
-                    {/* <div>button</div> */}
-                    <Button
-                      onClick={onclick}
-                      className="btn-apply"
-                      type={'primary'}
-                      disabled={checkApply}
-                      style={{
-                        fontSize: 16,
-                        backgroundColor: `${backgroundButton}`,
-                        color: 'white',
-                        fontWeight: 'normal',
-                      }}
-                      icon={checkPostUser ? <FormOutlined /> : null}
-                    >
-                      {textButton}
-                    </Button>
+                </div>
+                <div className="div-detail-row">
+                  <ClockCircleOutlined style={{ color: '#575757' }} />
+                  <div style={{ marginLeft: '10px' }}>
+                    {' '}
+                    <p>Thời gian hết hạn</p>
+                    <h5>
+                      {post?.data.expired_date
+                        ? moment(new Date(post?.data.expired_date)).format(
+                            'DD/MM/yyyy',
+                          )
+                        : 'Không thời hạn'}
+                    </h5>
                   </div>
                 </div>
               </div>
-              <div className="div-description-mo">
-                <div className="description">
-                  <h3>Mô tả công việc</h3>
-                  <div
-                    style={{
-                      whiteSpace: 'pre-line',
-                      fontFamily: 'Roboto',
-                      marginTop: '10px',
-                    }}
-                  >
-                    {post?.data.description}
-                  </div>
+            </div>
+            <div className="div-description-mo">
+              <div className="description">
+                <h3>Mô tả công việc</h3>
+                <div
+                  style={{
+                    whiteSpace: 'pre-line',
+                    fontFamily: 'Roboto',
+                    marginTop: '10px',
+                  }}
+                >
+                  {post?.data.description}
                 </div>
+              </div>
+              <>
+                {contextHolder}
                 <Button
                   onClick={onclick}
-                  className="btn-apply btn-for-mo"
+                  className="btn-apply"
                   type={'primary'}
                   disabled={checkApply}
                   style={{
@@ -731,18 +721,20 @@ const Detail: React.FC = () => {
                 >
                   {textButton}
                 </Button>
-              </div>
-              <div className="div-suggest">
-                <h3 style={{ paddingLeft: 10 }}>Việc làm tương tự </h3>
-                <div className="item">
-                  {postNewest?.data?.posts.map(
-                    (item: PostNewest, index: null | number) => (
-                      <ItemSuggest item={item} />
-                    ),
-                  )}
-                </div>
-              </div>
+              </>
             </div>
+          </div>
+          <div className="suggest-container">
+            <h3>Việc làm tương tự </h3>
+            <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
+              {postNewest?.data?.posts.map(
+                (item: PostNewest, index: number) => (
+                  <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                    <ItemSuggest item={item} />
+                  </Grid>
+                ),
+              )}
+            </Grid>
           </div>
           <ShowNotificativeSave
           // setShowNofySave={setShowNofySave}

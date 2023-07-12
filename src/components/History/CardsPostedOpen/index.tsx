@@ -46,7 +46,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   //   getData
   const getAllPosted = async (newCount: number) => {
     try {
-      const result = await historyRecruiter.getAllPosted(newCount, 5, 1)
+      const result = await historyRecruiter.getAllPosted(newCount, 10, 1)
 
       if (result) {
         setDataPosted(result.data)
@@ -80,7 +80,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
       setUploading(true)
       const result = await historyRecruiter.getAllPosted(
         lastPostId,
-        5, 3)
+        10, 3)
       if (result) {
         setUploading(false)
         if (result.data.length == 0) {
@@ -414,7 +414,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                     width: 130,
                     height: 40,
                     backgroundColor: `#0D99FF`,
-                    marginBottom: '2rem', 
+                    marginBottom: '2rem',
                     color: '#FFFFFF',
                     fontWeight: "bold"
                   }} loading={uploading} onClick={handleAddItem}>
