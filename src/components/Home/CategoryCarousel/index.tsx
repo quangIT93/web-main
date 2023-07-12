@@ -6,9 +6,6 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
 import './style.scss';
 import { TabScrollButton } from '@mui/material';
 // import { categories } from './dataCategory'
@@ -305,7 +302,7 @@ const CategoryCarousel: React.FC = () => {
         sx={{
           color: '#0d99ff ',
           backgroundColor: 'transparent',
-          zIndex: (theme) => theme.zIndex.drawer + 1
+          zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
         open={openBackdrop}
         onClick={handleClose}
