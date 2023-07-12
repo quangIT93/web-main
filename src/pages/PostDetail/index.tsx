@@ -1,5 +1,7 @@
 import React from 'react';
 // @ts-ignore
+
+import copy from 'clipboard-copy';
 import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -16,7 +18,11 @@ import bookMarkApi from 'api/bookMarkApi';
 
 // import redux
 // import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
-import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+import {
+  setAlertCancleSave,
+  setAlertSave,
+  setShowCopy,
+} from 'store/reducer/alertReducer';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -64,34 +70,44 @@ import TurnedInIcon from '@mui/icons-material/TurnedIn';
 
 import { PostNewest } from '#components/Home/NewJobs';
 
+// import icon
+import {
+  MailIcon,
+  FacebookIcon,
+  ZaloIcon,
+  CopyIcon,
+  MessagerIcon,
+} from '#components/Icons';
+
 import './style.scss';
+import ShowCopy from '#components/ShowCopy';
 
 const itemsShare = [
   {
     nameShare: 'Sao chép liên kết',
-    icon: 'icon',
+    icon: <CopyIcon />,
     source: '',
   },
   {
     nameShare: 'Mail',
-    icon: 'icon',
-    source: '',
-  },
-  {
-    nameShare: 'Messenger',
-    icon: 'icon',
+    icon: <MailIcon />,
     source: '',
   },
   {
     nameShare: 'Facebook',
-    icon: 'icon',
+    icon: <FacebookIcon />,
     source: '',
   },
   {
-    nameShare: 'Zalo',
-    icon: 'icon',
+    nameShare: 'Messenger',
+    icon: <MessagerIcon />,
     source: '',
   },
+  // {
+  //   nameShare: 'Zalo',
+  //   icon: <ZaloIcon />,
+  //   source: '',
+  // },
 ];
 
 interface ItemCategories {
@@ -164,6 +180,8 @@ const Detail: React.FC = () => {
   const [bookmarked, setBookmarked] = React.useState(false);
 
   const [openModalShare, setOpenModalShare] = React.useState(false);
+
+  const [copied, setCopied] = React.useState(false);
 
   const dispatch = useDispatch();
 
@@ -434,21 +452,35 @@ const Detail: React.FC = () => {
 
       const messengerLink =
         'fb-messenger://share?link=' +
-        encodeURIComponent('https://newsroom.fb.com/');
+        encodeURIComponent(post?.data.share_link);
       window.location.href = messengerLink;
     }
 
     if (nameShare === 'Facebook') {
-      window.location.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         post?.data.share_link,
       )}`;
+
+      window.open(url, '_self');
     }
     if (nameShare === 'Zalo') {
       window.location.href = `zalo://app?link=${encodeURIComponent(
-        'https://example.com/',
+        post?.data.share_link,
       )}`;
     }
+
+    if (nameShare === 'Sao chép liên kết') {
+      copy(post?.data.share_link);
+      // setCopied(true);
+      dispatch<any>(setShowCopy(true));
+
+      // setTimeout(() => {
+      //   setCopied(false);
+      // }, 3000);
+    }
   };
+
+  console.log('copy link', copied);
 
   return (
     <>
@@ -714,6 +746,8 @@ const Detail: React.FC = () => {
           // showNofySave={showNofySave}
           />
           <ShowCancleSave />
+          <ShowCopy />
+
           <Modal
             open={openModalShare}
             onClose={handleCloseModalShare}
@@ -744,7 +778,10 @@ const Detail: React.FC = () => {
                     className="item-share"
                     onClick={() => handleClickShareSource(itemShare.nameShare)}
                   >
-                    <span>{itemShare.nameShare}</span>
+                    {itemShare.icon}
+                    <span style={{ marginLeft: '4px' }}>
+                      {itemShare.nameShare}
+                    </span>
                   </div>
                 ))}
               </div>
