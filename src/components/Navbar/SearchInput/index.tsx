@@ -255,7 +255,7 @@ const SearchInput: React.FC<SearchProps> = ({
         allowClear={true}
         // onBlur={handleOnBlur}
         removeIcon={<CloseOutlined />}
-        menuItemSelectedIcon={<Spin size="small">dec</Spin>}
+        menuItemSelectedIcon={<CheckOutlined />}
         // dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
       />

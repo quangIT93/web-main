@@ -38,6 +38,10 @@ import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -161,6 +165,7 @@ const Detail: React.FC = () => {
   //   actionCreators,
   //   dispatch
   // )
+  const [value, setValue] = React.useState('1');
 
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
@@ -485,6 +490,10 @@ const Detail: React.FC = () => {
     }
   };
 
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
   console.log('copy link', copied);
   console.log(post?.data);
 
@@ -585,111 +594,123 @@ const Detail: React.FC = () => {
           </div>
           <div className="detail-container">
             <div className="div-job-title">
-              <div className="job-title-details">
-                <h4>Thông tin việc làm</h4>
-                <div className="div-detail-row">
-                  <EnvironmentOutlined style={{ color: '#575757' }} />
-                  <div style={{ marginLeft: '10px' }}>
-                    {' '}
-                    <p>Địa chỉ</p>
-                    <h5>{post?.data.address}</h5>
-                  </div>
-                </div>
-                <div className="div-detail-row">
-                  <SlidersOutlined style={{ color: '#575757' }} />
-                  <div style={{ marginLeft: '10px' }}>
-                    {' '}
-                    <p>Loại công viêc</p>
-                    <h5>{post?.data.job_type.job_type_name}</h5>
-                  </div>
-                </div>
-                <div className="div-detail-row">
-                  <ClockCircleOutlined style={{ color: '#575757' }} />
-                  <div style={{ marginLeft: '10px' }}>
-                    {' '}
-                    <p>Giờ làm việc</p>
-                    <h5>
-                      {moment(new Date(post?.data.start_time)).format(
-                        'HH:mm',
-                      )}{' '}
-                      -{' '}
-                      {moment(new Date(post?.data.end_time)).format('HH:mm')}
-                    </h5>
-                  </div>
-                </div>
-                <div className="div-detail-row">
-                  <CalendarOutlined style={{ color: '#575757' }} />
-                  <div style={{ marginLeft: '10px' }}>
-                    {' '}
-                    <p>Làm việc cuối tuần</p>
-                    <h5>
-                      {post?.data.is_working_weekend === 0
-                        ? 'Không làm việc cuối tuần'
-                        : 'Có làm việc cuối tuần'}
-                    </h5>
-                  </div>
-                </div>
-                <div className="div-detail-row">
-                  <DollarOutlined style={{ color: '#575757' }} />
-                  <div style={{ marginLeft: '10px' }}>
-                    {' '}
-                    <p>Mức lương</p>
-                    {post?.data.salary_type_id === 6 ? (
-                      <h5>{post?.data.salary_type}</h5>
-                    ) : (
-                      <h5>
-                        {new Intl.NumberFormat('en-US').format(
-                          post?.data.salary_min,
-                        ) + ` ${post?.data.money_type_text}`}{' '}
-                        -{' '}
-                        {new Intl.NumberFormat('en-US').format(
-                          post?.data.salary_max,
-                        ) + ` ${post?.data.money_type_text}`}
-                      </h5>
-                    )}
-                  </div>
-                </div>
-                <div className="div-detail-row">
-                  <CreditCardOutlined style={{ color: '#575757' }} />
-                  <div style={{ marginLeft: '10px' }}>
-                    {' '}
-                    <p>Danh mục</p>
-                    {post?.data.categories.map(
-                      (item: ItemCategories, index: null | number) => (
-                        <h5 key={index}>
-                          {item.parent_category}/{item.child_category}
-                        </h5>
-                      ),
-                    )}
-                  </div>
-                </div>
-                <div className="div-detail-row">
-                  <DesktopOutlined style={{ color: '#575757' }} />
-                  <div style={{ marginLeft: '10px' }}>
-                    {' '}
-                    <p>Làm việc từ xa</p>
-                    <h5>
-                      {post?.data.is_remotely === 0
-                        ? 'Không làm việc từ xa'
-                        : 'Có làm việc từ xa'}
-                    </h5>
-                  </div>
-                </div>
-                <div className="div-detail-row">
-                  <ClockCircleOutlined style={{ color: '#575757' }} />
-                  <div style={{ marginLeft: '10px' }}>
-                    {' '}
-                    <p>Thời gian hết hạn</p>
-                    <h5>
-                      {post?.data.expired_date
-                        ? moment(new Date(post?.data.expired_date)).format(
-                          'DD/MM/yyyy',
-                        )
-                        : 'Không thời hạn'}
-                    </h5>
-                  </div>
-                </div>
-              </div>
+              <Box sx={{ width: '100%', typography: 'body1' }}>
+                <TabContext value={value}>
+                  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <TabList onChange={handleChangeTab}>
+                      <Tab label="Thông tin việc làm" value="1" />
+                      <Tab label="Thông tin công ty" value="2" />
+                    </TabList>
+                  </Box>
+                  <TabPanel value="1">
+                    <div className="job-title-details">
+                      <div className="div-detail-row">
+                        <EnvironmentOutlined style={{ color: '#575757' }} />
+                        <div style={{ marginLeft: '10px' }}>
+                          {' '}
+                          <p>Địa chỉ</p>
+                          <h5>{post?.data.address}</h5>
+                        </div>
+                      </div>
+                      <div className="div-detail-row">
+                        <SlidersOutlined style={{ color: '#575757' }} />
+                        <div style={{ marginLeft: '10px' }}>
+                          {' '}
+                          <p>Loại công viêc</p>
+                          <h5>{post?.data.job_type.job_type_name}</h5>
+                        </div>
+                      </div>
+                      <div className="div-detail-row">
+                        <ClockCircleOutlined style={{ color: '#575757' }} />
+                        <div style={{ marginLeft: '10px' }}>
+                          {' '}
+                          <p>Giờ làm việc</p>
+                          <h5>
+                            {moment(new Date(post?.data.start_time)).format(
+                              'HH:mm',
+                            )}{' '}
+                            -{' '}
+                            {moment(new Date(post?.data.end_time)).format('HH:mm')}
+                          </h5>
+                        </div>
+                      </div>
+                      <div className="div-detail-row">
+                        <CalendarOutlined style={{ color: '#575757' }} />
+                        <div style={{ marginLeft: '10px' }}>
+                          {' '}
+                          <p>Làm việc cuối tuần</p>
+                          <h5>
+                            {post?.data.is_working_weekend === 0
+                              ? 'Không làm việc cuối tuần'
+                              : 'Có làm việc cuối tuần'}
+                          </h5>
+                        </div>
+                      </div>
+                      <div className="div-detail-row">
+                        <DollarOutlined style={{ color: '#575757' }} />
+                        <div style={{ marginLeft: '10px' }}>
+                          {' '}
+                          <p>Mức lương</p>
+                          {post?.data.salary_type_id === 6 ? (
+                            <h5>{post?.data.salary_type}</h5>
+                          ) : (
+                            <h5>
+                              {new Intl.NumberFormat('en-US').format(
+                                post?.data.salary_min,
+                              ) + ` ${post?.data.money_type_text}`}{' '}
+                              -{' '}
+                              {new Intl.NumberFormat('en-US').format(
+                                post?.data.salary_max,
+                              ) + ` ${post?.data.money_type_text}`}
+                            </h5>
+                          )}
+                        </div>
+                      </div>
+                      <div className="div-detail-row">
+                        <CreditCardOutlined style={{ color: '#575757' }} />
+                        <div style={{ marginLeft: '10px' }}>
+                          {' '}
+                          <p>Danh mục</p>
+                          {post?.data.categories.map(
+                            (item: ItemCategories, index: null | number) => (
+                              <h5 key={index}>
+                                {item.parent_category}/{item.child_category}
+                              </h5>
+                            ),
+                          )}
+                        </div>
+                      </div>
+                      <div className="div-detail-row">
+                        <DesktopOutlined style={{ color: '#575757' }} />
+                        <div style={{ marginLeft: '10px' }}>
+                          {' '}
+                          <p>Làm việc từ xa</p>
+                          <h5>
+                            {post?.data.is_remotely === 0
+                              ? 'Không làm việc từ xa'
+                              : 'Có làm việc từ xa'}
+                          </h5>
+                        </div>
+                      </div>
+                      <div className="div-detail-row">
+                        <ClockCircleOutlined style={{ color: '#575757' }} />
+                        <div style={{ marginLeft: '10px' }}>
+                          {' '}
+                          <p>Thời gian hết hạn</p>
+                          <h5>
+                            {post?.data.expired_date
+                              ? moment(new Date(post?.data.expired_date)).format(
+                                'DD/MM/yyyy',
+                              )
+                              : 'Không thời hạn'}
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </TabPanel>
+                  <TabPanel value="2">Thông tin công ty</TabPanel>
+                </TabContext>
+              </Box>
             </div>
             <div className="div-description-mo">
               <div className="description">
@@ -699,6 +720,8 @@ const Detail: React.FC = () => {
                     whiteSpace: 'pre-line',
                     fontFamily: 'Roboto',
                     marginTop: '10px',
+                    overflowY: 'scroll',
+                    height: '360px'
                   }}
                 >
                   {post?.data.description}
