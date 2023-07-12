@@ -75,14 +75,18 @@ const JobCard: React.FC<Iprops> = (props) => {
   } = React.useContext(HomeValueContext);
   const dispatch = useDispatch();
   const [checkBookMark, setCheckBookMark] = React.useState(true);
+  const [error, setError] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
   };
 
+  const handleImageError = () => {
+    setError(true);
+  }
+
   return (
     <>
-      {/* <div onClick={() => setShowNofySave(true)}>sssssssssss</div> */}
       <Card
         sx={{
           minWidth: '100%',
@@ -97,12 +101,13 @@ const JobCard: React.FC<Iprops> = (props) => {
           borderRadius: '5px',
           justifyContent: 'space-between',
         }}
+        onClick={(e) => {
+          
+          handleClickItem(e, props.item.id);
+        }}
       >
         <div
           className="div-card-post-left"
-          onClick={(e) => {
-            handleClickItem(e, props.item.id);
-          }}
         >
           <ImageListItem
             key={props.item.image}
@@ -262,7 +267,7 @@ const JobCard: React.FC<Iprops> = (props) => {
           <div
             style={{
               display: 'flex',
-              alignItems: 'center',
+              alignItems: 'flex-end',
               justifyContent: 'center',
               flexDirection: 'column',
             }}
@@ -270,6 +275,7 @@ const JobCard: React.FC<Iprops> = (props) => {
             <div
               onClick={async (e) => {
                 try {
+                  e.stopPropagation();
                   if (props.item.bookmarked) {
                     const result = await bookMarkApi.deleteBookMark(
                       props.item.id,
@@ -302,11 +308,17 @@ const JobCard: React.FC<Iprops> = (props) => {
                 />
               )}
             </div>
-            <img
-              className="img-resource-company"
-              src={props.item.resource.company_icon}
-              alt="ảnh"
-            />
+            <div>
+            {!error && (
+              <img
+                className="img-resource-company"
+                src={props.item.resource.company_icon}
+                alt="ảnh"
+                onError={handleImageError}
+              />
+            )}
+            </div>
+  
           </div>
           <p style={{ fontSize: 13, color: '#0d99ff' }}>
             {props.item.job_type.job_type_name}

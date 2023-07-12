@@ -72,7 +72,7 @@ const fetch = (
   };
 
   // check value search then fetching data
-  if (value != '') {
+  if (value !== '') {
     // setFetching(true)
     timeout = setTimeout(fake, 300);
   } else {
@@ -248,7 +248,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
         onInputKeyDown={handleKeyPress}
         allowClear={true}
         // onBlur={handleOnBlur}
-        removeIcon={<CloseOutlined />}
+        removeIcon={<CloseOutlined/>}
         menuItemSelectedIcon={<Spin size="small">dec</Spin>}
         // dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
