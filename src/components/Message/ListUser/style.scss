@@ -97,6 +97,14 @@
           flex-shrink: 0;
         }
 
+        div {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          justify-content: center;
+          color: #0d99ff
+        }
+
         .user-online {
           position: absolute;
           right: 0;

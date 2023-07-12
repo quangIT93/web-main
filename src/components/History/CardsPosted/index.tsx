@@ -65,7 +65,7 @@ const CardsPosted: React.FC<ICardsApplied> = (props) => {
   useEffect(() => {
     let isMounted = true
     setLoading(true)
-    getAllPosted(5).then(() => {
+    getAllPosted(10).then(() => {
       if (isMounted) {
         setLoading(false)
       }

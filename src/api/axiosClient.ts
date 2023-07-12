@@ -53,6 +53,7 @@ axiosClient.interceptors.response.use(
   (error) => {
     let originalRequest = error.config
     let refreshToken = localStorage.getItem('refreshToken')
+    console.log("errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", error)
     if (
       (refreshToken && error.response?.status === 403) ||
       (refreshToken && error.response?.status === 401)
@@ -75,6 +76,7 @@ axiosClient.interceptors.response.use(
         .catch((error) => {
           localStorage.clear()
           // localStorage.clear();
+          axios.post(`${BASE_URL}/v1/sign-out`)
           window.location.reload()
         })
     }

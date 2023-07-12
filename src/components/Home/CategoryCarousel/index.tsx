@@ -5,9 +5,9 @@ import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import './style.scss';
 
+import './style.scss';
+import { TabScrollButton } from '@mui/material';
 // import { categories } from './dataCategory'
 import { AxiosResponse } from 'axios';
 
@@ -189,7 +189,6 @@ const CategoryCarousel: React.FC = () => {
   };
   // scroll
 
-
   return (
     <Box
       ref={listRef}
@@ -268,37 +267,34 @@ const CategoryCarousel: React.FC = () => {
       className="tabs"
     >
       <Tabs
-          value={value === 0 ? categories?.data[0].id : value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons={true}
-          aria-label="scrollable auto tabs example"
-          allowScrollButtonsMobile
-          orientation="horizontal"
-          ref={refTab as any}
-          onDragStart={handleDragStart}
-          onDrop={handleDrop}
-          className="cateloryItemFilter"
-          sx={{ overflowX: 'hidden', scroll: 'auto', marginTop: '12px' }}
+        value={value === 0 ? categories?.data[0].id : value}
+        onChange={handleChange}
+        variant="scrollable"
+        scrollButtons={true}
+        aria-label="scrollable auto tabs example"
+        allowScrollButtonsMobile
+        orientation="horizontal"
+        ref={refTab as any}
+        className="cateloryItemFilter"
+        sx={{ overflowX: 'hidden', scroll: 'auto', marginTop: '12px' }}
       >
-
         {categories?.data.map((item: CategoryItem, index: number) => {
           return (
-              <Tab
-                key={index}
-                value={item.id}
-                label={
-                  <CategoryItem content={item.name} imageLink={item.image} />
-                }
-                sx={{
-                  color: 'black',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  maxWidth: '120px',
-                  borderRadius: '5px',
-                }}
-              />
+            <Tab
+              key={index}
+              value={item.id}
+              label={
+                <CategoryItem content={item.name} imageLink={item.image} />
+              }
+              sx={{
+                color: 'black',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                maxWidth: '120px',
+                borderRadius: '5px',
+              }}
+            />
           );
         })}
       </Tabs>
@@ -306,7 +302,7 @@ const CategoryCarousel: React.FC = () => {
         sx={{
           color: '#0d99ff ',
           backgroundColor: 'transparent',
-          zIndex: (theme) => theme.zIndex.drawer + 1
+          zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
         open={openBackdrop}
         onClick={handleClose}

@@ -42,7 +42,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   const getAllUserChat = async () => {
     try {
       const result = await messageApi.getUserChated();
-      // console.log('result', result)
+      console.log('result', result);
       if (result) {
         setStateUserChat(result.data);
       }
@@ -172,7 +172,11 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
               onClick={() => handleClickUserInfo(user)}
             >
               <div className="wrap-avatar_userChat">
-                <img src={user.avatar} alt="" />
+                {user.avatar ? (
+                  <img src={user.avatar} alt="" />
+                ) : (
+                  <div>Hijob</div>
+                )}
                 <span
                   className={`user-online ${
                     user.is_online ? 'user-online_true' : ''

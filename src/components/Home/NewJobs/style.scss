@@ -127,17 +127,17 @@
   padding: 0px 10px;
   cursor: pointer;
 
-  &:hover {
-    background-color: #575757;
-    color: white;
+  // &:hover {
+  //   background-color: #575757;
+  //   color: white;
 
-    p {
-      color: white;
-    }
-  }
+  //   p {
+  //     color: white;
+  //   }
+  // }
 
   p {
-    color: #575757;
+    color: white !important;
   }
 }
 

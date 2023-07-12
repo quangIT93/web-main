@@ -4,6 +4,10 @@
 .search-input-wrapper {
   position: relative;
 
+  // .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.css-i4bv87-MuiSvgIcon-root{
+  //   color: red;
+  // }
+
   .search-input-nav {
     width: 500px !important;
 
@@ -34,6 +38,10 @@
       padding: 0 11px;
       border-radius: 25px;
       height: 50px !important;
+
+      .ant-select-selection-item {
+        text-align: left;
+      }
 
       span {
         padding: 0 50px !important;
@@ -77,6 +85,12 @@
       display: none !important;
     }
   }
+
+
+}
+.ant-select-clear
+{
+  background-color: initial !important;
 }
 
 ::placeholder {

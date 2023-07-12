@@ -39,7 +39,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
     try {
       const result = await historyApplicator.getAllSubmitedApplied(
         null,
-        5,
+        10,
         1
       )
 
@@ -76,7 +76,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
       setUploading(true)
       const result = await historyApplicator.getAllSubmitedApplied(
         lastPostId,
-        5, 1)
+        10, 1)
       if (result) {
         setUploading(false)
         if (result.data.length == 0) {
