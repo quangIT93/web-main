@@ -452,7 +452,9 @@ const Detail: React.FC = () => {
 
       const messengerLink =
         'fb-messenger://share?link=' +
-        encodeURIComponent(post?.data.share_link);
+        encodeURIComponent(post?.data.share_link) +
+        '&app_id=' +
+        encodeURIComponent('523018296116961');
       window.location.href = messengerLink;
     }
 
@@ -461,7 +463,7 @@ const Detail: React.FC = () => {
         post?.data.share_link,
       )}`;
 
-      window.open(url, '_self');
+      window.open(url, '_blank');
     }
     if (nameShare === 'Zalo') {
       window.location.href = `zalo://app?link=${encodeURIComponent(
@@ -680,8 +682,9 @@ const Detail: React.FC = () => {
                       </h5>
                     </div>
                   </div>
-                  <>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     {contextHolder}
+                    {/* <div>button</div> */}
                     <Button
                       onClick={onclick}
                       className="btn-apply"
@@ -697,7 +700,7 @@ const Detail: React.FC = () => {
                     >
                       {textButton}
                     </Button>
-                  </>
+                  </div>
                 </div>
               </div>
               <div className="div-description-mo">

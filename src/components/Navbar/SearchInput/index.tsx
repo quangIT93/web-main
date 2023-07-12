@@ -112,8 +112,10 @@ const SearchInput: React.FC<SearchProps> = ({
       setData,
       // , setFet
     );
-    // console.log('newValue1111', newValue)
+    console.log('newValue1111', newValue);
   };
+
+  console.log('value', value);
 
   React.useEffect(() => {
     if (currentValue) {
