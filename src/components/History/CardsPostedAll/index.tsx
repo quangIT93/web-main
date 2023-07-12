@@ -48,7 +48,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
     try {
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
         postID,
-        5
+        10
       )
 
       if (result) {
@@ -420,7 +420,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                     width: 130,
                     height: 40,
                     backgroundColor: `#0D99FF`,
-                    marginBottom: '2rem', 
+                    marginBottom: '2rem',
                     color: '#FFFFFF',
                     fontWeight: 'bold',
                   }} loading={uploading} onClick={handleAddItem}>

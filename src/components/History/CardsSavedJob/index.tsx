@@ -38,7 +38,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
 
   const getAllPosted = async (newCount: number) => {
     try {
-      const result = await historyBookmark.getAllBookmark(newCount, 5)
+      const result = await historyBookmark.getAllBookmark(newCount, 10)
 
       if (result) {
         setLastPostId(result.data[result.data.length - 1].bookmark_id)
@@ -73,7 +73,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const handleClickAddItem = async () => {
     try {
       setUploading(true)
-      const result = await historyBookmark.getAllBookmark(lastPostId, 5)
+      const result = await historyBookmark.getAllBookmark(lastPostId, 10)
 
       if (result) {
         setUploading(false)

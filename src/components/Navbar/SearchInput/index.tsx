@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import { Select, Button } from 'antd'
-import jsonp from 'fetch-jsonp'
-import qs from 'qs'
-import type { SelectProps } from 'antd'
-import searchApi from 'api/searchApi'
-import './style.scss'
-import { Spin } from 'antd'
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons'
-import { SearchIcon, FilterIcon } from '../../Icons/index'
-
+import React, { useState } from 'react';
+import { Select, Button } from 'antd';
+import jsonp from 'fetch-jsonp';
+import qs from 'qs';
+import type { SelectProps } from 'antd';
+import searchApi from 'api/searchApi';
+import './style.scss';
+import { Spin } from 'antd';
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
+import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index';
 import {
   useNavigate,
   createSearchParams,
@@ -72,7 +71,7 @@ const fetch = (
   };
 
   // check value search then fetching data
-  if (value != '') {
+  if (value !== '') {
     // setFetching(true)
     timeout = setTimeout(fake, 300);
   } else {
@@ -87,16 +86,24 @@ const fetch = (
 };
 
 interface SearchProps {
-  value: string | undefined
-  setValue: React.Dispatch<React.SetStateAction<string | undefined>>
-  setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>
+  value: string | undefined;
+  setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
   handleSearchIcon: (event: any, params: string | undefined) => any;
-  openCollapseFilter: boolean
+  openCollapseFilter: boolean;
+  checkSearch: boolean;
 }
 
-const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFilter, openCollapseFilter, handleSearchIcon }) => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [data, setData] = useState<SelectProps['options']>([])
+const SearchInput: React.FC<SearchProps> = ({
+  value,
+  setValue,
+  setOpenCollapseFilter,
+  openCollapseFilter,
+  handleSearchIcon,
+  checkSearch,
+}) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [data, setData] = useState<SelectProps['options']>([]);
   // const [fetching, setFet] = useState(false)
   const [loading, setLoading] = useState(false);
   const QUERY = searchParams.get('q');
@@ -106,12 +113,13 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
       setData,
       // , setFet
     );
-    // console.log('newValue1111', newValue)
+    console.log('newValue1111', newValue);
   };
+
+  console.log('value', value);
 
   React.useEffect(() => {
     if (currentValue) {
-      console.log('ádadasd', currentValue);
       setValue(currentValue);
     }
   }, [currentValue]);
@@ -190,7 +198,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
         );
       } else
         window.open(
-          `/search-results?q=${encodeURIComponent(`${currentValue}`)}`,
+          `/search-results?q=${encodeURIComponent(`${value}`)}`,
           '_parent',
         );
     }
@@ -249,7 +257,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
         allowClear={true}
         // onBlur={handleOnBlur}
         removeIcon={<CloseOutlined />}
-        menuItemSelectedIcon={<CheckOutlined />}
+        menuItemSelectedIcon={<Spin size="small">dec</Spin>}
         // dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
       />
@@ -267,10 +275,14 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
         shape="circle"
         onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
       >
-        <FilterIcon width={20} height={20} />
+        {checkSearch && openCollapseFilter === false ? (
+          <LightFilterIcon width={20} height={20} />
+        ) : (
+          <FilterIcon width={20} height={20} />
+        )}
       </Button>
     </div>
-  )
-}
+  );
+};
 
 export default React.memo(SearchInput);

@@ -136,6 +136,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             getOptionLabel={(option: any) => option?.name || ''}
             value={selectedProvince || null}
             onChange={handleProvinceChange}
+            disableClearable
             renderInput={(params) => (
               <TextField {...params} placeholder="Tỉnh/TP" size="small" />
             )}
@@ -155,6 +156,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedDistrict || null}
             onChange={handleDistrictChange}
+            disableClearable
             renderInput={(params: any) => (
               <TextField {...params} placeholder="Quận/Huyện" size="small" />
             )}
@@ -176,6 +178,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedWard || null}
             onChange={handleChangeWardId}
+            disableClearable
             renderInput={(params) => (
               <TextField {...params} placeholder="Phường/Xã" size="small" />
             )}

@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useContext, useRef } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react';
 
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom';
 
-import { Input } from 'antd'
+import { Input } from 'antd';
 
-import io from 'socket.io-client'
+import io from 'socket.io-client';
 
 // import api
-import messageApi from 'api/messageApi'
-import profileApi from 'api/profileApi'
+import messageApi from 'api/messageApi';
+import profileApi from 'api/profileApi';
 
 // import icon
 import {
@@ -18,52 +18,52 @@ import {
   LocationIcon,
   ImageIcon,
   SendIcon,
-  CloseIcon
-} from '#components/Icons'
+  CloseIcon,
+} from '#components/Icons';
 
-import './style.scss'
+import './style.scss';
 
-import { ChatContext } from 'context/ChatContextProvider'
+import { ChatContext } from 'context/ChatContextProvider';
 interface Message {
-  receiverId: string
-  message: string
+  receiverId: string;
+  message: string;
   // createdAt: number
-  type: string
-  postId: number
+  type: string;
+  postId: number;
 }
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
-  openListChat: boolean
+  openListChat: boolean;
 }
 
 const ListChat: React.FC<IOpenListChat> = (props) => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [windowWidth, setWindowWidth] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [windowWidth, setWindowWidth] = useState(false);
 
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('');
 
-  const [allListChat, setAllListChat] = useState<any>([])
-  const [profileUser, setProfileUser] = useState<any>({})
-  const [image, setImage] = useState<File | null>(null)
-  const [isConnected, setIsConnected] = useState(false)
+  const [allListChat, setAllListChat] = useState<any>([]);
+  const [profileUser, setProfileUser] = useState<any>({});
+  const [image, setImage] = useState<File | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
   // const [previousDate, setPreviousDate] = useState<string | null>(null)
 
   const updateWindowWidth = () => {
     if (window.innerWidth <= 555) {
-      setWindowWidth(true)
+      setWindowWidth(true);
     } else {
-      setWindowWidth(false)
+      setWindowWidth(false);
     }
-  }
+  };
 
   useEffect(() => {
     updateWindowWidth();
-  }, [windowWidth])
+  }, [windowWidth]);
 
   const closeLitChat = () => {
     props.setOpenListChat(false);
-  }
+  };
 
   const {
     userInfoChat,
@@ -71,74 +71,75 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     sendMessages,
     receivedMessages,
     setReceivedMessages,
-  } = useContext(ChatContext)
+  } = useContext(ChatContext);
 
-  let socket = useRef<any>()
-  const listRef = useRef<HTMLDivElement>(null)
-  const imageInputRef = useRef<any>(null)
+  let socket = useRef<any>();
+  const listRef = useRef<HTMLDivElement>(null);
+  const imageInputRef = useRef<any>(null);
+  const lastChatRef = useRef<any>(null);
 
-  const previousDate = useRef<string | null>(null)
+  const previousDate = useRef<string | null>(null);
 
   useEffect(() => {
     socket.current = io(
       // 'https://181f-14-161-42-152.ngrok-free.app/',
-      'https://neoworks.vn',
+      'https://aiworks.vn',
       {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
-      }
-    )
-  }, [])
+      },
+    );
+  }, []);
 
   const getAllListChat = async () => {
     try {
       const result = await messageApi.getChatMessage(
         userInfoChat.user_id,
         // 36353,
-        Number(searchParams.get('post_id'))
-      )
+        Number(searchParams.get('post_id')),
+      );
       if (result) {
-        setAllListChat(result.data)
+        setAllListChat(result.data);
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    getAllListChat()
-  }, [receivedMessages, sendMessages, userInfoChat])
+    getAllListChat();
+  }, [receivedMessages, sendMessages, userInfoChat]);
 
   const getProfileUser = async () => {
     try {
-      const result = await profileApi.getProfile()
+      const result = await profileApi.getProfile();
       if (result) {
-        setProfileUser(result.data)
+        setProfileUser(result.data);
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    getProfileUser()
-  }, [])
+    getProfileUser();
+  }, []);
 
   useEffect(() => {
     try {
-      console.log('socketcurrent', socket.current)
+      console.log('socketcurrent', socket.current);
       // kết nối web socket
       socket.current.on('connect', () => {
-        console.log('::: Socket connected')
-        setIsConnected(true)
-      })
+        console.log('::: Socket connected');
+        setIsConnected(true);
+      });
 
       // ngắt kết nối websocket
       socket.current.on('disconnect', (reason: any) => {
-        console.log('::: Socket disconnected: ', reason)
-        setIsConnected(false)
-      })
+        console.log('::: Socket disconnected: ', reason);
+        setIsConnected(false);
+      });
 
       // gửi in nhắn
       // socket.current.on('client-send-message', (data: Message) => {
@@ -150,16 +151,16 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       // })
 
       socket.current.on('server-send-message-to-receiver', (data: any) => {
-        console.log(' gui tin nhan di den nguoi nhan', data)
+        console.log(' gui tin nhan di den nguoi nhan', data);
         // gui tin nhan di den nguoi nhan
-        setReceivedMessages((prevReceive: any[]) => [...prevReceive, data])
-      })
+        setReceivedMessages((prevReceive: any[]) => [...prevReceive, data]);
+      });
 
       socket.current.on('server-send-message-was-sent', (data: any) => {
-        console.log('nhận tin nhan ve khi da gui xong', data)
+        console.log('nhận tin nhan ve khi da gui xong', data);
         // nhận tin nhan ve khi da gui xong
-        setSendMessages((prevSend: any[]) => [...prevSend, data])
-      })
+        setSendMessages((prevSend: any[]) => [...prevSend, data]);
+      });
 
       // socket.current.on('server-send-error-message', (data: any) => {
       //   console.log('data', data)
@@ -169,9 +170,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       //   socket.current.disconnect() // Clean up the socket connection on component unmount
       // }
     } catch (error) {
-      console.log('eror', error)
+      console.log('eror', error);
     }
-  }, [])
+  }, []);
 
   // console.log('receive', receivedMessages)
   // console.log('send', sendMessages)
@@ -190,31 +191,31 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         type: 'text',
         postId: searchParams.get('post_id'),
         // postId: 36353,
-      })
+      });
 
-    setMessage('')
-  }
+    setMessage('');
+  };
 
   // enter sent message
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSendMessage()
+      handleSendMessage();
     }
-  }
+  };
 
   //
   const handleImageSelect = () => {
     // Mở hộp thoại chọn hình ảnh khi nhấn vào nút "ImageIcon"
-    if (imageInputRef) imageInputRef.current?.click()
-  }
+    if (imageInputRef) imageInputRef.current?.click();
+  };
 
   const handleImageUpload = (e: any) => {
-    const selectedImage = e.target.files
+    const selectedImage = e.target.files;
 
     if (selectedImage) {
-      const formData = new FormData()
+      const formData = new FormData();
 
-      formData.append('files', selectedImage)
+      formData.append('files', selectedImage);
 
       socket.current.emit('client-send-message', {
         receiverId: userInfoChat.user_id,
@@ -222,38 +223,51 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         createdAt: Date.now(),
         type: 'image',
         postId: searchParams.get('post_id'),
-      })
+      });
     }
-    setImage(selectedImage)
+    setImage(selectedImage);
     // Thực hiện việc tải lên hình ảnh
     // ...
-  }
+  };
 
   // Khi dữ liệu allListChat được cập nhật, cuộn xuống cuối cùng
+  React.useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTop = listRef.current.clientHeight;
+    }
+    if (lastChatRef.current) {
+      // lastChatRef.current.scrollIntoView({
+      //   behavior: 'auto',
+      //   block: 'end',
+      // });
+      // lastChatRef.current.scrollIntoView(false);
+    }
+  }, [allListChat]);
+
   useEffect(() => {
     if (listRef.current) {
-      setTimeout(() => {
-        if (listRef.current) {
-          listRef.current.scrollTop = listRef.current.scrollHeight
-        }
-      }, 100)
+      listRef.current.scrollTop = listRef.current.scrollHeight;
     }
-  }, [allListChat])
+  }, [allListChat]);
 
   if (userInfoChat.length !== 0) {
     return (
       <div
         // className="list-chat"
-        className={`list-chat ${props.openListChat === true && windowWidth ? 'show-list-chat-responesive' : ''
-          }`}
+        className={`list-chat ${
+          props.openListChat === true && windowWidth
+            ? 'show-list-chat-responesive'
+            : ''
+        }`}
       >
         <div className="header-list_chat">
           <div className="wrap-img_Userchat">
             <div className="wrap_img">
               <img src={userInfoChat.avatar} alt="" />
               <span
-                className={`user-chat_online ${userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
-                  }`}
+                className={`user-chat_online ${
+                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                }`}
               ></span>
             </div>
             <div className="wrap-infoUser_chat">
@@ -274,22 +288,26 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
           </span> */}
             <span>{/* <DotIcon /> */}</span>
           </div>
-          <div className="wrap-icon_close"
-            onClick={() => closeLitChat()}
-          >
+          <div className="wrap-icon_close" onClick={() => closeLitChat()}>
             <CloseIcon />
           </div>
         </div>
         <div className="list-content_chat" ref={listRef}>
           {allListChat.map((chat: any, index: number) => {
-            const chatDate = new Date(chat.created_at).toLocaleDateString()
-            let showDate = false
+            const chatDate = new Date(chat.created_at).toLocaleDateString();
+            let showDate = false;
 
             // if()
 
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
-                <div className="content-chat" key={index}>
+                <div
+                  className={`content-chat ${
+                    index === allListChat.length - 1 ? 'lastChatRef' : null
+                  }`}
+                  key={index}
+                  ref={index === allListChat.length - 1 ? lastChatRef : null}
+                >
                   {/* <img
                   src={profileUser.avatar}
                   alt=""
@@ -308,10 +326,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat">
                     <span
-                      className={`text-chat ${chat.message === null || chat.message === ''
-                        ? 'text-chat_hidden'
-                        : ''
-                        }`}
+                      className={`text-chat ${
+                        chat.message === null || chat.message === ''
+                          ? 'text-chat_hidden'
+                          : ''
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -331,10 +350,18 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     </small>
                   </div>
                 </div>
-              )
+              );
             } else {
               return (
-                <div className="content-chat2" key={index}>
+                <div
+                  className={`content-chat2 ${
+                    index === allListChat.length - 1
+                      ? 'dddddddddddddddddddddddd'
+                      : null
+                  }`}
+                  key={index}
+                  ref={index === allListChat.length - 1 ? lastChatRef : null}
+                >
                   {/* <img
                   src={userInfoChat.avatar}
                   alt=""
@@ -354,10 +381,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat2">
                     <span
-                      className={`text-chat ${chat.message === '' || chat.message === null
-                        ? 'text-chat_hidden'
-                        : ''
-                        }`}
+                      className={`text-chat ${
+                        chat.message === '' || chat.message === null
+                          ? 'text-chat_hidden'
+                          : ''
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -377,7 +405,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     </small>
                   </div>
                 </div>
-              )
+              );
             }
           })}
         </div>
@@ -407,7 +435,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
           </span>
         </div>
       </div>
-    )
+    );
   } else {
     return (
       <div className="list-chat">
@@ -416,8 +444,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
           <div>Chat giúp bạn thêm nhiều thông tin hiệu quả, nhanh chóng</div>
         </div>
       </div>
-    )
+    );
   }
-}
+};
 
-export default ListChat
+export default ListChat;

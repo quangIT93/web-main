@@ -38,7 +38,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
     try {
       const result = await historyApplicator.getAllSubmitedApplied(
         null,
-        5,
+        10,
         1
       )
 
@@ -76,7 +76,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
       setUploading(true)
       const result = await historyApplicator.getAllSubmitedApplied(
         lastPostId,
-        5, 1)
+        10, 1)
       if (result) {
         setUploading(false)
         if (result.data.length == 0) {
@@ -370,7 +370,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
                     width: 130,
                     height: 40,
                     backgroundColor: `#0D99FF`,
-                    marginBottom: '2rem', 
+                    marginBottom: '2rem',
                     color: '#FFFFFF',
                     fontWeight: "bold"
                   }} loading={uploading} onClick={handleClickAddItem}>
