@@ -442,8 +442,9 @@ const Detail: React.FC = () => {
     }
   };
 
-  console.log('copy link', copied);
-  console.log('date', new Date(post?.data.created_at).toLocaleDateString());
+  const handleClickSearchTitle = (title: string) => {
+    console.log('click', title);
+  };
 
   new Promise((resolve, reject) => {
     document.title = `${post?.data?.title}`;

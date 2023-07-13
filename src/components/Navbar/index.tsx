@@ -841,6 +841,7 @@ const Navbar: React.FC = () => {
               ref={bellRef}
             >
               <BellIcon />
+              {openNotificate ? <Notificate /> : <></>}
             </Button>
           </Center>
           <Right className="div-nav-right">
@@ -956,7 +957,7 @@ const Navbar: React.FC = () => {
             </Button>
           </div>
         </Collapse>
-        {openNotificate ? <Notificate /> : <></>}
+        {/* {openNotificate ? <Notificate /> : <></>} */}
         <PostButton setOpenModalLogin={setOpenModalLogin} />
       </Container>
     </div>

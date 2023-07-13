@@ -185,10 +185,6 @@ const SearchInput: React.FC<SearchProps> = ({
   }, [value]);
 
   const handleChange = (newValue: string) => {
-    console.log(
-      'newVasssssssssssssssssssssssssssssssssssssssssssssssssssssslue',
-      newValue,
-    );
     // setOpenDropdown(true);
     // setValue(newValue);
   };
