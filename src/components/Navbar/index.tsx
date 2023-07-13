@@ -691,7 +691,7 @@ const Navbar: React.FC = () => {
       className="btn-filter"
       onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
     >
-      <TuneOutlinedIcon />
+      <BlackSearchIcon width={20} height={20} />
     </Button>,
 
     <Badge key="2" count={countChat} className="box-right-responsive_badge">
@@ -834,15 +834,16 @@ const Navbar: React.FC = () => {
                 <ChatIcon />
               </Button>
             </Badge>
-
-            <Button
-              className="btn-notice"
-              onClick={() => setOpenNotificate(!openNotificate)}
-              ref={bellRef}
-            >
-              <BellIcon />
+            <div className="wrap-btn_notice">
+              <Button
+                className="btn-notice"
+                onClick={() => setOpenNotificate(!openNotificate)}
+                ref={bellRef}
+              >
+                <BellIcon />
+              </Button>
               {openNotificate ? <Notificate /> : <></>}
-            </Button>
+            </div>
           </Center>
           <Right className="div-nav-right">
             <Box

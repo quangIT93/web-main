@@ -500,6 +500,15 @@ export const MaidJob: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
   return <></>;
 };
 
+export const MoreICon: React.FC<SizeProps> = ({ width = 16, height = 16 }) => {
+  return (
+    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.5001 16.7501C12.301 16.751 12.11 16.6717 11.9701 16.5301L3.97009 8.53009C3.69473 8.23458 3.70286 7.77408 3.98847 7.48847C4.27408 7.20286 4.73458 7.19473 5.03009 7.47009L12.5001 14.9401L19.9701 7.47009C20.2656 7.19473 20.7261 7.20286 21.0117 7.48847C21.2973 7.77408 21.3054 8.23458 21.0301 8.53009L13.0301 16.5301C12.8902 16.6717 12.6992 16.751 12.5001 16.7501Z" fill="#0D99FF"/>
+    </svg>
+  )
+};
+
+
 export const DotIcon: React.FC = () => {
   return (
     <svg

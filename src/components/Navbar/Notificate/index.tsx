@@ -84,12 +84,12 @@ const Notificate = () => {
 
   // const inputRef = useRef<InputRef>(null);
 
-  const handleClickActiveSystem = () => {
+  const handleClickActiveSystem = (e: any) => {
     setActiveSystem(true);
     if (activeKeyword === true) setActiveKeyword(false);
   };
 
-  const handleClickActiveKeyword = () => {
+  const handleClickActiveKeyword = (e: any) => {
     setActiveKeyword(true);
     if (activeSystem === true) setActiveSystem(false);
   };
@@ -172,6 +172,9 @@ const Notificate = () => {
       window.open(`post-detail?post-id=${postId}`);
     }
   };
+
+  console.log('activeSystem', activeSystem);
+  console.log('activeKeyword', activeKeyword);
 
   return (
     <div className="notification" ref={refNotification}>

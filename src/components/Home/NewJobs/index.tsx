@@ -14,7 +14,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { NewJobIcon } from '#components/Icons';
+import { NewJobIcon, MoreICon } from '#components/Icons';
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -204,7 +204,7 @@ const NewJobs: React.FC = () => {
               }}
             >
               <p>Xem thêm</p>
-              <CaretDownFilled />
+              <MoreICon width={20} height={20} />
             </Space>
           </Stack>
           <Backdrop

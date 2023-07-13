@@ -187,8 +187,8 @@ const CategoryCarousel: React.FC = () => {
       scrollElement.scrollLeft += scrollAmount;
     }
   };
-  // scroll
 
+  // scroll
   return (
     <Box
       ref={listRef}
@@ -270,7 +270,7 @@ const CategoryCarousel: React.FC = () => {
         value={value === 0 ? categories?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
-        scrollButtons={true}
+        scrollButtons="auto"
         aria-label="scrollable auto tabs example"
         allowScrollButtonsMobile
         orientation="horizontal"
@@ -298,6 +298,7 @@ const CategoryCarousel: React.FC = () => {
           );
         })}
       </Tabs>
+      
       <Backdrop
         sx={{
           color: '#0d99ff ',

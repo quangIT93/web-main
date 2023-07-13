@@ -64,7 +64,7 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 // @ts-ignore
 import { Navbar } from '#components';
-import { CreateKeywordIconSmall } from '#components/Icons';
+import { CreateKeywordIconSmall, MoreICon } from '#components/Icons';
 
 //import jobcard
 import JobCard from '../../components/Home/JobCard'
@@ -720,7 +720,7 @@ const NewJobs: React.FC = () => {
                     }}
                   >
                     <p>Xem thêm</p>
-                    <CaretDownFilled />
+                    <MoreICon width={20} height={20}/>
                   </Space>
                 </Stack>
               </>

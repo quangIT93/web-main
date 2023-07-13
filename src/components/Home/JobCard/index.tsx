@@ -22,7 +22,12 @@ import {
 
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
-import { LocationHomeIcon, DolaIcon, SaveIconOutline, SaveIconFill } from '#components/Icons';
+import {
+  LocationHomeIcon,
+  DolaIcon,
+  SaveIconOutline,
+  SaveIconFill,
+} from '#components/Icons';
 
 import { Space, Tooltip } from 'antd';
 
@@ -82,7 +87,7 @@ const JobCard: React.FC<Iprops> = (props) => {
 
   const handleImageError = () => {
     setError(true);
-  }
+  };
 
   return (
     <>
@@ -101,13 +106,10 @@ const JobCard: React.FC<Iprops> = (props) => {
           justifyContent: 'space-between',
         }}
         onClick={(e) => {
-
           handleClickItem(e, props.item.id);
         }}
       >
-        <div
-          className="div-card-post-left"
-        >
+        <div className="div-card-post-left">
           <ImageListItem
             key={props.item.image}
             sx={{ flex: 1, display: 'flex' }}
@@ -311,13 +313,16 @@ const JobCard: React.FC<Iprops> = (props) => {
               {!error && (
                 <img
                   className="img-resource-company"
-                  src={props.item.resource.company_icon}
+                  src={
+                    props.item.resource.company_icon
+                      ? props.item.resource.company_icon
+                      : ''
+                  }
                   alt="ảnh"
                   onError={handleImageError}
                 />
               )}
             </div>
-
           </div>
           <p style={{ fontSize: 13, color: '#0d99ff' }}>
             {props.item.job_type.job_type_name}

@@ -10,7 +10,7 @@ import './style.scss'
 import { StringArraySupportOption } from 'prettier'
 const styleLabel = {
   fontWeight: 600,
-  color: '#000000',
+  color: '#000000'
 }
 
 interface IEditPostAddress {
@@ -170,7 +170,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
     <div className="edit-post_address">
       <div className="edit-post_addressTop">
         <div className="edit-post_titleAddress">
-          <Typography
+          <Typography 
             sx={styleLabel}
             variant="body1"
             component="label"

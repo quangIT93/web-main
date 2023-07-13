@@ -71,10 +71,10 @@
 
 .div-hover-more {
   border-radius: 5px;
-  height: 30px;
+  // height: 30px;
   padding: 0px 10px;
   cursor: pointer;
-  background-color: rgb(13, 153, 255);
+  // background-color: rgb(13, 153, 255);
 
   // &:hover {
   //   background-color: #575757;
@@ -84,13 +84,12 @@
   //     color: white;
   //   }
   // }
-
   p {
-    color: white
+    color: rgb(13, 153, 255)
   }
 
   .ant-space-item svg {
-    color: white !important;
+    color: rgb(13, 153, 255) !important;
   }
 }
 

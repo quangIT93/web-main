@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // @ts-ignore
 import copy from 'clipboard-copy';
 import moment from 'moment';
@@ -147,6 +147,8 @@ const Detail: React.FC = () => {
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [title, setTitle] = React.useState('');
+
   const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
   const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(
@@ -261,7 +263,7 @@ const Detail: React.FC = () => {
 
   React.useEffect(() => {
     getPostById();
-    document.title = `${post?.data.title}`
+    document.title = `${post?.data.title}`;
   }, [bookmarked]);
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -360,6 +362,17 @@ const Detail: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (post?.data) {
+      setTitle(post?.data.title);
+    }
+  }, [post]);
+
+  useEffect(() => {
+    document.title = title ? title : 'HiJob - Tìm việc làm, tuyển dụng';
+  }, [title]);
+
   const captionStyle = {
     fontSize: '2em',
     fontWeight: 'bold',
@@ -446,7 +459,7 @@ const Detail: React.FC = () => {
 
   new Promise((resolve, reject) => {
     document.title = `${post?.data?.title}`;
-  })
+  });
 
   return (
     <>
@@ -504,7 +517,9 @@ const Detail: React.FC = () => {
                     <h3>
                       {moment(new Date(post?.data.created_at)).format('HH:mm')}
                       <span>&nbsp;</span>
-                      {new Date(post?.data.created_at).toLocaleDateString('en-GB')}
+                      {new Date(post?.data.created_at).toLocaleDateString(
+                        'en-GB',
+                      )}
                     </h3>
                   </div>
                   <div className="bot-title-actions">
@@ -674,8 +689,8 @@ const Detail: React.FC = () => {
                       <h5>
                         {post?.data.expired_date
                           ? moment(new Date(post?.data.expired_date)).format(
-                            'DD/MM/yyyy',
-                          )
+                              'DD/MM/yyyy',
+                            )
                           : 'Không thời hạn'}
                       </h5>
                     </div>
