@@ -413,17 +413,31 @@
 .nav {
   &.css-1lmzauf {
 
-    // padding: 0 165px;
+    padding: 0 165px;
 
-    @media screen and (min-width:1025px) and (max-width: 1280px) {
+    @media screen and (min-width:1220px) and (max-width: 1280px) {
       &.css-1lmzauf {
-        padding: 0 24px;
+        padding: 0 10px;
       }
     }
 
-    // @include breakpoint(destop) {
-    //   padding: 0 165px;
-    // }
+    @media screen and (min-width:767px) and (max-width: 1219px) {
+      &.css-1lmzauf {
+        padding: 0 5px;
+      }
+    }
+
+    @include breakpoint(destop) {
+      padding: 0 165px;
+    }
+
+    @include breakpoint(tablet) {
+      padding: 0 !important;
+    }
+
+    @include breakpoint(largeTablet) {
+      padding: 0 5px;
+    }
 
     // @include breakpoint(an_order) {
     //   padding: 0 165px;

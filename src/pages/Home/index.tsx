@@ -13,6 +13,8 @@ import { ThemesJob } from '#components';
 // @ts-ignore
 import { CategoryCarousel } from '#components';
 
+import RollTop from '#components/RollTop';
+
 // import ModalLogin from '#components/Home/ModalLogin'
 // import { useHomeState } from './HomeState'
 import './style.scss';
@@ -38,6 +40,7 @@ const Home: React.FC = () => {
         <NewJobs />
         <ThemesJob />
       </div>
+      <RollTop />
       <Footer />
     </div>
   );

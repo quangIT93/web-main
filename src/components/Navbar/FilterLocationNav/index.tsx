@@ -1,21 +1,25 @@
-import React, { useState, memo, ReactNode } from 'react'
+import React, { useState, memo, ReactNode } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import { Cascader, Divider, Typography, Button } from 'antd';
 
-import Box from '@mui/material/Box'
-import { Cascader, Divider, Typography, Button } from 'antd'
+import './style.scss';
 
-import './style.scss'
-
-import { EnvironmentOutlined } from '@ant-design/icons'
-import { useSearchParams } from 'react-router-dom'
+import { EnvironmentOutlined } from '@ant-design/icons';
+import { useSearchParams } from 'react-router-dom';
 
 // import api
-import locationApi from 'api/locationApi'
+import locationApi from 'api/locationApi';
 
-const { Text } = Typography
+// import redux
+import { RootState } from 'store';
+
+const { Text } = Typography;
 interface DistrictProps {
-  setListDis: Function
+  setListDis: Function;
 }
-const { SHOW_CHILD } = Cascader
+const { SHOW_CHILD } = Cascader;
 
 const DropdownRender = (menus: React.ReactNode) => (
   <div style={{ width: '100%' }}>
@@ -31,98 +35,128 @@ const DropdownRender = (menus: React.ReactNode) => (
       </Button>
     </div> */}
   </div>
-)
+);
 
 const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
-  const [dataLocations, setDataLocations] = React.useState<any>(null)
-  const [dataDistrict, setDataDistrict] = React.useState<any>(null)
-  const [disable, setDisable] = React.useState<Boolean>(false)
-  const [locId, setLocId] = useState<string[]>([])
+  const [dataLocations, setDataLocations] = React.useState<any>(null);
+  const [dataDistrict, setDataDistrict] = React.useState<any>(null);
+  const [disable, setDisable] = React.useState<Boolean>(false);
+  const [locId, setLocId] = useState<string[]>([]);
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const userProfile = useSelector((state: RootState) => state.profile.profile);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const location = useLocation();
   const listLocation = searchParams
     .getAll('dis-ids')
-    .map((dis) => dis.split(','))
+    .map((dis) => dis.split(','));
   const getAllLocaitions = async () => {
     try {
-      const result = await locationApi.getAllLocation()
+      const result = await locationApi.getAllLocation();
       if (result) {
-        setDataLocations(result.data)
+        setDataLocations(result.data);
       }
 
-      setListDis(listLocation)
+      if (location.pathname !== '/search-results' && userProfile) {
+        setListDis(
+          userProfile?.locations?.map((profile: any) => [
+            profile.province_id,
+            profile.district_id,
+          ]),
+        );
+      } else {
+        setListDis(listLocation);
+      }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   React.useEffect(() => {
-    getAllLocaitions()
+    getAllLocaitions();
 
     // if (listLocation.length > 3) {
     //   setDisable(true)
     // }
-    onChange(listLocation)
-  }, [])
+    onChange(listLocation);
+  }, [userProfile]);
 
   const onChange = (value: any) => {
     // Xử lý giá trị thay đổi
-    setDisable(false)
-    const secondValues = value.map((item: any) => item[1])
+    console.log('value');
+    setDisable(false);
+    const secondValues = value.map((item: any) => item[1]);
 
     if (secondValues.length <= 3 && listLocation.length <= 3) {
-      setLocId(secondValues)
-      setListDis(value)
+      setLocId(secondValues);
+      setListDis(value);
     }
     if (value.length > 2) {
-      setDisable(true)
+      setDisable(true);
     }
-  }
+  };
 
-  return (
-    <>
-      <Cascader
-        multiple
-        maxTagCount="responsive"
-        size="large"
-        placeholder="Chọn địa điểm"
-        inputIcon={<EnvironmentOutlined />}
-        dropdownRender={DropdownRender}
-        defaultValue={listLocation}
-        options={
-          dataLocations
-            ? dataLocations.map((dataLocation: any) => ({
-                value: dataLocation.province_id,
-                label: dataLocation.province_fullName,
-                children: dataLocation.districts.map(
-                  (child: { district_id: string; district: string }) => {
-                    var dis = false
-                    if (disable) {
-                      dis = true
-                      for (const elem of locId) {
-                        if (elem === child.district_id) {
-                          dis = false
-                          break
+  console.log('listlocation', listLocation);
+
+  if (userProfile) {
+    return (
+      <>
+        <Cascader
+          multiple
+          maxTagCount="responsive"
+          size="large"
+          placeholder="Chọn địa điểm"
+          inputIcon={<EnvironmentOutlined />}
+          dropdownRender={DropdownRender}
+          defaultValue={
+            listLocation.length !== 0
+              ? listLocation
+              : listLocation.length === 0 &&
+                location.pathname === '/search-results'
+              ? []
+              : userProfile?.locations?.map((profile: any) => [
+                  profile.province_id,
+                  profile.district_id,
+                ])
+          }
+          options={
+            dataLocations
+              ? dataLocations.map((dataLocation: any) => ({
+                  value: dataLocation.province_id,
+                  label: dataLocation.province_fullName,
+                  children: dataLocation.districts.map(
+                    (child: { district_id: string; district: string }) => {
+                      var dis = false;
+                      if (disable) {
+                        dis = true;
+                        for (const elem of locId) {
+                          if (elem === child.district_id) {
+                            dis = false;
+                            break;
+                          }
                         }
                       }
-                    }
-                    return {
-                      value: child.district_id,
-                      label: child.district,
-                      disabled: dis,
-                    }
-                  }
-                ),
-              }))
-            : []
-        }
-        onChange={onChange}
-        changeOnSelect
-        className="inputFilterLocationNav input-filter_nav"
-        showCheckedStrategy={SHOW_CHILD}
-      />
-    </>
-  )
-}
+                      return {
+                        value: child.district_id,
+                        label: child.district,
+                        disabled: dis,
+                      };
+                    },
+                  ),
+                }))
+              : []
+          }
+          onChange={onChange}
+          changeOnSelect
+          className="inputFilterLocationNav input-filter_nav"
+          showCheckedStrategy={SHOW_CHILD}
+        />
+      </>
+    );
+  } else {
+    return <></>;
+  }
+};
 
-export default memo(FilterLocationNav)
+export default memo(FilterLocationNav);

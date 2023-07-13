@@ -37,16 +37,16 @@
 }
 
 .css-1qcklku-MuiImageListItem-root .MuiImageListItem-img {
-  min-width: 120px !important;
-  max-height: 120px !important;
+  // min-width: 120px !important;
+  // max-height: 120px !important;
   width: 120px !important;
   height: 120px !important;
   object-fit: cover;
   border-radius: 12px;
 
   @include breakpoint(mobile) {
-    max-width: 90px !important;
-    max-height: 90px !important;
+    // max-width: 90px !important;
+    // max-height: 90px !important;
     width: 90px !important;
     height: 120px !important;
   }

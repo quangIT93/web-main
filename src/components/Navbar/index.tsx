@@ -3,16 +3,16 @@ import React, { useEffect, useState, useContext } from 'react';
 // import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import ModalLogin from '../../components/Home/ModalLogin';
 
 // @ts-ignore
 import { Logo } from '#components';
 // @ts-ignore
-import { ChatIcon, BellIcon, SearchIcon } from '#components';
+import { ChatIcon, BellIcon } from '#components';
 
-import { FlagVNIcon } from '#components/Icons';
+import { FlagVNIcon, SearchIcon } from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
 
@@ -142,21 +142,40 @@ const Navbar: React.FC = () => {
 
   const [countChat, setCountChat] = useState<number>(0);
   // check search results
-  const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false)
+  const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
 
   // check search
   useEffect(() => {
-    if (isRemotely !== 0  || isWorkingWeekend !== 0 || listDis.length > 0 || listCate.length > 0 || salaryMin !== 6000000 || salaryMax !== 12000000 || typeMoney === 2 || salaryType || jobType) {
-      setCheckSeacrh(true)
+    if (
+      isRemotely !== 0 ||
+      isWorkingWeekend !== 0 ||
+      listDis.length > 0 ||
+      listCate.length > 0 ||
+      salaryMin !== 6000000 ||
+      salaryMax !== 12000000 ||
+      typeMoney === 2 ||
+      salaryType ||
+      jobType
+    ) {
+      setCheckSeacrh(true);
+    } else {
+      setCheckSeacrh(false);
     }
-    else{
-      setCheckSeacrh(false)
-    }
-  }, [isRemotely, isWorkingWeekend, listDis.length, listCate.length, salaryMin, salaryMax, typeMoney, salaryType, jobType]);
+  }, [
+    isRemotely,
+    isWorkingWeekend,
+    listDis.length,
+    listCate.length,
+    salaryMin,
+    salaryMax,
+    typeMoney,
+    salaryType,
+    jobType,
+  ]);
 
-
+  const location = useLocation();
   // use Redux manage state
-  
+
   // value query
 
   const QUERY = searchParams.get('q');
@@ -319,6 +338,9 @@ const Navbar: React.FC = () => {
   // }
 
   // handle click search button
+
+  console.log('location', location);
+
   const handleSearch = (event: any, valueSearchInput: string | undefined) => {
     event.preventDefault();
     var encode: any;
@@ -340,12 +362,30 @@ const Navbar: React.FC = () => {
       [].forEach((item) => {
         params.append(`dis-ids`, `${item}`);
       });
-    } else if (dataProfile.id && DIS_IDS.length === 0) {
-      dataProfile.locations.forEach((item: any) => {
-        params.append(`dis-ids`, `${[item.province_id, item.district_id]}`);
+    } else if (
+      dataProfile.id &&
+      DIS_IDS.length === 0 &&
+      list_dis.length !== 0 &&
+      location.pathname !== '/search-results'
+    ) {
+      // dataProfile.locations.forEach((item: any) => {
+      //   params.append(`dis-ids`, `${[item.province_id, item.district_id]}`);
+      // });
+      list_dis.forEach((item) => {
+        params.append(`dis-ids`, `${item}`);
+      });
+    } else if (
+      dataProfile.id &&
+      DIS_IDS.length === 0 &&
+      list_dis.length === 0 &&
+      location.pathname !== '/search-results'
+    ) {
+      [].forEach((item) => {
+        params.append(`dis-ids`, `${item}`);
       });
     }
     // lấy từ profile qua
+
     if (list_cate.length > 0) {
       list_cate.forEach((item, index) => {
         paramsCate.append(`categories-ids`, `${item}`);
@@ -354,12 +394,29 @@ const Navbar: React.FC = () => {
       [].forEach((item) => {
         paramsCate.append(`categories-ids`, `${item}`);
       });
-    } else if (dataProfile.id && CATE_IDS.length === 0) {
-      dataProfile.categories.forEach((item: any) => {
-        paramsCate.append(
-          `categories-ids`,
-          `${[item.parent_category_id, item.child_category_id]}`,
-        );
+    } else if (
+      dataProfile.id &&
+      CATE_IDS.length === 0 &&
+      list_cate.length !== 0 &&
+      location.pathname !== '/search-results'
+    ) {
+      // dataProfile.categories.forEach((item: any) => {
+      //   paramsCate.append(
+      //     `categories-ids`,
+      //     `${[item.parent_category_id, item.child_category_id]}`,
+      //   );
+      // });
+      list_cate.forEach((item, index) => {
+        paramsCate.append(`categories-ids`, `${item}`);
+      });
+    } else if (
+      dataProfile.id &&
+      CATE_IDS.length === 0 &&
+      list_cate.length === 0 &&
+      location.pathname !== '/search-results'
+    ) {
+      [].forEach((item) => {
+        paramsCate.append(`categories-ids`, `${item}`);
       });
     }
 
@@ -397,7 +454,8 @@ const Navbar: React.FC = () => {
     if (!salaryType && SALARY_TYPE) {
       salary_type = SALARY_TYPE;
     }
-
+    console.log('cate', paramsCate);
+    console.log('list_cate', list_cate);
     setTimeout(() => {
       window.open(
         `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}` +
@@ -420,7 +478,7 @@ const Navbar: React.FC = () => {
           `${money_type ? `&money_type=${money_type}` : ''}`,
         '_self',
       );
-    }, 1);
+    }, 100);
   };
 
   // login
@@ -740,7 +798,7 @@ const Navbar: React.FC = () => {
           <Center className="div-nav-center">
             {/* <div>assssssssssssssssssssssssssssssss</div> */}
             <SearchInput
-              checkSearch = {checkSeacrh}
+              checkSearch={checkSeacrh}
               value={valueSearchInput}
               setValue={setValueSearchInput}
               setOpenCollapseFilter={setOpenCollapseFilter}

@@ -22,8 +22,9 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
 // import compornent
-import ShowNotificativeSave from '../ShowNotificativeSave';
-import ShowCancleSave from '../ShowCancleSave';
+
+import ShowCancleSave from '../../ShowCancleSave';
+import ShowNotificativeSave from '../../ShowNotificativeSave';
 // import api
 import postApi from 'api/postApi';
 import bookMarkApi from 'api/bookMarkApi';

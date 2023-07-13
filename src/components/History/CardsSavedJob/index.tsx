@@ -12,6 +12,8 @@ import './style.scss'
 
 import { Skeleton } from 'antd'
 
+import { SaveIconFill } from '#components/Icons'
+
 import 'intl'
 import 'intl/locale-data/jsonp/en'
 import Nodata from 'utils/NoDataPage'
@@ -20,6 +22,10 @@ import sortData from 'utils/SortDataHistory/sortData'
 // import data
 import historyBookmark from 'api/historyBookmark'
 import bookMarkApi from 'api/bookMarkApi'
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
 interface ICardsApplied {
   activeChild: string
@@ -33,12 +39,13 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const [count, setCount] = useState(5)
   const [uploading, setUploading] = useState(false)
   const [lastPostId, setLastPostId] = useState(0)
+  const dispatch = useDispatch();
 
   const [messageApi, contextHolder] = message.useMessage()
 
   const getAllPosted = async (newCount: number) => {
     try {
-      const result = await historyBookmark.getAllBookmark(newCount, 5)
+      const result = await historyBookmark.getAllBookmark(newCount, 10)
 
       if (result) {
         setLastPostId(result.data[result.data.length - 1].bookmark_id)
@@ -73,7 +80,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const handleClickAddItem = async () => {
     try {
       setUploading(true)
-      const result = await historyBookmark.getAllBookmark(lastPostId, 5)
+      const result = await historyBookmark.getAllBookmark(lastPostId, 10)
 
       if (result) {
         setUploading(false)
@@ -116,6 +123,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
         newData.splice(index, 1)
         return newData
       })
+      dispatch<any>(setAlertCancleSave(true));
     }
   }
 
@@ -375,14 +383,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                         handleDeleteBookmark(e, i, dataBookmark.id)
                       }
                     >
-                      <BookmarkIcon
-                        sx={{
-                          top: 0,
-                          right: 0,
-                          color: '#0d99ff',
-                          fontSize: '32px',
-                        }}
-                      />
+                      <SaveIconFill width={24} height={24} />
                     </div>
                     <img
                       className="img-resource-company"

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 // @ts-ignore
+import copy from 'clipboard-copy';
 import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -8,26 +9,39 @@ import { AxiosResponse } from 'axios';
 import Footer from '../../components/Footer/Footer';
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+// import api
 import postApi from '../../api/postApi';
+import bookMarkApi from 'api/bookMarkApi';
+// import redux
+// import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+import {
+  setAlertCancleSave,
+  setAlertSave,
+  setShowCopy,
+} from 'store/reducer/alertReducer';
+import { useDispatch, useSelector } from 'react-redux';
 // import locationApi from '../../api/locationApi'
 import appplicationApi from 'api/appplication';
 import ItemSuggest from './components/ItemSuggest';
+import ShowCancleSave from '#components/ShowCancleSave';
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
 // @ts-ignore
 import { Carousel } from 'react-carousel-minimal';
 import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
+
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 //@ts-ignore
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 //@ts-ignore
 // import { StatePropsCloseSlider } from 'pages/Home'
-
-import {
-  // useDispatch,
-  useSelector,
-} from 'react-redux';
 // import { bindActionCreators } from 'redux'
 // import { actionCreators } from '../../store/index'
 import { RootState } from '../../store/reducer';
-
 import {
   EnvironmentOutlined,
   ClockCircleOutlined,
@@ -40,21 +54,71 @@ import {
   FormOutlined,
   ExclamationCircleFilled,
 } from '@ant-design/icons';
-
-import { SaveIcon, ShareIcon } from '#components/Icons';
-
+import { SaveIconOutline, SaveIconFill, ShareIcon } from '#components/Icons';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import { PostNewest } from '#components/Home/NewJobs';
+// import icon
+import {
+  MailIcon,
+  FacebookIcon,
+  ZaloIcon,
+  CopyIcon,
+  MessagerIcon,
+  CompanyNameDetailPostIcon,
+  AddressDetailPostIcon,
+  ClockDetailPostIcon,
+} from '#components/Icons';
 
 import './style.scss';
+import ShowCopy from '#components/ShowCopy';
+import { height } from '@mui/system';
 
+const itemsShare = [
+  {
+    nameShare: 'Sao chép liên kết',
+    icon: <CopyIcon />,
+    source: '',
+  },
+  {
+    nameShare: 'Mail',
+    icon: <MailIcon />,
+    source: '',
+  },
+  {
+    nameShare: 'Facebook',
+    icon: <FacebookIcon />,
+    source: '',
+  },
+  {
+    nameShare: 'Messenger',
+    icon: <MessagerIcon />,
+    source: '',
+  },
+  // {
+  //   nameShare: 'Zalo',
+  //   icon: <ZaloIcon />,
+  //   source: '',
+  // },
+];
 interface ItemCategories {
   child_category_id?: Number;
   parent_category?: string;
-
   child_category?: string;
   parent_category_id: Number;
 }
-
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'background.paper',
+  border: 'none',
+  outline: 'none',
+  borderRadius: '10px',
+  p: 4,
+};
 // state props
 // interface PostNewest {
 //   id?: Number;
@@ -69,7 +133,6 @@ interface ItemCategories {
 //   image?: string;
 // }
 const ACCESS_TOKEN = localStorage.getItem('accessToken');
-
 // page view details post
 const Detail: React.FC = () => {
   // const { Search } = Input
@@ -81,10 +144,8 @@ const Detail: React.FC = () => {
   //   actionCreators,
   //   dispatch
   // )
-
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
-
   const [searchParams, setSearchParams] = useSearchParams();
   const [title, setTitle] = React.useState('')
 
@@ -94,17 +155,17 @@ const Detail: React.FC = () => {
     null,
   );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-
   const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển');
   const [backgroundButton, setBackgroundButton] =
     React.useState<string>('#0D99FF');
   const [checkPostUser, setCheckPostUser] = React.useState<Boolean>(false);
   const [checkApply, setCheckApply] = React.useState<boolean>(false);
-
   const [api, contextHolder] = notification.useNotification();
-
+  const [bookmarked, setBookmarked] = React.useState(false);
+  const [openModalShare, setOpenModalShare] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
+  const dispatch = useDispatch();
   const POST_ID = Number(searchParams.get('post-id'));
-
   const openNotification = () => {
     api.info({
       message: (
@@ -134,7 +195,6 @@ const Detail: React.FC = () => {
       icon: <CheckCircleFilled style={{ color: 'green' }} />,
     });
   };
-
   // message if user login yet
   const CheckWasLogin = () => {
     api.info({
@@ -144,59 +204,67 @@ const Detail: React.FC = () => {
       icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
     });
   };
-
   // get post by id-post
   const getPostById = async () => {
     try {
       const accountId = localStorage.getItem('accountId');
-
       const result = await postApi.getById(POST_ID);
       if (result) {
-        console.log('post detail', result);
+        // const list = result?.data.categories.map((category: any) =>
+        //   Number(category.child_category_id)
+        // )
+        // console.log('child', list)
+        // check  application status
+        if (result.data.account_id === accountId) {
+          setTextButton('Chỉnh sửa bài tuyển dụng');
+          setBackgroundButton('black');
+          setCheckPostUser(true);
+        } else if (result.data.status === 3) {
+          setTextButton('Bài đăng đã đóng');
+          setBackgroundButton('gray');
+          result.data.applied = true;
+        } else if (result.data.application_status === 1) {
+          setTextButton('Đã ứng tuyển');
+          setBackgroundButton('gray');
+        } else if (result.data.application_status === 2) {
+          setTextButton('Hồ sơ được phê duyệt');
+          setBackgroundButton('#0D99FF');
+        } else if (result.data.application_status === 3) {
+          setTextButton('Hồ sơ bị từ chối');
+          setBackgroundButton('#BD3131');
+        } else if (result.data.application_status === 4) {
+          setTextButton('Hồ sơ được chấp nhận');
+          setBackgroundButton('#5CB265');
+        }
+        setPost(result);
+        setCheckApply(result.data.applied);
+        if (result.data.bookmarked) {
+          setBookmarked(true);
+        } else {
+          setBookmarked(false);
+        }
+        // get post related by id post
+        const postNewest = await postApi.getPostRelated(POST_ID);
+        //setPost related
+        setPostNewest(postNewest);
       }
-      // const list = result?.data.categories.map((category: any) =>
-      //   Number(category.child_category_id)
-      // )
-      // console.log('child', list)
-
-      // check  application status
-      if (result.data.account_id === accountId) {
-        setTextButton('Chỉnh sửa bài tuyển dụng');
-        setBackgroundButton('black');
-        setCheckPostUser(true);
-      } else if (result.data.status === 3) {
-        setTextButton('Bài đăng đã đóng');
-        setBackgroundButton('gray');
-        result.data.applied = true;
-      } else if (result.data.application_status === 1) {
-        setTextButton('Đã ứng tuyển');
-        setBackgroundButton('gray');
-      } else if (result.data.application_status === 2) {
-        setTextButton('Hồ sơ được phê duyệt');
-        setBackgroundButton('#0D99FF');
-      } else if (result.data.application_status === 3) {
-        setTextButton('Hồ sơ bị từ chối');
-        setBackgroundButton('#BD3131');
-      } else if (result.data.application_status === 4) {
-        setTextButton('Hồ sơ được chấp nhận');
-        setBackgroundButton('#5CB265');
-      }
-      setPost(result);
-      setCheckApply(result.data.applied);
-
-      // get post related by id post
-      const postNewest = await postApi.getPostRelated(POST_ID);
-      //setPost related
-      setPostNewest(postNewest);
     } catch (error) {
       console.error(error);
     }
   };
 
+  // React.useEffect(() => {
+  //   // setTimeout(() => {
+  //   document.title = `${post?.data?.title}`
+  //   console.log("title", post?.data?.title);
+
+  //   // }, 1000);
+  // }, [])
+
   React.useEffect(() => {
     getPostById();
-  }, []);
-
+    document.title = `${post?.data.title}`
+  }, [bookmarked]);
   // set size for Breadcrumb
   React.useEffect(() => {
     function handleWindowResize() {
@@ -205,7 +273,6 @@ const Detail: React.FC = () => {
         Number(componentRefJob?.current?.offsetWidth);
       setWidth(w);
     }
-
     window.addEventListener('resize', handleWindowResize);
     return () => {
       window.removeEventListener('resize', handleWindowResize);
@@ -232,10 +299,6 @@ const Detail: React.FC = () => {
       status: 1,
     },
   ];
-
-  // React.useEffect(() => {
-
-  // }, [])
 
   // handle click button
   const onclick = async () => {
@@ -272,7 +335,6 @@ const Detail: React.FC = () => {
         });
         return;
       }
-
       const result = await appplicationApi.applyAplication(POST_ID);
       console.log('result', result);
       if (result) {
@@ -320,12 +382,101 @@ const Detail: React.FC = () => {
     fontSize: '15px',
     fontWeight: 'bold',
   };
-
   setTimeout(() => {
     setAutomatic(true);
   }, 700);
+  console.log('postNewest', post);
+  const handleClickShare = () => {
+    setOpenModalShare(true);
+  };
+  const handleClickSave = async () => {
+    // const a = post?.data.bookmarked;
+    console.log('postMarked', post?.data.bookmarked);
+    console.log('bookmarked', bookmarked);
+    try {
+      if (post?.data.bookmarked && bookmarked) {
+        const result = await bookMarkApi.deleteBookMark(post?.data.id);
+        if (result) {
+          setBookmarked(!bookmarked);
+          dispatch<any>(setAlertCancleSave(true));
+        }
+      } else if (!post?.data.bookmarked && !bookmarked) {
+        const result = await bookMarkApi.createBookMark(post?.data.id);
+        if (result) {
+          dispatch<any>(setAlertSave(true));
+          setBookmarked(!bookmarked);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log('bookmarked', bookmarked);
+  const handleCloseModalShare = () => {
+    setOpenModalShare(false);
+  };
+  const handleClickShareSource = (nameShare: string) => {
+    // window.location.href = `mailto:${email}`;
+    if (nameShare === 'Mail') {
+      // window.location.href = `mailto:quangbk54@gmail.com`;
+      window.location.href = `mailto:?body=${encodeURIComponent(
+        post?.data.share_link,
+      )}`;
+    }
+    if (nameShare === 'Messenger') {
+      // fb-messenger://share/?link=${encodeURIComponent(linkToShare)}
+      // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
+      const messengerLink =
+        'fb-messenger://share?link=' +
+        encodeURIComponent(post?.data.share_link) +
+        '&app_id=' +
+        encodeURIComponent('523018296116961');
+      window.location.href = messengerLink;
+    }
+    if (nameShare === 'Facebook') {
+      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        post?.data.share_link,
+      )}`;
+      window.open(url, '_blank');
+    }
+    if (nameShare === 'Zalo') {
+      window.location.href = `zalo://app?link=${encodeURIComponent(
+        post?.data.share_link,
+      )}`;
+    }
+    if (nameShare === 'Sao chép liên kết') {
+      copy(post?.data.share_link);
+      // setCopied(true);
+      dispatch<any>(setShowCopy(true));
+      // setTimeout(() => {
+      //   setCopied(false);
+      // }, 3000);
+    }
+  };
 
+  console.log('copy link', copied);
+  console.log('date', new Date(post?.data.created_at).toLocaleDateString());
+  const [checkSearchCompany, setCheckSearchCompany] = React.useState(false)
+
+  new Promise((resolve, reject) => {
+    document.title = `${post?.data?.title}`;
+  })
+
+  // const handleClickSearch = () => {
+  //   window.location.href = `/search?q=${post?.data.company_name}`;
+  // }
+
+  const handleClickSearch = () => {
+    const companyName = post?.data.company_name;
+    const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
+    window.location.replace(searchUrl);
+    setCheckSearchCompany(true)
+  };
   
+
+  const handleClickShowMap = () => {
+    window.open(`https://www.google.com/maps/place/${post?.data.district}`);
+  }
 
   return (
     <>
@@ -357,6 +508,60 @@ const Detail: React.FC = () => {
             }}
           >
             <div className="detail-container">
+              <div className="title-container">
+                <div className="top-title">
+                  <h2 >{post?.data.title}</h2>
+                  <img
+                    src={post?.data.resource.company_icon}
+                    alt={post?.data.resource.company_icon}
+                  />
+                </div>
+                <div className="mid-title">
+                  <div className="mid-title_companyName">
+                    <CompanyNameDetailPostIcon width={24} height={24} />
+                    <h3 onClick={handleClickSearch} style={{cursor: 'pointer'}}>{post?.data.company_name}</h3>
+                  </div>
+                  <div className="mid-title_companyAddress">
+                    <AddressDetailPostIcon width={24} height={24} />
+                    <h3 onClick={handleClickShowMap}>{`${post?.data.district}, ${post?.data.province}`}</h3>
+                  </div>
+                </div>
+                <div className="bot-title">
+                  <div className="bot-title-createdTime">
+                    <ClockDetailPostIcon width={24} height={24} />
+                    <h3>
+                      {moment(new Date(post?.data.created_at)).format('HH:mm')}
+                      <span>&nbsp;</span>
+                      {new Date(post?.data.created_at).toLocaleDateString('en-GB')}
+                    </h3>
+                  </div>
+                  <div className="bot-title-actions">
+                    <div className="share-job-icon" onClick={handleClickShare}>
+                      <ShareIcon width={24} height={24} />
+                      {/* <div className="items-share">
+                          <Link
+                            to="#"
+                            onClick={() => {
+                              window.location.href = `mailto:kalsjkahsjkfasjfkajkshfjkashkj@gmail.com`;
+                            }}
+                          >
+                            send
+                          </Link>
+                        </div> */}
+                      <h3>Chia sẻ</h3>
+                    </div>
+                    <div className="save-job-icon" onClick={handleClickSave}>
+                      {bookmarked ? (
+                        // <SaveIcon width={24} height={24} />
+                        <SaveIconFill width={24} height={24} />
+                      ) : (
+                        <SaveIconOutline width={24} height={24} />
+                      )}
+                      <h3>Lưu</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="div-job-img" ref={componentRef}>
                 <Carousel
                   data={post?.data.images.length > 0 ? post?.data.images : data}
@@ -385,7 +590,7 @@ const Detail: React.FC = () => {
               </div>
               <div className="div-job-title" ref={componentRefJob}>
                 <div className="title">
-                  <div className="top-title">
+                  {/* <div className="top-title">
                     <h2>{post?.data.title}</h2>
                     <div className="share-save-icon">
                       <div className="share-job-icon">
@@ -395,7 +600,7 @@ const Detail: React.FC = () => {
                         <SaveIcon width={24} height={24} />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <h3>{post?.data.company_name}</h3>
                 </div>
                 <div className="job-title-details">
@@ -564,6 +769,49 @@ const Detail: React.FC = () => {
               </div>
             </div>
           </div>
+          <ShowCancleSave />
+          <ShowNotificativeSave />
+          <ShowCopy />
+
+          <Modal
+            open={openModalShare}
+            onClose={handleCloseModalShare}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Chia sẻ công việc này
+              </Typography>
+              <div className="wrap-info_modalShare">
+                <div className="wrap-img_info">
+                  <div className="wrap-img">
+                    <img src={post?.data.image} alt={post?.data.company_name} />
+                  </div>
+                  <div>
+                    <Typography sx={{ ml: 2 }}>
+                      {post?.data.company_name}
+                    </Typography>
+                    <Typography sx={{ ml: 2 }}>{post?.data.title}</Typography>
+                  </div>
+                </div>
+              </div>
+              <div className="items-share">
+                {itemsShare.map((itemShare) => (
+                  <div
+                    // to={`/post-detail?post-id=${post?.data.id}`}
+                    className="item-share"
+                    onClick={() => handleClickShareSource(itemShare.nameShare)}
+                  >
+                    {itemShare.icon}
+                    <span style={{ marginLeft: '4px' }}>
+                      {itemShare.nameShare}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Box>
+          </Modal>
           <Footer />
         </div>
       )}

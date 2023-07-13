@@ -110,8 +110,9 @@
     overflow-y: scroll;
     // height: 450px;
     /* Sét cứng cuộn đến phần cuối */
-    scroll-behavior: smooth;
+    // scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
+    scroll-behavior: auto;
 
     .img {
       width: 30px;

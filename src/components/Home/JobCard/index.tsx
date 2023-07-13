@@ -20,10 +20,9 @@ import {
   CaretDownFilled,
 } from '@ant-design/icons';
 
-import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
-import { setAlertCancleSave } from 'store/reducer/alertReducer';
+import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
-import { LocationHomeIcon, DolaIcon } from '#components/Icons';
+import { LocationHomeIcon, DolaIcon, SaveIconOutline, SaveIconFill } from '#components/Icons';
 
 import { Space, Tooltip } from 'antd';
 
@@ -35,7 +34,7 @@ import HomeValueContextProvider, {
   HomeValueContext,
 } from 'context/HomeValueContextProvider';
 
-import ShowNotificativeSave from '../ShowNotificativeSave';
+import ShowNotificativeSave from '../../ShowNotificativeSave';
 interface IitemNewJob {
   item: {
     id: number;
@@ -102,7 +101,7 @@ const JobCard: React.FC<Iprops> = (props) => {
           justifyContent: 'space-between',
         }}
         onClick={(e) => {
-          
+
           handleClickItem(e, props.item.id);
         }}
       >
@@ -119,8 +118,8 @@ const JobCard: React.FC<Iprops> = (props) => {
               alt={props.item.title}
               loading="lazy"
               style={{
-                maxWidth: '120px',
-                maxHeight: '120px',
+                width: '120px',
+                height: '120px',
                 borderRadius: 10,
               }}
             />
@@ -143,9 +142,10 @@ const JobCard: React.FC<Iprops> = (props) => {
                     color: '#575757',
                   }}
                 >
-                  {props?.item?.title?.length > 50
+                  {/* {props?.item?.title?.length > 50
                     ? `${props.item.title.substring(0, 50)} ...`
-                    : props.item.title}
+                    : props.item.title} */}
+                  {props?.item?.title}
                 </Typography>
               </Tooltip>
               <Tooltip placement="top" title={props.item.company_name}>
@@ -164,9 +164,10 @@ const JobCard: React.FC<Iprops> = (props) => {
                     color: '#575757',
                   }}
                 >
-                  {props?.item?.company_name?.length > 50
+                  {/* {props?.item?.company_name?.length > 50
                     ? `${props.item.company_name.substring(0, 50)} ...`
-                    : props.item.company_name}
+                    : props.item.company_name} */}
+                  {props?.item?.company_name}
                 </Typography>
               </Tooltip>
               <div
@@ -291,7 +292,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                     );
                     props.item.bookmarked = true;
                     if (result) {
-                      dispatch<any>(setAlert(true));
+                      dispatch<any>(setAlertSave(true));
                       setCheckBookMark(!checkBookMark);
                     }
                   }
@@ -301,11 +302,9 @@ const JobCard: React.FC<Iprops> = (props) => {
               }}
             >
               {props.item.bookmarked ? (
-                <TurnedInIcon sx={{ top: 0, right: 0, color: '#0d99ff' }} />
+                <SaveIconFill width={24} height={24} />
               ) : (
-                <BookmarkBorderOutlinedIcon
-                  sx={{ top: 0, right: 0, color: '' }}
-                />
+                <SaveIconOutline width={24} height={24} />
               )}
             </div>
             <div>
@@ -318,7 +317,7 @@ const JobCard: React.FC<Iprops> = (props) => {
               />
             )}
             </div>
-  
+
           </div>
           <p style={{ fontSize: 13, color: '#0d99ff' }}>
             {props.item.job_type.job_type_name}

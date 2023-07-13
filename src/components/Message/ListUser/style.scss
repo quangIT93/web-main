@@ -17,6 +17,20 @@
     width: 100%;
   }
 
+  .wrap-img_chat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: auto;
+    flex-direction: column;
+
+    img {
+      height: auto;
+      width: auto;
+    }
+  }
+
   .header-list_userChat {
     border-bottom: 1px solid #dcdcdc;
 
@@ -95,6 +109,14 @@
           object-fit: cover;
           flex-grow: 0; // Không mở rộng chiều cao
           flex-shrink: 0;
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          justify-content: center;
+          color: #0d99ff
         }
 
         .user-online {

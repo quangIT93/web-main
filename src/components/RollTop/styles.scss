@@ -1,0 +1,14 @@
+.roll-top-container {
+    .roll-top-btn {
+        // display: none;
+        width: 60px !important;
+        height: 60px !important;
+        position: fixed;
+        right: 40px;
+        background-color: #0d99ff;
+        bottom: 60px;
+        font-size: 24px !important;
+        z-index: 5;
+        transition: all 0.5s ease-in-out;
+    }
+}
