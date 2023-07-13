@@ -1,5 +1,6 @@
 .post-history {
   margin-top: 70px;
+
   .post-history_main {
     padding: 50px 180px 0 180px;
     margin: 12px auto;
@@ -7,6 +8,10 @@
     .history-post_left {
       flex: 1;
       margin-top: 16px;
+      height: fit-content;
+      border: 1px solid;
+      border-radius: 8px;
+      padding: 16px 24px;
     }
 
     .history-post_right {
@@ -17,12 +22,27 @@
 }
 
 .active-child {
-  background-color: #0d99ff;
+  background-color: #AAAAAA;
   color: #ffffff;
+
+  &:hover {
+    background-color: #AAAAAA !important;
+    color: #ffffff !important;
+  }
 }
 
-.ant-collapse-item.ant-collapse-item-active.history-left_item {
-  border-bottom: 1px solid #aaaaaa;
+// .ant-collapse-item.ant-collapse-item-active.history-left_item {
+//   border-bottom: 1px solid #aaaaaa;
+//   color: #000000 !important;
+// }
+
+// .ant-collapse-item-active .ant-collapse-header {
+//   background: #ffffff !important;
+//   color: #000000 !important;
+// }
+
+.ant-collapse-item-active {
+  color: #000000 !important;
 }
 
 .ant-collapse-header {
@@ -33,6 +53,7 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
+
   .child-item {
     padding: 12px 12px 12px 48px;
     cursor: pointer;
@@ -44,21 +65,17 @@
   }
 }
 
-:where(.css-dev-only-do-not-override-yp8pcc).ant-collapse-ghost
-  > .ant-collapse-item
-  > .ant-collapse-content
-  > .ant-collapse-content-box {
+:where(.css-dev-only-do-not-override-yp8pcc).ant-collapse-ghost>.ant-collapse-item>.ant-collapse-content>.ant-collapse-content-box {
   padding-block: 0;
   padding: 0;
 }
 
-:where(.css-dev-only-do-not-override-yp8pcc).ant-collapse
-  > .ant-collapse-item
-  > .ant-collapse-header {
+:where(.css-dev-only-do-not-override-yp8pcc).ant-collapse>.ant-collapse-item>.ant-collapse-header {
   border-radius: 4px;
   display: flex;
   align-items: center;
   padding: 0 12px;
+
   .ant-collapse-header-text {
     .panel-title_text {
       padding: 16px 12px;
@@ -68,32 +85,37 @@
 
 .ant-collapse-item-active .ant-collapse-header {
   background-color: #0d99ff;
+
   svg {
     color: white;
   }
+
   .ant-collapse-header-text {
     color: white;
   }
 }
 
-.ant-collapse .ant-collapse-item-active .ant-collapse-expand-icon svg,
-.ant-collapse .ant-collapse-item-active .activeItem {
-  color: #ffffff;
-}
+// .ant-collapse .ant-collapse-item-active .ant-collapse-expand-icon svg,
+// .ant-collapse .ant-collapse-item-active .activeItem {
+//   color: #ffffff;
+// }
 
 .ant-collapse-content {
   margin-left: 12px;
+
   .ant-collapse-content-box {
     .child-item {
       margin: 4px 0;
     }
+
     .child-item:hover {
-      background-color: #bfcbd4;
+      background-color: #AAAAAA;
       transition: all 0.3s linear;
-      color: #000000;
+      color: #ffffff;
     }
+
     .active-child.child-item:hover {
-      background-color: #1371b5;
+      background-color: #AAAAAA;
       color: #ffffff;
     }
   }

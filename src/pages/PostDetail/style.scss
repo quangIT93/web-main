@@ -170,13 +170,17 @@
             text-decoration: underline;
           }
 
-          .share-job-icon,
-          .save-job-icon {
+          .actions-item {
             display: flex;
             align-items: center;
             flex-wrap: nowrap;
-            gap: 4px;
+            gap: 6px;
             cursor: pointer;
+
+            img {
+              width: 24px;
+              height: 24px;
+            }
           }
         }
       }

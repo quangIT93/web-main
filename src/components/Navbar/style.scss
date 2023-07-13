@@ -829,13 +829,14 @@
         .sub-login_item {
           cursor: pointer;
           padding: 16px;
-          color: $primary-color;
+          color: $text-color;
 
           &:hover {
-            background-color: #ccc;
+            background-color: #AAAAAA;
             border-radius: 10px;
             font-weight: bold;
             transition: 0.3s linear all;
+            color: $white
           }
 
           display: flex;
