@@ -266,7 +266,7 @@ const SearchInput: React.FC<SearchProps> = ({ value, setValue, setOpenCollapseFi
         shape="circle"
         onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
       >
-        {(checkSearch && openCollapseFilter === false )  ? (<LightFilterIcon width={20} height={20} />) : (<FilterIcon width={20} height={20} />)}
+        {(checkSearch)  ? (<LightFilterIcon width={20} height={20} />) : (<FilterIcon width={20} height={20} />)}
       </Button>
     </div>
   )

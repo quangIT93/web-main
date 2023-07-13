@@ -6,9 +6,6 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
 import './style.scss';
 import { TabScrollButton } from '@mui/material';
 // import { categories } from './dataCategory'
@@ -191,7 +188,6 @@ const CategoryCarousel: React.FC = () => {
     }
   };
   // scroll
-
   return (
     <Box
       ref={listRef}
@@ -273,7 +269,7 @@ const CategoryCarousel: React.FC = () => {
         value={value === 0 ? categories?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
-        scrollButtons={true}
+        scrollButtons="auto"
         aria-label="scrollable auto tabs example"
         allowScrollButtonsMobile
         orientation="horizontal"
@@ -301,7 +297,7 @@ const CategoryCarousel: React.FC = () => {
           );
         })}
       </Tabs>
-      <Backdrop
+      {/* <Backdrop
         sx={{
           color: '#0d99ff ',
           backgroundColor: 'transparent',
@@ -311,7 +307,7 @@ const CategoryCarousel: React.FC = () => {
         onClick={handleClose}
       >
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </Backdrop> */}
     </Box>
   );
 };

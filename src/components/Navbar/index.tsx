@@ -633,7 +633,7 @@ const Navbar: React.FC = () => {
       className="btn-filter"
       onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
     >
-      <TuneOutlinedIcon />
+      <BlackSearchIcon width={20} height={20} />
     </Button>,
 
     <Badge key="2" count={countChat} className="box-right-responsive_badge">

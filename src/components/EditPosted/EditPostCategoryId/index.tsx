@@ -150,7 +150,7 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
         size="large"
         className="inputCategories"
         showCheckedStrategy={SHOW_CHILD}
-        style={{ width: '100%', borderRadius: '2px' }}
+        style={{ width: '100%', borderRadius: '2px'}}
       />
     </Box>
   )

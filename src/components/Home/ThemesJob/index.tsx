@@ -12,7 +12,7 @@ import { AxiosResponse } from 'axios'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { TopicJobIcon } from '#components/Icons'
+import { TopicJobIcon, MoreICon } from '#components/Icons'
 
 // @ts-ignore
 import moment from 'moment'
@@ -214,7 +214,7 @@ const ThemesJob: React.FC = () => {
                 }}
               >
                 <p>Xem thêm</p>
-                <CaretDownFilled />
+                <MoreICon width={20} height={20}/>
               </Space>
             </Stack>
             <Backdrop
