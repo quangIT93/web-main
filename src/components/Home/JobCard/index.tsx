@@ -101,7 +101,7 @@ const JobCard: React.FC<Iprops> = (props) => {
           justifyContent: 'space-between',
         }}
         onClick={(e) => {
-          
+
           handleClickItem(e, props.item.id);
         }}
       >
@@ -118,8 +118,8 @@ const JobCard: React.FC<Iprops> = (props) => {
               alt={props.item.title}
               loading="lazy"
               style={{
-                maxWidth: '120px',
-                maxHeight: '120px',
+                width: '120px',
+                height: '120px',
                 borderRadius: 10,
               }}
             />
@@ -142,9 +142,10 @@ const JobCard: React.FC<Iprops> = (props) => {
                     color: '#575757',
                   }}
                 >
-                  {props?.item?.title?.length > 50
+                  {/* {props?.item?.title?.length > 50
                     ? `${props.item.title.substring(0, 50)} ...`
-                    : props.item.title}
+                    : props.item.title} */}
+                  {props?.item?.title}
                 </Typography>
               </Tooltip>
               <Tooltip placement="top" title={props.item.company_name}>
@@ -163,9 +164,10 @@ const JobCard: React.FC<Iprops> = (props) => {
                     color: '#575757',
                   }}
                 >
-                  {props?.item?.company_name?.length > 50
+                  {/* {props?.item?.company_name?.length > 50
                     ? `${props.item.company_name.substring(0, 50)} ...`
-                    : props.item.company_name}
+                    : props.item.company_name} */}
+                  {props?.item?.company_name}
                 </Typography>
               </Tooltip>
               <div
@@ -306,16 +308,16 @@ const JobCard: React.FC<Iprops> = (props) => {
               )}
             </div>
             <div>
-            {!error && (
-              <img
-                className="img-resource-company"
-                src={props.item.resource.company_icon}
-                alt="ảnh"
-                onError={handleImageError}
-              />
-            )}
+              {!error && (
+                <img
+                  className="img-resource-company"
+                  src={props.item.resource.company_icon}
+                  alt="ảnh"
+                  onError={handleImageError}
+                />
+              )}
             </div>
-  
+
           </div>
           <p style={{ fontSize: 13, color: '#0d99ff' }}>
             {props.item.job_type.job_type_name}
