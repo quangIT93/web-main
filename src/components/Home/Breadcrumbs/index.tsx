@@ -262,6 +262,7 @@ const BreadcrumbsCpn: React.FC = () => {
 
   return (
     <Stack
+      className="bread-crumb-container"
       spacing={2}
       sx={{
         marginTop: '238px',

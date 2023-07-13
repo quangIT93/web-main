@@ -39,8 +39,8 @@
 
   .MuiImageListItem-img {
     @include breakpoint(mobile) {
-      min-height: 120px !important;
-      max-width: 90px;
+      height: 90px !important;
+      width: 90px;
     }
   }
 

@@ -250,8 +250,18 @@ const Detail: React.FC = () => {
       console.error(error);
     }
   };
+
+  // React.useEffect(() => {
+  //   // setTimeout(() => {
+  //   document.title = `${post?.data?.title}`
+  //   console.log("title", post?.data?.title);
+
+  //   // }, 1000);
+  // }, [])
+
   React.useEffect(() => {
     getPostById();
+    document.title = `${post?.data.title}`
   }, [bookmarked]);
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -266,6 +276,7 @@ const Detail: React.FC = () => {
       window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
+
   const data = [
     {
       id: 81,
@@ -286,8 +297,7 @@ const Detail: React.FC = () => {
       status: 1,
     },
   ];
-  // React.useEffect(() => {
-  // }, [])
+
   // handle click button
   const onclick = async () => {
     //  window.open(`${post?.data.share_link}`)
@@ -430,8 +440,13 @@ const Detail: React.FC = () => {
     }
   };
 
-  console.log('copy link', copied);
-  console.log('date', new Date(post?.data.created_at).toLocaleDateString());
+  const handleClickSearchTitle = (title: string) => {
+    console.log('click', title);
+  };
+
+  new Promise((resolve, reject) => {
+    document.title = `${post?.data?.title}`;
+  })
 
   return (
     <>
@@ -465,7 +480,9 @@ const Detail: React.FC = () => {
             <div className="detail-container">
               <div className="title-container">
                 <div className="top-title">
-                  <h2>{post?.data.title}</h2>
+                  <h2 onClick={() => handleClickSearchTitle(post?.data.title)}>
+                    {post?.data.title}
+                  </h2>
                   <img
                     src={post?.data.resource.company_icon}
                     alt={post?.data.resource.company_icon}
@@ -485,8 +502,9 @@ const Detail: React.FC = () => {
                   <div className="bot-title-createdTime">
                     <ClockDetailPostIcon width={24} height={24} />
                     <h3>
-                      {moment(new Date(post?.data.created_at)).format('HH:mm')}-
-                      {new Date(post?.data.created_at).toLocaleDateString()}
+                      {moment(new Date(post?.data.created_at)).format('HH:mm')}
+                      <span>&nbsp;</span>
+                      {new Date(post?.data.created_at).toLocaleDateString('en-GB')}
                     </h3>
                   </div>
                   <div className="bot-title-actions">
@@ -656,8 +674,8 @@ const Detail: React.FC = () => {
                       <h5>
                         {post?.data.expired_date
                           ? moment(new Date(post?.data.expired_date)).format(
-                              'DD/MM/yyyy',
-                            )
+                            'DD/MM/yyyy',
+                          )
                           : 'Không thời hạn'}
                       </h5>
                     </div>

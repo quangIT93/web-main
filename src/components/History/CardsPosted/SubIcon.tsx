@@ -1,55 +1,55 @@
-import React from 'react'
+import React from 'react';
 import {
   MoreOutlined,
   CloseSquareOutlined,
   EditOutlined,
-} from '@ant-design/icons'
+} from '@ant-design/icons';
 
-import postApi from 'api/postApi'
+import postApi from 'api/postApi';
 
 interface ISubicon {
-  postId: number
-  setStatus: React.Dispatch<React.SetStateAction<number>>
-  status: number
+  postId: number;
+  setStatus: React.Dispatch<React.SetStateAction<number>>;
+  status: number;
 }
 const SubIcon: React.FC<ISubicon> = (props) => {
-  const { postId, setStatus, status } = props
-  const [accepted, setAccepted] = React.useState('')
-  const [closed, setClosed] = React.useState('')
+  const { postId, setStatus, status } = props;
+  const [accepted, setAccepted] = React.useState('');
+  const [closed, setClosed] = React.useState('');
 
   const handleClickClosePost = async () => {
     try {
-      const result = await postApi.updateStatusPost(postId, 3)
+      const result = await postApi.updateStatusPost(postId, 3);
       if (result) {
-        setStatus(3)
+        setStatus(3);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleClickEditPost = async () => {
     try {
-      const result = await postApi.updateStatusPost(postId, 1)
+      const result = await postApi.updateStatusPost(postId, 1);
       if (result) {
-        window.open(`/edit-posted/?postId=${postId}`, '_blank')
+        window.open(`/edit-posted/?postId=${postId}`, '_blank');
         // setStatus(1)
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleClickOpenPost = async () => {
     try {
-      const result = await postApi.updateStatusPost(postId, 3)
+      const result = await postApi.updateStatusPost(postId, 3);
       if (result) {
-        setStatus(1)
+        setStatus(1);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <div className="subs-icon_moreOutlined">
@@ -61,7 +61,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         Chỉnh sửa bài tuyển dụng
       </div>
 
-      {status === 3 ? (
+      {/* {status === 3 ? (
         <div
           className="sub-icon_moreOutlined sub-open_post"
           onClick={handleClickOpenPost}
@@ -79,9 +79,9 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         </div>
       ) : (
         <></>
-      )}
+      )} */}
     </div>
-  )
-}
+  );
+};
 
-export default SubIcon
+export default SubIcon;
