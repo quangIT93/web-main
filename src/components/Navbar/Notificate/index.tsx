@@ -153,21 +153,24 @@ const Notificate = () => {
     };
   }, []);
 
-  console.log('dataNotification', dataNotification);
+  const handleClickNotiKey = (postId: number) => {
+    window.open(`post-detail?post-id=${postId}`);
+  };
 
-  const handleClickNotiItem = (
+  const handleClickNoty = (
     postId: number,
     applicationId: number,
     typeText: string,
   ) => {
-    console.log('typeText', typeText);
-    if (typeText === 'recruiter')
+    if (typeText === 'recruiter') {
       window.open(
-        `/candidate-detail?post-id=${postId}&application_id=${applicationId}`,
+        `candidate-detail?post-id=${postId}?application_id=${applicationId}`,
       );
+    }
 
-    if (typeText === 'applicator')
-      window.open(`/post-detail?post-id=${postId}`);
+    if (typeText === 'applicator') {
+      window.open(`post-detail?post-id=${postId}`);
+    }
   };
 
   return (
@@ -199,11 +202,7 @@ const Notificate = () => {
                   <div
                     key={index}
                     className="wrap-system"
-                    onClick={() =>
-                      window.open(
-                        `/post-detail?post-id=${notificate.data.postId}`,
-                      )
-                    }
+                    onClick={() => handleClickNotiKey(notificate.data.postId)}
                   >
                     <div className="wrap-img_keyword">
                       <img src={notificate.data.image} alt="ảnh lỗi" />
@@ -278,7 +277,7 @@ const Notificate = () => {
                     key={index}
                     className="wrap-notificate_system"
                     onClick={() =>
-                      handleClickNotiItem(
+                      handleClickNoty(
                         notificate.data.postId,
                         notificate.data.applicationId,
                         notificate.data.typeText,
