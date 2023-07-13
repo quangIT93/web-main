@@ -12,6 +12,8 @@ import CardsPosted from '#components/History/CardsPosted';
 import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
 
+import ShowCancleSave from '#components/ShowCancleSave';
+
 // import icon
 
 import './style.scss';
@@ -200,6 +202,7 @@ const HistoryPost = () => {
           </Box>
         </Box>
       </div>
+      <ShowCancleSave />
       <Footer />
     </div>
   );

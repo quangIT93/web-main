@@ -17,6 +17,20 @@
     width: 100%;
   }
 
+  .wrap-img_chat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: auto;
+    flex-direction: column;
+
+    img {
+      height: auto;
+      width: auto;
+    }
+  }
+
   .header-list_userChat {
     border-bottom: 1px solid #dcdcdc;
 

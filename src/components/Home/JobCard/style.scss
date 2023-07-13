@@ -1,7 +1,18 @@
 @import '../../../scss//mixins';
 
+.MuiGrid-item {
+    @media (max-width: 768px) {
+        max-width: 100% !important;
+    }
+}
+
 .div-card-post-left {
     width: 80%;
+
+    .MuiImageListItem-img {
+        width: 120px !important;
+        height: 120px !important;
+    }
 
     .div-card-post-left_info {
         padding: 0;
@@ -10,7 +21,35 @@
         flex-direction: column;
         height: 120px;
         justify-content: space-between;
+        width: 80%;
 
+        @include breakpoint(mobile) {
+            width: 94%;
+        }
+
+        @include breakpoint(tablet) {
+            width: 90%;
+        }
+
+        @include breakpoint(largeTablet) {
+            width: 80%;
+        }
+
+        @media screen and (max-width: 624px) and (min-width: 500px) {
+            width: 80%;
+        }
+
+        @media screen and (max-width: 499px) and (min-width: 426px) {
+            width: 70%;
+        }
+
+        @media screen and (max-width: 1280px) and (min-width: 1240px) {
+            width: 90%;
+        }
+
+        @media screen and (max-width: 950px) and (min-width: 900px) {
+            width: 75%;
+        }
     }
 
     .MuiTypography-h6 {
@@ -20,11 +59,11 @@
         }
 
         @include breakpoint(tablet) {
-            width: 90% !important
+            // width: 90% !important
         }
 
         @include breakpoint(largeTablet) {
-            width: 90% !important;
+            width: 100% !important;
         }
     }
 
@@ -34,13 +73,13 @@
             width: 75% !important;
         }
 
-        @include breakpoint(tablet) {
-            width: 90% !important
-        }
+        // @include breakpoint(tablet) {
+        //     width: 90% !important
+        // }
 
-        @include breakpoint(largeTablet) {
-            width: 90% !important
-        }
+        // @include breakpoint(largeTablet) {
+        //     width: 90% !important
+        // }
     }
 
     .MuiTypography-body2 {
