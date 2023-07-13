@@ -187,6 +187,7 @@ const CategoryCarousel: React.FC = () => {
       scrollElement.scrollLeft += scrollAmount;
     }
   };
+
   // scroll
   return (
     <Box
@@ -297,6 +298,7 @@ const CategoryCarousel: React.FC = () => {
           );
         })}
       </Tabs>
+      
       <Backdrop
         sx={{
           color: '#0d99ff ',

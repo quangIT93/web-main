@@ -107,7 +107,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       }}
     >
       <Tabs
-        value={value == 0 ? listTheme?.data[0].id : value}
+        value={value === 0 ? listTheme?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"

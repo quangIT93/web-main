@@ -105,13 +105,13 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
 
   return (
     <Box sx={{ marginTop: '24px' }}>
-      <Typography
-        sx={{ fontWeight: 600, color: '#000000' }}
+      <Typography 
+        sx={{ fontWeight: 600, color: '#000000'}}
         variant="body1"
         component="label"
         htmlFor="jobTitle"
       >
-        Danh mục nghề <span style={{ color: 'red' }}>*</span>
+        Danh mục nghề <span style={{ color: 'red'}}>*</span>
       </Typography>
       <Cascader
         defaultValue={dataPost?.map((cata: any) => [
