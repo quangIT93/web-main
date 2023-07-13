@@ -96,3 +96,37 @@
 ::placeholder {
   font-style: italic;
 }
+
+// search items
+.items-search_keyword{
+    h4 {
+      margin-left: 4px;
+      margin-top: 8px;
+    }
+  .wrap-items-search {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    .item-search {
+      display: flex;
+      align-items: center;
+      border-radius: 12px;
+      border: 1px solid #aaa;
+      margin-left: 4px;
+      margin-bottom: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      &:hover {
+        background-color: #e4e5e6;
+        transition: 0.3s all linear;
+      }
+      .item-search_text {
+        padding: 4px 4px 4px 6px;
+
+        // padding: 30px 16px;
+        // padding-left: 4px;
+      }
+    }
+  }
+}
+

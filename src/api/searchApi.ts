@@ -62,5 +62,19 @@ const searchApi = {
 
     return axiosClient.get(URL)
   },
+
+  deleteKeywordSearch: (keyword: string) => {
+    const URL = `/v1/search/history`
+    
+    return axiosClient.delete(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      data: {
+        keyword: keyword,
+      },
+    })
+  }
 }
+
 export default searchApi
