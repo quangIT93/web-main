@@ -335,14 +335,16 @@ const Detail: React.FC = () => {
         });
         return;
       }
-      const result = await appplicationApi.applyAplication(POST_ID);
-      console.log('result', result);
-      if (result) {
-        openNotification();
-        setTextButton('Đã ứng tuyển');
-        setBackgroundButton('gray');
-        setCheckApply(true);
-      }
+      // const result = await appplicationApi.applyAplication(POST_ID);
+      // console.log('result', result);
+
+      // if (result) {
+      // openNotification();
+      // setTextButton('Đã ứng tuyển');
+      // setBackgroundButton('gray');
+      // setCheckApply(true);
+      window.open(post?.data.resource.url, '_blank');
+      // }
     } catch (error: any) {
       console.log(error);
       console.log('error', error.code);
@@ -493,13 +495,7 @@ const Detail: React.FC = () => {
             <div className="detail-container">
               <div className="title-container">
                 <div className="top-title">
-                  <h2 onClick={() => handleClickSearchTitle(post?.data.title)}>
-                    {post?.data.title}
-                  </h2>
-                  <img
-                    src={post?.data.resource.company_icon}
-                    alt={post?.data.resource.company_icon}
-                  />
+                  <h2>{post?.data.title}</h2>
                 </div>
                 <div className="mid-title">
                   <div className="mid-title_companyName">
@@ -523,7 +519,18 @@ const Detail: React.FC = () => {
                     </h3>
                   </div>
                   <div className="bot-title-actions">
-                    <div className="share-job-icon" onClick={handleClickShare}>
+                    <div className="actions-item"
+                      onClick={() => {
+                        window.open(post?.data.resource.url, '_blank');
+                      }}
+                    >
+                      <img
+                        src={post?.data.resource.company_icon}
+                        alt={post?.data.resource.company_icon}
+                      />
+                      <h3>{post?.data.resource.company_resource_name}</h3>
+                    </div>
+                    <div className="actions-item" onClick={handleClickShare}>
                       <ShareIcon width={24} height={24} />
                       {/* <div className="items-share">
                           <Link
@@ -537,7 +544,7 @@ const Detail: React.FC = () => {
                         </div> */}
                       <h3>Chia sẻ</h3>
                     </div>
-                    <div className="save-job-icon" onClick={handleClickSave}>
+                    <div className="actions-item" onClick={handleClickSave}>
                       {bookmarked ? (
                         // <SaveIcon width={24} height={24} />
                         <SaveIconFill width={24} height={24} />
@@ -576,20 +583,6 @@ const Detail: React.FC = () => {
                 />
               </div>
               <div className="div-job-title" ref={componentRefJob}>
-                <div className="title">
-                  {/* <div className="top-title">
-                    <h2>{post?.data.title}</h2>
-                    <div className="share-save-icon">
-                      <div className="share-job-icon">
-                        <ShareIcon width={24} height={24} />
-                      </div>
-                      <div className="save-job-icon">
-                        <SaveIcon width={24} height={24} />
-                      </div>
-                    </div>
-                  </div> */}
-                  <h3>{post?.data.company_name}</h3>
-                </div>
                 <div className="job-title-details">
                   <h4>Thông tin việc làm</h4>
                   <div className="div-detail-row">
