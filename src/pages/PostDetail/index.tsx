@@ -430,8 +430,9 @@ const Detail: React.FC = () => {
     }
   };
 
-  console.log('copy link', copied);
-  console.log('date', new Date(post?.data.created_at).toLocaleDateString());
+  const handleClickSearchTitle = (title: string) => {
+    console.log('click', title);
+  };
 
   return (
     <>
@@ -465,7 +466,9 @@ const Detail: React.FC = () => {
             <div className="detail-container">
               <div className="title-container">
                 <div className="top-title">
-                  <h2>{post?.data.title}</h2>
+                  <h2 onClick={() => handleClickSearchTitle(post?.data.title)}>
+                    {post?.data.title}
+                  </h2>
                   <img
                     src={post?.data.resource.company_icon}
                     alt={post?.data.resource.company_icon}

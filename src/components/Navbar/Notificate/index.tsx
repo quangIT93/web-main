@@ -153,6 +153,23 @@ const Notificate = () => {
     };
   }, []);
 
+  console.log('dataNotification', dataNotification);
+
+  const handleClickNotiItem = (
+    postId: number,
+    applicationId: number,
+    typeText: string,
+  ) => {
+    console.log('typeText', typeText);
+    if (typeText === 'recruiter')
+      window.open(
+        `/candidate-detail?post-id=${postId}&application_id=${applicationId}`,
+      );
+
+    if (typeText === 'applicator')
+      window.open(`/post-detail?post-id=${postId}`);
+  };
+
   return (
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
@@ -179,7 +196,15 @@ const Notificate = () => {
             (notificate: any, index: number) => {
               if (notificate.data.typeText === 'keyword') {
                 return (
-                  <div key={index} className="wrap-system">
+                  <div
+                    key={index}
+                    className="wrap-system"
+                    onClick={() =>
+                      window.open(
+                        `/post-detail?post-id=${notificate.data.postId}`,
+                      )
+                    }
+                  >
                     <div className="wrap-img_keyword">
                       <img src={notificate.data.image} alt="ảnh lỗi" />
                     </div>
@@ -249,7 +274,17 @@ const Notificate = () => {
                 );
               } else {
                 return (
-                  <div key={index} className="wrap-notificate_system">
+                  <div
+                    key={index}
+                    className="wrap-notificate_system"
+                    onClick={() =>
+                      handleClickNotiItem(
+                        notificate.data.postId,
+                        notificate.data.applicationId,
+                        notificate.data.typeText,
+                      )
+                    }
+                  >
                     <h3>{notificate.content_app.title}</h3>
                     <h5
                       dangerouslySetInnerHTML={{
