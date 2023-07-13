@@ -297,7 +297,7 @@ const CategoryCarousel: React.FC = () => {
           );
         })}
       </Tabs>
-      {/* <Backdrop
+      <Backdrop
         sx={{
           color: '#0d99ff ',
           backgroundColor: 'transparent',
@@ -307,7 +307,7 @@ const CategoryCarousel: React.FC = () => {
         onClick={handleClose}
       >
         <CircularProgress color="inherit" />
-      </Backdrop> */}
+      </Backdrop>
     </Box>
   );
 };

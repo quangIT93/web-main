@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // @ts-ignore
 import moment from 'moment';
 import 'intl';
@@ -86,6 +86,7 @@ const Detail: React.FC = () => {
   const componentRefJob = React.useRef<HTMLDivElement>(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const [title, setTitle] = React.useState('')
 
   const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
@@ -300,6 +301,17 @@ const Detail: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (post?.data) {
+      setTitle(post?.data.title)
+    }
+  }, [post])
+
+  useEffect(() => {
+    document.title = title ? title : 'HiJob - Tìm việc làm, tuyển dụng'
+  }, [title])
+
+
   const captionStyle = {
     fontSize: '2em',
     fontWeight: 'bold',
@@ -313,7 +325,7 @@ const Detail: React.FC = () => {
     setAutomatic(true);
   }, 700);
 
-  console.log(postNewest);
+  
 
   return (
     <>
