@@ -1,33 +1,33 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo } from 'react';
 
-import Typography from '@mui/material/Typography'
+import Typography from '@mui/material/Typography';
 
-import TextField from '@mui/material/TextField'
+import TextField from '@mui/material/TextField';
 
-import FormValues from '../../../pages/Post/index'
+import FormValues from '../../../pages/Post/index';
 
 interface PropsPostCompanyJob {
-  setTitleJob: React.Dispatch<React.SetStateAction<any>>
-  setCompanyName: React.Dispatch<React.SetStateAction<any>>
-  titleError: boolean
-  companyError: boolean
+  setTitleJob: React.Dispatch<React.SetStateAction<any>>;
+  setCompanyName: React.Dispatch<React.SetStateAction<any>>;
+  titleError: boolean;
+  companyError: boolean;
 }
 
 const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
-  const { setTitleJob, setCompanyName, titleError, companyError } = props
+  const { setTitleJob, setCompanyName, titleError, companyError } = props;
 
   const handleChangeTitleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleJob(e.target.value)
-  }
+    setTitleJob(e.target.value);
+  };
 
   const handleChangeCompanyForm = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCompanyName(e.target.value)
-  }
+    setCompanyName(e.target.value);
+  };
 
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
-  }
+  };
   return (
     <div className="post-jobCompany">
       <div className="post-titleJob post-title">
@@ -67,13 +67,13 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           // value={formValues.company_name}
           size="small"
           onChange={handleChangeCompanyForm}
-          sx={{ width: '100%', marginTop: '4px' }}
+          sx={{ width: '100%', marginTop: '0.5rem' }}
           placeholder="Tên công ty"
           error={companyError} // Đánh dấu lỗi
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default memo(PostJobCompany)
+export default memo(PostJobCompany);
