@@ -1,151 +1,152 @@
-import React, { useEffect, useState } from 'react'
-import moment, { Moment } from 'moment'
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import { Space, Tooltip, message, Button, Result } from 'antd'
-import BookmarkIcon from '@mui/icons-material/Bookmark'
-import ImageListItem from '@mui/material/ImageListItem'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { Box, Typography, MenuItem, TextField } from '@mui/material'
-import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons'
-import './style.scss'
+import React, { useEffect, useState } from 'react';
+import moment, { Moment } from 'moment';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import { Space, Tooltip, message, Button, Result } from 'antd';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import ImageListItem from '@mui/material/ImageListItem';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Box, Typography, MenuItem, TextField } from '@mui/material';
+import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons';
+import './style.scss';
 
-import { Skeleton } from 'antd'
+import { Skeleton } from 'antd';
 
-import { SaveIconFill } from '#components/Icons'
+import { SaveIconFill } from '#components/Icons';
 
-import 'intl'
-import 'intl/locale-data/jsonp/en'
-import Nodata from 'utils/NoDataPage'
-import sortData from 'utils/SortDataHistory/sortData'
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+import Nodata from 'utils/NoDataPage';
+import sortData from 'utils/SortDataHistory/sortData';
 
 // import data
-import historyBookmark from 'api/historyBookmark'
-import bookMarkApi from 'api/bookMarkApi'
+import historyBookmark from 'api/historyBookmark';
+import bookMarkApi from 'api/bookMarkApi';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
 interface ICardsApplied {
-  activeChild: string
+  activeChild: string;
 }
 
 const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
-  const { activeChild } = props
-  const [loading, setLoading] = useState<boolean>(true)
-  const [dataBookmarks, setDataBookmarks] = useState<any>(null)
-  const [newOld, setnewOld] = React.useState('Mới nhất')
-  const [count, setCount] = useState(5)
-  const [uploading, setUploading] = useState(false)
-  const [lastPostId, setLastPostId] = useState(0)
+  const { activeChild } = props;
+  const [loading, setLoading] = useState<boolean>(true);
+  const [dataBookmarks, setDataBookmarks] = useState<any>(null);
+  const [newOld, setnewOld] = React.useState('Mới nhất');
+  const [count, setCount] = useState(5);
+  const [uploading, setUploading] = useState(false);
+  const [lastPostId, setLastPostId] = useState(0);
   const dispatch = useDispatch();
 
-  const [messageApi, contextHolder] = message.useMessage()
+  const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
-    const result = await historyBookmark.getAllBookmark(lastPostId, 11)
+    const result = await historyBookmark.getAllBookmark(lastPostId, 11);
     if (result.data.length <= 10) {
       setIsVisible(false);
     }
-  }
+  };
 
   useEffect(() => {
     getAllPostToCheck();
-  }, [])
+  }, []);
 
   const getAllPosted = async (newCount: number) => {
     try {
-      const result = await historyBookmark.getAllBookmark(newCount, 10)
+      const result = await historyBookmark.getAllBookmark(newCount, 10);
 
       if (result) {
-        setLastPostId(result.data[result.data.length - 1].bookmark_id)
-        setDataBookmarks(sortData.sortDataByDate(newOld, result.data))
+        setLastPostId(result.data[result.data.length - 1].bookmark_id);
+        setDataBookmarks(sortData.sortDataByDate(newOld, result.data));
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    let isMounted = true
-    setLoading(true)
+    let isMounted = true;
+    setLoading(true);
     getAllPosted(0).then(() => {
       if (isMounted) {
-        setLoading(false)
+        setLoading(false);
       }
-    })
+    });
 
     return () => {
-      isMounted = false // Đặt biến cờ thành false khi component unmounts để tránh lỗi
-    }
-  }, [])
+      isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
+    };
+  }, []);
 
   const handleChange = (event: any) => {
-    setnewOld(event.target.value)
+    setnewOld(event.target.value);
 
-    setDataBookmarks(sortData.sortDataByDate(event.target.value, dataBookmarks))
-  }
+    setDataBookmarks(
+      sortData.sortDataByDate(event.target.value, dataBookmarks),
+    );
+  };
 
   // click button
   const handleClickAddItem = async () => {
     try {
-      setUploading(true)
-      const result = await historyBookmark.getAllBookmark(lastPostId, 10)
+      setUploading(true);
+      const result = await historyBookmark.getAllBookmark(lastPostId, 10);
 
       if (result) {
-
         // if (result?.data?.is_over === true) {
         // setIsVisible(false);
         // return;
         // }
 
-        setUploading(false)
+        setUploading(false);
         if (result.data.length == 0) {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',
-          })
-          return
+          });
+          return;
         }
-        setLastPostId(result.data[result.data.length - 1].bookmark_id)
+        setLastPostId(result.data[result.data.length - 1].bookmark_id);
         setDataBookmarks((prev: any) => {
-          const array = [...prev, ...result.data]
-          return sortData.sortDataByDate(newOld, array)
-        })
+          const array = [...prev, ...result.data];
+          return sortData.sortDataByDate(newOld, array);
+        });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   // click card
   const handleClickCard = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    bookmarkId: number
+    bookmarkId: number,
   ) => {
-    window.open(`/post-detail?post-id=${bookmarkId}`)
-  }
+    window.open(`/post-detail?post-id=${bookmarkId}`);
+  };
 
   const handleDeleteBookmark = async (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
-    bookmarkId: number
+    bookmarkId: number,
   ) => {
-    const result = await bookMarkApi.deleteBookMark(bookmarkId)
+    const result = await bookMarkApi.deleteBookMark(bookmarkId);
 
     if (result) {
       setDataBookmarks((prev: any) => {
-        const newData = [...prev]
-        newData.splice(index, 1)
-        return newData
-      })
+        const newData = [...prev];
+        newData.splice(index, 1);
+        return newData;
+      });
       dispatch<any>(setAlertCancleSave(true));
     }
-  }
+  };
 
   return (
     <>
@@ -210,7 +211,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                     <ImageListItem sx={{ flex: 1, display: 'flex' }}>
                       <img
                         src={`${dataBookmark.image}?w=164&h=164&fit=crop&auto=format`}
-                        srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        // srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         alt="anh job"
                         loading="lazy"
                         style={{
@@ -218,9 +219,10 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                           marginRight: '1rem',
                           maxWidth: 'auto',
                           height: '100%',
-                          maxHeight: 150,
+                          maxHeight: 120,
                           borderRadius: 10,
                         }}
+                        // onError={() => '/images/psychology.png'}
                       />
                       <div
                         style={{ padding: '0', marginLeft: '12px' }}
@@ -275,11 +277,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                           <ClockCircleFilled className="icon-cart-item-post" />
                           <Typography variant="body2" color="text.secondary">
                             {moment(new Date(dataBookmark?.start_time)).format(
-                              'HH:mm'
+                              'HH:mm',
                             )}{' '}
                             -{' '}
                             {moment(new Date(dataBookmark?.end_time)).format(
-                              'HH:mm'
+                              'HH:mm',
                             )}
                           </Typography>
                         </div>
@@ -300,11 +302,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                           />
                           <Typography variant="body2" color="text.secondary">
                             {new Intl.NumberFormat('en-US').format(
-                              dataBookmark?.salary_min
+                              dataBookmark?.salary_min,
                             )}
                             {` ${dataBookmark?.money_type_text} `}-{' '}
                             {new Intl.NumberFormat('en-US').format(
-                              dataBookmark?.salary_max
+                              dataBookmark?.salary_max,
                             ) +
                               ` ${dataBookmark?.money_type_text} ` +
                               `/${dataBookmark?.salary_type}`}
@@ -407,7 +409,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                     </div>
                     <img
                       className="img-resource-company"
-                      src={dataBookmark.resource.company_icon}
+                      src={
+                        dataBookmark.resource.company_icon
+                          ? dataBookmark.resource.company_icon
+                          : ''
+                      }
                       alt="anh icon"
                     />
 
@@ -440,7 +446,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                   backgroundColor: `#0D99FF`,
                   color: '#FFFFFF',
                   fontWeight: 'bold',
-                  display: isVisible ? 'block' : 'none'
+                  display: isVisible ? 'block' : 'none',
                 }}
                 loading={uploading}
                 onClick={handleClickAddItem}
@@ -454,7 +460,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
         )}
       </Skeleton>
     </>
-  )
-}
+  );
+};
 
-export default CardsSavedJob
+export default CardsSavedJob;

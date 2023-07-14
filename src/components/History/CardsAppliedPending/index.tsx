@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from 'react'
-import moment, { Moment } from 'moment'
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import { Space, Tooltip, message, Button } from 'antd'
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
-import ImageListItem from '@mui/material/ImageListItem'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { Box, Typography, MenuItem, TextField } from '@mui/material'
-import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons'
+import React, { useEffect, useState } from 'react';
+import moment, { Moment } from 'moment';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import { Space, Tooltip, message, Button } from 'antd';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import ImageListItem from '@mui/material/ImageListItem';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Box, Typography, MenuItem, TextField } from '@mui/material';
+import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons';
 
-import { Skeleton } from 'antd'
+import { Skeleton } from 'antd';
 
-import 'intl'
-import 'intl/locale-data/jsonp/en'
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
 // import data
-import historyApplicator from 'api/historyApplicator'
-import sortData from 'utils/SortDataHistory/sortData'
-import NoDataComponent from 'utils/NoDataPage'
+import historyApplicator from 'api/historyApplicator';
+import sortData from 'utils/SortDataHistory/sortData';
+import NoDataComponent from 'utils/NoDataPage';
 
 interface ICardsAppliedPending {
-  activeChild: string
+  activeChild: string;
 }
 
 const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
-  const { activeChild } = props
-  const [loading, setLoading] = useState<boolean>(true)
-  const [dataApplied, setDataApplied] = useState<any>(null)
-  const [newOld, setnewOld] = React.useState('Mới nhất')
-  const [count, setCount] = useState(5)
-  const [lastPostId, setLastPostId] = useState(0)
-  const [uploading, setUploading] = useState(false)
-  const [messageApi, contextHolder] = message.useMessage()
+  const { activeChild } = props;
+  const [loading, setLoading] = useState<boolean>(true);
+  const [dataApplied, setDataApplied] = useState<any>(null);
+  const [newOld, setnewOld] = React.useState('Mới nhất');
+  const [count, setCount] = useState(5);
+  const [lastPostId, setLastPostId] = useState(0);
+  const [uploading, setUploading] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
 
   //get post to check if length <= 10
@@ -44,88 +44,78 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
     if (result.data.length <= 10) {
       setIsVisible(false);
     }
-  }
+  };
 
   useEffect(() => {
     getAllPostToCheck();
-  }, [])
+  }, []);
 
   const getAllPending = async () => {
     try {
-      const result = await historyApplicator.getAllSubmitedApplied(
-        null,
-        10,
-        1
-      )
+      const result = await historyApplicator.getAllSubmitedApplied(null, 10, 1);
 
       if (result) {
-        setDataApplied(result.data)
-        setLastPostId(result.data[result.data.length - 1].id)
+        setDataApplied(result.data);
+        setLastPostId(result.data[result.data.length - 1].id);
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    let isMounted = true
-    setLoading(true)
+    let isMounted = true;
+    setLoading(true);
     getAllPending().then(() => {
       if (isMounted) {
-        setLoading(false)
+        setLoading(false);
       }
-    })
+    });
 
     return () => {
-      isMounted = false // Đặt biến cờ thành false khi component unmounts để tránh lỗi
-    }
-  }, [])
-
+      isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
+    };
+  }, []);
 
   const handleChange = (event: any) => {
-    setnewOld(event.target.value)
-    setDataApplied(sortData.sortDataByDate(event.target.value, dataApplied))
-  }
+    setnewOld(event.target.value);
+    setDataApplied(sortData.sortDataByDate(event.target.value, dataApplied));
+  };
 
   const handleClickAddItem = async () => {
     try {
-      setUploading(true)
+      setUploading(true);
       const result = await historyApplicator.getAllSubmitedApplied(
         lastPostId,
-        10, 1)
+        10,
+        1,
+      );
       if (result) {
-        setUploading(false)
+        setUploading(false);
         if (result.data.length == 0) {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',
-          })
-          return
+          });
+          return;
         }
-        setLastPostId(result.data[result.data.length - 1].id)
+        setLastPostId(result.data[result.data.length - 1].id);
         setDataApplied((prev: any) => {
-          const array = [
-            ...prev,
-            ...result.data
-          ]
-          return sortData.sortDataByDate(newOld, array)
-        }
-        )
+          const array = [...prev, ...result.data];
+          return sortData.sortDataByDate(newOld, array);
+        });
       }
-    } catch (error) {
-
-    }
-  }
+    } catch (error) {}
+  };
 
   // click card
   const handleClickCard = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    postId: number
+    postId: number,
   ) => {
-
-    window.open(`/post-detail?post-id=${postId}`)
-  }
+    window.open(`/post-detail?post-id=${postId}`);
+  };
 
   // Sắp xếp mảng dữ liệu khi state `oldDate` thay đổi
 
@@ -163,11 +153,9 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
         </TextField>
       </Box>
       <Skeleton loading={loading} active>
-        {dataApplied?.length > 0 ?
-          <div className='history-post'>
+        {dataApplied?.length > 0 ? (
+          <div className="history-post">
             <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-
-
               {dataApplied?.map((posted: any, i: number) => (
                 <Card
                   sx={{
@@ -192,14 +180,14 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                     <ImageListItem sx={{ flex: 1, display: 'flex' }}>
                       <img
                         src={`${posted.image}?w=164&h=164&fit=crop&auto=format`}
-                        srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        // srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         alt="anh job"
                         loading="lazy"
                         style={{
                           width: '120px',
                           maxWidth: 'auto',
                           height: '100%',
-                          maxHeight: 150,
+                          maxHeight: 120,
                           borderRadius: 10,
                         }}
                       />
@@ -253,7 +241,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                           <ClockCircleFilled className="icon-cart-item-post" />
                           <Typography variant="body2" color="text.secondary">
                             {moment(new Date(posted?.start_time)).format(
-                              'HH:mm'
+                              'HH:mm',
                             )}{' '}
                             -{' '}
                             {moment(new Date(posted?.end_time)).format('HH:mm')}
@@ -276,12 +264,14 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                           />
                           <Typography variant="body2" color="text.secondary">
                             {new Intl.NumberFormat('en-US').format(
-                              posted?.salary_min
-                            )}{` ${posted?.money_type_text} `}
-                            -{' '}
+                              posted?.salary_min,
+                            )}
+                            {` ${posted?.money_type_text} `}-{' '}
                             {new Intl.NumberFormat('en-US').format(
-                              posted?.salary_max
-                            ) + ` ${posted?.money_type_text} ` + `/${posted?.salary_type}`}
+                              posted?.salary_max,
+                            ) +
+                              ` ${posted?.money_type_text} ` +
+                              `/${posted?.salary_type}`}
                           </Typography>
                         </div>
                         <div
@@ -356,11 +346,19 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                     align="center"
                   >
                     {/* <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} /> */}
-                    <img
-                      className="img-resource-company"
-                      src={posted.resource.company_icon}
-                      alt="anh icon"
-                    />
+                    {posted.resource.company_icon ? (
+                      <img
+                        className="img-resource-company"
+                        src={
+                          posted.resource.company_icon
+                            ? posted.resource.company_icon
+                            : ''
+                        }
+                        alt="anh icon"
+                      />
+                    ) : (
+                      <></>
+                    )}
                     <p
                       style={{
                         fontSize: 13,
@@ -373,7 +371,6 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                   </Space>
                 </Card>
               ))}
-
             </Grid>
             <Box
               sx={{
@@ -383,25 +380,28 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                 justifyContent: 'center',
               }}
             >
-              <Button style={{
-                width: 130,
-                height: 40,
-                backgroundColor: `#0D99FF`,
-                marginBottom: '2rem',
-                color: '#FFFFFF',
-                fontWeight: "bold"
-              }} loading={uploading} onClick={handleClickAddItem}>
+              <Button
+                style={{
+                  width: 130,
+                  height: 40,
+                  backgroundColor: `#0D99FF`,
+                  marginBottom: '2rem',
+                  color: '#FFFFFF',
+                  fontWeight: 'bold',
+                }}
+                loading={uploading}
+                onClick={handleClickAddItem}
+              >
                 Xem thêm
               </Button>
             </Box>
-          </div> : <NoDataComponent />
-        }
+          </div>
+        ) : (
+          <NoDataComponent />
+        )}
       </Skeleton>
-
-
-
     </>
-  )
-}
+  );
+};
 
-export default CardsAppliedPending
+export default CardsAppliedPending;
