@@ -473,19 +473,26 @@ const Detail: React.FC = () => {
     }
   };
 
-  const handleClickSearchTitle = (title: string) => {
-    console.log('click', title);
+  console.log('copy link', copied);
+  console.log('date', new Date(post?.data.created_at).toLocaleDateString());
+
+  new Promise((resolve, reject) => {
+    document.title = `${post?.data?.title}`;
+  });
+
+  // const handleClickSearch = () => {
+  //   window.location.href = `/search?q=${post?.data.company_name}`;
+  // }
+
+  const handleClickSearch = () => {
+    const companyName = post?.data.company_name;
+    const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
+    window.location.replace(searchUrl);
   };
 
-  useEffect(() => {
-    const analytics = getAnalytics();
-    // logEvent(analytics, 'select_content', {
-    //   content_type: 'image',
-    //   content_id: 'P12453',
-    // });
-
-    // logEvent(analytics, 'goal_completion', { name: 'lever_puzzle' });
-  }, []);
+  const handleClickShowMap = () => {
+    window.open(`https://www.google.com/maps/place/${post?.data.district}`);
+  };
 
   return (
     <>
@@ -520,15 +527,26 @@ const Detail: React.FC = () => {
               <div className="title-container">
                 <div className="top-title">
                   <h2>{post?.data.title}</h2>
+                  <img
+                    src={post?.data.resource.company_icon}
+                    alt={post?.data.resource.company_icon}
+                  />
                 </div>
                 <div className="mid-title">
                   <div className="mid-title_companyName">
                     <CompanyNameDetailPostIcon width={24} height={24} />
-                    <h3>{post?.data.company_name}</h3>
+                    <h3
+                      onClick={handleClickSearch}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {post?.data.company_name}
+                    </h3>
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.district}, ${post?.data.province}`}</h3>
+                    <h3
+                      onClick={handleClickShowMap}
+                    >{`${post?.data.district}, ${post?.data.province}`}</h3>
                   </div>
                 </div>
                 <div className="bot-title">

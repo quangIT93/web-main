@@ -180,7 +180,7 @@ const NewJobs: React.FC = () => {
       {
         // automatic && (
         <Box sx={{ flexGrow: 1, marginTop: '300px' }} className='new-job' ref={listRef}>
-          <div style={{display: 'flex', gap: '0.5rem', margin: '12px 0'}}>
+          <div  style={{display: 'flex', gap: '0.5rem', margin: '12px 0'}}>
             <NewJobIcon width={25} height={25}/>
             <h2>Công việc mới nhất</h2>
           </div>

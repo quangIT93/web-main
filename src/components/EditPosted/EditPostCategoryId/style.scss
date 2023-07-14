@@ -1,62 +1,31 @@
-@import '/src/scss//mixins';
+// @import '/src/scss//mixins';
 
-.ant-select-selector{
+.ant-select.ant-cascader.ant-select-lg.input-category-post.css-dev-only-do-not-override-yp8pcc.ant-select-multiple.ant-select-allow-clear.ant-select-show-arrow{
     margin-top: 0.5rem;
 }
 
-@media screen and (max-width: 1021px) and (min-width: 908px) {
+
+@media screen and (min-width: 509px) and (max-width: 769px){
     .ant-select-selector{
-        width: 100%;
+        width: 490px;
     }
-    .ant-select-arrow
-    {
-        width: 40%;
+
+    .ant-select-arrow{
+        display: none !important;
     }
+
 }
 
-@media screen and (max-width: 907px) and (min-width: 752px) {
+@media screen and (max-width: 508px){
     .ant-select-selector{
-        width: 260px;
-    }
-    .ant-select-arrow
-    {
-        width:65%;
-    }
-}
-
-@media screen and (max-width: 751px) and (min-width: 678px){
-    .ant-select-selector{
-
         width: 230px;
     }
-
-    .ant-select-arrow
-    {
-        width: 62%;
+    .ant-select-arrow{
+        display: none !important;
     }
 
-}
-
-@media screen and (max-width: 677px){
-    .ant-select-selector{
-
-        width: 230px;
-    }
-
-    .anticon.anticon-down.ant-select-suffix {
-        width: 310px !important;
-    }
-
-}
-
-
-@media screen and (min-width: 1022px) {
-    .ant-select-selector{
-        width: 100%;
-    }
-    .ant-select-arrow
-    {
-        width: 1% !important;
+    .connect {
+        display: none !important;
     }
 }
 
