@@ -34,6 +34,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   const [lastPostId, setLastPostId] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const [isVisible, setIsVisible] = useState(true);
 
   const getAllApproved = async () => {
     try {
@@ -62,6 +63,22 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
     };
   }, []);
 
+  //get post to check if length <= 10
+  const getAllPostToCheck = async () => {
+    const result = await historyApplicator.getAllSubmitedApplied(
+      lastPostId,
+      11,
+      1,
+    );
+    if (result.data.length <= 10) {
+      setIsVisible(false);
+    }
+  }
+
+  useEffect(() => {
+    getAllPostToCheck();
+  }, [])
+
   const handleChange = (event: any) => {
     setnewOld(event.target.value);
     setDataApplied(sortData.sortDataByDate(event.target.value, dataApplied));
@@ -78,6 +95,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
       if (result) {
         setUploading(false);
         if (result.data.length == 0) {
+          setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',
@@ -90,7 +108,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // click card
@@ -364,6 +382,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
                   marginBottom: '2rem',
                   color: '#FFFFFF',
                   fontWeight: 'bold',
+                  display: isVisible ? 'block' : 'none'
                 }}
                 loading={uploading}
                 onClick={handleClickAddItem}

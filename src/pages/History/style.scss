@@ -9,7 +9,7 @@
       flex: 1;
       margin-top: 16px;
       height: fit-content;
-      border: 1px solid;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
       border-radius: 8px;
       padding: 16px 24px;
     }
@@ -71,7 +71,6 @@
 }
 
 :where(.css-dev-only-do-not-override-yp8pcc).ant-collapse>.ant-collapse-item>.ant-collapse-header {
-  border-radius: 4px;
   display: flex;
   align-items: center;
   padding: 0 12px;
@@ -84,24 +83,24 @@
 }
 
 .ant-collapse-item-active .ant-collapse-header {
-  background-color: #0d99ff;
+  background-color: #ffffff;
 
   svg {
-    color: white;
+    color: #000000;
   }
 
   .ant-collapse-header-text {
-    color: white;
+    color: #000000;
   }
 }
 
-// .ant-collapse .ant-collapse-item-active .ant-collapse-expand-icon svg,
-// .ant-collapse .ant-collapse-item-active .activeItem {
-//   color: #ffffff;
-// }
+.ant-collapse .ant-collapse-item-active .ant-collapse-expand-icon svg,
+.ant-collapse .ant-collapse-item-active .activeItem {
+  color: #000000;
+}
 
 .ant-collapse-content {
-  margin-left: 12px;
+  // margin-left: 12px;
 
   .ant-collapse-content-box {
     .child-item {

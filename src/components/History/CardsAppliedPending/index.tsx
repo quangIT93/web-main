@@ -32,6 +32,23 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
   const [lastPostId, setLastPostId] = useState(0)
   const [uploading, setUploading] = useState(false)
   const [messageApi, contextHolder] = message.useMessage()
+  const [isVisible, setIsVisible] = useState(true);
+
+  //get post to check if length <= 10
+  const getAllPostToCheck = async () => {
+    const result = await historyApplicator.getAllSubmitedApplied(
+      lastPostId,
+      11,
+      1,
+    );
+    if (result.data.length <= 10) {
+      setIsVisible(false);
+    }
+  }
+
+  useEffect(() => {
+    getAllPostToCheck();
+  }, [])
 
   const getAllPending = async () => {
     try {
@@ -79,6 +96,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
       if (result) {
         setUploading(false)
         if (result.data.length == 0) {
+          setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',

@@ -31,8 +31,25 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
   const [count, setCount] = useState(5)
   const [lastPostId, setLastPostId] = useState(0)
   const [uploading, setUploading] = useState(false)
+  const [isVisible, setIsVisible] = useState(true);
 
   const [messageApi, contextHolder] = message.useMessage()
+
+  //get post to check if length <= 10
+  const getAllPostToCheck = async () => {
+    const result = await historyApplicator.getAllSubmitedApplied(
+      lastPostId,
+      11,
+      1,
+    );
+    if (result.data.length <= 10) {
+      setIsVisible(false);
+    }
+  }
+
+  useEffect(() => {
+    getAllPostToCheck();
+  }, [])
 
   const getAllApproved = async () => {
     try {
@@ -80,6 +97,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
       if (result) {
         setUploading(false)
         if (result.data.length == 0) {
+          setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',
@@ -372,7 +390,8 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
                     backgroundColor: `#0D99FF`,
                     marginBottom: '2rem',
                     color: '#FFFFFF',
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    display: isVisible ? 'block' : 'none'
                   }} loading={uploading} onClick={handleClickAddItem}>
                     Xem thêm
                   </Button>

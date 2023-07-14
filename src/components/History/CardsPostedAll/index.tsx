@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react'
+import './style.scss'
 import moment, { Moment } from 'moment'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
@@ -11,11 +12,14 @@ import {
   EnvironmentFilled,
   ClockCircleFilled,
   MoreOutlined,
+  LeftOutlined
 } from '@ant-design/icons'
 import { useSearchParams } from 'react-router-dom'
 import { Skeleton } from 'antd'
 import 'intl'
 import 'intl/locale-data/jsonp/en'
+
+import { BackIcon } from '#components/Icons'
 
 import sortData from 'utils/SortDataHistory/sortData'
 
@@ -43,6 +47,23 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
   const [lastPostId, setLastPostId] = useState(0)
 
   const [messageApi, contextHolder] = message.useMessage()
+  const [isVisible, setIsVisible] = useState(true);
+
+  //get post to check if length <= 10
+  const getAllPostToCheck = async () => {
+    const result = await historyRecruiter.GetInformationAndCandidatesCount(
+      0,
+      11
+    )
+    if (result.data.length <= 10) {
+      setIsVisible(false);
+    }
+  }
+
+  useEffect(() => {
+    getAllPostToCheck();
+  }, [])
+
   //   getData
   const getAllPosted = async (postID: number) => {
     try {
@@ -89,6 +110,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
       if (result) {
         setUploading(false)
         if (result.data.length == 0) {
+          setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',
@@ -126,6 +148,10 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
     setDataPosted(sortData.sortDataByDate(event.target.value, dataPosted))
   }
 
+  const handleHideDetail = () => {
+    setShowDetailPosted(false)
+  }
+
 
   return (
     <>
@@ -137,15 +163,27 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
           alignItems: 'center',
         }}
       >
-        <Typography
-          sx={{
-            fontWeight: '600',
-            fontSize: '16px',
-            lineHeight: '24px',
-          }}
-        >
-          Tất cả công việc đã đăng tuyển
-        </Typography>
+        <div className="back-container">
+          <Button
+            className="back-button"
+            type="primary"
+            shape="circle"
+            icon={<LeftOutlined />}
+            onClick={handleHideDetail}
+            style={{
+              display: showDetailPosted ? 'block' : 'none'
+            }}
+          />
+          <Typography
+            sx={{
+              fontWeight: '600',
+              fontSize: '16px',
+              lineHeight: '24px',
+            }}
+          >
+            Tất cả công việc đã đăng tuyển
+          </Typography>
+        </div>
         <TextField
           select
           id="sex"
@@ -423,6 +461,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                     marginBottom: '2rem',
                     color: '#FFFFFF',
                     fontWeight: 'bold',
+                    display: isVisible ? 'block' : 'none'
                   }} loading={uploading} onClick={handleAddItem}>
                     Xem thêm
                   </Button>
