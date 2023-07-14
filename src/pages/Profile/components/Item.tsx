@@ -59,6 +59,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const handleUpdateExperience = (id?: number | null) => {
     setOpenModalExperienceUpdate(true);
   };
+  console.log('item?.start_date', item?.start_date);
   return (
     <div className="div-apply-item">
       <div className="div-item-left">
@@ -80,8 +81,8 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <h3>{item?.company_name}</h3>
             <p>{typeItem == 'experiences' ? item?.title : item?.major}</p>
             <p>
-              {`${moment(item?.start_date).year()}`} - {` `}
-              {`${moment(item?.end_date).year()}`}
+              {`${moment(item?.start_date).format('MM/YYYY')}`} - {` `}
+              {`${moment(item?.end_date).format('MM/YYYY')}`}
             </p>
 
             <div

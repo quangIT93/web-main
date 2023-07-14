@@ -30,6 +30,16 @@ import { IvalueJobChild } from 'context/HomeValueContextProvider';
 
 import CategoryItem from './components/CategoryItem';
 
+// Import Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/scrollbar';
+import 'swiper/css/navigation';
+// import required modules
+import { Navigation, Mousewheel, Pagination } from 'swiper';
+
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
 // interface item category
@@ -84,6 +94,9 @@ const CategoryCarousel: React.FC = () => {
       setOpenBackdrop(true); // Mở backdrop
       window.scrollTo(0, 0);
       // window.scrollTo(0, 300)
+
+      console.log(newValue);
+
 
       const selectedCategory = categories?.data.find(
         (item: any) => item.id === newValue,
@@ -188,6 +201,8 @@ const CategoryCarousel: React.FC = () => {
     }
   };
 
+  console.log("category id: ", categories?.data);
+
   // scroll
   return (
     <Box
@@ -266,7 +281,7 @@ const CategoryCarousel: React.FC = () => {
       // }}
       className="tabs"
     >
-      <Tabs
+      {/* <Tabs
         value={value === 0 ? categories?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
@@ -297,8 +312,66 @@ const CategoryCarousel: React.FC = () => {
             />
           );
         })}
-      </Tabs>
-      
+      </Tabs> */}
+
+      <Swiper
+        // rewind={true}
+        // slidesPerView={14}
+        // spaceBetween={10}
+        navigation={true}
+        mousewheel={true}
+        breakpoints={{
+          320: {
+            slidesPerView: 4,
+            spaceBetween: 10,
+          },
+          640: {
+            slidesPerView: 5,
+            spaceBetween: 30,
+          },
+          768: {
+            slidesPerView: 5,
+            spaceBetween: 30,
+          },
+          1024: {
+            slidesPerView: 7,
+            spaceBetween: 20,
+          },
+          1440: {
+            slidesPerView: 8,
+            spaceBetween: 20,
+          },
+          1920: {
+            slidesPerView: 14,
+            spaceBetween: 10,
+          },
+          2560: {
+            slidesPerView: 14,
+            spaceBetween: 10,
+          }
+        }}
+        modules={[Mousewheel, Navigation, Pagination]}
+        className="mySwiper"
+      >
+        {categories?.data.map((item: CategoryItem, index: number) => {
+          // console.log("id: ", item.id);
+          return (
+            <SwiperSlide
+              key={index}
+              onClick={(event) => {
+                handleChange(event, item.id);
+              }}
+              style={{
+                borderBottom: item.id === value ? '2px solid #0d99ff' : 'none',
+                backgroundColor: item.id === value ? 'rgba(0, 0, 0, 0.1)' : '',
+              }}
+            >
+              <CategoryItem content={item.name} imageLink={item.image} />
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+
       <Backdrop
         sx={{
           color: '#0d99ff ',

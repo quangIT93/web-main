@@ -120,6 +120,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         position: 'relative',
         paddingBottom: '28px',
       }}
+      className="hot-place-container"
     >
       {/* <Tabs
         value={value == 0 ? listTheme?.data[0].id : value}
@@ -159,10 +160,31 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       </Tabs> */}
 
       <Swiper
-        // rewind={true}
-        slidesPerView={8}
         navigation={true}
         mousewheel={true}
+        breakpoints={{
+          320: {
+            slidesPerView: 2,
+          },
+          640: {
+            slidesPerView: 3,
+          },
+          768: {
+            slidesPerView: 4,
+          },
+          1024: {
+            slidesPerView: 5,
+          },
+          1440: {
+            slidesPerView: 6,
+          },
+          1920: {
+            slidesPerView: 8,
+          },
+          2560: {
+            slidesPerView: 8,
+          }
+        }}
         modules={[Mousewheel, Navigation, Pagination]}
         className="mySwiper"
       >

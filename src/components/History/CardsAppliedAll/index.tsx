@@ -73,11 +73,11 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
     if (result.data.length <= 10) {
       setIsVisible(false);
     }
-  }
+  };
 
   useEffect(() => {
     getAllPostToCheck();
-  }, [])
+  }, []);
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value);
@@ -108,7 +108,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // click card
@@ -180,14 +180,14 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
                     <ImageListItem sx={{ flex: 1, display: 'flex' }}>
                       <img
                         src={`${posted.image}?w=164&h=164&fit=crop&auto=format`}
-                        srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        // srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         alt="anh job"
                         loading="lazy"
                         style={{
                           width: '120px',
                           maxWidth: 'auto',
                           height: '100%',
-                          maxHeight: 150,
+                          maxHeight: 120,
                           borderRadius: 10,
                         }}
                       />
@@ -348,11 +348,15 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
                     align="center"
                   >
                     {/* <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} /> */}
-                    <img
-                      className="img-resource-company"
-                      src={posted.resource.company_icon}
-                      alt="anh icon"
-                    />
+                    {posted.resource.company_icon ? (
+                      <img
+                        className="img-resource-company"
+                        src={posted.resource.company_icon}
+                        alt="anh icon"
+                      />
+                    ) : (
+                      <></>
+                    )}
                     <p
                       style={{
                         fontSize: 13,
@@ -382,7 +386,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
                   marginBottom: '2rem',
                   color: '#FFFFFF',
                   fontWeight: 'bold',
-                  display: isVisible ? 'block' : 'none'
+                  display: isVisible ? 'block' : 'none',
                 }}
                 loading={uploading}
                 onClick={handleClickAddItem}

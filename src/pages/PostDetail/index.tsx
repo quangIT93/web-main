@@ -358,6 +358,7 @@ const Detail: React.FC = () => {
       // setBackgroundButton('gray');
       // setCheckApply(true);
       window.open(post?.data.resource.url, '_blank');
+
       // }
     } catch (error: any) {
       console.log(error);
@@ -378,6 +379,8 @@ const Detail: React.FC = () => {
       }
     }
   };
+
+  console.log(post?.data);
 
   useEffect(() => {
     if (post?.data) {
@@ -531,6 +534,7 @@ const Detail: React.FC = () => {
                     src={post?.data.resource.company_icon}
                     alt={post?.data.resource.company_icon}
                   />
+                  <h3>{post?.data.resource.company_resource_name}</h3>
                 </div>
                 <div className="mid-title">
                   <div className="mid-title_companyName">
@@ -561,18 +565,13 @@ const Detail: React.FC = () => {
                     </h3>
                   </div>
                   <div className="bot-title-actions">
-                    <div
-                      className="actions-item"
-                      onClick={() => {
-                        window.open(post?.data.resource.url, '_blank');
-                      }}
-                    >
+                    {/* <div className="actions-item">
                       <img
                         src={post?.data.resource.company_icon}
                         alt={post?.data.resource.company_icon}
                       />
                       <h3>{post?.data.resource.company_resource_name}</h3>
-                    </div>
+                    </div> */}
                     <div className="actions-item" onClick={handleClickShare}>
                       <ShareIcon width={24} height={24} />
                       {/* <div className="items-share">
@@ -725,8 +724,8 @@ const Detail: React.FC = () => {
                       <h5>
                         {post?.data.expired_date
                           ? moment(new Date(post?.data.expired_date)).format(
-                              'DD/MM/yyyy',
-                            )
+                            'DD/MM/yyyy',
+                          )
                           : 'Không thời hạn'}
                       </h5>
                     </div>
