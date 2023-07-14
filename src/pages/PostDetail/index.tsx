@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // @ts-ignore
 import copy from 'clipboard-copy';
 import moment from 'moment';
@@ -42,6 +42,21 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 // import { bindActionCreators } from 'redux'
 // import { actionCreators } from '../../store/index'
 import { RootState } from '../../store/reducer';
+
+// import firebase
+import firebase from 'firebase/app';
+import {
+  getDatabase,
+  ref,
+  child,
+  get,
+  set,
+  onValue,
+  update,
+} from 'firebase/database';
+
+import { getAnalytics, logEvent, setCurrentScreen } from 'firebase/analytics';
+
 import {
   EnvironmentOutlined,
   ClockCircleOutlined,
@@ -147,6 +162,8 @@ const Detail: React.FC = () => {
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [title, setTitle] = React.useState('');
+
   const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
   const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(
@@ -261,7 +278,6 @@ const Detail: React.FC = () => {
 
   React.useEffect(() => {
     getPostById();
-    document.title = `${post?.data.title}`
   }, [bookmarked]);
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -333,14 +349,16 @@ const Detail: React.FC = () => {
         });
         return;
       }
-      const result = await appplicationApi.applyAplication(POST_ID);
-      console.log('result', result);
-      if (result) {
-        openNotification();
-        setTextButton('Đã ứng tuyển');
-        setBackgroundButton('gray');
-        setCheckApply(true);
-      }
+      // const result = await appplicationApi.applyAplication(POST_ID);
+      // console.log('result', result);
+
+      // if (result) {
+      // openNotification();
+      // setTextButton('Đã ứng tuyển');
+      // setBackgroundButton('gray');
+      // setCheckApply(true);
+      window.open(post?.data.resource.url, '_blank');
+      // }
     } catch (error: any) {
       console.log(error);
       console.log('error', error.code);
@@ -360,6 +378,21 @@ const Detail: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (post?.data) {
+      setTitle(post?.data.title);
+    }
+  }, [post]);
+
+  useEffect(() => {
+    if (title) document.title = title ? title : 'web-post-detail';
+  }, [title]);
+
+  new Promise((resolve, reject) => {
+    document.title = post ? `${post?.data?.title}` : 'web-post-detail';
+  });
+
   const captionStyle = {
     fontSize: '2em',
     fontWeight: 'bold',
@@ -440,13 +473,26 @@ const Detail: React.FC = () => {
     }
   };
 
-  const handleClickSearchTitle = (title: string) => {
-    console.log('click', title);
-  };
+  console.log('copy link', copied);
+  console.log('date', new Date(post?.data.created_at).toLocaleDateString());
 
   new Promise((resolve, reject) => {
     document.title = `${post?.data?.title}`;
-  })
+  });
+
+  // const handleClickSearch = () => {
+  //   window.location.href = `/search?q=${post?.data.company_name}`;
+  // }
+
+  const handleClickSearch = () => {
+    const companyName = post?.data.company_name;
+    const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
+    window.location.replace(searchUrl);
+  };
+
+  const handleClickShowMap = () => {
+    window.open(`https://www.google.com/maps/place/${post?.data.district}`);
+  };
 
   return (
     <>
@@ -480,9 +526,7 @@ const Detail: React.FC = () => {
             <div className="detail-container">
               <div className="title-container">
                 <div className="top-title">
-                  <h2 onClick={() => handleClickSearchTitle(post?.data.title)}>
-                    {post?.data.title}
-                  </h2>
+                  <h2>{post?.data.title}</h2>
                   <img
                     src={post?.data.resource.company_icon}
                     alt={post?.data.resource.company_icon}
@@ -491,11 +535,18 @@ const Detail: React.FC = () => {
                 <div className="mid-title">
                   <div className="mid-title_companyName">
                     <CompanyNameDetailPostIcon width={24} height={24} />
-                    <h3>{post?.data.company_name}</h3>
+                    <h3
+                      onClick={handleClickSearch}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {post?.data.company_name}
+                    </h3>
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.district}, ${post?.data.province}`}</h3>
+                    <h3
+                      onClick={handleClickShowMap}
+                    >{`${post?.data.district}, ${post?.data.province}`}</h3>
                   </div>
                 </div>
                 <div className="bot-title">
@@ -504,11 +555,25 @@ const Detail: React.FC = () => {
                     <h3>
                       {moment(new Date(post?.data.created_at)).format('HH:mm')}
                       <span>&nbsp;</span>
-                      {new Date(post?.data.created_at).toLocaleDateString('en-GB')}
+                      {new Date(post?.data.created_at).toLocaleDateString(
+                        'en-GB',
+                      )}
                     </h3>
                   </div>
                   <div className="bot-title-actions">
-                    <div className="share-job-icon" onClick={handleClickShare}>
+                    <div
+                      className="actions-item"
+                      onClick={() => {
+                        window.open(post?.data.resource.url, '_blank');
+                      }}
+                    >
+                      <img
+                        src={post?.data.resource.company_icon}
+                        alt={post?.data.resource.company_icon}
+                      />
+                      <h3>{post?.data.resource.company_resource_name}</h3>
+                    </div>
+                    <div className="actions-item" onClick={handleClickShare}>
                       <ShareIcon width={24} height={24} />
                       {/* <div className="items-share">
                           <Link
@@ -522,7 +587,7 @@ const Detail: React.FC = () => {
                         </div> */}
                       <h3>Chia sẻ</h3>
                     </div>
-                    <div className="save-job-icon" onClick={handleClickSave}>
+                    <div className="actions-item" onClick={handleClickSave}>
                       {bookmarked ? (
                         // <SaveIcon width={24} height={24} />
                         <SaveIconFill width={24} height={24} />
@@ -561,20 +626,6 @@ const Detail: React.FC = () => {
                 />
               </div>
               <div className="div-job-title" ref={componentRefJob}>
-                <div className="title">
-                  {/* <div className="top-title">
-                    <h2>{post?.data.title}</h2>
-                    <div className="share-save-icon">
-                      <div className="share-job-icon">
-                        <ShareIcon width={24} height={24} />
-                      </div>
-                      <div className="save-job-icon">
-                        <SaveIcon width={24} height={24} />
-                      </div>
-                    </div>
-                  </div> */}
-                  <h3>{post?.data.company_name}</h3>
-                </div>
                 <div className="job-title-details">
                   <h4>Thông tin việc làm</h4>
                   <div className="div-detail-row">
@@ -674,8 +725,8 @@ const Detail: React.FC = () => {
                       <h5>
                         {post?.data.expired_date
                           ? moment(new Date(post?.data.expired_date)).format(
-                            'DD/MM/yyyy',
-                          )
+                              'DD/MM/yyyy',
+                            )
                           : 'Không thời hạn'}
                       </h5>
                     </div>

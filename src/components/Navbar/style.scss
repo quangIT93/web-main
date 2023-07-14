@@ -413,7 +413,7 @@
 .nav {
   &.css-1lmzauf {
 
-    padding: 0 165px;
+    padding: 0 180px;
 
     @media screen and (min-width:1220px) and (max-width: 1280px) {
       &.css-1lmzauf {
@@ -829,13 +829,14 @@
         .sub-login_item {
           cursor: pointer;
           padding: 16px;
-          color: $primary-color;
+          color: $text-color;
 
           &:hover {
-            background-color: #ccc;
+            background-color: #AAAAAA;
             border-radius: 10px;
             font-weight: bold;
             transition: 0.3s linear all;
+            color: $white
           }
 
           display: flex;
@@ -877,9 +878,10 @@
         }
       }
 
-      .btn-notice {
-        position: relative;
-      }
     }
   }
+}
+.wrap-btn_notice {
+  position: relative;
+
 }

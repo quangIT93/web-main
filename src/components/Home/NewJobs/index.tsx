@@ -14,7 +14,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { NewJobIcon } from '#components/Icons';
+import { NewJobIcon, MoreICon } from '#components/Icons';
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -180,7 +180,7 @@ const NewJobs: React.FC = () => {
       {
         // automatic && (
         <Box sx={{ flexGrow: 1, marginTop: '300px' }} className='new-job' ref={listRef}>
-          <div style={{display: 'flex', gap: '0.5rem', margin: '12px 0'}}>
+          <div  style={{display: 'flex', gap: '0.5rem', margin: '12px 0'}}>
             <NewJobIcon width={25} height={25}/>
             <h2>Công việc mới nhất</h2>
           </div>
@@ -204,7 +204,7 @@ const NewJobs: React.FC = () => {
               }}
             >
               <p>Xem thêm</p>
-              <CaretDownFilled />
+              <MoreICon width={20} height={20} />
             </Space>
           </Stack>
           <Backdrop

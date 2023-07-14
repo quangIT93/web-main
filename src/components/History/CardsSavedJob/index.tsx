@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import moment, { Moment } from 'moment'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import { Space, Tooltip, message, Button } from 'antd'
+import { Space, Tooltip, message, Button, Result } from 'antd'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import ImageListItem from '@mui/material/ImageListItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
@@ -42,6 +42,19 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const dispatch = useDispatch();
 
   const [messageApi, contextHolder] = message.useMessage()
+  const [isVisible, setIsVisible] = useState(true);
+
+  //get post to check if length <= 10
+  const getAllPostToCheck = async () => {
+    const result = await historyBookmark.getAllBookmark(lastPostId, 11)
+    if (result.data.length <= 10) {
+      setIsVisible(false);
+    }
+  }
+
+  useEffect(() => {
+    getAllPostToCheck();
+  }, [])
 
   const getAllPosted = async (newCount: number) => {
     try {
@@ -83,8 +96,15 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
       const result = await historyBookmark.getAllBookmark(lastPostId, 10)
 
       if (result) {
+
+        // if (result?.data?.is_over === true) {
+        // setIsVisible(false);
+        // return;
+        // }
+
         setUploading(false)
         if (result.data.length == 0) {
+          setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',
@@ -420,6 +440,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                   backgroundColor: `#0D99FF`,
                   color: '#FFFFFF',
                   fontWeight: 'bold',
+                  display: isVisible ? 'block' : 'none'
                 }}
                 loading={uploading}
                 onClick={handleClickAddItem}

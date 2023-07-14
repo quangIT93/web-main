@@ -84,7 +84,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
 
   const onChange = (value: any) => {
     // Xử lý giá trị thay đổi
-    console.log('value');
+
     setDisable(false);
     const secondValues = value.map((item: any) => item[1]);
 
@@ -96,8 +96,6 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
       setDisable(true);
     }
   };
-
-  console.log('listlocation', listLocation);
 
   if (userProfile) {
     return (

@@ -1,15 +1,15 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 
-import '../../scss/_mixins.scss'
-import breakpoints from '../../scss/breakpoints'
+import '../../scss/_mixins.scss';
+import breakpoints from '../../scss/breakpoints';
 
-const { mobile, tablet, desktop, laptop, largeDesktop } = breakpoints
+const { mobile, tablet, desktop, laptop, largeDesktop } = breakpoints;
 
 // import { colors } from '@mui/material'
 
 export const accent = {
   color: 'black',
-} // #e040fb (alternative method)
+}; // #e040fb (alternative method)
 
 export const Container = styled('div')({
   padding: '0 24px',
@@ -22,7 +22,7 @@ export const Container = styled('div')({
   left: '0',
   right: '0',
   background: 'white',
-})
+});
 
 export const Wrapper = styled('div')({
   //   padding: '10px 20px',
@@ -30,7 +30,7 @@ export const Wrapper = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-})
+});
 
 export const Left = styled('div')({
   flex: 1,
@@ -38,7 +38,7 @@ export const Left = styled('div')({
   alignItems: 'center',
   height: '70px',
   justifyContent: 'space-between',
-})
+});
 
 export const SearchContainer = styled('div')({
   // border: '0.5px solid lightgray',
@@ -59,21 +59,21 @@ export const SearchContainer = styled('div')({
   },
   backgroundColor: '#F3F8FB',
   height: 55,
-})
+});
 
 export const Input = styled.input({
   border: 'none',
   outline: 'none',
   paddingLeft: '10px',
   width: '100%',
-})
+});
 
 export const Right = styled('div')({
   flex: 1,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-})
+});
 
 export const boxSX = {
   position: 'relative',
@@ -82,13 +82,13 @@ export const boxSX = {
   '&:hover': {
     color: 'red',
   },
-}
+};
 
 export const collapse = {
   position: 'absolute',
   top: '100%',
   backgroundColor: '#ccc',
-}
+};
 
 export const Center = styled('div')({
   flex: 1,
@@ -96,7 +96,7 @@ export const Center = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-})
+});
 
 export const ItemCenter = styled('div')({
   display: 'flex',
@@ -105,14 +105,14 @@ export const ItemCenter = styled('div')({
   marginLeft: '4px',
   cursor: 'pointer',
   padding: '12px',
-})
+});
 
 export const NavSearch = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   padding: '12px 0',
-})
+});
 
 export const InputSearh = styled.input({
   width: '320px',
@@ -120,13 +120,13 @@ export const InputSearh = styled.input({
   borderRadius: '12px',
   outline: 'none',
   border: '1px solid #ccc',
-})
+});
 
 export const NavSearchButton = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-})
+});
 
 export const SearchButton = styled('div')({
   display: 'flex',
@@ -138,16 +138,16 @@ export const SearchButton = styled('div')({
   borderRadius: '20px',
   width: '120px',
   textAlign: 'center',
-})
+});
 
 export const NavFilter = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
   paddingBottom: '12px',
-})
+});
 
-export const ChoosesCarreer = styled('div')(({ }) => ({
+export const ChoosesCarreer = styled('div')(({}) => ({
   border: '1px solid #ccc',
   width: '260px',
   padding: '8px',
@@ -192,7 +192,7 @@ export const ChoosesCarreer = styled('div')(({ }) => ({
 
     /* Additional styles for screens with a maximum width of the specified breakpoint */
   },
-}))
+}));
 
 export const WrapChooseLocation = styled('div')({
   display: 'flex',
@@ -204,7 +204,7 @@ export const WrapChooseLocation = styled('div')({
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
-})
+});
 
 export const SubNavChoosesCarreer = styled('div')({
   position: 'absolute',
@@ -215,36 +215,37 @@ export const SubNavChoosesCarreer = styled('div')({
   borderRadius: '12px',
   maxHeight: '400px',
   overflow: 'hidden',
-})
+});
 
-export const SubNavCarreerUl = styled('ul')({})
-export const SubNavCarreerLi = styled('li')({})
+export const SubNavCarreerUl = styled('ul')({});
+export const SubNavCarreerLi = styled('li')({});
 
 export const Div = styled('div')({
   height: '100px',
-})
+});
 
 export const MenuItem = styled('div')({
   fontSize: '14px',
   cursor: 'pointer',
   marginRight: '25px',
   textAlign: 'center',
-})
+});
 export const Language = styled.span({
   fontSize: '14px',
   cursor: 'pointer',
-})
+});
 export const hoverButton = {
   '&:hover': {
     background: '$primary',
   },
-}
+};
 
 export const collapseCssFilter = {
   width: '100%',
   boxSizing: 'border-box',
   borderTop: '1px solid #ccc',
-  padding: '0 180px',
+  // padding: '0 180px',
+  display: 'flex',
   '@media (max-width: 1200px)': {
     padding: 0,
   },
@@ -252,6 +253,5 @@ export const collapseCssFilter = {
   '@media (max-width: 784px)': {
     // display: 'flex',
     // flexDirection: 'column',
-
   },
-}
+};

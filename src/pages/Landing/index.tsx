@@ -1,14 +1,16 @@
-import React from 'react'
+import React from 'react';
 // @ts-ignore
-import { Link } from 'react-router-dom'
-import NaviBar from '../Landing/components/navBar'
+import { Link } from 'react-router-dom';
+import NaviBar from '../Landing/components/navBar';
 // import { Navbar } from '../../components'
-import ItemInfoLeft from '../Landing/components/item/itemInfoLeft'
-import ItemInfoRight from '../Landing/components/item/itemInfoRight'
+import ItemInfoLeft from '../Landing/components/item/itemInfoLeft';
+import ItemInfoRight from '../Landing/components/item/itemInfoRight';
 // import Popup from './popup/index'
 // import useModal from './popup/useModal'
-import Footer from '../../components/Footer/index'
-import './style.scss'
+import Footer from '../../components/Footer/index';
+import './style.scss';
+
+import siteApi from 'api/siteApi';
 
 const Landing: React.FC = () => {
   // console.log('Home page here')
@@ -21,6 +23,38 @@ const Landing: React.FC = () => {
   //   document.body.style.overflow = 'scroll'
   // }
   // }, [])
+  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
+  const [site, SetSite] = React.useState<any>(null);
+
+  const getTitle = async () => {
+    try {
+      const result = await siteApi.getSalaryType();
+      if (result) {
+        SetSite(result);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  React.useEffect(() => {
+    getTitle();
+  }, []);
+
+  React.useEffect(() => {
+    if (site?.data) {
+      setTitleFirebase('HiJob - Trang Landing-page');
+    }
+  }, [site]);
+
+  React.useEffect(() => {
+    document.title = titleFirebase ? titleFirebase : 'web-landing-page';
+  }, [titleFirebase]);
+
+  new Promise((resolve, reject) => {
+    document.title = site ? titleFirebase : 'web-landing-page';
+  });
+
   return (
     <div className="home">
       <NaviBar />
@@ -149,7 +183,7 @@ const Landing: React.FC = () => {
       {/* <Popup isOpen={isOpen} toggle={toggle}></Popup> */}
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;

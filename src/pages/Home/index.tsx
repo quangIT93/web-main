@@ -20,6 +20,8 @@ import RollTop from '#components/RollTop';
 import './style.scss';
 import Footer from '../../components/Footer/Footer';
 
+import siteApi from 'api/siteApi';
+
 // import context
 // import { HomeValueContext } from 'context/HomeValueContextProvider'
 // import { HomeContext } from 'context/HomeContextProvider'
@@ -27,6 +29,38 @@ import Footer from '../../components/Footer/Footer';
 // import { IvalueJobChild } from 'context/HomeValueContextProvider'
 
 const Home: React.FC = () => {
+  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
+  const [site, SetSite] = React.useState<any>(null);
+
+  const getPost = async () => {
+    try {
+      const result = await siteApi.getSalaryType();
+      if (result) {
+        SetSite(result);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  React.useEffect(() => {
+    getPost();
+  }, []);
+
+  React.useEffect(() => {
+    if (site?.data) {
+      setTitleFirebase('HiJob - Tìm việc làm, tuyển dụng');
+    }
+  }, [site]);
+
+  React.useEffect(() => {
+    document.title = titleFirebase ? titleFirebase : 'web-home';
+  }, [titleFirebase]);
+
+  new Promise((resolve, reject) => {
+    document.title = site ? titleFirebase : 'web-home';
+  });
+
   return (
     <div className="home">
       <Navbar />

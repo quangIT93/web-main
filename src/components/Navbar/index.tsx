@@ -274,8 +274,6 @@ const Navbar: React.FC = () => {
     setReceivedMessages,
   ]);
 
-  console.log(receivedMessages, sendMessages);
-
   // console.log('receivedMessages', receivedMessages)
   // console.log('sendMessages', sendMessages)
   const ref = React.useRef<HTMLDivElement | null>(null);
@@ -338,8 +336,6 @@ const Navbar: React.FC = () => {
   // }
 
   // handle click search button
-
-  console.log('location', location);
 
   const handleSearch = (event: any, valueSearchInput: string | undefined) => {
     event.preventDefault();
@@ -648,13 +644,13 @@ const Navbar: React.FC = () => {
               </div>
             </Space>
             <div className="sub-login_items">
-              <Link to="/profile">
+              <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
                   <SyncOutlined />
                   <span>Cập nhật thông tin</span>
                 </div>
               </Link>
-              <Link to="/history">
+              <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
                   // onClick={() => {
@@ -691,7 +687,7 @@ const Navbar: React.FC = () => {
       className="btn-filter"
       onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
     >
-      <TuneOutlinedIcon />
+      <BlackSearchIcon width={20} height={20} />
     </Button>,
 
     <Badge key="2" count={countChat} className="box-right-responsive_badge">
@@ -834,15 +830,16 @@ const Navbar: React.FC = () => {
                 <ChatIcon />
               </Button>
             </Badge>
-
-            <Button
-              className="btn-notice"
-              onClick={() => setOpenNotificate(!openNotificate)}
-              ref={bellRef}
-            >
-              <BellIcon />
+            <div className="wrap-btn_notice">
+              <Button
+                className="btn-notice"
+                onClick={() => setOpenNotificate(!openNotificate)}
+                ref={bellRef}
+              >
+                <BellIcon />
+              </Button>
               {openNotificate ? <Notificate /> : <></>}
-            </Button>
+            </div>
           </Center>
           <Right className="div-nav-right">
             <Box

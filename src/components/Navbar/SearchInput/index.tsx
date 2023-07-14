@@ -316,8 +316,6 @@ const SearchInput: React.FC<SearchProps> = ({
     </div>
   ));
 
-  console.log('dataHíto', dataSuggest);
-
   return (
     <div className="search-input-wrapper">
       <Select
@@ -361,13 +359,12 @@ const SearchInput: React.FC<SearchProps> = ({
       >
         <SearchIcon width={18} height={18} />
       </Button>
-
       <Button
         className="search-input-wrapper-iconFilter"
         shape="circle"
         onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
       >
-        {checkSearch && openCollapseFilter === false ? (
+        {checkSearch ? (
           <LightFilterIcon width={20} height={20} />
         ) : (
           <FilterIcon width={20} height={20} />
