@@ -67,7 +67,7 @@ import { Navbar } from '#components';
 import { CreateKeywordIconSmall, MoreICon } from '#components/Icons';
 
 //import jobcard
-import JobCard from '../../components/Home/JobCard'
+import JobCard from '../../components/Home/JobCard';
 
 // import { useHomeState } from '../Home/HomeState'
 
@@ -229,7 +229,7 @@ const NewJobs: React.FC = () => {
 
   const JOB_TYPE =
     Number(searchParams.get('job-type')) &&
-      Number(searchParams.get('job-type'))! !== 5
+    Number(searchParams.get('job-type'))! !== 5
       ? [Number(searchParams.get('job-type'))]
       : [];
 
@@ -646,6 +646,40 @@ const NewJobs: React.FC = () => {
     getPostSearch();
   }, [dataProfile]);
 
+  // title
+
+  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
+  // const [site, SetSite] = React.useState<any>(null);
+
+  // const getTitle = async () => {
+  //   try {
+  //     const result = await siteApi.getSalaryType();
+  //     if (result) {
+  //       SetSite(result);
+  //     }
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   getTitle();
+  // }, []);
+
+  React.useEffect(() => {
+    if (dataAllLocation) {
+      setTitleFirebase('HiJob - Trang tìm kiếm');
+    }
+  }, [dataAllLocation]);
+
+  React.useEffect(() => {
+    document.title = titleFirebase ? titleFirebase : 'web-search';
+  }, [titleFirebase]);
+
+  new Promise((resolve, reject) => {
+    document.title = dataAllLocation ? titleFirebase : 'web-search';
+  });
+
   return (
     <>
       <Navbar />
@@ -698,9 +732,7 @@ const NewJobs: React.FC = () => {
                 <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
                   {searchData?.posts.map((item: PostNewest, index: number) => (
                     <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                      <JobCard
-                        item={item}
-                      />
+                      <JobCard item={item} />
                     </Grid>
                   ))}
                 </Grid>
@@ -720,7 +752,7 @@ const NewJobs: React.FC = () => {
                     }}
                   >
                     <p>Xem thêm</p>
-                    <MoreICon width={20} height={20}/>
+                    <MoreICon width={20} height={20} />
                   </Space>
                 </Stack>
               </>
@@ -734,7 +766,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -762,7 +794,7 @@ const NewJobs: React.FC = () => {
               onChange={handleChangeKeywordInput}
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Từ khóa"
-            // error={companyError} // Đánh dấu lỗi
+              // error={companyError} // Đánh dấu lỗi
             />
 
             <FormControl sx={{ width: '100%', marginTop: '12px' }} size="small">

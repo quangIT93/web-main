@@ -1,35 +1,37 @@
-import React from 'react'
-import Navbar from './components/Navbar'
-import Footer from '../../components/Footer/Footer'
+import React from 'react';
+import Navbar from './components/Navbar';
+import Footer from '../../components/Footer/Footer';
 // @ts-ignore
-import { ScrollContext } from '#utils'
-import './style.scss'
-import Category from './components/Category'
+import { ScrollContext } from '#utils';
+import './style.scss';
+import Category from './components/Category';
+
+import siteApi from 'api/siteApi';
 
 export interface CurrentCategoryActiveProps {
-  isAboutUs: boolean
-  privaryPolicy: boolean
-  termsOfUse: boolean
+  isAboutUs: boolean;
+  privaryPolicy: boolean;
+  termsOfUse: boolean;
 }
 
 const Policy: React.FC = () => {
-  const titleOneRef = React.useRef<HTMLDivElement>(null)
-  const titleTwoRef = React.useRef<HTMLDivElement>(null)
-  const titleThreeRef = React.useRef<HTMLDivElement>(null)
+  const titleOneRef = React.useRef<HTMLDivElement>(null);
+  const titleTwoRef = React.useRef<HTMLDivElement>(null);
+  const titleThreeRef = React.useRef<HTMLDivElement>(null);
   const [categoriesState, setCategoriesState] =
     React.useState<CurrentCategoryActiveProps>({
       isAboutUs: true,
       privaryPolicy: false,
       termsOfUse: false,
-    })
+    });
   // @ts-ignore
-  const { scrollY } = React.useContext(ScrollContext)
+  const { scrollY } = React.useContext(ScrollContext);
 
   React.useEffect(() => {
     const getActiveCategory = () => {
-      const { current: firstTitleEl } = titleOneRef
-      const { current: secondTitleEl } = titleTwoRef
-      const { current: thirdTitleEl } = titleThreeRef
+      const { current: firstTitleEl } = titleOneRef;
+      const { current: secondTitleEl } = titleTwoRef;
+      const { current: thirdTitleEl } = titleThreeRef;
 
       if (firstTitleEl && secondTitleEl && thirdTitleEl) {
         if (
@@ -40,7 +42,7 @@ const Policy: React.FC = () => {
             isAboutUs: true,
             privaryPolicy: false,
             termsOfUse: false,
-          })
+          });
         }
         if (
           scrollY - secondTitleEl.offsetTop >= 0 &&
@@ -50,19 +52,51 @@ const Policy: React.FC = () => {
             isAboutUs: false,
             privaryPolicy: true,
             termsOfUse: false,
-          })
+          });
         }
         if (scrollY - thirdTitleEl.offsetTop >= 0) {
           setCategoriesState({
             isAboutUs: false,
             privaryPolicy: false,
             termsOfUse: true,
-          })
+          });
         }
       }
+    };
+    getActiveCategory();
+  }, [scrollY]);
+
+  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
+  const [site, SetSite] = React.useState<any>(null);
+
+  const getTitle = async () => {
+    try {
+      const result = await siteApi.getSalaryType();
+      if (result) {
+        SetSite(result);
+      }
+    } catch (error) {
+      console.log('error', error);
     }
-    getActiveCategory()
-  }, [scrollY])
+  };
+
+  React.useEffect(() => {
+    getTitle();
+  }, []);
+
+  React.useEffect(() => {
+    if (site?.data) {
+      setTitleFirebase('HiJob - Chính sách công ty');
+    }
+  }, [site]);
+
+  React.useEffect(() => {
+    document.title = titleFirebase ? titleFirebase : 'web-policy';
+  }, [titleFirebase]);
+
+  new Promise((resolve, reject) => {
+    document.title = site ? titleFirebase : 'web-policy';
+  });
 
   return (
     <>
@@ -515,7 +549,7 @@ const Policy: React.FC = () => {
       </div>
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Policy
+export default Policy;

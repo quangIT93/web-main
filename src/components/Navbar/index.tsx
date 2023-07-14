@@ -274,8 +274,6 @@ const Navbar: React.FC = () => {
     setReceivedMessages,
   ]);
 
-  console.log(receivedMessages, sendMessages);
-
   // console.log('receivedMessages', receivedMessages)
   // console.log('sendMessages', sendMessages)
   const ref = React.useRef<HTMLDivElement | null>(null);
@@ -338,8 +336,6 @@ const Navbar: React.FC = () => {
   // }
 
   // handle click search button
-
-  console.log('location', location);
 
   const handleSearch = (event: any, valueSearchInput: string | undefined) => {
     event.preventDefault();
@@ -648,13 +644,13 @@ const Navbar: React.FC = () => {
               </div>
             </Space>
             <div className="sub-login_items">
-              <Link to="/profile">
+              <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
                   <SyncOutlined />
                   <span>Cập nhật thông tin</span>
                 </div>
               </Link>
-              <Link to="/history">
+              <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
                   // onClick={() => {

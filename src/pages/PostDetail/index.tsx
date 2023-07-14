@@ -42,6 +42,21 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 // import { bindActionCreators } from 'redux'
 // import { actionCreators } from '../../store/index'
 import { RootState } from '../../store/reducer';
+
+// import firebase
+import firebase from 'firebase/app';
+import {
+  getDatabase,
+  ref,
+  child,
+  get,
+  set,
+  onValue,
+  update,
+} from 'firebase/database';
+
+import { getAnalytics, logEvent, setCurrentScreen } from 'firebase/analytics';
+
 import {
   EnvironmentOutlined,
   ClockCircleOutlined,
@@ -263,7 +278,6 @@ const Detail: React.FC = () => {
 
   React.useEffect(() => {
     getPostById();
-    document.title = `${post?.data.title}`;
   }, [bookmarked]);
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -372,8 +386,12 @@ const Detail: React.FC = () => {
   }, [post]);
 
   useEffect(() => {
-    document.title = title ? title : 'HiJob - Tìm việc làm, tuyển dụng';
+    if (title) document.title = title ? title : 'web-post-detail';
   }, [title]);
+
+  new Promise((resolve, reject) => {
+    document.title = post ? `${post?.data?.title}` : 'web-post-detail';
+  });
 
   const captionStyle = {
     fontSize: '2em',
@@ -459,9 +477,15 @@ const Detail: React.FC = () => {
     console.log('click', title);
   };
 
-  new Promise((resolve, reject) => {
-    document.title = `${post?.data?.title}`;
-  });
+  useEffect(() => {
+    const analytics = getAnalytics();
+    // logEvent(analytics, 'select_content', {
+    //   content_type: 'image',
+    //   content_id: 'P12453',
+    // });
+
+    // logEvent(analytics, 'goal_completion', { name: 'lever_puzzle' });
+  }, []);
 
   return (
     <>
@@ -519,7 +543,8 @@ const Detail: React.FC = () => {
                     </h3>
                   </div>
                   <div className="bot-title-actions">
-                    <div className="actions-item"
+                    <div
+                      className="actions-item"
                       onClick={() => {
                         window.open(post?.data.resource.url, '_blank');
                       }}
