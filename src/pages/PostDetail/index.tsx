@@ -456,7 +456,6 @@ const Detail: React.FC = () => {
 
   console.log('copy link', copied);
   console.log('date', new Date(post?.data.created_at).toLocaleDateString());
-  const [checkSearchCompany, setCheckSearchCompany] = React.useState(false)
 
   new Promise((resolve, reject) => {
     document.title = `${post?.data?.title}`;
@@ -470,7 +469,6 @@ const Detail: React.FC = () => {
     const companyName = post?.data.company_name;
     const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
     window.location.replace(searchUrl);
-    setCheckSearchCompany(true)
   };
   
 
