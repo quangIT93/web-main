@@ -388,6 +388,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                   marginBottom: '2rem',
                   color: '#FFFFFF',
                   fontWeight: 'bold',
+                  display: isVisible ? 'block' : 'none',
                 }}
                 loading={uploading}
                 onClick={handleClickAddItem}
