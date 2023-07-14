@@ -1,148 +1,134 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import moment, { Moment } from 'moment'
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import { Space, Tooltip } from 'antd'
-import { message, Button } from 'antd'
-import ImageListItem from '@mui/material/ImageListItem'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { Box, Typography, MenuItem, TextField } from '@mui/material'
+import React, { useEffect, useState, useMemo } from 'react';
+import moment, { Moment } from 'moment';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import { Space, Tooltip } from 'antd';
+import { message, Button } from 'antd';
+import ImageListItem from '@mui/material/ImageListItem';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Box, Typography, MenuItem, TextField } from '@mui/material';
 import {
   EnvironmentFilled,
   ClockCircleFilled,
   MoreOutlined,
-  LeftOutlined
-} from '@ant-design/icons'
-import { useSearchParams } from 'react-router-dom'
-import { Skeleton } from 'antd'
-import 'intl'
-import 'intl/locale-data/jsonp/en'
-import Nodata from 'utils/NoDataPage'
+  LeftOutlined,
+} from '@ant-design/icons';
+import { useSearchParams } from 'react-router-dom';
+import { Skeleton } from 'antd';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+import Nodata from 'utils/NoDataPage';
 
-import sortData from 'utils/SortDataHistory/sortData'
-
+import sortData from 'utils/SortDataHistory/sortData';
 
 // api
-import historyRecruiter from 'api/historyRecruiter'
+import historyRecruiter from 'api/historyRecruiter';
 
 // import component
-import DetailPosted from '../DetailPosted'
+import DetailPosted from '../DetailPosted';
 
 interface CardsPostedOpen {
-  setShowDetailPosted: React.Dispatch<React.SetStateAction<boolean>>
-  showDetailPosted: boolean
+  setShowDetailPosted: React.Dispatch<React.SetStateAction<boolean>>;
+  showDetailPosted: boolean;
 }
 const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
-  const { setShowDetailPosted, showDetailPosted } = props
-  const [detailPosted, setDetailPosted] = React.useState<any>(null)
-  const [dataPosted, setDataPosted] = useState<any>(null)
-  const [loading, setLoading] = useState<boolean>(true)
-  const [newOld, setnewOld] = React.useState('Mới nhất')
-  const [lastPostId, setLastPostId] = useState(0)
+  const { setShowDetailPosted, showDetailPosted } = props;
+  const [detailPosted, setDetailPosted] = React.useState<any>(null);
+  const [dataPosted, setDataPosted] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [newOld, setnewOld] = React.useState('Mới nhất');
+  const [lastPostId, setLastPostId] = useState(0);
 
-  const [uploading, setUploading] = useState(false)
+  const [uploading, setUploading] = useState(false);
 
-  const [messageApi, contextHolder] = message.useMessage()
+  const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
     const result = await historyRecruiter.GetInformationAndCandidatesCount(
       0,
-      11
-    )
+      11,
+    );
     if (result.data.length <= 10) {
       setIsVisible(false);
     }
-  }
+  };
 
   useEffect(() => {
     getAllPostToCheck();
-  }, [])
+  }, []);
 
   //   getData
   const getAllPosted = async (newCount: number) => {
     try {
-      const result = await historyRecruiter.getAllPosted(newCount, 10, 1)
+      const result = await historyRecruiter.getAllPosted(newCount, 10, 1);
 
       if (result) {
-        setDataPosted(result.data)
-        setLastPostId(result.data[result.data.length - 1].id)
+        setDataPosted(result.data);
+        setLastPostId(result.data[result.data.length - 1].id);
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    let isMounted = true
-    setLoading(true)
+    let isMounted = true;
+    setLoading(true);
     getAllPosted(0).then(() => {
       if (isMounted) {
-        setLoading(false)
+        setLoading(false);
       }
-    })
+    });
 
     return () => {
-      isMounted = false // Đặt biến cờ thành false khi component unmounts để tránh lỗi
-    }
-  }, [showDetailPosted])
-
-
+      isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
+    };
+  }, [showDetailPosted]);
 
   // click Button
   const handleAddItem = async () => {
-
     try {
-      setUploading(true)
-      const result = await historyRecruiter.getAllPosted(
-        lastPostId,
-        10, 3)
+      setUploading(true);
+      const result = await historyRecruiter.getAllPosted(lastPostId, 10, 3);
       if (result) {
-        setUploading(false)
+        setUploading(false);
         if (result.data.length == 0) {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',
-          })
-          return
+          });
+          return;
         }
-        setLastPostId(result.data[result.data.length - 1].id)
+        setLastPostId(result.data[result.data.length - 1].id);
         setDataPosted((prev: any) => {
-          const array = [
-            ...prev,
-            ...result.data
-          ]
-          return sortData.sortDataByDate(newOld, array)
-        }
-        )
+          const array = [...prev, ...result.data];
+          return sortData.sortDataByDate(newOld, array);
+        });
       }
-    } catch (error) {
-
-    }
-
-  }
+    } catch (error) {}
+  };
 
   const handleShowDetail = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    posted: any
+    posted: any,
   ) => {
-    event.stopPropagation()
+    event.stopPropagation();
 
-    setShowDetailPosted(true)
-    setDetailPosted(posted)
-  }
+    setShowDetailPosted(true);
+    setDetailPosted(posted);
+  };
 
   const handleChange = (event: any) => {
-    setnewOld(event.target.value)
-    setDataPosted(sortData.sortDataByDate(event.target.value, dataPosted))
-  }
+    setnewOld(event.target.value);
+    setDataPosted(sortData.sortDataByDate(event.target.value, dataPosted));
+  };
 
   const handleHideDetail = () => {
-    setShowDetailPosted(false)
-  }
-
+    setShowDetailPosted(false);
+  };
 
   return (
     <>
@@ -162,7 +148,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
             icon={<LeftOutlined />}
             onClick={handleHideDetail}
             style={{
-              display: showDetailPosted ? 'block' : 'none'
+              display: showDetailPosted ? 'block' : 'none',
             }}
           />
           <Typography
@@ -191,13 +177,12 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
         </TextField>
       </Box>
 
-      {!showDetailPosted ? <>
-        <Skeleton loading={loading} active>
-          {
-            dataPosted?.length > 0 ?
-              <div className='history-post'>
+      {!showDetailPosted ? (
+        <>
+          <Skeleton loading={loading} active>
+            {dataPosted?.length > 0 ? (
+              <div className="history-post">
                 <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-
                   {dataPosted?.map((posted: any, i: number) => (
                     <Card
                       sx={{
@@ -227,14 +212,14 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                         <ImageListItem sx={{ flex: 1, display: 'flex' }}>
                           <img
                             src={`${posted.image}?w=164&h=164&fit=crop&auto=format`}
-                            srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                            // srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                             alt="anh job"
                             loading="lazy"
                             style={{
                               width: '120px',
                               maxWidth: 'auto',
                               height: '100%',
-                              maxHeight: 150,
+                              maxHeight: 120,
                               borderRadius: 10,
                             }}
                           />
@@ -274,7 +259,10 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                               }}
                             >
                               <EnvironmentFilled className="icon-cart-item-post" />
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
                                 {posted.district}, {posted.province}
                               </Typography>
                             </div>
@@ -286,12 +274,17 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                               }}
                             >
                               <ClockCircleFilled className="icon-cart-item-post" />
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
                                 {moment(new Date(posted?.start_time)).format(
-                                  'HH:mm'
+                                  'HH:mm',
                                 )}{' '}
                                 -{' '}
-                                {moment(new Date(posted?.end_time)).format('HH:mm')}
+                                {moment(new Date(posted?.end_time)).format(
+                                  'HH:mm',
+                                )}
                               </Typography>
                             </div>
                             <div
@@ -309,14 +302,19 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                                   color: '#575757',
                                 }}
                               />
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
                                 {new Intl.NumberFormat('en-US').format(
-                                  posted?.salary_min
-                                )}{` ${posted?.money_type_text} `}
-                                -{' '}
+                                  posted?.salary_min,
+                                )}
+                                {` ${posted?.money_type_text} `}-{' '}
                                 {new Intl.NumberFormat('en-US').format(
-                                  posted?.salary_max
-                                ) + ` ${posted?.money_type_text} ` + `/${posted?.salary_type}`}
+                                  posted?.salary_max,
+                                ) +
+                                  ` ${posted?.money_type_text} ` +
+                                  `/${posted?.salary_type}`}
                               </Typography>
                             </div>
                             <div
@@ -375,7 +373,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                                 borderRadius: '15px',
                                 color: '#ffffff',
                                 marginLeft: '30px',
-                                fontStyle: "italic"
+                                fontStyle: 'italic',
                               }}
                             >
                               Đang tuyển
@@ -388,7 +386,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                                 borderRadius: '15px',
                                 color: '#ffffff',
                                 marginLeft: '30px',
-                                fontStyle: "italic"
+                                fontStyle: 'italic',
                               }}
                             >
                               Đã đóng
@@ -421,7 +419,11 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                         {/* <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} /> */}
                         <img
                           className="img-resource-company"
-                          src={posted.resource.company_icon}
+                          src={
+                            posted.resource.company_icon
+                              ? posted.resource.company_icon
+                              : ''
+                          }
                           alt="anh icon"
                         />
                         <p
@@ -445,26 +447,33 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                     justifyContent: 'center',
                   }}
                 >
-                  <Button style={{
-                    width: 130,
-                    height: 40,
-                    backgroundColor: `#0D99FF`,
-                    marginBottom: '2rem',
-                    color: '#FFFFFF',
-                    fontWeight: "bold",
-                    display: isVisible ? 'block' : 'none'
-                  }} loading={uploading} onClick={handleAddItem}>
+                  <Button
+                    style={{
+                      width: 130,
+                      height: 40,
+                      backgroundColor: `#0D99FF`,
+                      marginBottom: '2rem',
+                      color: '#FFFFFF',
+                      fontWeight: 'bold',
+                      display: isVisible ? 'block' : 'none',
+                    }}
+                    loading={uploading}
+                    onClick={handleAddItem}
+                  >
                     Xem thêm
                   </Button>
                 </Box>
-              </div> : <Nodata />
-          }
-        </Skeleton>
-      </> : (
+              </div>
+            ) : (
+              <Nodata />
+            )}
+          </Skeleton>
+        </>
+      ) : (
         <DetailPosted detailPosted={detailPosted} />
       )}
     </>
-  )
-}
+  );
+};
 
-export default CardsPostedOpen
+export default CardsPostedOpen;

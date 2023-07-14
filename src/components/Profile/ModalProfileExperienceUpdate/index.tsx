@@ -247,6 +247,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                 <DatePicker
                   value={moment(experience.startDate)}
                   onChange={handleChangeStartTime}
+                  views={['year', 'month']}
+                  openTo="month"
                 />
               </div>
               <div className="wrapTimeDay">
@@ -261,6 +263,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                 <DatePicker
                   value={moment(experience.endDate)}
                   onChange={handleChangeEndTime}
+                  views={['year', 'month']}
+                  openTo="month"
                 />
               </div>
             </DemoContainer>

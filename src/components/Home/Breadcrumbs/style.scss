@@ -1,6 +1,62 @@
+@import '../../../scss//mixins';
+
 .bread-crumb-container {
+  top: -56px;
+
+  @media screen and (max-width: 2560px) and (min-width: 2244px) {
+    top: -75px;
+  }
+
+  @media screen and (max-width: 1919px) and (min-width: 1503px) {
+    top: -75px;
+  }
+
+  @media screen and (max-width: 1439px) {
+    top: -75px;
+  }
+
+  @media screen and (max-width: 1356px) {
+    top: -70px;
+  }
+
+  @media screen and (max-width: 1280px) {
+    top: -75px;
+  }
+
+  @media screen and (max-width: 1036px) {
+    top: -56px;
+  }
+
+  @media screen and (max-width: 1023px) {
+    top: -75px;
+  }
+
+  @media screen and (max-width: 786px) {
+    top: -56px;
+  }
+
+  @media screen and (max-width: 639px) {
+    top: -75px;
+  }
+
+  @media screen and (max-width: 530px) {
+    top: -60px;
+  }
+
+  @media screen and (max-width: 424px) {
+    top: -55px;
+  }
+
+  @media screen and (max-width: 375px) {
+    top: -53px;
+  }
+
+  @media screen and (max-width: 320px) {
+    top: -35px;
+  }
+
   .MuiCollapse-root {
-    margin-top: 210px !important;
+    margin-top: 190px !important;
   }
 
   .collapse-breadcrumbs {

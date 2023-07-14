@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import moment, { Moment } from 'moment'
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import { Space, Tooltip } from 'antd'
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined'
-import ImageListItem from '@mui/material/ImageListItem'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { Box, Typography, MenuItem, TextField, Button } from '@mui/material'
+import React, { useEffect, useState } from 'react';
+import moment, { Moment } from 'moment';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import { Space, Tooltip } from 'antd';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import ImageListItem from '@mui/material/ImageListItem';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Box, Typography, MenuItem, TextField, Button } from '@mui/material';
 import {
   EnvironmentFilled,
   ClockCircleFilled,
   MoreOutlined,
-} from '@ant-design/icons'
+} from '@ant-design/icons';
 
-import SubIcon from '../CardsPosted/SubIcon'
+import SubIcon from '../CardsPosted/SubIcon';
 
-import 'intl'
-import 'intl/locale-data/jsonp/en'
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
 // import data
-import historyRecruiter from 'api/historyRecruiter'
+import historyRecruiter from 'api/historyRecruiter';
 
 // impport Icon
-import PersonIcon from '@mui/icons-material/Person'
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
+import PersonIcon from '@mui/icons-material/Person';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-import './styles.scss'
+import './styles.scss';
 
 interface IDetailPosted {
-  detailPosted: any
+  detailPosted: any;
 }
 
 const statusCandidates = [
@@ -88,62 +88,62 @@ const statusCandidates = [
     height: 'unset',
     padding: '4px 16px',
   },
-]
+];
 
 const DetailPosted: React.FC<IDetailPosted> = (props) => {
-  const { detailPosted } = props
-  const [dataCandidates, setDadaCandidates] = useState<any>(null)
-  const [loading, setLoading] = useState<boolean>(true)
-  const [status, setStatus] = useState(detailPosted?.status)
+  const { detailPosted } = props;
+  const [dataCandidates, setDadaCandidates] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [status, setStatus] = useState(detailPosted?.status);
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   const getAllCandidates = async () => {
     try {
       const result = await historyRecruiter.GetAllApplicationsOfAJob(
         detailPosted?.post_id,
         5,
-        null
-      )
+        null,
+      );
 
       if (result) {
-        setDadaCandidates(result.data)
+        setDadaCandidates(result.data);
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    let isMounted = true
-    setLoading(true)
+    let isMounted = true;
+    setLoading(true);
     getAllCandidates().then(() => {
       if (isMounted) {
-        setLoading(false)
+        setLoading(false);
       }
-    })
+    });
 
     return () => {
-      isMounted = false // Đặt biến cờ thành false khi component unmounts để tránh lỗi
-    }
-  }, [])
+      isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
+    };
+  }, []);
 
   const handleClickPost = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    detailPosted: any
-  ) => {}
+    detailPosted: any,
+  ) => {};
 
   const handleClickCandidate = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     applicationId: number,
-    postId: number
+    postId: number,
   ) => {
     // console.log('applicationId', applicationId)
     window.open(
-      `/candidate-detail?post-id=${postId}&application_id=${applicationId}`
-    )
-  }
+      `/candidate-detail?post-id=${postId}&application_id=${applicationId}`,
+    );
+  };
 
   return (
     <div className="history-post">
@@ -164,14 +164,14 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
           <ImageListItem sx={{ flex: 1, display: 'flex' }}>
             <img
               src={`${detailPosted?.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              // srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt="anh job"
               loading="lazy"
               style={{
                 width: '120px',
                 maxWidth: 'auto',
                 height: '100%',
-                maxHeight: 150,
+                maxHeight: 120,
                 borderRadius: 10,
               }}
             />
@@ -245,11 +245,11 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                 />
                 <Typography variant="body2" color="text.secondary">
                   {new Intl.NumberFormat('en-US').format(
-                    detailPosted?.salary_min
+                    detailPosted?.salary_min,
                   )}
                   {` ${detailPosted?.money_type_text} `}-{' '}
                   {new Intl.NumberFormat('en-US').format(
-                    detailPosted?.salary_max
+                    detailPosted?.salary_max,
                   ) +
                     ` ${detailPosted?.money_type_text} ` +
                     `/${detailPosted?.salary_type}`}
@@ -415,9 +415,9 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                       >
                         {statusCandidate.statusName}
                       </p>
-                    )
+                    );
                   }
-                  return null
+                  return null;
                 })}
               </div>
               <div className="item-candidate">
@@ -462,7 +462,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
         </Box>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default DetailPosted
+export default DetailPosted;

@@ -1,157 +1,150 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import './style.scss'
-import moment, { Moment } from 'moment'
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import { Space, Tooltip, Button } from 'antd'
-import { message } from 'antd'
-import ImageListItem from '@mui/material/ImageListItem'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { Box, Typography, MenuItem, TextField } from '@mui/material'
+import React, { useEffect, useState, useMemo } from 'react';
+import './style.scss';
+import moment, { Moment } from 'moment';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import { Space, Tooltip, Button } from 'antd';
+import { message } from 'antd';
+import ImageListItem from '@mui/material/ImageListItem';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Box, Typography, MenuItem, TextField } from '@mui/material';
 import {
   EnvironmentFilled,
   ClockCircleFilled,
   MoreOutlined,
-  LeftOutlined
-} from '@ant-design/icons'
-import { useSearchParams } from 'react-router-dom'
-import { Skeleton } from 'antd'
-import 'intl'
-import 'intl/locale-data/jsonp/en'
+  LeftOutlined,
+} from '@ant-design/icons';
+import { useSearchParams } from 'react-router-dom';
+import { Skeleton } from 'antd';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
-import { BackIcon } from '#components/Icons'
+import { BackIcon } from '#components/Icons';
 
-import sortData from 'utils/SortDataHistory/sortData'
+import sortData from 'utils/SortDataHistory/sortData';
 
 // api
-import historyRecruiter from 'api/historyRecruiter'
-
+import historyRecruiter from 'api/historyRecruiter';
 
 // import component
-import DetailPosted from '../DetailPosted'
-import NoData from 'utils/NoDataPage'
+import DetailPosted from '../DetailPosted';
+import NoData from 'utils/NoDataPage';
 
 interface ICardsPostedAll {
-  setShowDetailPosted: React.Dispatch<React.SetStateAction<boolean>>
-  showDetailPosted: boolean
+  setShowDetailPosted: React.Dispatch<React.SetStateAction<boolean>>;
+  showDetailPosted: boolean;
 }
 
 const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
-  const { setShowDetailPosted, showDetailPosted } = props
-  const [detailPosted, setDetailPosted] = React.useState<any>(null)
-  const [dataPosted, setDataPosted] = useState<any>(null)
-  const [loading, setLoading] = useState<boolean>(true)
-  const [newOld, setnewOld] = React.useState('Mới nhất')
+  const { setShowDetailPosted, showDetailPosted } = props;
+  const [detailPosted, setDetailPosted] = React.useState<any>(null);
+  const [dataPosted, setDataPosted] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [newOld, setnewOld] = React.useState('Mới nhất');
 
-  const [uploading, setUploading] = useState(false)
-  const [lastPostId, setLastPostId] = useState(0)
+  const [uploading, setUploading] = useState(false);
+  const [lastPostId, setLastPostId] = useState(0);
 
-  const [messageApi, contextHolder] = message.useMessage()
+  const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
     const result = await historyRecruiter.GetInformationAndCandidatesCount(
       0,
-      11
-    )
+      11,
+    );
     if (result.data.length <= 10) {
       setIsVisible(false);
     }
-  }
+  };
 
   useEffect(() => {
     getAllPostToCheck();
-  }, [])
+  }, []);
 
   //   getData
   const getAllPosted = async (postID: number) => {
     try {
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
         postID,
-        10
-      )
+        10,
+      );
 
       if (result) {
-        setDataPosted(result.data)
-        console.log('load data cardPostedAll recruiter', result)
-        setLastPostId(result.data[result.data.length - 1].id)
+        setDataPosted(result.data);
+        console.log('load data cardPostedAll recruiter', result);
+        setLastPostId(result.data[result.data.length - 1].id);
       }
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   useEffect(() => {
-    let isMounted = true
-    setLoading(true)
+    let isMounted = true;
+    setLoading(true);
     // setCount(5)
     getAllPosted(0).then(() => {
       if (isMounted) {
-        setLoading(false)
+        setLoading(false);
       }
-    })
+    });
 
     return () => {
-      isMounted = false // Đặt biến cờ thành false khi component unmounts để tránh lỗi
-    }
-  }, [showDetailPosted])
-
+      isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
+    };
+  }, [showDetailPosted]);
 
   // click Button
   const handleAddItem = async () => {
-
     try {
-      setUploading(true)
+      setUploading(true);
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
         lastPostId,
-        5
-      )
+        5,
+      );
       if (result) {
-        setUploading(false)
+        setUploading(false);
         if (result.data.length == 0) {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',
-          })
-          return
+          });
+          return;
         }
-        setLastPostId(result.data[result.data.length - 1].id)
+        setLastPostId(result.data[result.data.length - 1].id);
         setDataPosted((prev: any) => {
-          const array = [
-            ...prev,
-            ...result.data
-          ]
-          return sortData.sortDataByDate(newOld, array)
-        }
-        )
+          const array = [...prev, ...result.data];
+          return sortData.sortDataByDate(newOld, array);
+        });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
-  }
+  };
   const handleShowDetail = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    posted: any
+    posted: any,
   ) => {
-    event.stopPropagation()
-    console.log('click')
-    setShowDetailPosted(true)
-    setDetailPosted(posted)
-  }
+    event.stopPropagation();
+    console.log('click');
+    setShowDetailPosted(true);
+    setDetailPosted(posted);
+  };
 
   const handleChange = (event: any) => {
-    setnewOld(event.target.value)
+    setnewOld(event.target.value);
 
-    setDataPosted(sortData.sortDataByDate(event.target.value, dataPosted))
-  }
+    setDataPosted(sortData.sortDataByDate(event.target.value, dataPosted));
+  };
 
   const handleHideDetail = () => {
-    setShowDetailPosted(false)
-  }
+    setShowDetailPosted(false);
+  };
 
+  console.log('posssssssssssssssssssss', dataPosted);
 
   return (
     <>
@@ -171,7 +164,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
             icon={<LeftOutlined />}
             onClick={handleHideDetail}
             style={{
-              display: showDetailPosted ? 'block' : 'none'
+              display: showDetailPosted ? 'block' : 'none',
             }}
           />
           <Typography
@@ -199,13 +192,12 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
         </TextField>
       </Box>
 
-      {!showDetailPosted ?
+      {!showDetailPosted ? (
         <>
           <Skeleton loading={loading} active>
-            {
-              dataPosted?.length > 0 ? <div className='history-post'>
+            {dataPosted?.length > 0 ? (
+              <div className="history-post">
                 <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-
                   {dataPosted?.map((posted: any, i: number) => (
                     <Card
                       sx={{
@@ -235,14 +227,14 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                         <ImageListItem sx={{ flex: 1, display: 'flex' }}>
                           <img
                             src={`${posted.image}?w=164&h=164&fit=crop&auto=format`}
-                            srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                            // srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                             alt="anh job"
                             loading="lazy"
                             style={{
                               width: '120px',
                               maxWidth: 'auto',
                               height: '100%',
-                              maxHeight: 150,
+                              maxHeight: 120,
                               borderRadius: 10,
                             }}
                           />
@@ -264,7 +256,10 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                                 {posted.title}
                               </Typography>
                             </Tooltip>
-                            <Tooltip placement="top" title={posted.company_name}>
+                            <Tooltip
+                              placement="top"
+                              title={posted.company_name}
+                            >
                               <Typography
                                 gutterBottom
                                 variant="h1"
@@ -282,7 +277,10 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                               }}
                             >
                               <EnvironmentFilled className="icon-cart-item-post" />
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
                                 {posted.district}, {posted.province}
                               </Typography>
                             </div>
@@ -294,12 +292,17 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                               }}
                             >
                               <ClockCircleFilled className="icon-cart-item-post" />
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
                                 {moment(new Date(posted?.start_time)).format(
-                                  'HH:mm'
+                                  'HH:mm',
                                 )}{' '}
                                 -{' '}
-                                {moment(new Date(posted?.end_time)).format('HH:mm')}
+                                {moment(new Date(posted?.end_time)).format(
+                                  'HH:mm',
+                                )}
                               </Typography>
                             </div>
                             <div
@@ -317,14 +320,19 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                                   color: '#575757',
                                 }}
                               />
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
                                 {new Intl.NumberFormat('en-US').format(
-                                  posted?.salary_min
-                                )}{` ${posted?.money_type_text} `}
-                                -{' '}
+                                  posted?.salary_min,
+                                )}
+                                {` ${posted?.money_type_text} `}-{' '}
                                 {new Intl.NumberFormat('en-US').format(
-                                  posted?.salary_max
-                                ) + ` ${posted?.money_type_text} ` + `/${posted?.salary_type}`}
+                                  posted?.salary_max,
+                                ) +
+                                  ` ${posted?.money_type_text} ` +
+                                  `/${posted?.salary_type}`}
                               </Typography>
                             </div>
                             <div
@@ -383,7 +391,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                                 borderRadius: '15px',
                                 color: '#ffffff',
                                 marginLeft: '30px',
-                                fontStyle: "italic"
+                                fontStyle: 'italic',
                               }}
                             >
                               Đang tuyển
@@ -396,7 +404,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                                 borderRadius: '15px',
                                 color: '#ffffff',
                                 marginLeft: '30px',
-                                fontStyle: "italic"
+                                fontStyle: 'italic',
                               }}
                             >
                               Đã đóng
@@ -427,11 +435,19 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                         align="center"
                       >
                         {/* <BookmarkBorderOutlinedIcon sx={{ top: 0, right: 0 }} /> */}
-                        <img
-                          className="img-resource-company"
-                          src={posted.resource.company_icon}
-                          alt="anh icon"
-                        />
+                        {posted.resource.company_icon ? (
+                          <img
+                            className="img-resource-company"
+                            src={
+                              posted.resource.company_icon
+                                ? posted.resource.company_icon
+                                : ''
+                            }
+                            alt="anh icon"
+                          />
+                        ) : (
+                          <></>
+                        )}
                         <p
                           style={{
                             fontSize: 13,
@@ -444,7 +460,6 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                       </Space>
                     </Card>
                   ))}
-
                 </Grid>
                 <Box
                   sx={{
@@ -454,27 +469,33 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                     justifyContent: 'center',
                   }}
                 >
-                  <Button style={{
-                    width: 130,
-                    height: 40,
-                    backgroundColor: `#0D99FF`,
-                    marginBottom: '2rem',
-                    color: '#FFFFFF',
-                    fontWeight: 'bold',
-                    display: isVisible ? 'block' : 'none'
-                  }} loading={uploading} onClick={handleAddItem}>
+                  <Button
+                    style={{
+                      width: 130,
+                      height: 40,
+                      backgroundColor: `#0D99FF`,
+                      marginBottom: '2rem',
+                      color: '#FFFFFF',
+                      fontWeight: 'bold',
+                      display: isVisible ? 'block' : 'none',
+                    }}
+                    loading={uploading}
+                    onClick={handleAddItem}
+                  >
                     Xem thêm
                   </Button>
                 </Box>
-              </div> : <NoData />
-            }
+              </div>
+            ) : (
+              <NoData />
+            )}
           </Skeleton>
         </>
-        : (
-          <DetailPosted detailPosted={detailPosted} />
-        )}
+      ) : (
+        <DetailPosted detailPosted={detailPosted} />
+      )}
     </>
-  )
-}
+  );
+};
 
-export default CardsPostedAll
+export default CardsPostedAll;

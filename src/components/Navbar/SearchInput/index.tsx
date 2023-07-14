@@ -232,6 +232,10 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const handleClickItem = (e: any, value: string) => {
     setValue(value);
+    window.open(
+      `/search-results?q=${encodeURIComponent(`${value}`)}`,
+      '_parent',
+    );
     e.stoppropagation();
 
     // console.log('curent', currentValue);

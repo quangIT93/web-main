@@ -1,11 +1,17 @@
 @import '../../../../scss/mixins';
+
 .test {
   display: flex;
   align-items: center;
   flex-direction: column;
+  text-align: center;
+
   .img-category {
+    height: 45px !important;
+    width: 45px !important;
+
     @include breakpoint(mobile) {
-      height: 30px !important ;
+      height: 30px !important;
       width: 30px !important;
     }
   }

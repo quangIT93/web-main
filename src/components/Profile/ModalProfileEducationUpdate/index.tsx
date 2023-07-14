@@ -240,6 +240,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                 <DatePicker
                   value={moment(education.startDate)}
                   onChange={handleChangeStartTime}
+                  views={['year', 'month']}
+                  openTo="month"
                 />
               </div>
               <div className="wrapTimeDay">
@@ -254,6 +256,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                 <DatePicker
                   value={moment(education.endDate)}
                   onChange={handleChangeEndTime}
+                  views={['year', 'month']}
+                  openTo="month"
                 />
               </div>
             </DemoContainer>
