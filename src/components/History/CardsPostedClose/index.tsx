@@ -10,6 +10,7 @@ import { Box, Typography, MenuItem, TextField, } from '@mui/material'
 import {
   EnvironmentFilled,
   ClockCircleFilled,
+  LeftOutlined,
   MoreOutlined,
 } from '@ant-design/icons'
 import { useSearchParams } from 'react-router-dom'
@@ -41,6 +42,23 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
   const [lastPostId, setLastPostId] = useState(0)
 
   const [messageApi, contextHolder] = message.useMessage()
+  const [isVisible, setIsVisible] = useState(true);
+
+  //get post to check if length <= 10
+  const getAllPostToCheck = async () => {
+    const result = await historyRecruiter.GetInformationAndCandidatesCount(
+      0,
+      11
+    )
+    if (result.data.length <= 10) {
+      setIsVisible(false);
+    }
+  }
+
+  useEffect(() => {
+    getAllPostToCheck();
+  }, [])
+
   //   getData
   const getAllPosted = async (newCount: number) => {
     try {
@@ -80,6 +98,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
       if (result) {
         setUploading(false)
         if (result.data.length == 0) {
+          setIsVisible(false);
           messageApi.open({
             type: 'error',
             content: 'Đã hết công việc để hiển thị',
@@ -118,6 +137,10 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
     setDataPosted(sortData.sortDataByDate(event.target.value, dataPosted))
   }
 
+  const handleHideDetail = () => {
+    setShowDetailPosted(false)
+  }
+
   console.log('render cardPostedAll', dataPosted)
   return (
     <>
@@ -129,15 +152,27 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
           alignItems: 'center',
         }}
       >
-        <Typography
-          sx={{
-            fontWeight: '600',
-            fontSize: '16px',
-            lineHeight: '24px',
-          }}
-        >
-          Các công việc đã đóng
-        </Typography>
+        <div className="back-container">
+          <Button
+            className="back-button"
+            type="primary"
+            shape="circle"
+            icon={<LeftOutlined />}
+            onClick={handleHideDetail}
+            style={{
+              display: showDetailPosted ? 'block' : 'none'
+            }}
+          />
+          <Typography
+            sx={{
+              fontWeight: '600',
+              fontSize: '16px',
+              lineHeight: '24px',
+            }}
+          >
+            Các công việc đã đóng
+          </Typography>
+        </div>
         <TextField
           select
           id="sex"
@@ -415,7 +450,8 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                       backgroundColor: `#0D99FF`,
                       color: '#FFFFFF',
                       marginBottom: '2rem',
-                      fontWeight: "bold"
+                      fontWeight: "bold",
+                      display: isVisible ? 'block' : 'none'
                     }} loading={uploading} onClick={handleAddItem}>
                       Xem thêm
                     </Button>
