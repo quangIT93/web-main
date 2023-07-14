@@ -82,9 +82,6 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     locations?.map((v: any, i) => v.district_id),
   );
 
-  console.log('locations', locations);
-  console.log('location', location);
-
   const dispatch = useDispatch();
   const handleClose = () => setOpenModalLocation(false);
   const allLocation = async () => {

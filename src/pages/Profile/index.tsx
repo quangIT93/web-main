@@ -83,6 +83,7 @@ const Profile: React.FC = () => {
 
   const profile = useSelector((state: RootState) => state.profileUser);
   const profileUser = useSelector((state: RootState) => state.profile.profile);
+
   console.log('profileUser', profileUser);
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false);
   const [openModalContact, setOpenModalContact] = useState(false);
@@ -102,12 +103,17 @@ const Profile: React.FC = () => {
   const [checkRemove, setCheckRemove] = useState(2);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
+  const [titleFirebase, setTitleFirebase] = useState<string>('');
+
+  const [user, setUser] = useState<any>(null);
+
   const fecthDataProfile = async () => {
     try {
       const result = await profileApi.getProfile();
       if (result) {
         setProfileUser(result.data);
         setLoading(false);
+        setUser(result);
       }
     } catch (error) {
       setLoading(false);
@@ -189,7 +195,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success('Xóa CV thanh cong.');
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
@@ -269,7 +275,38 @@ const Profile: React.FC = () => {
   const alert = useSelector((state: any) => state.alertProfile.alert);
 
   const handleClose = () => dispatch<any>(setAlert(false));
+
   // console.log('alert', alert)
+
+  // const getSiteChangeTitle = async () => {
+  //   try {
+  //     const result = await siteApi.getSalaryType();
+  //     if (result) {
+  //       SetPostData(result);
+  //     }
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getPost();
+  // }, []);
+
+  useEffect(() => {
+    document.title = 'web-profile';
+    if (user?.data) {
+      setTitleFirebase('HiJob - Thông tin người dùng');
+    }
+  }, [user]);
+
+  React.useEffect(() => {
+    document.title = titleFirebase ? titleFirebase : 'web-profile';
+  }, [titleFirebase]);
+
+  new Promise((resolve, reject) => {
+    document.title = user ? titleFirebase : 'web-profile';
+  });
 
   return (
     <div className="profile">
@@ -506,7 +543,7 @@ const Profile: React.FC = () => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-              // direction="vertical"
+                // direction="vertical"
               >
                 {profile.cv_url && fileList?.length == 0 ? (
                   <Popconfirm
@@ -542,8 +579,9 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                      }`,
+                    backgroundColor: `${
+                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                    }`,
                     alignItems: 'flex-start',
                   }}
                 >
@@ -578,12 +616,12 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                  (item: ICategories, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.child_category}
-                    </Button>
-                  ),
-                )
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    ),
+                  )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -612,10 +650,10 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.district}
-                  </Button>
-                ))
+                    <Button key={index} className="btn" type="text">
+                      {item?.district}
+                    </Button>
+                  ))
                 : 'Chưa cập nhật'}
             </Space>
           </div>

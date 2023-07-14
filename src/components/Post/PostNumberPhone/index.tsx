@@ -69,7 +69,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         Số điện thoại liên hệ <span style={{ color: 'red' }}>*</span>
       </Typography>
       <NumericInput
-        style={{ width: '100%', height: 40 }}
+        style={{ width: '100%', height: 40, marginTop: '0.5rem' }}
         value={phone}
         onChange={setPhoneNumber}
       />

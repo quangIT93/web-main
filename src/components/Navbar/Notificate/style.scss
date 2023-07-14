@@ -2,7 +2,7 @@
   position: absolute;
   background-color: #ffffff;
   top: 68px;
-  left: 0;
+  left: 12px;
   width: 400px;
   height: 100%;
   min-height: 80vh;
@@ -258,6 +258,9 @@
         cursor: pointer;
         display: flex;
         align-items: center;
+        button {
+          padding: 6px 8px;
+        }
 
         &:after {
           content: '';
@@ -289,6 +292,7 @@
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
+            // display: flex;
           }
 
           ul {
@@ -306,7 +310,7 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
-                // display: flex;
+                display: flex;
                 // justify-content: start;
               }
             }

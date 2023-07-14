@@ -90,8 +90,6 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
     }
   };
 
-  console.log('listCate', listCate);
-  console.log('userProfile', userProfile);
   if (userProfile) {
     return (
       <>

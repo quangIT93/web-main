@@ -27,7 +27,7 @@ const Description: React.FC<IDescription> = (props) => {
       <TextField
         // className={classes.textarea}
         onChange={handleChangeDescription}
-        sx={{ width: '100%', marginTop: '4px' }}
+        sx={{ width: '100%', marginTop: '0.5rem'}}
         multiline
         rows={6}
         // label="Một số đặc điểm nhận diện công ty"

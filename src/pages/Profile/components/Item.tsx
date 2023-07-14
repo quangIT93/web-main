@@ -1,64 +1,64 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 // @ts-ignore
 
-import { Button, Space } from 'antd'
-import Snackbar from '@mui/material/Snackbar'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
-import Stack from '@mui/material/Stack'
-import './styleItem.scss'
-import moment from 'moment'
+import { Button, Space } from 'antd';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import './styleItem.scss';
+import moment from 'moment';
 
 // import component
-import ModalDeleteEducation from '#components/Profile/ModalDeleteEducation'
-import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate'
-import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate'
-import ModalDeleteExperience from '#components/Profile/ModalDeleteExperience'
+import ModalDeleteEducation from '#components/Profile/ModalDeleteEducation';
+import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
+import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate';
+import ModalDeleteExperience from '#components/Profile/ModalDeleteExperience';
 interface SuggestItemProps {
-  typeItem?: string
-  item?: ItemAppy
+  typeItem?: string;
+  item?: ItemAppy;
 }
 interface ItemAppy {
-  id?: number | null
-  company_name?: String
-  major?: String
-  start_date?: number
-  end_date?: number
-  extra_information?: string
-  title?: String
+  id?: number | null;
+  company_name?: String;
+  major?: String;
+  start_date?: number;
+  end_date?: number;
+  extra_information?: string;
+  title?: String;
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
-  ref
+  ref,
 ) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const [openModalDeleteEducation, setOpenModalDeleteEducation] =
-    useState(false)
+    useState(false);
   const [openModalEducationUpdate, setOpenModalEducationUpdate] =
-    useState(false)
+    useState(false);
   const [openModalDeleteExperience, setOpenModalDeleteExperience] =
-    useState(false)
+    useState(false);
   const [openModalExperienceUpdate, setOpenModalExperienceUpdate] =
-    useState(false)
+    useState(false);
 
   const handleDeleteEducation = (id?: number | null) => {
-    setOpenModalDeleteEducation(true)
-  }
+    setOpenModalDeleteEducation(true);
+  };
 
   const handleUpdateEducation = (id?: number | null) => {
-    setOpenModalEducationUpdate(true)
-  }
+    setOpenModalEducationUpdate(true);
+  };
 
   const handleDeleteExperience = (id?: number | null) => {
-    setOpenModalDeleteExperience(true)
-  }
+    setOpenModalDeleteExperience(true);
+  };
 
   const handleUpdateExperience = (id?: number | null) => {
-    setOpenModalExperienceUpdate(true)
-  }
+    setOpenModalExperienceUpdate(true);
+  };
   return (
     <div className="div-apply-item">
       <div className="div-item-left">
@@ -84,7 +84,13 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
               {`${moment(item?.end_date).year()}`}
             </p>
 
-            <div style={{ whiteSpace: 'pre-wrap', marginTop: '15px', color: "#575757" }}>
+            <div
+              style={{
+                whiteSpace: 'pre-wrap',
+                marginTop: '15px',
+                color: '#575757',
+              }}
+            >
               {item?.extra_information}
             </div>
           </Space>
@@ -141,7 +147,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
         experienceValue={item}
       />
     </div>
-  )
-}
+  );
+};
 
-export default ItemInfoLeft
+export default ItemInfoLeft;

@@ -12,11 +12,20 @@ const postApi = {
       },
     })
   },
+  getPost: () => {
+    const URL = `v1/posts?limit=10`
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  },
 
   getById: (params: number) => {
     const URL = `v1/posts/${params}`
     return axiosClient.get(URL)
   },
+
 
   getPostByThemeId: (
     themeId: number,

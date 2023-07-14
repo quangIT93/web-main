@@ -141,7 +141,76 @@
     }
 
     @include breakpoint(mobile) {
-      margin-top: 218px !important;
+      // margin-top: 218px !important;
     }
   }
+}
+
+.slick-slider {
+  width: 100%;
+  overflow: hidden;
+}
+.slick-list {
+  position: relative;
+  display: block !important;
+  width: 100%;
+}
+.slick-slide div {
+  width: auto;
+  margin-right: 10px;
+}
+.slick-slide img {
+  width: calc(100% - 10px) !important;
+}
+/* For the demo */
+.slick-prev,
+.slick-next {
+  z-index: 999 !important;
+}
+.slick-prev {
+  left: 25px !important;
+}
+.slick-next {
+  right: 25px !important;
+}
+
+
+@media screen and (max-width: 597px) {
+  .img-category{
+    width: 35px !important;
+    height: 35px !important;  
+  }
+
+  .css-7r6yzn-MuiButtonBase-root-MuiTab-root {
+    padding: 10px 10px !important;
+  }
+
+  .css-4npvne-MuiStack-root{
+    margin-top: 202px !important;
+  }
+
+  .tabs .cateloryItemFilter .MuiTabs-flexContainer {
+    gap: 0px !important;
+  }
+
+  .tabs .MuiButtonBase-root {
+    min-width: none !important;
+  }
+
+  .MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.Mui-selected.css-7r6yzn-MuiButtonBase-root-MuiTab-root{
+    height: 99px !important;
+  }
+
+  .MuiTabs-scroller.MuiTabs-hideScrollbar.MuiTabs-scrollableX.css-69z67c-MuiTabs-scroller{
+    height: 100px !important;
+  }
+
+  .title-categoryItem{
+    font-size: 9px !important;
+  }
+
+  .tabs .cateloryItemFilter .MuiTabs-scrollButtons:last-child, .tabs .cateloryItemFilter .MuiTabs-scrollButtons:first-child {
+    height: 100px !important;
+  }
+
 }
