@@ -389,7 +389,8 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                 backgroundColor: `#0D99FF`,
                 marginBottom: '2rem',
                 color: '#FFFFFF',
-                fontWeight: "bold"
+                fontWeight: "bold",
+                display: isVisible ? 'block' : 'none'
               }} loading={uploading} onClick={handleClickAddItem}>
                 Xem thêm
               </Button>
