@@ -13,7 +13,7 @@ import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
 
 import ShowCancleSave from '#components/ShowCancleSave';
-
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
 // api
 import siteApi from 'api/siteApi';
 
@@ -116,27 +116,27 @@ const HistoryPost = () => {
       {ItemLeft === dataItem[0].id - 1
         ? dataItem[0].title
         : ItemLeft === dataItem[1].id - 1
-        ? dataItem[1].title
-        : dataItem[2].title}
+          ? dataItem[1].title
+          : dataItem[2].title}
     </Typography>,
     <Typography key="3" color="text.primary">
       {activeChild === '0-0'
         ? 'Tất cả'
         : activeChild === '0-1'
-        ? 'Đã được duyệt'
-        : activeChild === '0-2'
-        ? 'Đang chờ duyệt'
-        : ''}
+          ? 'Đã được duyệt'
+          : activeChild === '0-2'
+            ? 'Đang chờ duyệt'
+            : ''}
 
       {activeChild === '1-0' ? 'Tất cả' : ''}
 
       {activeChild === '2-0'
         ? 'Tất cả'
         : activeChild === '2-1'
-        ? 'Chưa đóng'
-        : activeChild === '2-2'
-        ? 'Đã đóng'
-        : ''}
+          ? 'Chưa đóng'
+          : activeChild === '2-2'
+            ? 'Đã đóng'
+            : ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {
@@ -205,9 +205,8 @@ const HistoryPost = () => {
                   header={
                     <div
                       onClick={() => handleClickSubTitle(index)}
-                      className={`${
-                        ItemLeft === index ? 'activeItem' : ''
-                      } panel-title_text`}
+                      className={`${ItemLeft === index ? 'activeItem' : ''
+                        } panel-title_text`}
                     >
                       {item.title}
                     </div>
@@ -241,6 +240,7 @@ const HistoryPost = () => {
         </Box>
       </div>
       <ShowCancleSave />
+      <ShowNotificativeSave />
       <Footer />
     </div>
   );

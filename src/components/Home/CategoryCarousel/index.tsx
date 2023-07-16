@@ -201,7 +201,7 @@ const CategoryCarousel: React.FC = () => {
     }
   };
 
-  console.log("category id: ", categories?.data);
+  console.log("category id: ", value);
 
   // scroll
   return (
@@ -234,7 +234,7 @@ const CategoryCarousel: React.FC = () => {
         //     ? '283px'
         //     : '',
 
-        top: !openCollapseFilter ? '71px' : openCollapseFilter ? '283px' : '',
+        top: !openCollapseFilter ? '70px' : openCollapseFilter ? '282px' : '',
         zIndex: 2,
         // margin: '0 180px',
         // zIndex: navTouchCatelory ? ' 2' : '',
@@ -365,7 +365,7 @@ const CategoryCarousel: React.FC = () => {
                 backgroundColor: item.id === value ? 'rgba(0, 0, 0, 0.1)' : '',
               }}
             >
-              <CategoryItem content={item.name} imageLink={item.image} />
+              <CategoryItem content={item.name} imageLink={item.image} imageDescription={item.name} />
             </SwiperSlide>
           );
         })}

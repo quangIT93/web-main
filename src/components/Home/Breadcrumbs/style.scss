@@ -1,78 +1,90 @@
 @import '../../../scss//mixins';
 
 .bread-crumb-container {
-  top: -56px;
+  top: -57px;
+
+  @media screen and (min-width: 2561px) {
+    top: -75px;
+  }
 
   @media screen and (max-width: 2560px) and (min-width: 2244px) {
-    top: -75px;
+    top: -76px;
+  }
+
+  @media screen and (max-width: 2243px) and (min-width: 2115px) {
+    top: -76px;
   }
 
   @media screen and (max-width: 1919px) and (min-width: 1503px) {
-    top: -75px;
+    top: -76px;
   }
 
   @media screen and (max-width: 1499px) {
-    top: -75px;
+    top: -76px;
   }
 
   @media screen and (max-width: 1487px) {
-    top: -56px;
+    top: -57px;
   }
 
   @media screen and (max-width: 1439px) {
-    top: -56px;
+    top: -57px;
   }
 
   @media screen and (max-width: 1356px) {
-    top: -56px;
+    top: -57px;
   }
 
   @media screen and (max-width: 1293px) {
-    top: -40px;
+    top: -73px;
+  }
+
+  @media screen and (max-width: 1292px) {
+    top: -57px;
   }
 
   @media screen and (max-width: 1280px) {
-    top: -75px;
+    top: -76px;
   }
 
   @media screen and (max-width: 1255px) {
-    top: -75px;
+    top: -76px;
   }
 
   @media screen and (max-width: 1167px) {
-    top: -56px;
+    top: -57px;
   }
 
   @media screen and (max-width: 1055px) {
-    top: -56px;
+    top: -57px;
   }
 
   @media screen and (max-width: 1036px) {
-    top: -56px;
+    top: -57px;
   }
 
   @media screen and (max-width: 1023px) {
-    top: -56px;
+    top: -57px;
   }
 
   @media screen and (max-width: 962px) {
-    top: -75px;
+    top: -76px;
   }
 
   @media screen and (max-width: 916px) {
-    top: -56px;
+    top: -57px;
   }
 
   @media screen and (max-width: 786px) {
-    top: -56px;
+    top: -57px;
   }
 
   @media screen and (max-width: 767px) {
-    top: -75px;
+    top: -76px;
   }
 
   @media screen and (max-width: 639px) {
-    top: -75px;
+    top: -76px;
   }
 
   @media screen and (max-width: 530px) {
@@ -80,19 +92,23 @@
   }
 
   @media screen and (max-width: 426px) {
-    top: -90px;
+    top: -91px;
   }
 
   @media screen and (max-width: 397px) {
-    top: -75px;
+    top: -76px;
+  }
+
+  @media screen and (max-width: 396px) and (min-width: 388px) {
+    top: -90px;
   }
 
   @media screen and (max-width: 375px) {
-    top: -72px;
+    top: -73px;
   }
 
   @media screen and (max-width: 320px) {
-    top: -73px;
+    top: -74px;
   }
 
   .MuiCollapse-root {
