@@ -265,7 +265,7 @@ const BreadcrumbsCpn: React.FC = () => {
       className="bread-crumb-container"
       spacing={2}
       sx={{
-        marginTop: '238px',
+        marginTop: '237px',
         // marginTop: navTouchCatelory ? '170px' : '24px',
         // position: 'relative',
         position: 'fixed',
@@ -273,9 +273,9 @@ const BreadcrumbsCpn: React.FC = () => {
         // top: '-60px',
         zIndex: '1',
         background: '#ffffff',
-        padding: '16px 8px ',
-        left: 180,
-        right: 180,
+        padding: '16px 180px ',
+        left: 0,
+        right: 0,
         borderBottom: '1px solid #e5e5e5',
       }}
     >

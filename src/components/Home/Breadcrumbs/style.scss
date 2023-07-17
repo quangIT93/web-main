@@ -19,6 +19,10 @@
     top: -76px;
   }
 
+  @media screen and (max-width: 1502px) {
+    top: -76px;
+  }
+
   @media screen and (max-width: 1499px) {
     top: -76px;
   }
@@ -45,10 +49,15 @@
 
   @media screen and (max-width: 1280px) {
     top: -76px;
+    padding: 16px 24px !important;
   }
 
   @media screen and (max-width: 1255px) {
     top: -76px;
+  }
+
+  @media screen and (max-width: 1187px) {
+    top: -55px;
   }
 
   @media screen and (max-width: 1167px) {
@@ -69,6 +78,10 @@
 
   @media screen and (max-width: 962px) {
     top: -76px;
+  }
+
+  @media screen and (max-width: 936px) {
+    top: -55px;
   }
 
   @media screen and (max-width: 916px) {
@@ -95,24 +108,88 @@
     top: -91px;
   }
 
+  @media screen and (max-width: 407px) {
+    top: -72px;
+  }
+
   @media screen and (max-width: 397px) {
     top: -76px;
   }
 
   @media screen and (max-width: 396px) and (min-width: 388px) {
-    top: -90px;
+    top: -73px;
   }
 
   @media screen and (max-width: 375px) {
     top: -73px;
   }
 
-  @media screen and (max-width: 320px) {
-    top: -74px;
+  @media screen and (max-width: 324px) {
+    top: -53px;
   }
 
   .MuiCollapse-root {
     margin-top: 190px !important;
+
+    @include breakpoint(tablet) {
+      left: 0 !important;
+    }
+
+    @media screen and (max-width: 767px) {
+      margin-top: 170px !important;
+    }
+
+    @media screen and (max-width: 591px) {
+      margin-top: 130px !important;
+    }
+
+    @media screen and (max-width: 552px) {
+      margin-top: 135px !important;
+      left: -30% !important;
+    }
+
+    @media screen and (max-width: 500px) {
+      left: -60% !important;
+    }
+
+    @media screen and (max-width: 473px) {
+      margin-top: 110px !important;
+    }
+
+    @media screen and (max-width: 465px) {
+      margin-top: 90px !important;
+      left: -90% !important;
+    }
+
+    @media screen and (max-width: 427px) {
+      margin-top: 90px !important;
+      left: -150% !important;
+    }
+
+    @media screen and (max-width: 425px) {
+      margin-top: 100px !important;
+      left: -190% !important;
+    }
+
+    @media screen and (max-width: 407px) {
+      margin-top: 110px !important;
+      left: -260% !important;
+    }
+
+    @media screen and (max-width: 396px) {
+      width: 250px !important;
+      margin-top: 110px px !important;
+      left: -400% !important;
+    }
+
+    @media screen and (max-width: 375px) {
+      left: -850% !important;
+    }
+
+    @media screen and (max-width: 324px) {
+      margin-top: 135px !important;
+      left: -850% !important;
+    }
   }
 
   .collapse-breadcrumbs {
