@@ -10,7 +10,8 @@ import ItemInfoRight from '../Landing/components/item/itemInfoRight';
 import Footer from '../../components/Footer/index';
 import './style.scss';
 
-import siteApi from 'api/siteApi';
+// import firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 const Landing: React.FC = () => {
   // console.log('Home page here')
@@ -23,37 +24,16 @@ const Landing: React.FC = () => {
   //   document.body.style.overflow = 'scroll'
   // }
   // }, [])
-  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
-  const [site, SetSite] = React.useState<any>(null);
 
-  const getTitle = async () => {
-    try {
-      const result = await siteApi.getSalaryType();
-      if (result) {
-        SetSite(result);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+  const analytics: any = getAnalytics();
 
   React.useEffect(() => {
-    getTitle();
+    // Cập nhật title và screen name trong Firebase Analytics
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_landing_page' as string,
+    });
   }, []);
-
-  React.useEffect(() => {
-    if (site?.data) {
-      setTitleFirebase('HiJob - Trang Landing-page');
-    }
-  }, [site]);
-
-  React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-landing-page';
-  }, [titleFirebase]);
-
-  new Promise((resolve, reject) => {
-    document.title = site ? titleFirebase : 'web-landing-page';
-  });
 
   return (
     <div className="home">

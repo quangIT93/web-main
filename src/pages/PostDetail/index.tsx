@@ -44,18 +44,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { RootState } from '../../store/reducer';
 
 // import firebase
-import firebase from 'firebase/app';
-import {
-  getDatabase,
-  ref,
-  child,
-  get,
-  set,
-  onValue,
-  update,
-} from 'firebase/database';
-
-import { getAnalytics, logEvent, setCurrentScreen } from 'firebase/analytics';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import {
   EnvironmentOutlined,
@@ -268,14 +257,6 @@ const Detail: React.FC = () => {
     }
   };
 
-  // React.useEffect(() => {
-  //   // setTimeout(() => {
-  //   document.title = `${post?.data?.title}`
-  //   console.log("title", post?.data?.title);
-
-  //   // }, 1000);
-  // }, [])
-
   React.useEffect(() => {
     getPostById();
   }, [bookmarked]);
@@ -380,22 +361,6 @@ const Detail: React.FC = () => {
     }
   };
 
-  console.log(post?.data);
-
-  useEffect(() => {
-    if (post?.data) {
-      setTitle(post?.data.title);
-    }
-  }, [post]);
-
-  useEffect(() => {
-    if (title) document.title = title ? title : 'web-post-detail';
-  }, [title]);
-
-  new Promise((resolve, reject) => {
-    document.title = post ? `${post?.data?.title}` : 'web-post-detail';
-  });
-
   const captionStyle = {
     fontSize: '2em',
     fontWeight: 'bold',
@@ -476,12 +441,23 @@ const Detail: React.FC = () => {
     }
   };
 
-  console.log('copy link', copied);
-  console.log('date', new Date(post?.data.created_at).toLocaleDateString());
+  // console.log('copy link', copied);
+  // console.log('date', new Date(post?.data.created_at).toLocaleDateString());
 
   new Promise((resolve, reject) => {
-    document.title = `${post?.data?.title}`;
+    if (post) document.title = `${post?.data?.title}`;
   });
+
+  // custom title firebase
+  const analytics: any = getAnalytics();
+
+  useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_post_detail' as string,
+    });
+  }, []);
 
   // const handleClickSearch = () => {
   //   window.location.href = `/search?q=${post?.data.company_name}`;
@@ -724,8 +700,8 @@ const Detail: React.FC = () => {
                       <h5>
                         {post?.data.expired_date
                           ? moment(new Date(post?.data.expired_date)).format(
-                            'DD/MM/yyyy',
-                          )
+                              'DD/MM/yyyy',
+                            )
                           : 'Không thời hạn'}
                       </h5>
                     </div>

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 // @ts-ignore
 import { Navbar } from '#components';
 
@@ -20,7 +20,7 @@ import RollTop from '#components/RollTop';
 import './style.scss';
 import Footer from '../../components/Footer/Footer';
 
-import siteApi from 'api/siteApi';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 // import context
 // import { HomeValueContext } from 'context/HomeValueContextProvider'
@@ -29,37 +29,15 @@ import siteApi from 'api/siteApi';
 // import { IvalueJobChild } from 'context/HomeValueContextProvider'
 
 const Home: React.FC = () => {
-  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
-  const [site, SetSite] = React.useState<any>(null);
+  const analytics: any = getAnalytics();
 
-  const getPost = async () => {
-    try {
-      const result = await siteApi.getSalaryType();
-      if (result) {
-        SetSite(result);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  React.useEffect(() => {
-    getPost();
+  useEffect(() => {
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: 'HiJob - Tìm việc làm, tuyển dụng',
+      // screen_class: 'HomeScreen',
+      page_title: '/web_home',
+    });
   }, []);
-
-  React.useEffect(() => {
-    if (site?.data) {
-      setTitleFirebase('HiJob - Tìm việc làm, tuyển dụng');
-    }
-  }, [site]);
-
-  React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-home';
-  }, [titleFirebase]);
-
-  new Promise((resolve, reject) => {
-    document.title = site ? titleFirebase : 'web-home';
-  });
 
   return (
     <div className="home">
