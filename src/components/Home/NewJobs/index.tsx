@@ -58,6 +58,8 @@ import ChildCateloriesArray from 'context/HomeValueContextProvider';
 //import jobcard
 import JobCard from '../JobCard';
 
+import { Skeleton } from 'antd';
+
 export interface PostNewest {
   id: number;
   post_id: Number;
@@ -104,6 +106,8 @@ const NewJobs: React.FC = () => {
   );
 
   const [checkBookMark, setCheckBookMark] = React.useState(true);
+
+  const [loading, setLoading] = React.useState(false);
 
   const {
     setChildCateloriesArray,
@@ -160,7 +164,6 @@ const NewJobs: React.FC = () => {
 
         // set loading
         setOpenBackdrop(false);
-        setIsLoading(true);
       }
     } catch (error) {
       setOpenBackdrop(false);
@@ -173,53 +176,91 @@ const NewJobs: React.FC = () => {
     // delete param when back to page
     // searchParams.delete("theme-id")
     // setSearchParams(searchParams)
+    setLoading(true);
+    setTimeout(() => {
+      if (postNewest.data) {
+        setLoading(false);
+      }
+    }, 1000);
   }, []);
 
   return (
     <>
       {
         // automatic && (
-        <Box sx={{ flexGrow: 1, marginTop: '300px' }} className='new-job' ref={listRef}>
-          <div  style={{display: 'flex', gap: '0.5rem', margin: '12px 0'}}>
-            <NewJobIcon width={25} height={25}/>
+        <Box
+          sx={{ flexGrow: 1, marginTop: '300px' }}
+          className="new-job"
+          ref={listRef}
+        >
+          <div style={{ display: 'flex', gap: '0.5rem', margin: '12px 0' }}>
+            <NewJobIcon width={25} height={25} />
             <h2>Công việc mới nhất</h2>
           </div>
-         
-          <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-            {postNewest.data.posts.map((item: PostNewest, index: number) => (
-              <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                <JobCard item={item} />
-              </Grid>
-            ))}
-          </Grid>
-          <Stack
-            spacing={2}
-            sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}
-          >
-            {/* <Pagination count={10} shape="rounded" /> */}
-            <Space
-              className="div-hover-more"
-              onClick={(e) => {
-                handleChange(e, page);
-              }}
-            >
-              <p>Xem thêm</p>
-              <MoreICon width={20} height={20} />
-            </Space>
-          </Stack>
-          <Backdrop
-            sx={{
-              color: '#0d99ff ',
-              backgroundColor: 'transparent',
-              // boxShadow: 'none',
-              zIndex: (theme: any) => theme.zIndex.drawer + 1,
-            }}
-            open={openBackdrop}
-            //  onClick={handleClose}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
 
+          <Skeleton loading={loading} active>
+            <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
+              {postNewest.data.posts.map((item: PostNewest, index: number) => (
+                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                  <JobCard item={item} />
+                </Grid>
+              ))}
+            </Grid>
+            <Stack
+              spacing={2}
+              sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}
+            >
+              {/* <Pagination count={10} shape="rounded" /> */}
+              <Space
+                className="div-hover-more"
+                onClick={(e) => {
+                  handleChange(e, page);
+                }}
+              >
+                <p>Xem thêm</p>
+                <MoreICon width={20} height={20} />
+              </Space>
+            </Stack>
+            <Backdrop
+              sx={{
+                color: '#0d99ff ',
+                backgroundColor: 'transparent',
+                // boxShadow: 'none',
+                zIndex: (theme: any) => theme.zIndex.drawer + 1,
+              }}
+              open={openBackdrop}
+              //  onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          </Skeleton>
+          <Skeleton loading={loading} active>
+            {loading ? <br /> : <></>}
+          </Skeleton>
+          <Skeleton loading={loading} active>
+            {loading ? <br /> : <></>}
+          </Skeleton>
+          <Skeleton loading={loading} active>
+            {loading ? <br /> : <></>}
+          </Skeleton>
+          <Skeleton loading={loading} active>
+            {loading ? <br /> : <></>}
+          </Skeleton>
+          <Skeleton loading={loading} active>
+            {loading ? <br /> : <></>}
+          </Skeleton>
+          <Skeleton loading={loading} active>
+            {loading ? <br /> : <></>}
+          </Skeleton>
+          <Skeleton loading={loading} active>
+            {loading ? <br /> : <></>}
+          </Skeleton>
+          <Skeleton loading={loading} active>
+            {loading ? <br /> : <></>}
+          </Skeleton>
+          <Skeleton loading={loading} active>
+            {loading ? <br /> : <></>}
+          </Skeleton>
           <ShowNotificativeSave
           // setShowNofySave={setShowNofySave}
           // showNofySave={showNofySave}

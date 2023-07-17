@@ -32,9 +32,9 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
   useEffect(() => {
     if (dataProvinces && !selectedProvince) {
       setSelectedProvince(
-        dataProvinces.find(
+        dataProvinces?.find(
           (dataProvince: any) =>
-            dataProvince.name === dataPostById.province_name
+            dataProvince?.name === dataPostById?.province_name
         )
       )
     }
@@ -170,7 +170,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
     <div className="edit-post_address">
       <div className="edit-post_addressTop">
         <div className="edit-post_titleAddress">
-          <Typography 
+          <Typography
             sx={styleLabel}
             variant="body1"
             component="label"
