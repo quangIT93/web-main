@@ -5,29 +5,26 @@
   align-items: center;
 
   @media screen and (max-width: 1280px) and (min-width: 1221px) {
-    margin: 0 24px !important;
+    padding: 0 24px !important;
   }
 
   @media screen and (max-width: 1220px) and (min-width: 1201px) {
-    margin: 0 10px !important;
+    padding: 0 10px !important;
   }
 
   @media screen and (max-width: 1200px) {
-    margin: 0 20px !important;
+    padding: 0 20px !important;
   }
 
   .mySwiper {
     z-index: 0;
+
     .swiper-wrapper {
       .swiper-slide {
         // width: fit-content !important;
         padding: 12px 16px;
         cursor: pointer;
         height: unset !important;
-
-        // &:active {
-        //   border-bottom: 2px solid #0d99ff;
-        // }
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.1);
@@ -43,6 +40,11 @@
             color: white;
           }
         }
+      }
+
+      .swiper-slide-clicked {
+        border-bottom: 2px solid #0d99ff !important;
+        background-color: rgba(0, 0, 0, 0.1) !important;
       }
     }
 
@@ -204,24 +206,24 @@
   }
 
   .MuiStack-root {
-    @media screen and (max-width: 1280px) and (min-width: 1221px) {
-      left: 24px !important;
-      right: 24px !important;
-    }
+    // @media screen and (max-width: 1280px) and (min-width: 1221px) {
+    //   left: 24px !important;
+    //   right: 24px !important;
+    // }
 
-    @media screen and (max-width: 1220px) and (min-width: 1201px) {
-      left: 10px !important;
-      right: 10px !important;
-    }
+    // @media screen and (max-width: 1220px) and (min-width: 1201px) {
+    //   left: 10px !important;
+    //   right: 10px !important;
+    // }
 
-    @media screen and (max-width: 1200px) {
-      left: 20px !important;
-      right: 20px !important;
-    }
+    // @media screen and (max-width: 1200px) {
+    //   left: 20px !important;
+    //   right: 20px !important;
+    // }
 
-    @include breakpoint(mobile) {
-      // margin-top: 218px !important;
-    }
+    // @include breakpoint(mobile) {
+    //   // margin-top: 218px !important;
+    // }
   }
 }
 
