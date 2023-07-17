@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
@@ -12,7 +12,7 @@ import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { TopicJobIcon, MoreICon } from '#components/Icons';
+import { MoreICon, SuggestIcon } from '#components/Icons';
 
 // @ts-ignore
 import moment from 'moment';
@@ -56,7 +56,6 @@ import { Space, Tooltip } from 'antd';
 
 //import jobcard
 import JobCard from '../JobCard';
-import { Skeleton } from 'antd';
 
 interface PostTheme {
   id: number;
@@ -91,7 +90,7 @@ const ThemesJob: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [checkBookMark, setCheckBookMark] = React.useState(true);
-  const [loading, setLoading] = React.useState(false);
+
   // state redux
   const { post } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
@@ -168,17 +167,18 @@ const ThemesJob: React.FC = () => {
     searchParams.delete('theme-id');
     searchParams.delete('categories-id');
     setSearchParams(searchParams);
-    setLoading(true);
-    setTimeout(() => {
-      if (listTheme) {
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    }, 1000);
   }, []);
 
-  console.log('listthem', listTheme);
+  const listSuggestJob = () => {
+    try {
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  useEffect(() => {
+    listSuggestJob();
+  }, []);
   // React.useEffect(() => {
   //   console.log("vap")
   //   getPostByThemeId()
@@ -191,94 +191,62 @@ const ThemesJob: React.FC = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
-        <TopicJobIcon width={25} height={25} />
-        <h2>Công việc theo chủ đề</h2>
+        <SuggestIcon width={25} height={25} />
+        <h2>Công việc gợi ý</h2>
       </div>
-      <Skeleton loading={loading} active>
-        <ListCompanyCarousel listTheme={listTheme} />
-      </Skeleton>
 
-      <Skeleton loading={loading} active>
-        <>
-          {automatic && (
-            <>
-              <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-                {post?.data.posts.map((item: PostTheme, index: number) => (
-                  <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                    <JobCard item={item} />
-                  </Grid>
-                ))}
-              </Grid>
-              <Stack
-                spacing={2}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  margin: '24px 0',
-                  marginBottom: '50px',
-                }}
-              >
-                {/* <Pagination count={10} shape="rounded" /> */}
-                {/* Test page: {page} */}
-                {/* <Pagination
+      <>
+        {automatic && (
+          <>
+            <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
+              {post?.data.posts.map((item: PostTheme, index: number) => (
+                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                  <JobCard item={item} />
+                </Grid>
+              ))}
+            </Grid>
+            <Stack
+              spacing={2}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                margin: '24px 0',
+                marginBottom: '50px',
+              }}
+            >
+              {/* <Pagination count={10} shape="rounded" /> */}
+              {/* Test page: {page} */}
+              {/* <Pagination
                   count={10}
                   variant="outlined"
                   shape="rounded"
                   page={page}
                   onChange={handleChange}
                 /> */}
-                <Space
-                  className="div-hover-more"
-                  onClick={(e) => {
-                    handleChange(e, page);
-                  }}
-                >
-                  <p>Xem thêm</p>
-                  <MoreICon width={20} height={20} />
-                </Space>
-              </Stack>
-              <Backdrop
-                sx={{
-                  color: '#0d99ff ',
-                  backgroundColor: 'transparent',
-                  zIndex: (theme: any) => theme.zIndex.drawer + 1,
+              <Space
+                className="div-hover-more"
+                onClick={(e) => {
+                  handleChange(e, page);
                 }}
-                open={openBackdrop}
-                //   onClick={handleClose}
               >
-                <CircularProgress color="inherit" />
-              </Backdrop>
-            </>
-          )}
-        </>
-      </Skeleton>
-      <Skeleton loading={loading} active>
-        {loading ? <br /> : <></>}
-      </Skeleton>
-      <Skeleton loading={loading} active>
-        {loading ? <br /> : <></>}
-      </Skeleton>
-      <Skeleton loading={loading} active>
-        {loading ? <br /> : <></>}
-      </Skeleton>
-      <Skeleton loading={loading} active>
-        {loading ? <br /> : <></>}
-      </Skeleton>
-      <Skeleton loading={loading} active>
-        {loading ? <br /> : <></>}
-      </Skeleton>
-      <Skeleton loading={loading} active>
-        {loading ? <br /> : <></>}
-      </Skeleton>
-      <Skeleton loading={loading} active>
-        {loading ? <br /> : <></>}
-      </Skeleton>
-      <Skeleton loading={loading} active>
-        {loading ? <br /> : <></>}
-      </Skeleton>
-      <Skeleton loading={loading} active>
-        {loading ? <br /> : <></>}
-      </Skeleton>
+                <p>Xem thêm</p>
+                <MoreICon width={20} height={20} />
+              </Space>
+            </Stack>
+            <Backdrop
+              sx={{
+                color: '#0d99ff ',
+                backgroundColor: 'transparent',
+                zIndex: (theme: any) => theme.zIndex.drawer + 1,
+              }}
+              open={openBackdrop}
+              //   onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          </>
+        )}
+      </>
     </Box>
   );
 };
