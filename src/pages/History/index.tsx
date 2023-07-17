@@ -17,6 +17,7 @@ import ShowCancleSave from '#components/ShowCancleSave';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
 // api
 import siteApi from 'api/siteApi';
 
@@ -222,6 +223,7 @@ const HistoryPost = () => {
         </Box>
       </div>
       <ShowCancleSave />
+      <ShowNotificativeSave />
       <Footer />
     </div>
   );

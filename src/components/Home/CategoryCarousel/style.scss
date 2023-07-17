@@ -18,7 +18,6 @@
 
   .mySwiper {
     z-index: 0;
-
     .swiper-wrapper {
       .swiper-slide {
         // width: fit-content !important;
@@ -26,9 +25,9 @@
         cursor: pointer;
         height: unset !important;
 
-        &:active {
-          border-bottom: 2px solid #0d99ff;
-        }
+        // &:active {
+        //   border-bottom: 2px solid #0d99ff;
+        // }
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.1);

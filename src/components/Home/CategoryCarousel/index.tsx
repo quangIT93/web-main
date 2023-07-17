@@ -97,7 +97,6 @@ const CategoryCarousel: React.FC = () => {
 
       console.log(newValue);
 
-
       const selectedCategory = categories?.data.find(
         (item: any) => item.id === newValue,
       );
@@ -201,7 +200,7 @@ const CategoryCarousel: React.FC = () => {
     }
   };
 
-  console.log("category id: ", categories?.data);
+  console.log('category id: ', value);
 
   // scroll
   return (
@@ -234,7 +233,7 @@ const CategoryCarousel: React.FC = () => {
         //     ? '283px'
         //     : '',
 
-        top: !openCollapseFilter ? '71px' : openCollapseFilter ? '283px' : '',
+        top: !openCollapseFilter ? '70px' : openCollapseFilter ? '282px' : '',
         zIndex: 2,
         // margin: '0 180px',
         // zIndex: navTouchCatelory ? ' 2' : '',
@@ -322,33 +321,32 @@ const CategoryCarousel: React.FC = () => {
         mousewheel={true}
         breakpoints={{
           320: {
-            slidesPerView: 4,
-            spaceBetween: 10,
+            slidesPerView: 3,
           },
           640: {
-            slidesPerView: 5,
-            spaceBetween: 30,
+            slidesPerView: 4,
           },
           768: {
-            slidesPerView: 5,
-            spaceBetween: 30,
+            slidesPerView: 7,
+          },
+          868: {
+            slidesPerView: 7,
+          },
+          963: {
+            slidesPerView: 8,
           },
           1024: {
-            slidesPerView: 7,
-            spaceBetween: 20,
+            slidesPerView: 9,
           },
           1440: {
-            slidesPerView: 8,
-            spaceBetween: 20,
+            slidesPerView: 9,
           },
           1920: {
             slidesPerView: 14,
-            spaceBetween: 10,
           },
           2560: {
             slidesPerView: 14,
-            spaceBetween: 10,
-          }
+          },
         }}
         modules={[Mousewheel, Navigation, Pagination]}
         className="mySwiper"
@@ -366,7 +364,11 @@ const CategoryCarousel: React.FC = () => {
                 backgroundColor: item.id === value ? 'rgba(0, 0, 0, 0.1)' : '',
               }}
             >
-              <CategoryItem content={item.name} imageLink={item.image} />
+              <CategoryItem
+                content={item.name}
+                imageLink={item.image}
+                imageDescription={item.name}
+              />
             </SwiperSlide>
           );
         })}
