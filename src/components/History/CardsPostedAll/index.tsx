@@ -51,19 +51,19 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
   const [isVisible, setIsVisible] = useState(true);
 
   //get post to check if length <= 10
-  const getAllPostToCheck = async () => {
-    const result = await historyRecruiter.GetInformationAndCandidatesCount(
-      0,
-      11,
-    );
-    if (result.data.length <= 10) {
-      setIsVisible(false);
-    }
-  };
+  // const getAllPostToCheck = async () => {
+  //   const result = await historyRecruiter.GetInformationAndCandidatesCount(
+  //     0,
+  //     11,
+  //   );
+  //   if (result.data.length <= 10) {
+  //     setIsVisible(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    getAllPostToCheck();
-  }, []);
+  // useEffect(() => {
+  //   getAllPostToCheck();
+  // }, []);
 
   //   getData
   const getAllPosted = async (postID: number) => {
@@ -77,6 +77,9 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
         setDataPosted(result.data);
         console.log('load data cardPostedAll recruiter', result);
         setLastPostId(result.data[result.data.length - 1].id);
+        if (result.data.length < 10) {
+          setIsVisible(false);
+        }
       }
     } catch (error) {
       console.log('error', error);

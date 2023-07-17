@@ -63,7 +63,7 @@
 
   .bottom-notificate {
     overflow-y: scroll;
-    height: 71vh;
+    height: 70vh;
 
     .wrap-system {
       display: flex;
@@ -259,7 +259,11 @@
         display: flex;
         align-items: center;
         button {
-          padding: 6px 8px;
+          padding: 10px 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 12px;
         }
 
         &:after {
@@ -292,7 +296,7 @@
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
-            // display: flex;
+            display: flex;
           }
 
           ul {
@@ -311,6 +315,7 @@
                 overflow: hidden;
                 white-space: nowrap;
                 display: flex;
+                margin-left: 4px;
                 // justify-content: start;
               }
             }

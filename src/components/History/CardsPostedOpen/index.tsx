@@ -47,28 +47,34 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   const [isVisible, setIsVisible] = useState(true);
 
   //get post to check if length <= 10
-  const getAllPostToCheck = async () => {
-    const result = await historyRecruiter.GetInformationAndCandidatesCount(
-      0,
-      11,
-    );
-    if (result.data.length <= 10) {
-      setIsVisible(false);
-    }
-  };
+  // const getAllPostToCheck = async () => {
+  //   const result = await historyRecruiter.GetInformationAndCandidatesCount(
+  //     0,
+  //     11,
+  //   );
+  //   if (result.data.length <= 10) {
+  //     setIsVisible(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    getAllPostToCheck();
-  }, []);
+  // useEffect(() => {
+  //   getAllPostToCheck();
+  // }, []);
 
   //   getData
   const getAllPosted = async (newCount: number) => {
     try {
-      const result = await historyRecruiter.getAllPosted(newCount, 10, 1);
+      const result = await historyRecruiter.GetInformationAndCandidatesCount(
+        newCount,
+        10,
+      );
 
       if (result) {
         setDataPosted(result.data);
         setLastPostId(result.data[result.data.length - 1].id);
+        if (result.data.length < 10) {
+          setIsVisible(false);
+        }
       }
     } catch (error) {
       console.log('error', error);
@@ -93,7 +99,10 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   const handleAddItem = async () => {
     try {
       setUploading(true);
-      const result = await historyRecruiter.getAllPosted(lastPostId, 10, 3);
+      const result = await historyRecruiter.GetInformationAndCandidatesCount(
+        lastPostId,
+        5,
+      );
       if (result) {
         setUploading(false);
         if (result.data.length == 0) {

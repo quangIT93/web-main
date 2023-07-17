@@ -1,0 +1,23 @@
+.influencer-card {
+    .div-influencer-card-top {
+        .MuiImageListItem-img {
+            width: 100% !important;
+            height: 300px !important;
+        }
+    }
+
+    .div-influencer-card-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .div-influencer-card-bottom_left {}
+
+        .div-influencer-card-bottom_right {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-self: space-between;
+        }
+    }
+}
