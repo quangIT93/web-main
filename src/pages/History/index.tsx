@@ -14,6 +14,10 @@ import CardsSavedJob from '#components/History/CardsSavedJob';
 
 import ShowCancleSave from '#components/ShowCancleSave';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
 // api
 import siteApi from 'api/siteApi';
 
@@ -61,37 +65,15 @@ const HistoryPost = () => {
 
   console.log('sssssssss', showDetailPosted);
 
-  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
-  const [site, SetSite] = React.useState<any>(null);
-
-  const getPost = async () => {
-    try {
-      const result = await siteApi.getSalaryType();
-      if (result) {
-        SetSite(result);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+  const analytics: any = getAnalytics();
 
   React.useEffect(() => {
-    getPost();
+    // Cập nhật title và screen name trong Firebase Analytics
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_history' as string,
+    });
   }, []);
-
-  React.useEffect(() => {
-    if (site?.data) {
-      setTitleFirebase('HiJob - Lịch sử tuyển dụng');
-    }
-  }, [site]);
-
-  React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-history';
-  }, [titleFirebase]);
-
-  new Promise((resolve, reject) => {
-    document.title = site ? titleFirebase : 'web-history';
-  });
 
   const breadcrumbs = [
     <Link
@@ -241,6 +223,7 @@ const HistoryPost = () => {
         </Box>
       </div>
       <ShowCancleSave />
+      <ShowNotificativeSave />
       <Footer />
     </div>
   );
