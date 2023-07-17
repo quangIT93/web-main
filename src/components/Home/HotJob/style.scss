@@ -10,7 +10,7 @@
             .swiper-slide {
                 // width: fit-content !important;
                 // padding: 12px 16px;
-                height: 180px !important;
+                height: 360px !important;
                 cursor: pointer;
 
                 &:active {
@@ -23,11 +23,11 @@
 
                 .slide-item {
                     position: relative;
-                    height: 180px !important;
+                    height: 360px !important;
 
                     img {
                         width: 100% !important;
-                        height: 180px !important;
+                        height: 360px !important;
                     }
 
                     .div-info-themes-item {
@@ -35,8 +35,8 @@
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
-                        padding: 0 12px;
-                        margin-top: -160px;
+                        padding: 0 24px;
+                        top: 16px;
                         position: absolute;
                         color: white;
 

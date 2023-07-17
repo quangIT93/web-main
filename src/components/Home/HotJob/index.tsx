@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { AxiosResponse } from 'axios';
 // import api
 import postApi from 'api/postApi';
+import hotJobApi from 'api/hotJobApi';
 
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -50,6 +51,7 @@ const HotJob: React.FC = () => {
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [index, setIndex] = React.useState(0);
   const [listTheme, setListTheme] = React.useState<ItemTheme[]>([]);
+  const [hotjob, setHotJob] = React.useState<any>([]);
 
   const [addressIdCookie, setAddressIdCookie] = React.useState(0);
 
@@ -91,33 +93,23 @@ const HotJob: React.FC = () => {
     return null;
   }
 
-  const handleChange = async (
-    event: React.SyntheticEvent,
-    newValue: number,
-  ) => {
+  const getHotJob = async () => {
     try {
-      setValue(newValue);
-      setIndex(newValue);
-      setOpenBackdrop(!openBackdrop);
-      const categoryId = searchParams.get('categories-id');
-      if (categoryId) {
-        setSearchParams({
-          'theme-id': `${newValue}`,
-          'categories-id': `${Number(categoryId) == 1 ? 'all' : categoryId}`,
-        });
-      } else {
-        setSearchParams({ 'theme-id': `${newValue}` });
-      }
-
-      const result = await postApi.getPostByThemeId(newValue, 19, null);
+      const result = await hotJobApi.getHotJobTheme();
       if (result) {
-        setPostByTheme(result);
-        // set backdrop
-        setOpenBackdrop(false);
+        setHotJob(result.data);
       }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  React.useEffect(() => {
+    getHotJob();
+  }, []);
+
+  const handleClickItem = (event: any, id: number, type: number) => {
+    window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`);
   };
   // handle close backdrop
   const handleClose = () => {
@@ -201,41 +193,39 @@ const HotJob: React.FC = () => {
         modules={[Mousewheel, Navigation, Pagination]}
         className="mySwiper"
       >
-        <Skeleton loading={dataImageHotJob ? false : true} active>
-          {dataImageHotJob?.map((item: any, index: number) => {
-            // console.log("id: ", item.id);
-            return (
-              <SwiperSlide
-                key={index}
-                onClick={(event) => {
-                  handleChange(event, item.id);
-                }}
-              >
-                <div className="slide-item">
-                  <img
-                    src={item.img}
-                    alt="amhr bị lỗi"
-                    style={{
-                      width: '160px',
-                      height: '160px',
-                      borderRadius: '10px',
-                      objectFit: 'cover',
-                    }}
-                  />
-                  <div className="div-info-themes-item">
-                    <div className="div-info-themes-item_left">
-                      <h5>{item.title}</h5>
-                    </div>
-                    <div className="div-info-themes-item_right">
-                      <BagIcon />
-                      <h6>{`${item.author} `}</h6>
-                    </div>
+        {hotjob?.map((item: any, index: number) => {
+          // console.log("id: ", item.id);
+          return (
+            <SwiperSlide
+              key={index}
+              onClick={(event) => {
+                handleClickItem(event, item.id, item.type);
+              }}
+            >
+              <div className="slide-item">
+                <img
+                  src={item.image}
+                  alt="anh bị lỗi"
+                  style={{
+                    width: '160px',
+                    height: '160px',
+                    borderRadius: '10px',
+                    objectFit: 'cover',
+                  }}
+                />
+                <div className="div-info-themes-item">
+                  <div className="div-info-themes-item_left">
+                    <h5>{item.title}</h5>
+                  </div>
+                  <div className="div-info-themes-item_right">
+                    <BagIcon />
+                    <h6>{`${item.count} `}</h6>
                   </div>
                 </div>
-              </SwiperSlide>
-            );
-          })}
-        </Skeleton>
+              </div>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
       <Backdrop
         sx={{

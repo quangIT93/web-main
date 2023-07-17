@@ -328,7 +328,7 @@ const CategoryCarousel: React.FC = () => {
         //     ? '283px'
         //     : '',
 
-        top: !openCollapseFilter ? '70px' : openCollapseFilter ? '282px' : '',
+        top: '70px',
         zIndex: 2,
         // margin: '0 180px',
         // zIndex: navTouchCatelory ? ' 2' : '',
