@@ -28,6 +28,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import './styles.scss';
 
+import JobCardDetailPostedHistory from '../JobCardDetailedHistory';
+
 interface IDetailPosted {
   detailPosted: any;
 }
@@ -115,6 +117,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     }
   };
 
+  console.log(dataCandidates?.applications);
+
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
@@ -147,204 +151,12 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
 
   return (
     <div className="history-post">
-      <Card
-        sx={{ background: '#D5EDFF', padding: '12px', margin: '8px 0' }}
-        onClick={(e) => handleClickPost(e, detailPosted)}
-      >
-        <Box
-          sx={{
-            minWidth: '100%',
-            display: 'flex',
-            padding: '12px',
-
-            boxShadow: 'none',
-            borderRadius: '5px',
-          }}
-        >
-          <ImageListItem sx={{ flex: 1, display: 'flex' }}>
-            <img
-              src={`${detailPosted?.image}?w=164&h=164&fit=crop&auto=format`}
-              // srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt="anh job"
-              loading="lazy"
-              style={{
-                width: '120px',
-                maxWidth: 'auto',
-                height: '100%',
-                maxHeight: 120,
-                borderRadius: 10,
-              }}
-            />
-            <div
-              style={{ padding: '0', marginLeft: '12px' }}
-              className="div-cart-item-post"
-            >
-              <Tooltip placement="top" title="àhakj">
-                <Typography
-                  gutterBottom
-                  variant="h6"
-                  component="div"
-                  sx={{
-                    fontSize: '15px',
-                    margin: 0,
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {detailPosted?.company_name}
-                </Typography>
-              </Tooltip>
-              <Tooltip placement="top" title="j j  j jj">
-                <Typography
-                  gutterBottom
-                  variant="h1"
-                  component="div"
-                  sx={{ fontSize: '12px' }}
-                >
-                  {detailPosted?.title}
-                </Typography>
-              </Tooltip>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  justifyContent: 'center',
-                }}
-              >
-                <EnvironmentFilled className="icon-cart-item-post" />
-                <Typography variant="body2" color="text.secondary">
-                  {detailPosted?.district}, {detailPosted?.province}
-                </Typography>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <ClockCircleFilled className="icon-cart-item-post" />
-                <Typography variant="body2" color="text.secondary">
-                  {moment(new Date(detailPosted?.start_time)).format('HH:mm')} -{' '}
-                  {moment(new Date(detailPosted?.end_time)).format('HH:mm')}
-                </Typography>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <AttachMoneyIcon
-                  sx={{
-                    fontSize: 20,
-                    marginLeft: '-2px',
-                    marginRight: '2px',
-                    color: '#575757',
-                  }}
-                />
-                <Typography variant="body2" color="text.secondary">
-                  {new Intl.NumberFormat('en-US').format(
-                    detailPosted?.salary_min,
-                  )}
-                  {` ${detailPosted?.money_type_text} `}-{' '}
-                  {new Intl.NumberFormat('en-US').format(
-                    detailPosted?.salary_max,
-                  ) +
-                    ` ${detailPosted?.money_type_text} ` +
-                    `/${detailPosted?.salary_type}`}
-                </Typography>
-              </div>
-              <div
-                style={{
-                  marginTop: 5,
-                }}
-              >
-                <p
-                  style={{
-                    color: '#AAAAAA',
-                    fontSize: 13,
-                    fontStyle: 'italic',
-                  }}
-                >
-                  {detailPosted?.created_at_text}
-                </p>
-              </div>
-            </div>
-          </ImageListItem>
-
-          <Space direction="vertical" align="center">
-            <SubIcon
-              postId={detailPosted?.id}
-              setStatus={setStatus}
-              status={status}
-            />
-          </Space>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <p
-            style={{
-              color: '#001424',
-              fontSize: 13,
-              fontStyle: 'italic',
-            }}
-          >
-            {' '}
-            Đã đăng vào: {moment(detailPosted?.created_at).format('DD/MM/YY')}
-          </p>
-          <p
-            style={{
-              margin: '0 24px',
-              background: '#0D99FF',
-              padding: '4px 12px',
-              borderRadius: '15px',
-              color: '#ffffff',
-            }}
-          >
-            {dataCandidates?.applications.length} đơn ứng tuyển
-          </p>
-
-          {status === 1 ? (
-            <p
-              style={{
-                background: '#5CB265',
-                padding: '4px 16px',
-                borderRadius: '15px',
-                color: '#ffffff',
-              }}
-            >
-              Đang tuyển
-            </p>
-          ) : status === 3 ? (
-            <p
-              style={{
-                background: '#aaaaaa',
-                padding: '4px 16px',
-                borderRadius: '15px',
-                color: '#ffffff',
-              }}
-            >
-              Đã đóng
-            </p>
-          ) : (
-            <p
-              style={{
-                background: '#aaaaaa',
-                padding: '4px 16px',
-                borderRadius: '15px',
-                color: '#ffffff',
-              }}
-            >
-              Không chấp nhận
-            </p>
-          )}
-        </Box>
-      </Card>
+      <JobCardDetailPostedHistory
+        item={detailPosted}
+        status={status}
+        setStatus={setStatus}
+        dataCandidates={dataCandidates}
+      />
       <Box>
         <h3 style={{ margin: '12px 0' }}>Danh sách các ứng viên</h3>
         {dataCandidates?.applications.map((candidate: any, index: number) => (
@@ -371,11 +183,15 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
             }
           >
             <div className="image-cadidate_wrap">
-              <img
-                src={candidate.avatar}
-                alt={candidate.name}
-                className="image-cadidate"
-              />
+              {candidate.avatar ? (
+                <img
+                  src={candidate.avatar}
+                  alt={candidate.name}
+                  className="image-cadidate"
+                />
+              ) : (
+                <div className="image-cadidate"></div>
+              )}
             </div>
             <Box sx={{ marginLeft: '12px' }}>
               <div

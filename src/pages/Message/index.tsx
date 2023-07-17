@@ -15,6 +15,10 @@ import './style.scss';
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 import siteApi from 'api/siteApi';
+
+// import firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 const { Text } = Typography;
 
 const Message = () => {
@@ -37,21 +41,20 @@ const Message = () => {
 
   React.useEffect(() => {
     getTitle();
+    // document.title = 'Hijob - Nhắn tin';
   }, []);
 
-  React.useEffect(() => {
-    if (site?.data) {
-      setTitleFirebase('HiJob - Nhắn tin');
-    }
-  }, [site]);
-
-  React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-message';
-  }, [titleFirebase]);
+  // custom title firebase
+  const analytics: any = getAnalytics();
 
   new Promise((resolve, reject) => {
-    document.title = site ? titleFirebase : 'web-message';
+    document.title = 'Hijob - Nhắn tin';
   });
+  useEffect(() => {
+    logEvent(analytics, 'screen_view' as string, {
+      page_title: '/new_message ',
+    });
+  }, []);
   return (
     <div className="message-page">
       <Navbar />

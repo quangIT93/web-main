@@ -50,6 +50,10 @@ interface CategoryItem {
   image: string;
 }
 
+interface UserSelected {
+  userSelectedId: any;
+}
+
 const CategoryCarousel: React.FC = () => {
   // Contexts
   const {
@@ -73,6 +77,7 @@ const CategoryCarousel: React.FC = () => {
   } = useContext(HomeValueContext);
 
   const [value, setValue] = React.useState(0);
+  const [categoryIdCookie, setCategorieIdCookie] = React.useState(0);
   // const positionRef = React.useRef(0)
 
   // const {height} = height
@@ -89,14 +94,53 @@ const CategoryCarousel: React.FC = () => {
     null,
   );
 
+  // Set the cookie
+  function setCookie(name: string, value: string, days: number) {
+    let expires = "";
+    if (days) {
+      let date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+  // Get the cookie
+  function getCookie(name: string): string | null {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1, c.length);
+      }
+      if (c.indexOf(nameEQ) == 0) {
+        return c.substring(nameEQ.length, c.length);
+      }
+    }
+    return null;
+  }
+
   const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
     try {
       setOpenBackdrop(true); // Mở backdrop
       window.scrollTo(0, 0);
       // window.scrollTo(0, 300)
 
-      console.log(newValue);
+      if (newValue === undefined || newValue === 1) {
+        const slide = document.querySelector('.swiper-slide');
+        slide?.classList.add('swiper-slide-clicked')
+      } else {
+        const slide = document.querySelector('.swiper-slide');
+        slide?.classList.remove('swiper-slide-clicked')
+      }
 
+      let userSelected: UserSelected = {
+        userSelectedId: newValue,
+      };
+      setCookie("userSelected", JSON.stringify(userSelected), 365);
+
+      console.log(newValue);
 
       const selectedCategory = categories?.data.find(
         (item: any) => item.id === newValue,
@@ -167,9 +211,46 @@ const CategoryCarousel: React.FC = () => {
     }
   };
 
+  const getNewstJobBycookie = async (userSelectedId: any) => {
+    if (userSelectedId) {
+      setSearchParams({
+        'categories-id': `${userSelectedId == 1 ? 'all' : userSelectedId}`,
+      })
+      let result = await postApi.getPostNewest(Number(userSelectedId), null, null, 19);
+
+
+      if (result) {
+        setPostNewest(result);
+      }
+    }
+  }
+
   React.useEffect(() => {
     getAllParentCategories();
+    let storedSettings = JSON.parse(getCookie("userSelected") || "{}") as UserSelected;
+
+    setTimeout(async () => {
+      if (storedSettings.userSelectedId !== 1) {
+        const slide = document.querySelector('.swiper-slide');
+        slide?.classList.remove('swiper-slide-clicked');
+      } else {
+        const slide = document.querySelector('.swiper-slide');
+        slide?.classList.add('swiper-slide-clicked');
+      }
+
+      getNewstJobBycookie(storedSettings.userSelectedId);
+    }, 500)
   }, []);
+
+  React.useEffect(() => {
+    // Retrieve the user's settings from cookies
+    let storedSettings = JSON.parse(getCookie("userSelected") || "{}") as UserSelected;
+    setCategorieIdCookie(storedSettings.userSelectedId);
+    if (storedSettings.userSelectedId !== 1) {
+      const slide = document.querySelector('.swiper-slide');
+      slide?.classList.remove('swiper-slide-clicked');
+    }
+  }, [value])
 
   React.useEffect(() => {
     setRefCatelory(listRef.current ? listRef : null);
@@ -201,7 +282,7 @@ const CategoryCarousel: React.FC = () => {
     }
   };
 
-  console.log("category id: ", categories?.data);
+  console.log('category id: ', value);
 
   // scroll
   return (
@@ -234,11 +315,11 @@ const CategoryCarousel: React.FC = () => {
         //     ? '283px'
         //     : '',
 
-        top: !openCollapseFilter ? '71px' : openCollapseFilter ? '283px' : '',
+        top: !openCollapseFilter ? '70px' : openCollapseFilter ? '282px' : '',
         zIndex: 2,
         // margin: '0 180px',
         // zIndex: navTouchCatelory ? ' 2' : '',
-        margin: navTouchCatelory ? '0 180px' : '0px 180px 0 180px',
+        padding: navTouchCatelory ? '0 180px' : '0px 180px 0 180px',
         right: 0,
         left: 0,
         background: '#ffffff',
@@ -322,33 +403,32 @@ const CategoryCarousel: React.FC = () => {
         mousewheel={true}
         breakpoints={{
           320: {
-            slidesPerView: 4,
-            spaceBetween: 10,
+            slidesPerView: 3,
           },
           640: {
-            slidesPerView: 5,
-            spaceBetween: 30,
+            slidesPerView: 4,
           },
           768: {
-            slidesPerView: 5,
-            spaceBetween: 30,
+            slidesPerView: 7,
+          },
+          868: {
+            slidesPerView: 7,
+          },
+          963: {
+            slidesPerView: 8,
           },
           1024: {
-            slidesPerView: 7,
-            spaceBetween: 20,
+            slidesPerView: 9,
           },
           1440: {
-            slidesPerView: 8,
-            spaceBetween: 20,
+            slidesPerView: 9,
           },
           1920: {
             slidesPerView: 14,
-            spaceBetween: 10,
           },
           2560: {
             slidesPerView: 14,
-            spaceBetween: 10,
-          }
+          },
         }}
         modules={[Mousewheel, Navigation, Pagination]}
         className="mySwiper"
@@ -362,11 +442,15 @@ const CategoryCarousel: React.FC = () => {
                 handleChange(event, item.id);
               }}
               style={{
-                borderBottom: item.id === value ? '2px solid #0d99ff' : 'none',
-                backgroundColor: item.id === value ? 'rgba(0, 0, 0, 0.1)' : '',
+                borderBottom: item.id === categoryIdCookie || item.id === value ? '2px solid #0d99ff' : 'none',
+                backgroundColor: item.id === categoryIdCookie || item.id === value ? 'rgba(0, 0, 0, 0.1)' : '',
               }}
             >
-              <CategoryItem content={item.name} imageLink={item.image} />
+              <CategoryItem
+                content={item.name}
+                imageLink={item.image}
+                imageDescription={item.name}
+              />
             </SwiperSlide>
           );
         })}

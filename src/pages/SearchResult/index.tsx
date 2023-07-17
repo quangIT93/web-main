@@ -19,6 +19,9 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
+import { Cascader, Divider, Typography, Input, Space } from 'antd';
+import { EnvironmentOutlined } from '@ant-design/icons';
+
 import {
   FormControl,
   InputLabel,
@@ -33,7 +36,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography,
+  // Typography,
   Autocomplete,
   Box,
   Chip,
@@ -57,6 +60,7 @@ import bookMarkApi from 'api/bookMarkApi';
 import searchApi from 'api/searchApi';
 import profileApi from 'api/profileApi';
 import locationApi from 'api/locationApi';
+import categoriesApi from 'api/categoriesApi';
 import Footer from '../../components/Footer/Footer';
 
 import moment from 'moment';
@@ -85,11 +89,10 @@ import {
   CaretDownFilled,
 } from '@ant-design/icons';
 
-import { Space, Tooltip } from 'antd';
-
 import './style.scss';
 import { stringify } from 'query-string/base';
 import notificationKeywordApi from 'api/notificationKeyword';
+const { SHOW_CHILD } = Cascader;
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -173,7 +176,6 @@ const NewJobs: React.FC = () => {
   const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   // modal keyword
-  const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
 
   const [selectedProvince, setSelectedProvince] = React.useState<any>(null);
   const [value, setValue] = React.useState<string | number>('');
@@ -205,6 +207,25 @@ const NewJobs: React.FC = () => {
 
   const [oenModalCreateSuccess, setOpenModalCreateSuccess] =
     React.useState(false);
+
+  const [disableLocation, setDisableLocation] = React.useState<Boolean>(false);
+  const [disableCatelory, setDisableCatelory] = React.useState<Boolean>(false);
+  const [locId, setLocId] = React.useState<string[]>([]);
+
+  const [locationOneItem, setLocationOneItem] = React.useState<string>('');
+  const [cateloryOneItem, setCateloryOneItem] = React.useState<number | null>(
+    null,
+  );
+
+  const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
+  const [dataCategories, setDataCategories] = React.useState<any>(null);
+  const [categoriesId, setCategoriesId] = React.useState<string[]>([]);
+
+  // ----------------------------------------------------------------
+
+  const { Text } = Typography;
+  const userProfile = useSelector((state: RootState) => state.profile.profile);
+
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
   const dispatch = useDispatch();
@@ -257,6 +278,23 @@ const NewJobs: React.FC = () => {
 
   React.useEffect(() => {
     allLocation();
+    // getAllLocations()
+    // delete param when back to page
+  }, []);
+
+  const getCategories = async () => {
+    try {
+      const result = await categoriesApi.getAllCategorise();
+      if (result) {
+        setDataCategories(result.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getCategories();
     // getAllLocations()
     // delete param when back to page
   }, []);
@@ -414,6 +452,65 @@ const NewJobs: React.FC = () => {
     setOpenBackdrop(false);
   };
 
+  const onChangeLocation = (value: any) => {
+    // Xử lý giá trị thay đổi
+
+    setDisableLocation(false);
+    const secondValues = value.map((item: any) => item[1]);
+    console.log('value', value);
+    if (
+      secondValues.length <= 1
+      // && listLocation.length <= 3
+    ) {
+      setLocId(secondValues);
+      if (value.length !== 0) {
+        setLocationOneItem(value[0][1]);
+      } else {
+        setLocationOneItem('');
+      }
+      // setListDis(value);
+    }
+    if (value.length > 0) {
+      setDisableLocation(true);
+    }
+  };
+
+  console.log('locationOneItem', locationOneItem);
+  console.log('cateloryOneItem', cateloryOneItem);
+
+  const onChangeCateLory = (value: any) => {
+    setDisable(false);
+    const secondValues = value.map((item: any) => item[1]);
+
+    if (secondValues.length <= 1) {
+      setCategoriesId(secondValues);
+      if (value.length !== 0) {
+        setCateloryOneItem(value[0][1]);
+      } else {
+        setCateloryOneItem(null);
+      }
+    }
+    if (value.length > 0) {
+      setDisable(true);
+    }
+  };
+
+  const DropdownRender = (menus: React.ReactNode) => (
+    <div style={{ width: '100%' }}>
+      <Text className="title-filter_location">Chọn địa điểm</Text>
+      {menus}
+      <Divider style={{ margin: 5 }} />
+      {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+        <Button type="default" onClick={() => {}}>
+          Huỷ
+        </Button>
+        <Button type="primary" onClick={() => {}}>
+          Áp dụng
+        </Button>
+      </div> */}
+    </div>
+  );
+
   const fetchDataProfileUser = async () => {
     try {
       await dispatch(getProfile() as any);
@@ -453,41 +550,6 @@ const NewJobs: React.FC = () => {
     setDistrictId(JSON.parse(e.target.value).district_id);
   };
 
-  console.log('districtId', districtId);
-
-  const renderOptions = () => {
-    return dataAllLocation?.map((item: any, index: number) => (
-      <div key={index}>
-        <ListItemButton onClick={(event) => handleClickProvince(event, index)}>
-          <ListItemText primary={item.province_fullName} />
-          {open[index] ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse
-          in={open[index]}
-          timeout="auto"
-          unmountOnExit
-          sx={{ padding: '0 24px' }}
-        >
-          <RadioGroup
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="controlled-radio-buttons-group"
-            value={JSON.stringify(valueDistrict)}
-            onChange={handleChangeCheckedRadio}
-          >
-            {item.districts.map((v: any, i: number) => (
-              <FormControlLabel
-                key={v.district_id} // Thêm key cho FormControlLabel
-                value={JSON.stringify(v)}
-                control={<Radio />}
-                label={v.district}
-              />
-            ))}
-          </RadioGroup>
-        </Collapse>
-      </div>
-    ));
-  };
-
   // openModal
   const handleShowCreateKeywork = () => setOpenModal(true);
   const handleCloseModalCreateKeyword = () => setOpenModal(false);
@@ -500,10 +562,14 @@ const NewJobs: React.FC = () => {
   const handleSubmitKeyword = async () => {
     try {
       const result = await notificationKeywordApi.createKeywordNotification(
-        valueKeyword,
-        districtId,
+        'web khong ngon',
+        cateloryOneItem,
+        locationOneItem,
       );
       // const result = true;
+      console.log('result', result.data);
+      console.log('result', result);
+
       if (result) {
         setOpenModal(false);
         setOpenModalCreateSuccess(true);
@@ -525,97 +591,6 @@ const NewJobs: React.FC = () => {
   const getPostSearch = async () => {
     try {
       if (dataProfile) {
-        // const result = await searchApi.getSearchByQueryV2(
-        //   QUERY,
-        //   null,
-        //   !dataProfile && !MONEY_TYPE //không có profile và value
-        //     ? 1
-        //     : !dataProfile && MONEY_TYPE //không có profile nhưng có value
-        //     ? MONEY_TYPE
-        //     : dataProfile && !MONEY_TYPE //Có profile nhưng không có value
-        //     ? 1 // Lấy profile
-        //     : dataProfile && MONEY_TYPE // Có profile và value
-        //     ? MONEY_TYPE
-        //     : 1,
-        //   !dataProfile && !IS_WORKING_WEEKEND //không có profile và value
-        //     ? null
-        //     : !dataProfile && IS_WORKING_WEEKEND //không có profile nhưng có value
-        //     ? IS_WORKING_WEEKEND
-        //     : dataProfile && !IS_WORKING_WEEKEND //Có profile nhưng không có value
-        //     ? null // Lấy profile
-        //     : dataProfile && IS_WORKING_WEEKEND // Có profile và value
-        //     ? IS_WORKING_WEEKEND
-        //     : null,
-        //   !dataProfile && !IS_REMOTELY //không có profile và value
-        //     ? null
-        //     : !dataProfile && IS_REMOTELY //không có profile nhưng có value
-        //     ? IS_REMOTELY
-        //     : dataProfile && !IS_REMOTELY //Có profile nhưng không có value
-        //     ? null // Lấy profile
-        //     : dataProfile && IS_REMOTELY // Có profile và value
-        //     ? IS_REMOTELY
-        //     : null,
-        //   null,
-        //   !dataProfile && !SALARY_MIN //không có profile và value
-        //     ? 6000000
-        //     : !dataProfile && SALARY_MIN //không có profile nhưng có value
-        //     ? SALARY_MIN
-        //     : dataProfile && !SALARY_MIN //Có profile nhưng không có value
-        //     ? 6000000 // Lấy profile
-        //     : dataProfile && SALARY_MIN // Có profile và value
-        //     ? SALARY_MIN
-        //     : 6000000,
-        //   !dataProfile && !SALARY_MAX //không có profile và value
-        //     ? 12000000
-        //     : !dataProfile && SALARY_MAX //không có profile nhưng có value
-        //     ? SALARY_MAX
-        //     : dataProfile && !SALARY_MAX //Có profile nhưng không có value
-        //     ? 12000000 // Lấy profile
-        //     : dataProfile && SALARY_MAX // Có profile và value
-        //     ? SALARY_MAX
-        //     : 12000000,
-        //   null,
-        //   null,
-        //   !dataProfile && !JOB_TYPE //không có profile và value
-        //     ? []
-        //     : !dataProfile && JOB_TYPE //không có profile nhưng có value
-        //     ? JOB_TYPE
-        //     : dataProfile && !JOB_TYPE //Có profile nhưng không có value
-        //     ? [] // Lấy profile
-        //     : dataProfile && JOB_TYPE // Có profile và value
-        //     ? JOB_TYPE
-        //     : [],
-        //   !dataProfile && LIST_CATEGORIES_ID.length === 0 //không có profile và value
-        //     ? []
-        //     : !dataProfile && LIST_CATEGORIES_ID //không có profile nhưng có value
-        //     ? LIST_CATEGORIES_ID
-        //     : dataProfile && LIST_CATEGORIES_ID.length === 0 //Có profile nhưng không có value
-        //     ? dataProfile.categories.map(
-        //         (categorie: any) => categorie.child_category_id
-        //       ) // Lấy profile
-        //     : dataProfile && LIST_CATEGORIES_ID // Có profile và value
-        //     ? LIST_CATEGORIES_ID
-        //     : [],
-        //   !dataProfile && !LIST_DIS_ID //không có profile và value
-        //     ? []
-        //     : !dataProfile && LIST_DIS_ID //không có profile nhưng có value
-        //     ? LIST_DIS_ID
-        //     : dataProfile && !LIST_DIS_ID //Có profile nhưng không có value
-        //     ? [] // Lấy profile
-        //     : dataProfile && LIST_DIS_ID // Có profile và value
-        //     ? LIST_DIS_ID
-        //     : [],
-        //   !dataProfile && !SALARY_TYPE //không có profile và value
-        //     ? null
-        //     : !dataProfile && SALARY_TYPE //không có profile nhưng có value
-        //     ? SALARY_TYPE
-        //     : dataProfile && !SALARY_TYPE //Có profile nhưng không có value
-        //     ? null // Lấy profile
-        //     : dataProfile && SALARY_TYPE // Có profile và value
-        //     ? SALARY_TYPE
-        //     : null
-        // )
-
         const result = await searchApi.getSearchByQueryV2(
           QUERY,
           null,
@@ -679,6 +654,8 @@ const NewJobs: React.FC = () => {
   new Promise((resolve, reject) => {
     document.title = dataAllLocation ? titleFirebase : 'web-search';
   });
+
+  const [disable, setDisable] = React.useState(false);
 
   return (
     <>
@@ -773,7 +750,6 @@ const NewJobs: React.FC = () => {
           </Box>
           // )
         }
-
         <Modal
           open={openModal}
           onClose={handleCloseModalCreateKeyword}
@@ -781,120 +757,110 @@ const NewJobs: React.FC = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Thống báo từ khóa
-            </Typography>
+            <p>Thông báo từ khóa</p>
 
-            <TextField
-              type="text"
-              id="districtId"
-              name="districtId"
-              value={valueKeyword}
-              size="small"
-              onChange={handleChangeKeywordInput}
-              sx={{ width: '100%', marginTop: '4px' }}
-              placeholder="Từ khóa"
-              // error={companyError} // Đánh dấu lỗi
+            <Input
+              placeholder="input with clear icon"
+              allowClear
+              size="large"
+              // onChange={onChange}
+              styles={{}}
             />
 
-            <FormControl sx={{ width: '100%', marginTop: '12px' }} size="small">
-              <Select
-                multiple
-                displayEmpty
-                value={[
-                  valueDistrict && valueDistrict?.length !== 0
-                    ? valueDistrict?.district
-                    : '',
-                ]}
-                input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
-                renderValue={(selected) => {
-                  console.log('selected', selected);
-                  console.log('valueDistrict', valueDistrict);
-                  if (selected.length === 0) {
-                    return (
-                      <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>
-                        Quận, Tỉnh/Thành Phố
-                      </p>
-                    );
-                  } else {
-                    return selected[0].length ? (
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          gap: 0.5,
-                        }}
-                      >
-                        {/* {selected.map((value: string, i: number) => (
-                  ))} */}
+            <Cascader
+              multiple
+              maxTagCount="responsive"
+              size="large"
+              placeholder="Chọn địa điểm"
+              inputIcon={<EnvironmentOutlined />}
+              dropdownRender={DropdownRender}
+              // defaultValue={
+              //   listLocation.length !== 0
+              //     ? listLocation
+              //     : listLocation.length === 0 &&
+              //       location.pathname === '/search-results'
+              //     ? []
+              //     : userProfile?.locations?.map((profile: any) => [
+              //         profile.province_id,
+              //         profile.district_id,
+              //       ])
+              // }
+              options={
+                dataAllLocation
+                  ? dataAllLocation.map((dataLocation: any) => ({
+                      value: dataLocation.province_id,
+                      label: dataLocation.province_fullName,
+                      children: dataLocation.districts.map(
+                        (child: { district_id: string; district: string }) => {
+                          var dis = false;
+                          if (disableLocation) {
+                            dis = true;
+                            for (const elem of locId) {
+                              if (elem === child.district_id) {
+                                dis = false;
+                                break;
+                              }
+                            }
+                          }
+                          return {
+                            value: child.district_id,
+                            label: child.district,
+                            disabled: dis,
+                          };
+                        },
+                      ),
+                    }))
+                  : []
+              }
+              onChange={onChangeLocation}
+              changeOnSelect
+              className="inputFilterLocationNav input-filter_nav"
+              showCheckedStrategy={SHOW_CHILD}
+            />
 
-                        {selected ? (
-                          <Chip label={selected[0] !== '' ? selected[0] : ''} />
-                        ) : (
-                          ''
-                        )}
+            {/* 
+            <Cascader>
 
-                        {/* <p>{value}</p> */}
-                      </Box>
-                    ) : (
-                      <i style={{ color: 'rgba(0, 0, 0, 0.35)' }}>
-                        Quận, Tỉnh/Thành Phố
-                      </i>
-                    );
-                  }
-                }}
-                MenuProps={MenuProps}
-              >
-                {renderOptions()}
-              </Select>
-            </FormControl>
+            </Cascader> */}
 
-            <FormControl sx={{ width: '100%', margin: '12px 0' }} size="small">
-              <Select
-                multiple
-                displayEmpty
-                value={['']}
-                input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
-                renderValue={(selected) => {
-                  console.log('selected', selected);
-                  console.log('valueDistrict', valueDistrict);
-                  if (selected.length === 0) {
-                    return (
-                      <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>
-                        Quận, Tỉnh/Thành Phố
-                      </p>
-                    );
-                  } else {
-                    return selected[0].length ? (
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          gap: 0.5,
-                        }}
-                      >
-                        {/* {selected.map((value: string, i: number) => (
-                  ))} */}
+            <Cascader
+              dropdownRender={DropdownRender}
+              options={
+                dataCategories
+                  ? dataCategories.map((parentCategory: any) => ({
+                      value: parentCategory.parent_category_id,
+                      label: parentCategory.parent_category,
+                      children: parentCategory.childs.map((child: any) => {
+                        var dis = false;
+                        //check id child  when disable = true
+                        if (disable) {
+                          dis = true;
+                          for (const elem of categoriesId) {
+                            if (elem === child.id) {
+                              dis = false;
+                              break;
+                            }
+                          }
+                        }
+                        return {
+                          value: child.id,
+                          label: child.name,
+                          disabled: dis,
+                        };
+                      }),
+                    }))
+                  : []
+              }
+              onChange={onChangeCateLory}
+              multiple
+              maxTagCount="responsive"
+              size="large"
+              className="inputCategories input-filter_nav"
+              showCheckedStrategy={SHOW_CHILD}
+              style={{ width: '100%', borderRadius: '2px' }}
+              placeholder="Chọn danh mục ngành nghề"
+            />
 
-                        {selected ? (
-                          <Chip label={selected[0] !== '' ? selected[0] : ''} />
-                        ) : (
-                          ''
-                        )}
-
-                        {/* <p>{value}</p> */}
-                      </Box>
-                    ) : (
-                      <i style={{ color: 'rgba(0, 0, 0, 0.35)' }}>
-                        Danh mục nghề nghiệp
-                      </i>
-                    );
-                  }
-                }}
-              >
-                {renderOptions()}
-              </Select>
-            </FormControl>
             <div
               style={{
                 display: 'flex',
@@ -947,14 +913,12 @@ const NewJobs: React.FC = () => {
           onClose={handleCloseModalCreateSuccess}
         >
           <Box sx={styleSuccess}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Hoàn thành
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <p>Hoàn thành</p>
+            <p>
               Bạn đã thành công thêm từ khoá, có thể các thông báo sẽ làm phiền,
               bạn có thể tắt thông báo trong mục Thông báo từ khoá. Bạn có muốn
               chuyển đến mục thông báo từ khoá không?
-            </Typography>
+            </p>
             <div
               style={{
                 display: 'flex',
