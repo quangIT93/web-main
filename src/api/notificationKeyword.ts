@@ -21,12 +21,12 @@ const notificationKeywordApi = {
       })
   },
 
-  createKeywordNotification: (keyword: string, district_id: string) => {
+  createKeywordNotification: (keyword: string, category_id: number | null,  district_id: string,) => {
     const URL = `/v1/notification/keyword`
 
     return axiosClient.post(URL, {
       keyword: keyword,
-      catelory_id: 5,
+      category_id: category_id,
       category_status: 1,
       district_id: district_id,
       district_status: 1

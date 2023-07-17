@@ -6,7 +6,7 @@ const Logo: React.FC = () => {
   return (
     <Link to="/home" reloadDocument>
       <div className="logo">
-        <img src="/logoHijob.png" width={40} height={40} />
+        <img src="/logo-hijob.png" width={40} height={40} />
       </div>
     </Link>
   );
