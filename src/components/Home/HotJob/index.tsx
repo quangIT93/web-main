@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { AxiosResponse } from 'axios';
 // import api
 import postApi from 'api/postApi';
+import hotJobApi from 'api/hotJobApi';
 
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -49,77 +50,41 @@ const HotJob: React.FC = () => {
     const [openBackdrop, setOpenBackdrop] = React.useState(false);
     const [index, setIndex] = React.useState(0);
     const [listTheme, setListTheme] = React.useState<ItemTheme[]>([]);;
+    const [hotjob, setHotJob] = React.useState<any>([]);;
 
     const [addressIdCookie, setAddressIdCookie] = React.useState(0);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
     const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
-    // get post by theme id when click theme item
 
-    // React.useEffect(() => {
-    //     setListTheme(...listTheme,)
-    // },[])
-
-    // Set the cookie
-    function setCookie(name: string, value: string, days: number) {
-        let expires = "";
-        if (days) {
-            let date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
-
-    // Get the cookie
-    function getCookie(name: string): string | null {
-        let nameEQ = name + "=";
-        let ca = document.cookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1, c.length);
-            }
-            if (c.indexOf(nameEQ) == 0) {
-                return c.substring(nameEQ.length, c.length);
-            }
-        }
-        return null;
-    }
-
-    const handleChange = async (
-        event: React.SyntheticEvent,
-        newValue: number,
-    ) => {
-        try {
-            setValue(newValue);
-            setIndex(newValue);
-            setOpenBackdrop(!openBackdrop);
-            const categoryId = searchParams.get('categories-id');
-            if (categoryId) {
-                setSearchParams({
-                    'theme-id': `${newValue}`,
-                    'categories-id': `${Number(categoryId) == 1 ? 'all' : categoryId}`,
-                });
-            } else {
-                setSearchParams({ 'theme-id': `${newValue}` });
-            }
-
-            const result = await postApi.getPostByThemeId(newValue, 19, null);
-            if (result) {
-                setPostByTheme(result);
-                // set backdrop
-                setOpenBackdrop(false);
-            }
-        } catch (error) {
-            console.log(error);
-        }
+    const handleClickItem = (event: any, id: number, type: number) => {
+        window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`);
     };
+
     // handle close backdrop
     const handleClose = () => {
         setOpenBackdrop(false);
     };
+
+    const getHotJob = async () => {
+        try {
+            const result = await hotJobApi.getHotJobTheme();
+            if (result) {
+                setHotJob(result.data);
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
+    React.useEffect(() => {
+        getHotJob()
+    }, [])
+
+    console.log(hotjob);
+
     // const getPostNewestByThemeId = async () => {
     //     try {
     //         const themeId = searchParams.get(`theme-id`)
@@ -198,19 +163,17 @@ const HotJob: React.FC = () => {
                 modules={[Mousewheel, Navigation, Pagination]}
                 className="mySwiper"
             >
-                {dataImageHotJob?.map((item: any, index: number) => {
+                {hotjob?.map((item: any, index: number) => {
                     // console.log("id: ", item.id);
                     return (
                         <SwiperSlide
                             key={index}
-                            onClick={(event) => {
-                                handleChange(event, item.id);
-                            }}
+                            onClick={(event) => { handleClickItem(event, item.id, item.type) }}
                         >
                             <div className="slide-item">
                                 <img
-                                    src={item.img}
-                                    alt="amhr bị lỗi"
+                                    src={item.image}
+                                    alt="anh bị lỗi"
                                     style={{
                                         width: '160px',
                                         height: '160px',
@@ -224,7 +187,7 @@ const HotJob: React.FC = () => {
                                     </div>
                                     <div className="div-info-themes-item_right">
                                         <BagIcon />
-                                        <h6>{`${item.author} `}</h6>
+                                        <h6>{`${item.count} `}</h6>
                                     </div>
                                 </div>
                             </div>

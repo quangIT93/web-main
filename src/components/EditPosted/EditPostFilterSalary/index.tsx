@@ -23,8 +23,8 @@ interface IEditPostFilterSalary {
 const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
   const { setEditDataPosted, editDataPosted, salaryType, dataOld } = props
 
-  const [valueSalaryMax, setValueSalaryMax] = useState(dataOld.salary_max)
-  const [valueSalaryMin, setValueSalaryMin] = useState(dataOld.salary_min)
+  const [valueSalaryMax, setValueSalaryMax] = useState(dataOld?.salary_max)
+  const [valueSalaryMin, setValueSalaryMin] = useState(dataOld?.salary_min)
 
   const handleChangesalaryMin = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -66,8 +66,8 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
     } else {
       setEditDataPosted((preValue: any) => ({
         ...preValue,
-        salaryMax: valueSalaryMax.toString().replace(',', ''),
-        salaryMin: valueSalaryMin.toString().replace(',', ''),
+        salaryMax: valueSalaryMax?.toString()?.replace(',', ''),
+        salaryMin: valueSalaryMin?.toString()?.replace(',', ''),
       }))
     }
   }, [salaryType])
