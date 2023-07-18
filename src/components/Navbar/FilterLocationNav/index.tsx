@@ -97,7 +97,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
     }
   };
 
-  if (userProfile) {
+  if (userProfile || dataLocations) {
     return (
       <>
         <Cascader

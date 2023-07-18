@@ -40,6 +40,8 @@ import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Mousewheel, Pagination } from 'swiper';
 
+import { Skeleton } from 'antd';
+
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
 // interface item category
@@ -78,6 +80,7 @@ const CategoryCarousel: React.FC = () => {
 
   const [value, setValue] = React.useState(0);
   const [categoryIdCookie, setCategorieIdCookie] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
   // const positionRef = React.useRef(0)
 
   // const {height} = height
@@ -96,18 +99,18 @@ const CategoryCarousel: React.FC = () => {
 
   // Set the cookie
   function setCookie(name: string, value: string, days: number) {
-    let expires = "";
+    let expires = '';
     if (days) {
       let date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = "; expires=" + date.toUTCString();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = '; expires=' + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    document.cookie = name + '=' + (value || '') + expires + '; path=/';
   }
 
   // Get the cookie
   function getCookie(name: string): string | null {
-    let nameEQ = name + "=";
+    let nameEQ = name + '=';
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
@@ -129,16 +132,16 @@ const CategoryCarousel: React.FC = () => {
 
       if (newValue === undefined || newValue === 1) {
         const slide = document.querySelector('.swiper-slide');
-        slide?.classList.add('swiper-slide-clicked')
+        slide?.classList.add('swiper-slide-clicked');
       } else {
         const slide = document.querySelector('.swiper-slide');
-        slide?.classList.remove('swiper-slide-clicked')
+        slide?.classList.remove('swiper-slide-clicked');
       }
 
       let userSelected: UserSelected = {
         userSelectedId: newValue,
       };
-      setCookie("userSelected", JSON.stringify(userSelected), 365);
+      setCookie('userSelected', JSON.stringify(userSelected), 365);
 
       console.log(newValue);
 
@@ -228,11 +231,14 @@ const CategoryCarousel: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   React.useEffect(() => {
     getAllParentCategories();
-    let storedSettings = JSON.parse(getCookie("userSelected") || "{}") as UserSelected;
+    setLoading(true);
+    let storedSettings = JSON.parse(
+      getCookie('userSelected') || '{}',
+    ) as UserSelected;
 
     setTimeout(async () => {
       if (storedSettings.userSelectedId !== 1) {
@@ -244,18 +250,21 @@ const CategoryCarousel: React.FC = () => {
       }
 
       getNewstJobBycookie(storedSettings.userSelectedId);
-    }, 500)
+      setLoading(false);
+    }, 1000);
   }, []);
 
   React.useEffect(() => {
     // Retrieve the user's settings from cookies
-    let storedSettings = JSON.parse(getCookie("userSelected") || "{}") as UserSelected;
+    let storedSettings = JSON.parse(
+      getCookie('userSelected') || '{}',
+    ) as UserSelected;
     setCategorieIdCookie(storedSettings.userSelectedId);
     if (storedSettings.userSelectedId !== 1) {
       const slide = document.querySelector('.swiper-slide');
       slide?.classList.remove('swiper-slide-clicked');
     }
-  }, [value])
+  }, [value]);
 
   React.useEffect(() => {
     setRefCatelory(listRef.current ? listRef : null);
@@ -367,7 +376,86 @@ const CategoryCarousel: React.FC = () => {
       // }}
       className="tabs"
     >
-      {/* <Tabs
+      <Skeleton loading={loading} active>
+        <Swiper
+          // rewind={true}
+          // slidesPerView={14}
+          // spaceBetween={10}
+          navigation={true}
+          mousewheel={true}
+          breakpoints={{
+            320: {
+              slidesPerView: 3,
+            },
+            640: {
+              slidesPerView: 4,
+            },
+            768: {
+              slidesPerView: 7,
+            },
+            868: {
+              slidesPerView: 7,
+            },
+            963: {
+              slidesPerView: 8,
+            },
+            1024: {
+              slidesPerView: 9,
+            },
+            1440: {
+              slidesPerView: 9,
+            },
+            1920: {
+              slidesPerView: 14,
+            },
+            2560: {
+              slidesPerView: 14,
+            },
+          }}
+          modules={[Mousewheel, Navigation, Pagination]}
+          className="mySwiper"
+        >
+          {categories?.data.map((item: CategoryItem, index: number) => {
+            // console.log("id: ", item.id);
+            return (
+              <SwiperSlide
+                key={index}
+                onClick={(event) => {
+                  handleChange(event, item.id);
+                }}
+                style={{
+                  borderBottom:
+                    item.id === categoryIdCookie || item.id === value
+                      ? '2px solid #0d99ff'
+                      : 'none',
+                  backgroundColor:
+                    item.id === categoryIdCookie || item.id === value
+                      ? 'rgba(0, 0, 0, 0.1)'
+                      : '',
+                }}
+              >
+                <CategoryItem
+                  content={item.name}
+                  imageLink={item.image}
+                  imageDescription={item.name}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            backgroundColor: 'transparent',
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
+          open={openBackdrop}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        {/* <Tabs
         value={value === 0 ? categories?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
@@ -399,79 +487,7 @@ const CategoryCarousel: React.FC = () => {
           );
         })}
       </Tabs> */}
-
-      <Swiper
-        // rewind={true}
-        // slidesPerView={14}
-        // spaceBetween={10}
-        navigation={true}
-        mousewheel={true}
-        breakpoints={{
-          320: {
-            slidesPerView: 3,
-          },
-          640: {
-            slidesPerView: 4,
-          },
-          768: {
-            slidesPerView: 9,
-          },
-          868: {
-            slidesPerView: 9,
-          },
-          963: {
-            slidesPerView: 10,
-          },
-          1024: {
-            slidesPerView: 13,
-          },
-          1440: {
-            slidesPerView: 12,
-          },
-          1920: {
-            slidesPerView: 14,
-          },
-          2560: {
-            slidesPerView: 14,
-          },
-        }}
-        modules={[Mousewheel, Navigation, Pagination]}
-        className="mySwiper"
-      >
-        {categories?.data.map((item: CategoryItem, index: number) => {
-          // console.log("id: ", item.id);
-          return (
-            <SwiperSlide
-              key={index}
-              onClick={(event) => {
-                handleChange(event, item.id);
-              }}
-              style={{
-                borderBottom: item.id === categoryIdCookie || item.id === value ? '2px solid #0d99ff' : 'none',
-                backgroundColor: item.id === categoryIdCookie || item.id === value ? 'rgba(0, 0, 0, 0.1)' : '',
-              }}
-            >
-              <CategoryItem
-                content={item.name}
-                imageLink={item.image}
-                imageDescription={item.name}
-              />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-
-      <Backdrop
-        sx={{
-          color: '#0d99ff ',
-          backgroundColor: 'transparent',
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-        open={openBackdrop}
-        onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      </Skeleton>
     </Box>
   );
 };

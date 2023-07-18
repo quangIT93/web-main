@@ -194,26 +194,26 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         mousewheel={true}
         breakpoints={{
           320: {
-            slidesPerView: 2,
+            slidesPerView: 3,
             spaceBetween: 24
           },
           640: {
-            slidesPerView: 3,
+            slidesPerView: 5,
             spaceBetween: 24
           },
           768: {
             slidesPerView: 4,
             spaceBetween: 24
           },
-          1024: {
+          769: {
             slidesPerView: 5,
             spaceBetween: 24
           },
-          1440: {
-            slidesPerView: 5,
+          1025: {
+            slidesPerView: 6,
             spaceBetween: 24
           },
-          1920: {
+          1723: {
             slidesPerView: 8,
             spaceBetween: 24
           },

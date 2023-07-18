@@ -12,6 +12,8 @@ import { NewJobs } from '#components';
 import { ThemesJob } from '#components';
 // @ts-ignore
 import { CategoryCarousel } from '#components';
+// @ts-ignore
+import { SuggestJob } from '#components';
 
 import HotJob from '#components/Home/HotJob';
 
@@ -54,6 +56,7 @@ const Home: React.FC = () => {
         <NewJobs />
         <HotJob />
         <ThemesJob />
+        <SuggestJob />
       </div>
       <RollTop />
       <Footer />

@@ -90,7 +90,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
     }
   };
 
-  if (userProfile) {
+  if (userProfile || dataCategories) {
     return (
       <>
         <Cascader
@@ -123,13 +123,14 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           }
           onChange={onChange}
           defaultValue={
-            listCate.length !== 0
+            listCate?.length !== 0
               ? listCate
-              : listCate.length === 0 && location.pathname === '/search-results'
+              : listCate?.length === 0 &&
+                location.pathname === '/search-results'
               ? []
-              : userProfile.categories.map((profile: any) => [
-                  profile.parent_category_id,
-                  profile.child_category_id,
+              : userProfile?.categories.map((profile: any) => [
+                  profile?.parent_category_id,
+                  profile?.child_category_id,
                 ])
           }
           multiple
