@@ -62,7 +62,14 @@ const HotJob: React.FC = () => {
     id: number,
     type: number,
     total: number,
+    api: string,
+    query: any
   ) => {
+    const queyObj = query[0]
+    let keyOfQuery = Object.keys(queyObj)[0]
+    let url = api.replace("/api", "") + "?" + keyOfQuery + "=" + queyObj[keyOfQuery];
+
+    localStorage.setItem("hotjobApi", url);
     window.open(
       `/hotjobs?hotjob-id=${id}&hotjob-type=${type}&hotjob-total=${total}`,
     );
@@ -174,7 +181,7 @@ const HotJob: React.FC = () => {
             <SwiperSlide
               key={index}
               onClick={(event) => {
-                handleClickItem(event, item.id, item.type, item.count);
+                handleClickItem(event, item.id, item.type, item.count, item.api, item.query);
               }}
             >
               <div className="slide-item">
