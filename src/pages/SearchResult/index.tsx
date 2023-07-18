@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import Card from '@mui/material/Card';
 
@@ -90,6 +90,9 @@ import {
   CaretDownFilled,
 } from '@ant-design/icons';
 
+// import context
+import { HomeValueContext } from 'context/HomeValueContextProvider';
+
 import './style.scss';
 import { stringify } from 'query-string/base';
 import notificationKeywordApi from 'api/notificationKeyword';
@@ -158,14 +161,14 @@ const styleSuccess = {
 };
 
 const NewJobs: React.FC = () => {
-  // const {
-  //   openCollapse,
-  //   setOpenCollapse,
-  //   height,
-  //   setHeight,
-
-  //   setOpenModalLogin,
-  // } = useHomeState()
+  const {
+    setOpenNotificate,
+    openNotificate,
+  }: // setRefNav,
+  {
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+  } = useContext(HomeValueContext);
 
   const [page, setPage] = React.useState(2);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
@@ -458,7 +461,7 @@ const NewJobs: React.FC = () => {
 
     setDisableLocation(false);
     const secondValues = value.map((item: any) => item[1]);
-    console.log('value', value);
+
     if (
       secondValues.length <= 1
       // && listLocation.length <= 3
@@ -476,23 +479,20 @@ const NewJobs: React.FC = () => {
     }
   };
 
-  console.log('locationOneItem', locationOneItem);
-  console.log('cateloryOneItem', cateloryOneItem);
-
   const onChangeCateLory = (value: any) => {
-    setDisable(false);
+    setDisableCatelory(false);
     const secondValues = value.map((item: any) => item[1]);
-
+    console.log('value', value);
     if (secondValues.length <= 1) {
       setCategoriesId(secondValues);
       if (value.length !== 0) {
-        setCateloryOneItem(value[0][1]);
+        setCateloryOneItem(value[0][0]);
       } else {
         setCateloryOneItem(null);
       }
     }
     if (value.length > 0) {
-      setDisable(true);
+      setDisableCatelory(true);
     }
   };
 
@@ -564,20 +564,17 @@ const NewJobs: React.FC = () => {
   const handleCloseModalCreateKeyword = () => setOpenModal(false);
 
   const handleChangeKeywordInput = (e: any) => {
-    console.log('value', e.target.value);
     setValueKeyword(e.target.value);
   };
 
   const handleSubmitKeyword = async () => {
     try {
       const result = await notificationKeywordApi.createKeywordNotification(
-        'web khong ngon',
+        QUERY,
         cateloryOneItem,
         locationOneItem,
       );
       // const result = true;
-      console.log('result', result.data);
-      console.log('result', result);
 
       if (result) {
         setOpenModal(false);
@@ -595,6 +592,7 @@ const NewJobs: React.FC = () => {
 
   const handleOpenNotification = () => {
     setOpenModalCreateSuccess(false);
+    setOpenNotificate(true);
   };
 
   const getPostSearch = async () => {
@@ -666,7 +664,17 @@ const NewJobs: React.FC = () => {
 
   const [disable, setDisable] = React.useState(false);
 
-  console.log('search Data', searchData);
+  useEffect(() => {
+    if (!openModal) {
+      setLocId([]);
+      setLocationOneItem('');
+      setDisableLocation(false);
+      //
+      setCategoriesId([]);
+      setCateloryOneItem(null);
+      setDisableCatelory(false);
+    }
+  }, [openModal]);
 
   return (
     <>
@@ -813,7 +821,6 @@ const NewJobs: React.FC = () => {
                       children: dataLocation.districts.map(
                         (child: { district_id: string; district: string }) => {
                           var dis = false;
-                          console.log('locId', locId);
                           // setLocId([]);
                           if (disableLocation) {
                             dis = true;
@@ -858,7 +865,7 @@ const NewJobs: React.FC = () => {
                       children: parentCategory.childs.map((child: any) => {
                         var dis = false;
                         //check id child  when disable = true
-                        if (disable) {
+                        if (disableCatelory) {
                           dis = true;
                           for (const elem of categoriesId) {
                             if (elem === child.id) {
@@ -942,7 +949,7 @@ const NewJobs: React.FC = () => {
           onClose={handleCloseModalCreateSuccess}
         >
           <Box sx={styleSuccess}>
-            <p>Hoàn thành</p>
+            <p className="title-modal_createKeySuccess">Hoàn thành</p>
             <p>
               Bạn đã thành công thêm từ khoá, có thể các thông báo sẽ làm phiền,
               bạn có thể tắt thông báo trong mục Thông báo từ khoá. Bạn có muốn
