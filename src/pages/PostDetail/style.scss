@@ -15,6 +15,18 @@
   // }
   padding-top: 110px;
 
+  .nav {
+    &.css-1lmzauf {
+      @media screen and (min-width: 1280px) {
+        padding: 0 20%;
+      }
+    }
+
+    .div-nav-right {
+      flex: 2
+    }
+  }
+
   @include breakpoint(tablet) {
     padding-top: 80px;
   }
@@ -55,14 +67,14 @@
   .detail-container {
     display: flex;
     justify-content: center;
-    padding: 0 180px 70px;
+    padding: 0 20% 70px;
 
     @include breakpoint(destop) {
       padding: 0 24px 70px;
     }
 
     @media screen and (max-width: 1440px) and (min-width: 1280px) {
-      padding: 0 180px 70px;
+      padding: 0 20% 70px;
     }
 
     @include breakpoint(largeTablet) {
@@ -392,47 +404,52 @@
             flex-direction: column;
             justify-content: space-between;
 
-            .job-title-details {
-              display: flex;
-              flex-direction: column;
-              height: 90%;
-              justify-content: space-around;
+            .job-title-container {
+              height: 430px;
+              overflow-y: scroll;
 
-              @include breakpoint(tablet) {
-                height: 95%;
-                justify-content: space-evenly;
-                max-height: 600px;
-              }
-
-              @include breakpoint(mobile) {
-                height: auto;
-              }
-
-              .div-detail-row {
+              .job-title-details {
                 display: flex;
-                flex-direction: row;
-                margin-top: 10px;
+                flex-direction: column;
+                // height: 90%;
+                justify-content: space-around;
 
-                p {
-                  color: #575757;
-                  font-size: 15px;
-                  margin-bottom: 5px;
+                @include breakpoint(tablet) {
+                  height: 95%;
+                  justify-content: space-evenly;
+                  max-height: 600px;
                 }
 
-                h5 {
-                  color: #001424;
-                  font-size: 14px;
+                @include breakpoint(mobile) {
+                  height: auto;
+                }
 
-                  @include breakpoint(tablet) {
-                    font-size: 14px;
+                .div-detail-row {
+                  display: flex;
+                  flex-direction: row;
+                  margin-top: 10px;
+
+                  p {
+                    color: #575757;
+                    font-size: 15px;
+                    margin-bottom: 5px;
                   }
 
-                  @include breakpoint(largeTablet) {
+                  h5 {
+                    color: #001424;
                     font-size: 14px;
-                  }
 
-                  @include breakpoint(destop) {
-                    font-size: 14px;
+                    @include breakpoint(tablet) {
+                      font-size: 14px;
+                    }
+
+                    @include breakpoint(largeTablet) {
+                      font-size: 14px;
+                    }
+
+                    @include breakpoint(destop) {
+                      font-size: 14px;
+                    }
                   }
                 }
               }
@@ -551,6 +568,15 @@
                 color: white;
                 gap: 16px;
                 cursor: pointer;
+                transition: 0.2s linear all;
+
+                &:hover {
+                  transform: scale(1.1);
+                }
+
+                &:active {
+                  transform: scale(0.9);
+                }
 
                 .icon {
                   display: flex;

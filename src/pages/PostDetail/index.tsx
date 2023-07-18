@@ -270,13 +270,21 @@ const Detail: React.FC = () => {
   };
 
   const handlePreviousPost = () => {
-    const prevId = POST_ID - 1;
-    setPrevIdPost(prevId);
+    setSearchParams({
+      'post-id': `${POST_ID - 1}`,
+    });
+  }
+
+  const handleNextPost = () => {
+    setSearchParams({
+      'post-id': `${POST_ID + 1}`,
+    });
   }
 
   React.useEffect(() => {
     getPostById();
-  }, [bookmarked, prevIdPost]);
+  }, [bookmarked, POST_ID]);
+
   // set size for Breadcrumb
   React.useEffect(() => {
     function handleWindowResize() {
@@ -483,7 +491,7 @@ const Detail: React.FC = () => {
   const handleClickSearch = () => {
     const companyName = post?.data.company_name;
     const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
-    window.location.replace(searchUrl);
+    window.open(searchUrl, "_self");
   };
 
   const handleClickShowMap = () => {
@@ -630,109 +638,111 @@ const Detail: React.FC = () => {
                         </TabList>
                       </Box>
                       <TabPanel value="1">
-                        <div className="job-title-details">
-                          <div className="div-detail-row">
-                            <EnvironmentOutlined style={{ color: '#575757' }} />
-                            <div style={{ marginLeft: '10px' }}>
-                              {' '}
-                              <p>Địa chỉ</p>
-                              <h5>{post?.data.address}</h5>
+                        <div className="job-title-container">
+                          <div className="job-title-details">
+                            <div className="div-detail-row">
+                              <EnvironmentOutlined style={{ color: '#575757' }} />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Địa chỉ</p>
+                                <h5>{post?.data.address}</h5>
+                              </div>
                             </div>
-                          </div>
-                          <div className="div-detail-row">
-                            <SlidersOutlined style={{ color: '#575757' }} />
-                            <div style={{ marginLeft: '10px' }}>
-                              {' '}
-                              <p>Loại công viêc</p>
-                              <h5>{post?.data.job_type.job_type_name}</h5>
+                            <div className="div-detail-row">
+                              <SlidersOutlined style={{ color: '#575757' }} />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Loại công viêc</p>
+                                <h5>{post?.data.job_type.job_type_name}</h5>
+                              </div>
                             </div>
-                          </div>
-                          <div className="div-detail-row">
-                            <ClockCircleOutlined style={{ color: '#575757' }} />
-                            <div style={{ marginLeft: '10px' }}>
-                              {' '}
-                              <p>Giờ làm việc</p>
-                              <h5>
-                                {moment(new Date(post?.data.start_time)).format(
-                                  'HH:mm',
-                                )}{' '}
-                                -{' '}
-                                {moment(new Date(post?.data.end_time)).format(
-                                  'HH:mm',
-                                )}
-                              </h5>
-                            </div>
-                          </div>
-                          <div className="div-detail-row">
-                            <CalendarOutlined style={{ color: '#575757' }} />
-                            <div style={{ marginLeft: '10px' }}>
-                              {' '}
-                              <p>Làm việc cuối tuần</p>
-                              <h5>
-                                {post?.data.is_working_weekend === 0
-                                  ? 'Không làm việc cuối tuần'
-                                  : 'Có làm việc cuối tuần'}
-                              </h5>
-                            </div>
-                          </div>
-                          <div className="div-detail-row">
-                            <DollarOutlined style={{ color: '#575757' }} />
-                            <div style={{ marginLeft: '10px' }}>
-                              {' '}
-                              <p>Mức lương</p>
-                              {post?.data.salary_type_id === 6 ? (
-                                <h5>{post?.data.salary_type}</h5>
-                              ) : (
+                            <div className="div-detail-row">
+                              <ClockCircleOutlined style={{ color: '#575757' }} />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Giờ làm việc</p>
                                 <h5>
-                                  {new Intl.NumberFormat('en-US').format(
-                                    post?.data.salary_min,
-                                  ) + ` ${post?.data.money_type_text}`}{' '}
+                                  {moment(new Date(post?.data.start_time)).format(
+                                    'HH:mm',
+                                  )}{' '}
                                   -{' '}
-                                  {new Intl.NumberFormat('en-US').format(
-                                    post?.data.salary_max,
-                                  ) + ` ${post?.data.money_type_text}`}
+                                  {moment(new Date(post?.data.end_time)).format(
+                                    'HH:mm',
+                                  )}
                                 </h5>
-                              )}
+                              </div>
                             </div>
-                          </div>
-                          <div className="div-detail-row">
-                            <CreditCardOutlined style={{ color: '#575757' }} />
-                            <div style={{ marginLeft: '10px' }}>
-                              {' '}
-                              <p>Danh mục</p>
-                              {post?.data.categories.map(
-                                (item: ItemCategories, index: null | number) => (
-                                  <h5 key={index}>
-                                    {item.parent_category}/{item.child_category}
+                            <div className="div-detail-row">
+                              <CalendarOutlined style={{ color: '#575757' }} />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Làm việc cuối tuần</p>
+                                <h5>
+                                  {post?.data.is_working_weekend === 0
+                                    ? 'Không làm việc cuối tuần'
+                                    : 'Có làm việc cuối tuần'}
+                                </h5>
+                              </div>
+                            </div>
+                            <div className="div-detail-row">
+                              <DollarOutlined style={{ color: '#575757' }} />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Mức lương</p>
+                                {post?.data.salary_type_id === 6 ? (
+                                  <h5>{post?.data.salary_type}</h5>
+                                ) : (
+                                  <h5>
+                                    {new Intl.NumberFormat('en-US').format(
+                                      post?.data.salary_min,
+                                    ) + ` ${post?.data.money_type_text}`}{' '}
+                                    -{' '}
+                                    {new Intl.NumberFormat('en-US').format(
+                                      post?.data.salary_max,
+                                    ) + ` ${post?.data.money_type_text}`}
                                   </h5>
-                                ),
-                              )}
+                                )}
+                              </div>
                             </div>
-                          </div>
-                          <div className="div-detail-row">
-                            <DesktopOutlined style={{ color: '#575757' }} />
-                            <div style={{ marginLeft: '10px' }}>
-                              {' '}
-                              <p>Làm việc từ xa</p>
-                              <h5>
-                                {post?.data.is_remotely === 0
-                                  ? 'Không làm việc từ xa'
-                                  : 'Có làm việc từ xa'}
-                              </h5>
+                            <div className="div-detail-row">
+                              <CreditCardOutlined style={{ color: '#575757' }} />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Danh mục</p>
+                                {post?.data.categories.map(
+                                  (item: ItemCategories, index: null | number) => (
+                                    <h5 key={index}>
+                                      {item.parent_category}/{item.child_category}
+                                    </h5>
+                                  ),
+                                )}
+                              </div>
                             </div>
-                          </div>
-                          <div className="div-detail-row">
-                            <ClockCircleOutlined style={{ color: '#575757' }} />
-                            <div style={{ marginLeft: '10px' }}>
-                              {' '}
-                              <p>Thời gian hết hạn</p>
-                              <h5>
-                                {post?.data.expired_date
-                                  ? moment(new Date(post?.data.expired_date)).format(
-                                    'DD/MM/yyyy',
-                                  )
-                                  : 'Không thời hạn'}
-                              </h5>
+                            <div className="div-detail-row">
+                              <DesktopOutlined style={{ color: '#575757' }} />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Làm việc từ xa</p>
+                                <h5>
+                                  {post?.data.is_remotely === 0
+                                    ? 'Không làm việc từ xa'
+                                    : 'Có làm việc từ xa'}
+                                </h5>
+                              </div>
+                            </div>
+                            <div className="div-detail-row">
+                              <ClockCircleOutlined style={{ color: '#575757' }} />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Thời gian hết hạn</p>
+                                <h5>
+                                  {post?.data.expired_date
+                                    ? moment(new Date(post?.data.expired_date)).format(
+                                      'DD/MM/yyyy',
+                                    )
+                                    : 'Không thời hạn'}
+                                </h5>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -781,7 +791,7 @@ const Detail: React.FC = () => {
                         </div>
                         <span>Previous job</span>
                       </div>
-                      <div className="description-button_next">
+                      <div className="description-button_next" onClick={handleNextPost}>
                         <span>Next job</span>
                         <div className="icon">
                           <BackIcon width={20} height={20} />

@@ -229,7 +229,7 @@ const NewJobs: React.FC = () => {
 
   const JOB_TYPE =
     Number(searchParams.get('job-type')) &&
-    Number(searchParams.get('job-type'))! !== 5
+      Number(searchParams.get('job-type'))! !== 5
       ? [Number(searchParams.get('job-type'))]
       : [];
 
@@ -739,7 +739,7 @@ const NewJobs: React.FC = () => {
                 <Stack
                   spacing={2}
                   sx={{
-                    display: 'flex',
+                    display: searchData?.is_over ? 'none' : 'flex',
                     alignItems: 'center',
                     margin: '24px 0',
                   }}
@@ -766,7 +766,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -794,7 +794,7 @@ const NewJobs: React.FC = () => {
               onChange={handleChangeKeywordInput}
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Từ khóa"
-              // error={companyError} // Đánh dấu lỗi
+            // error={companyError} // Đánh dấu lỗi
             />
 
             <FormControl sx={{ width: '100%', marginTop: '12px' }} size="small">

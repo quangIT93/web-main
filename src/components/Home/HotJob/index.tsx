@@ -58,8 +58,8 @@ const HotJob: React.FC = () => {
     const dispatch = useDispatch();
     const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
 
-    const handleClickItem = (event: any, id: number, type: number) => {
-        window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`);
+    const handleClickItem = (event: any, id: number, type: number, total: number) => {
+        window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}&hotjob-total=${total}`);
     };
 
     // handle close backdrop
@@ -168,7 +168,7 @@ const HotJob: React.FC = () => {
                     return (
                         <SwiperSlide
                             key={index}
-                            onClick={(event) => { handleClickItem(event, item.id, item.type) }}
+                            onClick={(event) => { handleClickItem(event, item.id, item.type, item.count) }}
                         >
                             <div className="slide-item">
                                 <img
