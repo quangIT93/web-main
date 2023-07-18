@@ -742,7 +742,7 @@ const NewJobs: React.FC = () => {
                 <Stack
                   spacing={2}
                   sx={{
-                    display: 'flex',
+                    display: searchData?.is_over ? 'none' : 'flex',
                     alignItems: 'center',
                     margin: '24px 0',
                   }}
@@ -793,6 +793,7 @@ const NewJobs: React.FC = () => {
               style={{ marginTop: '12px' }}
               value={QUERY ? QUERY : ''}
               disabled
+              // error={companyError} // Đánh dấu lỗi
             />
 
             <Cascader

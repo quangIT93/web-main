@@ -35,8 +35,6 @@ import { FireIcon, BagIcon } from '#components/Icons';
 
 import { dataImageHotJob } from './dataImagehotJob';
 
-import { Skeleton } from 'antd';
-
 import './style.scss';
 
 interface ItemTheme {
@@ -59,39 +57,21 @@ const HotJob: React.FC = () => {
   const dispatch = useDispatch();
   const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
 
-  const [loading, setLoading] = React.useState(false);
-  // get post by theme id when click theme item
+  const handleClickItem = (
+    event: any,
+    id: number,
+    type: number,
+    total: number,
+  ) => {
+    window.open(
+      `/hotjobs?hotjob-id=${id}&hotjob-type=${type}&hotjob-total=${total}`,
+    );
+  };
 
-  // React.useEffect(() => {
-  //     setListTheme(...listTheme,)
-  // },[])
-
-  // Set the cookie
-  function setCookie(name: string, value: string, days: number) {
-    let expires = '';
-    if (days) {
-      let date = new Date();
-      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-      expires = '; expires=' + date.toUTCString();
-    }
-    document.cookie = name + '=' + (value || '') + expires + '; path=/';
-  }
-
-  // Get the cookie
-  function getCookie(name: string): string | null {
-    let nameEQ = name + '=';
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1, c.length);
-      }
-      if (c.indexOf(nameEQ) == 0) {
-        return c.substring(nameEQ.length, c.length);
-      }
-    }
-    return null;
-  }
+  // handle close backdrop
+  const handleClose = () => {
+    setOpenBackdrop(false);
+  };
 
   const getHotJob = async () => {
     try {
@@ -108,13 +88,8 @@ const HotJob: React.FC = () => {
     getHotJob();
   }, []);
 
-  const handleClickItem = (event: any, id: number, type: number) => {
-    window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`);
-  };
-  // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  console.log(hotjob);
+
   // const getPostNewestByThemeId = async () => {
   //     try {
   //         const themeId = searchParams.get(`theme-id`)
@@ -140,6 +115,8 @@ const HotJob: React.FC = () => {
   //     getPostNewestByThemeId();
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
+
+  console.log(index);
 
   return (
     <Box
@@ -197,7 +174,7 @@ const HotJob: React.FC = () => {
             <SwiperSlide
               key={index}
               onClick={(event) => {
-                handleClickItem(event, item.id, item.type);
+                handleClickItem(event, item.id, item.type, item.count);
               }}
             >
               <div className="slide-item">
