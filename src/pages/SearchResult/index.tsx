@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+
 import Card from '@mui/material/Card';
 
 import Modal from '@mui/material/Modal';
@@ -495,7 +496,7 @@ const NewJobs: React.FC = () => {
     }
   };
 
-  const DropdownRender = (menus: React.ReactNode) => (
+  const DropdownRenderLocation = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
       <Text className="title-filter_location">Chọn địa điểm</Text>
       {menus}
@@ -508,6 +509,14 @@ const NewJobs: React.FC = () => {
           Áp dụng
         </Button>
       </div> */}
+    </div>
+  );
+
+  const DropdownRenderCategory = (menus: React.ReactNode) => (
+    <div style={{ width: '100%' }}>
+      <Text className="title-filter_location">Chọn danh mục nghề nghiệp</Text>
+      {menus}
+      <Divider style={{ margin: 5 }} />
     </div>
   );
 
@@ -534,21 +543,21 @@ const NewJobs: React.FC = () => {
     }
   }, [dataAllLocation]);
 
-  const handleClickProvince = (event: any, index: number) => {
-    event.stopPropagation();
+  // const handleClickProvince = (event: any, index: number) => {
+  //   event.stopPropagation();
 
-    const newOpen = open.map((value: boolean, i: number) =>
-      i === index ? !value : false,
-    );
-    console.log('newOpen', newOpen);
-    setOpen(newOpen);
-  };
+  //   const newOpen = open.map((value: boolean, i: number) =>
+  //     i === index ? !value : false,
+  //   );
+  //   console.log('newOpen', newOpen);
+  //   setOpen(newOpen);
+  // };
 
-  const handleChangeCheckedRadio = (e: any) => {
-    console.log('value', JSON.parse(e.target.value));
-    setValueDistrict(JSON.parse(e.target.value));
-    setDistrictId(JSON.parse(e.target.value).district_id);
-  };
+  // const handleChangeCheckedRadio = (e: any) => {
+  //   console.log('value', JSON.parse(e.target.value));
+  //   setValueDistrict(JSON.parse(e.target.value));
+  //   setDistrictId(JSON.parse(e.target.value).district_id);
+  // };
 
   // openModal
   const handleShowCreateKeywork = () => setOpenModal(true);
@@ -657,6 +666,8 @@ const NewJobs: React.FC = () => {
 
   const [disable, setDisable] = React.useState(false);
 
+  console.log('search Data', searchData);
+
   return (
     <>
       <Navbar />
@@ -698,9 +709,16 @@ const NewJobs: React.FC = () => {
                 }}
                 onClick={handleShowCreateKeywork}
               >
-                <CreateKeywordIconSmall />
-
-                <span style={{ marginLeft: '4px' }}>Tạo thông tin từ khóa</span>
+                {searchData?.posts.length !== 0 && QUERY ? (
+                  <>
+                    <CreateKeywordIconSmall />
+                    <span style={{ marginLeft: '4px' }}>
+                      Tạo thông báo từ khóa
+                    </span>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
 
@@ -757,14 +775,16 @@ const NewJobs: React.FC = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <p>Thông báo từ khóa</p>
-
+            <p className="title-modal_createKey">Thông báo từ khóa</p>
             <Input
-              placeholder="input with clear icon"
+              placeholder="Từ khóa"
               allowClear
               size="large"
               // onChange={onChange}
-              styles={{}}
+              type=""
+              style={{ marginTop: '12px' }}
+              value={QUERY ? QUERY : ''}
+              disabled
             />
 
             <Cascader
@@ -773,7 +793,7 @@ const NewJobs: React.FC = () => {
               size="large"
               placeholder="Chọn địa điểm"
               inputIcon={<EnvironmentOutlined />}
-              dropdownRender={DropdownRender}
+              dropdownRender={DropdownRenderLocation}
               // defaultValue={
               //   listLocation.length !== 0
               //     ? listLocation
@@ -793,6 +813,8 @@ const NewJobs: React.FC = () => {
                       children: dataLocation.districts.map(
                         (child: { district_id: string; district: string }) => {
                           var dis = false;
+                          console.log('locId', locId);
+                          // setLocId([]);
                           if (disableLocation) {
                             dis = true;
                             for (const elem of locId) {
@@ -816,15 +838,18 @@ const NewJobs: React.FC = () => {
               changeOnSelect
               className="inputFilterLocationNav input-filter_nav"
               showCheckedStrategy={SHOW_CHILD}
+              style={{
+                width: '100%',
+                borderRadius: '2px',
+                fontStyle: 'italic',
+              }}
             />
-
             {/* 
             <Cascader>
 
             </Cascader> */}
-
             <Cascader
-              dropdownRender={DropdownRender}
+              dropdownRender={DropdownRenderCategory}
               options={
                 dataCategories
                   ? dataCategories.map((parentCategory: any) => ({
@@ -857,15 +882,19 @@ const NewJobs: React.FC = () => {
               size="large"
               className="inputCategories input-filter_nav"
               showCheckedStrategy={SHOW_CHILD}
-              style={{ width: '100%', borderRadius: '2px' }}
+              style={{
+                width: '100%',
+                borderRadius: '2px',
+                fontStyle: 'italic',
+              }}
               placeholder="Chọn danh mục ngành nghề"
             />
-
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
+                marginTop: '12px',
               }}
             >
               <Button
