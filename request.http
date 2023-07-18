@@ -77,3 +77,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxL
 GET https://aiworks.vn/api/v1/history/recruiter/23894/applications/673
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZjdkNTUxLTZjYjUtNDZiMy1hNjgyLWNhMTU1NmM2NmZlYyIsInJvbGUiOjAsImlhdCI6MTY4NjAyMzE5NywiZXhwIjoxNjg2MDI2Nzk3fQ.Z86YtoLf8lEoZNqA-DWnkzsNn7y-sHwbFmq0ecmUTQo
+
+###
+GET https://neoworks.vn/api/v3/posts/topic/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhkMTk4MTYzLTlkNjMtNDdkNy04ODM1LTUzYTJmYjlmZGNhMiIsInJvbGUiOjAsImlhdCI6MTY4OTY1MjM4OCwiZXhwIjoxNjg5NjU1OTg4fQ.Ve6hKZONzu3aNj8l-PVqpQnFAfz2UUgGN_nV8OER5Mw

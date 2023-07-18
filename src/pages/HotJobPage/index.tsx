@@ -178,6 +178,7 @@ const styleSuccess = {
 const HotJobpage: React.FC = () => {
   const [hotjob, setHotJob] = React.useState<any>([]);
   const [hotJobType, setHotJobType] = React.useState<any>([]);
+  const [hotJobTotal, setHotJobTotal] = React.useState<any>([]);
   const [page, setPage] = React.useState(2);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [searchData, setSearchData] = React.useState<any>();
@@ -282,8 +283,10 @@ const HotJobpage: React.FC = () => {
         Number(searchParams.get('hotjob-id')),
       );
       const hotjobtype = Number(searchParams.get('hotjob-type'));
+      const hotjobtotal = Number(searchParams.get('hotjob-total'));
       setHotJob(hotjob.data);
       setHotJobType(hotjobtype);
+      setHotJobTotal(hotjobtotal);
       console.log('result', hotjob);
       console.log('type', hotjobtype);
     } catch (error) {
@@ -416,7 +419,7 @@ const HotJobpage: React.FC = () => {
                     : ''}
                 </h3>
                 <h4>
-                  {hotjob ? hotjob?.length : 0}
+                  {hotJobTotal ? hotJobTotal : 0}
                   <span> kết quả</span>
                 </h4>
               </div>
