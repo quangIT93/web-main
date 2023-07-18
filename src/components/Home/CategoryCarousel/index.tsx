@@ -414,19 +414,19 @@ const CategoryCarousel: React.FC = () => {
             slidesPerView: 4,
           },
           768: {
-            slidesPerView: 7,
+            slidesPerView: 9,
           },
           868: {
-            slidesPerView: 7,
+            slidesPerView: 9,
           },
           963: {
-            slidesPerView: 8,
+            slidesPerView: 10,
           },
           1024: {
-            slidesPerView: 9,
+            slidesPerView: 13,
           },
           1440: {
-            slidesPerView: 9,
+            slidesPerView: 12,
           },
           1920: {
             slidesPerView: 14,
