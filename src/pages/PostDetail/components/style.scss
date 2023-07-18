@@ -9,19 +9,6 @@
   width: 100%;
   background: none !important;
 
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 99%;
-    height: 1px;
-    background: rgb(170, 170, 170);
-  }
-
-  &:last-child::after {
-    height: 0px;
-  }
-
   &:hover {
     background-color: #cccccc;
   }
