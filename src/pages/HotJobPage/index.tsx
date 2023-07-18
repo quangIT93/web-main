@@ -365,125 +365,6 @@ const HotJobpage: React.FC = () => {
         }
     }, [dataAllLocation]);
 
-    const handleClickProvince = (event: any, index: number) => {
-        event.stopPropagation();
-
-        const newOpen = open.map((value: boolean, i: number) =>
-            i === index ? !value : false,
-        );
-        console.log('newOpen', newOpen);
-        setOpen(newOpen);
-    };
-
-    const handleChangeCheckedRadio = (e: any) => {
-        console.log('value', JSON.parse(e.target.value));
-        setValueDistrict(JSON.parse(e.target.value));
-        setDistrictId(JSON.parse(e.target.value).district_id);
-    };
-
-    console.log('districtId', districtId);
-
-    const renderOptions = () => {
-        return dataAllLocation?.map((item: any, index: number) => (
-            <div key={index}>
-                <ListItemButton onClick={(event) => handleClickProvince(event, index)}>
-                    <ListItemText primary={item.province_fullName} />
-                    {open[index] ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse
-                    in={open[index]}
-                    timeout="auto"
-                    unmountOnExit
-                    sx={{ padding: '0 24px' }}
-                >
-                    <RadioGroup
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={JSON.stringify(valueDistrict)}
-                        onChange={handleChangeCheckedRadio}
-                    >
-                        {item.districts.map((v: any, i: number) => (
-                            <FormControlLabel
-                                key={v.district_id} // Thêm key cho FormControlLabel
-                                value={JSON.stringify(v)}
-                                control={<Radio />}
-                                label={v.district}
-                            />
-                        ))}
-                    </RadioGroup>
-                </Collapse>
-            </div>
-        ));
-    };
-
-    // openModal
-    const handleShowCreateKeywork = () => setOpenModal(true);
-    const handleCloseModalCreateKeyword = () => setOpenModal(false);
-
-    const handleChangeKeywordInput = (e: any) => {
-        console.log('value', e.target.value);
-        setValueKeyword(e.target.value);
-    };
-
-    const handleSubmitKeyword = async () => {
-        try {
-            const result = await notificationKeywordApi.createKeywordNotification(
-                valueKeyword,
-                districtId,
-            );
-            // const result = true;
-            if (result) {
-                setOpenModal(false);
-                setOpenModalCreateSuccess(true);
-            }
-        } catch (error) {
-            console.log('error', error);
-        }
-    };
-
-    // open Modal success
-    const handleCloseModalCreateSuccess = () => {
-        setOpenModalCreateSuccess(false);
-    };
-
-    const handleOpenNotification = () => {
-        setOpenModalCreateSuccess(false);
-    };
-
-    const getPostSearch = async () => {
-        try {
-            if (dataProfile) {
-
-                const result = await searchApi.getSearchByQueryV2(
-                    QUERY,
-                    null,
-                    MONEY_TYPE,
-                    IS_WORKING_WEEKEND,
-                    IS_REMOTELY,
-                    null,
-                    SALARY_MIN,
-                    SALARY_MAX,
-                    null,
-                    null,
-                    JOB_TYPE,
-                    LIST_CATEGORIES_ID,
-                    LIST_DIS_ID,
-                    SALARY_TYPE,
-                );
-                if (result) {
-                    setSearchData(result.data);
-                }
-            }
-        } catch (error) {
-            setOpenBackdrop(false);
-            console.log(error);
-        }
-    };
-
-    React.useEffect(() => {
-        getPostSearch();
-    }, [dataProfile]);
-
     // title
 
     const [titleFirebase, setTitleFirebase] = React.useState<string>('');
@@ -518,23 +399,21 @@ const HotJobpage: React.FC = () => {
                             }}
                         >
                             <div
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                Việc làm{' '}
-                                <h4 style={{ margin: '0 10px' }}>
+                                className="hot-job-title-container">
+                                <h3>
+                                    Việc làm{' '}
+                                    {
+                                        hotJobType === 1
+                                            ? "Remote" : hotJobType === 3
+                                                ? "Influencer" : hotJobType === 4
+                                                    ? "Short time" : hotJobType === 5
+                                                        ? "Job today" : hotJobType === 6 ? "Freelancer" : ""
+                                    }
+                                </h3>
+                                <h4>
                                     {hotjob ? hotjob?.length : 0}
+                                    <span>{' '}kết quả</span>
                                 </h4>
-                                {' '}
-                                {
-                                    hotJobType === 1
-                                        ? "Remote" : hotJobType === 3
-                                            ? "Influencer" : hotJobType === 4
-                                                ? "Short time" : hotJobType === 5
-                                                    ? "Job today" : hotJobType === 6 ? "Freelancer" : ""
-                                }
                             </div>
                         </div>
 
@@ -586,76 +465,6 @@ const HotJobpage: React.FC = () => {
                     </Box>
                     // )
                 }
-
-                <Modal
-                    open={openModal}
-                    onClose={handleCloseModalCreateKeyword}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Thống báo từ khóa
-                        </Typography>
-
-                        <TextField
-                            type="text"
-                            id="districtId"
-                            name="districtId"
-                            value={valueKeyword}
-                            size="small"
-                            onChange={handleChangeKeywordInput}
-                            sx={{ width: '100%', marginTop: '4px' }}
-                            placeholder="Từ khóa"
-                        // error={companyError} // Đánh dấu lỗi
-                        />
-
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-evenly',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Button
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    borderRadius: '20px',
-                                    width: '153px',
-                                    padding: '12px 16px',
-                                }}
-                                onClick={handleSubmitKeyword}
-                                variant="contained"
-                            >
-                                Áp dụng
-                            </Button>
-                            <Button
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    borderRadius: '20px',
-                                    width: '153px',
-                                    padding: '12px 16px',
-                                    // border: '1px solid transparent',
-                                    color: 'red',
-                                    border: '1px solid red',
-                                    // background: 'red',
-
-                                    '&:hover': {
-                                        border: '1px solid red',
-                                        color: '#ffffff',
-                                        background: '#c60404',
-                                    },
-                                }}
-                                onClick={() => setOpenModal(false)}
-                                variant="outlined"
-                            >
-                                Hủy
-                            </Button>
-                        </div>
-                    </Box>
-                </Modal>
             </div>
             <ShowNotificativeSave />
             <ShowCancleSave />

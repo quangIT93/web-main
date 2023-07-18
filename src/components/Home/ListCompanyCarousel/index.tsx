@@ -195,24 +195,31 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         breakpoints={{
           320: {
             slidesPerView: 2,
+            spaceBetween: 24
           },
           640: {
             slidesPerView: 3,
+            spaceBetween: 24
           },
           768: {
             slidesPerView: 4,
+            spaceBetween: 24
           },
           1024: {
             slidesPerView: 5,
+            spaceBetween: 24
           },
           1440: {
-            slidesPerView: 6,
+            slidesPerView: 5,
+            spaceBetween: 24
           },
           1920: {
             slidesPerView: 8,
+            spaceBetween: 24
           },
           2560: {
-            slidesPerView: 8,
+            slidesPerView: 10,
+            spaceBetween: 24
           }
         }}
         modules={[Mousewheel, Navigation, Pagination]}
@@ -228,7 +235,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
               }}
               style={{
                 borderBottom: item.id === value ? '2px solid #0d99ff' : 'none',
-                backgroundColor: item.id === value ? 'rgba(0, 0, 0, 0.1)' : '',
               }}
             >
               <div className="slide-item">
@@ -236,8 +242,8 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                   src={item.image}
                   alt="amhr bị lỗi"
                   style={{
-                    width: '160px',
-                    height: '160px',
+                    width: '100%',
+                    height: '100%',
                     borderRadius: '10px',
                     objectFit: 'cover',
                   }}

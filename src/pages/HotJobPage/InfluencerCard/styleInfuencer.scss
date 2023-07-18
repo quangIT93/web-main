@@ -1,8 +1,11 @@
 .influencer-card {
+    padding: 0 !important;
+
     .div-influencer-card-top {
         .MuiImageListItem-img {
             width: 100% !important;
             height: 300px !important;
+            border-radius: 8px;
         }
     }
 
@@ -10,6 +13,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin: 12px;
 
         .div-influencer-card-bottom_left {}
 
@@ -17,7 +21,8 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-self: space-between;
+            justify-content: space-between;
+            align-items: flex-end;
         }
     }
 }

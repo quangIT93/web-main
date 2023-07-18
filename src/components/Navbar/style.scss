@@ -824,6 +824,7 @@
       margin-top: 12px;
       border-radius: 20px;
       width: 308px;
+      z-index: 10;
 
       .sub-login_info {
         margin-left: -10px;
@@ -887,6 +888,7 @@
     }
   }
 }
+
 .wrap-btn_notice {
   position: relative;
 

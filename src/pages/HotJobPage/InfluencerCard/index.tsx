@@ -103,21 +103,10 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
                             srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                             alt={props.item.title}
                             loading="lazy"
-                            style={{
-                                width: '100% !important',
-                                height: '300px !important',
-                                borderRadius: 8,
-                            }}
                         />
                     </ImageListItem>
                 </div>
-                <div className="div-influencer-card-bottom"
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                    }}
-                >
+                <div className="div-influencer-card-bottom">
                     <div className="div-influencer-card-bottom_left">
                         {' '}
                         <Tooltip placement="top" title={props.item.title}>
@@ -225,13 +214,6 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
                         </div>
                     </div>
                     <Space
-                        style={{
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            alignItems: 'flex-end'
-                        }}
                         direction="vertical"
                         align="center"
                         className="div-influencer-card-bottom_right"

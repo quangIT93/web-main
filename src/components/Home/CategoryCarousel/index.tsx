@@ -212,16 +212,21 @@ const CategoryCarousel: React.FC = () => {
   };
 
   const getNewstJobBycookie = async (userSelectedId: any) => {
-    if (userSelectedId) {
-      setSearchParams({
-        'categories-id': `${userSelectedId == 1 ? 'all' : userSelectedId}`,
-      })
-      let result = await postApi.getPostNewest(Number(userSelectedId), null, null, 19);
-
-
+    try {
+      setOpenBackdrop(true);
+      const themeId = userSelectedId;
+      var result;
+      if (themeId == 1) {
+        result = await postApi.getPostNewest(null, null, null, 19);
+      } else {
+        result = await postApi.getPostNewest(Number(themeId), null, null, 19);
+      }
       if (result) {
         setPostNewest(result);
+        setOpenBackdrop(false);
       }
+    } catch (error) {
+      console.error(error);
     }
   }
 

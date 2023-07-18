@@ -132,19 +132,19 @@ const HotJob: React.FC = () => {
                 mousewheel={true}
                 breakpoints={{
                     320: {
-                        slidesPerView: 3,
+                        slidesPerView: 1,
                         spaceBetween: 24
                     },
                     640: {
-                        slidesPerView: 3,
+                        slidesPerView: 2,
                         spaceBetween: 24
                     },
                     768: {
-                        slidesPerView: 3,
+                        slidesPerView: 2,
                         spaceBetween: 24
                     },
                     1024: {
-                        slidesPerView: 3,
+                        slidesPerView: 2,
                         spaceBetween: 24
                     },
                     1440: {
@@ -152,11 +152,11 @@ const HotJob: React.FC = () => {
                         spaceBetween: 24
                     },
                     1920: {
-                        slidesPerView: 3,
+                        slidesPerView: 4,
                         spaceBetween: 24
                     },
                     2560: {
-                        slidesPerView: 3,
+                        slidesPerView: 4,
                         spaceBetween: 24
                     }
                 }}
@@ -187,7 +187,7 @@ const HotJob: React.FC = () => {
                                     </div>
                                     <div className="div-info-themes-item_right">
                                         <BagIcon />
-                                        <h6>{`${item.count} `}</h6>
+                                        <h6>{`${item.count}`}</h6>
                                     </div>
                                 </div>
                             </div>
