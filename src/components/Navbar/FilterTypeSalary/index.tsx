@@ -10,6 +10,7 @@ import {
   ListCateIcon,
   ListJobIcon,
   LocationIcon,
+  ClockDetailPostIcon,
 } from '#components/Icons';
 
 import './style.scss';

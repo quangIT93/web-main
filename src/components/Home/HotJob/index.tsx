@@ -63,6 +63,25 @@ const HotJob: React.FC = () => {
     type: number,
     total: number,
   ) => {
+    const handleClickItem = (
+      event: any,
+      id: number,
+      type: number,
+      total: number,
+      api: string,
+      query: any,
+    ) => {
+      const queyObj = query[0];
+      let keyOfQuery = Object.keys(queyObj)[0];
+      let url =
+        api.replace('/api', '') + '?' + keyOfQuery + '=' + queyObj[keyOfQuery];
+
+      localStorage.setItem('hotjobApi', url);
+      window.open(
+        `/hotjobs?hotjob-id=${id}&hotjob-type=${type}&hotjob-total=${total}`,
+      );
+    };
+
     window.open(
       `/hotjobs?hotjob-id=${id}&hotjob-type=${type}&hotjob-total=${total}`,
     );

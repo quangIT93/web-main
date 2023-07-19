@@ -8,6 +8,7 @@ import {
   ListCateIcon,
   ListJobIcon,
   LocationIcon,
+  ClockDetailPostIcon,
 } from '#components/Icons';
 //@ts-ignore
 import 'intl';
