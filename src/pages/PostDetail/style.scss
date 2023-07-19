@@ -550,55 +550,69 @@
             width: 100%;
             border-radius: 10px;
 
-            .description-buttons {
+            .div-description-mo-bottom {
               display: flex;
-              align-items: center;
-              justify-content: space-between;
-              margin-top: 24px;
+              flex-direction: column;
+              gap: 12px;
 
-              .description-button_previous,
-              .description-button_next {
+              .description-buttons {
                 display: flex;
                 align-items: center;
-                width: 200px;
-                height: 40px;
-                background-color: #000;
-                border-radius: 8px;
-                padding: 8px 12px;
-                color: white;
-                gap: 16px;
-                cursor: pointer;
-                transition: 0.2s linear all;
+                justify-content: space-between;
+                margin-top: 24px;
 
-                &:hover {
-                  transform: scale(1.1);
-                }
-
-                &:active {
-                  transform: scale(0.9);
-                }
-
-                .icon {
+                .description-button_previous,
+                .description-button_next {
                   display: flex;
                   align-items: center;
-                  justify-content: center;
-                  height: 24px;
-                  width: 24px;
-                  border-radius: 4px;
-                  background-color: white;
+                  width: 200px;
+                  height: 40px;
+                  border-radius: 8px;
+                  color: black;
+                  gap: 12px;
+                  cursor: pointer;
+                  transition: 0.2s linear all;
+
+                  &:hover {
+                    transform: scale(1.1);
+                  }
+
+                  &:active {
+                    transform: scale(0.9);
+                  }
+
+                  .icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 24px;
+                    width: 24px;
+                    border-radius: 4px;
+                    background-color: black;
+                  }
+
+                  span {
+                    font-size: 16px;
+                    font-weight: 700;
+                  }
                 }
 
-                span {
-                  font-size: 16px;
-                  font-weight: 700;
+                .description-button_next {
+                  justify-content: flex-end;
+
+                  .icon {
+                    transform: rotate(180deg);
+                  }
                 }
               }
 
-              .description-button_next {
-                justify-content: flex-end;
+              .description-post {
+                .anotherPost-container {
 
-                .icon {
-                  transform: rotate(180deg);
+                  .anotherPost-content {
+                    display: flex;
+                    gap: 12px;
+                  }
                 }
               }
             }

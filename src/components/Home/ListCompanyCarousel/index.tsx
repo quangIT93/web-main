@@ -192,36 +192,38 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       <Swiper
         navigation={true}
         mousewheel={true}
-        breakpoints={{
-          320: {
-            slidesPerView: 3,
-            spaceBetween: 24
-          },
-          640: {
-            slidesPerView: 5,
-            spaceBetween: 24
-          },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 24
-          },
-          769: {
-            slidesPerView: 5,
-            spaceBetween: 24
-          },
-          1025: {
-            slidesPerView: 6,
-            spaceBetween: 24
-          },
-          1723: {
-            slidesPerView: 8,
-            spaceBetween: 24
-          },
-          2560: {
-            slidesPerView: 10,
-            spaceBetween: 24
-          }
-        }}
+        spaceBetween={24}
+        slidesPerView="auto"
+        // breakpoints={{
+        //   320: {
+        //     slidesPerView: 3,
+        //     spaceBetween: 24
+        //   },
+        //   640: {
+        //     slidesPerView: 5,
+        //     spaceBetween: 24
+        //   },
+        //   768: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 24
+        //   },
+        //   769: {
+        //     slidesPerView: 5,
+        //     spaceBetween: 24
+        //   },
+        //   1025: {
+        //     slidesPerView: 6,
+        //     spaceBetween: 24
+        //   },
+        //   1723: {
+        //     slidesPerView: 8,
+        //     spaceBetween: 24
+        //   },
+        //   2560: {
+        //     slidesPerView: 10,
+        //     spaceBetween: 24
+        //   }
+        // }}
         modules={[Mousewheel, Navigation, Pagination]}
         className="mySwiper"
       >
