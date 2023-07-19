@@ -265,7 +265,7 @@ const BreadcrumbsCpn: React.FC = () => {
       className="bread-crumb-container"
       spacing={2}
       sx={{
-        marginTop: '237px',
+        marginTop: '192px',
         // marginTop: navTouchCatelory ? '170px' : '24px',
         // position: 'relative',
         position: 'fixed',
@@ -282,7 +282,7 @@ const BreadcrumbsCpn: React.FC = () => {
       <Breadcrumbs separator="" aria-label="breadcrumb">
         {breadcrumbs}
       </Breadcrumbs>
-      <Stack
+      {/* <Stack
         spacing={2}
         sx={{
           marginTop: '238px',
@@ -353,7 +353,7 @@ const BreadcrumbsCpn: React.FC = () => {
             </button>
           </div>
         </Collapse>
-      </Stack>
+      </Stack> */}
     </Stack>
   )
 }
