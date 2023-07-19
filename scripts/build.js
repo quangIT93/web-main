@@ -6,7 +6,7 @@ process.env.NODE_ENV = 'production'
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
-// terminate the Node.js process with a non-zero exit code.
+// terminate the Node.js process with a non-zero exit code
 process.on('unhandledRejection', (err) => {
   throw err
 })
@@ -69,7 +69,21 @@ checkBrowsers(paths.appPath, isInteractive)
   .then(
     ({ stats, previousFileSizes, warnings }) => {
       if (warnings.length) {
-
+        console.log(chalk.yellow('Compiled with warnings.\n'))
+        console.log(warnings.join('\n\n'))
+        console.log(
+          '\nSearch for the ' +
+          chalk.underline(chalk.yellow('keywords')) +
+          ' to learn more about each warning.'
+        )
+        console.log(
+          'To ignore, add ' +
+          chalk.cyan('// eslint-disable-next-line') +
+          ' to the line before.\n'
+        )
+      } else {
+        console.log(chalk.green('Compiled successfully.\n'))
+      }
       printFileSizesAfterBuild(
         stats,
         previousFileSizes,
@@ -167,7 +181,7 @@ function build(previousFileSizes) {
           console.log(
             chalk.yellow(
               '\nTreating warnings as errors because process.env.CI = true.\n' +
-                'Most CI servers set it automatically.\n'
+              'Most CI servers set it automatically.\n'
             )
           )
           return reject(new Error(filteredWarnings.join('\n\n')))
