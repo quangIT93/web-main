@@ -141,7 +141,7 @@ const ThemesJob: React.FC = () => {
   const getPostByThemeId = async () => {
     try {
       const result = await themeApi.getThemesEnable();
-      console.log('result', result);
+
       if (result) {
         setListThem(result);
 

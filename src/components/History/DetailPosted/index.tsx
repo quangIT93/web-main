@@ -117,8 +117,6 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     }
   };
 
-  console.log(dataCandidates?.applications);
-
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
