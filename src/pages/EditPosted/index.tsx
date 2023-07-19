@@ -25,10 +25,12 @@ import EditDescription from '#components/EditPosted/EditDescription';
 import EditPostTypeSalary from '#components/EditPosted/EditPostTypeSalary';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 
+import NotFound from 'pages/NotFound';
 import './style.scss';
 
 // inport Api
 import postApi from 'api/postApi';
+import historyRecruiter from 'api/historyRecruiter';
 // import { ConsoleSqlOutlined } from '@ant-design/icons'
 
 export interface FormValues {
@@ -102,6 +104,8 @@ const EditPosted = () => {
     deletedImages: [],
   });
 
+  const [dataPostAccount, SetDataPostAccount] = React.useState<any>([]);
+
   const [openModalEditPost, setOpenModalEditPost] = React.useState(false);
 
   const postId = parseInt(searchParams.get('postId') ?? '');
@@ -151,7 +155,11 @@ const EditPosted = () => {
     try {
       const result = await postApi.getPostbyId(postId);
       if (result) {
-        setDataPostById(result.data);
+        dataPostAccount?.map((value: any) => {
+          if (value.post_id === postId) {
+            setDataPostById(result.data);
+          }
+        });
       }
     } catch (error) {
       console.error(error);
@@ -166,6 +174,21 @@ const EditPosted = () => {
         setLoading(false);
       }
     });
+  }, [dataPostAccount]);
+
+  const getAllPostAccount = async () => {
+    try {
+      const result = await historyRecruiter.getAllPosted(0, 20, 0);
+      if (result) {
+        SetDataPostAccount(result.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getAllPostAccount();
   }, []);
 
   const handleSubmit = (
@@ -332,112 +355,129 @@ const EditPosted = () => {
     }
   };
 
-  return (
-    <div className="edit-posted">
-      {contextHolder}
-      <Navbar />
-      <div className="edit-posted_main">
-        <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
-        <Skeleton loading={loading} active>
-          <form action="">
-            <EditPostJobCompany
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-            />
-
-            <EditPostAddress
-              dataPostById={dataPostById}
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-            />
-
-            <EditPostImage
-              editDataPosted={memoizedEditDataPosted}
-              setEditDataPosted={setEditDataPosted}
-              dataPosted={dataPostById?.images}
-            />
-
-            <EditPostTypeJob
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-            />
-
-            <EditPostPeriodDate
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-            />
-            {editDataPosted?.isDatePeriod === 1 ? (
-              <EditRecruitmentTime
+  if (dataPostById) {
+    return (
+      <div className="edit-posted">
+        {contextHolder}
+        <Navbar />
+        <div className="edit-posted_main">
+          <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
+          <Skeleton loading={loading} active>
+            <form action="">
+              <EditPostJobCompany
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
               />
-            ) : (
-              <></>
-            )}
-            {editDataPosted?.startTime ? (
-              <EditStyleWork
+
+              <EditPostAddress
+                dataPostById={dataPostById}
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
               />
-            ) : (
-              <></>
-            )}
 
-            <EditPostTime
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-            />
-            <EditPostCategoryId
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-              dataPost={dataPostById?.categories}
-            />
+              <EditPostImage
+                editDataPosted={memoizedEditDataPosted}
+                setEditDataPosted={setEditDataPosted}
+                dataPosted={dataPostById?.images}
+              />
 
-            <EditSalaryType
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-            />
+              <EditPostTypeJob
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={memoizedEditDataPosted}
+              />
 
-            <EditPostTypeSalary
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-              salaryType={editDataPosted?.salaryType}
-            />
+              <EditPostPeriodDate
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={memoizedEditDataPosted}
+              />
+              {editDataPosted?.isDatePeriod === 1 ? (
+                <EditRecruitmentTime
+                  setEditDataPosted={setEditDataPosted}
+                  editDataPosted={memoizedEditDataPosted}
+                />
+              ) : (
+                <></>
+              )}
+              {editDataPosted?.startTime ? (
+                <EditStyleWork
+                  setEditDataPosted={setEditDataPosted}
+                  editDataPosted={memoizedEditDataPosted}
+                />
+              ) : (
+                <></>
+              )}
 
-            <EditPostFilterSalary
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-              salaryType={editDataPosted?.salaryType}
-              dataOld={dataPostById}
-            />
+              <EditPostTime
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={memoizedEditDataPosted}
+              />
+              <EditPostCategoryId
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={memoizedEditDataPosted}
+                dataPost={dataPostById?.categories}
+              />
 
-            <EditPostNumberPhone
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-            />
+              <EditSalaryType
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={memoizedEditDataPosted}
+              />
 
-            <EditDescription
-              setEditDataPosted={setEditDataPosted}
-              editDataPosted={memoizedEditDataPosted}
-            />
+              <EditPostTypeSalary
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={memoizedEditDataPosted}
+                salaryType={editDataPosted?.salaryType}
+              />
 
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="btn-edit_submitForm"
-            >
-              Lưu chỉnh sửa
-            </button>
-          </form>
-        </Skeleton>
+              <EditPostFilterSalary
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={memoizedEditDataPosted}
+                salaryType={editDataPosted?.salaryType}
+                dataOld={dataPostById}
+              />
+
+              <EditPostNumberPhone
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={memoizedEditDataPosted}
+              />
+
+              <EditDescription
+                setEditDataPosted={setEditDataPosted}
+                editDataPosted={memoizedEditDataPosted}
+              />
+
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className="btn-edit_submitForm"
+              >
+                Lưu chỉnh sửa
+              </button>
+            </form>
+          </Skeleton>
+        </div>
+        <ModalEditSuccess
+          openModalEditPost={openModalEditPost}
+          setOpenModalEditPost={setOpenModalEditPost}
+        />
+        <Footer />
       </div>
-      <ModalEditSuccess
-        openModalEditPost={openModalEditPost}
-        setOpenModalEditPost={setOpenModalEditPost}
-      />
-      <Footer />
-    </div>
-  );
+    );
+  } else {
+    return (
+      <>
+        <Skeleton loading={loading} active>
+          <NotFound />
+        </Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+      </>
+    );
+  }
 };
 
 export default EditPosted;

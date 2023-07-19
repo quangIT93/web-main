@@ -296,6 +296,8 @@ const CategoryCarousel: React.FC = () => {
     }
   };
 
+  console.log('category id: ', value);
+
   // scroll
   return (
     <Box
