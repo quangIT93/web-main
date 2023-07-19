@@ -88,8 +88,6 @@ const HotJob: React.FC = () => {
     getHotJob();
   }, []);
 
-  console.log(hotjob);
-
   // const getPostNewestByThemeId = async () => {
   //     try {
   //         const themeId = searchParams.get(`theme-id`)

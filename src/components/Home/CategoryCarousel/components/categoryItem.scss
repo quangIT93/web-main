@@ -1,18 +1,35 @@
 @import '../../../../scss/mixins';
 
-.test {
+.category-item-container {
   display: flex;
-  align-items: center;
+  position: relative;
+  width: fit-content;
+  align-items: flex-start;
   flex-direction: column;
   text-align: center;
 
-  .img-category {
-    height: 45px !important;
-    width: 45px !important;
+  .border-selected {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+  }
 
-    @include breakpoint(mobile) {
+  .category-item-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+
+    .category-item-image {
       height: 30px !important;
       width: 30px !important;
+
+      @include breakpoint(mobile) {
+        height: 30px !important;
+        width: 30px !important;
+      }
     }
   }
 }

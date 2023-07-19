@@ -5,8 +5,8 @@ const hotJobApi = {
     const URL = `/v3/topics`
     return axiosClient.get(URL)
   },
-  getHotJobById: (id : number)=> {
-    const URL = `/v3/posts/topic/${id}`
+  getHotJobById: (url: any, page: number, limit: number)=> {
+    const URL = url + `&page=${page}&limit=${limit}`
     return axiosClient.get(URL)
   }
 }

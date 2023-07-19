@@ -15,7 +15,16 @@
         justify-content: space-between;
         margin: 12px;
 
-        .div-influencer-card-bottom_left {}
+        .div-influencer-card-bottom_left {
+            width: 85%;
+
+            // .MuiTypography-h6 {
+            //     white-space: unset !important;
+            //     text-overflow: unset !important;
+            //     overflow: unset !important;
+            //     word-break: break-word;
+            // }
+        }
 
         .div-influencer-card-bottom_right {
             height: 100%;

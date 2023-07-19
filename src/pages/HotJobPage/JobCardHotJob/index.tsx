@@ -86,18 +86,18 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                     justifyContent: 'space-between',
                 }}
                 onClick={(e) => {
-                    handleClickItem(e, props.item.id);
+                    handleClickItem(e, props.item?.id);
                 }}
             >
                 <div className="div-card-post-left">
                     <ImageListItem
-                        key={props.item.image}
+                        key={props.item?.image}
                         sx={{ flex: 1, display: 'flex' }}
                     >
                         <img
-                            src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
-                            srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                            alt={props.item.title}
+                            src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
+                            srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                            alt={props.item?.title}
                             loading="lazy"
                             style={{
                                 width: '120px',
@@ -107,7 +107,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                         />
                         <div className="div-card-post-left_info">
                             {' '}
-                            <Tooltip placement="top" title={props.item.title}>
+                            <Tooltip placement="top" title={props.item?.title}>
                                 <Typography
                                     gutterBottom
                                     variant="h6"
@@ -127,7 +127,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                                     {props?.item?.title}
                                 </Typography>
                             </Tooltip>
-                            <Tooltip placement="top" title={props.item.companyName}>
+                            <Tooltip placement="top" title={props.item?.companyName}>
                                 <Typography
                                     gutterBottom
                                     variant="h6"
@@ -165,8 +165,8 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                                         marginLeft: '4px',
                                     }}
                                 >
-                                    {`${props.item.location.district.fullName}, 
-                                    ${props.item.location.province.fullName}`}
+                                    {`${props.item?.location?.district?.fullName}, 
+                                    ${props.item?.location?.province?.fullName}`}
                                 </Typography>
                             </div>
                             <div
@@ -188,11 +188,11 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                                         marginLeft: '4px',
                                     }}
                                 >
-                                    {new Intl.NumberFormat('en-US').format(props.item.salaryMin)}{' '}
+                                    {new Intl.NumberFormat('en-US').format(props.item?.salaryMin)}{' '}
                                     -{' '}
                                     {new Intl.NumberFormat('en-US').format(
-                                        props.item.salaryMax,
-                                    ) + `/${props.item.salaryType.name}`}
+                                        props.item?.salaryMax,
+                                    ) + `/${props.item?.salaryType?.name}`}
                                 </Typography>
                             </div>
                             <div
@@ -207,7 +207,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                                         fontStyle: 'italic',
                                     }}
                                 >
-                                    {props.item.createdAtText}
+                                    {props.item?.createdAtText}
                                 </p>
                             </div>
                         </div>
@@ -232,9 +232,9 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                             onClick={async (e) => {
                                 try {
                                     e.stopPropagation();
-                                    if (props.item.bookmarked) {
+                                    if (props.item?.bookmarked) {
                                         const result = await bookMarkApi.deleteBookMark(
-                                            props.item.id,
+                                            props.item?.id,
                                         );
                                         props.item.bookmarked = false;
                                         if (result) {
@@ -243,7 +243,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                                         }
                                     } else {
                                         const result = await bookMarkApi.createBookMark(
-                                            props.item.id,
+                                            props.item?.id,
                                         );
                                         props.item.bookmarked = true;
                                         if (result) {
@@ -256,7 +256,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                                 }
                             }}
                         >
-                            {props.item.bookmarked ? (
+                            {props.item?.bookmarked ? (
                                 <SaveIconFill width={24} height={24} />
                             ) : (
                                 <SaveIconOutline width={24} height={24} />
@@ -267,8 +267,8 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                                 <img
                                     className="img-resource-company"
                                     src={
-                                        props.item.companyResourceData.logo
-                                            ? props.item.companyResourceData.logo
+                                        props.item?.companyResourceData?.logo
+                                            ? props.item?.companyResourceData?.logo
                                             : ''
                                     }
                                     alt="ảnh"
@@ -278,7 +278,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                         </div>
                     </div>
                     <p style={{ fontSize: 13, color: '#0d99ff' }}>
-                        {props.item.jobType.name}
+                        {props.item?.jobType?.name}
                     </p>
                 </Space>
             </Card>

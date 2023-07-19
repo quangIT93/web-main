@@ -52,6 +52,7 @@ import { actionCreators } from 'store/index';
 import { RootState } from 'store/reducer';
 
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
+import { message } from 'antd';
 // import api
 // import postApi from 'api/postApi'
 import bookMarkApi from 'api/bookMarkApi';
@@ -179,14 +180,18 @@ const HotJobpage: React.FC = () => {
   const [hotjob, setHotJob] = React.useState<any>([]);
   const [hotJobType, setHotJobType] = React.useState<any>([]);
   const [hotJobTotal, setHotJobTotal] = React.useState<any>([]);
-  const [page, setPage] = React.useState(2);
+  const [page, setPage] = React.useState(0);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [searchData, setSearchData] = React.useState<any>();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isVisible, setIsVisible] = React.useState(true);
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate()
   const [checkBookMark, setCheckBookMark] = React.useState(true);
+
+  const [pageNumber, setPageNumber] = React.useState(0);
 
   // modal keyword
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
@@ -245,7 +250,7 @@ const HotJobpage: React.FC = () => {
 
   const JOB_TYPE =
     Number(searchParams.get('job-type')) &&
-    Number(searchParams.get('job-type'))! !== 5
+      Number(searchParams.get('job-type'))! !== 5
       ? [Number(searchParams.get('job-type'))]
       : [];
 
@@ -279,16 +284,38 @@ const HotJobpage: React.FC = () => {
 
   const getHotJob = async () => {
     try {
-      const hotjob = await hotJobApi.getHotJobById(
-        Number(searchParams.get('hotjob-id')),
-      );
+      const url = localStorage.getItem("hotjobApi");
+      const hotjob = await hotJobApi.getHotJobById(url, pageNumber, 20);
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       const hotjobtotal = Number(searchParams.get('hotjob-total'));
       setHotJob(hotjob.data);
       setHotJobType(hotjobtype);
       setHotJobTotal(hotjobtotal);
-      console.log('result', hotjob);
-      console.log('type', hotjobtype);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getMoreHotJob = async () => {
+    try {
+      setOpenBackdrop(!openBackdrop);
+      const url = localStorage.getItem("hotjobApi");
+      const result = await hotJobApi.getHotJobById(url, pageNumber, 20);
+      if (result) {
+
+        if (result.data.length == 0) {
+          setIsVisible(false);
+          setOpenBackdrop(false);
+          messageApi.open({
+            type: 'error',
+            content: 'Đã hết công việc để hiển thị',
+          });
+          return;
+        }
+
+        setHotJob([...hotjob, ...result.data]);
+        setOpenBackdrop(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -298,9 +325,11 @@ const HotJobpage: React.FC = () => {
     getHotJob();
   }, []);
 
-  console.log(hotjob);
+  React.useEffect(() => {
+    getMoreHotJob();
+  }, [pageNumber]);
 
-  console.log('type', hotJobType);
+
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
@@ -309,37 +338,9 @@ const HotJobpage: React.FC = () => {
   // handle change paginaton
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
-    value: number,
+    pageNumber: number,
   ) => {
-    const result = await searchApi.getSearchByQueryV2(
-      QUERY,
-      page,
-      MONEY_TYPE,
-      IS_WORKING_WEEKEND,
-      IS_REMOTELY,
-      null,
-      SALARY_MIN,
-      SALARY_MAX,
-      null,
-      null,
-      JOB_TYPE,
-      LIST_CATEGORIES_ID,
-      LIST_DIS_ID,
-      SALARY_TYPE,
-    );
-
-    //
-    if (result && result?.data?.posts.length !== 0) {
-      setSearchData((prev: any) => {
-        return {
-          posts: [...prev.posts, ...result.data.posts],
-          total: result.data.total,
-        };
-      });
-      setPage(page + 1);
-    } else {
-      console.log('da het data', result);
-    }
+    setPageNumber(pageNumber + 1);
   };
 
   // handle close backdrop
@@ -386,6 +387,7 @@ const HotJobpage: React.FC = () => {
 
   return (
     <>
+      {contextHolder}
       <Navbar />
 
       <div className="hot-job-page-container">
@@ -409,14 +411,14 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? 'Remote'
                     : hotJobType === 3
-                    ? 'Influencer'
-                    : hotJobType === 4
-                    ? 'Short time'
-                    : hotJobType === 5
-                    ? 'Job today'
-                    : hotJobType === 6
-                    ? 'Freelancer'
-                    : ''}
+                      ? 'Influencer'
+                      : hotJobType === 4
+                        ? 'Short time'
+                        : hotJobType === 5
+                          ? 'Job today'
+                          : hotJobType === 6
+                            ? 'Freelancer'
+                            : ''}
                 </h3>
                 <h4>
                   {hotJobTotal ? hotJobTotal : 0}
@@ -448,7 +450,7 @@ const HotJobpage: React.FC = () => {
                 <Stack
                   spacing={2}
                   sx={{
-                    display: 'flex',
+                    display: isVisible ? 'flex' : 'none',
                     alignItems: 'center',
                     margin: '24px 0',
                   }}
@@ -457,7 +459,7 @@ const HotJobpage: React.FC = () => {
                   <Space
                     className="div-hover-more"
                     onClick={(e) => {
-                      handleChange(e, page);
+                      handleChange(e, pageNumber);
                     }}
                   >
                     <p>Xem thêm</p>
@@ -475,7 +477,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
