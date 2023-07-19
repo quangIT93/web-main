@@ -22,13 +22,13 @@
     .swiper-wrapper {
       .swiper-slide {
         // width: fit-content !important;
-        padding: 12px 16px;
+        padding: 12px 0px;
         cursor: pointer;
         height: unset !important;
 
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.1);
-        }
+        // &:hover {
+        //   background-color: rgba(0, 0, 0, 0.1);
+        // }
 
         .slide-item {
           position: relative;
@@ -42,10 +42,10 @@
         }
       }
 
-      .swiper-slide-clicked {
-        border-bottom: 2px solid #0d99ff !important;
-        background-color: rgba(0, 0, 0, 0.1) !important;
-      }
+      // .swiper-slide-clicked {
+      //   border-bottom: 2px solid #0d99ff !important;
+      //   background-color: rgba(0, 0, 0, 0.1) !important;
+      // }
     }
 
     .swiper-button-prev,
