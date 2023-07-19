@@ -5,12 +5,14 @@ interface CategoryCarouselItemProps {
   content: string;
   imageLink: string;
   imageDescription?: string;
+  isSelected?: boolean;
 }
 
 const CategoryItem: React.FC<CategoryCarouselItemProps> = ({
   content,
   imageLink,
   imageDescription,
+  isSelected
 }) => {
   return (
     <div className="test">

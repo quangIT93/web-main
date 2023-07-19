@@ -379,35 +379,37 @@ const CategoryCarousel: React.FC = () => {
           // spaceBetween={10}
           navigation={true}
           mousewheel={true}
-          breakpoints={{
-            320: {
-              slidesPerView: 3,
-            },
-            640: {
-              slidesPerView: 4,
-            },
-            768: {
-              slidesPerView: 7,
-            },
-            868: {
-              slidesPerView: 7,
-            },
-            963: {
-              slidesPerView: 8,
-            },
-            1024: {
-              slidesPerView: 9,
-            },
-            1440: {
-              slidesPerView: 9,
-            },
-            1920: {
-              slidesPerView: 14,
-            },
-            2560: {
-              slidesPerView: 14,
-            },
-          }}
+          slidesPerView="auto"
+          spaceBetween={50}
+          // breakpoints={{
+          //   320: {
+          //     slidesPerView: 3,
+          //   },
+          //   640: {
+          //     slidesPerView: 4,
+          //   },
+          //   768: {
+          //     slidesPerView: 7,
+          //   },
+          //   868: {
+          //     slidesPerView: 7,
+          //   },
+          //   963: {
+          //     slidesPerView: 8,
+          //   },
+          //   1024: {
+          //     slidesPerView: 9,
+          //   },
+          //   1440: {
+          //     slidesPerView: 9,
+          //   },
+          //   1920: {
+          //     slidesPerView: 14,
+          //   },
+          //   2560: {
+          //     slidesPerView: 14,
+          //   },
+          // }}
           modules={[Mousewheel, Navigation, Pagination]}
           className="mySwiper"
         >
@@ -419,22 +421,37 @@ const CategoryCarousel: React.FC = () => {
                 onClick={(event) => {
                   handleChange(event, item.id);
                 }}
-                style={{
-                  borderBottom:
-                    item.id === categoryIdCookie || item.id === value
-                      ? '2px solid #0d99ff'
-                      : 'none',
-                  backgroundColor:
-                    item.id === categoryIdCookie || item.id === value
-                      ? 'rgba(0, 0, 0, 0.1)'
-                      : '',
-                }}
+                style={{ width: 'fit-content' }}
               >
-                <CategoryItem
+                {/* <CategoryItem
                   content={item.name}
                   imageLink={item.image}
                   imageDescription={item.name}
-                />
+                  isSelected={}
+                /> */}
+                <div className="category-item-container">
+                  <div className="category-item-body">
+                    <img
+                      className="category-item-image"
+                      src={item.image}
+                      alt={item.name}
+                    />
+                    <span
+                      className="category-item-title"
+                      style={{ fontSize: '10px', color: '#000000' }}
+                    >
+                      {item.name}
+                    </span>
+                  </div>
+                  <div className="border-selected"
+                    style={{
+                      backgroundColor:
+                        item.id === categoryIdCookie || item.id === value
+                          ? '#0d99ff'
+                          : 'white',
+                    }}
+                  ></div>
+                </div>
               </SwiperSlide>
             );
           })}
