@@ -143,8 +143,6 @@ const CategoryCarousel: React.FC = () => {
       };
       setCookie('userSelected', JSON.stringify(userSelected), 365);
 
-      console.log(newValue);
-
       const selectedCategory = categories?.data.find(
         (item: any) => item.id === newValue,
       );
@@ -295,8 +293,6 @@ const CategoryCarousel: React.FC = () => {
       scrollElement.scrollLeft += scrollAmount;
     }
   };
-
-  console.log('category id: ', value);
 
   // scroll
   return (
