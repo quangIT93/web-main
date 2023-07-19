@@ -128,16 +128,13 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
   useEffect(() => {
     try {
-      console.log('socketcurrent', socket.current);
       // kết nối web socket
       socket.current.on('connect', () => {
-        console.log('::: Socket connected');
         setIsConnected(true);
       });
 
       // ngắt kết nối websocket
       socket.current.on('disconnect', (reason: any) => {
-        console.log('::: Socket disconnected: ', reason);
         setIsConnected(false);
       });
 

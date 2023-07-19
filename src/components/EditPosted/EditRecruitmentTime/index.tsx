@@ -1,39 +1,40 @@
-import React, { useState, memo } from 'react'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { TimePicker } from '@mui/x-date-pickers/TimePicker'
-import Typography from '@mui/material/Typography'
-import moment from 'moment'
-import { TextField } from '@mui/material'
+import React, { useState, memo } from 'react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import Typography from '@mui/material/Typography';
+import moment from 'moment';
+import { TextField } from '@mui/material';
 import { Space } from 'antd';
 
-import { styleLabel } from '../CssEditPost'
-import './style.scss'
+import { styleLabel } from '../CssEditPost';
+import './style.scss';
 
 interface IEditRecruitmentTime {
-  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
-  editDataPosted: any
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
+  editDataPosted: any;
 }
 
 const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
-  const { setEditDataPosted, editDataPosted } = props
+  const { setEditDataPosted, editDataPosted } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       startDate: new Date(newValue._d).getTime(),
-    }))
-  }
+    }));
+  };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       endDate: new Date(newValue._d).getTime(),
-    }))
-  }
+    }));
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <Space
@@ -52,11 +53,15 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             Ngày bắt đầu <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
-            value={moment(editDataPosted.startDate)}
+            value={
+              editDataPosted.startDate
+                ? moment(editDataPosted.startDate)
+                : moment(new Date())
+            }
             onChange={handleChangeStartTime}
           />
         </div>
-        <div className='connect'>-</div>
+        <div className="connect">-</div>
         <div className="wrapTimeDay">
           <Typography
             sx={styleLabel}
@@ -67,13 +72,17 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             Ngày kết thúc <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
-            value={moment(editDataPosted.endDate)}
+            value={
+              editDataPosted.endDate
+                ? moment(editDataPosted.endDate)
+                : moment(new Date())
+            }
             onChange={handleChangeEndTime}
           />
         </div>
       </Space>
     </LocalizationProvider>
-  )
-}
+  );
+};
 
-export default memo(EditRecruitmentTime)
+export default memo(EditRecruitmentTime);
