@@ -32,6 +32,7 @@ import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Skeleton from '@mui/material/Skeleton';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -175,7 +176,7 @@ const Detail: React.FC = () => {
   const [bookmarked, setBookmarked] = React.useState(false);
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
-  const [prevIdPost, setPrevIdPost] = React.useState<any>();
+  const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
   const POST_ID = Number(searchParams.get('post-id'));
   const openNotification = () => {
@@ -223,6 +224,7 @@ const Detail: React.FC = () => {
   // get post by id-post
   const getPostById = async () => {
     try {
+      setIsLoading(true);
       const accountId = localStorage.getItem('accountId');
       const result = await postApi.getById(POST_ID);
       if (result) {
@@ -231,6 +233,7 @@ const Detail: React.FC = () => {
         // )
         // console.log('child', list)
         // check  application status
+        setIsLoading(false);
         if (result.data.account_id === accountId) {
           setTextButton('Chỉnh sửa bài tuyển dụng');
           setBackgroundButton('black');
@@ -270,12 +273,14 @@ const Detail: React.FC = () => {
   };
 
   const handlePreviousPost = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams({
       'post-id': `${POST_ID - 1}`,
     });
   }
 
   const handleNextPost = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams({
       'post-id': `${POST_ID + 1}`,
     });
@@ -601,32 +606,36 @@ const Detail: React.FC = () => {
               </div>
               <div className="img-container">
                 <div className="div-job-img" ref={componentRef}>
-                  <Carousel
-                    data={
-                      post?.data.images.length > 0 ? post?.data.images : data
-                    }
-                    time={2000}
-                    width="100%"
-                    height="500px"
-                    captionStyle={captionStyle}
-                    radius="10px"
-                    slideNumber={true}
-                    slideNumberStyle={slideNumberStyle}
-                    captionPosition="bottom"
-                    automatic={false}
-                    // dots={true}
-                    pauseIconColor="white"
-                    pauseIconSize="40px"
-                    slideBackgroundColor="darkgrey"
-                    slideImageFit="cover"
-                    thumbnails={true}
-                    thumbnailWidth="100px"
-                    style={{
-                      textAlign: 'center',
-                      // maxWidth: '850px',
-                      maxHeight: '590px',
-                    }}
-                  />
+                  {isLoading
+                    ? <Skeleton variant="rectangular" width={"100%"} height={630} />
+                    :
+                    <Carousel
+                      data={
+                        post?.data.images.length > 0 ? post?.data.images : data
+                      }
+                      time={2000}
+                      width="100%"
+                      height="500px"
+                      captionStyle={captionStyle}
+                      radius="10px"
+                      slideNumber={true}
+                      slideNumberStyle={slideNumberStyle}
+                      captionPosition="bottom"
+                      automatic={false}
+                      // dots={true}
+                      pauseIconColor="white"
+                      pauseIconSize="40px"
+                      slideBackgroundColor="darkgrey"
+                      slideImageFit="cover"
+                      thumbnails={true}
+                      thumbnailWidth="100px"
+                      style={{
+                        textAlign: 'center',
+                        // maxWidth: '850px',
+                        maxHeight: '590px',
+                      }}
+                    />
+                  }
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
                   <Box sx={{ width: '100%', height: '100%', typography: 'body1' }}>
