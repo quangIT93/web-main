@@ -3,6 +3,12 @@ import { Collapse, Radio, Input, Button, Typography } from 'antd';
 import { useSearchParams } from 'react-router-dom';
 
 import { DownOutlined } from '@ant-design/icons';
+import {
+  DolaIcon,
+  ListCateIcon,
+  ListJobIcon,
+  LocationIcon,
+} from '#components/Icons';
 //@ts-ignore
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -314,8 +320,8 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       }`}
       activeKey={collapseOpen ? '1' : ''}
       ref={collapseRef}
-      expandIconPosition="end"
-      expandIcon={(panelProps) => <DownOutlined />}
+      expandIconPosition="start"
+      expandIcon={(panelProps) => <DolaIcon />}
     >
       <Panel
         header={
@@ -328,6 +334,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
             : `Mức lương`
         }
         key="1"
+        extra={<DownOutlined color="#fff" size={12} />}
       >
         <Text className="title-filterSalary">Mức lương</Text>
         <Radio.Group
