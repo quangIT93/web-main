@@ -178,7 +178,6 @@ const ThemesJob: React.FC = () => {
     }, 1000);
   }, []);
 
-  console.log('listthem', listTheme);
   // React.useEffect(() => {
   //   console.log("vap")
   //   getPostByThemeId()

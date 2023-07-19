@@ -1,42 +1,42 @@
-import React, { useEffect, memo } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import React, { useEffect, memo } from 'react';
+import { Box, Button, Typography } from '@mui/material';
 
 // import { blobToBase64 } from 'blob-util'
 
 //@ts-ignore
-import imageCompression from 'browser-image-compression'
-import { validatePostImages } from 'validations'
+import imageCompression from 'browser-image-compression';
+import { validatePostImages } from 'validations';
 //@ts-ignore
-import { toast } from 'react-toastify'
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import { toast } from 'react-toastify';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
-import './style.scss'
+import './style.scss';
 
 interface IEditPostImage {
-  editDataPosted: any
-  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
-  dataPosted: any
+  editDataPosted: any;
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
+  dataPosted: any;
 }
 
 const EditPostImage: React.FC<IEditPostImage> = (props) => {
-  const { editDataPosted, setEditDataPosted, dataPosted } = props
+  const { editDataPosted, setEditDataPosted, dataPosted } = props;
 
-  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([])
-  const [selectedImages, setSelectedImages] = React.useState<any[]>([])
+  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
+  const [selectedImages, setSelectedImages] = React.useState<any[]>([]);
 
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 840,
-  }
+  };
 
   const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const files = event.target.files
+    const files = event.target.files;
 
     const imagesUpload: any = Array.from(
-      event.target.files ? event.target.files : []
-    )
+      event.target.files ? event.target.files : [],
+    );
 
     // console.log('imagesUpload', imagesUpload)
     // console.log('selectedFiles', selectedFiles)
@@ -45,26 +45,26 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     const imagesToCheck =
       selectedFiles.length + imagesUpload.length > 5
         ? imagesUpload.slice(0, 5 - selectedImages?.length)
-        : imagesUpload
+        : imagesUpload;
 
     if (imagesToCheck.length > 0) {
-      const validateImagesReply = validatePostImages(imagesToCheck)
+      const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
         // console.log('::: Invalid images')
-        return toast.warn('Ảnh không đúng định dạng')
+        return toast.warn('Ảnh không đúng định dạng');
       } else {
         try {
-          const compressedImages: any = []
+          const compressedImages: any = [];
           await Promise.all(
             imagesToCheck.map(async (image: any) => {
-              const compressedImage = await imageCompression(image, options)
+              const compressedImage = await imageCompression(image, options);
               compressedImages.push(
                 new File([compressedImage], compressedImage.name, {
                   type: compressedImage.type,
-                })
-              )
-            })
-          )
+                }),
+              );
+            }),
+          );
 
           // console.log('Original image ::: ', imagesUpload)
           // console.log('Compressed image ::: ', compressedImages)
@@ -75,7 +75,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               image,
               preview: window.URL.createObjectURL(image),
             })),
-          ])
+          ]);
 
           setEditDataPosted((preValue: any) => ({
             ...preValue,
@@ -86,85 +86,85 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
                 preview: window.URL.createObjectURL(image),
               })),
             ],
-          }))
+          }));
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
       }
     }
 
     if (files && dataPosted) {
-      const newImages: any[] = []
+      const newImages: any[] = [];
 
       for (let i = 0; i < files.length; i++) {
-        const file = files[i]
-        const reader = new FileReader()
+        const file = files[i];
+        const reader = new FileReader();
 
         reader.onload = () => {
-          const imageDataURL = reader.result as string
+          const imageDataURL = reader.result as string;
           newImages.push({
             id: null,
             image: imageDataURL,
             status: null,
-          })
+          });
 
           if (newImages.length === files.length) {
             setSelectedImages((prevImages: any) => [
               ...prevImages,
               ...newImages,
-            ])
+            ]);
           }
-        }
+        };
 
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
       }
     }
-  }
-  console.log('selectedFiles', selectedFiles)
+  };
+
   useEffect(() => {
     if (selectedFiles) {
       setEditDataPosted((preValue: any) => ({
         ...preValue,
         images: [...selectedFiles],
-      }))
+      }));
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (dataPosted) {
-      setSelectedImages(dataPosted)
+      setSelectedImages(dataPosted);
     }
-  }, [])
+  }, []);
 
   const handleDeleteImage = (index: number, id: number | null) => {
     setSelectedImages((prevImages: any) => {
-      const updatedImages = [...prevImages]
-      updatedImages.splice(index, 1)
-      return updatedImages
-    })
+      const updatedImages = [...prevImages];
+      updatedImages.splice(index, 1);
+      return updatedImages;
+    });
     setSelectedFiles((prevFiles: any) => {
-      const updatedFiles = [...prevFiles]
-      updatedFiles.splice(index - dataPosted.length - 1, 1)
-      return updatedFiles
-    })
+      const updatedFiles = [...prevFiles];
+      updatedFiles.splice(index - dataPosted.length - 1, 1);
+      return updatedFiles;
+    });
 
     setEditDataPosted((preValue: any) => {
-      const updatedFiles = [...preValue.images]
-      updatedFiles.splice(index - dataPosted.length - 1, 1)
+      const updatedFiles = [...preValue.images];
+      updatedFiles.splice(index - dataPosted.length - 1, 1);
 
       return {
         ...preValue,
         images: updatedFiles,
-      }
-    })
+      };
+    });
 
     if (id && !editDataPosted.deletedImages.includes(id)) {
       setEditDataPosted((preValue: any) => ({
         ...preValue,
         deletedImages: [...preValue.deletedImages, { id: id }],
-      }))
+      }));
     }
-  }
+  };
 
   return (
     <div className="edit-post_image">
@@ -247,7 +247,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
         </Button>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default memo(EditPostImage)
+export default memo(EditPostImage);

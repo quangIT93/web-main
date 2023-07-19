@@ -1,4 +1,5 @@
 import React, { useState, FormEvent, useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { toast } from 'react-toastify';
 // @ts-ignore
@@ -37,6 +38,9 @@ import './style.scss';
 import postApi from 'api/postApi';
 import siteApi from 'api/siteApi';
 import { Form, message } from 'antd';
+
+// redux
+import { RootState } from 'store';
 
 const initPost = {
   title: '',
@@ -112,6 +116,8 @@ interface Option {
 
 const Post: React.FC = () => {
   const { openCollapseFilter } = useContext(HomeValueContext);
+
+  const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   const formValues = {
     title: '',
@@ -332,7 +338,11 @@ const Post: React.FC = () => {
   };
 
   useEffect(() => {
-    getPost();
+    if (localStorage.getItem('accessToken')) {
+      getPost();
+    } else {
+      window.open(`/home`, '_parent');
+    }
   }, []);
 
   useEffect(() => {
@@ -349,100 +359,104 @@ const Post: React.FC = () => {
     document.title = postData ? titleFirebase : 'web-create-post';
   });
 
-  return (
-    <div className="post">
-      <Navbar />
+  if (localStorage.getItem('accessToken')) {
+    return (
+      <div className="post">
+        <Navbar />
 
-      {contextHolder}
-      <div className="post-main">
-        <h1>Tạo bài đăng tuyển dụng</h1>
-        <form onSubmit={handleSubmit}>
-          <PostJobCompany
-            setTitleJob={setTitleJob}
-            setCompanyName={setCompanyName}
-            titleError={titleError}
-            companyError={companyError}
-          />
-          <PostAddress
-            setWardId={setWardId}
-            setAddress={setAddress}
-            address={address}
-          />
-          <PostImage
-            selectedFiles={selectedFiles}
-            setSelectedFiles={setSelectedFiles}
-          />
-          <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob} />
-          <PostPeriodDate
-            setIsPeriodDate={setIsPeriodDate}
-            isPeriodDate={isPeriodDate}
-          />
-          {isPeriodDate === 1 ? (
-            <RecruitmentTime
-              startDate={startDate}
-              endDate={endDate}
-              setStartDate={setStartDate}
-              setEndDate={setEndDate}
+        {contextHolder}
+        <div className="post-main">
+          <h1>Tạo bài đăng tuyển dụng</h1>
+          <form onSubmit={handleSubmit}>
+            <PostJobCompany
+              setTitleJob={setTitleJob}
+              setCompanyName={setCompanyName}
+              titleError={titleError}
+              companyError={companyError}
             />
-          ) : (
-            <></>
-          )}
-          <StyleWork
-            isWorkingWeekend={isWorkingWeekend}
-            isRemotely={isRemotely}
-            setIsWorkingWeekend={setIsWorkingWeekend}
-            setIsRemotely={setIsRemotely}
-          />
-          <PostTime
-            startTime={startTime}
-            endTime={endTime}
-            setStartTime={setStartTime}
-            setEndTime={setEndTime}
-          />
+            <PostAddress
+              setWardId={setWardId}
+              setAddress={setAddress}
+              address={address}
+            />
+            <PostImage
+              selectedFiles={selectedFiles}
+              setSelectedFiles={setSelectedFiles}
+            />
+            <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob} />
+            <PostPeriodDate
+              setIsPeriodDate={setIsPeriodDate}
+              isPeriodDate={isPeriodDate}
+            />
+            {isPeriodDate === 1 ? (
+              <RecruitmentTime
+                startDate={startDate}
+                endDate={endDate}
+                setStartDate={setStartDate}
+                setEndDate={setEndDate}
+              />
+            ) : (
+              <></>
+            )}
+            <StyleWork
+              isWorkingWeekend={isWorkingWeekend}
+              isRemotely={isRemotely}
+              setIsWorkingWeekend={setIsWorkingWeekend}
+              setIsRemotely={setIsRemotely}
+            />
+            <PostTime
+              startTime={startTime}
+              endTime={endTime}
+              setStartTime={setStartTime}
+              setEndTime={setEndTime}
+            />
 
-          <PostCategoryId
-            setCategoriesId={setCategoriesId}
-            categoriesId={categoriesId}
-          />
+            <PostCategoryId
+              setCategoriesId={setCategoriesId}
+              categoriesId={categoriesId}
+            />
 
-          <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
+            <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
 
-          <PostSalaryType
-            setMoneyType={setMoneyType}
-            moneyType={moneyType}
-            salaryType={salaryType}
-          />
+            <PostSalaryType
+              setMoneyType={setMoneyType}
+              moneyType={moneyType}
+              salaryType={salaryType}
+            />
 
-          <PostFilterSalary
-            salaryMin={salaryMin}
-            setSalaryMin={setSalaryMin}
-            salaryMax={salaryMax}
-            setSalaryMax={setSalaryMax}
-            salaryType={salaryType}
-          />
+            <PostFilterSalary
+              salaryMin={salaryMin}
+              setSalaryMin={setSalaryMin}
+              salaryMax={salaryMax}
+              setSalaryMax={setSalaryMax}
+              salaryType={salaryType}
+            />
 
-          <PostNumberPhone
-            phone={phoneNumber}
-            setPhoneNumber={setPhoneNumber}
-          />
-          <Description setDescription={setDescription} />
-          {/* <EditText /> */}
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className="btn-submitForm"
-          >
-            Đăng
-          </button>
-        </form>
+            <PostNumberPhone
+              phone={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
+            />
+            <Description setDescription={setDescription} />
+            {/* <EditText /> */}
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="btn-submitForm"
+            >
+              Đăng
+            </button>
+          </form>
+        </div>
+        <Footer />
+        <ModalPost
+          openModalPost={openModalPost}
+          setOpenModalPost={setOpenModalPost}
+        />
       </div>
-      <Footer />
-      <ModalPost
-        openModalPost={openModalPost}
-        setOpenModalPost={setOpenModalPost}
-      />
-    </div>
-  );
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default Post;

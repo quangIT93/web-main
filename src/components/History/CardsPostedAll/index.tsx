@@ -75,7 +75,6 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
 
       if (result) {
         setDataPosted(result.data);
-        console.log('load data cardPostedAll recruiter', result);
         setLastPostId(result.data[result.data.length - 1].id);
         if (result.data.length < 10) {
           setIsVisible(false);
@@ -134,7 +133,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
     posted: any,
   ) => {
     event.stopPropagation();
-    console.log('click');
+
     setShowDetailPosted(true);
     setDetailPosted(posted);
   };
@@ -148,8 +147,6 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
   const handleHideDetail = () => {
     setShowDetailPosted(false);
   };
-
-  console.log('posssssssssssssssssssss', dataPosted);
 
   return (
     <>

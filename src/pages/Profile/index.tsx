@@ -448,7 +448,7 @@ const Profile: React.FC = () => {
                 </p>
                 <p>
                   {profile?.gender
-                    ? profile?.gender === 0
+                    ? profile?.gender === 1
                       ? 'Nam'
                       : 'Nữ'
                     : 'Nam'}
