@@ -23,31 +23,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Cascader, Divider, Typography, Input, Space } from 'antd';
 import { EnvironmentOutlined } from '@ant-design/icons';
 
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Checkbox,
-  ListItemText,
-  OutlinedInput,
-  NativeSelect,
-  ListSubheader,
-  TextField,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  // Typography,
-  Autocomplete,
-  Box,
-  Chip,
-  ListItemButton,
-  Collapse,
-  RadioGroup,
-  Radio,
-  FormControlLabel,
-  Button,
-} from '@mui/material';
+import { Box, Button } from '@mui/material';
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -73,6 +49,8 @@ import { CreateKeywordIconSmall, MoreICon } from '#components/Icons';
 
 //import jobcard
 import JobCard from '../../components/Home/JobCard';
+import ShowCancleSave from '#components/ShowCancleSave';
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
 // import { useHomeState } from '../Home/HomeState'
 
@@ -1004,6 +982,9 @@ const NewJobs: React.FC = () => {
           </Box>
         </Modal>
       </div>
+      <ShowCancleSave />
+
+      <ShowNotificativeSave />
 
       <Footer />
     </>

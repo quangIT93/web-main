@@ -70,6 +70,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
   const handleRadioChange = (e: any) => {
     setSelectedValue(e.target.value);
+    setTypeMoney(e.target.value);
   };
 
   const handleInputChangeSalaryMin = (e: any) => {
@@ -178,6 +179,71 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     setTypeMoney(selectedValue);
   };
 
+  // useEffect(() => {
+  //   const reg = /[0-9]+$/;
+
+  //   if (inputValueMin && !inputValueMax && Salary_Max < Number(inputValueMin)) {
+  //     console.log('vô');
+  //     setCheckSalary(true);
+  //     setTimeout(() => {
+  //       setCheckSalary(false);
+  //     }, 4000);
+  //   } else if (
+  //     inputValueMax &&
+  //     !inputValueMin &&
+  //     Number(inputValueMax) < Salary_Min
+  //   ) {
+  //     console.log('vô');
+  //     setCheckSalary(true);
+  //     setTimeout(() => {
+  //       setCheckSalary(false);
+  //     }, 4000);
+  //   } else if (
+  //     inputValueMax &&
+  //     inputValueMin &&
+  //     Number(inputValueMax) < Number(inputValueMin)
+  //   ) {
+  //     console.log('vô');
+  //     setCheckSalary(true);
+  //     setTimeout(() => {
+  //       setCheckSalary(false);
+  //     }, 4000);
+  //   } else {
+  //     if (inputValueMax) {
+  //       const inputValue = inputValueMax?.replace(',', '');
+  //       if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+  //         setSalaryMax(Number(inputValue.replace(',', '')));
+  //       }
+  //     } else if (Salary_Max) {
+  //       const inputValue = Salary_Max.toString()?.replace(',', '');
+  //       if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+  //         setSalaryMax(Number(inputValue.replace(',', '')));
+  //       }
+  //     } else {
+  //       setSalaryMax(0);
+  //     }
+
+  //     if (inputValueMin) {
+  //       const inputValue = inputValueMin?.replace(',', '');
+  //       if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+  //         setSalaryMin(Number(inputValue.replace(',', '')));
+  //       }
+  //     } else if (Salary_Min) {
+  //       const inputValue = Salary_Min.toString()?.replace(',', '');
+  //       if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+  //         setSalaryMin(Number(inputValue.replace(',', '')));
+  //       }
+  //     } else {
+  //       setSalaryMin(0);
+  //     }
+
+  //     if (!salaryMax && !salaryMin) {
+  //       setSalaryMin(6000000);
+  //       setSalaryMax(12000000);
+  //     }
+  //   }
+  // }, [inputValueMax, inputValueMin]);
+
   useEffect(() => {
     if (salaryType === 6) {
       setSalaryMax(0);
@@ -235,6 +301,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       window.removeEventListener('click', handleOutsideClick);
     };
   }, []);
+
+  console.log('salaryMin', salaryMin);
+  console.log('salaryMax', salaryMax);
+  console.log('inputValueMin', inputValueMin);
+  console.log('inputValueMax', inputValueMax);
 
   return (
     <Collapse
