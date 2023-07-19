@@ -85,6 +85,8 @@ import './style.scss';
 import ShowCopy from '#components/ShowCopy';
 import { height } from '@mui/system';
 
+import AnotherPost from './components/AnotherPost';
+
 const itemsShare = [
   {
     nameShare: 'Sao chép liên kết',
@@ -163,6 +165,8 @@ const Detail: React.FC = () => {
 
   const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
+  const [postPrev, setPostPrev] = React.useState<AxiosResponse | null>(null);
+  const [postNext, setPostNext] = React.useState<AxiosResponse | null>(null);
   const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(
     null,
   );
@@ -272,6 +276,19 @@ const Detail: React.FC = () => {
     }
   };
 
+  const getAnotherPost = async (postID: number, position: number) => {
+    try {
+      setIsLoading(true);
+      const result = await postApi.getById(postID);
+      if (result) {
+        setIsLoading(false);
+        position === 0 ? setPostPrev(result.data) : setPostNext(result.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const handlePreviousPost = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams({
@@ -288,7 +305,14 @@ const Detail: React.FC = () => {
 
   React.useEffect(() => {
     getPostById();
+    //get post prev
+    getAnotherPost(POST_ID - 1, 0);
+    //get post next
+    getAnotherPost(POST_ID + 1, 1);
+
   }, [bookmarked, POST_ID]);
+  console.log("post prev: ", postPrev);
+  console.log("post next: ", postNext);
 
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -793,18 +817,24 @@ const Detail: React.FC = () => {
                     >
                       {post?.data.description}
                     </div>
-                    <div className="description-buttons">
-                      <div className="description-button_previous" onClick={handlePreviousPost}>
-                        <div className="icon">
-                          <BackIcon width={20} height={20} />
+                    <div className="div-description-mo-bottom">
+                      <div className="description-buttons">
+                        <div className="description-button_previous" onClick={handlePreviousPost}>
+                          <div className="icon">
+                            <BackIcon width={17} height={17} />
+                          </div>
+                          <span>Previous job</span>
                         </div>
-                        <span>Previous job</span>
+                        <div className="description-button_next" onClick={handleNextPost}>
+                          <span>Next job</span>
+                          <div className="icon">
+                            <BackIcon width={17} height={17} />
+                          </div>
+                        </div>
                       </div>
-                      <div className="description-button_next" onClick={handleNextPost}>
-                        <span>Next job</span>
-                        <div className="icon">
-                          <BackIcon width={20} height={20} />
-                        </div>
+                      <div className="description-post">
+                        <AnotherPost item={postPrev} />
+                        <AnotherPost item={postNext} />
                       </div>
                     </div>
                   </div>
