@@ -88,6 +88,7 @@ import './style.scss';
 import ShowCopy from '#components/ShowCopy';
 import { height } from '@mui/system';
 
+//@ts-ignore
 import AnotherPost from './components/AnotherPost';
 
 const itemsShare = [
