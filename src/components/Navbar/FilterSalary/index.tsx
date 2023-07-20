@@ -13,8 +13,10 @@ import {
 //@ts-ignore
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-
+import { MoneyFilterIcon } from '#components/Icons';
 import './style.scss';
+
+import { ArrowFilterIcon } from '#components/Icons';
 
 const { Text } = Typography;
 
@@ -315,101 +317,105 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   console.log('inputValueMax', inputValueMax);
 
   return (
-    <Collapse
-      className={`inputFilterSalary input-filter_nav ${
-        inputValueMin || salaryMax ? 'activeSalary' : ''
-      }`}
-      activeKey={collapseOpen ? '1' : ''}
-      ref={collapseRef}
-      expandIconPosition="start"
-      expandIcon={(panelProps) => <DolaIcon />}
-    >
-      <Panel
-        header={
-          salaryMax || salaryMin
-            ? `${new Intl.NumberFormat('en-US').format(
-                Number(salaryMin?.toString().replace(',', '')),
-              )} - ${new Intl.NumberFormat('en-US').format(
-                Number(salaryMax?.toString().replace(',', '')),
-              )}`
-            : `Mức lương`
-        }
-        key="1"
-        extra={<DownOutlined color="#fff" size={12} />}
+    <div className="filter-input">
+      <div className="filter-input_icon">
+        <MoneyFilterIcon width={20} height={20} />
+      </div>
+      <Collapse
+        className={`inputFilterSalary input-filter_nav ${
+          inputValueMin || salaryMax ? 'activeSalary' : ''
+        }`}
+        activeKey={collapseOpen ? '1' : ''}
+        ref={collapseRef}
+        expandIconPosition="end"
+        expandIcon={(panelProps) => <ArrowFilterIcon width={14} height={10} />}
       >
-        <Text className="title-filterSalary">Mức lương</Text>
-        <Radio.Group
-          value={selectedValue}
-          onChange={handleRadioChange}
-          className="inputFilter-groupSalary_radio"
+        <Panel
+          header={
+            salaryMax || salaryMin
+              ? `${new Intl.NumberFormat('en-US').format(
+                  Number(salaryMin?.toString().replace(',', '')),
+                )} - ${new Intl.NumberFormat('en-US').format(
+                  Number(salaryMax?.toString().replace(',', '')),
+                )}`
+              : `Mức lương`
+          }
+          key="1"
         >
-          <Radio value={1}>VND</Radio>
-          <Radio value={2}>USD</Radio>
-        </Radio.Group>
-        <br />
-        <Input
-          maxLength={11}
-          // value={inputValueMin ? inputValueMin : Salary_Min ? Salary_Min : ''}
-          value={
-            inputValueMin || inputValueMin === ''
-              ? new Intl.NumberFormat('en-US').format(
-                  Number(inputValueMin.toString().replace(',', '')),
-                )
-              : Salary_Min
-              ? new Intl.NumberFormat('en-US').format(
-                  Number(Salary_Min.toString().replace(',', '')),
-                )
-              : new Intl.NumberFormat('en-US').format(
-                  Number('6000000'.replace(',', '')),
-                )
-          }
-          onChange={handleInputChangeSalaryMin}
-          className="input-text_salary"
-          placeholder="Lương tối thiểu"
-          disabled={salaryType === 6}
-        />
-        <Input
-          maxLength={selectedValue === 1 ? 11 : 5}
-          // value={inputValueMax ? inputValueMax : Salary_Max ? Salary_Max : ''}
-          value={
-            inputValueMax || inputValueMax === ''
-              ? new Intl.NumberFormat('en-US').format(
-                  Number(inputValueMax.toString().replace(',', '')),
-                )
-              : Salary_Max
-              ? new Intl.NumberFormat('en-US').format(
-                  Number(Salary_Max.toString().replace(',', '')),
-                )
-              : new Intl.NumberFormat('en-US').format(
-                  Number('12000000'.replace(',', '')),
-                )
-          }
-          onChange={handleInputChangeSalaryMax}
-          className="input-text_salary"
-          placeholder="Lương tối đa"
-          disabled={salaryType === 6}
-        />
-        {checkSalary ? (
-          <i style={{ color: 'red', marginBottom: '24px' }}>
-            Tiền tối thiểu không được lớn hơn tiền tối đa
-          </i>
-        ) : (
-          <></>
-        )}
-        <div className="wrap-button_filter">
-          <Button type="default" onClick={handleCancleValue}>
-            Đặt lại
-          </Button>
-          <Button
-            type="primary"
-            onClick={handleSubmitValue}
-            className="submitValue"
+          <Text className="title-filterSalary">Mức lương</Text>
+          <Radio.Group
+            value={selectedValue}
+            onChange={handleRadioChange}
+            className="inputFilter-groupSalary_radio"
           >
-            Áp dụng
-          </Button>
-        </div>
-      </Panel>
-    </Collapse>
+            <Radio value={1}>VND</Radio>
+            <Radio value={2}>USD</Radio>
+          </Radio.Group>
+          <br />
+          <Input
+            maxLength={11}
+            // value={inputValueMin ? inputValueMin : Salary_Min ? Salary_Min : ''}
+            value={
+              inputValueMin || inputValueMin === ''
+                ? new Intl.NumberFormat('en-US').format(
+                    Number(inputValueMin.toString().replace(',', '')),
+                  )
+                : Salary_Min
+                ? new Intl.NumberFormat('en-US').format(
+                    Number(Salary_Min.toString().replace(',', '')),
+                  )
+                : new Intl.NumberFormat('en-US').format(
+                    Number('6000000'.replace(',', '')),
+                  )
+            }
+            onChange={handleInputChangeSalaryMin}
+            className="input-text_salary"
+            placeholder="Lương tối thiểu"
+            disabled={salaryType === 6}
+          />
+          <Input
+            maxLength={selectedValue === 1 ? 11 : 5}
+            // value={inputValueMax ? inputValueMax : Salary_Max ? Salary_Max : ''}
+            value={
+              inputValueMax || inputValueMax === ''
+                ? new Intl.NumberFormat('en-US').format(
+                    Number(inputValueMax.toString().replace(',', '')),
+                  )
+                : Salary_Max
+                ? new Intl.NumberFormat('en-US').format(
+                    Number(Salary_Max.toString().replace(',', '')),
+                  )
+                : new Intl.NumberFormat('en-US').format(
+                    Number('12000000'.replace(',', '')),
+                  )
+            }
+            onChange={handleInputChangeSalaryMax}
+            className="input-text_salary"
+            placeholder="Lương tối đa"
+            disabled={salaryType === 6}
+          />
+          {checkSalary ? (
+            <i style={{ color: 'red', marginBottom: '24px' }}>
+              Tiền tối thiểu không được lớn hơn tiền tối đa
+            </i>
+          ) : (
+            <></>
+          )}
+          <div className="wrap-button_filter">
+            <Button type="default" onClick={handleCancleValue}>
+              Đặt lại
+            </Button>
+            <Button
+              type="primary"
+              onClick={handleSubmitValue}
+              className="submitValue"
+            >
+              Áp dụng
+            </Button>
+          </div>
+        </Panel>
+      </Collapse>
+    </div>
   );
 };
 

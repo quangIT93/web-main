@@ -13,6 +13,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { NumberOutlined } from '@ant-design/icons';
+import Skeleton from '@mui/material/Skeleton';
 
 // import component
 
@@ -47,6 +48,7 @@ const BreadcrumbsCpn: React.FC = () => {
   } = useContext(HomeValueContext);
 
   const [open, setOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   // const [checked, setChecked] = React.useState(true)
   const [childCatelories, setChildCatelories] = React.useState<any>(null);
 
@@ -88,6 +90,13 @@ const BreadcrumbsCpn: React.FC = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, [])
 
   useEffect(() => {
     getAllChildCategoriesById();
@@ -261,6 +270,7 @@ const BreadcrumbsCpn: React.FC = () => {
   ];
 
   return (
+
     <Stack
       className="bread-crumb-container"
       spacing={2}
@@ -279,9 +289,13 @@ const BreadcrumbsCpn: React.FC = () => {
         borderBottom: '1px solid #e5e5e5',
       }}
     >
-      <Breadcrumbs separator="" aria-label="breadcrumb">
-        {breadcrumbs}
-      </Breadcrumbs>
+      {isLoading ?
+        <Skeleton variant="rounded" width="100%" height={34} />
+        :
+        <Breadcrumbs separator="" aria-label="breadcrumb">
+          {breadcrumbs}
+        </Breadcrumbs>
+      }
       <Collapse
         in={open}
         // timeout="auto"
@@ -404,7 +418,7 @@ const BreadcrumbsCpn: React.FC = () => {
           </div>
         </Collapse>
       </Stack> */}
-    </Stack>
+    </Stack >
   )
 }
 

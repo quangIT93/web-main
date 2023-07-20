@@ -315,7 +315,10 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                         }}
                     >
                         <div
-                            onClick={async (e) => { props.handleDeleteBookmark(e, props.index, props.item.id) }}
+                            onClick={async (e) => {
+                                e.stopPropagation();
+                                props.handleDeleteBookmark(e, props.index, props.item.id)
+                            }}
                         >
                             <SaveIconFill width={24} height={24} />
                         </div>

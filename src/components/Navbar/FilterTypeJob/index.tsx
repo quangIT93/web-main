@@ -5,13 +5,9 @@ import type { RadioChangeEvent } from 'antd';
 import { useSearchParams } from 'react-router-dom';
 import siteApi from 'api/siteApi';
 
+import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons';
+
 import './style.scss';
-import {
-  ClockDetailPostIcon,
-  ListCateIcon,
-  ListJobIcon,
-  LocationIcon,
-} from '#components/Icons';
 
 const CustomOption = ({
   data,
@@ -87,7 +83,10 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
   const handleChange = (value1: string) => {};
 
   return (
-    <>
+    <div className="filter-input">
+      <div className="filter-input_icon">
+        <PaperFilterIcon width={20} height={20} />
+      </div>
       <Select
         style={{ width: 120 }}
         onChange={handleChange}
@@ -96,10 +95,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder="Loai cong viec"
-        // menuItemSelectedIcon={<LocationIcon />}
-        removeIcon={<ListCateIcon />}
-        clearIcon={<ClockDetailPostIcon />}
-        // suffixIcon={<ListJobIcon />}
+        suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="5" label="">
           <CustomOption
@@ -110,7 +106,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
           />
         </Option>
       </Select>
-    </>
+    </div>
   );
 };
 

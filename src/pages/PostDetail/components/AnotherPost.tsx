@@ -40,7 +40,7 @@ import HomeValueContextProvider, {
 } from 'context/HomeValueContextProvider';
 
 interface Iprops {
-  item: PostNewest;
+  isLeft: PostNewest;
 }
 
 const AnotherPost: React.FC<any> = (props) => {
@@ -52,7 +52,6 @@ const AnotherPost: React.FC<any> = (props) => {
     <>
       <Card
         sx={{
-          minWidth: '100%',
           display: 'flex',
           padding: '12px',
           cursor: 'pointer',
@@ -65,9 +64,7 @@ const AnotherPost: React.FC<any> = (props) => {
           justifyContent: 'space-between',
         }}
         className="anotherPost-container"
-        onClick={(e) => {
-          handleClickItem(e, props.item.id);
-        }}
+        onClick={props.onClick}
       >
         <div className="anotherPost-content">
           <img
@@ -75,11 +72,6 @@ const AnotherPost: React.FC<any> = (props) => {
             srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
             alt={props.item?.title}
             loading="lazy"
-            style={{
-              width: '120px',
-              height: '120px',
-              borderRadius: 10,
-            }}
             className="anotherPost_image"
           />
           <div className="anotherPost_info">
@@ -146,6 +138,7 @@ const AnotherPost: React.FC<any> = (props) => {
                   textOverflow: 'ellipsis',
                   overflow: 'hidden',
                   marginLeft: '4px',
+                  fontSize: '12px',
                 }}
               >
                 {`${props.item?.district}, ${props.item?.province}`}
@@ -168,6 +161,7 @@ const AnotherPost: React.FC<any> = (props) => {
                   textOverflow: 'ellipsis',
                   overflow: 'hidden',
                   marginLeft: '4px',
+                  fontSize: '12px',
                 }}
               >
                 {new Intl.NumberFormat('en-US').format(props.item?.salary_min)}{' '}
