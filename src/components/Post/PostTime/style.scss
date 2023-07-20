@@ -1,19 +1,19 @@
 @import '/src/scss//mixins';
 
-.wrap-time_right {
+.wrap-time_left {
   display: flex;
   flex-direction: column;
   margin: 0 !important;
   width: 30%;
-}
-
-.ant-space-item:nth-child(2) {
-  min-width: unset !important;
-
-  .connect {
-    transform: translateY(0%);
+  .ant-space-item:nth-child(2) {
+    min-width: unset !important;
+  
+    .connect {
+      transform: translateY(0%);
+    }
   }
 }
+
 
 .wrap-time_left {
   width: 100%;

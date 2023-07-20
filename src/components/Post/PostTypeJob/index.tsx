@@ -1,39 +1,41 @@
-import React, { memo } from 'react'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
+import React, { memo } from 'react';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
-import siteApi from 'api/siteApi'
-import { AxiosResponse } from 'axios'
+import siteApi from 'api/siteApi';
+import { AxiosResponse } from 'axios';
+
+import './style.scss';
 
 interface IPostTypeJob {
-  typeJob: number
-  setTypeJob: React.Dispatch<React.SetStateAction<number>>
+  typeJob: number;
+  setTypeJob: React.Dispatch<React.SetStateAction<number>>;
 }
 const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
-  const { typeJob, setTypeJob } = props
+  const { typeJob, setTypeJob } = props;
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
-  }
-  const [jobTypes, setJobTypes] = React.useState<AxiosResponse | null>(null)
+  };
+  const [jobTypes, setJobTypes] = React.useState<AxiosResponse | null>(null);
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType()
+    const result = await siteApi.getJobType();
     if (result) {
-      setJobTypes(result)
+      setJobTypes(result);
     }
-  }
+  };
 
   React.useEffect(() => {
-    getTypeJob()
-  }, [])
+    getTypeJob();
+  }, []);
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTypeJob(Number(e.target.value))
-  }
+    setTypeJob(Number(e.target.value));
+  };
 
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>
@@ -59,11 +61,11 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
               control={<Radio />}
               label={`${item.name}`}
             />
-          )
+          );
         })}
       </RadioGroup>
     </FormControl>
-  )
-}
+  );
+};
 
-export default memo(PostTypeJob)
+export default memo(PostTypeJob);

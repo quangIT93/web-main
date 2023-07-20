@@ -29,6 +29,18 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     maxWidthOrHeight: 840,
   };
 
+  React.useEffect(() => {
+    selectedFiles.map((value: any) => {
+      console.log('file img', value.preview);
+    });
+    return () => {
+      // Clean up all selectedFiles previews when the component unmounts
+
+      selectedFiles.length !== 0 &&
+        selectedFiles.forEach((file: any) => URL.revokeObjectURL(file.preview));
+    };
+  }, [selectedFiles]);
+
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -114,6 +126,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               ...newImages,
             ]);
           }
+          event.target.value = '';
         };
 
         reader.readAsDataURL(file);
