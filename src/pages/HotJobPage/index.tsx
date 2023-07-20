@@ -195,7 +195,7 @@ const HotJobpage: React.FC = () => {
 
   const getHotJob = async () => {
     try {
-      const url = localStorage.getItem("hotjobApi");
+      const url = localStorage.getItem('hotjobApi');
       const hotjob = await hotJobApi.getHotJobById(url, pageNumber, 20);
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       const hotjobtotal = Number(searchParams.get('hotjob-total'));
@@ -210,10 +210,9 @@ const HotJobpage: React.FC = () => {
   const getMoreHotJob = async () => {
     try {
       setOpenBackdrop(!openBackdrop);
-      const url = localStorage.getItem("hotjobApi");
+      const url = localStorage.getItem('hotjobApi');
       const result = await hotJobApi.getHotJobById(url, pageNumber, 20);
       if (result) {
-
         if (result.data.length == 0) {
           setIsVisible(false);
           setOpenBackdrop(false);
@@ -239,7 +238,6 @@ const HotJobpage: React.FC = () => {
   React.useEffect(() => {
     getMoreHotJob();
   }, [pageNumber]);
-
 
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -299,14 +297,14 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? 'Remote'
                     : hotJobType === 3
-                      ? 'Influencer'
-                      : hotJobType === 4
-                        ? 'Short time'
-                        : hotJobType === 5
-                          ? 'Job today'
-                          : hotJobType === 6
-                            ? 'Freelancer'
-                            : ''}
+                    ? 'Influencer'
+                    : hotJobType === 4
+                    ? 'Short time'
+                    : hotJobType === 5
+                    ? 'Job today'
+                    : hotJobType === 6
+                    ? 'Freelancer'
+                    : ''}
                 </h3>
                 <h4>
                   {hotJobTotal ? hotJobTotal : 0}
@@ -365,7 +363,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

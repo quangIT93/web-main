@@ -1,18 +1,18 @@
-import React, { useState, memo } from 'react'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import { Cascader } from 'antd'
-import categoriesApi from '../../../api/categoriesApi'
-import './style.scss'
+import React, { useState, memo } from 'react';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import { Cascader } from 'antd';
+import categoriesApi from '../../../api/categoriesApi';
+import './style.scss';
 
 interface Option {
-  value: string | number
-  label: string
-  children?: Option[]
-  disableCheckbox?: boolean
+  value: string | number;
+  label: string;
+  children?: Option[];
+  disableCheckbox?: boolean;
 }
 
-const { SHOW_CHILD } = Cascader
+const { SHOW_CHILD } = Cascader;
 
 const options: Option[] = [
   {
@@ -49,51 +49,54 @@ const options: Option[] = [
       },
     ],
   },
-]
+];
 
 interface ICategories {
-  setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>
-  categoriesId: string[]
+  setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>;
+  categoriesId: string[];
 }
 
 const CheckboxesTags: React.FC<ICategories> = (props) => {
-  const { setCategoriesId, categoriesId } = props
+  const { setCategoriesId, categoriesId } = props;
 
-  const [dataCategories, setDataCategories] = React.useState<any>(null)
-  const [disable, setDisable] = React.useState<Boolean>(false)
+  const [dataCategories, setDataCategories] = React.useState<any>(null);
+  const [disable, setDisable] = React.useState<Boolean>(false);
   const onChange = (value: any) => {
-    setDisable(false)
-    const secondValues = value.map((item: any) => item[1])
+    setDisable(false);
+    const secondValues = value.map((item: any) => item[1]);
 
     if (secondValues.length <= 2) {
-      setCategoriesId(secondValues)
+      setCategoriesId(secondValues);
     }
     if (value.length > 1) {
-      setDisable(true)
+      setDisable(true);
     }
-  }
+  };
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise()
+      const result = await categoriesApi.getAllCategorise();
       if (result) {
-        setDataCategories(result.data)
+        setDataCategories(result.data);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   React.useEffect(() => {
-    getCategories()
-  }, [])
+    getCategories();
+  }, []);
 
   return (
-    <Box sx={{
-      marginTop: '24px',
-      display: 'flex',
-      flexDirection: 'column',
-    }}>
+    <Box
+      sx={{
+        marginTop: '24px',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+      className="post_cate"
+    >
       <Typography
         sx={{ fontWeight: 600, color: '#000000' }}
         variant="body1"
@@ -106,27 +109,27 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-              value: parentCategory.parent_category_id,
-              label: parentCategory.parent_category,
-              children: parentCategory.childs.map((child: any) => {
-                var dis = false
-                //check id child  when disable = true
-                if (disable) {
-                  dis = true
-                  for (const elem of categoriesId) {
-                    if (elem === child.id) {
-                      dis = false
-                      break
+                value: parentCategory.parent_category_id,
+                label: parentCategory.parent_category,
+                children: parentCategory.childs.map((child: any) => {
+                  var dis = false;
+                  //check id child  when disable = true
+                  if (disable) {
+                    dis = true;
+                    for (const elem of categoriesId) {
+                      if (elem === child.id) {
+                        dis = false;
+                        break;
+                      }
                     }
                   }
-                }
-                return {
-                  value: child.id,
-                  label: child.name,
-                  disabled: dis,
-                }
-              }),
-            }))
+                  return {
+                    value: child.id,
+                    label: child.name,
+                    disabled: dis,
+                  };
+                }),
+              }))
             : []
         }
         onChange={onChange}
@@ -138,7 +141,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         style={{ borderRadius: '2px' }}
       />
     </Box>
-  )
-}
+  );
+};
 
-export default memo(CheckboxesTags)
+export default memo(CheckboxesTags);

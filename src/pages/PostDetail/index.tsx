@@ -81,7 +81,7 @@ import {
   CompanyNameDetailPostIcon,
   AddressDetailPostIcon,
   ClockDetailPostIcon,
-  BackIcon
+  BackIcon,
 } from '#components/Icons';
 
 import './style.scss';
@@ -165,7 +165,7 @@ const Detail: React.FC = () => {
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [title, setTitle] = React.useState('');
-  const [tabValue, setTabValue] = React.useState("1");
+  const [tabValue, setTabValue] = React.useState('1');
 
   const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
@@ -293,21 +293,21 @@ const Detail: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const handlePreviousPost = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams({
       'post-id': `${POST_ID - 1}`,
     });
-  }
+  };
 
   const handleNextPost = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams({
       'post-id': `${POST_ID + 1}`,
     });
-  }
+  };
 
   React.useEffect(() => {
     getPostById();
@@ -315,10 +315,9 @@ const Detail: React.FC = () => {
     getAnotherPost(POST_ID - 1, 0);
     //get post next
     getAnotherPost(POST_ID + 1, 1);
-
   }, [bookmarked, POST_ID]);
-  console.log("post prev: ", postPrev);
-  console.log("post next: ", postNext);
+  console.log('post prev: ', postPrev);
+  console.log('post next: ', postNext);
 
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -526,15 +525,16 @@ const Detail: React.FC = () => {
   const handleClickSearch = () => {
     const companyName = post?.data.company_name;
     const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
-    window.open(searchUrl, "_self");
+    window.open(searchUrl, '_self');
   };
 
   const handleClickShowMap = () => {
-    window.open('https://www.google.com/maps/place/' +
-      `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`
+    window.open(
+      'https://www.google.com/maps/place/' +
+        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
-
+  console.log('time', post?.data);
   return (
     <>
       {automatic && (
@@ -638,9 +638,13 @@ const Detail: React.FC = () => {
               </div>
               <div className="img-container">
                 <div className="div-job-img" ref={componentRef}>
-                  {isLoading
-                    ? <Skeleton variant="rectangular" width={"100%"} height={630} />
-                    :
+                  {isLoading ? (
+                    <Skeleton
+                      variant="rectangular"
+                      width={'100%'}
+                      height={630}
+                    />
+                  ) : (
                     <Carousel
                       data={
                         post?.data.images.length > 0 ? post?.data.images : data
@@ -667,13 +671,18 @@ const Detail: React.FC = () => {
                         maxHeight: '590px',
                       }}
                     />
-                  }
+                  )}
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
-                  <Box sx={{ width: '100%', height: '100%', typography: 'body1' }}>
+                  <Box
+                    sx={{ width: '100%', height: '100%', typography: 'body1' }}
+                  >
                     <TabContext value={tabValue}>
                       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList onChange={handleChangeTab} aria-label="lab API tabs example">
+                        <TabList
+                          onChange={handleChangeTab}
+                          aria-label="lab API tabs example"
+                        >
                           <Tab label="Thông tin việc làm" value="1" />
                           <Tab label="Thông tin công ty" value="2" />
                         </TabList>
@@ -681,6 +690,16 @@ const Detail: React.FC = () => {
                       <TabPanel value="1">
                         <div className="job-title-container">
                           <div className="job-title-details">
+                            <div className="div-detail-row">
+                              <EnvironmentOutlined
+                                style={{ color: '#575757' }}
+                              />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Địa chỉ</p>
+                                <h5>{post?.data.address}</h5>
+                              </div>
+                            </div>
                             <div className="div-detail-row">
                               <SlidersOutlined style={{ color: '#575757' }} />
                               <div style={{ marginLeft: '10px' }}>
@@ -690,14 +709,16 @@ const Detail: React.FC = () => {
                               </div>
                             </div>
                             <div className="div-detail-row">
-                              <ClockCircleOutlined style={{ color: '#575757' }} />
+                              <ClockCircleOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Giờ làm việc</p>
                                 <h5>
-                                  {moment(new Date(post?.data.start_time)).format(
-                                    'HH:mm',
-                                  )}{' '}
+                                  {moment(
+                                    new Date(post?.data.start_time),
+                                  ).format('HH:mm')}{' '}
                                   -{' '}
                                   {moment(new Date(post?.data.end_time)).format(
                                     'HH:mm',
@@ -738,14 +759,20 @@ const Detail: React.FC = () => {
                               </div>
                             </div>
                             <div className="div-detail-row">
-                              <CreditCardOutlined style={{ color: '#575757' }} />
+                              <CreditCardOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Danh mục</p>
                                 {post?.data.categories.map(
-                                  (item: ItemCategories, index: null | number) => (
+                                  (
+                                    item: ItemCategories,
+                                    index: null | number,
+                                  ) => (
                                     <h5 key={index}>
-                                      {item.parent_category}/{item.child_category}
+                                      {item.parent_category}/
+                                      {item.child_category}
                                     </h5>
                                   ),
                                 )}
@@ -764,15 +791,17 @@ const Detail: React.FC = () => {
                               </div>
                             </div>
                             <div className="div-detail-row">
-                              <ClockCircleOutlined style={{ color: '#575757' }} />
+                              <ClockCircleOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Thời gian hết hạn</p>
                                 <h5>
                                   {post?.data.expired_date
-                                    ? moment(new Date(post?.data.expired_date)).format(
-                                      'DD/MM/yyyy',
-                                    )
+                                    ? moment(
+                                        new Date(post?.data.expired_date),
+                                      ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>
@@ -819,13 +848,19 @@ const Detail: React.FC = () => {
                     </div>
                     <div className="div-description-mo-bottom">
                       <div className="description-buttons">
-                        <div className="description-button_previous">
+                        <div
+                          className="description-button_previous"
+                          onClick={handlePreviousPost}
+                        >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
                           </div>
                           <span>Previous job</span>
                         </div>
-                        <div className="description-button_next">
+                        <div
+                          className="description-button_next"
+                          onClick={handleNextPost}
+                        >
                           <span>Next job</span>
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -837,10 +872,7 @@ const Detail: React.FC = () => {
                           item={postPrev}
                           onClick={handlePreviousPost}
                         />
-                        <AnotherPost
-                          item={postNext}
-                          onClick={handleNextPost}
-                        />
+                        <AnotherPost item={postNext} onClick={handleNextPost} />
                       </div>
                     </div>
                   </div>
@@ -884,15 +916,21 @@ const Detail: React.FC = () => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2" style={{ position: 'relative' }}>
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                style={{ position: 'relative' }}
+              >
                 Chia sẻ công việc này
-                <IconButton aria-label="close"
+                <IconButton
+                  aria-label="close"
                   onClick={handleCloseModalShare}
                   sx={{
                     position: 'absolute',
                     right: '0',
                     top: '50%',
-                    transform: 'translateY(-50%)'
+                    transform: 'translateY(-50%)',
                   }}
                 >
                   <CloseIcon />

@@ -99,32 +99,33 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           <BagFilterIcon width={20} height={20} />
         </div>
         <Cascader
+          // open
           dropdownRender={DropdownRender}
           suffixIcon={<ArrowFilterIcon width={14} height={10} />}
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
+                  value: parentCategory.parent_category_id,
+                  label: parentCategory.parent_category,
+                  children: parentCategory.childs.map((child: any) => {
+                    var dis = false;
+                    //check id child  when disable = true
+                    if (disable) {
+                      dis = true;
+                      for (const elem of categoriesId) {
+                        if (elem === child.id) {
+                          dis = false;
+                          break;
+                        }
                       }
                     }
-                  }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                    return {
+                      value: child.id,
+                      label: child.name,
+                      disabled: dis,
+                    };
+                  }),
+                }))
               : []
           }
           onChange={onChange}
@@ -133,8 +134,8 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
               ? listCate
               : listCate?.length === 0 &&
                 location.pathname === '/search-results'
-                ? []
-                : userProfile?.categories.map((profile: any) => [
+              ? []
+              : userProfile?.categories.map((profile: any) => [
                   profile?.parent_category_id,
                   profile?.child_category_id,
                 ])

@@ -127,6 +127,17 @@
   // height: 30px;
   padding: 0px 10px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  p {
+    width: 84px;
+  }
+
+
+  .ant-space-item {
+    display: flex;
+    align-items: center;
+  }
 
   // &:hover {
   //   background-color: #575757;

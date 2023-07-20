@@ -1,13 +1,13 @@
-import React, { ReactNode } from 'react'
-import { Select, Space, Radio } from 'antd'
-import { EnvironmentOutlined } from '@ant-design/icons'
-import type { RadioChangeEvent } from 'antd'
-import siteApi from 'api/siteApi'
-import { useSearchParams } from 'react-router-dom'
+import React, { ReactNode } from 'react';
+import { Select, Space, Radio } from 'antd';
+import { EnvironmentOutlined } from '@ant-design/icons';
+import type { RadioChangeEvent } from 'antd';
+import siteApi from 'api/siteApi';
+import { useSearchParams } from 'react-router-dom';
 
-import { ClockFilterIcon, ArrowFilterIcon } from '#components/Icons'
+import { ClockFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
-import './style.scss'
+import './style.scss';
 
 const CustomOption = ({
   data,
@@ -15,17 +15,17 @@ const CustomOption = ({
   setValueRender,
   salaryType,
 }: {
-  data: any
-  setValue: Function
-  setValueRender: Function
-  salaryType: number
+  data: any;
+  setValue: Function;
+  setValueRender: Function;
+  salaryType: number;
 }) => {
-  console.log('Custom option', data)
+  console.log('Custom option', data);
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
-    setValue(value)
-    const valueRender = data.find((item: any) => item.id == value)
-    setValueRender(valueRender)
-  }
+    setValue(value);
+    const valueRender = data.find((item: any) => item.id == value);
+    setValueRender(valueRender);
+  };
 
   return (
     <Radio.Group
@@ -40,41 +40,41 @@ const CustomOption = ({
             <Radio key={index} style={{ width: '100%' }} value={value.id}>
               {value.value}
             </Radio>
-          )
+          );
         })}
       </Space>
     </Radio.Group>
-  )
-}
+  );
+};
 
 interface SalaryFilter {
-  setSalaryType: Function
+  setSalaryType: Function;
 }
 
-const { Option } = Select
+const { Option } = Select;
 const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [data, setData] = React.useState()
-  const [valueRender, setValueRender] = React.useState<any>()
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [data, setData] = React.useState();
+  const [valueRender, setValueRender] = React.useState<any>();
 
-  const SALARY_TYPE = Number(searchParams.get('sal-type'))
+  const SALARY_TYPE = Number(searchParams.get('sal-type'));
 
   const getTypeSalary = async () => {
-    const result = await siteApi.getSalaryType()
+    const result = await siteApi.getSalaryType();
 
     if (result) {
-      setData(result.data)
+      setData(result.data);
       if (SALARY_TYPE) {
-        const value = result.data.find((item: any) => item.id === SALARY_TYPE)
-        setValueRender(value)
+        const value = result.data.find((item: any) => item.id === SALARY_TYPE);
+        setValueRender(value);
       }
     }
-  }
+  };
   React.useEffect(() => {
-    getTypeSalary()
-  }, [])
+    getTypeSalary();
+  }, []);
 
-  const handleChange = (value1: string) => { }
+  const handleChange = (value1: string) => {};
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
@@ -101,7 +101,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
         </Option>
       </Select>
     </div>
-  )
-}
+  );
+};
 
-export default FilterTypeSalary
+export default FilterTypeSalary;

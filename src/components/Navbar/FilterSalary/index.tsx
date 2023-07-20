@@ -3,6 +3,13 @@ import { Collapse, Radio, Input, Button, Typography } from 'antd';
 import { useSearchParams } from 'react-router-dom';
 
 import { DownOutlined } from '@ant-design/icons';
+import {
+  DolaIcon,
+  ListCateIcon,
+  ListJobIcon,
+  LocationIcon,
+  ClockDetailPostIcon,
+} from '#components/Icons';
 //@ts-ignore
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -315,8 +322,9 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
         <MoneyFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterSalary input-filter_nav ${inputValueMin || salaryMax ? 'activeSalary' : ''
-          }`}
+        className={`inputFilterSalary input-filter_nav ${
+          inputValueMin || salaryMax ? 'activeSalary' : ''
+        }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -326,10 +334,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           header={
             salaryMax || salaryMin
               ? `${new Intl.NumberFormat('en-US').format(
-                Number(salaryMin?.toString().replace(',', '')),
-              )} - ${new Intl.NumberFormat('en-US').format(
-                Number(salaryMax?.toString().replace(',', '')),
-              )}`
+                  Number(salaryMin?.toString().replace(',', '')),
+                )} - ${new Intl.NumberFormat('en-US').format(
+                  Number(salaryMax?.toString().replace(',', '')),
+                )}`
               : `Mức lương`
           }
           key="1"
@@ -350,13 +358,13 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
             value={
               inputValueMin || inputValueMin === ''
                 ? new Intl.NumberFormat('en-US').format(
-                  Number(inputValueMin.toString().replace(',', '')),
-                )
+                    Number(inputValueMin.toString().replace(',', '')),
+                  )
                 : Salary_Min
-                  ? new Intl.NumberFormat('en-US').format(
+                ? new Intl.NumberFormat('en-US').format(
                     Number(Salary_Min.toString().replace(',', '')),
                   )
-                  : new Intl.NumberFormat('en-US').format(
+                : new Intl.NumberFormat('en-US').format(
                     Number('6000000'.replace(',', '')),
                   )
             }
@@ -371,13 +379,13 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
             value={
               inputValueMax || inputValueMax === ''
                 ? new Intl.NumberFormat('en-US').format(
-                  Number(inputValueMax.toString().replace(',', '')),
-                )
+                    Number(inputValueMax.toString().replace(',', '')),
+                  )
                 : Salary_Max
-                  ? new Intl.NumberFormat('en-US').format(
+                ? new Intl.NumberFormat('en-US').format(
                     Number(Salary_Max.toString().replace(',', '')),
                   )
-                  : new Intl.NumberFormat('en-US').format(
+                : new Intl.NumberFormat('en-US').format(
                     Number('12000000'.replace(',', '')),
                   )
             }

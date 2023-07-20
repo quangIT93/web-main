@@ -1,13 +1,13 @@
-import React, { ReactNode } from 'react'
-import { Select, Space, Radio } from 'antd'
-import { EnvironmentOutlined } from '@ant-design/icons'
-import type { RadioChangeEvent } from 'antd'
-import { useSearchParams } from 'react-router-dom'
-import siteApi from 'api/siteApi'
+import React, { ReactNode } from 'react';
+import { Select, Space, Radio } from 'antd';
+import { EnvironmentOutlined } from '@ant-design/icons';
+import type { RadioChangeEvent } from 'antd';
+import { useSearchParams } from 'react-router-dom';
+import siteApi from 'api/siteApi';
 
-import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons'
+import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
-import './style.scss'
+import './style.scss';
 
 const CustomOption = ({
   data,
@@ -15,19 +15,19 @@ const CustomOption = ({
   setValueRender,
   jobType,
 }: {
-  data: any
-  setValue: Function
-  setValueRender: Function
-  jobType: number
+  data: any;
+  setValue: Function;
+  setValueRender: Function;
+  jobType: number;
 }) => {
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
-    const valueRender = data.find((item: any) => item.id === value)
+    const valueRender = data.find((item: any) => item.id === value);
 
-    setValueRender(valueRender)
+    setValueRender(valueRender);
 
-    setValue(value)
-  }
-  console.log('jobType', jobType)
+    setValue(value);
+  };
+  console.log('jobType', jobType);
   return (
     <Radio.Group
       style={{ width: '100%' }}
@@ -41,46 +41,46 @@ const CustomOption = ({
             <Radio key={index} style={{ width: '100%' }} value={value.id}>
               {value.name}
             </Radio>
-          )
+          );
         })}
       </Space>
     </Radio.Group>
-  )
-}
+  );
+};
 
 interface TypeJob {
-  setTypeJob: Function
-  valueTypeJob: any
+  setTypeJob: Function;
+  valueTypeJob: any;
 }
 
-const { Option } = Select
+const { Option } = Select;
 const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
   // const [data, setData] = React.useState()
-  const [data, setData] = React.useState<{ id: number; name: string }[]>([])
-  const [valueRender, setValueRender] = React.useState<any>()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const TYPE_JOB = Number(searchParams.get('job-type'))
+  const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
+  const [valueRender, setValueRender] = React.useState<any>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const TYPE_JOB = Number(searchParams.get('job-type'));
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType()
-    const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data]
+    const result = await siteApi.getJobType();
+    const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data];
     if (updatedData) {
-      setData(updatedData)
-      console.log('TYPE_JOB', TYPE_JOB)
-      console.log('data', data)
+      setData(updatedData);
+      console.log('TYPE_JOB', TYPE_JOB);
+      console.log('data', data);
       if (TYPE_JOB) {
-        const value = updatedData.find((item: any) => item.id === TYPE_JOB)
-        setValueRender(value)
+        const value = updatedData.find((item: any) => item.id === TYPE_JOB);
+        setValueRender(value);
       } else {
-        setValueRender({ id: 5, name: 'Tất cả' })
+        setValueRender({ id: 5, name: 'Tất cả' });
       }
     }
-  }
+  };
   React.useEffect(() => {
-    getTypeJob()
-  }, [])
+    getTypeJob();
+  }, []);
 
-  const handleChange = (value1: string) => { }
+  const handleChange = (value1: string) => {};
 
   return (
     <div className="filter-input">
@@ -107,7 +107,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
         </Option>
       </Select>
     </div>
-  )
-}
+  );
+};
 
-export default FilterTypeJob
+export default FilterTypeJob;

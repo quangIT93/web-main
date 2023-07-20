@@ -33,3 +33,29 @@
         display: none !important;
     }
 }
+
+.edit-cate_post {
+    margin-top: 24px;
+    :where(.css-dev-only-do-not-override-yp8pcc).ant-select-multiple.ant-select-lg .ant-select-selector {
+        padding: 4px;
+        border-radius: 4px;
+    }
+    .ant-select.ant-cascader {
+        width: calc(60% + 16px);
+    }
+
+}
+.edit-cate_post {
+
+    .ant-select-dropdown.ant-cascader-dropdown {
+        min-width: 30% !important;
+        z-index: 0;
+    }
+    
+    .ant-select-clear {
+        margin-right: 20px;
+    }
+}
+
+
+
