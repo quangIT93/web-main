@@ -101,15 +101,6 @@ import ShowCancleSave from '#components/ShowCancleSave';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 export interface PostHotJob {
   id: number;
   address: string;
@@ -150,39 +141,11 @@ export interface PostHotJob {
   title: string;
 }
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '640px',
-  bgcolor: 'background.paper',
-  border: 'none',
-  outline: 'none',
-  borderRadius: '10px',
-  p: 4,
-};
-
-const styleSuccess = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '440px',
-  bgcolor: 'background.paper',
-  border: 'none',
-  outline: 'none',
-  borderRadius: '10px',
-  p: 4,
-};
-
 const HotJobpage: React.FC = () => {
   const [hotjob, setHotJob] = React.useState<any>([]);
   const [hotJobType, setHotJobType] = React.useState<any>([]);
   const [hotJobTotal, setHotJobTotal] = React.useState<any>([]);
-  const [page, setPage] = React.useState(0);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [searchData, setSearchData] = React.useState<any>();
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = React.useState(true);
 
@@ -229,62 +192,10 @@ const HotJobpage: React.FC = () => {
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
   const dispatch = useDispatch();
-  // const { setPostNewest, setPostNewestMore } = bindActionCreators(
-  //     actionCreators,
-  //     dispatch
-  // )
-
-  const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
-
-  const dataProfile = useSelector((state: RootState) => state.profileUser);
-
-  // query value
-  const QUERY = decodeURIComponent(`${searchParams.get('q')}`);
-
-  const SALARY_TYPE = Number(searchParams.get('sal-type'));
-  const MONEY_TYPE = Number(searchParams.get('money_type'));
-  const SALARY_MIN = Number(searchParams.get('salary_min'));
-  const SALARY_MAX = Number(searchParams.get('salary_max'));
-  const IS_WORKING_WEEKEND = Number(searchParams.get('is_working_weekend'));
-  const IS_REMOTELY = Number(searchParams.get('is_remotely'));
-
-  const JOB_TYPE =
-    Number(searchParams.get('job-type')) &&
-      Number(searchParams.get('job-type'))! !== 5
-      ? [Number(searchParams.get('job-type'))]
-      : [];
-
-  const LIST_DIS_ID = searchParams
-    .getAll('dis-ids')
-    .map((disId) => disId.split(','))
-    .map((dis) => dis[1]);
-  const LIST_CATEGORIES_ID = searchParams
-    .getAll('categories-ids')
-    .map((cateId) => cateId.split(','))
-    .map((dis) => dis[1])
-    .map(Number);
-
-  const allLocation = async () => {
-    try {
-      const allLocation = await locationApi.getAllLocation();
-
-      if (allLocation) {
-        setDataAllLocation(allLocation.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  React.useEffect(() => {
-    allLocation();
-    // getAllLocations()
-    // delete param when back to page
-  }, []);
 
   const getHotJob = async () => {
     try {
-      const url = localStorage.getItem("hotjobApi");
+      const url = localStorage.getItem('hotjobApi');
       const hotjob = await hotJobApi.getHotJobById(url, pageNumber, 20);
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       const hotjobtotal = Number(searchParams.get('hotjob-total'));
@@ -299,10 +210,9 @@ const HotJobpage: React.FC = () => {
   const getMoreHotJob = async () => {
     try {
       setOpenBackdrop(!openBackdrop);
-      const url = localStorage.getItem("hotjobApi");
+      const url = localStorage.getItem('hotjobApi');
       const result = await hotJobApi.getHotJobById(url, pageNumber, 20);
       if (result) {
-
         if (result.data.length == 0) {
           setIsVisible(false);
           setOpenBackdrop(false);
@@ -329,7 +239,6 @@ const HotJobpage: React.FC = () => {
     getMoreHotJob();
   }, [pageNumber]);
 
-
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
@@ -348,29 +257,6 @@ const HotJobpage: React.FC = () => {
     setOpenBackdrop(false);
   };
 
-  const fetchDataProfileUser = async () => {
-    try {
-      await dispatch(getProfile() as any);
-      const result = await profileApi.getProfile();
-      if (result) {
-        setProfileUser(result.data);
-      }
-    } catch (error) {
-      // Xử lý lỗi
-      console.log('error', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchDataProfileUser();
-  }, []);
-
-  useEffect(() => {
-    if (dataAllLocation && dataAllLocation.length > 0) {
-      setOpen(Array(dataAllLocation.length).fill(false));
-    }
-  }, [dataAllLocation]);
-
   // title
 
   const [titleFirebase, setTitleFirebase] = React.useState<string>('');
@@ -382,7 +268,7 @@ const HotJobpage: React.FC = () => {
   }, [dataAllLocation]);
 
   React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-hotjob';
+    document.title = titleFirebase ? titleFirebase : 'HiJob - Hot Job';
   }, [titleFirebase]);
 
   return (
@@ -411,14 +297,14 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? 'Remote'
                     : hotJobType === 3
-                      ? 'Influencer'
-                      : hotJobType === 4
-                        ? 'Short time'
-                        : hotJobType === 5
-                          ? 'Job today'
-                          : hotJobType === 6
-                            ? 'Freelancer'
-                            : ''}
+                    ? 'Influencer'
+                    : hotJobType === 4
+                    ? 'Short time'
+                    : hotJobType === 5
+                    ? 'Job today'
+                    : hotJobType === 6
+                    ? 'Freelancer'
+                    : ''}
                 </h3>
                 <h4>
                   {hotJobTotal ? hotJobTotal : 0}
@@ -477,7 +363,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

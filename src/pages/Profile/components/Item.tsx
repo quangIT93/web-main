@@ -6,6 +6,8 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import './styleItem.scss';
+
+import { PencilIcon } from '#components/Icons';
 import moment from 'moment';
 
 // import component
@@ -117,7 +119,9 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           }
           style={{ cursor: 'pointer' }}
         >
-          <img src="/images/profile/pen.png" alt="s" />
+          <div className="edit-icon">
+            <PencilIcon width={15} height={15} />
+          </div>
 
           <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
         </Space>

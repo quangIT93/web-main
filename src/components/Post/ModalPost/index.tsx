@@ -1,10 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Box from '@mui/material/Box'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
 
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import { Button } from 'antd'
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { Button } from 'antd';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -18,20 +18,20 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+};
 
 interface IModalPost {
-  openModalPost: boolean
-  setOpenModalPost: React.Dispatch<React.SetStateAction<boolean>>
+  openModalPost: boolean;
+  setOpenModalPost: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalPost: React.FC<IModalPost> = (props) => {
-  const { openModalPost, setOpenModalPost } = props
-  const handleClose = () => setOpenModalPost(false)
+  const { openModalPost, setOpenModalPost } = props;
+  const handleClose = () => setOpenModalPost(false);
 
   const onclick = async () => {
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
   return (
     <div>
@@ -98,7 +98,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             >
               <img
                 alt="lỗi ảnh"
-                src={require('../../../img/langdingPage/image 43.png')}
+                src={require('../../../img/langdingPage/image 45.png')}
               />
             </Link>
           </div>
@@ -124,7 +124,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
         </Box>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default ModalPost
+export default ModalPost;

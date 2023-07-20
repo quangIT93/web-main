@@ -28,6 +28,8 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 // import icon
 import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined'
@@ -308,13 +310,25 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             lineHeight: '24px',
             color: '#001424',
             margin: '12px 0',
+            position: 'relative'
           }}
         >
           Đăng nhập
+          <IconButton aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: '0',
+              top: '50%',
+              transform: 'translateY(-50%)'
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
         </Typography>
         {!isEmailVerified && (
           <>
-            <KeyboardArrowLeftOutlinedIcon
+            {/* <KeyboardArrowLeftOutlinedIcon
               className="icon-left_login"
               sx={{
                 width: '2rem',
@@ -323,7 +337,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 fontWeight: '300',
               }}
               onClick={handleBackOtp}
-            />
+            /> */}
             <form>
               <FacebookLogin
                 appId={appId}

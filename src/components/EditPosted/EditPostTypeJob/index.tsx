@@ -1,45 +1,45 @@
-import React, { useState, useEffect, memo } from 'react'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
+import React, { useState, useEffect, memo } from 'react';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
-import siteApi from 'api/siteApi'
-import { AxiosResponse } from 'axios'
+import siteApi from 'api/siteApi';
+import { AxiosResponse } from 'axios';
 
 interface IEditPostTypeJob {
-  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
-  editDataPosted: any
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
+  editDataPosted: any;
 }
 
 const styleLabel = {
   fontWeight: 600,
   color: '#000000',
-}
+};
 
 const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
-  const { editDataPosted, setEditDataPosted } = props
+  const { editDataPosted, setEditDataPosted } = props;
 
-  const [jobTypes, setJobTypes] = useState<AxiosResponse | null>(null)
+  const [jobTypes, setJobTypes] = useState<AxiosResponse | null>(null);
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType()
+    const result = await siteApi.getJobType();
     if (result) {
-      setJobTypes(result)
+      setJobTypes(result);
     }
-  }
+  };
 
   React.useEffect(() => {
-    getTypeJob()
-  }, [])
+    getTypeJob();
+  }, []);
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       jobTypeId: Number(e.target.value),
-    }))
-  }
+    }));
+  };
 
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>
@@ -53,13 +53,12 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
         value={Number(
           !editDataPosted?.jobTypeId
             ? editDataPosted?.job_type?.job_type_id
-            : editDataPosted?.jobTypeId
+            : editDataPosted?.jobTypeId,
         )}
         onChange={handleChaneTypeJob}
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          marginLeft: '12px',
         }}
       >
         {jobTypes?.data.map((item: any, i: number) => {
@@ -70,11 +69,11 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
               control={<Radio />}
               label={`${item.name}`}
             />
-          )
+          );
         })}
       </RadioGroup>
     </FormControl>
-  )
-}
+  );
+};
 
-export default memo(EditPostTypeJob)
+export default memo(EditPostTypeJob);

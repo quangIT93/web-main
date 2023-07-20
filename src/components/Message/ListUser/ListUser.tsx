@@ -115,8 +115,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
     windowWidth && props.setOpenListChat(true);
 
+
     if (props.openListChat === true && windowWidth) {
-      props.setOpenListChat(true);
       let listChatElement = document.querySelector('.list_userChat');
       listChatElement?.classList.add('.hide-list-userChat');
     }

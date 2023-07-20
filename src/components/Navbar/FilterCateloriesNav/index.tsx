@@ -8,6 +8,8 @@ import './style.scss';
 import { useSearchParams, useLocation } from 'react-router-dom';
 
 import { RootState } from 'store';
+import { BagFilterIcon, ArrowFilterIcon } from '#components/Icons';
+
 const { Text } = Typography;
 
 interface DistrictProps {
@@ -92,9 +94,14 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
 
   if (userProfile || dataCategories) {
     return (
-      <>
+      <div className="filter-input">
+        <div className="filter-input_icon">
+          <BagFilterIcon width={20} height={20} />
+        </div>
         <Cascader
+          // open
           dropdownRender={DropdownRender}
+          suffixIcon={<ArrowFilterIcon width={14} height={10} />}
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
@@ -141,7 +148,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           style={{ width: '100%', borderRadius: '2px' }}
           placeholder="Chọn danh mục ngành nghề"
         />
-      </>
+      </div>
     );
   } else {
     return <></>;

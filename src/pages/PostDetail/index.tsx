@@ -68,6 +68,9 @@ import { SaveIconOutline, SaveIconFill, ShareIcon } from '#components/Icons';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import { PostNewest } from '#components/Home/NewJobs';
+
+import IconButton from '@mui/material/IconButton';
+import { CloseIcon } from '#components/Icons';
 // import icon
 import {
   MailIcon,
@@ -78,12 +81,14 @@ import {
   CompanyNameDetailPostIcon,
   AddressDetailPostIcon,
   ClockDetailPostIcon,
-  BackIcon
+  BackIcon,
 } from '#components/Icons';
 
 import './style.scss';
 import ShowCopy from '#components/ShowCopy';
 import { height } from '@mui/system';
+
+import AnotherPost from './components/AnotherPost';
 
 const itemsShare = [
   {
@@ -159,10 +164,12 @@ const Detail: React.FC = () => {
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [title, setTitle] = React.useState('');
-  const [tabValue, setTabValue] = React.useState("1");
+  const [tabValue, setTabValue] = React.useState('1');
 
   const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
+  const [postPrev, setPostPrev] = React.useState<AxiosResponse | null>(null);
+  const [postNext, setPostNext] = React.useState<AxiosResponse | null>(null);
   const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(
     null,
   );
@@ -272,23 +279,44 @@ const Detail: React.FC = () => {
     }
   };
 
+  const getAnotherPost = async (postID: number, position: number) => {
+    try {
+      setIsLoading(true);
+      const result = await postApi.getById(postID);
+      if (result) {
+        console.log(result);
+
+        setIsLoading(false);
+        position === 0 ? setPostPrev(result.data) : setPostNext(result.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handlePreviousPost = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams({
       'post-id': `${POST_ID - 1}`,
     });
-  }
+  };
 
   const handleNextPost = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams({
       'post-id': `${POST_ID + 1}`,
     });
-  }
+  };
 
   React.useEffect(() => {
     getPostById();
+    //get post prev
+    getAnotherPost(POST_ID - 1, 0);
+    //get post next
+    getAnotherPost(POST_ID + 1, 1);
   }, [bookmarked, POST_ID]);
+  console.log('post prev: ', postPrev);
+  console.log('post next: ', postNext);
 
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -496,13 +524,16 @@ const Detail: React.FC = () => {
   const handleClickSearch = () => {
     const companyName = post?.data.company_name;
     const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
-    window.open(searchUrl, "_self");
+    window.open(searchUrl, '_self');
   };
 
   const handleClickShowMap = () => {
-    window.open(`https://www.google.com/maps/place/${post?.data.district}`);
+    window.open(
+      'https://www.google.com/maps/place/' +
+        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
+    );
   };
-
+  console.log('time', post?.data);
   return (
     <>
       {automatic && (
@@ -556,7 +587,7 @@ const Detail: React.FC = () => {
                     <AddressDetailPostIcon width={24} height={24} />
                     <h3
                       onClick={handleClickShowMap}
-                    >{`${post?.data.district}, ${post?.data.province}`}</h3>
+                    >{`${post?.data.address}, ${post?.data.district}, ${post?.data.province}`}</h3>
                   </div>
                 </div>
                 <div className="bot-title">
@@ -606,9 +637,13 @@ const Detail: React.FC = () => {
               </div>
               <div className="img-container">
                 <div className="div-job-img" ref={componentRef}>
-                  {isLoading
-                    ? <Skeleton variant="rectangular" width={"100%"} height={630} />
-                    :
+                  {isLoading ? (
+                    <Skeleton
+                      variant="rectangular"
+                      width={'100%'}
+                      height={630}
+                    />
+                  ) : (
                     <Carousel
                       data={
                         post?.data.images.length > 0 ? post?.data.images : data
@@ -635,13 +670,18 @@ const Detail: React.FC = () => {
                         maxHeight: '590px',
                       }}
                     />
-                  }
+                  )}
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
-                  <Box sx={{ width: '100%', height: '100%', typography: 'body1' }}>
+                  <Box
+                    sx={{ width: '100%', height: '100%', typography: 'body1' }}
+                  >
                     <TabContext value={tabValue}>
                       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList onChange={handleChangeTab} aria-label="lab API tabs example">
+                        <TabList
+                          onChange={handleChangeTab}
+                          aria-label="lab API tabs example"
+                        >
                           <Tab label="Thông tin việc làm" value="1" />
                           <Tab label="Thông tin công ty" value="2" />
                         </TabList>
@@ -650,7 +690,9 @@ const Detail: React.FC = () => {
                         <div className="job-title-container">
                           <div className="job-title-details">
                             <div className="div-detail-row">
-                              <EnvironmentOutlined style={{ color: '#575757' }} />
+                              <EnvironmentOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Địa chỉ</p>
@@ -666,14 +708,16 @@ const Detail: React.FC = () => {
                               </div>
                             </div>
                             <div className="div-detail-row">
-                              <ClockCircleOutlined style={{ color: '#575757' }} />
+                              <ClockCircleOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Giờ làm việc</p>
                                 <h5>
-                                  {moment(new Date(post?.data.start_time)).format(
-                                    'HH:mm',
-                                  )}{' '}
+                                  {moment(
+                                    new Date(post?.data.start_time),
+                                  ).format('HH:mm')}{' '}
                                   -{' '}
                                   {moment(new Date(post?.data.end_time)).format(
                                     'HH:mm',
@@ -714,14 +758,20 @@ const Detail: React.FC = () => {
                               </div>
                             </div>
                             <div className="div-detail-row">
-                              <CreditCardOutlined style={{ color: '#575757' }} />
+                              <CreditCardOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Danh mục</p>
                                 {post?.data.categories.map(
-                                  (item: ItemCategories, index: null | number) => (
+                                  (
+                                    item: ItemCategories,
+                                    index: null | number,
+                                  ) => (
                                     <h5 key={index}>
-                                      {item.parent_category}/{item.child_category}
+                                      {item.parent_category}/
+                                      {item.child_category}
                                     </h5>
                                   ),
                                 )}
@@ -740,15 +790,17 @@ const Detail: React.FC = () => {
                               </div>
                             </div>
                             <div className="div-detail-row">
-                              <ClockCircleOutlined style={{ color: '#575757' }} />
+                              <ClockCircleOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Thời gian hết hạn</p>
                                 <h5>
                                   {post?.data.expired_date
-                                    ? moment(new Date(post?.data.expired_date)).format(
-                                      'DD/MM/yyyy',
-                                    )
+                                    ? moment(
+                                        new Date(post?.data.expired_date),
+                                      ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>
@@ -793,18 +845,33 @@ const Detail: React.FC = () => {
                     >
                       {post?.data.description}
                     </div>
-                    <div className="description-buttons">
-                      <div className="description-button_previous" onClick={handlePreviousPost}>
-                        <div className="icon">
-                          <BackIcon width={20} height={20} />
+                    <div className="div-description-mo-bottom">
+                      <div className="description-buttons">
+                        <div
+                          className="description-button_previous"
+                          onClick={handlePreviousPost}
+                        >
+                          <div className="icon">
+                            <BackIcon width={17} height={17} />
+                          </div>
+                          <span>Previous job</span>
                         </div>
-                        <span>Previous job</span>
+                        <div
+                          className="description-button_next"
+                          onClick={handleNextPost}
+                        >
+                          <span>Next job</span>
+                          <div className="icon">
+                            <BackIcon width={17} height={17} />
+                          </div>
+                        </div>
                       </div>
-                      <div className="description-button_next" onClick={handleNextPost}>
-                        <span>Next job</span>
-                        <div className="icon">
-                          <BackIcon width={20} height={20} />
-                        </div>
+                      <div className="description-post">
+                        <AnotherPost
+                          item={postPrev}
+                          onClick={handlePreviousPost}
+                        />
+                        <AnotherPost item={postNext} onClick={handleNextPost} />
                       </div>
                     </div>
                   </div>
@@ -848,8 +915,25 @@ const Detail: React.FC = () => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                style={{ position: 'relative' }}
+              >
                 Chia sẻ công việc này
+                <IconButton
+                  aria-label="close"
+                  onClick={handleCloseModalShare}
+                  sx={{
+                    position: 'absolute',
+                    right: '0',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
               </Typography>
               <div className="wrap-info_modalShare">
                 <div className="wrap-img_info">

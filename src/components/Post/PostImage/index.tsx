@@ -1,43 +1,61 @@
-import React, { memo } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import React, { memo } from 'react';
+import { Box, Button, Typography } from '@mui/material';
 //@ts-ignore
-import imageCompression from 'browser-image-compression'
-import { validatePostImages } from 'validations'
+import imageCompression from 'browser-image-compression';
+import { validatePostImages } from 'validations';
 //@ts-ignore
-import { toast } from 'react-toastify'
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import { toast } from 'react-toastify';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
-import { useTheme } from '@mui/material/styles'
-import { useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 
-import './style.scss'
+import './style.scss';
 interface PostImageProps {
-  selectedFiles: File[]
-  setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>
+  selectedFiles: any;
+  setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
 }
 const PostImage: React.FC<PostImageProps> = (props) => {
-  const { selectedFiles, setSelectedFiles } = props
-  const [selectedImages, setSelectedImages] = React.useState<string[]>([])
+  const { selectedFiles, setSelectedFiles } = props;
+  const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
+  const [image, setImage] = React.useState<any>();
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 840,
-  }
+  };
 
-  const theme = useTheme()
-  const ixsobile = useMediaQuery(theme.breakpoints.down('xs'))
+  const theme = useTheme();
+  const ixsobile = useMediaQuery(theme.breakpoints.down('xs'));
+
+  React.useEffect(() => {
+    selectedFiles.map((value: any) => {
+      console.log('file img', value.preview);
+    });
+    return () => {
+      // Clean up all selectedFiles previews when the component unmounts
+
+      selectedFiles.length !== 0 &&
+        selectedFiles.forEach((file: any) => URL.revokeObjectURL(file.preview));
+    };
+  }, [selectedFiles]);
 
   const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const files = event.target.files
+    const files = event.target.files;
+
+    setImage(event.target.files && event.target.files[0]);
+
     const imagesUpload: any = Array.from(
-      event.target.files ? event.target.files : []
-    )
+      event.target.files ? event.target.files : [],
+    );
+
+    selectedFiles.forEach((file: any) => URL.revokeObjectURL(file.preview));
 
     const imagesToCheck =
       selectedFiles.length + imagesUpload.length > 5
         ? imagesUpload.slice(0, 5 - selectedImages.length)
-        : imagesUpload
+        : imagesUpload;
 
     // console.log(
     //   ' imagesUpload.slice(0, 5 - selectedImages.length)',
@@ -46,74 +64,76 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     // console.log(' imagesToCheck', imagesToCheck)
     // console.log(' imagesToCheck.length', imagesToCheck.length)
     if (imagesToCheck.length > 0) {
-      const validateImagesReply = validatePostImages(imagesToCheck)
+      const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
-        console.log('::: Invalid images')
-        return toast.warn('Ảnh không đúng định dạng')
+        console.log('::: Invalid images');
+        return toast.warn('Ảnh không đúng định dạng');
       } else {
         try {
-          const compressedImages: any = []
+          const compressedImages: any = [];
           await Promise.all(
             imagesToCheck.map(async (image: any) => {
-              const compressedImage = await imageCompression(image, options)
+              const compressedImage = await imageCompression(image, options);
               compressedImages.push(
                 new File([compressedImage], compressedImage.name, {
                   type: compressedImage.type,
-                })
-              )
-            })
-          )
+                }),
+              );
+            }),
+          );
           // console.log('Original image ::: ', imagesUpload)
           // console.log('Compressed image ::: ', compressedImages)
+
           setSelectedFiles((prevState) => [
             ...prevState,
             ...compressedImages.map((image: any) => ({
               image,
               preview: window.URL.createObjectURL(image),
             })),
-          ])
+          ]);
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
       }
     }
 
     if (files) {
-      const newImages: string[] = []
+      const newImages: string[] = [];
 
       for (let i = 0; i < files.length; i++) {
-        const file = files[i]
-        const reader = new FileReader()
+        const file = files[i];
+        const reader = new FileReader();
 
         reader.onload = () => {
-          const imageDataURL = reader.result as string
-          newImages.push(imageDataURL)
+          const imageDataURL = reader.result as string;
+          newImages.push(imageDataURL);
 
           if (newImages.length === files.length) {
             setSelectedImages((prevImages: string[]) => [
               ...prevImages,
               ...newImages,
-            ])
+            ]);
+            event.target.value = '';
           }
-        }
+        };
 
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
       }
     }
-  }
+  };
 
   const handleDeleteImage = (index: number) => {
     setSelectedImages((prevImages) => {
-      const updatedImages = [...prevImages]
-      updatedImages.splice(index, 1)
-      return updatedImages
-    })
+      const updatedImages = [...prevImages];
+      updatedImages.splice(index, 1);
+      return updatedImages;
+    });
     setSelectedFiles((prevFiles) => {
-      const updatedFiles = [...prevFiles]
-      updatedFiles.splice(index, 1)
-      return updatedFiles
-    })
-  }
+      const updatedFiles = [...prevFiles];
+      updatedFiles.splice(index, 1);
+      return updatedFiles;
+    });
+  };
 
   return (
     <div className="postImages">
@@ -189,13 +209,13 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             name="images"
             hidden
             accept="image/*"
-            onChange={(e) => handleImageChange(e)}
+            onChange={handleImageChange}
             multiple
           />
         </Button>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default memo(PostImage)
+export default memo(PostImage);
