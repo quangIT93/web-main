@@ -68,6 +68,9 @@ import { SaveIconOutline, SaveIconFill, ShareIcon } from '#components/Icons';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import { PostNewest } from '#components/Home/NewJobs';
+
+import IconButton from '@mui/material/IconButton';
+import { CloseIcon } from '#components/Icons';
 // import icon
 import {
   MailIcon,
@@ -281,6 +284,8 @@ const Detail: React.FC = () => {
       setIsLoading(true);
       const result = await postApi.getById(postID);
       if (result) {
+        console.log(result);
+
         setIsLoading(false);
         position === 0 ? setPostPrev(result.data) : setPostNext(result.data);
       }
@@ -524,7 +529,9 @@ const Detail: React.FC = () => {
   };
 
   const handleClickShowMap = () => {
-    window.open(`https://www.google.com/maps/place/${post?.data.district}`);
+    window.open('https://www.google.com/maps/place/' +
+      `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`
+    );
   };
 
   return (
@@ -580,7 +587,7 @@ const Detail: React.FC = () => {
                     <AddressDetailPostIcon width={24} height={24} />
                     <h3
                       onClick={handleClickShowMap}
-                    >{`${post?.data.district}, ${post?.data.province}`}</h3>
+                    >{`${post?.data.address}, ${post?.data.district}, ${post?.data.province}`}</h3>
                   </div>
                 </div>
                 <div className="bot-title">
@@ -673,14 +680,6 @@ const Detail: React.FC = () => {
                       <TabPanel value="1">
                         <div className="job-title-container">
                           <div className="job-title-details">
-                            <div className="div-detail-row">
-                              <EnvironmentOutlined style={{ color: '#575757' }} />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Địa chỉ</p>
-                                <h5>{post?.data.address}</h5>
-                              </div>
-                            </div>
                             <div className="div-detail-row">
                               <SlidersOutlined style={{ color: '#575757' }} />
                               <div style={{ marginLeft: '10px' }}>
@@ -819,13 +818,13 @@ const Detail: React.FC = () => {
                     </div>
                     <div className="div-description-mo-bottom">
                       <div className="description-buttons">
-                        <div className="description-button_previous" onClick={handlePreviousPost}>
+                        <div className="description-button_previous">
                           <div className="icon">
                             <BackIcon width={17} height={17} />
                           </div>
                           <span>Previous job</span>
                         </div>
-                        <div className="description-button_next" onClick={handleNextPost}>
+                        <div className="description-button_next">
                           <span>Next job</span>
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -833,8 +832,14 @@ const Detail: React.FC = () => {
                         </div>
                       </div>
                       <div className="description-post">
-                        <AnotherPost item={postPrev} />
-                        <AnotherPost item={postNext} />
+                        <AnotherPost
+                          item={postPrev}
+                          onClick={handlePreviousPost}
+                        />
+                        <AnotherPost
+                          item={postNext}
+                          onClick={handleNextPost}
+                        />
                       </div>
                     </div>
                   </div>
@@ -878,8 +883,19 @@ const Detail: React.FC = () => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
+              <Typography id="modal-modal-title" variant="h6" component="h2" style={{ position: 'relative' }}>
                 Chia sẻ công việc này
+                <IconButton aria-label="close"
+                  onClick={handleCloseModalShare}
+                  sx={{
+                    position: 'absolute',
+                    right: '0',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
               </Typography>
               <div className="wrap-info_modalShare">
                 <div className="wrap-img_info">

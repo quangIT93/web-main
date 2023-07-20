@@ -110,6 +110,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const [dataHistory, setDataHistory] = React.useState<any>([]);
   const [dataSuggest, setDataSuggest] = React.useState<any>([]);
   const [openDropdown, setOpenDropdown] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
 
   const QUERY = searchParams.get('q');
   const handleSearch = async (newValue: string | undefined) => {
@@ -132,6 +133,8 @@ const SearchInput: React.FC<SearchProps> = ({
   // get keyWords suggests
   React.useEffect(() => {
     setValue(QUERY as any);
+    const accessToken = localStorage.getItem('accessToken');
+    accessToken && setIsLogin(true);
   }, []);
 
   const getSuggestKeyWord = async () => {
@@ -171,14 +174,20 @@ const SearchInput: React.FC<SearchProps> = ({
     try {
       const resultHistory = await searchApi.getHistoryKeyWord(10);
       const resultSuggest = await searchApi.getSuggestKeyWord(10);
-      if (resultHistory && resultSuggest) {
+      if (resultHistory || resultSuggest) {
         setDataHistory(resultHistory.data);
         setDataSuggest(resultSuggest.data);
       }
+
+      console.log("resultSuggest effective", resultSuggest);
+
     } catch (error) {
       console.log('error');
     }
   };
+
+  console.log("resultSuggest", dataSuggest.data);
+
 
   React.useEffect(() => {
     getDataSearch();
@@ -254,7 +263,7 @@ const SearchInput: React.FC<SearchProps> = ({
     setValue('');
   };
 
-  const handleDeleteKeyword = () => {};
+  const handleDeleteKeyword = () => { };
 
   const handleDeleteHistoryKeyword = async (e: any, keyword: string) => {
     // e.stoppropagation();
@@ -297,7 +306,11 @@ const SearchInput: React.FC<SearchProps> = ({
           ))}
         </div>
       </div>
-      <div className="items-history items-search_keyword">
+      <div className="items-history items-search_keyword"
+        style={{
+          display: isLogin ? 'block' : 'none'
+        }}
+      >
         <h4>Tìm kiếm gần đây</h4>
         <div className="wrap-items-history wrap-items-search">
           {dataHistory?.listHistorySearch?.map((history: any) => (
@@ -353,7 +366,7 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-        // open={openDropdown}
+      // open={openDropdown}
       />
 
       <Button
@@ -361,7 +374,7 @@ const SearchInput: React.FC<SearchProps> = ({
         shape="circle"
         onClick={(event) => handleSearchIcon(event, value)}
       >
-        <SearchIcon width={18} height={18} />
+        <SearchIcon width={24} height={24} />
       </Button>
       <Button
         className="search-input-wrapper-iconFilter"

@@ -53,23 +53,23 @@
 
 .new-job {
   @include breakpoint(mobile) {
-    margin-top: 17rem !important;
+    margin-top: 14rem !important;
   }
 
   @include breakpoint(tablet) {
-    margin-top: 17rem !important;
+    margin-top: 14rem !important;
   }
 
   @include breakpoint(largeTablet) {
-    margin-top: 17rem !important;
+    margin-top: 14rem !important;
   }
 
   @include breakpoint(an_order) {
-    margin-top: 17rem !important;
+    margin-top: 14rem !important;
   }
 
   @include breakpoint(destop) {
-    margin-top: 17rem !important;
+    margin-top: 14rem !important;
   }
 }
 
@@ -140,7 +140,8 @@
 }
 
 .img-resource-company {
-  height: 40px;
+  height: 24px !important;
+  width: 24px;
   border-radius: 5px;
 }
 

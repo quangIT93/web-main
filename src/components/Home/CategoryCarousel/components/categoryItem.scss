@@ -23,8 +23,8 @@
     align-items: center;
 
     .category-item-image {
-      height: 30px !important;
-      width: 30px !important;
+      height: 40px !important;
+      width: 40px !important;
 
       @include breakpoint(mobile) {
         height: 30px !important;

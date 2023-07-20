@@ -17,13 +17,40 @@
 
   .nav {
     &.css-1lmzauf {
-      @media screen and (min-width: 1280px) {
-        padding: 0 20%;
+      padding: 0 20%;
+
+      @media screen and (max-width: 1834px) and (min-width: 1280px) {
+        padding: 0 10%;
+      }
+
+      @media screen and (max-width: 1279px) {
+        padding: 0 24px;
       }
     }
 
     .div-nav-right {
       flex: 2
+    }
+  }
+
+  #div-policy-footer {
+    padding: 10px 20%;
+
+    @media screen and (max-width: 1834px) and (min-width: 1280px) {
+      padding: 10px 10%;
+    }
+
+    @media screen and (max-width: 1440px) and (min-width: 1025px) {
+      padding: 10px 24px;
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 769px) {
+      padding: 10px 24px;
+    }
+
+    @media screen and (max-width: 768px) {
+      padding: 10px 24px;
+      justify-content: center
     }
   }
 
@@ -73,8 +100,12 @@
       padding: 0 24px 70px;
     }
 
-    @media screen and (max-width: 1440px) and (min-width: 1280px) {
-      padding: 0 20% 70px;
+    // @media screen and (max-width: 1440px) and (min-width: 1280px) {
+    //   padding: 0 20% 70px;
+    // }
+
+    @media screen and (max-width: 1834px) and (min-width: 1280px) {
+      padding: 0 10% 70px;
     }
 
     @include breakpoint(largeTablet) {
@@ -99,17 +130,6 @@
 
       h3 {
         color: #001424;
-      }
-
-      .thumbnails {
-        position: sticky;
-        margin-top: -90px;
-
-        justify-content: center;
-
-        .active-thumbnail {
-          border: #0d99ff solid 3px !important;
-        }
       }
 
       .title-container {
@@ -220,10 +240,18 @@
 
         @include breakpoint(tablet) {
           flex-direction: column;
+          gap: 80px;
+
         }
 
         @include breakpoint(mobile) {
           flex-direction: column;
+          gap: 50px;
+        }
+
+        @include breakpoint(425) {
+          flex-direction: column;
+          gap: 50px;
         }
 
         .div-job-img {
@@ -265,6 +293,7 @@
 
                 img {
                   width: 100% !important;
+                  border: 1px solid #e5e5e5;
                 }
               }
 
@@ -337,7 +366,21 @@
             }
 
             .thumbnails {
-              margin-top: -20px !important;
+              position: sticky;
+              justify-content: center;
+              margin-top: -20px;
+
+              @media screen and (max-width: 768px) {
+                margin-top: -145px;
+              }
+
+              @media screen and (max-width: 500px) {
+                margin-top: -110px;
+              }
+
+              .active-thumbnail {
+                border: #0d99ff solid 3px !important;
+              }
 
               .thumbnail {
                 margin: 0 5px;
@@ -405,8 +448,8 @@
             justify-content: space-between;
 
             .job-title-container {
-              height: 430px;
-              overflow-y: scroll;
+              // height: 430px;
+              // overflow-y: scroll;
 
               .job-title-details {
                 display: flex;
@@ -570,16 +613,6 @@
                   border-radius: 8px;
                   color: black;
                   gap: 12px;
-                  cursor: pointer;
-                  transition: 0.2s linear all;
-
-                  &:hover {
-                    transform: scale(1.1);
-                  }
-
-                  &:active {
-                    transform: scale(0.9);
-                  }
 
                   .icon {
                     display: flex;
@@ -607,11 +640,63 @@
               }
 
               .description-post {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
                 .anotherPost-container {
+                  width: 318px;
+                  height: 100px;
+                  cursor: pointer;
+                  transition: 0.2s linear all;
+
+                  @media screen and (max-width: 700px) {
+                    width: 45%;
+                  }
+
+                  @media screen and (max-width: 4250px) {
+                    width: 45%;
+                    height: fit-content;
+                  }
+
+                  &:hover {
+                    transform: scale(1.025);
+                  }
+
+                  &:active {
+                    transform: scale(0.9);
+                  }
 
                   .anotherPost-content {
                     display: flex;
                     gap: 12px;
+                    align-items: center;
+                    width: 100%;
+
+                    @media screen and (max-width: 724px) {
+                      flex-direction: column;
+                    }
+
+                    img {
+                      width: 94px !important;
+                      height: 76px !important;
+                      border-radius: 10px;
+                      object-fit: cover;
+                    }
+
+                    .anotherPost_info {
+                      width: 160px;
+
+                      @media screen and (max-width: 724px) {
+                        width: 100%;
+                      }
+
+                      .MuiTypography-h6 {
+                        // white-space: normal !important;
+                        // text-overflow: unset;
+                        // overflow: unset !important;
+                      }
+                    }
                   }
                 }
               }
@@ -650,7 +735,6 @@
             align-items: flex-start;
 
             @include breakpoint(tablet) {
-              padding: 0px 10px;
               flex-direction: row;
               flex-wrap: wrap;
               justify-content: space-between;

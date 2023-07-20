@@ -125,4 +125,9 @@
     @include breakpoint(largeTablet) {
         width: 30%;
     }
+
+    .img-resource-company {
+        height: 24px !important;
+        width: 24px;
+    }
 }

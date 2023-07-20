@@ -5,6 +5,8 @@ import type { RadioChangeEvent } from 'antd'
 import siteApi from 'api/siteApi'
 import { useSearchParams } from 'react-router-dom'
 
+import { ClockFilterIcon, ArrowFilterIcon } from '#components/Icons'
+
 import './style.scss'
 
 const CustomOption = ({
@@ -72,9 +74,12 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
     getTypeSalary()
   }, [])
 
-  const handleChange = (value1: string) => {}
+  const handleChange = (value1: string) => { }
   return (
-    <>
+    <div className="filter-input">
+      <div className="filter-input_icon">
+        <ClockFilterIcon width={20} height={20} />
+      </div>
       <Select
         // defaultValue="lucy"
         style={{ width: 120 }}
@@ -84,6 +89,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder="Trả lương theo"
+        suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="1" label="Jack">
           <CustomOption
@@ -94,7 +100,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
           />
         </Option>
       </Select>
-    </>
+    </div>
   )
 }
 

@@ -40,20 +40,15 @@ import HomeValueContextProvider, {
 } from 'context/HomeValueContextProvider';
 
 interface Iprops {
-    item: PostNewest;
+    isLeft: PostNewest;
 }
 
 const AnotherPost: React.FC<any> = (props) => {
-
-    const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-        window.open(`/post-detail?post-id=${id}`);
-    };
 
     return (
         <>
             <Card
                 sx={{
-                    minWidth: '100%',
                     display: 'flex',
                     padding: '12px',
                     cursor: 'pointer',
@@ -66,26 +61,19 @@ const AnotherPost: React.FC<any> = (props) => {
                     justifyContent: 'space-between',
                 }}
                 className="anotherPost-container"
-                onClick={(e) => {
-                    handleClickItem(e, props.item.id);
-                }}
+                onClick={props.onClick}
             >
                 <div className="anotherPost-content">
                     <img
-                        src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
-                        srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                        alt={props.item.title}
+                        src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={props.item?.title}
                         loading="lazy"
-                        style={{
-                            width: '120px',
-                            height: '120px',
-                            borderRadius: 10,
-                        }}
                         className="anotherPost_image"
                     />
                     <div className="anotherPost_info">
                         {' '}
-                        <Tooltip placement="top" title={props.item.title}>
+                        <Tooltip placement="top" title={props.item?.title}>
                             <Typography
                                 gutterBottom
                                 variant="h6"
@@ -108,7 +96,7 @@ const AnotherPost: React.FC<any> = (props) => {
                                 {props?.item?.title}
                             </Typography>
                         </Tooltip>
-                        <Tooltip placement="top" title={props.item.company_name}>
+                        <Tooltip placement="top" title={props.item?.company_name}>
                             <Typography
                                 gutterBottom
                                 variant="h6"
@@ -147,9 +135,10 @@ const AnotherPost: React.FC<any> = (props) => {
                                     textOverflow: 'ellipsis',
                                     overflow: 'hidden',
                                     marginLeft: '4px',
+                                    fontSize: '12px',
                                 }}
                             >
-                                {`${props.item.district}, ${props.item.province}`}
+                                {`${props.item?.district}, ${props.item?.province}`}
                             </Typography>
                         </div>
                         <div
@@ -169,13 +158,14 @@ const AnotherPost: React.FC<any> = (props) => {
                                     textOverflow: 'ellipsis',
                                     overflow: 'hidden',
                                     marginLeft: '4px',
+                                    fontSize: '12px',
                                 }}
                             >
-                                {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
+                                {new Intl.NumberFormat('en-US').format(props.item?.salary_min)}{' '}
                                 -{' '}
                                 {new Intl.NumberFormat('en-US').format(
-                                    props.item.salary_max,
-                                ) + `/${props.item.salary_type}`}
+                                    props.item?.salary_max,
+                                ) + `/${props.item?.salary_type}`}
                             </Typography>
                         </div>
                     </div>
