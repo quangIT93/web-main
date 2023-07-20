@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
 import { Navbar } from '#components';
-
+import Footer from '#components/Footer/Footer';
 import './style.scss';
 
 const NotFound: React.FC = () => {
@@ -11,6 +11,7 @@ const NotFound: React.FC = () => {
       <div className="notFound-page">
         <strong>NotFound</strong>
       </div>
+      <Footer />
     </div>
   );
 };

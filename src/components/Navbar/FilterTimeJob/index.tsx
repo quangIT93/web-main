@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
+import { CalendarFilterIcon, ArrowFilterIcon } from '#components/Icons';
+
 import './style.scss';
 import { AnyMxRecord } from 'dns';
 
@@ -125,28 +127,32 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   }, []);
 
   return (
-    <Collapse
-      className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
-        }`}
-      activeKey={collapseOpen ? '1' : ''}
-      ref={collapseRef}
-      expandIconPosition="end"
-      expandIcon={(panelProps) => <DownOutlined />}
-    >
-      <Panel
-        header={
-          isRemotely || isWorkingWeekend
-            ? `${isWorkingWeekend ? 'Làm việc cuối tuần' : ''} 
+    <div className="filter-input">
+      <div className="filter-input_icon">
+        <CalendarFilterIcon width={20} height={20} />
+      </div>
+      <Collapse
+        className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
+          }`}
+        activeKey={collapseOpen ? '1' : ''}
+        ref={collapseRef}
+        expandIconPosition="end"
+        expandIcon={() => <ArrowFilterIcon width={14} height={10} />}
+      >
+        <Panel
+          header={
+            isRemotely || isWorkingWeekend
+              ? `${isWorkingWeekend ? 'Làm việc cuối tuần' : ''} 
             ${isWorkingWeekend && isRemotely ? '-' : ''}
             
             ${isRemotely ? 'Làm việc từ xa' : ''}`
-            : `Thời gian làm việc`
-        }
-        key="1"
-      >
-        <Text className="title-filter_timeJob">Thời gian làm việc</Text>
+              : `Thời gian làm việc`
+          }
+          key="1"
+        >
+          <Text className="title-filter_timeJob">Thời gian làm việc</Text>
 
-        {/* <Radio.Group
+          {/* <Radio.Group
           value={selectedValue}
           onChange={handleRadioChange}
           className="inputFilter-grouptimeJob_radio"
@@ -159,40 +165,41 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
           <DatePicker onChange={onChangeEndDate} />
         </div> */}
 
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <FormControlLabel
-            label="Làm việc cuối tuần"
-            control={
-              <Checkbox
-                checked={checkboxIsWeekend === 0 ? false : true}
-                onChange={handleWeekendChange}
-              />
-            }
-          />
-          <FormControlLabel
-            label="Làm việc từ xa"
-            control={
-              <Checkbox
-                checked={checksetIsRemotely === 0 ? false : true}
-                onChange={handleRemoteChange}
-              />
-            }
-          />
-        </Box>
-        <div className="wrap-button_filter">
-          <Button type="default" onClick={handleConfirmCancel}>
-            Huỷ
-          </Button>
-          <Button
-            type="primary"
-            onClick={handleConfirm}
-            className="submitValue"
-          >
-            Áp dụng
-          </Button>
-        </div>
-      </Panel>
-    </Collapse>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <FormControlLabel
+              label="Làm việc cuối tuần"
+              control={
+                <Checkbox
+                  checked={checkboxIsWeekend === 0 ? false : true}
+                  onChange={handleWeekendChange}
+                />
+              }
+            />
+            <FormControlLabel
+              label="Làm việc từ xa"
+              control={
+                <Checkbox
+                  checked={checksetIsRemotely === 0 ? false : true}
+                  onChange={handleRemoteChange}
+                />
+              }
+            />
+          </Box>
+          <div className="wrap-button_filter">
+            <Button type="default" onClick={handleConfirmCancel}>
+              Huỷ
+            </Button>
+            <Button
+              type="primary"
+              onClick={handleConfirm}
+              className="submitValue"
+            >
+              Áp dụng
+            </Button>
+          </div>
+        </Panel>
+      </Collapse>
+    </div>
   );
 };
 

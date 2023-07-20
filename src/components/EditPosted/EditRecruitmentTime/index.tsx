@@ -42,8 +42,9 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
         wrap={true}
         size={[16, 8]}
         style={{ width: '100%' }}
+        className="EditRecruitmentTime"
       >
-        <div className="wrapTimeDay">
+        <div className="wrap-editPost_time">
           <Typography
             sx={styleLabel}
             variant="body1"
@@ -61,8 +62,8 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             onChange={handleChangeStartTime}
           />
         </div>
-        <div className="connect">-</div>
-        <div className="wrapTimeDay">
+        {/* <div className="connect">-</div> */}
+        <div className="wrap-editPost_time">
           <Typography
             sx={styleLabel}
             variant="body1"

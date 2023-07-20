@@ -81,6 +81,8 @@ const CategoryCarousel: React.FC = () => {
   const [value, setValue] = React.useState(0);
   const [categoryIdCookie, setCategorieIdCookie] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
+  const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
   // const positionRef = React.useRef(0)
 
   // const {height} = height
@@ -238,6 +240,10 @@ const CategoryCarousel: React.FC = () => {
       getCookie('userSelected') || '{}',
     ) as UserSelected;
 
+    const accessToken = localStorage.getItem('accessToken');
+    accessToken && setIsLogin(true);
+    setSelectedItemIndex(storedSettings.userSelectedId)
+
     setTimeout(async () => {
       if (storedSettings.userSelectedId !== 1) {
         const slide = document.querySelector('.swiper-slide');
@@ -257,6 +263,7 @@ const CategoryCarousel: React.FC = () => {
     let storedSettings = JSON.parse(
       getCookie('userSelected') || '{}',
     ) as UserSelected;
+    setSelectedItemIndex(storedSettings.userSelectedId)
     setCategorieIdCookie(storedSettings.userSelectedId);
     if (storedSettings.userSelectedId !== 1) {
       const slide = document.querySelector('.swiper-slide');
@@ -295,6 +302,7 @@ const CategoryCarousel: React.FC = () => {
   };
 
   console.log('category id: ', value);
+  console.log('selectedItemIndex: ', selectedItemIndex);
 
   // scroll
   return (
@@ -382,7 +390,7 @@ const CategoryCarousel: React.FC = () => {
           navigation={true}
           mousewheel={true}
           slidesPerView="auto"
-          spaceBetween={50}
+          spaceBetween={40}
           // breakpoints={{
           //   320: {
           //     slidesPerView: 3,
@@ -414,6 +422,7 @@ const CategoryCarousel: React.FC = () => {
           // }}
           modules={[Mousewheel, Navigation, Pagination]}
           className="mySwiper"
+          initialSlide={selectedItemIndex - 1}
         >
           {categories?.data.map((item: CategoryItem, index: number) => {
             // console.log("id: ", item.id);
@@ -440,9 +449,9 @@ const CategoryCarousel: React.FC = () => {
                     />
                     <span
                       className="category-item-title"
-                      style={{ fontSize: '10px', color: '#000000' }}
+                      style={{ fontSize: '14px', fontWeight: '400', color: '#000000' }}
                     >
-                      {item.name}
+                      {isLogin && item.id === 1 ? "Công việc gợi ý" : item.name}
                     </span>
                   </div>
                   <div className="border-selected"

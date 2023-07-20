@@ -39,7 +39,10 @@ const dataItem = [
   {
     id: 1,
     title: 'Các công việc đã ứng tuyển',
-    childs: ['Tất cả', 'Đã được duyệt', 'Đang chờ duyệt'],
+    childs: [
+      'Tất cả',
+      // 'Đã được duyệt', 'Đang chờ duyệt'
+    ],
   },
   {
     id: 2,
@@ -104,11 +107,11 @@ const HistoryPost = () => {
     <Typography key="3" color="text.primary">
       {activeChild === '0-0'
         ? 'Tất cả'
-        : activeChild === '0-1'
-        ? 'Đã được duyệt'
-        : activeChild === '0-2'
-        ? 'Đang chờ duyệt'
-        : ''}
+        : // : activeChild === '0-1'
+          // ? 'Đã được duyệt'
+          // : activeChild === '0-2'
+          // ? 'Đang chờ duyệt'
+          ''}
 
       {activeChild === '1-0' ? 'Tất cả' : ''}
 

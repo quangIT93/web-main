@@ -108,6 +108,8 @@ const EditPosted = () => {
 
   const [openModalEditPost, setOpenModalEditPost] = React.useState(false);
 
+  const [loadingNotFound, setLoadingNotFound] = React.useState(false);
+
   const postId = parseInt(searchParams.get('postId') ?? '');
 
   useEffect(() => {
@@ -169,16 +171,26 @@ const EditPosted = () => {
   React.useEffect(() => {
     let isMounted = true;
     setLoading(true);
+    setLoadingNotFound(true);
+
     getDataPosted().then(() => {
       if (isMounted && editDataPosted) {
         setLoading(false);
+
+        setTimeout(() => {
+          setLoadingNotFound(false);
+        }, 3000);
       }
     });
   }, [dataPostAccount]);
 
   const getAllPostAccount = async () => {
     try {
-      const result = await historyRecruiter.getAllPosted(0, 20, 0);
+      const result = await historyRecruiter.GetInformationAndCandidatesCount(
+        0,
+        20,
+      );
+
       if (result) {
         SetDataPostAccount(result.data);
       }
@@ -465,16 +477,16 @@ const EditPosted = () => {
   } else {
     return (
       <>
-        <Skeleton loading={loading} active>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loadingNotFound} active>
           <NotFound />
         </Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
       </>
     );
   }
