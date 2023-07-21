@@ -191,7 +191,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
 
       <Swiper
         navigation={true}
-        mousewheel={true}
+        // mousewheel={true}
         spaceBetween={24}
         slidesPerView="auto"
         // breakpoints={{
