@@ -341,7 +341,7 @@ const Post: React.FC = () => {
     if (localStorage.getItem('accessToken')) {
       getPost();
     } else {
-      window.open(`/home`, '_parent');
+      window.open(`/`, '_parent');
     }
   }, []);
 

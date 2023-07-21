@@ -83,7 +83,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     socket.current = io(
       // 'https://181f-14-161-42-152.ngrok-free.app/',
-      'https://aiworks.vn',
+      'https://neoworks.vn',
       {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -251,18 +251,20 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     return (
       <div
         // className="list-chat"
-        className={`list-chat ${props.openListChat === true && windowWidth
+        className={`list-chat ${
+          props.openListChat === true && windowWidth
             ? 'show-list-chat-responesive'
             : ''
-          }`}
+        }`}
       >
         <div className="header-list_chat">
           <div className="wrap-img_Userchat">
             <div className="wrap_img">
               <img src={userInfoChat.avatar} alt="" />
               <span
-                className={`user-chat_online ${userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
-                  }`}
+                className={`user-chat_online ${
+                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                }`}
               ></span>
             </div>
             <div className="wrap-infoUser_chat">
@@ -297,8 +299,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
                 <div
-                  className={`content-chat ${index === allListChat.length - 1 ? 'lastChatRef' : null
-                    }`}
+                  className={`content-chat ${
+                    index === allListChat.length - 1 ? 'lastChatRef' : null
+                  }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -320,10 +323,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat">
                     <span
-                      className={`text-chat ${chat.message === null || chat.message === ''
+                      className={`text-chat ${
+                        chat.message === null || chat.message === ''
                           ? 'text-chat_hidden'
                           : ''
-                        }`}
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -347,10 +351,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             } else {
               return (
                 <div
-                  className={`content-chat2 ${index === allListChat.length - 1
+                  className={`content-chat2 ${
+                    index === allListChat.length - 1
                       ? 'dddddddddddddddddddddddd'
                       : null
-                    }`}
+                  }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -373,10 +378,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat2">
                     <span
-                      className={`text-chat ${chat.message === '' || chat.message === null
+                      className={`text-chat ${
+                        chat.message === '' || chat.message === null
                           ? 'text-chat_hidden'
                           : ''
-                        }`}
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message

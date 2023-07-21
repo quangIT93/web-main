@@ -5,7 +5,7 @@ import RouteProps from '../routes';
 import HomeValueContextProvider from 'context/HomeValueContextProvider';
 
 const route: RouteProps = {
-  path: '/home',
+  path: '/',
   component: <Home />,
 };
 

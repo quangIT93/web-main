@@ -195,7 +195,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chức danh *
+            Chức danh <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -216,7 +216,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Công ty/Tổ chức *
+            Công ty/Tổ chức <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -244,7 +244,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu *:
+                  Thời gian bắt đầu <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(experience.startDate)}
@@ -260,7 +260,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc *:
+                  Thời gian kết thúc <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(experience.endDate)}
@@ -279,7 +279,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung *:
+            Thông tin bổ sung <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}

@@ -172,17 +172,22 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getDataSearch = async () => {
     try {
-      const resultHistory = await searchApi.getHistoryKeyWord(10);
       const resultSuggest = await searchApi.getSuggestKeyWord(10);
-      if (resultHistory || resultSuggest) {
-        setDataHistory(resultHistory.data);
-        setDataSuggest(resultSuggest.data);
+      let resultHistory
+      if (isLogin) {
+        resultHistory = await searchApi.getHistoryKeyWord(10);
+        resultHistory && setDataHistory(resultHistory.data);
       }
+      // if (resultHistory || resultSuggest) {
+      //   setDataHistory(resultHistory.data);
+      //   setDataSuggest(resultSuggest.data);
+      // }
+      resultSuggest && setDataSuggest(resultSuggest.data);
 
       console.log("resultSuggest effective", resultSuggest);
 
     } catch (error) {
-      console.log('error');
+      console.log('error get history', error);
     }
   };
 

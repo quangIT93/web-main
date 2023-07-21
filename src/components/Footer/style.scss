@@ -9,11 +9,16 @@
 .container-footer {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  padding-top: 20px;
+  justify-content: space-between;
+  // padding-top: 20px;
   // padding-bottom: 20px;
   border-bottom: 1px solid #dcdcdc;
   border-top: 1px solid #dcdcdc;
+  padding: 20px 180px 0;
+
+  @media screen and (max-width: 1280px) {
+    padding: 20px 24px 0;
+  }
 
   @include breakpoint(mobile) {
     flex-wrap: wrap-reverse;

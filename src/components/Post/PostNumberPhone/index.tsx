@@ -1,40 +1,40 @@
-import React, { memo } from 'react'
-import { Box } from '@mui/material'
+import React, { memo } from 'react';
+import { Box } from '@mui/material';
 
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
-import { Input } from 'antd'
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import { Input } from 'antd';
 
 interface IPhoneNumber {
-  setPhoneNumber: React.Dispatch<React.SetStateAction<string>>
-  phone: string
+  setPhoneNumber: React.Dispatch<React.SetStateAction<string>>;
+  phone: string;
 }
 
 interface NumericInputProps {
-  style: React.CSSProperties
-  value: string
-  onChange: (value: string) => void
+  style: React.CSSProperties;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 const NumericInput = (props: NumericInputProps) => {
-  const { value, onChange } = props
+  const { value, onChange } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: inputValue } = e.target
-    const reg = /^-?\d*(\.\d*)?$/
+    const { value: inputValue } = e.target;
+    const reg = /^-?\d*(\.\d*)?$/;
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-      onChange(inputValue)
+      onChange(inputValue);
     }
-  }
+  };
 
   // '.' at the end or only '-' in the input box.
   const handleBlur = () => {
-    let valueTemp = value
+    let valueTemp = value;
     if (value.charAt(value.length - 1) === '.' || value === '-') {
-      valueTemp = value.slice(0, -1)
+      valueTemp = value.slice(0, -1);
     }
-    onChange(valueTemp.replace(/(\d+)/, '$1'))
-  }
+    onChange(valueTemp.replace(/(\d+)/, '$1'));
+  };
   return (
     <Input
       {...props}
@@ -43,25 +43,25 @@ const NumericInput = (props: NumericInputProps) => {
       placeholder="Nhập số điện thoại"
       maxLength={16}
     />
-  )
-}
+  );
+};
 const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
-  const { setPhoneNumber, phone } = props
+  const { setPhoneNumber, phone } = props;
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
-  }
+  };
 
   const handleChangeNumber = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setPhoneNumber(e.target.value.replace('d', ''))
-  }
+    setPhoneNumber(e.target.value.replace('d', ''));
+  };
 
   return (
-    <Box sx={{ marginTop: "24px" }}>
+    <Box sx={{ marginTop: '24px' }}>
       <Typography
-        sx={styleLabel}
+        sx={{ fontSize: '12px', fontStyle: 'normal' }}
         variant="body1"
         component="label"
         htmlFor="company"
@@ -69,7 +69,17 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         Số điện thoại liên hệ <span style={{ color: 'red' }}>*</span>
       </Typography>
       <NumericInput
-        style={{ width: '100%', height: 40, marginTop: '0.5rem' }}
+        style={{
+          width: '100%',
+          height: 40,
+          marginTop: '0.5rem',
+          fontStyle: 'normal',
+          font: 'inherit',
+          letterSpacing: 'inherit',
+          color: 'rgba(0, 0, 0, 0.87)',
+          fontWeight: '400',
+          fontFamily: `"Roboto","Helvetica","Arial",sans-serif`,
+        }}
         value={phone}
         onChange={setPhoneNumber}
       />
@@ -78,7 +88,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         onChange={handleChangeNumber}
       /> */}
     </Box>
-  )
-}
+  );
+};
 
-export default memo(PostNumberPhone)
+export default memo(PostNumberPhone);
