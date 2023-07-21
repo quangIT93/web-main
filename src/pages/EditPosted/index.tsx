@@ -207,18 +207,7 @@ const EditPosted = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
   ) => {
     e.preventDefault();
-    console.log('sssss', editDataPosted?.startDate);
-    console.log(
-      ' String(editDataPosted?.startDate) !== null',
-      String(editDataPosted?.startDate) !== 'null',
-    );
-    console.log(
-      'rrr',
-      String(editDataPosted?.startDate) !== null
-        ? String(editDataPosted?.startDate)
-        : 'String(moment(new Date()).valueOf())',
-    );
-    console.log('xxx', String(moment(new Date()).valueOf()));
+
     const formData = new FormData();
     formData.append('id', String(editDataPosted?.id));
     formData.append('title', String(editDataPosted?.title));

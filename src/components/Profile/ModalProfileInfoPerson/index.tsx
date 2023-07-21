@@ -119,7 +119,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       const info: IInfoPersonal = {
         name: name,
         birthday: new Date(day.toString()).getTime(),
-        gender: gender === 'Nam' ? 0 : 1,
+        gender: gender === 'Nam' ? 1 : 0,
         address: selectedProvince.id,
         introduction: introduction,
       };
@@ -138,6 +138,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       handleSubmit();
     }
   };
+
+  console.log('genner', gender);
+  console.log('genner', profile);
 
   return (
     <Modal
