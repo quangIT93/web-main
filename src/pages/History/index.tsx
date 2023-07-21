@@ -83,7 +83,7 @@ const HistoryPost = () => {
       underline="hover"
       key="1"
       color="#0d99ff "
-      href="/home"
+      href="/"
       onClick={handleClick}
     >
       Trang chủ

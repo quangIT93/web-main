@@ -186,7 +186,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Trường/Tổ chức *
+            Trường/Tổ chức <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -208,7 +208,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chuyên ngành *
+            Chuyên ngành <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -235,7 +235,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu *:
+                  Thời gian bắt đầu <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.startDate)}
@@ -251,7 +251,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc *:
+                  Thời gian kết thúc <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.endDate)}
@@ -270,7 +270,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung *:
+            Thông tin bổ sung <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}

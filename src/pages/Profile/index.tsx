@@ -167,7 +167,7 @@ const Profile: React.FC = () => {
       const isPNG = file.type === 'application/pdf';
       var checFileSize = true;
       if (!isPNG) {
-        message.error(`${file.name} khong phai la file pdf`);
+        message.error(`${file.name} không phải là file pdf`);
       } else if (file.size > 1024 * 1024 * 5) {
         checFileSize = false;
         message.error(`File lon hon 5mb`);
@@ -193,7 +193,7 @@ const Profile: React.FC = () => {
         }
         setOpen(false);
         setFileList([]);
-        message.success('Xóa CV thanh cong.');
+        message.success('Xóa CV thành công.');
       }
     } catch (error) {}
   };

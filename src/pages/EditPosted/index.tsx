@@ -2,7 +2,7 @@ import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-
+import moment, { Moment } from 'moment';
 import { Skeleton } from 'antd';
 import { message } from 'antd';
 // import component
@@ -207,6 +207,18 @@ const EditPosted = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
   ) => {
     e.preventDefault();
+    console.log('sssss', editDataPosted?.startDate);
+    console.log(
+      ' String(editDataPosted?.startDate) !== null',
+      String(editDataPosted?.startDate) !== 'null',
+    );
+    console.log(
+      'rrr',
+      String(editDataPosted?.startDate) !== null
+        ? String(editDataPosted?.startDate)
+        : 'String(moment(new Date()).valueOf())',
+    );
+    console.log('xxx', String(moment(new Date()).valueOf()));
     const formData = new FormData();
     formData.append('id', String(editDataPosted?.id));
     formData.append('title', String(editDataPosted?.title));
@@ -214,8 +226,19 @@ const EditPosted = () => {
     formData.append('wardId', String(editDataPosted?.ward_id));
     formData.append('jobTypeId', String(editDataPosted?.jobTypeId));
     formData.append('isDatePeriod', String(editDataPosted?.isDatePeriod));
-    formData.append('startDate', String(editDataPosted?.startDate));
-    formData.append('endDate', String(editDataPosted?.endDate));
+    formData.append(
+      'startDate',
+      editDataPosted?.startDate !== null
+        ? String(editDataPosted?.startDate)
+        : String(moment(new Date()).valueOf()),
+    );
+
+    formData.append(
+      'endDate',
+      editDataPosted?.endDate !== null
+        ? String(editDataPosted?.endDate)
+        : String(moment(new Date()).valueOf()),
+    );
     formData.append('startTime', String(editDataPosted?.startTime));
     formData.append('endTime', String(editDataPosted?.endTime));
     formData.append(

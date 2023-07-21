@@ -107,7 +107,7 @@ const ThemesJob: React.FC = () => {
     setOpenBackdrop(!openBackdrop);
     // const test = [1, 2]
     // const p = createSearchParams({ page: `${test}`})
-    // navigate(`/home/?${p}`);
+    // navigate(`/?${p}`);
     // console.log(searchParams.get(`page`))
     const themeId = searchParams.get(`theme-id`)
       ? searchParams.get(`theme-id`)

@@ -1,21 +1,22 @@
-import React, { memo } from 'react'
-import { Box } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
+import React, { memo } from 'react';
+import { Box } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 //@ts-ignore
-import { styleLabel } from '#components/Post/CssPost'
+import { styleLabel } from '#components/Post/CssPost';
 
+import './style.scss';
 interface IDescription {
-  setDescription: React.Dispatch<React.SetStateAction<string>>
+  setDescription: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Description: React.FC<IDescription> = (props) => {
-  const { setDescription } = props
+  const { setDescription } = props;
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value)
-  }
+    setDescription(e.target.value);
+  };
   return (
-    <Box sx={{ marginTop: '24px' }}>
+    <Box sx={{ marginTop: '24px' }} className="description-post">
       <Typography
         sx={styleLabel}
         variant="body1"
@@ -27,7 +28,7 @@ const Description: React.FC<IDescription> = (props) => {
       <TextField
         // className={classes.textarea}
         onChange={handleChangeDescription}
-        sx={{ width: '100%', marginTop: '0.5rem'}}
+        sx={{ width: '100%', marginTop: '0.5rem' }}
         multiline
         rows={6}
         // label="Một số đặc điểm nhận diện công ty"
@@ -37,7 +38,7 @@ const Description: React.FC<IDescription> = (props) => {
     Mô tả yêu cầu kỹ năng, bằng cấp nếu có"
       />
     </Box>
-  )
-}
+  );
+};
 
-export default memo(Description)
+export default memo(Description);

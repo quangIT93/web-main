@@ -388,17 +388,16 @@ const Detail: React.FC = () => {
         });
         return;
       }
-      // const result = await appplicationApi.applyAplication(POST_ID);
+      const result = await appplicationApi.applyAplication(POST_ID);
       // console.log('result', result);
 
-      // if (result) {
-      // openNotification();
-      // setTextButton('Đã ứng tuyển');
-      // setBackgroundButton('gray');
-      // setCheckApply(true);
-      window.open(post?.data.resource.url, '_blank');
-
-      // }
+      if (result) {
+        openNotification();
+        setTextButton('Đã ứng tuyển');
+        setBackgroundButton('gray');
+        setCheckApply(true);
+        window.open(post?.data.resource.url, '_blank');
+      }
     } catch (error: any) {
       console.log(error);
       console.log('error', error.code);
@@ -546,7 +545,7 @@ const Detail: React.FC = () => {
                   separator=">"
                   items={[
                     {
-                      title: <a href="/home">HiJob</a>,
+                      title: <a href="/">HiJob</a>,
                     },
                     {
                       title: `${post?.data.title}`,

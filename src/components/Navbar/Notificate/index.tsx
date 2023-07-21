@@ -164,7 +164,7 @@ const Notificate = () => {
   ) => {
     if (typeText === 'recruiter') {
       window.open(
-        `candidate-detail?post-id=${postId}?application_id=${applicationId}`,
+        `candidate-detail?post-id=${postId}&application_id=${applicationId}`,
       );
     }
 

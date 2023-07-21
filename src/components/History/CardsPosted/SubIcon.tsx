@@ -35,7 +35,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
 
   const handleClickOpenPost = async () => {
     try {
-      const result = await postApi.updateStatusPost(postId, 3);
+      const result = await postApi.updateStatusPost(postId, 1);
       if (result) {
         setStatus(1);
       }
@@ -51,9 +51,9 @@ const SubIcon: React.FC<ISubicon> = (props) => {
       <div
         className="sub-icon_moreOutlined sub-edit_post"
         onClick={handleClickEditPost}
-        style={
-          status !== 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
-        }
+        // style={
+        //   status !== 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
+        // }
       >
         <EditOutlined />
         Chỉnh sửa bài tuyển dụng
