@@ -3,7 +3,7 @@ import axiosClient from './axiosClient'
 
 const bannersApi = {
   getBannersApi: () => {
-    const URL = `/v1/banners/ena?v=1`
+    const URL = `/v1/banners/ena?v=2`
     return axiosClient.get(URL)
   },
 }

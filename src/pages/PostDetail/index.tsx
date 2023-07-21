@@ -30,6 +30,18 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import { Carousel } from 'react-carousel-minimal';
 import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
+
+// import required modules
+import { FreeMode, Mousewheel, Navigation, Pagination, Thumbs } from 'swiper';
+
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
@@ -166,6 +178,8 @@ const Detail: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [title, setTitle] = React.useState('');
   const [tabValue, setTabValue] = React.useState('1');
+
+  const [thumbsSwiper, setThumbsSwiper] = React.useState<any>(null);
 
   const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
@@ -531,7 +545,7 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
+      `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
   console.log('time', post?.data);
@@ -638,7 +652,7 @@ const Detail: React.FC = () => {
               </div>
               <div className="img-container">
                 <div className="div-job-img" ref={componentRef}>
-                  {isLoading ? (
+                  {/* {isLoading ? (
                     <Skeleton
                       variant="rectangular"
                       width={'100%'}
@@ -671,7 +685,52 @@ const Detail: React.FC = () => {
                         maxHeight: '590px',
                       }}
                     />
-                  )}
+                  )} */}
+                  <Swiper
+                    // style={{
+                    //   '--swiper-navigation-color': '#fff',
+                    //   '--swiper-pagination-color': '#fff',
+                    // }}
+                    pagination={{
+                      type: 'fraction',
+                    }}
+                    spaceBetween={10}
+                    navigation={true}
+                    mousewheel={true}
+                    thumbs={{ swiper: thumbsSwiper }}
+                    modules={[Mousewheel, FreeMode, Pagination, Navigation, Thumbs]}
+                    className="div-job-img-swipper"
+                  >
+                    {
+                      post?.data.images.map((item: any, index: number) => {
+                        return (
+                          <SwiperSlide className="div-job-img-swipper_item" key={index}>
+                            <img src={item.image} />
+                          </SwiperSlide>
+                        )
+                      })
+                    }
+                  </Swiper>
+                  <Swiper
+                    onSwiper={setThumbsSwiper}
+                    spaceBetween={10}
+                    mousewheel={true}
+                    slidesPerView={3}
+                    freeMode={true}
+                    watchSlidesProgress={true}
+                    modules={[Mousewheel, FreeMode, Navigation, Thumbs]}
+                    className="div-job-img-swipper_Thumbs"
+                  >
+                    {
+                      post?.data.images.map((item: any, index: number) => {
+                        return (
+                          <SwiperSlide className="div-job-img-swipper-thumbs_item" key={index}>
+                            <img src={item.image} />
+                          </SwiperSlide>
+                        )
+                      })
+                    }
+                  </Swiper>
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
                   <Box
@@ -800,8 +859,8 @@ const Detail: React.FC = () => {
                                 <h5>
                                   {post?.data.expired_date
                                     ? moment(
-                                        new Date(post?.data.expired_date),
-                                      ).format('DD/MM/yyyy')
+                                      new Date(post?.data.expired_date),
+                                    ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>

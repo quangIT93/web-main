@@ -17,7 +17,7 @@
 
   .nav {
     &.css-1lmzauf {
-      padding: 0 20%;
+      padding: 0 15%;
 
       @media screen and (max-width: 1834px) and (min-width: 1280px) {
         padding: 0 10%;
@@ -34,7 +34,7 @@
   }
 
   #div-policy-footer {
-    padding: 10px 20%;
+    padding: 10px 15%;
 
     @media screen and (max-width: 1834px) and (min-width: 1280px) {
       padding: 10px 10%;
@@ -94,7 +94,7 @@
   .detail-container {
     display: flex;
     justify-content: center;
-    padding: 0 20% 70px;
+    padding: 0 15% 70px;
 
     @include breakpoint(destop) {
       padding: 0 24px 70px;
@@ -256,6 +256,10 @@
 
         .div-job-img {
           width: 57%;
+          border-radius: 8px;
+          border: 1px solid #e5e5e5;
+          position: relative;
+          height: 630px;
 
           @include breakpoint(tablet) {
             width: 100%;
@@ -263,6 +267,107 @@
 
           @include breakpoint(mobile) {
             width: 100%;
+          }
+
+          .div-job-img-swipper {
+            height: 100%;
+            border-radius: 8px;
+
+            .div-job-img-swipper_item {
+              height: 100%;
+
+              img {
+                height: 100% !important;
+                width: 100% !important;
+              }
+            }
+
+            .swiper-pagination-fraction {
+              position: absolute;
+              bottom: 1px;
+              z-index: 1;
+              /* text-align: center; */
+              left: 50%;
+              transform: translateX(-50%);
+              background: #ccc;
+              padding: 4px 8px;
+              border-radius: 4px;
+            }
+
+            .swiper-button-prev,
+            .swiper-button-next {
+              width: 40px !important;
+              height: 100% !important;
+              top: 0 !important;
+              margin-top: 0 !important;
+              background-color: transparent;
+
+              &:hover {
+
+                &:after {
+                  transform: scale(1.1);
+                }
+
+                &:active {
+                  &:after {
+                    transform: scale(0.7);
+                  }
+                }
+              }
+
+              &:after {
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+                color: #000;
+                font-size: 18px;
+                height: 30px;
+                width: 10px;
+                line-height: 30px;
+                padding: 0px 10px;
+                transition: 0.3s linear all;
+              }
+            }
+
+            .swiper-button-prev {
+              left: 0;
+            }
+
+            .swiper-button-next {
+              right: 0;
+            }
+
+            .swiper-button-disabled {
+              display: none !important;
+            }
+          }
+
+          .div-job-img-swipper_Thumbs {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: fit-content;
+            bottom: 30px;
+
+            .div-job-img-swipper-thumbs_item {
+              height: 100px;
+              width: 125px;
+              border-radius: 16px;
+              margin-right: 10px;
+              border-radius: 16px;
+              border: 3px solid #ffff;
+
+              img {
+                border-radius: 16px;
+                height: 100% !important;
+                width: 100% !important;
+              }
+            }
+
+            .swiper-slide-thumb-active {
+              border: 3px solid #0d99ff;
+            }
           }
 
           .box {
