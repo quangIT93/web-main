@@ -147,7 +147,7 @@ const CategoryCarousel: React.FC = () => {
 
       const selectedCategory = categories?.data.find(
         (item: any) => item.id === newValue,
-      );
+      )
       if (selectedCategory) {
         const { id, name } = selectedCategory;
         setValue(id);
@@ -189,6 +189,22 @@ const CategoryCarousel: React.FC = () => {
       const result = await categoriesApi.getAllParentCategories();
       if (result) {
         setCategories(result);
+
+        let storedSettings = JSON.parse(
+          getCookie('userSelected') || '{}',
+        ) as UserSelected;
+
+        const selectedCategory = result?.data.find(
+          (item: any) => item.id === storedSettings.userSelectedId,
+        )
+        if (selectedCategory) {
+          const { id, name } = selectedCategory;
+          setValue(id);
+          setValueJobChild({
+            parentName: name,
+            id,
+          });
+        }
       }
     } catch (error) {
       console.error(error);

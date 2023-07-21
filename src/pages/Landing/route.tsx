@@ -1,9 +1,9 @@
 // import React, { lazy } from 'react'
-import Landing from '.'
-import RouteProps from '../routes'
+import Landing from '.';
+import RouteProps from '../routes';
 const route: RouteProps = {
-  path: '/',
+  path: '/landing-page',
   component: <Landing />,
-}
+};
 
-export default route
+export default route;

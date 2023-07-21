@@ -60,7 +60,11 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
 
   const handleSetPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
+    if (!/^[0-9-]*$/.test(e.target.value)) {
+      e.preventDefault();
+    } else {
+      setPhone(e.target.value);
+    }
   };
 
   const handleSetEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,10 +143,10 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Số điện thoại *
+            Số điện thoại <span className="color-asterisk">*</span>
           </Typography>
           <TextField
-            type="number"
+            type="tel"
             id="nameProfile"
             name="title"
             value={phone}
@@ -150,6 +154,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Số điện thoại"
+            inputMode="numeric"
             // error={titleError} // Đánh dấu lỗi
           />
         </Box>
@@ -161,7 +166,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Email *
+            Email <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -183,7 +188,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Link Facebook *
+            Link Facebook <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -205,7 +210,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Link Linkedin *
+            Link Linkedin <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
