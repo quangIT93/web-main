@@ -38,7 +38,7 @@ import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
 
 import postApi from 'api/postApi';
-import themeApi from '../../../api/themesApi';
+import nearByApi from 'api/apiNearBy';
 import bookMarkApi from 'api/bookMarkApi';
 
 import './style.scss';
@@ -91,6 +91,8 @@ const ThemesJob: React.FC = () => {
   const navigate = useNavigate();
   const [checkBookMark, setCheckBookMark] = React.useState(true);
 
+  const [nearJob, setNearJob] = React.useState<any>([]);
+
   // state redux
   const { post } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
@@ -103,25 +105,27 @@ const ThemesJob: React.FC = () => {
     event: React.ChangeEvent<unknown>,
     value: number,
   ) => {
-    setPage(value);
+    // setPage(value);
     setOpenBackdrop(!openBackdrop);
     // const test = [1, 2]
     // const p = createSearchParams({ page: `${test}`})
     // navigate(`/?${p}`);
     // console.log(searchParams.get(`page`))
-    const themeId = searchParams.get(`theme-id`)
-      ? searchParams.get(`theme-id`)
-      : listTheme?.data[0].id;
+    // const themeId = searchParams.get(`theme-id`)
+    //   ? searchParams.get(`theme-id`)
+    //   : listTheme?.data[0].id;
 
-    const threshold = post.data.posts[post.data.posts.length - 1].id;
-    const result = await postApi.getPostByThemeId(
-      Number(themeId),
-      9,
-      threshold,
-    );
+    const threshold = nearJob[nearJob.length - 1].id;
+    const result = await nearByApi.getNearByJob(userProfile?.address?.id, 11, threshold);
+    // const result = await postApi.getPostByThemeId(
+    //   Number(themeId),
+    //   9,
+    //   threshold,
+    // );
 
     if (result) {
-      setPostThemeMore(result);
+      // setPostThemeMore(result);
+      setNearJob([...nearJob, ...result.data.posts])
 
       setOpenBackdrop(false);
     }
@@ -137,23 +141,27 @@ const ThemesJob: React.FC = () => {
     setOpenBackdrop(false);
   };
 
+
+  const userProfile = useSelector((state: RootState) => state.profile.profile);
+
   // get post by theme id
   const getPostByThemeId = async () => {
     try {
-      const result = await themeApi.getThemesEnable();
+      const result = await nearByApi.getNearByJob(userProfile?.address?.id, 11, null);
 
       if (result) {
-        setListThem(result);
+        // (result);
 
-        const list = await postApi.getPostByThemeId(
-          result.data[0].id,
-          19,
-          null,
-        );
-        if (list) {
-          setPostByTheme(list);
-          setAutomatic(true);
-        }
+        // const list = await postApi.getPostByThemeId(
+        //   result.data[0].id,
+        //   19,
+        //   null,
+        // );
+        // if (list) {
+        //   setPostByTheme(list);
+        setAutomatic(true);
+        // }
+        setNearJob(result.data.posts)
       }
     } catch (error) {
       setAutomatic(true);
@@ -167,7 +175,7 @@ const ThemesJob: React.FC = () => {
     searchParams.delete('theme-id');
     searchParams.delete('categories-id');
     setSearchParams(searchParams);
-  }, []);
+  }, [userProfile]);
 
   const listSuggestJob = () => {
     try {
@@ -175,6 +183,10 @@ const ThemesJob: React.FC = () => {
       console.log('error', error);
     }
   };
+
+  console.log("userProfile ", userProfile);
+  console.log("suggestJob ", nearJob);
+
 
   useEffect(() => {
     listSuggestJob();
@@ -198,8 +210,8 @@ const ThemesJob: React.FC = () => {
       <>
         {automatic && (
           <>
-            <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-              {post?.data.posts.map((item: PostTheme, index: number) => (
+            <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }} sx={{ marginTop: "16px" }}>
+              {nearJob.map((item: PostTheme, index: number) => (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                   <JobCard item={item} />
                 </Grid>
@@ -240,7 +252,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //   onClick={handleClose}
+            //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

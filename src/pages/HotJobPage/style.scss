@@ -1,6 +1,10 @@
 .hot-job-page-container {
     margin: 100px 180px;
 
+    @media screen and (max-width: 1280px) {
+        margin: 100px 24px;
+    }
+
     .hot-job-title-container {
         display: flex;
         align-items: flex-start;

@@ -297,14 +297,14 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? 'Remote'
                     : hotJobType === 3
-                    ? 'Influencer'
-                    : hotJobType === 4
-                    ? 'Short time'
-                    : hotJobType === 5
-                    ? 'Job today'
-                    : hotJobType === 6
-                    ? 'Freelancer'
-                    : ''}
+                      ? 'Influencer'
+                      : hotJobType === 4
+                        ? 'Short time'
+                        : hotJobType === 5
+                          ? 'Job today'
+                          : hotJobType === 6
+                            ? 'Freelancer'
+                            : ''}
                 </h3>
                 <h4>
                   {hotJobTotal ? hotJobTotal : 0}
@@ -315,7 +315,9 @@ const HotJobpage: React.FC = () => {
 
             {hotjob.length > 0 ? (
               <>
-                <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
+                <Grid container spacing={2}
+                // columns={{ xs: 6, sm: 4, md: 12 }}
+                >
                   {hotjob.map((item: PostHotJob, index: number) => (
                     <Grid
                       item
@@ -363,7 +365,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
