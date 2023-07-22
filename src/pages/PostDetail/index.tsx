@@ -920,9 +920,17 @@ const Detail: React.FC = () => {
                         <div
                           className="description-button_next"
                           onClick={handleNextPost}
+                          style={{
+                            color: postNext ? 'black' : '#cccc'
+                          }}
                         >
                           <span>Next job</span>
-                          <div className="icon">
+                          <div
+                            className="icon"
+                            style={{
+                              backgroundColor: postNext ? 'black' : '#cccc'
+                            }}
+                          >
                             <BackIcon width={17} height={17} />
                           </div>
                         </div>
