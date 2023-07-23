@@ -173,7 +173,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const getDataSearch = async () => {
     try {
       const resultSuggest = await searchApi.getSuggestKeyWord(10);
-      let resultHistory
+      let resultHistory;
       if (isLogin) {
         resultHistory = await searchApi.getHistoryKeyWord(10);
         resultHistory && setDataHistory(resultHistory.data);
@@ -184,15 +184,13 @@ const SearchInput: React.FC<SearchProps> = ({
       // }
       resultSuggest && setDataSuggest(resultSuggest.data);
 
-      console.log("resultSuggest effective", resultSuggest);
-
+      console.log('resultSuggest effective', resultSuggest);
     } catch (error) {
       console.log('error get history', error);
     }
   };
 
-  console.log("resultSuggest", dataSuggest.data);
-
+  console.log('resultSuggest', dataSuggest.data);
 
   React.useEffect(() => {
     getDataSearch();
@@ -268,7 +266,7 @@ const SearchInput: React.FC<SearchProps> = ({
     setValue('');
   };
 
-  const handleDeleteKeyword = () => { };
+  const handleDeleteKeyword = () => {};
 
   const handleDeleteHistoryKeyword = async (e: any, keyword: string) => {
     // e.stoppropagation();
@@ -298,8 +296,8 @@ const SearchInput: React.FC<SearchProps> = ({
       <div className="items-history items-search_keyword">
         <h4>Từ khóa</h4>
         <div className="wrap-items-history wrap-items-search">
-          {dataSuggest.map((suggest: any) => (
-            <div className="item-history item-search">
+          {dataSuggest.map((suggest: any, index: number) => (
+            <div className="item-history item-search" key={index}>
               <span
                 className="item-search_text"
                 onClick={(e) => handleClickItem(e, suggest.keyword)}
@@ -311,28 +309,33 @@ const SearchInput: React.FC<SearchProps> = ({
           ))}
         </div>
       </div>
-      <div className="items-history items-search_keyword"
+      <div
+        className="items-history items-search_keyword"
         style={{
-          display: isLogin ? 'block' : 'none'
+          display: isLogin ? 'block' : 'none',
         }}
       >
         <h4>Tìm kiếm gần đây</h4>
         <div className="wrap-items-history wrap-items-search">
-          {dataHistory?.listHistorySearch?.map((history: any) => (
-            <div className="item-history item-search">
-              <span
-                className="item-search_text"
-                onClick={(e) => handleClickItem(e, history.keyword)}
-              >
-                {history.keyword}
-              </span>
+          {dataHistory?.listHistorySearch?.map(
+            (history: any, index: number) => (
+              <div className="item-history item-search" key={index}>
+                <span
+                  className="item-search_text"
+                  onClick={(e) => handleClickItem(e, history.keyword)}
+                >
+                  {history.keyword}
+                </span>
 
-              <CloseOutlined
-                onClick={(e) => handleDeleteHistoryKeyword(e, history.keyword)}
-                style={{ fontSize: '16px' }}
-              />
-            </div>
-          ))}
+                <CloseOutlined
+                  onClick={(e) =>
+                    handleDeleteHistoryKeyword(e, history.keyword)
+                  }
+                  style={{ fontSize: '16px' }}
+                />
+              </div>
+            ),
+          )}
         </div>
       </div>
     </div>
@@ -371,7 +374,7 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-      // open={openDropdown}
+        // open={openDropdown}
       />
 
       <Button
