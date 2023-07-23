@@ -34,117 +34,117 @@ const PostImage: React.FC<PostImageProps> = (props) => {
   const theme = useTheme();
   const ixsobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const { acceptedFiles, fileRejections, getRootProps, getInputProps } = useDropzone({
-    accept: {
-      'image/*': []
-    },
-    // maxFiles: 5,
-    onDrop: async (acceptedFiles) => {
-      const fileUploaded = acceptedFiles.map((file: any) => Object.assign(file, {
-        preview: URL.createObjectURL(file)
-      }))
-      // setFiles(acceptedFiles.map((file: any) => Object.assign(file, {
-      //   preview: URL.createObjectURL(file)
-      // })));
-      console.log("fileUploaded : ", fileUploaded);
+  const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
+    useDropzone({
+      accept: {
+        'image/*': [],
+      },
+      // maxFiles: 5,
+      onDrop: async (acceptedFiles: File[]) => {
+        const fileUploaded = acceptedFiles.map((file: any) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          }),
+        );
+        // setFiles(acceptedFiles.map((file: any) => Object.assign(file, {
+        //   preview: URL.createObjectURL(file)
+        // })));
+        console.log('fileUploaded : ', fileUploaded);
 
-      if (fileUploaded.length > 5) {
-        messageApi.open({
-          type: 'error',
-          content: 'Chỉ có thể tối đa 5 ảnh',
-        });
-        return;
-      }
+        if (fileUploaded.length > 5) {
+          messageApi.open({
+            type: 'error',
+            content: 'Chỉ có thể tối đa 5 ảnh',
+          });
+          return;
+        }
 
-      // const imagesToCheck =
-      // selectedFiles.length + imagesUpload.length > 5
-      //   ? imagesUpload.slice(0, 5 - selectedImages.length)
-      //   : imagesUpload;
+        // const imagesToCheck =
+        // selectedFiles.length + imagesUpload.length > 5
+        //   ? imagesUpload.slice(0, 5 - selectedImages.length)
+        //   : imagesUpload;
 
-      // console.log(
-      //   ' imagesUpload.slice(0, 5 - selectedImages.length)',
-      //   imagesUpload.slice(0, 5 - selectedImages.length)
-      // )
-      // console.log(' imagesToCheck', imagesToCheck)
-      // console.log(' imagesToCheck.length', imagesToCheck.length)
-      // if (fileUploaded.length > 0) {
-      //   const validateImagesReply = validatePostImages(selectedFiles);
-      //   if (validateImagesReply.isError) {
-      //     console.log('::: Invalid images');
-      //     return toast.warn('Ảnh không đúng định dạng');
-      //   } else {
-      //     try {
-      // const compressedImages: any = [];
-      // await Promise.all(
-      //   imagesToCheck.map(async (image: any) => {
-      //     const compressedImage = await imageCompression(image, options);
-      //     compressedImages.push(
-      //       new File([compressedImage], compressedImage.name, {
-      //         type: compressedImage.type,
-      //       }),
-      //     );
-      //   }),
-      // );
-      // console.log('Original image ::: ', imagesUpload)
-      // console.log('Compressed image ::: ', compressedImages)
+        // console.log(
+        //   ' imagesUpload.slice(0, 5 - selectedImages.length)',
+        //   imagesUpload.slice(0, 5 - selectedImages.length)
+        // )
+        // console.log(' imagesToCheck', imagesToCheck)
+        // console.log(' imagesToCheck.length', imagesToCheck.length)
+        // if (fileUploaded.length > 0) {
+        //   const validateImagesReply = validatePostImages(selectedFiles);
+        //   if (validateImagesReply.isError) {
+        //     console.log('::: Invalid images');
+        //     return toast.warn('Ảnh không đúng định dạng');
+        //   } else {
+        //     try {
+        // const compressedImages: any = [];
+        // await Promise.all(
+        //   imagesToCheck.map(async (image: any) => {
+        //     const compressedImage = await imageCompression(image, options);
+        //     compressedImages.push(
+        //       new File([compressedImage], compressedImage.name, {
+        //         type: compressedImage.type,
+        //       }),
+        //     );
+        //   }),
+        // );
+        // console.log('Original image ::: ', imagesUpload)
+        // console.log('Compressed image ::: ', compressedImages)
 
+        const newFileSelected = [
+          ...selectedFiles,
+          ...fileUploaded.map((file: any) => ({
+            image: file,
+            preview: file.preview,
+          })),
+        ];
 
-      const newFileSelected = [
-        ...selectedFiles,
-        ...fileUploaded.map((file: any) => ({
-          image: file,
-          preview: file.preview,
-        }))
-      ]
+        if (newFileSelected.length > 5) {
+          messageApi.open({
+            type: 'error',
+            content: 'Chỉ có thể tối đa 5 ảnh',
+          });
 
-      if (newFileSelected.length > 5) {
-        messageApi.open({
-          type: 'error',
-          content: 'Chỉ có thể tối đa 5 ảnh',
-        });
+          return;
+        }
 
-        return;
-      }
+        setSelectedFiles(newFileSelected);
+        //     } catch (error) {
+        //       console.log(error);
+        //     }
+        //   }
+        // }
 
-      setSelectedFiles(newFileSelected);
-      //     } catch (error) {
-      //       console.log(error);
-      //     }
-      //   }
-      // }
+        const newImages: string[] = [];
 
-      const newImages: string[] = [];
+        for (let i = 0; i < fileUploaded.length; i++) {
+          const file = fileUploaded[i];
+          const reader = new FileReader();
+          console.log(reader);
 
-      for (let i = 0; i < fileUploaded.length; i++) {
-        const file = fileUploaded[i];
-        const reader = new FileReader();
-        console.log(reader);
+          reader.onload = () => {
+            const imageDataURL = reader.result as string;
+            newImages.push(imageDataURL);
 
+            if (newImages.length === fileUploaded.length) {
+              const newImageSelected = [...selectedImages, ...newImages];
+              if (newImageSelected.length > 5) {
+                messageApi.open({
+                  type: 'error',
+                  content: 'Chỉ có thể tối đa 5 ảnh',
+                });
 
-        reader.onload = () => {
-          const imageDataURL = reader.result as string;
-          newImages.push(imageDataURL);
-
-          if (newImages.length === fileUploaded.length) {
-            const newImageSelected = [...selectedImages, ...newImages]
-            if (newImageSelected.length > 5) {
-              messageApi.open({
-                type: 'error',
-                content: 'Chỉ có thể tối đa 5 ảnh',
-              });
-
-              return;
+                return;
+              }
+              setSelectedImages(newImageSelected);
+              // event.target.value = '';
             }
-            setSelectedImages(newImageSelected);
-            // event.target.value = '';
-          }
-        };
+          };
 
-        reader.readAsDataURL(file);
-      }
-
-    }
-  });
+          reader.readAsDataURL(file);
+        }
+      },
+    });
 
   const acceptedFileItems = acceptedFiles.map((file: any) => (
     <li key={file.path}>
@@ -157,11 +157,12 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       <li key={file?.path}>
         {file?.path} - {file.size} bytes
         <ul>
-          {errors.map((event: any) => <li key={event.code}>{event.message}</li>)}
+          {errors.map((event: any) => (
+            <li key={event.code}>{event.message}</li>
+          ))}
         </ul>
-
       </li>
-    )
+    );
   });
 
   const thumbs = files.map((file: any, index: number) => (
@@ -171,7 +172,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           className="deleteButton"
           onClick={(e) => {
             e.stopPropagation();
-            handleDeleteImage(index)
+            handleDeleteImage(index);
           }}
         >
           <CloseOutlinedIcon style={{ color: 'white' }} />
@@ -179,7 +180,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         <img
           src={file.preview}
           // Revoke data uri after image is loaded
-          onLoad={() => { URL.revokeObjectURL(file.preview) }}
+          onLoad={() => {
+            URL.revokeObjectURL(file.preview);
+          }}
         />
       </div>
     </div>
@@ -187,9 +190,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
 
   React.useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => files.forEach((file: any) => URL.revokeObjectURL(file.preview));
+    return () =>
+      files.forEach((file: any) => URL.revokeObjectURL(file.preview));
   }, []);
-
 
   React.useEffect(() => {
     selectedFiles.map((value: any) => {
@@ -276,13 +279,12 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         const reader = new FileReader();
         console.log(reader);
 
-
         reader.onload = () => {
           const imageDataURL = reader.result as string;
           newImages.push(imageDataURL);
 
           if (newImages.length === files.length) {
-            const newImageSelected = [...selectedImages, ...newImages]
+            const newImageSelected = [...selectedImages, ...newImages];
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
@@ -300,8 +302,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     }
   };
 
-  console.log("selectedFiles 333 " + selectedFiles);
-
+  console.log('selectedFiles 333 ' + selectedFiles);
 
   const handleDeleteImage = (index: number) => {
     setSelectedImages((prevImages) => {
@@ -316,8 +317,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     });
   };
 
-  console.log("selectedImages: ", selectedImages);
-
+  console.log('selectedImages: ', selectedImages);
 
   return (
     <div className="postImages">
