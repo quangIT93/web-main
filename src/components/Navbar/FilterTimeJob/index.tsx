@@ -97,16 +97,20 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   const handleWeekendChange = (e: any) => {
     if (e.target.checked) {
       setCheckboxIsWeekend(1);
+      setIsWorkingWeekend(1);
     } else {
       setCheckboxIsWeekend(0);
+      setIsWorkingWeekend(0);
     }
   };
 
   const handleRemoteChange = (e: any) => {
     if (e.target.checked) {
       setChecksetIsRemotely(1);
+      setIsRemotely(1);
     } else {
       setChecksetIsRemotely(0);
+      setIsRemotely(0);
     }
   };
 
@@ -132,8 +136,9 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <CalendarFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
-          }`}
+        className={`inputFilterTimeJob input-filter_nav ${
+          isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
+        }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -185,7 +190,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
               }
             />
           </Box>
-          <div className="wrap-button_filter">
+          {/* <div className="wrap-button_filter">
             <Button type="default" onClick={handleConfirmCancel}>
               Huỷ
             </Button>
@@ -196,7 +201,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
             >
               Áp dụng
             </Button>
-          </div>
+          </div> */}
         </Panel>
       </Collapse>
     </div>

@@ -183,6 +183,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           onLoad={() => {
             URL.revokeObjectURL(file.preview);
           }}
+          alt="ảnh lỗi"
         />
       </div>
     </div>
@@ -326,7 +327,10 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         <section className="drag-img-container">
           <div {...getRootProps({ className: 'dropzone' })}>
             <input {...getInputProps()} />
-            <p>Drag and drop some files here, or click to select files</p>
+            {/* <p>Drag and drop some files here, or click to select files</p> */}
+            <p>
+              Kéo và thả nhiều file ảnh ở đây, hoặc click vào để chọn file ảnh
+            </p>
             {/* <aside className="thumbs-containter">
               {thumbs}
             </aside> */}

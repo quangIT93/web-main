@@ -1,6 +1,8 @@
 import React, { useEffect, memo } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 
+import { useDropzone } from 'react-dropzone';
+
 // import { blobToBase64 } from 'blob-util'
 
 //@ts-ignore
@@ -9,6 +11,8 @@ import { validatePostImages } from 'validations';
 //@ts-ignore
 import { toast } from 'react-toastify';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+
+import { message } from 'antd';
 
 import './style.scss';
 
@@ -21,8 +25,165 @@ interface IEditPostImage {
 const EditPostImage: React.FC<IEditPostImage> = (props) => {
   const { editDataPosted, setEditDataPosted, dataPosted } = props;
 
-  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
+  const [selectedFiles, setSelectedFiles] = React.useState<
+    {
+      image: any;
+      preview: any;
+    }[]
+  >([]);
   const [selectedImages, setSelectedImages] = React.useState<any[]>([]);
+
+  const [files, setFiles] = React.useState<File[]>([]);
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+    accept: {
+      'image/*': [],
+    },
+    onDrop: (acceptedFiles: File[]) => {
+      const fileUploaded = acceptedFiles.map((file: any) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        }),
+      );
+
+      // console.log('file upload', fileUploaded);
+
+      if (fileUploaded.length > 5) {
+        console.log('file fileUpload', fileUploaded);
+
+        messageApi.open({
+          type: 'error',
+          content: 'Chỉ có thể tối đa 5 ảnh',
+        });
+        return;
+      }
+
+      const newFileSelected = [
+        ...selectedFiles,
+        ...fileUploaded.map((file: any) => ({
+          image: file,
+          preview: file.preview,
+        })),
+      ];
+
+      if (newFileSelected.length > 5) {
+        console.log('file newFileSelected', newFileSelected);
+        console.log('file selectedFiles', selectedFiles);
+        console.log('file selectedImage', selectedImages);
+
+        messageApi.open({
+          type: 'error',
+          content: 'Chỉ có thể tối đa 5 ảnh',
+        });
+
+        return;
+      }
+      console.log('file newFileSelected', newFileSelected);
+      console.log('file selectedFiles', selectedFiles);
+      console.log('file fileUpload', fileUploaded);
+      console.log('file selectedImage', selectedImages);
+
+      setSelectedFiles(newFileSelected);
+
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        images: newFileSelected,
+      }));
+
+      const newImages: any[] = [];
+
+      for (let i = 0; i < fileUploaded.length; i++) {
+        const file = fileUploaded[i];
+        const reader = new FileReader();
+        console.log('reader', reader);
+
+        reader.onload = () => {
+          const imageDataURL = reader.result as string;
+
+          newImages.push({
+            id: null,
+            image: imageDataURL,
+            status: null,
+          });
+          console.log('newImages', newImages);
+
+          if (newImages.length === fileUploaded.length) {
+            const newImageSelected = [...selectedImages, ...newImages];
+            if (newImageSelected.length > 5) {
+              messageApi.open({
+                type: 'error',
+                content: 'Chỉ có thể tối đa 5 ảnh',
+              });
+
+              return;
+            }
+            setSelectedImages(newImageSelected);
+            // event.target.value = '';
+          }
+        };
+
+        reader.readAsDataURL(file);
+      }
+
+      setFiles(
+        acceptedFiles.map((file: any) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          }),
+        ),
+      );
+    },
+  });
+
+  console.log('edit Data post', editDataPosted);
+
+  const thumbs = files.map((file: any, index: number) => (
+    <div
+      key={index}
+      style={{
+        border: '1px solid #ccc',
+        position: 'relative',
+        marginRight: '12px',
+        height: '150px',
+        width: '150px',
+      }}
+    >
+      <img
+        key={index}
+        src={file.preview}
+        alt={`ảnh bị lỗi`}
+        style={{
+          height: '150px',
+          width: '150px',
+          objectFit: 'cover',
+        }}
+      />
+      <div
+        className="deleteButton"
+        onClick={() => handleDeleteImage(index, 1)}
+        style={{
+          position: 'absolute',
+          top: '6px',
+          right: '6px',
+          border: 'solid 1px #ccc',
+          width: '24px',
+          height: '24px',
+          backgroundColor: '#ccc',
+          cursor: 'pointer',
+        }}
+      >
+        <CloseOutlinedIcon />
+      </div>
+    </div>
+  ));
+
+  useEffect(() => {
+    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+    return () =>
+      files.forEach((file: any) => URL.revokeObjectURL(file.preview));
+  }, []);
 
   const options = {
     maxSizeMB: 1,
@@ -106,6 +267,13 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     }
 
     if (files && dataPosted) {
+      if (files.length > 5) {
+        messageApi.open({
+          type: 'error',
+          content: 'Chỉ có thể tối đa 5 ảnh',
+        });
+        return;
+      }
       const newImages: any[] = [];
 
       for (let i = 0; i < files.length; i++) {
@@ -181,6 +349,21 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
 
   return (
     <div className="edit-post_image">
+      {contextHolder}
+      <Box p="0rem 0">
+        <section className="drag-img-container">
+          <div {...getRootProps({ className: 'dropzone' })}>
+            <input {...getInputProps()} />
+            {/* <p>Drag and drop some files here, or click to select files</p> */}
+            <p>
+              Kéo và thả nhiều file ảnh ở đây, hoặc click vào để chọn file ảnh
+            </p>
+            {/* <aside className="thumbs-containter">
+              {thumbs}
+            </aside> */}
+          </div>
+        </section>
+      </Box>
       <Box p="0rem 0">
         <Box sx={{ display: 'flex', minWidth: '150px', minHeight: '150px' }}>
           {selectedImages?.map((image: any, index: number) => (
@@ -225,13 +408,14 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
             </div>
           ))}
         </Box>
+
         <Typography
           variant="body1"
           color="#ccc"
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          Có thể tải tối đa 5 ảnh, mỗi ảnh không quá 5MB. (Định dạng cho phép:
+          Có thể tải tối đa 5 ảnh, 5 ảnh không quá 5MB. (Định dạng cho phép:
           jpeg, jpg, png)
         </Typography>
 
