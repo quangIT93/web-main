@@ -183,6 +183,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           onLoad={() => {
             URL.revokeObjectURL(file.preview);
           }}
+          alt="Ảnh lỗi"
         />
       </div>
     </div>
