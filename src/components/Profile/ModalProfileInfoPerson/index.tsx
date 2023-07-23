@@ -139,9 +139,6 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     }
   };
 
-  console.log('genner', gender);
-  console.log('genner', profile);
-
   return (
     <Modal
       open={openModelPersonalInfo}

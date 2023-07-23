@@ -172,7 +172,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleSubmit = async () => {
     try {
       if (locationId.length > 3) {
-        message.warning('Chon 3 khu vuc lam viec');
+        message.warning('Chọn 3 ');
         return;
       }
       const result = await profileApi.updateProfileLocation(

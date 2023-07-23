@@ -151,7 +151,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     // treeCheckStrictly: true,
     // treeDefaultExpandAll: true,
     // showSearch: true, // Chỉ cho phép chọn các nút lá
-    showSearch: true,
+    showSearch: false,
     value,
     treeCheckable: true,
     onChange: (newValue: string[]) => setValue(newValue),

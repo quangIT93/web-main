@@ -371,10 +371,10 @@ const Detail: React.FC = () => {
   // handle click button
   const onclick = async () => {
     //  window.open(`${post?.data.share_link}`)
-    console.log('accessToken', ACCESS_TOKEN);
-    console.log('POST_ID', POST_ID);
-    console.log('checkPostUser', checkPostUser);
-    console.log('userProfile', userProfile);
+    // console.log('accessToken', ACCESS_TOKEN);
+    // console.log('POST_ID', POST_ID);
+    // console.log('checkPostUser', checkPostUser);
+    // console.log('userProfile', userProfile);
     try {
       if (!ACCESS_TOKEN) {
         CheckWasLogin();
@@ -394,7 +394,6 @@ const Detail: React.FC = () => {
         !userProfile.phone ||
         !userProfile.email
       ) {
-        console.log('user', userProfile);
         api.info({
           message: `Cập nhật thông tin`,
           description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
@@ -403,15 +402,15 @@ const Detail: React.FC = () => {
         });
         return;
       }
-      const result = await appplicationApi.applyAplication(POST_ID);
+      // const result = await appplicationApi.applyAplication(POST_ID);
       // console.log('result', result);
 
-      if (result) {
+      if (true) {
         openNotification();
         setTextButton('Đã ứng tuyển');
         setBackgroundButton('gray');
         setCheckApply(true);
-        window.open(post?.data.resource.url, '_blank');
+        // window.open(post?.data.resource.url, '_blank');
       }
     } catch (error: any) {
       console.log(error);
@@ -544,7 +543,7 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
+        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
   console.log('time', post?.data);
@@ -594,14 +593,19 @@ const Detail: React.FC = () => {
                       onClick={handleClickSearch}
                       style={{ cursor: 'pointer' }}
                     >
-                      View more
+                      View all
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
+                    <h3>{`${post?.data.address}, ${post?.data.district}, ${post?.data.province}`}</h3>
+                    <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
-                    >{`${post?.data.address}, ${post?.data.district}, ${post?.data.province}`}</h3>
+                      style={{ cursor: 'pointer' }}
+                    >
+                      Open on maps
+                    </h3>
                   </div>
                 </div>
                 <div className="bot-title">
@@ -697,18 +701,25 @@ const Detail: React.FC = () => {
                     navigation={true}
                     mousewheel={true}
                     thumbs={{ swiper: thumbsSwiper }}
-                    modules={[Mousewheel, FreeMode, Pagination, Navigation, Thumbs]}
+                    modules={[
+                      Mousewheel,
+                      FreeMode,
+                      Pagination,
+                      Navigation,
+                      Thumbs,
+                    ]}
                     className="div-job-img-swipper"
                   >
-                    {
-                      post?.data.images.map((item: any, index: number) => {
-                        return (
-                          <SwiperSlide className="div-job-img-swipper_item" key={index}>
-                            <img src={item.image} />
-                          </SwiperSlide>
-                        )
-                      })
-                    }
+                    {post?.data.images.map((item: any, index: number) => {
+                      return (
+                        <SwiperSlide
+                          className="div-job-img-swipper_item"
+                          key={index}
+                        >
+                          <img src={item.image} />
+                        </SwiperSlide>
+                      );
+                    })}
                   </Swiper>
                   <Swiper
                     onSwiper={setThumbsSwiper}
@@ -720,15 +731,16 @@ const Detail: React.FC = () => {
                     modules={[Mousewheel, FreeMode, Navigation, Thumbs]}
                     className="div-job-img-swipper_Thumbs"
                   >
-                    {
-                      post?.data.images.map((item: any, index: number) => {
-                        return (
-                          <SwiperSlide className="div-job-img-swipper-thumbs_item" key={index}>
-                            <img src={item.image} />
-                          </SwiperSlide>
-                        )
-                      })
-                    }
+                    {post?.data.images.map((item: any, index: number) => {
+                      return (
+                        <SwiperSlide
+                          className="div-job-img-swipper-thumbs_item"
+                          key={index}
+                        >
+                          <img src={item.image} />
+                        </SwiperSlide>
+                      );
+                    })}
                   </Swiper>
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
@@ -858,8 +870,8 @@ const Detail: React.FC = () => {
                                 <h5>
                                   {post?.data.expired_date
                                     ? moment(
-                                      new Date(post?.data.expired_date),
-                                    ).format('DD/MM/yyyy')
+                                        new Date(post?.data.expired_date),
+                                      ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>

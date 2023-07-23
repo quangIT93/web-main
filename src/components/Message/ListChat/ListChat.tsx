@@ -187,7 +187,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         createdAt: Date.now(),
         type: 'text',
         postId: searchParams.get('post_id'),
-        // postId: 36353,
+        // postId: 66587,
       });
 
     setMessage('');
@@ -294,8 +294,6 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             const chatDate = new Date(chat.created_at).toLocaleDateString();
             let showDate = false;
 
-            // if()
-
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
                 <div
@@ -343,7 +341,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     )}
                     <small>
                       {new Date(chat.created_at).getHours()}:
-                      {new Date(chat.created_at).getMinutes()}
+                      {new Date(chat.created_at)
+                        .getMinutes()
+                        .toString()
+                        .padStart(2, '0')}
                     </small>
                   </div>
                 </div>
@@ -398,7 +399,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     )}
                     <small>
                       {new Date(chat.created_at).getHours()}:
-                      {new Date(chat.created_at).getMinutes()}
+                      {new Date(chat.created_at)
+                        .getMinutes()
+                        .toString()
+                        .padStart(2, '0')}
                     </small>
                   </div>
                 </div>
@@ -408,11 +412,18 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         </div>
 
         <div className="inputs-chat">
-          <Input
+          <input
             placeholder="Nhập đoạn chat của bạn"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyPress}
+            style={{
+              fontStyle: 'normal',
+              width: '100%',
+              borderRadius: '10px',
+              border: '1px solid #aaa',
+              outline: 'none',
+            }}
           />
           <input
             type="file"

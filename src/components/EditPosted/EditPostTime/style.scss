@@ -23,15 +23,17 @@
   // }
 }
 
+.wrap-editTime_left {
 
-
-.ant-space-item:nth-child(2) {
-  min-width: 30% !important;
-
-  .connect {
-    transform: translateY(0%);
+  .ant-space-item:nth-child(2) {
+    min-width: 30% !important;
+  
+    .connect {
+      transform: translateY(0%);
+    }
   }
 }
+
 
 .wrap-EditTime_right {
   // padding-left: 16px;

@@ -189,6 +189,7 @@ const EditPosted = () => {
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
         0,
         20,
+        '-1',
       );
 
       if (result) {

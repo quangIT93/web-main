@@ -29,7 +29,6 @@
     }
     
 }
-
 .ant-select.ant-cascader {
     width: calc(60% + 38px);
     z-index: 0;
@@ -40,4 +39,8 @@
         border: 1px solid #c2c0c0;
     }
 }
+
+    .ant-select-clear {
+        margin-right: 24px;
+    }
 }

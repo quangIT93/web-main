@@ -23,8 +23,8 @@ const historyRecruiter = {
       },
     })
   },
-  GetInformationAndCandidatesCount: (threshold: number, limit: number) => {
-    const URL = `/v1/history/recruiter/applications?threshold=${threshold}&limit=${limit}`
+  GetInformationAndCandidatesCount: (threshold: number, limit: number, status: string) => {
+    const URL = `/v1/history/recruiter/applications?threshold=${threshold}&limit=${limit}&status=${status}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
