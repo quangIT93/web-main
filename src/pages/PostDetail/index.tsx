@@ -699,7 +699,8 @@ const Detail: React.FC = () => {
                     }}
                     spaceBetween={10}
                     navigation={true}
-                    mousewheel={true}
+                    // mousewheel={true}
+                    loop={true}
                     thumbs={{ swiper: thumbsSwiper }}
                     modules={[
                       Mousewheel,
@@ -724,9 +725,10 @@ const Detail: React.FC = () => {
                   <Swiper
                     onSwiper={setThumbsSwiper}
                     spaceBetween={10}
-                    mousewheel={true}
+                    // mousewheel={true}
                     slidesPerView={3}
                     freeMode={true}
+                    centeredSlides={post?.data.images.length === 1 ? true : false}
                     watchSlidesProgress={true}
                     modules={[Mousewheel, FreeMode, Navigation, Thumbs]}
                     className="div-job-img-swipper_Thumbs"
@@ -760,7 +762,7 @@ const Detail: React.FC = () => {
                       <TabPanel value="1">
                         <div className="job-title-container">
                           <div className="job-title-details">
-                            <div className="div-detail-row">
+                            {/* <div className="div-detail-row">
                               <EnvironmentOutlined
                                 style={{ color: '#575757' }}
                               />
@@ -769,7 +771,7 @@ const Detail: React.FC = () => {
                                 <p>Địa chỉ</p>
                                 <h5>{post?.data.address}</h5>
                               </div>
-                            </div>
+                            </div> */}
                             <div className="div-detail-row">
                               <SlidersOutlined style={{ color: '#575757' }} />
                               <div style={{ marginLeft: '10px' }}>
@@ -930,9 +932,17 @@ const Detail: React.FC = () => {
                         <div
                           className="description-button_next"
                           onClick={handleNextPost}
+                          style={{
+                            color: postNext ? 'black' : '#cccc'
+                          }}
                         >
                           <span>Next job</span>
-                          <div className="icon">
+                          <div
+                            className="icon"
+                            style={{
+                              backgroundColor: postNext ? 'black' : '#cccc'
+                            }}
+                          >
                             <BackIcon width={17} height={17} />
                           </div>
                         </div>

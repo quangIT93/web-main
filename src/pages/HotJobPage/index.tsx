@@ -316,7 +316,7 @@ const HotJobpage: React.FC = () => {
             {hotjob.length > 0 ? (
               <>
                 <Grid container spacing={2}
-                // columns={{ xs: 6, sm: 4, md: 12 }}
+                  columns={{ xs: 6, sm: 4, md: 12 }}
                 >
                   {hotjob.map((item: PostHotJob, index: number) => (
                     <Grid
