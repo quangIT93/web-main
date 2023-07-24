@@ -600,7 +600,7 @@ const Navbar: React.FC = () => {
       className="btn btn__post"
       onClick={() => {
         if (dataProfile && localStorage.getItem('refreshToken')) {
-          window.open('/post', '_blank');
+          window.open('/post', '_seft');
         } else {
           setOpenModalLogin(true);
         }
@@ -702,7 +702,7 @@ const Navbar: React.FC = () => {
       <Button
         onClick={() => {
           if (dataProfile && localStorage.getItem('refreshToken')) {
-            window.open(`/message`, '_blank');
+            window.open(`/message`, '_seft');
           } else {
             setOpenModalLogin(true);
           }
@@ -828,7 +828,7 @@ const Navbar: React.FC = () => {
               <Button
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
-                    window.open(`/message`, '_blank');
+                    window.open(`/message`, '_seft');
                   } else {
                     setOpenModalLogin(true);
                   }

@@ -74,7 +74,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const handleSetFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-  console.log('Day', day);
+
   const getAllProvinces = async () => {
     try {
       const allLocation = await locationApi.getAllProvinces();

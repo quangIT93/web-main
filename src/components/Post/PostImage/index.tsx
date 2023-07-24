@@ -49,7 +49,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         // setFiles(acceptedFiles.map((file: any) => Object.assign(file, {
         //   preview: URL.createObjectURL(file)
         // })));
-        console.log('fileUploaded : ', fileUploaded);
+        // console.log('fileUploaded : ', fileUploaded);
 
         if (fileUploaded.length > 5) {
           messageApi.open({
@@ -197,7 +197,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
 
   React.useEffect(() => {
     selectedFiles.map((value: any) => {
-      console.log('file img', value.preview);
+      // console.log('file img', value.preview);
     });
     return () => {
       // Clean up all selectedFiles previews when the component unmounts
@@ -234,7 +234,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     if (imagesToCheck.length > 0) {
       const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
-        console.log('::: Invalid images');
+        // console.log('::: Invalid images');
         return toast.warn('Ảnh không đúng định dạng');
       } else {
         try {
@@ -303,8 +303,6 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     }
   };
 
-  console.log('selectedFiles 333 ' + selectedFiles);
-
   const handleDeleteImage = (index: number) => {
     setSelectedImages((prevImages) => {
       const updatedImages = [...prevImages];
@@ -317,8 +315,6 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       return updatedFiles;
     });
   };
-
-  console.log('selectedImages: ', selectedImages);
 
   return (
     <div className="postImages">

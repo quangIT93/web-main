@@ -225,8 +225,6 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
             value={location}
             input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
             renderValue={(selected) => {
-              console.log('selected', selected);
-
               if (selected.length === 0) {
                 return (
                   <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>

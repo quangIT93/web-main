@@ -116,7 +116,11 @@ const ThemesJob: React.FC = () => {
     //   : listTheme?.data[0].id;
 
     const threshold = nearJob[nearJob.length - 1].id;
-    const result = await nearByApi.getNearByJob(userProfile?.address?.id, 11, threshold);
+    const result = await nearByApi.getNearByJob(
+      userProfile?.address?.id,
+      11,
+      threshold,
+    );
     // const result = await postApi.getPostByThemeId(
     //   Number(themeId),
     //   9,
@@ -125,7 +129,7 @@ const ThemesJob: React.FC = () => {
 
     if (result) {
       // setPostThemeMore(result);
-      setNearJob([...nearJob, ...result.data.posts])
+      setNearJob([...nearJob, ...result.data.posts]);
 
       setOpenBackdrop(false);
     }
@@ -141,13 +145,16 @@ const ThemesJob: React.FC = () => {
     setOpenBackdrop(false);
   };
 
-
   const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   // get post by theme id
   const getPostByThemeId = async () => {
     try {
-      const result = await nearByApi.getNearByJob(userProfile?.address?.id, 11, null);
+      const result = await nearByApi.getNearByJob(
+        userProfile?.address?.id,
+        11,
+        null,
+      );
 
       if (result) {
         // (result);
@@ -161,7 +168,7 @@ const ThemesJob: React.FC = () => {
         //   setPostByTheme(list);
         setAutomatic(true);
         // }
-        setNearJob(result.data.posts)
+        setNearJob(result.data.posts);
       }
     } catch (error) {
       setAutomatic(true);
@@ -183,10 +190,6 @@ const ThemesJob: React.FC = () => {
       console.log('error', error);
     }
   };
-
-  console.log("userProfile ", userProfile);
-  console.log("suggestJob ", nearJob);
-
 
   useEffect(() => {
     listSuggestJob();
@@ -210,7 +213,12 @@ const ThemesJob: React.FC = () => {
       <>
         {automatic && (
           <>
-            <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }} sx={{ marginTop: "16px" }}>
+            <Grid
+              container
+              spacing={3}
+              columns={{ xs: 12, sm: 4, md: 12 }}
+              sx={{ marginTop: '16px' }}
+            >
               {nearJob.map((item: PostTheme, index: number) => (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                   <JobCard item={item} />
@@ -252,7 +260,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //   onClick={handleClose}
+              //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

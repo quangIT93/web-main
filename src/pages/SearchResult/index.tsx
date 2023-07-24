@@ -460,7 +460,6 @@ const NewJobs: React.FC = () => {
   const onChangeCateLory = (value: any) => {
     setDisableCatelory(false);
     const secondValues = value.map((item: any) => item[1]);
-    console.log('value', value);
     if (secondValues.length <= 1) {
       setCategoriesId(secondValues);
       if (value.length !== 0) {

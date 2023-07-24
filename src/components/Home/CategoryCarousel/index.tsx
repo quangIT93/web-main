@@ -147,7 +147,7 @@ const CategoryCarousel: React.FC = () => {
 
       const selectedCategory = categories?.data.find(
         (item: any) => item.id === newValue,
-      )
+      );
       if (selectedCategory) {
         const { id, name } = selectedCategory;
         setValue(id);
@@ -196,7 +196,7 @@ const CategoryCarousel: React.FC = () => {
 
         const selectedCategory = result?.data.find(
           (item: any) => item.id === storedSettings.userSelectedId,
-        )
+        );
         if (selectedCategory) {
           const { id, name } = selectedCategory;
           setValue(id);
@@ -258,7 +258,7 @@ const CategoryCarousel: React.FC = () => {
 
     const accessToken = localStorage.getItem('accessToken');
     accessToken && setIsLogin(true);
-    setSelectedItemIndex(storedSettings.userSelectedId)
+    setSelectedItemIndex(storedSettings.userSelectedId);
 
     setTimeout(async () => {
       if (storedSettings.userSelectedId !== 1) {
@@ -279,7 +279,7 @@ const CategoryCarousel: React.FC = () => {
     let storedSettings = JSON.parse(
       getCookie('userSelected') || '{}',
     ) as UserSelected;
-    setSelectedItemIndex(storedSettings.userSelectedId)
+    setSelectedItemIndex(storedSettings.userSelectedId);
     setCategorieIdCookie(storedSettings.userSelectedId);
     if (storedSettings.userSelectedId !== 1) {
       const slide = document.querySelector('.swiper-slide');
@@ -316,9 +316,6 @@ const CategoryCarousel: React.FC = () => {
       scrollElement.scrollLeft += scrollAmount;
     }
   };
-
-  console.log('category id: ', value);
-  console.log('selectedItemIndex: ', selectedItemIndex);
 
   // scroll
   return (
@@ -465,12 +462,17 @@ const CategoryCarousel: React.FC = () => {
                     />
                     <span
                       className="category-item-title"
-                      style={{ fontSize: '14px', fontWeight: '400', color: '#000000' }}
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        color: '#000000',
+                      }}
                     >
-                      {isLogin && item.id === 1 ? "Công việc gợi ý" : item.name}
+                      {isLogin && item.id === 1 ? 'Công việc gợi ý' : item.name}
                     </span>
                   </div>
-                  <div className="border-selected"
+                  <div
+                    className="border-selected"
                     style={{
                       backgroundColor:
                         item.id === categoryIdCookie || item.id === value

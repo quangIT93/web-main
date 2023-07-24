@@ -299,7 +299,7 @@ const Detail: React.FC = () => {
       setIsLoading(true);
       const result = await postApi.getById(postID);
       if (result) {
-        console.log(result);
+
 
         setIsLoading(false);
         position === 0 ? setPostPrev(result.data) : setPostNext(result.data);
@@ -330,8 +330,7 @@ const Detail: React.FC = () => {
     //get post next
     getAnotherPost(POST_ID + 1, 1);
   }, [bookmarked, POST_ID]);
-  console.log('post prev: ', postPrev);
-  console.log('post next: ', postNext);
+
 
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -443,14 +442,13 @@ const Detail: React.FC = () => {
   setTimeout(() => {
     setAutomatic(true);
   }, 700);
-  console.log('postNewest', post);
+
   const handleClickShare = () => {
     setOpenModalShare(true);
   };
   const handleClickSave = async () => {
     // const a = post?.data.bookmarked;
-    console.log('postMarked', post?.data.bookmarked);
-    console.log('bookmarked', bookmarked);
+
     try {
       if (post?.data.bookmarked && bookmarked) {
         const result = await bookMarkApi.deleteBookMark(post?.data.id);
@@ -469,7 +467,7 @@ const Detail: React.FC = () => {
       console.log(error);
     }
   };
-  console.log('bookmarked', bookmarked);
+
   const handleCloseModalShare = () => {
     setOpenModalShare(false);
   };
@@ -546,7 +544,7 @@ const Detail: React.FC = () => {
         `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
-  console.log('time', post?.data);
+
   return (
     <>
       {automatic && (

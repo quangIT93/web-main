@@ -63,10 +63,7 @@ const HistoryPost = () => {
 
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     // event.preventDefault()
-    console.info('You clicked a breadcrumb.');
   }
-
-  console.log('sssssssss', showDetailPosted);
 
   const analytics: any = getAnalytics();
 

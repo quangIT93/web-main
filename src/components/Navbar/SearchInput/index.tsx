@@ -184,13 +184,13 @@ const SearchInput: React.FC<SearchProps> = ({
       // }
       resultSuggest && setDataSuggest(resultSuggest.data);
 
-      console.log('resultSuggest effective', resultSuggest);
+      // console.log('resultSuggest effective', resultSuggest);
     } catch (error) {
       console.log('error get history', error);
     }
   };
 
-  console.log('resultSuggest', dataSuggest.data);
+  // console.log('resultSuggest', dataSuggest.data);
 
   React.useEffect(() => {
     getDataSearch();

@@ -51,8 +51,6 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       // console.log('file upload', fileUploaded);
 
       if (fileUploaded.length > 5) {
-        console.log('file fileUpload', fileUploaded);
-
         messageApi.open({
           type: 'error',
           content: 'Chỉ có thể tối đa 5 ảnh',
@@ -69,10 +67,6 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       ];
 
       if (newFileSelected.length > 5) {
-        console.log('file newFileSelected', newFileSelected);
-        console.log('file selectedFiles', selectedFiles);
-        console.log('file selectedImage', selectedImages);
-
         messageApi.open({
           type: 'error',
           content: 'Chỉ có thể tối đa 5 ảnh',
@@ -80,10 +74,6 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
 
         return;
       }
-      console.log('file newFileSelected', newFileSelected);
-      console.log('file selectedFiles', selectedFiles);
-      console.log('file fileUpload', fileUploaded);
-      console.log('file selectedImage', selectedImages);
 
       setSelectedFiles(newFileSelected);
 
@@ -97,7 +87,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       for (let i = 0; i < fileUploaded.length; i++) {
         const file = fileUploaded[i];
         const reader = new FileReader();
-        console.log('reader', reader);
+        // console.log('reader', reader);
 
         reader.onload = () => {
           const imageDataURL = reader.result as string;
@@ -107,7 +97,6 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
             image: imageDataURL,
             status: null,
           });
-          console.log('newImages', newImages);
 
           if (newImages.length === fileUploaded.length) {
             const newImageSelected = [...selectedImages, ...newImages];
@@ -137,7 +126,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     },
   });
 
-  console.log('edit Data post', editDataPosted);
+  console.log('edit', editDataPosted);
 
   const thumbs = files.map((file: any, index: number) => (
     <div
@@ -192,7 +181,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
 
   React.useEffect(() => {
     selectedFiles.map((value: any) => {
-      console.log('file img', value.preview);
+      // console.log('file img', value.preview);
     });
     return () => {
       // Clean up all selectedFiles previews when the component unmounts

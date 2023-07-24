@@ -184,7 +184,7 @@ const Footer: React.FC = () => {
               <div className="div-link-app">
                 <Link
                   to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
-                  target="_blank"
+                  target="_seft"
                 >
                   <img
                     id="img-gallery"
@@ -194,7 +194,7 @@ const Footer: React.FC = () => {
                 </Link>
                 <Link
                   to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
-                  target="_blank"
+                  target="_seft"
                 >
                   <img
                     src={require('../../img/langdingPage/image 45.png')}

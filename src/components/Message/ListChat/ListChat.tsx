@@ -148,13 +148,13 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       // })
 
       socket.current.on('server-send-message-to-receiver', (data: any) => {
-        console.log(' gui tin nhan di den nguoi nhan', data);
+        // console.log(' gui tin nhan di den nguoi nhan', data);
         // gui tin nhan di den nguoi nhan
         setReceivedMessages((prevReceive: any[]) => [...prevReceive, data]);
       });
 
       socket.current.on('server-send-message-was-sent', (data: any) => {
-        console.log('nhận tin nhan ve khi da gui xong', data);
+        // console.log('nhận tin nhan ve khi da gui xong', data);
         // nhận tin nhan ve khi da gui xong
         setSendMessages((prevSend: any[]) => [...prevSend, data]);
       });
