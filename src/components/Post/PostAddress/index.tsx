@@ -140,6 +140,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             renderInput={(params) => (
               <TextField {...params} placeholder="Tỉnh/TP" size="small" />
             )}
+            style={{ marginTop: '0.5rem' }}
           />
         </div>
         <div className="post-title">
@@ -160,6 +161,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             renderInput={(params: any) => (
               <TextField {...params} placeholder="Quận/Huyện" size="small" />
             )}
+            style={{ marginTop: '0.5rem' }}
           />
         </div>
       </div>
@@ -182,6 +184,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             renderInput={(params) => (
               <TextField {...params} placeholder="Phường/Xã" size="small" />
             )}
+            style={{ marginTop: '0.5rem' }}
           />
         </div>
         <div className="post-title">
