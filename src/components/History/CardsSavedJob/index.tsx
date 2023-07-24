@@ -45,6 +45,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
+  const [clicked, setClicked] = useState(false);
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
@@ -76,14 +77,16 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
     setLoading(true);
     getAllPosted(0).then(() => {
       if (isMounted) {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 300);
       }
     });
 
     return () => {
       isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
     };
-  }, []);
+  }, [dataBookmarks?.length]);
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value);
@@ -141,9 +144,14 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
     const result = await bookMarkApi.deleteBookMark(bookmarkId);
 
     if (result) {
+      // setClicked(!clicked)
       setDataBookmarks((prev: any) => {
         const newData = [...prev];
         newData.splice(index, 1);
+        if (newData.length === 0) {
+          // console.log("tam het");
+          getAllPosted(0)
+        }
         return newData;
       });
       dispatch<any>(setAlertCancleSave(true));
@@ -183,47 +191,47 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           <MenuItem value="Cũ nhất">Cũ nhất</MenuItem>
         </TextField>
       </Box>
-      <Skeleton loading={loading} active>
-        {dataBookmarks?.length > 0 ? (
-          <div className="history-post">
-            <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-              {dataBookmarks?.map((dataBookmark: any, i: number) => (
+      {dataBookmarks?.length > 0 ? (
+        <div className="history-post">
+          <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
+            {dataBookmarks?.map((dataBookmark: any, i: number) => (
+              <Skeleton loading={loading} active>
                 <JobCardSaveHistory
                   item={dataBookmark}
                   handleDeleteBookmark={handleDeleteBookmark}
                   index={i}
                 />
-              ))}
-            </Grid>
-            <Box
-              sx={{
-                margin: '12px auto',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+              </Skeleton>
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                marginBottom: '2rem',
+                backgroundColor: `#0D99FF`,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
               }}
+              loading={uploading}
+              onClick={handleClickAddItem}
             >
-              <Button
-                style={{
-                  width: 130,
-                  height: 40,
-                  marginBottom: '2rem',
-                  backgroundColor: `#0D99FF`,
-                  color: '#FFFFFF',
-                  fontWeight: 'bold',
-                  display: isVisible ? 'block' : 'none',
-                }}
-                loading={uploading}
-                onClick={handleClickAddItem}
-              >
-                Xem thêm
-              </Button>
-            </Box>
-          </div>
-        ) : (
-          <Nodata />
-        )}
-      </Skeleton>
+              Xem thêm
+            </Button>
+          </Box>
+        </div>
+      ) : (
+        <Nodata />
+      )}
     </>
   );
 };
