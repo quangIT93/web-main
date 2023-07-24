@@ -32,6 +32,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     }[]
   >([]);
   const [selectedImages, setSelectedImages] = React.useState<any[]>([]);
+  const [isDragActive, setIsDragActive] = React.useState(false);
 
   const [files, setFiles] = React.useState<File[]>([]);
 
@@ -41,7 +42,14 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     accept: {
       'image/*': [],
     },
+    onDragEnter: () => {
+      setIsDragActive(true);
+    },
+    onDragLeave: () => {
+      setIsDragActive(false);
+    },
     onDrop: (acceptedFiles: File[]) => {
+      setIsDragActive(false);
       const fileUploaded = acceptedFiles.map((file: any) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file),
@@ -341,7 +349,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       {contextHolder}
       <Box p="0rem 0">
         <section className="drag-img-container">
-          <div {...getRootProps({ className: 'dropzone' })}>
+          <div {...getRootProps({ className: isDragActive ? 'dropzone on-drag' : 'dropzone' })}>
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
             <p>

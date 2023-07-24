@@ -12,6 +12,7 @@
   .drag-img-container {
     .dropzone {
       position: absolute;
+      border: 1px solid transparent;
       top: 0;
       left: 0;
       right: 0;
@@ -74,6 +75,13 @@
           }
         }
       }
+    }
+
+    .on-drag {
+      border: 1px dashed #0d99ff;
+      background-color: #e3e2e2;
+      color: #0d99ff;
+      transition: all 0.2s ease-in-out;
     }
   }
 

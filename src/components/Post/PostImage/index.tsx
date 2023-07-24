@@ -24,6 +24,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
   const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
   const [image, setImage] = React.useState<any>();
   const [files, setFiles] = React.useState<any>([]);
+  const [isDragActive, setIsDragActive] = React.useState(false);
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 840,
@@ -40,7 +41,14 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         'image/*': [],
       },
       // maxFiles: 5,
+      onDragEnter: () => {
+        setIsDragActive(true);
+      },
+      onDragLeave: () => {
+        setIsDragActive(false);
+      },
       onDrop: async (acceptedFiles: File[]) => {
+        setIsDragActive(false);
         const fileUploaded = acceptedFiles.map((file: any) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
@@ -321,7 +329,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       {contextHolder}
       <Box p="0rem 0">
         <section className="drag-img-container">
-          <div {...getRootProps({ className: 'dropzone' })}>
+          <div {...getRootProps({ className: isDragActive ? 'dropzone on-drag' : 'dropzone' })}>
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
             <p>
@@ -389,7 +397,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          Có thể tải tối đa 5 ảnh, mỗi ảnh không quá 5MB. (Định dạng cho phép:
+          Có thể tải tối đa 5 ảnh, 5 ảnh không quá 5MB. (Định dạng cho phép:
           jpeg, jpg, png)
         </Typography>
         <Button

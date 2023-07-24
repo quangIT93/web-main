@@ -1678,11 +1678,11 @@ export const CompanyNameDetailPostIcon = ({ width = 20, height = 21 }) => {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M12.73 0.890481L18.29 5.00048C19.3567 5.77576 19.9914 7.01185 20 8.33048V15.7705C19.94 18.1637 17.9534 20.0564 15.56 20.0005H4.44C2.04665 20.0564 0.0600245 18.1637 0 15.7705V8.34048C0.00610336 7.01612 0.645442 5.77462 1.72 5.00048L7.27 0.890481C8.89636 -0.296827 11.1036 -0.296827 12.73 0.890481ZM15.56 18.5005C17.1251 18.5568 18.4404 17.3354 18.5 15.7705V8.33048C18.4948 7.48583 18.0812 6.6959 17.39 6.21048L11.84 2.10048C10.7439 1.30006 9.25609 1.30006 8.16 2.10048L2.61 6.20048C1.91817 6.69448 1.50534 7.4904 1.5 8.34048V15.7705C1.56502 17.333 2.87698 18.5512 4.44 18.5005H15.56Z"
-        fill="#0D99FF"
+        fill="#001424"
       />
       <path
         d="M14.5 13.7505H5.5C5.08579 13.7505 4.75 14.0863 4.75 14.5005C4.75 14.9147 5.08579 15.2505 5.5 15.2505H14.5C14.9142 15.2505 15.25 14.9147 15.25 14.5005C15.25 14.0863 14.9142 13.7505 14.5 13.7505Z"
-        fill="#0D99FF"
+        fill="#001424"
       />
     </svg>
   );
@@ -1701,7 +1701,7 @@ export const AddressDetailPostIcon = ({ width = 20, height = 21 }) => {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M8.25 0C12.799 0 16.5 3.729 16.5 8.313C16.5 13.948 10.044 19.5 8.25 19.5C6.456 19.5 0 13.948 0 8.313C0 3.729 3.701 0 8.25 0ZM8.25 1.5C4.528 1.5 1.5 4.557 1.5 8.313C1.5 13.092 7.124 17.748 8.25 17.996C9.376 17.747 15 13.091 15 8.313C15 4.557 11.972 1.5 8.25 1.5ZM8.251 5C10.043 5 11.501 6.458 11.501 8.251C11.501 10.043 10.043 11.5 8.251 11.5C6.459 11.5 5.001 10.043 5.001 8.251C5.001 6.458 6.459 5 8.251 5ZM8.251 6.5C7.286 6.5 6.501 7.285 6.501 8.251C6.501 9.216 7.286 10 8.251 10C9.216 10 10.001 9.216 10.001 8.251C10.001 7.285 9.216 6.5 8.251 6.5Z"
-        fill="#0D99FF"
+        fill="#001424"
       />
     </svg>
   );
@@ -2036,6 +2036,116 @@ export const ArrowFilterIcon = ({ width = 15, height = 17 }) => {
         d="M5.75593 6.79388C5.35716 7.25434 4.64284 7.25434 4.24407 6.79388L0.370795 2.3214C-0.190081 1.67376 0.269972 0.666749 1.12672 0.666749L8.87328 0.66675C9.73003 0.66675 10.1901 1.67376 9.62921 2.3214L5.75593 6.79388Z"
         fill="#001424"
       />
+    </svg>
+  );
+};
+
+export const CheckedBlueIcon = ({ width = 15, height = 17 }) => {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_9915_239611)">
+        <path
+          d="M18.3346 9.2333V9.99997C18.3336 11.797 17.7517 13.5455 16.6757 14.9848C15.5998 16.4241 14.0874 17.477 12.3641 17.9866C10.6408 18.4961 8.79902 18.4349 7.11336 17.8121C5.4277 17.1894 3.98851 16.0384 3.01044 14.5309C2.03236 13.0233 1.56779 11.24 1.68603 9.4469C1.80427 7.65377 2.49897 5.94691 3.66654 4.58086C4.8341 3.21482 6.41196 2.26279 8.16479 1.86676C9.91763 1.47073 11.7515 1.65192 13.393 2.3833"
+          stroke="#3DADFF"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M18.3333 3.33337L10 11.675L7.5 9.17504"
+          stroke="#3DADFF"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_9915_239611">
+          <rect width="20" height="20" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const AppliedPostedIcon = ({ width = 30, height = 30 }) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 30 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <rect width="30" height="30" fill="url(#pattern0)" />
+      <defs>
+        <pattern
+          id="pattern0"
+          patternContentUnits="objectBoundingBox"
+          width="1"
+          height="1"
+        >
+          <use xlinkHref="#image0_9915_239334" transform="scale(0.0138889)" />
+        </pattern>
+        <image
+          id="image0_9915_239334"
+          width="72"
+          height="72"
+          xlinkHref="data:image/png;base64,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"
+        />
+      </defs>
+    </svg>
+  );
+};
+
+export const ClockIcon = ({ width = 16, height = 16 }) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M6 1C8.757 1 11 3.243 11 6C11 8.757 8.757 11 6 11C3.243 11 1 8.757 1 6C1 3.243 3.243 1 6 1ZM6 1.75C3.6565 1.75 1.75 3.6565 1.75 6C1.75 8.3435 3.6565 10.25 6 10.25C8.3435 10.25 10.25 8.3435 10.25 6C10.25 3.6565 8.3435 1.75 6 1.75ZM5.8306 3.5477C6.0381 3.5477 6.2056 3.7157 6.2056 3.9227V6.1337L7.9081 7.1487C8.0856 7.2552 8.1441 7.4852 8.0381 7.6632C7.9676 7.7807 7.8431 7.8462 7.7156 7.8462C7.6501 7.8462 7.5841 7.8292 7.5236 7.7937L5.6386 6.6692C5.5256 6.6012 5.4556 6.4787 5.4556 6.3467V3.9227C5.4556 3.7157 5.6236 3.5477 5.8306 3.5477Z"
+        fill="#575757"
+      />
+    </svg>
+  );
+};
+
+export const BagHomeIcon = ({ width = 16, height = 16 }) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_9927_236653)">
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M21.2688 14.7351C21.6818 14.7661 21.9908 15.1271 21.9598 15.5401L21.7698 18.0491C21.6128 20.1191 19.8658 21.7401 17.7908 21.7401H6.19079C4.11579 21.7401 2.36879 20.1191 2.21179 18.0491L2.02179 15.5401C1.99079 15.1271 2.30079 14.7661 2.71379 14.7351C3.12879 14.7201 3.48679 15.0131 3.51879 15.4271L3.70779 17.9351C3.80579 19.2271 4.89579 20.2401 6.19079 20.2401H17.7908C19.0858 20.2401 20.1768 19.2271 20.2738 17.9351L20.4638 15.4271C20.4958 15.0131 20.8628 14.7191 21.2688 14.7351ZM13.281 2C14.7839 2 16.0291 3.12626 16.2166 4.57903L18.1861 4.5799C20.2821 4.5799 21.9861 6.2889 21.9861 8.3909V11.8299C21.9861 12.0969 21.8441 12.3429 21.6151 12.4769C19.1468 13.9224 16.02 14.7655 12.7406 14.878L12.741 16.6766C12.741 17.0906 12.405 17.4266 11.991 17.4266C11.577 17.4266 11.241 17.0906 11.241 16.6766L11.2403 14.8782C7.96428 14.7668 4.83725 13.9235 2.36709 12.4769C2.13709 12.3429 1.99609 12.0969 1.99609 11.8299V8.3809C1.99609 6.2849 3.70509 4.5799 5.80609 4.5799L7.7654 4.57903C7.95294 3.12626 9.19805 2 10.701 2H13.281ZM18.1861 6.0799H5.80609C4.53209 6.0799 3.49609 7.1119 3.49609 8.3809V11.3929C5.86981 12.6827 8.86232 13.3895 11.9771 13.3909L11.991 13.3896L12.0021 13.39L12.4782 13.385C15.4241 13.3149 18.2342 12.616 20.4861 11.3929V8.3909C20.4861 7.1159 19.4551 6.0799 18.1861 6.0799ZM13.281 3.5H10.701C10.0276 3.5 9.45925 3.95827 9.29134 4.57928H14.6906C14.5227 3.95827 13.9543 3.5 13.281 3.5Z"
+          fill="white"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_9927_236653">
+          <rect width="24" height="24" fill="white" />
+        </clipPath>
+      </defs>
     </svg>
   );
 };
