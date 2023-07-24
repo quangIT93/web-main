@@ -8,6 +8,8 @@ import ImageListItem from '@mui/material/ImageListItem';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Box, Typography, MenuItem, TextField } from '@mui/material';
 import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import './style.scss';
 
 import { Skeleton } from 'antd';
@@ -191,17 +193,28 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           <MenuItem value="Cũ nhất">Cũ nhất</MenuItem>
         </TextField>
       </Box>
+      <Backdrop
+        sx={{
+          color: '#0d99ff ',
+          backgroundColor: 'transparent',
+          zIndex: (theme: any) => theme.zIndex.drawer + 1,
+        }}
+        open={loading}
+      // onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       {dataBookmarks?.length > 0 ? (
         <div className="history-post">
           <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
             {dataBookmarks?.map((dataBookmark: any, i: number) => (
-              <Skeleton loading={loading} active>
-                <JobCardSaveHistory
-                  item={dataBookmark}
-                  handleDeleteBookmark={handleDeleteBookmark}
-                  index={i}
-                />
-              </Skeleton>
+              // <Skeleton loading={loading} active>
+              <JobCardSaveHistory
+                item={dataBookmark}
+                handleDeleteBookmark={handleDeleteBookmark}
+                index={i}
+              />
+              //</Skeleton> 
             ))}
           </Grid>
           <Box

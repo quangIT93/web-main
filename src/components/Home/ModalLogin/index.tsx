@@ -53,7 +53,8 @@ const style = {
   // height: '568px',
   bgcolor: '#ffffff',
   borderRadius: '20px',
-  // border: '2px solid #000',
+  border: 'none',
+  outline: 'none',
   boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.12)',
   p: 4,
 }

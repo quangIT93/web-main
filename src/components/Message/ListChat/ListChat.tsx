@@ -88,7 +88,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     socket.current = io(
       // 'https://181f-14-161-42-152.ngrok-free.app/',
-      'https://neoworks.vn',
+      'https://aiworks.vn',
       {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -106,10 +106,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         Number(searchParams.get('post_id')),
       );
       if (result) {
-        setTimeout(() => {
-          setAllListChat(result.data);
-          setOpenBackdrop(false);
-        }, 1000);
+        // setTimeout(() => {
+        setAllListChat(result.data);
+        setOpenBackdrop(false);
+        // }, 1000);
       }
     } catch (error) {
       console.log('error', error);
@@ -237,9 +237,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   };
 
   // Khi dữ liệu allListChat được cập nhật, cuộn xuống cuối cùng
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (listRef.current) {
-      // listRef.current.scrollTop = listRef.current.clientHeight;
+      listRef.current.scrollTop = listRef.current.clientHeight;
     }
     if (lastChatRef.current) {
       lastChatRef.current.scrollIntoView({
@@ -267,11 +267,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     return (
       <div
         // className="list-chat"
-        className={`list-chat ${
-          props.openListChat === true && windowWidth
-            ? 'show-list-chat-responesive'
-            : ''
-        }`}
+        className={`list-chat ${props.openListChat === true && windowWidth
+          ? 'show-list-chat-responesive'
+          : ''
+          }`}
       >
         <Backdrop
           sx={{
@@ -280,7 +279,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             background: 'transparent',
           }}
           open={openBackdrop}
-          // onClick={handleClose}
+        // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -289,9 +288,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             <div className="wrap_img">
               <img src={userInfoChat.avatar} alt="" />
               <span
-                className={`user-chat_online ${
-                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
-                }`}
+                className={`user-chat_online ${userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                  }`}
               ></span>
             </div>
             <div className="wrap-infoUser_chat">
@@ -325,9 +323,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
                 <div
-                  className={`content-chat ${
-                    index === allListChat.length - 1 ? 'lastChatRef' : null
-                  }`}
+                  className={`content-chat ${index === allListChat.length - 1 ? 'lastChatRef' : null
+                    }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -349,11 +346,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat">
                     <span
-                      className={`text-chat ${
-                        chat.message === null || chat.message === ''
-                          ? 'text-chat_hidden'
-                          : ''
-                      }`}
+                      className={`text-chat ${chat.message === null || chat.message === ''
+                        ? 'text-chat_hidden'
+                        : ''
+                        }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -380,11 +376,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             } else {
               return (
                 <div
-                  className={`content-chat2 ${
-                    index === allListChat.length - 1
-                      ? 'dddddddddddddddddddddddd'
-                      : null
-                  }`}
+                  className={`content-chat2 ${index === allListChat.length - 1
+                    ? 'dddddddddddddddddddddddd'
+                    : null
+                    }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -407,11 +402,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat2">
                     <span
-                      className={`text-chat ${
-                        chat.message === '' || chat.message === null
-                          ? 'text-chat_hidden'
-                          : ''
-                      }`}
+                      className={`text-chat ${chat.message === '' || chat.message === null
+                        ? 'text-chat_hidden'
+                        : ''
+                        }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
