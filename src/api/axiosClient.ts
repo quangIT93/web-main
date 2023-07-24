@@ -53,7 +53,7 @@ axiosClient.interceptors.response.use(
   (error) => {
     let originalRequest = error.config
     let refreshToken = localStorage.getItem('refreshToken')
-    console.log("errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", error)
+    console.log("error", error)
     if (
       (refreshToken && error.response?.status === 403) ||
       (refreshToken && error.response?.status === 401)

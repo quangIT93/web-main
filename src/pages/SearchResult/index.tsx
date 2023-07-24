@@ -46,6 +46,7 @@ import 'intl/locale-data/jsonp/en';
 // @ts-ignore
 import { Navbar } from '#components';
 import { CreateKeywordIconSmall, MoreICon } from '#components/Icons';
+import { CloseOutlined } from '@ant-design/icons';
 
 //import jobcard
 import JobCard from '../../components/Home/JobCard';
@@ -61,12 +62,8 @@ import {
 } from 'react-router-dom';
 // import { AxiosResponse } from 'axios'
 // import icon
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  // EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
+
+import { message } from 'antd';
 
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
@@ -206,6 +203,9 @@ const NewJobs: React.FC = () => {
   // ----------------------------------------------------------------
 
   const { Text } = Typography;
+
+  const [messageApi, contextHolder] = message.useMessage();
+
   const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   // state redux
@@ -460,7 +460,6 @@ const NewJobs: React.FC = () => {
   const onChangeCateLory = (value: any) => {
     setDisableCatelory(false);
     const secondValues = value.map((item: any) => item[1]);
-    console.log('value', value);
     if (secondValues.length <= 1) {
       setCategoriesId(secondValues);
       if (value.length !== 0) {
@@ -761,6 +760,20 @@ const NewJobs: React.FC = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
+            <div
+              style={{
+                position: 'absolute',
+                right: '20px',
+                top: '20px',
+                cursor: 'pointer',
+                // border: '1px solid',
+                borderRadius: '50%',
+                padding: '1px',
+              }}
+              onClick={() => setOpenModal(false)}
+            >
+              <CloseOutlined style={{ fontSize: '30px' }} />
+            </div>
             <p className="title-modal_createKey">Thông báo từ khóa</p>
             <Input
               placeholder="Từ khóa"
@@ -828,6 +841,7 @@ const NewJobs: React.FC = () => {
                 width: '100%',
                 borderRadius: '2px',
                 fontStyle: 'italic',
+                margin: '12px 0',
               }}
             />
             {/* 
@@ -896,7 +910,7 @@ const NewJobs: React.FC = () => {
               >
                 Áp dụng
               </Button>
-              <Button
+              {/* <Button
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
@@ -918,7 +932,7 @@ const NewJobs: React.FC = () => {
                 variant="outlined"
               >
                 Hủy
-              </Button>
+              </Button> */}
             </div>
           </Box>
         </Modal>

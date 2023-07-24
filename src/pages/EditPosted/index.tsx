@@ -189,6 +189,7 @@ const EditPosted = () => {
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
         0,
         20,
+        '-1',
       );
 
       if (result) {
@@ -252,7 +253,7 @@ const EditPosted = () => {
     editDataPosted?.categoryIds.forEach((category: any) => {
       formData.append('categoryIds', category);
     });
-    console.log('editDataPosted', editDataPosted);
+
     editDataPosted?.images.forEach((image: any) => {
       formData.append('images', image.image);
     });

@@ -84,7 +84,6 @@ const Profile: React.FC = () => {
   const profile = useSelector((state: RootState) => state.profileUser);
   const profileUser = useSelector((state: RootState) => state.profile.profile);
 
-  console.log('profileUser', profileUser);
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false);
   const [openModalContact, setOpenModalContact] = useState(false);
   const [openModalCareerObjective, setOpenModalCareerObjective] =
@@ -163,7 +162,7 @@ const Profile: React.FC = () => {
       return true;
     },
     beforeUpload: (file) => {
-      console.log('file', file);
+
       const isPNG = file.type === 'application/pdf';
       var checFileSize = true;
       if (!isPNG) {
@@ -207,7 +206,7 @@ const Profile: React.FC = () => {
   // handle upload cv
   const handleUpload = async () => {
     const formData = new FormData();
-    console.log(fileList);
+
     formData.append('pdf', fileList[0] as RcFile);
     setUploading(true);
     var mess = '';
@@ -220,7 +219,7 @@ const Profile: React.FC = () => {
         result = await profileApi.createCV(formData);
         mess = 'Thêm CV thành công';
       }
-      console.log(result);
+
       if (result) {
         const result = await profileApi.getProfile();
         if (result) {
@@ -270,7 +269,7 @@ const Profile: React.FC = () => {
       // Xử lý lỗi tải lên ảnh
     }
   };
-  console.log('profile', profile.avatar);
+
 
   const alert = useSelector((state: any) => state.alertProfile.alert);
 

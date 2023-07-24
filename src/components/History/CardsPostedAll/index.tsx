@@ -71,6 +71,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
         postID,
         10,
+        '-1',
       );
 
       if (result) {
@@ -107,6 +108,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
         lastPostId,
         5,
+        '-1',
       );
       if (result) {
         setUploading(false);

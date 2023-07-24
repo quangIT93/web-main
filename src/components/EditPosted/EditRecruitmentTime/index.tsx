@@ -23,8 +23,6 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
 
   const valueNewDate: any = moment(new Date());
 
-  console.log('1', editDataPosted);
-
   const handleChangeStartTime = (newValue: any, e: any) => {
     console.log('nuew', newValue);
     setEditDataPosted((preValue: any) => ({

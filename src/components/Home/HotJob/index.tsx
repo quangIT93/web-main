@@ -140,7 +140,7 @@ const HotJob: React.FC = () => {
       </div>
       <Swiper
         navigation={true}
-        mousewheel={true}
+        // mousewheel={true}
         breakpoints={{
           320: {
             slidesPerView: 1,

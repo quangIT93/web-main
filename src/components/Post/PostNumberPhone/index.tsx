@@ -61,7 +61,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
   return (
     <Box sx={{ marginTop: '24px' }}>
       <Typography
-        sx={{ fontSize: '12px', fontStyle: 'normal' }}
+        sx={styleLabel}
         variant="body1"
         component="label"
         htmlFor="company"

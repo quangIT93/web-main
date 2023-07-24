@@ -46,7 +46,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           //   value={formValues.title}
           onChange={handleChangeTitleForm}
           size="small"
-          sx={{ width: '100%', marginTop: '4px' }}
+          sx={{ width: '100%', marginTop: '0.5rem' }}
           placeholder="Tên công việc"
           error={titleError} // Đánh dấu lỗi
         />

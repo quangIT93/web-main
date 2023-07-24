@@ -67,6 +67,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
         newCount,
         10,
+        '1',
       );
 
       if (result) {
@@ -102,6 +103,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
       const result = await historyRecruiter.GetInformationAndCandidatesCount(
         lastPostId,
         5,
+        '1',
       );
       if (result) {
         setUploading(false);

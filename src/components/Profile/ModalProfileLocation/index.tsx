@@ -172,7 +172,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleSubmit = async () => {
     try {
       if (locationId.length > 3) {
-        message.warning('Chon 3 khu vuc lam viec');
+        message.warning('Chọn 3 ');
         return;
       }
       const result = await profileApi.updateProfileLocation(
@@ -225,8 +225,6 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
             value={location}
             input={<OutlinedInput placeholder="Quận, Tỉnh/Thành Phố" />}
             renderValue={(selected) => {
-              console.log('selected', selected);
-
               if (selected.length === 0) {
                 return (
                   <p style={{ color: ' #aaaaaa', padding: '4px 0' }}>

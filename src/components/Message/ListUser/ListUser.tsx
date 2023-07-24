@@ -115,7 +115,6 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
     windowWidth && props.setOpenListChat(true);
 
-
     if (props.openListChat === true && windowWidth) {
       let listChatElement = document.querySelector('.list_userChat');
       listChatElement?.classList.add('.hide-list-userChat');
@@ -138,13 +137,14 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   // console.log('tin nhan duoc nhan', receivedMessages)
   // console.log('tin nhan da gui', sendMessages)
-  const onSearch = (value: string) => console.log(value);
+  // const onSearch = (value: string) => console.log(value);
   if (listUserChat.length !== 0) {
     return (
       <div
         // className="list_userChat"
-        className={`list_userChat ${props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
-          }`}
+        className={`list_userChat ${
+          props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
+        }`}
       >
         <div className="header-list_userChat">
           <h4 className="title-header_listUserChat">Tin nhắn</h4>
@@ -164,8 +164,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         <div className="list-infoUser">
           {listUserChat.map((user: any, index: number) => (
             <div
-              className={`wrap-userInfo ${userInfoChat.user_id === user.user_id ? 'readed-message' : ''
-                } `}
+              className={`wrap-userInfo ${
+                userInfoChat.user_id === user.user_id ? 'readed-message' : ''
+              } `}
               key={index}
               onClick={() => handleClickUserInfo(user)}
             >
@@ -176,8 +177,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                   <div>Hijob</div>
                 )}
                 <span
-                  className={`user-online ${user.is_online ? 'user-online_true' : ''
-                    }`}
+                  className={`user-online ${
+                    user.is_online ? 'user-online_true' : ''
+                  }`}
                 ></span>
               </div>
               <div className="info-user_chat">
@@ -208,9 +210,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           <div>Bạn chưa có cuộc trò chuyện nào!</div>
         </div>
       </div>
-    )
+    );
   }
-
 };
 
 export default ListUserChat;

@@ -177,7 +177,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Thêm thông tin trình độ học vấn
+          Sửa thông tin trình độ học vấn
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -242,6 +242,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   onChange={handleChangeStartTime}
                   views={['year', 'month']}
                   openTo="month"
+                  format="MM/YYYY"
                 />
               </div>
               <div className="wrapTimeDay">
@@ -258,6 +259,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   onChange={handleChangeEndTime}
                   views={['year', 'month']}
                   openTo="month"
+                  minDate={moment(education.startDate)}
+                  format="MM/YYYY"
                 />
               </div>
             </DemoContainer>
