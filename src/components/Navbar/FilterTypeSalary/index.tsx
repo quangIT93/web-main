@@ -20,7 +20,6 @@ const CustomOption = ({
   setValueRender: Function;
   salaryType: number;
 }) => {
-  console.log('Custom option', data);
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     setValue(value);
     const valueRender = data.find((item: any) => item.id == value);

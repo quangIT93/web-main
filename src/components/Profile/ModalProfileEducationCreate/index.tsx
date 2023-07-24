@@ -244,6 +244,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   onChange={handleChangeStartTime}
                   views={['year', 'month']}
                   openTo="month"
+                  format="MM/YYYY"
                 />
               </div>
               <div className="wrapTimeDay">
@@ -260,6 +261,8 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   onChange={handleChangeEndTime}
                   views={['year', 'month']}
                   openTo="month"
+                  minDate={moment(education.startDate)}
+                  format="MM/YYYY"
                 />
               </div>
             </DemoContainer>

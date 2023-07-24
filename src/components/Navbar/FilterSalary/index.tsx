@@ -105,27 +105,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   };
 
   const handleSubmitValue = () => {
-    console.log(`Selected value: ${selectedValue}`);
     // console.log(`Input value: ${inputValue}`)
     const reg = /[0-9]+$/;
-    console.log('inputValueMax', inputValueMax);
-    console.log('inputValueMin', inputValueMin);
-    console.log('Salary_Max', Salary_Max);
-    console.log('Salary_Min', Salary_Min);
-    console.log('  Salary_Max < Salary_Min ', Salary_Max < Salary_Min);
-    console.log(
-      ' 2 ',
-      inputValueMin && !inputValueMax && Salary_Max < Number(inputValueMin),
-    );
-    console.log('  222 ', Salary_Max < Salary_Min);
-    console.log(
-      '  333',
-      inputValueMax && !inputValueMin && Number(inputValueMax) < Salary_Min,
-    );
-    console.log('dieu kien', Number(inputValueMax) > Number(inputValueMin));
 
     if (inputValueMin && !inputValueMax && Salary_Max < Number(inputValueMin)) {
-      console.log('vô');
       setCheckSalary(true);
       setTimeout(() => {
         setCheckSalary(false);
@@ -135,7 +118,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       !inputValueMin &&
       Number(inputValueMax) < Salary_Min
     ) {
-      console.log('vô');
       setCheckSalary(true);
       setTimeout(() => {
         setCheckSalary(false);
@@ -145,7 +127,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       inputValueMin &&
       Number(inputValueMax) < Number(inputValueMin)
     ) {
-      console.log('vô');
       setCheckSalary(true);
       setTimeout(() => {
         setCheckSalary(false);
@@ -310,11 +291,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       window.removeEventListener('click', handleOutsideClick);
     };
   }, []);
-
-  console.log('salaryMin', salaryMin);
-  console.log('salaryMax', salaryMax);
-  console.log('inputValueMin', inputValueMin);
-  console.log('inputValueMax', inputValueMax);
 
   return (
     <div className="filter-input">

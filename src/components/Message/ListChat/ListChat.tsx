@@ -5,11 +5,14 @@ import { useSearchParams } from 'react-router-dom';
 import { Input } from 'antd';
 
 import io from 'socket.io-client';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // import api
 import messageApi from 'api/messageApi';
 import profileApi from 'api/profileApi';
 
+// import { Skeleton } from 'antd';
+import Backdrop from '@mui/material/Backdrop';
 // import icon
 import {
   DotIcon,
@@ -47,6 +50,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   const [profileUser, setProfileUser] = useState<any>({});
   const [image, setImage] = useState<File | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+
+  const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [previousDate, setPreviousDate] = useState<string | null>(null)
 
   const updateWindowWidth = () => {
@@ -93,6 +98,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   }, []);
 
   const getAllListChat = async () => {
+    setOpenBackdrop(true);
     try {
       const result = await messageApi.getChatMessage(
         userInfoChat.user_id,
@@ -100,7 +106,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         Number(searchParams.get('post_id')),
       );
       if (result) {
-        setAllListChat(result.data);
+        setTimeout(() => {
+          setAllListChat(result.data);
+          setOpenBackdrop(false);
+        }, 1000);
       }
     } catch (error) {
       console.log('error', error);
@@ -148,13 +157,13 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       // })
 
       socket.current.on('server-send-message-to-receiver', (data: any) => {
-        console.log(' gui tin nhan di den nguoi nhan', data);
+        // console.log(' gui tin nhan di den nguoi nhan', data);
         // gui tin nhan di den nguoi nhan
         setReceivedMessages((prevReceive: any[]) => [...prevReceive, data]);
       });
 
       socket.current.on('server-send-message-was-sent', (data: any) => {
-        console.log('nhận tin nhan ve khi da gui xong', data);
+        // console.log('nhận tin nhan ve khi da gui xong', data);
         // nhận tin nhan ve khi da gui xong
         setSendMessages((prevSend: any[]) => [...prevSend, data]);
       });
@@ -187,7 +196,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         createdAt: Date.now(),
         type: 'text',
         postId: searchParams.get('post_id'),
-        // postId: 36353,
+        // postId: 66587,
       });
 
     setMessage('');
@@ -228,24 +237,31 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   };
 
   // Khi dữ liệu allListChat được cập nhật, cuộn xuống cuối cùng
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (listRef.current) {
-      listRef.current.scrollTop = listRef.current.clientHeight;
+      // listRef.current.scrollTop = listRef.current.clientHeight;
     }
     if (lastChatRef.current) {
-      // lastChatRef.current.scrollIntoView({
-      //   behavior: 'auto',
-      //   block: 'end',
-      // });
-      // lastChatRef.current.scrollIntoView(false);
+      lastChatRef.current.scrollIntoView({
+        behavior: 'auto',
+        block: 'end',
+      });
+      lastChatRef.current.scrollIntoView(false);
     }
   }, [allListChat]);
 
-  useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollTop = listRef.current.scrollHeight;
-    }
-  }, [allListChat]);
+  // useEffect(() => {
+  //   if (listRef.current) {
+  //     listRef.current.scrollTop = listRef.current.scrollHeight;
+  //   }
+  // }, [allListChat]);
+
+  // useEffect(() => {
+  //   setOpenBackdrop(true);
+  //   setTimeout(() => {
+  //     setOpenBackdrop(false);
+  //   }, 1000);
+  // }, []);
 
   if (userInfoChat.length !== 0) {
     return (
@@ -257,6 +273,17 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             : ''
         }`}
       >
+        <Backdrop
+          sx={{
+            color: '#fff',
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            background: 'transparent',
+          }}
+          open={openBackdrop}
+          // onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <div className="header-list_chat">
           <div className="wrap-img_Userchat">
             <div className="wrap_img">
@@ -289,12 +316,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             <CloseIcon />
           </div>
         </div>
+
         <div className="list-content_chat" ref={listRef}>
           {allListChat.map((chat: any, index: number) => {
             const chatDate = new Date(chat.created_at).toLocaleDateString();
             let showDate = false;
-
-            // if()
 
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
@@ -343,7 +369,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     )}
                     <small>
                       {new Date(chat.created_at).getHours()}:
-                      {new Date(chat.created_at).getMinutes()}
+                      {new Date(chat.created_at)
+                        .getMinutes()
+                        .toString()
+                        .padStart(2, '0')}
                     </small>
                   </div>
                 </div>
@@ -398,7 +427,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     )}
                     <small>
                       {new Date(chat.created_at).getHours()}:
-                      {new Date(chat.created_at).getMinutes()}
+                      {new Date(chat.created_at)
+                        .getMinutes()
+                        .toString()
+                        .padStart(2, '0')}
                     </small>
                   </div>
                 </div>
@@ -408,11 +440,24 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         </div>
 
         <div className="inputs-chat">
-          <Input
+          <input
             placeholder="Nhập đoạn chat của bạn"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              listRef?.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end',
+              });
+              setMessage(e.target.value);
+            }}
             onKeyDown={handleKeyPress}
+            style={{
+              fontStyle: 'normal',
+              width: '100%',
+              borderRadius: '10px',
+              border: '1px solid #aaa',
+              outline: 'none',
+            }}
           />
           <input
             type="file"

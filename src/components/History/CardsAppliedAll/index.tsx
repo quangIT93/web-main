@@ -51,6 +51,9 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
     }
   };
 
+  console.log("dataApplied ", dataApplied);
+
+
   useEffect(() => {
     let isMounted = true;
     setLoading(true);

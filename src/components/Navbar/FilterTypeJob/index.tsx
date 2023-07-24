@@ -27,7 +27,7 @@ const CustomOption = ({
 
     setValue(value);
   };
-  console.log('jobType', jobType);
+
   return (
     <Radio.Group
       style={{ width: '100%' }}
@@ -66,8 +66,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
     const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data];
     if (updatedData) {
       setData(updatedData);
-      console.log('TYPE_JOB', TYPE_JOB);
-      console.log('data', data);
+
       if (TYPE_JOB) {
         const value = updatedData.find((item: any) => item.id === TYPE_JOB);
         setValueRender(value);

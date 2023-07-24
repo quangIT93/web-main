@@ -5,6 +5,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Button } from 'antd';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -46,9 +48,20 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             id="modal-modal-title"
             variant="h5"
             component="h2"
-            sx={{ textAlign: 'center', color: '#0d99ff' }}
+            sx={{ textAlign: 'center', color: '#0d99ff', position: 'relative' }}
           >
             Đã đăng tuyển thành công!
+            <IconButton aria-label="close"
+              onClick={handleClose}
+              sx={{
+                position: 'absolute',
+                right: '0',
+                top: '50%',
+                transform: 'translateY(-50%)'
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
           </Typography>
           <Typography
             id="modal-modal-title"

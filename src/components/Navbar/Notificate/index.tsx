@@ -81,7 +81,6 @@ const Notificate = () => {
   const [activeKeyword, setActiveKeyword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
   const [input, setInput] = useState(true);
 
   const refNotification = React.useRef<HTMLDivElement | null>(null);
@@ -99,13 +98,13 @@ const Notificate = () => {
   };
   const getApiNotificate = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const result = await notificationApi.getNotificationV2();
       if (result) {
-        setIsLoading(false)
+        setIsLoading(false);
         setDataNotification(result.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -118,7 +117,7 @@ const Notificate = () => {
       if (result) {
         setDataNotificationkeyword(result.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -138,7 +137,6 @@ const Notificate = () => {
       console.log('error', error);
     }
   };
-  console.log('dataa', dataNotificationKeyword);
 
   React.useEffect(() => {
     const handleCLoseNotificate = (event: any) => {
@@ -179,138 +177,94 @@ const Notificate = () => {
     }
   };
 
-  console.log('activeSystem', activeSystem);
-  console.log('activeKeyword', activeKeyword);
-
   return (
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
-          className={`top-notificate_system ${activeSystem ? 'active-system' : ''
-            }`}
+          className={`top-notificate_system ${
+            activeSystem ? 'active-system' : ''
+          }`}
           onClick={handleClickActiveSystem}
         >
           Thông báo
         </div>
         <div
-          className={`top-notificate_keyword ${activeKeyword ? 'active-keyword' : ''
-            }`}
+          className={`top-notificate_keyword ${
+            activeKeyword ? 'active-keyword' : ''
+          }`}
           onClick={handleClickActiveKeyword}
         >
           Từ khoá
         </div>
       </div>
       <div className="bottom-notificate">
-        {
-          isLoading ?
-            <CircularProgress
-              sx={{ marginTop: '50%', color: '#0d99ff' }}
-            /> :
-            activeSystem ? (
-              dataNotification?.notifications?.map(
-                (notificate: any, index: number) => {
-                  if (notificate.data.typeText === 'keyword') {
-                    return (
-                      <div
-                        key={index}
-                        className="wrap-system"
-                        onClick={() => handleClickNotiKey(notificate.data.postId)}
-                      >
-                        <div className="wrap-img_keyword">
-                          <img src={notificate.data.image} alt="ảnh lỗi" />
-                        </div>
-                        <div className="content-notificate">
-                          <div className="wrap-title_contentNotificate">
-                            <Tooltip
-                              placement="top"
-                              title={notificate.data.postTitle}
-                            >
-                              <h3>{notificate.data.postTitle}</h3>
-                            </Tooltip>
-                            <img
-                              src={notificate.data.companyResource.logo}
-                              alt=""
-                            />
-                          </div>
-                          <Tooltip
-                            placement="top"
-                            title={notificate.data.companyResource.companyName}
-                          >
-                            <h5>{notificate.data.companyResource.companyName}</h5>
-                          </Tooltip>
-                          <ul>
-                            <Tooltip
-                              placement="top"
-                              title={`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
-                            >
-                              <li>
-                                {/* <LocationIcon /> */}
-                                <LocationHomeIcon />
-                                <p>
-                                  {`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
-                                </p>
-                              </li>
-                            </Tooltip>
-                            <li>
-                              <CateIcon />
-                              <p>
-                                {notificate.data.category.map(
-                                  (cate: any, index: number) => {
-                                    return `${cate.child_category}${' '}`;
-                                  },
-                                )}
-                              </p>
-                            </li>
-                          </ul>
-                          <div className="time-content_keyword">
-                            <div className="wrap-time">
-                              <p>
-                                {new Date(
-                                  notificate.data.createdAt,
-                                ).toLocaleTimeString([], {
-                                  hour: '2-digit',
-                                  minute: '2-digit',
-                                })}
-                              </p>
-                              <p>
-                                {new Date(
-                                  notificate.data.createdAt,
-                                ).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <p>{notificate.data.jobType.name}</p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div
-                        key={index}
-                        className="wrap-notificate_system"
-                        onClick={() =>
-                          handleClickNoty(
-                            notificate.data.postId,
-                            notificate.data.applicationId,
-                            notificate.data.typeText,
-                          )
-                        }
-                      >
-                        <h3>{notificate.content_app.title}</h3>
-                        <h5
-                          dangerouslySetInnerHTML={{
-                            __html: notificate.content_app.body,
-                          }}
+        {isLoading ? (
+          <CircularProgress sx={{ marginTop: '50%', color: '#0d99ff' }} />
+        ) : activeSystem ? (
+          dataNotification?.notifications?.map(
+            (notificate: any, index: number) => {
+              if (notificate.data.typeText === 'keyword') {
+                return (
+                  <div
+                    key={index}
+                    className="wrap-system"
+                    onClick={() => handleClickNotiKey(notificate.data.postId)}
+                  >
+                    <div className="wrap-img_keyword">
+                      <img src={notificate.data.image} alt="ảnh lỗi" />
+                    </div>
+                    <div className="content-notificate">
+                      <div className="wrap-title_contentNotificate">
+                        <Tooltip
+                          placement="top"
+                          title={notificate.data.postTitle}
+                        >
+                          <h3>{notificate.data.postTitle}</h3>
+                        </Tooltip>
+                        <img
+                          src={notificate.data.companyResource.logo}
+                          alt=""
                         />
-                        <div className="wrap-time">
+                      </div>
+                      <Tooltip
+                        placement="top"
+                        title={notificate.data.companyResource.companyName}
+                      >
+                        <h5>{notificate.data.companyResource.companyName}</h5>
+                      </Tooltip>
+                      <ul>
+                        <Tooltip
+                          placement="top"
+                          title={`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
+                        >
+                          <li>
+                            {/* <LocationIcon /> */}
+                            <LocationHomeIcon />
+                            <p>
+                              {`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
+                            </p>
+                          </li>
+                        </Tooltip>
+                        <li>
+                          <CateIcon />
                           <p>
-                            {new Date(notificate.data.createdAt).toLocaleTimeString(
-                              [],
-                              {
-                                hour: '2-digit',
-                                minute: '2-digit',
+                            {notificate.data.category.map(
+                              (cate: any, index: number) => {
+                                return `${cate.child_category}${' '}`;
                               },
                             )}
+                          </p>
+                        </li>
+                      </ul>
+                      <div className="time-content_keyword">
+                        <div className="wrap-time">
+                          <p>
+                            {new Date(
+                              notificate.data.createdAt,
+                            ).toLocaleTimeString([], {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
                           </p>
                           <p>
                             {new Date(
@@ -318,14 +272,54 @@ const Notificate = () => {
                             ).toLocaleDateString()}
                           </p>
                         </div>
+                        <p>{notificate.data.jobType.name}</p>
                       </div>
-                    );
-                  }
-                },
-              )
-            ) : (
-              <div className="wrap-keyword">
-                {/* <p>
+                    </div>
+                  </div>
+                );
+              } else {
+                return (
+                  <div
+                    key={index}
+                    className="wrap-notificate_system"
+                    onClick={() =>
+                      handleClickNoty(
+                        notificate.data.postId,
+                        notificate.data.applicationId,
+                        notificate.data.typeText,
+                      )
+                    }
+                  >
+                    <h3>{notificate.content_app.title}</h3>
+                    <h5
+                      dangerouslySetInnerHTML={{
+                        __html: notificate.content_app.body,
+                      }}
+                    />
+                    <div className="wrap-time">
+                      <p>
+                        {new Date(notificate.data.createdAt).toLocaleTimeString(
+                          [],
+                          {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          },
+                        )}
+                      </p>
+                      <p>
+                        {new Date(
+                          notificate.data.createdAt,
+                        ).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                );
+              }
+            },
+          )
+        ) : (
+          <div className="wrap-keyword">
+            {/* <p>
               Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh
               chóng qua:
             </p>
@@ -339,67 +333,67 @@ const Notificate = () => {
                 <label htmlFor="app">APP</label>
               </div>
             </div> */}
-                <div className="count-keyword">
-                  <p>
-                    Bạn đã lưu trữ được:
-                    <strong>{` ${dataNotificationKeyword?.keywords?.length}/10 `}</strong>
-                    gợi ý công việc
-                  </p>
-                </div>
+            <div className="count-keyword">
+              <p>
+                Bạn đã lưu trữ được:
+                <strong>{` ${dataNotificationKeyword?.keywords?.length}/10 `}</strong>
+                gợi ý công việc
+              </p>
+            </div>
 
-                {dataNotificationKeyword ? (
-                  dataNotificationKeyword?.keywords?.map(
-                    (dataKeyword: any, index: number) => (
-                      <div className="wrap-content_keyword" key={index}>
-                        <div className="content_keyword">
-                          <h3>{dataKeyword.keyword}</h3>
-                          <ul>
-                            <li>
-                              <LocationHomeIcon />
-                              <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p>
-                            </li>
-                            <li>
-                              <CateIcon />
-                              <p>{`${dataKeyword.category.name}`}</p>
-                            </li>
-                          </ul>
-                          <div className="wrap-time_keyword">
-                            <p>
-                              {new Date(dataKeyword.created_at).toLocaleTimeString(
-                                [],
-                                {
-                                  hour: '2-digit',
-                                  minute: '2-digit',
-                                },
-                              )}
-                            </p>
+            {dataNotificationKeyword ? (
+              dataNotificationKeyword?.keywords?.map(
+                (dataKeyword: any, index: number) => (
+                  <div className="wrap-content_keyword" key={index}>
+                    <div className="content_keyword">
+                      <h3>{dataKeyword.keyword}</h3>
+                      <ul>
+                        <li>
+                          <LocationHomeIcon />
+                          <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p>
+                        </li>
+                        <li>
+                          <CateIcon />
+                          <p>{`${dataKeyword.category.name}`}</p>
+                        </li>
+                      </ul>
+                      <div className="wrap-time_keyword">
+                        <p>
+                          {new Date(dataKeyword.created_at).toLocaleTimeString(
+                            [],
+                            {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            },
+                          )}
+                        </p>
 
-                            <p>
-                              {new Date(
-                                dataKeyword.created_at,
-                              ).toLocaleDateString()}
-                            </p>
-                          </div>
-                        </div>
-                        <Switch
-                          checked={dataKeyword.status === 1 ? true : false}
-                          checkedChildren=""
-                          unCheckedChildren=""
-                          onChange={() =>
-                            handleChangeStatusKeyword(
-                              dataKeyword.id,
-                              dataKeyword.status,
-                            )
-                          }
-                        />
+                        <p>
+                          {new Date(
+                            dataKeyword.created_at,
+                          ).toLocaleDateString()}
+                        </p>
                       </div>
-                    ),
-                  )
-                ) : (
-                  <></>
-                )}
-              </div>
+                    </div>
+                    <Switch
+                      checked={dataKeyword.status === 1 ? true : false}
+                      checkedChildren=""
+                      unCheckedChildren=""
+                      onChange={() =>
+                        handleChangeStatusKeyword(
+                          dataKeyword.id,
+                          dataKeyword.status,
+                        )
+                      }
+                    />
+                  </div>
+                ),
+              )
+            ) : (
+              <></>
             )}
+          </div>
+        )}
       </div>
       {/* {activeKeyword ? (
         <div

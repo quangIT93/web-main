@@ -52,7 +52,7 @@ const AnotherPost: React.FC<any> = (props) => {
     <>
       <Card
         sx={{
-          display: 'flex',
+          display: props.item ? 'flex' : 'none',
           padding: '12px',
           cursor: 'pointer',
           '&:hover': {

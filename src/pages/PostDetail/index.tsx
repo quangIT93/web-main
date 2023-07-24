@@ -253,7 +253,7 @@ const Detail: React.FC = () => {
         // const list = result?.data.categories.map((category: any) =>
         //   Number(category.child_category_id)
         // )
-        // console.log('child', list)
+        console.log('postId', result.data);
         // check  application status
         setIsLoading(false);
         if (result.data.account_id === accountId) {
@@ -263,10 +263,12 @@ const Detail: React.FC = () => {
         } else if (result.data.status === 3) {
           setTextButton('Bài đăng đã đóng');
           setBackgroundButton('gray');
+          // setBackgroundButton('#0D99FF');
           result.data.applied = true;
         } else if (result.data.application_status === 1) {
           setTextButton('Đã ứng tuyển');
-          setBackgroundButton('gray');
+          // setBackgroundButton('gray');
+          setBackgroundButton('#0D99FF');
         } else if (result.data.application_status === 2) {
           setTextButton('Hồ sơ được phê duyệt');
           setBackgroundButton('#0D99FF');
@@ -299,8 +301,6 @@ const Detail: React.FC = () => {
       setIsLoading(true);
       const result = await postApi.getById(postID);
       if (result) {
-        console.log(result);
-
         setIsLoading(false);
         position === 0 ? setPostPrev(result.data) : setPostNext(result.data);
       }
@@ -330,8 +330,6 @@ const Detail: React.FC = () => {
     //get post next
     getAnotherPost(POST_ID + 1, 1);
   }, [bookmarked, POST_ID]);
-  console.log('post prev: ', postPrev);
-  console.log('post next: ', postNext);
 
   // set size for Breadcrumb
   React.useEffect(() => {
@@ -370,11 +368,6 @@ const Detail: React.FC = () => {
 
   // handle click button
   const onclick = async () => {
-    //  window.open(`${post?.data.share_link}`)
-    console.log('accessToken', ACCESS_TOKEN);
-    console.log('POST_ID', POST_ID);
-    console.log('checkPostUser', checkPostUser);
-    console.log('userProfile', userProfile);
     try {
       if (!ACCESS_TOKEN) {
         CheckWasLogin();
@@ -394,7 +387,6 @@ const Detail: React.FC = () => {
         !userProfile.phone ||
         !userProfile.email
       ) {
-        console.log('user', userProfile);
         api.info({
           message: `Cập nhật thông tin`,
           description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
@@ -404,19 +396,16 @@ const Detail: React.FC = () => {
         return;
       }
       const result = await appplicationApi.applyAplication(POST_ID);
-      // console.log('result', result);
-
-      if (result) {
-        openNotification();
+      console.log('result ung tiyen', result);
+      if (true) {
+        // openNotification();
         setTextButton('Đã ứng tuyển');
-        setBackgroundButton('gray');
+        // setBackgroundButton('gray');
         setCheckApply(true);
         window.open(post?.data.resource.url, '_blank');
       }
     } catch (error: any) {
-      console.log(error);
-      console.log('error', error.code);
-      console.log('error', error.status);
+      console.log('error', error);
       if (error.response.status === 400) {
         api.info({
           message: `Ứng tuyển không thành công!`,
@@ -425,9 +414,11 @@ const Detail: React.FC = () => {
           icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
         });
         setTextButton('Đã ứng tuyển');
-        setBackgroundButton('gray');
+        // setBackgroundButton('gray');
+        setBackgroundButton('#0D99FF');
         setCheckApply(true);
-        openNotification();
+        window.open(post?.data.resource.url, '_blank');
+        // openNotification();
         return;
       }
     }
@@ -444,14 +435,13 @@ const Detail: React.FC = () => {
   setTimeout(() => {
     setAutomatic(true);
   }, 700);
-  console.log('postNewest', post);
+
   const handleClickShare = () => {
     setOpenModalShare(true);
   };
   const handleClickSave = async () => {
     // const a = post?.data.bookmarked;
-    console.log('postMarked', post?.data.bookmarked);
-    console.log('bookmarked', bookmarked);
+
     try {
       if (post?.data.bookmarked && bookmarked) {
         const result = await bookMarkApi.deleteBookMark(post?.data.id);
@@ -470,7 +460,7 @@ const Detail: React.FC = () => {
       console.log(error);
     }
   };
-  console.log('bookmarked', bookmarked);
+
   const handleCloseModalShare = () => {
     setOpenModalShare(false);
   };
@@ -544,10 +534,10 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
+        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
-  console.log('time', post?.data);
+
   return (
     <>
       {automatic && (
@@ -594,14 +584,19 @@ const Detail: React.FC = () => {
                       onClick={handleClickSearch}
                       style={{ cursor: 'pointer' }}
                     >
-                      View more
+                      View all
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
+                    <h3>{`${post?.data.address}, ${post?.data.district}, ${post?.data.province}`}</h3>
+                    <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
-                    >{`${post?.data.address}, ${post?.data.district}, ${post?.data.province}`}</h3>
+                      style={{ cursor: 'pointer' }}
+                    >
+                      Open on maps
+                    </h3>
                   </div>
                 </div>
                 <div className="bot-title">
@@ -695,40 +690,52 @@ const Detail: React.FC = () => {
                     }}
                     spaceBetween={10}
                     navigation={true}
-                    mousewheel={true}
+                    // mousewheel={true}
+                    loop={true}
                     thumbs={{ swiper: thumbsSwiper }}
-                    modules={[Mousewheel, FreeMode, Pagination, Navigation, Thumbs]}
+                    modules={[
+                      Mousewheel,
+                      FreeMode,
+                      Pagination,
+                      Navigation,
+                      Thumbs,
+                    ]}
                     className="div-job-img-swipper"
                   >
-                    {
-                      post?.data.images.map((item: any, index: number) => {
-                        return (
-                          <SwiperSlide className="div-job-img-swipper_item" key={index}>
-                            <img src={item.image} />
-                          </SwiperSlide>
-                        )
-                      })
-                    }
+                    {post?.data.images.map((item: any, index: number) => {
+                      return (
+                        <SwiperSlide
+                          className="div-job-img-swipper_item"
+                          key={index}
+                        >
+                          <img src={item.image} />
+                        </SwiperSlide>
+                      );
+                    })}
                   </Swiper>
                   <Swiper
                     onSwiper={setThumbsSwiper}
                     spaceBetween={10}
-                    mousewheel={true}
+                    // mousewheel={true}
                     slidesPerView={3}
                     freeMode={true}
+                    centeredSlides={
+                      post?.data.images.length === 1 ? true : false
+                    }
                     watchSlidesProgress={true}
                     modules={[Mousewheel, FreeMode, Navigation, Thumbs]}
                     className="div-job-img-swipper_Thumbs"
                   >
-                    {
-                      post?.data.images.map((item: any, index: number) => {
-                        return (
-                          <SwiperSlide className="div-job-img-swipper-thumbs_item" key={index}>
-                            <img src={item.image} />
-                          </SwiperSlide>
-                        )
-                      })
-                    }
+                    {post?.data.images.map((item: any, index: number) => {
+                      return (
+                        <SwiperSlide
+                          className="div-job-img-swipper-thumbs_item"
+                          key={index}
+                        >
+                          <img src={item.image} />
+                        </SwiperSlide>
+                      );
+                    })}
                   </Swiper>
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
@@ -748,7 +755,7 @@ const Detail: React.FC = () => {
                       <TabPanel value="1">
                         <div className="job-title-container">
                           <div className="job-title-details">
-                            <div className="div-detail-row">
+                            {/* <div className="div-detail-row">
                               <EnvironmentOutlined
                                 style={{ color: '#575757' }}
                               />
@@ -757,7 +764,7 @@ const Detail: React.FC = () => {
                                 <p>Địa chỉ</p>
                                 <h5>{post?.data.address}</h5>
                               </div>
-                            </div>
+                            </div> */}
                             <div className="div-detail-row">
                               <SlidersOutlined style={{ color: '#575757' }} />
                               <div style={{ marginLeft: '10px' }}>
@@ -858,8 +865,8 @@ const Detail: React.FC = () => {
                                 <h5>
                                   {post?.data.expired_date
                                     ? moment(
-                                      new Date(post?.data.expired_date),
-                                    ).format('DD/MM/yyyy')
+                                        new Date(post?.data.expired_date),
+                                      ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>
@@ -872,7 +879,7 @@ const Detail: React.FC = () => {
                             onClick={onclick}
                             className="btn-apply"
                             type={'primary'}
-                            disabled={checkApply}
+                            // disabled={checkApply}
                             style={{
                               fontSize: 16,
                               backgroundColor: `${backgroundButton}`,
@@ -918,9 +925,17 @@ const Detail: React.FC = () => {
                         <div
                           className="description-button_next"
                           onClick={handleNextPost}
+                          style={{
+                            color: postNext ? 'black' : '#cccc',
+                          }}
                         >
                           <span>Next job</span>
-                          <div className="icon">
+                          <div
+                            className="icon"
+                            style={{
+                              backgroundColor: postNext ? 'black' : '#cccc',
+                            }}
+                          >
                             <BackIcon width={17} height={17} />
                           </div>
                         </div>
