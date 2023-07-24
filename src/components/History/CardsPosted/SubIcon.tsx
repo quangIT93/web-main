@@ -51,9 +51,9 @@ const SubIcon: React.FC<ISubicon> = (props) => {
       <div
         className="sub-icon_moreOutlined sub-edit_post"
         onClick={handleClickEditPost}
-        // style={
-        //   status !== 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
-        // }
+      // style={
+      //   status !== 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
+      // }
       >
         <EditOutlined />
         Chỉnh sửa bài tuyển dụng
@@ -61,7 +61,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
 
       <div
         className="sub-icon_moreOutlined sub-close_post"
-        onClick={status !== 3 ? handleClickClosePost : () => {}}
+        onClick={status !== 3 ? handleClickClosePost : () => { }}
         style={
           status === 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
         }
@@ -70,7 +70,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         {status === 3 ? '     Đóng bài tuyển dụng' : 'Bài tuyển dụng đã đóng'}
       </div>
 
-      {/* {status === 3 ? (
+      {status === 3 ? (
         <div
           className="sub-icon_moreOutlined sub-open_post"
           onClick={handleClickOpenPost}
@@ -88,7 +88,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         </div>
       ) : (
         <></>
-      )} */}
+      )}
     </div>
   );
 };

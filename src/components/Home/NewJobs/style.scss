@@ -52,25 +52,25 @@
 }
 
 .new-job {
-  @include breakpoint(mobile) {
-    margin-top: 14rem !important;
-  }
+  // @include breakpoint(mobile) {
+  //   margin-top: 14rem !important;
+  // }
 
-  @include breakpoint(tablet) {
-    margin-top: 14rem !important;
-  }
+  // @include breakpoint(tablet) {
+  //   margin-top: 14rem !important;
+  // }
 
-  @include breakpoint(largeTablet) {
-    margin-top: 14rem !important;
-  }
+  // @include breakpoint(largeTablet) {
+  //   margin-top: 14rem !important;
+  // }
 
-  @include breakpoint(an_order) {
-    margin-top: 14rem !important;
-  }
+  // @include breakpoint(an_order) {
+  //   margin-top: 14rem !important;
+  // }
 
-  @include breakpoint(destop) {
-    margin-top: 14rem !important;
-  }
+  // @include breakpoint(destop) {
+  //   margin-top: 14rem !important;
+  // }
 }
 
 
@@ -129,6 +129,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+
   p {
     width: 84px;
   }
