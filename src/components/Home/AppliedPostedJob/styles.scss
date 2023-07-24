@@ -1,0 +1,147 @@
+.applied-posted-jobs-container {
+    margin-top: 15rem !important;
+
+    .applied-posted-jobs_swiper {
+        z-index: 0;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+
+
+        .swiper-wrapper {
+            margin-top: 4px;
+
+            .swiper-slide {
+                // width: fit-content !important;
+                padding: 12px 1px;
+                width: fit-content;
+                cursor: pointer;
+                height: unset !important;
+
+                // .slide-item {
+                //     position: relative;
+
+                //     .div-info-themes-item {
+                //         margin-top: -55px;
+                //         position: absolute;
+                //         text-align: center;
+                //         color: white;
+                //     }
+                // }
+
+                .applied-posted-card {
+                    position: relative;
+
+                    .applied-posted-card_bag {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        padding: 6px 12px 10px 21px;
+                        width: 57px;
+                        height: 40px;
+                        border-bottom-left-radius: 83px;
+                        background: rgba(61, 173, 255, 1);
+                    }
+
+                    .applied-posted-card_top {
+                        display: flex;
+                        justify-content: space-between;
+                        gap: 12px;
+
+                        .div-card-post-img {
+
+                            .MuiImageListItem-img {
+                                width: 80px !important;
+                                height: 80px !important;
+                            }
+                        }
+
+                        .div-card-post-info {
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                    }
+
+                    .applied-posted-card_bottom {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .button-approved {
+                            width: 155px;
+                            height: 36px;
+                            border-radius: 4px;
+                            gap: 10px;
+
+                            background: rgba(92, 178, 101, 1);
+                        }
+
+                        .button-check {
+                            width: 155px;
+                            height: 36px;
+                            border-radius: 4px;
+                            gap: 10px;
+
+                            background: rgba(189, 49, 49, 1);
+                        }
+                    }
+                }
+            }
+
+            // .swiper-slide-clicked {
+            //   border-bottom: 2px solid #0d99ff !important;
+            //   background-color: rgba(0, 0, 0, 0.1) !important;
+            // }
+        }
+
+        .swiper-button-prev,
+        .swiper-button-next {
+            width: 40px !important;
+            height: 100% !important;
+            top: 0 !important;
+            margin-top: 0 !important;
+            background: linear-gradient(270deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
+
+
+            &:hover {
+
+                background-color: transparent;
+
+                &:after {
+                    transform: scale(1.1);
+                }
+
+                &:active {
+                    &:after {
+                        transform: scale(0.7);
+                    }
+                }
+            }
+
+            &:after {
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+                color: #000;
+                font-size: 18px;
+                height: 30px;
+                width: 10px;
+                line-height: 30px;
+                padding: 0px 10px;
+                transition: 0.3s linear all;
+            }
+        }
+
+        .swiper-button-prev {
+            left: 0;
+        }
+
+        .swiper-button-next {
+            right: 0;
+        }
+
+        .swiper-button-disabled {
+            display: none !important;
+        }
+
+    }
+}

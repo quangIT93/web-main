@@ -88,7 +88,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     socket.current = io(
       // 'https://181f-14-161-42-152.ngrok-free.app/',
-      'https://aiworks.vn',
+      'https://neoworks.vn',
       {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
