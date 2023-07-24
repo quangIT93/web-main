@@ -583,6 +583,7 @@ const Detail: React.FC = () => {
                     <h3
                       onClick={handleClickSearch}
                       style={{ cursor: 'pointer' }}
+                      className="clickShow-detailPost"
                     >
                       View all
                     </h3>
@@ -594,6 +595,7 @@ const Detail: React.FC = () => {
                     <h3
                       onClick={handleClickShowMap}
                       style={{ cursor: 'pointer' }}
+                      className="clickShow-detailPost"
                     >
                       Open on maps
                     </h3>
@@ -708,7 +710,7 @@ const Detail: React.FC = () => {
                           className="div-job-img-swipper_item"
                           key={index}
                         >
-                          <img src={item.image} />
+                          <img src={item.image} alt="ảnh lỗi" />
                         </SwiperSlide>
                       );
                     })}

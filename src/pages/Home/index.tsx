@@ -7,6 +7,8 @@ import { Breadcrumbs } from '#components';
 // @ts-ignore
 import { Carousel } from '#components';
 // @ts-ignore
+import AppliedPostedJob from '#components/Home/AppliedPostedJob';
+// @ts-ignore
 import { NewJobs } from '#components';
 // @ts-ignore
 import { ThemesJob } from '#components';
@@ -52,7 +54,7 @@ const Home: React.FC = () => {
       <div className="home__main">
         <CategoryCarousel />
         <Breadcrumbs />
-
+        <AppliedPostedJob />
         <NewJobs />
         <HotJob />
         <ThemesJob />

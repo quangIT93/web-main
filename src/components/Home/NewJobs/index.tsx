@@ -189,78 +189,51 @@ const NewJobs: React.FC = () => {
       {
         // automatic && (
         <Box
-          sx={{ flexGrow: 1, marginTop: '300px' }}
+          sx={{ flexGrow: 1, }}
           className="new-job"
           ref={listRef}
         >
-          <div style={{ display: 'flex', gap: '0.5rem', margin: '16px 0' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
             <NewJobIcon width={25} height={25} />
             <h2>Công việc mới nhất</h2>
           </div>
 
-          <Skeleton loading={loading} active>
-            <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-              {postNewest.data.posts.map((item: PostNewest, index: number) => (
-                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+          <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
+            {postNewest.data.posts.map((item: PostNewest, index: number) => (
+              <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                <Skeleton loading={loading} active>
                   <JobCard item={item} />
-                </Grid>
-              ))}
-            </Grid>
-            <Stack
-              spacing={2}
-              sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}
-            >
-              {/* <Pagination count={10} shape="rounded" /> */}
-              <Space
-                className="div-hover-more"
-                onClick={(e) => {
-                  handleChange(e, page);
-                }}
-              >
-                <p>Xem thêm</p>
-                <MoreICon width={20} height={20} />
-              </Space>
-            </Stack>
-            <Backdrop
-              sx={{
-                color: '#0d99ff ',
-                backgroundColor: 'transparent',
-                // boxShadow: 'none',
-                zIndex: (theme: any) => theme.zIndex.drawer + 1,
+                </Skeleton>
+              </Grid>
+            ))}
+          </Grid>
+          <Stack
+            spacing={2}
+            sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}
+          >
+            {/* <Pagination count={10} shape="rounded" /> */}
+            <Space
+              className="div-hover-more"
+              onClick={(e) => {
+                handleChange(e, page);
               }}
-              open={openBackdrop}
-            //  onClick={handleClose}
             >
-              <CircularProgress color="inherit" />
-            </Backdrop>
-          </Skeleton>
-          <Skeleton loading={loading} active>
-            {loading ? <br /> : <></>}
-          </Skeleton>
-          <Skeleton loading={loading} active>
-            {loading ? <br /> : <></>}
-          </Skeleton>
-          <Skeleton loading={loading} active>
-            {loading ? <br /> : <></>}
-          </Skeleton>
-          <Skeleton loading={loading} active>
-            {loading ? <br /> : <></>}
-          </Skeleton>
-          <Skeleton loading={loading} active>
-            {loading ? <br /> : <></>}
-          </Skeleton>
-          <Skeleton loading={loading} active>
-            {loading ? <br /> : <></>}
-          </Skeleton>
-          <Skeleton loading={loading} active>
-            {loading ? <br /> : <></>}
-          </Skeleton>
-          <Skeleton loading={loading} active>
-            {loading ? <br /> : <></>}
-          </Skeleton>
-          <Skeleton loading={loading} active>
-            {loading ? <br /> : <></>}
-          </Skeleton>
+              <p>Xem thêm</p>
+              <MoreICon width={20} height={20} />
+            </Space>
+          </Stack>
+          <Backdrop
+            sx={{
+              color: '#0d99ff ',
+              backgroundColor: 'transparent',
+              // boxShadow: 'none',
+              zIndex: (theme: any) => theme.zIndex.drawer + 1,
+            }}
+            open={openBackdrop}
+          //  onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
           <ShowNotificativeSave
           // setShowNofySave={setShowNofySave}
           // showNofySave={showNofySave}
