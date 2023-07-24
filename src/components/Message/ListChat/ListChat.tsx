@@ -242,19 +242,19 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       listRef.current.scrollTop = listRef.current.clientHeight;
     }
     if (lastChatRef.current) {
-      lastChatRef.current.scrollIntoView({
-        behavior: 'auto',
-        block: 'end',
-      });
-      lastChatRef.current.scrollIntoView(false);
+      // lastChatRef.current.scrollIntoView({
+      //   behavior: 'auto',
+      //   block: 'end',
+      // });
+      // lastChatRef.current.scrollIntoView(false);
     }
   }, [allListChat]);
 
-  // useEffect(() => {
-  //   if (listRef.current) {
-  //     listRef.current.scrollTop = listRef.current.scrollHeight;
-  //   }
-  // }, [allListChat]);
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTop = listRef.current.scrollHeight;
+    }
+  }, [allListChat]);
 
   // useEffect(() => {
   //   setOpenBackdrop(true);
