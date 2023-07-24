@@ -42,7 +42,7 @@ import HomeValueContextProvider, {
 interface IitemNewJob {
   item: {
     id: number;
-    post_id: Number;
+    post_id: number;
     title: string;
     company_name: string;
     image: string;
@@ -105,7 +105,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
           justifyContent: 'space-between',
         }}
         onClick={(e) => {
-          handleClickItem(e, props.item.id);
+          handleClickItem(e, props.item.post_id);
         }}
       >
         <div className="div-card-post-left">
@@ -318,9 +318,11 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               onClick={async (e) => {
                 try {
                   e.stopPropagation();
+                  console.log("props.item ", props.item);
+
                   if (props.item.bookmarked) {
                     const result = await bookMarkApi.deleteBookMark(
-                      props.item.id,
+                      props.item.post_id,
                     );
                     props.item.bookmarked = false;
                     if (result) {
@@ -329,7 +331,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     }
                   } else {
                     const result = await bookMarkApi.createBookMark(
-                      props.item.id,
+                      props.item.post_id,
                     );
                     props.item.bookmarked = true;
                     if (result) {

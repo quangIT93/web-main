@@ -12,6 +12,8 @@ import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ImageListItem from '@mui/material/ImageListItem';
 
+import ModalLogin from '../../Home/ModalLogin';
+
 //ANT
 import {
   EnvironmentFilled,
@@ -80,6 +82,7 @@ const JobCard: React.FC<Iprops> = (props) => {
   const dispatch = useDispatch();
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
@@ -91,6 +94,10 @@ const JobCard: React.FC<Iprops> = (props) => {
 
   return (
     <>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
       <Card
         sx={{
           minWidth: '100%',
@@ -279,6 +286,11 @@ const JobCard: React.FC<Iprops> = (props) => {
               onClick={async (e) => {
                 try {
                   e.stopPropagation();
+                  console.log("props.item, ", props.item);
+
+                  if (!localStorage.getItem('accessToken')) {
+                    setOpenModalLogin(true);
+                  }
                   if (props.item.bookmarked) {
                     const result = await bookMarkApi.deleteBookMark(
                       props.item.id,

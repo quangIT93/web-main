@@ -148,7 +148,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         maxWidth: { xs: 320, sm: 480 },
         bgcolor: 'background.paper',
         position: 'relative',
-        paddingBottom: '28px',
+        paddingBottom: '16px',
       }}
       className="hot-place-container"
     >

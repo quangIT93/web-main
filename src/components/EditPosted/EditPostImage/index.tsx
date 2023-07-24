@@ -354,7 +354,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
         </section>
       </Box>
       <Box p="0rem 0">
-        <Box sx={{ display: 'flex', minWidth: '150px', minHeight: '150px' }}>
+        <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '40px' }}>
           {selectedImages?.map((image: any, index: number) => (
             <div
               className="item-editPost_image"

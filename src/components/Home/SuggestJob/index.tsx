@@ -217,7 +217,7 @@ const ThemesJob: React.FC = () => {
               container
               spacing={3}
               columns={{ xs: 12, sm: 4, md: 12 }}
-              sx={{ marginTop: '16px' }}
+              sx={{ marginTop: '-8px' }}
             >
               {nearJob.map((item: PostTheme, index: number) => (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -260,7 +260,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //   onClick={handleClose}
+            //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

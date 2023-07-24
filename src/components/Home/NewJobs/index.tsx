@@ -193,7 +193,7 @@ const NewJobs: React.FC = () => {
           className="new-job"
           ref={listRef}
         >
-          <div style={{ display: 'flex', gap: '0.5rem', margin: '12px 0' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', margin: '16px 0' }}>
             <NewJobIcon width={25} height={25} />
             <h2>Công việc mới nhất</h2>
           </div>
@@ -229,7 +229,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
