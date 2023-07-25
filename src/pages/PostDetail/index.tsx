@@ -197,6 +197,9 @@ const Detail: React.FC = () => {
   const [api, contextHolder] = notification.useNotification();
   const [bookmarked, setBookmarked] = React.useState(false);
   const [openModalShare, setOpenModalShare] = React.useState(false);
+  const [openModalApply, setOpenModalApply] = React.useState(false);
+  const [isApplied, setIsApplied] = React.useState(false);
+  const [isHiJob, setIsHiJob] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
@@ -253,6 +256,8 @@ const Detail: React.FC = () => {
         // const list = result?.data.categories.map((category: any) =>
         //   Number(category.child_category_id)
         // )
+        (result?.data?.resource?.company_resource_name === "HIJOB") && setIsHiJob(true);
+
         console.log('postId', result.data);
         // check  application status
         setIsLoading(false);
@@ -295,6 +300,7 @@ const Detail: React.FC = () => {
       console.error(error);
     }
   };
+
 
   const getAnotherPost = async (postID: number, position: number) => {
     try {
@@ -345,6 +351,9 @@ const Detail: React.FC = () => {
     };
   }, []);
 
+  console.log(post?.data);
+
+
   const data = [
     {
       id: 81,
@@ -373,6 +382,19 @@ const Detail: React.FC = () => {
         CheckWasLogin();
         return;
       }
+      if (post?.data.application_status === 1 && isHiJob || checkApply && isHiJob) {
+        api.info({
+          message: `Ứng tuyển không thành công!`,
+          description: 'Bạn đã ứng tuyển vị trí này',
+          placement: 'top',
+          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+        });
+        return
+      }
+      if (post?.data.application_status === 1 && !isHiJob || checkApply && !isHiJob) {
+        window.open(post?.data.resource.url, '_blank');
+        return
+      }
       // navigate to edit post
       if (checkPostUser) {
         window.open(`edit-posted/?postId=${POST_ID}`);
@@ -395,15 +417,17 @@ const Detail: React.FC = () => {
         });
         return;
       }
-      const result = await appplicationApi.applyAplication(POST_ID);
-      console.log('result ung tiyen', result);
-      if (true) {
-        // openNotification();
-        setTextButton('Đã ứng tuyển');
-        // setBackgroundButton('gray');
-        setCheckApply(true);
-        window.open(post?.data.resource.url, '_blank');
-      }
+
+      setOpenModalApply(true);
+      // const result = await appplicationApi.applyAplication(POST_ID);
+      // console.log('result ung tiyen', result);
+      // if (true) {
+      //   // openNotification();
+      //   setTextButton('Đã ứng tuyển');
+      //   // setBackgroundButton('gray');
+      //   setCheckApply(true);
+      //   // window.open(post?.data.resource.url, '_blank');
+      // }
     } catch (error: any) {
       console.log('error', error);
       if (error.response.status === 400) {
@@ -417,7 +441,7 @@ const Detail: React.FC = () => {
         // setBackgroundButton('gray');
         setBackgroundButton('#0D99FF');
         setCheckApply(true);
-        window.open(post?.data.resource.url, '_blank');
+        // window.open(post?.data.resource.url, '_blank');
         // openNotification();
         return;
       }
@@ -463,6 +487,11 @@ const Detail: React.FC = () => {
 
   const handleCloseModalShare = () => {
     setOpenModalShare(false);
+  };
+
+  const handleCloseModalApply = () => {
+    setOpenModalApply(false);
+    setIsApplied(false);
   };
   const handleClickShareSource = (nameShare: string) => {
     // window.location.href = `mailto:${email}`;
@@ -537,6 +566,54 @@ const Detail: React.FC = () => {
       `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
+
+  const handleClickChangePage = () => {
+    window.open(post?.data.resource.url, '_blank');
+    setIsApplied(true)
+  };
+
+  const handleChangeStatus = async () => {
+    const result = await appplicationApi.applyAplication(POST_ID);
+    console.log('result ung tiyen', result);
+    if (true) {
+      // openNotification();
+      setTextButton('Đã ứng tuyển');
+      // setBackgroundButton('gray');
+      setCheckApply(true);
+      // window.open(post?.data.resource.url, '_blank');
+      setOpenModalApply(false);
+    }
+  };
+
+  const handleApply = async () => {
+    if (
+      !userProfile.name ||
+      !userProfile.address ||
+      !userProfile.birthday ||
+      userProfile.gender === null ||
+      userProfile.gender === undefined ||
+      !userProfile.phone ||
+      !userProfile.email
+    ) {
+      api.info({
+        message: `Cập nhật thông tin`,
+        description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
+        placement: 'top',
+        icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+      });
+      return;
+    }
+    const result = await appplicationApi.applyAplication(POST_ID);
+    console.log('result ung tiyen', result);
+    if (true) {
+      // openNotification();
+      setTextButton('Đã ứng tuyển');
+      // setBackgroundButton('gray');
+      setCheckApply(true);
+      // window.open(post?.data.resource.url, '_blank');
+      setOpenModalApply(false)
+    }
+  }
 
   return (
     <>
@@ -1038,6 +1115,77 @@ const Detail: React.FC = () => {
                   </div>
                 ))}
               </div>
+            </Box>
+          </Modal>
+
+          <Modal
+            open={openModalApply}
+            onClose={handleCloseModalApply}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography
+                id="modal-modal-title"
+                variant="h5"
+                component="h2"
+                sx={{ textAlign: 'center', color: '#0d99ff' }}
+              >
+                Ứng tuyển cho công việc này
+              </Typography>
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
+              >
+                {isHiJob
+                  ? "Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Bạn có muốn ứng tuyển công việc này không?"
+                  : isApplied
+                    ? "Bạn đã ứng tuyển công việc này chưa?"
+                    : "Bạn có muốn chuyển sang trang của bài đăng này không?"
+                }
+              </Typography>
+
+              <Box
+                sx={{
+                  margin: '12px auto',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '12px',
+                }}
+              >
+                <Button
+                  type="primary"
+                  danger
+                  onClick={handleCloseModalApply}
+                  style={{
+                    width: '300px',
+                  }}
+                >
+                  {
+                    isApplied ? "Chưa" : "Không"
+                  }
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={
+                    isHiJob
+                      ? handleApply
+                      : isApplied
+                        ? handleChangeStatus
+                        : handleClickChangePage
+                  }
+                  style={{
+                    width: '300px',
+                  }}
+                >
+                  {
+                    isApplied ? "Rồi" : "Có"
+                  }
+                </Button>
+              </Box>
             </Box>
           </Modal>
           <Footer />
