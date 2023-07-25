@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 // @ts-ignore
 import { Navbar } from '#components';
+
+import ModalNoteCreatePost from '#components/Post/ModalNoteCreatePost';
 //@ts-ignore
 
 // import component
@@ -186,6 +188,9 @@ const Post: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [postData, SetPostData] = React.useState<any>(null);
+
+  const [openModalNoteCreatePost, setOpenModalNoteCreatePost] =
+    React.useState(true);
 
   // submit
   const handleSubmit = (
@@ -451,6 +456,11 @@ const Post: React.FC = () => {
         <ModalPost
           openModalPost={openModalPost}
           setOpenModalPost={setOpenModalPost}
+        />
+
+        <ModalNoteCreatePost
+          setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
+          openModalNoteCreatePost={openModalNoteCreatePost}
         />
       </div>
     );
