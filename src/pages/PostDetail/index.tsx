@@ -534,7 +534,7 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
+        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
 
@@ -585,7 +585,7 @@ const Detail: React.FC = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      View all
+                      Xem tất cả
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
@@ -597,7 +597,7 @@ const Detail: React.FC = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      Open on maps
+                      Xem trên bản đồ
                     </h3>
                   </div>
                 </div>
@@ -867,8 +867,8 @@ const Detail: React.FC = () => {
                                 <h5>
                                   {post?.data.expired_date
                                     ? moment(
-                                      new Date(post?.data.expired_date),
-                                    ).format('DD/MM/yyyy')
+                                        new Date(post?.data.expired_date),
+                                      ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>
@@ -934,11 +934,17 @@ const Detail: React.FC = () => {
                           <span>Next job</span>
                           <div
                             className="icon"
-                            style={{
-                              // backgroundColor: postNext ? 'white' : '#cccc',
-                            }}
+                            style={
+                              {
+                                // backgroundColor: postNext ? 'white' : '#cccc',
+                              }
+                            }
                           >
-                            <BackIcon width={17} height={17} fill={postNext ? 'black' : '#cccc'} />
+                            <BackIcon
+                              width={17}
+                              height={17}
+                              fill={postNext ? 'black' : '#cccc'}
+                            />
                           </div>
                         </div>
                       </div>

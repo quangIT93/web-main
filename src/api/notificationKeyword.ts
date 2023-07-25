@@ -20,6 +20,29 @@ const notificationKeywordApi = {
         },
       })
   },
+  putPlatform: (emailStatus: number, pushStatus: number) => {
+    const URL = `/v1/notification/update-platform`
+
+    return axiosClient.put(URL,  { emailStatus, pushStatus },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      })
+  },
+
+  deleteKeyword: (keywordNotificationIds: number[]) => {
+    const URL = `/v1/notification/keyword/delete`
+
+    return axiosClient.delete(URL, 
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        data: { keywordNotificationIds },
+      })
+  },
+
 
   createKeywordNotification: (keyword: string, category_id: number | null,  district_id: string,) => {
     const URL = `/v1/notification/keyword`
