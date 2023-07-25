@@ -23,6 +23,7 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 import { useSearchParams } from 'react-router-dom';
 
 import { Button, Space } from 'antd';
+import { Skeleton } from 'antd';
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,6 +47,7 @@ interface ItemTheme {
 const AppliedPostedJob: React.FC = () => {
     const [openBackdrop, setOpenBackdrop] = React.useState(false);
     const [isLogined, setIslogined] = React.useState(false);
+    const [loading, setloading] = React.useState(false);
     const [index, setIndex] = React.useState(0);
     const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
 
@@ -79,8 +81,10 @@ const AppliedPostedJob: React.FC = () => {
 
     const getAppliedPostedJobs = async () => {
         try {
+            setloading(true)
             const result = await applitedPostedApi.getAllApplitedPostedApi(0);
             if (result) {
+                setloading(false)
                 setAppliedPostedJob(result.data);
             } else {
                 setIslogined(true)
@@ -130,7 +134,7 @@ const AppliedPostedJob: React.FC = () => {
                 bgcolor: 'background.paper',
                 position: 'relative',
                 paddingBottom: '24px',
-                display: 'flex',
+                display: isLogined ? 'flex' : 'none',
                 flexDirection: 'column',
             }}
             className="applied-posted-jobs-container"
@@ -139,17 +143,17 @@ const AppliedPostedJob: React.FC = () => {
                 <AppliedPostedIcon width={30} height={30} />
                 <h2>Công việc đã Ứng tuyển/ Đăng tuyển</h2>
             </div>
-            <Swiper
-                navigation={true}
-                // mousewheel={true}
-                slidesPerView="auto"
-                spaceBetween={24}
-                modules={[Mousewheel, Navigation, Pagination]}
-                className="applied-posted-jobs_swiper"
-            >
-                {appliedPostedJob?.map((item: any, index: number) => {
-                    // console.log("id: ", item.id);
-                    return (
+
+            <Skeleton loading={loading} active>
+                <Swiper
+                    navigation={true}
+                    // mousewheel={true}
+                    slidesPerView="auto"
+                    spaceBetween={24}
+                    modules={[Mousewheel, Navigation, Pagination]}
+                    className="applied-posted-jobs_swiper"
+                >
+                    {appliedPostedJob?.map((item: any, index: number) => (
                         <SwiperSlide
                             key={index}
                             onClick={(event) => {
@@ -165,9 +169,9 @@ const AppliedPostedJob: React.FC = () => {
                         >
                             <AppliedPostedJobCard item={item} />
                         </SwiperSlide>
-                    );
-                })}
-            </Swiper>
+                    ))}
+                </Swiper>
+            </Skeleton>
             <Backdrop
                 sx={{
                     color: '#0d99ff ',
