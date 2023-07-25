@@ -92,6 +92,7 @@ const NewJobs: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isLogined, setIslogined] = React.useState(false);
 
   const [showNofySave, setShowNofySave] = React.useState(false);
 
@@ -172,6 +173,7 @@ const NewJobs: React.FC = () => {
   };
 
   React.useEffect(() => {
+    localStorage.getItem('accessToken') && setIslogined(true)
     getPostNewest();
     // delete param when back to page
     // searchParams.delete("theme-id")
@@ -189,7 +191,10 @@ const NewJobs: React.FC = () => {
       {
         // automatic && (
         <Box
-          sx={{ flexGrow: 1, }}
+          sx={{
+            flexGrow: 1,
+            marginTop: isLogined ? "0" : "15rem"
+          }}
           className="new-job"
           ref={listRef}
         >

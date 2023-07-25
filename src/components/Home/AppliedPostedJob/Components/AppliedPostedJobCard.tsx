@@ -219,7 +219,10 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               </div>
             </div>
             <Space
-              style={{ justifyContent: 'space-between' }}
+              style={{
+                justifyContent: 'space-between',
+                display: props.item.type === "application" ? "flex" : 'none'
+              }}
               direction="vertical"
               align="center"
               className="div-card-post-right"
@@ -247,7 +250,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   )}
                 </div>
               </div>
-              <p style={{ fontSize: 13, color: '#0d99ff' }}>
+              <p style={{ fontSize: 14, fontWeight: 500, color: '#575757', }}>
                 {props.item.job_type.job_type_name}
               </p>
             </Space>

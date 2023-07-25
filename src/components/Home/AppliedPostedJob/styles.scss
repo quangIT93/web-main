@@ -58,6 +58,11 @@
                         .div-card-post-info {
                             display: flex;
                             justify-content: space-between;
+                            width: 300px;
+
+                            .div-card-post-info_left {
+                                width: 181px;
+                            }
                         }
                     }
 
@@ -99,7 +104,6 @@
             height: 100% !important;
             top: 0 !important;
             margin-top: 0 !important;
-            background: linear-gradient(270deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
 
 
             &:hover {
@@ -133,9 +137,11 @@
 
         .swiper-button-prev {
             left: 0;
+            background: linear-gradient(90deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
         }
 
         .swiper-button-next {
+            background: linear-gradient(270deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
             right: 0;
         }
 
