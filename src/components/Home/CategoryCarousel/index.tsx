@@ -398,65 +398,65 @@ const CategoryCarousel: React.FC = () => {
       // }}
       className="tabs"
     >
-      {/* <Skeleton loading={loading} active> */}
-      <Swiper
-        // rewind={true}
-        // slidesPerView={14}
-        // spaceBetween={10}
-        navigation={true}
-        // mousewheel={true}
-        slidesPerView="auto"
-        spaceBetween={40}
-        // breakpoints={{
-        //   320: {
-        //     slidesPerView: 3,
-        //   },
-        //   640: {
-        //     slidesPerView: 4,
-        //   },
-        //   768: {
-        //     slidesPerView: 7,
-        //   },
-        //   868: {
-        //     slidesPerView: 7,
-        //   },
-        //   963: {
-        //     slidesPerView: 8,
-        //   },
-        //   1024: {
-        //     slidesPerView: 9,
-        //   },
-        //   1440: {
-        //     slidesPerView: 9,
-        //   },
-        //   1920: {
-        //     slidesPerView: 14,
-        //   },
-        //   2560: {
-        //     slidesPerView: 14,
-        //   },
-        // }}
-        modules={[Mousewheel, Navigation, Pagination]}
-        className="mySwiper"
-        initialSlide={selectedItemIndex - 1}
-      >
-        {categories?.data.map((item: CategoryItem, index: number) => {
-          // console.log("id: ", item.id);
-          return (
-            <SwiperSlide
-              key={index}
-              onClick={(event) => {
-                handleChange(event, item.id);
-              }}
-              style={{ width: 'fit-content' }}
-            >
-              {/* <CategoryItem
+      <Skeleton loading={loading} active>
+        <Swiper
+          // rewind={true}
+          // slidesPerView={14}
+          // spaceBetween={10}
+          navigation={true}
+          // mousewheel={true}
+          slidesPerView="auto"
+          spaceBetween={40}
+          // breakpoints={{
+          //   320: {
+          //     slidesPerView: 3,
+          //   },
+          //   640: {
+          //     slidesPerView: 4,
+          //   },
+          //   768: {
+          //     slidesPerView: 7,
+          //   },
+          //   868: {
+          //     slidesPerView: 7,
+          //   },
+          //   963: {
+          //     slidesPerView: 8,
+          //   },
+          //   1024: {
+          //     slidesPerView: 9,
+          //   },
+          //   1440: {
+          //     slidesPerView: 9,
+          //   },
+          //   1920: {
+          //     slidesPerView: 14,
+          //   },
+          //   2560: {
+          //     slidesPerView: 14,
+          //   },
+          // }}
+          modules={[Mousewheel, Navigation, Pagination]}
+          className="mySwiper"
+          initialSlide={selectedItemIndex - 1}
+        >
+          {categories?.data.map((item: CategoryItem, index: number) => {
+            // console.log("id: ", item.id);
+            return (
+              <SwiperSlide
+                key={index}
+                onClick={(event) => {
+                  handleChange(event, item.id);
+                }}
+                style={{ width: 'fit-content' }}
+              >
+                {/* <CategoryItem
                   content={item.name}
                   imageLink={item.image}
                   imageDescription={item.name}
                   isSelected={}
                 /> */}
-              <Skeleton loading={loading} active>
+                {/* <Skeleton loading={loading} active> */}
                 <div className="category-item-container">
                   <div className="category-item-body">
                     <img
@@ -485,24 +485,24 @@ const CategoryCarousel: React.FC = () => {
                     }}
                   ></div>
                 </div>
-              </Skeleton>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+                {/* </Skeleton> */}
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
 
-      <Backdrop
-        sx={{
-          color: '#0d99ff ',
-          backgroundColor: 'transparent',
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-        open={openBackdrop}
-        onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      {/* <Tabs
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            backgroundColor: 'transparent',
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
+          open={openBackdrop}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        {/* <Tabs
         value={value === 0 ? categories?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
@@ -534,7 +534,7 @@ const CategoryCarousel: React.FC = () => {
           );
         })}
       </Tabs> */}
-      {/* </Skeleton> */}
+      </Skeleton>
     </Box>
   );
 };

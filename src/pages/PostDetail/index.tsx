@@ -585,7 +585,7 @@ const Detail: React.FC = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      View all
+                      Xem tất cả
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
@@ -597,7 +597,7 @@ const Detail: React.FC = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      Open on maps
+                      Xem trên bản đồ
                     </h3>
                   </div>
                 </div>
@@ -934,11 +934,17 @@ const Detail: React.FC = () => {
                           <span>Next job</span>
                           <div
                             className="icon"
-                            style={{
-                              backgroundColor: postNext ? 'black' : '#cccc',
-                            }}
+                            style={
+                              {
+                                // backgroundColor: postNext ? 'white' : '#cccc',
+                              }
+                            }
                           >
-                            <BackIcon width={17} height={17} />
+                            <BackIcon
+                              width={17}
+                              height={17}
+                              fill={postNext ? 'black' : '#cccc'}
+                            />
                           </div>
                         </div>
                       </div>

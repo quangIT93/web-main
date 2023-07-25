@@ -162,7 +162,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                                         variant="h6"
                                         component="div"
                                         sx={{
-                                            fontSize: '12px',
+                                            fontSize: '14px',
                                             whiteSpace: 'nowrap',
                                             width: '100%',
                                             textOverflow: 'ellipsis',
@@ -195,6 +195,8 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                                             textOverflow: 'ellipsis',
                                             overflow: 'hidden',
                                             marginLeft: '4px',
+                                            fontSize: "14px",
+                                            fontWeight: "400",
                                         }}
                                     >
                                         {`${props.item.district}, ${props.item.province}`}
@@ -217,6 +219,8 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                                             textOverflow: 'ellipsis',
                                             overflow: 'hidden',
                                             marginLeft: '4px',
+                                            fontSize: "14px",
+                                            fontWeight: "400",
                                         }}
                                     >
                                         {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
@@ -234,8 +238,9 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                                     <p
                                         style={{
                                             color: '#AAAAAA',
-                                            fontSize: 13,
+                                            fontSize: 14,
                                             fontStyle: 'italic',
+                                            fontWeight: "400",
                                         }}
                                     >
                                         {props.item.created_at_text}
@@ -262,8 +267,9 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                     <p
                         style={{
                             color: '#001424',
-                            fontSize: 13,
+                            fontSize: 14,
                             fontStyle: 'italic',
+                            fontWeight: "400",
                         }}
                     >
                         {' '}

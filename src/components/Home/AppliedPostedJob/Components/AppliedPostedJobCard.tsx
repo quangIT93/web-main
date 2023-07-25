@@ -11,6 +11,8 @@ import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ImageListItem from '@mui/material/ImageListItem';
 
+import { BackIcon } from '#components/Icons';
+
 //ANT
 import {
   EnvironmentFilled,
@@ -54,8 +56,15 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
+  const handleClickItem = (
+    e: React.MouseEvent<HTMLDivElement>,
+    id: number,
+    type: string,
+  ) => {
+    // window.open(`/post-detail?post-id=${id}`);
+    type === 'application'
+      ? window.open(`/post-detail?post-id=${id}`)
+      : window.open(`/history?post=2`);
   };
 
   const handleImageError = () => {
@@ -82,11 +91,11 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
         }}
         className="applied-posted-card"
         onClick={(e) => {
-          handleClickItem(e, props.item.post_id);
+          handleClickItem(e, props.item.post_id, props.item.type);
         }}
       >
         <div
-          style={{ display: props.item.type === "post" ? "block" : 'none' }}
+          style={{ display: props.item.type === 'post' ? 'block' : 'none' }}
           className="applied-posted-card_bag"
         >
           <BagHomeIcon width={24} height={24} />
@@ -208,18 +217,16 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     fontWeight: '400',
                   }}
                 >
-                  {new Date(props.item.start_time).toLocaleDateString(
-                    'en-GB',
-                  )}
-                  -
-                  {new Date(props.item.end_time).toLocaleDateString(
-                    'en-GB',
-                  )}
+                  {new Date(props.item.start_time).toLocaleDateString('en-GB')}-
+                  {new Date(props.item.end_time).toLocaleDateString('en-GB')}
                 </Typography>
               </div>
             </div>
             <Space
-              style={{ justifyContent: 'space-between' }}
+              style={{
+                justifyContent: 'space-between',
+                display: props.item.type === 'application' ? 'flex' : 'none',
+              }}
               direction="vertical"
               align="center"
               className="div-card-post-right"
@@ -247,7 +254,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   )}
                 </div>
               </div>
-              <p style={{ fontSize: 13, color: '#0d99ff' }}>
+              <p style={{ fontSize: 14, fontWeight: 500, color: '#575757' }}>
                 {props.item.job_type.job_type_name}
               </p>
             </Space>
@@ -255,30 +262,60 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
         </div>
         <div className="applied-posted-card_bottom">
           <div className="applied-posted-card_date">
-            <span style={{ display: props.item.type === "application" ? "block" : 'none' }}>
+            <span
+              style={{
+                display: props.item.type === 'application' ? 'block' : 'none',
+              }}
+            >
               Đã nộp vào &nbsp;
-              {new Date(props.item.created_at).toLocaleDateString(
-                'en-GB',
-              )},&nbsp;
+              {new Date(props.item.created_at).toLocaleDateString('en-GB')}
+              ,&nbsp;
               {moment(new Date(props.item.created_at)).format('HH:mm')}
             </span>
-            <span style={{ display: props.item.type === "post" ? "block" : 'none' }}>
-              <strong style={{ color: "#0d99ff" }}>{props.item.num_of_application}</strong>&nbsp;
-              Ứng viên đã nộp hồ sơ
+            <span
+              style={{ display: props.item.type === 'post' ? 'block' : 'none' }}
+            >
+              <strong style={{ color: '#0d99ff' }}>
+                {props.item.num_of_application}
+              </strong>
+              &nbsp; Ứng viên đã nộp hồ sơ
             </span>
           </div>
-          <Button
-            style={{ display: props.item.type === "application" ? "block" : 'none' }}
-            rootClassName="button-approved" type="primary"
+          <div
+            style={{
+              display: props.item.type === 'application' ? 'flex' : 'none',
+              backgroundColor:
+                props.item.application_status === 1
+                  ? 'rgba(220, 220, 220, 1)'
+                  : props.item.application_status === 2
+                  ? 'rgba(92, 178, 101, 1)'
+                  : props.item.application_status === 3
+                  ? 'rgba(189, 49, 49, 1)'
+                  : 'rgba(13, 153, 255, 1)',
+              color:
+                props.item.application_status === 1
+                  ? 'rgba(170, 170, 170, 1)'
+                  : 'rgba(255, 255, 255, 1)',
+            }}
+            className="button-approved"
           >
-            Đã được duyệt
-          </Button>
-          <Button
-            style={{ display: props.item.type === "post" ? "block" : 'none' }}
-            rootClassName="button-check" type="primary"
+            {props.item.application_status === 1
+              ? 'Đã ứng tuyển'
+              : props.item.application_status === 2
+              ? 'Đã từ chối'
+              : props.item.application_status === 3
+              ? 'Đã được duyệt'
+              : 'Đã tuyển'}
+          </div>
+          <div
+            style={{ display: props.item.type === 'post' ? 'flex' : 'none' }}
+            className="button-check"
           >
             Kiểm tra ngay
-          </Button>
+            <div className="icon">
+              <BackIcon fill="white" />
+            </div>
+          </div>
         </div>
       </Card>
     </>

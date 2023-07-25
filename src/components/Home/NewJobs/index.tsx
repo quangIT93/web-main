@@ -92,6 +92,8 @@ const NewJobs: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isLogined, setIslogined] = React.useState(false);
+  const [isAppliedPostedJobs, setIsAppliedPostedJobs] = React.useState(false);
 
   const [showNofySave, setShowNofySave] = React.useState(false);
 
@@ -110,10 +112,10 @@ const NewJobs: React.FC = () => {
   const [loading, setLoading] = React.useState(false);
 
   const {
-    setChildCateloriesArray,
+    // setChildCateloriesArray,
     childCateloriesArray,
   }: {
-    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
+    // setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
     childCateloriesArray: number[];
   } = useContext(HomeValueContext);
 
@@ -172,24 +174,32 @@ const NewJobs: React.FC = () => {
   };
 
   React.useEffect(() => {
+    localStorage.getItem('accessToken') && setIslogined(true);
     getPostNewest();
     // delete param when back to page
     // searchParams.delete("theme-id")
     // setSearchParams(searchParams)
     setLoading(true);
     setTimeout(() => {
+      const AppliedPostedJobs = localStorage.getItem('numberAppliedPostedJobs');
+      Number(AppliedPostedJobs) > 0 && setIsAppliedPostedJobs(true);
       if (postNewest.data) {
         setLoading(false);
       }
     }, 1000);
   }, []);
 
+  console.log('isAppliedPostedJobs', isAppliedPostedJobs);
+
   return (
     <>
       {
         // automatic && (
         <Box
-          sx={{ flexGrow: 1, }}
+          sx={{
+            flexGrow: 1,
+            marginTop: isLogined && isAppliedPostedJobs ? '0' : '15rem',
+          }}
           className="new-job"
           ref={listRef}
         >
@@ -230,7 +240,7 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-          //  onClick={handleClose}
+            //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

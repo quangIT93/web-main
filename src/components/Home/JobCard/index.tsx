@@ -148,7 +148,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                     overflow: 'hidden',
                     fontWeight: '700',
                     lineheight: '20px',
-                    color: '#575757',
+                    color: '#000000',
                   }}
                 >
                   {/* {props?.item?.title?.length > 50
@@ -163,14 +163,14 @@ const JobCard: React.FC<Iprops> = (props) => {
                   variant="h6"
                   component="div"
                   sx={{
-                    fontSize: '12px',
+                    fontSize: '14px',
                     whiteSpace: 'nowrap',
                     width: '100%',
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     fontWeight: '400',
                     lineheight: '16px',
-                    color: '#575757',
+                    color: '#000000',
                   }}
                 >
                   {/* {props?.item?.company_name?.length > 50
@@ -196,6 +196,9 @@ const JobCard: React.FC<Iprops> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    color: '#000000',
                   }}
                 >
                   {`${props.item.district}, ${props.item.province}`}
@@ -240,6 +243,9 @@ const JobCard: React.FC<Iprops> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    color: '#000000',
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
@@ -257,8 +263,9 @@ const JobCard: React.FC<Iprops> = (props) => {
                 <p
                   style={{
                     color: '#AAAAAA',
-                    fontSize: 13,
+                    fontSize: 14,
                     fontStyle: 'italic',
+                    fontWeight: '400',
                   }}
                 >
                   {props.item.created_at_text}
@@ -286,7 +293,7 @@ const JobCard: React.FC<Iprops> = (props) => {
               onClick={async (e) => {
                 try {
                   e.stopPropagation();
-                  console.log("props.item, ", props.item);
+                  console.log('props.item, ', props.item);
 
                   if (!localStorage.getItem('accessToken')) {
                     setOpenModalLogin(true);
@@ -336,7 +343,7 @@ const JobCard: React.FC<Iprops> = (props) => {
               )}
             </div>
           </div>
-          <p style={{ fontSize: 13, color: '#0d99ff' }}>
+          <p style={{ fontSize: 14, color: '#0d99ff', fontWeight: 500 }}>
             {props.item.job_type.job_type_name}
           </p>
         </Space>
