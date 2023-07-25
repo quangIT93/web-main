@@ -225,13 +225,15 @@
         font-size: 14px;
         font-weight: 400;
         line-height: 24px;
+        text-align: left;
       }
 
       .wrap-checkbox_keyword {
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        // justify-content: space-around;
         margin: 12px 0;
+        gap: 30%;
         .checkbox-keyword {
           input {
             margin-right: 8px;

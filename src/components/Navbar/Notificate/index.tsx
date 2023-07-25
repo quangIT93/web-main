@@ -177,6 +177,10 @@ const Notificate = () => {
     }
   };
 
+  const handleChangeEmail = () => {};
+
+  // const handl
+
   return (
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
@@ -319,7 +323,7 @@ const Notificate = () => {
           )
         ) : (
           <div className="wrap-keyword">
-            {/* <p>
+            <p>
               Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh
               chóng qua:
             </p>
@@ -330,9 +334,9 @@ const Notificate = () => {
               </div>
               <div className="checkbox-keyword">
                 <input type="checkbox" name="app" id="app" value="app" />
-                <label htmlFor="app">APP</label>
+                <label htmlFor="app">App</label>
               </div>
-            </div> */}
+            </div>
             <div className="count-keyword">
               <p>
                 Bạn đã lưu trữ được:

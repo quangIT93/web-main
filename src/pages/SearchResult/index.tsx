@@ -783,7 +783,7 @@ const NewJobs: React.FC = () => {
               type=""
               style={{ marginTop: '12px' }}
               value={QUERY ? QUERY : ''}
-              disabled
+              // disabled
               // error={companyError} // Đánh dấu lỗi
             />
 
