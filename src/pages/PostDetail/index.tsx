@@ -498,32 +498,32 @@ const Detail: React.FC = () => {
     if (nameShare === 'Mail') {
       // window.location.href = `mailto:quangbk54@gmail.com`;
       window.location.href = `mailto:?body=${encodeURIComponent(
-        post?.data.share_link,
+        isHiJob ? window.location.href : post?.data.resource.url,
       )}`;
     }
-    if (nameShare === 'Messenger') {
-      // fb-messenger://share/?link=${encodeURIComponent(linkToShare)}
-      // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
-      const messengerLink =
-        'fb-messenger://share?link=' +
-        encodeURIComponent(post?.data.share_link) +
-        '&app_id=' +
-        encodeURIComponent('523018296116961');
-      window.location.href = messengerLink;
-    }
+    // if (nameShare === 'Messenger') {
+    //   // fb-messenger://share/?link=${encodeURIComponent(linkToShare)}
+    //   // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
+    //   const messengerLink =
+    //     'fb-messenger://share?link=' +
+    //     encodeURIComponent(post?.data.resource.url) +
+    //     '&app_id=' +
+    //     encodeURIComponent('523018296116961');
+    //   window.location.href = messengerLink;
+    // }
     if (nameShare === 'Facebook') {
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        post?.data.share_link,
+        isHiJob ? window.location.href : post?.data.resource.url,
       )}`;
       window.open(url, '_blank');
     }
     if (nameShare === 'Zalo') {
       window.location.href = `zalo://app?link=${encodeURIComponent(
-        post?.data.share_link,
+        isHiJob ? window.location.href : post?.data.resource.url,
       )}`;
     }
     if (nameShare === 'Sao chép liên kết') {
-      copy(post?.data.share_link);
+      copy(isHiJob ? window.location.href : post?.data.resource.url,);
       // setCopied(true);
       dispatch<any>(setShowCopy(true));
       // setTimeout(() => {
