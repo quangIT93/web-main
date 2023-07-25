@@ -70,7 +70,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         {status === 3 ? '     Đóng bài tuyển dụng' : 'Bài tuyển dụng đã đóng'}
       </div>
 
-      {status === 3 ? (
+      {/* {status === 3 ? (
         <div
           className="sub-icon_moreOutlined sub-open_post"
           onClick={handleClickOpenPost}
@@ -88,7 +88,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         </div>
       ) : (
         <></>
-      )}
+      )} */}
     </div>
   );
 };

@@ -163,7 +163,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                   variant="h6"
                   component="div"
                   sx={{
-                    fontSize: '12px',
+                    fontSize: '14px',
                     whiteSpace: 'nowrap',
                     width: '100%',
                     textOverflow: 'ellipsis',
@@ -196,6 +196,8 @@ const JobCard: React.FC<Iprops> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
+                    fontSize: '14px',
+                    fontWeight: '400'
                   }}
                 >
                   {`${props.item.district}, ${props.item.province}`}
@@ -240,6 +242,8 @@ const JobCard: React.FC<Iprops> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
+                    fontSize: '14px',
+                    fontWeight: '400'
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
@@ -257,8 +261,9 @@ const JobCard: React.FC<Iprops> = (props) => {
                 <p
                   style={{
                     color: '#AAAAAA',
-                    fontSize: 13,
+                    fontSize: 14,
                     fontStyle: 'italic',
+                    fontWeight: '400'
                   }}
                 >
                   {props.item.created_at_text}
@@ -336,7 +341,7 @@ const JobCard: React.FC<Iprops> = (props) => {
               )}
             </div>
           </div>
-          <p style={{ fontSize: 13, color: '#0d99ff' }}>
+          <p style={{ fontSize: 14, color: '#0d99ff', fontWeight: 500 }}>
             {props.item.job_type.job_type_name}
           </p>
         </Space>
