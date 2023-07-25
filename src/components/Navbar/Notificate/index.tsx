@@ -319,7 +319,7 @@ const Notificate = () => {
           )
         ) : (
           <div className="wrap-keyword">
-            {/* <p>
+            <p>
               Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh
               chóng qua:
             </p>
@@ -332,7 +332,7 @@ const Notificate = () => {
                 <input type="checkbox" name="app" id="app" value="app" />
                 <label htmlFor="app">APP</label>
               </div>
-            </div> */}
+            </div>
             <div className="count-keyword">
               <p>
                 Bạn đã lưu trữ được:
