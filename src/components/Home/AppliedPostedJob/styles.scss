@@ -76,8 +76,10 @@
                             height: 36px;
                             border-radius: 4px;
                             gap: 10px;
-
-                            background: rgba(92, 178, 101, 1);
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 14px;
+                            font-weight: 500;
                         }
 
                         .button-check {
@@ -85,8 +87,17 @@
                             height: 36px;
                             border-radius: 4px;
                             gap: 10px;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 14px;
+                            font-weight: 500;
+                            color: white;
 
                             background: rgba(189, 49, 49, 1);
+
+                            .icon {
+                                transform: rotate(180deg);
+                            }
                         }
                     }
                 }
