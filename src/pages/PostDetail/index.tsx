@@ -534,7 +534,7 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
+      `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
 
@@ -867,8 +867,8 @@ const Detail: React.FC = () => {
                                 <h5>
                                   {post?.data.expired_date
                                     ? moment(
-                                        new Date(post?.data.expired_date),
-                                      ).format('DD/MM/yyyy')
+                                      new Date(post?.data.expired_date),
+                                    ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>
@@ -935,10 +935,10 @@ const Detail: React.FC = () => {
                           <div
                             className="icon"
                             style={{
-                              backgroundColor: postNext ? 'black' : '#cccc',
+                              // backgroundColor: postNext ? 'white' : '#cccc',
                             }}
                           >
-                            <BackIcon width={17} height={17} />
+                            <BackIcon width={17} height={17} fill={postNext ? 'black' : '#cccc'} />
                           </div>
                         </div>
                       </div>

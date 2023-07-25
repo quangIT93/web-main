@@ -84,10 +84,11 @@ const AppliedPostedJob: React.FC = () => {
             setloading(true)
             const result = await applitedPostedApi.getAllApplitedPostedApi(0);
             if (result) {
-                setloading(false)
+                localStorage.setItem('numberAppliedPostedJobs', result.data.length)
+                setTimeout(() => {
+                    setloading(false)
+                }, 1000);
                 setAppliedPostedJob(result.data);
-            } else {
-                setIslogined(true)
             }
         } catch (error) {
             console.log(error);
@@ -125,7 +126,7 @@ const AppliedPostedJob: React.FC = () => {
     //     setValue(Number(searchParams.get('theme-id')));
     // }, [searchParams.get('theme-id')]);
 
-    console.log(index);
+    console.log(appliedPostedJob);
 
     return (
         <Box
@@ -134,7 +135,7 @@ const AppliedPostedJob: React.FC = () => {
                 bgcolor: 'background.paper',
                 position: 'relative',
                 paddingBottom: '24px',
-                display: isLogined ? 'flex' : 'none',
+                display: isLogined && appliedPostedJob.length > 0 ? 'flex' : 'none',
                 flexDirection: 'column',
             }}
             className="applied-posted-jobs-container"

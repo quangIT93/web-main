@@ -93,6 +93,7 @@ const NewJobs: React.FC = () => {
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
+  const [isAppliedPostedJobs, setIsAppliedPostedJobs] = React.useState(false);
 
   const [showNofySave, setShowNofySave] = React.useState(false);
 
@@ -180,11 +181,16 @@ const NewJobs: React.FC = () => {
     // setSearchParams(searchParams)
     setLoading(true);
     setTimeout(() => {
+      const AppliedPostedJobs = localStorage.getItem('numberAppliedPostedJobs')
+      Number(AppliedPostedJobs) > 0 && setIsAppliedPostedJobs(true)
       if (postNewest.data) {
         setLoading(false);
       }
     }, 1000);
   }, []);
+
+  console.log("isAppliedPostedJobs", isAppliedPostedJobs);
+
 
   return (
     <>
@@ -193,7 +199,7 @@ const NewJobs: React.FC = () => {
         <Box
           sx={{
             flexGrow: 1,
-            marginTop: isLogined ? "0" : "15rem"
+            marginTop: isLogined && isAppliedPostedJobs ? "0" : "15rem"
           }}
           className="new-job"
           ref={listRef}
