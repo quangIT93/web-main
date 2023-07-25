@@ -11,6 +11,8 @@ import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ImageListItem from '@mui/material/ImageListItem';
 
+import { BackIcon } from '#components/Icons';
+
 //ANT
 import {
   EnvironmentFilled,
@@ -54,8 +56,15 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
+  const handleClickItem = (
+    e: React.MouseEvent<HTMLDivElement>,
+    id: number,
+    type: string,
+  ) => {
+    // window.open(`/post-detail?post-id=${id}`);
+    type === 'application'
+      ? window.open(`/post-detail?post-id=${id}`)
+      : window.open(`/history?post=2`);
   };
 
   const handleImageError = () => {
@@ -82,7 +91,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
         }}
         className="applied-posted-card"
         onClick={(e) => {
-          handleClickItem(e, props.item.post_id);
+          handleClickItem(e, props.item.post_id, props.item.type);
         }}
       >
         <div
@@ -132,7 +141,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     overflow: 'hidden',
                     fontWeight: '700',
                     lineheight: '20px',
-                    color: '#000000',
+                    color: '#575757',
                   }}
                 >
                   {/* {props?.item?.title?.length > 50
@@ -154,7 +163,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     overflow: 'hidden',
                     fontWeight: '400',
                     lineheight: '16px',
-                    color: '#000000',
+                    color: '#575757',
                   }}
                 >
                   {/* {props?.item?.company_name?.length > 50
@@ -182,7 +191,6 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     marginLeft: '4px',
                     fontSize: '14px',
                     fontWeight: '400',
-                    color: '#000000',
                   }}
                 >
                   {`${props.item.district}, ${props.item.province}`}
@@ -273,22 +281,41 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               &nbsp; Ứng viên đã nộp hồ sơ
             </span>
           </div>
-          <Button
+          <div
             style={{
-              display: props.item.type === 'application' ? 'block' : 'none',
+              display: props.item.type === 'application' ? 'flex' : 'none',
+              backgroundColor:
+                props.item.application_status === 1
+                  ? 'rgba(220, 220, 220, 1)'
+                  : props.item.application_status === 2
+                  ? 'rgba(92, 178, 101, 1)'
+                  : props.item.application_status === 3
+                  ? 'rgba(189, 49, 49, 1)'
+                  : 'rgba(13, 153, 255, 1)',
+              color:
+                props.item.application_status === 1
+                  ? 'rgba(170, 170, 170, 1)'
+                  : 'rgba(255, 255, 255, 1)',
             }}
-            rootClassName="button-approved"
-            type="primary"
+            className="button-approved"
           >
-            Đã được duyệt
-          </Button>
-          <Button
-            style={{ display: props.item.type === 'post' ? 'block' : 'none' }}
-            rootClassName="button-check"
-            type="primary"
+            {props.item.application_status === 1
+              ? 'Đã ứng tuyển'
+              : props.item.application_status === 2
+              ? 'Đã từ chối'
+              : props.item.application_status === 3
+              ? 'Đã được duyệt'
+              : 'Đã tuyển'}
+          </div>
+          <div
+            style={{ display: props.item.type === 'post' ? 'flex' : 'none' }}
+            className="button-check"
           >
             Kiểm tra ngay
-          </Button>
+            <div className="icon">
+              <BackIcon fill="white" />
+            </div>
+          </div>
         </div>
       </Card>
     </>
