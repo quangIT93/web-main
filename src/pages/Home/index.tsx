@@ -50,7 +50,7 @@ const Home: React.FC = () => {
       <Navbar />
 
       {/* <Carousel /> */}
-      <h1 style={{ visibility: 'hidden' }}>
+      <h1 style={{ visibility: 'hidden', display: 'none' }}>
         Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được
         cập nhật mỗi ngày - Tìm việc làm nhanh chóng trên toàn quốc, tiện lợi –
         Đa dạng ngành nghề, mức lương hấp dẫn

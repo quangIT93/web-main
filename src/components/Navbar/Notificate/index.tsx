@@ -179,7 +179,7 @@ const Notificate = () => {
 
   const handleChangeEmail = () => {};
 
-  // const handl
+  const handleChangeApp = () => {};
 
   return (
     <div className="notification" ref={refNotification}>
@@ -329,12 +329,24 @@ const Notificate = () => {
             </p>
             <div className="wrap-checkbox_keyword">
               <div className="checkbox-keyword">
-                <input type="checkbox" id="email" value="email" name="email" />
-                <label htmlFor="email">Email</label>
+                <input
+                  type="checkbox"
+                  name="app"
+                  id="app"
+                  value="app"
+                  onChange={handleChangeApp}
+                />
+                <label htmlFor="app">App</label>
               </div>
               <div className="checkbox-keyword">
-                <input type="checkbox" name="app" id="app" value="app" />
-                <label htmlFor="app">App</label>
+                <input
+                  type="checkbox"
+                  id="email"
+                  value="email"
+                  name="email"
+                  onChange={handleChangeEmail}
+                />
+                <label htmlFor="email">Email</label>
               </div>
             </div>
             <div className="count-keyword">
