@@ -6,7 +6,7 @@ import { Cascader, Divider, Typography, Button } from 'antd';
 import categoriesApi from '../../../api/categoriesApi';
 import './style.scss';
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { getCookie } from 'cookies';
+
 import { RootState } from 'store';
 import { BagFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
@@ -39,12 +39,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
-
-  let userFilteredCookies = JSON.parse(
-    getCookie('userFiltered') || '{}',
-  )
-  const listCate = userFilteredCookies?.list_cate
-  searchParams
+  const listCate = searchParams
     .getAll('categories-ids')
     .map((dis) => dis.split(','))
     .map((category) => category.map(Number));
@@ -56,7 +51,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
         setDataCategories(result.data);
       }
 
-      if (location.pathname !== '/search-results' && userProfile && listCate.length === 0) {
+      if (location.pathname !== '/search-results' && userProfile) {
         setListCate(
           userProfile.categories.map((profile: any) => [
             profile.parent_category_id,
@@ -110,27 +105,27 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
+                  value: parentCategory.parent_category_id,
+                  label: parentCategory.parent_category,
+                  children: parentCategory.childs.map((child: any) => {
+                    var dis = false;
+                    //check id child  when disable = true
+                    if (disable) {
+                      dis = true;
+                      for (const elem of categoriesId) {
+                        if (elem === child.id) {
+                          dis = false;
+                          break;
+                        }
                       }
                     }
-                  }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                    return {
+                      value: child.id,
+                      label: child.name,
+                      disabled: dis,
+                    };
+                  }),
+                }))
               : []
           }
           onChange={onChange}
@@ -139,8 +134,8 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
               ? listCate
               : listCate?.length === 0 &&
                 location.pathname === '/search-results'
-                ? []
-                : userProfile?.categories.map((profile: any) => [
+              ? []
+              : userProfile?.categories.map((profile: any) => [
                   profile?.parent_category_id,
                   profile?.child_category_id,
                 ])
