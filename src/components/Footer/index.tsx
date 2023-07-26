@@ -91,9 +91,9 @@ const Footer: React.FC = () => {
             <p style={{ color: '#AAAAAA', marginLeft: '5px' }}>
               (028) 35358983
             </p>
-            {/* <p style={{ color: '#575757', marginLeft: '2px' }}>
+            <p style={{ color: '#575757', marginLeft: '2px' }}>
               (1.000 đồng/phút)
-            </p> */}
+            </p>
           </div>
           <p style={{ color: '#575757' }}>Email: neoworks.vn@gmail.com</p>
         </div>

@@ -243,29 +243,17 @@ const Detail: React.FC = () => {
       icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
     });
   };
-
-  const getDataCompany = () => {
-    try {
-    } catch (error) { }
-  };
-
-  useEffect(() => {
-    getDataCompany();
-  }, []);
-
   // get post by id-post
   const getPostById = async () => {
     try {
       setIsLoading(true);
       const accountId = localStorage.getItem('accountId');
-      // const result = await postApi.getById(POST_ID);
-      const result = await postApi.getPostV3(POST_ID);
-      // console.log('result', result2);
+      const result = await postApi.getById(POST_ID);
       if (result) {
         // const list = result?.data.categories.map((category: any) =>
         //   Number(category.child_category_id)
         // )
-        // console.log('postId', result.data);
+        console.log('postId', result.data);
         // check  application status
         setIsLoading(false);
         if (result.data.account_id === accountId) {
@@ -419,17 +407,17 @@ const Detail: React.FC = () => {
     } catch (error: any) {
       console.log('error', error);
       if (error.response.status === 400) {
-        // api.info({
-        //   message: `Ứng tuyển không thành công!`,
-        //   description: 'Bạn đã ứng tuyển vị trí này',
-        //   placement: 'top',
-        //   icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
-        // });
+        api.info({
+          message: `Ứng tuyển không thành công!`,
+          description: 'Bạn đã ứng tuyển vị trí này',
+          placement: 'top',
+          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+        });
         setTextButton('Đã ứng tuyển');
         // setBackgroundButton('gray');
         setBackgroundButton('#0D99FF');
         setCheckApply(true);
-        window.open(post?.data?.companyResourceData.url, '_blank');
+        window.open(post?.data.resource.url, '_blank');
         // openNotification();
         return;
       }
@@ -481,7 +469,7 @@ const Detail: React.FC = () => {
     if (nameShare === 'Mail') {
       // window.location.href = `mailto:quangbk54@gmail.com`;
       window.location.href = `mailto:?body=${encodeURIComponent(
-        post?.data.shareLink,
+        post?.data.share_link,
       )}`;
     }
     if (nameShare === 'Messenger') {
@@ -489,24 +477,24 @@ const Detail: React.FC = () => {
       // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
       const messengerLink =
         'fb-messenger://share?link=' +
-        encodeURIComponent(post?.data.shareLink) +
+        encodeURIComponent(post?.data.share_link) +
         '&app_id=' +
         encodeURIComponent('523018296116961');
       window.location.href = messengerLink;
     }
     if (nameShare === 'Facebook') {
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        post?.data.shareLink,
+        post?.data.share_link,
       )}`;
       window.open(url, '_blank');
     }
     if (nameShare === 'Zalo') {
       window.location.href = `zalo://app?link=${encodeURIComponent(
-        post?.data.shareLink,
+        post?.data.share_link,
       )}`;
     }
     if (nameShare === 'Sao chép liên kết') {
-      copy(post?.data.shareLink);
+      copy(post?.data.share_link);
       // setCopied(true);
       dispatch<any>(setShowCopy(true));
       // setTimeout(() => {
@@ -538,7 +526,7 @@ const Detail: React.FC = () => {
   // }
 
   const handleClickSearch = () => {
-    const companyName = post?.data.companyName;
+    const companyName = post?.data.company_name;
     const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
     window.open(searchUrl, '_self');
   };
@@ -546,11 +534,7 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-      }, ${post?.data.district ? post?.data.district?.fullName : ''}, ${post?.data.district?.province
-        ? post?.data.district?.province?.fullName
-        : ''
-      }`,
+        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
 
@@ -582,8 +566,8 @@ const Detail: React.FC = () => {
                 <div className="top-title">
                   <h2>{post?.data.title}</h2>
                   <img
-                    src={post?.data.companyResourceData.logo}
-                    alt={post?.data.companyResourceData.logo}
+                    src={post?.data.resource.company_icon}
+                    alt={post?.data.resource.company_icon}
                   />
                 </div>
                 <div className="mid-title">
@@ -593,7 +577,7 @@ const Detail: React.FC = () => {
                       onClick={handleClickSearch}
                       style={{ cursor: 'pointer' }}
                     >
-                      {post?.data.companyName}
+                      {post?.data.company_name}
                     </h3>
                     <h3>|</h3>
                     <h3
@@ -606,12 +590,7 @@ const Detail: React.FC = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-                      }, ${post?.data.district ? post?.data.district?.fullName : ''
-                      }, ${post?.data.district?.province
-                        ? post?.data.district?.province?.fullName
-                        : ''
-                      }`}</h3>
+                    <h3>{`${post?.data.address}, ${post?.data.district}, ${post?.data.province}`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -626,9 +605,9 @@ const Detail: React.FC = () => {
                   <div className="bot-title-createdTime">
                     <ClockDetailPostIcon width={24} height={24} />
                     <h3>
-                      {moment(new Date(post?.data.createdAt)).format('HH:mm')}
+                      {moment(new Date(post?.data.created_at)).format('HH:mm')}
                       <span>&nbsp;</span>
-                      {new Date(post?.data.createdAt).toLocaleDateString(
+                      {new Date(post?.data.created_at).toLocaleDateString(
                         'en-GB',
                       )}
                     </h3>
@@ -731,7 +710,7 @@ const Detail: React.FC = () => {
                           className="div-job-img-swipper_item"
                           key={index}
                         >
-                          <img src={item.url} alt="ảnh lỗi" />
+                          <img src={item.image} alt="ảnh lỗi" />
                         </SwiperSlide>
                       );
                     })}
@@ -755,7 +734,7 @@ const Detail: React.FC = () => {
                           className="div-job-img-swipper-thumbs_item"
                           key={index}
                         >
-                          <img src={item.url} />
+                          <img src={item.image} />
                         </SwiperSlide>
                       );
                     })}
@@ -793,7 +772,7 @@ const Detail: React.FC = () => {
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Loại công viêc</p>
-                                <h5>{post?.data.postJobType.fullName}</h5>
+                                <h5>{post?.data.job_type.job_type_name}</h5>
                               </div>
                             </div>
                             <div className="div-detail-row">
@@ -805,10 +784,10 @@ const Detail: React.FC = () => {
                                 <p>Giờ làm việc</p>
                                 <h5>
                                   {moment(
-                                    new Date(post?.data.startTime),
+                                    new Date(post?.data.start_time),
                                   ).format('HH:mm')}{' '}
                                   -{' '}
-                                  {moment(new Date(post?.data.endTime)).format(
+                                  {moment(new Date(post?.data.end_time)).format(
                                     'HH:mm',
                                   )}
                                 </h5>
@@ -820,7 +799,7 @@ const Detail: React.FC = () => {
                                 {' '}
                                 <p>Làm việc cuối tuần</p>
                                 <h5>
-                                  {post?.data.isWorkingWeekend === 0
+                                  {post?.data.is_working_weekend === 0
                                     ? 'Không làm việc cuối tuần'
                                     : 'Có làm việc cuối tuần'}
                                 </h5>
@@ -831,17 +810,17 @@ const Detail: React.FC = () => {
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Mức lương</p>
-                                {post?.data.postSalaryType.id === 6 ? (
-                                  <h5>{post?.data.postSalaryType.fullName}</h5>
+                                {post?.data.salary_type_id === 6 ? (
+                                  <h5>{post?.data.salary_type}</h5>
                                 ) : (
                                   <h5>
                                     {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salaryMin,
-                                    ) + ` ${post?.data.moneyTypeText}`}{' '}
+                                      post?.data.salary_min,
+                                    ) + ` ${post?.data.money_type_text}`}{' '}
                                     -{' '}
                                     {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salaryMax,
-                                    ) + ` ${post?.data.moneyTypeText}`}
+                                      post?.data.salary_max,
+                                    ) + ` ${post?.data.money_type_text}`}
                                   </h5>
                                 )}
                               </div>
@@ -853,11 +832,14 @@ const Detail: React.FC = () => {
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Danh mục</p>
-                                {post?.data.postCategories.map(
-                                  (item: any, index: null | number) => (
+                                {post?.data.categories.map(
+                                  (
+                                    item: ItemCategories,
+                                    index: null | number,
+                                  ) => (
                                     <h5 key={index}>
-                                      {item.parentCategory.fullName}/
-                                      {item.fullName}
+                                      {item.parent_category}/
+                                      {item.child_category}
                                     </h5>
                                   ),
                                 )}
@@ -869,7 +851,7 @@ const Detail: React.FC = () => {
                                 {' '}
                                 <p>Làm việc từ xa</p>
                                 <h5>
-                                  {post?.data.isRemotely === 0
+                                  {post?.data.is_remotely === 0
                                     ? 'Không làm việc từ xa'
                                     : 'Có làm việc từ xa'}
                                 </h5>
@@ -883,10 +865,10 @@ const Detail: React.FC = () => {
                                 {' '}
                                 <p>Thời gian hết hạn</p>
                                 <h5>
-                                  {post?.data?.expiredDate
+                                  {post?.data.expired_date
                                     ? moment(
-                                      new Date(post?.data?.expiredDate),
-                                    ).format('DD/MM/yyyy')
+                                        new Date(post?.data.expired_date),
+                                      ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>
@@ -935,7 +917,7 @@ const Detail: React.FC = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                        // onClick={handlePreviousPost}
+                          onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -944,7 +926,7 @@ const Detail: React.FC = () => {
                         </div>
                         <div
                           className="description-button_next"
-                          // onClick={handleNextPost}
+                          onClick={handleNextPost}
                           style={{
                             color: postNext ? 'black' : '#cccc',
                           }}

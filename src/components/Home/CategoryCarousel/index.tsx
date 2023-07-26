@@ -189,6 +189,7 @@ const CategoryCarousel: React.FC = () => {
       setLoading(true);
       const result = await categoriesApi.getAllParentCategories();
       if (result) {
+
         setTimeout(() => {
           setLoading(false);
         }, 1000);

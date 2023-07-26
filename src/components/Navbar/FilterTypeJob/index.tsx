@@ -5,7 +5,6 @@ import type { RadioChangeEvent } from 'antd';
 import { useSearchParams } from 'react-router-dom';
 import siteApi from 'api/siteApi';
 
-import { getCookie, setCookie } from 'cookies';
 import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
 import './style.scss';
@@ -27,8 +26,6 @@ const CustomOption = ({
     setValueRender(valueRender);
 
     setValue(value);
-
-    setCookie('userTypejobFiltered', JSON.stringify(valueRender), 365);
   };
 
   return (
@@ -36,8 +33,7 @@ const CustomOption = ({
       style={{ width: '100%' }}
       name="radiogroup"
       onChange={onChange}
-      value={jobType ? jobType : 5}
-    // defaultValue={jobType ? jobType : 5}
+      defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -63,11 +59,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
   const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
   const [valueRender, setValueRender] = React.useState<any>();
   const [searchParams, setSearchParams] = useSearchParams();
-
-  let userFilteredCookies = JSON.parse(
-    getCookie('userTypejobFiltered') || '{}',
-  )
-  const TYPE_JOB = userFilteredCookies?.id;
+  const TYPE_JOB = Number(searchParams.get('job-type'));
 
   const getTypeJob = async () => {
     const result = await siteApi.getJobType();
@@ -87,8 +79,8 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
     getTypeJob();
   }, []);
 
-  const handleChange = (value1: string) => { };
-  console.log(`TYPEJOB`, TYPE_JOB);
+  const handleChange = (value1: string) => {};
+
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
