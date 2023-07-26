@@ -794,12 +794,25 @@
   }
 
   .div-nav-center {
+
+    .btn-badge {
+
+      &:hover {
+        .btn-notice {
+
+          border: 1px solid #0D99FF !important;
+   
+        }
+      }
+    }
     button {
       padding: 24px 16px;
       display: flex;
       align-items: center;
       border-radius: 8px;
       margin-left: 12px;
+
+    
 
       @include breakpoint(mobile) {
         border: none;
@@ -896,11 +909,39 @@
       right: 0px;
       margin-top: 12px;
       border-radius: 20px;
-      width: 308px;
+      width: 380px;
       z-index: 10;
 
       .sub-login_info {
         margin-left: -10px;
+        .sub-login_detail {
+          display: flex;
+          flex-direction: column;
+
+          .sub-login_text {
+            display: flex;
+            align-items: flex-start;
+            width: 220px;
+            margin-top: 8px;
+            p {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              // white-space: ;
+              display: -webkit-box; /* Dùng -webkit-box để sử dụng thuộc tính clamp */
+              -webkit-line-clamp: 2; /* Giới hạn văn bản xuống 2 dòng */
+              -webkit-box-orient: vertical; /* Sắp xếp nội dung dọc */
+              overflow: hidden; /* Ẩn văn bản bị tràn */
+              color: #1b87f5;
+              cursor: pointer;
+            }
+
+            svg {
+              min-width: 16px;
+              margin-right: 4px;
+            }
+          }
+        }
+
       }
 
       .sub-login_items {
@@ -925,6 +966,30 @@
           // margin-bottom: 12px;
           span {
             padding-left: 8px;
+          }
+        }
+
+        .sub-history_status {
+          padding: 8px 0 8px 24px;
+          display: flex;
+          align-items: center;
+
+          :nth-child(1) {
+            color: #34A853;
+          }
+
+          :nth-child(3) {
+            color: #BD3131;
+          }
+
+          :nth-child(5) {
+            color: #575757;
+          }
+
+
+          :nth-child(4),
+          :nth-child(2){
+            margin: 0 12px;
           }
         }
       }
@@ -964,5 +1029,52 @@
 
 .wrap-btn_notice {
   position: relative;
+  
+  .sub-icon_qr {
+    transition: all 1s linear;
+    top:68px;
+    border-radius: 5px;
+    color: #000000;
+    background-color: #ffffff;
+    position: absolute;
+    width: 200px;
+    padding: 24px;
+    box-shadow: 1px 1px 5px #aaaaaa;
+    left: 12px;
+    // border: 1px solid #aaa;
+    display: none;
+    // display: block;
+    z-index: 10;
 
+    
+    h2 {
+      margin: 0 0 8px 0;
+      color: #0D99FF;
+      font-size: 16px;
+    }
+    .sub-icon_apps {
+      display: flex;
+      gap: 8px;
+    }
+    
+  }
+  &:hover {
+    .sub-icon_qr {
+      display: block;
+      &:hover {
+      display: block;
+
+      }
+    }
+  }
+  button:nth-child(1) {
+  &:after {
+    top: 40px;
+      content: "";
+      position: absolute;
+      background-color: transparent;
+      height: 40px;
+      width: 80px;
+    }
+  }
 }

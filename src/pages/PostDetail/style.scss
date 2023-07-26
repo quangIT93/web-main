@@ -33,6 +33,18 @@
     }
   }
 
+  .container-footer {
+    padding: 20px 15% 0;
+
+    @media screen and (max-width: 1834px) and (min-width: 1280px) {
+      padding: 20px 10% 0;
+    }
+
+    @media screen and (max-width: 1279px) {
+      padding: 20px 24px 0;
+    }
+  }
+
   #div-policy-footer {
     padding: 10px 15%;
 
@@ -40,17 +52,8 @@
       padding: 10px 10%;
     }
 
-    @media screen and (max-width: 1440px) and (min-width: 1025px) {
+    @media screen and (max-width: 1279px) {
       padding: 10px 24px;
-    }
-
-    @media screen and (max-width: 1024px) and (min-width: 769px) {
-      padding: 10px 24px;
-    }
-
-    @media screen and (max-width: 768px) {
-      padding: 10px 24px;
-      justify-content: center
     }
   }
 

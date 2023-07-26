@@ -10,7 +10,7 @@ import { EnvironmentOutlined } from '@ant-design/icons';
 import { useSearchParams } from 'react-router-dom';
 
 import { AddressFilterIcon, ArrowFilterIcon } from '#components/Icons';
-
+import { getCookie } from 'cookies';
 // import api
 import locationApi from 'api/locationApi';
 
@@ -50,9 +50,15 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
-  const listLocation = searchParams
-    .getAll('dis-ids')
-    .map((dis) => dis.split(','));
+
+  let userFilteredCookies = JSON.parse(
+    getCookie('userFiltered') || '{}',
+  )
+  const listLocation = userFilteredCookies?.list_dis
+
+  //  searchParams
+  //   .getAll('dis-ids')
+  //   .map((dis) => dis.split(','));
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation();
@@ -60,7 +66,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
         setDataLocations(result.data);
       }
 
-      if (location.pathname !== '/search-results' && userProfile) {
+      if (location.pathname !== '/search-results' && userProfile && listLocation.length === 0) {
         setListDis(
           userProfile?.locations?.map((profile: any) => [
             profile.province_id,
