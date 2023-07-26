@@ -99,19 +99,19 @@ const Navbar: React.FC = () => {
     setOpenNotificate,
     openNotificate,
     setSearch,
-    search
+    search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -146,7 +146,7 @@ const Navbar: React.FC = () => {
   // const [dateEnd, setDateEnd] = useState()
   const [isRemotely, setIsRemotely] = useState<number>(0);
   const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0);
-  const [userFiltered, setUserFiltered] = useState<any>()
+  const [userFiltered, setUserFiltered] = useState<any>();
 
   const [countChat, setCountChat] = useState<number>(0);
   // check search results
@@ -155,20 +155,18 @@ const Navbar: React.FC = () => {
   const [isSearch, setIsSearch] = useState<boolean>(false);
 
   useEffect(() => {
-    let userFilteredCookies = JSON.parse(
-      getCookie('userFiltered') || '{}',
-    )
-    setUserFiltered(userFilteredCookies)
-  }, [])
-  console.log("userFiltered: ", userFiltered);
+    let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
+    setUserFiltered(userFilteredCookies);
+  }, []);
+  console.log('userFiltered: ', userFiltered);
 
   // check search
   useEffect(() => {
     if (
       isRemotely !== 0 ||
       isWorkingWeekend !== 0 ||
-      listDis.length > 0 ||
-      listCate.length > 0 ||
+      listDis?.length > 0 ||
+      listCate?.length > 0 ||
       salaryMin !== 6000000 ||
       salaryMax !== 12000000 ||
       typeMoney === 2 ||
@@ -182,8 +180,8 @@ const Navbar: React.FC = () => {
   }, [
     isRemotely,
     isWorkingWeekend,
-    listDis.length,
-    listCate.length,
+    listDis?.length,
+    listCate?.length,
     salaryMin,
     salaryMax,
     typeMoney,
@@ -200,7 +198,7 @@ const Navbar: React.FC = () => {
   const SALARY_TYPE = userFiltered?.salary_type;
   const JOB_TYPE = userFiltered?.job_type;
   const DIS_IDS = userFiltered?.list_dis;
-  // : 
+  // :
   // searchParams
   //   .getAll('dis-ids')
   //   .map((disId) => disId.split(','));
@@ -392,7 +390,10 @@ const Navbar: React.FC = () => {
   //   return null;
   // }
 
-  const handleSearch = async (event: any, valueSearchInput: string | undefined) => {
+  const handleSearch = async (
+    event: any,
+    valueSearchInput: string | undefined,
+  ) => {
     event.preventDefault();
     var encode: any;
     var job_type = jobType;
@@ -415,24 +416,23 @@ const Navbar: React.FC = () => {
       list_cate,
       is_working_weekend,
       is_remotely,
-    }
+    };
 
     await setCookie('userFiltered', JSON.stringify(filter), 365);
 
-
-    if (list_dis.length > 0) {
+    if (list_dis?.length > 0) {
       list_dis.forEach((item) => {
         params.append(`dis-ids`, `${item}`);
       });
-    } else if (list_dis.length === 0 && DIS_IDS.length > 0) {
+    } else if (list_dis?.length === 0 && DIS_IDS.length > 0) {
       [].forEach((item) => {
         params.append(`dis-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      DIS_IDS.length === 0 &&
-      list_dis.length !== 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      DIS_IDS?.length === 0 &&
+      list_dis?.length !== 0 &&
+      location?.pathname !== '/search-results'
     ) {
       // dataProfile.locations.forEach((item: any) => {
       //   params.append(`dis-ids`, `${[item.province_id, item.district_id]}`);
@@ -441,10 +441,10 @@ const Navbar: React.FC = () => {
         params.append(`dis-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      DIS_IDS.length === 0 &&
-      list_dis.length === 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      DIS_IDS?.length === 0 &&
+      list_dis?.length === 0 &&
+      location?.pathname !== '/search-results'
     ) {
       [].forEach((item) => {
         params.append(`dis-ids`, `${item}`);
@@ -452,19 +452,19 @@ const Navbar: React.FC = () => {
     }
     // lấy từ profile qua
 
-    if (list_cate.length > 0) {
+    if (list_cate?.length > 0) {
       list_cate.forEach((item, index) => {
         paramsCate.append(`categories-ids`, `${item}`);
       });
-    } else if (list_cate.length === 0 && CATE_IDS.length > 0) {
+    } else if (list_cate?.length === 0 && CATE_IDS?.length > 0) {
       [].forEach((item) => {
-        paramsCate.append(`categories-ids`, `${item}`);
+        paramsCate?.append(`categories-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      CATE_IDS.length === 0 &&
-      list_cate.length !== 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      CATE_IDS?.length === 0 &&
+      list_cate?.length !== 0 &&
+      location?.pathname !== '/search-results'
     ) {
       // dataProfile.categories.forEach((item: any) => {
       //   paramsCate.append(
@@ -472,17 +472,17 @@ const Navbar: React.FC = () => {
       //     `${[item.parent_category_id, item.child_category_id]}`,
       //   );
       // });
-      list_cate.forEach((item, index) => {
-        paramsCate.append(`categories-ids`, `${item}`);
+      list_cate?.forEach((item, index) => {
+        paramsCate?.append(`categories-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      CATE_IDS.length === 0 &&
-      list_cate.length === 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      CATE_IDS?.length === 0 &&
+      list_cate?.length === 0 &&
+      location?.pathname !== '/search-results'
     ) {
       [].forEach((item) => {
-        paramsCate.append(`categories-ids`, `${item}`);
+        paramsCate?.append(`categories-ids`, `${item}`);
       });
     }
 
@@ -523,16 +523,16 @@ const Navbar: React.FC = () => {
 
     setTimeout(() => {
       if (location.pathname !== '/search-results') {
-        window.open(`/search-results`)
+        window.open(`/search-results`);
       } else {
         // setSearchParams({
         //   'search': `${isSearch}`
         // })
-        setSearch(!search)
-        setOpenCollapseFilter(false)
+        setSearch(!search);
+        setOpenCollapseFilter(false);
         // window.open(`/search-results`, "_self")
       }
-    }, 100)
+    }, 100);
 
     // setTimeout(() => {
     //   window.open(
@@ -733,9 +733,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -823,9 +823,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -848,8 +848,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
