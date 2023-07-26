@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 // @ts-ignore
 import { Navbar } from '#components';
 
-import ModalNoteCreatePost from '#components/Post/ModalNoteCreatePost';
 //@ts-ignore
+import ModalNoteCreatePost from '#components/Post/ModalNoteCreatePost';
 
 // import component
 import PostFilterSalary from '../../components/Post/PostFilterSalary';

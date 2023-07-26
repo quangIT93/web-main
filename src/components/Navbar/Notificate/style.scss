@@ -250,6 +250,9 @@
         line-height: 24px;
         border-bottom: 1px solid #aaaaaa;
         padding-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
       }
 
       .wrap-content_keyword {
@@ -333,6 +336,12 @@
           }
         }
       }
+
+      .wrap-content_keyword.selected {
+        background-color: #e7e7ed;
+      }
+
+
     }
   }
 
@@ -364,5 +373,12 @@
       display: flex;
       justify-content: flex-start;
     }
+  }
+
+  .icon-delele_keyword {
+    position: absolute;
+    
+    bottom: 30px;
+    right: 10px;
   }
 }

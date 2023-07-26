@@ -27,28 +27,32 @@ export const HomeValueContext = React.createContext<{
   navTouchCatelory: boolean
   setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>
   openNotificate: boolean
+  setSearch: React.Dispatch<React.SetStateAction<boolean>>
+  search: boolean
 }>({
   childCateloriesArray: [],
-  setChildCateloriesArray: () => {},
+  setChildCateloriesArray: () => { },
   openCollapseFilter: false,
-  setOpenCollapseFilter: () => {},
+  setOpenCollapseFilter: () => { },
   // heightNavbar: 0,
   // setHeightNavbar: () => {},
   openModalLoginNavbar: false,
-  setOpenModalLoginNavbar: () => {},
+  setOpenModalLoginNavbar: () => { },
   valueJobChild: {
     id: 1,
     parentName: 'Tất cả',
   },
-  setValueJobChild: () => {},
+  setValueJobChild: () => { },
   refCatelories: 0,
-  setRefCatelories: () => {},
-  setRefCatelory: () => {},
-  SetRefNav: () => {},
-  setNavTouchCatelory: () => {},
+  setRefCatelories: () => { },
+  setRefCatelory: () => { },
+  SetRefNav: () => { },
+  setNavTouchCatelory: () => { },
   navTouchCatelory: false,
-  setOpenNotificate: () => {},
+  setOpenNotificate: () => { },
   openNotificate: false,
+  setSearch: () => { },
+  search: false,
 })
 
 type ParentComponentProps = {
@@ -61,6 +65,7 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
   const [openCollapseFilter, setOpenCollapseFilter] = useState<boolean>(false)
 
   const [openNotificate, setOpenNotificate] = useState(false)
+  const [search, setSearch] = useState(false)
 
   // const [heightNavbar, setHeightNavbar] = useState<number>(0)
 
@@ -131,6 +136,8 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
     navTouchCatelory,
     setOpenNotificate,
     openNotificate,
+    setSearch,
+    search,
   }
 
   return (
