@@ -246,7 +246,7 @@ const Detail: React.FC = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -546,11 +546,13 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-      }, ${post?.data.district ? post?.data.district?.fullName : ''}, ${post?.data.district?.province
-        ? post?.data.district?.province?.fullName
-        : ''
-      }`,
+        `${post?.data.address}, ${
+          post?.data.location ? post?.data.location.fullName : ''
+        }, ${post?.data.district ? post?.data.district?.fullName : ''}, ${
+          post?.data.district?.province
+            ? post?.data.district?.province?.fullName
+            : ''
+        }`,
     );
   };
 
@@ -606,12 +608,15 @@ const Detail: React.FC = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-                      }, ${post?.data.district ? post?.data.district?.fullName : ''
-                      }, ${post?.data.district?.province
+                    <h3>{`${post?.data.address}, ${
+                      post?.data.location ? post?.data.location.fullName : ''
+                    }, ${
+                      post?.data.district ? post?.data.district?.fullName : ''
+                    }, ${
+                      post?.data.district?.province
                         ? post?.data.district?.province?.fullName
                         : ''
-                      }`}</h3>
+                    }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -885,8 +890,8 @@ const Detail: React.FC = () => {
                                 <h5>
                                   {post?.data?.expiredDate
                                     ? moment(
-                                      new Date(post?.data?.expiredDate),
-                                    ).format('DD/MM/yyyy')
+                                        new Date(post?.data?.expiredDate),
+                                      ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>
@@ -935,7 +940,7 @@ const Detail: React.FC = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                        // onClick={handlePreviousPost}
+                          // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />

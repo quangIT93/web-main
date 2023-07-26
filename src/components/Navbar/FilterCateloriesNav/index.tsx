@@ -40,10 +40,8 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
 
   const location = useLocation();
 
-  let userFilteredCookies = JSON.parse(
-    getCookie('userFiltered') || '{}',
-  )
-  const listCate = userFilteredCookies?.list_cate
+  let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
+  const listCate = userFilteredCookies?.list_cate;
   searchParams
     .getAll('categories-ids')
     .map((dis) => dis.split(','))
@@ -56,11 +54,15 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
         setDataCategories(result.data);
       }
 
-      if (location.pathname !== '/search-results' && userProfile && listCate.length === 0) {
+      if (
+        location?.pathname !== '/search-results' &&
+        userProfile &&
+        listCate?.length === 0
+      ) {
         setListCate(
-          userProfile.categories.map((profile: any) => [
-            profile.parent_category_id,
-            profile.child_category_id,
+          userProfile?.categories.map((profile: any) => [
+            profile?.parent_category_id,
+            profile?.child_category_id,
           ]),
         );
       } else {
@@ -86,13 +88,13 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
 
   const onChange = (value: any) => {
     setDisable(false);
-    const secondValues = value.map((item: any) => item[1]);
+    const secondValues = value?.map((item: any) => item[1]);
 
-    if (secondValues.length <= 3 && listCate.length <= 3) {
+    if (secondValues?.length <= 3 && listCate?.length <= 3) {
       setCategoriesId(secondValues);
       setListCate(value);
     }
-    if (value.length > 1) {
+    if (value?.length > 1) {
       setDisable(true);
     }
   };
@@ -110,27 +112,27 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
+                  value: parentCategory.parent_category_id,
+                  label: parentCategory.parent_category,
+                  children: parentCategory.childs.map((child: any) => {
+                    var dis = false;
+                    //check id child  when disable = true
+                    if (disable) {
+                      dis = true;
+                      for (const elem of categoriesId) {
+                        if (elem === child.id) {
+                          dis = false;
+                          break;
+                        }
                       }
                     }
-                  }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                    return {
+                      value: child.id,
+                      label: child.name,
+                      disabled: dis,
+                    };
+                  }),
+                }))
               : []
           }
           onChange={onChange}
@@ -139,8 +141,8 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
               ? listCate
               : listCate?.length === 0 &&
                 location.pathname === '/search-results'
-                ? []
-                : userProfile?.categories.map((profile: any) => [
+              ? []
+              : userProfile?.categories.map((profile: any) => [
                   profile?.parent_category_id,
                   profile?.child_category_id,
                 ])

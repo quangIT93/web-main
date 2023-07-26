@@ -144,13 +144,13 @@ const NewJobs: React.FC = () => {
   const {
     setOpenNotificate,
     openNotificate,
-    search
+    search,
   }: // setRefNav,
-    {
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const [page, setPage] = React.useState(2);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
@@ -233,15 +233,13 @@ const NewJobs: React.FC = () => {
   // const [userTypejobFilteredCookies, setUserTypejobFilteredCookies] = React.useState<any>()
 
   // React.useEffect(() => {
-  let userFilteredCookies = JSON.parse(
-    getCookie('userFiltered') || '{}'
-  )
+  let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
   let userTypeSalaryFilteredCookies = JSON.parse(
-    getCookie('userTypeSalaryFiltered') || '{}'
-  )
+    getCookie('userTypeSalaryFiltered') || '{}',
+  );
   let userTypejobFilteredCookies = JSON.parse(
-    getCookie('userTypejobFiltered') || '{}'
-  )
+    getCookie('userTypejobFiltered') || '{}',
+  );
   //   setUserFilteredCookies(userFilteredCookies)
   //   setUserTypeSalaryFilteredCookies(userTypeSalaryFilteredCookies)
   //   setUserTypejobFilteredCookies(userTypejobFilteredCookies)
@@ -250,41 +248,38 @@ const NewJobs: React.FC = () => {
   // query value
 
   const SALARY_TYPE = userTypeSalaryFilteredCookies?.id;
-  const MONEY_TYPE = userFilteredCookies?.money_type;;
+  const MONEY_TYPE = userFilteredCookies?.money_type;
   const SALARY_MIN = userFilteredCookies?.salary_min;
   const SALARY_MAX = userFilteredCookies?.salary_max;
   const IS_WORKING_WEEKEND = userFilteredCookies?.is_working_weekend;
   const IS_REMOTELY = userFilteredCookies?.is_remotely;
 
-  console.log("Salary_Max search params search result: ", SALARY_MAX)
+  console.log('Salary_Max search params search result: ', SALARY_MAX);
 
   const JOB_TYPE =
-    userTypejobFilteredCookies?.id &&
-      userTypejobFilteredCookies?.id! !== 5
+    userTypejobFilteredCookies?.id && userTypejobFilteredCookies?.id! !== 5
       ? [userTypejobFilteredCookies?.id]
       : [];
 
-  const LIST_DIS_ID = userFilteredCookies?.list_dis.map((dis: any) => dis[1])
+  const LIST_DIS_ID = userFilteredCookies?.list_dis.map((dis: any) => dis[1]);
   // searchParams
   //   .getAll('dis-ids')
   //   .map((disId) => disId.split(','))
   //   .map((dis) => dis[1]);
-  const LIST_CATEGORIES_ID = userFilteredCookies?.list_cate.map((cate: any) => cate[1])
+  const LIST_CATEGORIES_ID = userFilteredCookies?.list_cate.map(
+    (cate: any) => cate[1],
+  );
   // searchParams
   //   .getAll('categories-ids')
   //   .map((cateId) => cateId.split(','))
   //   .map((dis) => dis[1])
   //   .map(Number);
 
-  console.log(searchParams
-    .getAll('dis-ids'));
+  console.log(searchParams.getAll('dis-ids'));
 
+  let userFiltered = JSON.parse(getCookie('userFiltered') || '{}');
 
-  let userFiltered = JSON.parse(
-    getCookie('userFiltered') || '{}',
-  )
-
-  console.log("userFiltered: ", userFiltered);
+  console.log('userFiltered: ', userFiltered);
 
   const allLocation = async () => {
     try {
@@ -302,8 +297,7 @@ const NewJobs: React.FC = () => {
     allLocation();
     // getAllLocations()
     // delete param when back to page
-    console.log("search parameters: ", Number(searchParams.get('job-type')));
-
+    console.log('search parameters: ', Number(searchParams.get('job-type')));
   }, []);
 
   const getCategories = async () => {
@@ -480,7 +474,7 @@ const NewJobs: React.FC = () => {
     // Xử lý giá trị thay đổi
 
     setDisableLocation(false);
-    const secondValues = value.map((item: any) => item[1]);
+    const secondValues = value?.map((item: any) => item[1]);
 
     if (
       secondValues.length <= 1
@@ -501,7 +495,7 @@ const NewJobs: React.FC = () => {
 
   const onChangeCateLory = (value: any) => {
     setDisableCatelory(false);
-    const secondValues = value.map((item: any) => item[1]);
+    const secondValues = value?.map((item: any) => item[1]);
     if (secondValues.length <= 1) {
       setCategoriesId(secondValues);
       if (value.length !== 0) {
@@ -618,7 +612,7 @@ const NewJobs: React.FC = () => {
   const getPostSearch = async () => {
     try {
       if (dataProfile) {
-        setOpenBackdrop(true)
+        setOpenBackdrop(true);
         const result = await searchApi.getSearchByQueryV2(
           QUERY,
           null,
@@ -636,7 +630,7 @@ const NewJobs: React.FC = () => {
           SALARY_TYPE,
         );
         if (result) {
-          setOpenBackdrop(false)
+          setOpenBackdrop(false);
           setSearchData(result.data);
         }
       }
@@ -790,7 +784,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -853,29 +847,29 @@ const NewJobs: React.FC = () => {
               options={
                 dataAllLocation
                   ? dataAllLocation.map((dataLocation: any) => ({
-                    value: dataLocation.province_id,
-                    label: dataLocation.province_fullName,
-                    children: dataLocation.districts.map(
-                      (child: { district_id: string; district: string }) => {
-                        var dis = false;
-                        // setLocId([]);
-                        if (disableLocation) {
-                          dis = true;
-                          for (const elem of locId) {
-                            if (elem === child.district_id) {
-                              dis = false;
-                              break;
+                      value: dataLocation.province_id,
+                      label: dataLocation.province_fullName,
+                      children: dataLocation.districts.map(
+                        (child: { district_id: string; district: string }) => {
+                          var dis = false;
+                          // setLocId([]);
+                          if (disableLocation) {
+                            dis = true;
+                            for (const elem of locId) {
+                              if (elem === child.district_id) {
+                                dis = false;
+                                break;
+                              }
                             }
                           }
-                        }
-                        return {
-                          value: child.district_id,
-                          label: child.district,
-                          disabled: dis,
-                        };
-                      },
-                    ),
-                  }))
+                          return {
+                            value: child.district_id,
+                            label: child.district,
+                            disabled: dis,
+                          };
+                        },
+                      ),
+                    }))
                   : []
               }
               onChange={onChangeLocation}
@@ -898,27 +892,27 @@ const NewJobs: React.FC = () => {
               options={
                 dataCategories
                   ? dataCategories.map((parentCategory: any) => ({
-                    value: parentCategory.parent_category_id,
-                    label: parentCategory.parent_category,
-                    children: parentCategory.childs.map((child: any) => {
-                      var dis = false;
-                      //check id child  when disable = true
-                      if (disableCatelory) {
-                        dis = true;
-                        for (const elem of categoriesId) {
-                          if (elem === child.id) {
-                            dis = false;
-                            break;
+                      value: parentCategory.parent_category_id,
+                      label: parentCategory.parent_category,
+                      children: parentCategory.childs.map((child: any) => {
+                        var dis = false;
+                        //check id child  when disable = true
+                        if (disableCatelory) {
+                          dis = true;
+                          for (const elem of categoriesId) {
+                            if (elem === child.id) {
+                              dis = false;
+                              break;
+                            }
                           }
                         }
-                      }
-                      return {
-                        value: child.id,
-                        label: child.name,
-                        disabled: dis,
-                      };
-                    }),
-                  }))
+                        return {
+                          value: child.id,
+                          label: child.name,
+                          disabled: dis,
+                        };
+                      }),
+                    }))
                   : []
               }
               onChange={onChangeCateLory}
