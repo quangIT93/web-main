@@ -5,6 +5,8 @@ import type { RadioChangeEvent } from 'antd';
 import siteApi from 'api/siteApi';
 import { useSearchParams } from 'react-router-dom';
 
+import { getCookie, setCookie } from 'cookies';
+
 import { ClockFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
 import './style.scss';
@@ -14,16 +16,19 @@ const CustomOption = ({
   setValue,
   setValueRender,
   salaryType,
+  SALARY_TYPE
 }: {
   data: any;
   setValue: Function;
   setValueRender: Function;
   salaryType: number;
+  SALARY_TYPE: number;
 }) => {
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     setValue(value);
     const valueRender = data.find((item: any) => item.id == value);
     setValueRender(valueRender);
+    setCookie('userTypeSalaryFiltered', JSON.stringify(valueRender), 365);
   };
 
   return (
@@ -31,7 +36,8 @@ const CustomOption = ({
       style={{ width: '100%' }}
       name="radiogroup"
       onChange={onChange}
-      defaultValue={salaryType}
+      value={SALARY_TYPE}
+    // defaultValue={SALARY_TYPE}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -56,7 +62,11 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
   const [data, setData] = React.useState();
   const [valueRender, setValueRender] = React.useState<any>();
 
-  const SALARY_TYPE = Number(searchParams.get('sal-type'));
+  let userFilteredCookies = JSON.parse(
+    getCookie('userTypeSalaryFiltered') || '{}',
+  )
+
+  const SALARY_TYPE = userFilteredCookies.id;
 
   const getTypeSalary = async () => {
     const result = await siteApi.getSalaryType();
@@ -73,7 +83,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
     getTypeSalary();
   }, []);
 
-  const handleChange = (value1: string) => {};
+  const handleChange = (value1: string) => { };
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
@@ -90,12 +100,13 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
         placeholder="Trả lương theo"
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
-        <Option className="type-salary" value="1" label="Jack">
+        <Option className="type-salary" value="1" label="Trả lương theo">
           <CustomOption
             salaryType={SALARY_TYPE}
             data={data}
             setValue={setSalaryType}
             setValueRender={setValueRender}
+            SALARY_TYPE={SALARY_TYPE}
           />
         </Option>
       </Select>

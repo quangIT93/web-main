@@ -87,6 +87,11 @@ const postApi = {
       },
     })
   },
+
+  getPostV3: (id: number) => {
+    const URL = `v3/posts/${id}`
+    return axiosClient.get(URL)
+  }
 }
 
 export default postApi
