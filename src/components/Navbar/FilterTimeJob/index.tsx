@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
+import { getCookie } from 'cookies';
+
 import { CalendarFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
 import './style.scss';
@@ -36,8 +38,13 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   const [collapseOpen, setCollapseOpen] = useState(false);
   const collapseRef = useRef<any>(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const is_working_weekend = Number(searchParams.get('is_working_weekend'));
-  const is_remotely = Number(searchParams.get('is_remotely'));
+  let userFilteredCookies = JSON.parse(
+    getCookie('userFiltered') || '{}',
+  )
+
+  const is_working_weekend = userFilteredCookies?.is_working_weekend;
+  const is_remotely = userFilteredCookies?.is_remotely;
+
 
   useEffect(() => {
     if (is_working_weekend) {
@@ -136,9 +143,8 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <CalendarFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterTimeJob input-filter_nav ${
-          isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
-        }`}
+        className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
+          }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
