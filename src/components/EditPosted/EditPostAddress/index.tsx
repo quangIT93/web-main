@@ -1,103 +1,103 @@
-import React, { useState, useEffect, useCallback, memo } from 'react'
-import Typography from '@mui/material/Typography'
-import Autocomplete from '@mui/material/Autocomplete'
-import TextField from '@mui/material/TextField'
+import React, { useState, useEffect, useCallback, memo } from 'react';
+import Typography from '@mui/material/Typography';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
 // api
-import locationApi from '../../../api/locationApi'
+import locationApi from '../../../api/locationApi';
 
-import './style.scss'
-import { StringArraySupportOption } from 'prettier'
+import './style.scss';
+import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
   fontWeight: 600,
-  color: '#000000'
-}
+  color: '#000000',
+};
 
 interface IEditPostAddress {
-  dataPostById: any
-  setEditDataPosted: any
-  editDataPosted: any
+  dataPostById: any;
+  setEditDataPosted: any;
+  editDataPosted: any;
 }
 
 const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
-  const { dataPostById, setEditDataPosted, editDataPosted } = props
+  const { dataPostById, setEditDataPosted, editDataPosted } = props;
 
-  const [dataProvinces, setDataProvinces] = useState<any>(null)
-  const [dataDistricts, setDataDistrict] = useState<any>(null)
-  const [dataWards, setDataWard] = useState<any>(null)
-  const [selectedProvince, setSelectedProvince] = useState<any>(null)
-  const [selectedDistrict, setSelectedDistrict] = useState<any>(null)
-  const [selectedWard, setSelectedWard] = useState<any>(null)
+  const [dataProvinces, setDataProvinces] = useState<any>(null);
+  const [dataDistricts, setDataDistrict] = useState<any>(null);
+  const [dataWards, setDataWard] = useState<any>(null);
+  const [selectedProvince, setSelectedProvince] = useState<any>(null);
+  const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
+  const [selectedWard, setSelectedWard] = useState<any>(null);
 
   useEffect(() => {
     if (dataProvinces && !selectedProvince) {
       setSelectedProvince(
         dataProvinces?.find(
           (dataProvince: any) =>
-            dataProvince?.name === dataPostById?.province_name
-        )
-      )
+            dataProvince?.name === dataPostById?.province_name,
+        ),
+      );
     }
-  }, [dataProvinces])
+  }, [dataProvinces]);
 
   useEffect(() => {
     if (dataDistricts && !selectedDistrict) {
       setSelectedDistrict(
         dataDistricts.find(
           (dataDistrict: any) =>
-            dataDistrict.full_name === dataPostById.district
-        )
-      )
+            dataDistrict.full_name === dataPostById.district,
+        ),
+      );
     }
-  }, [dataDistricts])
+  }, [dataDistricts]);
 
   useEffect(() => {
     if (dataWards && !selectedWard) {
       setSelectedWard(
         dataWards.find(
-          (dataWard: any) => dataWard.full_name === dataPostById.ward
-        )
-      )
+          (dataWard: any) => dataWard.full_name === dataPostById.ward,
+        ),
+      );
     }
-  }, [dataWards])
+  }, [dataWards]);
 
   const getAllProvinces = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces()
+      const allLocation = await locationApi.getAllProvinces();
 
       if (allLocation) {
-        setDataProvinces(allLocation.data)
+        setDataProvinces(allLocation.data);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   // get All locations by location id
   const getDataDistrict = async () => {
     try {
       if (dataPostById && dataDistricts === null) {
         const districts = await locationApi.getDistrictsById(
-          dataPostById?.province_id
-        )
+          dataPostById?.province_id,
+        );
 
         if (districts) {
-          setDataDistrict(districts.data)
+          setDataDistrict(districts.data);
         }
       } else {
         if (selectedProvince) {
           const districts = await locationApi.getDistrictsById(
-            selectedProvince?.id
-          )
+            selectedProvince?.id,
+          );
           if (districts) {
-            setDataDistrict(districts.data)
+            setDataDistrict(districts.data);
           }
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   // get All ward by ward id
   const getDataWard = async () => {
@@ -105,66 +105,69 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
       if (dataDistricts && dataWards === null) {
         const allward = await locationApi.getWardsId(
           dataPostById.district_id,
-          ''
-        )
+          '',
+        );
         if (allward) {
-          setDataWard(allward.data)
+          setDataWard(allward.data);
         }
       } else {
         if (selectedDistrict) {
-          const allward = await locationApi.getWardsId(selectedDistrict?.id, '')
+          const allward = await locationApi.getWardsId(
+            selectedDistrict?.id,
+            '',
+          );
           if (allward) {
-            setDataWard(allward.data)
+            setDataWard(allward.data);
           }
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   React.useEffect(() => {
-    getAllProvinces()
+    getAllProvinces();
     // getAllLocations()
     // delete param when back to page
-  }, [])
+  }, []);
 
   React.useEffect(() => {
-    getDataDistrict()
+    getDataDistrict();
     // delete param when back to page
-  }, [selectedProvince])
+  }, [selectedProvince]);
 
   React.useEffect(() => {
-    getDataWard()
+    getDataWard();
     // delete param when back to page
-  }, [selectedDistrict])
+  }, [selectedDistrict]);
 
   const handleProvinceChange = (event: any, value: any) => {
-    setSelectedDistrict(null)
-    setSelectedWard(null)
-    setSelectedProvince(value)
-    setDataWard([])
-  }
+    setSelectedDistrict(null);
+    setSelectedWard(null);
+    setSelectedProvince(value);
+    setDataWard([]);
+  };
 
   const handleDistrictChange = (event: any, value: any) => {
-    setSelectedDistrict(value)
-    setSelectedWard(null)
-  }
+    setSelectedDistrict(value);
+    setSelectedWard(null);
+  };
 
   const handleChangeWardId = (event: any, value: any) => {
-    setSelectedWard(value)
+    setSelectedWard(value);
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       ward_id: value?.id,
-    }))
-  }
+    }));
+  };
 
   const handleChangeAddress = (e: any) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       address: e.target.value,
-    }))
-  }
+    }));
+  };
 
   return (
     <div className="edit-post_address">
@@ -193,8 +196,9 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
               />
             )}
             isOptionEqualToValue={(option, value) => {
-              return option.name === value.name
+              return option.name === value.name;
             }}
+            style={{ marginTop: '0.5rem' }}
           />
         </div>
 
@@ -216,8 +220,9 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
               <TextField {...params} placeholder="Quận/Huyện" size="small" />
             )}
             isOptionEqualToValue={(option, value) => {
-              return option.full_name === value.full_name
+              return option.full_name === value.full_name;
             }}
+            style={{ marginTop: '0.5rem' }}
           />
         </div>
       </div>
@@ -240,8 +245,9 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
               <TextField {...params} placeholder="Phường/Xã" size="small" />
             )}
             isOptionEqualToValue={(option, value) => {
-              return option.full_name === value.full_name
+              return option.full_name === value.full_name;
             }}
+            style={{ marginTop: '0.5rem' }}
           />
         </div>
 
@@ -261,13 +267,13 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             value={editDataPosted?.address}
             onChange={handleChangeAddress}
             size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
+            sx={{ width: '100%', marginTop: '0.5rem' }}
             placeholder="Tên đường, toà nhà, số nhà"
           />
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-export default memo(EditPostAddress)
+export default memo(EditPostAddress);

@@ -65,7 +65,7 @@ const PostTime: React.FC<IPostTime> = (props) => {
               onChange={handleChangeStartTime}
               value={moment(new Date(startTime))}
             />
-            <div className='connect'>-</div>
+            <div className="connect">-</div>
             {/* <SwapRightOutlined className="icon-time" style={{ fontSize: 35 }} /> */}
             <TimePicker
               // ampm={false}

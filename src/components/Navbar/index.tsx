@@ -8,12 +8,21 @@ import { Link, useLocation } from 'react-router-dom';
 import ModalLogin from '../../components/Home/ModalLogin';
 import Skeleton from '@mui/material/Skeleton';
 
+import { setCookie, getCookie } from 'cookies';
+
 // @ts-ignore
 import { Logo } from '#components';
 // @ts-ignore
 import { ChatIcon, BellIcon } from '#components';
 
-import { FlagVNIcon, SearchIcon } from '#components/Icons';
+import {
+  FlagVNIcon,
+  SearchIcon,
+  MailInfoIcon,
+  MapInfoIcon,
+  BagInfoJob,
+  DownloadIcon,
+} from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
 
@@ -63,6 +72,7 @@ import { Avatar, Button, Space, Spin, Badge } from 'antd';
 import authApi from 'api/authApi';
 import profileApi from 'api/profileApi';
 import messageApi from 'api/messageApi';
+import applitedPostedApi from 'api/apiAppliedPosted';
 
 import {
   Container,
@@ -96,16 +106,20 @@ const Navbar: React.FC = () => {
     SetRefNav,
     setOpenNotificate,
     openNotificate,
+    setSearch,
+    search
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean;
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-  } = useContext(HomeValueContext);
+    {
+      openCollapseFilter: boolean;
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+      search: boolean;
+    } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -140,11 +154,22 @@ const Navbar: React.FC = () => {
   // const [dateEnd, setDateEnd] = useState()
   const [isRemotely, setIsRemotely] = useState<number>(0);
   const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0);
+  const [userFiltered, setUserFiltered] = useState<any>()
 
   const [countChat, setCountChat] = useState<number>(0);
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
+  const [appliedPostedJob, setAppliedPostedJob] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSearch, setIsSearch] = useState<boolean>(false);
+
+  useEffect(() => {
+    let userFilteredCookies = JSON.parse(
+      getCookie('userFiltered') || '{}',
+    )
+    setUserFiltered(userFilteredCookies)
+  }, [])
+  console.log("userFiltered: ", userFiltered);
 
   // check search
   useEffect(() => {
@@ -181,15 +206,18 @@ const Navbar: React.FC = () => {
   // value query
 
   const QUERY = searchParams.get('q');
-  const SALARY_TYPE = Number(searchParams.get('sal-type'));
-  const JOB_TYPE = Number(searchParams.get('job-type'));
-  const DIS_IDS = searchParams
-    .getAll('dis-ids')
-    .map((disId) => disId.split(','));
+  const SALARY_TYPE = userFiltered?.salary_type;
+  const JOB_TYPE = userFiltered?.job_type;
+  const DIS_IDS = userFiltered?.list_dis;
+  // : 
+  // searchParams
+  //   .getAll('dis-ids')
+  //   .map((disId) => disId.split(','));
   // .map((dis) => dis[1])
-  const CATE_IDS = searchParams
-    .getAll('categories-ids')
-    .map((disId) => disId.split(','));
+  const CATE_IDS = userFiltered?.list_cate;
+  // searchParams
+  //   .getAll('categories-ids')
+  //   .map((disId) => disId.split(','));
   // .map((dis) => dis[1])
 
   // params url
@@ -346,7 +374,34 @@ const Navbar: React.FC = () => {
 
   // handle click search button
 
-  const handleSearch = (event: any, valueSearchInput: string | undefined) => {
+  // // Set the cookie
+  // function setCookie(name: string, value: string, days: number) {
+  //   let expires = '';
+  //   if (days) {
+  //     let date = new Date();
+  //     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  //     expires = '; expires=' + date.toUTCString();
+  //   }
+  //   document.cookie = name + '=' + (value || '') + expires + '; path=/';
+  // }
+
+  // // Get the cookie
+  // function getCookie(name: string): string | null {
+  //   let nameEQ = name + '=';
+  //   let ca = document.cookie.split(';');
+  //   for (let i = 0; i < ca.length; i++) {
+  //     let c = ca[i];
+  //     while (c.charAt(0) == ' ') {
+  //       c = c.substring(1, c.length);
+  //     }
+  //     if (c.indexOf(nameEQ) == 0) {
+  //       return c.substring(nameEQ.length, c.length);
+  //     }
+  //   }
+  //   return null;
+  // }
+
+  const handleSearch = async (event: any, valueSearchInput: string | undefined) => {
     event.preventDefault();
     var encode: any;
     var job_type = jobType;
@@ -358,6 +413,21 @@ const Navbar: React.FC = () => {
     var list_cate = listCate;
     var is_working_weekend = isWorkingWeekend;
     var is_remotely = isRemotely;
+
+    let filter = {
+      // job_type,
+      money_type,
+      // salary_type,
+      salary_min,
+      salary_max,
+      list_dis,
+      list_cate,
+      is_working_weekend,
+      is_remotely,
+    }
+
+    await setCookie('userFiltered', JSON.stringify(filter), 365);
+
 
     if (list_dis.length > 0) {
       list_dis.forEach((item) => {
@@ -461,28 +531,39 @@ const Navbar: React.FC = () => {
     }
 
     setTimeout(() => {
-      window.open(
-        `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}` +
-          `${salary_type ? `&sal-type=${salary_type}` : ''}` +
-          `${job_type ? `&job-type=${job_type}` : ''}` +
-          `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
-          `${
-            list_cate.length > 0
-              ? `&${paramsCate.toString()}`
-              : `&${paramsCate.toString()}`
-          }` +
-          `${salary_min ? `&salary_min=${salary_min}` : ''}` +
-          `${salary_max ? `&salary_max=${salary_max}` : ''}` +
-          `${
-            is_working_weekend
-              ? `&is_working_weekend=${is_working_weekend}`
-              : ''
-          }` +
-          `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
-          `${money_type ? `&money_type=${money_type}` : ''}`,
-        '_self',
-      );
-    }, 100);
+      if (location.pathname !== '/search-results') {
+        window.open(`/search-results`)
+      } else {
+        // setSearchParams({
+        //   'search': `${isSearch}`
+        // })
+        setSearch(!search)
+        setOpenCollapseFilter(false)
+        // window.open(`/search-results`, "_self")
+      }
+    }, 100)
+
+    // setTimeout(() => {
+    //   window.open(
+    //     `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}` +
+    //     `${salary_type ? `&sal-type=${salary_type}` : ''}` +
+    //     `${job_type ? `&job-type=${job_type}` : ''}` +
+    //     `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
+    //     `${list_cate.length > 0
+    //       ? `&${paramsCate.toString()}`
+    //       : `&${paramsCate.toString()}`
+    //     }` +
+    //     `${salary_min ? `&salary_min=${salary_min}` : ''}` +
+    //     `${salary_max ? `&salary_max=${salary_max}` : ''}` +
+    //     `${is_working_weekend
+    //       ? `&is_working_weekend=${is_working_weekend}`
+    //       : ''
+    //     }` +
+    //     `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
+    //     `${money_type ? `&money_type=${money_type}` : ''}`,
+    //     '_self',
+    //   );
+    // }, 100);
   };
 
   // login
@@ -552,7 +633,7 @@ const Navbar: React.FC = () => {
         const result = await authApi.signOut(refreshToken);
 
         if (result) {
-          window.location.replace('/home');
+          window.location.replace('/');
           localStorage.clear();
         }
       }
@@ -560,6 +641,68 @@ const Navbar: React.FC = () => {
       console.log(error);
     }
   };
+
+  const getAppliedPostedJobs = async () => {
+    try {
+      const result = await applitedPostedApi.getAllApplitedPostedApi(0);
+      if (result) {
+        localStorage.setItem('numberAppliedPostedJobs', result.data.length);
+
+        setAppliedPostedJob(result.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getAppliedPostedJobs();
+  }, []);
+
+  const [approved, setApproved] = useState(0);
+  const [pending, setPending] = useState(0);
+  const [waiting, setWaiting] = useState(0);
+
+  useEffect(() => {
+    const countApproved = appliedPostedJob.reduce(
+      (count: number, applicant: any) => {
+        if (applicant.application_status === 2) {
+          return count + 1;
+        }
+        return count;
+      },
+      0,
+    );
+
+    const countPending = appliedPostedJob.reduce(
+      (count: number, applicant: any) => {
+        if (applicant.application_status === 3) {
+          return count + 1;
+        }
+        return count;
+      },
+      0,
+    );
+
+    const countWaitng = appliedPostedJob.reduce(
+      (count: number, applicant: any) => {
+        if (
+          applicant.application_status === 1 ||
+          applicant.application_status === 0
+        ) {
+          return count + 1;
+        }
+        return count;
+      },
+      0,
+    );
+
+    console.log('acc');
+
+    setApproved(countApproved);
+    setPending(countPending);
+    setWaiting(countWaitng);
+  }, [appliedPostedJob]);
 
   const handleResetValue = () => {
     setJobType(null);
@@ -600,7 +743,7 @@ const Navbar: React.FC = () => {
       className="btn btn__post"
       onClick={() => {
         if (dataProfile && localStorage.getItem('refreshToken')) {
-          window.open('/post', '_blank');
+          window.open('/post', '_seft');
         } else {
           setOpenModalLogin(true);
         }
@@ -641,14 +784,47 @@ const Navbar: React.FC = () => {
           <div className="sub-login" ref={refInfoUser}>
             <Space className="sub-login_info">
               <Avatar
-                style={{ backgroundColor: '#0D99FF' }}
+                style={{
+                  backgroundColor: '#0D99FF',
+                  minWidth: '100px',
+                  minHeight: '100px',
+                }}
                 icon={<UserOutlined style={{ fontSize: 30 }} />}
                 size={50}
                 src={dataProfile?.avatar ? dataProfile.avatar : null}
               />
-              <div>
+              <div className="sub-login_detail">
                 <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
-                <span>{dataProfile?.email ? dataProfile?.email : ''}</span>
+                <span
+                  className="sub-login_text"
+                  onClick={() => window.open(`/profile`, '_seft')}
+                >
+                  <MailInfoIcon />
+                  {dataProfile?.email ? dataProfile?.email : ''}
+                </span>
+                <span className="sub-login_text">
+                  <MapInfoIcon />
+                  <p>
+                    {dataProfile?.categories.length > 0
+                      ? dataProfile?.categories.map((profile: any) => {
+                        return `${profile.parent_category} / ${profile.child_category}, `;
+                      })
+                      : 'Chưa cập nhật thông tin'}
+                  </p>
+                </span>
+                <span
+                  className="sub-login_text"
+                  onClick={() => window.open(`/profile`, '_seft')}
+                >
+                  <BagInfoJob />
+                  <p>
+                    {dataProfile?.locations.length > 0
+                      ? dataProfile?.locations.map((location: any) => {
+                        return `${location.district} , `;
+                      })
+                      : 'Chưa cập nhật thông tin'}
+                  </p>
+                </span>
               </div>
             </Space>
             <div className="sub-login_items">
@@ -661,20 +837,28 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
                 </div>
               </Link>
+              <div className="sub-history_status">
+                <span>Approved: {`${approved}`}</span>
+                <span>|</span>
+                <span>Pending: {`${pending}`}</span>
+                <span>|</span>
+                <span>Waiting: {`${waiting}`}</span>
+              </div>
               {/* <div className="sub-login_item">
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
               </div> */}
               <div className="sub-login_item" onClick={handleLogout}>
                 <LogoutOutlined />
+
                 <span>Đăng xuất</span>
               </div>
 
@@ -702,7 +886,7 @@ const Navbar: React.FC = () => {
       <Button
         onClick={() => {
           if (dataProfile && localStorage.getItem('refreshToken')) {
-            window.open(`/message`, '_blank');
+            window.open(`/message`, '_seft');
           } else {
             setOpenModalLogin(true);
           }
@@ -712,14 +896,15 @@ const Navbar: React.FC = () => {
         <ChatIcon />
       </Button>
     </Badge>,
-
-    <Button
-      key="3"
-      className="btn-notice"
-      onClick={() => setOpenNotificate(!openNotificate)}
-    >
-      <BellIcon />
-    </Button>,
+    <Badge key="3" count={2} className="box-right-responsive_badge">
+      <Button
+        key="3"
+        className="btn-notice"
+        onClick={() => setOpenNotificate(!openNotificate)}
+      >
+        <BellIcon />
+      </Button>
+    </Badge>,
 
     <div className="menu" onClick={handleClickLogin} ref={refLogin} key="4">
       <Button className="menu-button">
@@ -750,9 +935,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -775,9 +960,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -825,9 +1009,10 @@ const Navbar: React.FC = () => {
 
             <Badge count={countChat} className="btn-badge">
               <Button
+                className="btn-notice"
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
-                    window.open(`/message`, '_blank');
+                    window.open(`/message`, '_seft');
                   } else {
                     setOpenModalLogin(true);
                   }
@@ -838,6 +1023,7 @@ const Navbar: React.FC = () => {
                 <ChatIcon />
               </Button>
             </Badge>
+
             <div className="wrap-btn_notice">
               <Button
                 className="btn-notice"
@@ -847,6 +1033,41 @@ const Navbar: React.FC = () => {
                 <BellIcon />
               </Button>
               {openNotificate ? <Notificate /> : <></>}
+            </div>
+
+            <div className="wrap-btn_notice">
+              <Button
+                className="btn-notice"
+                // onClick={() => setOpenNotificate(!openNotificate)}
+                ref={bellRef}
+              >
+                <DownloadIcon />
+              </Button>
+              <div className="sub-icon_qr">
+                <h2>Tải Ứng dụng Hi Job!</h2>
+                <img src="/QrApp.jpg" alt="" />
+                <div className="sub-icon_apps">
+                  <Link
+                    to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+                    target="_seft"
+                  >
+                    <img
+                      id="img-gallery"
+                      src={require('../../img/langdingPage/image 43.png')}
+                      alt="ảnh bị lỗi"
+                    />
+                  </Link>
+                  <Link
+                    to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+                    target="_seft"
+                  >
+                    <img
+                      src={require('../../img/langdingPage/image 45.png')}
+                      alt="ảnh bị lỗi"
+                    />
+                  </Link>
+                </div>
+              </div>
             </div>
           </Center>
           <Right className="div-nav-right">
@@ -888,11 +1109,10 @@ const Navbar: React.FC = () => {
         </Wrapper>
         <Collapse
           in={openCollapseFilter}
-          // timeout={600}
-          // unmountOnExit
           onEnter={handleCollapseEntered}
           onExited={handleCollapseExited}
-          sx={collapseCssFilter}
+          // sx={collapseCssFilter}
+          sx={{ borderTop: '1px solid #ccc' }}
         >
           <SearchInput
             checkSearch={checkSeacrh}
@@ -902,28 +1122,30 @@ const Navbar: React.FC = () => {
             openCollapseFilter={openCollapseFilter}
             handleSearchIcon={handleSearch}
           />
-          <div className="filter-wrap_top">
-            <FilterLocationNav setListDis={setListDis} />
-            <FilterCateloriesNav setListCate={setListCate} />
-            <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
-          </div>
-          <div className="filter-wrap_bottom">
-            <FilterTypeSalary setSalaryType={setSalaryType} />
-            <FilterSalary
-              salaryType={salaryType}
-              typeMoney={typeMoney}
-              setTypeMoney={setTypeMoney}
-              salaryMin={salaryMin}
-              salaryMax={salaryMax}
-              setSalaryMin={setSalaryMin}
-              setSalaryMax={setSalaryMax}
-            />
-            <FilterTimeJob
-              setIsWorkingWeekend={setIsWorkingWeekend}
-              isWorkingWeekend={isWorkingWeekend}
-              isRemotely={isRemotely}
-              setIsRemotely={setIsRemotely}
-            />
+          <div className="filter-wraps">
+            <div className="filter-wrap_top">
+              <FilterLocationNav setListDis={setListDis} />
+              <FilterCateloriesNav setListCate={setListCate} />
+              <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
+            </div>
+            <div className="filter-wrap_bottom">
+              <FilterTypeSalary setSalaryType={setSalaryType} />
+              <FilterSalary
+                salaryType={salaryType}
+                typeMoney={typeMoney}
+                setTypeMoney={setTypeMoney}
+                salaryMin={salaryMin}
+                salaryMax={salaryMax}
+                setSalaryMin={setSalaryMin}
+                setSalaryMax={setSalaryMax}
+              />
+              <FilterTimeJob
+                setIsWorkingWeekend={setIsWorkingWeekend}
+                isWorkingWeekend={isWorkingWeekend}
+                isRemotely={isRemotely}
+                setIsRemotely={setIsRemotely}
+              />
+            </div>
           </div>
 
           <div className="filter-wrap_respone">

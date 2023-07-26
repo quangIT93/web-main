@@ -184,7 +184,7 @@ const Footer: React.FC = () => {
               <div className="div-link-app">
                 <Link
                   to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
-                  target="_blank"
+                  target="_seft"
                 >
                   <img
                     id="img-gallery"
@@ -194,7 +194,7 @@ const Footer: React.FC = () => {
                 </Link>
                 <Link
                   to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
-                  target="_blank"
+                  target="_seft"
                 >
                   <img
                     src={require('../../img/langdingPage/image 45.png')}
@@ -240,9 +240,9 @@ const Footer: React.FC = () => {
             <p style={{ color: '#AAAAAA', marginLeft: '5px' }}>
               (028) 35358983
             </p>
-            <p style={{ color: '#575757', marginLeft: '2px' }}>
+            {/* <p style={{ color: '#575757', marginLeft: '2px' }}>
               (1.000 đồng/phút)
-            </p>
+            </p> */}
           </div>
         </div>
         <p style={{ color: '#575757', fontSize: '12px' }}>

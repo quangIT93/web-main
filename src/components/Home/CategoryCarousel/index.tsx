@@ -81,6 +81,8 @@ const CategoryCarousel: React.FC = () => {
   const [value, setValue] = React.useState(0);
   const [categoryIdCookie, setCategorieIdCookie] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
+  const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
   // const positionRef = React.useRef(0)
 
   // const {height} = height
@@ -184,9 +186,29 @@ const CategoryCarousel: React.FC = () => {
 
   const getAllParentCategories = async () => {
     try {
+      setLoading(true);
       const result = await categoriesApi.getAllParentCategories();
       if (result) {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
         setCategories(result);
+
+        let storedSettings = JSON.parse(
+          getCookie('userSelected') || '{}',
+        ) as UserSelected;
+
+        const selectedCategory = result?.data.find(
+          (item: any) => item.id === storedSettings.userSelectedId,
+        );
+        if (selectedCategory) {
+          const { id, name } = selectedCategory;
+          setValue(id);
+          setValueJobChild({
+            parentName: name,
+            id,
+          });
+        }
       }
     } catch (error) {
       console.error(error);
@@ -233,10 +255,13 @@ const CategoryCarousel: React.FC = () => {
 
   React.useEffect(() => {
     getAllParentCategories();
-    setLoading(true);
     let storedSettings = JSON.parse(
       getCookie('userSelected') || '{}',
     ) as UserSelected;
+
+    const accessToken = localStorage.getItem('accessToken');
+    accessToken && setIsLogin(true);
+    setSelectedItemIndex(storedSettings.userSelectedId);
 
     setTimeout(async () => {
       if (storedSettings.userSelectedId !== 1) {
@@ -248,8 +273,7 @@ const CategoryCarousel: React.FC = () => {
       }
 
       getNewstJobBycookie(storedSettings.userSelectedId);
-      setLoading(false);
-    }, 1000);
+    }, 5000);
   }, []);
 
   React.useEffect(() => {
@@ -257,6 +281,7 @@ const CategoryCarousel: React.FC = () => {
     let storedSettings = JSON.parse(
       getCookie('userSelected') || '{}',
     ) as UserSelected;
+    setSelectedItemIndex(storedSettings.userSelectedId);
     setCategorieIdCookie(storedSettings.userSelectedId);
     if (storedSettings.userSelectedId !== 1) {
       const slide = document.querySelector('.swiper-slide');
@@ -293,8 +318,6 @@ const CategoryCarousel: React.FC = () => {
       scrollElement.scrollLeft += scrollAmount;
     }
   };
-
-  console.log('category id: ', value);
 
   // scroll
   return (
@@ -380,9 +403,9 @@ const CategoryCarousel: React.FC = () => {
           // slidesPerView={14}
           // spaceBetween={10}
           navigation={true}
-          mousewheel={true}
+          // mousewheel={true}
           slidesPerView="auto"
-          spaceBetween={50}
+          spaceBetween={40}
           // breakpoints={{
           //   320: {
           //     slidesPerView: 3,
@@ -414,6 +437,7 @@ const CategoryCarousel: React.FC = () => {
           // }}
           modules={[Mousewheel, Navigation, Pagination]}
           className="mySwiper"
+          initialSlide={selectedItemIndex - 1}
         >
           {categories?.data.map((item: CategoryItem, index: number) => {
             // console.log("id: ", item.id);
@@ -431,6 +455,7 @@ const CategoryCarousel: React.FC = () => {
                   imageDescription={item.name}
                   isSelected={}
                 /> */}
+                {/* <Skeleton loading={loading} active> */}
                 <div className="category-item-container">
                   <div className="category-item-body">
                     <img
@@ -440,12 +465,17 @@ const CategoryCarousel: React.FC = () => {
                     />
                     <span
                       className="category-item-title"
-                      style={{ fontSize: '10px', color: '#000000' }}
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        color: '#000000',
+                      }}
                     >
-                      {item.name}
+                      {isLogin && item.id === 1 ? 'Công việc gợi ý' : item.name}
                     </span>
                   </div>
-                  <div className="border-selected"
+                  <div
+                    className="border-selected"
                     style={{
                       backgroundColor:
                         item.id === categoryIdCookie || item.id === value
@@ -454,6 +484,7 @@ const CategoryCarousel: React.FC = () => {
                     }}
                   ></div>
                 </div>
+                {/* </Skeleton> */}
               </SwiperSlide>
             );
           })}

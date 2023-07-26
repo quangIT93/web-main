@@ -4,9 +4,9 @@ import './style.scss';
 
 const Logo: React.FC = () => {
   return (
-    <Link to="/home" reloadDocument>
+    <Link to="/" reloadDocument>
       <div className="logo">
-        <img src="/logo-hijob.png" width={40} height={40} />
+        <img src="/OfficialLogo_beta-01.png" width={50} height={50} />
       </div>
     </Link>
   );

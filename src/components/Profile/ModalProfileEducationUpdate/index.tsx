@@ -177,7 +177,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Thêm thông tin trình độ học vấn
+          Sửa thông tin trình độ học vấn
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -186,7 +186,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Trường/Tổ chức *
+            Trường/Tổ chức <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -208,7 +208,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chuyên ngành *
+            Chuyên ngành <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -235,13 +235,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu *:
+                  Thời gian bắt đầu <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.startDate)}
                   onChange={handleChangeStartTime}
                   views={['year', 'month']}
                   openTo="month"
+                  format="MM/YYYY"
                 />
               </div>
               <div className="wrapTimeDay">
@@ -251,13 +252,15 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc *:
+                  Thời gian kết thúc <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.endDate)}
                   onChange={handleChangeEndTime}
                   views={['year', 'month']}
                   openTo="month"
+                  minDate={moment(education.startDate)}
+                  format="MM/YYYY"
                 />
               </div>
             </DemoContainer>
@@ -270,7 +273,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung *:
+            Thông tin bổ sung <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}

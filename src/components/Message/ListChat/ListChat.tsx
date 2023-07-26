@@ -5,11 +5,14 @@ import { useSearchParams } from 'react-router-dom';
 import { Input } from 'antd';
 
 import io from 'socket.io-client';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // import api
 import messageApi from 'api/messageApi';
 import profileApi from 'api/profileApi';
 
+// import { Skeleton } from 'antd';
+import Backdrop from '@mui/material/Backdrop';
 // import icon
 import {
   DotIcon,
@@ -47,6 +50,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   const [profileUser, setProfileUser] = useState<any>({});
   const [image, setImage] = useState<File | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+
+  const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [previousDate, setPreviousDate] = useState<string | null>(null)
 
   const updateWindowWidth = () => {
@@ -61,7 +66,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     updateWindowWidth();
   }, [windowWidth]);
 
-  const closeLitChat = () => {
+  const closeListChat = () => {
     props.setOpenListChat(false);
   };
 
@@ -83,7 +88,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     socket.current = io(
       // 'https://181f-14-161-42-152.ngrok-free.app/',
-      'https://aiworks.vn',
+      'https://neoworks.vn',
       {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -93,6 +98,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   }, []);
 
   const getAllListChat = async () => {
+    setOpenBackdrop(true);
     try {
       const result = await messageApi.getChatMessage(
         userInfoChat.user_id,
@@ -100,7 +106,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         Number(searchParams.get('post_id')),
       );
       if (result) {
+        // setTimeout(() => {
         setAllListChat(result.data);
+        setOpenBackdrop(false);
+        // }, 1000);
       }
     } catch (error) {
       console.log('error', error);
@@ -148,13 +157,13 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       // })
 
       socket.current.on('server-send-message-to-receiver', (data: any) => {
-        console.log(' gui tin nhan di den nguoi nhan', data);
+        // console.log(' gui tin nhan di den nguoi nhan', data);
         // gui tin nhan di den nguoi nhan
         setReceivedMessages((prevReceive: any[]) => [...prevReceive, data]);
       });
 
       socket.current.on('server-send-message-was-sent', (data: any) => {
-        console.log('nhận tin nhan ve khi da gui xong', data);
+        // console.log('nhận tin nhan ve khi da gui xong', data);
         // nhận tin nhan ve khi da gui xong
         setSendMessages((prevSend: any[]) => [...prevSend, data]);
       });
@@ -187,7 +196,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         createdAt: Date.now(),
         type: 'text',
         postId: searchParams.get('post_id'),
-        // postId: 36353,
+        // postId: 66587,
       });
 
     setMessage('');
@@ -247,24 +256,40 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     }
   }, [allListChat]);
 
+  // useEffect(() => {
+  //   setOpenBackdrop(true);
+  //   setTimeout(() => {
+  //     setOpenBackdrop(false);
+  //   }, 1000);
+  // }, []);
+
   if (userInfoChat.length !== 0) {
     return (
       <div
         // className="list-chat"
-        className={`list-chat ${
-          props.openListChat === true && windowWidth
-            ? 'show-list-chat-responesive'
-            : ''
-        }`}
+        className={`list-chat ${props.openListChat === true && windowWidth
+          ? 'show-list-chat-responesive'
+          : ''
+          }`}
       >
+        <Backdrop
+          sx={{
+            color: '#fff',
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            background: 'transparent',
+          }}
+          open={openBackdrop}
+        // onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <div className="header-list_chat">
           <div className="wrap-img_Userchat">
             <div className="wrap_img">
               <img src={userInfoChat.avatar} alt="" />
               <span
-                className={`user-chat_online ${
-                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
-                }`}
+                className={`user-chat_online ${userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                  }`}
               ></span>
             </div>
             <div className="wrap-infoUser_chat">
@@ -285,23 +310,21 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
           </span> */}
             <span>{/* <DotIcon /> */}</span>
           </div>
-          <div className="wrap-icon_close" onClick={() => closeLitChat()}>
+          <div className="wrap-icon_close" onClick={() => closeListChat()}>
             <CloseIcon />
           </div>
         </div>
+
         <div className="list-content_chat" ref={listRef}>
           {allListChat.map((chat: any, index: number) => {
             const chatDate = new Date(chat.created_at).toLocaleDateString();
             let showDate = false;
 
-            // if()
-
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
                 <div
-                  className={`content-chat ${
-                    index === allListChat.length - 1 ? 'lastChatRef' : null
-                  }`}
+                  className={`content-chat ${index === allListChat.length - 1 ? 'lastChatRef' : null
+                    }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -323,11 +346,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat">
                     <span
-                      className={`text-chat ${
-                        chat.message === null || chat.message === ''
-                          ? 'text-chat_hidden'
-                          : ''
-                      }`}
+                      className={`text-chat ${chat.message === null || chat.message === ''
+                        ? 'text-chat_hidden'
+                        : ''
+                        }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -343,7 +365,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     )}
                     <small>
                       {new Date(chat.created_at).getHours()}:
-                      {new Date(chat.created_at).getMinutes()}
+                      {new Date(chat.created_at)
+                        .getMinutes()
+                        .toString()
+                        .padStart(2, '0')}
                     </small>
                   </div>
                 </div>
@@ -351,11 +376,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             } else {
               return (
                 <div
-                  className={`content-chat2 ${
-                    index === allListChat.length - 1
-                      ? 'dddddddddddddddddddddddd'
-                      : null
-                  }`}
+                  className={`content-chat2 ${index === allListChat.length - 1
+                    ? 'dddddddddddddddddddddddd'
+                    : null
+                    }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -378,11 +402,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat2">
                     <span
-                      className={`text-chat ${
-                        chat.message === '' || chat.message === null
-                          ? 'text-chat_hidden'
-                          : ''
-                      }`}
+                      className={`text-chat ${chat.message === '' || chat.message === null
+                        ? 'text-chat_hidden'
+                        : ''
+                        }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -398,7 +421,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     )}
                     <small>
                       {new Date(chat.created_at).getHours()}:
-                      {new Date(chat.created_at).getMinutes()}
+                      {new Date(chat.created_at)
+                        .getMinutes()
+                        .toString()
+                        .padStart(2, '0')}
                     </small>
                   </div>
                 </div>
@@ -408,11 +434,24 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         </div>
 
         <div className="inputs-chat">
-          <Input
+          <input
             placeholder="Nhập đoạn chat của bạn"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              listRef?.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end',
+              });
+              setMessage(e.target.value);
+            }}
             onKeyDown={handleKeyPress}
+            style={{
+              fontStyle: 'normal',
+              width: '100%',
+              borderRadius: '10px',
+              border: '1px solid #aaa',
+              outline: 'none',
+            }}
           />
           <input
             type="file"

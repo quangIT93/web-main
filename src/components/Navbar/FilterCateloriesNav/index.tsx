@@ -6,8 +6,10 @@ import { Cascader, Divider, Typography, Button } from 'antd';
 import categoriesApi from '../../../api/categoriesApi';
 import './style.scss';
 import { useSearchParams, useLocation } from 'react-router-dom';
-
+import { getCookie } from 'cookies';
 import { RootState } from 'store';
+import { BagFilterIcon, ArrowFilterIcon } from '#components/Icons';
+
 const { Text } = Typography;
 
 interface DistrictProps {
@@ -37,7 +39,12 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
-  const listCate = searchParams
+
+  let userFilteredCookies = JSON.parse(
+    getCookie('userFiltered') || '{}',
+  )
+  const listCate = userFilteredCookies?.list_cate
+  searchParams
     .getAll('categories-ids')
     .map((dis) => dis.split(','))
     .map((category) => category.map(Number));
@@ -49,7 +56,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
         setDataCategories(result.data);
       }
 
-      if (location.pathname !== '/search-results' && userProfile) {
+      if (location.pathname !== '/search-results' && userProfile && listCate.length === 0) {
         setListCate(
           userProfile.categories.map((profile: any) => [
             profile.parent_category_id,
@@ -92,33 +99,38 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
 
   if (userProfile || dataCategories) {
     return (
-      <>
+      <div className="filter-input">
+        <div className="filter-input_icon">
+          <BagFilterIcon width={20} height={20} />
+        </div>
         <Cascader
+          // open
           dropdownRender={DropdownRender}
+          suffixIcon={<ArrowFilterIcon width={14} height={10} />}
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                  value: parentCategory.parent_category_id,
-                  label: parentCategory.parent_category,
-                  children: parentCategory.childs.map((child: any) => {
-                    var dis = false;
-                    //check id child  when disable = true
-                    if (disable) {
-                      dis = true;
-                      for (const elem of categoriesId) {
-                        if (elem === child.id) {
-                          dis = false;
-                          break;
-                        }
+                value: parentCategory.parent_category_id,
+                label: parentCategory.parent_category,
+                children: parentCategory.childs.map((child: any) => {
+                  var dis = false;
+                  //check id child  when disable = true
+                  if (disable) {
+                    dis = true;
+                    for (const elem of categoriesId) {
+                      if (elem === child.id) {
+                        dis = false;
+                        break;
                       }
                     }
-                    return {
-                      value: child.id,
-                      label: child.name,
-                      disabled: dis,
-                    };
-                  }),
-                }))
+                  }
+                  return {
+                    value: child.id,
+                    label: child.name,
+                    disabled: dis,
+                  };
+                }),
+              }))
               : []
           }
           onChange={onChange}
@@ -127,8 +139,8 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
               ? listCate
               : listCate?.length === 0 &&
                 location.pathname === '/search-results'
-              ? []
-              : userProfile?.categories.map((profile: any) => [
+                ? []
+                : userProfile?.categories.map((profile: any) => [
                   profile?.parent_category_id,
                   profile?.child_category_id,
                 ])
@@ -141,7 +153,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           style={{ width: '100%', borderRadius: '2px' }}
           placeholder="Chọn danh mục ngành nghề"
         />
-      </>
+      </div>
     );
   } else {
     return <></>;

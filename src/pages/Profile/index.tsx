@@ -84,7 +84,6 @@ const Profile: React.FC = () => {
   const profile = useSelector((state: RootState) => state.profileUser);
   const profileUser = useSelector((state: RootState) => state.profile.profile);
 
-  console.log('profileUser', profileUser);
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false);
   const [openModalContact, setOpenModalContact] = useState(false);
   const [openModalCareerObjective, setOpenModalCareerObjective] =
@@ -163,11 +162,11 @@ const Profile: React.FC = () => {
       return true;
     },
     beforeUpload: (file) => {
-      console.log('file', file);
+
       const isPNG = file.type === 'application/pdf';
       var checFileSize = true;
       if (!isPNG) {
-        message.error(`${file.name} khong phai la file pdf`);
+        message.error(`${file.name} không phải là file pdf`);
       } else if (file.size > 1024 * 1024 * 5) {
         checFileSize = false;
         message.error(`File lon hon 5mb`);
@@ -193,9 +192,9 @@ const Profile: React.FC = () => {
         }
         setOpen(false);
         setFileList([]);
-        message.success('Xóa CV thanh cong.');
+        message.success('Xóa CV thành công.');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -207,7 +206,7 @@ const Profile: React.FC = () => {
   // handle upload cv
   const handleUpload = async () => {
     const formData = new FormData();
-    console.log(fileList);
+
     formData.append('pdf', fileList[0] as RcFile);
     setUploading(true);
     var mess = '';
@@ -220,7 +219,7 @@ const Profile: React.FC = () => {
         result = await profileApi.createCV(formData);
         mess = 'Thêm CV thành công';
       }
-      console.log(result);
+
       if (result) {
         const result = await profileApi.getProfile();
         if (result) {
@@ -270,7 +269,7 @@ const Profile: React.FC = () => {
       // Xử lý lỗi tải lên ảnh
     }
   };
-  console.log('profile', profile.avatar);
+
 
   const alert = useSelector((state: any) => state.alertProfile.alert);
 
@@ -399,6 +398,7 @@ const Profile: React.FC = () => {
               style={{
                 whiteSpace: 'pre-wrap',
                 marginTop: '20px',
+                overflowWrap: 'break-word',
                 color: '#575757',
               }}
             >
@@ -447,11 +447,7 @@ const Profile: React.FC = () => {
                     : 'Chưa cập nhật'}
                 </p>
                 <p>
-                  {profile?.gender
-                    ? profile?.gender === 1
-                      ? 'Nam'
-                      : 'Nữ'
-                    : 'Nam'}
+                  {profile ? (profile?.gender === 1 ? 'Nam' : 'Nữ') : 'Nam'}
                 </p>
                 <p>
                   {profile?.address?.name
@@ -543,7 +539,7 @@ const Profile: React.FC = () => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-                // direction="vertical"
+              // direction="vertical"
               >
                 {profile.cv_url && fileList?.length == 0 ? (
                   <Popconfirm
@@ -579,9 +575,8 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${
-                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                    }`,
+                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                      }`,
                     alignItems: 'flex-start',
                   }}
                 >
@@ -616,12 +611,12 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                    (item: ICategories, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item.child_category}
-                      </Button>
-                    ),
-                  )
+                  (item: ICategories, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.child_category}
+                    </Button>
+                  ),
+                )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -650,10 +645,10 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item?.district}
-                    </Button>
-                  ))
+                  <Button key={index} className="btn" type="text">
+                    {item?.district}
+                  </Button>
+                ))
                 : 'Chưa cập nhật'}
             </Space>
           </div>

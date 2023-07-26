@@ -28,6 +28,8 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 // import icon
 import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined'
@@ -51,7 +53,8 @@ const style = {
   // height: '568px',
   bgcolor: '#ffffff',
   borderRadius: '20px',
-  // border: '2px solid #000',
+  border: 'none',
+  outline: 'none',
   boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.12)',
   p: 4,
 }
@@ -308,13 +311,25 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             lineHeight: '24px',
             color: '#001424',
             margin: '12px 0',
+            position: 'relative'
           }}
         >
           Đăng nhập
+          <IconButton aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: '0',
+              top: '50%',
+              transform: 'translateY(-50%)'
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
         </Typography>
         {!isEmailVerified && (
           <>
-            <KeyboardArrowLeftOutlinedIcon
+            {/* <KeyboardArrowLeftOutlinedIcon
               className="icon-left_login"
               sx={{
                 width: '2rem',
@@ -323,7 +338,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 fontWeight: '300',
               }}
               onClick={handleBackOtp}
-            />
+            /> */}
             <form>
               <FacebookLogin
                 appId={appId}

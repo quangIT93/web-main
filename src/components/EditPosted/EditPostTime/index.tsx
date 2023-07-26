@@ -1,37 +1,37 @@
-import React, { memo } from 'react'
-import dayjs from 'dayjs'
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker'
-import { styleLabel } from '../CssEditPost'
-import Typography from '@mui/material/Typography'
-import moment from 'moment'
-import { SwapRightOutlined } from '@ant-design/icons'
-import { Space } from 'antd'
-
-import './style.scss'
+import React, { memo } from 'react';
+import dayjs from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
+import { styleLabel } from '../CssEditPost';
+import Typography from '@mui/material/Typography';
+import moment from 'moment';
+import { SwapRightOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import './style.scss';
 interface IEditPostTime {
-  editDataPosted: any
-  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
+  editDataPosted: any;
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const EditPostTime: React.FC<IEditPostTime> = (props) => {
-  const { editDataPosted, setEditDataPosted } = props
+  const { editDataPosted, setEditDataPosted } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       startTime: new Date(newValue._d).getTime(),
-    }))
-  }
+    }));
+  };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       endTime: new Date(newValue._d).getTime(),
-    }))
-  }
+    }));
+  };
 
   return editDataPosted ? (
     <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -56,23 +56,23 @@ const EditPostTime: React.FC<IEditPostTime> = (props) => {
           <Space
             direction="horizontal"
             wrap={true}
-            size={[100, 8]}
+            size={[16, 8]}
             style={{ width: '100%' }}
           >
-            <StaticTimePicker
-              ampm={false}
-              ampmInClock={true}
+            <TimePicker
+              // ampm={false}
+              ampmInClock={false}
               defaultValue={moment(new Date(editDataPosted.startTime))}
-              //   //sx={{ width: '80%' }}
+              //sx={{ width: '80%' }}
               onChange={handleChangeStartTime}
               value={moment(new Date(editDataPosted.startTime))}
             />
-            <SwapRightOutlined className="icon-time" style={{ fontSize: 35 }} />
-            <StaticTimePicker
-              ampm={false}
-              ampmInClock={true}
+
+            <TimePicker
+              // ampm={false}
+              ampmInClock={false}
               defaultValue={moment(new Date(editDataPosted.endTime))}
-              //   // sx={{ width: '30%' }}
+              //sx={{ width: '80%' }}
               value={moment(new Date(editDataPosted.endTime))}
               onChange={handleChangeEndTime}
             />
@@ -82,7 +82,7 @@ const EditPostTime: React.FC<IEditPostTime> = (props) => {
     </LocalizationProvider>
   ) : (
     <></>
-  )
-}
+  );
+};
 
-export default memo(EditPostTime)
+export default memo(EditPostTime);

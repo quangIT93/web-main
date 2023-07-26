@@ -100,7 +100,7 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
   };
 
   return (
-    <Box sx={{ marginTop: '24px' }}>
+    <Box sx={{ marginTop: '24px' }} className="post-category-ids-container">
       <Typography
         sx={{ fontWeight: 600, color: '#000000' }}
         variant="body1"

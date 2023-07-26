@@ -84,7 +84,6 @@ checkBrowsers(paths.appPath, isInteractive)
       } else {
         console.log(chalk.green('Compiled successfully.\n'))
       }
-
       printFileSizesAfterBuild(
         stats,
         previousFileSizes,

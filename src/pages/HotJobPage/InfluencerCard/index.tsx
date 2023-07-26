@@ -51,7 +51,7 @@ interface Iprops {
 
 
 const InfluencerCard: React.FC<Iprops> = (props) => {
-    console.log("hotjob: ", props);
+
     const {
         setOpenNotificate,
         openNotificate,

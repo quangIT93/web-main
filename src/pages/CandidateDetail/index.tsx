@@ -126,7 +126,7 @@ const CandidateDetail: React.FC = () => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     dataPost: any,
   ) => {
-    console.log('click pi');
+    // console.log('click pi');
   };
 
   const SeenApply = useMemo(() => {
@@ -159,7 +159,6 @@ const CandidateDetail: React.FC = () => {
     return null;
   }, [statusApplication, setStatusApplication]);
 
-  console.log('cv', dataCandidate?.applicationProfile?.cv_url);
   return (
     <div className="candidate-detail">
       <Navbar />
@@ -456,6 +455,7 @@ const CandidateDetail: React.FC = () => {
                 style={{
                   whiteSpace: 'pre-wrap',
                   marginTop: '20px',
+                  overflowWrap: 'break-word',
                   color: '#575757',
                 }}
               >

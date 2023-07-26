@@ -188,7 +188,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Trường/Tổ chức *
+            Trường/Tổ chức <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -210,7 +210,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chuyên ngành *
+            Chuyên ngành <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -237,11 +237,14 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu *:
+                  Thời gian bắt đầu <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.startDate)}
                   onChange={handleChangeStartTime}
+                  views={['year', 'month']}
+                  openTo="month"
+                  format="MM/YYYY"
                 />
               </div>
               <div className="wrapTimeDay">
@@ -251,11 +254,15 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc *:
+                  Thời gian kết thúc <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.endDate)}
                   onChange={handleChangeEndTime}
+                  views={['year', 'month']}
+                  openTo="month"
+                  minDate={moment(education.startDate)}
+                  format="MM/YYYY"
                 />
               </div>
             </DemoContainer>
@@ -268,7 +275,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung *:
+            Thông tin bổ sung <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}

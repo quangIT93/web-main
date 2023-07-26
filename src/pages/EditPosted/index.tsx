@@ -2,7 +2,7 @@ import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-
+import moment, { Moment } from 'moment';
 import { Skeleton } from 'antd';
 import { message } from 'antd';
 // import component
@@ -108,6 +108,8 @@ const EditPosted = () => {
 
   const [openModalEditPost, setOpenModalEditPost] = React.useState(false);
 
+  const [loadingNotFound, setLoadingNotFound] = React.useState(false);
+
   const postId = parseInt(searchParams.get('postId') ?? '');
 
   useEffect(() => {
@@ -169,16 +171,27 @@ const EditPosted = () => {
   React.useEffect(() => {
     let isMounted = true;
     setLoading(true);
+    setLoadingNotFound(true);
+
     getDataPosted().then(() => {
       if (isMounted && editDataPosted) {
         setLoading(false);
+
+        setTimeout(() => {
+          setLoadingNotFound(false);
+        }, 3000);
       }
     });
   }, [dataPostAccount]);
 
   const getAllPostAccount = async () => {
     try {
-      const result = await historyRecruiter.getAllPosted(0, 20, 0);
+      const result = await historyRecruiter.GetInformationAndCandidatesCount(
+        0,
+        20,
+        '-1',
+      );
+
       if (result) {
         SetDataPostAccount(result.data);
       }
@@ -195,6 +208,7 @@ const EditPosted = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
   ) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append('id', String(editDataPosted?.id));
     formData.append('title', String(editDataPosted?.title));
@@ -202,8 +216,19 @@ const EditPosted = () => {
     formData.append('wardId', String(editDataPosted?.ward_id));
     formData.append('jobTypeId', String(editDataPosted?.jobTypeId));
     formData.append('isDatePeriod', String(editDataPosted?.isDatePeriod));
-    formData.append('startDate', String(editDataPosted?.startDate));
-    formData.append('endDate', String(editDataPosted?.endDate));
+    formData.append(
+      'startDate',
+      editDataPosted?.startDate !== null
+        ? String(editDataPosted?.startDate)
+        : String(moment(new Date()).valueOf()),
+    );
+
+    formData.append(
+      'endDate',
+      editDataPosted?.endDate !== null
+        ? String(editDataPosted?.endDate)
+        : String(moment(new Date()).valueOf()),
+    );
     formData.append('startTime', String(editDataPosted?.startTime));
     formData.append('endTime', String(editDataPosted?.endTime));
     formData.append(
@@ -228,7 +253,7 @@ const EditPosted = () => {
     editDataPosted?.categoryIds.forEach((category: any) => {
       formData.append('categoryIds', category);
     });
-    console.log('editDataPosted', editDataPosted);
+
     editDataPosted?.images.forEach((image: any) => {
       formData.append('images', image.image);
     });
@@ -465,16 +490,16 @@ const EditPosted = () => {
   } else {
     return (
       <>
-        <Skeleton loading={loading} active>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loading} active></Skeleton>
+        <Skeleton loading={loadingNotFound} active>
           <NotFound />
         </Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
       </>
     );
   }

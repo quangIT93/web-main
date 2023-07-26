@@ -7,6 +7,8 @@ import { Breadcrumbs } from '#components';
 // @ts-ignore
 import { Carousel } from '#components';
 // @ts-ignore
+import AppliedPostedJob from '#components/Home/AppliedPostedJob';
+// @ts-ignore
 import { NewJobs } from '#components';
 // @ts-ignore
 import { ThemesJob } from '#components';
@@ -48,11 +50,15 @@ const Home: React.FC = () => {
       <Navbar />
 
       {/* <Carousel /> */}
-
+      <h1 style={{ visibility: 'hidden', display: 'none' }}>
+        Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được
+        cập nhật mỗi ngày - Tìm việc làm nhanh chóng trên toàn quốc, tiện lợi –
+        Đa dạng ngành nghề, mức lương hấp dẫn
+      </h1>
       <div className="home__main">
         <CategoryCarousel />
         <Breadcrumbs />
-
+        <AppliedPostedJob />
         <NewJobs />
         <HotJob />
         <ThemesJob />

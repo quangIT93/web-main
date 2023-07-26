@@ -75,12 +75,8 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     getCategories();
   }, []);
   const onChange = (newValue: string[] | any) => {
-    console.log('newValue', newValue);
-
     setValue(newValue);
   };
-  console.log('value', value);
-  console.log('treeData', treeData);
 
   React.useEffect(() => {
     if (dataCategories) {
@@ -143,7 +139,6 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     });
   };
 
-  console.log('clock');
   const tProps: any = {
     // treeData,
     treeData: renderTreeNode(treeData),
@@ -151,7 +146,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     // treeCheckStrictly: true,
     // treeDefaultExpandAll: true,
     // showSearch: true, // Chỉ cho phép chọn các nút lá
-    showSearch: true,
+    showSearch: false,
     value,
     treeCheckable: true,
     onChange: (newValue: string[]) => setValue(newValue),

@@ -2,12 +2,23 @@ import React, { useState, useRef, useEffect, memo } from 'react';
 import { Collapse, Radio, Input, Button, Typography } from 'antd';
 import { useSearchParams } from 'react-router-dom';
 
+import { getCookie } from 'cookies';
+
 import { DownOutlined } from '@ant-design/icons';
+import {
+  DolaIcon,
+  ListCateIcon,
+  ListJobIcon,
+  LocationIcon,
+  ClockDetailPostIcon,
+} from '#components/Icons';
 //@ts-ignore
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-
+import { MoneyFilterIcon } from '#components/Icons';
 import './style.scss';
+
+import { ArrowFilterIcon } from '#components/Icons';
 
 const { Text } = Typography;
 
@@ -34,7 +45,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     salaryMin,
   } = props;
 
-  const [selectedValue, setSelectedValue] = useState<number | null>(1);
   const [inputValueMin, setInputValueMin] = useState<string | null>(null);
   const [inputValueMax, setInputValueMax] = useState<string | null>(null);
 
@@ -46,9 +56,14 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const Salary_Max = Number(searchParams.get('salary_max'));
-  const Salary_Min = Number(searchParams.get('salary_min'));
-  const Type_Money = Number(searchParams.get('money_type'));
+  let userFilteredCookies = JSON.parse(
+    getCookie('userFiltered') || '{}',
+  )
+
+  const Salary_Max = userFilteredCookies?.salary_max;
+  const Salary_Min = userFilteredCookies?.salary_min;
+  const Type_Money = userFilteredCookies?.money_type;
+  const [selectedValue, setSelectedValue] = useState<number | null>(Type_Money);
 
   useEffect(() => {
     if (Type_Money) {
@@ -79,7 +94,8 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     const reg = /[0-9]+$/;
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-      setInputValueMin(inputValue.replace(',', ''));
+      // setInputValueMin(inputValue.replace(',', ''));
+      setSalaryMin(inputValue.replace(',', ''))
     }
   };
 
@@ -91,32 +107,16 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     const reg = /[0-9]+$/;
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-      setInputValueMax(inputValue.replace(',', ''));
+      // setInputValueMax(inputValue.replace(',', ''));
+      setSalaryMax(inputValue.replace(',', ''))
     }
   };
 
   const handleSubmitValue = () => {
-    console.log(`Selected value: ${selectedValue}`);
     // console.log(`Input value: ${inputValue}`)
     const reg = /[0-9]+$/;
-    console.log('inputValueMax', inputValueMax);
-    console.log('inputValueMin', inputValueMin);
-    console.log('Salary_Max', Salary_Max);
-    console.log('Salary_Min', Salary_Min);
-    console.log('  Salary_Max < Salary_Min ', Salary_Max < Salary_Min);
-    console.log(
-      ' 2 ',
-      inputValueMin && !inputValueMax && Salary_Max < Number(inputValueMin),
-    );
-    console.log('  222 ', Salary_Max < Salary_Min);
-    console.log(
-      '  333',
-      inputValueMax && !inputValueMin && Number(inputValueMax) < Salary_Min,
-    );
-    console.log('dieu kien', Number(inputValueMax) > Number(inputValueMin));
 
     if (inputValueMin && !inputValueMax && Salary_Max < Number(inputValueMin)) {
-      console.log('vô');
       setCheckSalary(true);
       setTimeout(() => {
         setCheckSalary(false);
@@ -126,7 +126,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       !inputValueMin &&
       Number(inputValueMax) < Salary_Min
     ) {
-      console.log('vô');
       setCheckSalary(true);
       setTimeout(() => {
         setCheckSalary(false);
@@ -136,7 +135,6 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
       inputValueMin &&
       Number(inputValueMax) < Number(inputValueMin)
     ) {
-      console.log('vô');
       setCheckSalary(true);
       setTimeout(() => {
         setCheckSalary(false);
@@ -302,106 +300,111 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     };
   }, []);
 
-  console.log('salaryMin', salaryMin);
-  console.log('salaryMax', salaryMax);
-  console.log('inputValueMin', inputValueMin);
-  console.log('inputValueMax', inputValueMax);
+  console.log("Number(searchParams.get('salary_min')): ", Number(searchParams.get('salary_min')));
+  console.log("Number(searchParams.get('salary_max')): ", Number(searchParams.get('salary_max')));
 
   return (
-    <Collapse
-      className={`inputFilterSalary input-filter_nav ${
-        inputValueMin || salaryMax ? 'activeSalary' : ''
-      }`}
-      activeKey={collapseOpen ? '1' : ''}
-      ref={collapseRef}
-      expandIconPosition="end"
-      expandIcon={(panelProps) => <DownOutlined />}
-    >
-      <Panel
-        header={
-          salaryMax || salaryMin
-            ? `${new Intl.NumberFormat('en-US').format(
+    <div className="filter-input">
+      <div className="filter-input_icon">
+        <MoneyFilterIcon width={20} height={20} />
+      </div>
+      <Collapse
+        className={`inputFilterSalary input-filter_nav ${inputValueMin || salaryMax ? 'activeSalary' : ''
+          }`}
+        activeKey={collapseOpen ? '1' : ''}
+        ref={collapseRef}
+        expandIconPosition="end"
+        expandIcon={(panelProps) => <ArrowFilterIcon width={14} height={10} />}
+      >
+        <Panel
+          header={
+            salaryMax || salaryMin
+              ? `${new Intl.NumberFormat('en-US').format(
                 Number(salaryMin?.toString().replace(',', '')),
               )} - ${new Intl.NumberFormat('en-US').format(
                 Number(salaryMax?.toString().replace(',', '')),
               )}`
-            : `Mức lương`
-        }
-        key="1"
-      >
-        <Text className="title-filterSalary">Mức lương</Text>
-        <Radio.Group
-          value={selectedValue}
-          onChange={handleRadioChange}
-          className="inputFilter-groupSalary_radio"
+              : `Mức lương`
+          }
+          key="1"
         >
-          <Radio value={1}>VND</Radio>
-          <Radio value={2}>USD</Radio>
-        </Radio.Group>
-        <br />
-        <Input
-          maxLength={11}
-          // value={inputValueMin ? inputValueMin : Salary_Min ? Salary_Min : ''}
-          value={
-            inputValueMin || inputValueMin === ''
-              ? new Intl.NumberFormat('en-US').format(
-                  Number(inputValueMin.toString().replace(',', '')),
-                )
-              : Salary_Min
-              ? new Intl.NumberFormat('en-US').format(
-                  Number(Salary_Min.toString().replace(',', '')),
-                )
-              : new Intl.NumberFormat('en-US').format(
-                  Number('6000000'.replace(',', '')),
-                )
-          }
-          onChange={handleInputChangeSalaryMin}
-          className="input-text_salary"
-          placeholder="Lương tối thiểu"
-          disabled={salaryType === 6}
-        />
-        <Input
-          maxLength={selectedValue === 1 ? 11 : 5}
-          // value={inputValueMax ? inputValueMax : Salary_Max ? Salary_Max : ''}
-          value={
-            inputValueMax || inputValueMax === ''
-              ? new Intl.NumberFormat('en-US').format(
-                  Number(inputValueMax.toString().replace(',', '')),
-                )
-              : Salary_Max
-              ? new Intl.NumberFormat('en-US').format(
-                  Number(Salary_Max.toString().replace(',', '')),
-                )
-              : new Intl.NumberFormat('en-US').format(
-                  Number('12000000'.replace(',', '')),
-                )
-          }
-          onChange={handleInputChangeSalaryMax}
-          className="input-text_salary"
-          placeholder="Lương tối đa"
-          disabled={salaryType === 6}
-        />
-        {checkSalary ? (
-          <i style={{ color: 'red', marginBottom: '24px' }}>
-            Tiền tối thiểu không được lớn hơn tiền tối đa
-          </i>
-        ) : (
-          <></>
-        )}
-        <div className="wrap-button_filter">
-          <Button type="default" onClick={handleCancleValue}>
-            Đặt lại
-          </Button>
-          <Button
-            type="primary"
-            onClick={handleSubmitValue}
-            className="submitValue"
+          <Text className="title-filterSalary">Mức lương</Text>
+          <Radio.Group
+            value={selectedValue}
+            onChange={handleRadioChange}
+            className="inputFilter-groupSalary_radio"
+          // defaultValue={Type_Money}
           >
-            Áp dụng
-          </Button>
-        </div>
-      </Panel>
-    </Collapse>
+            <Radio value={1}>VND</Radio>
+            <Radio value={2} >USD</Radio>
+          </Radio.Group>
+          <br />
+          <Input
+            maxLength={11}
+            // value={inputValueMin ? inputValueMin : Salary_Min ? Salary_Min : ''}
+            value={
+              // inputValueMin || inputValueMin === ''
+              //   ? new Intl.NumberFormat('en-US').format(
+              //       Number(inputValueMin.toString().replace(',', '')),
+              //     )
+              //   : 
+              salaryMin
+                ? new Intl.NumberFormat('en-US').format(
+                  Number(salaryMin.toString().replace(',', '')),
+                )
+                : new Intl.NumberFormat('en-US').format(
+                  Number(salaryMin?.toString().replace(',', '')),
+                )
+            }
+            onChange={handleInputChangeSalaryMin}
+            className="input-text_salary"
+            placeholder="Lương tối thiểu"
+            disabled={salaryType === 6}
+          />
+          <Input
+            maxLength={selectedValue === 1 ? 11 : 5}
+            // value={inputValueMax ? inputValueMax : Salary_Max ? Salary_Max : ''}
+            value={
+              // inputValueMax || inputValueMax === ''
+              //   ? new Intl.NumberFormat('en-US').format(
+              //       Number(inputValueMax.toString().replace(',', '')),
+              //     )
+              //   : 
+              salaryMax
+                ? new Intl.NumberFormat('en-US').format(
+                  Number(salaryMax.toString().replace(',', '')),
+                )
+                : new Intl.NumberFormat('en-US').format(
+                  Number(salaryMax?.toString().replace(',', '')),
+                )
+            }
+            onChange={handleInputChangeSalaryMax}
+            className="input-text_salary"
+            placeholder="Lương tối đa"
+            disabled={salaryType === 6}
+          />
+          {checkSalary ? (
+            <i style={{ color: 'red', marginBottom: '24px' }}>
+              Tiền tối thiểu không được lớn hơn tiền tối đa
+            </i>
+          ) : (
+            <></>
+          )}
+          {/* <div className="wrap-button_filter">
+            <Button type="default" onClick={handleCancleValue}>
+              Đặt lại
+            </Button>
+            <Button
+              type="primary"
+              onClick={handleSubmitValue}
+              className="submitValue"
+            >
+              Áp dụng
+            </Button>
+          </div> */}
+        </Panel>
+      </Collapse>
+    </div>
   );
 };
 

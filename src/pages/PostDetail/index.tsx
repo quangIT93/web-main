@@ -30,6 +30,18 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import { Carousel } from 'react-carousel-minimal';
 import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
+
+// import required modules
+import { FreeMode, Mousewheel, Navigation, Pagination, Thumbs } from 'swiper';
+
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
@@ -68,6 +80,9 @@ import { SaveIconOutline, SaveIconFill, ShareIcon } from '#components/Icons';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import { PostNewest } from '#components/Home/NewJobs';
+
+import IconButton from '@mui/material/IconButton';
+import { CloseIcon } from '#components/Icons';
 // import icon
 import {
   MailIcon,
@@ -78,12 +93,15 @@ import {
   CompanyNameDetailPostIcon,
   AddressDetailPostIcon,
   ClockDetailPostIcon,
-  BackIcon
+  BackIcon,
 } from '#components/Icons';
 
 import './style.scss';
 import ShowCopy from '#components/ShowCopy';
 import { height } from '@mui/system';
+
+//@ts-ignore
+import AnotherPost from './components/AnotherPost';
 
 const itemsShare = [
   {
@@ -159,10 +177,14 @@ const Detail: React.FC = () => {
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [title, setTitle] = React.useState('');
-  const [tabValue, setTabValue] = React.useState("1");
+  const [tabValue, setTabValue] = React.useState('1');
+
+  const [thumbsSwiper, setThumbsSwiper] = React.useState<any>(null);
 
   const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
+  const [postPrev, setPostPrev] = React.useState<AxiosResponse | null>(null);
+  const [postNext, setPostNext] = React.useState<AxiosResponse | null>(null);
   const [postNewest, setPostNewest] = React.useState<AxiosResponse | null>(
     null,
   );
@@ -221,17 +243,29 @@ const Detail: React.FC = () => {
       icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
     });
   };
+
+  const getDataCompany = () => {
+    try {
+    } catch (error) { }
+  };
+
+  useEffect(() => {
+    getDataCompany();
+  }, []);
+
   // get post by id-post
   const getPostById = async () => {
     try {
       setIsLoading(true);
       const accountId = localStorage.getItem('accountId');
-      const result = await postApi.getById(POST_ID);
+      // const result = await postApi.getById(POST_ID);
+      const result = await postApi.getPostV3(POST_ID);
+      // console.log('result', result2);
       if (result) {
         // const list = result?.data.categories.map((category: any) =>
         //   Number(category.child_category_id)
         // )
-        // console.log('child', list)
+        // console.log('postId', result.data);
         // check  application status
         setIsLoading(false);
         if (result.data.account_id === accountId) {
@@ -241,10 +275,12 @@ const Detail: React.FC = () => {
         } else if (result.data.status === 3) {
           setTextButton('Bài đăng đã đóng');
           setBackgroundButton('gray');
+          // setBackgroundButton('#0D99FF');
           result.data.applied = true;
         } else if (result.data.application_status === 1) {
           setTextButton('Đã ứng tuyển');
-          setBackgroundButton('gray');
+          // setBackgroundButton('gray');
+          setBackgroundButton('#0D99FF');
         } else if (result.data.application_status === 2) {
           setTextButton('Hồ sơ được phê duyệt');
           setBackgroundButton('#0D99FF');
@@ -272,22 +308,39 @@ const Detail: React.FC = () => {
     }
   };
 
+  const getAnotherPost = async (postID: number, position: number) => {
+    try {
+      setIsLoading(true);
+      const result = await postApi.getById(postID);
+      if (result) {
+        setIsLoading(false);
+        position === 0 ? setPostPrev(result.data) : setPostNext(result.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handlePreviousPost = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams({
       'post-id': `${POST_ID - 1}`,
     });
-  }
+  };
 
   const handleNextPost = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams({
       'post-id': `${POST_ID + 1}`,
     });
-  }
+  };
 
   React.useEffect(() => {
     getPostById();
+    //get post prev
+    getAnotherPost(POST_ID - 1, 0);
+    //get post next
+    getAnotherPost(POST_ID + 1, 1);
   }, [bookmarked, POST_ID]);
 
   // set size for Breadcrumb
@@ -327,11 +380,6 @@ const Detail: React.FC = () => {
 
   // handle click button
   const onclick = async () => {
-    //  window.open(`${post?.data.share_link}`)
-    console.log('accessToken', ACCESS_TOKEN);
-    console.log('POST_ID', POST_ID);
-    console.log('checkPostUser', checkPostUser);
-    console.log('userProfile', userProfile);
     try {
       if (!ACCESS_TOKEN) {
         CheckWasLogin();
@@ -351,7 +399,6 @@ const Detail: React.FC = () => {
         !userProfile.phone ||
         !userProfile.email
       ) {
-        console.log('user', userProfile);
         api.info({
           message: `Cập nhật thông tin`,
           description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
@@ -360,32 +407,30 @@ const Detail: React.FC = () => {
         });
         return;
       }
-      // const result = await appplicationApi.applyAplication(POST_ID);
-      // console.log('result', result);
-
-      // if (result) {
-      // openNotification();
-      // setTextButton('Đã ứng tuyển');
-      // setBackgroundButton('gray');
-      // setCheckApply(true);
-      window.open(post?.data.resource.url, '_blank');
-
-      // }
-    } catch (error: any) {
-      console.log(error);
-      console.log('error', error.code);
-      console.log('error', error.status);
-      if (error.response.status === 400) {
-        api.info({
-          message: `Ứng tuyển không thành công!`,
-          description: 'Bạn đã ứng tuyển vị trí này',
-          placement: 'top',
-          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
-        });
+      const result = await appplicationApi.applyAplication(POST_ID);
+      console.log('result ung tiyen', result);
+      if (true) {
+        // openNotification();
         setTextButton('Đã ứng tuyển');
-        setBackgroundButton('gray');
+        // setBackgroundButton('gray');
         setCheckApply(true);
-        openNotification();
+        window.open(post?.data.resource.url, '_blank');
+      }
+    } catch (error: any) {
+      console.log('error', error);
+      if (error.response.status === 400) {
+        // api.info({
+        //   message: `Ứng tuyển không thành công!`,
+        //   description: 'Bạn đã ứng tuyển vị trí này',
+        //   placement: 'top',
+        //   icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+        // });
+        setTextButton('Đã ứng tuyển');
+        // setBackgroundButton('gray');
+        setBackgroundButton('#0D99FF');
+        setCheckApply(true);
+        window.open(post?.data?.companyResourceData.url, '_blank');
+        // openNotification();
         return;
       }
     }
@@ -402,14 +447,13 @@ const Detail: React.FC = () => {
   setTimeout(() => {
     setAutomatic(true);
   }, 700);
-  console.log('postNewest', post);
+
   const handleClickShare = () => {
     setOpenModalShare(true);
   };
   const handleClickSave = async () => {
     // const a = post?.data.bookmarked;
-    console.log('postMarked', post?.data.bookmarked);
-    console.log('bookmarked', bookmarked);
+
     try {
       if (post?.data.bookmarked && bookmarked) {
         const result = await bookMarkApi.deleteBookMark(post?.data.id);
@@ -428,7 +472,7 @@ const Detail: React.FC = () => {
       console.log(error);
     }
   };
-  console.log('bookmarked', bookmarked);
+
   const handleCloseModalShare = () => {
     setOpenModalShare(false);
   };
@@ -437,7 +481,7 @@ const Detail: React.FC = () => {
     if (nameShare === 'Mail') {
       // window.location.href = `mailto:quangbk54@gmail.com`;
       window.location.href = `mailto:?body=${encodeURIComponent(
-        post?.data.share_link,
+        post?.data.shareLink,
       )}`;
     }
     if (nameShare === 'Messenger') {
@@ -445,24 +489,24 @@ const Detail: React.FC = () => {
       // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
       const messengerLink =
         'fb-messenger://share?link=' +
-        encodeURIComponent(post?.data.share_link) +
+        encodeURIComponent(post?.data.shareLink) +
         '&app_id=' +
         encodeURIComponent('523018296116961');
       window.location.href = messengerLink;
     }
     if (nameShare === 'Facebook') {
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        post?.data.share_link,
+        post?.data.shareLink,
       )}`;
       window.open(url, '_blank');
     }
     if (nameShare === 'Zalo') {
       window.location.href = `zalo://app?link=${encodeURIComponent(
-        post?.data.share_link,
+        post?.data.shareLink,
       )}`;
     }
     if (nameShare === 'Sao chép liên kết') {
-      copy(post?.data.share_link);
+      copy(post?.data.shareLink);
       // setCopied(true);
       dispatch<any>(setShowCopy(true));
       // setTimeout(() => {
@@ -494,13 +538,20 @@ const Detail: React.FC = () => {
   // }
 
   const handleClickSearch = () => {
-    const companyName = post?.data.company_name;
+    const companyName = post?.data.companyName;
     const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
-    window.open(searchUrl, "_self");
+    window.open(searchUrl, '_self');
   };
 
   const handleClickShowMap = () => {
-    window.open(`https://www.google.com/maps/place/${post?.data.district}`);
+    window.open(
+      'https://www.google.com/maps/place/' +
+      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
+      }, ${post?.data.district ? post?.data.district?.fullName : ''}, ${post?.data.district?.province
+        ? post?.data.district?.province?.fullName
+        : ''
+      }`,
+    );
   };
 
   return (
@@ -515,7 +566,7 @@ const Detail: React.FC = () => {
                   separator=">"
                   items={[
                     {
-                      title: <a href="/home">HiJob</a>,
+                      title: <a href="/">HiJob</a>,
                     },
                     {
                       title: `${post?.data.title}`,
@@ -531,8 +582,8 @@ const Detail: React.FC = () => {
                 <div className="top-title">
                   <h2>{post?.data.title}</h2>
                   <img
-                    src={post?.data.resource.company_icon}
-                    alt={post?.data.resource.company_icon}
+                    src={post?.data.companyResourceData.logo}
+                    alt={post?.data.companyResourceData.logo}
                   />
                 </div>
                 <div className="mid-title">
@@ -542,30 +593,42 @@ const Detail: React.FC = () => {
                       onClick={handleClickSearch}
                       style={{ cursor: 'pointer' }}
                     >
-                      {post?.data.company_name}
+                      {post?.data.companyName}
                     </h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickSearch}
                       style={{ cursor: 'pointer' }}
+                      className="clickShow-detailPost"
                     >
-                      View more
+                      Xem tất cả
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
+                    <h3>{`${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
+                      }, ${post?.data.district ? post?.data.district?.fullName : ''
+                      }, ${post?.data.district?.province
+                        ? post?.data.district?.province?.fullName
+                        : ''
+                      }`}</h3>
+                    <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
-                    >{`${post?.data.district}, ${post?.data.province}`}</h3>
+                      style={{ cursor: 'pointer' }}
+                      className="clickShow-detailPost"
+                    >
+                      Xem trên bản đồ
+                    </h3>
                   </div>
                 </div>
                 <div className="bot-title">
                   <div className="bot-title-createdTime">
                     <ClockDetailPostIcon width={24} height={24} />
                     <h3>
-                      {moment(new Date(post?.data.created_at)).format('HH:mm')}
+                      {moment(new Date(post?.data.createdAt)).format('HH:mm')}
                       <span>&nbsp;</span>
-                      {new Date(post?.data.created_at).toLocaleDateString(
+                      {new Date(post?.data.createdAt).toLocaleDateString(
                         'en-GB',
                       )}
                     </h3>
@@ -606,9 +669,13 @@ const Detail: React.FC = () => {
               </div>
               <div className="img-container">
                 <div className="div-job-img" ref={componentRef}>
-                  {isLoading
-                    ? <Skeleton variant="rectangular" width={"100%"} height={630} />
-                    :
+                  {/* {isLoading ? (
+                    <Skeleton
+                      variant="rectangular"
+                      width={'100%'}
+                      height={630}
+                    />
+                  ) : (
                     <Carousel
                       data={
                         post?.data.images.length > 0 ? post?.data.images : data
@@ -635,13 +702,75 @@ const Detail: React.FC = () => {
                         maxHeight: '590px',
                       }}
                     />
-                  }
+                  )} */}
+                  <Swiper
+                    // style={{
+                    //   '--swiper-navigation-color': '#fff',
+                    //   '--swiper-pagination-color': '#fff',
+                    // }}
+                    pagination={{
+                      type: 'fraction',
+                    }}
+                    spaceBetween={10}
+                    navigation={true}
+                    // mousewheel={true}
+                    loop={true}
+                    thumbs={{ swiper: thumbsSwiper }}
+                    modules={[
+                      Mousewheel,
+                      FreeMode,
+                      Pagination,
+                      Navigation,
+                      Thumbs,
+                    ]}
+                    className="div-job-img-swipper"
+                  >
+                    {post?.data.images.map((item: any, index: number) => {
+                      return (
+                        <SwiperSlide
+                          className="div-job-img-swipper_item"
+                          key={index}
+                        >
+                          <img src={item.url} alt="ảnh lỗi" />
+                        </SwiperSlide>
+                      );
+                    })}
+                  </Swiper>
+                  <Swiper
+                    onSwiper={setThumbsSwiper}
+                    spaceBetween={10}
+                    // mousewheel={true}
+                    slidesPerView={3}
+                    freeMode={true}
+                    centeredSlides={
+                      post?.data.images.length === 1 ? true : false
+                    }
+                    watchSlidesProgress={true}
+                    modules={[Mousewheel, FreeMode, Navigation, Thumbs]}
+                    className="div-job-img-swipper_Thumbs"
+                  >
+                    {post?.data.images.map((item: any, index: number) => {
+                      return (
+                        <SwiperSlide
+                          className="div-job-img-swipper-thumbs_item"
+                          key={index}
+                        >
+                          <img src={item.url} />
+                        </SwiperSlide>
+                      );
+                    })}
+                  </Swiper>
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
-                  <Box sx={{ width: '100%', height: '100%', typography: 'body1' }}>
+                  <Box
+                    sx={{ width: '100%', height: '100%', typography: 'body1' }}
+                  >
                     <TabContext value={tabValue}>
                       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList onChange={handleChangeTab} aria-label="lab API tabs example">
+                        <TabList
+                          onChange={handleChangeTab}
+                          aria-label="lab API tabs example"
+                        >
                           <Tab label="Thông tin việc làm" value="1" />
                           <Tab label="Thông tin công ty" value="2" />
                         </TabList>
@@ -649,33 +778,37 @@ const Detail: React.FC = () => {
                       <TabPanel value="1">
                         <div className="job-title-container">
                           <div className="job-title-details">
-                            <div className="div-detail-row">
-                              <EnvironmentOutlined style={{ color: '#575757' }} />
+                            {/* <div className="div-detail-row">
+                              <EnvironmentOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Địa chỉ</p>
                                 <h5>{post?.data.address}</h5>
                               </div>
-                            </div>
+                            </div> */}
                             <div className="div-detail-row">
                               <SlidersOutlined style={{ color: '#575757' }} />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Loại công viêc</p>
-                                <h5>{post?.data.job_type.job_type_name}</h5>
+                                <h5>{post?.data.postJobType.fullName}</h5>
                               </div>
                             </div>
                             <div className="div-detail-row">
-                              <ClockCircleOutlined style={{ color: '#575757' }} />
+                              <ClockCircleOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Giờ làm việc</p>
                                 <h5>
-                                  {moment(new Date(post?.data.start_time)).format(
-                                    'HH:mm',
-                                  )}{' '}
+                                  {moment(
+                                    new Date(post?.data.startTime),
+                                  ).format('HH:mm')}{' '}
                                   -{' '}
-                                  {moment(new Date(post?.data.end_time)).format(
+                                  {moment(new Date(post?.data.endTime)).format(
                                     'HH:mm',
                                   )}
                                 </h5>
@@ -687,7 +820,7 @@ const Detail: React.FC = () => {
                                 {' '}
                                 <p>Làm việc cuối tuần</p>
                                 <h5>
-                                  {post?.data.is_working_weekend === 0
+                                  {post?.data.isWorkingWeekend === 0
                                     ? 'Không làm việc cuối tuần'
                                     : 'Có làm việc cuối tuần'}
                                 </h5>
@@ -698,30 +831,33 @@ const Detail: React.FC = () => {
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Mức lương</p>
-                                {post?.data.salary_type_id === 6 ? (
-                                  <h5>{post?.data.salary_type}</h5>
+                                {post?.data.postSalaryType.id === 6 ? (
+                                  <h5>{post?.data.postSalaryType.fullName}</h5>
                                 ) : (
                                   <h5>
                                     {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salary_min,
-                                    ) + ` ${post?.data.money_type_text}`}{' '}
+                                      post?.data.salaryMin,
+                                    ) + ` ${post?.data.moneyTypeText}`}{' '}
                                     -{' '}
                                     {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salary_max,
-                                    ) + ` ${post?.data.money_type_text}`}
+                                      post?.data.salaryMax,
+                                    ) + ` ${post?.data.moneyTypeText}`}
                                   </h5>
                                 )}
                               </div>
                             </div>
                             <div className="div-detail-row">
-                              <CreditCardOutlined style={{ color: '#575757' }} />
+                              <CreditCardOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Danh mục</p>
-                                {post?.data.categories.map(
-                                  (item: ItemCategories, index: null | number) => (
+                                {post?.data.postCategories.map(
+                                  (item: any, index: null | number) => (
                                     <h5 key={index}>
-                                      {item.parent_category}/{item.child_category}
+                                      {item.parentCategory.fullName}/
+                                      {item.fullName}
                                     </h5>
                                   ),
                                 )}
@@ -733,22 +869,24 @@ const Detail: React.FC = () => {
                                 {' '}
                                 <p>Làm việc từ xa</p>
                                 <h5>
-                                  {post?.data.is_remotely === 0
+                                  {post?.data.isRemotely === 0
                                     ? 'Không làm việc từ xa'
                                     : 'Có làm việc từ xa'}
                                 </h5>
                               </div>
                             </div>
                             <div className="div-detail-row">
-                              <ClockCircleOutlined style={{ color: '#575757' }} />
+                              <ClockCircleOutlined
+                                style={{ color: '#575757' }}
+                              />
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Thời gian hết hạn</p>
                                 <h5>
-                                  {post?.data.expired_date
-                                    ? moment(new Date(post?.data.expired_date)).format(
-                                      'DD/MM/yyyy',
-                                    )
+                                  {post?.data?.expiredDate
+                                    ? moment(
+                                      new Date(post?.data?.expiredDate),
+                                    ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>
@@ -761,7 +899,7 @@ const Detail: React.FC = () => {
                             onClick={onclick}
                             className="btn-apply"
                             type={'primary'}
-                            disabled={checkApply}
+                            // disabled={checkApply}
                             style={{
                               fontSize: 16,
                               backgroundColor: `${backgroundButton}`,
@@ -793,18 +931,47 @@ const Detail: React.FC = () => {
                     >
                       {post?.data.description}
                     </div>
-                    <div className="description-buttons">
-                      <div className="description-button_previous" onClick={handlePreviousPost}>
-                        <div className="icon">
-                          <BackIcon width={20} height={20} />
+                    <div className="div-description-mo-bottom">
+                      <div className="description-buttons">
+                        <div
+                          className="description-button_previous"
+                        // onClick={handlePreviousPost}
+                        >
+                          <div className="icon">
+                            <BackIcon width={17} height={17} />
+                          </div>
+                          <span>Previous job</span>
                         </div>
-                        <span>Previous job</span>
+                        <div
+                          className="description-button_next"
+                          // onClick={handleNextPost}
+                          style={{
+                            color: postNext ? 'black' : '#cccc',
+                          }}
+                        >
+                          <span>Next job</span>
+                          <div
+                            className="icon"
+                            style={
+                              {
+                                // backgroundColor: postNext ? 'white' : '#cccc',
+                              }
+                            }
+                          >
+                            <BackIcon
+                              width={17}
+                              height={17}
+                              fill={postNext ? 'black' : '#cccc'}
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <div className="description-button_next" onClick={handleNextPost}>
-                        <span>Next job</span>
-                        <div className="icon">
-                          <BackIcon width={20} height={20} />
-                        </div>
+                      <div className="description-post">
+                        <AnotherPost
+                          item={postPrev}
+                          onClick={handlePreviousPost}
+                        />
+                        <AnotherPost item={postNext} onClick={handleNextPost} />
                       </div>
                     </div>
                   </div>
@@ -848,8 +1015,25 @@ const Detail: React.FC = () => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                style={{ position: 'relative' }}
+              >
                 Chia sẻ công việc này
+                <IconButton
+                  aria-label="close"
+                  onClick={handleCloseModalShare}
+                  sx={{
+                    position: 'absolute',
+                    right: '0',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
               </Typography>
               <div className="wrap-info_modalShare">
                 <div className="wrap-img_info">

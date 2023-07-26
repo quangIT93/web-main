@@ -56,7 +56,7 @@ interface IInfoPersonal {
 const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const { openModelPersonalInfo, setOpenModalPersonalInfo, profile } = props;
   const [gender, setGender] = React.useState(
-    profile?.gender != null ? (profile.gender == 0 ? 'Nam' : 'Nữ') : null,
+    profile?.gender != null ? (profile.gender === 1 ? 'Nam' : 'Nữ') : null,
   );
   const [day, setDay] = useState(
     profile?.birthday ? moment(new Date(profile?.birthday)) : moment(),
@@ -74,7 +74,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const handleSetFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-  console.log('Day', day);
+
   const getAllProvinces = async () => {
     try {
       const allLocation = await locationApi.getAllProvinces();
@@ -119,7 +119,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       const info: IInfoPersonal = {
         name: name,
         birthday: new Date(day.toString()).getTime(),
-        gender: gender === 'Nam' ? 0 : 1,
+        gender: gender === 'Nam' ? 1 : 0,
         address: selectedProvince.id,
         introduction: introduction,
       };
@@ -179,7 +179,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              Họ và tên *
+              Họ và tên <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               type="text"
@@ -200,7 +200,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="sex"
             >
-              Giới tính *
+              Giới tính <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               select
@@ -226,9 +226,18 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   component="label"
                   htmlFor="startTime"
                 >
-                  Ngày sinh *:
+                  Ngày sinh <span className="color-asterisk">*</span>
                 </Typography>
-                <DatePicker value={day} onChange={handleDateChange} />
+                <DatePicker
+                  value={day}
+                  onChange={handleDateChange}
+                  slotProps={{
+                    textField: {
+                      helperText: 'DD/MM/yyyy',
+                    },
+                  }}
+                  format="DD/MM/YYYY"
+                />
               </div>
             </LocalizationProvider>
           </Box>
@@ -239,7 +248,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="jobTitle"
             >
-              Địa điểm *:
+              Địa điểm <span className="color-asterisk">*</span>
             </Typography>
             <Autocomplete
               options={dataProvinces ? dataProvinces : []}
@@ -270,7 +279,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="startTime"
             >
-              Giới thiệu bản thân *:
+              Giới thiệu bản thân <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               // className={classes.textarea}

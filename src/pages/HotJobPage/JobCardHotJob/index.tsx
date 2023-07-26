@@ -49,7 +49,7 @@ interface Iprops {
 
 
 const JobCardHotJob: React.FC<Iprops> = (props) => {
-    console.log("hotjob: ", props);
+
     const {
         setOpenNotificate,
         openNotificate,

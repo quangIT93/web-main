@@ -29,20 +29,13 @@ const SubIcon: React.FC<ISubicon> = (props) => {
   };
 
   const handleClickEditPost = async () => {
-    try {
-      const result = await postApi.updateStatusPost(postId, 1);
-      if (result) {
-        window.open(`/edit-posted/?postId=${postId}`, '_blank');
-        // setStatus(1)
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // const result = await postApi.updateStatusPost(postId, 1);
+    window.open(`/edit-posted/?postId=${postId}`, '_blank');
   };
 
   const handleClickOpenPost = async () => {
     try {
-      const result = await postApi.updateStatusPost(postId, 3);
+      const result = await postApi.updateStatusPost(postId, 1);
       if (result) {
         setStatus(1);
       }
@@ -57,10 +50,10 @@ const SubIcon: React.FC<ISubicon> = (props) => {
     <div className="subs-icon_moreOutlined">
       <div
         className="sub-icon_moreOutlined sub-edit_post"
-        onClick={status === 3 ? handleClickEditPost : () => {}}
-        style={
-          status !== 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
-        }
+        onClick={handleClickEditPost}
+      // style={
+      //   status !== 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
+      // }
       >
         <EditOutlined />
         Chỉnh sửa bài tuyển dụng
@@ -68,10 +61,13 @@ const SubIcon: React.FC<ISubicon> = (props) => {
 
       <div
         className="sub-icon_moreOutlined sub-close_post"
-        onClick={handleClickClosePost}
+        onClick={status !== 3 ? handleClickClosePost : () => { }}
+        style={
+          status === 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
+        }
       >
         <CloseSquareOutlined />
-        Đóng bài tuyển dụng
+        {status === 3 ? '     Đóng bài tuyển dụng' : 'Bài tuyển dụng đã đóng'}
       </div>
 
       {/* {status === 3 ? (

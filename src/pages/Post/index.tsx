@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 // @ts-ignore
 import { Navbar } from '#components';
+
 //@ts-ignore
+import ModalNoteCreatePost from '#components/Post/ModalNoteCreatePost';
 
 // import component
 import PostFilterSalary from '../../components/Post/PostFilterSalary';
@@ -187,6 +189,9 @@ const Post: React.FC = () => {
 
   const [postData, SetPostData] = React.useState<any>(null);
 
+  const [openModalNoteCreatePost, setOpenModalNoteCreatePost] =
+    React.useState(true);
+
   // submit
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
@@ -341,7 +346,7 @@ const Post: React.FC = () => {
     if (localStorage.getItem('accessToken')) {
       getPost();
     } else {
-      window.open(`/home`, '_parent');
+      window.open(`/`, '_parent');
     }
   }, []);
 
@@ -451,6 +456,11 @@ const Post: React.FC = () => {
         <ModalPost
           openModalPost={openModalPost}
           setOpenModalPost={setOpenModalPost}
+        />
+
+        <ModalNoteCreatePost
+          setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
+          openModalNoteCreatePost={openModalNoteCreatePost}
         />
       </div>
     );

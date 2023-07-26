@@ -8,6 +8,8 @@ import {
   SettingOutlined,
 } from '@ant-design/icons';
 import { Input, Space } from 'antd';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import messageApi from 'api/messageApi';
 import historyRecruiter from 'api/historyRecruiter';
@@ -28,6 +30,7 @@ interface IOpenListChat {
 const ListUserChat: React.FC<IOpenListChat> = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [windowWidth, setWindowWidth] = useState(false);
+  const [openBackDrop, setBackDrop] = useState(false);
 
   const [listUserChat, setStateUserChat] = useState<any>([]);
   const {
@@ -92,6 +95,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   }, [windowWidth]);
 
   const handleClickUserInfo = (user: any) => {
+    setBackDrop(true);
     setSearchParams({ post_id: user.post_id, user_id: user.user_id });
     getAllUserChat();
     setReceivedMessages([
@@ -112,11 +116,12 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         postId: Number(searchParams.get('post_id')),
       },
     ]);
-
+    setTimeout(() => {
+      setBackDrop(false);
+    }, 500);
     windowWidth && props.setOpenListChat(true);
 
     if (props.openListChat === true && windowWidth) {
-      props.setOpenListChat(true);
       let listChatElement = document.querySelector('.list_userChat');
       listChatElement?.classList.add('.hide-list-userChat');
     }
@@ -138,7 +143,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   // console.log('tin nhan duoc nhan', receivedMessages)
   // console.log('tin nhan da gui', sendMessages)
-  const onSearch = (value: string) => console.log(value);
+  // const onSearch = (value: string) => console.log(value);
   if (listUserChat.length !== 0) {
     return (
       <div
@@ -162,6 +167,17 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         </div>
 
         <div className="list-infoUser">
+          <Backdrop
+            sx={{
+              color: '#0d99ff ',
+              backgroundColor: 'transparent',
+              zIndex: (theme: any) => theme.zIndex.drawer + 1,
+            }}
+            open={openBackDrop}
+          // onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
           {listUserChat.map((user: any, index: number) => (
             <div
               className={`wrap-userInfo ${userInfoChat.user_id === user.user_id ? 'readed-message' : ''
@@ -208,9 +224,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           <div>Bạn chưa có cuộc trò chuyện nào!</div>
         </div>
       </div>
-    )
+    );
   }
-
 };
 
 export default ListUserChat;

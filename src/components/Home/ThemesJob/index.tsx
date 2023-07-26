@@ -108,7 +108,7 @@ const ThemesJob: React.FC = () => {
     setOpenBackdrop(!openBackdrop);
     // const test = [1, 2]
     // const p = createSearchParams({ page: `${test}`})
-    // navigate(`/home/?${p}`);
+    // navigate(`/?${p}`);
     // console.log(searchParams.get(`page`))
     const themeId = searchParams.get(`theme-id`)
       ? searchParams.get(`theme-id`)
@@ -142,7 +142,7 @@ const ThemesJob: React.FC = () => {
   const getPostByThemeId = async () => {
     try {
       const result = await themeApi.getThemesEnable();
-      console.log('result', result);
+
       if (result) {
         setListThem(result);
 
@@ -214,7 +214,7 @@ const ThemesJob: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   margin: '24px 0',
-                  marginBottom: '50px',
+                  marginBottom: '24px',
                 }}
               >
                 {/* <Pagination count={10} shape="rounded" /> */}
@@ -243,7 +243,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

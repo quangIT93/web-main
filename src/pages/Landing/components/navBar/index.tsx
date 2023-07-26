@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
       <div className="div-space"></div>
       <ul className="navbar-links">
         <li className="links__item">
-          <Link to="/home">Trang chủ</Link>
+          <Link to="/">Trang chủ</Link>
         </li>
         <li className="links__item links">
           <a href="#us">Về chúng tôi</a>

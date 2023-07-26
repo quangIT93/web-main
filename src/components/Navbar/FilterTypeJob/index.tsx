@@ -1,11 +1,14 @@
-import React, { ReactNode } from 'react'
-import { Select, Space, Radio } from 'antd'
-import { EnvironmentOutlined } from '@ant-design/icons'
-import type { RadioChangeEvent } from 'antd'
-import { useSearchParams } from 'react-router-dom'
-import siteApi from 'api/siteApi'
+import React, { ReactNode } from 'react';
+import { Select, Space, Radio } from 'antd';
+import { EnvironmentOutlined } from '@ant-design/icons';
+import type { RadioChangeEvent } from 'antd';
+import { useSearchParams } from 'react-router-dom';
+import siteApi from 'api/siteApi';
 
-import './style.scss'
+import { getCookie, setCookie } from 'cookies';
+import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons';
+
+import './style.scss';
 
 const CustomOption = ({
   data,
@@ -13,25 +16,28 @@ const CustomOption = ({
   setValueRender,
   jobType,
 }: {
-  data: any
-  setValue: Function
-  setValueRender: Function
-  jobType: number
+  data: any;
+  setValue: Function;
+  setValueRender: Function;
+  jobType: number;
 }) => {
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
-    const valueRender = data.find((item: any) => item.id === value)
+    const valueRender = data.find((item: any) => item.id === value);
 
-    setValueRender(valueRender)
+    setValueRender(valueRender);
 
-    setValue(value)
-  }
-  console.log('jobType', jobType)
+    setValue(value);
+
+    setCookie('userTypejobFiltered', JSON.stringify(valueRender), 365);
+  };
+
   return (
     <Radio.Group
       style={{ width: '100%' }}
       name="radiogroup"
       onChange={onChange}
-      defaultValue={jobType ? jobType : 5}
+      value={jobType ? jobType : 5}
+    // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -39,49 +45,55 @@ const CustomOption = ({
             <Radio key={index} style={{ width: '100%' }} value={value.id}>
               {value.name}
             </Radio>
-          )
+          );
         })}
       </Space>
     </Radio.Group>
-  )
-}
+  );
+};
 
 interface TypeJob {
-  setTypeJob: Function
-  valueTypeJob: any
+  setTypeJob: Function;
+  valueTypeJob: any;
 }
 
-const { Option } = Select
+const { Option } = Select;
 const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
   // const [data, setData] = React.useState()
-  const [data, setData] = React.useState<{ id: number; name: string }[]>([])
-  const [valueRender, setValueRender] = React.useState<any>()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const TYPE_JOB = Number(searchParams.get('job-type'))
+  const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
+  const [valueRender, setValueRender] = React.useState<any>();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  let userFilteredCookies = JSON.parse(
+    getCookie('userTypejobFiltered') || '{}',
+  )
+  const TYPE_JOB = userFilteredCookies?.id;
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType()
-    const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data]
+    const result = await siteApi.getJobType();
+    const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data];
     if (updatedData) {
-      setData(updatedData)
-      console.log('TYPE_JOB', TYPE_JOB)
-      console.log('data', data)
+      setData(updatedData);
+
       if (TYPE_JOB) {
-        const value = updatedData.find((item: any) => item.id === TYPE_JOB)
-        setValueRender(value)
+        const value = updatedData.find((item: any) => item.id === TYPE_JOB);
+        setValueRender(value);
       } else {
-        setValueRender({ id: 5, name: 'Tất cả' })
+        setValueRender({ id: 5, name: 'Tất cả' });
       }
     }
-  }
+  };
   React.useEffect(() => {
-    getTypeJob()
-  }, [])
+    getTypeJob();
+  }, []);
 
-  const handleChange = (value1: string) => {}
-
+  const handleChange = (value1: string) => { };
+  console.log(`TYPEJOB`, TYPE_JOB);
   return (
-    <>
+    <div className="filter-input">
+      <div className="filter-input_icon">
+        <PaperFilterIcon width={20} height={20} />
+      </div>
       <Select
         style={{ width: 120 }}
         onChange={handleChange}
@@ -90,6 +102,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder="Loai cong viec"
+        suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="5" label="">
           <CustomOption
@@ -100,8 +113,8 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
           />
         </Option>
       </Select>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default FilterTypeJob
+export default FilterTypeJob;

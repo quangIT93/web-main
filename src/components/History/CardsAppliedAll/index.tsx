@@ -51,6 +51,9 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
     }
   };
 
+  console.log("dataApplied ", dataApplied);
+
+
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
@@ -110,7 +113,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // click card

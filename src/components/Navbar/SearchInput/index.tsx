@@ -110,6 +110,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const [dataHistory, setDataHistory] = React.useState<any>([]);
   const [dataSuggest, setDataSuggest] = React.useState<any>([]);
   const [openDropdown, setOpenDropdown] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
 
   const QUERY = searchParams.get('q');
   const handleSearch = async (newValue: string | undefined) => {
@@ -132,6 +133,8 @@ const SearchInput: React.FC<SearchProps> = ({
   // get keyWords suggests
   React.useEffect(() => {
     setValue(QUERY as any);
+    const accessToken = localStorage.getItem('accessToken');
+    accessToken && setIsLogin(true);
   }, []);
 
   const getSuggestKeyWord = async () => {
@@ -169,16 +172,25 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getDataSearch = async () => {
     try {
-      const resultHistory = await searchApi.getHistoryKeyWord(10);
       const resultSuggest = await searchApi.getSuggestKeyWord(10);
-      if (resultHistory && resultSuggest) {
-        setDataHistory(resultHistory.data);
-        setDataSuggest(resultSuggest.data);
+      let resultHistory;
+      if (isLogin) {
+        resultHistory = await searchApi.getHistoryKeyWord(10);
+        resultHistory && setDataHistory(resultHistory.data);
       }
+      // if (resultHistory || resultSuggest) {
+      //   setDataHistory(resultHistory.data);
+      //   setDataSuggest(resultSuggest.data);
+      // }
+      resultSuggest && setDataSuggest(resultSuggest.data);
+
+      // console.log('resultSuggest effective', resultSuggest);
     } catch (error) {
-      console.log('error');
+      console.log('error get history', error);
     }
   };
+
+  // console.log('resultSuggest', dataSuggest.data);
 
   React.useEffect(() => {
     getDataSearch();
@@ -284,8 +296,8 @@ const SearchInput: React.FC<SearchProps> = ({
       <div className="items-history items-search_keyword">
         <h4>Từ khóa</h4>
         <div className="wrap-items-history wrap-items-search">
-          {dataSuggest.map((suggest: any) => (
-            <div className="item-history item-search">
+          {dataSuggest.map((suggest: any, index: number) => (
+            <div className="item-history item-search" key={index}>
               <span
                 className="item-search_text"
                 onClick={(e) => handleClickItem(e, suggest.keyword)}
@@ -297,24 +309,33 @@ const SearchInput: React.FC<SearchProps> = ({
           ))}
         </div>
       </div>
-      <div className="items-history items-search_keyword">
+      <div
+        className="items-history items-search_keyword"
+        style={{
+          display: isLogin ? 'block' : 'none',
+        }}
+      >
         <h4>Tìm kiếm gần đây</h4>
         <div className="wrap-items-history wrap-items-search">
-          {dataHistory?.listHistorySearch?.map((history: any) => (
-            <div className="item-history item-search">
-              <span
-                className="item-search_text"
-                onClick={(e) => handleClickItem(e, history.keyword)}
-              >
-                {history.keyword}
-              </span>
+          {dataHistory?.listHistorySearch?.map(
+            (history: any, index: number) => (
+              <div className="item-history item-search" key={index}>
+                <span
+                  className="item-search_text"
+                  onClick={(e) => handleClickItem(e, history.keyword)}
+                >
+                  {history.keyword}
+                </span>
 
-              <CloseOutlined
-                onClick={(e) => handleDeleteHistoryKeyword(e, history.keyword)}
-                style={{ fontSize: '16px' }}
-              />
-            </div>
-          ))}
+                <CloseOutlined
+                  onClick={(e) =>
+                    handleDeleteHistoryKeyword(e, history.keyword)
+                  }
+                  style={{ fontSize: '16px' }}
+                />
+              </div>
+            ),
+          )}
         </div>
       </div>
     </div>
@@ -361,7 +382,7 @@ const SearchInput: React.FC<SearchProps> = ({
         shape="circle"
         onClick={(event) => handleSearchIcon(event, value)}
       >
-        <SearchIcon width={18} height={18} />
+        <SearchIcon width={24} height={24} />
       </Button>
       <Button
         className="search-input-wrapper-iconFilter"

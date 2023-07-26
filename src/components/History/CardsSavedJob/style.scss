@@ -1,5 +1,11 @@
 @import '../../../scss//mixins';
 
-.css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
-    height: 10rem !important;
+// .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+//     height: 10rem !important;
+// }
+
+#menu- {
+    .MuiPaper-root {
+        height: fit-content !important;
+    }
 }

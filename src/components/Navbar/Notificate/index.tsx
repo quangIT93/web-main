@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import { Space, Tooltip, Input, Switch } from 'antd';
 
+import { DeleteKeywordIcon } from '#components/Icons';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled, lighten, darken } from '@mui/system';
 // import {
@@ -50,6 +52,8 @@ import { notificates } from './data';
 
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 
+import CircularProgress from '@mui/material/CircularProgress';
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 
@@ -77,8 +81,18 @@ const Notificate = () => {
 
   const [activeSystem, setActiveSystem] = useState(true);
   const [activeKeyword, setActiveKeyword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [input, setInput] = useState(true);
+
+  const [valueApp, setValueApp] = useState(
+    dataNotificationKeyword?.status?.pushStatus,
+  );
+  const [valueMall, setValueMall] = useState(
+    dataNotificationKeyword?.status?.emailStatus,
+  );
+
+  const [idKeyWords, setIdKeywords] = useState<number[]>([]);
 
   const refNotification = React.useRef<HTMLDivElement | null>(null);
 
@@ -95,8 +109,10 @@ const Notificate = () => {
   };
   const getApiNotificate = async () => {
     try {
+      setIsLoading(true);
       const result = await notificationApi.getNotificationV2();
       if (result) {
+        setIsLoading(false);
         setDataNotification(result.data);
       }
     } catch (error) {}
@@ -106,18 +122,24 @@ const Notificate = () => {
     getApiNotificate();
   }, []);
 
+  console.log('Data', dataNotification);
+  console.log('Data', dataNotificationKeyword);
+  console.log('Data', typeof dataNotificationKeyword?.status?.emailStatus);
+
   const getApiNotificateKeyword = async () => {
     try {
       const result = await notificationKeywordApi.getNotificationKeyword();
       if (result) {
         setDataNotificationkeyword(result.data);
+        setValueApp(result.data.status.pushStatus);
+        setValueMall(result.data.status.emailStatus);
       }
     } catch (error) {}
   };
 
   useEffect(() => {
     getApiNotificateKeyword();
-  }, [input]);
+  }, [input, valueApp, valueMall]);
 
   const handleChangeStatusKeyword = async (id: number, status: number) => {
     try {
@@ -132,7 +154,6 @@ const Notificate = () => {
       console.log('error', error);
     }
   };
-  console.log('dataa', dataNotificationKeyword);
 
   React.useEffect(() => {
     const handleCLoseNotificate = (event: any) => {
@@ -164,7 +185,7 @@ const Notificate = () => {
   ) => {
     if (typeText === 'recruiter') {
       window.open(
-        `candidate-detail?post-id=${postId}?application_id=${applicationId}`,
+        `candidate-detail?post-id=${postId}&application_id=${applicationId}`,
       );
     }
 
@@ -173,8 +194,72 @@ const Notificate = () => {
     }
   };
 
+  const handleChangeEmail = async (e: any) => {
+    console.log(e.target.value);
+    try {
+      const result = await notificationKeywordApi.putPlatform(
+        parseInt(e.target.value) === 1 ? 0 : 1,
+        valueApp,
+      );
+      if (result) {
+        if (parseInt(e.target.value) === 1) {
+          setValueMall(0);
+        } else {
+          setValueMall(1);
+        }
+      } else {
+        setValueMall(e.target.value);
+      }
+    } catch (error) {
+      setValueMall(e.target.value);
+    }
+  };
+
+  const handleChangeApp = async (e: any) => {
+    try {
+      const result = await notificationKeywordApi.putPlatform(
+        valueMall,
+        parseInt(e.target.value) === 1 ? 0 : 1,
+      );
+
+      if (result) {
+        if (parseInt(e.target.value) === 1) {
+          setValueApp(0);
+        } else {
+          setValueApp(1);
+        }
+      }
+    } catch (error) {
+      setValueApp(valueApp);
+    }
+  };
+
+  const handleClickItemKeyword = (idKeyword: number) => {
+    console.log('idKeyword', idKeyword);
+    // Kiểm tra nếu idKeyword đã tồn tại trong mảng idKeywords
+    if (idKeyWords.includes(idKeyword)) {
+      // Xóa idKeyword khỏi mảng bằng cách sử dụng filter
+      const filteredIds = idKeyWords.filter((id: number) => id !== idKeyword);
+      setIdKeywords(filteredIds);
+    } else {
+      // Nếu idKeyword không tồn tại, thêm nó vào mảng
+      setIdKeywords((prevIds) => [...prevIds, idKeyword]);
+    }
+  };
+
+  const handleClickDeleteItemKeyword = async () => {
+    try {
+      const result = await notificationKeywordApi.deleteKeyword(idKeyWords);
+      if (result) {
+        getApiNotificateKeyword();
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  console.log('keuwwork', idKeyWords);
   console.log('activeSystem', activeSystem);
-  console.log('activeKeyword', activeKeyword);
 
   return (
     <div className="notification" ref={refNotification}>
@@ -197,7 +282,9 @@ const Notificate = () => {
         </div>
       </div>
       <div className="bottom-notificate">
-        {activeSystem ? (
+        {isLoading ? (
+          <CircularProgress sx={{ marginTop: '50%', color: '#0d99ff' }} />
+        ) : activeSystem ? (
           dataNotification?.notifications?.map(
             (notificate: any, index: number) => {
               if (notificate.data.typeText === 'keyword') {
@@ -316,32 +403,55 @@ const Notificate = () => {
           )
         ) : (
           <div className="wrap-keyword">
-            {/* <p>
+            <p>
               Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh
               chóng qua:
             </p>
             <div className="wrap-checkbox_keyword">
               <div className="checkbox-keyword">
-                <input type="checkbox" id="email" value="email" name="email" />
-                <label htmlFor="email">Email</label>
+                <input
+                  type="checkbox"
+                  name="app"
+                  id="app"
+                  value={valueApp}
+                  onChange={handleChangeApp}
+                  checked={valueApp === 1 ? true : false}
+                />
+                <label htmlFor="app">App</label>
               </div>
               <div className="checkbox-keyword">
-                <input type="checkbox" name="app" id="app" value="app" />
-                <label htmlFor="app">APP</label>
+                <input
+                  type="checkbox"
+                  id="email"
+                  value={valueMall}
+                  name="email"
+                  onChange={handleChangeEmail}
+                  checked={valueMall === 1 ? true : false}
+                />
+                <label htmlFor="email">Email</label>
               </div>
-            </div> */}
+            </div>
             <div className="count-keyword">
               <p>
                 Bạn đã lưu trữ được:
-                <strong>{` ${dataNotificationKeyword?.keywords?.length}/10 `}</strong>
+                <strong>{` ${
+                  dataNotificationKeyword?.keywords?.length > 0
+                    ? dataNotificationKeyword?.keywords?.length
+                    : 0
+                }/10 `}</strong>
                 gợi ý công việc
               </p>
             </div>
-
             {dataNotificationKeyword ? (
               dataNotificationKeyword?.keywords?.map(
                 (dataKeyword: any, index: number) => (
-                  <div className="wrap-content_keyword" key={index}>
+                  <div
+                    className={`wrap-content_keyword ${
+                      idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
+                    }`}
+                    key={index}
+                    onClick={() => handleClickItemKeyword(dataKeyword?.id)}
+                  >
                     <div className="content_keyword">
                       <h3>{dataKeyword.keyword}</h3>
                       <ul>
@@ -402,6 +512,17 @@ const Notificate = () => {
       ) : (
         <></>
       )} */}
+
+      {idKeyWords.length > 0 && !activeSystem ? (
+        <div
+          className="icon-delele_keyword"
+          onClick={handleClickDeleteItemKeyword}
+        >
+          <DeleteKeywordIcon />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

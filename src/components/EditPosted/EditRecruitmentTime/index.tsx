@@ -21,7 +21,10 @@ interface IEditRecruitmentTime {
 const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
   const { setEditDataPosted, editDataPosted } = props;
 
+  const valueNewDate: any = moment(new Date());
+
   const handleChangeStartTime = (newValue: any, e: any) => {
+    console.log('nuew', newValue);
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       startDate: new Date(newValue._d).getTime(),
@@ -42,8 +45,9 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
         wrap={true}
         size={[16, 8]}
         style={{ width: '100%' }}
+        className="EditRecruitmentTime"
       >
-        <div className="wrapTimeDay">
+        <div className="wrap-editPost_time">
           <Typography
             sx={styleLabel}
             variant="body1"
@@ -54,15 +58,18 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
           </Typography>
           <DatePicker
             value={
+              // editDataPosted.startDate
               editDataPosted.startDate
                 ? moment(editDataPosted.startDate)
                 : moment(new Date())
             }
             onChange={handleChangeStartTime}
+            format="DD/MM/YYYY"
+            disablePast
           />
         </div>
-        <div className="connect">-</div>
-        <div className="wrapTimeDay">
+        {/* <div className="connect">-</div> */}
+        <div className="wrap-editPost_time">
           <Typography
             sx={styleLabel}
             variant="body1"
@@ -73,11 +80,15 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
           </Typography>
           <DatePicker
             value={
-              editDataPosted.endDate
+              // editDataPosted.endDate
+              editDataPosted.startDate
                 ? moment(editDataPosted.endDate)
                 : moment(new Date())
             }
             onChange={handleChangeEndTime}
+            format="DD/MM/YYYY"
+            minDate={moment(editDataPosted.startDate)}
+            disablePast
           />
         </div>
       </Space>

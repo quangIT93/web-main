@@ -1,6 +1,8 @@
 import React, { useEffect, memo } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 
+import { useDropzone } from 'react-dropzone';
+
 // import { blobToBase64 } from 'blob-util'
 
 //@ts-ignore
@@ -10,6 +12,8 @@ import { validatePostImages } from 'validations';
 import { toast } from 'react-toastify';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
+import { message } from 'antd';
+import axios from 'axios';
 import './style.scss';
 
 interface IEditPostImage {
@@ -21,13 +25,211 @@ interface IEditPostImage {
 const EditPostImage: React.FC<IEditPostImage> = (props) => {
   const { editDataPosted, setEditDataPosted, dataPosted } = props;
 
-  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
+  const [selectedFiles, setSelectedFiles] = React.useState<
+    {
+      image: any;
+      preview: any;
+    }[]
+  >([]);
+
+  // /////////////////////////////////////////////////////////////////////
+  const [imageFile, setImageFile] = React.useState<any>(null);
+  useEffect(() => {
+    const loadImage = async () => {
+      try {
+        // Bước 1: Xác định định dạng file từ URL
+        const imageExtension = dataPosted.image.split('.').pop();
+        const imageType = `image/${
+          imageExtension === 'jpg' ? 'jpeg' : imageExtension
+        }`;
+
+        // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
+        const imageBlob = new Blob([dataPosted.image], { type: imageType });
+        const imageFile = new File([imageBlob], `image.${imageExtension}`, {
+          type: imageType,
+        });
+
+        setImageFile(imageFile);
+      } catch (error) {
+        console.error('Error loading image:', error);
+      }
+    };
+
+    loadImage();
+  }, [dataPosted.image]);
+
+  console.log('dataa post', dataPosted);
+  console.log('dataa editDataPosted', editDataPosted);
+  console.log('data image', imageFile);
+
+  // /////////////////////////////////////////////////////////////////
   const [selectedImages, setSelectedImages] = React.useState<any[]>([]);
+  const [isDragActive, setIsDragActive] = React.useState(false);
+
+  const [files, setFiles] = React.useState<File[]>([]);
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+    accept: {
+      'image/*': [],
+    },
+    onDragEnter: () => {
+      setIsDragActive(true);
+    },
+    onDragLeave: () => {
+      setIsDragActive(false);
+    },
+    onDrop: (acceptedFiles: File[]) => {
+      setIsDragActive(false);
+      const fileUploaded = acceptedFiles.map((file: any) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        }),
+      );
+
+      // console.log('file upload', fileUploaded);
+
+      if (fileUploaded.length > 5) {
+        messageApi.open({
+          type: 'error',
+          content: 'Chỉ có thể tối đa 5 ảnh',
+        });
+        return;
+      }
+
+      const newFileSelected = [
+        ...selectedFiles,
+        ...fileUploaded.map((file: any) => ({
+          image: file,
+          preview: file.preview,
+        })),
+      ];
+
+      if (newFileSelected.length > 5) {
+        messageApi.open({
+          type: 'error',
+          content: 'Chỉ có thể tối đa 5 ảnh',
+        });
+
+        return;
+      }
+
+      setSelectedFiles(newFileSelected);
+
+      setEditDataPosted((preValue: any) => ({
+        ...preValue,
+        images: newFileSelected,
+      }));
+
+      const newImages: any[] = [];
+
+      for (let i = 0; i < fileUploaded.length; i++) {
+        const file = fileUploaded[i];
+        const reader = new FileReader();
+        // console.log('reader', reader);
+
+        reader.onload = () => {
+          const imageDataURL = reader.result as string;
+
+          newImages.push({
+            id: null,
+            image: imageDataURL,
+            status: null,
+          });
+
+          if (newImages.length === fileUploaded.length) {
+            const newImageSelected = [...selectedImages, ...newImages];
+            if (newImageSelected.length > 5) {
+              messageApi.open({
+                type: 'error',
+                content: 'Chỉ có thể tối đa 5 ảnh',
+              });
+
+              return;
+            }
+            setSelectedImages(newImageSelected);
+            // event.target.value = '';
+          }
+        };
+
+        reader.readAsDataURL(file);
+      }
+
+      setFiles(
+        acceptedFiles.map((file: any) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          }),
+        ),
+      );
+    },
+  });
+
+  console.log('edit', editDataPosted);
+
+  const thumbs = files.map((file: any, index: number) => (
+    <div
+      key={index}
+      style={{
+        border: '1px solid #ccc',
+        position: 'relative',
+        marginRight: '12px',
+        height: '150px',
+        width: '150px',
+      }}
+    >
+      <img
+        key={index}
+        src={file.preview}
+        alt={`ảnh bị lỗi`}
+        style={{
+          height: '150px',
+          width: '150px',
+          objectFit: 'cover',
+        }}
+      />
+      <div
+        className="deleteButton"
+        onClick={() => handleDeleteImage(index, 1)}
+        style={{
+          position: 'absolute',
+          top: '6px',
+          right: '6px',
+          border: 'solid 1px #ccc',
+          width: '24px',
+          height: '24px',
+          backgroundColor: '#ccc',
+          cursor: 'pointer',
+        }}
+      >
+        <CloseOutlinedIcon />
+      </div>
+    </div>
+  ));
+
+  useEffect(() => {
+    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+    return () =>
+      files.forEach((file: any) => URL.revokeObjectURL(file.preview));
+  }, []);
 
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 840,
   };
+
+  React.useEffect(() => {
+    selectedFiles.map((value: any) => {
+      // console.log('file img', value.preview);
+    });
+    return () => {
+      // Clean up all selectedFiles previews when the component unmounts
+
+      selectedFiles.length !== 0 &&
+        selectedFiles.forEach((file: any) => URL.revokeObjectURL(file.preview));
+    };
+  }, [selectedFiles]);
 
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -94,6 +296,13 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     }
 
     if (files && dataPosted) {
+      if (files.length > 5) {
+        messageApi.open({
+          type: 'error',
+          content: 'Chỉ có thể tối đa 5 ảnh',
+        });
+        return;
+      }
       const newImages: any[] = [];
 
       for (let i = 0; i < files.length; i++) {
@@ -114,6 +323,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               ...newImages,
             ]);
           }
+          event.target.value = '';
         };
 
         reader.readAsDataURL(file);
@@ -168,8 +378,27 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
 
   return (
     <div className="edit-post_image">
+      {contextHolder}
       <Box p="0rem 0">
-        <Box sx={{ display: 'flex', minWidth: '150px', minHeight: '150px' }}>
+        <section className="drag-img-container">
+          <div
+            {...getRootProps({
+              className: isDragActive ? 'dropzone on-drag' : 'dropzone',
+            })}
+          >
+            <input {...getInputProps()} />
+            {/* <p>Drag and drop some files here, or click to select files</p> */}
+            <p>
+              Kéo và thả nhiều file ảnh ở đây, hoặc click vào để chọn file ảnh
+            </p>
+            {/* <aside className="thumbs-containter">
+              {thumbs}
+            </aside> */}
+          </div>
+        </section>
+      </Box>
+      <Box p="0rem 0">
+        <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '40px' }}>
           {selectedImages?.map((image: any, index: number) => (
             <div
               className="item-editPost_image"
@@ -212,13 +441,14 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
             </div>
           ))}
         </Box>
+
         <Typography
           variant="body1"
           color="#ccc"
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          Có thể tải tối đa 5 ảnh, mỗi ảnh không quá 5MB. (Định dạng cho phép:
+          Có thể tải tối đa 5 ảnh, 5 ảnh không quá 5MB. (Định dạng cho phép:
           jpeg, jpg, png)
         </Typography>
 
