@@ -13,7 +13,14 @@ import { Logo } from '#components';
 // @ts-ignore
 import { ChatIcon, BellIcon } from '#components';
 
-import { FlagVNIcon, SearchIcon } from '#components/Icons';
+import {
+  FlagVNIcon,
+  SearchIcon,
+  MailInfoIcon,
+  MapInfoIcon,
+  BagInfoJob,
+  DownloadIcon,
+} from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
 
@@ -63,6 +70,7 @@ import { Avatar, Button, Space, Spin, Badge } from 'antd';
 import authApi from 'api/authApi';
 import profileApi from 'api/profileApi';
 import messageApi from 'api/messageApi';
+import applitedPostedApi from 'api/apiAppliedPosted';
 
 import {
   Container,
@@ -145,6 +153,7 @@ const Navbar: React.FC = () => {
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
 
   // check search
   useEffect(() => {
@@ -561,6 +570,68 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const getAppliedPostedJobs = async () => {
+    try {
+      const result = await applitedPostedApi.getAllApplitedPostedApi(0);
+      if (result) {
+        localStorage.setItem('numberAppliedPostedJobs', result.data.length);
+
+        setAppliedPostedJob(result.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getAppliedPostedJobs();
+  }, []);
+
+  const [approved, setApproved] = useState(0);
+  const [pending, setPending] = useState(0);
+  const [waiting, setWaiting] = useState(0);
+
+  useEffect(() => {
+    const countApproved = appliedPostedJob.reduce(
+      (count: number, applicant: any) => {
+        if (applicant.application_status === 2) {
+          return count + 1;
+        }
+        return count;
+      },
+      0,
+    );
+
+    const countPending = appliedPostedJob.reduce(
+      (count: number, applicant: any) => {
+        if (applicant.application_status === 3) {
+          return count + 1;
+        }
+        return count;
+      },
+      0,
+    );
+
+    const countWaitng = appliedPostedJob.reduce(
+      (count: number, applicant: any) => {
+        if (
+          applicant.application_status === 1 ||
+          applicant.application_status === 0
+        ) {
+          return count + 1;
+        }
+        return count;
+      },
+      0,
+    );
+
+    console.log('acc');
+
+    setApproved(countApproved);
+    setPending(countPending);
+    setWaiting(countWaitng);
+  }, [appliedPostedJob]);
+
   const handleResetValue = () => {
     setJobType(null);
     setListDis([]);
@@ -641,14 +712,47 @@ const Navbar: React.FC = () => {
           <div className="sub-login" ref={refInfoUser}>
             <Space className="sub-login_info">
               <Avatar
-                style={{ backgroundColor: '#0D99FF' }}
+                style={{
+                  backgroundColor: '#0D99FF',
+                  minWidth: '100px',
+                  minHeight: '100px',
+                }}
                 icon={<UserOutlined style={{ fontSize: 30 }} />}
                 size={50}
                 src={dataProfile?.avatar ? dataProfile.avatar : null}
               />
-              <div>
+              <div className="sub-login_detail">
                 <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
-                <span>{dataProfile?.email ? dataProfile?.email : ''}</span>
+                <span
+                  className="sub-login_text"
+                  onClick={() => window.open(`/profile`, '_seft')}
+                >
+                  <MailInfoIcon />
+                  {dataProfile?.email ? dataProfile?.email : ''}
+                </span>
+                <span className="sub-login_text">
+                  <MapInfoIcon />
+                  <p>
+                    {dataProfile?.categories.length > 0
+                      ? dataProfile?.categories.map((profile: any) => {
+                          return `${profile.parent_category} / ${profile.child_category}, `;
+                        })
+                      : 'Chưa cập nhật thông tin'}
+                  </p>
+                </span>
+                <span
+                  className="sub-login_text"
+                  onClick={() => window.open(`/profile`, '_seft')}
+                >
+                  <BagInfoJob />
+                  <p>
+                    {dataProfile?.locations.length > 0
+                      ? dataProfile?.locations.map((location: any) => {
+                          return `${location.district} , `;
+                        })
+                      : 'Chưa cập nhật thông tin'}
+                  </p>
+                </span>
               </div>
             </Space>
             <div className="sub-login_items">
@@ -669,12 +773,20 @@ const Navbar: React.FC = () => {
                   <span>Lịch sử</span>
                 </div>
               </Link>
+              <div className="sub-history_status">
+                <span>Approved: {`${approved}`}</span>
+                <span>|</span>
+                <span>Pending: {`${pending}`}</span>
+                <span>|</span>
+                <span>Waiting: {`${waiting}`}</span>
+              </div>
               {/* <div className="sub-login_item">
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
               </div> */}
               <div className="sub-login_item" onClick={handleLogout}>
                 <LogoutOutlined />
+
                 <span>Đăng xuất</span>
               </div>
 
@@ -826,6 +938,7 @@ const Navbar: React.FC = () => {
 
             <Badge count={countChat} className="btn-badge">
               <Button
+                className="btn-notice"
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
                     window.open(`/message`, '_seft');
@@ -839,6 +952,7 @@ const Navbar: React.FC = () => {
                 <ChatIcon />
               </Button>
             </Badge>
+
             <div className="wrap-btn_notice">
               <Button
                 className="btn-notice"
@@ -848,6 +962,41 @@ const Navbar: React.FC = () => {
                 <BellIcon />
               </Button>
               {openNotificate ? <Notificate /> : <></>}
+            </div>
+
+            <div className="wrap-btn_notice">
+              <Button
+                className="btn-notice"
+                // onClick={() => setOpenNotificate(!openNotificate)}
+                ref={bellRef}
+              >
+                <DownloadIcon />
+              </Button>
+              <div className="sub-icon_qr">
+                <h2>Tải Ứng dụng Hi Job!</h2>
+                <img src="/QrApp.jpg" alt="" />
+                <div className="sub-icon_apps">
+                  <Link
+                    to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+                    target="_seft"
+                  >
+                    <img
+                      id="img-gallery"
+                      src={require('../../img/langdingPage/image 43.png')}
+                      alt="ảnh bị lỗi"
+                    />
+                  </Link>
+                  <Link
+                    to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+                    target="_seft"
+                  >
+                    <img
+                      src={require('../../img/langdingPage/image 45.png')}
+                      alt="ảnh bị lỗi"
+                    />
+                  </Link>
+                </div>
+              </div>
             </div>
           </Center>
           <Right className="div-nav-right">
