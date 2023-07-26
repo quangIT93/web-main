@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 import { message } from 'antd';
-
+import axios from 'axios';
 import './style.scss';
 
 interface IEditPostImage {
@@ -31,6 +31,38 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       preview: any;
     }[]
   >([]);
+
+  // /////////////////////////////////////////////////////////////////////
+  const [imageFile, setImageFile] = React.useState<any>(null);
+  useEffect(() => {
+    const loadImage = async () => {
+      try {
+        // Bước 1: Xác định định dạng file từ URL
+        const imageExtension = dataPosted.image.split('.').pop();
+        const imageType = `image/${
+          imageExtension === 'jpg' ? 'jpeg' : imageExtension
+        }`;
+
+        // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
+        const imageBlob = new Blob([dataPosted.image], { type: imageType });
+        const imageFile = new File([imageBlob], `image.${imageExtension}`, {
+          type: imageType,
+        });
+
+        setImageFile(imageFile);
+      } catch (error) {
+        console.error('Error loading image:', error);
+      }
+    };
+
+    loadImage();
+  }, [dataPosted.image]);
+
+  console.log('dataa post', dataPosted);
+  console.log('dataa editDataPosted', editDataPosted);
+  console.log('data image', imageFile);
+
+  // /////////////////////////////////////////////////////////////////
   const [selectedImages, setSelectedImages] = React.useState<any[]>([]);
   const [isDragActive, setIsDragActive] = React.useState(false);
 
@@ -349,7 +381,11 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       {contextHolder}
       <Box p="0rem 0">
         <section className="drag-img-container">
-          <div {...getRootProps({ className: isDragActive ? 'dropzone on-drag' : 'dropzone' })}>
+          <div
+            {...getRootProps({
+              className: isDragActive ? 'dropzone on-drag' : 'dropzone',
+            })}
+          >
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
             <p>
