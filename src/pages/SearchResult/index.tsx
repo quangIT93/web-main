@@ -40,6 +40,9 @@ import locationApi from 'api/locationApi';
 import categoriesApi from 'api/categoriesApi';
 import Footer from '../../components/Footer/Footer';
 
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -180,8 +183,8 @@ const NewJobs: React.FC = () => {
     wards: [],
   });
   const [openModal, setOpenModal] = React.useState(false);
-
-  const [valueKeyword, setValueKeyword] = React.useState('');
+  const QUERY = decodeURIComponent(`${searchParams.get('q')}`);
+  const [valueKeyword, setValueKeyword] = React.useState(QUERY ? QUERY : '');
   const [districtId, setDistrictId] = React.useState<string>('');
 
   const [oenModalCreateSuccess, setOpenModalCreateSuccess] =
@@ -221,7 +224,6 @@ const NewJobs: React.FC = () => {
   const dataProfile = useSelector((state: RootState) => state.profileUser);
 
   // query value
-  const QUERY = decodeURIComponent(`${searchParams.get('q')}`);
 
   const SALARY_TYPE = Number(searchParams.get('sal-type'));
   const MONEY_TYPE = Number(searchParams.get('money_type'));
@@ -547,7 +549,7 @@ const NewJobs: React.FC = () => {
   const handleSubmitKeyword = async () => {
     try {
       const result = await notificationKeywordApi.createKeywordNotification(
-        QUERY,
+        valueKeyword,
         cateloryOneItem,
         locationOneItem,
       );
@@ -565,6 +567,7 @@ const NewJobs: React.FC = () => {
   // open Modal success
   const handleCloseModalCreateSuccess = () => {
     setOpenModalCreateSuccess(false);
+    setOpenNotificate(true);
   };
 
   const handleOpenNotification = () => {
@@ -782,9 +785,10 @@ const NewJobs: React.FC = () => {
               // onChange={onChange}
               type=""
               style={{ marginTop: '12px' }}
-              value={QUERY ? QUERY : ''}
+              value={valueKeyword}
               // disabled
               // error={companyError} // Đánh dấu lỗi
+              onChange={handleChangeKeywordInput}
             />
 
             <Cascader
@@ -940,13 +944,34 @@ const NewJobs: React.FC = () => {
         <Modal
           open={oenModalCreateSuccess}
           onClose={handleCloseModalCreateSuccess}
+          className="Modal-success_keyword"
         >
-          <Box sx={styleSuccess}>
+          <Box sx={styleSuccess} className="box-modal_successKeyword">
+            <IconButton
+              aria-label="close"
+              onClick={handleCloseModalCreateSuccess}
+              sx={{
+                position: 'absolute',
+                right: '10px',
+                top: '10px',
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
             <p className="title-modal_createKeySuccess">Hoàn thành</p>
-            <p>
+            <p
+              className="text-modal_createKeySuccess"
+              style={{
+                fontFamily: 'Roboto',
+                // lineHeight: '16px',
+                margin: '12px 0px 4px 0px',
+              }}
+            >
               Bạn đã thành công thêm từ khoá, có thể các thông báo sẽ làm phiền,
-              bạn có thể tắt thông báo trong mục Thông báo từ khoá. Bạn có muốn
-              chuyển đến mục thông báo từ khoá không?
+              bạn có thể tắt thông báo trong mục Thông báo từ khoá.
+            </p>
+            <p className="text-modal_createKeySuccess">
+              Bạn có muốn chuyển đến mục thông báo từ khoá không?
             </p>
             <div
               style={{
@@ -969,7 +994,7 @@ const NewJobs: React.FC = () => {
               >
                 Xác nhận
               </Button>
-              <Button
+              {/* <Button
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
@@ -991,7 +1016,7 @@ const NewJobs: React.FC = () => {
                 variant="outlined"
               >
                 Hủy
-              </Button>
+              </Button> */}
             </div>
           </Box>
         </Modal>
