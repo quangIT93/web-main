@@ -563,7 +563,7 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
+      `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
     );
   };
 
@@ -944,8 +944,8 @@ const Detail: React.FC = () => {
                                 <h5>
                                   {post?.data.expired_date
                                     ? moment(
-                                        new Date(post?.data.expired_date),
-                                      ).format('DD/MM/yyyy')
+                                      new Date(post?.data.expired_date),
+                                    ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
                               </div>
@@ -994,7 +994,7 @@ const Detail: React.FC = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                          onClick={handlePreviousPost}
+                        // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1003,7 +1003,7 @@ const Detail: React.FC = () => {
                         </div>
                         <div
                           className="description-button_next"
-                          onClick={handleNextPost}
+                          // onClick={handleNextPost}
                           style={{
                             color: postNext ? 'black' : '#cccc',
                           }}
