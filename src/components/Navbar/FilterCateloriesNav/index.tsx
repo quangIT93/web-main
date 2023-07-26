@@ -6,7 +6,7 @@ import { Cascader, Divider, Typography, Button } from 'antd';
 import categoriesApi from '../../../api/categoriesApi';
 import './style.scss';
 import { useSearchParams, useLocation } from 'react-router-dom';
-
+import { getCookie } from 'cookies';
 import { RootState } from 'store';
 import { BagFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
@@ -39,7 +39,10 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
-  const listCate = searchParams
+
+  let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
+  const listCate = userFilteredCookies?.list_cate;
+  searchParams
     .getAll('categories-ids')
     .map((dis) => dis.split(','))
     .map((category) => category.map(Number));
@@ -51,7 +54,11 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
         setDataCategories(result.data);
       }
 
-      if (location.pathname !== '/search-results' && userProfile) {
+      if (
+        location?.pathname !== '/search-results' &&
+        userProfile &&
+        listCate?.length === 0
+      ) {
         setListCate(
           userProfile.categories.map((profile: any) => [
             profile.parent_category_id,
@@ -81,13 +88,13 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
 
   const onChange = (value: any) => {
     setDisable(false);
-    const secondValues = value.map((item: any) => item[1]);
+    const secondValues = value?.map((item: any) => item[1]);
 
-    if (secondValues.length <= 3 && listCate.length <= 3) {
+    if (secondValues?.length <= 3 && listCate?.length <= 3) {
       setCategoriesId(secondValues);
       setListCate(value);
     }
-    if (value.length > 1) {
+    if (value?.length > 1) {
       setDisable(true);
     }
   };
@@ -133,7 +140,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
             listCate?.length !== 0
               ? listCate
               : listCate?.length === 0 &&
-                location.pathname === '/search-results'
+                location?.pathname === '/search-results'
               ? []
               : userProfile?.categories.map((profile: any) => [
                   profile?.parent_category_id,

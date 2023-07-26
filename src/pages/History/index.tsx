@@ -23,6 +23,12 @@ import siteApi from 'api/siteApi';
 
 // import icon
 
+import {
+  // useNavigate,
+  // createSearchParams,
+  useSearchParams,
+} from 'react-router-dom';
+
 import './style.scss';
 // @ts-ignore
 import { Navbar } from '#components';
@@ -56,10 +62,14 @@ const dataItem = [
   },
 ];
 const HistoryPost = () => {
-  const [activeChild, setActiveChild] = React.useState('0-0');
-  const [ItemLeft, setItemLeft] = React.useState<null | number>(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const hotjobtype = Number(searchParams.get('post'));
+  const [activeChild, setActiveChild] = React.useState(hotjobtype === 2 ? '2-0' : '0-0');
+  const [ItemLeft, setItemLeft] = React.useState<null | number>(hotjobtype === 2 ? 2 : 0);
   const [showDetailPosted, setShowDetailPosted] =
     React.useState<boolean>(false);
+  console.log("searchParams", hotjobtype === 2);
+
 
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     // event.preventDefault()
@@ -162,6 +172,13 @@ const HistoryPost = () => {
     setShowDetailPosted(false);
   }, []);
 
+  React.useEffect(() => {
+    if (hotjobtype === 2) {
+      setItemLeft(2)
+      setActiveChild('2-0');
+    }
+  }, [])
+
   return (
     <div className="post-history">
       <Navbar />
@@ -177,7 +194,7 @@ const HistoryPost = () => {
         <Box sx={{ display: 'flex', gap: '12px' }} className="history-post-content">
           <Box className="history-post_left">
             <Collapse
-              defaultActiveKey={['0', '0']}
+              defaultActiveKey={hotjobtype && hotjobtype === 2 ? ['2', '0'] : ['0', '0']}
               accordion
               bordered={false}
               ghost={true}

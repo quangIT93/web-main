@@ -8,6 +8,8 @@ import { Link, useLocation } from 'react-router-dom';
 import ModalLogin from '../../components/Home/ModalLogin';
 import Skeleton from '@mui/material/Skeleton';
 
+import { setCookie, getCookie } from 'cookies';
+
 // @ts-ignore
 import { Logo } from '#components';
 // @ts-ignore
@@ -104,6 +106,8 @@ const Navbar: React.FC = () => {
     SetRefNav,
     setOpenNotificate,
     openNotificate,
+    setSearch,
+    search,
   }: // setRefNav,
   {
     openCollapseFilter: boolean;
@@ -113,6 +117,8 @@ const Navbar: React.FC = () => {
     SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
     setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
     openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
   } = useContext(HomeValueContext);
 
   const {
@@ -148,20 +154,28 @@ const Navbar: React.FC = () => {
   // const [dateEnd, setDateEnd] = useState()
   const [isRemotely, setIsRemotely] = useState<number>(0);
   const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0);
+  const [userFiltered, setUserFiltered] = useState<any>();
 
   const [countChat, setCountChat] = useState<number>(0);
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
+  const [isSearch, setIsSearch] = useState<boolean>(false);
+
+  useEffect(() => {
+    let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
+    setUserFiltered(userFilteredCookies);
+  }, []);
+  console.log('userFiltered: ', userFiltered);
 
   // check search
   useEffect(() => {
     if (
       isRemotely !== 0 ||
       isWorkingWeekend !== 0 ||
-      listDis.length > 0 ||
-      listCate.length > 0 ||
+      listDis?.length > 0 ||
+      listCate?.length > 0 ||
       salaryMin !== 6000000 ||
       salaryMax !== 12000000 ||
       typeMoney === 2 ||
@@ -175,8 +189,8 @@ const Navbar: React.FC = () => {
   }, [
     isRemotely,
     isWorkingWeekend,
-    listDis.length,
-    listCate.length,
+    listDis?.length,
+    listCate?.length,
     salaryMin,
     salaryMax,
     typeMoney,
@@ -190,15 +204,18 @@ const Navbar: React.FC = () => {
   // value query
 
   const QUERY = searchParams.get('q');
-  const SALARY_TYPE = Number(searchParams.get('sal-type'));
-  const JOB_TYPE = Number(searchParams.get('job-type'));
-  const DIS_IDS = searchParams
-    .getAll('dis-ids')
-    .map((disId) => disId.split(','));
+  const SALARY_TYPE = userFiltered?.salary_type;
+  const JOB_TYPE = userFiltered?.job_type;
+  const DIS_IDS = userFiltered?.list_dis;
+  // :
+  // searchParams
+  //   .getAll('dis-ids')
+  //   .map((disId) => disId.split(','));
   // .map((dis) => dis[1])
-  const CATE_IDS = searchParams
-    .getAll('categories-ids')
-    .map((disId) => disId.split(','));
+  const CATE_IDS = userFiltered?.list_cate;
+  // searchParams
+  //   .getAll('categories-ids')
+  //   .map((disId) => disId.split(','));
   // .map((dis) => dis[1])
 
   // params url
@@ -355,7 +372,37 @@ const Navbar: React.FC = () => {
 
   // handle click search button
 
-  const handleSearch = (event: any, valueSearchInput: string | undefined) => {
+  // // Set the cookie
+  // function setCookie(name: string, value: string, days: number) {
+  //   let expires = '';
+  //   if (days) {
+  //     let date = new Date();
+  //     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  //     expires = '; expires=' + date.toUTCString();
+  //   }
+  //   document.cookie = name + '=' + (value || '') + expires + '; path=/';
+  // }
+
+  // // Get the cookie
+  // function getCookie(name: string): string | null {
+  //   let nameEQ = name + '=';
+  //   let ca = document.cookie.split(';');
+  //   for (let i = 0; i < ca.length; i++) {
+  //     let c = ca[i];
+  //     while (c.charAt(0) == ' ') {
+  //       c = c.substring(1, c.length);
+  //     }
+  //     if (c.indexOf(nameEQ) == 0) {
+  //       return c.substring(nameEQ.length, c.length);
+  //     }
+  //   }
+  //   return null;
+  // }
+
+  const handleSearch = async (
+    event: any,
+    valueSearchInput: string | undefined,
+  ) => {
     event.preventDefault();
     var encode: any;
     var job_type = jobType;
@@ -368,19 +415,33 @@ const Navbar: React.FC = () => {
     var is_working_weekend = isWorkingWeekend;
     var is_remotely = isRemotely;
 
-    if (list_dis.length > 0) {
+    let filter = {
+      // job_type,
+      money_type,
+      // salary_type,
+      salary_min,
+      salary_max,
+      list_dis,
+      list_cate,
+      is_working_weekend,
+      is_remotely,
+    };
+
+    await setCookie('userFiltered', JSON.stringify(filter), 365);
+
+    if (list_dis?.length > 0) {
       list_dis.forEach((item) => {
         params.append(`dis-ids`, `${item}`);
       });
-    } else if (list_dis.length === 0 && DIS_IDS.length > 0) {
+    } else if (list_dis?.length === 0 && DIS_IDS.length > 0) {
       [].forEach((item) => {
         params.append(`dis-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      DIS_IDS.length === 0 &&
-      list_dis.length !== 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      DIS_IDS?.length === 0 &&
+      list_dis?.length !== 0 &&
+      location?.pathname !== '/search-results'
     ) {
       // dataProfile.locations.forEach((item: any) => {
       //   params.append(`dis-ids`, `${[item.province_id, item.district_id]}`);
@@ -389,10 +450,10 @@ const Navbar: React.FC = () => {
         params.append(`dis-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      DIS_IDS.length === 0 &&
-      list_dis.length === 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      DIS_IDS?.length === 0 &&
+      list_dis?.length === 0 &&
+      location?.pathname !== '/search-results'
     ) {
       [].forEach((item) => {
         params.append(`dis-ids`, `${item}`);
@@ -400,19 +461,19 @@ const Navbar: React.FC = () => {
     }
     // lấy từ profile qua
 
-    if (list_cate.length > 0) {
+    if (list_cate?.length > 0) {
       list_cate.forEach((item, index) => {
         paramsCate.append(`categories-ids`, `${item}`);
       });
-    } else if (list_cate.length === 0 && CATE_IDS.length > 0) {
+    } else if (list_cate?.length === 0 && CATE_IDS?.length > 0) {
       [].forEach((item) => {
-        paramsCate.append(`categories-ids`, `${item}`);
+        paramsCate?.append(`categories-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      CATE_IDS.length === 0 &&
-      list_cate.length !== 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      CATE_IDS?.length === 0 &&
+      list_cate?.length !== 0 &&
+      location?.pathname !== '/search-results'
     ) {
       // dataProfile.categories.forEach((item: any) => {
       //   paramsCate.append(
@@ -420,17 +481,17 @@ const Navbar: React.FC = () => {
       //     `${[item.parent_category_id, item.child_category_id]}`,
       //   );
       // });
-      list_cate.forEach((item, index) => {
-        paramsCate.append(`categories-ids`, `${item}`);
+      list_cate?.forEach((item, index) => {
+        paramsCate?.append(`categories-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      CATE_IDS.length === 0 &&
-      list_cate.length === 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      CATE_IDS?.length === 0 &&
+      list_cate?.length === 0 &&
+      location?.pathname !== '/search-results'
     ) {
       [].forEach((item) => {
-        paramsCate.append(`categories-ids`, `${item}`);
+        paramsCate?.append(`categories-ids`, `${item}`);
       });
     }
 
@@ -470,28 +531,39 @@ const Navbar: React.FC = () => {
     }
 
     setTimeout(() => {
-      window.open(
-        `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}` +
-          `${salary_type ? `&sal-type=${salary_type}` : ''}` +
-          `${job_type ? `&job-type=${job_type}` : ''}` +
-          `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
-          `${
-            list_cate.length > 0
-              ? `&${paramsCate.toString()}`
-              : `&${paramsCate.toString()}`
-          }` +
-          `${salary_min ? `&salary_min=${salary_min}` : ''}` +
-          `${salary_max ? `&salary_max=${salary_max}` : ''}` +
-          `${
-            is_working_weekend
-              ? `&is_working_weekend=${is_working_weekend}`
-              : ''
-          }` +
-          `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
-          `${money_type ? `&money_type=${money_type}` : ''}`,
-        '_self',
-      );
+      if (location.pathname !== '/search-results') {
+        window.open(`/search-results`);
+      } else {
+        // setSearchParams({
+        //   'search': `${isSearch}`
+        // })
+        setSearch(!search);
+        setOpenCollapseFilter(false);
+        // window.open(`/search-results`, "_self")
+      }
     }, 100);
+
+    // setTimeout(() => {
+    //   window.open(
+    //     `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}` +
+    //     `${salary_type ? `&sal-type=${salary_type}` : ''}` +
+    //     `${job_type ? `&job-type=${job_type}` : ''}` +
+    //     `${params.toString() !== '' ? `&${params.toString()}` : ''}` +
+    //     `${list_cate.length > 0
+    //       ? `&${paramsCate.toString()}`
+    //       : `&${paramsCate.toString()}`
+    //     }` +
+    //     `${salary_min ? `&salary_min=${salary_min}` : ''}` +
+    //     `${salary_max ? `&salary_max=${salary_max}` : ''}` +
+    //     `${is_working_weekend
+    //       ? `&is_working_weekend=${is_working_weekend}`
+    //       : ''
+    //     }` +
+    //     `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
+    //     `${money_type ? `&money_type=${money_type}` : ''}`,
+    //     '_self',
+    //   );
+    // }, 100);
   };
 
   // login
