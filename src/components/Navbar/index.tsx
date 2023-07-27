@@ -107,14 +107,6 @@ const Navbar: React.FC = () => {
     setOpenNotificate,
     openNotificate,
     setSearch,
-    search,  const {
-    openCollapseFilter,
-    setOpenCollapseFilter,
-    // setHeightNavbar,
-    SetRefNav,
-    setOpenNotificate,
-    openNotificate,
-    setSearch,
     search,
   }: // setRefNav,
   {
@@ -542,7 +534,7 @@ const Navbar: React.FC = () => {
       salary_type = SALARY_TYPE;
     }
 
-     setTimeout(() => {
+    setTimeout(() => {
       if (location.pathname !== '/search-results') {
         window.open(
           `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}`,
@@ -849,9 +841,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -947,9 +939,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -972,8 +964,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1057,7 +1050,10 @@ const Navbar: React.FC = () => {
               </Button>
               <div className="sub-icon_qr">
                 <h2>Tải Ứng dụng HiJob!</h2>
-                <img src="/QrApp.jpg" alt="" />
+                <img
+                  src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
+                  alt="Ảnh lỗi"
+                />
                 <div className="sub-icon_apps">
                   <Link
                     to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
