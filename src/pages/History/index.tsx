@@ -19,7 +19,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 // api
-import siteApi from 'api/siteApi';
+// import siteApi from 'api/siteApi';
 
 // import icon
 
@@ -35,11 +35,6 @@ import { Navbar } from '#components';
 // import Item from 'antd/es/list/Item'
 
 const { Panel } = Collapse;
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
 
 const dataItem = [
   {
@@ -64,12 +59,15 @@ const dataItem = [
 const HistoryPost = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const hotjobtype = Number(searchParams.get('post'));
-  const [activeChild, setActiveChild] = React.useState(hotjobtype === 2 ? '2-0' : '0-0');
-  const [ItemLeft, setItemLeft] = React.useState<null | number>(hotjobtype === 2 ? 2 : 0);
+  const [activeChild, setActiveChild] = React.useState(
+    hotjobtype === 2 ? '2-0' : '0-0',
+  );
+  const [ItemLeft, setItemLeft] = React.useState<null | number>(
+    hotjobtype === 2 ? 2 : 0,
+  );
   const [showDetailPosted, setShowDetailPosted] =
     React.useState<boolean>(false);
-  console.log("searchParams", hotjobtype === 2);
-
+  console.log('searchParams', hotjobtype === 2);
 
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     // event.preventDefault()
@@ -108,27 +106,27 @@ const HistoryPost = () => {
       {ItemLeft === dataItem[0].id - 1
         ? dataItem[0].title
         : ItemLeft === dataItem[1].id - 1
-          ? dataItem[1].title
-          : dataItem[2].title}
+        ? dataItem[1].title
+        : dataItem[2].title}
     </Typography>,
     <Typography key="3" color="text.primary">
       {activeChild === '0-0'
         ? 'Tất cả'
         : // : activeChild === '0-1'
-        // ? 'Đã được duyệt'
-        // : activeChild === '0-2'
-        // ? 'Đang chờ duyệt'
-        ''}
+          // ? 'Đã được duyệt'
+          // : activeChild === '0-2'
+          // ? 'Đang chờ duyệt'
+          ''}
 
       {activeChild === '1-0' ? 'Tất cả' : ''}
 
       {activeChild === '2-0'
         ? 'Tất cả'
         : activeChild === '2-1'
-          ? 'Chưa đóng'
-          : activeChild === '2-2'
-            ? 'Đã đóng'
-            : ''}
+        ? 'Chưa đóng'
+        : activeChild === '2-2'
+        ? 'Đã đóng'
+        : ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {
@@ -174,10 +172,10 @@ const HistoryPost = () => {
 
   React.useEffect(() => {
     if (hotjobtype === 2) {
-      setItemLeft(2)
+      setItemLeft(2);
       setActiveChild('2-0');
     }
-  }, [])
+  }, []);
 
   return (
     <div className="post-history">
@@ -191,10 +189,15 @@ const HistoryPost = () => {
             {breadcrumbs}
           </Breadcrumbs>
         </Box>
-        <Box sx={{ display: 'flex', gap: '12px' }} className="history-post-content">
+        <Box
+          sx={{ display: 'flex', gap: '12px' }}
+          className="history-post-content"
+        >
           <Box className="history-post_left">
             <Collapse
-              defaultActiveKey={hotjobtype && hotjobtype === 2 ? ['2', '0'] : ['0', '0']}
+              defaultActiveKey={
+                hotjobtype && hotjobtype === 2 ? ['2', '0'] : ['0', '0']
+              }
               accordion
               bordered={false}
               ghost={true}
@@ -205,8 +208,9 @@ const HistoryPost = () => {
                   header={
                     <div
                       onClick={() => handleClickSubTitle(index)}
-                      className={`${ItemLeft === index ? 'activeItem' : ''
-                        } panel-title_text`}
+                      className={`${
+                        ItemLeft === index ? 'activeItem' : ''
+                      } panel-title_text`}
                     >
                       {item.title}
                     </div>

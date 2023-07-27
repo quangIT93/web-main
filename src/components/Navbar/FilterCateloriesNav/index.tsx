@@ -1,8 +1,8 @@
-import React, { useState, memo } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import Box from '@mui/material/Box';
-import { Cascader, Divider, Typography, Button } from 'antd';
+// import Box from '@mui/material/Box';
+import { Cascader, Divider, Typography } from 'antd';
 import categoriesApi from '../../../api/categoriesApi';
 import './style.scss';
 import { useSearchParams, useLocation } from 'react-router-dom';
@@ -39,11 +39,17 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
+  const userProfile = useSelector((state: RootState) => state.profile.profile);
 
-  let userFilteredCookies = JSON.parse(
-    getCookie('userFiltered') || '{}',
-  )
-  const listCate = userFilteredCookies?.list_cate
+  const listCate: any = useRef<any>(
+    JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
+      ? JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
+      : userProfile?.categories.map((profile: any) => [
+          profile?.parent_category_id,
+          profile?.child_category_id,
+        ]),
+  );
+
   searchParams
     .getAll('categories-ids')
     .map((dis) => dis.split(','))
@@ -56,7 +62,11 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
         setDataCategories(result.data);
       }
 
-      if (location.pathname !== '/search-results' && userProfile && listCate.length === 0) {
+      if (
+        location?.pathname !== '/search-results' &&
+        userProfile &&
+        listCate?.current?.length === 0
+      ) {
         setListCate(
           userProfile.categories.map((profile: any) => [
             profile.parent_category_id,
@@ -64,21 +74,20 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           ]),
         );
       } else {
-        setListCate(listCate);
+        setListCate(listCate?.current);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const userProfile = useSelector((state: RootState) => state.profile.profile);
   React.useEffect(() => {
     getCategories();
     // if (listCate.length > 2) {
     //   setDisable(true)
     // }
 
-    onChange(listCate);
+    onChange(listCate?.current);
   }, [userProfile]);
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
@@ -86,13 +95,13 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
 
   const onChange = (value: any) => {
     setDisable(false);
-    const secondValues = value.map((item: any) => item[1]);
+    const secondValues = value?.map((item: any) => item[1]);
 
-    if (secondValues.length <= 3 && listCate.length <= 3) {
+    if (secondValues?.length <= 3) {
       setCategoriesId(secondValues);
       setListCate(value);
     }
-    if (value.length > 1) {
+    if (value?.length > 1) {
       setDisable(true);
     }
   };
@@ -110,37 +119,37 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
+                  value: parentCategory.parent_category_id,
+                  label: parentCategory.parent_category,
+                  children: parentCategory.childs.map((child: any) => {
+                    var dis = false;
+                    //check id child  when disable = true
+                    if (disable) {
+                      dis = true;
+                      for (const elem of categoriesId) {
+                        if (elem === child.id) {
+                          dis = false;
+                          break;
+                        }
                       }
                     }
-                  }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                    return {
+                      value: child.id,
+                      label: child.name,
+                      disabled: dis,
+                    };
+                  }),
+                }))
               : []
           }
           onChange={onChange}
           defaultValue={
-            listCate?.length !== 0
-              ? listCate
-              : listCate?.length === 0 &&
-                location.pathname === '/search-results'
-                ? []
-                : userProfile?.categories.map((profile: any) => [
+            listCate?.current?.length !== 0
+              ? listCate?.current
+              : listCate?.current?.length === 0 &&
+                location?.pathname === '/search-results'
+              ? []
+              : userProfile?.categories.map((profile: any) => [
                   profile?.parent_category_id,
                   profile?.child_category_id,
                 ])

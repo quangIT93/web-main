@@ -107,7 +107,7 @@ const Navbar: React.FC = () => {
     setOpenNotificate,
     openNotificate,
     setSearch,
-    search
+    search,
   }: // setRefNav,
     {
       openCollapseFilter: boolean;
@@ -154,7 +154,7 @@ const Navbar: React.FC = () => {
   // const [dateEnd, setDateEnd] = useState()
   const [isRemotely, setIsRemotely] = useState<number>(0);
   const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0);
-  const [userFiltered, setUserFiltered] = useState<any>()
+  const [userFiltered, setUserFiltered] = useState<any>();
 
   const [countChat, setCountChat] = useState<number>(0);
   // check search results
@@ -164,20 +164,19 @@ const Navbar: React.FC = () => {
   const [isSearch, setIsSearch] = useState<boolean>(false);
 
   useEffect(() => {
-    let userFilteredCookies = JSON.parse(
-      getCookie('userFiltered') || '{}',
-    )
-    setUserFiltered(userFilteredCookies)
-  }, [])
-  console.log("userFiltered: ", userFiltered);
+    let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
+    setUserFiltered(userFilteredCookies);
+  }, []);
+
+  console.log("valueSearchInput", valueSearchInput);
 
   // check search
   useEffect(() => {
     if (
       isRemotely !== 0 ||
       isWorkingWeekend !== 0 ||
-      listDis.length > 0 ||
-      listCate.length > 0 ||
+      listDis?.length > 0 ||
+      listCate?.length > 0 ||
       salaryMin !== 6000000 ||
       salaryMax !== 12000000 ||
       typeMoney === 2 ||
@@ -191,8 +190,8 @@ const Navbar: React.FC = () => {
   }, [
     isRemotely,
     isWorkingWeekend,
-    listDis.length,
-    listCate.length,
+    listDis?.length,
+    listCate?.length,
     salaryMin,
     salaryMax,
     typeMoney,
@@ -209,7 +208,7 @@ const Navbar: React.FC = () => {
   const SALARY_TYPE = userFiltered?.salary_type;
   const JOB_TYPE = userFiltered?.job_type;
   const DIS_IDS = userFiltered?.list_dis;
-  // : 
+  // :
   // searchParams
   //   .getAll('dis-ids')
   //   .map((disId) => disId.split(','));
@@ -401,7 +400,10 @@ const Navbar: React.FC = () => {
   //   return null;
   // }
 
-  const handleSearch = async (event: any, valueSearchInput: string | undefined) => {
+  const handleSearch = async (
+    event: any,
+    valueSearchInput: string | undefined,
+  ) => {
     event.preventDefault();
     var encode: any;
     var job_type = jobType;
@@ -409,8 +411,8 @@ const Navbar: React.FC = () => {
     var salary_type = salaryType;
     var salary_min = salaryMin;
     var salary_max = salaryMax;
-    var list_dis = listDis;
-    var list_cate = listCate;
+    var list_dis = listDis ? listDis : [];
+    var list_cate = listCate ? listCate : [];
     var is_working_weekend = isWorkingWeekend;
     var is_remotely = isRemotely;
 
@@ -424,24 +426,28 @@ const Navbar: React.FC = () => {
       list_cate,
       is_working_weekend,
       is_remotely,
-    }
-
+    };
+    console.log('list_dis', list_dis);
+    console.log('listDis', listDis);
+    console.log('list_cate', list_cate);
+    console.log('listCate', listCate);
+    console.log('salary_max', salary_max);
+    console.log('salary_min', salary_min);
     await setCookie('userFiltered', JSON.stringify(filter), 365);
 
-
-    if (list_dis.length > 0) {
+    if (list_dis?.length > 0) {
       list_dis.forEach((item) => {
         params.append(`dis-ids`, `${item}`);
       });
-    } else if (list_dis.length === 0 && DIS_IDS.length > 0) {
+    } else if (list_dis?.length === 0 && DIS_IDS?.length > 0) {
       [].forEach((item) => {
         params.append(`dis-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      DIS_IDS.length === 0 &&
-      list_dis.length !== 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      DIS_IDS?.length === 0 &&
+      list_dis?.length !== 0 &&
+      location?.pathname !== '/search-results'
     ) {
       // dataProfile.locations.forEach((item: any) => {
       //   params.append(`dis-ids`, `${[item.province_id, item.district_id]}`);
@@ -450,10 +456,10 @@ const Navbar: React.FC = () => {
         params.append(`dis-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      DIS_IDS.length === 0 &&
-      list_dis.length === 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      DIS_IDS?.length === 0 &&
+      list_dis?.length === 0 &&
+      location?.pathname !== '/search-results'
     ) {
       [].forEach((item) => {
         params.append(`dis-ids`, `${item}`);
@@ -461,19 +467,19 @@ const Navbar: React.FC = () => {
     }
     // lấy từ profile qua
 
-    if (list_cate.length > 0) {
+    if (list_cate?.length > 0) {
       list_cate.forEach((item, index) => {
         paramsCate.append(`categories-ids`, `${item}`);
       });
-    } else if (list_cate.length === 0 && CATE_IDS.length > 0) {
+    } else if (list_cate?.length === 0 && CATE_IDS?.length > 0) {
       [].forEach((item) => {
-        paramsCate.append(`categories-ids`, `${item}`);
+        paramsCate?.append(`categories-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      CATE_IDS.length === 0 &&
-      list_cate.length !== 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      CATE_IDS?.length === 0 &&
+      list_cate?.length !== 0 &&
+      location?.pathname !== '/search-results'
     ) {
       // dataProfile.categories.forEach((item: any) => {
       //   paramsCate.append(
@@ -481,17 +487,17 @@ const Navbar: React.FC = () => {
       //     `${[item.parent_category_id, item.child_category_id]}`,
       //   );
       // });
-      list_cate.forEach((item, index) => {
-        paramsCate.append(`categories-ids`, `${item}`);
+      list_cate?.forEach((item, index) => {
+        paramsCate?.append(`categories-ids`, `${item}`);
       });
     } else if (
-      dataProfile.id &&
-      CATE_IDS.length === 0 &&
-      list_cate.length === 0 &&
-      location.pathname !== '/search-results'
+      dataProfile?.id &&
+      CATE_IDS?.length === 0 &&
+      list_cate?.length === 0 &&
+      location?.pathname !== '/search-results'
     ) {
       [].forEach((item) => {
-        paramsCate.append(`categories-ids`, `${item}`);
+        paramsCate?.append(`categories-ids`, `${item}`);
       });
     }
 
@@ -532,16 +538,16 @@ const Navbar: React.FC = () => {
 
     setTimeout(() => {
       if (location.pathname !== '/search-results') {
-        window.open(`/search-results`)
+        window.open(`/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}`);
       } else {
-        // setSearchParams({
-        //   'search': `${isSearch}`
-        // })
-        setSearch(!search)
-        setOpenCollapseFilter(false)
+        setSearchParams({
+          'q': encode ? `${encode}` : ''
+        })
+        setSearch(!search);
+        setOpenCollapseFilter(false);
         // window.open(`/search-results`, "_self")
       }
-    }, 100)
+    }, 100);
 
     // setTimeout(() => {
     //   window.open(
@@ -696,8 +702,6 @@ const Navbar: React.FC = () => {
       },
       0,
     );
-
-    console.log('acc');
 
     setApproved(countApproved);
     setPending(countPending);

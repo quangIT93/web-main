@@ -122,7 +122,7 @@ const HotJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  console.log(index);
+  // console.log(index);
 
   return (
     <Box

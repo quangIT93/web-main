@@ -57,18 +57,18 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
 
   // Set the cookie
   function setCookie(name: string, value: string, days: number) {
-    let expires = "";
+    let expires = '';
     if (days) {
       let date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = "; expires=" + date.toUTCString();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = '; expires=' + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    document.cookie = name + '=' + (value || '') + expires + '; path=/';
   }
 
   // Get the cookie
   function getCookie(name: string): string | null {
-    let nameEQ = name + "=";
+    let nameEQ = name + '=';
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
@@ -140,7 +140,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     setValue(Number(searchParams.get('theme-id')));
   }, [searchParams.get('theme-id')]);
 
-  console.log(index);
+  // console.log(index);
 
   return (
     <Box

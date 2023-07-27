@@ -24,10 +24,10 @@ const CustomOption = ({
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     const valueRender = data.find((item: any) => item.id === value);
 
+    console.log('valueRender Loai cong viec', valueRender);
     setValueRender(valueRender);
 
     setValue(value);
-
     setCookie('userTypejobFiltered', JSON.stringify(valueRender), 365);
   };
 
@@ -66,7 +66,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
 
   let userFilteredCookies = JSON.parse(
     getCookie('userTypejobFiltered') || '{}',
-  )
+  );
   const TYPE_JOB = userFilteredCookies?.id;
 
   const getTypeJob = async () => {
@@ -88,7 +88,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
   }, []);
 
   const handleChange = (value1: string) => { };
-  console.log(`TYPEJOB`, TYPE_JOB);
+  // console.log(`TYPEJOB`, TYPE_JOB);
   return (
     <div className="filter-input">
       <div className="filter-input_icon">

@@ -552,10 +552,16 @@
               background-color: #0D99FF !important;
             }
           }
+          // .MuiTabPanel-root:nth-child(2),
+          // .MuiTabPanel-root:nth-child(3) {
+          //   padding: 12px 0 !important;
+          // }
 
           .MuiTabPanel-root {
-            padding: 16px 24px !important;
+          
             // height: calc(100% - 50px);
+            padding: 0px 0 !important;
+
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -605,6 +611,32 @@
 
                     @include breakpoint(destop) {
                       font-size: 14px;
+                    }
+                  }
+                }
+                .div-detail-rowCompany {
+                  display: flex;
+                  flex-direction: column;
+                  margin-top: 10px;
+                  h3 {
+                    color: #001424;
+                    font-family: Roboto;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 20px;
+                    
+                  }
+
+                  div {
+                    p {
+                      color: #000;
+                      font-family: Roboto;
+                      font-size: 12px;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: 16px; 
+                      margin: 8px 0;
                     }
                   }
                 }
@@ -872,7 +904,7 @@
 
       img {
         min-width: 80px;
-        min-height: 80px;
+        max-height: 80px;
         border-radius: 12px;
 
       }

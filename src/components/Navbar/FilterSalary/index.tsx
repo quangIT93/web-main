@@ -56,9 +56,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  let userFilteredCookies = JSON.parse(
-    getCookie('userFiltered') || '{}',
-  )
+  let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
 
   const Salary_Max = userFilteredCookies?.salary_max;
   const Salary_Min = userFilteredCookies?.salary_min;
@@ -95,7 +93,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       // setInputValueMin(inputValue.replace(',', ''));
-      setSalaryMin(inputValue.replace(',', ''))
+      setSalaryMin(inputValue.replace(',', ''));
     }
   };
 
@@ -108,7 +106,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       // setInputValueMax(inputValue.replace(',', ''));
-      setSalaryMax(inputValue.replace(',', ''))
+      setSalaryMax(inputValue.replace(',', ''));
     }
   };
 
@@ -300,17 +298,15 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     };
   }, []);
 
-  console.log("Number(searchParams.get('salary_min')): ", Number(searchParams.get('salary_min')));
-  console.log("Number(searchParams.get('salary_max')): ", Number(searchParams.get('salary_max')));
-
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
         <MoneyFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterSalary input-filter_nav ${inputValueMin || salaryMax ? 'activeSalary' : ''
-          }`}
+        className={`inputFilterSalary input-filter_nav ${
+          inputValueMin || salaryMax ? 'activeSalary' : ''
+        }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -320,10 +316,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           header={
             salaryMax || salaryMin
               ? `${new Intl.NumberFormat('en-US').format(
-                Number(salaryMin?.toString().replace(',', '')),
-              )} - ${new Intl.NumberFormat('en-US').format(
-                Number(salaryMax?.toString().replace(',', '')),
-              )}`
+                  Number(salaryMin?.toString().replace(',', '')),
+                )} - ${new Intl.NumberFormat('en-US').format(
+                  Number(salaryMax?.toString().replace(',', '')),
+                )}`
               : `Mức lương`
           }
           key="1"
@@ -333,10 +329,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
             value={selectedValue}
             onChange={handleRadioChange}
             className="inputFilter-groupSalary_radio"
-          // defaultValue={Type_Money}
+            // defaultValue={Type_Money}
           >
             <Radio value={1}>VND</Radio>
-            <Radio value={2} >USD</Radio>
+            <Radio value={2}>USD</Radio>
           </Radio.Group>
           <br />
           <Input
@@ -347,14 +343,14 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   ? new Intl.NumberFormat('en-US').format(
               //       Number(inputValueMin.toString().replace(',', '')),
               //     )
-              //   : 
+              //   :
               salaryMin
                 ? new Intl.NumberFormat('en-US').format(
-                  Number(salaryMin.toString().replace(',', '')),
-                )
+                    Number(salaryMin.toString().replace(',', '')),
+                  )
                 : new Intl.NumberFormat('en-US').format(
-                  Number(salaryMin?.toString().replace(',', '')),
-                )
+                    Number(salaryMin?.toString().replace(',', '')),
+                  )
             }
             onChange={handleInputChangeSalaryMin}
             className="input-text_salary"
@@ -369,14 +365,14 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   ? new Intl.NumberFormat('en-US').format(
               //       Number(inputValueMax.toString().replace(',', '')),
               //     )
-              //   : 
+              //   :
               salaryMax
                 ? new Intl.NumberFormat('en-US').format(
-                  Number(salaryMax.toString().replace(',', '')),
-                )
+                    Number(salaryMax.toString().replace(',', '')),
+                  )
                 : new Intl.NumberFormat('en-US').format(
-                  Number(salaryMax?.toString().replace(',', '')),
-                )
+                    Number(salaryMax?.toString().replace(',', '')),
+                  )
             }
             onChange={handleInputChangeSalaryMax}
             className="input-text_salary"
