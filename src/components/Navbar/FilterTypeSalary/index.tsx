@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Select, Space, Radio } from 'antd';
-import { EnvironmentOutlined } from '@ant-design/icons';
+// import { EnvironmentOutlined } from '@ant-design/icons';
 import type { RadioChangeEvent } from 'antd';
 import siteApi from 'api/siteApi';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
 import { getCookie, setCookie } from 'cookies';
 
@@ -15,8 +15,8 @@ const CustomOption = ({
   data,
   setValue,
   setValueRender,
-  salaryType,
-  SALARY_TYPE
+  // salaryType,
+  SALARY_TYPE,
 }: {
   data: any;
   setValue: Function;
@@ -26,7 +26,7 @@ const CustomOption = ({
 }) => {
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     setValue(value);
-    const valueRender = data.find((item: any) => item.id == value);
+    const valueRender = data.find((item: any) => item.id === value);
     setValueRender(valueRender);
     setCookie('userTypeSalaryFiltered', JSON.stringify(valueRender), 365);
   };
@@ -37,7 +37,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={SALARY_TYPE}
-    // defaultValue={SALARY_TYPE}
+      // defaultValue={SALARY_TYPE}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -58,13 +58,13 @@ interface SalaryFilter {
 
 const { Option } = Select;
 const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = React.useState();
   const [valueRender, setValueRender] = React.useState<any>();
 
   let userFilteredCookies = JSON.parse(
     getCookie('userTypeSalaryFiltered') || '{}',
-  )
+  );
 
   const SALARY_TYPE = userFilteredCookies.id;
 
@@ -83,7 +83,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
     getTypeSalary();
   }, []);
 
-  const handleChange = (value1: string) => { };
+  const handleChange = (value1: string) => {};
   return (
     <div className="filter-input">
       <div className="filter-input_icon">

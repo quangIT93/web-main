@@ -245,7 +245,9 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${value !== 'undefined' ? `q=${value}` : ``}`,
+          `/search-results?${
+            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          }`,
         );
       } else {
         setSearchParams({

@@ -1049,7 +1049,7 @@ const Navbar: React.FC = () => {
                 <DownloadIcon />
               </Button>
               <div className="sub-icon_qr">
-                <h2>Tải Ứng dụng Hi Job!</h2>
+                <h2>Tải Ứng dụng HiJob!</h2>
                 <img src="/QrApp.jpg" alt="" />
                 <div className="sub-icon_apps">
                   <Link
