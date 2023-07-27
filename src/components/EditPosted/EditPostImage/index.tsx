@@ -37,8 +37,9 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
   useEffect(() => {
     const loadImage = async () => {
       try {
+        console.log('dataPosted', dataPosted);
         // Bước 1: Xác định định dạng file từ URL
-        const imageExtension = dataPosted.image.split('.').pop();
+        const imageExtension = dataPosted?.image?.split('.').pop();
         const imageType = `image/${
           imageExtension === 'jpg' ? 'jpeg' : imageExtension
         }`;

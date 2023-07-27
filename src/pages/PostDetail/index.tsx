@@ -566,8 +566,10 @@ const Detail: React.FC = () => {
       'https://www.google.com/maps/place/' +
         `${post?.data.address}, ${
           post?.data.location ? post?.data.location.fullName : ''
-        }, ${post?.data.district ? post?.data.district?.fullName : ''}, ${
-          post?.data.district?.province
+        }, ${
+          post?.data.district ? post?.data?.location?.district?.fullName : ''
+        }, ${
+          post?.data?.location?.district?.province
             ? post?.data.district?.province?.fullName
             : ''
         }`,
@@ -675,12 +677,14 @@ const Detail: React.FC = () => {
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
                     <h3>{`${post?.data.address}, ${
-                      post?.data.location ? post?.data.location.fullName : ''
+                      post?.data?.location ? post?.data?.location?.fullName : ''
                     }, ${
-                      post?.data.district ? post?.data.district?.fullName : ''
+                      post?.data?.location?.district
+                        ? post?.data?.location?.district?.fullName
+                        : ''
                     }, ${
-                      post?.data.district?.province
-                        ? post?.data.district?.province?.fullName
+                      post?.data?.location?.district?.province
+                        ? post?.data?.location?.district?.province?.fullName
                         : ''
                     }`}</h3>
                     <h3>|</h3>
@@ -796,16 +800,26 @@ const Detail: React.FC = () => {
                     ]}
                     className="div-job-img-swipper"
                   >
-                    {post?.data.images.map((item: any, index: number) => {
-                      return (
-                        <SwiperSlide
-                          className="div-job-img-swipper_item"
-                          key={index}
-                        >
-                          <img src={item.url} alt="ảnh lỗi" />
-                        </SwiperSlide>
-                      );
-                    })}
+                    {post?.data?.images ? (
+                      post?.data?.images.map((item: any, index: number) => {
+                        return (
+                          <SwiperSlide
+                            className="div-job-img-swipper_item"
+                            key={index}
+                          >
+                            <img src={item.url} alt="ảnh lỗi" />
+                          </SwiperSlide>
+                        );
+                      })
+                    ) : (
+                      <SwiperSlide className="div-job-img-swipper_item">
+                        <img
+                          src={`${process.env.REACT_APP_URL_IMAGE}`}
+                          alt="ảnh lỗi"
+                          style={{ objectFit: 'cover' }}
+                        />
+                      </SwiperSlide>
+                    )}
                   </Swiper>
                   <Swiper
                     onSwiper={setThumbsSwiper}
@@ -814,22 +828,25 @@ const Detail: React.FC = () => {
                     slidesPerView={3}
                     freeMode={true}
                     centeredSlides={
-                      post?.data.images.length === 1 ? true : false
+                      post?.data.images && post?.data.images.length === 1
+                        ? true
+                        : false
                     }
                     watchSlidesProgress={true}
                     modules={[Mousewheel, FreeMode, Navigation, Thumbs]}
                     className="div-job-img-swipper_Thumbs"
                   >
-                    {post?.data.images.map((item: any, index: number) => {
-                      return (
-                        <SwiperSlide
-                          className="div-job-img-swipper-thumbs_item"
-                          key={index}
-                        >
-                          <img src={item.url} alt="Ảnh lỗi" />
-                        </SwiperSlide>
-                      );
-                    })}
+                    {post?.data?.images &&
+                      post?.data?.images.map((item: any, index: number) => {
+                        return (
+                          <SwiperSlide
+                            className="div-job-img-swipper-thumbs_item"
+                            key={index}
+                          >
+                            <img src={item.url} alt="Ảnh lỗi" />
+                          </SwiperSlide>
+                        );
+                      })}
                   </Swiper>
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
@@ -974,10 +991,10 @@ const Detail: React.FC = () => {
                               <h3 style={{ display: 'block' }}>Mô tả</h3>
                               <div className="div-detail_descCompany">
                                 <p>
-                                  {
-                                    post?.data.postCompanyInformation
-                                      ?.description
-                                  }
+                                  {post?.data.postCompanyInformation
+                                    ? post?.data.postCompanyInformation
+                                        ?.description
+                                    : 'Chưa cập nhật'}
                                 </p>
                               </div>
                             </div>

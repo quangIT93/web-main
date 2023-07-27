@@ -63,8 +63,8 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
   ) => {
     // window.open(`/post-detail?post-id=${id}`);
     type === 'application'
-      ? window.open(`/post-detail?post-id=${id}`)
-      : window.open(`/history?post=2`);
+      ? window.open(`/post-detail?post-id=${id}`, '_parent')
+      : window.open(`/history?post=2`, '_parent');
   };
 
   const handleImageError = () => {

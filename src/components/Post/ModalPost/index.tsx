@@ -51,13 +51,14 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             sx={{ textAlign: 'center', color: '#0d99ff', position: 'relative' }}
           >
             Đã đăng tuyển thành công!
-            <IconButton aria-label="close"
+            <IconButton
+              aria-label="close"
               onClick={handleClose}
               sx={{
                 position: 'absolute',
                 right: '0',
                 top: '50%',
-                transform: 'translateY(-50%)'
+                transform: 'translateY(-50%)',
               }}
             >
               <CloseIcon />

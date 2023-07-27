@@ -175,7 +175,7 @@ const Notificate = () => {
   }, []);
 
   const handleClickNotiKey = (postId: number) => {
-    window.open(`post-detail?post-id=${postId}`);
+    window.open(`post-detail?post-id=${postId}`, '_parent');
   };
 
   const handleClickNoty = (
@@ -186,11 +186,12 @@ const Notificate = () => {
     if (typeText === 'recruiter') {
       window.open(
         `candidate-detail?post-id=${postId}&application_id=${applicationId}`,
+        '_parent',
       );
     }
 
     if (typeText === 'applicator') {
-      window.open(`post-detail?post-id=${postId}`);
+      window.open(`post-detail?post-id=${postId}`, '_parent');
     }
   };
 

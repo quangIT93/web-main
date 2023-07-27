@@ -58,8 +58,12 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
 
   let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
 
-  const Salary_Max = userFilteredCookies?.salary_max;
-  const Salary_Min = userFilteredCookies?.salary_min;
+  const Salary_Max = userFilteredCookies?.salary_max
+    ? userFilteredCookies?.salary_max
+    : 0;
+  const Salary_Min = userFilteredCookies?.salary_min
+    ? userFilteredCookies?.salary_min
+    : 0;
   const Type_Money = userFilteredCookies?.money_type;
   const [selectedValue, setSelectedValue] = useState<number | null>(Type_Money);
 

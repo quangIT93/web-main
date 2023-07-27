@@ -809,9 +809,9 @@ const Navbar: React.FC = () => {
                 <span className="sub-login_text">
                   <MapInfoIcon />
                   <p>
-                    {dataProfile?.categories.length > 0
-                      ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
+                    {dataProfile?.locations.length > 0
+                      ? dataProfile?.locations.map((location: any) => {
+                          return `${location.district} , `;
                         })
                       : 'Chưa cập nhật thông tin'}
                   </p>
@@ -821,10 +821,11 @@ const Navbar: React.FC = () => {
                   onClick={() => window.open(`/profile`, '_seft')}
                 >
                   <BagInfoJob />
+
                   <p>
-                    {dataProfile?.locations.length > 0
-                      ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
+                    {dataProfile?.categories.length > 0
+                      ? dataProfile?.categories.map((profile: any) => {
+                          return `${profile.parent_category} / ${profile.child_category}, `;
                         })
                       : 'Chưa cập nhật thông tin'}
                   </p>
@@ -1047,6 +1048,7 @@ const Navbar: React.FC = () => {
                 ref={bellRef}
               >
                 <DownloadIcon />
+                {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
               </Button>
               <div className="sub-icon_qr">
                 <h2>Tải Ứng dụng HiJob!</h2>

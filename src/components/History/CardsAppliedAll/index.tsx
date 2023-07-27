@@ -51,8 +51,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
     }
   };
 
-  console.log("dataApplied ", dataApplied);
-
+  console.log('dataApplied ', dataApplied);
 
   useEffect(() => {
     let isMounted = true;
@@ -113,7 +112,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // click card
@@ -121,7 +120,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     postId: number,
   ) => {
-    window.open(`/post-detail?post-id=${postId}`);
+    window.open(`/post-detail?post-id=${postId}`, '_parent');
   };
 
   return (
