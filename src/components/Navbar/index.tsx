@@ -159,8 +159,8 @@ const Navbar: React.FC = () => {
   const [countChat, setCountChat] = useState<number>(0);
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
-  const [appliedPostedJob, setAppliedPostedJob] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   const [isSearch, setIsSearch] = useState<boolean>(false);
 
   useEffect(() => {
