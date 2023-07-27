@@ -1,48 +1,31 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // import component
 import ListChat from '#components/Message/ListChat/ListChat';
 import ListUserChat from '#components/Message/ListUser/ListUser';
-import HeaderMessage from '#components/Message/HeaderMessage';
+
 // @ts-ignore
 import Navbar from '#components/Navbar';
 import Footer from '#components/Footer/Footer';
 // import ui antd
-import { Typography } from 'antd';
+// import { Typography } from 'antd';
 
 import './style.scss';
 
-import { HomeValueContext } from 'context/HomeValueContextProvider';
+// import { HomeValueContext } from 'context/HomeValueContextProvider';
 
-import siteApi from 'api/siteApi';
+// import siteApi from 'api/siteApi';
 
 // import firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
-const { Text } = Typography;
+// const { Text } = Typography;
 
 const Message = () => {
-  const { openCollapseFilter } = useContext(HomeValueContext);
+  // const { openCollapseFilter } = useContext(HomeValueContext);
   const [openListChat, setOpenListChat] = useState(false);
 
-  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
-  const [site, SetSite] = React.useState<any>(null);
-
-  const getTitle = async () => {
-    try {
-      const result = await siteApi.getSalaryType();
-      if (result) {
-        SetSite(result);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  React.useEffect(() => {
-    getTitle();
-    // document.title = 'Hijob - Nhắn tin';
-  }, []);
+  // const [titleFirebase, setTitleFirebase] = React.useState<string>('');
 
   // custom title firebase
   const analytics: any = getAnalytics();

@@ -75,7 +75,7 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
         categoryIds: secondValues,
       }));
     }
-    if (value.length > 1) {
+    if (value?.length > 1) {
       setDisable(true);
     }
   };

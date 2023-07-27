@@ -1,4 +1,4 @@
-import React, { useState, memo, ReactNode } from 'react';
+import React, { useState, memo, ReactNode, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -47,16 +47,29 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
 
   const userProfile = useSelector((state: RootState) => state.profile.profile);
 
+  // const [listLocation];
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
 
   let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
-  const listLocation = userFilteredCookies?.list_dis;
+  // const listLocation = userFilteredCookies?.list_dis;
+  const listLocation: any = useRef<any>(
+    JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
+      ? JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
+      : userProfile?.locations?.map((profile: any) => [
+          profile?.province_id,
+          profile?.district_id,
+        ]),
+  );
 
+  // console.log('cookies', JSON.parse(getCookie('userFiltered') || '{}'));
+  // console.log('userFilteredCookies', valueDistrict.current);
   //  searchParams
   //   .getAll('dis-ids')
   //   .map((dis) => dis.split(','));
+
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation();
@@ -67,7 +80,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
       if (
         location?.pathname !== '/search-results' &&
         userProfile &&
-        listLocation?.length === 0
+        listLocation.current?.length === 0
       ) {
         setListDis(
           userProfile?.locations?.map((profile: any) => [
@@ -76,7 +89,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
           ]),
         );
       } else {
-        setListDis(listLocation);
+        setListDis(listLocation.current);
       }
     } catch (error) {
       console.error(error);
@@ -89,7 +102,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
     // if (listLocation.length > 3) {
     //   setDisable(true)
     // }
-    onChange(listLocation);
+    onChange(listLocation.current);
   }, [userProfile]);
 
   const onChange = (value: any) => {
@@ -98,7 +111,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
     setDisable(false);
     const secondValues = value?.map((item: any) => item[1]);
 
-    if (secondValues?.length <= 3 && listLocation?.length <= 3) {
+    if (secondValues?.length <= 3) {
       setLocId(secondValues);
       setListDis(value);
     }
@@ -122,9 +135,10 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
           suffixIcon={<ArrowFilterIcon width={14} height={10} />}
           dropdownRender={DropdownRender}
           defaultValue={
-            listLocation?.length !== 0
-              ? listLocation
-              : listLocation?.length === 0 &&
+            listLocation.current?.length !== 0 &&
+            listLocation.current !== undefined
+              ? listLocation.current
+              : listLocation.current?.length === 0 &&
                 location?.pathname === '/search-results'
               ? []
               : userProfile?.locations?.map((profile: any) => [
@@ -135,9 +149,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
           options={
             dataLocations
               ? dataLocations?.map((dataLocation: any) => ({
-                  value: dataLocation?.province_id,
-                  label: dataLocation?.province_fullName,
-                  children: dataLocation?.districts.map(
+                  value: dataLocation.province_id,
+                  label: dataLocation.province_fullName,
+                  children: dataLocation.districts.map(
                     (child: { district_id: string; district: string }) => {
                       var dis = false;
                       if (disable) {

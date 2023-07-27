@@ -1,10 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 
-import Card from '@mui/material/Card';
-
 import Modal from '@mui/material/Modal';
-
-import ImageListItem from '@mui/material/ImageListItem';
 
 import Grid from '@mui/material/Grid';
 // import { url } from 'inspector'
@@ -12,13 +8,6 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-
-// icon material
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { Cascader, Divider, Typography, Input, Space } from 'antd';
 import { EnvironmentOutlined } from '@ant-design/icons';
@@ -33,7 +22,7 @@ import { RootState } from 'store/reducer';
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
 // import api
 // import postApi from 'api/postApi'
-import bookMarkApi from 'api/bookMarkApi';
+
 import searchApi from 'api/searchApi';
 import profileApi from 'api/profileApi';
 import locationApi from 'api/locationApi';
@@ -43,7 +32,6 @@ import Footer from '../../components/Footer/Footer';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 // @ts-ignore
@@ -66,7 +54,7 @@ import {
 // import { AxiosResponse } from 'axios'
 // import icon
 
-import { message } from 'antd';
+// import { message } from 'antd';
 
 import { getCookie } from 'cookies';
 
@@ -74,21 +62,21 @@ import { getCookie } from 'cookies';
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 import './style.scss';
-import { stringify } from 'query-string/base';
+// import { stringify } from 'query-string/base';
 import notificationKeywordApi from 'api/notificationKeyword';
 const { SHOW_CHILD } = Cascader;
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
 
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+// const MenuProps = {
+//   PaperProps: {
+//     style: {
+//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+//       width: 250,
+//     },
+//   },
+// };
 
 interface PostNewest {
   id: number;
@@ -143,7 +131,7 @@ const styleSuccess = {
 const NewJobs: React.FC = () => {
   const {
     setOpenNotificate,
-    openNotificate,
+    // openNotificate,
     search,
   }: // setRefNav,
   {
@@ -159,39 +147,39 @@ const NewJobs: React.FC = () => {
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate()
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   // modal keyword
 
-  const [selectedProvince, setSelectedProvince] = React.useState<any>(null);
-  const [value, setValue] = React.useState<string | number>('');
+  // const [selectedProvince, setSelectedProvince] = React.useState<any>(null);
+  // const [value, setValue] = React.useState<string | number>('');
 
-  const [selectedProvinceId, setSelectedProvinceId] = React.useState<
-    number | null
-  >(null);
+  // const [selectedProvinceId, setSelectedProvinceId] = React.useState<
+  //   number | null
+  // >(null);
 
   const [open, setOpen] = React.useState<any>([]);
-  const locations: any = [];
+  // const locations: any = [];
 
-  const [location, setLocation] = React.useState<any>(
-    locations?.map((v: any, i: number) => v.district),
-  );
+  // const [location, setLocation] = React.useState<any>(
+  //   locations?.map((v: any, i: number) => v.district),
+  // );
 
-  const [locationId, setLocationId] = React.useState<any>(
-    locations?.map((v: any, i: number) => v.district_id),
-  );
+  // const [locationId, setLocationId] = React.useState<any>(
+  //   locations?.map((v: any, i: number) => v.district_id),
+  // );
 
-  const [valueDistrict, setValueDistrict] = React.useState<any>({
-    district: '',
-    district_id: '',
-    wards: [],
-  });
+  // const [valueDistrict, setValueDistrict] = React.useState<any>({
+  //   district: '',
+  //   district_id: '',
+  //   wards: [],
+  // });
   const [openModal, setOpenModal] = React.useState(false);
   const QUERY = decodeURIComponent(`${searchParams.get('q')}`);
   const [valueKeyword, setValueKeyword] = React.useState(QUERY ? QUERY : '');
-  const [districtId, setDistrictId] = React.useState<string>('');
+  // const [districtId, setDistrictId] = React.useState<string>('');
 
-  const [isSearch, setIsSearch] = React.useState<Boolean>(false);
+  // const [isSearch, setIsSearch] = React.useState<Boolean>(false);
 
   const [oenModalCreateSuccess, setOpenModalCreateSuccess] =
     React.useState(false);
@@ -213,9 +201,9 @@ const NewJobs: React.FC = () => {
 
   const { Text } = Typography;
 
-  const [messageApi, contextHolder] = message.useMessage();
+  // const [messageApi, contextHolder] = message.useMessage();
 
-  const userProfile = useSelector((state: RootState) => state.profile.profile);
+  // const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
@@ -261,14 +249,24 @@ const NewJobs: React.FC = () => {
       ? [userTypejobFilteredCookies?.id]
       : [];
 
-  const LIST_DIS_ID = userFilteredCookies?.list_dis.map((dis: any) => dis[1]);
+  const LIST_DIS_ID =
+    userFilteredCookies?.list_dis?.length > 0 ||
+    userFilteredCookies?.list_dis?.length !== undefined
+      ? userFilteredCookies?.list_dis?.map((dis: any) => dis[1])
+      : [];
+
+  console.log('ssssssss', userFilteredCookies?.list_cate);
+  console.log('userFilteredCookies?.list_cate', userFilteredCookies.list_cate);
+  console.log('LIST_DIS_ID', LIST_DIS_ID);
   // searchParams
   //   .getAll('dis-ids')
   //   .map((disId) => disId.split(','))
   //   .map((dis) => dis[1]);
-  const LIST_CATEGORIES_ID = userFilteredCookies?.list_cate.map(
-    (cate: any) => cate[1],
-  );
+  const LIST_CATEGORIES_ID =
+    userFilteredCookies?.list_cate?.length !== 0 ||
+    userFilteredCookies?.list_cate !== undefined
+      ? userFilteredCookies?.list_cate?.map((cate: any) => cate[1])
+      : [];
   // searchParams
   //   .getAll('categories-ids')
   //   .map((cateId) => cateId.split(','))
@@ -277,9 +275,9 @@ const NewJobs: React.FC = () => {
 
   console.log(searchParams.getAll('dis-ids'));
 
-  let userFiltered = JSON.parse(getCookie('userFiltered') || '{}');
+  // let userFiltered = JSON.parse(getCookie('userFiltered') || '{}');
 
-  console.log('userFiltered: ', userFiltered);
+  // console.log('userFiltered: ', userFiltered);
 
   const allLocation = async () => {
     try {
@@ -318,11 +316,12 @@ const NewJobs: React.FC = () => {
   }, []);
 
   // handle click post details
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
-  };
+  // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  //   window.open(`/post-detail?post-id=${id}`);
+  // };
 
   // handle change paginaton
+
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
     value: number,
@@ -434,6 +433,7 @@ const NewJobs: React.FC = () => {
     //     ? SALARY_TYPE
     //     : null
     // )
+    console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
     const result = await searchApi.getSearchByQueryV2(
       QUERY,
       page,
@@ -451,6 +451,7 @@ const NewJobs: React.FC = () => {
       SALARY_TYPE,
     );
 
+    console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', result);
     //
     if (result && result?.data?.posts.length !== 0) {
       setSearchData((prev: any) => {
@@ -613,6 +614,17 @@ const NewJobs: React.FC = () => {
     try {
       if (dataProfile) {
         setOpenBackdrop(true);
+        console.log('QUERY', QUERY);
+        console.log('page', page);
+        console.log('MONEY_TYPE', MONEY_TYPE);
+        console.log('IS_WORKING_WEEKEND', IS_WORKING_WEEKEND);
+        console.log('IS_REMOTELY', IS_REMOTELY);
+        console.log('SALARY_MIN', SALARY_MIN);
+        console.log('SALARY_MAX', SALARY_MAX);
+        console.log('JOB_TYPE', JOB_TYPE);
+        console.log('LIST_CATEGORIES_ID', LIST_CATEGORIES_ID);
+        console.log('LIST_DIS_ID', LIST_DIS_ID);
+        console.log('SALARY_TYPE', SALARY_TYPE);
         const result = await searchApi.getSearchByQueryV2(
           QUERY,
           null,
@@ -629,6 +641,24 @@ const NewJobs: React.FC = () => {
           LIST_DIS_ID,
           SALARY_TYPE,
         );
+        // const result = await searchApi.getSearchByQueryV2(
+        //   'null',
+        //   null,
+        //   MONEY_TYPE,
+        //   IS_WORKING_WEEKEND,
+        //   IS_REMOTELY,
+        //   null,
+        //   SALARY_MIN,
+        //   SALARY_MAX,
+        //   null,
+        //   null,
+        //   JOB_TYPE,
+        //   LIST_CATEGORIES_ID,
+        //   null,
+        //   SALARY_TYPE,
+        // );
+
+        console.log('resut', result);
         if (result) {
           setOpenBackdrop(false);
           setSearchData(result.data);
@@ -846,7 +876,7 @@ const NewJobs: React.FC = () => {
               // }
               options={
                 dataAllLocation
-                  ? dataAllLocation.map((dataLocation: any) => ({
+                  ? dataAllLocation?.map((dataLocation: any) => ({
                       value: dataLocation.province_id,
                       label: dataLocation.province_fullName,
                       children: dataLocation.districts.map(
