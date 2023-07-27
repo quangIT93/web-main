@@ -107,6 +107,14 @@ const Navbar: React.FC = () => {
     setOpenNotificate,
     openNotificate,
     setSearch,
+    search,  const {
+    openCollapseFilter,
+    setOpenCollapseFilter,
+    // setHeightNavbar,
+    SetRefNav,
+    setOpenNotificate,
+    openNotificate,
+    setSearch,
     search,
   }: // setRefNav,
   {
@@ -534,7 +542,7 @@ const Navbar: React.FC = () => {
       salary_type = SALARY_TYPE;
     }
 
-    setTimeout(() => {
+     setTimeout(() => {
       if (location.pathname !== '/search-results') {
         window.open(
           `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}`,
@@ -841,9 +849,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -939,9 +947,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -964,9 +972,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
