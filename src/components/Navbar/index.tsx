@@ -167,9 +167,7 @@ const Navbar: React.FC = () => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
     setUserFiltered(userFilteredCookies);
   }, []);
-
-  console.log("valueSearchInput", valueSearchInput);
-
+  console.log('jobTYpe', jobType);
   // check search
   useEffect(() => {
     if (
@@ -538,11 +536,13 @@ const Navbar: React.FC = () => {
 
     setTimeout(() => {
       if (location.pathname !== '/search-results') {
-        window.open(`/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}`);
+        window.open(
+          `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}`,
+        );
       } else {
         setSearchParams({
-          'q': encode ? `${encode}` : ''
-        })
+          q: encode ? `${encode}` : '',
+        });
         setSearch(!search);
         setOpenCollapseFilter(false);
         // window.open(`/search-results`, "_self")

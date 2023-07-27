@@ -25,6 +25,7 @@ const CustomOption = ({
     const valueRender = data.find((item: any) => item.id === value);
 
     console.log('valueRender Loai cong viec', valueRender);
+    console.log('valueRender Loai cong viec value', value);
     setValueRender(valueRender);
 
     setValue(value);
@@ -68,10 +69,11 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
     getCookie('userTypejobFiltered') || '{}',
   );
   const TYPE_JOB = userFilteredCookies?.id;
-
+  console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
     const result = await siteApi.getJobType();
     const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data];
+    console.log('updatedData', updatedData);
     if (updatedData) {
       setData(updatedData);
 
