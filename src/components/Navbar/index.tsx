@@ -175,7 +175,7 @@ const Navbar: React.FC = () => {
       isWorkingWeekend !== 0 ||
       listDis?.length > 0 ||
       listCate?.length > 0 ||
-      salaryMin !== 6000000 ||
+      salaryMin !== 0 ||
       salaryMax !== 12000000 ||
       typeMoney === 2 ||
       salaryType ||

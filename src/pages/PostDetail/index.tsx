@@ -580,7 +580,7 @@ const Detail: React.FC = () => {
   const handleChangeStatus = async () => {
     const result = await appplicationApi.applyAplication(POST_ID);
     console.log('result ung tiyen', result);
-    if (true) {
+    if (post?.data?.applied) {
       // openNotification();
       setTextButton('Đã ứng tuyển');
       // setBackgroundButton('gray');
@@ -610,7 +610,7 @@ const Detail: React.FC = () => {
     }
     const result = await appplicationApi.applyAplication(POST_ID);
     console.log('result ung tiyen', result);
-    if (true) {
+    if (post?.data?.applied) {
       // openNotification();
       setTextButton('Đã ứng tuyển');
       // setBackgroundButton('gray');
