@@ -71,13 +71,13 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     if (Salary_Min && Salary_Min !== 0) {
       setSalaryMin(Salary_Min);
     } else if (Salary_Min === 0) {
-      setSalaryMin(null);
+      setSalaryMin(0);
     }
 
     if (Salary_Max) {
       setSalaryMax(Salary_Max);
     } else if (Salary_Max === 0) {
-      setSalaryMax(null);
+      setSalaryMax(0);
     }
   }, [Salary_Max, Salary_Min, Salary_Max]);
 

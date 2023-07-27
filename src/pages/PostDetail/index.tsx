@@ -946,22 +946,6 @@ const Detail: React.FC = () => {
                                 </h5>
                               </div>
                             </div>
-                            <div className="div-detail-row">
-                              <ClockCircleOutlined
-                                style={{ color: '#575757' }}
-                              />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Thời gian hết hạn</p>
-                                <h5>
-                                  {post?.data?.expiredDate
-                                    ? moment(
-                                        new Date(post?.data?.expiredDate),
-                                      ).format('DD/MM/yyyy')
-                                    : 'Không thời hạn'}
-                                </h5>
-                              </div>
-                            </div>
                           </div>
                         </div>
                         <>
@@ -988,14 +972,112 @@ const Detail: React.FC = () => {
                           <div className="job-title-details">
                             <div className="div-detail-rowCompany">
                               <h3 style={{ display: 'block' }}>Mô tả</h3>
-                              <div>
-                                <p>Chưa cập nhật</p>
+                              <div className="div-detail_descCompany">
+                                <p>
+                                  {
+                                    post?.data.postCompanyInformation
+                                      ?.description
+                                  }
+                                </p>
                               </div>
                             </div>
                             <div className="div-detail-rowCompany">
                               <h3>Thông tin cơ bản</h3>
-                              <div>
-                                <p>Chưa cập nhật</p>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Mã số thuế</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? post?.data?.postCompanyInformation
+                                          ?.taxCode
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
+                              </div>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Địa chỉ</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
+                                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
+                              </div>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Email</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? post?.data?.postCompanyInformation
+                                          ?.email
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
+                              </div>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Điện thoại</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? post?.data?.postCompanyInformation
+                                          ?.phone
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
+                              </div>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Website</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? post?.data?.postCompanyInformation
+                                          ?.website
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
                               </div>
                             </div>
                           </div>

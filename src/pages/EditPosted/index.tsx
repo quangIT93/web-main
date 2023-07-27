@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import moment, { Moment } from 'moment';
 import { Skeleton } from 'antd';
-import { message } from 'antd';
+import { message, Switch } from 'antd';
 // import component
 // @ts-ignore
 import { Navbar } from '#components';
@@ -26,6 +26,7 @@ import EditPostTypeSalary from '#components/EditPosted/EditPostTypeSalary';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 
 import NotFound from 'pages/NotFound';
+
 import './style.scss';
 
 // inport Api
@@ -386,7 +387,18 @@ const EditPosted = () => {
         {contextHolder}
         <Navbar />
         <div className="edit-posted_main">
-          <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
+          <div className="edit-title_post">
+            <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
+            <div>
+              <h4>
+                <Switch
+                  // checked={dataKeyword.status === 1 ? true : false}
+                  checkedChildren=""
+                  unCheckedChildren=""
+                />
+              </h4>
+            </div>
+          </div>
           <Skeleton loading={loading} active>
             <form action="">
               <EditPostJobCompany
