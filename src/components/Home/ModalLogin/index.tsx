@@ -1,48 +1,48 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { actionCreators } from '../../../store/index'
-import { RootState } from '../../../store/reducer'
-import { getProfile } from 'store/reducer/profileReducer/getProfileReducer'
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../../store/index';
+import { RootState } from '../../../store/reducer';
+import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
 
 import {
   signInEmail,
   verifyOtp,
-} from '../../../store/reducer/authReducer/signGmailReducer'
+} from '../../../store/reducer/authReducer/signGmailReducer';
 
-import signInEmailApi from 'api/authApi'
+import signInEmailApi from 'api/authApi';
 //@ts-ignore
-import OtpInput from 'react-otp-input'
+import OtpInput from 'react-otp-input';
 //@ts-ignore
-import FacebookLogin from '@greatsumini/react-facebook-login'
-import { FacebookLoginClient } from '@greatsumini/react-facebook-login'
-import GoogleLogin from '@leecheuk/react-google-login'
+import FacebookLogin from '@greatsumini/react-facebook-login';
+import { FacebookLoginClient } from '@greatsumini/react-facebook-login';
+import GoogleLogin from '@leecheuk/react-google-login';
 
-import { gapi } from 'gapi-script'
+import { gapi } from 'gapi-script';
 
 // import component
-import CountdownTimer from './components/CountdownTimer'
+import CountdownTimer from './components/CountdownTimer';
 
 // import component Material
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 // import icon
-import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined'
+import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
 
 //import api
-import authApi from '../../../api/authApi'
-import profileApi from '../../../api/profileApi'
-import Backdrop from '@mui/material/Backdrop'
-import CircularProgress from '@mui/material/CircularProgress'
+import authApi from '../../../api/authApi';
+import profileApi from '../../../api/profileApi';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // import login from action
 
-import './style.scss'
+import './style.scss';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -57,239 +57,239 @@ const style = {
   outline: 'none',
   boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.12)',
   p: 4,
-}
+};
 
 interface LoginData {
-  email: string
+  email: string;
 }
 
 interface PropsModalLogin {
-  openModalLogin: boolean
-  setOpenModalLogin: React.Dispatch<React.SetStateAction<boolean>>
+  openModalLogin: boolean;
+  setOpenModalLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface AuthReponse {
-  accountId: string | null
-  accessToken: string | null
-  refreshToken: string | null
+  accountId: string | null;
+  accessToken: string | null;
+  refreshToken: string | null;
 }
 
 const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   const isEmailValid = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    return email.trim() !== '' && emailRegex.test(email)
-  }
+    return email.trim() !== '' && emailRegex.test(email);
+  };
   // app id facebook
   const appId = process.env.REACT_APP_FACEBOOK_APP_ID
     ? process.env.REACT_APP_FACEBOOK_APP_ID
-    : ''
+    : '';
   // id google client
   const googleClient = process.env.REACT_APP_GOOGLE_CLIENT_ID
     ? process.env.REACT_APP_GOOGLE_CLIENT_ID
-    : ''
+    : '';
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { ActionSignInEmail, setProfileUser } = bindActionCreators(
     actionCreators,
-    dispatch
-  )
+    dispatch,
+  );
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
-  })
-  const { openModalLogin, setOpenModalLogin } = props
+  });
+  const { openModalLogin, setOpenModalLogin } = props;
   // check entered the correct gmail
   // xác nhận xem email có đúng cú pháp hay không
-  const [isValidEmail, setIsValidEmail] = useState(false)
+  const [isValidEmail, setIsValidEmail] = useState(false);
   // error input gmail
-  const [invalid, setInvalid] = useState(false)
+  const [invalid, setInvalid] = useState(false);
   // isvalid otp isInputFilled if entered miss
-  const [isInputFilled, setIsInputFilled] = useState(false)
+  const [isInputFilled, setIsInputFilled] = useState(false);
   //
-  const [isEmailVerified, setIsEmailVerified] = useState(false)
-  const [showOTPModal, setShowOTPModal] = useState(false)
-  const [otp, setOTP] = useState('')
-  const [resendCode, setResendCode] = useState(true)
-  const [openBackdrop, setOpenBackdrop] = React.useState(false)
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [showOTPModal, setShowOTPModal] = useState(false);
+  const [otp, setOTP] = useState('');
+  const [resendCode, setResendCode] = useState(true);
+  const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
-  const handleClose = () => setOpenModalLogin(false)
+  const handleClose = () => setOpenModalLogin(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setLoginData((prevData) => ({ ...prevData, [name]: value }))
+    const { name, value } = e.target;
+    setLoginData((prevData) => ({ ...prevData, [name]: value }));
 
-    setIsValidEmail(isEmailValid(value))
-  }
+    setIsValidEmail(isEmailValid(value));
+  };
 
-  const authState = useSelector((state: RootState) => state.auth)
+  const authState = useSelector((state: RootState) => state.auth);
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
   const handleLogin = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     try {
-      e.preventDefault()
+      e.preventDefault();
       if (isValidEmail) {
         if (invalid) {
-          setInvalid(false)
+          setInvalid(false);
         } else {
-          await dispatch(signInEmail(loginData.email) as any)
-          setIsEmailVerified(true)
+          await dispatch(signInEmail(loginData.email) as any);
+          setIsEmailVerified(true);
           // Gửi yêu cầu đăng nhập và chờ kết quả trả về
         }
       } else {
-        setInvalid(true)
+        setInvalid(true);
       }
     } catch (error: any) {
-      console.log(error.response?.data)
+      console.log(error.response?.data);
       if (!error.response?.data.success) {
-        setInvalid(true)
+        setInvalid(true);
         setTimeout(() => {
-          setInvalid(false)
-        }, 3000)
+          setInvalid(false);
+        }, 3000);
       }
     }
-  }
+  };
 
   // ENTER OTP
   const handleOtpChange = (otpValue: string) => {
-    setOTP(otpValue)
+    setOTP(otpValue);
 
-    setIsInputFilled(otpValue.length > 5)
-  }
+    setIsInputFilled(otpValue.length > 5);
+  };
 
   const handleBackLogin = () => {
-    setIsEmailVerified(false)
-    setResendCode(false)
-  }
+    setIsEmailVerified(false);
+    setResendCode(false);
+  };
 
   const handleBackOtp = () => {
-    setIsEmailVerified(true)
+    setIsEmailVerified(true);
     // setResendCode(false)
-  }
+  };
 
   const handleCloseBackDrop = () => {
-    setOpenBackdrop(false)
-  }
+    setOpenBackdrop(false);
+  };
 
   const handleLoginOtp = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     try {
-      e.preventDefault()
+      e.preventDefault();
 
       if (isInputFilled) {
         // Thực hiện hành động khi button được click
         //  console.log('isInputFilled', isInputFilled)
-        await dispatch(verifyOtp({ email: loginData.email, otp }) as any)
-        setOpenModalLogin(false)
+        await dispatch(verifyOtp({ email: loginData.email, otp }) as any);
+        setOpenModalLogin(false);
       } else {
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   // handle login facebook
   const responseFacebook = async (response: any) => {
     try {
-      setOpenBackdrop(true)
+      setOpenBackdrop(true);
       if (response.userID) {
-        const result = await authApi.signInFacebook(response.accessToken)
+        const result = await authApi.signInFacebook(response.accessToken);
         if (result) {
-          fetchDataProfile(result.data, true)
+          fetchDataProfile(result.data, true);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
 
     // console.log('facebook', response)
-  }
+  };
 
   // check response failed from facebook and google
   const responseFailFacebookAndGoogle = () => {
-    setOpenBackdrop(false)
-  }
+    setOpenBackdrop(false);
+  };
 
   // handle login google
   const responseGoogle = async (response: any) => {
     try {
-      setOpenBackdrop(true)
+      setOpenBackdrop(true);
       if (response.tokenId) {
         // console.log('response.tokenID', response.tokenId)
-        const result = await authApi.signInGoogle(response.tokenObj.id_token)
+        const result = await authApi.signInGoogle(response.tokenObj.id_token);
         // console.log(result)
         if (result) {
-          fetchDataProfile(result.data, true)
+          fetchDataProfile(result.data, true);
         }
       }
     } catch (error) {
-      console.log(error)
-      setOpenBackdrop(false)
+      console.log(error);
+      setOpenBackdrop(false);
     }
 
     // console.log('gg', response)
-  }
+  };
 
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
   useEffect(() => {
     if (authState.isLoggedIn) {
-      console.log('Xác thực nhận email thành công', authState)
+      console.log('Xác thực nhận email thành công', authState);
       // Thực hiện các hành động sau khi xác thực thành công
-      setIsEmailVerified(true)
+      setIsEmailVerified(true);
     } else {
-      console.log('Lỗi xác nhận email thành công', authState)
+      // console.log('Lỗi xác nhận email thành công', authState);
       // Thực hiện các hành động sau khi xác thực thất bại
     }
-  }, [authState.isLoggedIn])
+  }, [authState.isLoggedIn]);
 
   // isVerifiedOtp facebook and google =true
   const fetchDataProfile = async (auth: AuthReponse, isVerifyOtp?: boolean) => {
     if (isVerifyOtp) {
-      console.log('Xác thực OTP thành công', authState)
+      console.log('Xác thực OTP thành công', authState);
       // Thực hiện các hành động sau khi xác thực thành công
       localStorage.setItem(
         'accountId',
-        auth && auth.accountId ? auth.accountId : ''
-      )
+        auth && auth.accountId ? auth.accountId : '',
+      );
       localStorage.setItem(
         'accessToken',
-        auth && auth.accessToken ? auth.accessToken : ''
-      )
+        auth && auth.accessToken ? auth.accessToken : '',
+      );
       localStorage.setItem(
         'refreshToken',
-        auth && auth.refreshToken ? auth.refreshToken : ''
-      )
+        auth && auth.refreshToken ? auth.refreshToken : '',
+      );
 
-      await dispatch(getProfile() as any)
-      const result = await profileApi.getProfile()
+      await dispatch(getProfile() as any);
+      const result = await profileApi.getProfile();
       if (result) {
-        setProfileUser(result.data)
+        setProfileUser(result.data);
       }
-      setOpenModalLogin(false)
-      setOpenBackdrop(false)
-      window.location.reload()
+      setOpenModalLogin(false);
+      setOpenBackdrop(false);
+      window.location.reload();
     } else {
-      console.log('Lỗi xác thực ', authState)
+      // console.log('Lỗi xác thực ', authState)
       // Thực hiện các hành động sau khi xác thực thất bại
     }
-  }
+  };
 
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
   useEffect(() => {
-    fetchDataProfile(authState, authState.isverifyOtp)
-  }, [authState.isverifyOtp])
+    fetchDataProfile(authState, authState.isverifyOtp);
+  }, [authState.isverifyOtp]);
 
   useEffect(() => {
     const start = () => {
       gapi.client.init({
         clientId: googleClient,
         scope: '',
-      })
-    }
-    gapi.load('client:auth2', start)
-  }, [])
+      });
+    };
+    gapi.load('client:auth2', start);
+  }, []);
 
   const handleResendCode = () => {
-    setResendCode(true)
-  }
+    setResendCode(true);
+  };
 
   return (
     <Modal
@@ -311,17 +311,18 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             lineHeight: '24px',
             color: '#001424',
             margin: '12px 0',
-            position: 'relative'
+            position: 'relative',
           }}
         >
           Đăng nhập
-          <IconButton aria-label="close"
+          <IconButton
+            aria-label="close"
             onClick={handleClose}
             sx={{
               position: 'absolute',
               right: '0',
               top: '50%',
-              transform: 'translateY(-50%)'
+              transform: 'translateY(-50%)',
             }}
           >
             <CloseIcon />
@@ -384,7 +385,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-              // cookiePolicy={'single_host_origin'}
+                // cookiePolicy={'single_host_origin'}
               />
 
               <div className="line-with-text">
@@ -417,7 +418,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               >
                 Login
               </button>
-
 
               {/* <div
                 className="bnt-login_google bnt-login"
@@ -505,7 +505,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
         </Backdrop>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalVerifyLogin
+export default ModalVerifyLogin;

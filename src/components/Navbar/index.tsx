@@ -167,7 +167,6 @@ const Navbar: React.FC = () => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
     setUserFiltered(userFilteredCookies);
   }, []);
-  console.log('userFiltered: ', userFiltered);
 
   // check search
   useEffect(() => {
@@ -410,8 +409,8 @@ const Navbar: React.FC = () => {
     var salary_type = salaryType;
     var salary_min = salaryMin;
     var salary_max = salaryMax;
-    var list_dis = listDis;
-    var list_cate = listCate;
+    var list_dis = listDis ? listDis : [];
+    var list_cate = listCate ? listCate : [];
     var is_working_weekend = isWorkingWeekend;
     var is_remotely = isRemotely;
 
@@ -426,14 +425,19 @@ const Navbar: React.FC = () => {
       is_working_weekend,
       is_remotely,
     };
-
+    console.log('list_dis', list_dis);
+    console.log('listDis', listDis);
+    console.log('list_cate', list_cate);
+    console.log('listCate', listCate);
+    console.log('salary_max', salary_max);
+    console.log('salary_min', salary_min);
     await setCookie('userFiltered', JSON.stringify(filter), 365);
 
     if (list_dis?.length > 0) {
       list_dis.forEach((item) => {
         params.append(`dis-ids`, `${item}`);
       });
-    } else if (list_dis?.length === 0 && DIS_IDS.length > 0) {
+    } else if (list_dis?.length === 0 && DIS_IDS?.length > 0) {
       [].forEach((item) => {
         params.append(`dis-ids`, `${item}`);
       });
@@ -696,8 +700,6 @@ const Navbar: React.FC = () => {
       },
       0,
     );
-
-    console.log('acc');
 
     setApproved(countApproved);
     setPending(countPending);
