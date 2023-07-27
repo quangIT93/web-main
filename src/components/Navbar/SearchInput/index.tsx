@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Select, Button } from 'antd';
 import jsonp from 'fetch-jsonp';
 import qs from 'qs';
 import type { SelectProps } from 'antd';
+import { useLocation } from 'react-router-dom';
 import searchApi from 'api/searchApi';
 import './style.scss';
 import { Spin } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index';
+// import context
+import { HomeValueContext } from 'context/HomeValueContextProvider';
 import {
   useNavigate,
   createSearchParams,
@@ -102,6 +105,14 @@ const SearchInput: React.FC<SearchProps> = ({
   handleSearchIcon,
   checkSearch,
 }) => {
+  const {
+    setSearch,
+    search,
+  }: {
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState<SelectProps['options']>([]);
   // const [fetching, setFet] = useState(false)
@@ -113,6 +124,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const [isLogin, setIsLogin] = React.useState(false);
 
   const QUERY = searchParams.get('q');
+  const location = useLocation();
   const handleSearch = async (newValue: string | undefined) => {
     // fetch(
     //   newValue,
@@ -121,6 +133,7 @@ const SearchInput: React.FC<SearchProps> = ({
     // );
     // console.log('search', newValue);
     setValue(newValue);
+    // console.log('coloe', newValue);
   };
 
   // React.useEffect(() => {
@@ -199,6 +212,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const handleChange = (newValue: string) => {
     // setOpenDropdown(true);
     // setValue(newValue);
+    console.log('cakakak');
   };
 
   const disableScroll = () => {
@@ -223,22 +237,24 @@ const SearchInput: React.FC<SearchProps> = ({
     setValue(value);
     // enableScroll();
   };
-
+  console.log('value', value);
   // handle press enter
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (QUERY && !value) {
-        window.open(
-          `/search-results?q=${encodeURIComponent(`${QUERY}`)}`,
-          '_parent',
-        );
-        // handleSearchIcon(e, QUERY);
-      } else
-        window.open(
-          `/search-results?q=${encodeURIComponent(`${value}`)}`,
-          '_parent',
-        );
       // handleSearchIcon(e, value);
+
+      if (location.pathname !== '/search-results') {
+        window.open(
+          `/search-results?${value !== 'undefined' ? `q=${value}` : ``}`,
+        );
+      } else {
+        setSearchParams({
+          q: value ? `${value}` : '',
+        });
+        setSearch(!search);
+        setOpenCollapseFilter(false);
+        // window.open(`/search-results`, "_self")
+      }
     }
   };
 

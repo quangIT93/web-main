@@ -189,8 +189,6 @@ const NewJobs: React.FC = () => {
     }, 1000);
   }, []);
 
-  console.log('isAppliedPostedJobs', isAppliedPostedJobs);
-
   return (
     <>
       {
@@ -199,6 +197,7 @@ const NewJobs: React.FC = () => {
           sx={{
             flexGrow: 1,
             marginTop: isLogined && isAppliedPostedJobs ? '0' : '15rem',
+            ['--mrTopRes']: isLogined && isAppliedPostedJobs ? '0' : '250px',
           }}
           className="new-job"
           ref={listRef}

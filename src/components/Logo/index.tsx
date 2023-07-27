@@ -6,7 +6,12 @@ const Logo: React.FC = () => {
   return (
     <Link to="/" reloadDocument>
       <div className="logo">
-        <img src="/OfficialLogo_beta-01.png" width={50} height={50} />
+        <img
+          src="/OfficialLogo_beta-01.png"
+          width={50}
+          height={50}
+          alt="Ảnh lỗi"
+        />
       </div>
     </Link>
   );

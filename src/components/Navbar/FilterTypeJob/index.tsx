@@ -5,6 +5,7 @@ import type { RadioChangeEvent } from 'antd';
 import { useSearchParams } from 'react-router-dom';
 import siteApi from 'api/siteApi';
 
+import { getCookie, setCookie } from 'cookies';
 import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
 import './style.scss';
@@ -23,9 +24,12 @@ const CustomOption = ({
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     const valueRender = data.find((item: any) => item.id === value);
 
+    console.log('valueRender Loai cong viec', valueRender);
+    console.log('valueRender Loai cong viec value', value);
     setValueRender(valueRender);
 
     setValue(value);
+    setCookie('userTypejobFiltered', JSON.stringify(valueRender), 365);
   };
 
   return (
@@ -33,7 +37,8 @@ const CustomOption = ({
       style={{ width: '100%' }}
       name="radiogroup"
       onChange={onChange}
-      defaultValue={jobType ? jobType : 5}
+      value={jobType ? jobType : 5}
+      // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -59,11 +64,16 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
   const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
   const [valueRender, setValueRender] = React.useState<any>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const TYPE_JOB = Number(searchParams.get('job-type'));
 
+  let userFilteredCookies = JSON.parse(
+    getCookie('userTypejobFiltered') || '{}',
+  );
+  const TYPE_JOB = userFilteredCookies?.id;
+  console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
     const result = await siteApi.getJobType();
     const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data];
+    console.log('updatedData', updatedData);
     if (updatedData) {
       setData(updatedData);
 
@@ -80,7 +90,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
   }, []);
 
   const handleChange = (value1: string) => {};
-
+  // console.log(`TYPEJOB`, TYPE_JOB);
   return (
     <div className="filter-input">
       <div className="filter-input_icon">

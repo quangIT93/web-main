@@ -1,7 +1,5 @@
-import React, { useState, FormEvent, useContext, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, FormEvent, useEffect } from 'react';
 
-import { toast } from 'react-toastify';
 // @ts-ignore
 import { Navbar } from '#components';
 
@@ -22,7 +20,7 @@ import Description from '#components/Post/Description';
 import PostImage from '#components/Post/PostImage';
 // import PostCategoryIds from '#components/Post/PostCategoryIds'
 import PostTime from '#components/Post/PostTime';
-import EditText from '#components/Post/EditText';
+
 import PostNumberPhone from '#components/Post/PostNumberPhone';
 
 import PostCategoryId from '#components/Post/PostCategoryId';
@@ -32,52 +30,52 @@ import PostSalaryType from '#components/Post/PostSalaryType';
 import Footer from '../../components/Footer/Footer';
 
 // import context
-import { HomeValueContext } from 'context/HomeValueContextProvider';
+// import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 import './style.scss';
 
 // import data
 import postApi from 'api/postApi';
 import siteApi from 'api/siteApi';
-import { Form, message } from 'antd';
+import { message } from 'antd';
 
 // redux
-import { RootState } from 'store';
+// import { RootState } from 'store';
 
-const initPost = {
-  title: '',
-  companyName: '',
-  provinceId: null,
-  districtId: null,
-  wardId: null,
-  address: '',
-  latitude: null,
-  longitude: null,
-  isDatePeriod: 0,
-  startDate: null,
-  endDate: null,
-  startTime: new Date(1970, 0, 2, 0, 0).getTime(),
-  endTime: new Date(1970, 0, 2, 0, 0).getTime(),
-  isWorkingWeekend: 0,
-  isRemotely: 0,
-  salaryMin: 1000,
-  salaryMax: 1000,
-  salaryType: 1,
-  moneyType: 1,
-  description: '',
-  phoneNumber: '',
-  categories: [],
-  images: [],
-  jobTypeId: null,
-  companyResourceId: null,
-  url: '',
-  email: '',
-};
+// const initPost = {
+//   title: '',
+//   companyName: '',
+//   provinceId: null,
+//   districtId: null,
+//   wardId: null,
+//   address: '',
+//   latitude: null,
+//   longitude: null,
+//   isDatePeriod: 0,
+//   startDate: null,
+//   endDate: null,
+//   startTime: new Date(1970, 0, 2, 0, 0).getTime(),
+//   endTime: new Date(1970, 0, 2, 0, 0).getTime(),
+//   isWorkingWeekend: 0,
+//   isRemotely: 0,
+//   salaryMin: 1000,
+//   salaryMax: 1000,
+//   salaryType: 1,
+//   moneyType: 1,
+//   description: '',
+//   phoneNumber: '',
+//   categories: [],
+//   images: [],
+//   jobTypeId: null,
+//   companyResourceId: null,
+//   url: '',
+//   email: '',
+// };
 
-interface ICategoryIds {
-  id: string;
-  name: string;
-}
+// interface ICategoryIds {
+//   id: string;
+//   name: string;
+// }
 
 export interface FormValues {
   title: string;
@@ -109,17 +107,17 @@ export interface FormValues {
   url: null;
 }
 
-interface Option {
-  id: string;
-  name: string;
-  image: string;
-  default_post_image: string;
-}
+// interface Option {
+//   id: string;
+//   name: string;
+//   image: string;
+//   default_post_image: string;
+// }
 
 const Post: React.FC = () => {
-  const { openCollapseFilter } = useContext(HomeValueContext);
+  // const { openCollapseFilter } = useContext(HomeValueContext);
 
-  const userProfile = useSelector((state: RootState) => state.profile.profile);
+  // const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   const formValues = {
     title: '',
@@ -166,11 +164,11 @@ const Post: React.FC = () => {
   const [endDate, setEndDate] = React.useState<any>(new Date().getTime());
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0);
   const [isRemotely, setIsRemotely] = React.useState<number>(0);
-  const [salary, setSalary] = React.useState<number[]>([500000, 100000000]);
+  // const [salary, setSalary] = React.useState<number[]>([500000, 100000000]);
   const [moneyType, setMoneyType] = React.useState<number>(1);
   const [salaryType, setSalaryType] = React.useState<number>(1);
   const [description, setDescription] = React.useState<string>('');
-  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+  // const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
   const [categoriesId, setCategoriesId] = useState<string[]>([]);
   const [address, setAddress] = useState<string>('');
   const [wardId, setWardId] = useState<string>('');
@@ -243,25 +241,25 @@ const Post: React.FC = () => {
 
   // valid values form data
   const validValue = () => {
-    if (titleJob == '') {
+    if (titleJob === '') {
       return {
         message: 'Vui lòng nhập tên công việc',
         checkForm: false,
       };
     }
-    if (companyName == '') {
+    if (companyName === '') {
       return {
         message: 'Vui lòng nhập tên công ty',
         checkForm: false,
       };
     }
-    if (address == '') {
+    if (address === '') {
       return {
         message: 'Vui lòng nhập dia chi',
         checkForm: false,
       };
     }
-    if (wardId == '') {
+    if (wardId === '') {
       return {
         message: 'Vui lòng chọn tỉnh thành phố',
         checkForm: false,
@@ -288,13 +286,13 @@ const Post: React.FC = () => {
         checkForm: false,
       };
     }
-    if (phoneNumber == '' || phoneNumber.length < 10) {
+    if (phoneNumber === '' || phoneNumber.length < 10) {
       return {
         message: 'Số điện thoại sai định dạng',
         checkForm: false,
       };
     }
-    if (description == '') {
+    if (description === '') {
       return {
         message: 'Vui lòng nhập mô tả công việc',
         checkForm: false,
