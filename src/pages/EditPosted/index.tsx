@@ -135,7 +135,10 @@ const EditPosted = () => {
         salaryMin: dataPostById.salary_min,
         moneyType: dataPostById.money_type,
         salaryType: dataPostById.salary_type_id,
-        phoneNumber: dataPostById.phone_contact.replace('+84', '0'),
+        phoneNumber:
+          dataPostById?.phone_contact?.length > 0
+            ? dataPostById?.phone_contact?.replace('+84', '0')
+            : '',
         description: dataPostById.description,
         images: [],
         deletedImages: [],
@@ -147,6 +150,8 @@ const EditPosted = () => {
       }));
     }
   }, [dataPostById]);
+
+  console.log('dataa', dataPostById);
 
   const [messageApi, contextHolder] = message.useMessage();
   const memoizedEditDataPosted = React.useMemo(
@@ -389,15 +394,6 @@ const EditPosted = () => {
         <div className="edit-posted_main">
           <div className="edit-title_post">
             <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
-            <div>
-              <h4>
-                <Switch
-                  // checked={dataKeyword.status === 1 ? true : false}
-                  checkedChildren=""
-                  unCheckedChildren=""
-                />
-              </h4>
-            </div>
           </div>
           <Skeleton loading={loading} active>
             <form action="">

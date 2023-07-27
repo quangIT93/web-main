@@ -116,7 +116,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     postId: number,
   ) => {
-    window.open(`/post-detail?post-id=${postId}`);
+    window.open(`/post-detail?post-id=${postId}`, '_parent');
   };
 
   // Sắp xếp mảng dữ liệu khi state `oldDate` thay đổi

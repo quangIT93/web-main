@@ -38,7 +38,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={jobType ? jobType : 5}
-      // defaultValue={jobType ? jobType : 5}
+    // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -89,7 +89,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
     getTypeJob();
   }, []);
 
-  const handleChange = (value1: string) => {};
+  const handleChange = (value1: string) => { };
   // console.log(`TYPEJOB`, TYPE_JOB);
   return (
     <div className="filter-input">

@@ -116,7 +116,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     postId: number,
   ) => {
-    window.open(`/post-detail?post-id=${postId}`);
+    window.open(`/post-detail?post-id=${postId}`, '_parent');
   };
 
   return (
