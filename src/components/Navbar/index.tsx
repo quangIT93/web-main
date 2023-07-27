@@ -107,14 +107,6 @@ const Navbar: React.FC = () => {
     setOpenNotificate,
     openNotificate,
     setSearch,
-    search,  const {
-    openCollapseFilter,
-    setOpenCollapseFilter,
-    // setHeightNavbar,
-    SetRefNav,
-    setOpenNotificate,
-    openNotificate,
-    setSearch,
     search,
   }: // setRefNav,
   {
