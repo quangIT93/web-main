@@ -1,13 +1,13 @@
-import React, { useMemo, useCallback, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 // materi
 import { Box, Typography } from '@mui/material';
 
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import Card from '@mui/material/Card';
 import { Space, Tooltip } from 'antd';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import ImageListItem from '@mui/material/ImageListItem';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import {
@@ -30,7 +30,7 @@ import 'intl/locale-data/jsonp/en';
 // @ts-ignore
 import { Navbar } from '#components';
 
-import { styled } from '@mui/material/styles';
+// import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import { Button, Skeleton } from 'antd';
@@ -43,12 +43,12 @@ import ApprovedApplication from '#components/CandidateDetail/ApprovedApplication
 import RecuitApplication from '#components/CandidateDetail/RecuitApplication';
 import CVItem from '#components/Profile/CV';
 import './style.scss';
-const SmallAvatar = styled(Avatar)(({ theme }) => ({
-  width: 22,
-  height: 22,
-  border: `2px solid ${theme.palette.background.paper}`,
-  backgroundColor: 'white',
-}));
+// const SmallAvatar = styled(Avatar)(({ theme }) => ({
+//   width: 22,
+//   height: 22,
+//   border: `2px solid ${theme.palette.background.paper}`,
+//   backgroundColor: 'white',
+// }));
 
 interface ItemAppy {
   id?: number | null;
@@ -456,6 +456,7 @@ const CandidateDetail: React.FC = () => {
                 style={{
                   whiteSpace: 'pre-wrap',
                   marginTop: '20px',
+                  overflowWrap: 'break-word',
                   color: '#575757',
                 }}
               >

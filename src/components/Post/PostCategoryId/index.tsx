@@ -62,11 +62,11 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
 
-  const dropdownMenuStyle = { maxHeight: "200px", overflowY: "auto" };
+  const dropdownMenuStyle = { maxHeight: '200px', overflowY: 'auto' };
 
   const onChange = (value: any) => {
     setDisable(false);
-    const secondValues = value.map((item: any) => item[1]);
+    const secondValues = value?.map((item: any) => item[1]);
 
     if (secondValues.length <= 2) {
       setCategoriesId(secondValues);
@@ -112,27 +112,27 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-              value: parentCategory.parent_category_id,
-              label: parentCategory.parent_category,
-              children: parentCategory.childs.map((child: any) => {
-                var dis = false;
-                //check id child  when disable = true
-                if (disable) {
-                  dis = true;
-                  for (const elem of categoriesId) {
-                    if (elem === child.id) {
-                      dis = false;
-                      break;
+                value: parentCategory.parent_category_id,
+                label: parentCategory.parent_category,
+                children: parentCategory.childs.map((child: any) => {
+                  var dis = false;
+                  //check id child  when disable = true
+                  if (disable) {
+                    dis = true;
+                    for (const elem of categoriesId) {
+                      if (elem === child.id) {
+                        dis = false;
+                        break;
+                      }
                     }
                   }
-                }
-                return {
-                  value: child.id,
-                  label: child.name,
-                  disabled: dis,
-                };
-              }),
-            }))
+                  return {
+                    value: child.id,
+                    label: child.name,
+                    disabled: dis,
+                  };
+                }),
+              }))
             : []
         }
         // dropdownStyle={dropdownMenuStyle}

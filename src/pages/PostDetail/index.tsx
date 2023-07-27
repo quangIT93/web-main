@@ -9,7 +9,7 @@ import { AxiosResponse } from 'axios';
 import Footer from '../../components/Footer/Footer';
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+
 // import api
 import postApi from '../../api/postApi';
 import bookMarkApi from 'api/bookMarkApi';
@@ -27,8 +27,7 @@ import ItemSuggest from './components/ItemSuggest';
 import ShowCancleSave from '#components/ShowCancleSave';
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 // @ts-ignore
-import { Carousel } from 'react-carousel-minimal';
-import { Button, Breadcrumb, notification, Input, Tooltip } from 'antd';
+import { Button, notification } from 'antd';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -43,9 +42,6 @@ import 'swiper/css/thumbs';
 import { FreeMode, Mousewheel, Navigation, Pagination, Thumbs } from 'swiper';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Skeleton from '@mui/material/Skeleton';
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -54,7 +50,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 //@ts-ignore
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+// import { CopyToClipboard } from 'react-copy-to-clipboard';
 //@ts-ignore
 // import { StatePropsCloseSlider } from 'pages/Home'
 // import { bindActionCreators } from 'redux'
@@ -65,20 +61,16 @@ import { RootState } from '../../store/reducer';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import {
-  EnvironmentOutlined,
   ClockCircleOutlined,
   DollarOutlined,
   CalendarOutlined,
   CreditCardOutlined,
-  CheckCircleFilled,
   DesktopOutlined,
   SlidersOutlined,
   FormOutlined,
   ExclamationCircleFilled,
 } from '@ant-design/icons';
 import { SaveIconOutline, SaveIconFill, ShareIcon } from '#components/Icons';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import { PostNewest } from '#components/Home/NewJobs';
 
 import IconButton from '@mui/material/IconButton';
@@ -87,7 +79,6 @@ import { CloseIcon } from '#components/Icons';
 import {
   MailIcon,
   FacebookIcon,
-  ZaloIcon,
   CopyIcon,
   MessagerIcon,
   CompanyNameDetailPostIcon,
@@ -98,7 +89,6 @@ import {
 
 import './style.scss';
 import ShowCopy from '#components/ShowCopy';
-import { height } from '@mui/system';
 
 //@ts-ignore
 import AnotherPost from './components/AnotherPost';
@@ -130,12 +120,12 @@ const itemsShare = [
   //   source: '',
   // },
 ];
-interface ItemCategories {
-  child_category_id?: Number;
-  parent_category?: string;
-  child_category?: string;
-  parent_category_id: Number;
-}
+// interface ItemCategories {
+//   child_category_id?: Number;
+//   parent_category?: string;
+//   child_category?: string;
+//   parent_category_id: Number;
+// }
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -176,12 +166,12 @@ const Detail: React.FC = () => {
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [title, setTitle] = React.useState('');
+  // const [title, setTitle] = React.useState('');
   const [tabValue, setTabValue] = React.useState('1');
 
   const [thumbsSwiper, setThumbsSwiper] = React.useState<any>(null);
 
-  const [width, setWidth] = React.useState<Number>(1050);
+  // const [width, setWidth] = React.useState<Number>(1050);
   const [post, setPost] = React.useState<AxiosResponse | null>(null);
   const [postPrev, setPostPrev] = React.useState<AxiosResponse | null>(null);
   const [postNext, setPostNext] = React.useState<AxiosResponse | null>(null);
@@ -197,39 +187,41 @@ const Detail: React.FC = () => {
   const [api, contextHolder] = notification.useNotification();
   const [bookmarked, setBookmarked] = React.useState(false);
   const [openModalShare, setOpenModalShare] = React.useState(false);
-  const [copied, setCopied] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [openModalApply, setOpenModalApply] = React.useState(false);
+  const [isApplied, setIsApplied] = React.useState(false);
+
+  // const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
   const POST_ID = Number(searchParams.get('post-id'));
-  const openNotification = () => {
-    api.info({
-      message: (
-        <>
-          Ứng tuyển công việc thành công <br /> Bạn muốn chia sẻ công việc ?
-        </>
-      ),
-      description: (
-        <Input
-          addonBefore="Link"
-          addonAfter={
-            <CopyToClipboard text={window.location.href}>
-              <Tooltip
-                trigger="click"
-                placement="topRight"
-                title={'Đã copy link '}
-                arrow={true}
-              >
-                <div style={{ cursor: 'pointer' }}>Copy</div>
-              </Tooltip>
-            </CopyToClipboard>
-          }
-          defaultValue={window.location.href}
-        />
-      ),
-      placement: 'topRight',
-      icon: <CheckCircleFilled style={{ color: 'green' }} />,
-    });
-  };
+  // const openNotification = () => {
+  //   api.info({
+  //     message: (
+  //       <>
+  //         Ứng tuyển công việc thành công <br /> Bạn muốn chia sẻ công việc ?
+  //       </>
+  //     ),
+  //     description: (
+  //       <Input
+  //         addonBefore="Link"
+  //         addonAfter={
+  //           <CopyToClipboard text={window.location.href}>
+  //             <Tooltip
+  //               trigger="click"
+  //               placement="topRight"
+  //               title={'Đã copy link '}
+  //               arrow={true}
+  //             >
+  //               <div style={{ cursor: 'pointer' }}>Copy</div>
+  //             </Tooltip>
+  //           </CopyToClipboard>
+  //         }
+  //         defaultValue={window.location.href}
+  //       />
+  //     ),
+  //     placement: 'topRight',
+  //     icon: <CheckCircleFilled style={{ color: 'green' }} />,
+  //   });
+  // };
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setTabValue(newValue);
@@ -243,20 +235,32 @@ const Detail: React.FC = () => {
       icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
     });
   };
+
+  const getDataCompany = () => {
+    try {
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getDataCompany();
+  }, []);
+
   // get post by id-post
   const getPostById = async () => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       const accountId = localStorage.getItem('accountId');
-      const result = await postApi.getById(POST_ID);
+      // const result = await postApi.getById(POST_ID);
+      const result = await postApi.getPostV3(POST_ID);
+      // console.log('result', result2);
       if (result) {
         // const list = result?.data.categories.map((category: any) =>
         //   Number(category.child_category_id)
         // )
-        console.log('postId', result.data);
+        // console.log('postId', result.data);
         // check  application status
-        setIsLoading(false);
-        if (result.data.account_id === accountId) {
+        // setIsLoading(false);
+        if (result.data.accountId === accountId) {
           setTextButton('Chỉnh sửa bài tuyển dụng');
           setBackgroundButton('black');
           setCheckPostUser(true);
@@ -265,20 +269,21 @@ const Detail: React.FC = () => {
           setBackgroundButton('gray');
           // setBackgroundButton('#0D99FF');
           result.data.applied = true;
-        } else if (result.data.application_status === 1) {
+        } else if (result.data.applied) {
           setTextButton('Đã ứng tuyển');
           // setBackgroundButton('gray');
           setBackgroundButton('#0D99FF');
-        } else if (result.data.application_status === 2) {
-          setTextButton('Hồ sơ được phê duyệt');
-          setBackgroundButton('#0D99FF');
-        } else if (result.data.application_status === 3) {
-          setTextButton('Hồ sơ bị từ chối');
-          setBackgroundButton('#BD3131');
-        } else if (result.data.application_status === 4) {
-          setTextButton('Hồ sơ được chấp nhận');
-          setBackgroundButton('#5CB265');
         }
+        // else if (result.data.application_status === 2) {
+        //   setTextButton('Hồ sơ được phê duyệt');
+        //   setBackgroundButton('#0D99FF');
+        // } else if (result.data.application_status === 3) {
+        //   setTextButton('Hồ sơ bị từ chối');
+        //   setBackgroundButton('#BD3131');
+        // } else if (result.data.application_status === 4) {
+        //   setTextButton('Hồ sơ được chấp nhận');
+        //   setBackgroundButton('#5CB265');
+        // }
         setPost(result);
         setCheckApply(result.data.applied);
         if (result.data.bookmarked) {
@@ -298,10 +303,10 @@ const Detail: React.FC = () => {
 
   const getAnotherPost = async (postID: number, position: number) => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       const result = await postApi.getById(postID);
       if (result) {
-        setIsLoading(false);
+        // setIsLoading(false);
         position === 0 ? setPostPrev(result.data) : setPostNext(result.data);
       }
     } catch (error) {
@@ -332,45 +337,52 @@ const Detail: React.FC = () => {
   }, [bookmarked, POST_ID]);
 
   // set size for Breadcrumb
-  React.useEffect(() => {
-    function handleWindowResize() {
-      const w =
-        Number(componentRef?.current?.offsetWidth) +
-        Number(componentRefJob?.current?.offsetWidth);
-      setWidth(w);
-    }
-    window.addEventListener('resize', handleWindowResize);
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   function handleWindowResize() {
+  //     const w =
+  //       Number(componentRef?.current?.offsetWidth) +
+  //       Number(componentRefJob?.current?.offsetWidth);
+  //     setWidth(w);
+  //   }
+  //   window.addEventListener('resize', handleWindowResize);
+  //   return () => {
+  //     window.removeEventListener('resize', handleWindowResize);
+  //   };
+  // }, []);
 
-  const data = [
-    {
-      id: 81,
-      image:
-        'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-6010e05a-44c7-4785-973a-03bef018a0b4.jpg',
-      status: 1,
-    },
-    {
-      id: 82,
-      image:
-        'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-3eedf311-0479-4ecc-804e-ca810f1b7658.jpg',
-      status: 1,
-    },
-    {
-      id: 83,
-      image:
-        'https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/273/1676444301989-8ade830d-f957-4aaa-8fdd-c5035d81d529.jpg',
-      status: 1,
-    },
-  ];
+  console.log(post?.data);
 
   // handle click button
   const onclick = async () => {
     try {
       if (!ACCESS_TOKEN) {
         CheckWasLogin();
+        return;
+      }
+      if (
+        // (post?.data.application_status === 1 && isHiJob) ||
+        (post?.data.applied &&
+          post?.data?.companyResourceData?.name === 'HIJOB') ||
+        (post?.data.applied &&
+          post?.data?.companyResourceData?.name === 'HIJOB') ||
+        (checkApply && post?.data?.companyResourceData?.name === 'HIJOB')
+      ) {
+        api.info({
+          message: `Bạn đã ứng tuyển công việc này!`,
+          description:
+            'Nhà tuyển dụng sẽ liên hệ bạn sớm nếu hồ sơ đạt yêu cầu.',
+          placement: 'top',
+          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+        });
+        return;
+      }
+      if (
+        // (post?.data.application_status === 1 && !isHiJob) ||
+        (post?.data?.applied &&
+          post?.data?.companyResourceData?.name !== 'HIJOB') ||
+        (checkApply && post?.data?.companyResourceData?.name !== 'HIJOB')
+      ) {
+        window.open(post?.data?.companyResourceData?.postUrl, '_blank');
         return;
       }
       // navigate to edit post
@@ -395,43 +407,45 @@ const Detail: React.FC = () => {
         });
         return;
       }
-      const result = await appplicationApi.applyAplication(POST_ID);
-      console.log('result ung tiyen', result);
-      if (true) {
-        // openNotification();
-        setTextButton('Đã ứng tuyển');
-        // setBackgroundButton('gray');
-        setCheckApply(true);
-        window.open(post?.data.resource.url, '_blank');
-      }
+
+      setOpenModalApply(true);
+      // const result = await appplicationApi.applyAplication(POST_ID);
+      // console.log('result ung tiyen', result);
+      // if (true) {
+      //   // openNotification();
+      //   setTextButton('Đã ứng tuyển');
+      //   // setBackgroundButton('gray');
+      //   setCheckApply(true);
+      //   // window.open(post?.data.resource.url, '_blank');
+      // }
     } catch (error: any) {
       console.log('error', error);
-      if (error.response.status === 400) {
-        api.info({
-          message: `Ứng tuyển không thành công!`,
-          description: 'Bạn đã ứng tuyển vị trí này',
-          placement: 'top',
-          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
-        });
-        setTextButton('Đã ứng tuyển');
-        // setBackgroundButton('gray');
-        setBackgroundButton('#0D99FF');
-        setCheckApply(true);
-        window.open(post?.data.resource.url, '_blank');
-        // openNotification();
-        return;
-      }
+      // if (error.response.status === 400) {
+      //   // api.info({
+      //   //   message: `Ứng tuyển không thành công!`,
+      //   //   description: 'Bạn đã ứng tuyển vị trí này',
+      //   //   placement: 'top',
+      //   //   icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+      //   // });
+      //   setTextButton('Đã ứng tuyển');
+      //   // setBackgroundButton('gray');
+      //   setBackgroundButton('#0D99FF');
+      //   setCheckApply(true);
+      //   window.open(post?.data?.companyResourceData.url, '_blank');
+      //   // openNotification();
+      //   return;
+      // }
     }
   };
 
-  const captionStyle = {
-    fontSize: '2em',
-    fontWeight: 'bold',
-  };
-  const slideNumberStyle = {
-    fontSize: '15px',
-    fontWeight: 'bold',
-  };
+  // const captionStyle = {
+  //   fontSize: '2em',
+  //   fontWeight: 'bold',
+  // };
+  // const slideNumberStyle = {
+  //   fontSize: '15px',
+  //   fontWeight: 'bold',
+  // };
   setTimeout(() => {
     setAutomatic(true);
   }, 700);
@@ -464,37 +478,53 @@ const Detail: React.FC = () => {
   const handleCloseModalShare = () => {
     setOpenModalShare(false);
   };
+
+  const handleCloseModalApply = () => {
+    setOpenModalApply(false);
+    setIsApplied(false);
+  };
   const handleClickShareSource = (nameShare: string) => {
     // window.location.href = `mailto:${email}`;
     if (nameShare === 'Mail') {
       // window.location.href = `mailto:quangbk54@gmail.com`;
       window.location.href = `mailto:?body=${encodeURIComponent(
-        post?.data.share_link,
+        post?.data?.companyResourceData?.name === 'HIJOB'
+          ? post?.data.shareLink
+          : post?.data.companyResourceData.postUrl,
       )}`;
     }
-    if (nameShare === 'Messenger') {
-      // fb-messenger://share/?link=${encodeURIComponent(linkToShare)}
-      // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
-      const messengerLink =
-        'fb-messenger://share?link=' +
-        encodeURIComponent(post?.data.share_link) +
-        '&app_id=' +
-        encodeURIComponent('523018296116961');
-      window.location.href = messengerLink;
-    }
+
+    // if (nameShare === 'Messenger') {
+    //   // fb-messenger://share/?link=${encodeURIComponent(linkToShare)}
+    //   // window.location.href = `fb-messenger://share/?link=${encodeURIComponent(
+    //   const messengerLink =
+    //     'fb-messenger://share?link=' +
+    //     encodeURIComponent(post?.data.resource.url) +
+    //     '&app_id=' +
+    //     encodeURIComponent('523018296116961');
+    //   window.location.href = messengerLink;
+    // }
     if (nameShare === 'Facebook') {
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        post?.data.share_link,
+        post?.data?.companyResourceData?.name === 'HIJOB'
+          ? post?.data.shareLink
+          : post?.data.companyResourceData.postUrl,
       )}`;
       window.open(url, '_blank');
     }
     if (nameShare === 'Zalo') {
       window.location.href = `zalo://app?link=${encodeURIComponent(
-        post?.data.share_link,
+        post?.data?.companyResourceData?.name === 'HIJOB'
+          ? post?.data.shareLink
+          : post?.data.companyResourceData.postUrl,
       )}`;
     }
     if (nameShare === 'Sao chép liên kết') {
-      copy(post?.data.share_link);
+      copy(
+        post?.data?.companyResourceData?.name === 'HIJOB'
+          ? post?.data.shareLink
+          : post?.data.companyResourceData.postUrl,
+      );
       // setCopied(true);
       dispatch<any>(setShowCopy(true));
       // setTimeout(() => {
@@ -526,7 +556,7 @@ const Detail: React.FC = () => {
   // }
 
   const handleClickSearch = () => {
-    const companyName = post?.data.company_name;
+    const companyName = post?.data.companyName;
     const searchUrl = `/search-results?q=${encodeURIComponent(companyName)}`;
     window.open(searchUrl, '_self');
   };
@@ -534,8 +564,62 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address} , ${post?.data.district}, ${post?.data.province}`,
+        `${post?.data.address}, ${
+          post?.data.location ? post?.data.location.fullName : ''
+        }, ${post?.data.district ? post?.data.district?.fullName : ''}, ${
+          post?.data.district?.province
+            ? post?.data.district?.province?.fullName
+            : ''
+        }`,
     );
+  };
+
+  const handleClickChangePage = () => {
+    window.open(post?.data?.companyResourceData?.postUrl, '_blank');
+    setIsApplied(true);
+  };
+
+  const handleChangeStatus = async () => {
+    const result = await appplicationApi.applyAplication(POST_ID);
+    console.log('result ung tiyen', result);
+    if (true) {
+      // openNotification();
+      setTextButton('Đã ứng tuyển');
+      // setBackgroundButton('gray');
+      setCheckApply(true);
+      // window.open(post?.data.resource.url, '_blank');
+      setOpenModalApply(false);
+    }
+  };
+
+  const handleApply = async () => {
+    if (
+      !userProfile.name ||
+      !userProfile.address ||
+      !userProfile.birthday ||
+      userProfile.gender === null ||
+      userProfile.gender === undefined ||
+      !userProfile.phone ||
+      !userProfile.email
+    ) {
+      api.info({
+        message: `Cập nhật thông tin`,
+        description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
+        placement: 'top',
+        icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+      });
+      return;
+    }
+    const result = await appplicationApi.applyAplication(POST_ID);
+    console.log('result ung tiyen', result);
+    if (true) {
+      // openNotification();
+      setTextButton('Đã ứng tuyển');
+      // setBackgroundButton('gray');
+      setCheckApply(true);
+      // window.open(post?.data.resource.url, '_blank');
+      setOpenModalApply(false);
+    }
   };
 
   return (
@@ -566,8 +650,8 @@ const Detail: React.FC = () => {
                 <div className="top-title">
                   <h2>{post?.data.title}</h2>
                   <img
-                    src={post?.data.resource.company_icon}
-                    alt={post?.data.resource.company_icon}
+                    src={post?.data.companyResourceData.logo}
+                    alt={post?.data.companyResourceData.logo}
                   />
                 </div>
                 <div className="mid-title">
@@ -577,7 +661,7 @@ const Detail: React.FC = () => {
                       onClick={handleClickSearch}
                       style={{ cursor: 'pointer' }}
                     >
-                      {post?.data.company_name}
+                      {post?.data.companyName}
                     </h3>
                     <h3>|</h3>
                     <h3
@@ -590,7 +674,15 @@ const Detail: React.FC = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${post?.data.district}, ${post?.data.province}`}</h3>
+                    <h3>{`${post?.data.address}, ${
+                      post?.data.location ? post?.data.location.fullName : ''
+                    }, ${
+                      post?.data.district ? post?.data.district?.fullName : ''
+                    }, ${
+                      post?.data.district?.province
+                        ? post?.data.district?.province?.fullName
+                        : ''
+                    }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -605,9 +697,9 @@ const Detail: React.FC = () => {
                   <div className="bot-title-createdTime">
                     <ClockDetailPostIcon width={24} height={24} />
                     <h3>
-                      {moment(new Date(post?.data.created_at)).format('HH:mm')}
+                      {moment(new Date(post?.data.createdAt)).format('HH:mm')}
                       <span>&nbsp;</span>
-                      {new Date(post?.data.created_at).toLocaleDateString(
+                      {new Date(post?.data.createdAt).toLocaleDateString(
                         'en-GB',
                       )}
                     </h3>
@@ -710,7 +802,7 @@ const Detail: React.FC = () => {
                           className="div-job-img-swipper_item"
                           key={index}
                         >
-                          <img src={item.image} alt="ảnh lỗi" />
+                          <img src={item.url} alt="ảnh lỗi" />
                         </SwiperSlide>
                       );
                     })}
@@ -734,7 +826,7 @@ const Detail: React.FC = () => {
                           className="div-job-img-swipper-thumbs_item"
                           key={index}
                         >
-                          <img src={item.image} />
+                          <img src={item.url} alt="Ảnh lỗi" />
                         </SwiperSlide>
                       );
                     })}
@@ -772,7 +864,7 @@ const Detail: React.FC = () => {
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Loại công viêc</p>
-                                <h5>{post?.data.job_type.job_type_name}</h5>
+                                <h5>{post?.data.postJobType.fullName}</h5>
                               </div>
                             </div>
                             <div className="div-detail-row">
@@ -784,10 +876,10 @@ const Detail: React.FC = () => {
                                 <p>Giờ làm việc</p>
                                 <h5>
                                   {moment(
-                                    new Date(post?.data.start_time),
+                                    new Date(post?.data.startTime),
                                   ).format('HH:mm')}{' '}
                                   -{' '}
-                                  {moment(new Date(post?.data.end_time)).format(
+                                  {moment(new Date(post?.data.endTime)).format(
                                     'HH:mm',
                                   )}
                                 </h5>
@@ -799,7 +891,7 @@ const Detail: React.FC = () => {
                                 {' '}
                                 <p>Làm việc cuối tuần</p>
                                 <h5>
-                                  {post?.data.is_working_weekend === 0
+                                  {post?.data.isWorkingWeekend === 0
                                     ? 'Không làm việc cuối tuần'
                                     : 'Có làm việc cuối tuần'}
                                 </h5>
@@ -810,17 +902,17 @@ const Detail: React.FC = () => {
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Mức lương</p>
-                                {post?.data.salary_type_id === 6 ? (
-                                  <h5>{post?.data.salary_type}</h5>
+                                {post?.data.postSalaryType.id === 6 ? (
+                                  <h5>{post?.data.postSalaryType.fullName}</h5>
                                 ) : (
                                   <h5>
                                     {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salary_min,
-                                    ) + ` ${post?.data.money_type_text}`}{' '}
+                                      post?.data.salaryMin,
+                                    ) + ` ${post?.data.moneyTypeText}`}{' '}
                                     -{' '}
                                     {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salary_max,
-                                    ) + ` ${post?.data.money_type_text}`}
+                                      post?.data.salaryMax,
+                                    ) + ` ${post?.data.moneyTypeText}`}
                                   </h5>
                                 )}
                               </div>
@@ -832,14 +924,11 @@ const Detail: React.FC = () => {
                               <div style={{ marginLeft: '10px' }}>
                                 {' '}
                                 <p>Danh mục</p>
-                                {post?.data.categories.map(
-                                  (
-                                    item: ItemCategories,
-                                    index: null | number,
-                                  ) => (
+                                {post?.data.postCategories.map(
+                                  (item: any, index: null | number) => (
                                     <h5 key={index}>
-                                      {item.parent_category}/
-                                      {item.child_category}
+                                      {item.parentCategory.fullName}/
+                                      {item.fullName}
                                     </h5>
                                   ),
                                 )}
@@ -851,7 +940,7 @@ const Detail: React.FC = () => {
                                 {' '}
                                 <p>Làm việc từ xa</p>
                                 <h5>
-                                  {post?.data.is_remotely === 0
+                                  {post?.data.isRemotely === 0
                                     ? 'Không làm việc từ xa'
                                     : 'Có làm việc từ xa'}
                                 </h5>
@@ -865,9 +954,9 @@ const Detail: React.FC = () => {
                                 {' '}
                                 <p>Thời gian hết hạn</p>
                                 <h5>
-                                  {post?.data.expired_date
+                                  {post?.data?.expiredDate
                                     ? moment(
-                                        new Date(post?.data.expired_date),
+                                        new Date(post?.data?.expiredDate),
                                       ).format('DD/MM/yyyy')
                                     : 'Không thời hạn'}
                                 </h5>
@@ -894,7 +983,24 @@ const Detail: React.FC = () => {
                           </Button>
                         </>
                       </TabPanel>
-                      <TabPanel value="2">Thông tin công ty</TabPanel>
+                      <TabPanel value="2">
+                        <div className="job-title-container">
+                          <div className="job-title-details">
+                            <div className="div-detail-rowCompany">
+                              <h3 style={{ display: 'block' }}>Mô tả</h3>
+                              <div>
+                                <p>Chưa cập nhật</p>
+                              </div>
+                            </div>
+                            <div className="div-detail-rowCompany">
+                              <h3>Thông tin cơ bản</h3>
+                              <div>
+                                <p>Chưa cập nhật</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </TabPanel>
                     </TabContext>
                   </Box>
                 </div>
@@ -917,7 +1023,7 @@ const Detail: React.FC = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                          onClick={handlePreviousPost}
+                          // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -926,7 +1032,7 @@ const Detail: React.FC = () => {
                         </div>
                         <div
                           className="description-button_next"
-                          onClick={handleNextPost}
+                          // onClick={handleNextPost}
                           style={{
                             color: postNext ? 'black' : '#cccc',
                           }}
@@ -1044,6 +1150,72 @@ const Detail: React.FC = () => {
                   </div>
                 ))}
               </div>
+            </Box>
+          </Modal>
+
+          <Modal
+            open={openModalApply}
+            onClose={handleCloseModalApply}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography
+                id="modal-modal-title"
+                variant="h5"
+                component="h2"
+                sx={{ textAlign: 'center', color: '#0d99ff' }}
+              >
+                Ứng tuyển cho công việc này
+              </Typography>
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
+              >
+                {post?.data?.companyResourceData?.name === 'HIJOB'
+                  ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Bạn có muốn ứng tuyển công việc này không?'
+                  : isApplied
+                  ? 'Bạn đã ứng tuyển công việc này chưa?'
+                  : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
+              </Typography>
+
+              <Box
+                sx={{
+                  margin: '12px auto',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '12px',
+                }}
+              >
+                <Button
+                  type="primary"
+                  danger
+                  onClick={handleCloseModalApply}
+                  style={{
+                    width: '300px',
+                  }}
+                >
+                  {isApplied ? 'Chưa' : 'Không'}
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={
+                    post?.data?.companyResourceData?.name === 'HIJOB'
+                      ? handleApply
+                      : isApplied
+                      ? handleChangeStatus
+                      : handleClickChangePage
+                  }
+                  style={{
+                    width: '300px',
+                  }}
+                >
+                  {isApplied ? 'Rồi' : 'Có'}
+                </Button>
+              </Box>
             </Box>
           </Modal>
           <Footer />

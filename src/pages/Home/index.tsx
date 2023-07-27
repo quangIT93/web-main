@@ -5,7 +5,7 @@ import { Navbar } from '#components';
 // @ts-ignore
 import { Breadcrumbs } from '#components';
 // @ts-ignore
-import { Carousel } from '#components';
+// import { Carousel } from '#components';
 // @ts-ignore
 import AppliedPostedJob from '#components/Home/AppliedPostedJob';
 // @ts-ignore
