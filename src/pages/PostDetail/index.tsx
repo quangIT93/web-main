@@ -567,7 +567,9 @@ const Detail: React.FC = () => {
         `${post?.data.address}, ${
           post?.data.location ? post?.data.location.fullName : ''
         }, ${
-          post?.data.district ? post?.data?.location?.district?.fullName : ''
+          post?.data?.location?.district
+            ? post?.data?.location?.district?.fullName
+            : ''
         }, ${
           post?.data?.location?.district?.province
             ? post?.data.district?.province?.fullName
@@ -584,7 +586,7 @@ const Detail: React.FC = () => {
   const handleChangeStatus = async () => {
     const result = await appplicationApi.applyAplication(POST_ID);
     console.log('result ung tiyen', result);
-    if (true) {
+    if (post?.data?.applied) {
       // openNotification();
       setTextButton('Đã ứng tuyển');
       // setBackgroundButton('gray');
@@ -614,7 +616,7 @@ const Detail: React.FC = () => {
     }
     const result = await appplicationApi.applyAplication(POST_ID);
     console.log('result ung tiyen', result);
-    if (true) {
+    if (post?.data?.applied) {
       // openNotification();
       setTextButton('Đã ứng tuyển');
       // setBackgroundButton('gray');

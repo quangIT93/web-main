@@ -1,0 +1,148 @@
+.company-container {
+    margin-top: 70px;
+
+    .company-content {
+        padding: 50px 180px;
+        margin: 0 auto;
+        transition: all l;
+        margin-bottom: 36px;
+
+        @media screen and (max-width: 1200px) {
+            padding-inline: 10px;
+        }
+
+        .edit-logo-company-container {
+            margin-top: 32px;
+
+            .edit-logo-company-content {
+
+                .company-logo {
+                    margin-top: 8px;
+
+                    .ant-upload-list-item-container,
+                    .ant-upload-select {
+                        width: 160px !important;
+                        height: 160px !important;
+                        border: 1px solid rgba(87, 87, 87, 1);
+                        border-radius: 8px;
+                    }
+
+                    .ant-upload-list-item-container {
+                        .ant-upload-list-item {
+                            padding: 0 !important;
+                            border-color: rgba(87, 87, 87, 1) !important;
+
+                            &::before {
+                                width: 100% !important;
+                                height: 100% !important;
+                            }
+
+                            .ant-upload-list-item-thumbnail {
+                                img {
+                                    border-radius: 8px;
+                                    object-fit: cover !important;
+                                }
+                            }
+
+                            .ant-upload-list-item-progress {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .edit-name-tax-company-container {
+            display: flex;
+            gap: 32px;
+            margin-top: 24px;
+
+            .edit-name-company,
+            .edit-tax-company {
+                flex: 1;
+            }
+        }
+
+        .edit-address-company-container {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 24px;
+
+            .edit-address-company {
+                display: flex;
+                gap: 32px;
+
+                .edit-titleAddress {
+                    flex: 1;
+                }
+            }
+        }
+
+        .edit-phone-mail-company-container {
+            margin-top: 24px;
+            display: flex;
+            gap: 32px;
+
+            .edit-phone-company,
+            .edit-mail-company {
+                flex: 1;
+            }
+        }
+
+        .edit-role-web-company-container {
+            display: flex;
+            margin-top: 24px;
+            gap: 32px;
+
+            .edit-role-company,
+            .edit-web-company {
+                flex: 1;
+            }
+        }
+
+        .edit-field-scale-company-container {
+            display: flex;
+            margin-top: 24px;
+            gap: 32px;
+
+            .edit-field-company,
+            .edit-scale-company {
+                flex: 1;
+            }
+        }
+
+        .edit-des-company-container {
+            margin-top: 24px;
+        }
+
+
+        h1 {
+            // text-align: center;
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 24px;
+            margin-bottom: 32px;
+        }
+
+        .btn-edit_submitForm {
+            margin-top: 24px;
+            border-radius: 5px;
+            align-items: center;
+            width: 100%;
+            // background-color: #0d99ff;
+            // color: #ffffff;
+            box-shadow: 0px 0px 4px 0px rgba(255, 255, 255, 0.35);
+            color: rgb(220, 220, 220, 1);
+
+            border: none;
+            outline: none;
+            padding: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 18px;
+            cursor: pointer;
+        }
+    }
+}
