@@ -1046,7 +1046,7 @@ const Navbar: React.FC = () => {
               </Button>
             </Badge>
 
-            <div className="wrap-btn_notice">
+            <div className="wrap-btn_notice ">
               <Button
                 className="btn-notice"
                 onClick={() => {
@@ -1064,7 +1064,7 @@ const Navbar: React.FC = () => {
             </div>
 
             <div
-              className="wrap-btn_notice 
+              className="wrap-btn_notice btn-noti_icon 
             border-aniation_download
             "
             >
