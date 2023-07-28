@@ -24,8 +24,8 @@ const CustomOption = ({
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     const valueRender = data.find((item: any) => item.id === value);
 
-    console.log('valueRender Loai cong viec', valueRender);
-    console.log('valueRender Loai cong viec value', value);
+    // console.log('valueRender Loai cong viec', valueRender);
+    // console.log('valueRender Loai cong viec value', value);
     setValueRender(valueRender);
 
     setValue(value);
@@ -38,7 +38,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={jobType ? jobType : 5}
-    // defaultValue={jobType ? jobType : 5}
+      // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -69,11 +69,11 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
     getCookie('userTypejobFiltered') || '{}',
   );
   const TYPE_JOB = userFilteredCookies?.id;
-  console.log('type', TYPE_JOB);
+  // console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
     const result = await siteApi.getJobType();
     const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data];
-    console.log('updatedData', updatedData);
+    // console.log('updatedData', updatedData);
     if (updatedData) {
       setData(updatedData);
 
@@ -89,7 +89,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
     getTypeJob();
   }, []);
 
-  const handleChange = (value1: string) => { };
+  const handleChange = (value1: string) => {};
   // console.log(`TYPEJOB`, TYPE_JOB);
   return (
     <div className="filter-input">

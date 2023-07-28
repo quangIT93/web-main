@@ -376,21 +376,22 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-            style={{ textAlign: 'center', display: 'block' }}
+            // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>Tạo bài đăng tuyển dụng</h1>
-            {/* <div className="post-main_switch">
+            <div className="post-main_switch">
               <h4>
-                Hi Job sẽ tự động điền tất cả các thông tin công việc trước đó
+                HiJob sẽ tự động điền tất cả các thông tin công việc trước đó
                 của bạn!
               </h4>
-              <Switch
+              {/* <Switch
+                
                 checked={openModalFillDataPost}
                 checkedChildren=""
                 unCheckedChildren=""
                 onChange={() => setOpenFillDataPost(!openModalFillDataPost)}
-              />
-            </div> */}
+              /> */}
+            </div>
           </div>
           <form onSubmit={handleSubmit}>
             <PostJobCompany
@@ -483,10 +484,10 @@ const Post: React.FC = () => {
           openModalNoteCreatePost={openModalNoteCreatePost}
         />
 
-        {/* <ModalFillDataPost
+        <ModalFillDataPost
           setOpenFillDataPost={setOpenFillDataPost}
           openModalFillDataPost={openModalFillDataPost}
-        /> */}
+        />
       </div>
     );
   } else {

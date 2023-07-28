@@ -30,7 +30,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
 
   const handleClickEditPost = async () => {
     // const result = await postApi.updateStatusPost(postId, 1);
-    window.open(`/edit-posted/?postId=${postId}`, '_parent');
+    window.open(`/edit-posted?postId=${postId}`, '_parent');
   };
 
   const handleClickOpenPost = async () => {

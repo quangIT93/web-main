@@ -167,7 +167,7 @@ const Navbar: React.FC = () => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
     setUserFiltered(userFilteredCookies);
   }, []);
-  console.log('jobTYpe', jobType);
+  // console.log('jobTYpe', jobType);
   // check search
   useEffect(() => {
     if (
@@ -741,6 +741,16 @@ const Navbar: React.FC = () => {
     };
   }, [openCollapseFilter]);
 
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsDownloading((prevIsDownloading) => !prevIsDownloading);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const buttons = [
     <button
       key="1"
@@ -1041,13 +1051,23 @@ const Navbar: React.FC = () => {
               {openNotificate ? <Notificate /> : <></>}
             </div>
 
-            <div className="wrap-btn_notice">
+            <div
+              className="wrap-btn_notice 
+            border-aniation_download
+            "
+            >
               <Button
                 className="btn-notice"
                 // onClick={() => setOpenNotificate(!openNotificate)}
                 ref={bellRef}
               >
-                <DownloadIcon />
+                <div
+                  className={`button-download ${
+                    isDownloading ? 'stopAnimation' : ''
+                  }`}
+                >
+                  <DownloadIcon />
+                </div>
                 {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
               </Button>
               <div className="sub-icon_qr">

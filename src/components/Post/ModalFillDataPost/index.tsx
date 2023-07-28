@@ -4,9 +4,12 @@ import Box from '@mui/material/Box';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Button } from 'antd';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import { Button } from 'antd';
+// import IconButton from '@mui/material/IconButton';
+// import CloseIcon from '@mui/icons-material/Close';
+
+import historyRecruiter from 'api/historyRecruiter';
+import applitedPostedApi from 'api/apiAppliedPosted';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -32,6 +35,14 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
 
   const handleClose = () => setOpenFillDataPost(false);
 
+  const allPost = () => {
+    try {
+      // const result = historyRecruiter.getAllPosted(null 20, null)
+    } catch (error) {}
+  };
+
+  React.useEffect(() => {}, []);
+
   return (
     <div>
       <Modal
@@ -53,7 +64,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
               fontWeight: '600',
             }}
           >
-            Hi Job sẽ tự động điền tất cả các thông tin công việc trước đó của
+            HiJob sẽ tự động điền tất cả các thông tin công việc trước đó của
             bạn!
             {/* <IconButton
               aria-label="close"
@@ -74,7 +85,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
               fontSize: '16px',
             }}
           >
-            Bài tuyển dụng mà bạn muốn Hi Job lấy thông tin tự động
+            Bài tuyển dụng mà bạn muốn HiJob lấy thông tin tự động
           </p>
           <div className="post_items_old">
             <div className="post_item_old"></div>
