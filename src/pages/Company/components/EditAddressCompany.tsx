@@ -27,15 +27,19 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedWard, setSelectedWard] = useState<any>(null);
 
-  console.log("selectedDistrict ", dataCompany?.ward?.district?.name);
-  console.log("dataWards ", dataWards);
+  // console.log("dataDistricts", dataDistricts);
+  // console.log("dataWards", dataWards);
+  // console.log("selectedProvince", selectedProvince);
+  // console.log("selectedDistrict", selectedDistrict);
+  // console.log("selectedWard", selectedWard);
+
 
   useEffect(() => {
     if (dataProvinces && !selectedProvince) {
       setSelectedProvince(
         dataProvinces?.find(
           (dataProvince: any) =>
-            dataProvince?.name === dataCompany?.ward?.district?.province?.name,
+            dataProvince?.full_name === dataCompany?.companyLocation?.district?.province?.fullName,
         ),
       );
     }
@@ -46,7 +50,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       setSelectedDistrict(
         dataDistricts?.find(
           (dataDistrict: any) =>
-            dataDistrict?.full_name === dataCompany?.ward?.district?.fullName,
+            dataDistrict?.full_name === dataCompany?.companyLocation?.district?.fullName,
         ),
       );
     }
@@ -57,7 +61,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     if (dataWards && !selectedWard) {
       setSelectedWard(
         dataWards?.find(
-          (dataWard: any) => dataWard?.full_name === dataCompany?.ward?.fullName,
+          (dataWard: any) => dataWard?.full_name === dataCompany?.companyLocation?.fullName,
         ),
       );
     }
@@ -78,9 +82,10 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   // get All locations by location id
   const getDataDistrict = async () => {
     try {
-      if (dataCompany && dataDistricts === null) {
+
+      if (dataCompany?.companyLocation?.district?.province?.id && dataDistricts === null) {
         const districts = await locationApi.getDistrictsById(
-          dataCompany?.ward?.district?.province?.id,
+          dataCompany?.companyLocation?.district?.province?.id,
         );
 
         if (districts) {
@@ -106,9 +111,10 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     try {
       if (dataDistricts && dataWards === null) {
         const allward = await locationApi.getWardsId(
-          dataCompany?.ward?.id,
+          dataCompany?.companyLocation?.district?.id,
           '',
         );
+
         if (allward) {
           setDataWard(allward?.data);
         }
@@ -148,7 +154,6 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     setSelectedDistrict(null);
     setSelectedWard(null);
     setSelectedProvince(value);
-    console.log("value province ", value);
 
     setDataWard([]);
   };
@@ -162,7 +167,9 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     setSelectedWard(value);
     setDataCompany((preValue: any) => ({
       ...preValue,
-      ward_id: value?.id,
+      companyLocation: {
+        id: value.id,
+      },
     }));
   };
 
@@ -188,24 +195,22 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
 
           <Autocomplete
             options={dataProvinces ? dataProvinces : []}
-            getOptionLabel={(option: any) => option?.name || ''}
+            getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedProvince || null}
             // onChange={handleProvinceChange}
             onChange={(event: any, newValue: any | null) => {
               handleProvinceChange(event, newValue);
-              console.log("newValue", newValue);
-
             }}
             renderInput={(params) => (
               <TextField
                 {...params}
                 placeholder="Tỉnh/TP"
                 size="small"
-                value={selectedProvince?.name}
+                value={selectedProvince?.full_name}
               />
             )}
             isOptionEqualToValue={(option, value) => {
-              return option.name === value.name;
+              return option.full_name === value.full_name;
             }}
             style={{ marginTop: '8px' }}
           />

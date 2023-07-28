@@ -23,7 +23,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
         const { value } = e.target
         setDataCompany((preValue: any) => ({
             ...preValue,
-            tax: value,
+            taxCode: value,
         }))
     }
 
@@ -33,7 +33,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
         const { value } = e.target
         setDataCompany((preValue: any) => ({
             ...preValue,
-            company_name: value,
+            name: value,
         }))
     }
 
@@ -46,7 +46,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
                     component="label"
                     htmlFor="editCompany"
                 >
-                    Tên công ty
+                    Tên công ty<span style={{ color: 'red' }}>*</span>
                 </Typography>
                 <TextField
                     type="text"

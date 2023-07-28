@@ -42,7 +42,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
                     type="text"
                     id="editCompany"
                     multiline
-                    rows={6}
+                    rows={12}
                     name="title"
                     value={dataCompany?.description}
                     onChange={handleEditCompanyDes}

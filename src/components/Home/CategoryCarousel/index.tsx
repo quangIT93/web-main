@@ -405,7 +405,7 @@ const CategoryCarousel: React.FC = () => {
           navigation={true}
           // mousewheel={true}
           slidesPerView="auto"
-          spaceBetween={40}
+          spaceBetween={30}
           // breakpoints={{
           //   320: {
           //     slidesPerView: 3,
@@ -466,7 +466,7 @@ const CategoryCarousel: React.FC = () => {
                     <span
                       className="category-item-title"
                       style={{
-                        fontSize: '14px',
+                        fontSize: '12px',
                         fontWeight: '400',
                         color: '#000000',
                       }}

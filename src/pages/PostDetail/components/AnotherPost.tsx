@@ -44,6 +44,8 @@ interface Iprops {
 }
 
 const AnotherPost: React.FC<any> = (props) => {
+  const [error, setError] = React.useState(false);
+
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
   };
@@ -172,6 +174,20 @@ const AnotherPost: React.FC<any> = (props) => {
                   `/${props.item?.salary_type}`}
               </Typography>
             </div>
+          </div>
+          <div className="anotherPost_logo">
+            {!error && (
+              <img
+                className="anotherPost_logo_image"
+                src={
+                  props.item.resource.company_icon
+                    ? props.item.resource.company_icon
+                    : ''
+                }
+                alt="ảnh"
+                onError={() => { setError(true); }}
+              />
+            )}
           </div>
         </div>
       </Card>

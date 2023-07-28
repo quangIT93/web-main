@@ -14,7 +14,7 @@ import PostJobCompany from '../../components/Post/PostJobCompany';
 import PostAddress from '../../components/Post/PostAddress';
 import PostTypeJob from '../../components/Post/PostTypeJob';
 import ModalPost from '#components/Post/ModalPost';
-import ModalFillDataPost from '#components/Post/ModalFillDataPost';
+import ModalFillDataPost from '../../components/Post/ModalFillDataPost';
 import PostPeriodDate from '#components/Post/PostPeriodDate';
 import RecruitmentTime from '#components/Post/RecruitmentTime';
 import StyleWork from '#components/Post/StyleWork';

@@ -27,7 +27,7 @@ const NumericInput = (props: NumericInputProps) => {
         const { value: inputValue } = e.target;
         const reg = /^-?\d*(\.\d*)?$/;
         if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-            onChange((preValue: any) => ({ ...preValue, phoneNumber: inputValue }));
+            onChange((preValue: any) => ({ ...preValue, phone: inputValue }));
         }
     };
 
@@ -39,7 +39,7 @@ const NumericInput = (props: NumericInputProps) => {
         }
         onChange((preValue: any) => ({
             ...preValue,
-            phoneNumber: valueTemp.replace(/(\d+)/, '$1'),
+            phone: valueTemp.replace(/(\d+)/, '$1'),
         }));
     };
     return (
@@ -75,7 +75,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
         const { value } = e.target
         setDataCompany((preValue: any) => ({
             ...preValue,
-            phoneNumber: value,
+            phone: value,
         }))
     }
 
