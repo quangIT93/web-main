@@ -10,10 +10,22 @@ interface IPostAddress {
   setWardId: React.Dispatch<React.SetStateAction<any>>;
   setAddress: React.Dispatch<React.SetStateAction<string>>;
   address: string;
+  wardId: string;
+  fillWardId: any;
+  fillProvince: any;
+  fillDistrict: any;
 }
 
 const PostAddress: React.FC<IPostAddress> = (props) => {
-  const { setWardId, address, setAddress } = props;
+  const {
+    setWardId,
+    address,
+    setAddress,
+    wardId,
+    fillWardId,
+    fillProvince,
+    fillDistrict,
+  } = props;
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
   const [dataProvinces, setDataProvinces] = useState<any>(null);
@@ -100,6 +112,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   }, [selectedDistrict]);
 
   const handleProvinceChange = (event: any, value: any) => {
+    console.log('province', value);
     setSelectedDistrict(null);
     setSelectedWard(null);
     setSelectedProvince(value);
@@ -107,10 +120,13 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   };
 
   const handleDistrictChange = (event: any, value: any) => {
+    console.log('district', value);
+
     setSelectedDistrict(value);
   };
 
   const handleChangeWardId = (e: any, value: any) => {
+    console.log('value', value);
     setSelectedWard(value);
     setWardId(value.id);
   };
@@ -134,7 +150,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           <Autocomplete
             options={dataProvinces ? dataProvinces : []}
             getOptionLabel={(option: any) => option?.name || ''}
-            value={selectedProvince || null}
+            value={fillProvince || selectedProvince || null}
             onChange={handleProvinceChange}
             disableClearable
             renderInput={(params) => (
@@ -155,7 +171,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           <Autocomplete
             options={dataDistrict ? dataDistrict : []}
             getOptionLabel={(option: any) => option?.full_name || ''}
-            value={selectedDistrict || null}
+            value={fillDistrict || selectedDistrict || null}
             onChange={handleDistrictChange}
             disableClearable
             renderInput={(params: any) => (
@@ -178,7 +194,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           <Autocomplete
             options={dataWard ? dataWard : []}
             getOptionLabel={(option: any) => option?.full_name || ''}
-            value={selectedWard || null}
+            value={selectedWard || fillWardId || null}
             onChange={handleChangeWardId}
             disableClearable
             renderInput={(params) => (

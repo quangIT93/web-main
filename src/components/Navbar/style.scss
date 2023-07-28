@@ -1029,7 +1029,8 @@
 
 .wrap-btn_notice {
   position: relative;
-  
+  // min-width: 52px;
+  // min-height: 50px;
   .sub-icon_qr {
     transition: all 1s linear;
     top:68px;
@@ -1078,11 +1079,18 @@
     }
   }
 
+  button {
+    min-width: 52px;
+    min-height: 50px;
+    .button-download {
+      border: 2px solid transparent;
+      // border-radius: 50%;
+      animation: jumpAndStop 2s linear infinite;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 14.5px;
   
-  .button-download {
-    border: 2px solid transparent;
-    // border-radius: 50%;
-    animation: jumpAndStop 2s linear infinite;
+    }
   }
 
   .button-download.stopAnimation {

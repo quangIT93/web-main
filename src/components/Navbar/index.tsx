@@ -915,7 +915,13 @@ const Navbar: React.FC = () => {
       <Button
         key="3"
         className="btn-notice"
-        onClick={() => setOpenNotificate(!openNotificate)}
+        onClick={() => {
+          if (dataProfile && localStorage.getItem('accessToken')) {
+            setOpenNotificate(!openNotificate);
+          } else {
+            setOpenModalLogin(true);
+          }
+        }}
       >
         <BellIcon />
       </Button>
@@ -1043,7 +1049,13 @@ const Navbar: React.FC = () => {
             <div className="wrap-btn_notice">
               <Button
                 className="btn-notice"
-                onClick={() => setOpenNotificate(!openNotificate)}
+                onClick={() => {
+                  if (dataProfile && localStorage.getItem('accessToken')) {
+                    setOpenNotificate(!openNotificate);
+                  } else {
+                    setOpenModalLogin(true);
+                  }
+                }}
                 ref={bellRef}
               >
                 <BellIcon />

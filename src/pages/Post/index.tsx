@@ -41,6 +41,7 @@ import './style.scss';
 import postApi from 'api/postApi';
 import siteApi from 'api/siteApi';
 import { message } from 'antd';
+import any from 'react/jsx-runtime';
 
 // redux
 // import { RootState } from 'store';
@@ -195,10 +196,19 @@ const Post: React.FC = () => {
   const [openModalNoteCreatePost, setOpenModalNoteCreatePost] =
     React.useState(true);
 
+  // fill data
+  const [fillWardId, setFillWardId] = React.useState<any>({
+    id: '',
+    full_name: '',
+  });
+  const [fillDistrict, setFillDistrict] = React.useState<any>('');
+  const [fillProvince, setFillProvince] = React.useState<any>('');
+
   // submit
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
   ) => {
+    console.log('data', startDate);
     e.preventDefault();
     const formData = new FormData();
     formData.append('title', titleJob);
@@ -236,7 +246,7 @@ const Post: React.FC = () => {
     formData.append('longitude', String(longitude));
 
     // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}, ${pair[1]}`)
+    //   console.log(`${pair[0]}, ${pair[1]}`);
     // }
 
     if (formData) {
@@ -384,13 +394,12 @@ const Post: React.FC = () => {
                 HiJob sẽ tự động điền tất cả các thông tin công việc trước đó
                 của bạn!
               </h4>
-              {/* <Switch
-                
+              <Switch
                 checked={openModalFillDataPost}
                 checkedChildren=""
                 unCheckedChildren=""
                 onChange={() => setOpenFillDataPost(!openModalFillDataPost)}
-              /> */}
+              />
             </div>
           </div>
           <form onSubmit={handleSubmit}>
@@ -399,11 +408,17 @@ const Post: React.FC = () => {
               setCompanyName={setCompanyName}
               titleError={titleError}
               companyError={companyError}
+              titleJob={titleJob}
+              companyName={companyName}
             />
             <PostAddress
               setWardId={setWardId}
               setAddress={setAddress}
+              fillWardId={fillWardId}
               address={address}
+              wardId={wardId}
+              fillProvince={fillProvince}
+              fillDistrict={fillDistrict}
             />
             <PostImage
               selectedFiles={selectedFiles}
@@ -462,7 +477,10 @@ const Post: React.FC = () => {
               phone={phoneNumber}
               setPhoneNumber={setPhoneNumber}
             />
-            <Description setDescription={setDescription} />
+            <Description
+              setDescription={setDescription}
+              description={description}
+            />
             {/* <EditText /> */}
             <button
               type="submit"
@@ -487,6 +505,25 @@ const Post: React.FC = () => {
         <ModalFillDataPost
           setOpenFillDataPost={setOpenFillDataPost}
           openModalFillDataPost={openModalFillDataPost}
+          setTitleJob={setTitleJob}
+          setCompanyName={setCompanyName}
+          setFillWardId={setFillWardId}
+          setAddress={setAddress}
+          setFillDistrict={setFillDistrict}
+          setFillProvince={setFillProvince}
+          setTypeJob={setTypeJob}
+          setIsPeriodDate={setIsPeriodDate}
+          setStartDate={setStartDate}
+          setEndDate={setEndDate}
+          setIsWorkingWeekend={setIsWorkingWeekend}
+          setIsRemotely={setIsRemotely}
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
+          setPhoneNumber={setPhoneNumber}
+          setSalaryMin={setSalaryMin}
+          setSalaryMax={setSalaryMax}
+          setDescription={setDescription}
+          setWardId={setWardId}
         />
       </div>
     );

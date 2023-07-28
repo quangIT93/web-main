@@ -24,12 +24,15 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
   const { startDate, endDate, setStartDate, setEndDate } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
+    console.log('time', newValue);
     setStartDate(new Date(newValue._d).getTime());
   };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
     setEndDate(new Date(newValue._d).getTime());
   };
+
+  console.log('time', startDate);
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>

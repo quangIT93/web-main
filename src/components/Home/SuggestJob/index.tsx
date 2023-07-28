@@ -249,8 +249,13 @@ const ThemesJob: React.FC = () => {
                   handleChange(e, page);
                 }}
               >
-                <p>Xem thêm</p>
-                <MoreICon width={20} height={20} />
+                {localStorage.getItem('accessToken') ? (
+                  <>
+                    <p>Xem thêm</p> <MoreICon width={20} height={20} />
+                  </>
+                ) : (
+                  <></>
+                )}
               </Space>
             </Stack>
             <Backdrop

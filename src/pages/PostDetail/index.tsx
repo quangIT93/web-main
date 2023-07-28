@@ -671,7 +671,7 @@ const Detail: React.FC = () => {
       // }
     }
   };
-
+  console.log('post?.data?.images', post?.data?.images);
   return (
     <>
       {automatic && (
@@ -866,7 +866,7 @@ const Detail: React.FC = () => {
                     ) : (
                       <SwiperSlide className="div-job-img-swipper_item">
                         <img
-                          src={`${process.env.REACT_APP_URL_IMAGE}`}
+                          src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
                           alt="ảnh lỗi"
                           style={{ objectFit: 'cover' }}
                         />
@@ -915,7 +915,7 @@ const Detail: React.FC = () => {
                           <Tab label="Thông tin công ty" value="2" />
                         </TabList>
                       </Box>
-                      <TabPanel value="1">
+                      <TabPanel value="1" className="info-job">
                         <div className="job-title-container">
                           <div className="job-title-details">
                             {/* <div className="div-detail-row">
@@ -1029,6 +1029,8 @@ const Detail: React.FC = () => {
                               backgroundColor: `${backgroundButton}`,
                               color: 'white',
                               fontWeight: 'normal',
+                              position: 'absolute',
+                              bottom: '-180px',
                             }}
                             icon={checkPostUser ? <FormOutlined /> : null}
                           >

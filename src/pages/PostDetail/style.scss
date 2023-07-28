@@ -540,6 +540,15 @@
           border-radius: 10px;
           height: 630px;
 
+          .MuiBox-root {
+     
+            
+              .info-job{
+               position: relative;
+              }
+            
+          }
+
           .MuiTabs-flexContainer {
             .MuiButtonBase-root {
               flex: 1;
@@ -557,6 +566,8 @@
           //   padding: 12px 0 !important;
           // }
 
+        
+
           .MuiTabPanel-root {
           
             // height: calc(100% - 50px);
@@ -565,7 +576,8 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-
+            // height: 95%;
+            align-content: space-between;
             .job-title-container {
               // height: 430px;
               // overflow-y: scroll;
@@ -574,8 +586,8 @@
                 display: flex;
                 flex-direction: column;
                 // height: 90%;
+  
                 justify-content: space-around;
-
                 @include breakpoint(tablet) {
                   height: 95%;
                   justify-content: space-evenly;
@@ -665,9 +677,9 @@
               background-color: #0d99ff;
               font-size: 17px;
               width: 100%;
-              margin: 20px auto;
               height: 45px;
-              margin-bottom: 0px;
+              // margin-bottom: 0px;
+              margin: 20px auto;
 
               // @include breakpoint(mobile) {
               //   display: none;

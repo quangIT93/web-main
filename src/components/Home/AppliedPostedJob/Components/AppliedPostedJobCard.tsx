@@ -156,7 +156,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   variant="h6"
                   component="div"
                   sx={{
-                    fontSize: '14px',
+                    fontSize: '12px',
                     whiteSpace: 'nowrap',
                     width: '100%',
                     textOverflow: 'ellipsis',
@@ -189,7 +189,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
-                    fontSize: '14px',
+                    fontSize: '12px',
                     fontWeight: '400',
                   }}
                 >
@@ -213,7 +213,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
-                    fontSize: '14px',
+                    fontSize: '12px',
                     fontWeight: '400',
                   }}
                 >
@@ -254,7 +254,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   )}
                 </div>
               </div>
-              <p style={{ fontSize: 14, fontWeight: 500, color: '#575757' }}>
+              <p style={{ fontSize: 12, fontWeight: 500, color: '#575757' }}>
                 {props.item.job_type.job_type_name}
               </p>
             </Space>
@@ -265,6 +265,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             <span
               style={{
                 display: props.item.type === 'application' ? 'block' : 'none',
+                fontSize: '12px',
               }}
             >
               Đã nộp vào &nbsp;
@@ -273,9 +274,17 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               {moment(new Date(props.item.created_at)).format('HH:mm')}
             </span>
             <span
-              style={{ display: props.item.type === 'post' ? 'block' : 'none' }}
+              style={{
+                display: props.item.type === 'post' ? 'block' : 'none',
+                fontSize: '12px',
+              }}
             >
-              <strong style={{ color: '#0d99ff' }}>
+              <strong
+                style={{
+                  color: '#0d99ff',
+                  fontSize: '12px',
+                }}
+              >
                 {props.item.num_of_application}
               </strong>
               &nbsp; Ứng viên đã nộp hồ sơ
@@ -296,6 +305,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 props.item.application_status === 1
                   ? 'rgba(170, 170, 170, 1)'
                   : 'rgba(255, 255, 255, 1)',
+              fontSize: '12px',
             }}
             className="button-approved"
           >
