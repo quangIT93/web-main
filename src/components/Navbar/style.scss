@@ -1079,9 +1079,9 @@
     }
   }
 
+
+
   button {
-    min-width: 52px;
-    min-height: 50px;
     .button-download {
       border: 2px solid transparent;
       // border-radius: 50%;
@@ -1107,6 +1107,7 @@
   }
 
   
+  
 
 
   @keyframes jumpAndStop {
@@ -1122,6 +1123,14 @@
     100% {
       transform: translateY(0px);
     }
+  }
+}
+
+.btn-noti_icon {
+  button {
+    min-width: 52px;
+    min-height: 50px;
+
   }
 }
 

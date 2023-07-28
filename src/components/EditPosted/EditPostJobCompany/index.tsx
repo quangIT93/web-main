@@ -1,42 +1,42 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo } from 'react';
 // import component UI
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
-import './style.scss'
+import './style.scss';
 
 const styleLabel = {
   fontWeight: 600,
   color: '#000000',
-}
+};
 
 interface IEditPostJobCompany {
-  setEditDataPosted: any
-  editDataPosted: any
+  setEditDataPosted: any;
+  editDataPosted: any;
 }
 
 const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
-  const { setEditDataPosted, editDataPosted } = props
+  const { setEditDataPosted, editDataPosted } = props;
 
   const handleEditJobName = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { value } = e.target
+    const { value } = e.target;
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       title: value,
-    }))
-  }
+    }));
+  };
 
   const handleEditCompanyName = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { value } = e.target
+    const { value } = e.target;
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       company_name: value,
-    }))
-  }
+    }));
+  };
 
   return (
     <div className="edit-post_jobCompany">
@@ -47,7 +47,7 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          Tên công việc *
+          Tên công việc <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -68,7 +68,7 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          Tên công ty *
+          Tên công ty <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -79,11 +79,11 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '4px' }}
           placeholder="Tên công việc"
-          //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi akla
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default memo(EditPostJobCompany)
+export default memo(EditPostJobCompany);
