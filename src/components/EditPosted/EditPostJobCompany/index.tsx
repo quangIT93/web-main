@@ -79,7 +79,7 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '4px' }}
           placeholder="Tên công việc"
-          //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi akla
         />
       </div>
     </div>
