@@ -4,7 +4,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 // api
-import locationApi from '../../../api/locationApi';
+import apiCompany from 'api/apiCompany';
+import categoriesApi from 'api/categoriesApi';
 
 import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
@@ -19,51 +20,86 @@ interface IEditPostAddress {
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
     const { setDataCompany, dataCompany } = props;
-    const [selectedProvince, setSelectedProvince] = useState<any>(null);
-    const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
 
-    const dataProvinces = [
-        {
-            id: 1,
-            name: 'IT'
-        },
-        {
-            id: 2,
-            name: 'Marketing'
-        },
-        {
-            id: 3,
-            name: 'Shop'
-        },
-        {
-            id: 4,
-            name: 'Khác'
-        },
-    ]
+    const [dataSizes, setDataSizes] = useState<any>(null);
+    const [selectedSize, setSelectedSize] = useState<any>(null);
+    const [dataCategories, setDataCategories] = useState<any>(null);
+    const [selectedCategory, setSelectedCategory] = useState<any>(null);
 
-    const scales = [
-        {
-            id: 1,
-            name: 'To'
-        },
-        {
-            id: 2,
-            name: 'Vừa'
-        },
-        {
-            id: 3,
-            name: 'Nhỏ'
-        },
-    ]
+    useEffect(() => {
+        if (dataSizes && !selectedSize) {
+            setSelectedSize(
+                dataSizes?.find(
+                    (dataRole: any) =>
+                        dataRole?.nameText === dataCompany?.companySizeInfomation?.nameText,
+                ),
+            );
+        }
 
-    const handleProvinceChange = (event: any, value: any) => {
-        setSelectedDistrict(null);
-        setSelectedProvince(value);
+    }, [dataSizes]);
+    useEffect(() => {
+        if (dataCategories && !selectedCategory) {
+            setSelectedCategory(
+                dataCategories?.find(
+                    (dataCate: any) =>
+                        dataCate?.parent_category_id === dataCompany?.companyCategory?.id,
+                ),
+            );
+        }
+
+    }, [dataCategories]);
+
+    const getSizes = async () => {
+        try {
+            const sizes = await apiCompany.getAllSizesCompany();
+
+            if (sizes) {
+                setDataSizes(sizes);
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const getCateogrys = async () => {
+        try {
+            const result = await categoriesApi.getAllCategorise();
+            if (result) {
+                setDataCategories(result.data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    const handleDistrictChange = (event: any, value: any) => {
-        setSelectedDistrict(value);
-    };
+    useEffect(() => {
+        getSizes()
+    }, [])
+
+    useEffect(() => {
+        getCateogrys()
+    }, [])
+
+    const handleEditCompanySize = (event: any, value: any) => {
+        setSelectedSize(value)
+        setDataCompany((preValue: any) => ({
+            ...preValue,
+            companySizeInfomation: {
+                id: value?.id
+            },
+        }))
+    }
+    const handleEditCompanyCategory = (event: any, value: any) => {
+        setSelectedCategory(value)
+        setDataCompany((preValue: any) => ({
+            ...preValue,
+            companyCategory: {
+                id: value?.parent_category_id
+            },
+        }))
+    }
+
+    console.log("selectedCategory", selectedCategory);
 
 
     return (
@@ -79,20 +115,20 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
                 </Typography>
 
                 <Autocomplete
-                    options={dataProvinces ? dataProvinces : []}
-                    getOptionLabel={(option: any) => option?.name || ''}
-                    value={selectedProvince || null}
-                    onChange={handleProvinceChange}
+                    options={dataCategories ? dataCategories : []}
+                    getOptionLabel={(option: any) => option?.parent_category || ''}
+                    value={selectedCategory || null}
+                    onChange={handleEditCompanyCategory}
                     renderInput={(params) => (
                         <TextField
                             {...params}
                             placeholder="Chọn lĩnh vực hoạt động"
                             size="small"
-                            value={selectedProvince?.name}
+                            value={selectedCategory?.parent_category}
                         />
                     )}
                     isOptionEqualToValue={(option, value) => {
-                        return option.name === value.name;
+                        return option?.parent_category === value?.parent_category;
                     }}
                     style={{ marginTop: '8px' }}
                 />
@@ -108,20 +144,20 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
                     Quy mô công ty <span style={{ color: 'red' }}>*</span>
                 </Typography>
                 <Autocomplete
-                    options={dataProvinces ? dataProvinces : []}
-                    getOptionLabel={(option: any) => option?.name || ''}
-                    value={selectedProvince || null}
-                    onChange={handleProvinceChange}
+                    options={dataSizes ? dataSizes : []}
+                    getOptionLabel={(option: any) => option?.nameText || ''}
+                    value={selectedSize || null}
+                    onChange={handleEditCompanySize}
                     renderInput={(params) => (
                         <TextField
                             {...params}
                             placeholder="Chọn quy mô công ty"
                             size="small"
-                            value={selectedProvince?.name}
+                            value={selectedSize?.nameText}
                         />
                     )}
                     isOptionEqualToValue={(option, value) => {
-                        return option.name === value.name;
+                        return option?.nameText === value?.nameText;
                     }}
                     style={{ marginTop: '8px' }}
                 />

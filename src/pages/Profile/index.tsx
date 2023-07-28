@@ -27,6 +27,8 @@ import { RootState } from '../../store/reducer/index';
 import Footer from '../../components/Footer/Footer';
 import ItemApply from './components/Item';
 
+import apiCompany from 'api/apiCompany';
+
 import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson';
 import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice';
 import ModalProfileContact from '#components/Profile/ModalProfileContact';
@@ -96,6 +98,7 @@ const Profile: React.FC = () => {
     useState(false);
   const [imageInfo, setImageInfo] = useState<string>('');
   const [avatarUrl, setAvatarUrl] = useState<string>('');
+  const [companyName, setCompanyName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [uploading, setUploading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -180,6 +183,21 @@ const Profile: React.FC = () => {
     listType: 'picture',
     fileList,
   };
+
+  const getCompanyInforByAccount = async () => {
+    try {
+      const result = await apiCompany.getCampanyByAccountApi()
+      if (result && result?.data?.companyInfomation?.id != null) {
+        setCompanyName(result?.data?.companyInfomation?.name)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getCompanyInforByAccount()
+  }, [])
 
   // confirm delete cv
   const confirm = async () => {
@@ -307,6 +325,9 @@ const Profile: React.FC = () => {
     document.title = user ? titleFirebase : 'web-profile';
   });
 
+  console.log("profile", profile);
+
+
   return (
     <div className="profile">
       <Navbar />
@@ -372,8 +393,18 @@ const Profile: React.FC = () => {
                     src={profileUser?.avatar ? profileUser?.avatar : ''}
                   />
                 </Badge>
-                <div style={{ marginLeft: '10px' }}>
+                <div className="user-company" style={{ marginLeft: '10px' }}>
                   <h2>{profile?.name ? profile?.name : 'Chưa cập nhật'}</h2>
+                  <h2
+                    className={companyName ? "have-company" : "company-name"}
+                    onClick={() => {
+                      window.open('/company-infor', '_self');
+                    }}
+                  >
+                    {companyName
+                      ? companyName
+                      : 'Thông tin công ty'}
+                  </h2>
                   {/* <div
                     style={{
                       display: 'flex',

@@ -561,6 +561,7 @@
               background-color: #0D99FF !important;
             }
           }
+
           // .MuiTabPanel-root:nth-child(2),
           // .MuiTabPanel-root:nth-child(3) {
           //   padding: 12px 0 !important;
@@ -569,7 +570,7 @@
         
 
           .MuiTabPanel-root {
-          
+
             // height: calc(100% - 50px);
             padding: 0px 0 !important;
 
@@ -626,19 +627,21 @@
                     }
                   }
                 }
+
                 .div-detail-rowCompany {
                   display: flex;
                   flex-direction: column;
                   margin-top: 10px;
-                  
-                .div-detail_descCompany {
-                  display: -webkit-box;
-                  -webkit-box-orient: vertical;
-                  overflow: hidden;
-                  -webkit-line-clamp: 7; /* Số dòng bạn muốn hạn chế */
-                  line-clamp: 7; 
 
-                }
+                  .div-detail_descCompany {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    -webkit-line-clamp: 7;
+                    /* Số dòng bạn muốn hạn chế */
+                    line-clamp: 7;
+
+                  }
 
                   h3 {
                     color: #001424;
@@ -647,16 +650,18 @@
                     font-style: normal;
                     font-weight: 700;
                     line-height: 20px;
-                    
+
                   }
 
                   .div-detail-items {
                     margin: 4px 0;
+
                     .div-detail-titleItem {
                       display: flex;
                       align-items: center;
                     }
                   }
+
                   p {
                     color: #575757;
                     font-size: 16px
@@ -800,7 +805,7 @@
                   }
 
                   span {
-                    font-size: 16px;
+                    font-size: 24px;
                     font-weight: 700;
                   }
                 }
@@ -846,13 +851,14 @@
                     display: flex;
                     gap: 12px;
                     align-items: center;
+                    justify-content: space-between;
                     width: 100%;
 
                     @media screen and (max-width: 724px) {
                       flex-direction: column;
                     }
 
-                    img {
+                    .anotherPost_image {
                       width: 94px !important;
                       height: 76px !important;
                       border-radius: 10px;
@@ -870,6 +876,17 @@
                         // white-space: normal !important;
                         // text-overflow: unset;
                         // overflow: unset !important;
+                      }
+                    }
+
+                    .anotherPost_logo {
+                      display: flex;
+                      height: 100%;
+
+                      .anotherPost_logo_image {
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 5px;
                       }
                     }
                   }

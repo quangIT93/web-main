@@ -405,7 +405,7 @@ const CategoryCarousel: React.FC = () => {
           navigation={true}
           // mousewheel={true}
           slidesPerView="auto"
-          spaceBetween={40}
+          spaceBetween={30}
           // breakpoints={{
           //   320: {
           //     slidesPerView: 3,
