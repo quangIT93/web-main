@@ -1,8 +1,9 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useEffect } from 'react'
 // import component UI
 import Typography from '@mui/material/Typography'
+import { Button } from '@mui/material';
 
-import { Upload } from 'antd';
+import { Upload, message } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 
 import { UploadLogoCompanyicon, ChangeLogoCompanyicon } from '#components/Icons';
@@ -15,60 +16,71 @@ interface IEditLogoCompany {
 const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
   const { dataCompany, setDataCompany } = props
 
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [logo, setLogo] = useState<any>([]);
-  const [imageFile, setImageFile] = React.useState<any>(null);
+  const [fileList, setFileList] = useState<UploadFile[]>(
+    dataCompany?.logoPath && dataCompany?.logopath != '' ?
+      [{
+        uid: '-1',
+        name: "logo.png",
+        status: "done",
+        url: dataCompany?.logoPath,
+        thumbUrl: dataCompany?.logoPath
+      }]
+      :
+      []
+  );
 
-  React.useEffect(() => {
-    const loadImage = async () => {
-      try {
-        // Bước 1: Xác định định dạng file từ URL
-        const imageExtension = dataCompany.logo.split('.').pop();
-        const imageType = `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension
-          }`;
+  const propsUpload: UploadProps = {
+    onChange: ({ fileList: newFileList }) => {
+      setFileList(newFileList);
+      setDataCompany((preValue: any) => ({
+        ...preValue,
+        logoPath: fileList[0] as RcFile,
+      }))
 
-        // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
-        const imageBlob = new Blob([dataCompany.logo], { type: imageType });
-        const imageFile = new File([imageBlob], `image.${imageExtension}`, {
-          type: imageType,
-        });
+      console.log("newFileList", newFileList);
 
-        setLogo((prevState: any) => [...prevState, imageFile])
-      } catch (error) {
-        console.error('Error loading image:', error);
+    },
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+
+      return true;
+    },
+    beforeUpload: (file) => {
+
+      // const isPNG = file.type === 'application/pdf';
+      var checFileSize = true;
+      // if (!isPNG) {
+      //   message.error(`${file.name} không phải là file pdf`);
+      // } else 
+      if (file.size > 1024 * 1024 * 5) {
+        checFileSize = false;
+        message.error(`File lon hon 5mb`);
+      } else {
+        setFileList([file]);
+        return false;
       }
-    };
-
-    loadImage();
-  }, [dataCompany.image]);
-
-
-  const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    setDataCompany((preValue: any) => ({
-      ...preValue,
-      logo: newFileList[0],
-    }))
-    console.log("newFileList", newFileList[0]);
-
-  };
-
-  console.log("dataCompany.logo ", dataCompany.logo);
-
-
-  const onPreview = async (file: UploadFile) => {
-    let src = file.url as string;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj as RcFile);
-        reader.onload = () => resolve(reader.result as string);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
+      return Upload.LIST_IGNORE || checFileSize;
+    },
+    onPreview: async (file: UploadFile) => {
+      let src = file.url as string;
+      if (!src) {
+        src = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file.originFileObj as RcFile);
+          reader.onload = () => resolve(reader.result as string);
+        });
+      }
+      const image = new Image();
+      image.src = src;
+      const imgWindow = window.open(src);
+      imgWindow?.document.write(image.outerHTML);
+    },
+    maxCount: 1,
+    listType: 'picture-card',
+    fileList,
   };
 
   return (
@@ -87,12 +99,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
         </Typography>
         <div className="company-logo">
           <Upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            listType="picture-card"
-            fileList={logo ? logo : fileList}
-            onChange={onChange}
-            onPreview={onPreview}
-            maxCount={1}
+            {...propsUpload}
           >
             {
               fileList.length < 1 ? <UploadLogoCompanyicon /> : <ChangeLogoCompanyicon />

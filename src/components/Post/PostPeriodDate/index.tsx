@@ -1,23 +1,24 @@
-import React, { memo } from 'react'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import React, { memo } from 'react';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
 //@ts-ignore
-import { styleLabel } from '#components/Post/CssPost'
+import { styleLabel } from '#components/Post/CssPost';
 
 interface IPostPeriodDate {
-  setIsPeriodDate: React.Dispatch<React.SetStateAction<number>>
-  isPeriodDate: number
+  setIsPeriodDate: React.Dispatch<React.SetStateAction<number>>;
+  isPeriodDate: number;
 }
 
 const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
-  const { setIsPeriodDate, isPeriodDate } = props
+  const { setIsPeriodDate, isPeriodDate } = props;
 
   const handleChangePeriodDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPeriodDate(Number(e.target.value))
-  }
+    console.log('thoi gian lam viec', e.target.value);
+    setIsPeriodDate(Number(e.target.value));
+  };
 
   return (
     <FormControl sx={{ marginTop: '24px' }}>
@@ -49,7 +50,7 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
         />
       </RadioGroup>
     </FormControl>
-  )
-}
+  );
+};
 
-export default memo(PostPeriodDate)
+export default memo(PostPeriodDate);

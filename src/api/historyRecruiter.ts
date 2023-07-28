@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient'
 // api/productApi.js
 const historyRecruiter = {
-  getAllPosted: (page: number, limit: number, status: number) => {
+  getAllPosted: (page: number | null, limit: number, status: number| null) => {
     const URL = `/v1/history/recruiter/posts?threshold=${page}&limit=${limit}&status=${status}`
     return axiosClient.get(URL, {
       headers: {

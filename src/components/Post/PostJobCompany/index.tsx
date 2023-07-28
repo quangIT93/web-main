@@ -11,10 +11,19 @@ interface PropsPostCompanyJob {
   setCompanyName: React.Dispatch<React.SetStateAction<any>>;
   titleError: boolean;
   companyError: boolean;
+  titleJob: string;
+  companyName: string;
 }
 
 const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
-  const { setTitleJob, setCompanyName, titleError, companyError } = props;
+  const {
+    setTitleJob,
+    setCompanyName,
+    titleError,
+    companyError,
+    titleJob,
+    companyName,
+  } = props;
 
   const handleChangeTitleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleJob(e.target.value);
@@ -49,6 +58,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           sx={{ width: '100%', marginTop: '0.5rem' }}
           placeholder="Tên công việc"
           error={titleError} // Đánh dấu lỗi
+          value={titleJob ? titleJob : ''}
         />
       </div>
       <div className="post-titleCompany post-title">
@@ -70,6 +80,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           sx={{ width: '100%', marginTop: '0.5rem' }}
           placeholder="Tên công ty"
           error={companyError} // Đánh dấu lỗi
+          value={companyName}
         />
       </div>
     </div>

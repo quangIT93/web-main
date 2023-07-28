@@ -8,10 +8,11 @@ import { styleLabel } from '#components/Post/CssPost';
 import './style.scss';
 interface IDescription {
   setDescription: React.Dispatch<React.SetStateAction<string>>;
+  description: string;
 }
 
 const Description: React.FC<IDescription> = (props) => {
-  const { setDescription } = props;
+  const { setDescription, description } = props;
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
   };
@@ -36,6 +37,7 @@ const Description: React.FC<IDescription> = (props) => {
     Tên công ty, địa chỉ, hình thức, mặt hàng kinh doanh
     Vị trí, yêu cầu công việc
     Mô tả yêu cầu kỹ năng, bằng cấp nếu có"
+        value={description}
       />
     </Box>
   );

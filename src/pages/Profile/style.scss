@@ -37,6 +37,34 @@
       align-items: center;
       width: 100%;
       justify-content: space-between;
+
+      .user-company {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .company-name {
+          color: rgba(189, 49, 49, 1);
+          font-family: Roboto;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 30px;
+          text-decoration-line: underline;
+          cursor: pointer;
+        }
+
+        .have-company {
+          color: #0D99FF;
+          font-family: Roboto;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 30px;
+          text-decoration-line: underline;
+          cursor: pointer;
+        }
+      }
     }
 
     .div-profile-info {

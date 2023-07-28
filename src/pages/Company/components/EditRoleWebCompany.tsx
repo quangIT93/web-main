@@ -25,6 +25,18 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
     const [dataRoles, setDataRoles] = useState<any>(null);
     const [selectedRole, setSelectedRole] = useState<any>(null);
 
+    useEffect(() => {
+        if (dataRoles && !selectedRole) {
+            setSelectedRole(
+                dataRoles?.find(
+                    (dataRole: any) =>
+                        dataRole?.nameText === dataCompany?.companyRoleInfomation?.nameText,
+                ),
+            );
+        }
+
+    }, [dataRoles]);
+
     const getRoles = async () => {
         try {
             const roles = await apiCompany.getAllRolesCompany();
@@ -42,29 +54,13 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
         getRoles()
     }, [])
 
-    const dataRoles2 = [
-        {
-            id: 1,
-            name: 'Chủ sở hữu doanh nghiệp'
-        },
-        {
-            id: 2,
-            name: 'Nhân viên của doanh nghiệp'
-        },
-        {
-            id: 3,
-            name: 'Nhà tuyển dụng của doanh nghiệp'
-        },
-        {
-            id: 4,
-            name: 'Khác'
-        },
-    ]
-
     const handleEditCompanyRole = (event: any, value: any) => {
+        setSelectedRole(value)
         setDataCompany((preValue: any) => ({
             ...preValue,
-            role: value,
+            companyRoleInfomation: {
+                id: value.id,
+            },
         }))
     }
 
@@ -74,7 +70,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
         const { value } = e.target
         setDataCompany((preValue: any) => ({
             ...preValue,
-            web: value,
+            website: value,
         }))
     }
 
@@ -93,20 +89,20 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
 
                 <Autocomplete
                     options={dataRoles ? dataRoles : []}
-                    getOptionLabel={(option: any) => option?.name || ''}
-                    value={dataCompany?.companyRoleId || null}
+                    getOptionLabel={(option: any) => option?.nameText || ''}
+                    value={selectedRole || null}
                     onChange={handleEditCompanyRole}
                     renderInput={(params) => (
                         <TextField
                             {...params}
                             placeholder="Chọn vai trò của bạn"
                             size="small"
-                        // value={dataCompany?.role_id}
+                        // value={dataCompany?.companyRole?.name}
                         />
                     )}
-                    // isOptionEqualToValue={(option, value) => {
-                    //     return option.name === value.name;
-                    // }}
+                    isOptionEqualToValue={(option, value) => {
+                        return option.nameText === value.nameText;
+                    }}
                     style={{ marginTop: '8px' }}
                 />
             </div>
