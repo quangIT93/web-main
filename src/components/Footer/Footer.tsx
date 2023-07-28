@@ -3,6 +3,8 @@ import { styled } from '@mui/material/styles'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import breakpoints from '../../scss/breakpoints'
 
+import { FaceBookIcon } from '#components/Icons'
+
 import { Link } from 'react-router-dom'
 
 const { mobile, tablet } = breakpoints
@@ -166,6 +168,12 @@ const Footer: React.FC = () => {
             <Link to="/policy#privacy-policy"> Chính sách bảo mật </Link>
 
             <Link to="/policy#terms-of-use"> Điều khoản sử dụng </Link>
+
+            <h4>Về HiJob</h4>
+            <div className="link-facebook">
+              <FaceBookIcon />
+              <Link to="https://www.facebook.com/hijobOfficial" target="_blank">Facebook</Link>
+            </div>
           </div>
           <div className="footer-right">
             <div className="right-top">
