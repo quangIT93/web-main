@@ -359,11 +359,18 @@ const Detail: React.FC = () => {
         CheckWasLogin();
         return;
       }
+      console.log('applied', post?.data.applied);
+      console.log(
+        'post?.data?.companyResourceData?.name',
+        post?.data?.companyResourceData?.name,
+      );
+
+      // Applied and Hijob
       if (
         // (post?.data.application_status === 1 && isHiJob) ||
-        (post?.data.applied &&
-          post?.data?.companyResourceData?.name === 'HIJOB') ||
-        (post?.data.applied &&
+        // (post?.data.applied &&
+        // post?.data?.companyResourceData?.name === 'HIJOB') ||
+        (post?.data?.applied &&
           post?.data?.companyResourceData?.name === 'HIJOB') ||
         (checkApply && post?.data?.companyResourceData?.name === 'HIJOB')
       ) {
@@ -372,10 +379,13 @@ const Detail: React.FC = () => {
           description:
             'Nhà tuyển dụng sẽ liên hệ bạn sớm nếu hồ sơ đạt yêu cầu.',
           placement: 'top',
-          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+          icon: <ExclamationCircleFilled style={{ color: 'blue' }} />,
         });
         return;
       }
+
+      // Applied but !Hijob
+
       if (
         // (post?.data.application_status === 1 && !isHiJob) ||
         (post?.data?.applied &&
@@ -584,10 +594,25 @@ const Detail: React.FC = () => {
   };
 
   const handleChangeStatus = async () => {
-    const result = await appplicationApi.applyAplication(POST_ID);
-    console.log('result ung tiyen', result);
-    if (post?.data?.applied) {
-      // openNotification();
+    try {
+      const result = await appplicationApi.applyAplication(POST_ID);
+      console.log('result ung tiyen', result);
+      if (post?.data?.applied) {
+        // openNotification();
+        setTextButton('Đã ứng tuyển');
+        // setBackgroundButton('gray');
+        setCheckApply(true);
+        // window.open(post?.data.resource.url, '_blank');
+        setOpenModalApply(false);
+      } else {
+        // openNotification();
+        setTextButton('Đã ứng tuyển');
+        // setBackgroundButton('gray');
+        setCheckApply(true);
+        // window.open(post?.data.resource.url, '_blank');
+        setOpenModalApply(false);
+      }
+    } catch (error) {
       setTextButton('Đã ứng tuyển');
       // setBackgroundButton('gray');
       setCheckApply(true);
@@ -614,15 +639,36 @@ const Detail: React.FC = () => {
       });
       return;
     }
-    const result = await appplicationApi.applyAplication(POST_ID);
-    console.log('result ung tiyen', result);
-    if (post?.data?.applied) {
-      // openNotification();
-      setTextButton('Đã ứng tuyển');
-      // setBackgroundButton('gray');
-      setCheckApply(true);
-      // window.open(post?.data.resource.url, '_blank');
-      setOpenModalApply(false);
+    try {
+      const result: any = await appplicationApi.applyAplication(POST_ID);
+      console.log('result ung tiyen', result);
+      console.log('result ung tiyen', result?.success);
+      console.log('result ung tiyen', result?.code);
+      if (
+        (result?.success as any) &&
+        (result.code as number) === (201 as any)
+      ) {
+        // openNotification();
+        setTextButton('Đã ứng tuyển');
+        // setBackgroundButton('gray');
+        setCheckApply(true);
+        // window.open(post?.data.resource.url, '_blank');
+        setOpenModalApply(false);
+      }
+    } catch (error) {
+      console.log('error', error);
+
+      // if (
+      //   (result?.success as any) &&
+      //   (result.code as number) === (400 as any)
+      // ) {
+      //   // openNotification();
+      //   setTextButton('Đã ứng tuyển');
+      //   // setBackgroundButton('gray');
+      //   setCheckApply(true);
+      //   // window.open(post?.data.resource.url, '_blank');
+      //   setOpenModalApply(false);
+      // }
     }
   };
 
@@ -653,10 +699,14 @@ const Detail: React.FC = () => {
               <div className="title-container">
                 <div className="top-title">
                   <h2>{post?.data.title}</h2>
-                  <img
-                    src={post?.data.companyResourceData.logo}
-                    alt={post?.data.companyResourceData.logo}
-                  />
+                  {post?.data.companyResourceData.logo ? (
+                    <img
+                      src={post?.data.companyResourceData.logo}
+                      alt={post?.data.companyResourceData.logo}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className="mid-title">
                   <div className="mid-title_companyName">

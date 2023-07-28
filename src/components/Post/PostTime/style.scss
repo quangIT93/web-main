@@ -7,10 +7,14 @@
   width: 30%;
   .ant-space-item:nth-child(2) {
     min-width: unset !important;
-  
     .connect {
       transform: translateY(0%);
     }
+  }
+  
+  .ant-space-item {
+    margin: 0 !important;
+
   }
 }
 

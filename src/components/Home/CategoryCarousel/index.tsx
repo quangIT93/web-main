@@ -466,7 +466,7 @@ const CategoryCarousel: React.FC = () => {
                     <span
                       className="category-item-title"
                       style={{
-                        fontSize: '14px',
+                        fontSize: '12px',
                         fontWeight: '400',
                         color: '#000000',
                       }}

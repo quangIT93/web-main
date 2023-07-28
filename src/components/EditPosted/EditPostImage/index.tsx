@@ -33,35 +33,30 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
   >([]);
 
   // /////////////////////////////////////////////////////////////////////
-  const [imageFile, setImageFile] = React.useState<any>(null);
-  useEffect(() => {
-    const loadImage = async () => {
-      try {
-        console.log('dataPosted', dataPosted);
-        // Bước 1: Xác định định dạng file từ URL
-        const imageExtension = dataPosted?.image?.split('.').pop();
-        const imageType = `image/${
-          imageExtension === 'jpg' ? 'jpeg' : imageExtension
-        }`;
+  // const [imageFile, setImageFile] = React.useState<any>(null);
+  // useEffect(() => {
+  //   const loadImage = async () => {
+  //     try {
+  //       // Bước 1: Xác định định dạng file từ URL
+  //       const imageExtension = dataPosted?.image?.split('.').pop();
+  //       const imageType = `image/${
+  //         imageExtension === 'jpg' ? 'jpeg' : imageExtension
+  //       }`;
 
-        // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
-        const imageBlob = new Blob([dataPosted.image], { type: imageType });
-        const imageFile = new File([imageBlob], `image.${imageExtension}`, {
-          type: imageType,
-        });
+  //       // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
+  //       const imageBlob = new Blob([dataPosted.image], { type: imageType });
+  //       const imageFile = new File([imageBlob], `image.${imageExtension}`, {
+  //         type: imageType,
+  //       });
 
-        setImageFile(imageFile);
-      } catch (error) {
-        console.error('Error loading image:', error);
-      }
-    };
+  //       setImageFile(imageFile);
+  //     } catch (error) {
+  //       console.error('Error loading image:', error);
+  //     }
+  //   };
 
-    loadImage();
-  }, [dataPosted.image]);
-
-  console.log('dataa post', dataPosted);
-  console.log('dataa editDataPosted', editDataPosted);
-  console.log('data image', imageFile);
+  //   loadImage();
+  // }, [dataPosted.image]);
 
   // /////////////////////////////////////////////////////////////////
   const [selectedImages, setSelectedImages] = React.useState<any[]>([]);
@@ -71,7 +66,11 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+  const {
+    getRootProps,
+    getInputProps,
+    // , acceptedFiles
+  } = useDropzone({
     accept: {
       'image/*': [],
     },
@@ -166,8 +165,6 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       );
     },
   });
-
-  console.log('edit', editDataPosted);
 
   const thumbs = files.map((file: any, index: number) => (
     <div

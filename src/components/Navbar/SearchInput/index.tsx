@@ -237,7 +237,7 @@ const SearchInput: React.FC<SearchProps> = ({
     setValue(value);
     // enableScroll();
   };
-  console.log('value', value);
+  // console.log('value', value);
   // handle press enter
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
