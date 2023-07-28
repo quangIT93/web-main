@@ -71,6 +71,7 @@ const AppliedPostedJob: React.FC = () => {
     localStorage.setItem('hotjobApi', url);
     window.open(
       `/hotjobs?appliedPostedJob-id=${id}&appliedPostedJob-type=${type}&appliedPostedJob-total=${total}`,
+      '_parent',
     );
   };
 

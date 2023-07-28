@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import moment, { Moment } from 'moment';
 import { Skeleton } from 'antd';
-import { message } from 'antd';
+import { message, Switch } from 'antd';
 // import component
 // @ts-ignore
 import { Navbar } from '#components';
@@ -26,6 +26,7 @@ import EditPostTypeSalary from '#components/EditPosted/EditPostTypeSalary';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 
 import NotFound from 'pages/NotFound';
+
 import './style.scss';
 
 // inport Api
@@ -134,7 +135,10 @@ const EditPosted = () => {
         salaryMin: dataPostById.salary_min,
         moneyType: dataPostById.money_type,
         salaryType: dataPostById.salary_type_id,
-        phoneNumber: dataPostById.phone_contact.replace('+84', '0'),
+        phoneNumber:
+          dataPostById?.phone_contact?.length > 0
+            ? dataPostById?.phone_contact?.replace('+84', '0')
+            : '',
         description: dataPostById.description,
         images: [],
         deletedImages: [],
@@ -146,6 +150,8 @@ const EditPosted = () => {
       }));
     }
   }, [dataPostById]);
+
+  console.log('dataa', dataPostById);
 
   const [messageApi, contextHolder] = message.useMessage();
   const memoizedEditDataPosted = React.useMemo(
@@ -386,7 +392,9 @@ const EditPosted = () => {
         {contextHolder}
         <Navbar />
         <div className="edit-posted_main">
-          <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
+          <div className="edit-title_post">
+            <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
+          </div>
           <Skeleton loading={loading} active>
             <form action="">
               <EditPostJobCompany

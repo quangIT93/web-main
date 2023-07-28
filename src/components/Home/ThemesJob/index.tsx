@@ -130,7 +130,7 @@ const ThemesJob: React.FC = () => {
 
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
+    window.open(`/post-detail?post-id=${id}`, '_parent');
   };
 
   // handle close backdrop
@@ -243,7 +243,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-              //   onClick={handleClose}
+                //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

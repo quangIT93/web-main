@@ -238,7 +238,7 @@ const Detail: React.FC = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -564,11 +564,17 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-      }, ${post?.data.district ? post?.data.district?.fullName : ''}, ${post?.data.district?.province
-        ? post?.data.district?.province?.fullName
-        : ''
-      }`,
+        `${post?.data.address}, ${
+          post?.data.location ? post?.data.location.fullName : ''
+        }, ${
+          post?.data?.location?.district
+            ? post?.data?.location?.district?.fullName
+            : ''
+        }, ${
+          post?.data?.location?.district?.province
+            ? post?.data.district?.province?.fullName
+            : ''
+        }`,
     );
   };
 
@@ -672,12 +678,17 @@ const Detail: React.FC = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-                      }, ${post?.data.district ? post?.data.district?.fullName : ''
-                      }, ${post?.data.district?.province
-                        ? post?.data.district?.province?.fullName
+                    <h3>{`${post?.data.address}, ${
+                      post?.data?.location ? post?.data?.location?.fullName : ''
+                    }, ${
+                      post?.data?.location?.district
+                        ? post?.data?.location?.district?.fullName
                         : ''
-                      }`}</h3>
+                    }, ${
+                      post?.data?.location?.district?.province
+                        ? post?.data?.location?.district?.province?.fullName
+                        : ''
+                    }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -791,16 +802,26 @@ const Detail: React.FC = () => {
                     ]}
                     className="div-job-img-swipper"
                   >
-                    {post?.data.images.map((item: any, index: number) => {
-                      return (
-                        <SwiperSlide
-                          className="div-job-img-swipper_item"
-                          key={index}
-                        >
-                          <img src={item.url} alt="ảnh lỗi" />
-                        </SwiperSlide>
-                      );
-                    })}
+                    {post?.data?.images ? (
+                      post?.data?.images.map((item: any, index: number) => {
+                        return (
+                          <SwiperSlide
+                            className="div-job-img-swipper_item"
+                            key={index}
+                          >
+                            <img src={item.url} alt="ảnh lỗi" />
+                          </SwiperSlide>
+                        );
+                      })
+                    ) : (
+                      <SwiperSlide className="div-job-img-swipper_item">
+                        <img
+                          src={`${process.env.REACT_APP_URL_IMAGE}`}
+                          alt="ảnh lỗi"
+                          style={{ objectFit: 'cover' }}
+                        />
+                      </SwiperSlide>
+                    )}
                   </Swiper>
                   <Swiper
                     onSwiper={setThumbsSwiper}
@@ -809,22 +830,25 @@ const Detail: React.FC = () => {
                     slidesPerView={3}
                     freeMode={true}
                     centeredSlides={
-                      post?.data.images.length === 1 ? true : false
+                      post?.data.images && post?.data.images.length === 1
+                        ? true
+                        : false
                     }
                     watchSlidesProgress={true}
                     modules={[Mousewheel, FreeMode, Navigation, Thumbs]}
                     className="div-job-img-swipper_Thumbs"
                   >
-                    {post?.data.images.map((item: any, index: number) => {
-                      return (
-                        <SwiperSlide
-                          className="div-job-img-swipper-thumbs_item"
-                          key={index}
-                        >
-                          <img src={item.url} alt="Ảnh lỗi" />
-                        </SwiperSlide>
-                      );
-                    })}
+                    {post?.data?.images &&
+                      post?.data?.images.map((item: any, index: number) => {
+                        return (
+                          <SwiperSlide
+                            className="div-job-img-swipper-thumbs_item"
+                            key={index}
+                          >
+                            <img src={item.url} alt="Ảnh lỗi" />
+                          </SwiperSlide>
+                        );
+                      })}
                   </Swiper>
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
@@ -941,22 +965,6 @@ const Detail: React.FC = () => {
                                 </h5>
                               </div>
                             </div>
-                            <div className="div-detail-row">
-                              <ClockCircleOutlined
-                                style={{ color: '#575757' }}
-                              />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Thời gian hết hạn</p>
-                                <h5>
-                                  {post?.data?.expiredDate
-                                    ? moment(
-                                      new Date(post?.data?.expiredDate),
-                                    ).format('DD/MM/yyyy')
-                                    : 'Không thời hạn'}
-                                </h5>
-                              </div>
-                            </div>
                           </div>
                         </div>
                         <>
@@ -983,14 +991,112 @@ const Detail: React.FC = () => {
                           <div className="job-title-details">
                             <div className="div-detail-rowCompany">
                               <h3 style={{ display: 'block' }}>Mô tả</h3>
-                              <div>
-                                <p>Chưa cập nhật</p>
+                              <div className="div-detail_descCompany">
+                                <p>
+                                  {post?.data.postCompanyInformation
+                                    ? post?.data.postCompanyInformation
+                                        ?.description
+                                    : 'Chưa cập nhật'}
+                                </p>
                               </div>
                             </div>
                             <div className="div-detail-rowCompany">
                               <h3>Thông tin cơ bản</h3>
-                              <div>
-                                <p>Chưa cập nhật</p>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Mã số thuế</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? post?.data?.postCompanyInformation
+                                          ?.taxCode
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
+                              </div>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Địa chỉ</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
+                                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
+                              </div>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Email</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? post?.data?.postCompanyInformation
+                                          ?.email
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
+                              </div>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Điện thoại</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? post?.data?.postCompanyInformation
+                                          ?.phone
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
+                              </div>
+                              <div className="div-detail-items">
+                                <div className="div-detail-titleItem">
+                                  <DesktopOutlined
+                                    style={{
+                                      color: '#575757',
+                                      marginRight: '8px',
+                                    }}
+                                  />
+                                  <p>Website</p>
+                                </div>
+                                <div className="div-detail-titleItem">
+                                  <h5>
+                                    {post?.data?.postCompanyInformation
+                                      ? post?.data?.postCompanyInformation
+                                          ?.website
+                                      : 'Chưa cập nhật'}
+                                  </h5>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1018,7 +1124,7 @@ const Detail: React.FC = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                        // onClick={handlePreviousPost}
+                          // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1172,8 +1278,8 @@ const Detail: React.FC = () => {
                 {post?.data?.companyResourceData?.name === 'HIJOB'
                   ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Bạn có muốn ứng tuyển công việc này không?'
                   : isApplied
-                    ? 'Bạn đã ứng tuyển công việc này chưa?'
-                    : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
+                  ? 'Bạn đã ứng tuyển công việc này chưa?'
+                  : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
               </Typography>
 
               <Box
@@ -1201,8 +1307,8 @@ const Detail: React.FC = () => {
                     post?.data?.companyResourceData?.name === 'HIJOB'
                       ? handleApply
                       : isApplied
-                        ? handleChangeStatus
-                        : handleClickChangePage
+                      ? handleChangeStatus
+                      : handleClickChangePage
                   }
                   style={{
                     width: '300px',

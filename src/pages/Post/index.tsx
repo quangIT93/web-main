@@ -1,5 +1,7 @@
 import React, { useState, FormEvent, useEffect } from 'react';
 
+import { Switch } from 'antd';
+
 // @ts-ignore
 import { Navbar } from '#components';
 
@@ -12,6 +14,7 @@ import PostJobCompany from '../../components/Post/PostJobCompany';
 import PostAddress from '../../components/Post/PostAddress';
 import PostTypeJob from '../../components/Post/PostTypeJob';
 import ModalPost from '#components/Post/ModalPost';
+import ModalFillDataPost from '#components/Post/ModalFillDataPost';
 import PostPeriodDate from '#components/Post/PostPeriodDate';
 import RecruitmentTime from '#components/Post/RecruitmentTime';
 import StyleWork from '#components/Post/StyleWork';
@@ -180,6 +183,8 @@ const Post: React.FC = () => {
   const [salaryMax, setSalaryMax] = React.useState<number>(0);
   // modal
   const [openModalPost, setOpenModalPost] = React.useState(false);
+  const [openModalFillDataPost, setOpenFillDataPost] =
+    React.useState<boolean>(false);
   // check error
   const [titleError, setTitleError] = useState(false);
   const [companyError, setCompanyError] = useState(false);
@@ -369,7 +374,24 @@ const Post: React.FC = () => {
 
         {contextHolder}
         <div className="post-main">
-          <h1>Tạo bài đăng tuyển dụng</h1>
+          <div
+            className="post-main_fillData"
+            style={{ textAlign: 'center', display: 'block' }}
+          >
+            <h1>Tạo bài đăng tuyển dụng</h1>
+            {/* <div className="post-main_switch">
+              <h4>
+                Hi Job sẽ tự động điền tất cả các thông tin công việc trước đó
+                của bạn!
+              </h4>
+              <Switch
+                checked={openModalFillDataPost}
+                checkedChildren=""
+                unCheckedChildren=""
+                onChange={() => setOpenFillDataPost(!openModalFillDataPost)}
+              />
+            </div> */}
+          </div>
           <form onSubmit={handleSubmit}>
             <PostJobCompany
               setTitleJob={setTitleJob}
@@ -460,6 +482,11 @@ const Post: React.FC = () => {
           setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
           openModalNoteCreatePost={openModalNoteCreatePost}
         />
+
+        {/* <ModalFillDataPost
+          setOpenFillDataPost={setOpenFillDataPost}
+          openModalFillDataPost={openModalFillDataPost}
+        /> */}
       </div>
     );
   } else {

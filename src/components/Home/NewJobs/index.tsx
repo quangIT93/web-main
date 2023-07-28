@@ -121,7 +121,7 @@ const NewJobs: React.FC = () => {
 
   // handle click post details
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
+    window.open(`/post-detail?post-id=${id}`, '_parent');
   };
 
   // handle change paginaton

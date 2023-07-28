@@ -109,17 +109,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -809,10 +809,10 @@ const Navbar: React.FC = () => {
                 <span className="sub-login_text">
                   <MapInfoIcon />
                   <p>
-                    {dataProfile?.categories.length > 0
-                      ? dataProfile?.categories.map((profile: any) => {
-                        return `${profile.parent_category} / ${profile.child_category}, `;
-                      })
+                    {dataProfile?.locations.length > 0
+                      ? dataProfile?.locations.map((location: any) => {
+                          return `${location.district} , `;
+                        })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -821,11 +821,12 @@ const Navbar: React.FC = () => {
                   onClick={() => window.open(`/profile`, '_seft')}
                 >
                   <BagInfoJob />
+
                   <p>
-                    {dataProfile?.locations.length > 0
-                      ? dataProfile?.locations.map((location: any) => {
-                        return `${location.district} , `;
-                      })
+                    {dataProfile?.categories.length > 0
+                      ? dataProfile?.categories.map((profile: any) => {
+                          return `${profile.parent_category} / ${profile.child_category}, `;
+                        })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -841,9 +842,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -939,9 +940,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -964,8 +965,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1046,10 +1048,14 @@ const Navbar: React.FC = () => {
                 ref={bellRef}
               >
                 <DownloadIcon />
+                {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
               </Button>
               <div className="sub-icon_qr">
-                <h2>Tải Ứng dụng Hi Job!</h2>
-                <img src="/QrApp.jpg" alt="" />
+                <h2>Tải Ứng dụng HiJob!</h2>
+                <img
+                  src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
+                  alt="Ảnh lỗi"
+                />
                 <div className="sub-icon_apps">
                   <Link
                     to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
