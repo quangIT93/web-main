@@ -1115,7 +1115,7 @@ const Detail: React.FC = () => {
                               </div>
                             </div>
                             <div className="div-detail-rowCompany">
-                              <h3>Thông tin cơ bản</h3>
+                              <h3>Thông tin cơ bản </h3>
                               <div className="div-detail-items">
                                 <div className="div-detail-titleItem">
                                   <DesktopOutlined
