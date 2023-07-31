@@ -25,8 +25,6 @@ const PostImage: React.FC<PostImageProps> = (props) => {
   const { selectedFiles, setSelectedFiles, setSelectedImages, selectedImages } =
     props;
 
-  console.log('selectedImages', selectedImages);
-  console.log('selectedImagessadadasdsa');
   const [image, setImage] = React.useState<any>();
   const [files, setFiles] = React.useState<any>([]);
   const [isDragActive, setIsDragActive] = React.useState(false);
@@ -59,8 +57,8 @@ const PostImage: React.FC<PostImageProps> = (props) => {
 
         const imageFile = blobImage.map(
           (blob: any) =>
-            new File([blob], `image.jpg`, {
-              type: 'jpg',
+            new File([blob], `image.${blob.type}`, {
+              type: `${blob.type}`,
             }),
         );
         // const imageBlob = new Blob([dataPosted.image], { type: imageType });
@@ -68,9 +66,6 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         //   type: imageType,
         // });
 
-        console.log('imageExtension', imageExtension);
-        console.log('blobImage', blobImage);
-        console.log('imageFile', imageFile);
         setSelectedFiles(imageFile);
       } catch (error) {
         console.error('Error loading image:', error);

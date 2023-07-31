@@ -60,6 +60,8 @@ interface IModalFillDataPost {
   setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>;
   setFillCate: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>;
+  setSalaryType: React.Dispatch<React.SetStateAction<number>>;
+  setMoneyType: React.Dispatch<React.SetStateAction<number>>;
 }
 const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const {
@@ -87,6 +89,8 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setCategoriesId,
     setFillCate,
     setSelectedImages,
+    setSalaryType,
+    setMoneyType,
   } = props;
 
   const [dataPost, setDataPost] = React.useState<any>([]);
@@ -114,6 +118,8 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setSelectedImages([]);
     setCategoriesId([]);
     setFillCate([]);
+    setSalaryType(1);
+    setMoneyType(1);
   };
 
   const allPost = async () => {
@@ -139,7 +145,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setSelectedValue(parseInt(e?.target?.value));
     setTitleJob(itemPost.title);
     setCompanyName(itemPost.company_name);
-    setFillWardId({ id: itemPost.ward_id, full_name: itemPost.ward_name });
+    setFillWardId({ id: itemPost.ward_id, full_name: itemPost.ward });
     setWardId(itemPost.ward_id);
 
     setFillProvince({
@@ -151,10 +157,13 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
       full_name: itemPost.district,
     });
     setTypeJob(itemPost.job_type.job_type_id);
+    console.log('itemPost', itemPost);
+
     try {
       const result = await postApi.getById(itemPost.post_id);
       console.log('reuslt', result.data);
       if (result) {
+        setTypeJob(result.data.job_type.job_type_id);
         setIsPeriodDate(result.data.is_date_period);
         setStartDate(result.data.start_date);
         setEndDate(result.data.end_date);
@@ -178,6 +187,8 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         );
 
         setSelectedImages(result.data.images.map((image: any) => image.image));
+        setSalaryType(result.data.salary_type_id);
+        setMoneyType(result.data.money_type);
       }
     } catch (error) {}
   };
@@ -210,6 +221,8 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setSelectedImages([]);
     setCategoriesId([]);
     setFillCate([]);
+    setSalaryType(1);
+    setMoneyType(1);
   };
 
   return (

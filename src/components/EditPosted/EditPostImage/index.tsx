@@ -65,7 +65,8 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
   const [files, setFiles] = React.useState<File[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
-
+  console.log('selectedFiles', selectedFiles);
+  console.log('selectedImages', selectedImages);
   const {
     getRootProps,
     getInputProps,
@@ -316,6 +317,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
           });
 
           if (newImages.length === files.length) {
+            // console.log('new', newImages);
             setSelectedImages((prevImages: any) => [
               ...prevImages,
               ...newImages,

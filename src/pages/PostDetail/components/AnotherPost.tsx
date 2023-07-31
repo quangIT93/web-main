@@ -160,7 +160,7 @@ const AnotherPost: React.FC<any> = (props) => {
               <img
                 className="anotherPost_logo_image"
                 src={
-                  props.item.resource.company_icon
+                  props?.item?.resource.company_icon
                     ? props.item.resource.company_icon
                     : ''
                 }

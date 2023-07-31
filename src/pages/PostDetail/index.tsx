@@ -903,16 +903,67 @@ const Detail: React.FC = () => {
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
                   <Box
-                    sx={{ width: '100%', height: '100%', typography: 'body1' }}
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      typography: 'body1',
+                    }}
                   >
                     <TabContext value={tabValue}>
-                      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                      <Box
+                        sx={{
+                          // borderBottom: 1,
+                          borderColor: 'divider',
+                        }}
+                      >
                         <TabList
                           onChange={handleChangeTab}
                           aria-label="lab API tabs example"
+                          // className="sdasd"
+                          sx={
+                            post?.data?.postCompanyInformation === null
+                              ? {
+                                  minHeight: 0,
+                                }
+                              : {}
+                          }
                         >
-                          <Tab label="Thông tin việc làm" value="1" />
-                          <Tab label="Thông tin công ty" value="2" />
+                          <Tab
+                            label="Thông tin việc làm"
+                            value="1"
+                            sx={
+                              post?.data?.postCompanyInformation === null
+                                ? {
+                                    minWidth: '100%',
+                                    padding: '0 0 12px 0',
+                                    margin: '0 0 0px 0',
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    minHeight: 0,
+                                    justifyContent: 'center',
+                                    '&:hover': {
+                                      background: 'none',
+                                      cursor: 'unset',
+                                    },
+                                  }
+                                : {}
+                            }
+                          />
+                          <Tab
+                            label="Thông tin công ty"
+                            value="2"
+                            // style={{ display: 'none' }}
+                            className={`${
+                              post?.data.postCompanyInformation
+                                ? 'tab-info_company'
+                                : ''
+                            }`}
+                            sx={
+                              post?.data.postCompanyInformation === null
+                                ? { display: 'none' }
+                                : { display: 'block' }
+                            }
+                          />
                         </TabList>
                       </Box>
                       <TabPanel value="1" className="info-job">
@@ -1030,7 +1081,7 @@ const Detail: React.FC = () => {
                               color: 'white',
                               fontWeight: 'normal',
                               position: 'absolute',
-                              bottom: '-180px',
+                              bottom: '-212px',
                             }}
                             icon={checkPostUser ? <FormOutlined /> : null}
                           >
@@ -1038,7 +1089,18 @@ const Detail: React.FC = () => {
                           </Button>
                         </>
                       </TabPanel>
-                      <TabPanel value="2">
+                      <TabPanel
+                        value="2"
+                        // style={{ display: 'none' }}
+                        className={`wrapJob-title-container ${
+                          post?.data.postCompanyInformation ? 'has-company' : ''
+                        }`}
+                        sx={
+                          post?.data.postCompanyInformation === null
+                            ? { display: 'none' }
+                            : { display: 'block' }
+                        }
+                      >
                         <div className="job-title-container">
                           <div className="job-title-details">
                             <div className="div-detail-rowCompany">

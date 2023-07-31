@@ -420,6 +420,9 @@ const Post: React.FC = () => {
               wardId={wardId}
               fillProvince={fillProvince}
               fillDistrict={fillDistrict}
+              setFillDistrict={setFillDistrict}
+              setFillProvince={setFillProvince}
+              setFillWardId={setFillWardId}
             />
             <PostImage
               selectedFiles={selectedFiles}
@@ -532,6 +535,8 @@ const Post: React.FC = () => {
           setCategoriesId={setCategoriesId}
           setFillCate={setFillCate}
           setSelectedImages={setSelectedImages}
+          setSalaryType={setSalaryType}
+          setMoneyType={setMoneyType}
         />
       </div>
     );

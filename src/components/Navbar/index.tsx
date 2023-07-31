@@ -759,7 +759,7 @@ const Navbar: React.FC = () => {
       className="btn btn__post"
       onClick={() => {
         if (dataProfile && localStorage.getItem('refreshToken')) {
-          window.open('/post', '_seft');
+          window.open('/post', '_self');
         } else {
           setOpenModalLogin(true);
         }
