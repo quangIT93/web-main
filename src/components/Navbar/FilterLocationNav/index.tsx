@@ -16,6 +16,7 @@ import locationApi from 'api/locationApi';
 
 // import redux
 import { RootState } from 'store';
+import { message } from 'antd';
 
 const { Text } = Typography;
 interface DistrictProps {
@@ -23,27 +24,30 @@ interface DistrictProps {
 }
 const { SHOW_CHILD } = Cascader;
 
-const DropdownRender = (menus: React.ReactNode) => (
-  <div style={{ width: '100%' }}>
-    <Text className="title-filter_location">Chọn địa điểm</Text>
-    {menus}
-    <Divider style={{ margin: 5 }} />
-    {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
-      <Button type="default" onClick={() => {}}>
-        Huỷ
-      </Button>
-      <Button type="primary" onClick={() => {}}>
-        Áp dụng
-      </Button>
-    </div> */}
-  </div>
-);
+// const DropdownRender = (menus: React.ReactNode) => (
+//   <div style={{ width: '100%' }}>
+//     <Text className="title-filter_location">Chọn địa điểm</Text>
+//     {menus}
+//     <Divider style={{ margin: '8px 5px' }} >
+//       {disable ? 'Chỉ có thể tối đa 10 địa điểm' : ''}
+//     </Divider>
+//     {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+//       <Button type="default" onClick={() => {}}>
+//         Huỷ
+//       </Button>
+//       <Button type="primary" onClick={() => {}}>
+//         Áp dụng
+//       </Button>
+//     </div> */}
+//   </div>
+// );
 
 const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
   const [dataLocations, setDataLocations] = React.useState<any>(null);
   const [dataDistrict, setDataDistrict] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
   const [locId, setLocId] = useState<string[]>([]);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const userProfile = useSelector((state: RootState) => state.profile.profile);
 
@@ -55,13 +59,32 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
 
   let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
   // const listLocation = userFilteredCookies?.list_dis;
+
+  const DropdownRender = (menus: React.ReactNode) => (
+    <div style={{ width: '100%' }}>
+      <Text className="title-filter_location">Chọn địa điểm</Text>
+      {menus}
+      <Divider style={{ margin: '8px 5px' }} >
+        {disable ? 'Chỉ có thể tối đa 10 địa điểm' : ''}
+      </Divider>
+      {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+        <Button type="default" onClick={() => {}}>
+          Huỷ
+        </Button>
+        <Button type="primary" onClick={() => {}}>
+          Áp dụng
+        </Button>
+      </div> */}
+    </div>
+  );
+
   const listLocation: any = useRef<any>(
     JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       : userProfile?.locations?.map((profile: any) => [
-          profile?.province_id,
-          profile?.district_id,
-        ]),
+        profile?.province_id,
+        profile?.district_id,
+      ]),
   );
 
   // console.log('cookies', JSON.parse(getCookie('userFiltered') || '{}'));
@@ -111,44 +134,51 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
     setDisable(false);
     const secondValues = value?.map((item: any) => item[1]);
 
-    if (secondValues?.length <= 3) {
+    console.log("value", value);
+
+
+    if (secondValues?.length <= 10) {
       setLocId(secondValues);
       setListDis(value);
     }
-    if (value?.length > 2) {
+
+    console.log("value", value);
+    if (value?.length > 9) {
       setDisable(true);
     }
   };
 
   if (userProfile || dataLocations) {
     return (
-      <div className="filter-input">
-        <div className="filter-input_icon">
-          <AddressFilterIcon width={20} height={20} />
-        </div>
-        <Cascader
-          multiple
-          maxTagCount="responsive"
-          size="large"
-          placeholder="Chọn địa điểm"
-          inputIcon={<EnvironmentOutlined />}
-          suffixIcon={<ArrowFilterIcon width={14} height={10} />}
-          dropdownRender={DropdownRender}
-          defaultValue={
-            listLocation.current?.length !== 0 &&
-            listLocation.current !== undefined
-              ? listLocation.current
-              : listLocation.current?.length === 0 &&
-                location?.pathname === '/search-results'
-              ? []
-              : userProfile?.locations?.map((profile: any) => [
-                  profile?.province_id,
-                  profile?.district_id,
-                ])
-          }
-          options={
-            dataLocations
-              ? dataLocations?.map((dataLocation: any) => ({
+      <>
+        {contextHolder}
+        <div className="filter-input">
+          <div className="filter-input_icon">
+            <AddressFilterIcon width={20} height={20} />
+          </div>
+          <Cascader
+            multiple
+            maxTagCount="responsive"
+            size="large"
+            placeholder="Chọn địa điểm"
+            inputIcon={<EnvironmentOutlined />}
+            suffixIcon={<ArrowFilterIcon width={14} height={10} />}
+            dropdownRender={DropdownRender}
+            defaultValue={
+              listLocation.current?.length !== 0 &&
+                listLocation.current !== undefined
+                ? listLocation.current
+                : listLocation.current?.length === 0 &&
+                  location?.pathname === '/search-results'
+                  ? []
+                  : userProfile?.locations?.map((profile: any) => [
+                    profile?.province_id,
+                    profile?.district_id,
+                  ])
+            }
+            options={
+              dataLocations
+                ? dataLocations?.map((dataLocation: any) => ({
                   value: dataLocation.province_id,
                   label: dataLocation.province_fullName,
                   children: dataLocation.districts.map(
@@ -171,14 +201,15 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
                     },
                   ),
                 }))
-              : []
-          }
-          onChange={onChange}
-          changeOnSelect
-          className="inputFilterLocationNav input-filter_nav"
-          showCheckedStrategy={SHOW_CHILD}
-        />
-      </div>
+                : []
+            }
+            onChange={onChange}
+            changeOnSelect
+            className="inputFilterLocationNav input-filter_nav"
+            showCheckedStrategy={SHOW_CHILD}
+          />
+        </div>
+      </>
     );
   } else {
     return <></>;

@@ -4,16 +4,16 @@ import Button from '@mui/material/Button';
 // data
 import profileApi from 'api/profileApi';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store/reducer/index';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from 'store/index';
+// import { useDispatch } from 'react-redux';
+// import { RootState } from '../../../store/reducer/index';
+// import { bindActionCreators } from 'redux';
+// import { actionCreators } from 'store/index';
 import { CloseOutlined } from '@ant-design/icons';
 
-import {
-  getProfile,
-  resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer';
+// import {
+//   getProfile,
+//   resetProfileState,
+// } from 'store/reducer/profileReducer/getProfileReducer';
 import './style.scss';
 
 interface InfoContact {
@@ -56,8 +56,8 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   );
 
   const handleClose = () => setOpenModalContact(false);
-  const dispatch = useDispatch();
-  const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+  // const dispatch = useDispatch();
+  // const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
 
   const handleSetPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!/^[0-9-]*$/.test(e.target.value)) {

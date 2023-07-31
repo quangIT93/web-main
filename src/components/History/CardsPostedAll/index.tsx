@@ -1,25 +1,25 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
-import moment, { Moment } from 'moment';
+// import moment from 'moment';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import { Space, Tooltip, Button } from 'antd';
+// import Card from '@mui/material/Card';
+import { Button } from 'antd';
 import { message } from 'antd';
-import ImageListItem from '@mui/material/ImageListItem';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+// import ImageListItem from '@mui/material/ImageListItem';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Box, Typography, MenuItem, TextField } from '@mui/material';
 import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  MoreOutlined,
+  // EnvironmentFilled,
+  // ClockCircleFilled,
+  // MoreOutlined,
   LeftOutlined,
 } from '@ant-design/icons';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
-import { BackIcon } from '#components/Icons';
+// import { BackIcon } from '#components/Icons';
 
 import sortData from 'utils/SortDataHistory/sortData';
 
@@ -112,7 +112,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
       );
       if (result) {
         setUploading(false);
-        if (result.data.length == 0) {
+        if (result.data.length === 0) {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
@@ -204,6 +204,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
                 <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
                   {dataPosted?.map((posted: any, i: number) => (
                     <JobCardPostHistory
+                      key={i}
                       item={posted}
                       handleShowDetail={handleShowDetail}
                       isHide={false}

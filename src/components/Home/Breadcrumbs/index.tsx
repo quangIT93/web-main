@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState, useCallback } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 
 import Collapse from '@mui/material/Collapse';
@@ -12,7 +12,7 @@ import { useSearchParams } from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-import { NumberOutlined } from '@ant-design/icons';
+// import { NumberOutlined } from '@ant-design/icons';
 import Skeleton from '@mui/material/Skeleton';
 
 // import component
@@ -35,10 +35,8 @@ const BreadcrumbsCpn: React.FC = () => {
   // Contexts
   const {
     setChildCateloriesArray,
-    childCateloriesArray,
+
     valueJobChild,
-    setValueJobChild,
-    navTouchCatelory,
   }: {
     navTouchCatelory: boolean;
     setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
@@ -96,10 +94,12 @@ const BreadcrumbsCpn: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     getAllChildCategoriesById();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueJobChild?.id]);
 
   useEffect(() => {
@@ -114,6 +114,7 @@ const BreadcrumbsCpn: React.FC = () => {
 
   useEffect(() => {
     setArrayChild([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('categories-id')]);
 
   const handleClickChoose = async () => {
@@ -172,7 +173,7 @@ const BreadcrumbsCpn: React.FC = () => {
   // }, [open])
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked, value } = event.target;
+    const { name, checked } = event.target;
 
     setCheckedItems((prevCheckedItems: any) => {
       const updatedCheckedItems = [...prevCheckedItems];
@@ -253,12 +254,12 @@ const BreadcrumbsCpn: React.FC = () => {
           {arrayChild?.length === 0
             ? 'Tất cả'
             : arrayChild?.map(
-              (value: { id: number; name: string }, index: number) => (
-                <div key={index}>
-                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                </div>
-              ),
-            )}
+                (value: { id: number; name: string }, index: number) => (
+                  <div key={index}>
+                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                  </div>
+                ),
+              )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -270,7 +271,6 @@ const BreadcrumbsCpn: React.FC = () => {
   ];
 
   return (
-
     <Stack
       className="bread-crumb-container"
       spacing={2}
@@ -289,13 +289,13 @@ const BreadcrumbsCpn: React.FC = () => {
         borderBottom: '1px solid #e5e5e5',
       }}
     >
-      {isLoading ?
+      {isLoading ? (
         <Skeleton variant="rounded" width="100%" height={34} />
-        :
+      ) : (
         <Breadcrumbs separator="" aria-label="breadcrumb">
           {breadcrumbs}
         </Breadcrumbs>
-      }
+      )}
       <Collapse
         in={open}
         // timeout="auto"
@@ -326,7 +326,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                        checkItemsCount >= MAX_CHECKED_ITEMS
+                          checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />
@@ -418,9 +418,9 @@ const BreadcrumbsCpn: React.FC = () => {
           </div>
         </Collapse>
       </Stack> */}
-    </Stack >
-  )
-}
+    </Stack>
+  );
+};
 
 export default BreadcrumbsCpn;
 

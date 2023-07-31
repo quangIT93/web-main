@@ -1,23 +1,23 @@
 import React, { useState, useContext } from 'react';
 import { Select, Button } from 'antd';
-import jsonp from 'fetch-jsonp';
-import qs from 'qs';
+// import jsonp from 'fetch-jsonp';
+// import qs from 'qs';
 import type { SelectProps } from 'antd';
 import { useLocation } from 'react-router-dom';
 import searchApi from 'api/searchApi';
 import './style.scss';
-import { Spin } from 'antd';
+// import { Spin } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index';
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 import {
-  useNavigate,
-  createSearchParams,
+  // useNavigate,
+  // createSearchParams,
   useSearchParams,
 } from 'react-router-dom';
 
-let timeout: ReturnType<typeof setTimeout> | null;
+// let timeout: ReturnType<typeof setTimeout> | null;
 // let currentValue: string | undefined;
 
 // fetch data keywords
@@ -120,7 +120,7 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const [dataHistory, setDataHistory] = React.useState<any>([]);
   const [dataSuggest, setDataSuggest] = React.useState<any>([]);
-  const [openDropdown, setOpenDropdown] = React.useState(false);
+  // const [openDropdown, setOpenDropdown] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(false);
 
   const QUERY = searchParams.get('q');
@@ -148,6 +148,7 @@ const SearchInput: React.FC<SearchProps> = ({
     setValue(QUERY as any);
     const accessToken = localStorage.getItem('accessToken');
     accessToken && setIsLogin(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getSuggestKeyWord = async () => {
@@ -207,6 +208,7 @@ const SearchInput: React.FC<SearchProps> = ({
 
   React.useEffect(() => {
     getDataSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const handleChange = (newValue: string) => {
@@ -215,13 +217,13 @@ const SearchInput: React.FC<SearchProps> = ({
     console.log('cakakak');
   };
 
-  const disableScroll = () => {
-    document.body.style.overflow = 'hidden';
-  };
+  // const disableScroll = () => {
+  //   document.body.style.overflow = 'hidden';
+  // };
 
-  const enableScroll = () => {
-    document.body.style.overflow = '';
-  };
+  // const enableScroll = () => {
+  //   document.body.style.overflow = '';
+  // };
 
   const handleOnFocus = () => {
     console.log('fcccccccccuss');
@@ -284,7 +286,7 @@ const SearchInput: React.FC<SearchProps> = ({
     setValue('');
   };
 
-  const handleDeleteKeyword = () => {};
+  // const handleDeleteKeyword = () => {};
 
   const handleDeleteHistoryKeyword = async (e: any, keyword: string) => {
     // e.stoppropagation();

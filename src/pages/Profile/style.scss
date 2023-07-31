@@ -1,10 +1,18 @@
 @import '../../scss/mixins';
 
+.ant-message {
+  z-index: 9999;
+}
+
 .profile {
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 100%;
+
+  .ant-select-tree-treenode {
+    width: 100%;
+  }
 
   .footer-right {
     @include breakpoint(mobile) {

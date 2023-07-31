@@ -1,60 +1,28 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 //import scss
 
 //MUI
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 import ImageListItem from '@mui/material/ImageListItem';
 
 import { BackIcon } from '#components/Icons';
 
-//ANT
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
+import { LocationHomeIcon, ClockIcon, BagHomeIcon } from '#components/Icons';
 
-import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
-
-import {
-  LocationHomeIcon,
-  ClockIcon,
-  BagHomeIcon,
-  DolaIcon,
-  SaveIconOutline,
-  SaveIconFill,
-} from '#components/Icons';
-
-import { Space, Button, Tooltip } from 'antd';
+import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
-import bookMarkApi from 'api/bookMarkApi';
-
-import HomeValueContextProvider, {
-  HomeValueContext,
-} from 'context/HomeValueContextProvider';
-
-import ShowNotificativeSave from '../../ShowNotificativeSave';
+// import bookMarkApi from 'api/bookMarkApi';
 
 const AppliedPostedJobCard: React.FC<any> = (props) => {
-  const {
-    setOpenNotificate,
-    openNotificate,
-  }: {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-  } = React.useContext(HomeValueContext);
-  const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const dispatch = useDispatch();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
-  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  // const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleClickItem = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -63,7 +31,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
   ) => {
     // window.open(`/post-detail?post-id=${id}`);
     type === 'application'
-      ? window.open(`/post-detail?post-id=${id}`, '_parent')
+      ? window.open(`/post-detail?post-id=${id}`, '_blank')
       : window.open(`/history?post=2`, '_parent');
   };
 
@@ -297,10 +265,10 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 props.item.application_status === 1
                   ? 'rgba(220, 220, 220, 1)'
                   : props.item.application_status === 2
-                  ? 'rgba(92, 178, 101, 1)'
-                  : props.item.application_status === 3
-                  ? 'rgba(189, 49, 49, 1)'
-                  : 'rgba(13, 153, 255, 1)',
+                    ? 'rgba(92, 178, 101, 1)'
+                    : props.item.application_status === 3
+                      ? 'rgba(189, 49, 49, 1)'
+                      : 'rgba(13, 153, 255, 1)',
               color:
                 props.item.application_status === 1
                   ? 'rgba(170, 170, 170, 1)'
@@ -312,10 +280,10 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             {props.item.application_status === 1
               ? 'Đã ứng tuyển'
               : props.item.application_status === 2
-              ? 'Đã từ chối'
-              : props.item.application_status === 3
-              ? 'Đã được duyệt'
-              : 'Đã tuyển'}
+                ? 'Đã được duyệt'
+                : props.item.application_status === 3
+                  ? 'Đã từ chối'
+                  : 'Đã tuyển'}
           </div>
           <div
             style={{ display: props.item.type === 'post' ? 'flex' : 'none' }}

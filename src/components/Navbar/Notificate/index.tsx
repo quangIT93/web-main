@@ -32,39 +32,39 @@ import { DeleteKeywordIcon } from '#components/Icons';
 //   FormControlLabel,
 // } from '@mui/material';
 
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+// import ExpandLess from '@mui/icons-material/ExpandLess';
+// import ExpandMore from '@mui/icons-material/ExpandMore';
 // import Api
 import notificationApi from 'api/notification';
 import notificationKeywordApi from 'api/notificationKeyword';
-import locationApi from '../../../api/locationApi';
+// import locationApi from '../../../api/locationApi';
 
 import {
-  LocationIcon,
+  // LocationIcon,
   CateIcon,
-  CreateKeywordIcon,
+  // CreateKeywordIcon,
   LocationHomeIcon,
 } from '#components/Icons';
 
 import './style.scss';
 // import fake data notificates
-import { notificates } from './data';
+// import { notificates } from './data';
 
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
 
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+// const MenuProps = {
+//   PaperProps: {
+//     style: {
+//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+//       width: 250,
+//     },
+//   },
+// };
 
 const Notificate = () => {
   const {
@@ -115,16 +115,12 @@ const Notificate = () => {
         setIsLoading(false);
         setDataNotification(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
     getApiNotificate();
   }, []);
-
-  console.log('Data', dataNotification);
-  console.log('Data', dataNotificationKeyword);
-  console.log('Data', typeof dataNotificationKeyword?.status?.emailStatus);
 
   const getApiNotificateKeyword = async () => {
     try {
@@ -134,7 +130,7 @@ const Notificate = () => {
         setValueApp(result.data.status.pushStatus);
         setValueMall(result.data.status.emailStatus);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -172,6 +168,7 @@ const Notificate = () => {
     return () => {
       document.removeEventListener('click', handleCLoseNotificate);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClickNotiKey = (postId: number) => {
@@ -266,17 +263,15 @@ const Notificate = () => {
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
-          className={`top-notificate_system ${
-            activeSystem ? 'active-system' : ''
-          }`}
+          className={`top-notificate_system ${activeSystem ? 'active-system' : ''
+            }`}
           onClick={handleClickActiveSystem}
         >
           Thông báo
         </div>
         <div
-          className={`top-notificate_keyword ${
-            activeKeyword ? 'active-keyword' : ''
-          }`}
+          className={`top-notificate_keyword ${activeKeyword ? 'active-keyword' : ''
+            }`}
           onClick={handleClickActiveKeyword}
         >
           Từ khoá
@@ -415,10 +410,12 @@ const Notificate = () => {
                   name="app"
                   id="app"
                   value={valueApp}
+                  disabled
                   onChange={handleChangeApp}
                   checked={valueApp === 1 ? true : false}
+                  style={{ cursor: 'not-allowed' }}
                 />
-                <label htmlFor="app">App</label>
+                <label htmlFor="app" style={{ color: '#ccc' }}>App</label>
               </div>
               <div className="checkbox-keyword">
                 <input
@@ -435,11 +432,10 @@ const Notificate = () => {
             <div className="count-keyword">
               <p>
                 Bạn đã lưu trữ được:
-                <strong>{` ${
-                  dataNotificationKeyword?.keywords?.length > 0
-                    ? dataNotificationKeyword?.keywords?.length
-                    : 0
-                }/10 `}</strong>
+                <strong>{` ${dataNotificationKeyword?.keywords?.length > 0
+                  ? dataNotificationKeyword?.keywords?.length
+                  : 0
+                  }/10 `}</strong>
                 gợi ý công việc
               </p>
             </div>
@@ -447,9 +443,8 @@ const Notificate = () => {
               dataNotificationKeyword?.keywords?.map(
                 (dataKeyword: any, index: number) => (
                   <div
-                    className={`wrap-content_keyword ${
-                      idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
-                    }`}
+                    className={`wrap-content_keyword ${idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
+                      }`}
                     key={index}
                     onClick={() => handleClickItemKeyword(dataKeyword?.id)}
                   >

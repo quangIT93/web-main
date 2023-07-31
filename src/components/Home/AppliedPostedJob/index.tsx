@@ -1,11 +1,11 @@
 import React from 'react';
 // import Tabs from '@mui/material/Tabs'
 // import Tab from '@mui/material/Tab'
-import { Radio, Tabs } from 'antd';
+// import { Radio, Tabs } from 'antd';
 import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 // import api
 import applitedPostedApi from 'api/apiAppliedPosted';
 
@@ -20,16 +20,15 @@ import 'swiper/css/navigation';
 import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
-import { Button, Space } from 'antd';
-import { Skeleton } from 'antd';
+// import { Button, Space } from 'antd';
+// import { Skeleton } from 'antd';
 
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../store/index';
-import { RootState } from '../../../store/reducer';
+// import { useDispatch } from 'react-redux';
+
+// import { RootState } from '../../../store/reducer';
 
 import { AppliedPostedIcon } from '#components/Icons';
 
@@ -37,23 +36,23 @@ import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
 
 import './styles.scss';
 
-interface ItemTheme {
-  id: number;
-  title: string;
-  img: string;
-  author: string;
-}
+// interface ItemTheme {
+//   id: number;
+//   title: string;
+//   img: string;
+//   author: string;
+// }
 
 const AppliedPostedJob: React.FC = () => {
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
-  const [loading, setloading] = React.useState(false);
-  const [index, setIndex] = React.useState(0);
+  // const [loading, setloading] = React.useState(false);
+  // const [index, setIndex] = React.useState(0);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatch = useDispatch();
-  const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const dispatch = useDispatch();
+  // const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
 
   const handleClickItem = (
     event: any,
@@ -82,12 +81,12 @@ const AppliedPostedJob: React.FC = () => {
 
   const getAppliedPostedJobs = async () => {
     try {
-      setloading(true);
+      // setloading(true);
       const result = await applitedPostedApi.getAllApplitedPostedApi(0);
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
         setTimeout(() => {
-          setloading(false);
+          // setloading(false);
         }, 1000);
         setAppliedPostedJob(result.data);
       }

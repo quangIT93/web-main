@@ -1,7 +1,7 @@
 import React from 'react';
 // import Tabs from '@mui/material/Tabs'
 // import Tab from '@mui/material/Tab'
-import { Radio, Tabs } from 'antd';
+
 import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -25,10 +25,10 @@ import { useSearchParams } from 'react-router-dom';
 import { Space } from 'antd';
 
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
-import { RootState } from '../../../store/reducer';
+// import { RootState } from '../../../store/reducer';
 
 import './style.scss';
 
@@ -46,9 +46,9 @@ interface PropsThemesType {
 const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   const [value, setValue] = React.useState<Number>(0);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [index, setIndex] = React.useState(0);
+  // const [index, setIndex] = React.useState(0);
 
-  const [addressIdCookie, setAddressIdCookie] = React.useState(0);
+  // const [addressIdCookie, setAddressIdCookie] = React.useState(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
@@ -56,31 +56,31 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   // get post by theme id when click theme item
 
   // Set the cookie
-  function setCookie(name: string, value: string, days: number) {
-    let expires = '';
-    if (days) {
-      let date = new Date();
-      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-      expires = '; expires=' + date.toUTCString();
-    }
-    document.cookie = name + '=' + (value || '') + expires + '; path=/';
-  }
+  // function setCookie(name: string, value: string, days: number) {
+  //   let expires = '';
+  //   if (days) {
+  //     let date = new Date();
+  //     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  //     expires = '; expires=' + date.toUTCString();
+  //   }
+  //   document.cookie = name + '=' + (value || '') + expires + '; path=/';
+  // }
 
   // Get the cookie
-  function getCookie(name: string): string | null {
-    let nameEQ = name + '=';
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1, c.length);
-      }
-      if (c.indexOf(nameEQ) == 0) {
-        return c.substring(nameEQ.length, c.length);
-      }
-    }
-    return null;
-  }
+  // function getCookie(name: string): string | null {
+  //   let nameEQ = name + '=';
+  //   let ca = document.cookie.split(';');
+  //   for (let i = 0; i < ca.length; i++) {
+  //     let c = ca[i];
+  //     while (c.charAt(0) == ' ') {
+  //       c = c.substring(1, c.length);
+  //     }
+  //     if (c.indexOf(nameEQ) == 0) {
+  //       return c.substring(nameEQ.length, c.length);
+  //     }
+  //   }
+  //   return null;
+  // }
 
   const handleChange = async (
     event: React.SyntheticEvent,
@@ -88,13 +88,13 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   ) => {
     try {
       setValue(newValue);
-      setIndex(newValue);
+      // setIndex(newValue);
       setOpenBackdrop(!openBackdrop);
       const categoryId = searchParams.get('categories-id');
       if (categoryId) {
         setSearchParams({
           'theme-id': `${newValue}`,
-          'categories-id': `${Number(categoryId) == 1 ? 'all' : categoryId}`,
+          'categories-id': `${Number(categoryId) === 1 ? 'all' : categoryId}`,
         });
       } else {
         setSearchParams({ 'theme-id': `${newValue}` });
@@ -138,7 +138,8 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   React.useEffect(() => {
     getPostNewestByThemeId();
     setValue(Number(searchParams.get('theme-id')));
-  }, [searchParams.get('theme-id')]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   // console.log(index);
 

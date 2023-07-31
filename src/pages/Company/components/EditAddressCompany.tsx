@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -6,15 +6,15 @@ import TextField from '@mui/material/TextField';
 // api
 import locationApi from '../../../api/locationApi';
 
-import { StringArraySupportOption } from 'prettier';
+// import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
   fontWeight: 700,
   color: '#000000',
 };
 
 interface IEditPostAddress {
-  setDataCompany: any
-  dataCompany: any
+  setDataCompany: any;
+  dataCompany: any;
 }
 
 const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
@@ -33,16 +33,17 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   // console.log("selectedDistrict", selectedDistrict);
   // console.log("selectedWard", selectedWard);
 
-
   useEffect(() => {
     if (dataProvinces && !selectedProvince) {
       setSelectedProvince(
         dataProvinces?.find(
           (dataProvince: any) =>
-            dataProvince?.full_name === dataCompany?.companyLocation?.district?.province?.fullName,
+            dataProvince?.full_name ===
+            dataCompany?.companyLocation?.district?.province?.fullName,
         ),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataProvinces]);
 
   useEffect(() => {
@@ -50,21 +51,24 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       setSelectedDistrict(
         dataDistricts?.find(
           (dataDistrict: any) =>
-            dataDistrict?.full_name === dataCompany?.companyLocation?.district?.fullName,
+            dataDistrict?.full_name ===
+            dataCompany?.companyLocation?.district?.fullName,
         ),
       );
     }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataDistricts]);
 
   useEffect(() => {
     if (dataWards && !selectedWard) {
       setSelectedWard(
         dataWards?.find(
-          (dataWard: any) => dataWard?.full_name === dataCompany?.companyLocation?.fullName,
+          (dataWard: any) =>
+            dataWard?.full_name === dataCompany?.companyLocation?.fullName,
         ),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataWards]);
 
   const getAllProvinces = async () => {
@@ -82,8 +86,10 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   // get All locations by location id
   const getDataDistrict = async () => {
     try {
-
-      if (dataCompany?.companyLocation?.district?.province?.id && dataDistricts === null) {
+      if (
+        dataCompany?.companyLocation?.district?.province?.id &&
+        dataDistricts === null
+      ) {
         const districts = await locationApi.getDistrictsById(
           dataCompany?.companyLocation?.district?.province?.id,
         );
@@ -143,11 +149,13 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   React.useEffect(() => {
     getDataDistrict();
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProvince]);
 
   React.useEffect(() => {
     getDataWard();
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDistrict]);
 
   const handleProvinceChange = (event: any, value: any) => {

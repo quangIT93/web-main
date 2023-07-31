@@ -1,29 +1,29 @@
-import React, { useState, memo } from 'react'
-import { EditorState, convertToRaw } from 'draft-js'
-import { Editor } from 'react-draft-wysiwyg'
-import draftToHtml from 'draftjs-to-html'
+import React, { useState, memo } from 'react';
+import { EditorState, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import draftToHtml from 'draftjs-to-html';
 
-import './style.scss'
+import './style.scss';
 
 const EditText = () => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const onEditorStateChange = (newEditorState: any) => {
-    setEditorState(newEditorState)
-  }
+    setEditorState(newEditorState);
+  };
 
   const convertToHtml = () => {
-    const contentState = editorState.getCurrentContent()
-    const html = draftToHtml(convertToRaw(contentState))
-    return html
-  }
+    const contentState = editorState.getCurrentContent();
+    const html = draftToHtml(convertToRaw(contentState));
+    return html;
+  };
 
   const handleTextareaChange = (e: any) => {
-    const html = e.target.value
+    // const html = e.target.value;
     // console.log('html', html)
     // Convert HTML to editor content state if needed
     // Implement your logic here
-  }
+  };
 
   return (
     <div>
@@ -39,7 +39,7 @@ const EditText = () => {
         style={{ width: '100%', height: '200px' }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default memo(EditText)
+export default memo(EditText);

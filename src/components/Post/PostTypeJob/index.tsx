@@ -36,6 +36,8 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTypeJob(Number(e.target.value));
   };
+  console.log('typeJob', typeJob);
+  console.log('jobTypes', jobTypes);
 
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Box } from '@mui/material';
 
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import { Input } from 'antd';
 
 interface IPhoneNumber {
@@ -52,11 +52,11 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
     color: '#000000',
   };
 
-  const handleChangeNumber = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setPhoneNumber(e.target.value.replace('d', ''));
-  };
+  // const handleChangeNumber = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  // ) => {
+  //   setPhoneNumber(e.target.value.replace('d', ''));
+  // };
 
   return (
     <Box sx={{ marginTop: '24px' }}>

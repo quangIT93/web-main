@@ -118,8 +118,22 @@ const ModalPost: React.FC<IModalPost> = (props) => {
           </div>
           <div
             className="div-img-footer"
-            style={{ display: 'flex', justifyContent: 'space-around' }}
+            style={{ display: 'flex', justifyContent: 'space-around', gap: '8px' }}
           >
+            <Button
+              onClick={() => { window.open(`/history?post=2`, '_parent') }}
+              className="btn-apply"
+              type={'primary'}
+              style={{
+                width: 320,
+                marginTop: 10,
+                height: 40,
+                fontWeight: 'bold',
+                backgroundColor: 'rgb(189, 49, 49)',
+              }}
+            >
+              Đến trang lịch sử
+            </Button>
             <Button
               onClick={onclick}
               className="btn-apply"

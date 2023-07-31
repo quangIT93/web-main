@@ -137,6 +137,18 @@ const Company = () => {
 
     console.log("dataCompany api: ", dataCompany);
 
+    const validURL = (str: string) => {
+        var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+        return !!pattern.test(str);
+
+    }
+
+
     // valid values form data
     const validValue = () => {
         if (dataCompany?.logoPath === '') {
@@ -163,9 +175,9 @@ const Company = () => {
                 checkForm: false,
             };
         }
-        if (dataCompany?.address === '') {
+        if (dataCompany?.address === '' || dataCompany?.address.length <= 10) {
             return {
-                message: 'Vui lòng nhập địa chỉ',
+                message: 'Địa chỉ phải dài hơn 10 ký tự',
                 checkForm: false,
             };
         }
@@ -195,6 +207,12 @@ const Company = () => {
         if (dataCompany?.website === '') {
             return {
                 message: 'Vui lòng nhập website công ty',
+                checkForm: false,
+            };
+        }
+        if (validURL(dataCompany?.website) == false) {
+            return {
+                message: 'Định dạng website không chính xác',
                 checkForm: false,
             };
         }

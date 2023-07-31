@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
+import { Box, TextField, Modal, Typography } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from 'moment';
-import Autocomplete from '@mui/material/Autocomplete';
+// import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import { CloseOutlined } from '@ant-design/icons';
 
@@ -33,15 +33,15 @@ const styleChildBox = {
   marginBottom: '12px',
 };
 
-interface IEducation {
-  id?: number | null;
-  company_name?: string;
-  major?: string;
-  start_date?: number;
-  end_date?: number;
-  extra_information?: string;
-  title?: string;
-}
+// interface IEducation {
+//   id?: number | null;
+//   company_name?: string;
+//   major?: string;
+//   start_date?: number;
+//   end_date?: number;
+//   extra_information?: string;
+//   title?: string;
+// }
 
 interface IModalProfileEducationUpdate {
   openModalEducationUpdate: boolean;
@@ -66,7 +66,6 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   const {
     openModalEducationUpdate,
     setOpenModalEducationUpdate,
-    typeItem,
     educationId,
     educationValue,
   } = props;

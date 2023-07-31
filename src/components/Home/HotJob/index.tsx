@@ -1,13 +1,13 @@
 import React from 'react';
 // import Tabs from '@mui/material/Tabs'
 // import Tab from '@mui/material/Tab'
-import { Radio, Tabs } from 'antd';
+// import { Radio, Tabs } from 'antd';
 import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 // import api
-import postApi from 'api/postApi';
+// import postApi from 'api/postApi';
 import hotJobApi from 'api/hotJobApi';
 
 // Import Swiper
@@ -21,41 +21,36 @@ import 'swiper/css/navigation';
 import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
-import { Space } from 'antd';
+// import { Space } from 'antd';
 
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../store/index';
-import { RootState } from '../../../store/reducer';
+// import { useDispatch } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { actionCreators } from '../../../store/index';
+// import { RootState } from '../../../store/reducer';
 
 import { FireIcon, BagIcon } from '#components/Icons';
 
-import { dataImageHotJob } from './dataImagehotJob';
+// import { dataImageHotJob } from './dataImagehotJob';
 
 import './style.scss';
 
-interface ItemTheme {
-  id: number;
-  title: string;
-  img: string;
-  author: string;
-}
+// interface ItemTheme {
+//   id: number;
+//   title: string;
+//   img: string;
+//   author: string;
+// }
 
 const HotJob: React.FC = () => {
-  const [value, setValue] = React.useState<Number>(0);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [index, setIndex] = React.useState(0);
-  const [listTheme, setListTheme] = React.useState<ItemTheme[]>([]);
+
   const [hotjob, setHotJob] = React.useState<any>([]);
 
-  const [addressIdCookie, setAddressIdCookie] = React.useState(0);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatch = useDispatch();
-  const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
+  // const dispatch = useDispatch();
+  // const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
 
   const handleClickItem = (
     event: any,

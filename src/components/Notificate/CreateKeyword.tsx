@@ -20,11 +20,11 @@ const CreateKeyword = () => {
 
   // const [valueDistrict, setValueDistrict] = useState<string>('');
 
-  const sharedProps = {
-    style: { width: '100%' },
-    defaultValue: 'Ant Design love you!',
-    // ref: inputRef,
-  };
+  // const sharedProps = {
+  //   style: { width: '100%' },
+  //   defaultValue: 'Ant Design love you!',
+  //   // ref: inputRef,
+  // };
   // const allLocation = async () => {
   //   try {
   //     const allLocation = await locationApi.getAllLocation();

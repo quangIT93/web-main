@@ -9,6 +9,9 @@ import locationApi from '../../../api/locationApi';
 interface IPostAddress {
   setWardId: React.Dispatch<React.SetStateAction<any>>;
   setAddress: React.Dispatch<React.SetStateAction<string>>;
+  setFillProvince: React.Dispatch<React.SetStateAction<any>>;
+  setFillDistrict: React.Dispatch<React.SetStateAction<any>>;
+  setFillWardId: React.Dispatch<React.SetStateAction<any>>;
   address: string;
   wardId: string;
   fillWardId: any;
@@ -25,6 +28,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     fillWardId,
     fillProvince,
     fillDistrict,
+    setFillProvince,
+    setFillDistrict,
+    setFillWardId,
   } = props;
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
@@ -112,21 +118,19 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   }, [selectedDistrict]);
 
   const handleProvinceChange = (event: any, value: any) => {
-    console.log('province', value);
     setSelectedDistrict(null);
     setSelectedWard(null);
     setSelectedProvince(value);
     setDataWard([]);
+    setFillWardId(null);
+    setFillDistrict(null);
   };
 
   const handleDistrictChange = (event: any, value: any) => {
-    console.log('district', value);
-
     setSelectedDistrict(value);
   };
 
   const handleChangeWardId = (e: any, value: any) => {
-    console.log('value', value);
     setSelectedWard(value);
     setWardId(value.id);
   };
@@ -194,7 +198,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           <Autocomplete
             options={dataWard ? dataWard : []}
             getOptionLabel={(option: any) => option?.full_name || ''}
-            value={selectedWard || fillWardId || null}
+            value={fillWardId || selectedWard || null}
             onChange={handleChangeWardId}
             disableClearable
             renderInput={(params) => (

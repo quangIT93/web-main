@@ -2,9 +2,9 @@ import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import { Skeleton } from 'antd';
-import { message, Switch } from 'antd';
+import { message } from 'antd';
 // import component
 // @ts-ignore
 import { Navbar } from '#components';
@@ -111,6 +111,8 @@ const EditPosted = () => {
 
   const [loadingNotFound, setLoadingNotFound] = React.useState(false);
 
+  const [changePage, setChangePage] = React.useState(false);
+
   const postId = parseInt(searchParams.get('postId') ?? '');
 
   useEffect(() => {
@@ -151,8 +153,6 @@ const EditPosted = () => {
     }
   }, [dataPostById]);
 
-  console.log('dataa', dataPostById);
-
   const [messageApi, contextHolder] = message.useMessage();
   const memoizedEditDataPosted = React.useMemo(
     () => editDataPosted,
@@ -162,15 +162,22 @@ const EditPosted = () => {
   const getDataPosted = async () => {
     try {
       const result = await postApi.getPostbyId(postId);
-      if (result) {
-        dataPostAccount?.map((value: any) => {
-          if (value.post_id === postId) {
-            setDataPostById(result.data);
-          }
-        });
+      if (
+        result &&
+        dataPostAccount.find((item: any) => item.post_id === postId)
+      ) {
+        // dataPostAccount.includes(value.post_id === postId)
+
+        setDataPostById(result.data);
+        setChangePage(false);
+
+        // return [];
+      } else {
+        setChangePage(true);
       }
     } catch (error) {
       console.error(error);
+      window.open('/', 'self');
     }
   };
 
@@ -188,6 +195,7 @@ const EditPosted = () => {
         }, 3000);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPostAccount]);
 
   const getAllPostAccount = async () => {
@@ -386,7 +394,9 @@ const EditPosted = () => {
     }
   };
 
-  if (dataPostById) {
+  console.log('editData', editDataPosted);
+
+  if (!changePage) {
     return (
       <div className="edit-posted">
         {contextHolder}
@@ -497,18 +507,19 @@ const EditPosted = () => {
     );
   } else {
     return (
-      <>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loadingNotFound} active>
+      <div className="edit-posted">
+        <Navbar />
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loadingNotFound}>
           <NotFound />
         </Skeleton>
-      </>
+      </div>
     );
   }
 };

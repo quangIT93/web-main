@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -8,18 +8,7 @@ import './style.scss';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ImageListItem from '@mui/material/ImageListItem';
-
-//ANT
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
@@ -35,9 +24,9 @@ import { Space, Tooltip } from 'antd';
 import moment from 'moment';
 import bookMarkApi from 'api/bookMarkApi';
 
-import HomeValueContextProvider, {
-  HomeValueContext,
-} from 'context/HomeValueContextProvider';
+// import HomeValueContextProvider, {
+//   HomeValueContext,
+// } from 'context/HomeValueContextProvider';
 
 interface IitemNewJob {
   item: {
@@ -68,13 +57,13 @@ interface IitemNewJob {
 }
 
 const JobCardHistory: React.FC<IitemNewJob> = (props) => {
-  const {
-    setOpenNotificate,
-    openNotificate,
-  }: {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-  } = React.useContext(HomeValueContext);
+  // const {
+  //   setOpenNotificate,
+  //   openNotificate,
+  // }: {
+  //   setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+  //   openNotificate: boolean;
+  // } = React.useContext(HomeValueContext);
   const dispatch = useDispatch();
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -191,7 +180,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     overflow: 'hidden',
                     marginLeft: '4px',
                     fontSize: '14px',
-                    fontWeight: '400'
+                    fontWeight: '400',
                   }}
                 >
                   {`${props.item.district}, ${props.item.province}`}
@@ -215,7 +204,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     overflow: 'hidden',
                     marginLeft: '4px',
                     fontSize: '14px',
-                    fontWeight: '400'
+                    fontWeight: '400',
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
@@ -235,7 +224,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     color: '#AAAAAA',
                     fontSize: 14,
                     fontStyle: 'italic',
-                    fontWeight: '400'
+                    fontWeight: '400',
                   }}
                 >
                   {props.item.created_at_text}
@@ -255,7 +244,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 color: '#001424',
                 fontSize: 14,
                 fontStyle: 'italic',
-                fontWeight: '400'
+                fontWeight: '400',
               }}
             >
               Đã đăng vào:{' '}
@@ -324,7 +313,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               onClick={async (e) => {
                 try {
                   e.stopPropagation();
-                  console.log("props.item ", props.item);
+                  console.log('props.item ', props.item);
 
                   if (props.item.bookmarked) {
                     const result = await bookMarkApi.deleteBookMark(

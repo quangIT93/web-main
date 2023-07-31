@@ -41,7 +41,6 @@ import './style.scss';
 import postApi from 'api/postApi';
 import siteApi from 'api/siteApi';
 import { message } from 'antd';
-import any from 'react/jsx-runtime';
 
 // redux
 // import { RootState } from 'store';
@@ -203,12 +202,14 @@ const Post: React.FC = () => {
   });
   const [fillDistrict, setFillDistrict] = React.useState<any>('');
   const [fillProvince, setFillProvince] = React.useState<any>('');
+  const [fillCate, setFillCate] = useState<any>([]);
+
+  const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
 
   // submit
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
   ) => {
-    console.log('data', startDate);
     e.preventDefault();
     const formData = new FormData();
     formData.append('title', titleJob);
@@ -419,10 +420,15 @@ const Post: React.FC = () => {
               wardId={wardId}
               fillProvince={fillProvince}
               fillDistrict={fillDistrict}
+              setFillDistrict={setFillDistrict}
+              setFillProvince={setFillProvince}
+              setFillWardId={setFillWardId}
             />
             <PostImage
               selectedFiles={selectedFiles}
               setSelectedFiles={setSelectedFiles}
+              setSelectedImages={setSelectedImages}
+              selectedImages={selectedImages}
             />
             <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob} />
             <PostPeriodDate
@@ -455,6 +461,8 @@ const Post: React.FC = () => {
             <PostCategoryId
               setCategoriesId={setCategoriesId}
               categoriesId={categoriesId}
+              fillCate={fillCate}
+              setFillCate={setFillCate}
             />
 
             <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
@@ -524,6 +532,11 @@ const Post: React.FC = () => {
           setSalaryMax={setSalaryMax}
           setDescription={setDescription}
           setWardId={setWardId}
+          setCategoriesId={setCategoriesId}
+          setFillCate={setFillCate}
+          setSelectedImages={setSelectedImages}
+          setSalaryType={setSalaryType}
+          setMoneyType={setMoneyType}
         />
       </div>
     );
