@@ -109,17 +109,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean;
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-    search: boolean;
-  } = useContext(HomeValueContext);
+    {
+      openCollapseFilter: boolean;
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+      search: boolean;
+    } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -802,6 +802,9 @@ const Navbar: React.FC = () => {
                   backgroundColor: '#0D99FF',
                   minWidth: '100px',
                   minHeight: '100px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
                 icon={<UserOutlined style={{ fontSize: 30 }} />}
                 size={50}
@@ -821,8 +824,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.locations.length > 0
                       ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                        return `${location.district} , `;
+                      })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -835,8 +838,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.categories.length > 0
                       ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                        return `${profile.parent_category} / ${profile.child_category}, `;
+                      })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -852,9 +855,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -956,9 +959,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -981,9 +984,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1074,9 +1076,8 @@ const Navbar: React.FC = () => {
                 ref={bellRef}
               >
                 <div
-                  className={`button-download ${
-                    isDownloading ? 'stopAnimation' : ''
-                  }`}
+                  className={`button-download ${isDownloading ? 'stopAnimation' : ''
+                    }`}
                 >
                   <DownloadIcon />
                 </div>

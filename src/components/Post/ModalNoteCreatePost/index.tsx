@@ -94,7 +94,7 @@ const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
               </li>
               <li>
                 <CheckedBlueIcon />
-                Bạn có thể đăng tối đa 3 bài viết một ngày.
+                Bạn có thể đăng tối đa 1 bài viết một ngày.
               </li>
             </ul>
           </div>

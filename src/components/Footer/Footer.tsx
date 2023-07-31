@@ -169,7 +169,7 @@ const Footer: React.FC = () => {
 
             <Link to="/policy#terms-of-use"> Điều khoản sử dụng </Link>
 
-            <h4>Về HiJob</h4>
+            <h4>Liên kết</h4>
             <div className="link-facebook">
               <FaceBookIcon />
               <Link to="https://www.facebook.com/hijobOfficial" target="_blank">Facebook</Link>

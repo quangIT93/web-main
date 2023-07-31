@@ -85,7 +85,7 @@ const JobCard: React.FC<Iprops> = (props) => {
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`, '_parent');
+    window.open(`/post-detail?post-id=${id}`, '_blank');
   };
 
   const handleImageError = () => {
