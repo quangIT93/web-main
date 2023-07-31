@@ -1,60 +1,28 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 //import scss
 
 //MUI
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 import ImageListItem from '@mui/material/ImageListItem';
 
 import { BackIcon } from '#components/Icons';
 
-//ANT
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
+import { LocationHomeIcon, ClockIcon, BagHomeIcon } from '#components/Icons';
 
-import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
-
-import {
-  LocationHomeIcon,
-  ClockIcon,
-  BagHomeIcon,
-  DolaIcon,
-  SaveIconOutline,
-  SaveIconFill,
-} from '#components/Icons';
-
-import { Space, Button, Tooltip } from 'antd';
+import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
-import bookMarkApi from 'api/bookMarkApi';
-
-import HomeValueContextProvider, {
-  HomeValueContext,
-} from 'context/HomeValueContextProvider';
-
-import ShowNotificativeSave from '../../ShowNotificativeSave';
+// import bookMarkApi from 'api/bookMarkApi';
 
 const AppliedPostedJobCard: React.FC<any> = (props) => {
-  const {
-    setOpenNotificate,
-    openNotificate,
-  }: {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-  } = React.useContext(HomeValueContext);
-  const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const dispatch = useDispatch();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
-  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  // const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleClickItem = (
     e: React.MouseEvent<HTMLDivElement>,

@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -15,9 +15,9 @@ import { useDispatch } from 'react-redux';
 
 import {
   getProfile,
-  resetProfileState,
+  // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
-const { SHOW_CHILD, SHOW_PARENT, SHOW_ALL, TreeNode } = TreeSelect;
+const { SHOW_PARENT } = TreeSelect;
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -53,9 +53,9 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     categories?.map((v, i) => v.child_category_id.toString()),
   );
   const [dataCategories, setDataCategories] = React.useState<any>(null);
-  const [originalValue, setOriginalValue] = useState<string[]>([]);
-  const [checkClick, setCheckList] = React.useState<boolean>(false);
-  const [childValue, setChildValue] = React.useState<string[]>([]);
+  // const [originalValue, setOriginalValue] = useState<string[]>([]);
+  // const [checkClick, setCheckList] = React.useState<boolean>(false);
+  // const [childValue, setChildValue] = React.useState<string[]>([]);
   const [treeData, setTransformedData] = React.useState<any>(null);
   const dispatch = useDispatch();
   const handleClose = () => setOpenModalCareerObjective(false);
@@ -74,9 +74,9 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   React.useEffect(() => {
     getCategories();
   }, []);
-  const onChange = (newValue: string[] | any) => {
-    setValue(newValue);
-  };
+  // const onChange = (newValue: string[] | any) => {
+  //   setValue(newValue);
+  // };
 
   React.useEffect(() => {
     if (dataCategories) {
@@ -101,9 +101,9 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
 
   React.useEffect(() => {
     setValue(categories?.map((v, i) => v.child_category_id.toString()) || []);
-    setOriginalValue(
-      categories?.map((v, i) => v.child_category_id.toString()) || [],
-    );
+    // setOriginalValue(
+    //   categories?.map((v, i) => v.child_category_id.toString()) || [],
+    // );
   }, [categories]);
 
   const handleSubmit = async () => {

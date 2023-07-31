@@ -158,7 +158,7 @@ const NewJobs: React.FC = () => {
   //   number | null
   // >(null);
 
-  const [open, setOpen] = React.useState<any>([]);
+  // const [open, setOpen] = React.useState<any>([]);
   // const locations: any = [];
 
   // const [location, setLocation] = React.useState<any>(
@@ -296,6 +296,7 @@ const NewJobs: React.FC = () => {
     // getAllLocations()
     // delete param when back to page
     console.log('search parameters: ', Number(searchParams.get('job-type')));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCategories = async () => {
@@ -467,9 +468,9 @@ const NewJobs: React.FC = () => {
   };
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   const onChangeLocation = (value: any) => {
     // Xử lý giá trị thay đổi
@@ -549,13 +550,14 @@ const NewJobs: React.FC = () => {
 
   useEffect(() => {
     fetchDataProfileUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (dataAllLocation && dataAllLocation.length > 0) {
-      setOpen(Array(dataAllLocation.length).fill(false));
-    }
-  }, [dataAllLocation]);
+  // useEffect(() => {
+  //   if (dataAllLocation && dataAllLocation.length > 0) {
+  //     setOpen(Array(dataAllLocation.length).fill(false));
+  //   }
+  // }, [dataAllLocation]);
 
   // const handleClickProvince = (event: any, index: number) => {
   //   event.stopPropagation();
@@ -672,6 +674,7 @@ const NewJobs: React.FC = () => {
 
   React.useEffect(() => {
     getPostSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataProfile, search]);
   // title
 
@@ -707,7 +710,7 @@ const NewJobs: React.FC = () => {
     document.title = dataAllLocation ? titleFirebase : 'web-search';
   });
 
-  const [disable, setDisable] = React.useState(false);
+  // const [disable, setDisable] = React.useState(false);
 
   useEffect(() => {
     if (!openModal) {

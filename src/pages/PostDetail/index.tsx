@@ -1237,7 +1237,7 @@ const Detail: React.FC = () => {
                   <div className="item">
                     {postNewest?.data?.posts.map(
                       (item: PostNewest, index: null | number) => (
-                        <ItemSuggest item={item} />
+                        <ItemSuggest item={item} key={index} />
                       ),
                     )}
                   </div>
@@ -1290,11 +1290,12 @@ const Detail: React.FC = () => {
                 </div>
               </div>
               <div className="items-share">
-                {itemsShare.map((itemShare) => (
+                {itemsShare.map((itemShare: any, index: number) => (
                   <div
                     // to={`/post-detail?post-id=${post?.data.id}`}
                     className="item-share"
                     onClick={() => handleClickShareSource(itemShare.nameShare)}
+                    key={index}
                   >
                     {itemShare.icon}
                     <span style={{ marginLeft: '4px' }}>

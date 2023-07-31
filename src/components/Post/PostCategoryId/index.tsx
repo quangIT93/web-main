@@ -1,73 +1,31 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { Cascader } from 'antd';
 import categoriesApi from '../../../api/categoriesApi';
 import './style.scss';
 
-interface Option {
-  value: string | number;
-  label: string;
-  children?: Option[];
-  disableCheckbox?: boolean;
-}
-
 const { SHOW_CHILD } = Cascader;
-
-const options: Option[] = [
-  {
-    label: 'Light',
-    value: 'light',
-    children: new Array(20).fill(null).map((_, index) => ({
-      label: `Number ${index}`,
-      value: index,
-      disableCheckbox: true,
-    })),
-  },
-  {
-    label: 'Bamboo',
-    value: 'bamboo',
-    children: [
-      {
-        label: 'Little',
-        value: 'little',
-        children: [
-          {
-            label: 'Toy Fish',
-            value: 'fish',
-            disableCheckbox: true,
-          },
-          {
-            label: 'Toy Cards',
-            value: 'cards',
-          },
-          {
-            label: 'Toy Bird',
-            value: 'bird',
-          },
-        ],
-      },
-    ],
-  },
-];
 
 interface ICategories {
   setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>;
+  setFillCate: React.Dispatch<React.SetStateAction<string[]>>;
   categoriesId: string[];
+  fillCate: string[];
 }
 
 const CheckboxesTags: React.FC<ICategories> = (props) => {
-  const { setCategoriesId, categoriesId } = props;
+  const { setCategoriesId, categoriesId, fillCate, setFillCate } = props;
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
 
-  const dropdownMenuStyle = { maxHeight: '200px', overflowY: 'auto' };
+  // const dropdownMenuStyle = { maxHeight: '200px', overflowY: 'auto' };
 
   const onChange = (value: any) => {
     setDisable(false);
+    setFillCate(value);
     const secondValues = value?.map((item: any) => item[1]);
-
     if (secondValues.length <= 2) {
       setCategoriesId(secondValues);
     }
@@ -91,6 +49,10 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     getCategories();
   }, []);
 
+  // React.useEffect(() => {
+  //   onChange(categoriesId);
+  // }, [setDataCategories]);
+
   return (
     <Box
       sx={{
@@ -109,6 +71,8 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         Danh mục nghề <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
+        defaultValue={fillCate}
+        value={fillCate}
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
@@ -136,7 +100,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
             : []
         }
         // dropdownStyle={dropdownMenuStyle}
-        dropdownClassName="post-category-drop"
+        popupClassName="post-category-drop"
         onChange={onChange}
         multiple
         maxTagCount="responsive"

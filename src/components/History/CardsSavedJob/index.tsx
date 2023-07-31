@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import moment, { Moment } from 'moment';
+// import moment, { Moment } from 'moment';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import { Space, Tooltip, message, Button, Result } from 'antd';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import ImageListItem from '@mui/material/ImageListItem';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 import { Box, Typography, MenuItem, TextField } from '@mui/material';
-import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons';
+
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import './style.scss';
 
-import { Skeleton } from 'antd';
-
-import { SaveIconFill } from '#components/Icons';
+import { message, Button } from 'antd';
 
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -25,7 +19,7 @@ import sortData from 'utils/SortDataHistory/sortData';
 import historyBookmark from 'api/historyBookmark';
 import bookMarkApi from 'api/bookMarkApi';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
@@ -36,18 +30,18 @@ interface ICardsApplied {
 }
 
 const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
-  const { activeChild } = props;
+  // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataBookmarks, setDataBookmarks] = useState<any>(null);
   const [newOld, setnewOld] = React.useState('Mới nhất');
-  const [count, setCount] = useState(5);
+  // const [count, setCount] = useState(5);
   const [uploading, setUploading] = useState(false);
   const [lastPostId, setLastPostId] = useState(0);
   const dispatch = useDispatch();
 
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
-  const [clicked, setClicked] = useState(false);
+  // const [clicked, setClicked] = useState(false);
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
@@ -59,6 +53,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
 
   useEffect(() => {
     getAllPostToCheck();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getAllPosted = async (newCount: number) => {
@@ -88,6 +83,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
     return () => {
       isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataBookmarks?.length]);
 
   const handleChange = (event: any) => {
@@ -111,7 +107,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
         // }
 
         setUploading(false);
-        if (result.data.length == 0) {
+        if (result.data.length === 0) {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
@@ -131,12 +127,12 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   };
 
   // click card
-  const handleClickCard = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    bookmarkId: number,
-  ) => {
-    window.open(`/post-detail?post-id=${bookmarkId}`, '_parent');
-  };
+  // const handleClickCard = (
+  //   e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  //   bookmarkId: number,
+  // ) => {
+  //   window.open(`/post-detail?post-id=${bookmarkId}`, '_parent');
+  // };
 
   const handleDeleteBookmark = async (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,

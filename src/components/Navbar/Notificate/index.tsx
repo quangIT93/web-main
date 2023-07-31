@@ -32,39 +32,39 @@ import { DeleteKeywordIcon } from '#components/Icons';
 //   FormControlLabel,
 // } from '@mui/material';
 
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+// import ExpandLess from '@mui/icons-material/ExpandLess';
+// import ExpandMore from '@mui/icons-material/ExpandMore';
 // import Api
 import notificationApi from 'api/notification';
 import notificationKeywordApi from 'api/notificationKeyword';
-import locationApi from '../../../api/locationApi';
+// import locationApi from '../../../api/locationApi';
 
 import {
-  LocationIcon,
+  // LocationIcon,
   CateIcon,
-  CreateKeywordIcon,
+  // CreateKeywordIcon,
   LocationHomeIcon,
 } from '#components/Icons';
 
 import './style.scss';
 // import fake data notificates
-import { notificates } from './data';
+// import { notificates } from './data';
 
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
 
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+// const MenuProps = {
+//   PaperProps: {
+//     style: {
+//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+//       width: 250,
+//     },
+//   },
+// };
 
 const Notificate = () => {
   const {
@@ -122,10 +122,6 @@ const Notificate = () => {
     getApiNotificate();
   }, []);
 
-  console.log('Data', dataNotification);
-  console.log('Data', dataNotificationKeyword);
-  console.log('Data', typeof dataNotificationKeyword?.status?.emailStatus);
-
   const getApiNotificateKeyword = async () => {
     try {
       const result = await notificationKeywordApi.getNotificationKeyword();
@@ -172,6 +168,7 @@ const Notificate = () => {
     return () => {
       document.removeEventListener('click', handleCLoseNotificate);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClickNotiKey = (postId: number) => {

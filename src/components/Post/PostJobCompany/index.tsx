@@ -1,10 +1,10 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 
 import Typography from '@mui/material/Typography';
 
 import TextField from '@mui/material/TextField';
 
-import FormValues from '../../../pages/Post/index';
+// import FormValues from '../../../pages/Post/index';
 
 interface PropsPostCompanyJob {
   setTitleJob: React.Dispatch<React.SetStateAction<any>>;

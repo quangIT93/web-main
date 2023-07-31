@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import locationApi from '../../../api/locationApi';
 
 import './style.scss';
-import { StringArraySupportOption } from 'prettier';
+// import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
   fontWeight: 600,
   color: '#000000',
@@ -38,6 +38,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         ),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataProvinces]);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         ),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataDistricts]);
 
   useEffect(() => {
@@ -59,6 +61,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         ),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataWards]);
 
   const getAllProvinces = async () => {
@@ -135,11 +138,13 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
   React.useEffect(() => {
     getDataDistrict();
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProvince]);
 
   React.useEffect(() => {
     getDataWard();
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDistrict]);
 
   const handleProvinceChange = (event: any, value: any) => {

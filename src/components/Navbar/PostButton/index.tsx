@@ -1,15 +1,15 @@
 import React from 'react';
 import './style.scss';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 
-import { Button, Tooltip, Space } from 'antd';
+import { Button } from 'antd';
 import { FormOutlined } from '@ant-design/icons';
 
-import breakpoints from '../../../scss/breakpoints';
+// import breakpoints from '../../../scss/breakpoints';
 
-const { mobile, tablet } = breakpoints;
+// const { mobile, tablet } = breakpoints;
 
 interface Iprops {
   setOpenModalLogin: (params: any) => any;

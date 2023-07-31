@@ -34,10 +34,11 @@
       background: #ccc;
       cursor: pointer;
     }
-    .active-system,
-    .active-keyword {
+
+    // .active-system,
+    // .active-keyword {
       //   border-bottom: 2px solid #0d99ff;
-    }
+    // }
     .top-notificate_system::after,
     .top-notificate_keyword::after {
       content: '';
@@ -50,13 +51,16 @@
     }
 
     .top-notificate_system::after {
+      content: '';
       left: 0;
     }
     .top-notificate_keyword::after {
+      content: '';
       left: 50%;
     }
     .top-notificate_system.active-system::after,
     .top-notificate_keyword.active-keyword::after {
+      content: '';
       width: 50%; /* Thời gian và kiểu chuyển động */
     }
   }
@@ -179,6 +183,7 @@
         border: none;
       }
       &:last-child::after {
+        content: '';
         display: none;
       }
 

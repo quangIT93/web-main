@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
+import { Box, TextField, Modal, Typography } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from 'moment';
-import Autocomplete from '@mui/material/Autocomplete';
+// import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import { CloseOutlined } from '@ant-design/icons';
 
 // data
 import profileApi from 'api/profileApi';
-import { useDispatch } from 'react-redux';
-import {
-  getProfile,
-  resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer';
+// import { useDispatch } from 'react-redux';
+// import {
+//   getProfile,
+//   resetProfileState,
+// } from 'store/reducer/profileReducer/getProfileReducer';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -64,11 +64,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
   const {
     openModalExperienceCreate,
     setOpenModalExperienceCreate,
-    typeItem,
-    educations,
+    // typeItem,
+    // educations,
   } = props;
   // console.log('typeItem', typeItem)
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const [companyName, setCompanyName] = useState<string>('')
   // const [startDate, setStartDate] = React.useState<any>(
   //   new Date(2023, 4, 30, 0, 0).getTime()
