@@ -20,6 +20,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { CloseOutlined } from '@ant-design/icons';
 
+import { TreeSelect } from 'antd';
+
 import Collapse from '@mui/material/Collapse';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 
@@ -38,6 +40,9 @@ import {
   getProfile,
   resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
+
+const { SHOW_CHILD, SHOW_PARENT, SHOW_ALL, TreeNode } = TreeSelect;
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -73,14 +78,19 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const { openModalLocation, setOpenModalLocation, locations } = props;
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
   const [open, setOpen] = React.useState<any>([]);
+  const [treeData, setTransformedData] = React.useState<any>(null);
 
-  const [location, setLocation] = React.useState<any>(
-    locations?.map((v: any, i) => v.district),
-  );
-
-  const [locationId, setLocationId] = React.useState<any>(
+  const [value, setValue] = React.useState(
     locations?.map((v: any, i) => v.district_id),
   );
+
+  // const [location, setLocation] = React.useState<any>(
+  //   locations?.map((v: any, i) => v.district),
+  // );
+
+  // const [locationId, setLocationId] = React.useState<any>(
+  //   locations?.map((v: any, i) => v.district_id),
+  // );
 
   const dispatch = useDispatch();
   const handleClose = () => setOpenModalLocation(false);
@@ -102,7 +112,30 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     // delete param when back to page
   }, []);
 
+  React.useEffect(() => {
+    if (dataAllLocation) {
+      const transformedData = dataAllLocation.map((item: any) => {
+        return {
+          title: item?.province_name,
+          value: item?.province_id,
+          key: item?.province_id,
+          children: item.districts.map((child: any) => {
+            return {
+              title: child.district,
+              value: child.district_id,
+              key: child.district_id,
+            };
+          }),
+        };
+      });
+
+      setTransformedData(transformedData);
+    }
+  }, [dataAllLocation]);
+
   useEffect(() => {
+    setValue(locations?.map((v: any, i) => v.district_id) || []);
+
     if (dataAllLocation && dataAllLocation.length > 0) {
       setOpen(Array(dataAllLocation.length).fill(false));
     }
@@ -110,81 +143,128 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
 
   // console.log('dataAllLocation', dataAllLocation)
 
-  const handleClickProvince = (event: any, index: number) => {
-    event.stopPropagation();
-    const newOpen = open.map((value: boolean, i: number) =>
-      i === index ? !value : false,
-    );
-    setOpen(newOpen);
-  };
+  // const handleClickProvince = (event: any, index: number) => {
+  //   event.stopPropagation();
+  //   const newOpen = open.map((value: boolean, i: number) =>
+  //     i === index ? !value : false,
+  //   );
+  //   setOpen(newOpen);
+  // };
 
-  const handleClickDistrict = (value: any) => {
-    setLocation((prevValues: number[]) => {
-      if (prevValues.includes(value.district)) {
-        // Nếu giá trị đã tồn tại, xoá nó khỏi
-        const newValues = prevValues.filter((item) => item !== value.district);
-        return newValues;
-      } else {
-        // Nếu giá trị chưa tồn tại, thêm nó vào mảng
-        const newValues = [...prevValues, value.district];
-        return newValues;
-      }
-    });
+  // const handleClickDistrict = (value: any) => {
+  //   setLocation((prevValues: number[]) => {
+  //     if (prevValues.includes(value.district)) {
+  //       // Nếu giá trị đã tồn tại, xoá nó khỏi
+  //       const newValues = prevValues.filter((item) => item !== value.district);
+  //       return newValues;
+  //     } else {
+  //       // Nếu giá trị chưa tồn tại, thêm nó vào mảng
+  //       const newValues = [...prevValues, value.district];
+  //       return newValues;
+  //     }
+  //   });
 
-    setLocationId((prevValuesId: number[]) => {
-      if (prevValuesId.includes(value.district_id)) {
-        // Nếu giá trị đã tồn tại, xoá nó khỏi
-        const newValues = prevValuesId.filter(
-          (item: number) => item !== value.district_id,
-        );
-        return newValues;
-      } else {
-        // Nếu giá trị chưa tồn tại, thêm nó vào mảng
-        const newValues = [...prevValuesId, value.district_id];
-        return newValues;
-      }
-    });
-  };
+  //   setLocationId((prevValuesId: number[]) => {
+  //     if (prevValuesId.includes(value.district_id)) {
+  //       // Nếu giá trị đã tồn tại, xoá nó khỏi
+  //       const newValues = prevValuesId.filter(
+  //         (item: number) => item !== value.district_id,
+  //       );
+  //       return newValues;
+  //     } else {
+  //       // Nếu giá trị chưa tồn tại, thêm nó vào mảng
+  //       const newValues = [...prevValuesId, value.district_id];
+  //       return newValues;
+  //     }
+  //   });
+  // };
 
-  const renderOptions = () => {
-    return dataAllLocation?.map((item: any, index: number) => (
-      <div key={index}>
-        <ListItemButton onClick={(event) => handleClickProvince(event, index)}>
-          <ListItemText primary={item.province_fullName} />
-          {open[index] ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open[index]} timeout="auto" unmountOnExit>
-          {item.districts.map((v: any, i: number) => (
-            <MenuItem
-              key={i}
-              value={v.district}
-              onClick={() => handleClickDistrict(v)}
-            >
-              <Checkbox checked={location?.indexOf(v.district) > -1} />
-              <ListItemText primary={v.district} />
-            </MenuItem>
-          ))}
-        </Collapse>
-      </div>
-    ));
-  };
+  // const renderOptions = () => {
+  //   return dataAllLocation?.map((item: any, index: number) => (
+  //     <div key={index}>
+  //       <ListItemButton onClick={(event) => handleClickProvince(event, index)}>
+  //         <ListItemText primary={item.province_fullName} />
+  //         {open[index] ? <ExpandLess /> : <ExpandMore />}
+  //       </ListItemButton>
+  //       <Collapse in={open[index]} timeout="auto" unmountOnExit>
+  //         {item.districts.map((v: any, i: number) => (
+  //           <MenuItem
+  //             key={i}
+  //             value={v.district}
+  //             onClick={() => handleClickDistrict(v)}
+  //           >
+  //             <Checkbox checked={location?.indexOf(v.district) > -1} />
+  //             <ListItemText primary={v.district} />
+  //           </MenuItem>
+  //         ))}
+  //       </Collapse>
+  //     </div>
+  //   ));
+  // };
 
   const handleSubmit = async () => {
     try {
-      if (locationId.length > 3) {
-        message.warning('Chọn 3 ');
+      if (value.length > 3) {
+        message.error('Chỉ được chọn tối đa 3 khu vực ');
         return;
       }
       const result = await profileApi.updateProfileLocation(
-        // value.map((v) => parseInt(v))
-        locationId,
+        value
+        // locationId,
       );
       if (result) {
+        await dispatch(getProfile() as any);
         setOpenModalLocation(false);
       }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const renderTreeNode = (data: any) => {
+    return data?.map((node: any) => {
+      if (node.children) {
+        return {
+          ...node,
+          disableCheckbox: true,
+          selectable: true,
+          checkable: false,
+
+          // Set the value of disableCheckbox
+        };
+      }
+
+      console.log('node location', node);
+      return node.children;
+      // <TreeNode key={node.value} value={node.value} title={node.title} />
+    });
+  };
+
+  const tProps: any = {
+    // treeData,
+    treeData: renderTreeNode(treeData),
+    showCheckbox: true, // Ẩn checkbox cho tất cả các nút
+    // treeCheckStrictly: true,
+    // treeDefaultExpandAll: true,
+    // showSearch: true, // Chỉ cho phép chọn các nút lá
+    showSearch: false,
+    value,
+    treeCheckable: true,
+    onChange: (newValue: string[]) => setValue(newValue),
+    // treeCheckStrictly: true,
+    // Enable strict checking
+    // Disable the "All" checkbox at the root level
+    showCheckedStrategy: SHOW_PARENT,
+    // treeDefaultExpandAll,
+    placeholder: 'Please select',
+    style: {
+      width: '100%',
+      zIndex: '1302',
+      margin: '12px auto',
+    },
+    size: 'Giờ làm việc large',
+    treeIcon: false,
+    // dropdownRender: CustomRenderCatelory,
   };
 
   return (
@@ -218,7 +298,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
           Khu vực làm việc
         </Typography>
 
-        <FormControl sx={{ width: '100%', margin: '12px auto' }} size="small">
+        {/* <FormControl sx={{ width: '100%', margin: '12px auto' }} size="small">
           <Select
             multiple
             displayEmpty
@@ -251,7 +331,8 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
           >
             {renderOptions()}
           </Select>
-        </FormControl>
+        </FormControl> */}
+        <TreeSelect {...tProps} />
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           Lưu thông tin

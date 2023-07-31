@@ -12,6 +12,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import profileApi from 'api/profileApi';
 import categoriesApi from '../../../api/categoriesApi';
 import { useDispatch } from 'react-redux';
+import { message, Space } from 'antd';
 
 import {
   getProfile,
@@ -108,6 +109,10 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
 
   const handleSubmit = async () => {
     try {
+      if (value.length > 10) {
+        message.error('Chỉ được chọn tối đa 10 lĩnh vực quan tâm ');
+        return;
+      }
       const result = await profileApi.updateProfileCareer(
         value.map((v) => parseInt(v)),
       );

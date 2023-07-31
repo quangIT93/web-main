@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Cascader } from 'antd';
+import { Cascader, Divider } from 'antd';
 import categoriesApi from '../../../api/categoriesApi';
 import './style.scss';
 
@@ -21,6 +21,15 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   const [disable, setDisable] = React.useState<Boolean>(false);
 
   // const dropdownMenuStyle = { maxHeight: '200px', overflowY: 'auto' };
+
+  const DropdownRender = (menus: React.ReactNode) => (
+    <div style={{ width: '100%' }}>
+      {menus}
+      <Divider style={{ margin: '8px 5px' }} >
+        {disable ? 'Chỉ có thể tối đa 2 danh mục' : ''}
+      </Divider>
+    </div>
+  );
 
   const onChange = (value: any) => {
     setDisable(false);
@@ -76,29 +85,30 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
-                      }
+              value: parentCategory.parent_category_id,
+              label: parentCategory.parent_category,
+              children: parentCategory.childs.map((child: any) => {
+                var dis = false;
+                //check id child  when disable = true
+                if (disable) {
+                  dis = true;
+                  for (const elem of categoriesId) {
+                    if (elem === child.id) {
+                      dis = false;
+                      break;
                     }
                   }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                }
+                return {
+                  value: child.id,
+                  label: child.name,
+                  disabled: dis,
+                };
+              }),
+            }))
             : []
         }
+        dropdownRender={DropdownRender}
         // dropdownStyle={dropdownMenuStyle}
         popupClassName="post-category-drop"
         onChange={onChange}

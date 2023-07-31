@@ -2,4 +2,12 @@
     .ant-cascader-checkbox {
         display: none;
     }
+
+    &:has(.ant-cascader-checkbox-indeterminate) {
+        color: #0d99ff;
+    }
+
+    &:has(.ant-cascader-checkbox-checked) {
+        color: #0d99ff;
+    }
 }

@@ -115,7 +115,7 @@ const Notificate = () => {
         setIsLoading(false);
         setDataNotification(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const Notificate = () => {
         setValueApp(result.data.status.pushStatus);
         setValueMall(result.data.status.emailStatus);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -263,17 +263,15 @@ const Notificate = () => {
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
-          className={`top-notificate_system ${
-            activeSystem ? 'active-system' : ''
-          }`}
+          className={`top-notificate_system ${activeSystem ? 'active-system' : ''
+            }`}
           onClick={handleClickActiveSystem}
         >
           Thông báo
         </div>
         <div
-          className={`top-notificate_keyword ${
-            activeKeyword ? 'active-keyword' : ''
-          }`}
+          className={`top-notificate_keyword ${activeKeyword ? 'active-keyword' : ''
+            }`}
           onClick={handleClickActiveKeyword}
         >
           Từ khoá
@@ -412,10 +410,12 @@ const Notificate = () => {
                   name="app"
                   id="app"
                   value={valueApp}
+                  disabled
                   onChange={handleChangeApp}
                   checked={valueApp === 1 ? true : false}
+                  style={{ cursor: 'not-allowed' }}
                 />
-                <label htmlFor="app">App</label>
+                <label htmlFor="app" style={{ color: '#ccc' }}>App</label>
               </div>
               <div className="checkbox-keyword">
                 <input
@@ -432,11 +432,10 @@ const Notificate = () => {
             <div className="count-keyword">
               <p>
                 Bạn đã lưu trữ được:
-                <strong>{` ${
-                  dataNotificationKeyword?.keywords?.length > 0
-                    ? dataNotificationKeyword?.keywords?.length
-                    : 0
-                }/10 `}</strong>
+                <strong>{` ${dataNotificationKeyword?.keywords?.length > 0
+                  ? dataNotificationKeyword?.keywords?.length
+                  : 0
+                  }/10 `}</strong>
                 gợi ý công việc
               </p>
             </div>
@@ -444,9 +443,8 @@ const Notificate = () => {
               dataNotificationKeyword?.keywords?.map(
                 (dataKeyword: any, index: number) => (
                   <div
-                    className={`wrap-content_keyword ${
-                      idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
-                    }`}
+                    className={`wrap-content_keyword ${idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
+                      }`}
                     key={index}
                     onClick={() => handleClickItemKeyword(dataKeyword?.id)}
                   >

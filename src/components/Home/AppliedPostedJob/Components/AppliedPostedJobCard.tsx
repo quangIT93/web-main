@@ -265,10 +265,10 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 props.item.application_status === 1
                   ? 'rgba(220, 220, 220, 1)'
                   : props.item.application_status === 2
-                  ? 'rgba(92, 178, 101, 1)'
-                  : props.item.application_status === 3
-                  ? 'rgba(189, 49, 49, 1)'
-                  : 'rgba(13, 153, 255, 1)',
+                    ? 'rgba(92, 178, 101, 1)'
+                    : props.item.application_status === 3
+                      ? 'rgba(189, 49, 49, 1)'
+                      : 'rgba(13, 153, 255, 1)',
               color:
                 props.item.application_status === 1
                   ? 'rgba(170, 170, 170, 1)'
@@ -280,10 +280,10 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             {props.item.application_status === 1
               ? 'Đã ứng tuyển'
               : props.item.application_status === 2
-              ? 'Đã từ chối'
-              : props.item.application_status === 3
-              ? 'Đã được duyệt'
-              : 'Đã tuyển'}
+                ? 'Đã được duyệt'
+                : props.item.application_status === 3
+                  ? 'Đã từ chối'
+                  : 'Đã tuyển'}
           </div>
           <div
             style={{ display: props.item.type === 'post' ? 'flex' : 'none' }}
