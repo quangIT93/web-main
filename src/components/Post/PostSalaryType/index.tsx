@@ -1,26 +1,26 @@
-import React, { memo } from 'react'
-import { Box, Slider } from '@mui/material'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import { Input, Space } from 'antd'
-import Typography from '@mui/material/Typography'
-import { styleLabel } from '#components/Post/CssPost'
+import React, { memo } from 'react';
+import { Box } from '@mui/material';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+// import { Input, Space } from 'antd'
+// import Typography from '@mui/material/Typography'
+import { styleLabel } from '#components/Post/CssPost';
 
 interface IPostSalaryType {
-  setMoneyType: React.Dispatch<React.SetStateAction<any>>
-  moneyType: number
-  salaryType?: number
+  setMoneyType: React.Dispatch<React.SetStateAction<any>>;
+  moneyType: number;
+  salaryType?: number;
 }
 
 const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
-  const { moneyType, setMoneyType, salaryType } = props
+  const { moneyType, setMoneyType, salaryType } = props;
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMoneyType(Number(e.target.value))
-  }
+    setMoneyType(Number(e.target.value));
+  };
 
   return (
     <Box
@@ -76,7 +76,7 @@ const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
         </RadioGroup>
       </FormControl>
     </Box>
-  )
-}
+  );
+};
 
-export default memo(PostSalaryType)
+export default memo(PostSalaryType);

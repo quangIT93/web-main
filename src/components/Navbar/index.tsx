@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 import ModalLogin from '../../components/Home/ModalLogin';
-import Skeleton from '@mui/material/Skeleton';
+// import Skeleton from '@mui/material/Skeleton';
 
 import { setCookie, getCookie } from 'cookies';
 
@@ -16,8 +16,8 @@ import { Logo } from '#components';
 import { ChatIcon, BellIcon } from '#components';
 
 import {
-  FlagVNIcon,
-  SearchIcon,
+  // FlagVNIcon,
+  // SearchIcon,
   MailInfoIcon,
   MapInfoIcon,
   BagInfoJob,
@@ -38,7 +38,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { BlackSearchIcon } from '#components/Icons';
 // import icon
-import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
+// import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 
 import {
   FormOutlined,
@@ -48,9 +48,9 @@ import {
   SyncOutlined,
   ClockCircleOutlined,
   LogoutOutlined,
-  KeyOutlined,
+  // KeyOutlined,
   LoadingOutlined,
-  CloseOutlined,
+  // CloseOutlined,
 } from '@ant-design/icons';
 
 // import component
@@ -81,14 +81,14 @@ import {
   Left,
   Right,
   Center,
-  collapseCssFilter,
+  // collapseCssFilter,
 } from './Css';
 
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
 
 import { RootState } from '../../store/reducer';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../store/index';
+// import { bindActionCreators } from 'redux';
+// import { actionCreators } from '../../store/index';
 
 // import Context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
     // setSendMessages,
   } = useContext(ChatContext);
 
-  const [showTap, setShowTap] = React.useState(false);
+  // const [showTap, setShowTap] = React.useState(false);
 
   // const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams();
@@ -159,9 +159,9 @@ const Navbar: React.FC = () => {
   const [countChat, setCountChat] = useState<number>(0);
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
-  const [isSearch, setIsSearch] = useState<boolean>(false);
+  // const [isSearch, setIsSearch] = useState<boolean>(false);
 
   useEffect(() => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
@@ -203,8 +203,8 @@ const Navbar: React.FC = () => {
   // value query
 
   const QUERY = searchParams.get('q');
-  const SALARY_TYPE = userFiltered?.salary_type;
-  const JOB_TYPE = userFiltered?.job_type;
+  // const SALARY_TYPE = userFiltered?.salary_type;
+  // const JOB_TYPE = userFiltered?.job_type;
   const DIS_IDS = userFiltered?.list_dis;
   // :
   // searchParams
@@ -232,9 +232,9 @@ const Navbar: React.FC = () => {
 
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
   // handle show tap on screen mobile
-  const handleTap = () => {
-    setShowTap(!showTap);
-  };
+  // const handleTap = () => {
+  //   setShowTap(!showTap);
+  // };
 
   //  MOdalFilter
   // const [openModalFilter, setOpenModalFilter] = React.useState(false)
@@ -248,12 +248,12 @@ const Navbar: React.FC = () => {
     setOpenBackdrop(false);
   };
 
-  React.useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+  // React.useEffect(() => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 1000);
+  // }, []);
 
   // fecth data profile with accesstoken
   const fecthDataProfileUser = async () => {
@@ -285,6 +285,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     fecthDataProfileUser();
     // dispatch(getProfile() as any)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // get count unread
@@ -404,9 +405,9 @@ const Navbar: React.FC = () => {
   ) => {
     event.preventDefault();
     var encode: any;
-    var job_type = jobType;
+    // var job_type = jobType;
     var money_type = typeMoney;
-    var salary_type = salaryType;
+    // var salary_type = salaryType;
     var salary_min = salaryMin;
     var salary_max = salaryMax;
     var list_dis = listDis ? listDis : [];
@@ -510,9 +511,9 @@ const Navbar: React.FC = () => {
     } else if (!valueSearchInput && !QUERY) {
       encode = encodeURIComponent(``);
     }
-    if (!jobType && JOB_TYPE) {
-      job_type = JOB_TYPE;
-    }
+    // if (!jobType && JOB_TYPE) {
+    //   job_type = JOB_TYPE;
+    // }
 
     // console.log('vvvvvvv', valueSearchInput)
     // console.log('encode', encode)
@@ -530,9 +531,9 @@ const Navbar: React.FC = () => {
     //   job_type = null
     // }
 
-    if (!salaryType && SALARY_TYPE) {
-      salary_type = SALARY_TYPE;
-    }
+    // if (!salaryType && SALARY_TYPE) {
+    //   salary_type = SALARY_TYPE;
+    // }
 
     setTimeout(() => {
       if (location.pathname !== '/search-results') {
@@ -708,18 +709,18 @@ const Navbar: React.FC = () => {
     setWaiting(countWaitng);
   }, [appliedPostedJob]);
 
-  const handleResetValue = () => {
-    setJobType(null);
-    setListDis([]);
-    setListCate([]);
-    setSalaryMax(null);
-    setSalaryMin(null);
-    setTypeMoney(1);
-    setSalaryType('');
+  // const handleResetValue = () => {
+  //   setJobType(null);
+  //   setListDis([]);
+  //   setListCate([]);
+  //   setSalaryMax(null);
+  //   setSalaryMin(null);
+  //   setTypeMoney(1);
+  //   setSalaryType('');
 
-    setIsWorkingWeekend(0);
-    setIsRemotely(0);
-  };
+  //   setIsWorkingWeekend(0);
+  //   setIsRemotely(0);
+  // };
 
   React.useEffect(() => {
     const handleCloseFilter = (event: any) => {
@@ -739,6 +740,7 @@ const Navbar: React.FC = () => {
     return () => {
       window.removeEventListener('click', handleCloseFilter);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openCollapseFilter]);
 
   const [isDownloading, setIsDownloading] = useState(false);

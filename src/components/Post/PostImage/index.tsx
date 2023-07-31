@@ -16,12 +16,17 @@ import { message } from 'antd';
 import './style.scss';
 interface PostImageProps {
   selectedFiles: any;
+  selectedImages: any;
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const PostImage: React.FC<PostImageProps> = (props) => {
-  const { selectedFiles, setSelectedFiles } = props;
-  const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
+  const { selectedFiles, setSelectedFiles, setSelectedImages, selectedImages } =
+    props;
+
+  console.log('selectedImages', selectedImages);
+  console.log('selectedImagessadadasdsa');
   const [image, setImage] = React.useState<any>();
   const [files, setFiles] = React.useState<any>([]);
   const [isDragActive, setIsDragActive] = React.useState(false);
@@ -34,6 +39,46 @@ const PostImage: React.FC<PostImageProps> = (props) => {
 
   const theme = useTheme();
   const ixsobile = useMediaQuery(theme.breakpoints.down('xs'));
+
+  // const [imageFile, setImageFile] = React.useState<any>(null);
+  React.useEffect(() => {
+    const loadImage = async () => {
+      try {
+        // Bước 1: Xác định định dạng file từ URL
+        const imageExtension = selectedImages?.map((image: any) =>
+          image.split('.').pop(),
+        );
+        // const imageType = `image/${
+        //   imageExtension === 'jpg' ? 'jpeg' : imageExtension
+        // }`;
+
+        // // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
+        const blobImage = imageExtension.map(
+          (image: any) => new Blob([image], { type: 'jpg' }),
+        );
+
+        const imageFile = blobImage.map(
+          (blob: any) =>
+            new File([blob], `image.jpg`, {
+              type: 'jpg',
+            }),
+        );
+        // const imageBlob = new Blob([dataPosted.image], { type: imageType });
+        // const imageFile = new File([imageBlob], `image.${imageExtension}`, {
+        //   type: imageType,
+        // });
+
+        console.log('imageExtension', imageExtension);
+        console.log('blobImage', blobImage);
+        console.log('imageFile', imageFile);
+        setSelectedFiles(imageFile);
+      } catch (error) {
+        console.error('Error loading image:', error);
+      }
+    };
+
+    loadImage();
+  }, [selectedImages]);
 
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
     useDropzone({
@@ -204,9 +249,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
   }, []);
 
   React.useEffect(() => {
-    selectedFiles.map((value: any) => {
-      // console.log('file img', value.preview);
-    });
+    // selectedFiles.map((value: any) => {
+    // console.log('file img', value.preview);
+    // });
     return () => {
       // Clean up all selectedFiles previews when the component unmounts
 
@@ -329,7 +374,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       {contextHolder}
       <Box p="0rem 0">
         <section className="drag-img-container">
-          <div {...getRootProps({ className: isDragActive ? 'dropzone on-drag' : 'dropzone' })}>
+          <div
+            {...getRootProps({
+              className: isDragActive ? 'dropzone on-drag' : 'dropzone',
+            })}
+          >
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
             <p>
@@ -341,7 +390,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           </div>
         </section>
         <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '40px' }}>
-          {selectedImages.map((image, index) => (
+          {selectedImages.map((image: any, index: number) => (
             <div
               className="item-image"
               style={{
@@ -352,6 +401,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
                 height: '150px',
                 width: '150px',
               }}
+              key={index}
             >
               <img
                 key={index}

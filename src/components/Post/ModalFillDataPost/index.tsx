@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import moment from 'moment';
 import Typography from '@mui/material/Typography';
@@ -10,18 +10,12 @@ import Modal from '@mui/material/Modal';
 // import CloseIcon from '@mui/icons-material/Close';
 
 import {
-  MailIcon,
-  FacebookIcon,
-  CopyIcon,
-  MessagerIcon,
   CompanyNameDetailPostIcon,
-  AddressDetailPostIcon,
   ClockDetailPostIcon,
-  BackIcon,
 } from '#components/Icons';
 
 import historyRecruiter from 'api/historyRecruiter';
-import applitedPostedApi from 'api/apiAppliedPosted';
+// import applitedPostedApi from 'api/apiAppliedPosted';
 import postApi from 'api/postApi';
 
 import './style.scss';
@@ -63,6 +57,9 @@ interface IModalFillDataPost {
   setSalaryMin: React.Dispatch<React.SetStateAction<any>>;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
   setWardId: React.Dispatch<React.SetStateAction<string>>;
+  setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>;
+  setFillCate: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>;
 }
 const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const {
@@ -87,6 +84,9 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setSalaryMax,
     setDescription,
     setWardId,
+    setCategoriesId,
+    setFillCate,
+    setSelectedImages,
   } = props;
 
   const [dataPost, setDataPost] = React.useState<any>([]);
@@ -110,8 +110,10 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setSalaryMax(12000000);
     setSalaryMin(0);
     setDescription('Chưa cập nhật');
-
     setSelectedValue(-1);
+    setSelectedImages([]);
+    setCategoriesId([]);
+    setFillCate([]);
   };
 
   const allPost = async () => {
@@ -151,7 +153,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setTypeJob(itemPost.job_type.job_type_id);
     try {
       const result = await postApi.getById(itemPost.post_id);
-
+      console.log('reuslt', result.data);
       if (result) {
         setIsPeriodDate(result.data.is_date_period);
         setStartDate(result.data.start_date);
@@ -165,6 +167,17 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         setSalaryMin(result.data.salary_min);
         setDescription(result.data.description);
         setAddress(result.data.address);
+        setCategoriesId(
+          result.data.categories.map((cate: any) => cate.child_category_id),
+        );
+        setFillCate(
+          result.data.categories.map((cate: any) => [
+            cate.parent_category_id,
+            cate.child_category_id,
+          ]),
+        );
+
+        setSelectedImages(result.data.images.map((image: any) => image.image));
       }
     } catch (error) {}
   };
@@ -194,6 +207,9 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setSalaryMin(0);
     setDescription('Chưa cập nhật');
     setSelectedValue(-1);
+    setSelectedImages([]);
+    setCategoriesId([]);
+    setFillCate([]);
   };
 
   return (

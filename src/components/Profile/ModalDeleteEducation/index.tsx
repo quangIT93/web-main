@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Modal, Typography, Button } from '@mui/material';
 
 // data
 import profileApi from 'api/profileApi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
-import { RootState } from 'store/reducer';
+// import { RootState } from 'store/reducer';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
 
@@ -22,9 +22,9 @@ const style = {
   p: 4,
 };
 
-const styleChildBox = {
-  marginBottom: '12px',
-};
+// const styleChildBox = {
+//   marginBottom: '12px',
+// };
 
 interface IModalProfileDeleteEducation {
   openModalDeleteEducation: boolean;

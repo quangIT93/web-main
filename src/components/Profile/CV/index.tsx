@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 // @ts-ignore
 
-import { Button, Space, Tooltip } from 'antd';
+import { Space, Tooltip } from 'antd';
 import { FilePdfOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import moment from 'moment';
+// import moment from 'moment';
 import './style.scss';
 
 interface Url_CV {

@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { Box, Modal, Typography, Button } from '@mui/material'
+import React from 'react';
+import { Box, Modal, Typography, Button } from '@mui/material';
 
 // data
-import profileApi from 'api/profileApi'
-import { useDispatch } from 'react-redux'
-import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer'
+import profileApi from 'api/profileApi';
+import { useDispatch } from 'react-redux';
+import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 
-import { bindActionCreators } from 'redux'
-import { actionCreators } from 'store/index'
+import { bindActionCreators } from 'redux';
+import { actionCreators } from 'store/index';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -20,51 +20,47 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+};
 
-const styleChildBox = {
-  marginBottom: '12px',
-}
+// const styleChildBox = {
+//   marginBottom: '12px',
+// };
 
 interface IModalProfileDelete {
-  openModalDeleteExperience: boolean
-  setOpenModalDeleteExperience: React.Dispatch<React.SetStateAction<boolean>>
-  experienceId?: number | null
+  openModalDeleteExperience: boolean;
+  setOpenModalDeleteExperience: React.Dispatch<React.SetStateAction<boolean>>;
+  experienceId?: number | null;
 }
 const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
   const {
     openModalDeleteExperience,
     setOpenModalDeleteExperience,
     experienceId,
-  } = props
+  } = props;
 
-  const dispatch = useDispatch()
-  const { setProfileUser } = bindActionCreators(
-    actionCreators,
-    dispatch
-  )
+  const dispatch = useDispatch();
+  const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
 
-
-  const handleClose = () => setOpenModalDeleteExperience(false)
+  const handleClose = () => setOpenModalDeleteExperience(false);
 
   const handleSubmitDelete = async () => {
     try {
-      const result = await profileApi.deleteProfileExperience(experienceId)
+      const result = await profileApi.deleteProfileExperience(experienceId);
       if (result) {
-        const profile = await profileApi.getProfile()
+        const profile = await profileApi.getProfile();
         if (profile) {
-          setProfileUser(profile.data)
+          setProfileUser(profile.data);
         }
-        await dispatch(setAlert(true))
-        setOpenModalDeleteExperience(false)
+        await dispatch(setAlert(true));
+        setOpenModalDeleteExperience(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   const handleSubmitRefuse = () => {
-    setOpenModalDeleteExperience(false)
-  }
+    setOpenModalDeleteExperience(false);
+  };
 
   return (
     <Modal
@@ -99,7 +95,7 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
         </Box>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default React.memo(ModalDelete)
+export default React.memo(ModalDelete);

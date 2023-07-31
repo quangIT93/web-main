@@ -116,31 +116,38 @@
   .MuiModal-root {
 
     .Modal-success_keyword {
-  
-        .box-modal_successKeyword {
-      
-          .title-modal_createKeySuccess {
-            color: #000;
-            font-family: Roboto;
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 32px;
-          }
-          
-          .text-modal_createKeySuccess {
-            color: #000;
-            text-align: center;
-            font-family: Roboto;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 24px;
-          }
-     }
-  
+
+      .box-modal_successKeyword {
+
+        .title-modal_createKeySuccess {
+          color: #000;
+          font-family: Roboto;
+          font-size: 24px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 32px;
+        }
+
+        .text-modal_createKeySuccess {
+          color: #000;
+          text-align: center;
+          font-family: Roboto;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+        }
+      }
+
     }
   }
 
 
 }
 
+.create-key-word {
+  .ant-select {
+    .ant-select-clear {
+      margin-right: 25px;
+    }
+  }
+}

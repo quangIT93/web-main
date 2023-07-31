@@ -205,7 +205,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleSubmit = async () => {
     try {
       if (value.length > 3) {
-        message.warning('Chọn 3 ');
+        message.error('Chỉ được chọn tối đa 3 khu vực ');
         return;
       }
       const result = await profileApi.updateProfileLocation(

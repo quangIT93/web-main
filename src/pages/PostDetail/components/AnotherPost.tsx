@@ -1,54 +1,34 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 //import scss
 import './style.scss';
 
 //MUI
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import ImageListItem from '@mui/material/ImageListItem';
 
-//ANT
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
+// import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
-import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+import { LocationHomeIcon, DolaIcon } from '#components/Icons';
 
-import {
-  LocationHomeIcon,
-  DolaIcon,
-  SaveIconOutline,
-  SaveIconFill,
-} from '#components/Icons';
+import { Tooltip } from 'antd';
 
-import { Space, Tooltip } from 'antd';
+// import moment from 'moment';
+// import bookMarkApi from 'api/bookMarkApi';
 
-import moment from 'moment';
-import bookMarkApi from 'api/bookMarkApi';
+// import { PostNewest } from '#components/Home/NewJobs';
 
-import { PostNewest } from '#components/Home/NewJobs';
-import HomeValueContextProvider, {
-  HomeValueContext,
-} from 'context/HomeValueContextProvider';
-
-interface Iprops {
-  isLeft: PostNewest;
-}
+// interface Iprops {
+//   isLeft: PostNewest;
+// }
 
 const AnotherPost: React.FC<any> = (props) => {
   const [error, setError] = React.useState(false);
 
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
-  };
+  // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  //   window.open(`/post-detail?post-id=${id}`);
+  // };
 
   return (
     <>
@@ -141,7 +121,7 @@ const AnotherPost: React.FC<any> = (props) => {
                   overflow: 'hidden',
                   marginLeft: '4px',
                   fontSize: '14px',
-                  fontWeight: 400
+                  fontWeight: 400,
                 }}
               >
                 {`${props.item?.district}, ${props.item?.province}`}
@@ -165,7 +145,7 @@ const AnotherPost: React.FC<any> = (props) => {
                   overflow: 'hidden',
                   marginLeft: '4px',
                   fontSize: '14px',
-                  fontWeight: 400
+                  fontWeight: 400,
                 }}
               >
                 {new Intl.NumberFormat('en-US').format(props.item?.salary_min)}{' '}
@@ -185,7 +165,9 @@ const AnotherPost: React.FC<any> = (props) => {
                     : ''
                 }
                 alt="ảnh"
-                onError={() => { setError(true); }}
+                onError={() => {
+                  setError(true);
+                }}
               />
             )}
           </div>

@@ -1,13 +1,12 @@
 import React, { useContext, memo } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+
 import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import Button from '@mui/material/Button';
 
 import './style.scss';
-import { TabScrollButton } from '@mui/material';
+import './components/categoryItem.scss';
+
 // import { categories } from './dataCategory'
 import { AxiosResponse } from 'axios';
 
@@ -19,16 +18,16 @@ import categoriesApi from '../../../api/categoriesApi';
 import { useSearchParams } from 'react-router-dom';
 
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
-import { RootState } from '../../../store/reducer';
+// import { RootState } from '../../../store/reducer';
 
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 import { IvalueJobChild } from 'context/HomeValueContextProvider';
 
-import CategoryItem from './components/CategoryItem';
+// import CategoryItem from './components/CategoryItem';
 
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -60,14 +59,14 @@ const CategoryCarousel: React.FC = () => {
   // Contexts
   const {
     setChildCateloriesArray,
-    childCateloriesArray,
-    valueJobChild,
+    // childCateloriesArray,
+    // valueJobChild,
     setValueJobChild,
-    setRefCatelories,
+    // setRefCatelories,
     setRefCatelory,
     navTouchCatelory,
-    openCollapseFilter,
-  }: {
+  }: // openCollapseFilter,
+  {
     setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
     childCateloriesArray: number[];
     valueJobChild: IvalueJobChild;
@@ -93,7 +92,7 @@ const CategoryCarousel: React.FC = () => {
   const { setPostNewest } = bindActionCreators(actionCreators, dispatch);
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
-  const refTab = React.useRef<HTMLUListElement | null>(null);
+  // const refTab = React.useRef<HTMLUListElement | null>(null);
 
   const [categories, setCategories] = React.useState<AxiosResponse | null>(
     null,
@@ -116,10 +115,11 @@ const CategoryCarousel: React.FC = () => {
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
-      while (c.charAt(0) == ' ') {
+
+      while (c.charAt(0) === ' ') {
         c = c.substring(1, c.length);
       }
-      if (c.indexOf(nameEQ) == 0) {
+      if (c.indexOf(nameEQ) === 0) {
         return c.substring(nameEQ.length, c.length);
       }
     }
@@ -160,15 +160,15 @@ const CategoryCarousel: React.FC = () => {
       if (themeId) {
         setSearchParams({
           'theme-id': `${themeId}`,
-          'categories-id': `${newValue == 1 ? 'all' : newValue}`,
+          'categories-id': `${newValue === 1 ? 'all' : newValue}`,
         });
       } else {
         setSearchParams({
-          'categories-id': `${newValue == 1 ? 'all' : newValue}`,
+          'categories-id': `${newValue === 1 ? 'all' : newValue}`,
         });
       }
       var result;
-      if (newValue == 1) {
+      if (newValue === 1) {
         result = await postApi.getPostNewest(null, null, null, 19);
       } else {
         result = await postApi.getPostNewest(Number(newValue), null, null, 19);
@@ -220,7 +220,7 @@ const CategoryCarousel: React.FC = () => {
       setOpenBackdrop(true);
       const themeId = searchParams.get('categories-id');
       var result;
-      if (themeId == 'all') {
+      if (themeId === 'all') {
         result = await postApi.getPostNewest(null, null, null, 19);
       } else {
         result = await postApi.getPostNewest(Number(themeId), null, null, 19);
@@ -239,7 +239,7 @@ const CategoryCarousel: React.FC = () => {
       setOpenBackdrop(true);
       const themeId = userSelectedId;
       var result;
-      if (themeId == 1) {
+      if (themeId === 1) {
         result = await postApi.getPostNewest(null, null, null, 19);
       } else {
         result = await postApi.getPostNewest(Number(themeId), null, null, 19);
@@ -274,6 +274,7 @@ const CategoryCarousel: React.FC = () => {
 
       getNewstJobBycookie(storedSettings.userSelectedId);
     }, 5000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -291,33 +292,35 @@ const CategoryCarousel: React.FC = () => {
 
   React.useEffect(() => {
     setRefCatelory(listRef.current ? listRef : null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listRef]);
 
   React.useEffect(() => {
     getPostNewestByCategori();
     setValue(Number(searchParams.get('categories-id')));
     setChildCateloriesArray([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('categories-id')]);
 
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const handleClose = () => {
     setOpenBackdrop(false);
   };
-  const handleOpen = () => {
-    setOpenBackdrop(true);
-  };
+  // const handleOpen = () => {
+  //   setOpenBackdrop(true);
+  // };
 
-  const [startX, setStartX] = React.useState(0);
-  const handleDragStart = (e: any) => {
-    setStartX(e.clientX);
-  };
-  const handleDrop = (e: any) => {
-    const scrollElement = refTab.current;
-    const scrollAmount = e.clientX - startX;
-    if (scrollElement) {
-      scrollElement.scrollLeft += scrollAmount;
-    }
-  };
+  // const [startX, setStartX] = React.useState(0);
+  // const handleDragStart = (e: any) => {
+  //   setStartX(e.clientX);
+  // };
+  // const handleDrop = (e: any) => {
+  //   const scrollElement = refTab.current;
+  //   const scrollAmount = e.clientX - startX;
+  //   if (scrollElement) {
+  //     scrollElement.scrollLeft += scrollAmount;
+  //   }
+  // };
 
   // scroll
   return (

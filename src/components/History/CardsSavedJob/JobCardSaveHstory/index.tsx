@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -8,36 +8,21 @@ import './style.scss';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 import ImageListItem from '@mui/material/ImageListItem';
 
 //ANT
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
-import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
-
-import {
-  LocationHomeIcon,
-  DolaIcon,
-  SaveIconOutline,
-  SaveIconFill,
-} from '#components/Icons';
+import { LocationHomeIcon, DolaIcon, SaveIconFill } from '#components/Icons';
 
 import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
-import bookMarkApi from 'api/bookMarkApi';
+// import bookMarkApi from 'api/bookMarkApi';
 
-import HomeValueContextProvider, {
-  HomeValueContext,
-} from 'context/HomeValueContextProvider';
+// import HomeValueContextProvider, {
+//   HomeValueContext,
+// } from 'context/HomeValueContextProvider';
 
 interface IitemNewJob {
   item: {
@@ -70,15 +55,15 @@ interface IitemNewJob {
 }
 
 const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
-  const {
-    setOpenNotificate,
-    openNotificate,
-  }: {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-  } = React.useContext(HomeValueContext);
-  const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const {
+  //   setOpenNotificate,
+  //   openNotificate,
+  // }: {
+  //   setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+  //   openNotificate: boolean;
+  // } = React.useContext(HomeValueContext);
+  // const dispatch = useDispatch();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {

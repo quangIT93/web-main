@@ -1,26 +1,18 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 //import scss
 import './style.scss';
 
 //MUI
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 import ImageListItem from '@mui/material/ImageListItem';
 
 import ModalLogin from '../../Home/ModalLogin';
 
 //ANT
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
@@ -33,52 +25,50 @@ import {
 
 import { Space, Tooltip } from 'antd';
 
-import moment from 'moment';
+// import moment from 'moment';
 import bookMarkApi from 'api/bookMarkApi';
 
 import { PostNewest } from '../NewJobs';
-import HomeValueContextProvider, {
-  HomeValueContext,
-} from 'context/HomeValueContextProvider';
+// import { HomeValueContext } from 'context/HomeValueContextProvider';
 
-import ShowNotificativeSave from '../../ShowNotificativeSave';
-interface IitemNewJob {
-  item: {
-    id: number;
-    post_id: Number;
-    title: string;
-    company_name: string;
-    image: string;
-    ward: string;
-    district: string;
-    province: string;
-    end_time: number;
-    start_time: number;
-    salary_max: number;
-    salary_min: number;
-    salary_type: string;
-    resource: {
-      company_icon: string;
-    };
-    job_type: {
-      job_type_name: string;
-    };
-    created_at_text: string;
-    bookmarked: boolean;
-  };
-}
+// import ShowNotificativeSave from '../../ShowNotificativeSave';
+// interface IitemNewJob {
+//   item: {
+//     id: number;
+//     post_id: Number;
+//     title: string;
+//     company_name: string;
+//     image: string;
+//     ward: string;
+//     district: string;
+//     province: string;
+//     end_time: number;
+//     start_time: number;
+//     salary_max: number;
+//     salary_min: number;
+//     salary_type: string;
+//     resource: {
+//       company_icon: string;
+//     };
+//     job_type: {
+//       job_type_name: string;
+//     };
+//     created_at_text: string;
+//     bookmarked: boolean;
+//   };
+// }
 interface Iprops {
   item: PostNewest;
 }
 
 const JobCard: React.FC<Iprops> = (props) => {
-  const {
-    setOpenNotificate,
-    openNotificate,
-  }: {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-  } = React.useContext(HomeValueContext);
+  // const {
+  //   setOpenNotificate,
+  //   openNotificate,
+  // }: {
+  //   setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+  //   openNotificate: boolean;
+  // } = React.useContext(HomeValueContext);
   const dispatch = useDispatch();
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
