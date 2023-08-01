@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import FormControlLabel from '@mui/material/FormControlLabel'
 
-import Typography from '@mui/material/Typography'
+// import Typography from '@mui/material/Typography'
 
 import { styleLabel } from '../CssEditPost'
 

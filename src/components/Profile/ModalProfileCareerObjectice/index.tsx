@@ -138,7 +138,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
         };
       }
 
-      console.log('nodeeeeeeeeeeeeeee', node);
+      // console.log('nodeeeeeeeeeeeeeee', node);
       return node.children;
       // <TreeNode key={node.value} value={node.value} title={node.title} />
     });

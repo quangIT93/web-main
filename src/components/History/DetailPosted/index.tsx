@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import moment, { Moment } from 'moment';
-import Grid from '@mui/material/Grid';
+// import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
-import { Space, Tooltip } from 'antd';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import ImageListItem from '@mui/material/ImageListItem';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+// import { Space, Tooltip } from 'antd';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import ImageListItem from '@mui/material/ImageListItem';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Box, Typography, MenuItem, TextField, Button } from '@mui/material';
 import {
   EnvironmentFilled,
@@ -13,7 +13,7 @@ import {
   MoreOutlined,
 } from '@ant-design/icons';
 
-import SubIcon from '../CardsPosted/SubIcon';
+// import SubIcon from '../CardsPosted/SubIcon';
 
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -131,10 +131,10 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     };
   }, []);
 
-  const handleClickPost = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    detailPosted: any,
-  ) => {};
+  // const handleClickPost = (
+  //   e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  //   detailPosted: any,
+  // ) => {};
 
   const handleClickCandidate = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -172,9 +172,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               boxShadow: 'none',
               borderRadius: '5px',
               margin: '8px 0',
-              background: `${
-                candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
-              }`,
+              background: `${candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
+                }`,
             }}
             onClick={(e) =>
               handleClickCandidate(e, candidate.id, detailPosted?.id)

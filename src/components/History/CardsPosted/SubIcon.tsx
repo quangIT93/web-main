@@ -14,8 +14,8 @@ interface ISubicon {
 }
 const SubIcon: React.FC<ISubicon> = (props) => {
   const { postId, setStatus, status } = props;
-  const [accepted, setAccepted] = React.useState('');
-  const [closed, setClosed] = React.useState('');
+  // const [accepted, setAccepted] = React.useState('');
+  // const [closed, setClosed] = React.useState('');
 
   const handleClickClosePost = async () => {
     try {
@@ -33,16 +33,16 @@ const SubIcon: React.FC<ISubicon> = (props) => {
     window.open(`/edit-posted?postId=${postId}`, '_parent');
   };
 
-  const handleClickOpenPost = async () => {
-    try {
-      const result = await postApi.updateStatusPost(postId, 1);
-      if (result) {
-        setStatus(1);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleClickOpenPost = async () => {
+  //   try {
+  //     const result = await postApi.updateStatusPost(postId, 1);
+  //     if (result) {
+  //       setStatus(1);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // console.lo
 

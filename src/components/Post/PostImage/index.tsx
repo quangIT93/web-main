@@ -168,7 +168,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         for (let i = 0; i < fileUploaded.length; i++) {
           const file = fileUploaded[i];
           const reader = new FileReader();
-          console.log(reader);
+          // console.log(reader);
 
           reader.onload = () => {
             const imageDataURL = reader.result as string;
@@ -279,6 +279,8 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     // )
     // console.log(' imagesToCheck', imagesToCheck)
     // console.log(' imagesToCheck.length', imagesToCheck.length)
+    console.log("imagesToCheck", imagesToCheck);
+
     if (imagesToCheck.length > 0) {
       const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
@@ -326,7 +328,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const reader = new FileReader();
-        console.log(reader);
+        // console.log(reader);
 
         reader.onload = () => {
           const imageDataURL = reader.result as string;

@@ -16,7 +16,7 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
   const { setIsPeriodDate, isPeriodDate } = props;
 
   const handleChangePeriodDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('thoi gian lam viec', e.target.value);
+    // console.log('thoi gian lam viec', e.target.value);
     setIsPeriodDate(Number(e.target.value));
   };
 

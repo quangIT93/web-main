@@ -394,7 +394,7 @@ const EditPosted = () => {
     }
   };
 
-  console.log('editData', editDataPosted);
+  // console.log('editData', editDataPosted);
 
   if (!changePage) {
     return (

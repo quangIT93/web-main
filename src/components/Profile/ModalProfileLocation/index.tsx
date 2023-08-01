@@ -234,7 +234,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         };
       }
 
-      console.log('node location', node);
+      // console.log('node location', node);
       return node.children;
       // <TreeNode key={node.value} value={node.value} title={node.title} />
     });

@@ -157,11 +157,11 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
       full_name: itemPost.district,
     });
     setTypeJob(itemPost.job_type.job_type_id);
-    console.log('itemPost', itemPost);
+    // console.log('itemPost', itemPost);
 
     try {
       const result = await postApi.getById(itemPost.post_id);
-      console.log('reuslt', result.data);
+      // console.log('reuslt', result.data);
       if (result) {
         setTypeJob(result.data.job_type.job_type_id);
         setIsPeriodDate(result.data.is_date_period);
@@ -190,7 +190,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         setSalaryType(result.data.salary_type_id);
         setMoneyType(result.data.money_type);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleSubmitValueFill = () => {

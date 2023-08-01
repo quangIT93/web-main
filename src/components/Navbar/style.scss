@@ -801,18 +801,19 @@
         .btn-notice {
 
           border: 1px solid #0D99FF !important;
-   
+
         }
       }
     }
-     button {
+
+    button {
       padding: 24px 16px;
       display: flex;
       align-items: center;
       border-radius: 8px;
       margin-left: 12px;
 
-    
+
 
       @include breakpoint(mobile) {
         border: none;
@@ -914,6 +915,7 @@
 
       .sub-login_info {
         margin-left: -10px;
+
         .sub-login_detail {
           display: flex;
           flex-direction: column;
@@ -923,14 +925,19 @@
             align-items: flex-start;
             width: 220px;
             margin-top: 8px;
+
             p {
               overflow: hidden;
               text-overflow: ellipsis;
               // white-space: ;
-              display: -webkit-box; /* Dùng -webkit-box để sử dụng thuộc tính clamp */
-              -webkit-line-clamp: 2; /* Giới hạn văn bản xuống 2 dòng */
-              -webkit-box-orient: vertical; /* Sắp xếp nội dung dọc */
-              overflow: hidden; /* Ẩn văn bản bị tràn */
+              display: -webkit-box;
+              /* Dùng -webkit-box để sử dụng thuộc tính clamp */
+              -webkit-line-clamp: 2;
+              /* Giới hạn văn bản xuống 2 dòng */
+              -webkit-box-orient: vertical;
+              /* Sắp xếp nội dung dọc */
+              overflow: hidden;
+              /* Ẩn văn bản bị tràn */
               color: #1b87f5;
               cursor: pointer;
             }
@@ -946,6 +953,28 @@
 
       .sub-login_items {
         margin-top: 24px;
+
+        .sub-login_item__translate {
+          background-color: #AAAAAA;
+          border-radius: 10px;
+          font-weight: bold;
+          color: $white;
+          padding: 16px;
+          display: flex;
+          align-items: center;
+
+          span,
+          svg {
+            margin-left: 8px;
+          }
+        }
+
+        .sub-translate_status {
+          .sub-login-radio-group {
+            width: 100%;
+            padding: 8px 24px;
+          }
+        }
 
         .sub-login_item {
           cursor: pointer;
@@ -988,7 +1017,7 @@
 
 
           :nth-child(4),
-          :nth-child(2){
+          :nth-child(2) {
             margin: 0 12px;
           }
         }
@@ -1029,11 +1058,12 @@
 
 .wrap-btn_notice {
   position: relative;
+
   // min-width: 52px;
   // min-height: 50px;
   .sub-icon_qr {
     transition: all 1s linear;
-    top:68px;
+    top: 68px;
     border-radius: 5px;
     color: #000000;
     background-color: #ffffff;
@@ -1047,30 +1077,34 @@
     // display: block;
     z-index: 10;
 
-    
+
     h2 {
       margin: 0 0 8px 0;
       color: #0D99FF;
       font-size: 16px;
     }
+
     .sub-icon_apps {
       display: flex;
       gap: 8px;
     }
-    
+
   }
+
   &:hover {
     .sub-icon_qr {
       display: block;
+
       &:hover {
-      display: block;
+        display: block;
 
       }
     }
   }
+
   button:nth-child(1) {
-  &:after {
-    top: 40px;
+    &:after {
+      top: 40px;
       content: "";
       position: absolute;
       background-color: transparent;
@@ -1089,7 +1123,7 @@
       position: absolute;
       transform: translate(-50%, -50%);
       left: 14.5px;
-  
+
     }
   }
 
@@ -1101,25 +1135,33 @@
     0% {
       box-shadow: 0 0 0 1px #aaa;
     }
+
     100% {
-      box-shadow: 0 0 0 20px #aaa; /* Đặt giá trị lớn hơn để tăng kích thước border */
+      box-shadow: 0 0 0 20px #aaa;
+      /* Đặt giá trị lớn hơn để tăng kích thước border */
     }
   }
 
-  
-  
+
+
 
 
   @keyframes jumpAndStop {
-    0%, 50%, 100% {
+
+    0%,
+    50%,
+    100% {
       transform: translateY(0);
     }
+
     25% {
       transform: translateY(5px);
     }
+
     75% {
       transform: translateY(10px);
     }
+
     100% {
       transform: translateY(0px);
     }
@@ -1133,8 +1175,3 @@
 
   }
 }
-
-
-
-
-

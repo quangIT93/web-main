@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { styled } from '@mui/material/styles'
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+// import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import breakpoints from '../../scss/breakpoints'
 
 import { FaceBookIcon } from '#components/Icons'

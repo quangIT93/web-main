@@ -45,7 +45,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   const getAllUserChat = async () => {
     try {
       const result = await messageApi.getUserChated();
-      console.log('result', result);
+      // console.log('result', result);
       if (result) {
         setStateUserChat(result.data);
       }
@@ -202,7 +202,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                 <p>{user.message}</p>
               </div>
               <div className="info-chat_icon">
-                <small>{new Date(user.created_at).toLocaleString()}</small>
+                <small>{new Date(user.created_at).toLocaleString('en-GB')}</small>
                 {user.status === 1 ? (
                   <span className="count-message_readed">
                     <SeenIcon />

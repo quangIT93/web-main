@@ -198,7 +198,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
 
     // console.log('facebook', response)
   };
@@ -231,7 +231,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
   useEffect(() => {
     if (authState.isLoggedIn) {
-      console.log('Xác thực nhận email thành công', authState);
+      // console.log('Xác thực nhận email thành công', authState);
       // Thực hiện các hành động sau khi xác thực thành công
       setIsEmailVerified(true);
     } else {
@@ -243,7 +243,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // isVerifiedOtp facebook and google =true
   const fetchDataProfile = async (auth: AuthReponse, isVerifyOtp?: boolean) => {
     if (isVerifyOtp) {
-      console.log('Xác thực OTP thành công', authState);
+      // console.log('Xác thực OTP thành công', authState);
       // Thực hiện các hành động sau khi xác thực thành công
       localStorage.setItem(
         'accountId',
@@ -385,7 +385,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-                // cookiePolicy={'single_host_origin'}
+              // cookiePolicy={'single_host_origin'}
               />
 
               <div className="line-with-text">

@@ -123,7 +123,7 @@ const Notificate = () => {
         setIsLoading(false);
         setDataNotification(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -138,7 +138,7 @@ const Notificate = () => {
         setValueApp(result.data.status.pushStatus);
         setValueMall(result.data.status.emailStatus);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -201,7 +201,7 @@ const Notificate = () => {
   };
 
   const handleChangeEmail = async (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     try {
       const result = await notificationKeywordApi.putPlatform(
         parseInt(e.target.value) === 1 ? 0 : 1,
@@ -281,17 +281,15 @@ const Notificate = () => {
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
-          className={`top-notificate_system ${
-            activeSystem ? 'active-system' : ''
-          }`}
+          className={`top-notificate_system ${activeSystem ? 'active-system' : ''
+            }`}
           onClick={handleClickActiveSystem}
         >
           Thông báo
         </div>
         <div
-          className={`top-notificate_keyword ${
-            activeKeyword ? 'active-keyword' : ''
-          }`}
+          className={`top-notificate_keyword ${activeKeyword ? 'active-keyword' : ''
+            }`}
           onClick={handleClickActiveKeyword}
         >
           Từ khoá
@@ -454,11 +452,10 @@ const Notificate = () => {
             <div className="count-keyword">
               <p>
                 Bạn đã lưu trữ được:
-                <strong>{` ${
-                  dataNotificationKeyword?.keywords?.length > 0
+                <strong>{` ${dataNotificationKeyword?.keywords?.length > 0
                     ? dataNotificationKeyword?.keywords?.length
                     : 0
-                }/10 `}</strong>
+                  }/10 `}</strong>
                 gợi ý công việc
               </p>
             </div>
@@ -466,9 +463,8 @@ const Notificate = () => {
               dataNotificationKeyword?.keywords?.map(
                 (dataKeyword: any, index: number) => (
                   <div
-                    className={`wrap-content_keyword ${
-                      idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
-                    }`}
+                    className={`wrap-content_keyword ${idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
+                      }`}
                     key={index}
                   >
                     <div
@@ -524,11 +520,10 @@ const Notificate = () => {
           </div>
         )}
         <div
-          className={`modal-delete_keyword ${
-            openModalDeleteKeyword && !activeSystem
+          className={`modal-delete_keyword ${openModalDeleteKeyword && !activeSystem
               ? 'open-modal_deleteKeyword'
               : ''
-          }`}
+            }`}
         >
           <h4>Xóa gợi ý công việc</h4>
           <p>Từ khoá sẽ không thể khôi phục sau khi xoá, bạn có chắc không?</p>

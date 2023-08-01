@@ -3,21 +3,24 @@
   flex-direction: row;
   margin-top: 20px;
   justify-content: space-between;
+
   .div-item-left {
     display: flex;
     flex-direction: row;
+
     .div-time-line {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .div-info-item {
       display: flex;
       flex-direction: column;
 
       p {
         color: #575757;
-        font-style: italic;
+        // font-style: italic;
       }
     }
   }
@@ -26,6 +29,7 @@
     display: flex;
     align-items: flex-start;
   }
+
   .ant-space-align-center {
     align-items: flex-start;
   }

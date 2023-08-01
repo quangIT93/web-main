@@ -1,23 +1,23 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import moment, { Moment } from 'moment';
-import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import { Space, Tooltip } from 'antd';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import ImageListItem from '@mui/material/ImageListItem';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { Box, Typography, MenuItem, TextField, Button } from '@mui/material';
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  MoreOutlined,
-} from '@ant-design/icons';
+// import moment, { Moment } from 'moment';
+// import Grid from '@mui/material/Grid';
+// import Card from '@mui/material/Card';
+// import { Space, Tooltip } from 'antd';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import ImageListItem from '@mui/material/ImageListItem';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+// import { Box, Typography, MenuItem, TextField, Button } from '@mui/material';
+// import {
+//   EnvironmentFilled,
+//   ClockCircleFilled,
+//   MoreOutlined,
+// } from '@ant-design/icons';
 import { useSearchParams } from 'react-router-dom';
-import { Skeleton } from 'antd';
+// import { Skeleton } from 'antd';
 
 // import data
 import historyRecruiter from 'api/historyRecruiter';
-import DetailPosted from '../DetailPosted';
+// import DetailPosted from '../DetailPosted';
 
 // import component
 import CardsPostedAll from '../CardsPostedAll';
@@ -40,7 +40,7 @@ const CardsPosted: React.FC<ICardsApplied> = (props) => {
 
   const [detailPosted, setDetailPosted] = React.useState<any>(null);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
   const [count, setCount] = useState(5);
 
   useEffect(() => {
@@ -77,26 +77,26 @@ const CardsPosted: React.FC<ICardsApplied> = (props) => {
     };
   }, [showDetailPosted]);
 
-  const handleChange = (event: any) => {
-    setnewOld(event.target.value);
-  };
+  // const handleChange = (event: any) => {
+  //   setnewOld(event.target.value);
+  // };
   // console.log('dataPosted', dataPosted)
 
-  const handleShowDetail = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    posted: any,
-  ) => {
-    event.stopPropagation();
-    setShowDetailPosted(true);
-    setDetailPosted(posted);
-  };
+  // const handleShowDetail = (
+  //   event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  //   posted: any,
+  // ) => {
+  //   event.stopPropagation();
+  //   setShowDetailPosted(true);
+  //   setDetailPosted(posted);
+  // };
 
-  // click Button
-  const handleAddItem = async () => {
-    const newCount = count + 6;
-    setCount(newCount);
-    await getAllPosted(newCount);
-  };
+  // // click Button
+  // const handleAddItem = async () => {
+  //   const newCount = count + 6;
+  //   setCount(newCount);
+  //   await getAllPosted(newCount);
+  // };
 
   // show posted All or posted closed || posted open
   const PostedAll = useMemo(() => {
