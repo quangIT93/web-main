@@ -109,17 +109,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -575,7 +575,9 @@ const Navbar: React.FC = () => {
 
   // login
   const handleClickLogin = async (e: any) => {
-    // e.stopPropagation();
+    e.stopPropagation();
+    console.log('click');
+    e.preventDefault();
     try {
       if (openInfoUser) {
         setSpinning(false);
@@ -768,13 +770,8 @@ const Navbar: React.FC = () => {
       <FormOutlined style={{ color: 'white' }} />
       <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
     </button>,
-    <div
-      className="actions-login"
-      onClick={handleClickLogin}
-      ref={refLogin}
-      key="2"
-    >
-      <button className="btn btn__login">
+    <div className="actions-login" ref={refLogin} key="2">
+      <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
           <div className="login__avatar">
             <Avatar
@@ -806,7 +803,7 @@ const Navbar: React.FC = () => {
                   minHeight: '100px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}
                 icon={<UserOutlined style={{ fontSize: 30 }} />}
                 size={50}
@@ -826,8 +823,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.locations.length > 0
                       ? dataProfile?.locations.map((location: any) => {
-                        return `${location.district} , `;
-                      })
+                          return `${location.district} , `;
+                        })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -840,8 +837,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.categories.length > 0
                       ? dataProfile?.categories.map((profile: any) => {
-                        return `${profile.parent_category} / ${profile.child_category}, `;
-                      })
+                          return `${profile.parent_category} / ${profile.child_category}, `;
+                        })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -857,9 +854,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -876,6 +873,12 @@ const Navbar: React.FC = () => {
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
               </div> */}
+              <div className="sub-login_item">
+                <LogoutOutlined />
+
+                <span></span>
+              </div>
+
               <div className="sub-login_item" onClick={handleLogout}>
                 <LogoutOutlined />
 
@@ -906,7 +909,7 @@ const Navbar: React.FC = () => {
       <Button
         onClick={() => {
           if (dataProfile && localStorage.getItem('refreshToken')) {
-            window.open(`/message`, '_seft');
+            window.open(`/message`, '_self');
           } else {
             setOpenModalLogin(true);
           }
@@ -932,7 +935,12 @@ const Navbar: React.FC = () => {
       </Button>
     </Badge>,
 
-    <div className="menu" onClick={handleClickLogin} ref={refLogin} key="4">
+    <div
+      className="menu"
+      // onClick={handleClickLogin}
+      ref={refLogin}
+      key="4"
+    >
       <Button className="menu-button">
         <MenuOutlined style={{ fontSize: '1.5em' }} />
       </Button>
@@ -961,9 +969,9 @@ const Navbar: React.FC = () => {
               <Link to="/history">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -986,8 +994,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1078,8 +1087,9 @@ const Navbar: React.FC = () => {
                 ref={bellRef}
               >
                 <div
-                  className={`button-download ${isDownloading ? 'stopAnimation' : ''
-                    }`}
+                  className={`button-download ${
+                    isDownloading ? 'stopAnimation' : ''
+                  }`}
                 >
                   <DownloadIcon />
                 </div>
