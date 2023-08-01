@@ -110,7 +110,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // click card
@@ -159,7 +159,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           <div className="history-post">
             <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
               {dataApplied?.map((posted: any, i: number) => (
-                <JobCardHistory item={posted} />
+                <JobCardHistory item={posted} key={i} />
               ))}
             </Grid>
             <Box
