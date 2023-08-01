@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 // import ReactHtmlParser from 'react-html-parser'
 
-import { Tooltip, Switch } from 'antd';
+import { Tooltip, Switch, Button } from 'antd';
 
 import { DeleteKeywordIcon } from '#components/Icons';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import { styled, lighten, darken } from '@mui/system';
@@ -94,13 +96,19 @@ const Notificate = () => {
 
   const [idKeyWords, setIdKeywords] = useState<number[]>([]);
 
+  const [openModalDeleteKeyword, setOpenModalDeleteKeyword] =
+    React.useState(false);
+
   const refNotification = React.useRef<HTMLDivElement | null>(null);
 
   // const inputRef = useRef<InputRef>(null);
 
   const handleClickActiveSystem = (e: any) => {
     setActiveSystem(true);
-    if (activeKeyword === true) setActiveKeyword(false);
+    if (activeKeyword === true) {
+      setActiveKeyword(false);
+      setOpenModalDeleteKeyword(false);
+    }
   };
 
   const handleClickActiveKeyword = (e: any) => {
@@ -193,7 +201,7 @@ const Notificate = () => {
   };
 
   const handleChangeEmail = async (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     try {
       const result = await notificationKeywordApi.putPlatform(
         parseInt(e.target.value) === 1 ? 0 : 1,
@@ -233,7 +241,6 @@ const Notificate = () => {
   };
 
   const handleClickItemKeyword = (idKeyword: number) => {
-    console.log('idKeyword', idKeyword);
     // Kiểm tra nếu idKeyword đã tồn tại trong mảng idKeywords
     if (idKeyWords.includes(idKeyword)) {
       // Xóa idKeyword khỏi mảng bằng cách sử dụng filter
@@ -245,19 +252,30 @@ const Notificate = () => {
     }
   };
 
+  const handleOpenModalDeleteKeyWord = () => {
+    if (true) {
+      setOpenModalDeleteKeyword(!openModalDeleteKeyword);
+    } else {
+      setOpenModalDeleteKeyword(!openModalDeleteKeyword);
+    }
+  };
+
   const handleClickDeleteItemKeyword = async () => {
     try {
       const result = await notificationKeywordApi.deleteKeyword(idKeyWords);
       if (result) {
         getApiNotificateKeyword();
+        setOpenModalDeleteKeyword(false);
       }
     } catch (error) {
       console.log('error', error);
+      setOpenModalDeleteKeyword(false);
     }
   };
 
-  console.log('keuwwork', idKeyWords);
-  console.log('activeSystem', activeSystem);
+  const handleClose = () => {
+    setOpenModalDeleteKeyword(false);
+  };
 
   return (
     <div className="notification" ref={refNotification}>
@@ -415,7 +433,9 @@ const Notificate = () => {
                   checked={valueApp === 1 ? true : false}
                   style={{ cursor: 'not-allowed' }}
                 />
-                <label htmlFor="app" style={{ color: '#ccc' }}>App</label>
+                <label htmlFor="app" style={{ color: '#ccc' }}>
+                  App
+                </label>
               </div>
               <div className="checkbox-keyword">
                 <input
@@ -433,8 +453,8 @@ const Notificate = () => {
               <p>
                 Bạn đã lưu trữ được:
                 <strong>{` ${dataNotificationKeyword?.keywords?.length > 0
-                  ? dataNotificationKeyword?.keywords?.length
-                  : 0
+                    ? dataNotificationKeyword?.keywords?.length
+                    : 0
                   }/10 `}</strong>
                 gợi ý công việc
               </p>
@@ -446,9 +466,11 @@ const Notificate = () => {
                     className={`wrap-content_keyword ${idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
                       }`}
                     key={index}
-                    onClick={() => handleClickItemKeyword(dataKeyword?.id)}
                   >
-                    <div className="content_keyword">
+                    <div
+                      className="content_keyword"
+                      onClick={() => handleClickItemKeyword(dataKeyword?.id)}
+                    >
                       <h3>{dataKeyword.keyword}</h3>
                       <ul>
                         <li>
@@ -497,6 +519,29 @@ const Notificate = () => {
             )}
           </div>
         )}
+        <div
+          className={`modal-delete_keyword ${openModalDeleteKeyword && !activeSystem
+              ? 'open-modal_deleteKeyword'
+              : ''
+            }`}
+        >
+          <h4>Xóa gợi ý công việc</h4>
+          <p>Từ khoá sẽ không thể khôi phục sau khi xoá, bạn có chắc không?</p>
+          <Button
+            type="primary"
+            className="submit-delete_submitKeyWord"
+            onClick={handleClickDeleteItemKeyword}
+          >
+            Đồng ý
+          </Button>
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            className="wrap-icon_deleteKeyword"
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
       </div>
       {/* {activeKeyword ? (
         <div
@@ -512,7 +557,7 @@ const Notificate = () => {
       {idKeyWords.length > 0 && !activeSystem ? (
         <div
           className="icon-delele_keyword"
-          onClick={handleClickDeleteItemKeyword}
+          onClick={handleOpenModalDeleteKeyWord}
         >
           <DeleteKeywordIcon />
         </div>

@@ -368,7 +368,7 @@ const Detail: React.FC = () => {
   //   };
   // }, []);
 
-  console.log(post?.data);
+  // console.log(post?.data);
 
   // handle click button
   const onclick = async () => {
@@ -377,11 +377,11 @@ const Detail: React.FC = () => {
         CheckWasLogin();
         return;
       }
-      console.log('applied', post?.data.applied);
-      console.log(
-        'post?.data?.companyResourceData?.name',
-        post?.data?.companyResourceData?.name,
-      );
+      // console.log('applied', post?.data.applied);
+      // console.log(
+      //   'post?.data?.companyResourceData?.name',
+      //   post?.data?.companyResourceData?.name,
+      // );
 
       // Applied and Hijob
       if (
@@ -611,7 +611,7 @@ const Detail: React.FC = () => {
   const handleChangeStatus = async () => {
     try {
       const result = await appplicationApi.applyAplication(POST_ID);
-      console.log('result ung tiyen', result);
+      // console.log('result ung tiyen', result);
       if (post?.data?.applied) {
         // openNotification();
         setTextButton('Đã ứng tuyển');
@@ -656,9 +656,9 @@ const Detail: React.FC = () => {
     }
     try {
       const result: any = await appplicationApi.applyAplication(POST_ID);
-      console.log('result ung tiyen', result);
-      console.log('result ung tiyen', result?.success);
-      console.log('result ung tiyen', result?.code);
+      // console.log('result ung tiyen', result);
+      // console.log('result ung tiyen', result?.success);
+      // console.log('result ung tiyen', result?.code);
       if (
         (result?.success as any) &&
         (result.code as number) === (201 as any)
@@ -735,7 +735,13 @@ const Detail: React.FC = () => {
                   </h5>
                 </div>
               </div>
-              <div className="div-detail-row">
+              <div
+                className="div-detail-row"
+                style={{
+                  display: post?.data?.startDate != null
+                    || post?.data?.endDate != null ? 'flex' : 'none'
+                }}
+              >
                 <div className="div-detail-row-titleItem">
                   <CalendarPostIcon />
                   <p>Thời gian làm việc</p>
@@ -958,7 +964,7 @@ const Detail: React.FC = () => {
       ,
     },
   ];
-  console.log('post?.data?', post?.data);
+  // console.log('post?.data?', post?.data);
   return (
     <>
       {automatic && (

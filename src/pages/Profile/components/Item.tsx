@@ -61,7 +61,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const handleUpdateExperience = (id?: number | null) => {
     setOpenModalExperienceUpdate(true);
   };
-  console.log('item?.start_date', item?.start_date);
+  // console.log('item?.start_date', item?.start_date);
   return (
     <div className="div-apply-item">
       <div className="div-item-left">

@@ -343,8 +343,14 @@ const Post: React.FC = () => {
           content: message,
         });
       }
-    } catch (error) {
-      console.error('error', error);
+    } catch (error: any) {
+      console.error('error', error?.response?.data?.message);
+      if (error?.response?.data?.message === "You only can post 1 job/day") {
+        messageApi.open({
+          type: 'error',
+          content: "Bạn chỉ có thể đăng 1 bài trong 1 ngày",
+        });
+      }
     }
   };
   const [titleFirebase, setTitleFirebase] = useState<string>('');
@@ -391,7 +397,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-            // style={{ textAlign: 'center', display: 'block' }}
+          // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>Tạo bài đăng tuyển dụng</h1>
             <div className="post-main_switch">

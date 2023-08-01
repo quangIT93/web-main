@@ -214,7 +214,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const handleChange = (newValue: string) => {
     // setOpenDropdown(true);
     // setValue(newValue);
-    console.log('cakakak');
+    // console.log('cakakak');
   };
 
   // const disableScroll = () => {
@@ -226,7 +226,7 @@ const SearchInput: React.FC<SearchProps> = ({
   // };
 
   const handleOnFocus = () => {
-    console.log('fcccccccccuss');
+    // console.log('fcccccccccuss');
     // setOpenDropdown(true);
     // disableScroll()
     // getSuggestKeyWord();
@@ -247,8 +247,7 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${
-            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          `/search-results?${value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
           }`,
         );
       } else {
@@ -394,7 +393,7 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-        // open={openDropdown}
+      // open={openDropdown}
       />
 
       <Button

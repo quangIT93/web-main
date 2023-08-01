@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import moment, { Moment } from 'moment';
+// import moment, { Moment } from 'moment';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 import { Space, Tooltip, message, Button } from 'antd';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import ImageListItem from '@mui/material/ImageListItem';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import ImageListItem from '@mui/material/ImageListItem';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Box, Typography, MenuItem, TextField } from '@mui/material';
-import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons';
+// import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons';
 
 import Nodata from 'utils/NoDataPage';
 import sortData from 'utils/SortDataHistory/sortData';
 
 import { Skeleton } from 'antd';
-import { Col, Row } from 'antd';
+// import { Col, Row } from 'antd';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import './style.scss';
@@ -28,11 +28,11 @@ interface ICardsAppliedAll {
 }
 
 const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
-  const { activeChild } = props;
+  // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataApplied, setDataApplied] = useState<any>(null);
   const [newOld, setnewOld] = React.useState('Mới nhất');
-  const [count, setCount] = useState(5);
+  // const [count, setCount] = useState(5);
   const [lastPostId, setLastPostId] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
@@ -110,16 +110,16 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // click card
-  const handleClickCard = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    postId: number,
-  ) => {
-    window.open(`/post-detail?post-id=${postId}`, '_parent');
-  };
+  // const handleClickCard = (
+  //   e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  //   postId: number,
+  // ) => {
+  //   window.open(`/post-detail?post-id=${postId}`, '_parent');
+  // };
 
   return (
     <>

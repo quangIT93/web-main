@@ -1,66 +1,59 @@
-import React, { useEffect, useState, memo } from 'react'
-import { Box, Slider } from '@mui/material'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import { Input, Space } from 'antd'
-import Typography from '@mui/material/Typography'
+import React, { useEffect, useState, memo } from 'react';
+import { Box } from '@mui/material';
+import { Input, Space } from 'antd';
+import Typography from '@mui/material/Typography';
 //@ts-ignore
-import 'intl'
-import 'intl/locale-data/jsonp/en'
-import { styleLabel } from '#components/Post/CssPost'
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+import { styleLabel } from '#components/Post/CssPost';
 
 interface PropsSalaryFilterSubnav {
-  setSalaryMin: React.Dispatch<React.SetStateAction<any>>
-  salaryMin: number
-  setSalaryMax: React.Dispatch<React.SetStateAction<any>>
-  salaryMax: number
-  salaryType?: number
+  setSalaryMin: React.Dispatch<React.SetStateAction<any>>;
+  salaryMin: number;
+  setSalaryMax: React.Dispatch<React.SetStateAction<any>>;
+  salaryMax: number;
+  salaryType?: number;
 }
 
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
-  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType } = props
-  const VND_TO_USD = 0.000043 // Conversion rate: 1 VND = 0.000043 USD
-  const USD_TO_VND = 23155
+  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType } =
+    props;
+  const VND_TO_USD = 0.000043; // Conversion rate: 1 VND = 0.000043 USD
+  const USD_TO_VND = 23155;
 
-  const [valueSalaryMax, setValueSalaryMax] = useState('')
-  const [valueSalaryMin, setValueSalaryMin] = useState('')
+  const [valueSalaryMax, setValueSalaryMax] = useState('');
+  const [valueSalaryMin, setValueSalaryMin] = useState('');
 
   const handleChangesalaryMin = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setValueSalaryMin(e.target.value.replace(',', ''))
+    setValueSalaryMin(e.target.value.replace(',', ''));
 
-    const inputValue = e.target.value.replace(',', '')
-    const reg = /[0-9]+$/
+    const inputValue = e.target.value.replace(',', '');
+    const reg = /[0-9]+$/;
 
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-      setSalaryMin(inputValue.replace(',', ''))
+      setSalaryMin(inputValue.replace(',', ''));
     }
-  }
+  };
   const handleChangesalaryMax = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setValueSalaryMax(e.target.value.replace(',', ''))
+    setValueSalaryMax(e.target.value.replace(',', ''));
 
-    const inputValue = e.target.value.replace(',', '')
-    const reg = /[0-9]+$/
+    const inputValue = e.target.value.replace(',', '');
+    const reg = /[0-9]+$/;
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-      setSalaryMax(inputValue.replace(',', ''))
+      setSalaryMax(inputValue.replace(',', ''));
     }
-  }
+  };
 
   useEffect(() => {
     if (salaryType === 6) {
-      setSalaryMax(0)
-      setSalaryMin(0)
-    } else {
-      setSalaryMax(valueSalaryMax.replace(',', ''))
-      setSalaryMin(valueSalaryMin.replace(',', ''))
+      setSalaryMax(0);
+      setSalaryMin(0);
     }
-  }, [salaryType])
+  }, [salaryType]);
 
   // const handleChange = (event: Event, newValue: number | number[]) => {
   //   let convertedValue: number[]
@@ -136,7 +129,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             placeholder="Luong toi thieu"
             onChange={handleChangesalaryMin}
             value={new Intl.NumberFormat('en-US').format(
-              Number(salaryMin.toString().replace(',', ''))
+              Number(salaryMin.toString().replace(',', '')),
             )}
             disabled={salaryType === 6}
           />
@@ -160,14 +153,14 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             placeholder="Luong toi da"
             onChange={handleChangesalaryMax}
             value={new Intl.NumberFormat('en-US').format(
-              Number(salaryMax.toString().replace(',', ''))
+              Number(salaryMax.toString().replace(',', '')),
             )}
             disabled={salaryType === 6}
           />
         </Space>
       </Space>
     </Box>
-  )
-}
+  );
+};
 
-export default memo(PostFilterSalary)
+export default memo(PostFilterSalary);

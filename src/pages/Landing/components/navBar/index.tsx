@@ -6,14 +6,14 @@ import '../navBar/style.scss';
 const Navbar: React.FC = () => {
   return (
     <nav className="navibar">
-      <a href="#" className="logoTitle">
+      <a href="/" className="logoTitle">
         neoworks
       </a>
 
       <div className="div-space"></div>
       <ul className="navbar-links">
         <li className="links__item">
-          <Link to="/">Trang chủ</Link>
+          <Link to="https://hijob.site/">Trang chủ</Link>
         </li>
         <li className="links__item links">
           <a href="#us">Về chúng tôi</a>

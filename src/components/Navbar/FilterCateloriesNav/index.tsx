@@ -45,7 +45,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
     <div style={{ width: '100%' }}>
       <Text className="title-filter_location">Chọn danh mục nghề nghiệp</Text>
       {menus}
-      <Divider style={{ margin: 4 }} >
+      <Divider style={{ margin: 4 }}>
         {disable ? 'Chỉ có thể tối đa 10 danh mục' : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -63,9 +63,9 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
     JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       : userProfile?.categories.map((profile: any) => [
-        profile?.parent_category_id,
-        profile?.child_category_id,
-      ]),
+          profile?.parent_category_id,
+          profile?.child_category_id,
+        ]),
   );
 
   searchParams
@@ -104,8 +104,8 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
     // if (listCate.length > 2) {
     //   setDisable(true)
     // }
-
     onChange(listCate?.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile]);
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
@@ -122,11 +122,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
     if (value?.length > 9) {
       setDisable(true);
     }
-    console.log("secondValues", secondValues);
-    console.log("value", value);
   };
-
-
 
   if (userProfile || dataCategories) {
     return (
@@ -141,27 +137,27 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
+                  value: parentCategory.parent_category_id,
+                  label: parentCategory.parent_category,
+                  children: parentCategory.childs.map((child: any) => {
+                    var dis = false;
+                    //check id child  when disable = true
+                    if (disable) {
+                      dis = true;
+                      for (const elem of categoriesId) {
+                        if (elem === child.id) {
+                          dis = false;
+                          break;
+                        }
                       }
                     }
-                  }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                    return {
+                      value: child.id,
+                      label: child.name,
+                      disabled: dis,
+                    };
+                  }),
+                }))
               : []
           }
           onChange={onChange}
@@ -170,8 +166,8 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
               ? listCate?.current
               : listCate?.current?.length === 0 &&
                 location?.pathname === '/search-results'
-                ? []
-                : userProfile?.categories.map((profile: any) => [
+              ? []
+              : userProfile?.categories.map((profile: any) => [
                   profile?.parent_category_id,
                   profile?.child_category_id,
                 ])
