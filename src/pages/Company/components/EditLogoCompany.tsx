@@ -22,14 +22,14 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
   const [fileList, setFileList] = useState<UploadFile[]>(
     dataCompany?.logoPath && dataCompany?.logopath !== ''
       ? [
-          {
-            uid: '-1',
-            name: 'logo.png',
-            status: 'done',
-            url: dataCompany?.logoPath,
-            thumbUrl: dataCompany?.logoPath,
-          },
-        ]
+        {
+          uid: '-1',
+          name: 'logo.png',
+          status: 'done',
+          url: dataCompany?.logoPath,
+          thumbUrl: dataCompany?.logoPath,
+        },
+      ]
       : [],
   );
 
@@ -41,7 +41,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
         logoPath: fileList[0] as RcFile,
       }));
 
-      console.log('newFileList', newFileList);
+      // console.log('newFileList', newFileList);
     },
     onRemove: (file) => {
       const index = fileList.indexOf(file);

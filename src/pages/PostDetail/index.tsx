@@ -73,6 +73,10 @@ import {
 import { SaveIconOutline, SaveIconFill, ShareIcon } from '#components/Icons';
 import { PostNewest } from '#components/Home/NewJobs';
 
+import { Tabs } from 'antd';
+import type { TabsProps } from 'antd';
+import { Avatar, Space } from 'antd';
+
 import IconButton from '@mui/material/IconButton';
 import { CloseIcon } from '#components/Icons';
 // import icon
@@ -85,6 +89,18 @@ import {
   AddressDetailPostIcon,
   ClockDetailPostIcon,
   BackIcon,
+  TaxCodeDetailPostIcon,
+  LocationDetailPostIcon,
+  MailDetailPostIcon,
+  PhoneDetailPostIcon,
+  WebDetailPostIcon,
+  JobTypePostIcon,
+  ClockPostIcon,
+  CalendarPostIcon,
+  MonitorPostIcon,
+  DollarPostIcon,
+  WorkPostIcon,
+  BoardiIntroCompanyPostIcon
 } from '#components/Icons';
 
 import './style.scss';
@@ -152,6 +168,7 @@ const style = {
 //   image?: string;
 // }
 const ACCESS_TOKEN = localStorage.getItem('accessToken');
+
 // page view details post
 const Detail: React.FC = () => {
   // const { Search } = Input
@@ -180,6 +197,7 @@ const Detail: React.FC = () => {
   );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
   const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển');
+  const [key, setKeyTab] = React.useState<string>('1');
   const [backgroundButton, setBackgroundButton] =
     React.useState<string>('#0D99FF');
   const [checkPostUser, setCheckPostUser] = React.useState<Boolean>(false);
@@ -238,7 +256,7 @@ const Detail: React.FC = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -350,7 +368,7 @@ const Detail: React.FC = () => {
   //   };
   // }, []);
 
-  console.log(post?.data);
+  // console.log(post?.data);
 
   // handle click button
   const onclick = async () => {
@@ -359,11 +377,11 @@ const Detail: React.FC = () => {
         CheckWasLogin();
         return;
       }
-      console.log('applied', post?.data.applied);
-      console.log(
-        'post?.data?.companyResourceData?.name',
-        post?.data?.companyResourceData?.name,
-      );
+      // console.log('applied', post?.data.applied);
+      // console.log(
+      //   'post?.data?.companyResourceData?.name',
+      //   post?.data?.companyResourceData?.name,
+      // );
 
       // Applied and Hijob
       if (
@@ -574,17 +592,14 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address}, ${
-          post?.data.location ? post?.data.location.fullName : ''
-        }, ${
-          post?.data?.location?.district
-            ? post?.data?.location?.district?.fullName
-            : ''
-        }, ${
-          post?.data?.location?.district?.province
-            ? post?.data.district?.province?.fullName
-            : ''
-        }`,
+      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
+      }, ${post?.data?.location?.district
+        ? post?.data?.location?.district?.fullName
+        : ''
+      }, ${post?.data?.location?.district?.province
+        ? post?.data.district?.province?.fullName
+        : ''
+      }`,
     );
   };
 
@@ -596,7 +611,7 @@ const Detail: React.FC = () => {
   const handleChangeStatus = async () => {
     try {
       const result = await appplicationApi.applyAplication(POST_ID);
-      console.log('result ung tiyen', result);
+      // console.log('result ung tiyen', result);
       if (post?.data?.applied) {
         // openNotification();
         setTextButton('Đã ứng tuyển');
@@ -641,9 +656,9 @@ const Detail: React.FC = () => {
     }
     try {
       const result: any = await appplicationApi.applyAplication(POST_ID);
-      console.log('result ung tiyen', result);
-      console.log('result ung tiyen', result?.success);
-      console.log('result ung tiyen', result?.code);
+      // console.log('result ung tiyen', result);
+      // console.log('result ung tiyen', result?.success);
+      // console.log('result ung tiyen', result?.code);
       if (
         (result?.success as any) &&
         (result.code as number) === (201 as any)
@@ -671,7 +686,285 @@ const Detail: React.FC = () => {
       // }
     }
   };
-  console.log('post?.data?.images', post?.data?.images);
+
+  const onChangeTab = (key: string) => {
+    setKeyTab(key)
+  };
+
+  const items: TabsProps['items'] = [
+    {
+      key: '1',
+      label: `Thông tin việc làm`,
+      children:
+        <>
+          <div className="job-title-container">
+            <div className="job-title-details">
+              {/* <div className="div-detail-row">
+                              <EnvironmentOutlined
+                                style={{ color: '#575757' }}
+                              />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Địa chỉ</p>
+                                <h5>{post?.data.address}</h5>
+                              </div>
+                            </div> */}
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <JobTypePostIcon />
+                  <p>Loại công viêc</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>{post?.data.postJobType.fullName}</h5>
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <ClockPostIcon />
+                  <p>Giờ làm việc</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>
+                    {moment(
+                      new Date(post?.data.startTime),
+                    ).format('HH:mm')}{' '}
+                    -{' '}
+                    {moment(new Date(post?.data.endTime)).format(
+                      'HH:mm',
+                    )}
+                  </h5>
+                </div>
+              </div>
+              <div
+                className="div-detail-row"
+                style={{
+                  display: post?.data?.startDate != null
+                    || post?.data?.endDate != null ? 'flex' : 'none'
+                }}
+              >
+                <div className="div-detail-row-titleItem">
+                  <CalendarPostIcon />
+                  <p>Thời gian làm việc</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>
+                    {new Date(post?.data?.startDate).toLocaleDateString(
+                      'en-GB',
+                    )}
+                    -{' '}
+                    {new Date(post?.data?.endDate).toLocaleDateString(
+                      'en-GB',
+                    )}
+                  </h5>
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <CalendarPostIcon />
+                  <p>Làm việc cuối tuần</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>
+                    {post?.data.isWorkingWeekend === 0
+                      ? 'Không làm việc cuối tuần'
+                      : 'Có làm việc cuối tuần'}
+                  </h5>
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <MonitorPostIcon />
+                  <p>Làm việc từ xa</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>
+                    {post?.data.isRemotely === 0
+                      ? 'Không làm việc từ xa'
+                      : 'Có làm việc từ xa'}
+                  </h5>
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <DollarPostIcon />
+                  <p>Mức lương</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  {post?.data.postSalaryType.id === 6 ? (
+                    <h5>{post?.data.postSalaryType.fullName}</h5>
+                  ) : (
+                    <h5>
+                      {new Intl.NumberFormat('en-US').format(
+                        post?.data.salaryMin,
+                      ) + ` ${post?.data.moneyTypeText}`}{' '}
+                      -{' '}
+                      {new Intl.NumberFormat('en-US').format(
+                        post?.data.salaryMax,
+                      ) + ` ${post?.data.moneyTypeText}`}
+                    </h5>
+                  )}
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <WorkPostIcon />
+                  <p>Danh mục</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  {post?.data.postCategories.map(
+                    (item: any, index: null | number) => (
+                      <h5 key={index}>
+                        {item.parentCategory.fullName}/
+                        {item.fullName}
+                      </h5>
+                    ),
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          <>
+            {contextHolder}
+            <Button
+              onClick={onclick}
+              className="btn-apply"
+              type={'primary'}
+              // disabled={checkApply}
+              style={{
+                fontSize: 16,
+                backgroundColor: `${backgroundButton}`,
+                color: 'white',
+                fontWeight: 'normal',
+                // position: 'absolute',
+                // bottom: '-212px',
+              }}
+              icon={checkPostUser ? <FormOutlined /> : null}
+            >
+              {textButton}
+            </Button>
+          </>
+        </>
+      ,
+    },
+    post?.data?.postCompanyInformation &&
+    {
+      key: '2',
+      label: `Thông tin công ty`,
+      style: { display: post?.data?.postCompanyInformation && key === '2' ? 'flex' : 'none' },
+      children:
+        <>
+          <div className="job-title-container">
+            <div className="job-title-details">
+              <div className="div-intro-Company">
+                <Avatar shape="square" size={80} src={post?.data?.postCompanyInformation?.logoPath} />
+                <div className="div-intro-Company_rows">
+                  <div className="div-intro-Company_row">
+                    <p>{post?.data?.postCompanyInformation?.name}</p>
+                  </div>
+                  <div className="div-intro-Company_row">
+                    <div className="div-intro-Company_row__item">
+                      <BoardiIntroCompanyPostIcon />
+                      <h3>{post?.data?.postCompanyInformation?.companySizeInfomation?.nameText}</h3>
+                    </div>
+                    <div className="div-intro-Company_row__item">
+                      <CalendarPostIcon width={24} height={24} />
+                      <h3>{post?.data?.postCompanyInformation?.companyCategory?.fullName}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="div-detail-rowCompany">
+                <h3 style={{ display: 'block' }}>Mô tả</h3>
+                <div className="div-detail_descCompany">
+                  <p>
+                    {post?.data.postCompanyInformation
+                      ? post?.data.postCompanyInformation
+                        ?.description
+                      : 'Chưa cập nhật'}
+                  </p>
+                </div>
+              </div>
+              <div className="div-detail-rowCompany">
+                <h3>Thông tin cơ bản </h3>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <TaxCodeDetailPostIcon />
+                    <p>Mã số thuế</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation
+                        ? post?.data?.postCompanyInformation
+                          ?.taxCode
+                        : 'Chưa cập nhật'}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <LocationDetailPostIcon />
+                    <p>Địa chỉ</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation
+                        ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                        : 'Chưa cập nhật'}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <MailDetailPostIcon />
+                    <p>Email</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation
+                        ? post?.data?.postCompanyInformation
+                          ?.email
+                        : 'Chưa cập nhật'}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <PhoneDetailPostIcon />
+                    <p>Điện thoại</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation
+                        ? post?.data?.postCompanyInformation
+                          ?.phone
+                        : 'Chưa cập nhật'}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <WebDetailPostIcon />
+                    <p>Website</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation
+                        ? post?.data?.postCompanyInformation
+                          ?.website
+                        : 'Chưa cập nhật'}
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ,
+    },
+  ];
+  // console.log('post?.data?', post?.data);
   return (
     <>
       {automatic && (
@@ -728,17 +1021,14 @@ const Detail: React.FC = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${
-                      post?.data?.location ? post?.data?.location?.fullName : ''
-                    }, ${
-                      post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
+                      }, ${post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                    }, ${
-                      post?.data?.location?.district?.province
+                      }, ${post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                    }`}</h3>
+                      }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -909,314 +1199,7 @@ const Detail: React.FC = () => {
                       typography: 'body1',
                     }}
                   >
-                    <TabContext value={tabValue}>
-                      <Box
-                        sx={{
-                          // borderBottom: 1,
-                          borderColor: 'divider',
-                        }}
-                      >
-                        <TabList
-                          onChange={handleChangeTab}
-                          aria-label="lab API tabs example"
-                          // className="sdasd"
-                          sx={
-                            post?.data?.postCompanyInformation === null
-                              ? {
-                                  minHeight: 0,
-                                }
-                              : {}
-                          }
-                        >
-                          <Tab
-                            label="Thông tin việc làm"
-                            value="1"
-                            sx={
-                              post?.data?.postCompanyInformation === null
-                                ? {
-                                    minWidth: '100%',
-                                    padding: '0 0 12px 0',
-                                    margin: '0 0 0px 0',
-                                    display: 'flex',
-                                    alignItems: 'flex-start',
-                                    minHeight: 0,
-                                    justifyContent: 'center',
-                                    '&:hover': {
-                                      background: 'none',
-                                      cursor: 'unset',
-                                    },
-                                  }
-                                : {}
-                            }
-                          />
-                          <Tab
-                            label="Thông tin công ty"
-                            value="2"
-                            // style={{ display: 'none' }}
-                            className={`${
-                              post?.data.postCompanyInformation
-                                ? 'tab-info_company'
-                                : ''
-                            }`}
-                            sx={
-                              post?.data.postCompanyInformation === null
-                                ? { display: 'none' }
-                                : { display: 'block' }
-                            }
-                          />
-                        </TabList>
-                      </Box>
-                      <TabPanel value="1" className="info-job">
-                        <div className="job-title-container">
-                          <div className="job-title-details">
-                            {/* <div className="div-detail-row">
-                              <EnvironmentOutlined
-                                style={{ color: '#575757' }}
-                              />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Địa chỉ</p>
-                                <h5>{post?.data.address}</h5>
-                              </div>
-                            </div> */}
-                            <div className="div-detail-row">
-                              <SlidersOutlined style={{ color: '#575757' }} />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Loại công viêc</p>
-                                <h5>{post?.data.postJobType.fullName}</h5>
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <ClockCircleOutlined
-                                style={{ color: '#575757' }}
-                              />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Giờ làm việc</p>
-                                <h5>
-                                  {moment(
-                                    new Date(post?.data.startTime),
-                                  ).format('HH:mm')}{' '}
-                                  -{' '}
-                                  {moment(new Date(post?.data.endTime)).format(
-                                    'HH:mm',
-                                  )}
-                                </h5>
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <CalendarOutlined style={{ color: '#575757' }} />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Làm việc cuối tuần</p>
-                                <h5>
-                                  {post?.data.isWorkingWeekend === 0
-                                    ? 'Không làm việc cuối tuần'
-                                    : 'Có làm việc cuối tuần'}
-                                </h5>
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <DollarOutlined style={{ color: '#575757' }} />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Mức lương</p>
-                                {post?.data.postSalaryType.id === 6 ? (
-                                  <h5>{post?.data.postSalaryType.fullName}</h5>
-                                ) : (
-                                  <h5>
-                                    {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salaryMin,
-                                    ) + ` ${post?.data.moneyTypeText}`}{' '}
-                                    -{' '}
-                                    {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salaryMax,
-                                    ) + ` ${post?.data.moneyTypeText}`}
-                                  </h5>
-                                )}
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <CreditCardOutlined
-                                style={{ color: '#575757' }}
-                              />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Danh mục</p>
-                                {post?.data.postCategories.map(
-                                  (item: any, index: null | number) => (
-                                    <h5 key={index}>
-                                      {item.parentCategory.fullName}/
-                                      {item.fullName}
-                                    </h5>
-                                  ),
-                                )}
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <DesktopOutlined style={{ color: '#575757' }} />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Làm việc từ xa</p>
-                                <h5>
-                                  {post?.data.isRemotely === 0
-                                    ? 'Không làm việc từ xa'
-                                    : 'Có làm việc từ xa'}
-                                </h5>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <>
-                          {contextHolder}
-                          <Button
-                            onClick={onclick}
-                            className="btn-apply"
-                            type={'primary'}
-                            // disabled={checkApply}
-                            style={{
-                              fontSize: 16,
-                              backgroundColor: `${backgroundButton}`,
-                              color: 'white',
-                              fontWeight: 'normal',
-                              position: 'absolute',
-                              bottom: '-212px',
-                            }}
-                            icon={checkPostUser ? <FormOutlined /> : null}
-                          >
-                            {textButton}
-                          </Button>
-                        </>
-                      </TabPanel>
-                      <TabPanel
-                        value="2"
-                        // style={{ display: 'none' }}
-                        className={`wrapJob-title-container ${
-                          post?.data.postCompanyInformation ? 'has-company' : ''
-                        }`}
-                        sx={
-                          post?.data.postCompanyInformation === null
-                            ? { display: 'none' }
-                            : { display: 'block' }
-                        }
-                      >
-                        <div className="job-title-container">
-                          <div className="job-title-details">
-                            <div className="div-detail-rowCompany">
-                              <h3 style={{ display: 'block' }}>Mô tả</h3>
-                              <div className="div-detail_descCompany">
-                                <p>
-                                  {post?.data.postCompanyInformation
-                                    ? post?.data.postCompanyInformation
-                                        ?.description
-                                    : 'Chưa cập nhật'}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="div-detail-rowCompany">
-                              <h3>Thông tin cơ bản </h3>
-                              <div className="div-detail-items">
-                                <div className="div-detail-titleItem">
-                                  <DesktopOutlined
-                                    style={{
-                                      color: '#575757',
-                                      marginRight: '8px',
-                                    }}
-                                  />
-                                  <p>Mã số thuế</p>
-                                </div>
-                                <div className="div-detail-titleItem">
-                                  <h5>
-                                    {post?.data?.postCompanyInformation
-                                      ? post?.data?.postCompanyInformation
-                                          ?.taxCode
-                                      : 'Chưa cập nhật'}
-                                  </h5>
-                                </div>
-                              </div>
-                              <div className="div-detail-items">
-                                <div className="div-detail-titleItem">
-                                  <DesktopOutlined
-                                    style={{
-                                      color: '#575757',
-                                      marginRight: '8px',
-                                    }}
-                                  />
-                                  <p>Địa chỉ</p>
-                                </div>
-                                <div className="div-detail-titleItem">
-                                  <h5>
-                                    {post?.data?.postCompanyInformation
-                                      ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
-                                      : 'Chưa cập nhật'}
-                                  </h5>
-                                </div>
-                              </div>
-                              <div className="div-detail-items">
-                                <div className="div-detail-titleItem">
-                                  <DesktopOutlined
-                                    style={{
-                                      color: '#575757',
-                                      marginRight: '8px',
-                                    }}
-                                  />
-                                  <p>Email</p>
-                                </div>
-                                <div className="div-detail-titleItem">
-                                  <h5>
-                                    {post?.data?.postCompanyInformation
-                                      ? post?.data?.postCompanyInformation
-                                          ?.email
-                                      : 'Chưa cập nhật'}
-                                  </h5>
-                                </div>
-                              </div>
-                              <div className="div-detail-items">
-                                <div className="div-detail-titleItem">
-                                  <DesktopOutlined
-                                    style={{
-                                      color: '#575757',
-                                      marginRight: '8px',
-                                    }}
-                                  />
-                                  <p>Điện thoại</p>
-                                </div>
-                                <div className="div-detail-titleItem">
-                                  <h5>
-                                    {post?.data?.postCompanyInformation
-                                      ? post?.data?.postCompanyInformation
-                                          ?.phone
-                                      : 'Chưa cập nhật'}
-                                  </h5>
-                                </div>
-                              </div>
-                              <div className="div-detail-items">
-                                <div className="div-detail-titleItem">
-                                  <DesktopOutlined
-                                    style={{
-                                      color: '#575757',
-                                      marginRight: '8px',
-                                    }}
-                                  />
-                                  <p>Website</p>
-                                </div>
-                                <div className="div-detail-titleItem">
-                                  <h5>
-                                    {post?.data?.postCompanyInformation
-                                      ? post?.data?.postCompanyInformation
-                                          ?.website
-                                      : 'Chưa cập nhật'}
-                                  </h5>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </TabPanel>
-                    </TabContext>
+                    <Tabs defaultActiveKey="1" centered items={items} onChange={onChangeTab} />
                   </Box>
                 </div>
               </div>
@@ -1238,7 +1221,7 @@ const Detail: React.FC = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                          // onClick={handlePreviousPost}
+                        // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1393,8 +1376,8 @@ const Detail: React.FC = () => {
                 {post?.data?.companyResourceData?.name === 'HIJOB'
                   ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Bạn có muốn ứng tuyển công việc này không?'
                   : isApplied
-                  ? 'Bạn đã ứng tuyển công việc này chưa?'
-                  : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
+                    ? 'Bạn đã ứng tuyển công việc này chưa?'
+                    : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
               </Typography>
 
               <Box
@@ -1422,8 +1405,8 @@ const Detail: React.FC = () => {
                     post?.data?.companyResourceData?.name === 'HIJOB'
                       ? handleApply
                       : isApplied
-                      ? handleChangeStatus
-                      : handleClickChangePage
+                        ? handleChangeStatus
+                        : handleClickChangePage
                   }
                   style={{
                     width: '300px',

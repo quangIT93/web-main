@@ -47,7 +47,7 @@ const NumericInput = (props: NumericInputProps) => {
       onChange={handleChange}
       onBlur={handleBlur}
       placeholder="Nhập số điện thoại"
-      inputProps={{ maxLength: 16 }}
+      inputProps={{ maxLength: 10 }}
       size="small"
       sx={{ width: '100%', marginTop: '8px' }}
     />
@@ -108,7 +108,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder="Nhập email công ty"
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>

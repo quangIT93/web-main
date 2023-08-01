@@ -14,16 +14,23 @@ import { useMediaQuery } from '@mui/material';
 import { message } from 'antd';
 
 import './style.scss';
+import { blob } from 'stream/consumers';
 interface PostImageProps {
   selectedFiles: any;
   selectedImages: any;
+  selectedFillImages: any;
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
   setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const PostImage: React.FC<PostImageProps> = (props) => {
-  const { selectedFiles, setSelectedFiles, setSelectedImages, selectedImages } =
-    props;
+  const {
+    selectedFiles,
+    setSelectedFiles,
+    setSelectedImages,
+    selectedImages,
+    selectedFillImages,
+  } = props;
 
   const [image, setImage] = React.useState<any>();
   const [files, setFiles] = React.useState<any>([]);
@@ -41,39 +48,63 @@ const PostImage: React.FC<PostImageProps> = (props) => {
   // const [imageFile, setImageFile] = React.useState<any>(null);
   React.useEffect(() => {
     const loadImage = async () => {
-      try {
-        // Bước 1: Xác định định dạng file từ URL
-        const imageExtension = selectedImages?.map((image: any) =>
-          image.split('.').pop(),
-        );
-        // const imageType = `image/${
-        //   imageExtension === 'jpg' ? 'jpeg' : imageExtension
-        // }`;
+      // Bước 1: Xác định định dạng file từ URL
+      const imageExtension = await selectedFillImages?.map((image: any) =>
+        image.split('.').pop(),
+      );
+      // const imageType = `image/${
+      //   imageExtension === 'jpg' ? 'jpeg' : imageExtension
+      // }`;
 
-        // // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
-        const blobImage = imageExtension.map(
-          (image: any) => new Blob([image], { type: 'jpg' }),
-        );
+      // // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
+      const blobImage = await imageExtension.map(
+        (image: any) => new Blob([image], { type: image }),
+      );
 
-        const imageFile = blobImage.map(
-          (blob: any) =>
-            new File([blob], `image.${blob.type}`, {
-              type: `${blob.type}`,
-            }),
-        );
-        // const imageBlob = new Blob([dataPosted.image], { type: imageType });
-        // const imageFile = new File([imageBlob], `image.${imageExtension}`, {
-        //   type: imageType,
-        // });
+      const imageFile = await blobImage.map(
+        (blob: any) =>
+          new File([blob], `${Math.random().toString(10)}.${blob.type}`, {
+            type: `image/${blob.type === 'jpg' ? 'jpeg' : blob.type}`,
+          }),
+      );
 
-        setSelectedFiles(imageFile);
-      } catch (error) {
-        console.error('Error loading image:', error);
+      if (imageFile.length > 0) {
+        const validateImagesReply = validatePostImages(imageFile);
+        if (validateImagesReply.isError) {
+          console.log('::: Invalid images');
+          return toast.warn('Ảnh không đúng định dạng');
+        } else {
+          try {
+            const compressedImages: any = [];
+            console.log('Compressed image ::: ', imageFile);
+            await Promise.all(
+              imageFile.map(async (image: any) => {
+                const compressedImage = await imageCompression(image, options);
+                compressedImages.push(
+                  new File([compressedImage], compressedImage.name, {
+                    type: compressedImage.type,
+                  }),
+                );
+              }),
+            );
+            // console.log('Original image ::: ', imagesUpload)
+
+            setSelectedFiles((prevState) => [
+              ...prevState,
+              ...compressedImages.map((image: any) => ({
+                image,
+                preview: window.URL.createObjectURL(image),
+              })),
+            ]);
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
       }
     };
 
     loadImage();
-  }, [selectedImages]);
+  }, [selectedFillImages]);
 
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
     useDropzone({
@@ -89,6 +120,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       },
       onDrop: async (acceptedFiles: File[]) => {
         setIsDragActive(false);
+
         const fileUploaded = acceptedFiles.map((file: any) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
@@ -168,7 +200,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         for (let i = 0; i < fileUploaded.length; i++) {
           const file = fileUploaded[i];
           const reader = new FileReader();
-          console.log(reader);
+          // console.log(reader);
 
           reader.onload = () => {
             const imageDataURL = reader.result as string;
@@ -267,6 +299,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     );
 
     selectedFiles.forEach((file: any) => URL.revokeObjectURL(file.preview));
+    console.log('selected file', selectedFiles);
 
     const imagesToCheck =
       selectedFiles.length + imagesUpload.length > 5
@@ -279,6 +312,8 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     // )
     // console.log(' imagesToCheck', imagesToCheck)
     // console.log(' imagesToCheck.length', imagesToCheck.length)
+    console.log('imagesToCheck', imagesToCheck);
+
     if (imagesToCheck.length > 0) {
       const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
@@ -286,6 +321,8 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         return toast.warn('Ảnh không đúng định dạng');
       } else {
         try {
+          console.log('imagesToCheck', imagesToCheck);
+
           const compressedImages: any = [];
           await Promise.all(
             imagesToCheck.map(async (image: any) => {
@@ -307,6 +344,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
               preview: window.URL.createObjectURL(image),
             })),
           ]);
+          console.log('imagesToCheck', imagesToCheck);
         } catch (error) {
           console.log(error);
         }
@@ -326,7 +364,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const reader = new FileReader();
-        console.log(reader);
+        // console.log(reader);
 
         reader.onload = () => {
           const imageDataURL = reader.result as string;

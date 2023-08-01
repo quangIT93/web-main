@@ -114,7 +114,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   // handle update information user
   const handleSubmit = async () => {
     // const data = new Date(day.toString()).getTime()
-    console.log('ennter');
+    // console.log('ennter');
     try {
       const info: IInfoPersonal = {
         name: name,
@@ -190,7 +190,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -256,8 +256,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={
                 selectedProvince
                   ? dataProvinces?.find(
-                      (province: any) => province.id === selectedProvince.id,
-                    )
+                    (province: any) => province.id === selectedProvince.id,
+                  )
                   : null
               }
               defaultValue={dataProvinces}

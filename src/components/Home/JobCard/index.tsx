@@ -283,7 +283,7 @@ const JobCard: React.FC<Iprops> = (props) => {
               onClick={async (e) => {
                 try {
                   e.stopPropagation();
-                  console.log('props.item, ', props.item);
+                  // console.log('props.item, ', props.item);
 
                   if (!localStorage.getItem('accessToken')) {
                     setOpenModalLogin(true);

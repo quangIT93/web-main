@@ -6,7 +6,7 @@ import '../navBar/style.scss';
 const Navbar: React.FC = () => {
   return (
     <nav className="navibar">
-      <a href="#" className="logoTitle">
+      <a href="/" className="logoTitle">
         neoworks
       </a>
 

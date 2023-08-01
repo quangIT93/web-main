@@ -60,6 +60,7 @@ interface IModalFillDataPost {
   setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>;
   setFillCate: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedFillImages: React.Dispatch<React.SetStateAction<string[]>>;
   setSalaryType: React.Dispatch<React.SetStateAction<number>>;
   setMoneyType: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -89,6 +90,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setCategoriesId,
     setFillCate,
     setSelectedImages,
+    setSelectedFillImages,
     setSalaryType,
     setMoneyType,
   } = props;
@@ -116,6 +118,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setDescription('Chưa cập nhật');
     setSelectedValue(-1);
     setSelectedImages([]);
+    setSelectedFillImages([]);
     setCategoriesId([]);
     setFillCate([]);
     setSalaryType(1);
@@ -157,11 +160,11 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
       full_name: itemPost.district,
     });
     setTypeJob(itemPost.job_type.job_type_id);
-    console.log('itemPost', itemPost);
+    // console.log('itemPost', itemPost);
 
     try {
       const result = await postApi.getById(itemPost.post_id);
-      console.log('reuslt', result.data);
+      // console.log('reuslt', result.data);
       if (result) {
         setTypeJob(result.data.job_type.job_type_id);
         setIsPeriodDate(result.data.is_date_period);
@@ -171,7 +174,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         setIsRemotely(result.data.is_remotely);
         setStartTime(result.data.start_time);
         setEndTime(result.data.end_time);
-        setPhoneNumber(result.data.phone_contact.replace(/^\+(\d{2})/, '0$1'));
+        setPhoneNumber(`0` + result.data.phone_contact.slice(3));
         setSalaryMax(result.data.salary_max);
         setSalaryMin(result.data.salary_min);
         setDescription(result.data.description);
@@ -187,10 +190,13 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         );
 
         setSelectedImages(result.data.images.map((image: any) => image.image));
+        setSelectedFillImages(
+          result.data.images.map((image: any) => image.image),
+        );
         setSalaryType(result.data.salary_type_id);
         setMoneyType(result.data.money_type);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleSubmitValueFill = () => {
@@ -219,6 +225,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setDescription('Chưa cập nhật');
     setSelectedValue(-1);
     setSelectedImages([]);
+    setSelectedFillImages([]);
     setCategoriesId([]);
     setFillCate([]);
     setSalaryType(1);

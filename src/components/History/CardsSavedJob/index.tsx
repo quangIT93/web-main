@@ -209,6 +209,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
                 item={dataBookmark}
                 handleDeleteBookmark={handleDeleteBookmark}
                 index={i}
+                key={i}
               />
               //</Skeleton>
             ))}

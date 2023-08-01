@@ -77,7 +77,7 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           value={editDataPosted?.company_name}
           onChange={handleEditCompanyName}
           size="small"
-          sx={{ width: '100%', marginTop: '4px' }}
+          sx={{ width: '100%', marginTop: '0.5rem' }}
           placeholder="Tên công việc"
           //   error={titleError} // Đánh dấu lỗi akla
         />

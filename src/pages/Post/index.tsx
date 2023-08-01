@@ -205,12 +205,16 @@ const Post: React.FC = () => {
   const [fillCate, setFillCate] = useState<any>([]);
 
   const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
+  const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
+    [],
+  );
 
   // submit
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
   ) => {
     e.preventDefault();
+    console.log('selected File', selectedFiles);
     const formData = new FormData();
     formData.append('title', titleJob);
     formData.append('companyName', companyName);
@@ -339,8 +343,14 @@ const Post: React.FC = () => {
           content: message,
         });
       }
-    } catch (error) {
-      console.error('error', error);
+    } catch (error: any) {
+      console.error('error', error?.response?.data?.message);
+      if (error?.response?.data?.message === "You only can post 1 job/day") {
+        messageApi.open({
+          type: 'error',
+          content: "Bạn chỉ có thể đăng 1 bài trong 1 ngày",
+        });
+      }
     }
   };
   const [titleFirebase, setTitleFirebase] = useState<string>('');
@@ -387,7 +397,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-            // style={{ textAlign: 'center', display: 'block' }}
+          // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>Tạo bài đăng tuyển dụng</h1>
             <div className="post-main_switch">
@@ -429,6 +439,7 @@ const Post: React.FC = () => {
               setSelectedFiles={setSelectedFiles}
               setSelectedImages={setSelectedImages}
               selectedImages={selectedImages}
+              selectedFillImages={selectedFillImages}
             />
             <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob} />
             <PostPeriodDate
@@ -537,6 +548,7 @@ const Post: React.FC = () => {
           setSelectedImages={setSelectedImages}
           setSalaryType={setSalaryType}
           setMoneyType={setMoneyType}
+          setSelectedFillImages={setSelectedFillImages}
         />
       </div>
     );

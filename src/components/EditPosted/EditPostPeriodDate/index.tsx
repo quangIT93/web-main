@@ -15,7 +15,7 @@ interface IEditPostPeriodDate {
 const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
   const { setEditDataPosted, editDataPosted } = props
 
-  const [isDatePeriod, setIsPeriodDate] = useState<number>(1)
+  // const [isDatePeriod, setIsPeriodDate] = useState<number>(1)
 
   const handleChangePeriodDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => {

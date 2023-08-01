@@ -313,7 +313,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               onClick={async (e) => {
                 try {
                   e.stopPropagation();
-                  console.log('props.item ', props.item);
+                  // console.log('props.item ', props.item);
 
                   if (props.item.bookmarked) {
                     const result = await bookMarkApi.deleteBookMark(

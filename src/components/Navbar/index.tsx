@@ -22,6 +22,7 @@ import {
   MapInfoIcon,
   BagInfoJob,
   DownloadIcon,
+  TransalteIcon
 } from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
@@ -67,7 +68,7 @@ import FilterTimeJob from './FilterTimeJob';
 import Notificate from './Notificate';
 import PostButton from './PostButton';
 
-import { Avatar, Button, Space, Spin, Badge } from 'antd';
+import { Avatar, Button, Space, Spin, Badge, Radio } from 'antd';
 
 import authApi from 'api/authApi';
 import profileApi from 'api/profileApi';
@@ -157,6 +158,7 @@ const Navbar: React.FC = () => {
   const [userFiltered, setUserFiltered] = useState<any>();
 
   const [countChat, setCountChat] = useState<number>(0);
+  const [languageId, setLanguageId] = useState<number>(1);
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
   // const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -167,6 +169,12 @@ const Navbar: React.FC = () => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
     setUserFiltered(userFilteredCookies);
   }, []);
+
+  useEffect(() => {
+    let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
+    setLanguageId(userLanguageSelected);
+  }, [languageId])
+
   // console.log('jobTYpe', jobType);
   // check search
   useEffect(() => {
@@ -426,12 +434,12 @@ const Navbar: React.FC = () => {
       is_working_weekend,
       is_remotely,
     };
-    console.log('list_dis', list_dis);
-    console.log('listDis', listDis);
-    console.log('list_cate', list_cate);
-    console.log('listCate', listCate);
-    console.log('salary_max', salary_max);
-    console.log('salary_min', salary_min);
+    // console.log('list_dis', list_dis);
+    // console.log('listDis', listDis);
+    // console.log('list_cate', list_cate);
+    // console.log('listCate', listCate);
+    // console.log('salary_max', salary_max);
+    // console.log('salary_min', salary_min);
     await setCookie('userFiltered', JSON.stringify(filter), 365);
 
     if (list_dis?.length > 0) {
@@ -546,7 +554,7 @@ const Navbar: React.FC = () => {
         });
         setSearch(!search);
         setOpenCollapseFilter(false);
-        // window.open(`/search-results`, "_self")
+        // window.open(`/search-results`, "_parent")
       }
     }, 100);
 
@@ -568,14 +576,16 @@ const Navbar: React.FC = () => {
     //     }` +
     //     `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
     //     `${money_type ? `&money_type=${money_type}` : ''}`,
-    //     '_self',
+    //     '_parent',
     //   );
     // }, 100);
   };
 
   // login
   const handleClickLogin = async (e: any) => {
-    // e.stopPropagation();
+    e.stopPropagation();
+    // console.log('click');
+    e.preventDefault();
     try {
       if (openInfoUser) {
         setSpinning(false);
@@ -633,7 +643,7 @@ const Navbar: React.FC = () => {
   // handle logout
   const handleLogout = async () => {
     try {
-      console.log('logout thành công');
+      // console.log('logout thành công');
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (refreshToken) {
@@ -722,6 +732,11 @@ const Navbar: React.FC = () => {
   //   setIsRemotely(0);
   // };
 
+  const handleChangeLanguage = (e: any) => {
+    setLanguageId(e.target.value)
+    setCookie('languageId', JSON.stringify(e.target.value), 365);
+  }
+
   React.useEffect(() => {
     const handleCloseFilter = (event: any) => {
       event.stopPropagation();
@@ -759,7 +774,7 @@ const Navbar: React.FC = () => {
       className="btn btn__post"
       onClick={() => {
         if (dataProfile && localStorage.getItem('refreshToken')) {
-          window.open('/post', '_self');
+          window.open('/post', '_parent');
         } else {
           setOpenModalLogin(true);
         }
@@ -768,13 +783,8 @@ const Navbar: React.FC = () => {
       <FormOutlined style={{ color: 'white' }} />
       <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
     </button>,
-    <div
-      className="actions-login"
-      onClick={handleClickLogin}
-      ref={refLogin}
-      key="2"
-    >
-      <button className="btn btn__login">
+    <div className="actions-login" ref={refLogin} key="2">
+      <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
           <div className="login__avatar">
             <Avatar
@@ -806,7 +816,7 @@ const Navbar: React.FC = () => {
                   minHeight: '100px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}
                 icon={<UserOutlined style={{ fontSize: 30 }} />}
                 size={50}
@@ -816,12 +826,14 @@ const Navbar: React.FC = () => {
                 <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
                 <span
                   className="sub-login_text"
-                  onClick={() => window.open(`/profile`, '_seft')}
                 >
                   <MailInfoIcon />
                   {dataProfile?.email ? dataProfile?.email : ''}
                 </span>
-                <span className="sub-login_text">
+                <span
+                  className="sub-login_text"
+                  onClick={() => window.open(`/profile`, '_parent')}
+                >
                   <MapInfoIcon />
                   <p>
                     {dataProfile?.locations.length > 0
@@ -833,7 +845,7 @@ const Navbar: React.FC = () => {
                 </span>
                 <span
                   className="sub-login_text"
-                  onClick={() => window.open(`/profile`, '_seft')}
+                  onClick={() => window.open(`/profile`, '_parent')}
                 >
                   <BagInfoJob />
 
@@ -876,6 +888,24 @@ const Navbar: React.FC = () => {
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
               </div> */}
+              {/* <div className="sub-login_item__translate">
+                <TransalteIcon />
+                <span>Ngôn ngữ</span>
+              </div>
+
+              <div className="sub-translate_status">
+                <Radio.Group
+                  name="radiogroup"
+                  defaultValue={languageId}
+                  className="sub-login-radio-group"
+                  onChange={handleChangeLanguage}
+                >
+                  <Radio value={1}>Tiếng Việt</Radio>
+                  <Radio value={2}>English</Radio>
+                  <Radio value={3}>Korean</Radio>
+                </Radio.Group>
+              </div> */}
+
               <div className="sub-login_item" onClick={handleLogout}>
                 <LogoutOutlined />
 
@@ -906,7 +936,7 @@ const Navbar: React.FC = () => {
       <Button
         onClick={() => {
           if (dataProfile && localStorage.getItem('refreshToken')) {
-            window.open(`/message`, '_seft');
+            window.open(`/message`, '_parent');
           } else {
             setOpenModalLogin(true);
           }
@@ -932,7 +962,12 @@ const Navbar: React.FC = () => {
       </Button>
     </Badge>,
 
-    <div className="menu" onClick={handleClickLogin} ref={refLogin} key="4">
+    <div
+      className="menu"
+      // onClick={handleClickLogin}
+      ref={refLogin}
+      key="4"
+    >
       <Button className="menu-button">
         <MenuOutlined style={{ fontSize: '1.5em' }} />
       </Button>
@@ -1038,7 +1073,7 @@ const Navbar: React.FC = () => {
                 className="btn-notice"
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
-                    window.open(`/message`, '_seft');
+                    window.open(`/message`, '_parent');
                   } else {
                     setOpenModalLogin(true);
                   }

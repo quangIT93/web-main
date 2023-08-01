@@ -98,7 +98,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
     }));
   };
 
-  console.log('selectedCategory', selectedCategory);
+  // console.log('selectedCategory', selectedCategory);
 
   return (
     <div className="edit-field-scale-company-container">

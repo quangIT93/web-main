@@ -14,6 +14,7 @@
     align-items: center;
     justify-content: space-evenly;
     // background: #ccc;
+    
     position: relative;
     .top-notificate_system {
       flex: 1;
@@ -68,7 +69,7 @@
   .bottom-notificate {
     overflow-y: scroll;
     height: 70vh;
-
+   
     .wrap-system {
       display: flex;
       margin: 12px;
@@ -260,20 +261,35 @@
         align-items: end;
       }
 
+      .wrap-content_keyword.selected {
+        background-color: #9ED6FF;
+        .content_keyword {
+          .wrap-time_keyword {
+            p {
+              color: #575757;
+            }
+          }
+        }
+      }
+
       .wrap-content_keyword {
         margin: 8px 0;
-        padding: 12px;
+        // padding: 12px;
         border-radius: 12px;
         position: relative;
         cursor: pointer;
         display: flex;
         align-items: center;
+        position: relative;
         button {
           padding: 10px 10px;
           display: flex;
           align-items: center;
           justify-content: center;
           border-radius: 12px;
+          margin-right: 8px;
+          position: absolute;
+          right: 0;
         }
 
         &:after {
@@ -291,10 +307,26 @@
         // }
 
         &:hover {
-          background-color: #e7e7ed;
+          background-color: #78c1f6;
+          .content_keyword {
+            ul {
+              li {
+                p {
+                color: #000000;
+                  
+                }
+              }
+            }
+            .wrap-time_keyword {
+              p {
+                color: #000000;
+              }
+            }
+          }
         }
         .content_keyword {
           width: 100%;
+          padding: 8px 0 8px 8px;
           h3 {
             color: #001424;
             font-size: 16px;
@@ -342,9 +374,9 @@
         }
       }
 
-      .wrap-content_keyword.selected {
-        background-color: #e7e7ed;
-      }
+    
+
+     
 
 
     }
@@ -385,5 +417,37 @@
     
     bottom: 30px;
     right: 10px;
+  }
+  .modal-delete_keyword {
+    position: absolute  ;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    background-color: #ffffff;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    width: 320px;
+    padding: 12px;
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    p {
+      padding: 8px 0;
+    }
+    .submit-delete_submitKeyWord {
+      padding: 16px 12px;
+    }
+
+    .wrap-icon_deleteKeyword {
+      position: absolute;
+      right: 3%;
+      top: 15%;
+      transform: translateY(-50%);
+      padding: 0;
+    }
+  }
+
+  .modal-delete_keyword.open-modal_deleteKeyword {
+    display: flex;
   }
 }

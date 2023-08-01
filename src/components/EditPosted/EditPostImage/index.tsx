@@ -65,8 +65,8 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
   const [files, setFiles] = React.useState<File[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
-  console.log('selectedFiles', selectedFiles);
-  console.log('selectedImages', selectedImages);
+  // console.log('selectedFiles', selectedFiles);
+  // console.log('selectedImages', selectedImages);
   const {
     getRootProps,
     getInputProps,
@@ -167,45 +167,45 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     },
   });
 
-  const thumbs = files.map((file: any, index: number) => (
-    <div
-      key={index}
-      style={{
-        border: '1px solid #ccc',
-        position: 'relative',
-        marginRight: '12px',
-        height: '150px',
-        width: '150px',
-      }}
-    >
-      <img
-        key={index}
-        src={file.preview}
-        alt={`ảnh bị lỗi`}
-        style={{
-          height: '150px',
-          width: '150px',
-          objectFit: 'cover',
-        }}
-      />
-      <div
-        className="deleteButton"
-        onClick={() => handleDeleteImage(index, 1)}
-        style={{
-          position: 'absolute',
-          top: '6px',
-          right: '6px',
-          border: 'solid 1px #ccc',
-          width: '24px',
-          height: '24px',
-          backgroundColor: '#ccc',
-          cursor: 'pointer',
-        }}
-      >
-        <CloseOutlinedIcon />
-      </div>
-    </div>
-  ));
+  // const thumbs = files.map((file: any, index: number) => (
+  //   <div
+  //     key={index}
+  //     style={{
+  //       border: '1px solid #ccc',
+  //       position: 'relative',
+  //       marginRight: '12px',
+  //       height: '150px',
+  //       width: '150px',
+  //     }}
+  //   >
+  //     <img
+  //       key={index}
+  //       src={file.preview}
+  //       alt={`ảnh bị lỗi`}
+  //       style={{
+  //         height: '150px',
+  //         width: '150px',
+  //         objectFit: 'cover',
+  //       }}
+  //     />
+  //     <div
+  //       className="deleteButton"
+  //       onClick={() => handleDeleteImage(index, 1)}
+  //       style={{
+  //         position: 'absolute',
+  //         top: '6px',
+  //         right: '6px',
+  //         border: 'solid 1px #ccc',
+  //         width: '24px',
+  //         height: '24px',
+  //         backgroundColor: '#ccc',
+  //         cursor: 'pointer',
+  //       }}
+  //     >
+  //       <CloseOutlinedIcon />
+  //     </div>
+  //   </div>
+  // ));
 
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount

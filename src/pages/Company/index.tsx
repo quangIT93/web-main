@@ -104,7 +104,7 @@ const Company = () => {
         logoPath: '',
     });
 
-    console.log("dataCompany", dataCompany);
+    // console.log("dataCompany", dataCompany);
     const [openModalEditPost, setOpenModalEditPost] = React.useState(false);
 
     const [loadingNotFound, setLoadingNotFound] = React.useState(false);
@@ -135,7 +135,7 @@ const Company = () => {
         getCompanyInforByAccount()
     }, [])
 
-    console.log("dataCompany api: ", dataCompany);
+    // console.log("dataCompany api: ", dataCompany);
 
     const validURL = (str: string) => {
         var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
@@ -254,7 +254,7 @@ const Company = () => {
                             type: 'success',
                             content: 'Tạo công ty thành công',
                         });
-                        console.log("create company result", result);
+                        // console.log("create company result", result);
                     } else {
                         messageApi.open({
                             type: 'error',
@@ -285,7 +285,7 @@ const Company = () => {
                             type: 'success',
                             content: 'Cập nhật thông tin công ty thành công',
                         });
-                        console.log("update company result", result);
+                        // console.log("update company result", result);
 
                     }
                 }
