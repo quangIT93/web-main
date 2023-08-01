@@ -52,7 +52,7 @@ const NumericInput = (props: NumericInputProps) => {
 const EditPostNumberPhone: React.FC<IEditPostNumberPhone> = (props) => {
   const { setEditDataPosted, editDataPosted } = props;
 
-  const [phone, setPhoneNumber] = useState<string>('');
+  // const [phone, setPhoneNumber] = useState<string>('');
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
