@@ -116,11 +116,12 @@
 :where(.css-dev-only-do-not-override-yp8pcc).ant-collapse>.ant-collapse-item>.ant-collapse-header {
   display: flex;
   align-items: center;
-  padding: 0 12px;
+  padding: 0 0;
 
   .ant-collapse-header-text {
     .panel-title_text {
-      padding: 16px 12px;
+      // padding: 16px 12px;
+      line-height: 3;
     }
   }
 }

@@ -543,12 +543,12 @@
           height: 630px;
 
           .MuiBox-root {
-     
-            
-              .info-job{
-               position: relative;
-              }
-            
+
+
+            .info-job {
+              position: relative;
+            }
+
           }
 
           .MuiTabs-flexContainer {
@@ -569,134 +569,219 @@
           //   padding: 12px 0 !important;
           // }
 
-        
+          .ant-tabs {
+            height: 100%;
 
-          .MuiTabPanel-root {
+            .ant-tabs-nav {
+              .ant-tabs-nav-list {
+                width: 100%;
 
-            // height: calc(100% - 50px);
-            padding: 0px 0 !important;
+                .ant-tabs-tab {
+                  flex: 1;
+                  justify-content: center;
 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            // height: 95%;
-            align-content: space-between;
-            .job-title-container {
-              // height: 430px;
-              // overflow-y: scroll;
-
-              .job-title-details {
-                display: flex;
-                flex-direction: column;
-                // height: 90%;
-  
-                justify-content: space-around;
-                @include breakpoint(tablet) {
-                  height: 95%;
-                  justify-content: space-evenly;
-                  max-height: 600px;
-                }
-
-                @include breakpoint(mobile) {
-                  height: auto;
-                }
-
-                .div-detail-row {
-                  display: flex;
-                  flex-direction: row;
-                  margin-top: 10px;
-
-                  p {
-                    color: #575757;
-                    font-size: 15px;
-                    margin-bottom: 5px;
-                  }
-
-                  h5 {
-                    color: #001424;
-                    font-size: 14px;
-
-                    @include breakpoint(tablet) {
-                      font-size: 14px;
-                    }
-
-                    @include breakpoint(largeTablet) {
-                      font-size: 14px;
-                    }
-
-                    @include breakpoint(destop) {
-                      font-size: 14px;
-                    }
-                  }
-                }
-
-                .div-detail-rowCompany {
-                  display: flex;
-                  flex-direction: column;
-                  margin-top: 10px;
-
-                  .div-detail_descCompany {
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                    -webkit-line-clamp: 7;
-                    /* Số dòng bạn muốn hạn chế */
-                    line-clamp: 7;
-
-                  }
-
-                  h3 {
-                    color: #001424;
-                    font-family: Roboto;
+                  .ant-tabs-tab-btn {
+                    color: #000;
                     font-size: 16px;
-                    font-style: normal;
                     font-weight: 700;
-                    line-height: 20px;
-
                   }
+                }
 
-                  .div-detail-items {
-                    margin: 4px 0;
-
-                    .div-detail-titleItem {
-                      display: flex;
-                      align-items: center;
-                    }
-                  }
-
-                  p {
-                    color: #575757;
-                    font-size: 16px
-                  }
-
-                  h5 {
-                    color: #000000;
-                    font-size: 16px;
-                    font-style: normal;
-                    font-weight: 700;
-                    margin-left: 24px;
-                  }
+                .ant-tabs-ink-bar {
+                  background: rgba(13, 153, 255, 1);
+                  height: 4px;
                 }
               }
             }
 
-            .btn-apply {
-              background-color: #0d99ff;
-              font-size: 17px;
-              width: 100%;
-              height: 45px;
-              // margin-bottom: 0px;
-              margin: 20px auto;
+            .ant-tabs-content {
+              height: 100%;
 
-              // @include breakpoint(mobile) {
-              //   display: none;
-              // }
+              .ant-tabs-tabpane-active {
 
-              // @include breakpoint(tablet) {
-              //   display: none;
-              // }
+                // height: calc(100% - 50px);
+                padding: 0px 0 !important;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+                align-content: space-between;
+
+                .job-title-container {
+                  // height: 430px;
+                  // overflow-y: scroll;
+
+                  .job-title-details {
+                    display: flex;
+                    flex-direction: column;
+                    // height: 90%;
+
+                    justify-content: space-around;
+
+                    @include breakpoint(tablet) {
+                      height: 95%;
+                      justify-content: space-evenly;
+                      max-height: 600px;
+                    }
+
+                    @include breakpoint(mobile) {
+                      height: auto;
+                    }
+
+                    .div-detail-row {
+                      display: flex;
+                      flex-direction: column;
+                      margin-top: 10px;
+
+                      .div-detail-row-titleItem {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                      }
+
+                      p {
+                        color: #575757;
+                        font-size: 16px;
+                        font-weight: 500;
+                      }
+
+                      h5 {
+                        color: #001424;
+                        font-size: 16px;
+                        font-weight: 500;
+                        margin-left: 28px;
+
+                        @include breakpoint(tablet) {
+                          font-size: 16px;
+                        }
+
+                        @include breakpoint(largeTablet) {
+                          font-size: 16px;
+                        }
+
+                        @include breakpoint(destop) {
+                          font-size: 16px;
+                        }
+                      }
+                    }
+
+                    .div-intro-Company {
+                      display: flex;
+                      gap: 12px;
+                      padding-bottom: 12px;
+                      border-bottom: 1px solid #aaa;
+
+                      .div-intro-Company_rows {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+
+                        .div-intro-Company_row {
+                          p {
+                            color: #252525;
+                            font-family: Roboto;
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: 20px;
+                            /* 125% */
+                          }
+
+                          .div-intro-Company_row__item {
+                            display: flex;
+                            gap: 8px;
+                            align-items: center;
+
+                            h3 {
+                              color: #252525;
+                              font-family: Roboto;
+                              font-size: 14px;
+                              font-style: normal;
+                              font-weight: 400;
+                              line-height: 20px;
+                              /* 142.857% */
+                            }
+                          }
+                        }
+                      }
+                    }
+
+                    .div-detail-rowCompany {
+                      display: flex;
+                      flex-direction: column;
+                      margin-top: 10px;
+
+                      .div-detail_descCompany {
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        -webkit-line-clamp: 7;
+                        /* Số dòng bạn muốn hạn chế */
+                        line-clamp: 7;
+
+                      }
+
+                      h3 {
+                        color: #001424;
+                        font-family: Roboto;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 20px;
+
+                      }
+
+                      .div-detail-items {
+                        margin: 4px 0;
+
+                        .div-detail-titleItem {
+                          display: flex;
+                          align-items: center;
+                          gap: 8px;
+                        }
+                      }
+
+                      p {
+                        color: #575757;
+                        font-size: 16px;
+                        font-weight: 400;
+                      }
+
+                      h5 {
+                        color: #000000;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 700;
+                        margin-left: 32px;
+                      }
+                    }
+                  }
+                }
+
+                .btn-apply {
+                  background-color: #0d99ff;
+                  font-size: 17px;
+                  width: 100%;
+                  height: 45px;
+                  // margin-bottom: 0px;
+                  margin: 20px auto 0;
+
+                  // @include breakpoint(mobile) {
+                  //   display: none;
+                  // }
+
+                  // @include breakpoint(tablet) {
+                  //   display: none;
+                  // }
+                }
+              }
             }
+
           }
+
+
+
 
           @include breakpoint(tablet) {
             width: 100%;
