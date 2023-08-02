@@ -13,6 +13,9 @@ import { useMediaQuery } from '@mui/material';
 
 import { message } from 'antd';
 
+import axios from 'axios';
+// import { saveAs } from 'file-saver';
+
 import './style.scss';
 import { blob } from 'stream/consumers';
 interface PostImageProps {
@@ -46,64 +49,134 @@ const PostImage: React.FC<PostImageProps> = (props) => {
   const ixsobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   // const [imageFile, setImageFile] = React.useState<any>(null);
-  React.useEffect(() => {
-    const loadImage = async () => {
-      // Bước 1: Xác định định dạng file từ URL
-      const imageExtension = await selectedFillImages?.map((image: any) =>
-        image.split('.').pop(),
-      );
-      // const imageType = `image/${
-      //   imageExtension === 'jpg' ? 'jpeg' : imageExtension
-      // }`;
+  console.log('file', selectedFiles);
 
-      // // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
-      const blobImage = await imageExtension.map(
-        (image: any) => new Blob([image], { type: image }),
-      );
+  // React.useEffect(() => {
+  //   const loadImage = async () => {
+  //     // Bước 1: Xác định định dạng file từ URL
+  //     const response = await axios.get(url, { responseType: 'blob' });
+  //     const imageExtension = await selectedFillImages?.map((image: any) =>
+  //       image.split('.').pop(),
+  //     );
 
-      const imageFile = await blobImage.map(
-        (blob: any) =>
-          new File([blob], `${Math.random().toString(10)}.${blob.type}`, {
-            type: `image/${blob.type === 'jpg' ? 'jpeg' : blob.type}`,
-          }),
-      );
+  //     // const imageType = `image/${
+  //     //   imageExtension === 'jpg' ? 'jpeg' : imageExtension
+  //     // }`;
+  //     console.log('imageExtension', imageExtension);
 
-      if (imageFile.length > 0) {
-        const validateImagesReply = validatePostImages(imageFile);
+  //     // // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
+  //     const blobImage = await imageExtension.map(
+  //       (image: any) => new Blob([image], { type: image }),
+  //     );
+  //     console.log('blobImage', blobImage);
+
+  //     const imageFile = await blobImage.map(
+  //       (blob: any) =>
+  //         new File([blob], `${Math.random().toString(10)}.${blob.type}`, {
+  //           type: `image/${blob.type === 'jpg' ? 'jpeg' : blob.type}`,
+  //         }),
+  //     );
+  //     console.log('imageFile', imageFile);
+
+  //     if (imageFile.length > 0) {
+  //       const validateImagesReply = validatePostImages(imageFile);
+  //       if (validateImagesReply.isError) {
+  //         console.log('::: Invalid images');
+  //         return toast.warn('Ảnh không đúng định dạng');
+  //       } else {
+  //         try {
+  //           const compressedImages: any = [];
+  //           console.log('Compressed image ::: ', imageFile);
+  //           await Promise.all(
+  //             imageFile.map(async (image: any) => {
+  //               const compressedImage = await imageCompression(image, options);
+  //               compressedImages.push(
+  //                 new File([compressedImage], compressedImage.name, {
+  //                   type: compressedImage.type,
+  //                 }),
+  //               );
+  //             }),
+  //           );
+  //           // console.log('Original image ::: ', imagesUpload)
+
+  //           setSelectedFiles((prevState) => [
+  //             ...prevState,
+  //             ...compressedImages.map((image: any) => ({
+  //               image,
+  //               preview: window.URL.createObjectURL(image),
+  //             })),
+  //           ]);
+  //         } catch (error) {
+  //           console.log('error', error);
+  //         }
+  //       }
+  //     }
+  //   };
+
+  //   loadImage();
+  // }, [selectedFillImages]);
+
+  async function downloadAndConvertImagesToFiles(urls: any) {
+    try {
+      const convertedFiles = [];
+      setSelectedFiles([]);
+
+      for (const url of urls) {
+        const response = await axios.get(url, {
+          responseType: 'blob',
+        });
+
+        const imageExtension = response.config.url?.split('.').pop();
+        const file = new File([response.data], getFileNameFromUrl(url), {
+          type: `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}`,
+        });
+
+        convertedFiles.push(file);
+      }
+      if (convertedFiles.length > 0) {
+        const validateImagesReply = validatePostImages(convertedFiles);
         if (validateImagesReply.isError) {
-          console.log('::: Invalid images');
+          // console.log('::: Invalid images');
           return toast.warn('Ảnh không đúng định dạng');
         } else {
-          try {
-            const compressedImages: any = [];
-            console.log('Compressed image ::: ', imageFile);
-            await Promise.all(
-              imageFile.map(async (image: any) => {
-                const compressedImage = await imageCompression(image, options);
-                compressedImages.push(
-                  new File([compressedImage], compressedImage.name, {
-                    type: compressedImage.type,
-                  }),
-                );
-              }),
-            );
-            // console.log('Original image ::: ', imagesUpload)
+          const compressedImages: any = [];
 
-            setSelectedFiles((prevState) => [
-              ...prevState,
-              ...compressedImages.map((image: any) => ({
-                image,
-                preview: window.URL.createObjectURL(image),
-              })),
-            ]);
-          } catch (error) {
-            console.log('error', error);
-          }
+          await Promise.all(
+            convertedFiles.map(async (image: any) => {
+              const compressedImage = await imageCompression(image, options);
+              compressedImages.push(
+                new File([compressedImage], compressedImage.name, {
+                  type: compressedImage.type,
+                }),
+              );
+            }),
+          );
+
+          setSelectedFiles((prevState) => [
+            ...prevState,
+            ...compressedImages.map((image: any) => ({
+              image,
+              preview: window.URL.createObjectURL(image),
+            })),
+          ]);
         }
       }
-    };
 
-    loadImage();
+      // console.log('Converted files:', convertedFiles);
+      // Ở đây bạn có thể thực hiện các xử lý khác với mảng convertedFiles, ví dụ lưu chúng vào state, ...
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  function getFileNameFromUrl(url: any) {
+    // Hàm này sẽ lấy tên file từ URL, có thể thay đổi phù hợp với cách đặt tên file của bạn
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1];
+  }
+
+  React.useEffect(() => {
+    downloadAndConvertImagesToFiles(selectedImages);
   }, [selectedFillImages]);
 
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
@@ -299,7 +372,6 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     );
 
     selectedFiles.forEach((file: any) => URL.revokeObjectURL(file.preview));
-    console.log('selected file', selectedFiles);
 
     const imagesToCheck =
       selectedFiles.length + imagesUpload.length > 5
