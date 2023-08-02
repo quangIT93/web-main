@@ -32,6 +32,7 @@ interface IFilterSalary {
   setSalaryMin: React.Dispatch<React.SetStateAction<number | null>>;
   setSalaryMax: React.Dispatch<React.SetStateAction<number | null>>;
   salaryType: number;
+  reset: Boolean;
 }
 
 const FilterSalary: React.FC<IFilterSalary> = (props) => {
@@ -43,6 +44,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     setSalaryMin,
     salaryMax,
     salaryMin,
+    reset,
   } = props;
 
   const [inputValueMin, setInputValueMin] = useState<string | null>(null);
@@ -278,6 +280,13 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     setSelectedValue(1);
   };
 
+  // useEffect(() => {
+  //   reset && handleCancleValue()
+  // }, [reset])
+
+  console.log("selectedValue", selectedValue);
+
+
   useEffect(() => {
     const handleOutsideClick = (e: any) => {
       if (
@@ -339,7 +348,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           </Radio.Group>
           <br />
           <Input
-            maxLength={11}
+            maxLength={selectedValue === 1 ? 11 : 5}
             // value={inputValueMin ? inputValueMin : Salary_Min ? Salary_Min : ''}
             value={
               // inputValueMin || inputValueMin === ''

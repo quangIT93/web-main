@@ -3,7 +3,7 @@ import React, { useState, memo } from 'react';
 import Typography from '@mui/material/Typography';
 // import { Button } from '@mui/material';
 
-import { Upload, message } from 'antd';
+import { Modal, Upload, message } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 
 import {
@@ -18,6 +18,9 @@ interface IEditLogoCompany {
 
 const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
   const { dataCompany, setDataCompany } = props;
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewTitle, setPreviewTitle] = useState('');
+  const [previewImage, setPreviewImage] = useState('');
 
   const [fileList, setFileList] = useState<UploadFile[]>(
     dataCompany?.logoPath && dataCompany?.logopath !== ''
@@ -67,22 +70,31 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
       return Upload.LIST_IGNORE || checFileSize;
     },
     onPreview: async (file: UploadFile) => {
-      let src = file.url as string;
-      if (!src) {
-        src = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file.originFileObj as RcFile);
-          reader.onload = () => resolve(reader.result as string);
-        });
-      }
-      const image = new Image();
-      image.src = src;
-      const imgWindow = window.open(src);
-      imgWindow?.document.write(image.outerHTML);
+      handlePreview(file)
     },
     maxCount: 1,
     listType: 'picture-card',
     fileList,
+  };
+
+  const handleCancel = () => setPreviewOpen(false);
+
+  const getBase64 = (file: RcFile): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as RcFile);
+    }
+
+    setPreviewImage(file.url || (file.preview as string));
+    setPreviewOpen(true);
+    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
   };
 
   return (
@@ -108,6 +120,9 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
             )}
           </Upload>
         </div>
+        <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        </Modal>
       </div>
     </div>
   );

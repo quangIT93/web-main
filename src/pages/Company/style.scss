@@ -147,3 +147,10 @@
         }
     }
 }
+
+.ant-modal {
+    width: fit-content !important;
+    // top: 50% !important;
+    // transform: translateY(-50%);
+    // transform-origin: unset !important;
+}
