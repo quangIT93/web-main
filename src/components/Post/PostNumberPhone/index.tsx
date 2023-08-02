@@ -57,7 +57,6 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
   // ) => {
   //   setPhoneNumber(e.target.value.replace('d', ''));
   // };
-  console.log('numnber', phone);
 
   return (
     <Box sx={{ marginTop: '24px' }}>

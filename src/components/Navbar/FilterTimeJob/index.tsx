@@ -25,10 +25,12 @@ interface IFilterTimeJob {
   setIsRemotely: React.Dispatch<React.SetStateAction<number>>;
   isRemotely: number;
   isWorkingWeekend: number;
+  reset: Boolean;
+  setReset: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
 const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
-  const { setIsWorkingWeekend, isWorkingWeekend, isRemotely, setIsRemotely } =
+  const { setIsWorkingWeekend, isWorkingWeekend, isRemotely, setIsRemotely, reset, setReset } =
     props;
 
   // const [selectedValue, setSelectedValue] = useState('')
@@ -103,9 +105,11 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
   const handleWeekendChange = (e: any) => {
     if (e.target.checked) {
+      setReset(false)
       setCheckboxIsWeekend(1);
       setIsWorkingWeekend(1);
     } else {
+      setReset(false)
       setCheckboxIsWeekend(0);
       setIsWorkingWeekend(0);
     }
@@ -113,9 +117,11 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
   const handleRemoteChange = (e: any) => {
     if (e.target.checked) {
+      setReset(false)
       setChecksetIsRemotely(1);
       setIsRemotely(1);
     } else {
+      setReset(false)
       setChecksetIsRemotely(0);
       setIsRemotely(0);
     }
@@ -181,7 +187,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
               label="Làm việc cuối tuần"
               control={
                 <Checkbox
-                  checked={checkboxIsWeekend === 0 ? false : true}
+                  checked={reset ? false : isWorkingWeekend === 0 ? false : true}
                   onChange={handleWeekendChange}
                 />
               }
@@ -190,7 +196,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
               label="Làm việc từ xa"
               control={
                 <Checkbox
-                  checked={checksetIsRemotely === 0 ? false : true}
+                  checked={reset ? false : isRemotely === 0 ? false : true}
                   onChange={handleRemoteChange}
                 />
               }

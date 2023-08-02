@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 
-import Modal from '@mui/material/Modal';
+// import Modal from '@mui/material/Modal';
 
-import ImageListItem from '@mui/material/ImageListItem';
+// import ImageListItem from '@mui/material/ImageListItem';
 
 import Grid from '@mui/material/Grid';
 import hotJobApi from 'api/hotJobApi';
@@ -13,63 +13,32 @@ import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-// icon material
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Checkbox,
-  ListItemText,
-  OutlinedInput,
-  NativeSelect,
-  ListSubheader,
-  TextField,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  Autocomplete,
-  Box,
-  Chip,
-  ListItemButton,
-  Collapse,
-  RadioGroup,
-  Radio,
-  FormControlLabel,
-  Button,
-} from '@mui/material';
+import { Box } from '@mui/material';
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from 'store/index';
-import { RootState } from 'store/reducer';
+import { useDispatch } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { actionCreators } from 'store/index';
+// import { RootState } from 'store/reducer';
 
-import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
+// import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
 import { message } from 'antd';
 // import api
 // import postApi from 'api/postApi'
-import bookMarkApi from 'api/bookMarkApi';
-import searchApi from 'api/searchApi';
-import profileApi from 'api/profileApi';
-import locationApi from 'api/locationApi';
+
 import Footer from '../../components/Footer/Footer';
 
-import moment from 'moment';
+// import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 // @ts-ignore
 import { Navbar } from '#components';
-import { CreateKeywordIconSmall, MoreICon } from '#components/Icons';
+import { MoreICon } from '#components/Icons';
 
 //import jobcard
-import JobCard from '../../components/Home/JobCard';
+// import JobCard from '../../components/Home/JobCard';
 import JobCardHotJob from './JobCardHotJob';
 import InfluencerCard from './InfluencerCard';
 
@@ -82,24 +51,24 @@ import {
 } from 'react-router-dom';
 // import { AxiosResponse } from 'axios'
 // import icon
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  // EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
+// import {
+//   EnvironmentFilled,
+//   ClockCircleFilled,
+//   // EuroCircleFilled,
+//   CaretDownFilled,
+// } from '@ant-design/icons';
 
 import { Space, Tooltip } from 'antd';
 
 import './style.scss';
-import { stringify } from 'query-string/base';
-import notificationKeywordApi from 'api/notificationKeyword';
+// import { stringify } from 'query-string/base';
+// import notificationKeywordApi from 'api/notificationKeyword';
 
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import ShowCancleSave from '#components/ShowCancleSave';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
 
 export interface PostHotJob {
   id: number;
@@ -152,43 +121,53 @@ const HotJobpage: React.FC = () => {
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate()
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [pageNumber, setPageNumber] = React.useState(0);
 
   // modal keyword
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
 
-  const [selectedProvince, setSelectedProvince] = React.useState<any>(null);
-  const [value, setValue] = React.useState<string | number>('');
+  // const [selectedProvince, setSelectedProvince] = React.useState<any>(null);
+  // const [value, setValue] = React.useState<string | number>('');
 
-  const [selectedProvinceId, setSelectedProvinceId] = React.useState<
-    number | null
-  >(null);
+  // const [selectedProvinceId, setSelectedProvinceId] = React.useState<
+  //   number | null
+  // >(null);
 
-  const [open, setOpen] = React.useState<any>([]);
-  const locations: any = [];
+  // const [open, setOpen] = React.useState<any>([]);
+  // const locations: any = [];
 
-  const [location, setLocation] = React.useState<any>(
-    locations?.map((v: any, i: number) => v.district),
-  );
+  // const [location, setLocation] = React.useState<any>(
+  //   locations?.map((v: any, i: number) => v.district),
+  // );
 
-  const [locationId, setLocationId] = React.useState<any>(
-    locations?.map((v: any, i: number) => v.district_id),
-  );
+  // const [locationId, setLocationId] = React.useState<any>(
+  //   locations?.map((v: any, i: number) => v.district_id),
+  // );
 
-  const [valueDistrict, setValueDistrict] = React.useState<any>({
-    district: '',
-    district_id: '',
-    wards: [],
-  });
-  const [openModal, setOpenModal] = React.useState(false);
+  // const [valueDistrict, setValueDistrict] = React.useState<any>({
+  //   district: '',
+  //   district_id: '',
+  //   wards: [],
+  // });
+  // const [openModal, setOpenModal] = React.useState(false);
 
-  const [valueKeyword, setValueKeyword] = React.useState('');
-  const [districtId, setDistrictId] = React.useState<string>('');
+  // const [valueKeyword, setValueKeyword] = React.useState('');
+  // const [districtId, setDistrictId] = React.useState<string>('');
 
-  const [oenModalCreateSuccess, setOpenModalCreateSuccess] =
-    React.useState(false);
+  // const [oenModalCreateSuccess, setOpenModalCreateSuccess] =
+  //   React.useState(false);
+
+  const analytics: any = getAnalytics();
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_hotJob' as string,
+    });
+  }, []);
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
   const dispatch = useDispatch();
@@ -297,14 +276,14 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? 'Remote'
                     : hotJobType === 3
-                      ? 'Influencer'
-                      : hotJobType === 4
-                        ? 'Short time'
-                        : hotJobType === 5
-                          ? 'Job today'
-                          : hotJobType === 6
-                            ? 'Freelancer'
-                            : ''}
+                    ? 'Influencer'
+                    : hotJobType === 4
+                    ? 'Short time'
+                    : hotJobType === 5
+                    ? 'Job today'
+                    : hotJobType === 6
+                    ? 'Freelancer'
+                    : ''}
                 </h3>
                 <h4>
                   {hotJobTotal ? hotJobTotal : 0}
@@ -315,9 +294,7 @@ const HotJobpage: React.FC = () => {
 
             {hotjob.length > 0 ? (
               <>
-                <Grid container spacing={2}
-                  columns={{ xs: 6, sm: 4, md: 12 }}
-                >
+                <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
                   {hotjob.map((item: PostHotJob, index: number) => (
                     <Grid
                       item
@@ -365,7 +342,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

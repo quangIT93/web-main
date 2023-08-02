@@ -30,6 +30,9 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 // import { RootState } from '../../../store/reducer';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 import './style.scss';
 
 interface ItemTheme {
@@ -234,6 +237,12 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
             <SwiperSlide
               key={index}
               onClick={(event) => {
+                const analytics: any = getAnalytics();
+
+                logEvent(analytics, 'screen_view' as string, {
+                  // screen_name: screenName as string,
+                  page_title: `/web_click_place_category` as string,
+                });
                 handleChange(event, item.id);
               }}
               style={{

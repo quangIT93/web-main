@@ -13,6 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import messageApi from 'api/messageApi';
 import historyRecruiter from 'api/historyRecruiter';
+import postApi from 'api/postApi';
 
 import { listUser, listMessage, countUnRead } from './data';
 import './style.scss';
@@ -45,7 +46,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   const getAllUserChat = async () => {
     try {
       const result = await messageApi.getUserChated();
-      // console.log('result', result);
+      console.log('result', result);
       if (result) {
         setStateUserChat(result.data);
       }
@@ -64,23 +65,55 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         Number(searchParams.get('post_id')),
         searchParams.get('application_id') ?? '',
       );
+      console.log('asdaadad', result);
 
       if (result.data) {
         setUserInfoChat({
-          user_id: result.data.applicationProfile.account_id,
-          name: result.data.applicationProfile.name,
-          avatar: result.data.applicationProfile.avatar,
+          user_id: result?.data.applicationProfile?.account_id,
+          name: result.data.applicationProfile?.name,
+          avatar: result.data.applicationProfile?.avatar,
           isOnline: null,
+          company_name: '',
+          image: '',
+          applied: '',
+          salary_max: '',
+          salary_min: '',
+          money_type_text: '',
+          salary_type_id: '',
         });
       }
     } catch (error) {
       console.error('error', error);
+      try {
+        if (searchParams.get('post_id') && searchParams.get('user_id')) {
+          const result = await postApi.getPostV3(
+            Number(searchParams.get('post_id')),
+          );
+          // console.log('ressulr post id', result);
+          setUserInfoChat({
+            user_id: searchParams.get('user_id'),
+            name: result.data.companyName,
+            avatar: result.data.image,
+            isOnline: null,
+            company_name: result.data.company_name,
+            image: result.data.image,
+            applied: result.data.applied,
+            salary_max: result.data.salary_max,
+            salary_min: result.data.salary_min,
+            money_type_text: result.data.money_type_text,
+            salary_type_id: result.data.salary_type_id,
+            post_title: result.data.title,
+          });
+        }
+      } catch (error) {
+        console.error('error', error);
+      }
     }
   };
 
   useEffect(() => {
     getApplicationByIdAndPost();
-  }, [searchParams.get('post_id'), searchParams.get('user_id')]);
+  }, []);
 
   const updateWindowWidth = () => {
     if (window.innerWidth <= 555) {
@@ -95,6 +128,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   }, [windowWidth]);
 
   const handleClickUserInfo = (user: any) => {
+    // console.log(user);
+
     setBackDrop(true);
     setSearchParams({ post_id: user.post_id, user_id: user.user_id });
     getAllUserChat();
@@ -132,18 +167,33 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       if (userChat.user_id === searchParams.get('user_id')) {
         setUserInfoChat({
           user_id: userChat.user_id,
-          name: userChat.name,
-          avatar: userChat.avatar,
+          name: userChat.name ? userChat.name : userChat.company_name,
+          avatar: userChat.name ? userChat.avatar : userChat.image,
           isOnline: null,
+          company_name: userChat.company_name,
+          image: userChat.image,
+          applied: userChat.applied,
+          salary_max: userChat.salary_max,
+          salary_min: userChat.salary_min,
+          money_type_text: userChat.money_type_text,
+          salary_type_id: userChat.salary_type_id,
+          post_title: userChat.post_title,
         });
       }
       return null;
     });
-  }, [searchParams.get('user_id'), listUserChat]);
+  }, [listUserChat]);
 
   // console.log('tin nhan duoc nhan', receivedMessages)
   // console.log('tin nhan da gui', sendMessages)
   // const onSearch = (value: string) => console.log(value);
+  const userTest = {
+    post_id: '66596',
+    user_id: 'dc68ddaf-a185-4c84-a983-c94068f5c646',
+  };
+
+  // console.log('lisstUserrChat', listUserChat);
+
   if (listUserChat.length !== 0) {
     return (
       <div
@@ -178,6 +228,28 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           >
             <CircularProgress color="inherit" />
           </Backdrop>
+          {/* <div
+            className={`wrap-userInfo `}
+            // key={index}
+            onClick={() => handleClickUserInfo(userTest)}
+          >
+            <div className="wrap-avatar_userChat">
+              <div>Hijob</div>
+              <span
+                className="user-online_true"
+              ></span>
+            </div>
+            <div className="info-user_chat">
+              <h4>user.name</h4>
+              <h5>user.post_title</h5>
+              <p>user.message</p>
+            </div>
+            <div className="info-chat_icon">
+              <small>{new Date().toLocaleString('en-GB')}</small>
+
+              <span className="count-message_receive"></span>
+            </div>
+          </div> */}
           {listUserChat.map((user: any, index: number) => (
             <div
               className={`wrap-userInfo ${userInfoChat.user_id === user.user_id ? 'readed-message' : ''
@@ -197,12 +269,14 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                 ></span>
               </div>
               <div className="info-user_chat">
-                <h4>{user.name}</h4>
-                <h5>{user.post_title}</h5>
+                <h4>{user.name ? user.name : user.company_name}</h4>
+                <h5>{user.name ? '' : user.post_title}</h5>
                 <p>{user.message}</p>
               </div>
               <div className="info-chat_icon">
-                <small>{new Date(user.created_at).toLocaleString('en-GB')}</small>
+                <small>
+                  {new Date(user.created_at).toLocaleString('en-GB')}
+                </small>
                 {user.status === 1 ? (
                   <span className="count-message_readed">
                     <SeenIcon />

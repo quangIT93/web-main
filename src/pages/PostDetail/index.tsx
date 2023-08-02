@@ -49,6 +49,7 @@ import TabPanel from '@mui/lab/TabPanel';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { MessageOutlined } from '@ant-design/icons';
 //@ts-ignore
 // import { CopyToClipboard } from 'react-copy-to-clipboard';
 //@ts-ignore
@@ -100,7 +101,7 @@ import {
   MonitorPostIcon,
   DollarPostIcon,
   WorkPostIcon,
-  BoardiIntroCompanyPostIcon
+  BoardiIntroCompanyPostIcon,
 } from '#components/Icons';
 
 import './style.scss';
@@ -256,7 +257,7 @@ const Detail: React.FC = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -592,14 +593,17 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-      }, ${post?.data?.location?.district
-        ? post?.data?.location?.district?.fullName
-        : ''
-      }, ${post?.data?.location?.district?.province
-        ? post?.data.district?.province?.fullName
-        : ''
-      }`,
+        `${post?.data.address}, ${
+          post?.data.location ? post?.data.location.fullName : ''
+        }, ${
+          post?.data?.location?.district
+            ? post?.data?.location?.district?.fullName
+            : ''
+        }, ${
+          post?.data?.location?.district?.province
+            ? post?.data.district?.province?.fullName
+            : ''
+        }`,
     );
   };
 
@@ -688,14 +692,14 @@ const Detail: React.FC = () => {
   };
 
   const onChangeTab = (key: string) => {
-    setKeyTab(key)
+    setKeyTab(key);
   };
 
   const items: TabsProps['items'] = [
     {
       key: '1',
       label: `Thông tin việc làm`,
-      children:
+      children: (
         <>
           <div className="job-title-container">
             <div className="job-title-details">
@@ -725,21 +729,18 @@ const Detail: React.FC = () => {
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
-                    {moment(
-                      new Date(post?.data.startTime),
-                    ).format('HH:mm')}{' '}
-                    -{' '}
-                    {moment(new Date(post?.data.endTime)).format(
-                      'HH:mm',
-                    )}
+                    {moment(new Date(post?.data.startTime)).format('HH:mm')} -{' '}
+                    {moment(new Date(post?.data.endTime)).format('HH:mm')}
                   </h5>
                 </div>
               </div>
               <div
                 className="div-detail-row"
                 style={{
-                  display: post?.data?.startDate != null
-                    || post?.data?.endDate != null ? 'flex' : 'none'
+                  display:
+                    post?.data?.startDate != null || post?.data?.endDate != null
+                      ? 'flex'
+                      : 'none',
                 }}
               >
                 <div className="div-detail-row-titleItem">
@@ -752,9 +753,7 @@ const Detail: React.FC = () => {
                       'en-GB',
                     )}
                     -{' '}
-                    {new Date(post?.data?.endDate).toLocaleDateString(
-                      'en-GB',
-                    )}
+                    {new Date(post?.data?.endDate).toLocaleDateString('en-GB')}
                   </h5>
                 </div>
               </div>
@@ -810,12 +809,14 @@ const Detail: React.FC = () => {
                   <WorkPostIcon />
                   <p>Danh mục</p>
                 </div>
-                <div className="div-detail-row-titleItem">
+                <div
+                  className="div-detail-row-titleItem"
+                  style={{ flexDirection: 'column', alignItems: 'flex-start' }}
+                >
                   {post?.data.postCategories.map(
                     (item: any, index: null | number) => (
                       <h5 key={index}>
-                        {item.parentCategory.fullName}/
-                        {item.fullName}
+                        {item.parentCategory.fullName}/{item.fullName}
                       </h5>
                     ),
                   )}
@@ -823,8 +824,34 @@ const Detail: React.FC = () => {
               </div>
             </div>
           </div>
-          <>
+          <div className="post-detail-btns">
             {contextHolder}
+            <Button
+              type="primary"
+              ghost
+              className="btn-mess"
+              icon={<MessageOutlined />}
+              style={{
+                padding: '20px',
+                display:
+                  post?.data?.companyResourceData?.name === 'HIJOB'
+                    ? 'flex'
+                    : 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onClick={() =>
+                window.open(
+                  `/message?post_id=${searchParams.get('post-id')}&user_id=${
+                    post?.data?.accountId
+                  } `,
+                  '_blank',
+                )
+              }
+              // onClick={() => {
+              //   console.log(post?.data);
+              // }}
+            ></Button>
             <Button
               onClick={onclick}
               className="btn-apply"
@@ -842,21 +869,27 @@ const Detail: React.FC = () => {
             >
               {textButton}
             </Button>
-          </>
+          </div>
         </>
-      ,
+      ),
     },
-    post?.data?.postCompanyInformation &&
-    {
+    post?.data?.postCompanyInformation && {
       key: '2',
       label: `Thông tin công ty`,
-      style: { display: post?.data?.postCompanyInformation && key === '2' ? 'flex' : 'none' },
-      children:
+      style: {
+        display:
+          post?.data?.postCompanyInformation && key === '2' ? 'flex' : 'none',
+      },
+      children: (
         <>
           <div className="job-title-container">
             <div className="job-title-details">
               <div className="div-intro-Company">
-                <Avatar shape="square" size={80} src={post?.data?.postCompanyInformation?.logoPath} />
+                <Avatar
+                  shape="square"
+                  size={80}
+                  src={post?.data?.postCompanyInformation?.logoPath}
+                />
                 <div className="div-intro-Company_rows">
                   <div className="div-intro-Company_row">
                     <p>{post?.data?.postCompanyInformation?.name}</p>
@@ -864,11 +897,21 @@ const Detail: React.FC = () => {
                   <div className="div-intro-Company_row">
                     <div className="div-intro-Company_row__item">
                       <BoardiIntroCompanyPostIcon />
-                      <h3>{post?.data?.postCompanyInformation?.companySizeInfomation?.nameText}</h3>
+                      <h3>
+                        {
+                          post?.data?.postCompanyInformation
+                            ?.companySizeInfomation?.nameText
+                        }
+                      </h3>
                     </div>
                     <div className="div-intro-Company_row__item">
                       <CalendarPostIcon width={24} height={24} />
-                      <h3>{post?.data?.postCompanyInformation?.companyCategory?.fullName}</h3>
+                      <h3>
+                        {
+                          post?.data?.postCompanyInformation?.companyCategory
+                            ?.fullName
+                        }
+                      </h3>
                     </div>
                   </div>
                 </div>
@@ -878,8 +921,7 @@ const Detail: React.FC = () => {
                 <div className="div-detail_descCompany">
                   <p>
                     {post?.data.postCompanyInformation
-                      ? post?.data.postCompanyInformation
-                        ?.description
+                      ? post?.data.postCompanyInformation?.description
                       : 'Chưa cập nhật'}
                   </p>
                 </div>
@@ -894,8 +936,7 @@ const Detail: React.FC = () => {
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation
-                        ? post?.data?.postCompanyInformation
-                          ?.taxCode
+                        ? post?.data?.postCompanyInformation?.taxCode
                         : 'Chưa cập nhật'}
                     </h5>
                   </div>
@@ -909,8 +950,8 @@ const Detail: React.FC = () => {
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
                         : 'Chưa cập nhật'}
                     </h5>
                   </div>
@@ -923,8 +964,7 @@ const Detail: React.FC = () => {
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation
-                        ? post?.data?.postCompanyInformation
-                          ?.email
+                        ? post?.data?.postCompanyInformation?.email
                         : 'Chưa cập nhật'}
                     </h5>
                   </div>
@@ -937,8 +977,7 @@ const Detail: React.FC = () => {
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation
-                        ? post?.data?.postCompanyInformation
-                          ?.phone
+                        ? post?.data?.postCompanyInformation?.phone
                         : 'Chưa cập nhật'}
                     </h5>
                   </div>
@@ -951,8 +990,7 @@ const Detail: React.FC = () => {
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation
-                        ? post?.data?.postCompanyInformation
-                          ?.website
+                        ? post?.data?.postCompanyInformation?.website
                         : 'Chưa cập nhật'}
                     </h5>
                   </div>
@@ -961,7 +999,7 @@ const Detail: React.FC = () => {
             </div>
           </div>
         </>
-      ,
+      ),
     },
   ];
   // console.log('post?.data?', post?.data);
@@ -1021,14 +1059,17 @@ const Detail: React.FC = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
-                      }, ${post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${
+                      post?.data?.location ? post?.data?.location?.fullName : ''
+                    }, ${
+                      post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                      }, ${post?.data?.location?.district?.province
+                    }, ${
+                      post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                      }`}</h3>
+                    }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -1199,7 +1240,12 @@ const Detail: React.FC = () => {
                       typography: 'body1',
                     }}
                   >
-                    <Tabs defaultActiveKey="1" centered items={items} onChange={onChangeTab} />
+                    <Tabs
+                      defaultActiveKey="1"
+                      centered
+                      items={items}
+                      onChange={onChangeTab}
+                    />
                   </Box>
                 </div>
               </div>
@@ -1221,7 +1267,7 @@ const Detail: React.FC = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                        // onClick={handlePreviousPost}
+                          // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1376,8 +1422,8 @@ const Detail: React.FC = () => {
                 {post?.data?.companyResourceData?.name === 'HIJOB'
                   ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Bạn có muốn ứng tuyển công việc này không?'
                   : isApplied
-                    ? 'Bạn đã ứng tuyển công việc này chưa?'
-                    : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
+                  ? 'Bạn đã ứng tuyển công việc này chưa?'
+                  : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
               </Typography>
 
               <Box
@@ -1405,8 +1451,8 @@ const Detail: React.FC = () => {
                     post?.data?.companyResourceData?.name === 'HIJOB'
                       ? handleApply
                       : isApplied
-                        ? handleChangeStatus
-                        : handleClickChangePage
+                      ? handleChangeStatus
+                      : handleClickChangePage
                   }
                   style={{
                     width: '300px',

@@ -148,8 +148,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter' && event.target.id !== 'extraExp_info') {
       handleSubmit();
     }
   };
@@ -289,6 +289,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
             multiline
             rows={4}
+            id="extraExp_info"
             // label="Một số đặc điểm nhận diện công ty"
             placeholder="Để được nhà tuyển dụng quan tâm và tăng cơ hội ứng tuyển vào công ty mong muốn. Hẫy nhập thông tin bổ sung của bạn vào đây!"
           />

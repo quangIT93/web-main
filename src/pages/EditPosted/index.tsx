@@ -34,6 +34,9 @@ import postApi from 'api/postApi';
 import historyRecruiter from 'api/historyRecruiter';
 // import { ConsoleSqlOutlined } from '@ant-design/icons'
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 export interface FormValues {
   id: string;
   title: string;
@@ -114,6 +117,16 @@ const EditPosted = () => {
   const [changePage, setChangePage] = React.useState(false);
 
   const postId = parseInt(searchParams.get('postId') ?? '');
+
+  const analytics: any = getAnalytics();
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_editPost' as string,
+    });
+  }, []);
 
   useEffect(() => {
     if (dataPostById) {

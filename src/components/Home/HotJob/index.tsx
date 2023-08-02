@@ -33,6 +33,9 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 import { FireIcon, BagIcon } from '#components/Icons';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 // import { dataImageHotJob } from './dataImagehotJob';
 
 import './style.scss';
@@ -136,36 +139,38 @@ const HotJob: React.FC = () => {
       <Swiper
         navigation={true}
         // mousewheel={true}
-        breakpoints={{
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 24,
-          },
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          1024: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          1440: {
-            slidesPerView: 3,
-            spaceBetween: 24,
-          },
-          1920: {
-            slidesPerView: 4,
-            spaceBetween: 24,
-          },
-          2560: {
-            slidesPerView: 4,
-            spaceBetween: 24,
-          },
-        }}
+        slidesPerView="auto"
+        spaceBetween={24}
+        // breakpoints={{
+        //   320: {
+        //     slidesPerView: 1,
+        //     spaceBetween: 24,
+        //   },
+        //   640: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 24,
+        //   },
+        //   768: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 24,
+        //   },
+        //   1024: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 24,
+        //   },
+        //   1440: {
+        //     slidesPerView: 3,
+        //     spaceBetween: 24,
+        //   },
+        //   1920: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 24,
+        //   },
+        //   2560: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 24,
+        //   },
+        // }}
         modules={[Mousewheel, Navigation, Pagination]}
         className="mySwiper"
       >
@@ -175,6 +180,12 @@ const HotJob: React.FC = () => {
             <SwiperSlide
               key={index}
               onClick={(event) => {
+                const analytics: any = getAnalytics();
+
+                logEvent(analytics, 'screen_view' as string, {
+                  // screen_name: screenName as string,
+                  page_title: `/web_click_hotJob_${item.title}` as string,
+                });
                 handleClickItem(
                   event,
                   item.id,

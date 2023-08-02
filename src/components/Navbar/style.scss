@@ -609,7 +609,7 @@
   .filter-wraps,
   .filter-wrap_respone {
     width: 100%;
-    gap: 24px;
+    gap: 28px;
     display: flex;
     flex-direction: column;
 
@@ -718,7 +718,12 @@
     display: flex;
     justify-content: flex-end;
     gap: 24px;
+    flex-direction: column;
     // margin-bottom: 24px;
+
+    @media screen and (max-width: 1024px) {
+      flex-direction: row;
+    }
 
     button {
       padding: 20px 50px;

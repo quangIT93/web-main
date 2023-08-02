@@ -25,6 +25,9 @@ import Footer from '../../components/Footer/Footer';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 // import icon
 
 // @ts-ignore
@@ -77,6 +80,16 @@ const CandidateDetail: React.FC = () => {
     dataCandidate?.applicationProfile?.application_status,
   );
   const [open, setOpen] = useState(false);
+
+  const analytics: any = getAnalytics();
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_company' as string,
+    });
+  }, []);
 
   // when dataCandidate changed, statusApplication change
   useEffect(() => {
