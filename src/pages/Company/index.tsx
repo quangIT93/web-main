@@ -148,6 +148,8 @@ const Company = () => {
 
     }
 
+    const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 
     // valid values form data
     const validValue = () => {
@@ -195,6 +197,12 @@ const Company = () => {
         if (dataCompany?.email === '') {
             return {
                 message: 'Vui lòng nhập email công ty',
+                checkForm: false,
+            };
+        }
+        if (regexCheckEmail.test(dataCompany?.email) == false) {
+            return {
+                message: 'Định dạng email không đúng',
                 checkForm: false,
             };
         }

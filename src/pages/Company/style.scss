@@ -150,7 +150,9 @@
 
 .ant-modal {
     width: fit-content !important;
+    // position: relative;
     // top: 50% !important;
     // transform: translateY(-50%);
-    // transform-origin: unset !important;
+    // transform-origin: 0 !important;
+    // padding-bottom: 0;
 }

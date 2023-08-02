@@ -81,7 +81,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           const result = await postApi.getPostV3(
             Number(searchParams.get('post_id')),
           );
-          console.log('ressulr post id', result);
+          // console.log('ressulr post id', result);
           setUserInfoChat({
             user_id: searchParams.get('user_id'),
             name: result.data.companyName,
@@ -168,15 +168,14 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     user_id: 'dc68ddaf-a185-4c84-a983-c94068f5c646',
   };
 
-  console.log('lisstUserrChat', listUserChat);
+  // console.log('lisstUserrChat', listUserChat);
 
   if (listUserChat.length !== 0) {
     return (
       <div
         // className="list_userChat"
-        className={`list_userChat ${
-          props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
-        }`}
+        className={`list_userChat ${props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
+          }`}
       >
         <div className="header-list_userChat">
           <h4 className="title-header_listUserChat">Tin nhắn</h4>
@@ -201,7 +200,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackDrop}
-            // onClick={handleClose}
+          // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -229,9 +228,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           </div> */}
           {listUserChat.map((user: any, index: number) => (
             <div
-              className={`wrap-userInfo ${
-                userInfoChat.user_id === user.user_id ? 'readed-message' : ''
-              } `}
+              className={`wrap-userInfo ${userInfoChat.user_id === user.user_id ? 'readed-message' : ''
+                } `}
               key={index}
               onClick={() => handleClickUserInfo(user)}
             >
@@ -242,9 +240,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                   <div>Hijob</div>
                 )}
                 <span
-                  className={`user-online ${
-                    user.is_online ? 'user-online_true' : ''
-                  }`}
+                  className={`user-online ${user.is_online ? 'user-online_true' : ''
+                    }`}
                 ></span>
               </div>
               <div className="info-user_chat">

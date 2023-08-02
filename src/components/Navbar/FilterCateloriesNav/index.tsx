@@ -13,7 +13,10 @@ import { BagFilterIcon, ArrowFilterIcon } from '#components/Icons';
 const { Text } = Typography;
 
 interface DistrictProps {
+  listCateProps: [],
   setListCate: Function;
+  reset: Boolean;
+  setReset: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 const { SHOW_CHILD } = Cascader;
 
@@ -33,7 +36,7 @@ const { SHOW_CHILD } = Cascader;
 //   </div>
 // );
 
-const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
+const FilterCateloriesNav: React.FC<DistrictProps> = ({ listCateProps, setListCate, reset, setReset }) => {
   const [categoriesId, setCategoriesId] = useState<string[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,9 +66,9 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
     JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       : userProfile?.categories.map((profile: any) => [
-          profile?.parent_category_id,
-          profile?.child_category_id,
-        ]),
+        profile?.parent_category_id,
+        profile?.child_category_id,
+      ]),
   );
 
   searchParams
@@ -112,6 +115,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
   const [disable, setDisable] = React.useState<Boolean>(false);
 
   const onChange = (value: any) => {
+    setReset(false);
     setDisable(false);
     const secondValues = value?.map((item: any) => item[1]);
 
@@ -137,27 +141,27 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                  value: parentCategory.parent_category_id,
-                  label: parentCategory.parent_category,
-                  children: parentCategory.childs.map((child: any) => {
-                    var dis = false;
-                    //check id child  when disable = true
-                    if (disable) {
-                      dis = true;
-                      for (const elem of categoriesId) {
-                        if (elem === child.id) {
-                          dis = false;
-                          break;
-                        }
+                value: parentCategory.parent_category_id,
+                label: parentCategory.parent_category,
+                children: parentCategory.childs.map((child: any) => {
+                  var dis = false;
+                  //check id child  when disable = true
+                  if (disable) {
+                    dis = true;
+                    for (const elem of categoriesId) {
+                      if (elem === child.id) {
+                        dis = false;
+                        break;
                       }
                     }
-                    return {
-                      value: child.id,
-                      label: child.name,
-                      disabled: dis,
-                    };
-                  }),
-                }))
+                  }
+                  return {
+                    value: child.id,
+                    label: child.name,
+                    disabled: dis,
+                  };
+                }),
+              }))
               : []
           }
           onChange={onChange}
@@ -166,11 +170,14 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
               ? listCate?.current
               : listCate?.current?.length === 0 &&
                 location?.pathname === '/search-results'
-              ? []
-              : userProfile?.categories.map((profile: any) => [
+                ? []
+                : userProfile?.categories.map((profile: any) => [
                   profile?.parent_category_id,
                   profile?.child_category_id,
                 ])
+          }
+          value={
+            reset ? [] : listCateProps
           }
           multiple
           maxTagCount="responsive"

@@ -22,6 +22,9 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
 
   // const dropdownMenuStyle = { maxHeight: '200px', overflowY: 'auto' };
 
+  // console.log("fillCate", fillCate);
+
+
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
       {menus}
@@ -57,6 +60,10 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   React.useEffect(() => {
     getCategories();
   }, []);
+
+  React.useEffect(() => {
+    fillCate.length >= 2 ? setDisable(true) : setDisable(false)
+  }, [fillCate]);
 
   // React.useEffect(() => {
   //   onChange(categoriesId);

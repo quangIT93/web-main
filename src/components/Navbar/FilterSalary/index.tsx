@@ -33,6 +33,7 @@ interface IFilterSalary {
   setSalaryMax: React.Dispatch<React.SetStateAction<number | null>>;
   salaryType: number;
   reset: Boolean;
+  setReset: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
 const FilterSalary: React.FC<IFilterSalary> = (props) => {
@@ -45,6 +46,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     salaryMax,
     salaryMin,
     reset,
+    setReset
   } = props;
 
   const [inputValueMin, setInputValueMin] = useState<string | null>(null);
@@ -72,6 +74,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   useEffect(() => {
     if (Type_Money) {
       setTypeMoney(Type_Money);
+      setSelectedValue(Type_Money)
     }
 
     if (Salary_Min && Salary_Min !== 0) {
@@ -85,9 +88,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     } else if (Salary_Max === 0) {
       setSalaryMax(0);
     }
-  }, [Salary_Max, Salary_Min, Salary_Max]);
+  }, [Salary_Max, Salary_Min, Salary_Max, Type_Money]);
 
   const handleRadioChange = (e: any) => {
+    setReset(false)
     setSelectedValue(e.target.value);
     setTypeMoney(e.target.value);
   };
@@ -284,7 +288,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   //   reset && handleCancleValue()
   // }, [reset])
 
-  console.log("selectedValue", selectedValue);
+  // console.log("selectedValue", selectedValue);
 
 
   useEffect(() => {
@@ -338,7 +342,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
         >
           <Text className="title-filterSalary">Mức lương</Text>
           <Radio.Group
-            value={selectedValue}
+            value={reset ? 1 : selectedValue}
             onChange={handleRadioChange}
             className="inputFilter-groupSalary_radio"
           // defaultValue={Type_Money}

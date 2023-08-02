@@ -20,7 +20,10 @@ import { message } from 'antd';
 
 const { Text } = Typography;
 interface DistrictProps {
+  listDis: [],
   setListDis: Function;
+  reset: Boolean;
+  setReset: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 const { SHOW_CHILD } = Cascader;
 
@@ -42,7 +45,7 @@ const { SHOW_CHILD } = Cascader;
 //   </div>
 // );
 
-const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
+const FilterLocationNav: React.FC<DistrictProps> = ({ listDis, setListDis, reset, setReset }) => {
   const [dataLocations, setDataLocations] = React.useState<any>(null);
   const [dataDistrict, setDataDistrict] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
@@ -82,9 +85,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
     JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       : userProfile?.locations?.map((profile: any) => [
-          profile?.province_id,
-          profile?.district_id,
-        ]),
+        profile?.province_id,
+        profile?.district_id,
+      ]),
   );
 
   // console.log('cookies', JSON.parse(getCookie('userFiltered') || '{}'));
@@ -131,6 +134,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
   const onChange = (value: any) => {
     // Xử lý giá trị thay đổi
 
+    setReset(false);
     setDisable(false);
     const secondValues = value?.map((item: any) => item[1]);
 
@@ -160,14 +164,17 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
             inputIcon={<EnvironmentOutlined />}
             suffixIcon={<ArrowFilterIcon width={14} height={10} />}
             dropdownRender={DropdownRender}
+            value={
+              reset ? [] : listDis
+            }
             defaultValue={
               listLocation.current?.length !== 0 &&
-              listLocation.current !== undefined
+                listLocation.current !== undefined
                 ? listLocation.current
                 : listLocation.current?.length === 0 &&
                   location?.pathname === '/search-results'
-                ? []
-                : userProfile?.locations?.map((profile: any) => [
+                  ? []
+                  : userProfile?.locations?.map((profile: any) => [
                     profile?.province_id,
                     profile?.district_id,
                   ])
@@ -175,28 +182,28 @@ const FilterLocationNav: React.FC<DistrictProps> = ({ setListDis }) => {
             options={
               dataLocations
                 ? dataLocations?.map((dataLocation: any) => ({
-                    value: dataLocation.province_id,
-                    label: dataLocation.province_fullName,
-                    children: dataLocation.districts.map(
-                      (child: { district_id: string; district: string }) => {
-                        var dis = false;
-                        if (disable) {
-                          dis = true;
-                          for (const elem of locId) {
-                            if (elem === child.district_id) {
-                              dis = false;
-                              break;
-                            }
+                  value: dataLocation.province_id,
+                  label: dataLocation.province_fullName,
+                  children: dataLocation.districts.map(
+                    (child: { district_id: string; district: string }) => {
+                      var dis = false;
+                      if (disable) {
+                        dis = true;
+                        for (const elem of locId) {
+                          if (elem === child.district_id) {
+                            dis = false;
+                            break;
                           }
                         }
-                        return {
-                          value: child.district_id,
-                          label: child.district,
-                          disabled: dis,
-                        };
-                      },
-                    ),
-                  }))
+                      }
+                      return {
+                        value: child.district_id,
+                        label: child.district,
+                        disabled: dis,
+                      };
+                    },
+                  ),
+                }))
                 : []
             }
             onChange={onChange}

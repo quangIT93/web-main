@@ -138,7 +138,7 @@ const Navbar: React.FC = () => {
   const [openInfoUser, setOpenInfoUser] = React.useState(false);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [spinning, setSpinning] = React.useState(false);
-  const [reset, setReset] = React.useState(false);
+  const [reset, setReset] = React.useState<Boolean>(false);
 
   // value search
   const [salaryType, setSalaryType] = React.useState<any>();
@@ -742,6 +742,18 @@ const Navbar: React.FC = () => {
       'is_remotely': 0,
     };
     setCookie('userFiltered', JSON.stringify(filter), 365);
+
+    let typeJobReset = {
+      "id": 5,
+      "name": "Tất cả"
+    }
+    setCookie('userTypejobFiltered', JSON.stringify(typeJobReset), 365);
+
+    let typeSalaryReset = {
+      "id": 4,
+      "value": "Tháng"
+    }
+    setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };
 
   const handleChangeLanguage = (e: any) => {
@@ -1216,12 +1228,12 @@ const Navbar: React.FC = () => {
           />
           <div className="filter-wraps">
             <div className="filter-wrap_top">
-              <FilterLocationNav setListDis={setListDis} />
-              <FilterCateloriesNav setListCate={setListCate} />
-              <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
+              <FilterLocationNav listDis={listDis} setListDis={setListDis} reset={reset} setReset={setReset} />
+              <FilterCateloriesNav listCateProps={listCate} setListCate={setListCate} reset={reset} setReset={setReset} />
+              <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} reset={reset} setReset={setReset} />
             </div>
             <div className="filter-wrap_bottom">
-              <FilterTypeSalary setSalaryType={setSalaryType} />
+              <FilterTypeSalary setSalaryType={setSalaryType} reset={reset} setReset={setReset} />
               <FilterSalary
                 salaryType={salaryType}
                 typeMoney={typeMoney}
@@ -1231,21 +1243,24 @@ const Navbar: React.FC = () => {
                 setSalaryMin={setSalaryMin}
                 setSalaryMax={setSalaryMax}
                 reset={reset}
+                setReset={setReset}
               />
               <FilterTimeJob
                 setIsWorkingWeekend={setIsWorkingWeekend}
                 isWorkingWeekend={isWorkingWeekend}
                 isRemotely={isRemotely}
                 setIsRemotely={setIsRemotely}
+                reset={reset}
+                setReset={setReset}
               />
             </div>
           </div>
 
           <div className="filter-wrap_respone">
-            <FilterLocationNav setListDis={setListDis} />
-            <FilterCateloriesNav setListCate={setListCate} />
-            <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
-            <FilterTypeSalary setSalaryType={setSalaryType} />
+            <FilterLocationNav listDis={listDis} setListDis={setListDis} reset={reset} setReset={setReset} />
+            <FilterCateloriesNav listCateProps={listCate} setListCate={setListCate} reset={reset} setReset={setReset} />
+            <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} reset={reset} setReset={setReset} />
+            <FilterTypeSalary setSalaryType={setSalaryType} reset={reset} setReset={setReset} />
             <div className="filter-wrap-respone_bottom">
               <FilterSalary
                 salaryType={salaryType}
@@ -1256,12 +1271,15 @@ const Navbar: React.FC = () => {
                 setSalaryMin={setSalaryMin}
                 setSalaryMax={setSalaryMax}
                 reset={reset}
+                setReset={setReset}
               />
               <FilterTimeJob
                 setIsWorkingWeekend={setIsWorkingWeekend}
                 isWorkingWeekend={isWorkingWeekend}
                 isRemotely={isRemotely}
                 setIsRemotely={setIsRemotely}
+                reset={reset}
+                setReset={setReset}
               />
             </div>
           </div>
