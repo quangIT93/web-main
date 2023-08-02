@@ -95,6 +95,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   }, [windowWidth]);
 
   const handleClickUserInfo = (user: any) => {
+    console.log(user);
+
     setBackDrop(true);
     setSearchParams({ post_id: user.post_id, user_id: user.user_id });
     getAllUserChat();
@@ -144,6 +146,11 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   // console.log('tin nhan duoc nhan', receivedMessages)
   // console.log('tin nhan da gui', sendMessages)
   // const onSearch = (value: string) => console.log(value);
+  const userTest = {
+    'post_id': '66596',
+    'user_id': 'dc68ddaf-a185-4c84-a983-c94068f5c646'
+  }
+
   if (listUserChat.length !== 0) {
     return (
       <div
@@ -178,6 +185,28 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           >
             <CircularProgress color="inherit" />
           </Backdrop>
+          <div
+            className={`wrap-userInfo `}
+            // key={index}
+            onClick={() => handleClickUserInfo(userTest)}
+          >
+            <div className="wrap-avatar_userChat">
+              <div>Hijob</div>
+              <span
+                className="user-online_true"
+              ></span>
+            </div>
+            <div className="info-user_chat">
+              <h4>user.name</h4>
+              <h5>user.post_title</h5>
+              <p>user.message</p>
+            </div>
+            <div className="info-chat_icon">
+              <small>{new Date().toLocaleString('en-GB')}</small>
+
+              <span className="count-message_receive"></span>
+            </div>
+          </div>
           {listUserChat.map((user: any, index: number) => (
             <div
               className={`wrap-userInfo ${userInfoChat.user_id === user.user_id ? 'readed-message' : ''

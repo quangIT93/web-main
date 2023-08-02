@@ -49,6 +49,7 @@ import TabPanel from '@mui/lab/TabPanel';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { MessageOutlined } from '@ant-design/icons';
 //@ts-ignore
 // import { CopyToClipboard } from 'react-copy-to-clipboard';
 //@ts-ignore
@@ -823,8 +824,29 @@ const Detail: React.FC = () => {
               </div>
             </div>
           </div>
-          <>
+          <div className="post-detail-btns">
             {contextHolder}
+            <Button
+              type="primary"
+              ghost
+              className="btn-mess"
+              icon={<MessageOutlined />}
+              style={{
+                padding: '20px',
+                display: post?.data?.companyResourceData?.name === 'HIJOB' ? 'flex' : 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onClick={() =>
+                window.open(
+                  `/message?post_id=${searchParams.get('post-id',)
+                  }&user_id=${post?.data?.accountId
+                  } `,
+                  '_blank',
+                )
+              }
+            // onClick={() => { console.log(post?.data) }}
+            ></Button>
             <Button
               onClick={onclick}
               className="btn-apply"
@@ -842,7 +864,7 @@ const Detail: React.FC = () => {
             >
               {textButton}
             </Button>
-          </>
+          </div>
         </>
       ,
     },
