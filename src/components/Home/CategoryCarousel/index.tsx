@@ -41,6 +41,9 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 import { Skeleton } from 'antd';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
 // interface item category
@@ -448,6 +451,12 @@ const CategoryCarousel: React.FC = () => {
               <SwiperSlide
                 key={index}
                 onClick={(event) => {
+                  const analytics: any = getAnalytics();
+                  logEvent(analytics, 'event_web_click_HiJob' as string, {
+                    // screen_name: screenName as string,
+                    page_home: `/category_${item.name}` as string,
+                  });
+
                   handleChange(event, item.id);
                 }}
                 style={{ width: 'fit-content' }}

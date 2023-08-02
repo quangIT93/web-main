@@ -22,7 +22,7 @@ import {
   MapInfoIcon,
   BagInfoJob,
   DownloadIcon,
-  TransalteIcon
+  TransalteIcon,
 } from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
@@ -110,17 +110,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -174,7 +174,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
     setLanguageId(userLanguageSelected);
-  }, [languageId])
+  }, [languageId]);
 
   // console.log('jobTYpe', jobType);
   // check search
@@ -733,33 +733,33 @@ const Navbar: React.FC = () => {
     setReset(true);
 
     let filter = {
-      'money_type': 1,
-      'salary_min': 0,
-      'salary_max': 12000000,
-      'list_dis': [],
-      'list_cate': [],
-      'is_working_weekend': 0,
-      'is_remotely': 0,
+      money_type: 1,
+      salary_min: 0,
+      salary_max: 12000000,
+      list_dis: [],
+      list_cate: [],
+      is_working_weekend: 0,
+      is_remotely: 0,
     };
     setCookie('userFiltered', JSON.stringify(filter), 365);
 
     let typeJobReset = {
-      "id": 5,
-      "name": "Tất cả"
-    }
+      id: 5,
+      name: 'Tất cả',
+    };
     setCookie('userTypejobFiltered', JSON.stringify(typeJobReset), 365);
 
     let typeSalaryReset = {
-      "id": 4,
-      "value": "Tháng"
-    }
+      id: 4,
+      value: 'Tháng',
+    };
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };
 
   const handleChangeLanguage = (e: any) => {
-    setLanguageId(e.target.value)
+    setLanguageId(e.target.value);
     setCookie('languageId', JSON.stringify(e.target.value), 365);
-  }
+  };
 
   React.useEffect(() => {
     const handleCloseFilter = (event: any) => {
@@ -848,9 +848,7 @@ const Navbar: React.FC = () => {
               />
               <div className="sub-login_detail">
                 <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
-                <span
-                  className="sub-login_text"
-                >
+                <span className="sub-login_text">
                   <MailInfoIcon />
                   {dataProfile?.email ? dataProfile?.email : ''}
                 </span>
@@ -862,8 +860,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.locations.length > 0
                       ? dataProfile?.locations.map((location: any) => {
-                        return `${location.district} , `;
-                      })
+                          return `${location.district} , `;
+                        })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -876,8 +874,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.categories.length > 0
                       ? dataProfile?.categories.map((profile: any) => {
-                        return `${profile.parent_category} / ${profile.child_category}, `;
-                      })
+                          return `${profile.parent_category} / ${profile.child_category}, `;
+                        })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -893,9 +891,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -1011,18 +1009,18 @@ const Navbar: React.FC = () => {
               </div>
             </Space>
             <div className="sub-login_items">
-              <Link to="/profile">
+              <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
                   <SyncOutlined />
                   <span>Cập nhật thông tin</span>
                 </div>
               </Link>
-              <Link to="/history">
+              <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -1045,8 +1043,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1137,8 +1136,9 @@ const Navbar: React.FC = () => {
                 ref={bellRef}
               >
                 <div
-                  className={`button-download ${isDownloading ? 'stopAnimation' : ''
-                    }`}
+                  className={`button-download ${
+                    isDownloading ? 'stopAnimation' : ''
+                  }`}
                 >
                   <DownloadIcon />
                 </div>
@@ -1228,12 +1228,31 @@ const Navbar: React.FC = () => {
           />
           <div className="filter-wraps">
             <div className="filter-wrap_top">
-              <FilterLocationNav listDis={listDis} setListDis={setListDis} reset={reset} setReset={setReset} />
-              <FilterCateloriesNav listCateProps={listCate} setListCate={setListCate} reset={reset} setReset={setReset} />
-              <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} reset={reset} setReset={setReset} />
+              <FilterLocationNav
+                listDis={listDis}
+                setListDis={setListDis}
+                reset={reset}
+                setReset={setReset}
+              />
+              <FilterCateloriesNav
+                listCateProps={listCate}
+                setListCate={setListCate}
+                reset={reset}
+                setReset={setReset}
+              />
+              <FilterTypeJob
+                valueTypeJob={jobType}
+                setTypeJob={setJobType}
+                reset={reset}
+                setReset={setReset}
+              />
             </div>
             <div className="filter-wrap_bottom">
-              <FilterTypeSalary setSalaryType={setSalaryType} reset={reset} setReset={setReset} />
+              <FilterTypeSalary
+                setSalaryType={setSalaryType}
+                reset={reset}
+                setReset={setReset}
+              />
               <FilterSalary
                 salaryType={salaryType}
                 typeMoney={typeMoney}
@@ -1257,10 +1276,29 @@ const Navbar: React.FC = () => {
           </div>
 
           <div className="filter-wrap_respone">
-            <FilterLocationNav listDis={listDis} setListDis={setListDis} reset={reset} setReset={setReset} />
-            <FilterCateloriesNav listCateProps={listCate} setListCate={setListCate} reset={reset} setReset={setReset} />
-            <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} reset={reset} setReset={setReset} />
-            <FilterTypeSalary setSalaryType={setSalaryType} reset={reset} setReset={setReset} />
+            <FilterLocationNav
+              listDis={listDis}
+              setListDis={setListDis}
+              reset={reset}
+              setReset={setReset}
+            />
+            <FilterCateloriesNav
+              listCateProps={listCate}
+              setListCate={setListCate}
+              reset={reset}
+              setReset={setReset}
+            />
+            <FilterTypeJob
+              valueTypeJob={jobType}
+              setTypeJob={setJobType}
+              reset={reset}
+              setReset={setReset}
+            />
+            <FilterTypeSalary
+              setSalaryType={setSalaryType}
+              reset={reset}
+              setReset={setReset}
+            />
             <div className="filter-wrap-respone_bottom">
               <FilterSalary
                 salaryType={salaryType}

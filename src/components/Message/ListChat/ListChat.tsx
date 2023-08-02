@@ -290,49 +290,87 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         <div className="header-list_chat">
           <div className="wrap-img_Userchat">
             <div className="wrap_img">
-              <img src={userInfoChat.avatar} alt="" />
+              <img
+                src={userInfoChat.avatar}
+                alt={userInfoChat.company_name}
+                onError={(e: any) => {
+                  e.target.onerror = null; // Ngăn sự kiện lặp lại
+                  e.target.src =
+                    'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png'; // Đường dẫn của hình ảnh mặc định
+                }}
+              />
               <span
                 className={`user-chat_online ${
-                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                  userInfoChat.isOnline ? 'user-chat_onlineTrue' : ''
                 }`}
               ></span>
             </div>
             <div className="wrap-infoUser_chat">
               <h4>{userInfoChat.name}</h4>
-              {userInfoChat.is_online ? (
+              {userInfoChat.isOnline ? (
                 <span>Đang hoạt động</span>
               ) : (
                 <span>offline</span>
               )}
             </div>
           </div>
-          <div className="wrap-icon_chat">
-            {/* <span>
+          {userInfoChat.company_name ? (
+            <div className="wrap-icon_chat">
+              {/* <span>
             <VideoIcon />
           </span>
           <span>
             <CallIcon />
           </span> */}
-            <span>{/* <DotIcon /> */}</span>
-            <div className="wrap-imgCompany_chat">
-              <img
-                src="https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1690163810621-e6846498-7780-4c95-b673-0c1943118661.jpg"
-                alt=""
-              />
-            </div>
-            <div className="wrap-infoCompany_chat">
-              <h4>{userInfoChat.post_title}</h4>
-              <h6>{userInfoChat.company_name}</h6>
-              <p>
-                {userInfoChat.salary_min} - {userInfoChat.salary_max}{' '}
-                {userInfoChat.money_type_text}/Tháng
-              </p>
-            </div>
+              {/* <span>
+              <DotIcon />
+            </span> */}
+              <div className="wrap-infoCompany_chat">
+                <div className="imgCompany_chat">
+                  <img
+                    src={userInfoChat.imageCompany}
+                    alt="Ảnh lỗi"
+                    onError={(e: any) => {
+                      e.target.onerror = null; // Ngăn sự kiện lặp lại
+                      e.target.src =
+                        'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png'; // Đường dẫn của hình ảnh mặc định
+                    }}
+                  />
+                </div>
+                <div className="infoCompany_chat">
+                  <h4>{userInfoChat.post_title}</h4>
+                  <h6>{userInfoChat.company_name}</h6>
+                  <p>
+                    {userInfoChat.salary_min} - {userInfoChat.salary_max}{' '}
+                    {userInfoChat.money_type_text}/
+                    {userInfoChat.salary_type_id === 1
+                      ? 'Giờ'
+                      : userInfoChat.salary_type_id === 2
+                      ? 'Ngày'
+                      : userInfoChat.salary_type_id === 3
+                      ? 'Tháng'
+                      : userInfoChat.salary_type_id === 4
+                      ? 'Tuần'
+                      : userInfoChat.salary_type_id === 5
+                      ? 'Công việc'
+                      : userInfoChat.salary_type_id === 6
+                      ? 'Thương lượng'
+                      : ''}
+                  </p>
+                </div>
+              </div>
 
-            <Button>
-              {userInfoChat.applied ? 'Ứng tuyển' : 'Đã ứng tuyển'}
-            </Button>
-          </div>
+              <Button
+                type={userInfoChat.applied ? 'primary' : 'default'}
+                // disabled={!userInfoChat.applied}
+                disabled={true}
+              >
+                {userInfoChat.applied ? 'Ứng tuyển' : 'Đã ứng tuyển'}
+              </Button>
+            </div>
+          ) : (
+            <></>
+          )}
           <div className="wrap-icon_close" onClick={() => closeListChat()}>
             <CloseIcon />
           </div>

@@ -565,15 +565,12 @@ const Detail: React.FC = () => {
   // console.log('copy link', copied);
   // console.log('date', new Date(post?.data.created_at).toLocaleDateString());
 
-  new Promise((resolve, reject) => {
-    if (post) document.title = `${post?.data?.title}`;
-  });
-
   // custom title firebase
   const analytics: any = getAnalytics();
 
   useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    document.title = 'HiJob - Chi tiết bài tuyển dụng';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_post_detail' as string,

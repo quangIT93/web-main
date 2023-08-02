@@ -247,7 +247,8 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          `/search-results?${
+            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
           }`,
         );
       } else {
@@ -315,7 +316,7 @@ const SearchInput: React.FC<SearchProps> = ({
       <div className="items-history items-search_keyword">
         <h4>Từ khóa</h4>
         <div className="wrap-items-history wrap-items-search">
-          {dataSuggest.map((suggest: any, index: number) => (
+          {dataSuggest?.map((suggest: any, index: number) => (
             <div className="item-history item-search" key={index}>
               <span
                 className="item-search_text"
@@ -393,7 +394,7 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-      // open={openDropdown}
+        // open={openDropdown}
       />
 
       <Button

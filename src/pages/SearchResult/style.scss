@@ -149,5 +149,29 @@
     .ant-select-clear {
       margin-right: 25px;
     }
+
+    .ant-select-selector {
+      .ant-select-selection-placeholder {
+        font-style: italic;
+      }
+
+      .ant-select-selection-overflow {
+        .ant-select-selection-overflow-item {
+         font-style: normal;
+        }
+      }
+    }
+  }
+
+  // .ant-input-clear-icon {
+  //   margin-right: 25px;
+  // } 
+}
+
+
+.ant-select-item-option-selected {
+  .ant-select-item-option-content {
+    color: #0d99ff;
+
   }
 }

@@ -99,18 +99,16 @@ const Profile: React.FC = () => {
 
   const [openModalExperienceCreate, setOpenModalExperienceCreate] =
     useState(false);
-  const [imageInfo, setImageInfo] = useState<string>('');
-  const [avatarUrl, setAvatarUrl] = useState<string>('');
+  // const [imageInfo, setImageInfo] = useState<string>('');
+  // const [avatarUrl, setAvatarUrl] = useState<string>('');
   const [companyName, setCompanyName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [uploading, setUploading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [checkRemove, setCheckRemove] = useState(2);
+  // const [checkRemove, setCheckRemove] = useState(2);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-  const [titleFirebase, setTitleFirebase] = useState<string>('');
-
-  const [user, setUser] = useState<any>(null);
+  // const [user, setUser] = useState<any>(null);
 
   const analytics: any = getAnalytics();
 
@@ -128,7 +126,7 @@ const Profile: React.FC = () => {
       if (result) {
         setProfileUser(result.data);
         setLoading(false);
-        setUser(result);
+        // setUser(result);
       }
     } catch (error) {
       setLoading(false);
@@ -144,7 +142,7 @@ const Profile: React.FC = () => {
     //   .catch((err: any) => {
 
     //   })
-    fecthDataProfile();
+    // fecthDataProfile();
   }, []);
 
   useEffect(() => {
@@ -320,20 +318,6 @@ const Profile: React.FC = () => {
   // useEffect(() => {
   //   getPost();
   // }, []);
-
-  React.useEffect(() => {
-    if (companyName) {
-      setTitleFirebase('HiJob - Thông tin cá nhân');
-    }
-  }, [companyName]);
-
-  React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-profile';
-  }, [titleFirebase]);
-
-  new Promise((resolve, reject) => {
-    document.title = user ? titleFirebase : 'web-profile';
-  });
 
   console.log('profile', profile);
 

@@ -193,8 +193,6 @@ const Post: React.FC = () => {
   const [companyError, setCompanyError] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [postData, SetPostData] = React.useState<any>(null);
-
   const [openModalNoteCreatePost, setOpenModalNoteCreatePost] =
     React.useState(true);
 
@@ -356,45 +354,12 @@ const Post: React.FC = () => {
       }
     }
   };
-  const [titleFirebase, setTitleFirebase] = useState<string>('');
-
-  const getPost = async () => {
-    try {
-      const result = await siteApi.getSalaryType();
-      if (result) {
-        SetPostData(result);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      getPost();
-    } else {
-      window.open(`/`, '_parent');
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   if (postData?.data) {
-  //     setTitleFirebase('HiJob - Đăng bài đăng tuyển dụng');
-  //   }
-  // }, [postData]);
-
-  // React.useEffect(() => {
-  //   document.title = titleFirebase ? titleFirebase : 'web-create-post';
-  // }, [titleFirebase]);
-
-  // new Promise((resolve, reject) => {
-  //   document.title = postData ? titleFirebase : 'web-create-post';
-  // });
 
   const analytics: any = getAnalytics();
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    document.title = 'HiJob - Tạo bài đăng tuyển dụng';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_createPost' as string,
