@@ -8,8 +8,8 @@ import { toast } from 'react-toastify';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useDropzone } from 'react-dropzone';
 
-import { useTheme } from '@mui/material/styles';
-import { useMediaQuery } from '@mui/material';
+// import { useTheme } from '@mui/material/styles';
+// import { useMediaQuery } from '@mui/material';
 
 import { message } from 'antd';
 
@@ -17,7 +17,7 @@ import axios from 'axios';
 // import { saveAs } from 'file-saver';
 
 import './style.scss';
-import { blob } from 'stream/consumers';
+// import { blob } from 'stream/consumers';
 interface PostImageProps {
   selectedFiles: any;
   selectedImages: any;
@@ -35,7 +35,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     selectedFillImages,
   } = props;
 
-  const [image, setImage] = React.useState<any>();
+  // const [image, setImage] = React.useState<any>();
   const [files, setFiles] = React.useState<any>([]);
   const [isDragActive, setIsDragActive] = React.useState(false);
   const options = {
@@ -45,76 +45,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const theme = useTheme();
-  const ixsobile = useMediaQuery(theme.breakpoints.down('xs'));
-
-  // const [imageFile, setImageFile] = React.useState<any>(null);
-  console.log('file', selectedFiles);
-
-  // React.useEffect(() => {
-  //   const loadImage = async () => {
-  //     // Bước 1: Xác định định dạng file từ URL
-  //     const response = await axios.get(url, { responseType: 'blob' });
-  //     const imageExtension = await selectedFillImages?.map((image: any) =>
-  //       image.split('.').pop(),
-  //     );
-
-  //     // const imageType = `image/${
-  //     //   imageExtension === 'jpg' ? 'jpeg' : imageExtension
-  //     // }`;
-  //     console.log('imageExtension', imageExtension);
-
-  //     // // Bước 2: Chuyển đổi dữ liệu hình ảnh thành dạng file
-  //     const blobImage = await imageExtension.map(
-  //       (image: any) => new Blob([image], { type: image }),
-  //     );
-  //     console.log('blobImage', blobImage);
-
-  //     const imageFile = await blobImage.map(
-  //       (blob: any) =>
-  //         new File([blob], `${Math.random().toString(10)}.${blob.type}`, {
-  //           type: `image/${blob.type === 'jpg' ? 'jpeg' : blob.type}`,
-  //         }),
-  //     );
-  //     console.log('imageFile', imageFile);
-
-  //     if (imageFile.length > 0) {
-  //       const validateImagesReply = validatePostImages(imageFile);
-  //       if (validateImagesReply.isError) {
-  //         console.log('::: Invalid images');
-  //         return toast.warn('Ảnh không đúng định dạng');
-  //       } else {
-  //         try {
-  //           const compressedImages: any = [];
-  //           console.log('Compressed image ::: ', imageFile);
-  //           await Promise.all(
-  //             imageFile.map(async (image: any) => {
-  //               const compressedImage = await imageCompression(image, options);
-  //               compressedImages.push(
-  //                 new File([compressedImage], compressedImage.name, {
-  //                   type: compressedImage.type,
-  //                 }),
-  //               );
-  //             }),
-  //           );
-  //           // console.log('Original image ::: ', imagesUpload)
-
-  //           setSelectedFiles((prevState) => [
-  //             ...prevState,
-  //             ...compressedImages.map((image: any) => ({
-  //               image,
-  //               preview: window.URL.createObjectURL(image),
-  //             })),
-  //           ]);
-  //         } catch (error) {
-  //           console.log('error', error);
-  //         }
-  //       }
-  //     }
-  //   };
-
-  //   loadImage();
-  // }, [selectedFillImages]);
+  // const theme = useTheme();
+  // const ixsobile = useMediaQuery(theme.breakpoints.down('xs'));
+  // console.log('file', selectedFiles);
 
   async function downloadAndConvertImagesToFiles(urls: any) {
     try {
@@ -365,7 +298,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
   ) => {
     const files = event.target.files;
 
-    setImage(event.target.files && event.target.files[0]);
+    // setImage(event.target.files && event.target.files[0]);
 
     const imagesUpload: any = Array.from(
       event.target.files ? event.target.files : [],
