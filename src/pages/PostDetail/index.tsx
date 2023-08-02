@@ -837,15 +837,15 @@ const Detail: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onClick={() =>
-                window.open(
-                  `/message?post_id=${searchParams.get('post-id',)
-                  }&user_id=${post?.data?.accountId
-                  } `,
-                  '_blank',
-                )
-              }
-            // onClick={() => { console.log(post?.data) }}
+              // onClick={() =>
+              //   window.open(
+              //     `/message?post_id=${searchParams.get('post-id',)
+              //     }&user_id=${post?.data?.accountId
+              //     } `,
+              //     '_blank',
+              //   )
+              // }
+              onClick={() => { console.log(post?.data) }}
             ></Button>
             <Button
               onClick={onclick}
