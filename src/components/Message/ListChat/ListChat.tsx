@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Input } from 'antd';
+import { Button } from 'antd';
 
 import io from 'socket.io-client';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -264,6 +264,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   // }, []);
 
   console.log('info', userInfoChat);
+  console.log('allListChat', allListChat);
 
   if (userInfoChat.length !== 0) {
     return (
@@ -313,6 +314,24 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             <CallIcon />
           </span> */}
             <span>{/* <DotIcon /> */}</span>
+            <div className="wrap-imgCompany_chat">
+              <img
+                src="https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1690163810621-e6846498-7780-4c95-b673-0c1943118661.jpg"
+                alt=""
+              />
+            </div>
+            <div className="wrap-infoCompany_chat">
+              <h4>{userInfoChat.post_title}</h4>
+              <h6>{userInfoChat.company_name}</h6>
+              <p>
+                {userInfoChat.salary_min} - {userInfoChat.salary_max}{' '}
+                {userInfoChat.money_type_text}/Tháng
+              </p>
+            </div>
+
+            <Button>
+              {userInfoChat.applied ? 'Ứng tuyển' : 'Đã ứng tuyển'}
+            </Button>
           </div>
           <div className="wrap-icon_close" onClick={() => closeListChat()}>
             <CloseIcon />

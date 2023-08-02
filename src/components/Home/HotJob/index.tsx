@@ -33,6 +33,9 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 import { FireIcon, BagIcon } from '#components/Icons';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 // import { dataImageHotJob } from './dataImagehotJob';
 
 import './style.scss';
@@ -175,6 +178,12 @@ const HotJob: React.FC = () => {
             <SwiperSlide
               key={index}
               onClick={(event) => {
+                const analytics: any = getAnalytics();
+
+                logEvent(analytics, 'screen_view' as string, {
+                  // screen_name: screenName as string,
+                  page_title: `/web_click_hotJob_${item.title}` as string,
+                });
                 handleClickItem(
                   event,
                   item.id,

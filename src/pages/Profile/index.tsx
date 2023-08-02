@@ -39,6 +39,9 @@ import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperi
 import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
 import CVItem from '#components/Profile/CV';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 // import data
 import {
   getProfile,
@@ -109,6 +112,16 @@ const Profile: React.FC = () => {
 
   const [user, setUser] = useState<any>(null);
 
+  const analytics: any = getAnalytics();
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_profile' as string,
+    });
+  }, []);
+
   const fecthDataProfile = async () => {
     try {
       const result = await profileApi.getProfile();
@@ -165,7 +178,6 @@ const Profile: React.FC = () => {
       return true;
     },
     beforeUpload: (file) => {
-
       const isPNG = file.type === 'application/pdf';
       var checFileSize = true;
       if (!isPNG) {
@@ -186,18 +198,18 @@ const Profile: React.FC = () => {
 
   const getCompanyInforByAccount = async () => {
     try {
-      const result = await apiCompany.getCampanyByAccountApi()
+      const result = await apiCompany.getCampanyByAccountApi();
       if (result && result?.data?.companyInfomation?.id != null) {
-        setCompanyName(result?.data?.companyInfomation?.name)
+        setCompanyName(result?.data?.companyInfomation?.name);
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    getCompanyInforByAccount()
-  }, [])
+    getCompanyInforByAccount();
+  }, []);
 
   // confirm delete cv
   const confirm = async () => {
@@ -212,7 +224,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success('Xóa CV thành công.');
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
@@ -288,7 +300,6 @@ const Profile: React.FC = () => {
     }
   };
 
-
   const alert = useSelector((state: any) => state.alertProfile.alert);
 
   const handleClose = () => dispatch<any>(setAlert(false));
@@ -310,13 +321,6 @@ const Profile: React.FC = () => {
   //   getPost();
   // }, []);
 
-  useEffect(() => {
-    document.title = 'web-profile';
-    if (user?.data) {
-      setTitleFirebase('HiJob - Thông tin người dùng');
-    }
-  }, [user]);
-
   React.useEffect(() => {
     document.title = titleFirebase ? titleFirebase : 'web-profile';
   }, [titleFirebase]);
@@ -326,7 +330,6 @@ const Profile: React.FC = () => {
   });
 
   // console.log("profile", profile);
-
 
   return (
     <div className="profile">
@@ -396,14 +399,12 @@ const Profile: React.FC = () => {
                 <div className="user-company" style={{ marginLeft: '10px' }}>
                   <h2>{profile?.name ? profile?.name : 'Chưa cập nhật'}</h2>
                   <h2
-                    className={companyName ? "have-company" : "company-name"}
+                    className={companyName ? 'have-company' : 'company-name'}
                     onClick={() => {
                       window.open('/company-infor', '_self');
                     }}
                   >
-                    {companyName
-                      ? companyName
-                      : 'Thông tin công ty'}
+                    {companyName ? companyName : 'Thông tin công ty'}
                   </h2>
                   {/* <div
                     style={{
@@ -570,7 +571,7 @@ const Profile: React.FC = () => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-              // direction="vertical"
+                // direction="vertical"
               >
                 {profile.cv_url && fileList?.length == 0 ? (
                   <Popconfirm
@@ -606,8 +607,9 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                      }`,
+                    backgroundColor: `${
+                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                    }`,
                     alignItems: 'flex-start',
                   }}
                 >
@@ -642,12 +644,12 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                  (item: ICategories, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.child_category}
-                    </Button>
-                  ),
-                )
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    ),
+                  )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -676,10 +678,10 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.district}
-                  </Button>
-                ))
+                    <Button key={index} className="btn" type="text">
+                      {item?.district}
+                    </Button>
+                  ))
                 : 'Chưa cập nhật'}
             </Space>
           </div>

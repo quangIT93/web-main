@@ -32,6 +32,9 @@ import PostSalaryType from '#components/Post/PostSalaryType';
 
 import Footer from '../../components/Footer/Footer';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 // import context
 // import { HomeValueContext } from 'context/HomeValueContextProvider';
 
@@ -374,19 +377,29 @@ const Post: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (postData?.data) {
-      setTitleFirebase('HiJob - Đăng bài đăng tuyển dụng');
-    }
-  }, [postData]);
+  // useEffect(() => {
+  //   if (postData?.data) {
+  //     setTitleFirebase('HiJob - Đăng bài đăng tuyển dụng');
+  //   }
+  // }, [postData]);
+
+  // React.useEffect(() => {
+  //   document.title = titleFirebase ? titleFirebase : 'web-create-post';
+  // }, [titleFirebase]);
+
+  // new Promise((resolve, reject) => {
+  //   document.title = postData ? titleFirebase : 'web-create-post';
+  // });
+
+  const analytics: any = getAnalytics();
 
   React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-create-post';
-  }, [titleFirebase]);
-
-  new Promise((resolve, reject) => {
-    document.title = postData ? titleFirebase : 'web-create-post';
-  });
+    // Cập nhật title và screen name trong Firebase Analytics
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_createPost' as string,
+    });
+  }, []);
 
   console.log('phone', phoneNumber);
 

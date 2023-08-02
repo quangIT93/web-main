@@ -6,6 +6,9 @@ import { ScrollContext } from '#utils';
 import './style.scss';
 import Category from './components/Category';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 import siteApi from 'api/siteApi';
 
 export interface CurrentCategoryActiveProps {
@@ -68,6 +71,16 @@ const Policy: React.FC = () => {
 
   const [titleFirebase, setTitleFirebase] = React.useState<string>('');
   const [site, SetSite] = React.useState<any>(null);
+
+  const analytics: any = getAnalytics();
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_policy' as string,
+    });
+  }, []);
 
   const getTitle = async () => {
     try {

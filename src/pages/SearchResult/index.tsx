@@ -707,11 +707,11 @@ const NewJobs: React.FC = () => {
   }, [dataAllLocation]);
 
   React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-search';
+    document.title = titleFirebase ? titleFirebase : '/web-search';
   }, [titleFirebase]);
 
   new Promise((resolve, reject) => {
-    document.title = dataAllLocation ? titleFirebase : 'web-search';
+    document.title = dataAllLocation ? titleFirebase : '/web-search';
   });
 
   // const [disable, setDisable] = React.useState(false);

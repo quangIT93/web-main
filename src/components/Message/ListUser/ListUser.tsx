@@ -65,6 +65,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         Number(searchParams.get('post_id')),
         searchParams.get('application_id') ?? '',
       );
+      console.log('asdaadad', result);
 
       if (result.data) {
         setUserInfoChat({
@@ -72,6 +73,13 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           name: result.data.applicationProfile?.name,
           avatar: result.data.applicationProfile?.avatar,
           isOnline: null,
+          company_name: '',
+          image: '',
+          applied: '',
+          salary_max: '',
+          salary_min: '',
+          money_type_text: '',
+          salary_type_id: '',
         });
       }
     } catch (error) {
@@ -87,6 +95,14 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
             name: result.data.companyName,
             avatar: result.data.image,
             isOnline: null,
+            company_name: result.data.company_name,
+            image: result.data.image,
+            applied: result.data.applied,
+            salary_max: result.data.salary_max,
+            salary_min: result.data.salary_min,
+            money_type_text: result.data.money_type_text,
+            salary_type_id: result.data.salary_type_id,
+            post_title: result.data.title,
           });
         }
       } catch (error) {
@@ -151,9 +167,17 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       if (userChat.user_id === searchParams.get('user_id')) {
         setUserInfoChat({
           user_id: userChat.user_id,
-          name: userChat.name,
-          avatar: userChat.avatar,
+          name: userChat.name ? userChat.name : userChat.company_name,
+          avatar: userChat.name ? userChat.avatar : userChat.image,
           isOnline: null,
+          company_name: userChat.company_name,
+          image: userChat.image,
+          applied: userChat.applied,
+          salary_max: userChat.salary_max,
+          salary_min: userChat.salary_min,
+          money_type_text: userChat.money_type_text,
+          salary_type_id: userChat.salary_type_id,
+          post_title: userChat.post_title,
         });
       }
       return null;
@@ -237,7 +261,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
             >
               <div className="wrap-avatar_userChat">
                 {user.avatar ? (
-                  <img src={user.image} alt="" />
+                  <img src={user.avatar} alt="" />
                 ) : (
                   <div>Hijob</div>
                 )}
@@ -248,8 +272,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                 ></span>
               </div>
               <div className="info-user_chat">
-                <h4>{user.company_name}</h4>
-                <h5>{user.post_title}</h5>
+                <h4>{user.name ? user.name : user.company_name}</h4>
+                <h5>{user.name ? '' : user.post_title}</h5>
                 <p>{user.message}</p>
               </div>
               <div className="info-chat_icon">
