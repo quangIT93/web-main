@@ -139,36 +139,38 @@ const HotJob: React.FC = () => {
       <Swiper
         navigation={true}
         // mousewheel={true}
-        breakpoints={{
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 24,
-          },
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          1024: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          1440: {
-            slidesPerView: 3,
-            spaceBetween: 24,
-          },
-          1920: {
-            slidesPerView: 4,
-            spaceBetween: 24,
-          },
-          2560: {
-            slidesPerView: 4,
-            spaceBetween: 24,
-          },
-        }}
+        slidesPerView="auto"
+        spaceBetween={24}
+        // breakpoints={{
+        //   320: {
+        //     slidesPerView: 1,
+        //     spaceBetween: 24,
+        //   },
+        //   640: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 24,
+        //   },
+        //   768: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 24,
+        //   },
+        //   1024: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 24,
+        //   },
+        //   1440: {
+        //     slidesPerView: 3,
+        //     spaceBetween: 24,
+        //   },
+        //   1920: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 24,
+        //   },
+        //   2560: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 24,
+        //   },
+        // }}
         modules={[Mousewheel, Navigation, Pagination]}
         className="mySwiper"
       >

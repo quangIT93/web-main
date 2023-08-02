@@ -25,7 +25,7 @@ const CustomOption = ({
     const valueRender = data.find((item: any) => item.id === value);
 
     // console.log('valueRender Loai cong viec', valueRender);
-    // console.log('valueRender Loai cong viec value', value);
+    console.log('valueRender Loai cong viec value', value);
     setValueRender(valueRender);
 
     setValue(value);
@@ -38,7 +38,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={jobType ? jobType : 5}
-      // defaultValue={jobType ? jobType : 5}
+    // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -56,10 +56,12 @@ const CustomOption = ({
 interface TypeJob {
   setTypeJob: Function;
   valueTypeJob: any;
+  reset: Boolean;
+  setReset: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
 const { Option } = Select;
-const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
+const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob, reset, setReset }) => {
   // const [data, setData] = React.useState()
   const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
   const [valueRender, setValueRender] = React.useState<any>();
@@ -87,9 +89,11 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
   };
   React.useEffect(() => {
     getTypeJob();
-  }, []);
+  }, [TYPE_JOB]);
 
-  const handleChange = (value1: string) => {};
+  const handleChange = (value1: string) => {
+    setReset(false);
+  };
   // console.log(`TYPEJOB`, TYPE_JOB);
   return (
     <div className="filter-input">
@@ -100,7 +104,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={valueRender ? valueRender.name : undefined}
+        value={reset ? "Tất cả" : valueRender ? valueRender.name : undefined}
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder="Loai cong viec"

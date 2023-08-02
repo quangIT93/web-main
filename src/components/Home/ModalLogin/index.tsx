@@ -120,6 +120,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     setIsValidEmail(isEmailValid(value));
   };
 
+  const regexCheckMail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   const authState = useSelector((state: RootState) => state.auth);
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
   const handleLogin = async (
@@ -453,6 +455,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             />
             <p className="textOpt">Bạn hãy nhập mã OTP được gửi đến email:</p>
             <p className="textOpt-email">{loginData.email}</p>
+            <p className="textOpt">
+              Nếu không nhận được mã OTP qua email,
+              bạn vui lòng kiểm tra lại email đã nhập chính xác chưa
+              hoặc kiểm tra trong thư mục spam
+            </p>
             <div className="otp-inputs">
               <OtpInput
                 value={otp}

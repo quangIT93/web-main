@@ -30,7 +30,7 @@
     border-bottom: none !important;
 
     .ant-collapse-header {
-      height: 39.6px !important;
+      height: 38px !important;
       border-radius: 8px !important;
       background-color: white !important;
       border: unset !important;
@@ -39,18 +39,19 @@
         svg {
           color: rgba(0, 0, 0, 0.25) !important;
         }
+
         .ant-collapse-header-text {
           color: #00000040;
         }
-    }
+      }
 
 
       .ant-collapse-extra {
-          svg {
-            color: rgba(0, 0, 0, 0.25) !important;
-            font-size: 12px;
-          }
+        svg {
+          color: rgba(0, 0, 0, 0.25) !important;
+          font-size: 12px;
         }
+      }
     }
 
 

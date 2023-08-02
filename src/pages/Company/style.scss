@@ -63,6 +63,11 @@
             .edit-tax-company {
                 flex: 1;
             }
+
+            @media screen and (max-width: 590px) {
+                flex-direction: column;
+                gap: 24px;
+            }
         }
 
         .edit-address-company-container {
@@ -74,6 +79,11 @@
             .edit-address-company {
                 display: flex;
                 gap: 32px;
+
+                @media screen and (max-width: 590px) {
+                    flex-direction: column;
+                    gap: 24px;
+                }
 
                 .edit-titleAddress {
                     flex: 1;
@@ -90,6 +100,11 @@
             .edit-mail-company {
                 flex: 1;
             }
+
+            @media screen and (max-width: 590px) {
+                flex-direction: column;
+                gap: 24px;
+            }
         }
 
         .edit-role-web-company-container {
@@ -101,6 +116,11 @@
             .edit-web-company {
                 flex: 1;
             }
+
+            @media screen and (max-width: 590px) {
+                flex-direction: column;
+                gap: 24px;
+            }
         }
 
         .edit-field-scale-company-container {
@@ -111,6 +131,11 @@
             .edit-field-company,
             .edit-scale-company {
                 flex: 1;
+            }
+
+            @media screen and (max-width: 590px) {
+                flex-direction: column;
+                gap: 24px;
             }
         }
 
@@ -146,4 +171,13 @@
             cursor: pointer;
         }
     }
+}
+
+.ant-modal {
+    width: fit-content !important;
+    // position: relative;
+    // top: 50% !important;
+    // transform: translateY(-50%);
+    // transform-origin: 0 !important;
+    // padding-bottom: 0;
 }

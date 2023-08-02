@@ -7,7 +7,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import './styleItem.scss';
 
-import { PencilIcon } from '#components/Icons';
+import { PencilIcon, DeleteIcon } from '#components/Icons';
 import moment from 'moment';
 
 // import component
@@ -108,6 +108,9 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           }
           style={{ cursor: 'pointer', marginRight: '16px' }}
         >
+          <div className="edit-icon">
+            <DeleteIcon width={15} height={15} />
+          </div>
           <p style={{ color: 'gray', fontSize: '14px' }}>Xoá</p>
         </Space>
 

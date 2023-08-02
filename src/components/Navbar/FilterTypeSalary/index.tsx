@@ -37,7 +37,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={SALARY_TYPE}
-      // defaultValue={SALARY_TYPE}
+    // defaultValue={SALARY_TYPE}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -54,10 +54,12 @@ const CustomOption = ({
 
 interface SalaryFilter {
   setSalaryType: Function;
+  reset: Boolean;
+  setReset: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
 const { Option } = Select;
-const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
+const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType, reset, setReset }) => {
   // const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = React.useState();
   const [valueRender, setValueRender] = React.useState<any>();
@@ -81,9 +83,11 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
   };
   React.useEffect(() => {
     getTypeSalary();
-  }, []);
+  }, [SALARY_TYPE]);
 
-  const handleChange = (value1: string) => {};
+  const handleChange = (value1: string) => {
+    setReset(false);
+  };
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
@@ -94,7 +98,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={valueRender ? valueRender.value : undefined}
+        value={reset ? "Tháng" : valueRender ? valueRender.value : undefined}
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder="Trả lương theo"

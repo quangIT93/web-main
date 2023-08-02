@@ -133,8 +133,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       console.log(error);
     }
   };
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter' && event.target.id !== 'profile-introduction') {
       handleSubmit();
     }
   };
@@ -288,10 +288,17 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               multiline
               rows={4}
               value={introduction}
+              id="profile-introduction"
               // label="Một số đặc điểm nhận diện công ty"
               placeholder="Giới thiệu bản thân với Nhà Tuyển dụng
             Nêu sở trường và mong muốn của bạn liên quan đến công việc để gây chú ý với Nhà Tuyển dụng"
               error={!introduction} // Đánh dấu lỗi
+            // onKeyDown={(event) => {
+            //   // if (event.key === 'Enter') {
+            //   //   event.preventDefault();
+            //   // }
+            //   console.log(event.target);
+            // }}
             />
           </Box>
         </form>
