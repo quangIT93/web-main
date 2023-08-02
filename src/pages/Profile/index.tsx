@@ -322,6 +322,12 @@ const Profile: React.FC = () => {
   // }, []);
 
   React.useEffect(() => {
+    if (companyName) {
+      setTitleFirebase('HiJob - Thông tin cá nhân');
+    }
+  }, [companyName]);
+
+  React.useEffect(() => {
     document.title = titleFirebase ? titleFirebase : 'web-profile';
   }, [titleFirebase]);
 
@@ -329,7 +335,7 @@ const Profile: React.FC = () => {
     document.title = user ? titleFirebase : 'web-profile';
   });
 
-  // console.log("profile", profile);
+  console.log('profile', profile);
 
   return (
     <div className="profile">
