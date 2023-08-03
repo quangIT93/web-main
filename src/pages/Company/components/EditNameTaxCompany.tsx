@@ -45,7 +45,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          Tên công ty<span style={{ color: 'red' }}>*</span>
+          Tên công ty <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -56,7 +56,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder="Nhập tên công ty"
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
       </div>
       <div className="edit-tax-company">
@@ -66,7 +66,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          Mã số thuế <span style={{ color: 'red' }}>*</span>
+          Mã số thuế
         </Typography>
         <TextField
           type="text"
@@ -77,7 +77,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder="Nhập mã số thuế"
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>

@@ -89,7 +89,7 @@
   .div-hover-more {
     border-radius: 5px;
     // height: 30px;
-    padding: 0px 10px;
+    // padding: 0px 10px;
     cursor: pointer;
     // font-size: 12px;
 
@@ -103,7 +103,7 @@
     // }
 
     p {
-      color: white !important;
+      color: rgb(13, 153, 255);
     }
   }
 
@@ -157,7 +157,7 @@
 
       .ant-select-selection-overflow {
         .ant-select-selection-overflow-item {
-         font-style: normal;
+          font-style: normal;
         }
       }
     }

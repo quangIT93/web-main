@@ -193,6 +193,10 @@ const ThemesJob: React.FC = () => {
         <TopicJobIcon width={25} height={25} />
         <h2>Công việc theo chủ đề</h2>
       </div>
+      <div className="title-location-job">
+        <h3>Vị trí công việc lý tưởng</h3>
+        <p>Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.</p>
+      </div>
       <Skeleton loading={loading} active>
         <ListCompanyCarousel listTheme={listTheme} />
       </Skeleton>
@@ -243,7 +247,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

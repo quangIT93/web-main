@@ -1,6 +1,62 @@
 .applied-posted-jobs-container {
     margin-top: 15rem !important;
 
+    .applied-posted-job-not-loging {
+        display: flex;
+        margin-top: 12px;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        .applied-posted-job-not-loging_left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            h3 {
+                color: #252525;
+                font-family: Roboto;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 30px;
+                /* 125% */
+            }
+
+            p {
+                color: #252525;
+                font-family: Roboto;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px;
+                width: auto;
+                /* 150% */
+            }
+        }
+
+        .applied-posted-job-not-loging_right {
+            .ant-btn {
+                min-width: 32px;
+                height: 32px;
+                background: #575757;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3 linear;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+
+                &:active {
+                    transform: scale(0.9);
+                }
+            }
+        }
+    }
+
     .applied-posted-jobs_swiper {
         z-index: 0;
         margin-left: 0 !important;
