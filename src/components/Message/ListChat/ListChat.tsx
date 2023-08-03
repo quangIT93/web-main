@@ -10,6 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 // import api
 import messageApi from 'api/messageApi';
 import profileApi from 'api/profileApi';
+import appplicationApi from 'api/appplication';
 
 // import { Skeleton } from 'antd';
 import Backdrop from '@mui/material/Backdrop';
@@ -89,6 +90,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     socket.current = io(
       // 'https://181f-14-161-42-152.ngrok-free.app/',
       'https://neoworks.vn',
+      // 'https://aiworks.vn',
       {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -265,6 +267,17 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
   console.log('info', userInfoChat);
   console.log('allListChat', allListChat);
+  console.log('userInfoChat', userInfoChat);
+
+  const handleClickApplication = async () => {
+    const result = await appplicationApi.applyAplication(
+      Number(searchParams.get('post_id')),
+    );
+
+    if (result) {
+      console.log('result', result.data);
+    }
+  };
 
   if (userInfoChat.length !== 0) {
     return (
@@ -291,7 +304,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
           <div className="wrap-img_Userchat">
             <div className="wrap_img">
               <img
-                src={userInfoChat.avatar}
+                src={
+                  userInfoChat.avatar
+                    ? userInfoChat.avatar
+                    : userInfoChat.imageCompany
+                }
                 alt={userInfoChat.company_name}
                 onError={(e: any) => {
                   e.target.onerror = null; // Ngăn sự kiện lặp lại
@@ -361,11 +378,24 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
               </div>
 
               <Button
-                type={userInfoChat.applied ? 'primary' : 'default'}
-                // disabled={!userInfoChat.applied}
-                disabled={true}
+                type={
+                  userInfoChat.applied && userInfoChat.statusPost !== 3
+                    ? 'primary'
+                    : userInfoChat.statusPost === 3
+                    ? 'default'
+                    : 'default'
+                }
+                disabled={
+                  !userInfoChat.applied || userInfoChat.statusPost === 3
+                }
+                // disabled={true}
+                onClick={handleClickApplication}
               >
-                {userInfoChat.applied ? 'Ứng tuyển' : 'Đã ứng tuyển'}
+                {userInfoChat.applied && userInfoChat.statusPost !== 3
+                  ? 'Ứng tuyển ngay'
+                  : userInfoChat.statusPost === 3
+                  ? 'Đã đóng tuyển dụng'
+                  : 'Đã ứng tuyển'}
               </Button>
             </div>
           ) : (

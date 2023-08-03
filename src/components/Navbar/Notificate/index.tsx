@@ -132,9 +132,9 @@ const Notificate = () => {
 
   const getApiNotificateKeyword = async () => {
     try {
-      const result = await notificationKeywordApi.getNotificationKeyword();
-      const result1 = await notificationKeywordApi.getNotificationKeywordV3();
-      console.log('keyword v3', result1);
+      // const result = await notificationKeywordApi.getNotificationKeyword();
+      const result = await notificationKeywordApi.getNotificationKeywordV3();
+      console.log('keyword v3', result);
       if (result) {
         setDataNotificationkeyword(result.data);
         setValueApp(result.data.status.pushStatus);
@@ -182,7 +182,7 @@ const Notificate = () => {
   }, []);
 
   const handleClickNotiKey = (postId: number) => {
-    window.open(`post-detail?post-id=${postId}`, '_parent');
+    window.open(`post-detail?post-id=${postId}`, '_blank');
   };
 
   const handleClickNoty = (
@@ -203,11 +203,11 @@ const Notificate = () => {
   };
 
   const handleChangeEmail = async (e: any) => {
-    // console.log(e.target.value);
+    console.log(e.target.value);
     try {
       const result = await notificationKeywordApi.putPlatform(
         parseInt(e.target.value) === 1 ? 0 : 1,
-        valueApp,
+        valueApp ? 1 : 0,
       );
       if (result) {
         if (parseInt(e.target.value) === 1) {
@@ -457,8 +457,8 @@ const Notificate = () => {
               <p>
                 Bạn đã lưu trữ được:
                 <strong>{` ${
-                  dataNotificationKeyword?.keywords?.length > 0
-                    ? dataNotificationKeyword?.keywords?.length
+                  dataNotificationKeyword.keywords.length > 0
+                    ? dataNotificationKeyword.keywords.length
                     : 0
                 }/10 `}</strong>
                 gợi ý công việc
@@ -477,20 +477,74 @@ const Notificate = () => {
                       className="content_keyword"
                       onClick={() => handleClickItemKeyword(dataKeyword?.id)}
                     >
-                      <h3>{dataKeyword.keyword}</h3>
+                      <Tooltip title={dataKeyword.keyword} placement="top">
+                        <h3>{dataKeyword.keyword}</h3>
+                      </Tooltip>
                       <ul>
                         <li>
                           <LocationHomeIcon />
-                          <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p>
+                          {/* <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p> */}
+                          <Tooltip
+                            title={dataKeyword.keywordDistricts.map(
+                              (location: any, index: number) => {
+                                return `${location.fullName}${
+                                  index ===
+                                  dataKeyword.keywordDistricts.length - 1
+                                    ? ''
+                                    : ', '
+                                }`;
+                              },
+                            )}
+                            placement="top"
+                          >
+                            <p>
+                              {dataKeyword.keywordDistricts.map(
+                                (location: any, index: number) => {
+                                  return `${location.fullName}${
+                                    index ===
+                                    dataKeyword.keywordDistricts.length - 1
+                                      ? ''
+                                      : ', '
+                                  }`;
+                                },
+                              )}
+                            </p>
+                          </Tooltip>
                         </li>
                         <li>
                           <CateIcon />
-                          <p>{`${dataKeyword.category.name}`}</p>
+                          {/* <p>{`${dataKeyword.category.name}`}</p> */}
+                          <Tooltip
+                            title={dataKeyword.keywordCategories.map(
+                              (cate: any, index: number) => {
+                                return `${cate.fullName}${
+                                  index ===
+                                  dataKeyword.keywordCategories.length - 1
+                                    ? ''
+                                    : ', '
+                                }`;
+                              },
+                            )}
+                            placement="top"
+                          >
+                            <p>
+                              {dataKeyword.keywordCategories.map(
+                                (cate: any, index: number) => {
+                                  return `${cate.fullName}${
+                                    index ===
+                                    dataKeyword.keywordCategories.length - 1
+                                      ? ''
+                                      : ', '
+                                  }`;
+                                },
+                              )}
+                            </p>
+                          </Tooltip>
                         </li>
                       </ul>
                       <div className="wrap-time_keyword">
                         <p>
-                          {new Date(dataKeyword.created_at).toLocaleTimeString(
+                          {new Date(dataKeyword.createdAt).toLocaleTimeString(
                             [],
                             {
                               hour: '2-digit',
@@ -500,9 +554,7 @@ const Notificate = () => {
                         </p>
 
                         <p>
-                          {new Date(
-                            dataKeyword.created_at,
-                          ).toLocaleDateString()}
+                          {new Date(dataKeyword.createdAt).toLocaleDateString()}
                         </p>
                       </div>
                     </div>

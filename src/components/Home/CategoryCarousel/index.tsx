@@ -454,7 +454,7 @@ const CategoryCarousel: React.FC = () => {
                   const analytics: any = getAnalytics();
                   logEvent(analytics, 'event_web_click_HiJob' as string, {
                     // screen_name: screenName as string,
-                    page_home: `/category_${item.name}` as string,
+                    web_page_home: `/category_${item.name}` as string,
                   });
 
                   handleChange(event, item.id);

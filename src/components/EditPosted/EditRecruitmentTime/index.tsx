@@ -60,7 +60,7 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
               // editDataPosted.startDate
               editDataPosted.startDate
                 ? moment(editDataPosted.startDate)
-                : moment(new Date())
+                : moment(new Date().getTime())
             }
             onChange={handleChangeStartTime}
             format="DD/MM/YYYY"
@@ -80,9 +80,9 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
           <DatePicker
             value={
               // editDataPosted.endDate
-              editDataPosted.startDate
+              editDataPosted.endDate
                 ? moment(editDataPosted.endDate)
-                : moment(new Date())
+                : moment(new Date().getTime())
             }
             onChange={handleChangeEndTime}
             format="DD/MM/YYYY"

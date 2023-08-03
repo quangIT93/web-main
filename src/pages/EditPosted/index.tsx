@@ -244,19 +244,22 @@ const EditPosted = () => {
     formData.append('wardId', String(editDataPosted?.ward_id));
     formData.append('jobTypeId', String(editDataPosted?.jobTypeId));
     formData.append('isDatePeriod', String(editDataPosted?.isDatePeriod));
-    formData.append(
-      'startDate',
-      editDataPosted?.startDate !== null
-        ? String(editDataPosted?.startDate)
-        : String(moment(new Date()).valueOf()),
-    );
 
-    formData.append(
-      'endDate',
-      editDataPosted?.endDate !== null
-        ? String(editDataPosted?.endDate)
-        : String(moment(new Date()).valueOf()),
-    );
+    if (editDataPosted?.isDatePeriod === 1) {
+      formData.append(
+        'startDate',
+        editDataPosted?.startDate !== null
+          ? String(editDataPosted?.startDate)
+          : String(moment(new Date()).valueOf()),
+      );
+
+      formData.append(
+        'endDate',
+        editDataPosted?.endDate !== null
+          ? String(editDataPosted?.endDate)
+          : String(moment(new Date()).valueOf()),
+      );
+    }
     formData.append('startTime', String(editDataPosted?.startTime));
     formData.append('endTime', String(editDataPosted?.endTime));
     formData.append(
@@ -336,6 +339,14 @@ const EditPosted = () => {
         checkForm: false,
       };
     }
+
+    // if (editDataPosted?.startDateNum.getTime() > editDataPosted?.endDate) {
+    //   return {
+    //     message: 'Bạn đã nhập ngày bắt đầu lớn hơn ngày kết thúc',
+    //     checkForm: false,
+    //   };
+    // }
+
     if (
       editDataPosted?.categoryIds &&
       editDataPosted?.categoryIds?.length <= 0
@@ -379,6 +390,16 @@ const EditPosted = () => {
         checkForm: false,
       };
     }
+    if (
+      editDataPosted?.startDate &&
+      editDataPosted?.endDate &&
+      editDataPosted?.startDate > editDataPosted?.endDate
+    ) {
+      return {
+        message: 'Vui lòng nhập lại ngày làm việc',
+        checkForm: false,
+      };
+    }
 
     return {
       message: '',
@@ -403,8 +424,14 @@ const EditPosted = () => {
           content: message,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('error', error);
+      if (error?.response?.data?.message === 'Invalid date value') {
+        messageApi.open({
+          type: 'error',
+          content: 'Vui lòng nhập lại ngày làm việc',
+        });
+      }
     }
   };
 

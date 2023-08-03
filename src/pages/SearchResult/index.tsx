@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { Cascader, Divider, Typography, Input, Space, Select } from 'antd';
+import { Cascader, Divider, Typography, Input, Space, message } from 'antd';
 import { EnvironmentOutlined } from '@ant-design/icons';
 
 import { Box, Button } from '@mui/material';
@@ -198,7 +198,7 @@ const NewJobs: React.FC = () => {
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [categoriesId, setCategoriesId] = React.useState<string[]>([]);
-
+  const [messageApi, contextHolder] = message.useMessage();
   const analytics: any = getAnalytics();
 
   React.useEffect(() => {
@@ -608,7 +608,22 @@ const NewJobs: React.FC = () => {
     setValueKeyword(e.target.value);
   };
 
+  // const validValue = () => {
+  //   if ('') {
+  //     return {
+  //       message: 'Vui lòng chọn logo công ty',
+  //       checkForm: false,
+  //     };
+  //   }
+
+  //   return {
+  //     message: '',
+  //     checkForm: true,
+  //   };
+  // };
+
   const handleSubmitKeyword = async () => {
+    // const { message, checkForm } = validValue();
     try {
       // const result = await notificationKeywordApi.createKeywordNotification(
       //   valueKeyword,
@@ -625,9 +640,22 @@ const NewJobs: React.FC = () => {
       if (result) {
         setOpenModal(false);
         setOpenModalCreateSuccess(true);
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: 'Tạo từ khóa công việc không thành công.',
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log('error', error);
+      if (
+        error.response.data.message === 'Create keyword notification failed'
+      ) {
+        messageApi.open({
+          type: 'error',
+          content: 'Bạn chỉ có thể tạo 10 từ khóa.',
+        });
+      }
     }
   };
 
@@ -763,6 +791,7 @@ const NewJobs: React.FC = () => {
       <Navbar />
 
       <div className="search-result">
+        {contextHolder}
         {
           // automatic && (
           <Box sx={{ flexGrow: 1 }} ref={listRef}>

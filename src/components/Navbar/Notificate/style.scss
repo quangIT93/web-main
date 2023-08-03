@@ -110,6 +110,7 @@
             font-weight: 500;
             line-height: 24px;
             font-size: 16px;
+            text-align: start;
           }
 
           img {
@@ -281,6 +282,7 @@
         display: flex;
         align-items: center;
         position: relative;
+        transition: 0.3s all linear;
         button {
           padding: 10px 10px;
           display: flex;
@@ -307,7 +309,8 @@
         // }
 
         &:hover {
-          background-color: #78c1f6;
+          background-color: #e7e7ed;
+          
           .content_keyword {
             ul {
               li {
@@ -338,7 +341,8 @@
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
-            display: flex;
+            // display: flex;
+            text-align: start;
           }
 
           ul {
@@ -352,11 +356,12 @@
                 font-style: normal;
                 font-weight: 400;
                 line-height: 18px;
-                width: 100%;
+                // width: 100%;
+                max-width: 260px;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
-                display: flex;
+                // display: flex;
                 margin-left: 4px;
                 // justify-content: start;
               }

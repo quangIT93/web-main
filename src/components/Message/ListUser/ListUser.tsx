@@ -98,6 +98,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
               salary_min: resultPost.data.salaryMin,
               money_type_text: resultPost.data.moneyTypeText,
               salary_type_id: resultPost.data.postSalaryType.id,
+              statusPost: resultPost.status,
             });
           }
         }
@@ -106,7 +107,6 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         console.log('result.data', resultGetUserChated.data);
 
         if (resultGetUserChated.data) {
-          console.log('ve', resultGetUserChated.data);
           resultGetUserChated.data.map(async (userChat: any) => {
             if (userChat.user_id === searchParams.get('user_id')) {
               setUserInfoChat({
@@ -122,11 +122,15 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                 salary_min: userChat.salary_min,
                 money_type_text: userChat.money_type_text,
                 salary_type_id: userChat.salary_type_id,
+                statusPost: userChat.status,
               });
             } else {
               const resultGetPostV3 = await postApi.getPostV3(
                 Number(searchParams.get('post_id')),
               );
+
+              console.log('v3', resultGetPostV3);
+
               if (resultGetPostV3) {
                 if (
                   searchParams.get('post_id') &&
@@ -146,6 +150,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                     money_type_text: resultGetPostV3.data.moneyTypeText,
                     salary_type_id: resultGetPostV3.data.postSalaryType.id,
                     post_title: resultGetPostV3.data.title,
+                    statusPost: resultGetPostV3.data.status,
                   });
                 }
               }
@@ -175,6 +180,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
             money_type_text: result.data.moneyTypeText,
             salary_type_id: result.data.postSalaryType.id,
             post_title: result.data.title,
+            statusPost: result.data.status,
           });
         }
       } catch (error) {
@@ -236,6 +242,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   };
 
   useEffect(() => {
+    console.log('lis', listUserChat);
+
     listUserChat.map((userChat: any) => {
       if (userChat.user_id === searchParams.get('user_id')) {
         setUserInfoChat({
@@ -252,6 +260,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           money_type_text: userChat.money_type_text,
           salary_type_id: userChat.salary_type_id,
           post_title: userChat.post_title,
+          statusPost: userChat.status,
         });
       }
       return null;

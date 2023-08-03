@@ -319,8 +319,6 @@ const Profile: React.FC = () => {
   //   getPost();
   // }, []);
 
-  console.log('profile', profile);
-
   return (
     <div className="profile">
       <Navbar />

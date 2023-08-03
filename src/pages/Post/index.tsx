@@ -222,8 +222,10 @@ const Post: React.FC = () => {
     formData.append('wardId', wardId);
     formData.append('jobTypeId', String(typeJob));
     formData.append('isDatePeriod', String(isPeriodDate));
-    formData.append('startDate', startDate);
-    formData.append('endDate', endDate);
+    if (isPeriodDate === 1) {
+      formData.append('startDate', startDate);
+      formData.append('endDate', endDate);
+    }
     formData.append('startTime', startTime);
     formData.append('endTime', endTime);
     formData.append('salaryMin', String(salaryMin.toString().replace(',', '')));
@@ -320,6 +322,13 @@ const Post: React.FC = () => {
       };
     }
 
+    if (startDate > endDate) {
+      return {
+        message: 'Bạn đã nhập ngày bắt đầu lớn hơn ngày kết thúc',
+        checkForm: false,
+      };
+    }
+
     return {
       message: '',
       checkForm: true,
@@ -351,6 +360,11 @@ const Post: React.FC = () => {
           type: 'error',
           content: 'Bạn chỉ có thể đăng 1 bài trong 1 ngày',
         });
+      } else if (error?.response?.data?.message === 'Invalid date value') {
+        messageApi.open({
+          type: 'error',
+          content: 'Vui lòng nhập lại ngày làm việc',
+        });
       }
     }
   };
@@ -366,7 +380,7 @@ const Post: React.FC = () => {
     });
   }, []);
 
-  console.log('phone', phoneNumber);
+  // console.log('phone', phoneNumber);
 
   if (localStorage.getItem('accessToken')) {
     return (

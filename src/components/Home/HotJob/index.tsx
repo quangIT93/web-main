@@ -189,7 +189,7 @@ const HotJob: React.FC = () => {
 
                 logEvent(analytics, 'event_web_click_HiJob' as string, {
                   // screen_name: screenName as string,
-                  page_home: `/hotJob_${item.title}` as string,
+                  web_page_home: `/hotJob_${item.title}` as string,
                 });
                 handleClickItem(
                   event,

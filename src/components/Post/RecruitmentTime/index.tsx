@@ -50,7 +50,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             Ngày bắt đầu <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
-            value={startDate ? moment(startDate) : moment(new Date())}
+            value={startDate ? moment(startDate) : moment(new Date().getTime())}
             onChange={handleChangeStartTime}
             format="DD/MM/YYYY"
             disablePast={true}
@@ -67,7 +67,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             Ngày kết thúc <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
-            value={endDate ? moment(endDate) : moment(new Date())}
+            value={endDate ? moment(endDate) : moment(new Date().getTime())}
             onChange={handleChangeEndTime}
             // minDate={moment(startDate)}
             format="DD/MM/YYYY"
