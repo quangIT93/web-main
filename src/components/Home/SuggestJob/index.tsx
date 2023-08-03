@@ -119,7 +119,8 @@ const ThemesJob: React.FC = () => {
     //   ? searchParams.get(`theme-id`)
     //   : listTheme?.data[0].id;
 
-    const threshold = nearJob[nearJob.length - 1].id;
+    const threshold = nearJob[nearJob.length - 1]?.id;
+
     const result = await nearByApi.getNearByJob(
       userProfile?.address?.id,
       11,
@@ -255,18 +256,24 @@ const ThemesJob: React.FC = () => {
                 }}
               >
                 {localStorage.getItem('accessToken') ? (
-                  <div className='more-job'>
+                  <div className="more-job">
                     <p>Xem thêm</p> <MoreICon width={20} height={20} />
                   </div>
                 ) : (
                   <div className="suggest-job-not-loging">
                     <div className="suggest-job-not-loging_left">
                       <h3>Hijob gợi ý công việc cho bạn</h3>
-                      <p>Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.</p>
+                      <p>
+                        Nhanh chóng tìm được việc làm phù hợp với nhu cầu của
+                        bạn.
+                      </p>
                     </div>
                     <div className="suggest-job-not-loging_right">
-                      <Button type="primary"
-                        onClick={() => { setOpenModalLogin(true) }}
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          setOpenModalLogin(true);
+                        }}
                       >
                         Đăng nhập ngay
                         <ArrowIcon />
@@ -283,7 +290,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //   onClick={handleClose}
+              //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
