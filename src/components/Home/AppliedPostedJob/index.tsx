@@ -147,17 +147,20 @@ const AppliedPostedJob: React.FC = () => {
 
       <div
         className="applied-posted-job-not-loging"
-        style={{ display: !isLogined ? 'flex' : 'none', }}
+        style={{ display: !isLogined ? 'flex' : 'none' }}
       >
         <div className="applied-posted-job-not-loging_left">
-          <p>HiJob giúp bạn tìm được công việc lý tưởng, ứng viên tiềm năng.</p>
+          <p> Đăng nhập để đăng ký việc làm miễn phí.</p>
         </div>
         <div className="applied-posted-job-not-loging_right">
-          <Button type="primary" shape="circle"
-            onClick={() => { setOpenModalLogin(true) }}
+          <Button
+            type="primary"
+            shape="circle"
+            onClick={() => {
+              setOpenModalLogin(true);
+            }}
             icon={<DoubleArrowIcon width={16} height={16} />}
-          >
-          </Button>
+          ></Button>
         </div>
       </div>
 

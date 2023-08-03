@@ -251,13 +251,17 @@ const ThemesJob: React.FC = () => {
               <Space
                 className="div-hover-more-suggest-job"
                 style={{ width: '100%' }}
-                onClick={(e) => {
-                  handleChange(e, page);
-                }}
               >
                 {localStorage.getItem('accessToken') ? (
                   <div className="more-job">
-                    <p>Xem thêm</p> <MoreICon width={20} height={20} />
+                    <p
+                      onClick={(e) => {
+                        handleChange(e, page);
+                      }}
+                    >
+                      Xem thêm
+                    </p>{' '}
+                    <MoreICon width={20} height={20} />
                   </div>
                 ) : (
                   <div className="suggest-job-not-loging">
