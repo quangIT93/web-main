@@ -46,7 +46,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   const getAllUserChat = async () => {
     try {
       const result = await messageApi.getUserChated();
-      console.log('result', result);
+
       if (result) {
         setStateUserChat(result.data);
       }
@@ -61,26 +61,102 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   const getApplicationByIdAndPost = async () => {
     try {
-      const result = await historyRecruiter.GetAJobApplication(
-        Number(searchParams.get('post_id')),
-        searchParams.get('application_id') ?? '',
-      );
-      console.log('asdaadad', result);
+      // const result = await historyRecruiter.GetAJobApplication(
+      //   Number(searchParams.get('post_id')),
+      //   searchParams.get('application_id') ?? '',
+      // );
+      // console.log('chat', result.data);
+      // const result = await messageApi.getUserChated();
 
-      if (result.data) {
-        setUserInfoChat({
-          user_id: result?.data.applicationProfile?.account_id,
-          name: result.data.applicationProfile?.name,
-          avatar: result.data.applicationProfile?.avatar,
-          isOnline: null,
-          company_name: '',
-          image: '',
-          applied: '',
-          salary_max: '',
-          salary_min: '',
-          money_type_text: '',
-          salary_type_id: '',
-        });
+      if (searchParams.get('application_id')) {
+        const resultHistoryRecruiter =
+          await historyRecruiter.GetAJobApplication(
+            Number(searchParams.get('post_id')),
+            searchParams.get('application_id') ?? '',
+          );
+
+        if (resultHistoryRecruiter) {
+          // console.log('ressssss', result.data);
+          const resultPost = await postApi.getPostV3(
+            Number(searchParams.get('post_id')),
+          );
+          console.log(resultHistoryRecruiter.data);
+          console.log('resultPost', resultPost);
+
+          if (resultPost && resultHistoryRecruiter) {
+            return setUserInfoChat({
+              user_id:
+                resultHistoryRecruiter.data.applicationProfile?.account_id,
+              name: resultHistoryRecruiter.data.applicationProfile?.name,
+              avatar: resultHistoryRecruiter.data.applicationProfile?.avatar,
+              imageCompany: resultPost.data?.image,
+              isOnline: false,
+              company_name: resultPost.data?.companyName,
+              image: resultPost.data.image,
+              applied: resultPost.data.applied,
+              salary_max: resultPost.data.salaryMax,
+              salary_min: resultPost.data.salaryMin,
+              money_type_text: resultPost.data.moneyTypeText,
+              salary_type_id: resultPost.data.postSalaryType.id,
+              statusPost: resultPost.status,
+            });
+          }
+        }
+      } else {
+        const resultGetUserChated = await messageApi.getUserChated();
+        console.log('result.data', resultGetUserChated.data);
+
+        if (resultGetUserChated.data) {
+          resultGetUserChated.data.map(async (userChat: any) => {
+            if (userChat.user_id === searchParams.get('user_id')) {
+              setUserInfoChat({
+                user_id: userChat.user_id,
+                name: userChat.name,
+                avatar: userChat.avatar,
+                imageCompany: userChat.image,
+                isOnline: userChat.is_online,
+                company_name: userChat.company_name,
+                image: userChat.avatar,
+                applied: userChat.applied,
+                salary_max: userChat.salary_max,
+                salary_min: userChat.salary_min,
+                money_type_text: userChat.money_type_text,
+                salary_type_id: userChat.salary_type_id,
+                statusPost: userChat.status,
+              });
+            } else {
+              const resultGetPostV3 = await postApi.getPostV3(
+                Number(searchParams.get('post_id')),
+              );
+
+              console.log('v3', resultGetPostV3);
+
+              if (resultGetPostV3) {
+                if (
+                  searchParams.get('post_id') &&
+                  searchParams.get('user_id')
+                ) {
+                  setUserInfoChat({
+                    user_id: searchParams.get('user_id'),
+                    name: resultGetPostV3.data.companyName,
+                    avatar: resultGetPostV3.data.image,
+                    imageCompany: resultGetPostV3.data.image,
+                    isOnline: null,
+                    company_name: resultGetPostV3.data.companyName,
+                    image: resultGetPostV3.data.image,
+                    applied: resultGetPostV3.data.applied,
+                    salary_max: resultGetPostV3.data.salaryMax,
+                    salary_min: resultGetPostV3.data.salaryMin,
+                    money_type_text: resultGetPostV3.data.moneyTypeText,
+                    salary_type_id: resultGetPostV3.data.postSalaryType.id,
+                    post_title: resultGetPostV3.data.title,
+                    statusPost: resultGetPostV3.data.status,
+                  });
+                }
+              }
+            }
+          });
+        }
       }
     } catch (error) {
       console.error('error', error);
@@ -89,20 +165,22 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           const result = await postApi.getPostV3(
             Number(searchParams.get('post_id')),
           );
-          // console.log('ressulr post id', result);
+
           setUserInfoChat({
             user_id: searchParams.get('user_id'),
             name: result.data.companyName,
             avatar: result.data.image,
+            imageCompany: result.data.image,
             isOnline: null,
-            company_name: result.data.company_name,
+            company_name: result.data.companyName,
             image: result.data.image,
             applied: result.data.applied,
-            salary_max: result.data.salary_max,
-            salary_min: result.data.salary_min,
-            money_type_text: result.data.money_type_text,
-            salary_type_id: result.data.salary_type_id,
+            salary_max: result.data.salaryMax,
+            salary_min: result.data.salaryMin,
+            money_type_text: result.data.moneyTypeText,
+            salary_type_id: result.data.postSalaryType.id,
             post_title: result.data.title,
+            statusPost: result.data.status,
           });
         }
       } catch (error) {
@@ -113,6 +191,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   useEffect(() => {
     getApplicationByIdAndPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateWindowWidth = () => {
@@ -163,13 +242,16 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   };
 
   useEffect(() => {
+    console.log('lis', listUserChat);
+
     listUserChat.map((userChat: any) => {
       if (userChat.user_id === searchParams.get('user_id')) {
         setUserInfoChat({
           user_id: userChat.user_id,
           name: userChat.name ? userChat.name : userChat.company_name,
-          avatar: userChat.name ? userChat.avatar : userChat.image,
-          isOnline: null,
+          avatar: userChat.avatar,
+          imageCompany: userChat.image,
+          isOnline: userChat.is_online,
           company_name: userChat.company_name,
           image: userChat.image,
           applied: userChat.applied,
@@ -178,19 +260,22 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           money_type_text: userChat.money_type_text,
           salary_type_id: userChat.salary_type_id,
           post_title: userChat.post_title,
+          statusPost: userChat.status,
         });
       }
       return null;
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listUserChat]);
 
   // console.log('tin nhan duoc nhan', receivedMessages)
   // console.log('tin nhan da gui', sendMessages)
   // const onSearch = (value: string) => console.log(value);
-  const userTest = {
-    post_id: '66596',
-    user_id: 'dc68ddaf-a185-4c84-a983-c94068f5c646',
-  };
+  // const userTest = {
+  //   post_id: '66596',
+  //   user_id: 'dc68ddaf-a185-4c84-a983-c94068f5c646',
+  // };
 
   // console.log('lisstUserrChat', listUserChat);
 
@@ -198,8 +283,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     return (
       <div
         // className="list_userChat"
-        className={`list_userChat ${props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
-          }`}
+        className={`list_userChat ${
+          props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
+        }`}
       >
         <div className="header-list_userChat">
           <h4 className="title-header_listUserChat">Tin nhắn</h4>
@@ -224,7 +310,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackDrop}
-          // onClick={handleClose}
+            // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -252,8 +338,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           </div> */}
           {listUserChat.map((user: any, index: number) => (
             <div
-              className={`wrap-userInfo ${userInfoChat.user_id === user.user_id ? 'readed-message' : ''
-                } `}
+              className={`wrap-userInfo ${
+                userInfoChat.user_id === user.user_id ? 'readed-message' : ''
+              } `}
               key={index}
               onClick={() => handleClickUserInfo(user)}
             >
@@ -264,8 +351,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                   <div>Hijob</div>
                 )}
                 <span
-                  className={`user-online ${user.is_online ? 'user-online_true' : ''
-                    }`}
+                  className={`user-online ${
+                    user.is_online ? 'user-online_true' : ''
+                  }`}
                 ></span>
               </div>
               <div className="info-user_chat">

@@ -69,47 +69,16 @@ const Policy: React.FC = () => {
     getActiveCategory();
   }, [scrollY]);
 
-  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
-  const [site, SetSite] = React.useState<any>(null);
-
   const analytics: any = getAnalytics();
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    document.title = 'HiJob - Chính sách công ty';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_policy' as string,
     });
   }, []);
-
-  const getTitle = async () => {
-    try {
-      const result = await siteApi.getSalaryType();
-      if (result) {
-        SetSite(result);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  React.useEffect(() => {
-    getTitle();
-  }, []);
-
-  React.useEffect(() => {
-    if (site?.data) {
-      setTitleFirebase('HiJob - Chính sách công ty');
-    }
-  }, [site]);
-
-  React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-policy';
-  }, [titleFirebase]);
-
-  new Promise((resolve, reject) => {
-    document.title = site ? titleFirebase : 'web-policy';
-  });
 
   return (
     <>

@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { styled } from '@mui/material/styles'
+import React, { useEffect, useState, useRef } from 'react';
+import { styled } from '@mui/material/styles';
 // import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
-import breakpoints from '../../scss/breakpoints'
+import breakpoints from '../../scss/breakpoints';
 
-import { FaceBookIcon } from '#components/Icons'
+import { FaceBookIcon } from '#components/Icons';
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-const { mobile, tablet } = breakpoints
+const { mobile, tablet } = breakpoints;
 
 const WrapFooter = styled('div')({
   position: 'fixed',
@@ -29,7 +29,7 @@ const WrapFooter = styled('div')({
     position: 'unset',
     height: '70px',
   },
-})
+});
 const PolicyFooter = styled('div')({
   display: 'flex',
   flexDirection: 'row',
@@ -46,7 +46,7 @@ const PolicyFooter = styled('div')({
   // [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
   //   position: 'unset',
   // },
-})
+});
 
 const Visibility = styled('div')({
   position: 'absolute',
@@ -66,12 +66,12 @@ const Visibility = styled('div')({
   [`@media (min-width: ${mobile}) and (max-width: ${tablet}) `]: {
     position: 'unset',
   },
-})
+});
 
 const Footer: React.FC = () => {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
-  const [windowWidth, setWindowWidth] = useState(false)
+  const [windowWidth, setWindowWidth] = useState(false);
   // const [position, setPosition] = React.useState('0')
 
   const footerRef = React.useRef<HTMLDivElement | null>(null);
@@ -79,34 +79,34 @@ const Footer: React.FC = () => {
   const handleClickOpen = (
     e:
       | React.MouseEvent<SVGSVGElement, MouseEvent>
-      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     // e.isPropagationStopped()
 
     if (!open && !windowWidth) {
-      return setOpen(true)
+      return setOpen(true);
     } else if (open && !windowWidth) {
-      setOpen(false)
+      setOpen(false);
     }
-  }
+  };
 
   const updateWindowWidth = () => {
     if (window.innerWidth < 784) {
-      setWindowWidth(true)
+      setWindowWidth(true);
     } else {
-      setWindowWidth(false)
+      setWindowWidth(false);
     }
-  }
+  };
 
   useEffect(() => {
-    updateWindowWidth()
-  }, [windowWidth])
+    updateWindowWidth();
+  }, [windowWidth]);
 
   useEffect(() => {
     if (windowWidth) {
-      return setOpen(true)
+      return setOpen(true);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -115,13 +115,12 @@ const Footer: React.FC = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
 
   return (
     <WrapFooter ref={footerRef}>
@@ -129,14 +128,14 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-              transform: 'translateY(calc(-100% - 36px))',
-            }
+                transform: 'translateY(calc(-100% - 36px))',
+              }
             : !open && !windowWidth
-              ? {
+            ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-              : { transform: 'none' }
+            : { transform: 'none' }
         }
       >
         <div className="container-footer">
@@ -163,16 +162,26 @@ const Footer: React.FC = () => {
           </div>
           <div className="footer-center">
             <h4>Về HiJob</h4>
-            <Link to="/policy#about-us">Về HiJob</Link>
+            <Link to="/policy#about-us" target="_seft">
+              Về HiJob
+            </Link>
 
-            <Link to="/policy#privacy-policy"> Chính sách bảo mật </Link>
+            <Link to="/policy#privacy-policy" target="_seft">
+              {' '}
+              Chính sách bảo mật{' '}
+            </Link>
 
-            <Link to="/policy#terms-of-use"> Điều khoản sử dụng </Link>
+            <Link to="/policy#terms-of-use" target="_seft">
+              {' '}
+              Điều khoản sử dụng{' '}
+            </Link>
 
             <h4>Liên kết</h4>
             <div className="link-facebook">
               <FaceBookIcon />
-              <Link to="https://www.facebook.com/hijobOfficial" target="_blank">Facebook</Link>
+              <Link to="https://www.facebook.com/hijobOfficial" target="_blank">
+                Facebook
+              </Link>
             </div>
           </div>
           <div className="footer-right">
@@ -239,7 +248,7 @@ const Footer: React.FC = () => {
         </div>
       </Visibility>
       <PolicyFooter id="div-policy-footer" onClick={handleClickOpen}>
-        <Link to="/policy">
+        <Link to="/policy" target="_parent">
           <p>Chính sách sử dụng</p>
         </Link>
         <div id="div-policy-footer-right">
@@ -258,7 +267,7 @@ const Footer: React.FC = () => {
         </p>
       </PolicyFooter>
     </WrapFooter>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

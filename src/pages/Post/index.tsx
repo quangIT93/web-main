@@ -193,8 +193,6 @@ const Post: React.FC = () => {
   const [companyError, setCompanyError] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [postData, SetPostData] = React.useState<any>(null);
-
   const [openModalNoteCreatePost, setOpenModalNoteCreatePost] =
     React.useState(true);
 
@@ -224,8 +222,10 @@ const Post: React.FC = () => {
     formData.append('wardId', wardId);
     formData.append('jobTypeId', String(typeJob));
     formData.append('isDatePeriod', String(isPeriodDate));
-    formData.append('startDate', startDate);
-    formData.append('endDate', endDate);
+    if (isPeriodDate === 1) {
+      formData.append('startDate', startDate);
+      formData.append('endDate', endDate);
+    }
     formData.append('startTime', startTime);
     formData.append('endTime', endTime);
     formData.append('salaryMin', String(salaryMin.toString().replace(',', '')));
@@ -322,6 +322,13 @@ const Post: React.FC = () => {
       };
     }
 
+    if (startDate > endDate) {
+      return {
+        message: 'Bạn đã nhập ngày bắt đầu lớn hơn ngày kết thúc',
+        checkForm: false,
+      };
+    }
+
     return {
       message: '',
       checkForm: true,
@@ -353,55 +360,27 @@ const Post: React.FC = () => {
           type: 'error',
           content: 'Bạn chỉ có thể đăng 1 bài trong 1 ngày',
         });
+      } else if (error?.response?.data?.message === 'Invalid date value') {
+        messageApi.open({
+          type: 'error',
+          content: 'Vui lòng nhập lại ngày làm việc',
+        });
       }
     }
   };
-  const [titleFirebase, setTitleFirebase] = useState<string>('');
-
-  const getPost = async () => {
-    try {
-      const result = await siteApi.getSalaryType();
-      if (result) {
-        SetPostData(result);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      getPost();
-    } else {
-      window.open(`/`, '_parent');
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   if (postData?.data) {
-  //     setTitleFirebase('HiJob - Đăng bài đăng tuyển dụng');
-  //   }
-  // }, [postData]);
-
-  // React.useEffect(() => {
-  //   document.title = titleFirebase ? titleFirebase : 'web-create-post';
-  // }, [titleFirebase]);
-
-  // new Promise((resolve, reject) => {
-  //   document.title = postData ? titleFirebase : 'web-create-post';
-  // });
 
   const analytics: any = getAnalytics();
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    document.title = 'HiJob - Tạo bài đăng tuyển dụng';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_createPost' as string,
     });
   }, []);
 
-  console.log('phone', phoneNumber);
+  // console.log('phone', phoneNumber);
 
   if (localStorage.getItem('accessToken')) {
     return (

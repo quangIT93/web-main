@@ -22,7 +22,7 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 // @ts-ignore
 // import { useSearchParams } from 'react-router-dom';
 
-// import { Button, Space } from 'antd';
+import { Button, Space } from 'antd';
 // import { Skeleton } from 'antd';
 
 // import redux
@@ -30,11 +30,13 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 // import { RootState } from '../../../store/reducer';
 
-import { AppliedPostedIcon } from '#components/Icons';
+import { AppliedPostedIcon, DoubleArrowIcon } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
 
 import './styles.scss';
+
+import ModalLogin from '../../../components/Home/ModalLogin';
 
 // interface ItemTheme {
 //   id: number;
@@ -49,6 +51,7 @@ const AppliedPostedJob: React.FC = () => {
   // const [loading, setloading] = React.useState(false);
   // const [index, setIndex] = React.useState(0);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   // const [searchParams, setSearchParams] = useSearchParams();
   // const dispatch = useDispatch();
@@ -133,7 +136,6 @@ const AppliedPostedJob: React.FC = () => {
         bgcolor: 'background.paper',
         position: 'relative',
         paddingBottom: '24px',
-        display: isLogined && appliedPostedJob.length > 0 ? 'flex' : 'none',
         flexDirection: 'column',
       }}
       className="applied-posted-jobs-container"
@@ -143,6 +145,22 @@ const AppliedPostedJob: React.FC = () => {
         <h2>Công việc đã Ứng tuyển/ Đăng tuyển</h2>
       </div>
 
+      <div
+        className="applied-posted-job-not-loging"
+        style={{ display: !isLogined ? 'flex' : 'none', }}
+      >
+        <div className="applied-posted-job-not-loging_left">
+          <p>HiJob giúp bạn tìm được công việc lý tưởng, ứng viên tiềm năng.</p>
+        </div>
+        <div className="applied-posted-job-not-loging_right">
+          <Button type="primary" shape="circle"
+            onClick={() => { setOpenModalLogin(true) }}
+            icon={<DoubleArrowIcon width={16} height={16} />}
+          >
+          </Button>
+        </div>
+      </div>
+
       <Swiper
         navigation={true}
         // mousewheel={true}
@@ -150,6 +168,9 @@ const AppliedPostedJob: React.FC = () => {
         spaceBetween={24}
         modules={[Mousewheel, Navigation, Pagination]}
         className="applied-posted-jobs_swiper"
+        style={{
+          display: isLogined && appliedPostedJob.length > 0 ? 'flex' : 'none',
+        }}
       >
         {appliedPostedJob?.map((item: any, index: number) => (
           <SwiperSlide
@@ -181,6 +202,10 @@ const AppliedPostedJob: React.FC = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </Box>
   );
 };

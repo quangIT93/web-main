@@ -182,9 +182,14 @@ const HotJob: React.FC = () => {
               onClick={(event) => {
                 const analytics: any = getAnalytics();
 
-                logEvent(analytics, 'screen_view' as string, {
+                // logEvent(analytics, 'screen_view' as string, {
+                //   // screen_name: screenName as string,
+                //   page_title: `/web_click_hotJob_${item.title}` as string,
+                // });
+
+                logEvent(analytics, 'event_web_click_HiJob' as string, {
                   // screen_name: screenName as string,
-                  page_title: `/web_click_hotJob_${item.title}` as string,
+                  web_page_home: `/hotJob_${item.title}` as string,
                 });
                 handleClickItem(
                   event,

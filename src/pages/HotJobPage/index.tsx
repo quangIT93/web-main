@@ -163,6 +163,7 @@ const HotJobpage: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    document.title = 'HiJob - Bài tuyển dụng nổi bật';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -237,18 +238,6 @@ const HotJobpage: React.FC = () => {
   };
 
   // title
-
-  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
-
-  React.useEffect(() => {
-    if (dataAllLocation) {
-      setTitleFirebase('HiJob - Hot Job');
-    }
-  }, [dataAllLocation]);
-
-  React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'HiJob - Hot Job';
-  }, [titleFirebase]);
 
   return (
     <>

@@ -123,7 +123,7 @@ const Notificate = () => {
         setIsLoading(false);
         setDataNotification(result.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -132,13 +132,15 @@ const Notificate = () => {
 
   const getApiNotificateKeyword = async () => {
     try {
-      const result = await notificationKeywordApi.getNotificationKeyword();
+      // const result = await notificationKeywordApi.getNotificationKeyword();
+      const result = await notificationKeywordApi.getNotificationKeywordV3();
+      console.log('keyword v3', result);
       if (result) {
         setDataNotificationkeyword(result.data);
         setValueApp(result.data.status.pushStatus);
         setValueMall(result.data.status.emailStatus);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -180,7 +182,7 @@ const Notificate = () => {
   }, []);
 
   const handleClickNotiKey = (postId: number) => {
-    window.open(`post-detail?post-id=${postId}`, '_parent');
+    window.open(`post-detail?post-id=${postId}`, '_blank');
   };
 
   const handleClickNoty = (
@@ -201,11 +203,11 @@ const Notificate = () => {
   };
 
   const handleChangeEmail = async (e: any) => {
-    // console.log(e.target.value);
+    console.log(e.target.value);
     try {
       const result = await notificationKeywordApi.putPlatform(
         parseInt(e.target.value) === 1 ? 0 : 1,
-        valueApp,
+        valueApp ? 1 : 0,
       );
       if (result) {
         if (parseInt(e.target.value) === 1) {
@@ -281,15 +283,17 @@ const Notificate = () => {
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
-          className={`top-notificate_system ${activeSystem ? 'active-system' : ''
-            }`}
+          className={`top-notificate_system ${
+            activeSystem ? 'active-system' : ''
+          }`}
           onClick={handleClickActiveSystem}
         >
           Thông báo
         </div>
         <div
-          className={`top-notificate_keyword ${activeKeyword ? 'active-keyword' : ''
-            }`}
+          className={`top-notificate_keyword ${
+            activeKeyword ? 'active-keyword' : ''
+          }`}
           onClick={handleClickActiveKeyword}
         >
           Từ khoá
@@ -452,10 +456,11 @@ const Notificate = () => {
             <div className="count-keyword">
               <p>
                 Bạn đã lưu trữ được:
-                <strong>{` ${dataNotificationKeyword?.keywords?.length > 0
-                    ? dataNotificationKeyword?.keywords?.length
+                <strong>{` ${
+                  dataNotificationKeyword.keywords.length > 0
+                    ? dataNotificationKeyword.keywords.length
                     : 0
-                  }/10 `}</strong>
+                }/10 `}</strong>
                 gợi ý công việc
               </p>
             </div>
@@ -463,28 +468,83 @@ const Notificate = () => {
               dataNotificationKeyword?.keywords?.map(
                 (dataKeyword: any, index: number) => (
                   <div
-                    className={`wrap-content_keyword ${idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
-                      }`}
+                    className={`wrap-content_keyword ${
+                      idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
+                    }`}
                     key={index}
                   >
                     <div
                       className="content_keyword"
                       onClick={() => handleClickItemKeyword(dataKeyword?.id)}
                     >
-                      <h3>{dataKeyword.keyword}</h3>
+                      <Tooltip title={dataKeyword.keyword} placement="top">
+                        <h3>{dataKeyword.keyword}</h3>
+                      </Tooltip>
                       <ul>
                         <li>
                           <LocationHomeIcon />
-                          <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p>
+                          {/* <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p> */}
+                          <Tooltip
+                            title={dataKeyword.keywordDistricts.map(
+                              (location: any, index: number) => {
+                                return `${location.fullName}${
+                                  index ===
+                                  dataKeyword.keywordDistricts.length - 1
+                                    ? ''
+                                    : ', '
+                                }`;
+                              },
+                            )}
+                            placement="top"
+                          >
+                            <p>
+                              {dataKeyword.keywordDistricts.map(
+                                (location: any, index: number) => {
+                                  return `${location.fullName}${
+                                    index ===
+                                    dataKeyword.keywordDistricts.length - 1
+                                      ? ''
+                                      : ', '
+                                  }`;
+                                },
+                              )}
+                            </p>
+                          </Tooltip>
                         </li>
                         <li>
                           <CateIcon />
-                          <p>{`${dataKeyword.category.name}`}</p>
+                          {/* <p>{`${dataKeyword.category.name}`}</p> */}
+                          <Tooltip
+                            title={dataKeyword.keywordCategories.map(
+                              (cate: any, index: number) => {
+                                return `${cate.fullName}${
+                                  index ===
+                                  dataKeyword.keywordCategories.length - 1
+                                    ? ''
+                                    : ', '
+                                }`;
+                              },
+                            )}
+                            placement="top"
+                          >
+                            <p>
+                              {dataKeyword.keywordCategories.map(
+                                (cate: any, index: number) => {
+                                  return `${cate.fullName}${
+                                    index ===
+                                    dataKeyword.keywordCategories.length - 1
+                                      ? ''
+                                      : ', '
+                                  }`;
+                                },
+                              )}
+                            </p>
+                          </Tooltip>
                         </li>
                       </ul>
                       <div className="wrap-time_keyword">
                         <p>
-                          {new Date(dataKeyword.created_at).toLocaleTimeString(
+                          {new Date(dataKeyword.createdAt).toLocaleTimeString(
                             [],
                             {
                               hour: '2-digit',
@@ -494,9 +554,7 @@ const Notificate = () => {
                         </p>
 
                         <p>
-                          {new Date(
-                            dataKeyword.created_at,
-                          ).toLocaleDateString()}
+                          {new Date(dataKeyword.createdAt).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
@@ -520,10 +578,11 @@ const Notificate = () => {
           </div>
         )}
         <div
-          className={`modal-delete_keyword ${openModalDeleteKeyword && !activeSystem
+          className={`modal-delete_keyword ${
+            openModalDeleteKeyword && !activeSystem
               ? 'open-modal_deleteKeyword'
               : ''
-            }`}
+          }`}
         >
           <h4>Xóa gợi ý công việc</h4>
           <p>Từ khoá sẽ không thể khôi phục sau khi xoá, bạn có chắc không?</p>

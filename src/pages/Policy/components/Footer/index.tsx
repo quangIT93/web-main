@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 // @ts-ignore
-import { ChatIcon, PhoneIcon, EmailIcon } from '#components'
-import './style.scss'
+import { ChatIcon, PhoneIcon, EmailIcon } from '#components';
+import './style.scss';
 
 const Footer: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
       <span className="footer__title">LIÊN HỆ VỚI CHÚNG TÔI:</span>
       <div className="footer-desktop">
         <button className="footer__btn">
-          <Link to="/chat">
+          <Link to="/chat" target="_parent">
             <ChatIcon width={21} height={21} />
             <span>Chat trực tuyến</span>
           </Link>
@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
         </button>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

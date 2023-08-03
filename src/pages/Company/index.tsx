@@ -116,6 +116,7 @@ const Company = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    document.title = 'HiJob - Thông tin công ty';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_company' as string,
@@ -153,11 +154,11 @@ const Company = () => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -167,7 +168,7 @@ const Company = () => {
 
   // valid values form data
   const validValue = () => {
-    if (dataCompany?.logoPath === '') {
+    if (dataCompany?.logoPath === '' || dataCompany?.logoPath?.status == "removed") {
       return {
         message: 'Vui lòng chọn logo công ty',
         checkForm: false,
@@ -179,12 +180,12 @@ const Company = () => {
         checkForm: false,
       };
     }
-    if (dataCompany?.taxCode === '') {
-      return {
-        message: 'Vui lòng nhập mã số thuế công ty',
-        checkForm: false,
-      };
-    }
+    // if (dataCompany?.taxCode === '') {
+    //   return {
+    //     message: 'Vui lòng nhập mã số thuế công ty',
+    //     checkForm: false,
+    //   };
+    // }
     if (dataCompany?.companyLocation === '') {
       return {
         message: 'Vui lòng chọn tỉnh thành phố',

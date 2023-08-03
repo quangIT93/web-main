@@ -30,12 +30,14 @@ const Message = () => {
   // custom title firebase
   const analytics: any = getAnalytics();
 
-  new Promise((resolve, reject) => {
-    document.title = 'Hijob - Nhắn tin';
-  });
+  // new Promise((resolve, reject) => {
+  //   document.title = 'Hijob - Nhắn tin';
+  // });
+
   useEffect(() => {
+    document.title = 'HiJob - Nhắn tin';
     logEvent(analytics, 'screen_view' as string, {
-      page_title: '/new_message ',
+      page_title: '/web_message ',
     });
   }, []);
   return (

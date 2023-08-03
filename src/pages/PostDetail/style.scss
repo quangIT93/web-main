@@ -17,7 +17,9 @@
 
   .nav {
     &.css-1lmzauf {
-      padding: 0 15%;
+      // padding: 0 15%;
+      padding: 0 180px;
+
 
       @media screen and (max-width: 1834px) and (min-width: 1280px) {
         padding: 0 10%;
@@ -29,12 +31,14 @@
     }
 
     .div-nav-right {
-      flex: 2
+      // flex: 2
+      flex: 1
     }
   }
-
+  
   .container-footer {
-    padding: 20px 15% 0;
+    // padding: 20px 15% 0;
+    padding: 20px 180px 0;
 
     @media screen and (max-width: 1834px) and (min-width: 1280px) {
       padding: 20px 10% 0;
@@ -46,7 +50,8 @@
   }
 
   #div-policy-footer {
-    padding: 10px 15%;
+    // padding: 10px 15%;
+    padding: 10px 180px;
 
     @media screen and (max-width: 1834px) and (min-width: 1280px) {
       padding: 10px 10%;
@@ -97,14 +102,15 @@
   .detail-container {
     display: flex;
     justify-content: center;
-    padding: 0 15% 70px;
+    // padding: 0 15% 70px;
+    padding: 0 180px 70px;
 
     @include breakpoint(destop) {
       padding: 0 24px 70px;
     }
 
-    // @media screen and (max-width: 1440px) and (min-width: 1280px) {
     //   padding: 0 20% 70px;
+    // @media screen and (max-width: 1440px) and (min-width: 1280px) {
     // }
 
     @media screen and (max-width: 1834px) and (min-width: 1280px) {

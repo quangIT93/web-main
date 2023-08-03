@@ -61,6 +61,8 @@ import { RootState } from '../../store/reducer';
 // import firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
+import ModalLogin from '../../components/Home/ModalLogin';
+
 import {
   ClockCircleOutlined,
   DollarOutlined,
@@ -126,11 +128,11 @@ const itemsShare = [
     icon: <FacebookIcon />,
     source: '',
   },
-  {
-    nameShare: 'Messenger',
-    icon: <MessagerIcon />,
-    source: '',
-  },
+  // {
+  //   nameShare: 'Messenger',
+  //   icon: <MessagerIcon />,
+  //   source: '',
+  // },
   // {
   //   nameShare: 'Zalo',
   //   icon: <ZaloIcon />,
@@ -208,6 +210,7 @@ const Detail: React.FC = () => {
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalApply, setOpenModalApply] = React.useState(false);
   const [isApplied, setIsApplied] = React.useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   // const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
@@ -375,7 +378,8 @@ const Detail: React.FC = () => {
   const onclick = async () => {
     try {
       if (!ACCESS_TOKEN) {
-        CheckWasLogin();
+        setOpenModalLogin(true);
+        // CheckWasLogin();
         return;
       }
       // console.log('applied', post?.data.applied);
@@ -486,6 +490,9 @@ const Detail: React.FC = () => {
     // const a = post?.data.bookmarked;
 
     try {
+      if (!localStorage.getItem('accessToken')) {
+        setOpenModalLogin(true);
+      }
       if (post?.data.bookmarked && bookmarked) {
         const result = await bookMarkApi.deleteBookMark(post?.data.id);
         if (result) {
@@ -565,15 +572,12 @@ const Detail: React.FC = () => {
   // console.log('copy link', copied);
   // console.log('date', new Date(post?.data.created_at).toLocaleDateString());
 
-  new Promise((resolve, reject) => {
-    if (post) document.title = `${post?.data?.title}`;
-  });
-
   // custom title firebase
   const analytics: any = getAnalytics();
 
   useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    document.title = 'HiJob - Chi tiết bài tuyển dụng';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_post_detail' as string,
@@ -1463,6 +1467,10 @@ const Detail: React.FC = () => {
               </Box>
             </Box>
           </Modal>
+          <ModalLogin
+            openModalLogin={openModalLogin}
+            setOpenModalLogin={setOpenModalLogin}
+          />
           <Footer />
         </div>
       )}

@@ -236,7 +236,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               <div className="item-candidate">
                 <PersonIcon fontSize="small" className="icon-candidate" />
                 <p>
-                  {candidate.gender === 0 ? 'Nam' : 'Nữ'} -{' '}
+                  {candidate.gender === 0 ? 'Nữ' : 'Nam'} -{' '}
                   {moment(candidate.birthday).format('DD/MM/YYYY')}
                 </p>
               </div>

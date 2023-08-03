@@ -239,10 +239,17 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
               onClick={(event) => {
                 const analytics: any = getAnalytics();
 
-                logEvent(analytics, 'screen_view' as string, {
+                // logEvent(analytics, 'screen_view' as string, {
+                //   // screen_name: screenName as string,
+                //   page_title: `/web_click_place_category` as string,
+                // });
+                console.log('item', item);
+
+                logEvent(analytics, 'event_web_click_HiJob' as string, {
                   // screen_name: screenName as string,
-                  page_title: `/web_click_place_category` as string,
+                  web_page_home: `/place_category_${item.title}` as string,
                 });
+
                 handleChange(event, item.id);
               }}
               style={{

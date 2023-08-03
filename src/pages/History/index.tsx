@@ -77,6 +77,7 @@ const HistoryPost = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    document.title = 'HiJob - Lịch sử ứng tuyển/đăng tuyển';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_history' as string,
@@ -90,6 +91,7 @@ const HistoryPost = () => {
       color="#0d99ff "
       href="/"
       onClick={handleClick}
+      target="_parent"
     >
       Trang chủ
     </Link>,
@@ -99,6 +101,7 @@ const HistoryPost = () => {
       color="#0d99ff "
       href="/history"
       onClick={handleClick}
+      target="_parent"
     >
       Lịch sử
     </Link>,
