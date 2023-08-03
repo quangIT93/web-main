@@ -35,7 +35,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          Mô tả công ty
+          Mô tả công ty <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -47,7 +47,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           onChange={handleEditCompanyDes}
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder="Nhập vào nội dung"
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>

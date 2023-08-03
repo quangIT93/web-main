@@ -12,7 +12,7 @@ import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { MoreICon, SuggestIcon } from '#components/Icons';
+import { MoreICon, SuggestIcon, ArrowIcon } from '#components/Icons';
 
 // @ts-ignore
 import moment from 'moment';
@@ -37,6 +37,8 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
 
+import { Button } from 'antd';
+
 import postApi from 'api/postApi';
 import nearByApi from 'api/apiNearBy';
 import bookMarkApi from 'api/bookMarkApi';
@@ -56,6 +58,7 @@ import { Space, Tooltip } from 'antd';
 
 //import jobcard
 import JobCard from '../JobCard';
+import ModalLogin from '../../../components/Home/ModalLogin';
 
 interface PostTheme {
   id: number;
@@ -86,6 +89,7 @@ const ThemesJob: React.FC = () => {
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
   const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -204,7 +208,7 @@ const ThemesJob: React.FC = () => {
   // }, [localStorage.getItem("accessToken")])
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }}>
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <SuggestIcon width={25} height={25} />
         <h2>Công việc gợi ý</h2>
@@ -244,17 +248,31 @@ const ThemesJob: React.FC = () => {
                   onChange={handleChange}
                 /> */}
               <Space
-                className="div-hover-more"
+                className="div-hover-more-suggest-job"
+                style={{ width: '100%' }}
                 onClick={(e) => {
                   handleChange(e, page);
                 }}
               >
                 {localStorage.getItem('accessToken') ? (
-                  <>
+                  <div className='more-job'>
                     <p>Xem thêm</p> <MoreICon width={20} height={20} />
-                  </>
+                  </div>
                 ) : (
-                  <></>
+                  <div className="suggest-job-not-loging">
+                    <div className="suggest-job-not-loging_left">
+                      <h3>Hijob gợi ý công việc cho bạn</h3>
+                      <p>Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.</p>
+                    </div>
+                    <div className="suggest-job-not-loging_right">
+                      <Button type="primary"
+                        onClick={() => { setOpenModalLogin(true) }}
+                      >
+                        Đăng nhập ngay
+                        <ArrowIcon />
+                      </Button>
+                    </div>
+                  </div>
                 )}
               </Space>
             </Stack>
@@ -265,10 +283,14 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //   onClick={handleClose}
+            //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
+            <ModalLogin
+              openModalLogin={openModalLogin}
+              setOpenModalLogin={setOpenModalLogin}
+            />
           </>
         )}
       </>
