@@ -95,8 +95,8 @@ export interface FormValues {
   endDate: number | null;
   latitude: number;
   longitude: number;
-  startTime: number;
-  endTime: number;
+  // startTime: number;
+  // endTime: number;
   isWorkingWeekend: number;
   isRemotely: number;
   salaryMin: number;
@@ -160,12 +160,16 @@ const Post: React.FC = () => {
 
   const [typeJob, setTypeJob] = useState(1);
   const [isPeriodDate, setIsPeriodDate] = useState<number>(1);
-  const [startTime, setStartTime] = React.useState<any>(
-    new Date(1970, 0, 2, 7, 0).getTime(),
-  );
-  const [endTime, setEndTime] = React.useState<any>(
-    new Date(1970, 0, 2, 17, 0).getTime(),
-  );
+  // const [startTime, setStartTime] = React.useState<any>(
+  //   new Date(1970, 0, 2, 7, 0).getTime(),
+  // );
+
+  // const [endTime, setEndTime] = React.useState<any>(
+  //   new Date(1970, 0, 2, 17, 0).getTime(),
+  // );
+
+  const [startTime, setStartTime] = React.useState<string>('00:00');
+  const [endTime, setEndTime] = React.useState<string>('00:00');
   const [startDate, setStartDate] = React.useState<any>(new Date().getTime());
   const [endDate, setEndDate] = React.useState<any>(new Date().getTime());
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0);
@@ -253,12 +257,12 @@ const Post: React.FC = () => {
     formData.append('latitude', String(latitude));
     formData.append('longitude', String(longitude));
 
-    // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}, ${pair[1]}`);
-    // }
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    }
 
     if (formData) {
-      createNewPost(formData);
+      // createNewPost(formData);
     }
   };
 
@@ -342,7 +346,8 @@ const Post: React.FC = () => {
     try {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
-          const result = await postApi.createPost(formData);
+          // const result = await postApi.createPost(formData);
+          const result = await postApi.createPostV3(formData);
           if (result) {
             setOpenModalPost(true);
           }

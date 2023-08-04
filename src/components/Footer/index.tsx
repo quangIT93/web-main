@@ -1,9 +1,10 @@
-import React from 'react'
-// import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import './style.scss'
+import './style.scss';
 
 const Footer: React.FC = () => {
+  const mail = 'contact.hijob@gmail.com';
   return (
     <div style={{ width: '100%' }}>
       <div className="container-footer">
@@ -95,11 +96,13 @@ const Footer: React.FC = () => {
               (1.000 đồng/phút)
             </p> */}
           </div>
-          <p style={{ color: '#575757' }}>Email: neoworks.vn@gmail.com</p>
+          <Link to={`mailto:someone@example.com`} style={{ color: '#575757' }}>
+            Email: contact.hijob@gmail.com
+          </Link>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

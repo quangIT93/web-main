@@ -522,12 +522,12 @@ const Detail: React.FC = () => {
   const handleClickShareSource = (nameShare: string) => {
     // window.location.href = `mailto:${email}`;
     if (nameShare === 'Mail') {
-      // window.location.href = `mailto:quangbk54@gmail.com`;
-      window.location.href = `mailto:?body=${encodeURIComponent(
-        post?.data?.companyResourceData?.name === 'HIJOB'
-          ? post?.data.shareLink
-          : post?.data.companyResourceData.postUrl,
-      )}`;
+      window.location.href = `mailto:quangbk54@gmail.com`;
+      // window.location.href = `mailto:contact.hijob@gmail.com?body=${encodeURIComponent(
+      //   post?.data?.companyResourceData?.name === 'HIJOB'
+      //     ? post?.data.shareLink
+      //     : post?.data.companyResourceData.postUrl,
+      // )}`;
     }
 
     // if (nameShare === 'Messenger') {
