@@ -230,6 +230,7 @@ const Post: React.FC = () => {
       formData.append('startDate', startDate);
       formData.append('endDate', endDate);
     }
+
     formData.append('startTime', startTime);
     formData.append('endTime', endTime);
     formData.append('salaryMin', String(salaryMin.toString().replace(',', '')));
