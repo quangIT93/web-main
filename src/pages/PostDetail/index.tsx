@@ -897,7 +897,10 @@ const Detail: React.FC = () => {
       },
       children: (
         <>
-          <div className="job-title-container">
+          <div
+            className={`job-title-container`}
+            style={{ overflowY: 'scroll' }}
+          >
             <div className="job-title-details">
               <div className="div-intro-Company">
                 <Avatar
