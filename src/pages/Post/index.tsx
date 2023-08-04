@@ -160,16 +160,16 @@ const Post: React.FC = () => {
 
   const [typeJob, setTypeJob] = useState(1);
   const [isPeriodDate, setIsPeriodDate] = useState<number>(1);
-  // const [startTime, setStartTime] = React.useState<any>(
-  //   new Date(1970, 0, 2, 7, 0).getTime(),
-  // );
+  const [startTime, setStartTime] = React.useState<any>(
+    new Date(1970, 0, 2, 7, 0).getTime(),
+  );
 
-  // const [endTime, setEndTime] = React.useState<any>(
-  //   new Date(1970, 0, 2, 17, 0).getTime(),
-  // );
+  const [endTime, setEndTime] = React.useState<any>(
+    new Date(1970, 0, 2, 17, 0).getTime(),
+  );
 
-  const [startTime, setStartTime] = React.useState<string>('00:00');
-  const [endTime, setEndTime] = React.useState<string>('00:00');
+  // const [startTime, setStartTime] = React.useState<string>('00:00');
+  // const [endTime, setEndTime] = React.useState<string>('00:00');
   const [startDate, setStartDate] = React.useState<any>(new Date().getTime());
   const [endDate, setEndDate] = React.useState<any>(new Date().getTime());
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0);

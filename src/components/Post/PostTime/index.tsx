@@ -18,27 +18,16 @@ interface IPostTime {
   setEndTime: any;
 }
 const PostTime: React.FC<IPostTime> = (props) => {
-  // const { startTime, endTime, setStartTime, setEndTime } = props;
+  const { startTime, endTime, setStartTime, setEndTime } = props;
 
-  const [startTime, setStartTime] = React.useState<any>(
-    new Date(1970, 0, 2, 7, 0).getTime(),
-  );
+  // const [startTime, setStartTime] = React.useState<any>(
+  //   new Date(1970, 0, 2, 7, 0).getTime(),
+  // );
 
-  const [endTime, setEndTime] = React.useState<any>(
-    new Date(1970, 0, 2, 17, 0).getTime(),
-  );
+  // const [endTime, setEndTime] = React.useState<any>(
+  //   new Date(1970, 0, 2, 17, 0).getTime(),
+  // );
   const handleChangeStartTime = (newValue: any, e: any) => {
-    console.log('time start', new Date(newValue).getHours());
-    console.log('time start', new Date(newValue).getMinutes());
-    console.log('time start', new Date(newValue).getTimezoneOffset() / 60);
-
-    console.log('time', moment(new Date(startTime)));
-    console.log('startTime', startTime);
-    console.log(
-      'new Date(newValue._d).getTime()',
-      new Date(newValue._d).getTime(),
-    );
-
     setStartTime(new Date(newValue._d).getTime());
   };
 

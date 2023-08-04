@@ -98,7 +98,7 @@ const Footer: React.FC = () => {
           </div>
           <Link
             to={`mailto:contact.hijob@gmail.com`}
-            style={{ color: '#575757' }}
+            style={{ color: '#0d99ff', textDecoration: 'underline' }}
           >
             Email: contact.hijob@gmail.com
           </Link>
