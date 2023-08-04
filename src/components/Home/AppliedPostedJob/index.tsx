@@ -30,7 +30,7 @@ import { Button, Space } from 'antd';
 
 // import { RootState } from '../../../store/reducer';
 
-import { AppliedPostedIcon, DoubleArrowIcon } from '#components/Icons';
+import { AppliedPostedIcon, DoubleArrowIcon, LoginArrowIcon } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
 
@@ -155,12 +155,13 @@ const AppliedPostedJob: React.FC = () => {
         <div className="applied-posted-job-not-loging_right">
           <Button
             type="primary"
-            shape="circle"
             onClick={() => {
               setOpenModalLogin(true);
             }}
-            icon={<DoubleArrowIcon width={16} height={16} />}
-          ></Button>
+          >
+            <LoginArrowIcon />
+            Đăng nhập ngay
+          </Button>
         </div>
       </div>
 

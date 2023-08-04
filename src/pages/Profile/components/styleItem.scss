@@ -28,6 +28,8 @@
   .div-item-right {
     display: flex;
     align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .ant-space-align-center {
