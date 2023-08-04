@@ -76,6 +76,9 @@ const Footer: React.FC = () => {
 
   const footerRef = React.useRef<HTMLDivElement | null>(null);
 
+  // const mail = useRef('contact.hijob@gmail.com');
+  const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
+
   const handleClickOpen = (
     e:
       | React.MouseEvent<SVGSVGElement, MouseEvent>
@@ -262,9 +265,16 @@ const Footer: React.FC = () => {
             </p> */}
           </div>
         </div>
-        <p style={{ color: '#575757', fontSize: '12px' }}>
-          Email: neoworks.vn@gmail.com
-        </p>
+        <Link
+          to="mailto:contact.hijob@gmail.com"
+          style={{
+            color: '#0d99ff',
+            textDecoration: 'underline',
+            fontSize: '12px',
+          }}
+        >
+          Email: contact.hijob@gmail.com
+        </Link>
       </PolicyFooter>
     </WrapFooter>
   );

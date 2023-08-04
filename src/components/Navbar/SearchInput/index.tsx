@@ -5,6 +5,7 @@ import { Select, Button } from 'antd';
 import type { SelectProps } from 'antd';
 import { useLocation } from 'react-router-dom';
 import searchApi from 'api/searchApi';
+import apiTotalJob from 'api/apiTotalJob';
 import './style.scss';
 // import { Spin } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
@@ -122,6 +123,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const [dataSuggest, setDataSuggest] = React.useState<any>([]);
   // const [openDropdown, setOpenDropdown] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(false);
+  const [totalJob, setTotalJob] = React.useState<number>(0);
 
   const QUERY = searchParams.get('q');
   const location = useLocation();
@@ -302,6 +304,20 @@ const SearchInput: React.FC<SearchProps> = ({
     }
   };
 
+  const getTotalUserSearch = async () => {
+    try {
+      const result = await apiTotalJob.getTotalJob();
+      if (result) {
+        setTotalJob(result?.data?.total);
+      }
+    } catch (error) {}
+  };
+  console.log('total', totalJob);
+
+  React.useEffect(() => {
+    getTotalUserSearch();
+  }, []);
+
   const dropdownRender: any = ['1'].map((d: any, index: number) => (
     <div
       key={index}
@@ -314,7 +330,7 @@ const SearchInput: React.FC<SearchProps> = ({
       {/* {d.value} */}
 
       <div className="items-history items-search_keyword">
-        <h4>Từ khóa</h4>
+        <h4>Từ khóa phổ biến</h4>
         <div className="wrap-items-history wrap-items-search">
           {dataSuggest?.map((suggest: any, index: number) => (
             <div className="item-history item-search" key={index}>
@@ -372,7 +388,7 @@ const SearchInput: React.FC<SearchProps> = ({
         searchValue={value}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
-        placeholder="Tìm kiếm hơn 70,000 công việc tại Việt Nam"
+        placeholder={`Tìm kiếm hơn ${totalJob} công việc tại Việt Nam`}
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}

@@ -12,6 +12,15 @@ const postApi = {
       },
     })
   },
+  createPostV3: (newPost: FormValues) => {
+    const URL = `v3/posts`
+    return axiosClient.post(URL, newPost, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+  },
   getPost: () => {
     const URL = `v1/posts?limit=10`
     return axiosClient.get(URL, {

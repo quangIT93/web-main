@@ -95,8 +95,8 @@ export interface FormValues {
   endDate: number | null;
   latitude: number;
   longitude: number;
-  startTime: number;
-  endTime: number;
+  // startTime: number;
+  // endTime: number;
   isWorkingWeekend: number;
   isRemotely: number;
   salaryMin: number;
@@ -163,9 +163,13 @@ const Post: React.FC = () => {
   const [startTime, setStartTime] = React.useState<any>(
     new Date(1970, 0, 2, 7, 0).getTime(),
   );
+
   const [endTime, setEndTime] = React.useState<any>(
     new Date(1970, 0, 2, 17, 0).getTime(),
   );
+
+  // const [startTime, setStartTime] = React.useState<string>('00:00');
+  // const [endTime, setEndTime] = React.useState<string>('00:00');
   const [startDate, setStartDate] = React.useState<any>(new Date().getTime());
   const [endDate, setEndDate] = React.useState<any>(new Date().getTime());
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0);
@@ -226,6 +230,7 @@ const Post: React.FC = () => {
       formData.append('startDate', startDate);
       formData.append('endDate', endDate);
     }
+
     formData.append('startTime', startTime);
     formData.append('endTime', endTime);
     formData.append('salaryMin', String(salaryMin.toString().replace(',', '')));
@@ -343,6 +348,7 @@ const Post: React.FC = () => {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
           const result = await postApi.createPost(formData);
+          // const result = await postApi.createPostV3(formData);
           if (result) {
             setOpenModalPost(true);
           }

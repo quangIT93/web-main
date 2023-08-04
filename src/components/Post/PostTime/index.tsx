@@ -19,6 +19,14 @@ interface IPostTime {
 }
 const PostTime: React.FC<IPostTime> = (props) => {
   const { startTime, endTime, setStartTime, setEndTime } = props;
+
+  // const [startTime, setStartTime] = React.useState<any>(
+  //   new Date(1970, 0, 2, 7, 0).getTime(),
+  // );
+
+  // const [endTime, setEndTime] = React.useState<any>(
+  //   new Date(1970, 0, 2, 17, 0).getTime(),
+  // );
   const handleChangeStartTime = (newValue: any, e: any) => {
     setStartTime(new Date(newValue._d).getTime());
   };
