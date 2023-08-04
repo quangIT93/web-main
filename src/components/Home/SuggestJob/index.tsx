@@ -12,7 +12,7 @@ import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { MoreICon, SuggestIcon, ArrowIcon } from '#components/Icons';
+import { MoreICon, SuggestIcon, ArrowIcon, LoginArrowIcon } from '#components/Icons';
 
 // @ts-ignore
 import moment from 'moment';
@@ -279,8 +279,8 @@ const ThemesJob: React.FC = () => {
                           setOpenModalLogin(true);
                         }}
                       >
+                        <LoginArrowIcon />
                         Đăng nhập ngay
-                        <ArrowIcon />
                       </Button>
                     </div>
                   </div>
@@ -294,7 +294,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //   onClick={handleClose}
+            //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

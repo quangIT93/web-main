@@ -107,7 +107,7 @@ const Company = () => {
     logoPath: '',
   });
 
-  // console.log("dataCompany", dataCompany);
+  console.log("dataCompany", dataCompany);
   const [openModalEditPost, setOpenModalEditPost] = React.useState(false);
 
   // const [loadingNotFound, setLoadingNotFound] = React.useState(false);

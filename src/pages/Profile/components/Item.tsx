@@ -103,20 +103,6 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
         <Space
           onClick={
             typeItem === 'experiences'
-              ? () => handleDeleteExperience(item?.id)
-              : () => handleDeleteEducation(item?.id)
-          }
-          style={{ cursor: 'pointer', marginRight: '16px' }}
-        >
-          <div className="edit-icon">
-            <DeleteIcon width={15} height={15} />
-          </div>
-          <p style={{ color: 'gray', fontSize: '14px' }}>Xoá</p>
-        </Space>
-
-        <Space
-          onClick={
-            typeItem === 'experiences'
               ? () => handleUpdateExperience(item?.id)
               : () => handleUpdateEducation(item?.id)
           }
@@ -127,6 +113,19 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           </div>
 
           <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+        </Space>
+        <Space
+          onClick={
+            typeItem === 'experiences'
+              ? () => handleDeleteExperience(item?.id)
+              : () => handleDeleteEducation(item?.id)
+          }
+          style={{ cursor: 'pointer', marginRight: '16px' }}
+        >
+          <div className="edit-icon">
+            <DeleteIcon width={15} height={15} />
+          </div>
+          <p style={{ color: 'gray', fontSize: '14px' }}>Xoá</p>
         </Space>
       </div>
       <ModalDeleteEducation
