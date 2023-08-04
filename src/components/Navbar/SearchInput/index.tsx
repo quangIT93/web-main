@@ -312,7 +312,6 @@ const SearchInput: React.FC<SearchProps> = ({
       }
     } catch (error) {}
   };
-  console.log('total', totalJob);
 
   React.useEffect(() => {
     getTotalUserSearch();
@@ -388,7 +387,9 @@ const SearchInput: React.FC<SearchProps> = ({
         searchValue={value}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
-        placeholder={`Tìm kiếm hơn ${totalJob} công việc tại Việt Nam`}
+        placeholder={`Tìm kiếm hơn ${totalJob.toLocaleString(
+          'en-US',
+        )} công việc tại Việt Nam`}
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}

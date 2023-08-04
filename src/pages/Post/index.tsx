@@ -95,8 +95,8 @@ export interface FormValues {
   endDate: number | null;
   latitude: number;
   longitude: number;
-  // startTime: number;
-  // endTime: number;
+  startTime: number;
+  endTime: number;
   isWorkingWeekend: number;
   isRemotely: number;
   salaryMin: number;
