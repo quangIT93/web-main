@@ -11,6 +11,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import { CloseOutlined } from '@ant-design/icons';
 
+import { message } from 'antd';
+
 // data
 import locationApi from '../../../api/locationApi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -68,6 +70,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [name, setName] = useState(profile?.name);
   const [introduction, setIntroduction] = useState(profile?.introduction);
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   const dispatch = useDispatch();
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
 
@@ -111,26 +115,59 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIntroduction(e.target.value);
   };
+
+  const validValue = () => {
+    if (name === '') {
+      return {
+        message: 'Vui lòng nhập tên',
+        checkForm: false,
+      };
+    }
+
+    if (introduction === '') {
+      return {
+        message: 'Vui lòng nhập giới thiệu bản thân',
+        checkForm: false,
+      };
+    }
+
+    return {
+      message: '',
+      checkForm: true,
+    };
+  };
   // handle update information user
   const handleSubmit = async () => {
     // const data = new Date(day.toString()).getTime()
     // console.log('ennter');
-    try {
-      const info: IInfoPersonal = {
-        name: name,
-        birthday: new Date(day.toString()).getTime(),
-        gender: gender === 'Nam' ? 1 : 0,
-        address: selectedProvince.id,
-        introduction: introduction,
-      };
+    const { message, checkForm } = validValue();
 
-      const result = await profileApi.putProfilePersonal(info);
-      if (result) {
-        await dispatch(getProfile() as any);
-        setOpenModalPersonalInfo(false);
+    try {
+      if (checkForm) {
+        const info: IInfoPersonal = {
+          name: name,
+          birthday: new Date(day.toString()).getTime(),
+          gender: gender === 'Nam' ? 1 : 0,
+          address: selectedProvince.id,
+          introduction: introduction,
+        };
+        const result = await profileApi.putProfilePersonal(info);
+        if (result) {
+          await dispatch(getProfile() as any);
+          setOpenModalPersonalInfo(false);
+        }
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: message,
+        });
       }
     } catch (error) {
       console.log(error);
+      messageApi.open({
+        type: 'error',
+        content: 'Vui lòng kiểm tra lại thông tin đã nhập',
+      });
     }
   };
   const handleKeyDown = (event: any) => {
@@ -148,6 +185,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       onKeyDown={handleKeyDown}
     >
       <Box sx={style}>
+        {contextHolder}
         <form action="">
           <div
             style={{
@@ -190,7 +228,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -236,7 +274,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       helperText: 'DD/MM/yyyy',
                     },
                   }}
-                  format="DD/MM/YYYY"
+                  // format="DD/MM/YYYY"
                 />
               </div>
             </LocalizationProvider>
@@ -256,8 +294,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={
                 selectedProvince
                   ? dataProvinces?.find(
-                    (province: any) => province.id === selectedProvince.id,
-                  )
+                      (province: any) => province.id === selectedProvince.id,
+                    )
                   : null
               }
               defaultValue={dataProvinces}
@@ -293,12 +331,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               placeholder="Giới thiệu bản thân với Nhà Tuyển dụng
             Nêu sở trường và mong muốn của bạn liên quan đến công việc để gây chú ý với Nhà Tuyển dụng"
               error={!introduction} // Đánh dấu lỗi
-            // onKeyDown={(event) => {
-            //   // if (event.key === 'Enter') {
-            //   //   event.preventDefault();
-            //   // }
-            //   console.log(event.target);
-            // }}
+              // onKeyDown={(event) => {
+              //   // if (event.key === 'Enter') {
+              //   //   event.preventDefault();
+              //   // }
+              //   console.log(event.target);
+              // }}
             />
           </Box>
         </form>

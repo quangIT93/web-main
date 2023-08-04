@@ -103,8 +103,10 @@
       .actions-login {
 
         // display: none;
+
         .btn {
           width: 70px;
+          position: relative;
 
           .login__avatar {
             width: 40px;
@@ -117,6 +119,7 @@
             }
           }
         }
+
       }
     }
   }
@@ -1057,6 +1060,154 @@
         }
       }
 
+    }
+
+    .actions-login {
+      position: relative;
+      // pointer-events: none;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 47px;
+        right: 60px;
+        width: 71px;
+        height: 20px;
+        background-color: transparent;
+      }
+
+      &:hover>.login__hover__container {
+        display: block;
+        animation-name: animate-pop-out;
+      }
+
+      // &:not(:hover)>.login__hover__container {
+      //   // display: block;
+      //   animation-name: animate-pop-in;
+      // }
+
+      @keyframes animate-pop-out {
+        0% {
+          opacity: 0;
+          transform: scale(0.5, 0.5);
+        }
+
+        100% {
+          opacity: 1;
+          transform: scale(1, 1);
+        }
+      }
+
+      @keyframes animate-pop-in {
+        0% {
+          opacity: 1;
+          transform: scale(1, 1);
+        }
+
+        100% {
+          opacity: 0;
+          transform: scale(0.5, 0.5);
+          display: none;
+        }
+      }
+
+
+      .login__hover__container {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        display: none;
+        // visibility: hidden;
+        animation-duration: 0.55s;
+        animation-delay: 0.3s;
+        animation-name: animate-pop-in;
+        animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
+        animation-fill-mode: backwards;
+
+
+        .login__hover {
+          padding: 18px 24px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          width: 311px;
+          // height: 172px;
+          gap: 8px;
+          // left: 949px;
+          border-radius: 50px;
+          background: rgba(37, 37, 37, 1);
+
+          &:after {
+            content: "";
+            position: absolute;
+            top: -11px;
+            right: 70px;
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 13px solid rgb(37, 37, 37);
+          }
+
+          h3 {
+            color: #FFF;
+            font-family: Roboto;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 30px;
+            /* 150% */
+          }
+
+          .login__hover__p {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            p {
+              // text-align: left;
+              color: #FFF;
+              font-family: Roboto;
+              font-size: 16px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 24px;
+              /* 150% */
+            }
+          }
+
+          .ant-btn {
+            padding: 12px 24px;
+            gap: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+            flex-shrink: 0;
+            border-radius: 37px;
+            background-color: #FFF;
+            transition: all 0.3 linear;
+            color: #252525;
+            font-family: Roboto;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+            /* 150% */
+
+            &:hover {
+              transform: scale(1.1);
+            }
+
+            &:active {
+              transform: scale(0.9);
+            }
+          }
+
+        }
+      }
     }
   }
 }

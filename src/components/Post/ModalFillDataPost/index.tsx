@@ -196,7 +196,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         setSalaryType(result.data.salary_type_id);
         setMoneyType(result.data.money_type);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleSubmitValueFill = () => {

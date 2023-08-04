@@ -15,6 +15,8 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
 
+import { message } from 'antd';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -71,6 +73,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   const dispatch = useDispatch();
 
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+
+  const [messageApi, contextHolder] = message.useMessage();
 
   const [experience, setExperience] = useState<IInfoExperience>({
     experienceId,
@@ -132,19 +136,80 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   };
 
   // submit
+  const validValue = () => {
+    if (experience.title === '') {
+      return {
+        message: 'Vui lòng nhập tên chuyên ngành',
+        checkForm: false,
+      };
+    }
+
+    if (experience.companyName === '') {
+      return {
+        message: 'Vui lòng nhập tên trường/tổ chức',
+        checkForm: false,
+      };
+    }
+
+    if (experience.extraInformation === '') {
+      return {
+        message: 'Vui lòng nhập thông tin bổ sung',
+        checkForm: false,
+      };
+    }
+    console.log('NaN', experience.startDate);
+
+    if (!experience.startDate) {
+      return {
+        message: 'Vui lòng nhập ngày bắt đầu',
+        checkForm: false,
+      };
+    }
+
+    if (!experience.endDate) {
+      return {
+        message: 'Vui lòng nhập Ngày kết thúc',
+        checkForm: false,
+      };
+    }
+
+    // if (experience.endDate > experience.startDate) {
+    //   return {
+    //     message: 'Ngày bắt đầu không thể lớn hơn ngày kết thúc',
+    //     checkForm: false,
+    //   };
+    // }
+
+    return {
+      message: '',
+      checkForm: true,
+    };
+  };
 
   const handleSubmit = async () => {
+    const { message, checkForm } = validValue();
     try {
-      const result = await profileApi.updateProfileExperience(experience);
-      if (result) {
-        const profile = await profileApi.getProfile();
-        if (profile) {
-          setProfileUser(profile.data);
+      if (checkForm) {
+        const result = await profileApi.updateProfileExperience(experience);
+        if (result) {
+          const profile = await profileApi.getProfile();
+          if (profile) {
+            setProfileUser(profile.data);
+          }
+          setOpenModalExperienceUpdate(false);
         }
-        setOpenModalExperienceUpdate(false);
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: message,
+        });
       }
     } catch (error) {
       console.log(error);
+      messageApi.open({
+        type: 'error',
+        content: 'Vui lòng kiểm tra lại thông tin đã nhập',
+      });
     }
   };
 
@@ -163,6 +228,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       onKeyDown={handleKeyDown}
     >
       <Box sx={style}>
+        {contextHolder}
         <div
           style={{
             position: 'absolute',

@@ -146,7 +146,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
 
   const tProps: any = {
     // treeData,
-    open: true,
+    // open: true,
     treeCheckStrictly: true,
     treeData: renderTreeNode(treeData),
     showCheckbox: true, // Ẩn checkbox cho tất cả các nút

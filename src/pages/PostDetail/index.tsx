@@ -260,7 +260,7 @@ const Detail: React.FC = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -282,6 +282,13 @@ const Detail: React.FC = () => {
         // console.log('postId', result.data);
         // check  application status
         // setIsLoading(false);
+        console.log(
+          'result.data.accountId === accountId',
+          result.data.accountId === accountId,
+        );
+
+        console.log('data', result.data);
+
         if (result.data.accountId === accountId) {
           setTextButton('Chỉnh sửa bài tuyển dụng');
           setBackgroundButton('black');
@@ -295,6 +302,10 @@ const Detail: React.FC = () => {
           setTextButton('Đã ứng tuyển');
           // setBackgroundButton('gray');
           setBackgroundButton('#0D99FF');
+        } else {
+          setTextButton('Ứng tuyển');
+          setBackgroundButton('#0D99FF');
+          // setCheckPostUser(true);
         }
         // else if (result.data.application_status === 2) {
         //   setTextButton('Hồ sơ được phê duyệt');
@@ -597,17 +608,14 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address}, ${
-          post?.data.location ? post?.data.location.fullName : ''
-        }, ${
-          post?.data?.location?.district
-            ? post?.data?.location?.district?.fullName
-            : ''
-        }, ${
-          post?.data?.location?.district?.province
-            ? post?.data.district?.province?.fullName
-            : ''
-        }`,
+      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
+      }, ${post?.data?.location?.district
+        ? post?.data?.location?.district?.fullName
+        : ''
+      }, ${post?.data?.location?.district?.province
+        ? post?.data.district?.province?.fullName
+        : ''
+      }`,
     );
   };
 
@@ -846,15 +854,14 @@ const Detail: React.FC = () => {
               }}
               onClick={() =>
                 window.open(
-                  `/message?post_id=${searchParams.get('post-id')}&user_id=${
-                    post?.data?.accountId
+                  `/message?post_id=${searchParams.get('post-id')}&user_id=${post?.data?.accountId
                   } `,
                   '_blank',
                 )
               }
-              // onClick={() => {
-              //   console.log(post?.data);
-              // }}
+            // onClick={() => {
+            //   console.log(post?.data);
+            // }}
             ></Button>
             <Button
               onClick={onclick}
@@ -886,7 +893,10 @@ const Detail: React.FC = () => {
       },
       children: (
         <>
-          <div className="job-title-container">
+          <div
+            className={`job-title-container`}
+            style={{ overflowY: 'scroll' }}
+          >
             <div className="job-title-details">
               <div className="div-intro-Company">
                 <Avatar
@@ -954,8 +964,8 @@ const Detail: React.FC = () => {
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
                         : 'Chưa cập nhật'}
                     </h5>
                   </div>
@@ -1063,17 +1073,14 @@ const Detail: React.FC = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${
-                      post?.data?.location ? post?.data?.location?.fullName : ''
-                    }, ${
-                      post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
+                      }, ${post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                    }, ${
-                      post?.data?.location?.district?.province
+                      }, ${post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                    }`}</h3>
+                      }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -1271,7 +1278,7 @@ const Detail: React.FC = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                          // onClick={handlePreviousPost}
+                        // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1426,8 +1433,8 @@ const Detail: React.FC = () => {
                 {post?.data?.companyResourceData?.name === 'HIJOB'
                   ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Bạn có muốn ứng tuyển công việc này không?'
                   : isApplied
-                  ? 'Bạn đã ứng tuyển công việc này chưa?'
-                  : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
+                    ? 'Bạn đã ứng tuyển công việc này chưa?'
+                    : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
               </Typography>
 
               <Box
@@ -1455,8 +1462,8 @@ const Detail: React.FC = () => {
                     post?.data?.companyResourceData?.name === 'HIJOB'
                       ? handleApply
                       : isApplied
-                      ? handleChangeStatus
-                      : handleClickChangePage
+                        ? handleChangeStatus
+                        : handleClickChangePage
                   }
                   style={{
                     width: '300px',

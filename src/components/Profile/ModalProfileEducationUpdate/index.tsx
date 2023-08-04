@@ -16,6 +16,8 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
 
+import { message } from 'antd';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -82,6 +84,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
     extraInformation: educationValue.extra_information,
   });
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   const handleClose = () => setOpenModalEducationUpdate(false);
 
   // school
@@ -93,18 +97,33 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
   // time
   const handleChangeStartTime = (newValue: any, e: any) => {
-    setEducation((preValue) => {
-      return { ...preValue, startDate: new Date(newValue._d).getTime() };
-    });
+    if (newValue) {
+      setEducation((preValue) => {
+        return { ...preValue, startDate: new Date(newValue._d).getTime() };
+      });
+    } else {
+      setEducation((preValue) => {
+        return { ...preValue, startDate: NaN };
+      });
+    }
   };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
-    setEducation((preValue) => {
-      return {
-        ...preValue,
-        endDate: new Date(newValue._d).getTime(),
-      };
-    });
+    if (newValue) {
+      setEducation((preValue) => {
+        return {
+          ...preValue,
+          endDate: new Date(newValue._d).getTime(),
+        };
+      });
+    } else {
+      setEducation((preValue) => {
+        return {
+          ...preValue,
+          endDate: NaN,
+        };
+      });
+    }
   };
 
   // major
@@ -126,18 +145,80 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
   // submit
 
+  const validValue = () => {
+    if (education.major === '') {
+      return {
+        message: 'Vui lòng nhập tên chuyên ngành',
+        checkForm: false,
+      };
+    }
+
+    if (education.companyName === '') {
+      return {
+        message: 'Vui lòng nhập tên trường/tổ chức',
+        checkForm: false,
+      };
+    }
+
+    if (education.extraInformation === '') {
+      return {
+        message: 'Vui lòng nhập thông tin bổ sung',
+        checkForm: false,
+      };
+    }
+    console.log('NaN', education.startDate);
+
+    if (!education.startDate) {
+      return {
+        message: 'Vui lòng nhập ngày bắt đầu',
+        checkForm: false,
+      };
+    }
+
+    if (!education.endDate) {
+      return {
+        message: 'Vui lòng nhập Ngày kết thúc',
+        checkForm: false,
+      };
+    }
+
+    // if (education.endDate > education.startDate) {
+    //   return {
+    //     message: 'Ngày bắt đầu không thể lớn hơn ngày kết thúc',
+    //     checkForm: false,
+    //   };
+    // }
+
+    return {
+      message: '',
+      checkForm: true,
+    };
+  };
+
   const handleSubmit = async () => {
+    const { message, checkForm } = validValue();
     try {
-      const result = await profileApi.updateProfileEducation(education);
-      if (result) {
-        const profile = await profileApi.getProfile();
-        if (profile) {
-          setProfileUser(profile.data);
+      if (checkForm) {
+        const result = await profileApi.updateProfileEducation(education);
+        if (result) {
+          const profile = await profileApi.getProfile();
+          if (profile) {
+            setProfileUser(profile.data);
+          }
+          setOpenModalEducationUpdate(false);
         }
-        setOpenModalEducationUpdate(false);
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: message,
+        });
       }
     } catch (error) {
-      console.log(error);
+      console.log('error', error);
+      messageApi.open({
+        type: 'error',
+        content: 'Vui lòng kiểm tra lại thông tin đã nhập',
+      });
     }
   };
 
@@ -155,6 +236,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       onKeyDown={handleKeyDown}
     >
       <Box sx={style}>
+        {contextHolder}
         <div
           style={{
             position: 'absolute',
@@ -237,7 +319,11 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   Thời gian bắt đầu <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
-                  value={moment(education.startDate)}
+                  value={
+                    moment(education.startDate)
+                    // && new Date().getTime()
+                  }
+                  defaultValue={moment(new Date().getTime())}
                   onChange={handleChangeStartTime}
                   views={['year', 'month']}
                   openTo="month"
@@ -255,6 +341,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                 </Typography>
                 <DatePicker
                   value={moment(education.endDate)}
+                  defaultValue={moment(new Date().getTime())}
                   onChange={handleChangeEndTime}
                   views={['year', 'month']}
                   openTo="month"

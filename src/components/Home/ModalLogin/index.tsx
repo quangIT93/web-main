@@ -455,7 +455,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             />
             <p className="textOpt">Bạn hãy nhập mã OTP được gửi đến email:</p>
             <p className="textOpt-email">{loginData.email}</p>
-            <p className="textOpt">
+            <p className="textOpt-notice">
               Nếu không nhận được mã OTP qua email,
               bạn vui lòng kiểm tra lại email đã nhập chính xác chưa
               hoặc kiểm tra trong thư mục spam
