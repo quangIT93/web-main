@@ -347,8 +347,8 @@ const Post: React.FC = () => {
     try {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
-          // const result = await postApi.createPost(formData);
-          const result = await postApi.createPostV3(formData);
+          const result = await postApi.createPost(formData);
+          // const result = await postApi.createPostV3(formData);
           if (result) {
             setOpenModalPost(true);
           }
