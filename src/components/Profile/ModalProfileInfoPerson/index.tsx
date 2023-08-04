@@ -190,7 +190,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -256,8 +256,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={
                 selectedProvince
                   ? dataProvinces?.find(
-                    (province: any) => province.id === selectedProvince.id,
-                  )
+                      (province: any) => province.id === selectedProvince.id,
+                    )
                   : null
               }
               defaultValue={dataProvinces}
@@ -293,12 +293,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               placeholder="Giới thiệu bản thân với Nhà Tuyển dụng
             Nêu sở trường và mong muốn của bạn liên quan đến công việc để gây chú ý với Nhà Tuyển dụng"
               error={!introduction} // Đánh dấu lỗi
-            // onKeyDown={(event) => {
-            //   // if (event.key === 'Enter') {
-            //   //   event.preventDefault();
-            //   // }
-            //   console.log(event.target);
-            // }}
+              // onKeyDown={(event) => {
+              //   // if (event.key === 'Enter') {
+              //   //   event.preventDefault();
+              //   // }
+              //   console.log(event.target);
+              // }}
             />
           </Box>
         </form>
