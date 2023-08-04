@@ -282,6 +282,13 @@ const Detail: React.FC = () => {
         // console.log('postId', result.data);
         // check  application status
         // setIsLoading(false);
+        console.log(
+          'result.data.accountId === accountId',
+          result.data.accountId === accountId,
+        );
+
+        console.log('data', result.data);
+
         if (result.data.accountId === accountId) {
           setTextButton('Chỉnh sửa bài tuyển dụng');
           setBackgroundButton('black');
@@ -295,6 +302,10 @@ const Detail: React.FC = () => {
           setTextButton('Đã ứng tuyển');
           // setBackgroundButton('gray');
           setBackgroundButton('#0D99FF');
+        } else {
+          setTextButton('Ứng tuyển');
+          setBackgroundButton('#0D99FF');
+          // setCheckPostUser(true);
         }
         // else if (result.data.application_status === 2) {
         //   setTextButton('Hồ sơ được phê duyệt');
