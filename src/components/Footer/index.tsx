@@ -96,7 +96,10 @@ const Footer: React.FC = () => {
               (1.000 đồng/phút)
             </p> */}
           </div>
-          <Link to={`mailto:someone@example.com`} style={{ color: '#575757' }}>
+          <Link
+            to={`mailto:contact.hijob@gmail.com`}
+            style={{ color: '#575757' }}
+          >
             Email: contact.hijob@gmail.com
           </Link>
         </div>
