@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
+import queryString from 'query-string';
 
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
@@ -22,12 +23,6 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 // import siteApi from 'api/siteApi';
 
 // import icon
-
-import {
-  // useNavigate,
-  // createSearchParams,
-  useSearchParams,
-} from 'react-router-dom';
 
 import './style.scss';
 // @ts-ignore
@@ -57,8 +52,9 @@ const dataItem = [
   },
 ];
 const HistoryPost = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const hotjobtype = Number(searchParams.get('post'));
+  const queryParams = queryString.parse(window.location.search);
+  // const hotjobtype = Number(searchParams.get('post'));
+  const hotjobtype = Number(queryParams['post']);
   const [activeChild, setActiveChild] = React.useState(
     hotjobtype === 2 ? '2-0' : '0-0',
   );
@@ -144,6 +140,7 @@ const HistoryPost = () => {
       );
     }
     return null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ItemLeft, activeChild, showDetailPosted, setShowDetailPosted]);
 
   const CardsApply = useMemo(() => {
@@ -166,12 +163,14 @@ const HistoryPost = () => {
     if (childKey === '2-0') setShowDetailPosted(false);
     if (childKey === '2-1') setShowDetailPosted(false);
     if (childKey === '2-2') setShowDetailPosted(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClickSubTitle = useCallback((index: number) => {
     setItemLeft(index);
     setActiveChild(`${index}-0`);
     setShowDetailPosted(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

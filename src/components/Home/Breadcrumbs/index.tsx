@@ -207,6 +207,7 @@ const BreadcrumbsCpn: React.FC = () => {
     return () => {
       window.removeEventListener('click', handleOutsideClick);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const breadcrumbs = [

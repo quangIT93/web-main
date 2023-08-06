@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 // import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import breakpoints from '../../scss/breakpoints';
@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
   const footerRef = React.useRef<HTMLDivElement | null>(null);
 
   // const mail = useRef('contact.hijob@gmail.com');
-  const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
+  // const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
 
   const handleClickOpen = (
     e:
@@ -109,6 +109,7 @@ const Footer: React.FC = () => {
     if (windowWidth) {
       return setOpen(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -123,6 +124,7 @@ const Footer: React.FC = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

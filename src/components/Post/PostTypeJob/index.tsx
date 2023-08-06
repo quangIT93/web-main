@@ -31,6 +31,7 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
 
   React.useEffect(() => {
     getTypeJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {

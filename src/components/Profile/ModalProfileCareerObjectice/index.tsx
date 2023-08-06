@@ -106,6 +106,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     // setOriginalValue(
     //   categories?.map((v, i) => v.child_category_id.toString()) || [],
     // );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories]);
 
   const handleSubmit = async () => {

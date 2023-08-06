@@ -249,6 +249,7 @@ const Detail: React.FC = () => {
 
   useEffect(() => {
     getDataCompany();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // get post by id-post

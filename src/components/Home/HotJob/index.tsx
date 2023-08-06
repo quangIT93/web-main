@@ -92,6 +92,7 @@ const HotJob: React.FC = () => {
 
   React.useEffect(() => {
     getHotJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const getPostNewestByThemeId = async () => {

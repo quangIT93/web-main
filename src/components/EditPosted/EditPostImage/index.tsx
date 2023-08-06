@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 import { message } from 'antd';
-import axios from 'axios';
+// import axios from 'axios';
 import './style.scss';
 
 interface IEditPostImage {
@@ -211,6 +211,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () =>
       files.forEach((file: any) => URL.revokeObjectURL(file.preview));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const options = {
@@ -219,9 +220,9 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
   };
 
   React.useEffect(() => {
-    selectedFiles.map((value: any) => {
-      // console.log('file img', value.preview);
-    });
+    // selectedFiles.map((value: any) => {
+    // console.log('file img', value.preview);
+    // });
     return () => {
       // Clean up all selectedFiles previews when the component unmounts
 
@@ -338,12 +339,14 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
         images: [...selectedFiles],
       }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (dataPosted) {
       setSelectedImages(dataPosted);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDeleteImage = (index: number, id: number | null) => {

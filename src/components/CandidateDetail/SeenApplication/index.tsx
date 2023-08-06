@@ -1,10 +1,10 @@
-import React from 'react'
-import { useSearchParams } from 'react-router-dom'
-import appplicationApi from 'api/appplication'
-import { Box, Typography, Modal } from '@mui/material'
-import { Button } from 'antd'
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
+import appplicationApi from 'api/appplication';
+import { Box, Typography, Modal } from '@mui/material';
+import { Button } from 'antd';
 
-import './style.scss'
+import './style.scss';
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -16,46 +16,47 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+};
 
 interface ISeenApplication {
-  setStatusApplication: React.Dispatch<React.SetStateAction<number>>
+  setStatusApplication: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SeenApplication: React.FC<ISeenApplication> = (props) => {
-  const { setStatusApplication } = props
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [openReject, setOpenReject] = React.useState(false)
-  const [openApprove, setOpenApprove] = React.useState(false)
-  const handleClose = () => setOpenReject(false)
+  const { setStatusApplication } = props;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [openReject, setOpenReject] = React.useState(false);
+  const [openApprove, setOpenApprove] = React.useState(false);
+  const handleClose = () => setOpenReject(false);
 
   const handleClickReject = async () => {
-    const candidateId = parseInt(searchParams.get('application_id') ?? '')
+    const candidateId = parseInt(searchParams.get('application_id') ?? '');
     try {
-      const result = await appplicationApi.updateApplication(candidateId, 3)
+      const result = await appplicationApi.updateApplication(candidateId, 3);
       if (result) {
-        setStatusApplication(3)
+        setStatusApplication(3);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleClickApproved = async () => {
-    const candidateId = parseInt(searchParams.get('application_id') ?? '')
+    const candidateId = parseInt(searchParams.get('application_id') ?? '');
 
     try {
-      const result = await appplicationApi.updateApplication(candidateId, 2)
+      const result = await appplicationApi.updateApplication(candidateId, 2);
       if (result) {
-        setStatusApplication(2)
+        setStatusApplication(2);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <>
       <Button
+        name="SeenApplicationReject"
         type="primary"
         style={{
           backgroundColor: '#BD3131',
@@ -70,6 +71,7 @@ const SeenApplication: React.FC<ISeenApplication> = (props) => {
         Từ chối hồ sơ
       </Button>
       <Button
+        name="SeenApplicationApprove"
         type="primary"
         style={{
           backgroundColor: '#5CB365',
@@ -129,7 +131,7 @@ const SeenApplication: React.FC<ISeenApplication> = (props) => {
         </Box>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default SeenApplication
+export default SeenApplication;

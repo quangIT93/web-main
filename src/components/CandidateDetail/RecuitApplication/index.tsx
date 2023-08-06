@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import { Button } from 'antd'
+import { Button } from 'antd';
 
 const RecuitApplication = () => {
   return (
@@ -17,11 +17,12 @@ const RecuitApplication = () => {
           marginLeft: '8px',
           cursor: 'default',
         }}
+        name="RecuitApplication"
       >
         Đã tuyển ứng viên này
       </Button>
     </>
-  )
-}
+  );
+};
 
-export default RecuitApplication
+export default RecuitApplication;

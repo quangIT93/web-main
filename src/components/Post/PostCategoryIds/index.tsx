@@ -64,6 +64,7 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
   };
   React.useEffect(() => {
     getAllParentCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleInputChange = (

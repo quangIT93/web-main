@@ -50,6 +50,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   const checkSalary = useMemo(() => {
     // Thực hiện các logic bạn cần ở đây
     return false; // Giả sử bạn trả về false, thay bằng logic thật
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const collapseRef = useRef<any>(null);
@@ -310,6 +311,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     return () => {
       window.removeEventListener('click', handleOutsideClick);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

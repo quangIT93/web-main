@@ -100,6 +100,7 @@ const CandidateDetail: React.FC = () => {
         dataCandidate?.applicationProfile?.application_status,
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataCandidate]);
   console.log('dataCandidate', dataCandidate?.applicationProfile?.avatar);
 

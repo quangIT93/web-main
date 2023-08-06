@@ -80,7 +80,7 @@ interface PostTheme {
 }
 
 const ThemesJob: React.FC = () => {
-  const [page, setPage] = React.useState(1);
+  // const [page, setPage] = React.useState(1);
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
   // const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
@@ -100,10 +100,7 @@ const ThemesJob: React.FC = () => {
   //   dispatch,
   // );
 
-  const handleChange = async (
-    event: React.ChangeEvent<unknown>,
-    value: number,
-  ) => {
+  const handleChange = async () => {
     // setPage(value);
     setOpenBackdrop(!openBackdrop);
     // const test = [1, 2]
@@ -194,6 +191,7 @@ const ThemesJob: React.FC = () => {
 
   useEffect(() => {
     listSuggestJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // React.useEffect(() => {
   //   console.log("vap")
@@ -250,13 +248,7 @@ const ThemesJob: React.FC = () => {
               >
                 {localStorage.getItem('accessToken') ? (
                   <div className="more-job">
-                    <p
-                      onClick={(e) => {
-                        handleChange(e, page);
-                      }}
-                    >
-                      Xem thêm
-                    </p>{' '}
+                    <p onClick={handleChange}>Xem thêm</p>{' '}
                     <MoreICon width={20} height={20} />
                   </div>
                 ) : (

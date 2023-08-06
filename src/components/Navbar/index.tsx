@@ -172,6 +172,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
     setUserFiltered(userFilteredCookies);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -645,6 +646,7 @@ const Navbar: React.FC = () => {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // handle logout
@@ -681,6 +683,7 @@ const Navbar: React.FC = () => {
 
   React.useEffect(() => {
     getAppliedPostedJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [approved, setApproved] = useState(0);
@@ -1177,7 +1180,7 @@ const Navbar: React.FC = () => {
                 // onClick={() => setOpenNotificate(!openNotificate)}
                 ref={bellRef}
               >
-                <div className={`button-download`}>
+                <div className="button-download">
                   <DownloadIcon />
                 </div>
                 {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}

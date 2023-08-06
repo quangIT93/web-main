@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import moment, { Moment } from 'moment';
 import Grid from '@mui/material/Grid';
 // import Card from '@mui/material/Card';
-import { Space, Tooltip, message, Button } from 'antd';
+import { message, Button } from 'antd';
 // import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 // import ImageListItem from '@mui/material/ImageListItem';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -63,6 +63,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
     return () => {
       isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //get post to check if length <= 10
@@ -79,6 +80,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
 
   useEffect(() => {
     getAllPostToCheck();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (event: any) => {
@@ -96,7 +98,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
       );
       if (result) {
         setUploading(false);
-        if (result.data.length == 0) {
+        if (result.data.length === 0) {
           setIsVisible(false);
           messageApi.open({
             type: 'error',

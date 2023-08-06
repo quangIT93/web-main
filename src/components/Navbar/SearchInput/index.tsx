@@ -184,6 +184,7 @@ const SearchInput: React.FC<SearchProps> = ({
 
   React.useEffect(() => {
     getSuggestKeyWord();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getDataSearch = async () => {
@@ -315,6 +316,7 @@ const SearchInput: React.FC<SearchProps> = ({
 
   React.useEffect(() => {
     getTotalUserSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dropdownRender: any = ['1'].map((d: any, index: number) => (

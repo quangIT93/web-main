@@ -1,6 +1,6 @@
-import { PostNewest } from '#components/Home/NewJobs';
+// import { PostNewest } from '#components/Home/NewJobs';
 import { ActionType , PostTypes } from "../../types"
-import { AxiosResponse } from "axios"
+// import { AxiosResponse } from "axios"
 
 const initialState: any = {
   data: {

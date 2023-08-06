@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 // import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 // import { Space, Tooltip } from 'antd';
 // import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 // import ImageListItem from '@mui/material/ImageListItem';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { Box, Typography, MenuItem, TextField, Button } from '@mui/material';
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  MoreOutlined,
-} from '@ant-design/icons';
+import { Box, Typography, Button } from '@mui/material';
 
 // import SubIcon from '../CardsPosted/SubIcon';
 
@@ -95,10 +90,11 @@ const statusCandidates = [
 const DetailPosted: React.FC<IDetailPosted> = (props) => {
   const { detailPosted } = props;
   const [dataCandidates, setDadaCandidates] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
   const [status, setStatus] = useState(detailPosted?.status);
   useEffect(() => {
     window.scrollTo(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getAllCandidates = async () => {
@@ -118,17 +114,19 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
   };
 
   useEffect(() => {
-    let isMounted = true;
-    setLoading(true);
-    getAllCandidates().then(() => {
-      if (isMounted) {
-        setLoading(false);
-      }
-    });
+    // let isMounted = true;
+    // setLoading(true);
+    getAllCandidates();
+    //   .then(() => {
+    //   if (isMounted) {
+    //     setLoading(false);
+    //   }
+    // });
 
-    return () => {
-      isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
-    };
+    // return () => {
+    //   isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
+    // };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const handleClickPost = (
@@ -172,8 +170,9 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               boxShadow: 'none',
               borderRadius: '5px',
               margin: '8px 0',
-              background: `${candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
-                }`,
+              background: `${
+                candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
+              }`,
             }}
             onClick={(e) =>
               handleClickCandidate(e, candidate.id, detailPosted?.id)

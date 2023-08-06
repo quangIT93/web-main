@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-
+import queryString from 'query-string';
 import Modal from '@mui/material/Modal';
 
 import Grid from '@mui/material/Grid';
@@ -46,11 +46,6 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
 // import { useHomeState } from '../Home/HomeState'
 
-import {
-  // useNavigate,
-  // createSearchParams,
-  useSearchParams,
-} from 'react-router-dom';
 // import { AxiosResponse } from 'axios'
 // import icon
 
@@ -149,7 +144,11 @@ const NewJobs: React.FC = () => {
   const [searchData, setSearchData] = React.useState<any>();
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+  // Lấy query params từ URL
+  const queryParams = queryString.parse(window.location.search);
+
+  // Lấy giá trị của tham số cụ thể (ví dụ: post-id)
+
   // const navigate = useNavigate()
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
@@ -179,7 +178,7 @@ const NewJobs: React.FC = () => {
   //   wards: [],
   // });
   const [openModal, setOpenModal] = React.useState(false);
-  const QUERY = decodeURIComponent(`${searchParams.get('q')}`);
+  const QUERY = decodeURIComponent(`${queryParams['q']}`);
   const [valueKeyword, setValueKeyword] = React.useState(QUERY ? QUERY : '');
   // const [districtId, setDistrictId] = React.useState<string>('');
 
@@ -287,7 +286,7 @@ const NewJobs: React.FC = () => {
   //   .map((dis) => dis[1])
   //   .map(Number);
 
-  console.log(searchParams.getAll('dis-ids'));
+  // console.log(searchParams.getAll('dis-ids'));
 
   // let userFiltered = JSON.parse(getCookie('userFiltered') || '{}');
 
@@ -309,7 +308,7 @@ const NewJobs: React.FC = () => {
     allLocation();
     // getAllLocations()
     // delete param when back to page
-    console.log('search parameters: ', Number(searchParams.get('job-type')));
+    // console.log('search parameters: ', Number(searchParams.get('job-type')));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -328,6 +327,7 @@ const NewJobs: React.FC = () => {
     getCategories();
     // getAllLocations()
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // handle click post details

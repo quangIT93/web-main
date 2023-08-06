@@ -51,6 +51,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   useEffect(() => {
     getRoles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleEditCompanyRole = (event: any, value: any) => {
@@ -96,7 +97,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
               {...params}
               placeholder="Chọn vai trò của bạn"
               size="small"
-            // value={dataCompany?.companyRole?.name}
+              // value={dataCompany?.companyRole?.name}
             />
           )}
           isOptionEqualToValue={(option, value) => {
@@ -124,7 +125,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder="http://"
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>

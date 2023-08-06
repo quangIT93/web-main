@@ -117,6 +117,7 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
 
   useEffect(() => {
     setPrevScrollTop(Number(refCatelory?.current?.getBoundingClientRect().top));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refCatelory]);
 
   const homeValueContextData = {
@@ -134,6 +135,7 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
     refCatelories,
     setRefCatelory,
     SetRefNav,
+    refNav,
     setNavTouchCatelory,
     navTouchCatelory,
     setOpenNotificate,

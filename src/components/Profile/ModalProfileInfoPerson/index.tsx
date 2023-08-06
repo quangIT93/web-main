@@ -95,6 +95,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     getAllProvinces();
     // getAllLocations()
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDateChange = (date: any) => {

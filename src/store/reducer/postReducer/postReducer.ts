@@ -1,5 +1,5 @@
 import { ActionType , PostTypes } from "../../types"
-import { AxiosResponse } from "axios"
+// import { AxiosResponse } from "axios"
 
 const initialState: any = {
   data: {

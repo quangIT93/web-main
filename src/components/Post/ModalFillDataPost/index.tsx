@@ -139,6 +139,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
 
   React.useEffect(() => {
     allPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [selectedValue, setSelectedValue] = React.useState<number>(0);

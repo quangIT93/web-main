@@ -145,6 +145,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
     return () => {
       window.removeEventListener('click', handleOutsideClick);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

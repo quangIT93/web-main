@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-import { Button } from 'antd'
+import { Button } from 'antd';
 
 const RejectedApplication: React.FC = () => {
   return (
     <>
       <Button
+        name="RejectedApplication"
         type="primary"
         style={{
           backgroundColor: '#bd3131',
@@ -21,7 +22,7 @@ const RejectedApplication: React.FC = () => {
         Đã từ chối hồ sơ
       </Button>
     </>
-  )
-}
+  );
+};
 
-export default RejectedApplication
+export default RejectedApplication;

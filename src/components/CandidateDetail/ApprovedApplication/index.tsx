@@ -57,6 +57,7 @@ const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
   return (
     <>
       <Button
+        name="submitApply"
         type="primary"
         style={{
           backgroundColor: '#0D99FF',
@@ -85,10 +86,19 @@ const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
             Hãy đảm bảo bạn và ứng viên đã liên hệ và sẽ làm việc cùng nhau.
           </Typography>
           <div className="button-modal_reject">
-            <Button type="default" danger onClick={() => setOpenRecruit(false)}>
+            <Button
+              type="default"
+              danger
+              onClick={() => setOpenRecruit(false)}
+              name="cancleApprovedApply"
+            >
               Huỷ
             </Button>
-            <Button type="primary" onClick={handleClickPassRecruitment}>
+            <Button
+              type="primary"
+              onClick={handleClickPassRecruitment}
+              name="submitApprovedApply"
+            >
               Đồng ý
             </Button>
           </div>

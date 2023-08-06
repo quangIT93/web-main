@@ -93,6 +93,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     allLocation();
     // getAllLocations()
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -114,6 +115,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
 
       setTransformedData(transformedData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataAllLocation]);
 
   useEffect(() => {

@@ -58,9 +58,10 @@ const EmblaCarousel: React.FC = () => {
 
   useEffect(() => {
     getBannersApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const SLIDE_COUNT = dataBanners.length;
+  // const SLIDE_COUNT = dataBanners.length;
   const slideCount = useRef(dataBanners.length);
 
   slideCount.current = dataBanners.length;
@@ -69,6 +70,7 @@ const EmblaCarousel: React.FC = () => {
     // ...
 
     return Array.from(Array(15).keys());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const imageByIndex = (index: number): any =>
@@ -99,6 +101,7 @@ const EmblaCarousel: React.FC = () => {
       //   onSelect()
       //   emblaApi.on('select', onSelect)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [emblaApi]);
 
   const onSelect = useCallback(() => {
@@ -106,6 +109,7 @@ const EmblaCarousel: React.FC = () => {
     setSelectedIndex(emblaApi.selectedScrollSnap());
     setPrevBtnEnabled(emblaApi.canScrollPrev());
     setNextBtnEnabled(emblaApi.canScrollNext());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [emblaApi, setSelectedIndex]);
 
   useEffect(() => {

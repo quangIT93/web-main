@@ -82,6 +82,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         },
       },
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getAllListChat = async () => {

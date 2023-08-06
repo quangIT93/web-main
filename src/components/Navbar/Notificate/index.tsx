@@ -128,6 +128,7 @@ const Notificate = () => {
 
   useEffect(() => {
     getApiNotificate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getApiNotificateKeyword = async () => {

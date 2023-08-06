@@ -144,6 +144,7 @@ const Profile: React.FC = () => {
 
     //   })
     // fecthDataProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -209,6 +210,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     getCompanyInforByAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // confirm delete cv

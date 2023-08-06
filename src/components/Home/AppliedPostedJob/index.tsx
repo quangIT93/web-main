@@ -22,7 +22,7 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 // @ts-ignore
 // import { useSearchParams } from 'react-router-dom';
 
-import { Button, Space } from 'antd';
+import { Button } from 'antd';
 // import { Skeleton } from 'antd';
 
 // import redux
@@ -30,7 +30,11 @@ import { Button, Space } from 'antd';
 
 // import { RootState } from '../../../store/reducer';
 
-import { AppliedPostedIcon, DoubleArrowIcon, LoginArrowIcon } from '#components/Icons';
+import {
+  AppliedPostedIcon,
+  // DoubleArrowIcon,
+  LoginArrowIcon,
+} from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
 
@@ -101,6 +105,7 @@ const AppliedPostedJob: React.FC = () => {
   React.useEffect(() => {
     getAppliedPostedJobs();
     localStorage.getItem('accessToken') && setIslogined(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const getPostNewestByThemeId = async () => {
