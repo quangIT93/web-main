@@ -2,12 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import {
-  AudioOutlined,
-  EditOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
-import { Input, Space } from 'antd';
+// import { Input, Space } from 'antd';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -15,13 +10,13 @@ import messageApi from 'api/messageApi';
 import historyRecruiter from 'api/historyRecruiter';
 import postApi from 'api/postApi';
 
-import { listUser, listMessage, countUnRead } from './data';
+// import { listUser, listMessage, countUnRead } from './data';
 import './style.scss';
 import { ChatContext } from 'context/ChatContextProvider';
 
 import { SeenIcon } from '#components/Icons';
 
-const { Search } = Input;
+// const { Search } = Input;
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;

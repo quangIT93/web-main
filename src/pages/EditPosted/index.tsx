@@ -127,6 +127,7 @@ const EditPosted = () => {
       // screen_name: screenName as string,
       page_title: '/web_editPost' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

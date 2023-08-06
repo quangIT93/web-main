@@ -3,7 +3,7 @@ import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 // import { DatePicker } from '@mui/lab'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from 'moment';
@@ -15,12 +15,12 @@ import { message } from 'antd';
 
 // data
 import locationApi from '../../../api/locationApi';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store/reducer/index';
+import { useDispatch } from 'react-redux';
+// import { RootState } from '../../../store/reducer/index';
 
 import {
   getProfile,
-  resetProfileState,
+  // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
 
 import './style.scss';
@@ -73,7 +73,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const dispatch = useDispatch();
-  const dataProfile = useSelector((state: RootState) => state.profile.profile);
+  // const dataProfile = useSelector((state: RootState) => state.profile.profile);
 
   const handleSetFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);

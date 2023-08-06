@@ -1,17 +1,9 @@
-import React, { useState, useRef, useEffect, memo } from 'react';
-import { Collapse, Radio, Input, Button, Typography } from 'antd';
-import { useSearchParams } from 'react-router-dom';
+import React, { useState, useRef, useEffect, memo, useMemo } from 'react';
+import { Collapse, Radio, Input, Typography } from 'antd';
+// import { useSearchParams } from 'react-router-dom';
 
 import { getCookie } from 'cookies';
 
-import { DownOutlined } from '@ant-design/icons';
-import {
-  DolaIcon,
-  ListCateIcon,
-  ListJobIcon,
-  LocationIcon,
-  ClockDetailPostIcon,
-} from '#components/Icons';
 //@ts-ignore
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -39,26 +31,30 @@ interface IFilterSalary {
 const FilterSalary: React.FC<IFilterSalary> = (props) => {
   const {
     salaryType,
-    typeMoney,
     setTypeMoney,
     setSalaryMax,
     setSalaryMin,
     salaryMax,
     salaryMin,
     reset,
-    setReset
+    setReset,
   } = props;
 
   const [inputValueMin, setInputValueMin] = useState<string | null>(null);
-  const [inputValueMax, setInputValueMax] = useState<string | null>(null);
+  // const [inputValueMax, setInputValueMax] = useState<string | null>(null);
 
   const [collapseOpen, setCollapseOpen] = useState(false);
 
-  const [checkSalary, setCheckSalary] = useState(false);
+  // const [checkSalary, setCheckSalary] = useState(false);
+
+  const checkSalary = useMemo(() => {
+    // Thực hiện các logic bạn cần ở đây
+    return false; // Giả sử bạn trả về false, thay bằng logic thật
+  }, []);
 
   const collapseRef = useRef<any>(null);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
 
@@ -74,7 +70,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   useEffect(() => {
     if (Type_Money) {
       setTypeMoney(Type_Money);
-      setSelectedValue(Type_Money)
+      setSelectedValue(Type_Money);
     }
 
     if (Salary_Min && Salary_Min !== 0) {
@@ -88,10 +84,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     } else if (Salary_Max === 0) {
       setSalaryMax(0);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Salary_Max, Salary_Min, Salary_Max, Type_Money]);
 
   const handleRadioChange = (e: any) => {
-    setReset(false)
+    setReset(false);
     setSelectedValue(e.target.value);
     setTypeMoney(e.target.value);
   };
@@ -120,70 +117,70 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     }
   };
 
-  const handleSubmitValue = () => {
-    // console.log(`Input value: ${inputValue}`)
-    const reg = /[0-9]+$/;
+  // const handleSubmitValue = () => {
+  //   // console.log(`Input value: ${inputValue}`)
+  //   const reg = /[0-9]+$/;
 
-    if (inputValueMin && !inputValueMax && Salary_Max < Number(inputValueMin)) {
-      setCheckSalary(true);
-      setTimeout(() => {
-        setCheckSalary(false);
-      }, 4000);
-    } else if (
-      inputValueMax &&
-      !inputValueMin &&
-      Number(inputValueMax) < Salary_Min
-    ) {
-      setCheckSalary(true);
-      setTimeout(() => {
-        setCheckSalary(false);
-      }, 4000);
-    } else if (
-      inputValueMax &&
-      inputValueMin &&
-      Number(inputValueMax) < Number(inputValueMin)
-    ) {
-      setCheckSalary(true);
-      setTimeout(() => {
-        setCheckSalary(false);
-      }, 4000);
-    } else {
-      if (inputValueMax) {
-        const inputValue = inputValueMax?.replace(',', '');
-        if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-          setSalaryMax(Number(inputValue.replace(',', '')));
-        }
-      } else if (Salary_Max) {
-        const inputValue = Salary_Max.toString()?.replace(',', '');
-        if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-          setSalaryMax(Number(inputValue.replace(',', '')));
-        }
-      } else {
-        setSalaryMax(0);
-      }
+  //   if (inputValueMin && !inputValueMax && Salary_Max < Number(inputValueMin)) {
+  //     setCheckSalary(true);
+  //     setTimeout(() => {
+  //       setCheckSalary(false);
+  //     }, 4000);
+  //   } else if (
+  //     inputValueMax &&
+  //     !inputValueMin &&
+  //     Number(inputValueMax) < Salary_Min
+  //   ) {
+  //     setCheckSalary(true);
+  //     setTimeout(() => {
+  //       setCheckSalary(false);
+  //     }, 4000);
+  //   } else if (
+  //     inputValueMax &&
+  //     inputValueMin &&
+  //     Number(inputValueMax) < Number(inputValueMin)
+  //   ) {
+  //     setCheckSalary(true);
+  //     setTimeout(() => {
+  //       setCheckSalary(false);
+  //     }, 4000);
+  //   } else {
+  //     if (inputValueMax) {
+  //       const inputValue = inputValueMax?.replace(',', '');
+  //       if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+  //         setSalaryMax(Number(inputValue.replace(',', '')));
+  //       }
+  //     } else if (Salary_Max) {
+  //       const inputValue = Salary_Max.toString()?.replace(',', '');
+  //       if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+  //         setSalaryMax(Number(inputValue.replace(',', '')));
+  //       }
+  //     } else {
+  //       setSalaryMax(0);
+  //     }
 
-      if (inputValueMin) {
-        const inputValue = inputValueMin?.replace(',', '');
-        if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-          setSalaryMin(Number(inputValue.replace(',', '')));
-        }
-      } else if (Salary_Min) {
-        const inputValue = Salary_Min.toString()?.replace(',', '');
-        if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
-          setSalaryMin(Number(inputValue.replace(',', '')));
-        }
-      } else {
-        setSalaryMin(0);
-      }
+  //     if (inputValueMin) {
+  //       const inputValue = inputValueMin?.replace(',', '');
+  //       if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+  //         setSalaryMin(Number(inputValue.replace(',', '')));
+  //       }
+  //     } else if (Salary_Min) {
+  //       const inputValue = Salary_Min.toString()?.replace(',', '');
+  //       if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+  //         setSalaryMin(Number(inputValue.replace(',', '')));
+  //       }
+  //     } else {
+  //       setSalaryMin(0);
+  //     }
 
-      if (!salaryMax && !salaryMin) {
-        setSalaryMin(0);
-        setSalaryMax(12000000);
-      }
-    }
+  //     if (!salaryMax && !salaryMin) {
+  //       setSalaryMin(0);
+  //       setSalaryMax(12000000);
+  //     }
+  //   }
 
-    setTypeMoney(selectedValue);
-  };
+  //   setTypeMoney(selectedValue);
+  // };
 
   // useEffect(() => {
   //   const reg = /[0-9]+$/;
@@ -254,16 +251,17 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     if (salaryType === 6) {
       setSalaryMax(0);
       setSalaryMin(0);
-      setInputValueMax('0');
+      // setInputValueMax('0');
       setInputValueMin('0');
     }
 
     if (!salaryMax && !salaryMin && !Salary_Max && !Salary_Min) {
       setSalaryMax(12000000);
       setSalaryMin(0);
-      setInputValueMax('12000000');
+      // setInputValueMax('12000000');
       setInputValueMin('0');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [salaryType]);
   // console.log('paramMin', Salary_Min);
   // console.log('paramMax', Salary_Max);
@@ -272,24 +270,23 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   // console.log('inputValueMax', inputValueMax);
   // console.log('inputValueMin', inputValueMin);
 
-  const handleCancleValue = () => {
-    // console.log(`Selected value: ${selectedValue}`)
-    // console.log(`Input value: ${inputValue}`)
-    setSalaryMax(12000000);
-    setSalaryMin(0);
-    setTypeMoney(1);
+  // const handleCancleValue = () => {
+  //   // console.log(`Selected value: ${selectedValue}`)
+  //   // console.log(`Input value: ${inputValue}`)
+  //   setSalaryMax(12000000);
+  //   setSalaryMin(0);
+  //   setTypeMoney(1);
 
-    setInputValueMax('12000000');
-    setInputValueMin('0');
-    setSelectedValue(1);
-  };
+  //   setInputValueMax('12000000');
+  //   setInputValueMin('0');
+  //   setSelectedValue(1);
+  // };
 
   // useEffect(() => {
   //   reset && handleCancleValue()
   // }, [reset])
 
   // console.log("selectedValue", selectedValue);
-
 
   useEffect(() => {
     const handleOutsideClick = (e: any) => {
@@ -321,8 +318,9 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
         <MoneyFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterSalary input-filter_nav ${inputValueMin || salaryMax ? 'activeSalary' : ''
-          }`}
+        className={`inputFilterSalary input-filter_nav ${
+          inputValueMin || salaryMax ? 'activeSalary' : ''
+        }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -332,10 +330,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           header={
             salaryMax || salaryMin
               ? `${new Intl.NumberFormat('en-US').format(
-                Number(salaryMin?.toString().replace(',', '')),
-              )} - ${new Intl.NumberFormat('en-US').format(
-                Number(salaryMax?.toString().replace(',', '')),
-              )}`
+                  Number(salaryMin?.toString().replace(',', '')),
+                )} - ${new Intl.NumberFormat('en-US').format(
+                  Number(salaryMax?.toString().replace(',', '')),
+                )}`
               : `Mức lương`
           }
           key="1"
@@ -345,7 +343,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
             value={reset ? 1 : selectedValue}
             onChange={handleRadioChange}
             className="inputFilter-groupSalary_radio"
-          // defaultValue={Type_Money}
+            // defaultValue={Type_Money}
           >
             <Radio value={1}>VND</Radio>
             <Radio value={2}>USD</Radio>
@@ -362,11 +360,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMin
                 ? new Intl.NumberFormat('en-US').format(
-                  Number(salaryMin.toString().replace(',', '')),
-                )
+                    Number(salaryMin.toString().replace(',', '')),
+                  )
                 : new Intl.NumberFormat('en-US').format(
-                  Number(salaryMin?.toString().replace(',', '')),
-                )
+                    Number(salaryMin?.toString().replace(',', '')),
+                  )
             }
             onChange={handleInputChangeSalaryMin}
             className="input-text_salary"
@@ -384,11 +382,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMax
                 ? new Intl.NumberFormat('en-US').format(
-                  Number(salaryMax.toString().replace(',', '')),
-                )
+                    Number(salaryMax.toString().replace(',', '')),
+                  )
                 : new Intl.NumberFormat('en-US').format(
-                  Number(salaryMax?.toString().replace(',', '')),
-                )
+                    Number(salaryMax?.toString().replace(',', '')),
+                  )
             }
             onChange={handleInputChangeSalaryMax}
             className="input-text_salary"

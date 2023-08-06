@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { AutocompleteInputChangeReason } from '@mui/material/Autocomplete';
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 import categoriesApi from '../../../api/categoriesApi';
 
 import './style.scss';

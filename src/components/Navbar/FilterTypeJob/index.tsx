@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Select, Space, Radio } from 'antd';
-import { EnvironmentOutlined } from '@ant-design/icons';
+// import { EnvironmentOutlined } from '@ant-design/icons';
 import type { RadioChangeEvent } from 'antd';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 import siteApi from 'api/siteApi';
 
 import { getCookie, setCookie } from 'cookies';
@@ -38,7 +38,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={jobType ? jobType : 5}
-    // defaultValue={jobType ? jobType : 5}
+      // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -61,11 +61,16 @@ interface TypeJob {
 }
 
 const { Option } = Select;
-const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob, reset, setReset }) => {
+const FilterTypeJob: React.FC<TypeJob> = ({
+  setTypeJob,
+  valueTypeJob,
+  reset,
+  setReset,
+}) => {
   // const [data, setData] = React.useState()
   const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
   const [valueRender, setValueRender] = React.useState<any>();
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   let userFilteredCookies = JSON.parse(
     getCookie('userTypejobFiltered') || '{}',
@@ -89,6 +94,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob, reset, set
   };
   React.useEffect(() => {
     getTypeJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TYPE_JOB]);
 
   const handleChange = (value1: string) => {
@@ -104,7 +110,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob, reset, set
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={reset ? "Tất cả" : valueRender ? valueRender.name : undefined}
+        value={reset ? 'Tất cả' : valueRender ? valueRender.name : undefined}
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder="Loai cong viec"

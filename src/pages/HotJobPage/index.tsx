@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 // import Card from '@mui/material/Card';
 
 // import Modal from '@mui/material/Modal';
@@ -18,7 +18,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import { Box } from '@mui/material';
 // import redux
-import { useDispatch } from 'react-redux';
+
 // import { bindActionCreators } from 'redux';
 // import { actionCreators } from 'store/index';
 // import { RootState } from 'store/reducer';
@@ -58,7 +58,7 @@ import {
 //   CaretDownFilled,
 // } from '@ant-design/icons';
 
-import { Space, Tooltip } from 'antd';
+import { Space } from 'antd';
 
 import './style.scss';
 // import { stringify } from 'query-string/base';
@@ -126,7 +126,6 @@ const HotJobpage: React.FC = () => {
   const [pageNumber, setPageNumber] = React.useState(0);
 
   // modal keyword
-  const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
 
   // const [selectedProvince, setSelectedProvince] = React.useState<any>(null);
   // const [value, setValue] = React.useState<string | number>('');
@@ -168,10 +167,10 @@ const HotJobpage: React.FC = () => {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
-  const dispatch = useDispatch();
 
   const getHotJob = async () => {
     try {
@@ -193,7 +192,7 @@ const HotJobpage: React.FC = () => {
       const url = localStorage.getItem('hotjobApi');
       const result = await hotJobApi.getHotJobById(url, pageNumber, 20);
       if (result) {
-        if (result.data.length == 0) {
+        if (result.data.length === 0) {
           setIsVisible(false);
           setOpenBackdrop(false);
           messageApi.open({
@@ -213,16 +212,15 @@ const HotJobpage: React.FC = () => {
 
   React.useEffect(() => {
     getHotJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
     getMoreHotJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNumber]);
 
   // handle click post details
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
-  };
 
   // handle change paginaton
   const handleChange = async (
@@ -233,9 +231,6 @@ const HotJobpage: React.FC = () => {
   };
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
 
   // title
 

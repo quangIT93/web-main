@@ -399,7 +399,7 @@
     border: 100px solid #1b87f5;
   }
 
-  .list-locations {}
+  // .list-locations {}
 }
 
 .show-modal_navbar {
@@ -1275,11 +1275,11 @@
     .button-download {
       border: 2px solid transparent;
       // border-radius: 50%;
-      animation: jumpAndStop 2s linear infinite;
+      animation: jumpAndStop 2.5s linear infinite;
       position: absolute;
       transform: translate(-50%, -50%);
       left: 14.5px;
-
+      animation-delay: 2s; 
     }
   }
 
@@ -1303,23 +1303,16 @@
 
 
   @keyframes jumpAndStop {
-
-    0%,
-    50%,
-    100% {
+    0%, 100% {
       transform: translateY(0);
     }
-
+  
     25% {
       transform: translateY(5px);
     }
-
+  
     75% {
       transform: translateY(10px);
-    }
-
-    100% {
-      transform: translateY(0px);
     }
   }
 }

@@ -1,8 +1,8 @@
 import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import moment, { Moment } from 'moment';
+// import moment, { Moment } from 'moment';
 import { Skeleton } from 'antd';
 import { message } from 'antd';
 // import component
@@ -107,7 +107,7 @@ const Company = () => {
     logoPath: '',
   });
 
-  console.log("dataCompany", dataCompany);
+  console.log('dataCompany', dataCompany);
   const [openModalEditPost, setOpenModalEditPost] = React.useState(false);
 
   // const [loadingNotFound, setLoadingNotFound] = React.useState(false);
@@ -121,6 +121,7 @@ const Company = () => {
       // screen_name: screenName as string,
       page_title: '/web_company' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCompanyInforByAccount = async () => {
@@ -154,11 +155,11 @@ const Company = () => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -168,7 +169,10 @@ const Company = () => {
 
   // valid values form data
   const validValue = () => {
-    if (dataCompany?.logoPath === '' || dataCompany?.logoPath?.status == "removed") {
+    if (
+      dataCompany?.logoPath === '' ||
+      dataCompany?.logoPath?.status === 'removed'
+    ) {
       return {
         message: 'Vui lòng chọn logo công ty',
         checkForm: false,
@@ -214,7 +218,7 @@ const Company = () => {
         checkForm: false,
       };
     }
-    if (regexCheckEmail.test(dataCompany?.email) == false) {
+    if (regexCheckEmail.test(dataCompany?.email) === false) {
       return {
         message: 'Định dạng email không đúng',
         checkForm: false,
@@ -232,7 +236,7 @@ const Company = () => {
         checkForm: false,
       };
     }
-    if (validURL(dataCompany?.website) == false) {
+    if (validURL(dataCompany?.website) === false) {
       return {
         message: 'Định dạng website không chính xác',
         checkForm: false,

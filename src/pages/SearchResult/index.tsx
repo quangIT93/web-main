@@ -208,6 +208,7 @@ const NewJobs: React.FC = () => {
       // screen_name: screenName as string,
       page_title: '/web_search' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ----------------------------------------------------------------

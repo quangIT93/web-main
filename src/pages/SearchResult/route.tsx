@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+// import React, { lazy } from 'react';
 import SearchResult from '.';
 import RouteProps from '../routes';
 import HomeValueContextProvider from 'context/HomeValueContextProvider';

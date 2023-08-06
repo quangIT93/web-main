@@ -1,8 +1,8 @@
-import React, { lazy } from 'react'
-import Post from '.'
-import { ToastContainer } from 'react-toastify'
+// import React, { lazy } from 'react'
+import Post from '.';
+import { ToastContainer } from 'react-toastify';
 
-import RouteProps from '../routes'
+import RouteProps from '../routes';
 const route: RouteProps = {
   path: '/post',
   component: (
@@ -22,6 +22,6 @@ const route: RouteProps = {
       />
     </>
   ),
-}
+};
 
-export default route
+export default route;

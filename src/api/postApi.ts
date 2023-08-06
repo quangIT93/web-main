@@ -22,7 +22,7 @@ const postApi = {
     })
   },
   getPost: () => {
-    const URL = `v1/posts?limit=10`
+    const URL = `v1/posts?l imit=10`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -43,7 +43,12 @@ const postApi = {
   ) => {
     const URL = `v1/posts/theme?tid=${themeId}&limit=${limit}&threshold=${threshold ? threshold : ''
       }`
-    return axiosClient.get(URL)
+    return axiosClient.get(URL,
+      {
+        headers: {
+          'Cache-Control': 'private, max-age=300'
+        },
+      })
   },
   getPostNewest: (
     pcid?: Number | null,
@@ -64,7 +69,11 @@ const postApi = {
         : ``
       }` +
       `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}`
-    return axiosClient.get(URL)
+    return axiosClient.get(URL, {
+      headers: {
+        'Cache-Control': 'private, max-age=300'
+      },
+    })
   },
   updateStatusPost: (id: number, status: number) => {
     const URL = `/v1/posts/sta`

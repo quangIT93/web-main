@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
-import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+// import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
 import './style.scss';
@@ -42,7 +42,11 @@ const ShowCancleSave: React.FC = () => {
             horizontal: 'center',
           }}
         >
-          <Alert onClose={handleClose} severity="error" sx={{ width: '100%', backgroundColor: '#000000' }}>
+          <Alert
+            onClose={handleClose}
+            severity="error"
+            sx={{ width: '100%', backgroundColor: '#000000' }}
+          >
             Bạn đã xóa thành công!
           </Alert>
         </Snackbar>

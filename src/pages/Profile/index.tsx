@@ -7,14 +7,14 @@ import { Navbar } from '#components';
 import { CameraIcon, PencilIcon } from '#components/Icons';
 
 import './style.scss';
-import { styled } from '@mui/material/styles';
+// import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import { Button, Space, Skeleton, Upload, message, Popconfirm } from 'antd';
 import {
   PlusCircleOutlined,
   UploadOutlined,
-  InstagramFilled,
+  // InstagramFilled,
 } from '@ant-design/icons';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 
@@ -34,9 +34,9 @@ import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerO
 import ModalProfileContact from '#components/Profile/ModalProfileContact';
 import ModalProfileEducationCreate from '#components/Profile/ModalProfileEducationCreate';
 import ModalProfileLocation from '#components/Profile/ModalProfileLocation';
-import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate';
+// import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate';
 import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperienceCreate';
-import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
+// import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
 import CVItem from '#components/Profile/CV';
 
 // firebase
@@ -45,7 +45,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // import data
 import {
   getProfile,
-  resetProfileState,
+  // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
 import profileApi from 'api/profileApi';
 
@@ -118,6 +118,7 @@ const Profile: React.FC = () => {
       // screen_name: screenName as string,
       page_title: '/web_profile' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fecthDataProfile = async () => {
@@ -148,6 +149,7 @@ const Profile: React.FC = () => {
   useEffect(() => {
     // Gọi action để lấy thông tin profile
     fecthDataProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     openModelPersonalInfo,
     openModalContact,
@@ -266,7 +268,7 @@ const Profile: React.FC = () => {
     // const file = e.target.files[0]
     const files = Array.from(e.target.files); // Chuyển đổi FileList thành mảng các đối tượng file
     if (files) {
-      const imageUrl = await uploadImage(e, files);
+      // const imageUrl = await uploadImage(e, files);
       dispatch(getProfile() as any);
       // window.location.reload();
       // if (imageUrl)
@@ -276,48 +278,31 @@ const Profile: React.FC = () => {
   };
 
   // upload avatar
-  const uploadImage = async (e: any, files: any) => {
-    const formData = new FormData();
+  // const uploadImage = async (e: any, files: any) => {
+  //   const formData = new FormData();
 
-    files.forEach((file: File) => {
-      if (file instanceof File) {
-        formData.append(`images`, file);
-      }
-    });
-    try {
-      const response = await profileApi.postAvatar(formData);
-      if (response) {
-        dispatch(getProfile() as any);
-        return profile.avatar;
-      } else {
-        throw new Error('Failed to upload image');
-      }
-    } catch (error) {
-      console.error(error);
-      // Xử lý lỗi tải lên ảnh
-    }
-  };
+  //   files.forEach((file: File) => {
+  //     if (file instanceof File) {
+  //       formData.append(`images`, file);
+  //     }
+  //   });
+  //   try {
+  //     const response = await profileApi.postAvatar(formData);
+  //     if (response) {
+  //       dispatch(getProfile() as any);
+  //       return profile.avatar;
+  //     } else {
+  //       throw new Error('Failed to upload image');
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     // Xử lý lỗi tải lên ảnh
+  //   }
+  // };
 
   const alert = useSelector((state: any) => state.alertProfile.alert);
 
   const handleClose = () => dispatch<any>(setAlert(false));
-
-  // console.log('alert', alert)
-
-  // const getSiteChangeTitle = async () => {
-  //   try {
-  //     const result = await siteApi.getSalaryType();
-  //     if (result) {
-  //       SetPostData(result);
-  //     }
-  //   } catch (error) {
-  //     console.log('error', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getPost();
-  // }, []);
 
   return (
     <div className="profile">
@@ -561,7 +546,7 @@ const Profile: React.FC = () => {
                 }}
                 // direction="vertical"
               >
-                {profile.cv_url && fileList?.length == 0 ? (
+                {profile.cv_url && fileList?.length === 0 ? (
                   <Popconfirm
                     title="Xóa CV"
                     description="Bạn có muốn xóa CV này"

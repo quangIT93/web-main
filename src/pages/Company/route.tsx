@@ -1,9 +1,9 @@
-import React, { lazy } from 'react'
-import Company from '.'
-import RouteProps from '../routes'
+// import React, { lazy } from 'react'
+import Company from '.';
+import RouteProps from '../routes';
 const route: RouteProps = {
-    path: '/company-infor',
-    component: <Company />,
-}
+  path: '/company-infor',
+  component: <Company />,
+};
 
-export default route
+export default route;

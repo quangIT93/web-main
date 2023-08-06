@@ -12,7 +12,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import profileApi from 'api/profileApi';
 import categoriesApi from '../../../api/categoriesApi';
 import { useDispatch } from 'react-redux';
-import { message, Space } from 'antd';
+import { message } from 'antd';
 
 import {
   getProfile,
@@ -74,6 +74,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
 
   React.useEffect(() => {
     getCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // const onChange = (newValue: string[] | any) => {
   //   setValue(newValue);

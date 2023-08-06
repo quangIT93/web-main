@@ -9,7 +9,7 @@ import Category from './components/Category';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
-import siteApi from 'api/siteApi';
+// import siteApi from 'api/siteApi';
 
 export interface CurrentCategoryActiveProps {
   isAboutUs: boolean;
@@ -78,6 +78,7 @@ const Policy: React.FC = () => {
       // screen_name: screenName as string,
       page_title: '/web_policy' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

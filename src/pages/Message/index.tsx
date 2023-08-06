@@ -39,6 +39,7 @@ const Message = () => {
     logEvent(analytics, 'screen_view' as string, {
       page_title: '/web_message ',
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="message-page">

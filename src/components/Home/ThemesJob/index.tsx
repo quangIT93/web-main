@@ -1,9 +1,9 @@
 import React from 'react';
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
-import CardActions from '@mui/material/CardActions';
-import ImageListItem from '@mui/material/ImageListItem';
-import Typography from '@mui/material/Typography';
+// import CardActions from '@mui/material/CardActions';
+// import ImageListItem from '@mui/material/ImageListItem';
+// import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 // import { url } from 'inspector'
 // import Pagination from '@mui/material/Pagination'
@@ -11,22 +11,22 @@ import Stack from '@mui/material/Stack';
 import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { TopicJobIcon, MoreICon } from '#components/Icons';
 
 // @ts-ignore
-import moment from 'moment';
+// import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
-import { useNavigate, createSearchParams } from 'react-router-dom';
-import { MouseEvent, MouseEventHandler } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { MouseEvent, MouseEventHandler } from 'react';
 
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom';
 // import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import TurnedInIcon from '@mui/icons-material/TurnedIn';
 
 // import component
 import ListCompanyCarousel from '../ListCompanyCarousel';
@@ -39,19 +39,13 @@ import { RootState } from '../../../store/reducer';
 
 import postApi from 'api/postApi';
 import themeApi from '../../../api/themesApi';
-import bookMarkApi from 'api/bookMarkApi';
+// import bookMarkApi from 'api/bookMarkApi';
 
 import './style.scss';
 
 // import icon
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
-import { Space, Tooltip } from 'antd';
+import { Space } from 'antd';
 // interface item post themes
 
 //import jobcard
@@ -89,8 +83,8 @@ const ThemesJob: React.FC = () => {
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const navigate = useNavigate();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   // state redux
   const { post } = useSelector((state: RootState) => state);
@@ -129,14 +123,14 @@ const ThemesJob: React.FC = () => {
   };
 
   // handle click post details
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`, '_parent');
-  };
+  // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  //   window.open(`/post-detail?post-id=${id}`, '_parent');
+  // };
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   // get post by theme id
   const getPostByThemeId = async () => {
@@ -176,6 +170,7 @@ const ThemesJob: React.FC = () => {
         setLoading(false);
       }
     }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // React.useEffect(() => {

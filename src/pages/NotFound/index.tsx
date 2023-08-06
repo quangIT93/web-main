@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 // @ts-ignore
 import { Navbar } from '#components';
 import Footer from '#components/Footer/Footer';

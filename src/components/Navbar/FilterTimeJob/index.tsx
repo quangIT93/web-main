@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
-import type { DatePickerProps } from 'antd';
-import { DatePicker, Space } from 'antd';
-import { Collapse, Radio, Input, Button, Typography } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+// import type { DatePickerProps } from 'antd';
+// import { DatePicker, Space } from 'antd';
+import { Collapse, Typography } from 'antd';
+// import { DownOutlined } from '@ant-design/icons';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -14,7 +14,7 @@ import { getCookie } from 'cookies';
 import { CalendarFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
 import './style.scss';
-import { AnyMxRecord } from 'dns';
+// import { AnyMxRecord } from 'dns';
 
 const { Text } = Typography;
 
@@ -30,34 +30,38 @@ interface IFilterTimeJob {
 }
 
 const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
-  const { setIsWorkingWeekend, isWorkingWeekend, isRemotely, setIsRemotely, reset, setReset } =
-    props;
+  const {
+    setIsWorkingWeekend,
+    isWorkingWeekend,
+    isRemotely,
+    setIsRemotely,
+    reset,
+    setReset,
+  } = props;
 
   // const [selectedValue, setSelectedValue] = useState('')
   // const [inputValue, setInputValue] = useState('')
-  const [checkboxIsWeekend, setCheckboxIsWeekend] = useState(0);
-  const [checksetIsRemotely, setChecksetIsRemotely] = useState(0);
+  // const [checkboxIsWeekend, setCheckboxIsWeekend] = useState(0);
+  // const [checksetIsRemotely, setChecksetIsRemotely] = useState(0);
   const [collapseOpen, setCollapseOpen] = useState(false);
   const collapseRef = useRef<any>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
-  let userFilteredCookies = JSON.parse(
-    getCookie('userFiltered') || '{}',
-  )
+  // const [searchParams, setSearchParams] = useSearchParams();
+  let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
 
   const is_working_weekend = userFilteredCookies?.is_working_weekend;
   const is_remotely = userFilteredCookies?.is_remotely;
 
-
   useEffect(() => {
     if (is_working_weekend) {
       setIsWorkingWeekend(is_working_weekend);
-      setCheckboxIsWeekend(is_working_weekend);
+      // setCheckboxIsWeekend(is_working_weekend);
     }
 
     if (is_remotely) {
       setIsRemotely(is_remotely);
-      setChecksetIsRemotely(is_remotely);
+      // setChecksetIsRemotely(is_remotely);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [is_working_weekend, is_remotely]);
 
   // const handleRadioChange = (e: any) => {
@@ -68,32 +72,32 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   //   setInputValue(e.target.value)
   // }
 
-  const handleConfirm = (e: any) => {
-    e.stopPropagation();
-    // console.log(`Selected value: ${selectedValue}`)
-    // console.log(`Input value: ${inputValue}`)
-    setIsWorkingWeekend(checkboxIsWeekend);
-    setIsRemotely(checksetIsRemotely);
-    if (
-      // collapseRef &&
-      // !collapseRef?.current?.contains(e.target)
-      e.target.closest('.inputFilterTimeJob') &&
-      e.target.closest('.submitValue')
-    ) {
-      setCollapseOpen(false);
-    } else if (!e.target.closest('.inputFilterTimeJob')) {
-      setCollapseOpen(false);
-    } else if (e.target.closest('.inputFilterTimeJob')) {
-      setCollapseOpen(true);
-    }
-  };
+  // const handleConfirm = (e: any) => {
+  //   e.stopPropagation();
+  //   // console.log(`Selected value: ${selectedValue}`)
+  //   // console.log(`Input value: ${inputValue}`)
+  //   setIsWorkingWeekend(checkboxIsWeekend);
+  //   setIsRemotely(checksetIsRemotely);
+  //   if (
+  //     // collapseRef &&
+  //     // !collapseRef?.current?.contains(e.target)
+  //     e.target.closest('.inputFilterTimeJob') &&
+  //     e.target.closest('.submitValue')
+  //   ) {
+  //     setCollapseOpen(false);
+  //   } else if (!e.target.closest('.inputFilterTimeJob')) {
+  //     setCollapseOpen(false);
+  //   } else if (e.target.closest('.inputFilterTimeJob')) {
+  //     setCollapseOpen(true);
+  //   }
+  // };
 
-  const handleConfirmCancel = () => {
-    setIsWorkingWeekend(0);
-    setIsRemotely(0);
-    setCheckboxIsWeekend(0);
-    setChecksetIsRemotely(0);
-  };
+  // const handleConfirmCancel = () => {
+  //   setIsWorkingWeekend(0);
+  //   setIsRemotely(0);
+  //   setCheckboxIsWeekend(0);
+  //   setChecksetIsRemotely(0);
+  // };
 
   // const onChangeStartDate: DatePickerProps['onChange'] = (date, dateString) => {
   //   console.log(date, dateString)
@@ -105,24 +109,24 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
   const handleWeekendChange = (e: any) => {
     if (e.target.checked) {
-      setReset(false)
-      setCheckboxIsWeekend(1);
+      setReset(false);
+      // setCheckboxIsWeekend(1);
       setIsWorkingWeekend(1);
     } else {
-      setReset(false)
-      setCheckboxIsWeekend(0);
+      setReset(false);
+      // setCheckboxIsWeekend(0);
       setIsWorkingWeekend(0);
     }
   };
 
   const handleRemoteChange = (e: any) => {
     if (e.target.checked) {
-      setReset(false)
-      setChecksetIsRemotely(1);
+      setReset(false);
+      // setChecksetIsRemotely(1);
       setIsRemotely(1);
     } else {
-      setReset(false)
-      setChecksetIsRemotely(0);
+      setReset(false);
+      // setChecksetIsRemotely(0);
       setIsRemotely(0);
     }
   };
@@ -149,8 +153,9 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <CalendarFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
-          }`}
+        className={`inputFilterTimeJob input-filter_nav ${
+          isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
+        }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -187,7 +192,9 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
               label="Làm việc cuối tuần"
               control={
                 <Checkbox
-                  checked={reset ? false : isWorkingWeekend === 0 ? false : true}
+                  checked={
+                    reset ? false : isWorkingWeekend === 0 ? false : true
+                  }
                   onChange={handleWeekendChange}
                 />
               }

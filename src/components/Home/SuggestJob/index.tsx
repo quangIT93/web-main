@@ -1,59 +1,54 @@
 import React, { useEffect } from 'react';
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
-import CardActions from '@mui/material/CardActions';
-import ImageListItem from '@mui/material/ImageListItem';
-import Typography from '@mui/material/Typography';
+
 import Grid from '@mui/material/Grid';
 // import { url } from 'inspector'
 // import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack';
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { MoreICon, SuggestIcon, ArrowIcon, LoginArrowIcon } from '#components/Icons';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { MoreICon, SuggestIcon, LoginArrowIcon } from '#components/Icons';
 
 // @ts-ignore
-import moment from 'moment';
+// import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
-import { useNavigate, createSearchParams } from 'react-router-dom';
-import { MouseEvent, MouseEventHandler } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { MouseEvent, MouseEventHandler } from 'react';
 
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom';
 // import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import TurnedInIcon from '@mui/icons-material/TurnedIn';
 
 // import component
-import ListCompanyCarousel from '../ListCompanyCarousel';
+// import ListCompanyCarousel from '../ListCompanyCarousel';
 
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../store/index';
+import {
+  // useDispatch,
+  useSelector,
+} from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
 
 import { Button } from 'antd';
 
-import postApi from 'api/postApi';
+// import postApi from 'api/postApi';
 import nearByApi from 'api/apiNearBy';
-import bookMarkApi from 'api/bookMarkApi';
+// import bookMarkApi from 'api/bookMarkApi';
 
 import './style.scss';
 
 // import icon
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
-import { Space, Tooltip } from 'antd';
+import { Space } from 'antd';
 // interface item post themes
 
 //import jobcard
@@ -87,23 +82,23 @@ interface PostTheme {
 const ThemesJob: React.FC = () => {
   const [page, setPage] = React.useState(1);
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-  const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
+  // const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const navigate = useNavigate();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [nearJob, setNearJob] = React.useState<any>([]);
 
   // state redux
-  const { post } = useSelector((state: RootState) => state);
-  const dispatch = useDispatch();
-  const { setPostByTheme, setPostThemeMore } = bindActionCreators(
-    actionCreators,
-    dispatch,
-  );
+  // const { post } = useSelector((state: RootState) => state);
+  // const dispatch = useDispatch();
+  // const { setPostByTheme, setPostThemeMore } = bindActionCreators(
+  //   actionCreators,
+  //   dispatch,
+  // );
 
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
@@ -141,14 +136,14 @@ const ThemesJob: React.FC = () => {
   };
 
   // handle click post details
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`, '_parent');
-  };
+  // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  //   window.open(`/post-detail?post-id=${id}`, '_parent');
+  // };
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   const userProfile = useSelector((state: RootState) => state.profile.profile);
 
@@ -187,6 +182,7 @@ const ThemesJob: React.FC = () => {
     searchParams.delete('theme-id');
     searchParams.delete('categories-id');
     setSearchParams(searchParams);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile]);
 
   const listSuggestJob = () => {
@@ -294,7 +290,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //   onClick={handleClose}
+              //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

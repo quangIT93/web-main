@@ -34,6 +34,7 @@ const Landing: React.FC = () => {
       // screen_name: screenName as string,
       page_title: '/web_landing_page' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

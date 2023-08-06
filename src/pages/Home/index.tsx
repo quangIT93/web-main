@@ -43,6 +43,7 @@ const Home: React.FC = () => {
       // screen_class: 'HomeScreen',
       page_title: '/web_home',
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

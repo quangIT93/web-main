@@ -82,6 +82,7 @@ const HistoryPost = () => {
       // screen_name: screenName as string,
       page_title: '/web_history' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const breadcrumbs = [
@@ -178,6 +179,7 @@ const HistoryPost = () => {
       setItemLeft(2);
       setActiveChild('2-0');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -9,32 +9,17 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 // import api
 import messageApi from 'api/messageApi';
-import profileApi from 'api/profileApi';
+// import profileApi from 'api/profileApi';
 import appplicationApi from 'api/appplication';
 
 // import { Skeleton } from 'antd';
 import Backdrop from '@mui/material/Backdrop';
 // import icon
-import {
-  DotIcon,
-  VideoIcon,
-  CallIcon,
-  LocationIcon,
-  ImageIcon,
-  SendIcon,
-  CloseIcon,
-} from '#components/Icons';
+import { ImageIcon, SendIcon, CloseIcon } from '#components/Icons';
 
 import './style.scss';
 
 import { ChatContext } from 'context/ChatContextProvider';
-interface Message {
-  receiverId: string;
-  message: string;
-  // createdAt: number
-  type: string;
-  postId: number;
-}
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
@@ -48,9 +33,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   const [message, setMessage] = useState('');
 
   const [allListChat, setAllListChat] = useState<any>([]);
-  const [profileUser, setProfileUser] = useState<any>({});
-  const [image, setImage] = useState<File | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
+  // const [profileUser, setProfileUser] = useState<any>({});
+  // const [image, setImage] = useState<File | null>(null);
+  // const [isConnected, setIsConnected] = useState(false);
 
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [previousDate, setPreviousDate] = useState<string | null>(null)
@@ -84,7 +69,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   const imageInputRef = useRef<any>(null);
   const lastChatRef = useRef<any>(null);
 
-  const previousDate = useRef<string | null>(null);
+  // const previousDate = useRef<string | null>(null);
 
   useEffect(() => {
     socket.current = io(
@@ -120,33 +105,34 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
   useEffect(() => {
     getAllListChat();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [receivedMessages, sendMessages, userInfoChat]);
 
-  const getProfileUser = async () => {
-    try {
-      const result = await profileApi.getProfile();
-      if (result) {
-        setProfileUser(result.data);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+  // const getProfileUser = async () => {
+  //   try {
+  //     const result = await profileApi.getProfile();
+  //     if (result) {
+  //       setProfileUser(result.data);
+  //     }
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getProfileUser();
-  }, []);
+  // useEffect(() => {
+  //   getProfileUser();
+  // }, []);
 
   useEffect(() => {
     try {
       // kết nối web socket
       socket.current.on('connect', () => {
-        setIsConnected(true);
+        // setIsConnected(true);
       });
 
       // ngắt kết nối websocket
       socket.current.on('disconnect', (reason: any) => {
-        setIsConnected(false);
+        // setIsConnected(false);
       });
 
       // gửi in nhắn
@@ -180,6 +166,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     } catch (error) {
       console.log('eror', error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // console.log('receive', receivedMessages)
@@ -233,7 +220,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         postId: searchParams.get('post_id'),
       });
     }
-    setImage(selectedImage);
+    // setImage(selectedImage);
     // Thực hiện việc tải lên hình ảnh
     // ...
   };

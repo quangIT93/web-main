@@ -14,7 +14,7 @@ import { getAnalytics } from 'firebase/analytics';
 import './App.scss';
 import ScrollObserver from './utils/ScrollObserver';
 // import context
-import HomeContextProvider from 'context/HomeContextProvider';
+// import HomeContextProvider from 'context/HomeContextProvider';
 import HomeValueContextProvider from 'context/HomeValueContextProvider';
 import ChatContextProvider from 'context/ChatContextProvider';
 const NotFound = React.lazy(() => import('./pages/NotFound'));
@@ -59,13 +59,11 @@ const App: React.FC = () => {
                 <Layout>
                   <Routes>
                     {/* @ts-ignore */}
-                    {routes.map(
-                      ({ path, component: component }: RouteProps) => {
-                        return (
-                          <Route path={path} element={component} key={path} />
-                        );
-                      },
-                    )}
+                    {routes.map(({ path, component }: RouteProps) => {
+                      return (
+                        <Route path={path} element={component} key={path} />
+                      );
+                    })}
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Layout>

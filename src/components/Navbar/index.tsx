@@ -22,10 +22,10 @@ import {
   MapInfoIcon,
   BagInfoJob,
   DownloadIcon,
-  TransalteIcon,
-  LoginArrowIcon,
+  // TransalteIcon,
+  // LoginArrowIcon,
   LoginArrowBlackIcon,
-  LoginHomeIcon
+  // LoginHomeIcon
 } from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
@@ -71,7 +71,7 @@ import FilterTimeJob from './FilterTimeJob';
 import Notificate from './Notificate';
 import PostButton from './PostButton';
 
-import { Avatar, Button, Space, Spin, Badge, Radio } from 'antd';
+import { Avatar, Button, Space, Spin, Badge } from 'antd';
 
 import authApi from 'api/authApi';
 import profileApi from 'api/profileApi';
@@ -113,17 +113,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -181,6 +181,8 @@ const Navbar: React.FC = () => {
 
   // console.log('jobTYpe', jobType);
   // check search
+  // console.log('cccccccccccccccccccccccccccccccccccc');
+
   useEffect(() => {
     if (
       isRemotely !== 0 ||
@@ -760,10 +762,10 @@ const Navbar: React.FC = () => {
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };
 
-  const handleChangeLanguage = (e: any) => {
-    setLanguageId(e.target.value);
-    setCookie('languageId', JSON.stringify(e.target.value), 365);
-  };
+  // const handleChangeLanguage = (e: any) => {
+  //   setLanguageId(e.target.value);
+  //   setCookie('languageId', JSON.stringify(e.target.value), 365);
+  // };
 
   React.useEffect(() => {
     const handleCloseFilter = (event: any) => {
@@ -786,15 +788,16 @@ const Navbar: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openCollapseFilter]);
 
-  const [isDownloading, setIsDownloading] = useState(false);
+  // const [isDownloading, setIsDownloading] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsDownloading((prevIsDownloading) => !prevIsDownloading);
-    }, 3000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setIsDownloading((prevIsDownloading) => !prevIsDownloading);
+  //   }, 3000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
+  // console.log('click');
 
   const buttons = [
     <button
@@ -811,9 +814,12 @@ const Navbar: React.FC = () => {
       <FormOutlined style={{ color: 'white' }} />
       <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
     </button>,
-    <div className="actions-login" ref={refLogin} key="2"
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+    <div
+      className="actions-login"
+      ref={refLogin}
+      key="2"
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -839,7 +845,9 @@ const Navbar: React.FC = () => {
       <div
         className="login__hover__container"
         style={{
-          visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
+          visibility: localStorage.getItem('accessToken')
+            ? 'hidden'
+            : 'visible',
         }}
       >
         <div className="login__hover">
@@ -894,8 +902,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.locations.length > 0
                       ? dataProfile?.locations.map((location: any) => {
-                        return `${location.district} , `;
-                      })
+                          return `${location.district} , `;
+                        })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -908,8 +916,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.categories.length > 0
                       ? dataProfile?.categories.map((profile: any) => {
-                        return `${profile.parent_category} / ${profile.child_category}, `;
-                      })
+                          return `${profile.parent_category} / ${profile.child_category}, `;
+                        })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -925,9 +933,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -1052,9 +1060,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -1077,8 +1085,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1168,10 +1177,7 @@ const Navbar: React.FC = () => {
                 // onClick={() => setOpenNotificate(!openNotificate)}
                 ref={bellRef}
               >
-                <div
-                  className={`button-download ${isDownloading ? 'stopAnimation' : ''
-                    }`}
-                >
+                <div className={`button-download`}>
                   <DownloadIcon />
                 </div>
                 {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}

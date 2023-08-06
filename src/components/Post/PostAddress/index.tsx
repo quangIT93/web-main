@@ -24,11 +24,11 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setWardId,
     address,
     setAddress,
-    wardId,
+    // wardId,
     fillWardId,
     fillProvince,
     fillDistrict,
-    setFillProvince,
+    // setFillProvince,
     setFillDistrict,
     setFillWardId,
   } = props;
@@ -110,11 +110,13 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   React.useEffect(() => {
     getDataDistrict();
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProvince]);
 
   React.useEffect(() => {
     getDataWard();
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDistrict]);
 
   const handleProvinceChange = (event: any, value: any) => {

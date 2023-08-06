@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
@@ -10,12 +10,12 @@ import {
   verifyOtp,
 } from '../../../store/reducer/authReducer/signGmailReducer';
 
-import signInEmailApi from 'api/authApi';
+// import signInEmailApi from 'api/authApi';
 //@ts-ignore
 import OtpInput from 'react-otp-input';
 //@ts-ignore
 import FacebookLogin from '@greatsumini/react-facebook-login';
-import { FacebookLoginClient } from '@greatsumini/react-facebook-login';
+// import { FacebookLoginClient } from '@greatsumini/react-facebook-login';
 import GoogleLogin from '@leecheuk/react-google-login';
 
 import { gapi } from 'gapi-script';
@@ -25,7 +25,7 @@ import CountdownTimer from './components/CountdownTimer';
 
 // import component Material
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
@@ -89,10 +89,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     : '';
 
   const dispatch = useDispatch();
-  const { ActionSignInEmail, setProfileUser } = bindActionCreators(
-    actionCreators,
-    dispatch,
-  );
+  const {
+    // ActionSignInEmail,
+    setProfileUser,
+  } = bindActionCreators(actionCreators, dispatch);
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
   });
@@ -106,7 +106,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   const [isInputFilled, setIsInputFilled] = useState(false);
   //
   const [isEmailVerified, setIsEmailVerified] = useState(false);
-  const [showOTPModal, setShowOTPModal] = useState(false);
+  // const [showOTPModal, setShowOTPModal] = useState(false);
   const [otp, setOTP] = useState('');
   const [resendCode, setResendCode] = useState(true);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
@@ -120,7 +120,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     setIsValidEmail(isEmailValid(value));
   };
 
-  const regexCheckMail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  // const regexCheckMail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const authState = useSelector((state: RootState) => state.auth);
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
@@ -163,10 +163,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     setResendCode(false);
   };
 
-  const handleBackOtp = () => {
-    setIsEmailVerified(true);
-    // setResendCode(false)
-  };
+  // const handleBackOtp = () => {
+  //   setIsEmailVerified(true);
+  //   // setResendCode(false)
+  // };
 
   const handleCloseBackDrop = () => {
     setOpenBackdrop(false);
@@ -200,7 +200,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
 
     // console.log('facebook', response)
   };
@@ -277,6 +277,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
   useEffect(() => {
     fetchDataProfile(authState, authState.isverifyOtp);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState.isverifyOtp]);
 
   useEffect(() => {
@@ -287,6 +288,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       });
     };
     gapi.load('client:auth2', start);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleResendCode = () => {
@@ -387,7 +389,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-              // cookiePolicy={'single_host_origin'}
+                // cookiePolicy={'single_host_origin'}
               />
 
               <div className="line-with-text">
@@ -456,9 +458,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             <p className="textOpt">Bạn hãy nhập mã OTP được gửi đến email:</p>
             <p className="textOpt-email">{loginData.email}</p>
             <p className="textOpt-notice">
-              Nếu không nhận được mã OTP qua email,
-              bạn vui lòng kiểm tra lại email đã nhập chính xác chưa
-              hoặc kiểm tra trong thư mục spam
+              Nếu không nhận được mã OTP qua email, bạn vui lòng kiểm tra lại
+              email đã nhập chính xác chưa hoặc kiểm tra trong thư mục spam
             </p>
             <div className="otp-inputs">
               <OtpInput
@@ -492,7 +493,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 <p className="resend-otp_countDown"></p>
               ) : (
                 <CountdownTimer
-                  resendCode={resendCode}
+                  // resendCode={resendCode}
                   setResendCode={setResendCode}
                 />
               )}

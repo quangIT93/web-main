@@ -1,19 +1,12 @@
 import React, { useContext } from 'react';
-import Card from '@mui/material/Card';
+
 import Box from '@mui/material/Box';
-import CardActions from '@mui/material/CardActions';
-import ImageListItem from '@mui/material/ImageListItem';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 // import { url } from 'inspector'
-import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { NewJobIcon, MoreICon } from '#components/Icons';
 
 // import redux
@@ -27,33 +20,26 @@ import ShowCancleSave from '../../ShowCancleSave';
 import ShowNotificativeSave from '../../ShowNotificativeSave';
 // import api
 import postApi from 'api/postApi';
-import bookMarkApi from 'api/bookMarkApi';
 
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 
-import moment from 'moment';
+// import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
 import { useSearchParams } from 'react-router-dom';
-import { useNavigate, createSearchParams } from 'react-router-dom';
-import { AxiosResponse } from 'axios';
+// import { useNavigate } from 'react-router-dom';
+// import { AxiosResponse } from 'axios';
 // import icon
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
-import { Space, Tooltip } from 'antd';
+import { Space } from 'antd';
 
 import './style.scss';
 //@ts-ignore
-import { maxHeight } from '@mui/system';
+// import { maxHeight } from '@mui/system';
 
-import ChildCateloriesArray from 'context/HomeValueContextProvider';
+// import ChildCateloriesArray from 'context/HomeValueContextProvider';
 
 //import jobcard
 import JobCard from '../JobCard';
@@ -91,13 +77,13 @@ const NewJobs: React.FC = () => {
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [isLoading, setIsLoading] = React.useState(false);
+  // const [isLoading, setIsLoading] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [isAppliedPostedJobs, setIsAppliedPostedJobs] = React.useState(false);
 
-  const [showNofySave, setShowNofySave] = React.useState(false);
+  // const [showNofySave, setShowNofySave] = React.useState(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // state redux
   const { postNewest } = useSelector((state: RootState) => state);
@@ -107,7 +93,7 @@ const NewJobs: React.FC = () => {
     dispatch,
   );
 
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -120,9 +106,9 @@ const NewJobs: React.FC = () => {
   } = useContext(HomeValueContext);
 
   // handle click post details
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`, '_parent');
-  };
+  // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  //   window.open(`/post-detail?post-id=${id}`, '_parent');
+  // };
 
   // handle change paginaton
   const handleChange = async (
@@ -152,9 +138,9 @@ const NewJobs: React.FC = () => {
     }
   };
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   const getPostNewest = async () => {
     try {
@@ -187,6 +173,7 @@ const NewJobs: React.FC = () => {
         setLoading(false);
       }
     }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -239,7 +226,7 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-          //  onClick={handleClose}
+            //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
