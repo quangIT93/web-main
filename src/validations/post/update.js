@@ -1,5 +1,3 @@
-import { validatePhoneNumber } from "utils";
-
 const updatePostValidation = (post) => {
   if (!post.title.trim()) {
     return {

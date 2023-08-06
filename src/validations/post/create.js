@@ -1,5 +1,3 @@
-import { validatePhoneNumber } from "utils";
-
 const createPostValidation = (post) => {
   if (post.title.trim() === "") {
     return {
