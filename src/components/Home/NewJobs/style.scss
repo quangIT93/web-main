@@ -171,3 +171,9 @@
     margin-top: var(--mrTopRes) !important;
   }
 }
+
+@media screen and (max-width: 596px) {
+  .new-job {
+    margin-top: 0 !important;
+  }
+}

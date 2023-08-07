@@ -127,6 +127,32 @@
           }
         }
       }
+
+
     }
   }
+
+  @include breakpoint(mobile) {
+    .ant-space-item {
+      .suggest-job-not-loging {
+          flex-direction: column;
+        }
+      }
+    }
+
+    @include breakpoint(tablet) {
+      .ant-space-item {
+        .suggest-job-not-loging {
+            flex-direction: column;
+            align-items: flex-start;
+            .suggest-job-not-loging_left {
+              margin-bottom: 8px;
+              h3 {
+                margin-bottom: 8px;
+
+              }
+            }
+          }
+        }
+      }
 }

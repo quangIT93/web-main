@@ -89,7 +89,7 @@ const AppliedPostedJob: React.FC = () => {
   const getAppliedPostedJobs = async () => {
     try {
       // setloading(true);
-      const result = await applitedPostedApi.getAllApplitedPostedApi(0, "vi");
+      const result = await applitedPostedApi.getAllApplitedPostedApi(0, 'vi');
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
         setTimeout(() => {
@@ -145,7 +145,7 @@ const AppliedPostedJob: React.FC = () => {
       }}
       className="applied-posted-jobs-container"
     >
-      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
         <AppliedPostedIcon width={30} height={30} />
         <h2>Công việc đã Ứng tuyển/ Đăng tuyển</h2>
       </div>
