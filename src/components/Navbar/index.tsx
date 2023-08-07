@@ -140,6 +140,7 @@ const Navbar: React.FC = () => {
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [openInfoUser, setOpenInfoUser] = React.useState(false);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  const [openLogin, setOpenLogin] = React.useState(true);
   const [spinning, setSpinning] = React.useState(false);
   const [reset, setReset] = React.useState<Boolean>(false);
 
@@ -168,6 +169,15 @@ const Navbar: React.FC = () => {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   // const [isSearch, setIsSearch] = useState<boolean>(false);
+
+  useEffect(() => {
+    // if(localStorage.getItem('accessToken')){
+    //   set
+    // }
+    setTimeout(() => {
+      setOpenLogin(false);
+    }, 5000);
+  }, []);
 
   useEffect(() => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
@@ -848,9 +858,13 @@ const Navbar: React.FC = () => {
       <div
         className="login__hover__container"
         style={{
-          visibility: localStorage.getItem('accessToken')
-            ? 'hidden'
-            : 'visible',
+          // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
+          display:
+            !localStorage.getItem('accessToken') &&
+            openLogin &&
+            location?.pathname === '/'
+              ? 'block'
+              : 'none',
         }}
       >
         <div className="login__hover">
