@@ -31,20 +31,20 @@ const apiCompany = {
             }
         )
     },
-    getCampanyByAccountApi: () => {
-        const URL = `/v3/profiles/me`
+    getCampanyByAccountApi: (lang: string) => {
+        const URL = `/v3/profiles/me?lang=${lang}`
         return axiosClient.get(URL, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
             },
         })
     },
-    getAllRolesCompany: () => {
-        const URL = `/v3/company-roles`
+    getAllRolesCompany: (lang: string) => {
+        const URL = `/v3/company-roles?lang=${lang}`
         return axiosClient.get(URL)
     },
-    getAllSizesCompany: () => {
-        const URL = `/v3/company-sizes`
+    getAllSizesCompany: (lang: string) => {
+        const URL = `/v3/company-sizes?lang=${lang}`
         return axiosClient.get(URL)
     },
 }

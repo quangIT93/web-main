@@ -29,7 +29,7 @@ const EditSalaryType: React.FC<ISalaryType> = (props) => {
 
   // call api get salaryType
   const getSalaryType = async () => {
-    const result = await siteApi.getSalaryType()
+    const result = await siteApi.getSalaryType("vi")
     if (result) {
       setSalary(result)
     }

@@ -47,7 +47,7 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
     try {
       const result = await profileApi.deleteProfileExperience(experienceId);
       if (result) {
-        const profile = await profileApi.getProfile();
+        const profile = await profileApi.getProfile("vi");
         if (profile) {
           setProfileUser(profile.data);
         }

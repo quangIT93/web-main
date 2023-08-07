@@ -20,7 +20,7 @@ export const getProfile = createAsyncThunk(
       // Gọi API để lấy thông tin profile với accessToken đã có
 
       if (accessToken) {
-        const response = await profileApi.getProfile()
+        const response = await profileApi.getProfile("vi")
 
         return response.data
       }

@@ -200,7 +200,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
 
     // console.log('facebook', response)
   };
@@ -261,7 +261,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       );
 
       await dispatch(getProfile() as any);
-      const result = await profileApi.getProfile();
+      const result = await profileApi.getProfile("vi");
       if (result) {
         setProfileUser(result.data);
       }
@@ -389,7 +389,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-                // cookiePolicy={'single_host_origin'}
+              // cookiePolicy={'single_host_origin'}
               />
 
               <div className="line-with-text">

@@ -39,7 +39,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const getRoles = async () => {
     try {
-      const roles = await apiCompany.getAllRolesCompany();
+      const roles = await apiCompany.getAllRolesCompany("vi");
 
       if (roles) {
         setDataRoles(roles);
@@ -97,7 +97,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
               {...params}
               placeholder="Chọn vai trò của bạn"
               size="small"
-              // value={dataCompany?.companyRole?.name}
+            // value={dataCompany?.companyRole?.name}
             />
           )}
           isOptionEqualToValue={(option, value) => {
@@ -125,7 +125,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder="http://"
-          //   error={titleError} // Đánh dấu lỗi
+        //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>

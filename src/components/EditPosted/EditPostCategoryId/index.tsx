@@ -91,7 +91,7 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise();
+      const result = await categoriesApi.getAllCategorise("vi");
       if (result) {
         setDataCategories(result.data);
       }
@@ -131,27 +131,27 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
-                      }
+              value: parentCategory.parent_category_id,
+              label: parentCategory.parent_category,
+              children: parentCategory.childs.map((child: any) => {
+                var dis = false;
+                //check id child  when disable = true
+                if (disable) {
+                  dis = true;
+                  for (const elem of categoriesId) {
+                    if (elem === child.id) {
+                      dis = false;
+                      break;
                     }
                   }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                }
+                return {
+                  value: child.id,
+                  label: child.name,
+                  disabled: dis,
+                };
+              }),
+            }))
             : []
         }
         dropdownRender={DropdownRender}

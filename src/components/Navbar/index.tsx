@@ -22,7 +22,7 @@ import {
   MapInfoIcon,
   BagInfoJob,
   DownloadIcon,
-  // TransalteIcon,
+  TransalteIcon,
   // LoginArrowIcon,
   LoginArrowBlackIcon,
   // LoginHomeIcon
@@ -71,7 +71,7 @@ import FilterTimeJob from './FilterTimeJob';
 import Notificate from './Notificate';
 import PostButton from './PostButton';
 
-import { Avatar, Button, Space, Spin, Badge } from 'antd';
+import { Avatar, Button, Space, Spin, Badge, Radio } from 'antd';
 
 import authApi from 'api/authApi';
 import profileApi from 'api/profileApi';
@@ -99,6 +99,7 @@ import { HomeValueContext } from 'context/HomeValueContextProvider';
 import { ChatContext } from 'context/ChatContextProvider';
 import { DivRef1 } from 'context/HomeValueContextProvider';
 import { useSearchParams } from 'react-router-dom';
+import { setLanguage } from 'store/reducer/changeLanguageReducer';
 
 // import redux
 
@@ -113,17 +114,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean;
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-    search: boolean;
-  } = useContext(HomeValueContext);
+    {
+      openCollapseFilter: boolean;
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+      search: boolean;
+    } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -257,6 +258,7 @@ const Navbar: React.FC = () => {
   // const dataProfile = useSelector((state: RootState) => state.profileUser);
 
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   // handle show tap on screen mobile
   // const handleTap = () => {
   //   setShowTap(!showTap);
@@ -270,6 +272,8 @@ const Navbar: React.FC = () => {
   // }
 
   // handle close backdrop
+
+  console.log("languageRedux", languageRedux);
   const handleClose = () => {
     setOpenBackdrop(false);
   };
@@ -286,7 +290,7 @@ const Navbar: React.FC = () => {
     try {
       await dispatch(getProfile() as any);
 
-      const result = await profileApi.getProfile();
+      const result = await profileApi.getProfile("vi");
       if (result) {
         dispatch(getProfile() as any);
       }
@@ -613,7 +617,7 @@ const Navbar: React.FC = () => {
       }
       var result = null;
       if (localStorage.getItem('accessToken')) {
-        result = await profileApi.getProfile();
+        result = await profileApi.getProfile("vi");
       }
       if (result) {
         dispatch(getProfile() as any);
@@ -680,7 +684,7 @@ const Navbar: React.FC = () => {
 
   const getAppliedPostedJobs = async () => {
     try {
-      const result = await applitedPostedApi.getAllApplitedPostedApi(0);
+      const result = await applitedPostedApi.getAllApplitedPostedApi(0, "vi");
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
 
@@ -775,10 +779,11 @@ const Navbar: React.FC = () => {
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };
 
-  // const handleChangeLanguage = (e: any) => {
-  //   setLanguageId(e.target.value);
-  //   setCookie('languageId', JSON.stringify(e.target.value), 365);
-  // };
+  const handleChangeLanguage = (e: any) => {
+    setLanguageId(e.target.value);
+    // setCookie('languageId', JSON.stringify(e.target.value), 365);
+    dispatch<any>(setLanguage(e.target.value));
+  };
 
   React.useEffect(() => {
     const handleCloseFilter = (event: any) => {
@@ -831,8 +836,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="2"
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -861,8 +866,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-            openLogin &&
-            location?.pathname === '/'
+              openLogin &&
+              location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -919,8 +924,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.locations.length > 0
                       ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                        return `${location.district} , `;
+                      })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -933,8 +938,8 @@ const Navbar: React.FC = () => {
                   <p>
                     {dataProfile?.categories.length > 0
                       ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                        return `${profile.parent_category} / ${profile.child_category}, `;
+                      })
                       : 'Chưa cập nhật thông tin'}
                   </p>
                 </span>
@@ -950,9 +955,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -969,7 +974,7 @@ const Navbar: React.FC = () => {
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
               </div> */}
-              {/* <div className="sub-login_item__translate">
+              <div className="sub-login_item__translate">
                 <TransalteIcon />
                 <span>Ngôn ngữ</span>
               </div>
@@ -985,7 +990,7 @@ const Navbar: React.FC = () => {
                   <Radio value={2}>English</Radio>
                   <Radio value={3}>Korean</Radio>
                 </Radio.Group>
-              </div> */}
+              </div>
 
               <div className="sub-login_item" onClick={handleLogout}>
                 <LogoutOutlined />
@@ -1077,9 +1082,9 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <ClockCircleOutlined />
                   <span>Lịch sử</span>
@@ -1102,9 +1107,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin

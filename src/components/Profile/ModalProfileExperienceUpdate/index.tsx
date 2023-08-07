@@ -192,7 +192,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileExperience(experience);
         if (result) {
-          const profile = await profileApi.getProfile();
+          const profile = await profileApi.getProfile("vi");
           if (profile) {
             setProfileUser(profile.data);
           }
@@ -270,7 +270,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Chức danh"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -291,7 +291,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Nhập tên công ty hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 

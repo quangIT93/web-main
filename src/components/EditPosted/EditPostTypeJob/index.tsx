@@ -24,7 +24,7 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
   const [jobTypes, setJobTypes] = useState<AxiosResponse | null>(null);
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType();
+    const result = await siteApi.getJobType("vi");
     if (result) {
       setJobTypes(result);
     }

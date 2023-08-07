@@ -117,6 +117,7 @@ const ThemesJob: React.FC = () => {
       userProfile?.address?.id,
       11,
       threshold,
+      "vi"
     );
     // const result = await postApi.getPostByThemeId(
     //   Number(themeId),
@@ -151,6 +152,7 @@ const ThemesJob: React.FC = () => {
         userProfile?.address?.id,
         11,
         null,
+        "vi"
       );
 
       if (result) {
@@ -282,7 +284,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //   onClick={handleClose}
+            //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

@@ -89,7 +89,7 @@ const AppliedPostedJob: React.FC = () => {
   const getAppliedPostedJobs = async () => {
     try {
       // setloading(true);
-      const result = await applitedPostedApi.getAllApplitedPostedApi(0);
+      const result = await applitedPostedApi.getAllApplitedPostedApi(0, "vi");
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
         setTimeout(() => {

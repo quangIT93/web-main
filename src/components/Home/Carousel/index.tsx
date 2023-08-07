@@ -48,7 +48,7 @@ const EmblaCarousel: React.FC = () => {
   );
 
   const getBannersApi = async () => {
-    const result = await bannersApi.getBannersApi();
+    const result = await bannersApi.getBannersApi("vi");
     try {
       if (result) setDataBanners(result.data);
     } catch (error) {
@@ -124,7 +124,7 @@ const EmblaCarousel: React.FC = () => {
     <>
       <div
         className="embla"
-        // style={{ position: 'fixed', top: '-100%' }}
+      // style={{ position: 'fixed', top: '-100%' }}
       >
         <div className="embla__viewport" ref={emblaRef}>
           <div

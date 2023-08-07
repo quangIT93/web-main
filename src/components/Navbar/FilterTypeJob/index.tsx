@@ -38,7 +38,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={jobType ? jobType : 5}
-      // defaultValue={jobType ? jobType : 5}
+    // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -78,7 +78,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   const TYPE_JOB = userFilteredCookies?.id;
   // console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType();
+    const result = await siteApi.getJobType("vi");
     const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data];
     // console.log('updatedData', updatedData);
     if (updatedData) {
