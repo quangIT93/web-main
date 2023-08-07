@@ -11,6 +11,11 @@ import { MoneyFilterIcon } from '#components/Icons';
 import './style.scss';
 
 import { ArrowFilterIcon } from '#components/Icons';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
+
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
 
 const { Text } = Typography;
 
@@ -39,6 +44,8 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
     reset,
     setReset,
   } = props;
+
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
 
   const [inputValueMin, setInputValueMin] = useState<string | null>(null);
   // const [inputValueMax, setInputValueMax] = useState<string | null>(null);
@@ -320,9 +327,8 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
         <MoneyFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterSalary input-filter_nav ${
-          inputValueMin || salaryMax ? 'activeSalary' : ''
-        }`}
+        className={`inputFilterSalary input-filter_nav ${inputValueMin || salaryMax ? 'activeSalary' : ''
+          }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -332,20 +338,24 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           header={
             salaryMax || salaryMin
               ? `${new Intl.NumberFormat('en-US').format(
-                  Number(salaryMin?.toString().replace(',', '')),
-                )} - ${new Intl.NumberFormat('en-US').format(
-                  Number(salaryMax?.toString().replace(',', '')),
-                )}`
-              : `Mức lương`
+                Number(salaryMin?.toString().replace(',', '')),
+              )} - ${new Intl.NumberFormat('en-US').format(
+                Number(salaryMax?.toString().replace(',', '')),
+              )}`
+              : languageRedux == 1 ? `Mức lương` : `Salary`
           }
           key="1"
         >
-          <Text className="title-filterSalary">Mức lương</Text>
+          <Text className="title-filterSalary">
+            {
+              languageRedux == 1 ? `Mức lương` : `Salary`
+            }
+          </Text>
           <Radio.Group
             value={reset ? 1 : selectedValue}
             onChange={handleRadioChange}
             className="inputFilter-groupSalary_radio"
-            // defaultValue={Type_Money}
+          // defaultValue={Type_Money}
           >
             <Radio value={1}>VND</Radio>
             <Radio value={2}>USD</Radio>
@@ -362,11 +372,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMin
                 ? new Intl.NumberFormat('en-US').format(
-                    Number(salaryMin.toString().replace(',', '')),
-                  )
+                  Number(salaryMin.toString().replace(',', '')),
+                )
                 : new Intl.NumberFormat('en-US').format(
-                    Number(salaryMin?.toString().replace(',', '')),
-                  )
+                  Number(salaryMin?.toString().replace(',', '')),
+                )
             }
             onChange={handleInputChangeSalaryMin}
             className="input-text_salary"
@@ -384,11 +394,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMax
                 ? new Intl.NumberFormat('en-US').format(
-                    Number(salaryMax.toString().replace(',', '')),
-                  )
+                  Number(salaryMax.toString().replace(',', '')),
+                )
                 : new Intl.NumberFormat('en-US').format(
-                    Number(salaryMax?.toString().replace(',', '')),
-                  )
+                  Number(salaryMax?.toString().replace(',', '')),
+                )
             }
             onChange={handleInputChangeSalaryMax}
             className="input-text_salary"
@@ -397,7 +407,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           />
           {checkSalary ? (
             <i style={{ color: 'red', marginBottom: '24px' }}>
-              Tiền tối thiểu không được lớn hơn tiền tối đa
+              {
+                languageRedux == 1 ?
+                  'Tiền tối thiểu không được lớn hơn tiền tối đa' :
+                  'The minimum amount cannot be greater than the maximum amount'
+              }
             </i>
           ) : (
             <></>

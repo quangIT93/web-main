@@ -30,6 +30,8 @@ import './style.scss';
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 import { IvalueJobChild } from 'context/HomeValueContextProvider';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
 
 const BreadcrumbsCpn: React.FC = () => {
   // Contexts
@@ -45,6 +47,7 @@ const BreadcrumbsCpn: React.FC = () => {
     setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
   } = useContext(HomeValueContext);
 
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   // const [checked, setChecked] = React.useState(true)
@@ -78,11 +81,13 @@ const BreadcrumbsCpn: React.FC = () => {
 
   const getAllChildCategoriesById = async () => {
     try {
+      setIsLoading(true);
       const result = await categoriesApi.getAllChildCategories(
         valueJobChild?.id,
-        "vi"
+        languageRedux == 1 ? "vi" : "en"
       );
       if (result) {
+        setIsLoading(false);
         setChildCatelories(result.data);
       }
     } catch (error) {
@@ -90,18 +95,18 @@ const BreadcrumbsCpn: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 2000);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     getAllChildCategoriesById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueJobChild?.id]);
+  }, [valueJobChild?.id, languageRedux]);
 
   useEffect(() => {
     setCheckedItems(
@@ -145,7 +150,7 @@ const BreadcrumbsCpn: React.FC = () => {
         null,
         9,
         thersholdId,
-        "vi"
+        languageRedux == 1 ? "vi" : "en"
       );
       if (result) {
         setPostNewest(result);
@@ -255,7 +260,7 @@ const BreadcrumbsCpn: React.FC = () => {
           }}
         >
           {arrayChild?.length === 0
-            ? 'Tất cả'
+            ? languageRedux == 1 ? home.all : homeEn.all
             : arrayChild?.map(
               (value: { id: number; name: string }, index: number) => (
                 <div key={index}>
@@ -306,7 +311,13 @@ const BreadcrumbsCpn: React.FC = () => {
         unmountOnExit
         className="collapse-breadcrumbs"
       >
-        <Typography className="header-breabcrumb_text">Danh sách</Typography>
+        <Typography className="header-breabcrumb_text">
+          {
+            languageRedux == 1 ?
+              "Danh sách" :
+              "List"
+          }
+        </Typography>
         <Box padding={0} className="box-breadcrumbs">
           <FormGroup>
             {childCatelories?.map((childCatelorie: any, index: number) => (
@@ -345,7 +356,7 @@ const BreadcrumbsCpn: React.FC = () => {
             className="btn-breadcrumb_nav"
             onClick={handleClickChoose}
           >
-            Chọn
+            {languageRedux == 1 ? 'Chọn' : 'Select'}
           </button>
         </div>
       </Collapse>

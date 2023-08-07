@@ -12,11 +12,13 @@ import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index';
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   // useNavigate,
   // createSearchParams,
   useSearchParams,
 } from 'react-router-dom';
+import { RootState } from '../../../store/reducer';
 
 // let timeout: ReturnType<typeof setTimeout> | null;
 // let currentValue: string | undefined;
@@ -114,6 +116,7 @@ const SearchInput: React.FC<SearchProps> = ({
     search: boolean;
   } = useContext(HomeValueContext);
 
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState<SelectProps['options']>([]);
   // const [fetching, setFet] = useState(false)
@@ -388,9 +391,15 @@ const SearchInput: React.FC<SearchProps> = ({
         searchValue={value}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
-        placeholder={`Tìm kiếm hơn ${totalJob.toLocaleString(
-          'en-US',
-        )} công việc tại Việt Nam`}
+        placeholder={
+          languageRedux == 1 ?
+            `Tìm kiếm hơn ${totalJob.toLocaleString(
+              'en-US',
+            )} công việc tại Việt Nam` :
+            `Search over ${totalJob.toLocaleString(
+              'en-US',
+            )} jobs in Vietnam`
+        }
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}

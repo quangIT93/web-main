@@ -25,7 +25,13 @@ import {
   TransalteIcon,
   // LoginArrowIcon,
   LoginArrowBlackIcon,
-  // LoginHomeIcon
+  // LoginHomeIcon,
+  CompanySubLoginIcon,
+  UserPersonSubLoginIcon,
+  PaperSubLoginIcon,
+  TranslateSubLoginIcon,
+  LogoutSubLoginIcon,
+  ArrowSubLoginIcon,
 } from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
@@ -71,12 +77,13 @@ import FilterTimeJob from './FilterTimeJob';
 import Notificate from './Notificate';
 import PostButton from './PostButton';
 
-import { Avatar, Button, Space, Spin, Badge, Radio } from 'antd';
+import { Avatar, Button, Space, Spin, Badge, Radio, Select } from 'antd';
 
 import authApi from 'api/authApi';
 import profileApi from 'api/profileApi';
 import messageApi from 'api/messageApi';
 import applitedPostedApi from 'api/apiAppliedPosted';
+import apiCompany from 'api/apiCompany';
 
 import {
   Container,
@@ -100,6 +107,10 @@ import { ChatContext } from 'context/ChatContextProvider';
 import { DivRef1 } from 'context/HomeValueContextProvider';
 import { useSearchParams } from 'react-router-dom';
 import { setLanguage } from 'store/reducer/changeLanguageReducer';
+
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
+import { set } from 'immer/dist/internal';
 
 // import redux
 
@@ -156,6 +167,7 @@ const Navbar: React.FC = () => {
   const [typeMoney, setTypeMoney] = useState<number | null>(1);
   const [salaryMin, setSalaryMin] = useState<number | null>(null);
   const [salaryMax, setSalaryMax] = useState<number | null>(null);
+  const [companyName, setCompanyName] = useState<string>('');
   // const [timeJob, setTimeJob] = useState()
   // const [dateBegin, setDateBegin] = useState()
   // const [dateEnd, setDateEnd] = useState()
@@ -167,6 +179,7 @@ const Navbar: React.FC = () => {
   const [languageId, setLanguageId] = useState<number>(1);
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
+  const [openRadioGroup, setOpenRadioGroup] = useState<boolean>(false);
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   // const [isSearch, setIsSearch] = useState<boolean>(false);
@@ -179,6 +192,10 @@ const Navbar: React.FC = () => {
       setOpenLogin(false);
     }, 5000);
   }, []);
+
+  const handleOpenRadioGroup = () => {
+    setOpenRadioGroup(!openRadioGroup);
+  };
 
   useEffect(() => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
@@ -273,9 +290,25 @@ const Navbar: React.FC = () => {
   //   setOpenCollapse(!openCollapse)
   // }
 
-  // handle close backdrop
+  const getCompanyInforByAccount = async () => {
+    try {
+      const result = await apiCompany.getCampanyByAccountApi(
+        languageRedux == 1 ? 'vi' : 'en',
+      );
+      if (result && result?.data?.companyInfomation?.id != null) {
+        setCompanyName(result?.data?.companyInfomation?.name);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  console.log('languageRedux', languageRedux);
+  useEffect(() => {
+    getCompanyInforByAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
+
+  // handle close backdrop
   const handleClose = () => {
     setOpenBackdrop(false);
   };
@@ -292,7 +325,9 @@ const Navbar: React.FC = () => {
     try {
       await dispatch(getProfile() as any);
 
-      const result = await profileApi.getProfile('vi');
+      const result = await profileApi.getProfile(
+        languageRedux == 1 ? 'vi' : 'en',
+      );
       if (result) {
         dispatch(getProfile() as any);
       }
@@ -318,12 +353,14 @@ const Navbar: React.FC = () => {
     fecthDataProfileUser();
     // dispatch(getProfile() as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   // get count unread
   const getCountUnread = async () => {
     try {
-      const result = await messageApi.getUnread('vi');
+      const result = await messageApi.getUnread(
+        languageRedux == 1 ? 'vi' : 'en',
+      );
       if (result) {
         setCountChat(result.data.quantity);
       }
@@ -676,7 +713,18 @@ const Navbar: React.FC = () => {
 
         if (result) {
           window.location.replace('/');
-          localStorage.clear();
+          // localStorage.clear();
+          const exceptionKey = 'persist:root';
+
+          const localStorageKeys = Object.keys(localStorage);
+
+          const keysToRemove = localStorageKeys.filter(
+            (key) => key !== exceptionKey,
+          );
+
+          for (const key of keysToRemove) {
+            localStorage.removeItem(key);
+          }
         }
       }
     } catch (error) {
@@ -832,7 +880,9 @@ const Navbar: React.FC = () => {
       }}
     >
       <FormOutlined style={{ color: 'white' }} />
-      <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
+      <p style={{ marginLeft: 10, color: 'white' }}>
+        {languageRedux == 1 ? home.post : homeEn.post}
+      </p>
     </button>,
     <div
       className="actions-login"
@@ -854,7 +904,7 @@ const Navbar: React.FC = () => {
             {localStorage.getItem('accessToken') && dataProfile ? (
               <span>{dataProfile?.name}</span>
             ) : (
-              <span>Đăng nhập</span>
+              <span>{languageRedux == 1 ? 'Đăng nhập' : homeEn.sign_in}</span>
             )}
           </div>
         </div>
@@ -875,10 +925,18 @@ const Navbar: React.FC = () => {
         }}
       >
         <div className="login__hover">
-          <h3>Đăng nhập ở đây</h3>
+          <h3>{languageRedux == 1 ? 'Đăng nhập ở đây' : 'Sign in here'}</h3>
           <div className="login__hover__p">
-            <p>Chọn vị trí và danh mục của bạn</p>
-            <p>Chúng tôi sẽ cung cấp thông tin tuyển dụng tốt nhất</p>
+            <p>
+              {languageRedux == 1
+                ? 'Chọn vị trí và danh mục của bạn'
+                : 'Choose your location and category'}
+            </p>
+            <p>
+              {languageRedux == 1
+                ? 'Chúng tôi sẽ cung cấp thông tin tuyển dụng tốt nhất'
+                : 'We will provide the best recruitment information'}
+            </p>
           </div>
           <Button
             type="primary"
@@ -887,118 +945,181 @@ const Navbar: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            Đăng nhập ngay
+            {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
           </Button>
         </div>
       </div>
       <Spin indicator={antIcon} spinning={spinning}>
         {openInfoUser && (
           <div className="sub-login" ref={refInfoUser}>
-            <Space className="sub-login_info">
-              <Avatar
-                style={{
-                  backgroundColor: '#0D99FF',
-                  minWidth: '100px',
-                  minHeight: '100px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                icon={<UserOutlined style={{ fontSize: 30 }} />}
-                size={50}
-                src={dataProfile?.avatar ? dataProfile.avatar : null}
-              />
-              <div className="sub-login_detail">
-                <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
-                <span className="sub-login_text">
-                  <MailInfoIcon />
-                  {dataProfile?.email ? dataProfile?.email : ''}
-                </span>
-                {/* <span className="sub-login_text">
+            <Space
+              className="sub-login_info"
+              style={{
+                flexDirection: 'column',
+                paddingBottom: '12px',
+                borderBottom: '1px solid rgba(170, 170, 170, 1)',
+              }}
+            >
+              <div className="sub-login_info__top">
+                <Avatar
+                  style={{
+                    backgroundColor: '#0D99FF',
+                    minWidth: '80px',
+                    minHeight: '80px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  icon={<UserOutlined style={{ fontSize: 30 }} />}
+                  size={50}
+                  src={dataProfile?.avatar ? dataProfile.avatar : null}
+                />
+                <div className="sub-login_detail">
+                  <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
+                  <span className="sub-login_text">
+                    <CompanySubLoginIcon />
+                    {companyName ? companyName : ''}
+                  </span>
+                  <span className="sub-login_text">
+                    <MailInfoIcon />
+                    {dataProfile?.email ? dataProfile?.email : ''}
+                  </span>
+                  {/* <span className="sub-login_text">
                   <LoginHomeIcon />
                   {dataProfile?.email ? dataProfile?.email : ''}
                 </span> */}
-                <span
-                  className="sub-login_text"
-                  onClick={() => window.open(`/profile`, '_parent')}
-                >
-                  <MapInfoIcon />
-                  <p>
-                    {dataProfile?.locations.length > 0
-                      ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
-                      : 'Chưa cập nhật thông tin'}
-                  </p>
-                </span>
-                <span
-                  className="sub-login_text"
-                  onClick={() => window.open(`/profile`, '_parent')}
-                >
-                  <BagInfoJob />
+                </div>
+              </div>
+              <div className="sub-login_info__bottom">
+                <div className="sub-login_detail__bottom">
+                  <span
+                    className="sub-login_text__bottom"
+                    onClick={() => window.open(`/profile`, '_parent')}
+                  >
+                    <MapInfoIcon />
+                    <p>
+                      {dataProfile?.locations.length > 0
+                        ? dataProfile?.locations.map((location: any) => {
+                            return `${location.district} , `;
+                          })
+                        : languageRedux == 1
+                        ? 'Chưa cập nhật thông tin'
+                        : 'The information has not been updated'}
+                    </p>
+                  </span>
+                  <span
+                    className="sub-login_text__bottom"
+                    onClick={() => window.open(`/profile`, '_parent')}
+                  >
+                    <BagInfoJob />
 
-                  <p>
-                    {dataProfile?.categories.length > 0
-                      ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
-                      : 'Chưa cập nhật thông tin'}
-                  </p>
-                </span>
+                    <p>
+                      {dataProfile?.categories.length > 0
+                        ? dataProfile?.categories.map((profile: any) => {
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
+                        : languageRedux == 1
+                        ? 'Chưa cập nhật thông tin'
+                        : 'The information has not been updated'}
+                    </p>
+                  </span>
+                </div>
               </div>
             </Space>
             <div className="sub-login_items">
               <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
-                  <SyncOutlined />
-                  <span>Cập nhật thông tin</span>
+                  <UserPersonSubLoginIcon />
+                  <span>
+                    {languageRedux == 1
+                      ? 'Cập nhật thông tin'
+                      : 'Update information'}
+                  </span>
                 </div>
               </Link>
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
+                  style={{
+                    borderBottom: 'none',
+                  }}
                   // onClick={() => {
                   //   window.open('/history', "_top")
                   // }}
                 >
-                  <ClockCircleOutlined />
-                  <span>Lịch sử</span>
+                  <PaperSubLoginIcon />
+                  <span>{languageRedux == 1 ? 'Lịch sử' : 'History'}</span>
                 </div>
               </Link>
               <div className="sub-history_status">
                 <span>Approved: {`${approved}`}</span>
-                <span>|</span>
+                {/* <span>|</span> */}
                 <span>Pending: {`${pending}`}</span>
-                <span>|</span>
+                {/* <span>|</span> */}
                 <span>Waiting: {`${waiting}`}</span>
               </div>
               {/* <div className="sub-login_item">
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
               </div> */}
-              <div className="sub-login_item__translate">
-                <TransalteIcon />
-                <span>Ngôn ngữ</span>
+              <div
+                className="sub-login_item__translate"
+                onClick={handleOpenRadioGroup}
+                // style={{
+                //   borderBottom: openRadioGroup
+                //     ? 'none'
+                //     : '1px solid rgba(170, 170, 170, 1)',
+                // }}
+                style={{ display: 'none' }}
+              >
+                <div className="sub-translate_header_left">
+                  <TranslateSubLoginIcon />
+                  <span>{languageRedux == 1 ? 'Ngôn ngữ' : 'Language'}</span>
+                </div>
+                <div
+                  className="sub-translate_header_right"
+                  style={{
+                    transform: openRadioGroup ? 'rotate(-90deg)' : 'unset',
+                  }}
+                >
+                  <ArrowSubLoginIcon />
+                </div>
               </div>
 
-              <div className="sub-translate_status">
+              <div
+                className="sub-translate_status"
+                style={{
+                  height: openRadioGroup ? 'fit-content' : '0',
+                }}
+              >
                 <Radio.Group
                   name="radiogroup"
                   value={languageRedux}
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
+                  style={{
+                    display: openRadioGroup ? 'flex' : 'none',
+                  }}
                 >
-                  <Radio value={1}>Tiếng Việt</Radio>
-                  <Radio value={2}>English</Radio>
-                  <Radio value={3}>Korean</Radio>
+                  <Radio value={1}>
+                    {languageRedux == 1 ? 'Tiếng Việt' : 'Vietnamese'}
+                  </Radio>
+                  <Radio value={2}>
+                    {languageRedux == 1 ? 'Tiếng Anh' : 'English'}
+                  </Radio>
+                  {/* <Radio value={3}>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</Radio> */}
                 </Radio.Group>
               </div>
 
-              <div className="sub-login_item" onClick={handleLogout}>
-                <LogoutOutlined />
+              <div
+                className="sub-login_item"
+                onClick={handleLogout}
+                style={{ borderBottom: 'none' }}
+              >
+                <LogoutSubLoginIcon />
 
-                <span>Đăng xuất</span>
+                <span>{languageRedux == 1 ? 'Đăng xuất' : 'Log out'}</span>
               </div>
 
               {/* <div className="sub-login_item" onClick={handleLogout}>
@@ -1079,7 +1200,11 @@ const Navbar: React.FC = () => {
               <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
                   <SyncOutlined />
-                  <span>Cập nhật thông tin</span>
+                  <span>
+                    {languageRedux == 1
+                      ? 'Cập nhật thông tin'
+                      : 'Update information'}
+                  </span>
                 </div>
               </Link>
               <Link to="/history" target="_parent">
@@ -1090,7 +1215,7 @@ const Navbar: React.FC = () => {
                   // }}
                 >
                   <ClockCircleOutlined />
-                  <span>Lịch sử</span>
+                  <span>{languageRedux == 1 ? 'Lịch sử' : 'History'}</span>
                 </div>
               </Link>
               {/* <div className="sub-login_item">
@@ -1099,7 +1224,7 @@ const Navbar: React.FC = () => {
               </div> */}
               <div className="sub-login_item" onClick={handleLogout}>
                 <LogoutOutlined />
-                <span>Đăng xuất</span>
+                <span>{languageRedux == 1 ? 'Đăng xuất' : 'Log out'}</span>
               </div>
             </div>
           </div>
@@ -1208,10 +1333,14 @@ const Navbar: React.FC = () => {
                 {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
               </Button>
               <div className="sub-icon_qr">
-                <h2>Tải Ứng dụng HiJob!</h2>
+                <h2>
+                  {languageRedux == 1
+                    ? 'Tải Ứng dụng HiJob!'
+                    : 'Download the HiJob App!'}
+                </h2>
                 <img
                   src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
-                  alt="Ảnh lỗi"
+                  alt={languageRedux == 1 ? 'Ảnh lỗi' : 'Error photo'}
                 />
                 <div className="sub-icon_apps">
                   <Link
@@ -1221,7 +1350,7 @@ const Navbar: React.FC = () => {
                     <img
                       id="img-gallery"
                       src={require('../../img/langdingPage/image 43.png')}
-                      alt="ảnh bị lỗi"
+                      alt={languageRedux == 1 ? 'Ảnh lỗi' : 'Error photo'}
                     />
                   </Link>
                   <Link
@@ -1230,7 +1359,7 @@ const Navbar: React.FC = () => {
                   >
                     <img
                       src={require('../../img/langdingPage/image 45.png')}
-                      alt="ảnh bị lỗi"
+                      alt={languageRedux == 1 ? 'Ảnh lỗi' : 'Error photo'}
                     />
                   </Link>
                 </div>
@@ -1389,13 +1518,13 @@ const Navbar: React.FC = () => {
 
           <div className="btn-filter_nav">
             <Button type="default" onClick={handleResetValue}>
-              Đặt Lại
+              {languageRedux == 1 ? 'Đặt Lại' : 'Reset'}
             </Button>
             <Button
               type="primary"
               onClick={(e) => handleSearch(e, valueSearchInput)}
             >
-              Áp dụng
+              {languageRedux == 1 ? 'Áp dụng' : 'Apply'}
             </Button>
           </div>
         </Collapse>

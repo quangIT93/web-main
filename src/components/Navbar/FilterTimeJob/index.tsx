@@ -14,6 +14,10 @@ import { getCookie } from 'cookies';
 import { CalendarFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
 import './style.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
 // import { AnyMxRecord } from 'dns';
 
 const { Text } = Typography;
@@ -43,6 +47,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   // const [inputValue, setInputValue] = useState('')
   // const [checkboxIsWeekend, setCheckboxIsWeekend] = useState(0);
   // const [checksetIsRemotely, setChecksetIsRemotely] = useState(0);
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [collapseOpen, setCollapseOpen] = useState(false);
   const collapseRef = useRef<any>(null);
   // const [searchParams, setSearchParams] = useSearchParams();
@@ -154,9 +159,8 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <CalendarFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterTimeJob input-filter_nav ${
-          isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
-        }`}
+        className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
+          }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -165,15 +169,21 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <Panel
           header={
             isRemotely || isWorkingWeekend
-              ? `${isWorkingWeekend ? 'Làm việc cuối tuần' : ''} 
+              ? `${isWorkingWeekend ?
+                languageRedux == 1 ? 'Làm việc cuối tuần' : 'Weekend work'
+                : ''} 
             ${isWorkingWeekend && isRemotely ? '-' : ''}
             
-            ${isRemotely ? 'Làm việc từ xa' : ''}`
-              : `Thời gian làm việc`
+            ${isRemotely ?
+                languageRedux == 1 ? 'Làm việc từ xa' : 'Working remotely'
+                : ''}`
+              : languageRedux == 1 ? `Thời gian làm việc` : `Working time`
           }
           key="1"
         >
-          <Text className="title-filter_timeJob">Thời gian làm việc</Text>
+          <Text className="title-filter_timeJob">
+            {languageRedux == 1 ? `Thời gian làm việc` : `Working time`}
+          </Text>
 
           {/* <Radio.Group
           value={selectedValue}
@@ -190,7 +200,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <FormControlLabel
-              label="Làm việc cuối tuần"
+              label={languageRedux == 1 ? 'Làm việc cuối tuần' : 'Weekend work'}
               control={
                 <Checkbox
                   checked={
@@ -201,7 +211,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
               }
             />
             <FormControlLabel
-              label="Làm việc từ xa"
+              label={languageRedux == 1 ? 'Làm việc từ xa' : 'Working remotely'}
               control={
                 <Checkbox
                   checked={reset ? false : isRemotely === 0 ? false : true}

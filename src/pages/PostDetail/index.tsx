@@ -442,8 +442,12 @@ const Detail: React.FC = () => {
         !userProfile.email
       ) {
         api.info({
-          message: `Cập nhật thông tin`,
-          description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
+          message:
+            languageRedux === 1 ? `Cập nhật thông tin` : `Update information`,
+          description:
+            languageRedux === 1
+              ? 'Vui lòng cập nhật thông tin để ứng tuyển công việc'
+              : 'Please update your information to apply for a job',
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
         });
@@ -838,7 +842,7 @@ const Detail: React.FC = () => {
               </div>
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
-                  <CalendarPostIcon />
+                  <WorkPostIcon />
                   <p>Ngày hết hạn</p>
                 </div>
                 <div

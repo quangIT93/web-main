@@ -1,4 +1,4 @@
-export const en = {
+export const homeEn = {
     "sign_in": "Sign in",
     "search": "Search",
     "newest_jobs": "Newest jobs",
@@ -44,8 +44,8 @@ export const en = {
     "this_job_has_been_saved": "This job has been saved",
     "view_saved_jobs": "View saved jobs",
     "check_now": "Check now",
-    "applied_on_02/23/2023,_15:32": "Applied on 02/23/2023, 15:32",
-    "x_candidates_have_applied": "x candidates have applied",
+    "applied_on": "Applied on",
+    "x_candidates_have_applied": "candidates have applied",
     "there_are_no_jobs_to_show_yet": "There are no jobs to show yet",
     "application_approved!": "Application approved!",
     "system_notification": "System Notification",
