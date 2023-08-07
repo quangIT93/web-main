@@ -103,7 +103,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         setSearchParams({ 'theme-id': `${newValue}` });
       }
 
-      const result = await postApi.getPostByThemeId(newValue, 19, null, "vi");
+      const result = await postApi.getPostByThemeId(newValue, 19, null, 'vi');
       if (result) {
         setPostByTheme(result);
         // set backdrop
@@ -126,7 +126,12 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       var result;
       if (themeId) {
         setOpenBackdrop(true);
-        result = await postApi.getPostByThemeId(Number(themeId), 19, null, "vi");
+        result = await postApi.getPostByThemeId(
+          Number(themeId),
+          19,
+          null,
+          'vi',
+        );
       }
 
       if (result) {
@@ -144,7 +149,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-  // console.log(index);
+  console.log('value', value);
 
   return (
     <Box
@@ -232,7 +237,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         className="mySwiper"
       >
         {listTheme?.data.map((item: ItemTheme, index: number) => {
-          // console.log("id: ", item.id);
           return (
             <SwiperSlide
               key={index}
@@ -253,7 +257,12 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                 handleChange(event, item.id);
               }}
               style={{
-                borderBottom: item.id === value ? '2px solid #0d99ff' : 'none',
+                borderBottom:
+                  item.id === value
+                    ? '2px solid #0d99ff'
+                    : index === 0 && value === 0
+                    ? '2px solid #0d99ff'
+                    : '',
               }}
             >
               <div className="slide-item">

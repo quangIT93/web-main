@@ -67,8 +67,10 @@
       gap: 8px;
 
       p {
+        cursor: pointer;
         width: 84px;
       }
+
     }
 
     .suggest-job-not-loging {
@@ -90,6 +92,7 @@
           font-style: normal;
           font-weight: 700;
           line-height: 30px;
+          margin-bottom: 8px;
           /* 125% */
         }
 

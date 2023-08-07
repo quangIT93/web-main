@@ -57,6 +57,18 @@ const style = {
   outline: 'none',
   boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.12)',
   p: 4,
+
+  '@media (max-width: 600px)': {
+    width: '400px',
+  },
+
+  '@media (max-width: 400px)': {
+    width: '360px',
+  },
+
+  '@media (max-width: 280px)': {
+    width: '280px',
+  },
 };
 
 interface LoginData {
@@ -200,7 +212,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
 
     // console.log('facebook', response)
   };
@@ -261,7 +273,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       );
 
       await dispatch(getProfile() as any);
-      const result = await profileApi.getProfile("vi");
+      const result = await profileApi.getProfile('vi');
       if (result) {
         setProfileUser(result.data);
       }
@@ -357,8 +369,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   >
                     <img
                       src="loginLogo/facebookOriginal.png"
-                      alt=""
-                      width={30}
+                      alt="Ảnh lỗi"
+                      width={29}
                       height={30}
                     />
                     <p className="text-login ">
@@ -389,7 +401,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-              // cookiePolicy={'single_host_origin'}
+                // cookiePolicy={'single_host_origin'}
               />
 
               <div className="line-with-text">
