@@ -130,6 +130,7 @@ const NewJobs: React.FC = () => {
       null,
       9,
       thersholdId,
+      "vi"
     );
 
     if (result) {
@@ -145,7 +146,7 @@ const NewJobs: React.FC = () => {
   const getPostNewest = async () => {
     try {
       setOpenBackdrop(true);
-      const result = await postApi.getPostNewest(null, null, null, 19);
+      const result = await postApi.getPostNewest(null, null, null, 19, null, "vi");
 
       if (result) {
         setPostNewest(result);
@@ -226,7 +227,7 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-            //  onClick={handleClose}
+          //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
