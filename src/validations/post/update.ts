@@ -1,4 +1,4 @@
-const updatePostValidation = (post) => {
+const updatePostValidation = (post: any) => {
   if (!post.title.trim()) {
     return {
       isError: true,
