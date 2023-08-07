@@ -842,7 +842,7 @@ const Detail: React.FC = () => {
               </div>
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
-                  <WorkPostIcon />
+                  <ClockPostIcon />
                   <p>Ngày hết hạn</p>
                 </div>
                 <div
