@@ -9,6 +9,7 @@ import profileUser from './profileReducer/profileReducer'
 import getProfileReducer from './profileReducer/getProfileReducer'
 import putProfileInfoPersonalReducer from './profileReducer/putProfileInfoPersonalReducer'
 import alertProfileReducer from './profileReducer/alertProfileReducer'
+import changeLanguageReducer from './changeLanguageReducer'
 
 import alertReducer from './alertReducer'
 
@@ -23,6 +24,7 @@ const reducers = combineReducers({
   profile: getProfileReducer,
   putProfileInfoPersonal: putProfileInfoPersonalReducer,
   alertProfile: alertProfileReducer,
+  changeLaguage: changeLanguageReducer,
 
   showAlert: alertReducer,
 
