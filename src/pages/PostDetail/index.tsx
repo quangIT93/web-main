@@ -836,6 +836,24 @@ const Detail: React.FC = () => {
                   )}
                 </div>
               </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <CalendarPostIcon />
+                  <p>Ngày hết hạn</p>
+                </div>
+                <div
+                  className="div-detail-row-titleItem"
+                  style={{ flexDirection: 'column', alignItems: 'flex-start' }}
+                >
+                  <h5>
+                    {post?.data.expiredDate
+                      ? `${moment(new Date(post?.data.expiredDate)).format(
+                          'HH:mm',
+                        )}`
+                      : `Không có thời gian hết hạn`}
+                  </h5>
+                </div>
+              </div>
             </div>
           </div>
           <div className="post-detail-btns">

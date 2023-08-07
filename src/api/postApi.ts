@@ -91,11 +91,11 @@ const postApi = {
     )
   },
   getPostRelated: (postId: number, lang: string) => {
-    const URL = `/v1/posts/related/${postId}&lang=${lang}`
+    const URL = `/v1/posts/related/${postId}?lang=${lang}`
     return axiosClient.get(URL)
   },
   getPostbyId: (params: number, lang: string) => {
-    const URL = `/v1/posts/${params}&lang=${lang}`
+    const URL = `/v1/posts/${params}?lang=${lang}`
     return axiosClient.get(URL)
   },
   updatePostedInfo: (updatePost: FormValues) => {
