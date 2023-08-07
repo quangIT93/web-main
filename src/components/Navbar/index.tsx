@@ -982,6 +982,7 @@ const Navbar: React.FC = () => {
               <div className="sub-translate_status">
                 <Radio.Group
                   name="radiogroup"
+                  value={languageRedux}
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}

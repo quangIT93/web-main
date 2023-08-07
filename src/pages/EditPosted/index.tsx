@@ -179,7 +179,7 @@ const EditPosted = () => {
 
   const getDataPosted = async () => {
     try {
-      const result = await postApi.getPostbyId(postId);
+      const result = await postApi.getPostbyId(postId, "vi");
       if (
         result &&
         dataPostAccount.find((item: any) => item.post_id === postId)

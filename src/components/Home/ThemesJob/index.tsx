@@ -113,6 +113,7 @@ const ThemesJob: React.FC = () => {
       Number(themeId),
       9,
       threshold,
+      "vi"
     );
 
     if (result) {
@@ -144,6 +145,7 @@ const ThemesJob: React.FC = () => {
           result.data[0].id,
           19,
           null,
+          "vi"
         );
         if (list) {
           setPostByTheme(list);
