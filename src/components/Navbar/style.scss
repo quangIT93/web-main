@@ -1076,10 +1076,10 @@
         background-color: transparent;
       }
 
-      &:hover>.login__hover__container {
-        display: block;
-        animation-name: animate-pop-out;
-      }
+      // &:hover>.login__hover__container {
+      //   display: block;
+      //   animation-name: animate-pop-out;
+      // }
 
       // &:not(:hover)>.login__hover__container {
       //   // display: block;
@@ -1116,13 +1116,14 @@
         position: absolute;
         top: 60px;
         right: 0;
-        display: none;
+        z-index: 10;
+        // display: none;
         // visibility: hidden;
-        animation-duration: 0.55s;
-        animation-delay: 0.3s;
-        animation-name: animate-pop-in;
-        animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
-        animation-fill-mode: backwards;
+        // animation-duration: 0.55s;
+        // animation-delay: 0.3s;
+        // animation-name: animate-pop-in;
+        // animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
+        // animation-fill-mode: backwards;
 
 
         .login__hover {
