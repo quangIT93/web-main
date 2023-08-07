@@ -1078,7 +1078,7 @@ const Navbar: React.FC = () => {
                 </div>
                 <div className='sub-translate_header_right'
                   style={{
-                    transform: openRadioGroup ? 'rotate(270deg);' : 'unset'
+                    transform: openRadioGroup ? 'rotate(-90deg)' : 'unset'
                   }}
                 >
                   <ArrowSubLoginIcon />
