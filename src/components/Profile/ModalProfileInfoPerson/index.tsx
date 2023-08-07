@@ -81,7 +81,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
 
   const getAllProvinces = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces();
+      const allLocation = await locationApi.getAllProvinces('vi');
 
       if (allLocation) {
         setDataProvinces(allLocation.data);

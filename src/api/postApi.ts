@@ -21,8 +21,8 @@ const postApi = {
       },
     })
   },
-  getPost: () => {
-    const URL = `v1/posts?l imit=10`
+  getPost: (lang: string) => {
+    const URL = `v1/posts?limit=10?lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -30,8 +30,8 @@ const postApi = {
     })
   },
 
-  getById: (params: number) => {
-    const URL = `v1/posts/${params}`
+  getById: (params: number, lang: string) => {
+    const URL = `v1/posts/${params}?lang=${lang}`
     return axiosClient.get(URL)
   },
 

@@ -81,7 +81,7 @@ const HotJob: React.FC = () => {
 
   const getHotJob = async () => {
     try {
-      const result = await hotJobApi.getHotJobTheme();
+      const result = await hotJobApi.getHotJobTheme('vi');
       if (result) {
         setHotJob(result.data);
       }

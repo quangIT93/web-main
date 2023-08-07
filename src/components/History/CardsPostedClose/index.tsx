@@ -68,6 +68,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
         newCount,
         10,
         '3',
+        'vi',
       );
 
       if (result) {
@@ -103,6 +104,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
         lastPostId,
         5,
         '3',
+        'vi',
       );
       if (result) {
         setUploading(false);

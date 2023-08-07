@@ -294,7 +294,7 @@ const NewJobs: React.FC = () => {
 
   const allLocation = async () => {
     try {
-      const allLocation = await locationApi.getAllLocation();
+      const allLocation = await locationApi.getAllLocation('vi');
 
       if (allLocation) {
         setDataAllLocation(allLocation.data);

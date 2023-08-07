@@ -118,7 +118,7 @@ const Notificate = () => {
   const getApiNotificate = async () => {
     try {
       setIsLoading(true);
-      const result = await notificationApi.getNotificationV2();
+      const result = await notificationApi.getNotificationV2('vi');
       if (result) {
         setIsLoading(false);
         setDataNotification(result.data);
@@ -134,7 +134,9 @@ const Notificate = () => {
   const getApiNotificateKeyword = async () => {
     try {
       // const result = await notificationKeywordApi.getNotificationKeyword();
-      const result = await notificationKeywordApi.getNotificationKeywordV3();
+      const result = await notificationKeywordApi.getNotificationKeywordV3(
+        'vi',
+      );
       console.log('keyword v3', result);
       if (result) {
         setDataNotificationkeyword(result.data);

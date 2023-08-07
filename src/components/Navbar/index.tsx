@@ -317,7 +317,7 @@ const Navbar: React.FC = () => {
   // get count unread
   const getCountUnread = async () => {
     try {
-      const result = await messageApi.getUnread();
+      const result = await messageApi.getUnread('vi');
       if (result) {
         setCountChat(result.data.quantity);
       }

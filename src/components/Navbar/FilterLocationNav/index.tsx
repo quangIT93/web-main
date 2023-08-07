@@ -103,7 +103,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
 
   const getAllLocaitions = async () => {
     try {
-      const result = await locationApi.getAllLocation();
+      const result = await locationApi.getAllLocation('vi');
       if (result) {
         setDataLocations(result.data);
       }

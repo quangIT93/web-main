@@ -79,7 +79,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleClose = () => setOpenModalLocation(false);
   const allLocation = async () => {
     try {
-      const allLocation = await locationApi.getAllLocation();
+      const allLocation = await locationApi.getAllLocation('vi');
 
       if (allLocation) {
         setDataAllLocation(allLocation.data);

@@ -103,6 +103,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
         detailPosted?.post_id,
         5,
         null,
+        'vi',
       );
 
       if (result) {

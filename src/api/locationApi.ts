@@ -1,18 +1,18 @@
 import axiosClient from './axiosClient'
 // api/productApi.js
 const locationApi = {
-  getAllLocation: () => {
-    const URL = `/v1/locations`
+  getAllLocation: (lang: string) => {
+    const URL = `/v1/locations?lang=${lang}`
     return axiosClient.get(URL)
   },
 
-  getAllProvinces: () => {
-    const URL = `/v1/locations/p`
+  getAllProvinces: (lang: string) => {
+    const URL = `/v1/locations/p?lang=${lang}`
     return axiosClient.get(URL)
   },
 
-  getDistrictsById: (idProvince: number) => {
-    const URL = `/v1/locations/d?pid=${idProvince}`
+  getDistrictsById: (idProvince: number, lang: string) => {
+    const URL = `/v1/locations/d?pid=${idProvince}&lang=${lang}`
     return axiosClient.get(URL)
   },
 

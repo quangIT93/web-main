@@ -1,8 +1,8 @@
 import axiosClient from './axiosClient'
 // api/productApi.js
 const hotJobApi = {
-  getHotJobTheme: () => {
-    const URL = `/v3/topics`
+  getHotJobTheme: (lang: string) => {
+    const URL = `/v3/topics?lang=${lang}`
     return axiosClient.get(URL)
   },
   getHotJobById: (url: any, page: number, limit: number, lang: string)=> {

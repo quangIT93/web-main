@@ -164,7 +164,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     // console.log('itemPost', itemPost);
 
     try {
-      const result = await postApi.getById(itemPost.post_id);
+      const result = await postApi.getById(itemPost.post_id, 'vi');
       // console.log('reuslt', result.data);
       if (result) {
         setTypeJob(result.data.job_type.job_type_id);

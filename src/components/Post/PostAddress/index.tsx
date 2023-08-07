@@ -59,7 +59,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   // get All locations by location id
   const getAllProvinces = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces();
+      const allLocation = await locationApi.getAllProvinces('vi');
 
       if (allLocation) {
         setDataProvinces(allLocation.data);
@@ -77,6 +77,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       if (selectedProvince) {
         const districts = await locationApi.getDistrictsById(
           selectedProvince.id,
+          'vi',
         );
         if (districts) {
           setDataDistrict(districts.data);

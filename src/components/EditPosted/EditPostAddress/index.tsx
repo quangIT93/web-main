@@ -66,7 +66,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
 
   const getAllProvinces = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces();
+      const allLocation = await locationApi.getAllProvinces('vi');
 
       if (allLocation) {
         setDataProvinces(allLocation.data);
@@ -82,6 +82,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
       if (dataPostById && dataDistricts === null) {
         const districts = await locationApi.getDistrictsById(
           dataPostById?.province_id,
+          'vi',
         );
 
         if (districts) {
@@ -91,6 +92,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedProvince) {
           const districts = await locationApi.getDistrictsById(
             selectedProvince?.id,
+            'vi',
           );
           if (districts) {
             setDataDistrict(districts.data);

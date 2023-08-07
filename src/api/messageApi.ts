@@ -1,8 +1,8 @@
 import axiosClient from './axiosClient'
 
 const messageApi = {
-  getChatMessage: (uid: string, pid: number) => {
-    const URL = `/v1/chats/messages?uid=${uid}&pid=${pid}`
+  getChatMessage: (uid: string, pid: number, lang: string) => {
+    const URL = `/v1/chats/messages?uid=${uid}&pid=${pid}&lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -10,8 +10,8 @@ const messageApi = {
     })
   },
 
-  getUserChated: () => {
-    const URL = `/v1/chats/users`
+  getUserChated: (lang: string) => {
+    const URL = `/v1/chats/users?lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -19,8 +19,8 @@ const messageApi = {
     })
   },
 
-  getUnread: () => {
-    const URL = `/v1/chats/unread`
+  getUnread: (lang: string) => {
+    const URL = `/v1/chats/unread?lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

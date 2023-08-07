@@ -108,7 +108,7 @@ const CandidateDetail: React.FC = () => {
     try {
       const postId = parseInt(searchParams.get('post-id') ?? '');
       const candidateId = searchParams.get('application_id') ?? '';
-      const result = await postApi.getById(postId);
+      const result = await postApi.getById(postId, 'vi');
 
       if (result) {
         setDataPost(result.data);
@@ -116,6 +116,7 @@ const CandidateDetail: React.FC = () => {
       const detailCandidate = await historyRecruiter.GetAJobApplication(
         postId,
         candidateId,
+        'vi',
       );
 
       if (detailCandidate) {

@@ -40,7 +40,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   const getAllUserChat = async () => {
     try {
-      const result = await messageApi.getUserChated();
+      const result = await messageApi.getUserChated('vi');
 
       if (result) {
         setStateUserChat(result.data);
@@ -68,6 +68,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           await historyRecruiter.GetAJobApplication(
             Number(searchParams.get('post_id')),
             searchParams.get('application_id') ?? '',
+            'vi',
           );
 
         if (resultHistoryRecruiter) {
@@ -98,7 +99,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           }
         }
       } else {
-        const resultGetUserChated = await messageApi.getUserChated();
+        const resultGetUserChated = await messageApi.getUserChated('vi');
         console.log('result.data', resultGetUserChated.data);
 
         if (resultGetUserChated.data) {

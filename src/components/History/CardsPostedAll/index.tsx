@@ -72,6 +72,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
         postID,
         10,
         '-1',
+        'vi',
       );
 
       if (result) {
@@ -109,6 +110,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
         lastPostId,
         5,
         '-1',
+        'vi',
       );
       if (result) {
         setUploading(false);

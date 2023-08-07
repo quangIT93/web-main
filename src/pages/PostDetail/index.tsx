@@ -322,7 +322,7 @@ const Detail: React.FC = () => {
   const getAnotherPost = async (postID: number, position: number) => {
     try {
       // setIsLoading(true);
-      const result = await postApi.getById(postID);
+      const result = await postApi.getById(postID, 'vi');
       if (result) {
         // setIsLoading(false);
         position === 0 ? setPostPrev(result.data) : setPostNext(result.data);

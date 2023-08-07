@@ -92,6 +92,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         userInfoChat.user_id,
         // 36353,
         Number(searchParams.get('post_id')),
+        'vi',
       );
       if (result) {
         // setTimeout(() => {
