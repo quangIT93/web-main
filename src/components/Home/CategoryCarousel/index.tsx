@@ -18,7 +18,7 @@ import categoriesApi from '../../../api/categoriesApi';
 import { useSearchParams } from 'react-router-dom';
 
 // import redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 // import { RootState } from '../../../store/reducer';
@@ -43,6 +43,9 @@ import { Skeleton } from 'antd';
 
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
+import { RootState } from '../../../store/reducer';
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
 
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
@@ -80,6 +83,7 @@ const CategoryCarousel: React.FC = () => {
       openCollapseFilter: boolean;
     } = useContext(HomeValueContext);
 
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [value, setValue] = React.useState(0);
   const [categoryIdCookie, setCategorieIdCookie] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
@@ -172,9 +176,13 @@ const CategoryCarousel: React.FC = () => {
       }
       var result;
       if (newValue === 1) {
-        result = await postApi.getPostNewest(null, null, null, 19, null, "vi");
+        result = await postApi.getPostNewest(null, null, null, 19, null,
+          languageRedux == 1 ? "vi" : "en"
+        );
       } else {
-        result = await postApi.getPostNewest(Number(newValue), null, null, 19, null, "vi")
+        result = await postApi.getPostNewest(Number(newValue), null, null, 19, null,
+          languageRedux == 1 ? "vi" : "en"
+        )
       }
 
       if (result) {
@@ -190,7 +198,9 @@ const CategoryCarousel: React.FC = () => {
   const getAllParentCategories = async () => {
     try {
       setLoading(true);
-      const result = await categoriesApi.getAllParentCategories("vi");
+      const result = await categoriesApi.getAllParentCategories(
+        languageRedux == 1 ? "vi" : "en"
+      );
       if (result) {
         setTimeout(() => {
           setLoading(false);
@@ -224,9 +234,13 @@ const CategoryCarousel: React.FC = () => {
       const themeId = searchParams.get('categories-id');
       var result;
       if (themeId === 'all') {
-        result = await postApi.getPostNewest(null, null, null, 19, null, "vi");
+        result = await postApi.getPostNewest(null, null, null, 19, null,
+          languageRedux == 1 ? "vi" : "en"
+        );
       } else {
-        result = await postApi.getPostNewest(Number(themeId), null, null, 19, null, "vi");
+        result = await postApi.getPostNewest(Number(themeId), null, null, 19, null,
+          languageRedux == 1 ? "vi" : "en"
+        );
       }
       if (result) {
         setPostNewest(result);
@@ -243,9 +257,13 @@ const CategoryCarousel: React.FC = () => {
       const themeId = userSelectedId;
       var result;
       if (themeId === 1) {
-        result = await postApi.getPostNewest(null, null, null, 19, null, "vi");
+        result = await postApi.getPostNewest(null, null, null, 19, null,
+          languageRedux == 1 ? "vi" : "en"
+        );
       } else {
-        result = await postApi.getPostNewest(Number(themeId), null, null, 19, null, "vi");
+        result = await postApi.getPostNewest(Number(themeId), null, null, 19, null,
+          languageRedux == 1 ? "vi" : "en"
+        );
       }
       if (result) {
         setPostNewest(result);
@@ -278,7 +296,7 @@ const CategoryCarousel: React.FC = () => {
       getNewstJobBycookie(storedSettings.userSelectedId);
     }, 5000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   React.useEffect(() => {
     // Retrieve the user's settings from cookies
@@ -483,7 +501,11 @@ const CategoryCarousel: React.FC = () => {
                         color: '#000000',
                       }}
                     >
-                      {isLogin && item.id === 1 ? 'Công việc gợi ý' : item.name}
+                      {isLogin && item.id === 1 ?
+                        languageRedux == 1 ?
+                          'Công việc gợi ý' :
+                          'Suggested work' :
+                        item.name}
                     </span>
                   </div>
                   <div

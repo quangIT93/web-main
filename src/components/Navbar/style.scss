@@ -921,8 +921,17 @@
       width: 380px;
       z-index: 10;
 
+      .ant-space-item {
+        width: 100%;
+      }
+
       .sub-login_info {
-        margin-left: -10px;
+        // margin-left: -10px;
+
+        .sub-login_info__top {
+          display: flex;
+          gap: 8px;
+        }
 
         .sub-login_detail {
           display: flex;
@@ -933,6 +942,7 @@
             align-items: flex-start;
             width: 220px;
             margin-top: 8px;
+            gap: 4px;
 
             p {
               overflow: hidden;
@@ -952,7 +962,41 @@
 
             svg {
               min-width: 16px;
-              margin-right: 4px;
+              // margin-right: 4px;
+            }
+          }
+        }
+
+        .sub-login_detail__bottom {
+          display: flex;
+          flex-direction: column;
+
+          .sub-login_text__bottom {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            margin-top: 8px;
+            gap: 12px;
+
+            p {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              // white-space: ;
+              display: -webkit-box;
+              /* Dùng -webkit-box để sử dụng thuộc tính clamp */
+              -webkit-line-clamp: 2;
+              /* Giới hạn văn bản xuống 2 dòng */
+              -webkit-box-orient: vertical;
+              /* Sắp xếp nội dung dọc */
+              overflow: hidden;
+              /* Ẩn văn bản bị tràn */
+              color: #1b87f5;
+              cursor: pointer;
+            }
+
+            svg {
+              min-width: 16px;
+              // margin-right: 4px;
             }
           }
         }
@@ -960,41 +1004,62 @@
       }
 
       .sub-login_items {
-        margin-top: 24px;
+        margin-top: 12px;
 
         .sub-login_item__translate {
-          background-color: #AAAAAA;
-          border-radius: 10px;
-          font-weight: bold;
-          color: $white;
-          padding: 16px;
+          // background-color: #AAAAAA;
+          // border-radius: 10px;
+          // font-weight: bold;
+          // color: #ffffff;
+          padding: 16px 0;
           display: flex;
+          justify-content: space-between;
           align-items: center;
+          cursor: pointer;
+
+          &:hover {
+            font-weight: bold;
+            color: #1b87f5;
+          }
+
+          .sub-translate_header_left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
 
           span,
           svg {
-            margin-left: 8px;
+            // margin-left: 8px;
           }
         }
 
         .sub-translate_status {
+
           .sub-login-radio-group {
+            transition: all 0.3 ease-in-out;
             width: 100%;
-            padding: 8px 24px;
+            padding: 0 24px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border-bottom: 1px solid rgba(170, 170, 170, 1);
           }
         }
 
         .sub-login_item {
           cursor: pointer;
-          padding: 16px;
+          padding: 16px 0;
           color: $text-color;
+          border-bottom: 1px solid rgba(170, 170, 170, 1);
 
           &:hover {
-            background-color: #AAAAAA;
-            border-radius: 10px;
+            // background-color: #AAAAAA;
+            // border-radius: 10px;
             font-weight: bold;
             transition: 0.3s linear all;
-            color: $white
+            // color: $white
+            color: #1b87f5
           }
 
           display: flex;
@@ -1007,9 +1072,12 @@
         }
 
         .sub-history_status {
-          padding: 8px 0 8px 24px;
+          padding: 0 0 12px 24px;
           display: flex;
-          align-items: center;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+          border-bottom: 1px solid rgba(170, 170, 170, 1);
 
           :nth-child(1) {
             color: #34A853;
@@ -1024,10 +1092,10 @@
           }
 
 
-          :nth-child(4),
-          :nth-child(2) {
-            margin: 0 12px;
-          }
+          // :nth-child(4),
+          // :nth-child(2) {
+          //   margin: 0 12px;
+          // }
         }
       }
     }
@@ -1280,7 +1348,7 @@
       position: absolute;
       transform: translate(-50%, -50%);
       left: 14.5px;
-      animation-delay: 2s; 
+      animation-delay: 2s;
     }
   }
 
@@ -1304,14 +1372,16 @@
 
 
   @keyframes jumpAndStop {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateY(0);
     }
-  
+
     25% {
       transform: translateY(5px);
     }
-  
+
     75% {
       transform: translateY(10px);
     }

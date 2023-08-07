@@ -51,6 +51,8 @@ import { Space } from 'antd';
 //import jobcard
 import JobCard from '../JobCard';
 import { Skeleton } from 'antd';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
 
 interface PostTheme {
   id: number;
@@ -77,6 +79,7 @@ interface PostTheme {
 }
 
 const ThemesJob: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [page, setPage] = React.useState(1);
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
   const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
@@ -113,7 +116,7 @@ const ThemesJob: React.FC = () => {
       Number(themeId),
       9,
       threshold,
-      "vi"
+      languageRedux == 1 ? "vi" : "en"
     );
 
     if (result) {
@@ -136,7 +139,9 @@ const ThemesJob: React.FC = () => {
   // get post by theme id
   const getPostByThemeId = async () => {
     try {
-      const result = await themeApi.getThemesEnable("vi");
+      const result = await themeApi.getThemesEnable(
+        languageRedux == 1 ? "vi" : "en"
+      );
 
       if (result) {
         setListThem(result);
@@ -145,7 +150,7 @@ const ThemesJob: React.FC = () => {
           result.data[0].id,
           19,
           null,
-          "vi"
+          languageRedux == 1 ? "vi" : "en"
         );
         if (list) {
           setPostByTheme(list);
@@ -173,7 +178,7 @@ const ThemesJob: React.FC = () => {
       }
     }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   // React.useEffect(() => {
   //   console.log("vap")
@@ -188,15 +193,30 @@ const ThemesJob: React.FC = () => {
     <Box sx={{ flexGrow: 1 }}>
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <TopicJobIcon width={25} height={25} />
-        <h2>Công việc theo chủ đề</h2>
+        <h2>
+          {
+            languageRedux == 1 ?
+              home.jobs_by_theme :
+              homeEn.jobs_by_theme
+          }
+        </h2>
       </div>
 
       {!localStorage.getItem('accessToken') ? (
         <div className="title-location-job">
-          <h3>Vị trí công việc lý tưởng</h3>
+          <h3>
+            {
+              languageRedux == 1 ?
+                'Vị trí công việc lý tưởng' :
+                'Ideal job location'
+            }
+          </h3>
           <p>
-            Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của
-            bạn.
+            {
+              languageRedux == 1 ?
+                "Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn." :
+                "Search for jobs in famous locations in your city."
+            }
           </p>
         </div>
       ) : (
@@ -241,7 +261,13 @@ const ThemesJob: React.FC = () => {
                     handleChange(e, page);
                   }}
                 >
-                  <p>Xem thêm</p>
+                  <p>
+                    {
+                      languageRedux == 1 ?
+                        home.more :
+                        homeEn.more
+                    }
+                  </p>
                   <MoreICon width={20} height={20} />
                 </Space>
               </Stack>

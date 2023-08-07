@@ -99,33 +99,35 @@ import ShowCopy from '#components/ShowCopy';
 //@ts-ignore
 import AnotherPost from './components/AnotherPost';
 
-const itemsShare = [
-  {
-    nameShare: 'Sao chép liên kết',
-    icon: <CopyIcon />,
-    source: '',
-  },
-  {
-    nameShare: 'Mail',
-    icon: <MailIcon />,
-    source: '',
-  },
-  {
-    nameShare: 'Facebook',
-    icon: <FacebookIcon />,
-    source: '',
-  },
-  // {
-  //   nameShare: 'Messenger',
-  //   icon: <MessagerIcon />,
-  //   source: '',
-  // },
-  // {
-  //   nameShare: 'Zalo',
-  //   icon: <ZaloIcon />,
-  //   source: '',
-  // },
-];
+import { homeEn } from "../../validations/lang/en/home";
+
+// const itemsShare = [
+//   {
+//     nameShare: 'Sao chép liên kết',
+//     icon: <CopyIcon />,
+//     source: '',
+//   },
+//   {
+//     nameShare: 'Mail',
+//     icon: <MailIcon />,
+//     source: '',
+//   },
+//   {
+//     nameShare: 'Facebook',
+//     icon: <FacebookIcon />,
+//     source: '',
+//   },
+//   // {
+//   //   nameShare: 'Messenger',
+//   //   icon: <MessagerIcon />,
+//   //   source: '',
+//   // },
+//   // {
+//   //   nameShare: 'Zalo',
+//   //   icon: <ZaloIcon />,
+//   //   source: '',
+//   // },
+// ];
 // interface ItemCategories {
 //   child_category_id?: Number;
 //   parent_category?: string;
@@ -165,6 +167,7 @@ const Detail: React.FC = () => {
   // test redux
   // const userProfile = useSelector((state: RootState) => state.profileUser);
   const userProfile = useSelector((state: RootState) => state.profile.profile);
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   // const dispatch = useDispatch()
   // const { setPostByTheme, setProvince } = bindActionCreators(
   //   actionCreators,
@@ -186,7 +189,7 @@ const Detail: React.FC = () => {
     null,
   );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-  const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển');
+  const [textButton, setTextButton] = React.useState<string>(languageRedux == 1 ? 'Ứng Tuyển' : "Apply");
   const [key, setKeyTab] = React.useState<string>('1');
   const [backgroundButton, setBackgroundButton] =
     React.useState<string>('#0D99FF');
@@ -201,8 +204,35 @@ const Detail: React.FC = () => {
 
   // const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const POST_ID = Number(searchParams.get('post-id'));
+
+  const itemsShare = [
+    {
+      nameShare: languageRedux == 1 ? 'Sao chép liên kết' : 'Copy link',
+      icon: <CopyIcon />,
+      source: '',
+    },
+    {
+      nameShare: 'Mail',
+      icon: <MailIcon />,
+      source: '',
+    },
+    {
+      nameShare: 'Facebook',
+      icon: <FacebookIcon />,
+      source: '',
+    },
+    // {
+    //   nameShare: 'Messenger',
+    //   icon: <MessagerIcon />,
+    //   source: '',
+    // },
+    // {
+    //   nameShare: 'Zalo',
+    //   icon: <ZaloIcon />,
+    //   source: '',
+    // },
+  ];
   // const openNotification = () => {
   //   api.info({
   //     message: (
@@ -278,20 +308,20 @@ const Detail: React.FC = () => {
         console.log('data', result.data);
 
         if (result.data.accountId === accountId) {
-          setTextButton('Chỉnh sửa bài tuyển dụng');
+          setTextButton(languageRedux == 1 ? 'Chỉnh sửa bài tuyển dụng' : 'Edit post');
           setBackgroundButton('black');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
-          setTextButton('Bài đăng đã đóng');
+          setTextButton(languageRedux == 1 ? 'Bài đăng đã đóng' : 'Post closed');
           setBackgroundButton('gray');
           // setBackgroundButton('#0D99FF');
           result.data.applied = true;
         } else if (result.data.applied) {
-          setTextButton('Đã ứng tuyển');
+          setTextButton(languageRedux == 1 ? 'Đã ứng tuyển' : 'Applied');
           // setBackgroundButton('gray');
           setBackgroundButton('#0D99FF');
         } else {
-          setTextButton('Ứng tuyển');
+          setTextButton(languageRedux == 1 ? 'Ứng tuyển' : 'Apply');
           setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
         }
@@ -402,9 +432,11 @@ const Detail: React.FC = () => {
         (checkApply && post?.data?.companyResourceData?.name === 'HIJOB')
       ) {
         api.info({
-          message: `Bạn đã ứng tuyển công việc này!`,
+          message: languageRedux == 1 ? `Bạn đã ứng tuyển công việc này!` : `You have applied for this job!`,
           description:
-            'Nhà tuyển dụng sẽ liên hệ bạn sớm nếu hồ sơ đạt yêu cầu.',
+            languageRedux == 1 ?
+              'Nhà tuyển dụng sẽ liên hệ bạn sớm nếu hồ sơ đạt yêu cầu.' :
+              'Employers will contact you soon if your profile meets the requirements.',
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'blue' }} />,
         });
@@ -437,8 +469,10 @@ const Detail: React.FC = () => {
         !userProfile.email
       ) {
         api.info({
-          message: `Cập nhật thông tin`,
-          description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
+          message: languageRedux == 1 ? `Cập nhật thông tin` : `Update information`,
+          description: languageRedux == 1 ?
+            'Vui lòng cập nhật thông tin để ứng tuyển công việc' :
+            'Please update your information to apply for a job',
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
         });
@@ -559,7 +593,7 @@ const Detail: React.FC = () => {
           : post?.data.companyResourceData.postUrl,
       )}`;
     }
-    if (nameShare === 'Sao chép liên kết') {
+    if (nameShare === 'Sao chép liên kết' || nameShare === 'Copy link') {
       copy(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
@@ -581,7 +615,10 @@ const Detail: React.FC = () => {
 
   useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = 'HiJob - Chi tiết bài tuyển dụng';
+    document.title = languageRedux == 1 ?
+      'HiJob - Chi tiết bài tuyển dụng' :
+      'HiJob - Details of recruitment post'
+      ;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_post_detail' as string,
@@ -624,21 +661,21 @@ const Detail: React.FC = () => {
       // console.log('result ung tiyen', result);
       if (post?.data?.applied) {
         // openNotification();
-        setTextButton('Đã ứng tuyển');
+        setTextButton(languageRedux == 1 ? 'Đã ứng tuyển' : 'Applied');
         // setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
       } else {
         // openNotification();
-        setTextButton('Đã ứng tuyển');
+        setTextButton(languageRedux == 1 ? 'Đã ứng tuyển' : 'Applied');
         // setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
       }
     } catch (error) {
-      setTextButton('Đã ứng tuyển');
+      setTextButton(languageRedux == 1 ? 'Đã ứng tuyển' : 'Applied');
       // setBackgroundButton('gray');
       setCheckApply(true);
       // window.open(post?.data.resource.url, '_blank');
@@ -657,8 +694,10 @@ const Detail: React.FC = () => {
       !userProfile.email
     ) {
       api.info({
-        message: `Cập nhật thông tin`,
-        description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
+        message: languageRedux == 1 ? `Cập nhật thông tin` : `Update information`,
+        description: languageRedux == 1 ?
+          'Vui lòng cập nhật thông tin để ứng tuyển công việc' :
+          'Please update your information to apply for a job',
         placement: 'top',
         icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
       });
@@ -674,7 +713,7 @@ const Detail: React.FC = () => {
         (result.code as number) === (201 as any)
       ) {
         // openNotification();
-        setTextButton('Đã ứng tuyển');
+        setTextButton(languageRedux == 1 ? 'Đã ứng tuyển' : 'Applied');
         // setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
@@ -704,7 +743,7 @@ const Detail: React.FC = () => {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: `Thông tin việc làm`,
+      label: languageRedux == 1 ? `Thông tin việc làm` : `Job Information`,
       children: (
         <>
           <div className="job-title-container">
@@ -722,7 +761,7 @@ const Detail: React.FC = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <JobTypePostIcon />
-                  <p>Loại công viêc</p>
+                  <p>{languageRedux == 1 ? 'Loại công việc' : 'Type of work'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>{post?.data.postJobType.fullName}</h5>
@@ -731,7 +770,7 @@ const Detail: React.FC = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <ClockPostIcon />
-                  <p>Giờ làm việc</p>
+                  <p>{languageRedux == 1 ? 'Giờ làm việc' : 'Work time'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -751,7 +790,7 @@ const Detail: React.FC = () => {
               >
                 <div className="div-detail-row-titleItem">
                   <CalendarPostIcon />
-                  <p>Thời gian làm việc</p>
+                  <p>{languageRedux == 1 ? 'Thời gian làm việc' : 'Working time'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -766,33 +805,33 @@ const Detail: React.FC = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <CalendarPostIcon />
-                  <p>Làm việc cuối tuần</p>
+                  <p>{languageRedux == 1 ? 'Làm việc cuối tuần' : 'Weekend work'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
                     {post?.data.isWorkingWeekend === 0
-                      ? 'Không làm việc cuối tuần'
-                      : 'Có làm việc cuối tuần'}
+                      ? languageRedux == 1 ? 'Không làm việc cuối tuần' : 'No weekend work'
+                      : languageRedux == 1 ? 'Có làm việc cuối tuần' : 'Weekend work'}
                   </h5>
                 </div>
               </div>
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <MonitorPostIcon />
-                  <p>Làm việc từ xa</p>
+                  <p>{languageRedux == 1 ? 'Làm việc từ xa' : 'Working remotely'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
                     {post?.data.isRemotely === 0
-                      ? 'Không làm việc từ xa'
-                      : 'Có làm việc từ xa'}
+                      ? languageRedux == 1 ? 'Không làm việc từ xa' : 'Not working remotely'
+                      : languageRedux == 1 ? 'Có làm việc từ xa' : 'Working remotely'}
                   </h5>
                 </div>
               </div>
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <DollarPostIcon />
-                  <p>Mức lương</p>
+                  <p>{languageRedux == 1 ? 'Mức lương' : 'Salary'}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   {post?.data.postSalaryType.id === 6 ? (
@@ -813,7 +852,7 @@ const Detail: React.FC = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <WorkPostIcon />
-                  <p>Danh mục</p>
+                  <p>{languageRedux == 1 ? 'Danh mục' : 'Category'}</p>
                 </div>
                 <div
                   className="div-detail-row-titleItem"
@@ -880,7 +919,7 @@ const Detail: React.FC = () => {
     },
     post?.data?.postCompanyInformation && {
       key: '2',
-      label: `Thông tin công ty`,
+      label: languageRedux == 1 ? `Thông tin công ty` : `Company information`,
       style: {
         display:
           post?.data?.postCompanyInformation && key === '2' ? 'flex' : 'none',
@@ -925,34 +964,34 @@ const Detail: React.FC = () => {
                 </div>
               </div>
               <div className="div-detail-rowCompany">
-                <h3 style={{ display: 'block' }}>Mô tả</h3>
+                <h3 style={{ display: 'block' }}>{languageRedux == 1 ? 'Mô tả' : 'Describe'}</h3>
                 <div className="div-detail_descCompany">
                   <p>
                     {post?.data.postCompanyInformation
                       ? post?.data.postCompanyInformation?.description
-                      : 'Chưa cập nhật'}
+                      : languageRedux == 1 ? 'Chưa cập nhật' : 'Not update'}
                   </p>
                 </div>
               </div>
               <div className="div-detail-rowCompany">
-                <h3>Thông tin cơ bản </h3>
+                <h3>{languageRedux == 1 ? 'Thông tin cơ bản' : 'Basic information'} </h3>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <TaxCodeDetailPostIcon />
-                    <p>Mã số thuế</p>
+                    <p>{languageRedux == 1 ? 'Mã số thuế' : 'Tax code'}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.taxCode
-                        : 'Chưa cập nhật'}
+                        : languageRedux == 1 ? 'Chưa cập nhật' : 'Not update'}
                     </h5>
                   </div>
                 </div>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <LocationDetailPostIcon />
-                    <p>Địa chỉ</p>
+                    <p>{languageRedux == 1 ? 'Địa chỉ' : 'Address'}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
@@ -960,7 +999,7 @@ const Detail: React.FC = () => {
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
                         `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
                         `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
-                        : 'Chưa cập nhật'}
+                        : languageRedux == 1 ? 'Chưa cập nhật' : 'Not update'}
                     </h5>
                   </div>
                 </div>
@@ -973,20 +1012,20 @@ const Detail: React.FC = () => {
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.email
-                        : 'Chưa cập nhật'}
+                        : languageRedux == 1 ? 'Chưa cập nhật' : 'Not update'}
                     </h5>
                   </div>
                 </div>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <PhoneDetailPostIcon />
-                    <p>Điện thoại</p>
+                    <p>{languageRedux == 1 ? 'Điện thoại' : 'Phone number'}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.phone
-                        : 'Chưa cập nhật'}
+                        : languageRedux == 1 ? 'Chưa cập nhật' : 'Not update'}
                     </h5>
                   </div>
                 </div>
@@ -999,7 +1038,7 @@ const Detail: React.FC = () => {
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.website
-                        : 'Chưa cập nhật'}
+                        : languageRedux == 1 ? 'Chưa cập nhật' : 'Not update'}
                     </h5>
                   </div>
                 </div>
@@ -1062,7 +1101,7 @@ const Detail: React.FC = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      Xem tất cả
+                      {languageRedux == 1 ? 'Xem tất cả' : 'See all'}
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
@@ -1081,7 +1120,7 @@ const Detail: React.FC = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      Xem trên bản đồ
+                      {languageRedux == 1 ? 'Xem trên bản đồ' : 'See on map'}
                     </h3>
                   </div>
                 </div>
@@ -1116,7 +1155,7 @@ const Detail: React.FC = () => {
                             send
                           </Link>
                         </div> */}
-                      <h3>Chia sẻ</h3>
+                      <h3>{languageRedux == 1 ? 'Chia sẻ' : 'Share'}</h3>
                     </div>
                     <div className="actions-item" onClick={handleClickSave}>
                       {bookmarked ? (
@@ -1125,7 +1164,7 @@ const Detail: React.FC = () => {
                       ) : (
                         <SaveIconOutline width={24} height={24} />
                       )}
-                      <h3>Lưu</h3>
+                      <h3>{languageRedux == 1 ? 'Lưu' : homeEn.save}</h3>
                     </div>
                   </div>
                 </div>
@@ -1257,7 +1296,7 @@ const Detail: React.FC = () => {
               <div className="description-container">
                 <div className="div-description-mo">
                   <div className="description">
-                    <h3>Mô tả công việc</h3>
+                    <h3>{languageRedux == 1 ? 'Mô tả công việc' : 'Job description'}</h3>
                     <div
                       style={{
                         whiteSpace: 'pre-line',
@@ -1329,7 +1368,7 @@ const Detail: React.FC = () => {
                   </Button> */}
                 </div>
                 <div className="div-suggest">
-                  <h3>Việc làm tương tự </h3>
+                  <h3>{languageRedux == 1 ? 'Việc làm tương tự' : 'Similar jobs'} </h3>
                   <div className="item">
                     {postNewest?.data?.posts.map(
                       (item: PostNewest, index: null | number) => (
@@ -1358,7 +1397,7 @@ const Detail: React.FC = () => {
                 component="h2"
                 style={{ position: 'relative' }}
               >
-                Chia sẻ công việc này
+                {languageRedux == 1 ? 'Chia sẻ công việc này' : 'Share this job'}
                 <IconButton
                   aria-label="close"
                   onClick={handleCloseModalShare}

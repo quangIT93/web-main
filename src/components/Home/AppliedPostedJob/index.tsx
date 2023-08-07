@@ -5,6 +5,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Skeleton } from 'antd';
 // import { AxiosResponse } from 'axios';
 // import api
 import applitedPostedApi from 'api/apiAppliedPosted';
@@ -41,6 +42,10 @@ import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
 import './styles.scss';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
 
 // interface ItemTheme {
 //   id: number;
@@ -50,9 +55,10 @@ import ModalLogin from '../../../components/Home/ModalLogin';
 // }
 
 const AppliedPostedJob: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
-  // const [loading, setloading] = React.useState(false);
+  const [loading, setloading] = React.useState(false);
   // const [index, setIndex] = React.useState(0);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
@@ -88,12 +94,14 @@ const AppliedPostedJob: React.FC = () => {
 
   const getAppliedPostedJobs = async () => {
     try {
-      // setloading(true);
-      const result = await applitedPostedApi.getAllApplitedPostedApi(0, 'vi');
+      setloading(true);
+      const result = await applitedPostedApi.getAllApplitedPostedApi(0,
+        languageRedux == 1 ? 'vi' : 'en'
+      );
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
         setTimeout(() => {
-          // setloading(false);
+          setloading(false);
         }, 1000);
         setAppliedPostedJob(result.data);
       }
@@ -106,7 +114,7 @@ const AppliedPostedJob: React.FC = () => {
     getAppliedPostedJobs();
     localStorage.getItem('accessToken') && setIslogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   // const getPostNewestByThemeId = async () => {
   //     try {
@@ -145,60 +153,73 @@ const AppliedPostedJob: React.FC = () => {
       }}
       className="applied-posted-jobs-container"
     >
-      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
-        <AppliedPostedIcon width={30} height={30} />
-        <h2>Công việc đã Ứng tuyển/ Đăng tuyển</h2>
-      </div>
-
-      <div
-        className="applied-posted-job-not-loging"
-        style={{ display: !isLogined ? 'flex' : 'none' }}
-      >
-        <div className="applied-posted-job-not-loging_left">
-          <p> Đăng nhập để đăng ký việc làm miễn phí.</p>
+      <Skeleton loading={loading} active>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
+          <AppliedPostedIcon width={30} height={30} />
+          <h2>
+            {
+              languageRedux == 1 ?
+                'Công việc đã Ứng tuyển/ Đăng tuyển' :
+                'Applied / Posted Job'
+            }
+          </h2>
         </div>
-        <div className="applied-posted-job-not-loging_right">
-          <Button
-            type="primary"
-            onClick={() => {
-              setOpenModalLogin(true);
-            }}
-          >
-            <LoginArrowIcon />
-            Đăng nhập ngay
-          </Button>
-        </div>
-      </div>
 
-      <Swiper
-        navigation={true}
-        // mousewheel={true}
-        slidesPerView="auto"
-        spaceBetween={24}
-        modules={[Mousewheel, Navigation, Pagination]}
-        className="applied-posted-jobs_swiper"
-        style={{
-          display: isLogined && appliedPostedJob.length > 0 ? 'flex' : 'none',
-        }}
-      >
-        {appliedPostedJob?.map((item: any, index: number) => (
-          <SwiperSlide
-            key={index}
-            onClick={(event) => {
-              handleClickItem(
-                event,
-                item.id,
-                item.type,
-                item.count,
-                item.api,
-                item.query,
-              );
-            }}
-          >
-            <AppliedPostedJobCard item={item} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <div
+          className="applied-posted-job-not-loging"
+          style={{ display: !isLogined ? 'flex' : 'none' }}
+        >
+          <div className="applied-posted-job-not-loging_left">
+            <p>
+              {
+                languageRedux == 1 ?
+                  'Đăng nhập để đăng ký việc làm miễn phí.' :
+                  'Sign in to apply for free jobs.'}
+            </p>
+          </div>
+          <div className="applied-posted-job-not-loging_right">
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpenModalLogin(true);
+              }}
+            >
+              <LoginArrowIcon />
+              {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+            </Button>
+          </div>
+        </div>
+
+        <Swiper
+          navigation={true}
+          // mousewheel={true}
+          slidesPerView="auto"
+          spaceBetween={24}
+          modules={[Mousewheel, Navigation, Pagination]}
+          className="applied-posted-jobs_swiper"
+          style={{
+            display: isLogined && appliedPostedJob.length > 0 ? 'flex' : 'none',
+          }}
+        >
+          {appliedPostedJob?.map((item: any, index: number) => (
+            <SwiperSlide
+              key={index}
+              onClick={(event) => {
+                handleClickItem(
+                  event,
+                  item.id,
+                  item.type,
+                  item.count,
+                  item.api,
+                  item.query,
+                );
+              }}
+            >
+              <AppliedPostedJobCard item={item} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Skeleton>
 
       <Backdrop
         sx={{

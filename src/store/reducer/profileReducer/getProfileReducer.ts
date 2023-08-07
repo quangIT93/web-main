@@ -18,9 +18,17 @@ export const getProfile = createAsyncThunk(
     try {
       const accessToken = localStorage.getItem('accessToken')
       // Gọi API để lấy thông tin profile với accessToken đã có
+      const languageRedux = JSON.parse(JSON.parse(localStorage.getItem("persist:root") as string)?.changeLaguage)["language"]
 
       if (accessToken) {
-        const response = await profileApi.getProfile("vi")
+        const response = await profileApi.getProfile(
+          languageRedux ?
+            languageRedux == 1 ?
+              "vi" :
+              "en" :
+            // languageRedux && 
+            "vi"
+        )
 
         return response.data
       }

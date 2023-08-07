@@ -10,6 +10,9 @@ import { getCookie } from 'cookies';
 import { RootState } from 'store';
 import { BagFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
+
 const { Text } = Typography;
 
 interface DistrictProps {
@@ -42,6 +45,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   reset,
   setReset,
 }) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [categoriesId, setCategoriesId] = useState<string[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -51,10 +55,20 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
 
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
-      <Text className="title-filter_location">Chọn danh mục nghề nghiệp</Text>
+      <Text className="title-filter_location">
+        {
+          languageRedux == 1 ?
+            'Chọn danh mục nghề nghiệp' :
+            'Select career categories'
+        }
+      </Text>
       {menus}
       <Divider style={{ margin: 4 }}>
-        {disable ? 'Chỉ có thể tối đa 10 danh mục' : ''}
+        {disable ?
+          languageRedux == 1 ?
+            'Chỉ có thể tối đa 10 danh mục' :
+            'Can only max 10 categories' :
+          ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -83,7 +97,9 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise("vi");
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux == 1 ? "vi" : "en"
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -188,7 +204,11 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           className="inputCategories input-filter_nav"
           showCheckedStrategy={SHOW_CHILD}
           style={{ width: '100%', borderRadius: '2px' }}
-          placeholder="Chọn danh mục ngành nghề"
+          placeholder={
+            languageRedux == 1 ?
+              'Chọn danh mục nghề nghiệp' :
+              'Select career categories'
+          }
         />
       </div>
     );

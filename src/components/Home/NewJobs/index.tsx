@@ -45,6 +45,8 @@ import './style.scss';
 import JobCard from '../JobCard';
 
 import { Skeleton } from 'antd';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
 
 export interface PostNewest {
   id: number;
@@ -71,6 +73,7 @@ export interface PostNewest {
 }
 
 const NewJobs: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [page, setPage] = React.useState(1);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
@@ -130,7 +133,7 @@ const NewJobs: React.FC = () => {
       null,
       9,
       thersholdId,
-      "vi"
+      languageRedux == 1 ? "vi" : "en"
     );
 
     if (result) {
@@ -146,7 +149,9 @@ const NewJobs: React.FC = () => {
   const getPostNewest = async () => {
     try {
       setOpenBackdrop(true);
-      const result = await postApi.getPostNewest(null, null, null, 19, null, "vi");
+      const result = await postApi.getPostNewest(null, null, null, 19, null,
+        languageRedux == 1 ? "vi" : "en"
+      );
 
       if (result) {
         setPostNewest(result);
@@ -175,7 +180,7 @@ const NewJobs: React.FC = () => {
       }
     }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   return (
     <>
@@ -192,7 +197,13 @@ const NewJobs: React.FC = () => {
         >
           <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
             <NewJobIcon width={25} height={25} />
-            <h2>Công việc mới nhất</h2>
+            <h2>
+              {
+                languageRedux == 1 ?
+                  home.newest_jobs :
+                  homeEn.newest_jobs
+              }
+            </h2>
           </div>
 
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
@@ -215,7 +226,13 @@ const NewJobs: React.FC = () => {
                 handleChange(e, page);
               }}
             >
-              <p>Xem thêm</p>
+              <p>
+                {
+                  languageRedux == 1 ?
+                    home.more :
+                    homeEn.more
+                }
+              </p>
               <MoreICon width={20} height={20} />
             </Space>
           </Stack>
