@@ -1,12 +1,12 @@
 import { ActionType , PostTypes } from "../../types"
-import { AxiosResponse } from "axios"
+// import { AxiosResponse } from "axios"
 
-const initialState :any ={
-  data:{
-    posts:[]
+const initialState: any = {
+  data: {
+    posts: []
   }
-};
-export default (state = initialState, { type, payload }: PostTypes) => {
+}
+const postReducer = (state = initialState, { type, payload }: PostTypes) => {
     switch (type) {
       case ActionType.SET_POST_ID:
         return payload.post;
@@ -18,4 +18,6 @@ export default (state = initialState, { type, payload }: PostTypes) => {
       default:
         return state;
     }
-  };    
+}; 
+  
+export default postReducer

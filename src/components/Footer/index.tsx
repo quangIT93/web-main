@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './style.scss';
 
 const Footer: React.FC = () => {
-  const mail = 'contact.hijob@gmail.com';
+  // const mail = 'contact.hijob@gmail.com';
   return (
     <div style={{ width: '100%' }}>
       <div className="container-footer">
@@ -17,7 +17,10 @@ const Footer: React.FC = () => {
               marginBottom: 10,
             }}
           >
-            <img src={require('../../img/langdingPage/logoHiJob.png')} />
+            <img
+              src={require('../../img/langdingPage/logoHiJob.png')}
+              alt="ảnh bị lỗi"
+            />
           </div>
 
           <h3>Kết nối tài năng</h3>
@@ -38,54 +41,69 @@ const Footer: React.FC = () => {
           <div className="right-top">
             <h4>TẢI ỨNG DỤNG HIJOB</h4>
             <div className="div-img-footer">
-              <img src={require('../../img/langdingPage/QRcode-ggplay.png')} />
+              <img
+                src={require('../../img/langdingPage/QRcode-ggplay.png')}
+                alt="Ảnh lỗi"
+              />
               <img
                 style={{ marginLeft: 10 }}
                 src={require('../../img/langdingPage/QRcode-appstore.png')}
+                alt="Ảnh lỗi"
               />
             </div>
             <div className="div-link-app">
-              <a
-                href="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+              <Link
+                to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
                 target="_blank"
               >
                 <img
                   id="img-gallery"
                   src={require('../../img/langdingPage/image 43.png')}
+                  alt="Ảnh lỗi"
                 />
-              </a>
-              <a
-                href="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+              </Link>
+              <Link
+                to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
                 target="_blank"
               >
-                <img src={require('../../img/langdingPage/image 45.png')} />
-              </a>
+                <img
+                  src={require('../../img/langdingPage/image 45.png')}
+                  alt="Ảnh lỗi"
+                />
+              </Link>
             </div>
           </div>
           <div className="div-socal-link">
             <h4 style={{ color: '#0D99FF' }}>LIÊN KẾT</h4>
             <div id="div-img-socal">
-              <a href="https://www.facebook.com/hijobOfficial/">
-                <img src={require('../../img/langdingPage/imagefb.png')} />
-              </a>
-              <a href="#">
+              <Link to="https://www.facebook.com/hijobOfficial/">
+                <img
+                  src={require('../../img/langdingPage/imagefb.png')}
+                  alt="Ảnh lỗi"
+                />
+              </Link>
+              <Link to="#">
                 <img
                   id="img-gallery"
                   src={require('../../img/langdingPage/imagein.png')}
+                  alt="Ảnh lỗi"
                 />
-              </a>
-              <a href="#">
-                <img src={require('../../img/langdingPage/imageyou.png')} />
-              </a>
+              </Link>
+              <Link to="#">
+                <img
+                  src={require('../../img/langdingPage/imageyou.png')}
+                  alt="Ảnh lỗi"
+                />
+              </Link>
             </div>
           </div>
         </div>
       </div>
       <div id="div-policy-footer">
-        <a href="/policy">
+        <Link to="/policy">
           {' '}
           <p>Chính sách sử dụng</p>{' '}
-        </a>
+        </Link>
         <div id="div-policy-footer-right">
           <div style={{ flexDirection: 'row', display: 'flex' }}>
             <p style={{ color: '#575757' }}>Tổng đài CSKH: </p>

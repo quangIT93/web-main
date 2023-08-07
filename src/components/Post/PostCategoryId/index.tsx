@@ -24,11 +24,10 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
 
   // console.log("fillCate", fillCate);
 
-
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
       {menus}
-      <Divider style={{ margin: '8px 5px' }} >
+      <Divider style={{ margin: '8px 5px' }}>
         {disable ? 'Chỉ có thể tối đa 2 danh mục' : ''}
       </Divider>
     </div>
@@ -48,7 +47,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise();
+      const result = await categoriesApi.getAllCategorise("vi");
       if (result) {
         setDataCategories(result.data);
       }
@@ -59,10 +58,11 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
 
   React.useEffect(() => {
     getCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
-    fillCate.length >= 2 ? setDisable(true) : setDisable(false)
+    fillCate.length >= 2 ? setDisable(true) : setDisable(false);
   }, [fillCate]);
 
   // React.useEffect(() => {

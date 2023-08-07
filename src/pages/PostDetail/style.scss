@@ -159,7 +159,7 @@
           h2 {
             font-size: 24px;
             font-weight: 700;
-            cursor: pointer;
+       
           }
 
           img {
@@ -181,7 +181,6 @@
             align-items: center;
             flex-wrap: nowrap;
             column-gap: 10px;
-            cursor: pointer;
 
             h3 {
               font-size: 16px;
@@ -973,11 +972,11 @@
                         width: 100%;
                       }
 
-                      .MuiTypography-h6 {
+                      // .MuiTypography-h6 {
                         // white-space: normal !important;
                         // text-overflow: unset;
                         // overflow: unset !important;
-                      }
+                      // }
                     }
 
                     .anotherPost_logo {

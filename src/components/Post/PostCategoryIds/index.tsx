@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { AutocompleteInputChangeReason } from '@mui/material/Autocomplete';
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 import categoriesApi from '../../../api/categoriesApi';
 
 import './style.scss';
@@ -54,7 +54,7 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
 
   const getAllParentCategories = async () => {
     try {
-      const result = await categoriesApi.getAllParentCategories();
+      const result = await categoriesApi.getAllParentCategories("vi");
       if (result) {
         setCategories(result.data);
       }
@@ -64,6 +64,7 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
   };
   React.useEffect(() => {
     getAllParentCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleInputChange = (

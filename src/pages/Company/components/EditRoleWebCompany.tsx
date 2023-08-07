@@ -39,7 +39,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const getRoles = async () => {
     try {
-      const roles = await apiCompany.getAllRolesCompany();
+      const roles = await apiCompany.getAllRolesCompany("vi");
 
       if (roles) {
         setDataRoles(roles);
@@ -51,6 +51,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   useEffect(() => {
     getRoles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleEditCompanyRole = (event: any, value: any) => {

@@ -399,7 +399,7 @@
     border: 100px solid #1b87f5;
   }
 
-  .list-locations {}
+  // .list-locations {}
 }
 
 .show-modal_navbar {
@@ -492,12 +492,15 @@
 
     @include breakpoint(mobile) {
       height: 90% !important;
-      overflow-y: scroll !important;
+      overflow-y: hidden !important;
+      overflow-x: hidden;
     }
 
     @include breakpoint(tablet) {
       height: 90% !important;
-      overflow-y: scroll !important;
+      overflow-y: hidden !important;
+      overflow-x: hidden;
+
     }
 
     .search-input-wrapper {
@@ -659,6 +662,14 @@
         top: 50%;
         transform: translateY(-50%);
         display: flex;
+        @include breakpoint(mobile) {
+          top: 20px;
+        }
+
+        @include breakpoint(tablet) {
+          top: 20px;
+        }
+     
       }
 
       .ant-select-selector {
@@ -909,7 +920,6 @@
 
   .div-nav-right {
 
-
     .sub-login {
       position: absolute;
       background-color: #ffffff;
@@ -921,8 +931,17 @@
       width: 380px;
       z-index: 10;
 
+      .ant-space-item {
+        width: 100%;
+      }
+
       .sub-login_info {
-        margin-left: -10px;
+        // margin-left: -10px;
+
+        .sub-login_info__top {
+          display: flex;
+          gap: 8px;
+        }
 
         .sub-login_detail {
           display: flex;
@@ -933,6 +952,7 @@
             align-items: flex-start;
             width: 220px;
             margin-top: 8px;
+            gap: 4px;
 
             p {
               overflow: hidden;
@@ -952,7 +972,41 @@
 
             svg {
               min-width: 16px;
-              margin-right: 4px;
+              // margin-right: 4px;
+            }
+          }
+        }
+
+        .sub-login_detail__bottom {
+          display: flex;
+          flex-direction: column;
+
+          .sub-login_text__bottom {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            margin-top: 8px;
+            gap: 12px;
+
+            p {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              // white-space: ;
+              display: -webkit-box;
+              /* Dùng -webkit-box để sử dụng thuộc tính clamp */
+              -webkit-line-clamp: 2;
+              /* Giới hạn văn bản xuống 2 dòng */
+              -webkit-box-orient: vertical;
+              /* Sắp xếp nội dung dọc */
+              overflow: hidden;
+              /* Ẩn văn bản bị tràn */
+              color: #1b87f5;
+              cursor: pointer;
+            }
+
+            svg {
+              min-width: 16px;
+              // margin-right: 4px;
             }
           }
         }
@@ -960,41 +1014,62 @@
       }
 
       .sub-login_items {
-        margin-top: 24px;
+        margin-top: 12px;
 
         .sub-login_item__translate {
-          background-color: #AAAAAA;
-          border-radius: 10px;
-          font-weight: bold;
-          color: $white;
-          padding: 16px;
+          // background-color: #AAAAAA;
+          // border-radius: 10px;
+          // font-weight: bold;
+          // color: #ffffff;
+          padding: 16px 0;
           display: flex;
+          justify-content: space-between;
           align-items: center;
+          cursor: pointer;
+
+          &:hover {
+            font-weight: bold;
+            color: #1b87f5;
+          }
+
+          .sub-translate_header_left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
 
           span,
           svg {
-            margin-left: 8px;
+            // margin-left: 8px;
           }
         }
 
         .sub-translate_status {
+
           .sub-login-radio-group {
+            transition: all 0.3 ease-in-out;
             width: 100%;
-            padding: 8px 24px;
+            padding: 0 24px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border-bottom: 1px solid rgba(170, 170, 170, 1);
           }
         }
 
         .sub-login_item {
           cursor: pointer;
-          padding: 16px;
+          padding: 16px 0;
           color: $text-color;
+          border-bottom: 1px solid rgba(170, 170, 170, 1);
 
           &:hover {
-            background-color: #AAAAAA;
-            border-radius: 10px;
+            // background-color: #AAAAAA;
+            // border-radius: 10px;
             font-weight: bold;
             transition: 0.3s linear all;
-            color: $white
+            // color: $white
+            color: #1b87f5
           }
 
           display: flex;
@@ -1007,9 +1082,12 @@
         }
 
         .sub-history_status {
-          padding: 8px 0 8px 24px;
+          padding: 0 0 12px 24px;
           display: flex;
-          align-items: center;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+          border-bottom: 1px solid rgba(170, 170, 170, 1);
 
           :nth-child(1) {
             color: #34A853;
@@ -1024,10 +1102,10 @@
           }
 
 
-          :nth-child(4),
-          :nth-child(2) {
-            margin: 0 12px;
-          }
+          // :nth-child(4),
+          // :nth-child(2) {
+          //   margin: 0 12px;
+          // }
         }
       }
     }
@@ -1076,10 +1154,10 @@
         background-color: transparent;
       }
 
-      &:hover>.login__hover__container {
-        display: block;
-        animation-name: animate-pop-out;
-      }
+      // &:hover>.login__hover__container {
+      //   display: block;
+      //   animation-name: animate-pop-out;
+      // }
 
       // &:not(:hover)>.login__hover__container {
       //   // display: block;
@@ -1116,13 +1194,14 @@
         position: absolute;
         top: 60px;
         right: 0;
-        display: none;
+        z-index: 10;
+        // display: none;
         // visibility: hidden;
-        animation-duration: 0.55s;
-        animation-delay: 0.3s;
-        animation-name: animate-pop-in;
-        animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
-        animation-fill-mode: backwards;
+        // animation-duration: 0.55s;
+        // animation-delay: 0.3s;
+        // animation-name: animate-pop-in;
+        // animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
+        // animation-fill-mode: backwards;
 
 
         .login__hover {
@@ -1209,6 +1288,83 @@
         }
       }
     }
+
+    // @media screen and (min-width: 421px) and (max-width: 600px) {
+    //   display: none;
+    // }
+      .notification {
+        display: none;
+      }
+    @include breakpoint(mobile) {
+      .notification {
+        display: block;
+        left: 24px;
+        width: 320px;
+        .bottom-notificate {
+          overflow-x: hidden;
+        .wrap-system {
+          // width: 120px;
+          justify-content: unset;
+          .content-notificate {
+            display: flex;
+            align-items: stretch;
+            flex-direction: column;
+
+            .wrap-title_contentNotificate {
+              h3 {
+                width: 150px;
+              }
+            }
+            h5 {
+              width: 150px;
+              display: block;
+            }
+
+            h2 {
+              width: 150px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            }
+
+            ul {
+              li {
+                width: 150px;
+                p {
+                  width: 150px;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  display: block;
+
+                }
+              }
+            }
+
+            .time-content_keyword {
+              .wrap-time {
+                p {
+                  width: 38px;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                }
+              }
+
+              p {
+                width: 70px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+              }
+            }
+          }
+        }
+
+        }
+      }
+
+    }
   }
 }
 
@@ -1258,10 +1414,10 @@
     }
   }
 
-  button:nth-child(1) {
+  .btn-notice {
     &:after {
-      top: 40px;
       content: "";
+      top: 40px;
       position: absolute;
       background-color: transparent;
       height: 40px;
@@ -1275,11 +1431,11 @@
     .button-download {
       border: 2px solid transparent;
       // border-radius: 50%;
-      animation: jumpAndStop 2s linear infinite;
+      animation: jumpAndStop 2.5s linear infinite;
       position: absolute;
       transform: translate(-50%, -50%);
       left: 14.5px;
-
+      animation-delay: 2s;
     }
   }
 
@@ -1305,7 +1461,6 @@
   @keyframes jumpAndStop {
 
     0%,
-    50%,
     100% {
       transform: translateY(0);
     }
@@ -1316,10 +1471,6 @@
 
     75% {
       transform: translateY(10px);
-    }
-
-    100% {
-      transform: translateY(0px);
     }
   }
 }

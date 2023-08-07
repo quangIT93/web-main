@@ -128,7 +128,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const allPost = async () => {
     try {
       // const result = await applitedPostedApi.getAllApplitedPostedApi(0);
-      const result = await historyRecruiter.getAllPosted(0, 20, null);
+      const result = await historyRecruiter.getAllPosted(0, 20, null, 'vi');
       if (result) {
         setDataPost(result.data);
       }
@@ -139,6 +139,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
 
   React.useEffect(() => {
     allPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [selectedValue, setSelectedValue] = React.useState<number>(0);
@@ -163,7 +164,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     // console.log('itemPost', itemPost);
 
     try {
-      const result = await postApi.getById(itemPost.post_id);
+      const result = await postApi.getById(itemPost.post_id, 'vi');
       // console.log('reuslt', result.data);
       if (result) {
         setTypeJob(result.data.job_type.job_type_id);

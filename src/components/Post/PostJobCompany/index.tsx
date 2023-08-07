@@ -9,8 +9,8 @@ import TextField from '@mui/material/TextField';
 interface PropsPostCompanyJob {
   setTitleJob: React.Dispatch<React.SetStateAction<any>>;
   setCompanyName: React.Dispatch<React.SetStateAction<any>>;
-  titleError: boolean;
-  companyError: boolean;
+  // titleError: boolean;
+  // companyError: boolean;
   titleJob: string;
   companyName: string;
 }
@@ -19,8 +19,8 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
   const {
     setTitleJob,
     setCompanyName,
-    titleError,
-    companyError,
+    // titleError,
+    // companyError,
     titleJob,
     companyName,
   } = props;
@@ -57,7 +57,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '0.5rem' }}
           placeholder="Tên công việc"
-          error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           value={titleJob ? titleJob : ''}
         />
       </div>
@@ -79,7 +79,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           onChange={handleChangeCompanyForm}
           sx={{ width: '100%', marginTop: '0.5rem' }}
           placeholder="Tên công ty"
-          error={companyError} // Đánh dấu lỗi
+          // error={companyError} // Đánh dấu lỗi
           value={companyName}
         />
       </div>

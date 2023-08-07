@@ -1,12 +1,13 @@
+// import { PostNewest } from '#components/Home/NewJobs';
 import { ActionType , PostTypes } from "../../types"
-import { AxiosResponse } from "axios"
+// import { AxiosResponse } from "axios"
 
-const initialState :any ={
-  data:{
-    posts:[]
+const initialState: any = {
+  data: {
+    posts: []
   }
-};
-export default (state = initialState, { type, payload }: PostTypes) => {
+}
+const postNewest = (state = initialState, { type, payload }: PostTypes) => {
     switch (type) {
       case ActionType.SET_POST_NEWEST:
         return payload.postNewest;
@@ -16,4 +17,6 @@ export default (state = initialState, { type, payload }: PostTypes) => {
       default:
         return state;
     }
-  };    
+};  
+  
+export default postNewest

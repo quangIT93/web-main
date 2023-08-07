@@ -12,11 +12,13 @@ import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index';
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   // useNavigate,
   // createSearchParams,
   useSearchParams,
 } from 'react-router-dom';
+import { RootState } from '../../../store/reducer';
 
 // let timeout: ReturnType<typeof setTimeout> | null;
 // let currentValue: string | undefined;
@@ -114,6 +116,7 @@ const SearchInput: React.FC<SearchProps> = ({
     search: boolean;
   } = useContext(HomeValueContext);
 
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState<SelectProps['options']>([]);
   // const [fetching, setFet] = useState(false)
@@ -158,12 +161,12 @@ const SearchInput: React.FC<SearchProps> = ({
       var response = null;
       setLoading(true);
       if (localStorage.getItem('accessToken')) {
-        const result = await searchApi.getHistoryKeyWord(10);
+        const result = await searchApi.getHistoryKeyWord(10, "vi");
         if (result) {
           response = result.data.listHistorySearch;
         }
       } else {
-        const result = await searchApi.getSuggestKeyWord(10);
+        const result = await searchApi.getSuggestKeyWord(10, "vi");
         if (result) {
           response = result.data;
         }
@@ -184,14 +187,15 @@ const SearchInput: React.FC<SearchProps> = ({
 
   React.useEffect(() => {
     getSuggestKeyWord();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getDataSearch = async () => {
     try {
-      const resultSuggest = await searchApi.getSuggestKeyWord(10);
+      const resultSuggest = await searchApi.getSuggestKeyWord(10, "vi");
       let resultHistory;
       if (isLogin) {
-        resultHistory = await searchApi.getHistoryKeyWord(10);
+        resultHistory = await searchApi.getHistoryKeyWord(10, "vi");
         resultHistory && setDataHistory(resultHistory.data);
       }
       // if (resultHistory || resultSuggest) {
@@ -249,8 +253,7 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${
-            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          `/search-results?${value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
           }`,
         );
       } else {
@@ -306,15 +309,16 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getTotalUserSearch = async () => {
     try {
-      const result = await apiTotalJob.getTotalJob();
+      const result = await apiTotalJob.getTotalJob("vi");
       if (result) {
         setTotalJob(result?.data?.total);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
     getTotalUserSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dropdownRender: any = ['1'].map((d: any, index: number) => (
@@ -387,9 +391,15 @@ const SearchInput: React.FC<SearchProps> = ({
         searchValue={value}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
-        placeholder={`Tìm kiếm hơn ${totalJob.toLocaleString(
-          'en-US',
-        )} công việc tại Việt Nam`}
+        placeholder={
+          languageRedux == 1 ?
+            `Tìm kiếm hơn ${totalJob.toLocaleString(
+              'en-US',
+            )} công việc tại Việt Nam` :
+            `Search over ${totalJob.toLocaleString(
+              'en-US',
+            )} jobs in Vietnam`
+        }
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}
@@ -411,7 +421,7 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-        // open={openDropdown}
+      // open={openDropdown}
       />
 
       <Button

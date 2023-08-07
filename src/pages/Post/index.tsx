@@ -42,7 +42,7 @@ import './style.scss';
 
 // import data
 import postApi from 'api/postApi';
-import siteApi from 'api/siteApi';
+
 import { message } from 'antd';
 
 // redux
@@ -93,8 +93,8 @@ export interface FormValues {
   isDatePeriod: number;
   startDate: number | null;
   endDate: number | null;
-  latitude: number;
-  longitude: number;
+  // latitude: number;
+  // longitude: number;
   startTime: number;
   endTime: number;
   isWorkingWeekend: number;
@@ -184,8 +184,8 @@ const Post: React.FC = () => {
   const [wardId, setWardId] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
-  const [latitude, SetLatitude] = useState<number>(10.761955);
-  const [longitude, SetLongitude] = useState<number>(106.70183);
+  // const [latitude, SetLatitude] = useState<number>(10.761955);
+  // const [longitude, SetLongitude] = useState<number>(106.70183);
   const [salaryMin, setSalaryMin] = React.useState<number>(0);
   const [salaryMax, setSalaryMax] = React.useState<number>(0);
   // modal
@@ -193,8 +193,8 @@ const Post: React.FC = () => {
   const [openModalFillDataPost, setOpenFillDataPost] =
     React.useState<boolean>(false);
   // check error
-  const [titleError, setTitleError] = useState(false);
-  const [companyError, setCompanyError] = useState(false);
+  // const [titleError, setTitleError] = useState(false);
+  // const [companyError, setCompanyError] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
   const [openModalNoteCreatePost, setOpenModalNoteCreatePost] =
@@ -255,8 +255,8 @@ const Post: React.FC = () => {
     formData.append('email', formValues.email);
     // formData.append('companyResourceId', String(formValues.companyResourceId))
     // formData.append('url', Str1q 1q  1q  1q  1qing(formValues.url))
-    formData.append('latitude', String(latitude));
-    formData.append('longitude', String(longitude));
+    formData.append('latitude', String(10.761955));
+    formData.append('longitude', String(106.70183));
 
     // for (const pair of formData.entries()) {
     //   console.log(`${pair[0]}, ${pair[1]}`);
@@ -384,6 +384,7 @@ const Post: React.FC = () => {
       // screen_name: screenName as string,
       page_title: '/web_createPost' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // console.log('phone', phoneNumber);
@@ -417,8 +418,8 @@ const Post: React.FC = () => {
             <PostJobCompany
               setTitleJob={setTitleJob}
               setCompanyName={setCompanyName}
-              titleError={titleError}
-              companyError={companyError}
+              // titleError={titleError}
+              // companyError={companyError}
               titleJob={titleJob}
               companyName={companyName}
             />

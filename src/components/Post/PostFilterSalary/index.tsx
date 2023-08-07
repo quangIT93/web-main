@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, memo } from 'react';
 import { Box } from '@mui/material';
 import { Input, Space } from 'antd';
 import Typography from '@mui/material/Typography';
@@ -18,16 +18,16 @@ interface PropsSalaryFilterSubnav {
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
   const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType } =
     props;
-  const VND_TO_USD = 0.000043; // Conversion rate: 1 VND = 0.000043 USD
-  const USD_TO_VND = 23155;
+  // const VND_TO_USD = 0.000043; // Conversion rate: 1 VND = 0.000043 USD
+  // const USD_TO_VND = 23155;
 
-  const [valueSalaryMax, setValueSalaryMax] = useState('');
-  const [valueSalaryMin, setValueSalaryMin] = useState('');
+  // const [valueSalaryMax, setValueSalaryMax] = useState('');
+  // const [valueSalaryMin, setValueSalaryMin] = useState('');
 
   const handleChangesalaryMin = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setValueSalaryMin(e.target.value.replace(',', ''));
+    // setValueSalaryMin(e.target.value.replace(',', ''));
 
     const inputValue = e.target.value.replace(',', '');
     const reg = /[0-9]+$/;
@@ -39,7 +39,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
   const handleChangesalaryMax = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setValueSalaryMax(e.target.value.replace(',', ''));
+    // setValueSalaryMax(e.target.value.replace(',', ''));
 
     const inputValue = e.target.value.replace(',', '');
     const reg = /[0-9]+$/;
@@ -53,6 +53,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
       setSalaryMax(0);
       setSalaryMin(0);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [salaryType]);
 
   // const handleChange = (event: Event, newValue: number | number[]) => {

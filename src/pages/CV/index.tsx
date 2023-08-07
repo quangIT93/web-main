@@ -14,7 +14,7 @@ import './styles.scss';
 import { DownloadOutlined } from '@ant-design/icons';
 
 import { Modal, Button, Avatar } from 'antd';
-import any from 'react/jsx-runtime';
+// import any from 'react/jsx-runtime';
 
 const CV: React.FC = () => {
   const [open, setOpen] = React.useState(false);
@@ -24,40 +24,87 @@ const CV: React.FC = () => {
     setOpen(!open);
   };
 
+  // const printDocument = async (isDowload: boolean) => {
+  //   const pdf = new jsPDF();
+  //   const divtoprints = document.querySelectorAll('.page');
+  //   let lastPage = 0;
+  //   for (const divtoprint of divtoprints) {
+  //     // const divtoprint = document.querySelector(".page");
+  //     await html2canvas(divtoprint as HTMLElement).then((canvas: any) => {
+  //       // document.body.appendChild(canvas);  // if you want see your screenshot in body.
+  //       const imgData = canvas.toDataURL('image/png');
+  //       let width = Math.round(pdf.internal.pageSize.getWidth());
+  //       let height = Math.round(pdf.internal.pageSize.getHeight());
+
+  //       let widthRatio = width / canvas.width;
+  //       let heightRatio = height / canvas.height;
+
+  //       let ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
+  //       // addImage(imageData, format, x, y, width, height, alias, compression, rotation)
+  //       pdf.addImage(
+  //         imgData,
+  //         'PNG',
+  //         0,
+  //         0,
+  //         Math.round(canvas.width * ratio),
+  //         Math.round(canvas.height * ratio),
+  //       );
+  //       pdf.addPage();
+  //       lastPage = pdf.getNumberOfPages();
+  //     });
+  //   }
+
+  //   // Set the number of pages in the PDF file to 1
+  //   pdf.deletePage(lastPage);
+  //   // isDowload ? pdf.save("download.pdf") :
+  //   //     window.open(URL.createObjectURL(pdf.output("blob")))
+  //   if (isDowload) {
+  //     pdf.save('download.pdf');
+  //   } else {
+  //     setBlobCv(URL.createObjectURL(pdf.output('blob')));
+  //     setOpen(!open);
+  //     console.log(URL.createObjectURL(pdf.output('blob')));
+  //     // window.open(URL.createObjectURL(pdf.output('blob')));
+  //   }
+  //   // pdf.save("download.pdf");
+  // };
+
   const printDocument = async (isDowload: boolean) => {
     const pdf = new jsPDF();
     const divtoprints = document.querySelectorAll('.page');
-    let lastPage = 0;
+    let promises: Promise<any>[] = []; // Create an array to store promises
     for (const divtoprint of divtoprints) {
-      // const divtoprint = document.querySelector(".page");
-      await html2canvas(divtoprint as HTMLElement).then((canvas) => {
-        // document.body.appendChild(canvas);  // if you want see your screenshot in body.
-        const imgData = canvas.toDataURL('image/png');
-        let width = Math.round(pdf.internal.pageSize.getWidth());
-        let height = Math.round(pdf.internal.pageSize.getHeight());
+      const promise = html2canvas(divtoprint as HTMLElement).then(
+        (canvas: any) => {
+          const imgData = canvas.toDataURL('image/png');
+          let width = Math.round(pdf.internal.pageSize.getWidth());
+          let height = Math.round(pdf.internal.pageSize.getHeight());
 
-        let widthRatio = width / canvas.width;
-        let heightRatio = height / canvas.height;
+          let widthRatio = width / canvas.width;
+          let heightRatio = height / canvas.height;
 
-        let ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
-        // addImage(imageData, format, x, y, width, height, alias, compression, rotation)
-        pdf.addImage(
-          imgData,
-          'PNG',
-          0,
-          0,
-          Math.round(canvas.width * ratio),
-          Math.round(canvas.height * ratio),
-        );
-        pdf.addPage();
-        lastPage = pdf.getNumberOfPages();
-      });
+          let ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
+
+          pdf.addImage(
+            imgData,
+            'PNG',
+            0,
+            0,
+            Math.round(canvas.width * ratio),
+            Math.round(canvas.height * ratio),
+          );
+          pdf.addPage();
+        },
+      );
+      promises.push(promise); // Push each promise into the array
     }
 
+    // Wait for all promises to resolve
+    await Promise.all(promises);
+
     // Set the number of pages in the PDF file to 1
-    pdf.deletePage(lastPage);
-    // isDowload ? pdf.save("download.pdf") :
-    //     window.open(URL.createObjectURL(pdf.output("blob")))
+    pdf.deletePage(pdf.getNumberOfPages());
+
     if (isDowload) {
       pdf.save('download.pdf');
     } else {
@@ -66,7 +113,6 @@ const CV: React.FC = () => {
       console.log(URL.createObjectURL(pdf.output('blob')));
       window.open(URL.createObjectURL(pdf.output('blob')));
     }
-    // pdf.save("download.pdf");
   };
 
   return (

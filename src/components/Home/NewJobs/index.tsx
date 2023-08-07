@@ -1,19 +1,12 @@
 import React, { useContext } from 'react';
-import Card from '@mui/material/Card';
+
 import Box from '@mui/material/Box';
-import CardActions from '@mui/material/CardActions';
-import ImageListItem from '@mui/material/ImageListItem';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 // import { url } from 'inspector'
-import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { NewJobIcon, MoreICon } from '#components/Icons';
 
 // import redux
@@ -27,38 +20,33 @@ import ShowCancleSave from '../../ShowCancleSave';
 import ShowNotificativeSave from '../../ShowNotificativeSave';
 // import api
 import postApi from 'api/postApi';
-import bookMarkApi from 'api/bookMarkApi';
 
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 
-import moment from 'moment';
+// import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
 import { useSearchParams } from 'react-router-dom';
-import { useNavigate, createSearchParams } from 'react-router-dom';
-import { AxiosResponse } from 'axios';
+// import { useNavigate } from 'react-router-dom';
+// import { AxiosResponse } from 'axios';
 // import icon
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
-import { Space, Tooltip } from 'antd';
+import { Space } from 'antd';
 
 import './style.scss';
 //@ts-ignore
-import { maxHeight } from '@mui/system';
+// import { maxHeight } from '@mui/system';
 
-import ChildCateloriesArray from 'context/HomeValueContextProvider';
+// import ChildCateloriesArray from 'context/HomeValueContextProvider';
 
 //import jobcard
 import JobCard from '../JobCard';
 
 import { Skeleton } from 'antd';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
 
 export interface PostNewest {
   id: number;
@@ -85,19 +73,20 @@ export interface PostNewest {
 }
 
 const NewJobs: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [page, setPage] = React.useState(1);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [isLoading, setIsLoading] = React.useState(false);
+  // const [isLoading, setIsLoading] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [isAppliedPostedJobs, setIsAppliedPostedJobs] = React.useState(false);
 
-  const [showNofySave, setShowNofySave] = React.useState(false);
+  // const [showNofySave, setShowNofySave] = React.useState(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // state redux
   const { postNewest } = useSelector((state: RootState) => state);
@@ -107,7 +96,7 @@ const NewJobs: React.FC = () => {
     dispatch,
   );
 
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -120,9 +109,9 @@ const NewJobs: React.FC = () => {
   } = useContext(HomeValueContext);
 
   // handle click post details
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`, '_parent');
-  };
+  // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  //   window.open(`/post-detail?post-id=${id}`, '_parent');
+  // };
 
   // handle change paginaton
   const handleChange = async (
@@ -144,6 +133,7 @@ const NewJobs: React.FC = () => {
       null,
       9,
       thersholdId,
+      languageRedux == 1 ? "vi" : "en"
     );
 
     if (result) {
@@ -152,14 +142,16 @@ const NewJobs: React.FC = () => {
     }
   };
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   const getPostNewest = async () => {
     try {
       setOpenBackdrop(true);
-      const result = await postApi.getPostNewest(null, null, null, 19);
+      const result = await postApi.getPostNewest(null, null, null, 19, null,
+        languageRedux == 1 ? "vi" : "en"
+      );
 
       if (result) {
         setPostNewest(result);
@@ -187,7 +179,8 @@ const NewJobs: React.FC = () => {
         setLoading(false);
       }
     }, 1000);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   return (
     <>
@@ -204,7 +197,13 @@ const NewJobs: React.FC = () => {
         >
           <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
             <NewJobIcon width={25} height={25} />
-            <h2>Công việc mới nhất</h2>
+            <h2>
+              {
+                languageRedux == 1 ?
+                  home.newest_jobs :
+                  homeEn.newest_jobs
+              }
+            </h2>
           </div>
 
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
@@ -227,7 +226,13 @@ const NewJobs: React.FC = () => {
                 handleChange(e, page);
               }}
             >
-              <p>Xem thêm</p>
+              <p>
+                {
+                  languageRedux == 1 ?
+                    home.more :
+                    homeEn.more
+                }
+              </p>
               <MoreICon width={20} height={20} />
             </Space>
           </Stack>

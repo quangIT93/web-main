@@ -2,12 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import {
-  AudioOutlined,
-  EditOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
-import { Input, Space } from 'antd';
+// import { Input, Space } from 'antd';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -15,13 +10,13 @@ import messageApi from 'api/messageApi';
 import historyRecruiter from 'api/historyRecruiter';
 import postApi from 'api/postApi';
 
-import { listUser, listMessage, countUnRead } from './data';
+// import { listUser, listMessage, countUnRead } from './data';
 import './style.scss';
 import { ChatContext } from 'context/ChatContextProvider';
 
 import { SeenIcon } from '#components/Icons';
 
-const { Search } = Input;
+// const { Search } = Input;
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
@@ -45,7 +40,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   const getAllUserChat = async () => {
     try {
-      const result = await messageApi.getUserChated();
+      const result = await messageApi.getUserChated('vi');
 
       if (result) {
         setStateUserChat(result.data);
@@ -73,12 +68,14 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           await historyRecruiter.GetAJobApplication(
             Number(searchParams.get('post_id')),
             searchParams.get('application_id') ?? '',
+            'vi',
           );
 
         if (resultHistoryRecruiter) {
           // console.log('ressssss', result.data);
           const resultPost = await postApi.getPostV3(
             Number(searchParams.get('post_id')),
+            "vi"
           );
           console.log(resultHistoryRecruiter.data);
           console.log('resultPost', resultPost);
@@ -103,7 +100,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           }
         }
       } else {
-        const resultGetUserChated = await messageApi.getUserChated();
+        const resultGetUserChated = await messageApi.getUserChated('vi');
         console.log('result.data', resultGetUserChated.data);
 
         if (resultGetUserChated.data) {
@@ -127,6 +124,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
             } else {
               const resultGetPostV3 = await postApi.getPostV3(
                 Number(searchParams.get('post_id')),
+                "vi"
               );
 
               console.log('v3', resultGetPostV3);
@@ -164,6 +162,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         if (searchParams.get('post_id') && searchParams.get('user_id')) {
           const result = await postApi.getPostV3(
             Number(searchParams.get('post_id')),
+            "vi"
           );
 
           setUserInfoChat({
@@ -283,9 +282,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     return (
       <div
         // className="list_userChat"
-        className={`list_userChat ${
-          props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
-        }`}
+        className={`list_userChat ${props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
+          }`}
       >
         <div className="header-list_userChat">
           <h4 className="title-header_listUserChat">Tin nhắn</h4>
@@ -310,7 +308,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackDrop}
-            // onClick={handleClose}
+          // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -338,9 +336,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           </div> */}
           {listUserChat.map((user: any, index: number) => (
             <div
-              className={`wrap-userInfo ${
-                userInfoChat.user_id === user.user_id ? 'readed-message' : ''
-              } `}
+              className={`wrap-userInfo ${userInfoChat.user_id === user.user_id ? 'readed-message' : ''
+                } `}
               key={index}
               onClick={() => handleClickUserInfo(user)}
             >
@@ -351,9 +348,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                   <div>Hijob</div>
                 )}
                 <span
-                  className={`user-online ${
-                    user.is_online ? 'user-online_true' : ''
-                  }`}
+                  className={`user-online ${user.is_online ? 'user-online_true' : ''
+                    }`}
                 ></span>
               </div>
               <div className="info-user_chat">

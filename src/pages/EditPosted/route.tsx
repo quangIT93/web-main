@@ -1,5 +1,5 @@
 // import React from 'react'
-import Feed from '.';
+// import Feed from '.';
 
 import EditPosted from '.';
 import RouteProps from '../routes';

@@ -16,6 +16,10 @@ import { LocationHomeIcon, ClockIcon, BagHomeIcon } from '#components/Icons';
 import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/reducer';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
 // import bookMarkApi from 'api/bookMarkApi';
 
 const AppliedPostedJobCard: React.FC<any> = (props) => {
@@ -34,6 +38,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
       ? window.open(`/post-detail?post-id=${id}`, '_blank')
       : window.open(`/history?post=2`, '_parent');
   };
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
 
   const handleImageError = () => {
     setError(true);
@@ -236,7 +241,12 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 fontSize: '12px',
               }}
             >
-              Đã nộp vào &nbsp;
+              {
+                languageRedux == 1 ?
+                  home.applied_on :
+                  homeEn.applied_on
+              }
+              &nbsp;
               {new Date(props.item.created_at).toLocaleDateString('en-GB')}
               ,&nbsp;
               {moment(new Date(props.item.created_at)).format('HH:mm')}
@@ -255,7 +265,12 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               >
                 {props.item.num_of_application}
               </strong>
-              &nbsp; Ứng viên đã nộp hồ sơ
+              &nbsp;
+              {
+                languageRedux == 1 ?
+                  home.x_candidates_have_applied :
+                  homeEn.x_candidates_have_applied
+              }
             </span>
           </div>
           <div
@@ -278,18 +293,22 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             className="button-approved"
           >
             {props.item.application_status === 1
-              ? 'Đã ứng tuyển'
+              ? languageRedux == 1 ? 'Đã ứng tuyển' : 'Applied'
               : props.item.application_status === 2
-                ? 'Đã được duyệt'
+                ? languageRedux == 1 ? 'Đã được duyệt' : 'Approved'
                 : props.item.application_status === 3
-                  ? 'Đã từ chối'
-                  : 'Đã tuyển'}
+                  ? languageRedux == 1 ? 'Đã từ chối' : 'Denied'
+                  : languageRedux == 1 ? 'Đã tuyển' : 'Recruited'}
           </div>
           <div
             style={{ display: props.item.type === 'post' ? 'flex' : 'none' }}
             className="button-check"
           >
-            Kiểm tra ngay
+            {
+              languageRedux == 1 ?
+                'Kiểm tra ngay' :
+                'Check now'
+            }
             <div className="icon">
               <BackIcon fill="white" />
             </div>

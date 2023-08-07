@@ -1,15 +1,17 @@
-import React, { ReactNode } from 'react'
-import { CloseOutlined, DiffFilled } from '@ant-design/icons'
+import React, { ReactNode } from 'react';
+import { CloseOutlined } from '@ant-design/icons';
 
-import './style.scss'
+import { Link } from 'react-router-dom';
+
+import './style.scss';
 
 interface ModalType {
-  children?: ReactNode
-  isOpen: boolean
-  toggle: () => void
+  children?: ReactNode;
+  isOpen: boolean;
+  toggle: () => void;
 }
 
-const Modal = (props: ModalType) => {
+const Modal: React.FC<ModalType> = (props) => {
   return (
     <>
       {props.isOpen && (
@@ -21,12 +23,15 @@ const Modal = (props: ModalType) => {
             >
               <div id="div-container-popup">
                 <div id="div-close" style={{ width: '100%' }}>
-                  <a href="#" onClick={props.toggle}>
+                  <Link to="#" onClick={props.toggle}>
                     <CloseOutlined style={{ color: 'white', fontSize: 20 }} />
-                  </a>
+                  </Link>
                 </div>
                 <div id="div-content-popup">
-                  <img src={require('../../../img/langdingPage/_image.png')} />
+                  <img
+                    src={require('../../../img/langdingPage/_image.png')}
+                    alt="Ảnh lỗi"
+                  />
                   <div id="div-content-right">
                     <div>
                       <h3 className="text-title">
@@ -38,27 +43,31 @@ const Modal = (props: ModalType) => {
                       <div>
                         <img
                           src={require('../../../img/langdingPage/imageQR.png')}
+                          alt="Ảnh lỗi"
                         />
                         <p className="text-title">Quét mã QR code</p>
                       </div>
 
                       <div className="div-popup-link-app">
-                        <a href="http://bit.ly/3KF5JZS" target="_blank">
+                        <Link to="http://bit.ly/3KF5JZS" target="_blank">
                           <img
                             src={require('../../../img/langdingPage/image 45.png')}
+                            alt="Ảnh lỗi"
                           />
-                        </a>
-                        <a href="https://bit.ly/3m3vE3W" target="_blank">
+                        </Link>
+                        <Link to="https://bit.ly/3m3vE3W" target="_blank">
                           <img
                             id="img-gallery"
                             src={require('../../../img/langdingPage/image 43.png')}
+                            alt="Ảnh lỗi"
                           />
-                        </a>
-                        <a href="">
+                        </Link>
+                        <Link to="">
                           <img
                             src={require('../../../img/langdingPage/image 44.png')}
+                            alt="Ảnh lỗi"
                           />
-                        </a>
+                        </Link>
                         <p className="text-title">Quét mã QR code</p>
                       </div>
                     </div>
@@ -70,7 +79,7 @@ const Modal = (props: ModalType) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

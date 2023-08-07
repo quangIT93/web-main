@@ -66,7 +66,7 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
       {menus}
-      <Divider style={{ margin: '8px 5px' }} >
+      <Divider style={{ margin: '8px 5px' }}>
         {disable ? 'Chỉ có thể tối đa 2 danh mục' : ''}
       </Divider>
     </div>
@@ -91,7 +91,7 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise();
+      const result = await categoriesApi.getAllCategorise("vi");
       if (result) {
         setDataCategories(result.data);
       }

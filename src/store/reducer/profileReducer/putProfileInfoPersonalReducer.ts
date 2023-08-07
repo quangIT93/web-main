@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import profileApi from '../../../api/profileApi'
-import { RootState } from '..'
+// import { RootState } from '..'
 
 interface IInfoPersonal {
   name: string

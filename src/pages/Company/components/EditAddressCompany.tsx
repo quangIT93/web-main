@@ -73,7 +73,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const getAllProvinces = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces();
+      const allLocation = await locationApi.getAllProvinces('vi');
 
       if (allLocation) {
         setDataProvinces(allLocation?.data);
@@ -92,6 +92,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       ) {
         const districts = await locationApi.getDistrictsById(
           dataCompany?.companyLocation?.district?.province?.id,
+          'vi',
         );
 
         if (districts) {
@@ -101,6 +102,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedProvince) {
           const districts = await locationApi.getDistrictsById(
             selectedProvince?.id,
+            'vi',
           );
           if (districts) {
             setDataDistrict(districts?.data);
@@ -144,6 +146,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     getAllProvinces();
     // getAllLocations()
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

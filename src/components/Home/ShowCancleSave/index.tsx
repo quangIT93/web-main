@@ -5,10 +5,13 @@ import Stack from '@mui/material/Stack';
 
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
-import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+// import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 import { setAlertCancleSave } from 'store/reducer/alertReducer';
+import { RootState } from '../../../store/reducer';
 
 import './style.scss';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -23,6 +26,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 // }
 
 const ShowCancleSave: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
   const cancleSave = useSelector((state: any) => state.showAlert.alert);
@@ -42,8 +46,16 @@ const ShowCancleSave: React.FC = () => {
             horizontal: 'center',
           }}
         >
-          <Alert onClose={handleClose} severity="error" sx={{ width: '100%', backgroundColor: '#000000' }}>
-            Bạn đã xóa thành công!
+          <Alert
+            onClose={handleClose}
+            severity="error"
+            sx={{ width: '100%', backgroundColor: '#000000' }}
+          >
+            {
+              languageRedux == 1 ?
+                home.unsaved_this_job :
+                homeEn.unsaved_this_job
+            }
           </Alert>
         </Snackbar>
       </Stack>

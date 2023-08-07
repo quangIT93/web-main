@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 // @ts-ignore
 
-import { Button, Space } from 'antd';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import { Space } from 'antd';
+// import Snackbar from '@mui/material/Snackbar';
+// import MuiAlert, { AlertProps } from '@mui/material/Alert';
+// import Stack from '@mui/material/Stack';
 import './styleItem.scss';
 
 import { PencilIcon, DeleteIcon } from '#components/Icons';
@@ -29,12 +29,12 @@ interface ItemAppy {
   title?: String;
 }
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+// const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+//   props,
+//   ref,
+// ) {
+//   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+// });
 
 const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const [openModalDeleteEducation, setOpenModalDeleteEducation] =
@@ -81,7 +81,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
         <div className="div-info-item">
           <Space size={4} direction="vertical" style={{ marginLeft: 10 }}>
             <h3>{item?.company_name}</h3>
-            <p>{typeItem == 'experiences' ? item?.title : item?.major}</p>
+            <p>{typeItem === 'experiences' ? item?.title : item?.major}</p>
             <p>
               {`${moment(item?.start_date).format('MM/YYYY')}`} - {` `}
               {`${moment(item?.end_date).format('MM/YYYY')}`}

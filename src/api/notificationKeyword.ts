@@ -1,8 +1,8 @@
 import axiosClient from './axiosClient'
 
 const notificationKeywordApi = {
-  getNotificationKeyword: () => {
-    const URL = `/v1/notification/keyword`
+  getNotificationKeyword: (lang: string) => {
+    const URL = `/v1/notification/keyword?lang=${lang}`
 
     return axiosClient.get(URL, {
       headers: {
@@ -10,8 +10,8 @@ const notificationKeywordApi = {
       },
     })
   },
-  getNotificationKeywordV3: () => {
-    const URL = `/v3/keyword-notifications`
+  getNotificationKeywordV3: (lang: string) => {
+    const URL = `/v3/keyword-notifications?lang=${lang}`
 
     return axiosClient.get(URL, {
       headers: {

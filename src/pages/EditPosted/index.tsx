@@ -1,6 +1,8 @@
 import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
-import { useSearchParams } from 'react-router-dom';
+import queryString from 'query-string';
+
+// import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import moment from 'moment';
 import { Skeleton } from 'antd';
@@ -72,8 +74,8 @@ export interface FormValues {
 const EditPosted = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const queryParams = queryString.parse(window.location.search);
   const [dataPostById, setDataPostById] = useState<any>(null);
 
   const [editDataPosted, setEditDataPosted] = useState<FormValues | null>({
@@ -116,7 +118,7 @@ const EditPosted = () => {
 
   const [changePage, setChangePage] = React.useState(false);
 
-  const postId = parseInt(searchParams.get('postId') ?? '');
+  const postId = parseInt((queryParams['postId'] as string) ?? '');
 
   const analytics: any = getAnalytics();
 
@@ -127,6 +129,7 @@ const EditPosted = () => {
       // screen_name: screenName as string,
       page_title: '/web_editPost' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -165,6 +168,7 @@ const EditPosted = () => {
         longitude: dataPostById.longitude,
       }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPostById]);
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -175,7 +179,7 @@ const EditPosted = () => {
 
   const getDataPosted = async () => {
     try {
-      const result = await postApi.getPostbyId(postId);
+      const result = await postApi.getPostbyId(postId, "vi");
       if (
         result &&
         dataPostAccount.find((item: any) => item.post_id === postId)
@@ -218,6 +222,7 @@ const EditPosted = () => {
         0,
         20,
         '-1',
+        'vi',
       );
 
       if (result) {
@@ -230,6 +235,7 @@ const EditPosted = () => {
 
   React.useEffect(() => {
     getAllPostAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (

@@ -21,8 +21,8 @@ const postApi = {
       },
     })
   },
-  getPost: () => {
-    const URL = `v1/posts?limit=10`
+  getPost: (lang: string) => {
+    const URL = `v1/posts?limit=10?lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -30,8 +30,8 @@ const postApi = {
     })
   },
 
-  getById: (params: number) => {
-    const URL = `v1/posts/${params}`
+  getById: (params: number, lang: string) => {
+    const URL = `v1/posts/${params}?lang=${lang}`
     return axiosClient.get(URL)
   },
 
@@ -39,18 +39,25 @@ const postApi = {
   getPostByThemeId: (
     themeId: number,
     limit: Number,
-    threshold: Number | null
+    threshold: Number | null,
+    lang: string
   ) => {
     const URL = `v1/posts/theme?tid=${themeId}&limit=${limit}&threshold=${threshold ? threshold : ''
-      }`
-    return axiosClient.get(URL)
+      }&lang=${lang}`
+    return axiosClient.get(URL,
+      {
+        headers: {
+          'Cache-Control': 'private, max-age=300'
+        },
+      })
   },
   getPostNewest: (
-    pcid?: Number | null,
-    ccid?: number[] | null,
-    dtid?: [] | null,
-    limit?: Number,
-    threshold?: Number
+    pcid: number | null,
+    ccid: number[] | null,
+    dtid: [] | null,
+    limit: number | null,
+    threshold: number | null,
+    lang: string
   ) => {
     const URL =
       `/v1/posts/newest?` +
@@ -63,8 +70,13 @@ const postApi = {
         ? `&${dtid?.map((n, index) => `dtid[${index}]=${n}`).join('&')}`
         : ``
       }` +
-      `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}`
-    return axiosClient.get(URL)
+      `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}` +
+      `&lang=${lang}`
+    return axiosClient.get(URL, {
+      headers: {
+        'Cache-Control': 'private, max-age=300'
+      },
+    })
   },
   updateStatusPost: (id: number, status: number) => {
     const URL = `/v1/posts/sta`
@@ -78,12 +90,12 @@ const postApi = {
       }
     )
   },
-  getPostRelated: (postId: number) => {
-    const URL = `/v1/posts/related/${postId}`
+  getPostRelated: (postId: number, lang: string) => {
+    const URL = `/v1/posts/related/${postId}?lang=${lang}`
     return axiosClient.get(URL)
   },
-  getPostbyId: (params: number) => {
-    const URL = `/v1/posts/${params}`
+  getPostbyId: (params: number, lang: string) => {
+    const URL = `/v1/posts/${params}?lang=${lang}`
     return axiosClient.get(URL)
   },
   updatePostedInfo: (updatePost: FormValues) => {
@@ -97,8 +109,8 @@ const postApi = {
     })
   },
 
-  getPostV3: (id: number) => {
-    const URL = `v3/posts/${id}`
+  getPostV3: (id: number, lang: string) => {
+    const URL = `v3/posts/${id}?lang=${lang}`
     return axiosClient.get(URL)
   }
 }

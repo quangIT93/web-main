@@ -65,10 +65,12 @@
       justify-content: center;
       color: #0D99FF;
       gap: 8px;
+      cursor: pointer;
 
       p {
-        width: 84px;
+        // width: 84px;
       }
+
     }
 
     .suggest-job-not-loging {
@@ -90,6 +92,7 @@
           font-style: normal;
           font-weight: 700;
           line-height: 30px;
+          margin-bottom: 8px;
           /* 125% */
         }
 
@@ -124,6 +127,34 @@
 
           &:active {
             transform: scale(0.9);
+          }
+        }
+      }
+
+
+    }
+  }
+
+  @include breakpoint(mobile) {
+    .ant-space-item {
+      .suggest-job-not-loging {
+        flex-direction: column;
+      }
+    }
+  }
+
+  @include breakpoint(tablet) {
+    .ant-space-item {
+      .suggest-job-not-loging {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .suggest-job-not-loging_left {
+          margin-bottom: 8px;
+
+          h3 {
+            margin-bottom: 8px;
+
           }
         }
       }

@@ -23,7 +23,7 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
   const [jobTypes, setJobTypes] = React.useState<AxiosResponse | null>(null);
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType();
+    const result = await siteApi.getJobType("vi");
     if (result) {
       setJobTypes(result);
     }
@@ -31,6 +31,7 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
 
   React.useEffect(() => {
     getTypeJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {

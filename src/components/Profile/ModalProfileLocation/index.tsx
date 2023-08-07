@@ -1,33 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
+// import Autocomplete from '@mui/material/Autocomplete';
+// import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import OutlinedInput from '@mui/material/OutlinedInput';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
-import { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-import Chip from '@mui/material/Chip';
-
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import { CloseOutlined } from '@ant-design/icons';
 
 import { TreeSelect } from 'antd';
 
-import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { message, Space } from 'antd';
+import { message } from 'antd';
 
 // data
 import profileApi from 'api/profileApi';
@@ -38,10 +21,10 @@ import locationApi from '../../../api/locationApi';
 
 import {
   getProfile,
-  resetProfileState,
+  // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
 
-const { SHOW_CHILD, SHOW_PARENT, SHOW_ALL, TreeNode } = TreeSelect;
+const { SHOW_PARENT } = TreeSelect;
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -62,22 +45,22 @@ interface IModalProfileLocation {
   locations: number[];
 }
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
 
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+// const MenuProps = {
+//   PaperProps: {
+//     style: {
+//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+//       width: 250,
+//     },
+//   },
+// };
 
 const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const { openModalLocation, setOpenModalLocation, locations } = props;
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
-  const [open, setOpen] = React.useState<any>([]);
+  // const [open, setOpen] = React.useState<any>([]);
   const [treeData, setTransformedData] = React.useState<any>(null);
 
   const [value, setValue] = React.useState(
@@ -96,7 +79,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleClose = () => setOpenModalLocation(false);
   const allLocation = async () => {
     try {
-      const allLocation = await locationApi.getAllLocation();
+      const allLocation = await locationApi.getAllLocation('vi');
 
       if (allLocation) {
         setDataAllLocation(allLocation.data);
@@ -110,6 +93,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     allLocation();
     // getAllLocations()
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -131,14 +115,16 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
 
       setTransformedData(transformedData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataAllLocation]);
 
   useEffect(() => {
     setValue(locations?.map((v: any, i) => v.district_id) || []);
 
     if (dataAllLocation && dataAllLocation.length > 0) {
-      setOpen(Array(dataAllLocation.length).fill(false));
+      // setOpen(Array(dataAllLocation.length).fill(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataAllLocation]);
 
   // console.log('dataAllLocation', dataAllLocation)
@@ -209,7 +195,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         return;
       }
       const result = await profileApi.updateProfileLocation(
-        value
+        value,
         // locationId,
       );
       if (result) {

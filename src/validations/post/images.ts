@@ -1,8 +1,8 @@
-const validatePostImages = (images) => {
+const validatePostImages = (images: any) => {
   let isValid = true
   let message = ''
 
-  images.forEach((image) => {
+  images.forEach((image: any) => {
     if (!image.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
       isValid = false
       message = 'Định dạng không hợp lệ'

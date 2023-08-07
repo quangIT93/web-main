@@ -68,6 +68,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
         newCount,
         10,
         '1',
+        'vi',
       );
 
       if (result) {
@@ -104,6 +105,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
         lastPostId,
         5,
         '1',
+        'vi',
       );
       if (result) {
         setUploading(false);
@@ -121,7 +123,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleShowDetail = (

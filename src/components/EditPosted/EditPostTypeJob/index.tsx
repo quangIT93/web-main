@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, memo } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -24,7 +24,7 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
   const [jobTypes, setJobTypes] = useState<AxiosResponse | null>(null);
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType();
+    const result = await siteApi.getJobType("vi");
     if (result) {
       setJobTypes(result);
     }
@@ -32,6 +32,7 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
 
   React.useEffect(() => {
     getTypeJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {

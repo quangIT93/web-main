@@ -51,27 +51,27 @@
   }
 }
 
-.new-job {
-  // @include breakpoint(mobile) {
-  //   margin-top: 14rem !important;
-  // }
+// .new-job {
+// @include breakpoint(mobile) {
+//   margin-top: 14rem !important;
+// }
 
-  // @include breakpoint(tablet) {
-  //   margin-top: 14rem !important;
-  // }
+// @include breakpoint(tablet) {
+//   margin-top: 14rem !important;
+// }
 
-  // @include breakpoint(largeTablet) {
-  //   margin-top: 14rem !important;
-  // }
+// @include breakpoint(largeTablet) {
+//   margin-top: 14rem !important;
+// }
 
-  // @include breakpoint(an_order) {
-  //   margin-top: 14rem !important;
-  // }
+// @include breakpoint(an_order) {
+//   margin-top: 14rem !important;
+// }
 
-  // @include breakpoint(destop) {
-  //   margin-top: 14rem !important;
-  // }
-}
+// @include breakpoint(destop) {
+//   margin-top: 14rem !important;
+// }
+// }
 
 
 .div-cart-item-post {
@@ -132,7 +132,7 @@
 
   // font-size: 12px;
   p {
-    width: 84px;
+    // width: 84px;
   }
 
 
@@ -169,5 +169,11 @@
 @media screen and (max-width: 597px) {
   .new-job {
     margin-top: var(--mrTopRes) !important;
+  }
+}
+
+@media screen and (max-width: 596px) {
+  .new-job {
+    margin-top: 0 !important;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 // import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import breakpoints from '../../scss/breakpoints';
@@ -6,6 +6,9 @@ import breakpoints from '../../scss/breakpoints';
 import { FaceBookIcon } from '#components/Icons';
 
 import { Link } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer';
 
 const { mobile, tablet } = breakpoints;
 
@@ -69,6 +72,7 @@ const Visibility = styled('div')({
 });
 
 const Footer: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [open, setOpen] = React.useState(false);
 
   const [windowWidth, setWindowWidth] = useState(false);
@@ -77,7 +81,7 @@ const Footer: React.FC = () => {
   const footerRef = React.useRef<HTMLDivElement | null>(null);
 
   // const mail = useRef('contact.hijob@gmail.com');
-  const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
+  // const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
 
   const handleClickOpen = (
     e:
@@ -102,6 +106,10 @@ const Footer: React.FC = () => {
   };
 
   useEffect(() => {
+
+  }, [languageRedux])
+
+  useEffect(() => {
     updateWindowWidth();
   }, [windowWidth]);
 
@@ -109,6 +117,7 @@ const Footer: React.FC = () => {
     if (windowWidth) {
       return setOpen(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -123,6 +132,7 @@ const Footer: React.FC = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -131,14 +141,14 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-                transform: 'translateY(calc(-100% - 36px))',
-              }
+              transform: 'translateY(calc(-100% - 36px))',
+            }
             : !open && !windowWidth
-            ? {
+              ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-            : { transform: 'none' }
+              : { transform: 'none' }
         }
       >
         <div className="container-footer">
@@ -153,33 +163,89 @@ const Footer: React.FC = () => {
             >
               <img
                 src={require('../../img/langdingPage/logoHiJob.png')}
-                alt="ảnh bị lỗi"
+                alt={languageRedux == 1 ? "ảnh bị lỗi" : "Error photo"}
               />
             </div>
 
-            <h3>Kết nối tài năng</h3>
-            <p>Công ty TNHH NeoWorks., LTD</p>
-            <p>Địa chỉ: 79 Quốc Hương, P. Thảo Điền, Quận 2, TP HCM</p>
-            <p>Đại diện pháp luật: Kim Dongha</p>
-            <p>Chức vụ: Giám đốc</p>
+            <h3>
+              {
+                languageRedux == 1 ?
+                  'Kết nối tài năng' :
+                  'Talent connection'
+              }
+            </h3>
+            <p>
+              {
+                languageRedux == 1 ?
+                  'Công ty TNHH NeoWorks., LTD' :
+                  'NeoWorks Co., Ltd., LTD'
+              }
+            </p>
+            <p>
+              {
+                languageRedux == 1 ?
+                  'Địa chỉ: 79 Quốc Hương, P. Thảo Điền, Quận 2, TP HCM' :
+                  'Address: 79 Quoc Huong, Thao Dien Ward, District 2, HCMC'
+              }
+            </p>
+            <p>
+              {
+                languageRedux == 1 ?
+                  'Đại diện pháp luật: Kim Dongha' :
+                  'Legal representative: Kim Dongha'
+              }
+            </p>
+            <p>
+              {
+                languageRedux == 1 ?
+                  'Chức vụ: Giám đốc' :
+                  'Position: Director'
+              }
+            </p>
           </div>
           <div className="footer-center">
-            <h4>Về HiJob</h4>
+            <h4>
+              {
+                languageRedux == 1 ?
+                  'Về HiJob' :
+                  'About HiJob'
+              }
+            </h4>
             <Link to="/policy#about-us" target="_seft">
-              Về HiJob
+              {
+                languageRedux == 1 ?
+                  'Về HiJob' :
+                  'About HiJob'
+              }
             </Link>
 
             <Link to="/policy#privacy-policy" target="_seft">
               {' '}
-              Chính sách bảo mật{' '}
+              {
+                languageRedux == 1 ?
+                  'Chính sách bảo mật' :
+                  'Privacy Policy'
+              }
+              {' '}
             </Link>
 
             <Link to="/policy#terms-of-use" target="_seft">
               {' '}
-              Điều khoản sử dụng{' '}
+              {
+                languageRedux == 1 ?
+                  'Điều khoản sử dụng' :
+                  'Terms of use'
+              }
+              {' '}
             </Link>
 
-            <h4>Liên kết</h4>
+            <h4>
+              {
+                languageRedux == 1 ?
+                  "Liên kết" :
+                  "Connect"
+              }
+            </h4>
             <div className="link-facebook">
               <FaceBookIcon />
               <Link to="https://www.facebook.com/hijobOfficial" target="_blank">
@@ -189,16 +255,23 @@ const Footer: React.FC = () => {
           </div>
           <div className="footer-right">
             <div className="right-top">
-              <h4>TẢI ỨNG DỤNG HIJOB</h4>
+              <h4>
+                {
+                  languageRedux == 1 ?
+                    'Tải Ứng dụng HiJob!' :
+                    'Download the HiJob App!'
+
+                }
+              </h4>
               <div className="div-img-footer">
                 <img
                   src={require('../../img/langdingPage/QRcode-ggplay.png')}
-                  alt="ảnh bị lỗi"
+                  alt={languageRedux == 1 ? "ảnh bị lỗi" : "Error photo"}
                 />
                 <img
                   style={{ marginLeft: 10 }}
                   src={require('../../img/langdingPage/QRcode-appstore.png')}
-                  alt="ảnh bị lỗi"
+                  alt={languageRedux == 1 ? "ảnh bị lỗi" : "Error photo"}
                 />
               </div>
               <div className="div-link-app">
@@ -209,7 +282,7 @@ const Footer: React.FC = () => {
                   <img
                     id="img-gallery"
                     src={require('../../img/langdingPage/image 43.png')}
-                    alt="ảnh bị lỗi"
+                    alt={languageRedux == 1 ? "ảnh bị lỗi" : "Error photo"}
                   />
                 </Link>
                 <Link
@@ -218,7 +291,7 @@ const Footer: React.FC = () => {
                 >
                   <img
                     src={require('../../img/langdingPage/image 45.png')}
-                    alt="ảnh bị lỗi"
+                    alt={languageRedux == 1 ? "ảnh bị lỗi" : "Error photo"}
                   />
                 </Link>
               </div>
@@ -229,20 +302,20 @@ const Footer: React.FC = () => {
                 <Link to="https://www.facebook.com/hijobOfficial/">
                   <img
                     src={require('../../img/langdingPage/imagefb.png')}
-                    alt="ảnh bị lỗi"
+                    alt={languageRedux == 1 ? "ảnh bị lỗi" : "Error photo"}
                   />
                 </Link>
                 <Link to="#">
                   <img
                     id="img-gallery"
                     src={require('../../img/langdingPage/imagein.png')}
-                    alt="ảnh bị lỗi"
+                    alt={languageRedux == 1 ? "ảnh bị lỗi" : "Error photo"}
                   />
                 </Link>
                 <Link to="#">
                   <img
                     src={require('../../img/langdingPage/imageyou.png')}
-                    alt="ảnh bị lỗi"
+                    alt={languageRedux == 1 ? "ảnh bị lỗi" : "Error photo"}
                   />
                 </Link>
               </div>
@@ -252,11 +325,23 @@ const Footer: React.FC = () => {
       </Visibility>
       <PolicyFooter id="div-policy-footer" onClick={handleClickOpen}>
         <Link to="/policy" target="_parent">
-          <p>Chính sách sử dụng</p>
+          <p>
+            {
+              languageRedux == 1 ?
+                'Chính sách sử dụng' :
+                'Usage Policy'
+            }
+          </p>
         </Link>
         <div id="div-policy-footer-right">
           <div style={{ flexDirection: 'row', display: 'flex' }}>
-            <p style={{ color: '#575757' }}>Tổng đài CSKH: </p>
+            <p style={{ color: '#575757' }}>
+              {
+                languageRedux == 1 ?
+                  'Tổng đài CSKH:' :
+                  'Customer Service Center'
+              }
+            </p>
             <p style={{ color: '#AAAAAA', marginLeft: '5px' }}>
               (028) 35358983
             </p>

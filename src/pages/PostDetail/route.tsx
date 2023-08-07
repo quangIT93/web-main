@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+// import React, { lazy } from 'react';
 import Detail from '.';
 import RouteProps from '../routes';
 const route: RouteProps = {

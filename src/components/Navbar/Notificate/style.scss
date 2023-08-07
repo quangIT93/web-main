@@ -1,3 +1,5 @@
+@import '/src/scss//mixins';
+
 .notification {
   position: absolute;
   background-color: #ffffff;
@@ -259,7 +261,7 @@
         padding-bottom: 6px;
         display: flex;
         justify-content: space-between;
-        align-items: end;
+        align-items: flex-end;
       }
 
       .wrap-content_keyword.selected {
@@ -454,5 +456,18 @@
 
   .modal-delete_keyword.open-modal_deleteKeyword {
     display: flex;
+  }
+
+  @include breakpoint(mobile) {
+    right: 0;
+    // width: 300px !important;
+  }
+
+  @include breakpoint(tablet) {
+    // display: none;
+  right: -106px;
+  left: unset;
+  // width: 200px !important;
+
   }
 }

@@ -40,6 +40,11 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import './style.scss';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
+
 // interface ItemTheme {
 //   id: number;
 //   title: string;
@@ -48,6 +53,7 @@ import './style.scss';
 // }
 
 const HotJob: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
   const [hotjob, setHotJob] = React.useState<any>([]);
@@ -81,7 +87,9 @@ const HotJob: React.FC = () => {
 
   const getHotJob = async () => {
     try {
-      const result = await hotJobApi.getHotJobTheme();
+      const result = await hotJobApi.getHotJobTheme(
+        languageRedux == 1 ? "vi" : "en"
+      );
       if (result) {
         setHotJob(result.data);
       }
@@ -92,7 +100,8 @@ const HotJob: React.FC = () => {
 
   React.useEffect(() => {
     getHotJob();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   // const getPostNewestByThemeId = async () => {
   //     try {
@@ -134,7 +143,7 @@ const HotJob: React.FC = () => {
     >
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <FireIcon width={25} height={25} />
-        <h2>Công việc nổi bật</h2>
+        <h2>{languageRedux == 1 ? "Công việc nổi bật" : "Hot jobs"}</h2>
       </div>
       <Swiper
         navigation={true}
@@ -204,7 +213,7 @@ const HotJob: React.FC = () => {
               <div className="slide-item">
                 <img
                   src={item.image}
-                  alt="anh bị lỗi"
+                  alt={languageRedux == 1 ? "ảnh bị lỗi" : "Error photo"}
                   style={{
                     width: '160px',
                     height: '160px',

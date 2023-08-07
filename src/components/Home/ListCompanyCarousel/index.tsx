@@ -35,6 +35,9 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import './style.scss';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+
 interface ItemTheme {
   id: number;
   title: string;
@@ -47,6 +50,9 @@ interface PropsThemesType {
   listTheme: AxiosResponse | null;
 }
 const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [value, setValue] = React.useState<Number>(0);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [index, setIndex] = React.useState(0);
@@ -103,7 +109,12 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         setSearchParams({ 'theme-id': `${newValue}` });
       }
 
-      const result = await postApi.getPostByThemeId(newValue, 19, null);
+      const result = await postApi.getPostByThemeId(
+        newValue,
+        19,
+        null,
+        languageRedux == 1 ? 'vi' : 'en',
+      );
       if (result) {
         setPostByTheme(result);
         // set backdrop
@@ -126,7 +137,12 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       var result;
       if (themeId) {
         setOpenBackdrop(true);
-        result = await postApi.getPostByThemeId(Number(themeId), 19, null);
+        result = await postApi.getPostByThemeId(
+          Number(themeId),
+          19,
+          null,
+          languageRedux == 1 ? 'vi' : 'en',
+        );
       }
 
       if (result) {
@@ -142,9 +158,9 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     getPostNewestByThemeId();
     setValue(Number(searchParams.get('theme-id')));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  }, [searchParams, languageRedux]);
 
-  // console.log(index);
+  console.log('value', value);
 
   return (
     <Box
@@ -232,7 +248,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         className="mySwiper"
       >
         {listTheme?.data.map((item: ItemTheme, index: number) => {
-          // console.log("id: ", item.id);
           return (
             <SwiperSlide
               key={index}
@@ -253,13 +268,18 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                 handleChange(event, item.id);
               }}
               style={{
-                borderBottom: item.id === value ? '2px solid #0d99ff' : 'none',
+                borderBottom:
+                  item.id === value
+                    ? '2px solid #0d99ff'
+                    : index === 0 && value === 0
+                    ? '2px solid #0d99ff'
+                    : '',
               }}
             >
               <div className="slide-item">
                 <img
                   src={item.image}
-                  alt="amhr bị lỗi"
+                  alt={languageRedux == 1 ? 'ảnh bị lỗi' : 'Error Photo'}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -270,7 +290,11 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                 <div className="div-info-themes-item">
                   <Space size={3} direction={'vertical'} style={{ width: 150 }}>
                     <h5>{item.title}</h5>
-                    <h6>{`${item.number_of_posts} việc làm`}</h6>
+                    <h6>
+                      {languageRedux == 1
+                        ? `${item.number_of_posts} việc làm`
+                        : `${item.number_of_posts} jobs`}
+                    </h6>
                   </Space>
                 </div>
               </div>

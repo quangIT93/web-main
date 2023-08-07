@@ -4,9 +4,10 @@ const nearByApi = {
   getNearByJob: (
     pvId: number,
     limit: Number,
-    threshold: Number | null
+    threshold: Number | null,
+    lang: string
   ) => {
-    const URL = `/v1/posts/nearby?pvid=${pvId}&limit=${limit}&threshold=${threshold ? threshold : ''}`
+    const URL = `/v1/posts/nearby?pvid=${pvId}&limit=${limit}&threshold=${threshold ? threshold : ''}&lang=${lang}`
     return axiosClient.get(URL)
   },
 }
