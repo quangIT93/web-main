@@ -850,7 +850,7 @@ const Detail: React.FC = () => {
                       ? `${moment(new Date(post?.data.expiredDate)).format(
                           'HH:mm',
                         )}`
-                      : `Không có thời gian hết hạn`}
+                      : `Vô thời hạn`}
                   </h5>
                 </div>
               </div>
