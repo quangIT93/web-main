@@ -80,6 +80,7 @@ const BreadcrumbsCpn: React.FC = () => {
     try {
       const result = await categoriesApi.getAllChildCategories(
         valueJobChild?.id,
+        "vi"
       );
       if (result) {
         setChildCatelories(result.data);
@@ -255,12 +256,12 @@ const BreadcrumbsCpn: React.FC = () => {
           {arrayChild?.length === 0
             ? 'Tất cả'
             : arrayChild?.map(
-                (value: { id: number; name: string }, index: number) => (
-                  <div key={index}>
-                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                  </div>
-                ),
-              )}
+              (value: { id: number; name: string }, index: number) => (
+                <div key={index}>
+                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                </div>
+              ),
+            )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -327,7 +328,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                          checkItemsCount >= MAX_CHECKED_ITEMS
+                        checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />

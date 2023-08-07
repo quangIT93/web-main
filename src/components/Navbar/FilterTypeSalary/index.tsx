@@ -37,7 +37,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={SALARY_TYPE}
-      // defaultValue={SALARY_TYPE}
+    // defaultValue={SALARY_TYPE}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -75,7 +75,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
   const SALARY_TYPE = userFilteredCookies.id;
 
   const getTypeSalary = async () => {
-    const result = await siteApi.getSalaryType();
+    const result = await siteApi.getSalaryType("vi");
 
     if (result) {
       setData(result.data);

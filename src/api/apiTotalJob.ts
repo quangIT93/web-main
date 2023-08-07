@@ -2,8 +2,8 @@ import axiosClient from './axiosClient'
 // api/productApi.js
 
 const apiTotalJob = {
-  getTotalJob: () => {
-    const URL = `/v3/site/jobs`
+  getTotalJob: (lang: string) => {
+    const URL = `/v3/site/jobs?lang=${lang}`
     return axiosClient.get(URL)
   },
 }

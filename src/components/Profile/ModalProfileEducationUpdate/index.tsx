@@ -201,7 +201,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileEducation(education);
         if (result) {
-          const profile = await profileApi.getProfile();
+          const profile = await profileApi.getProfile("vi");
           if (profile) {
             setProfileUser(profile.data);
           }
@@ -278,7 +278,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Nhập tên trường hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -300,7 +300,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Ngành"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>

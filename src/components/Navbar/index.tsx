@@ -290,7 +290,7 @@ const Navbar: React.FC = () => {
     try {
       await dispatch(getProfile() as any);
 
-      const result = await profileApi.getProfile();
+      const result = await profileApi.getProfile("vi");
       if (result) {
         dispatch(getProfile() as any);
       }
@@ -617,7 +617,7 @@ const Navbar: React.FC = () => {
       }
       var result = null;
       if (localStorage.getItem('accessToken')) {
-        result = await profileApi.getProfile();
+        result = await profileApi.getProfile("vi");
       }
       if (result) {
         dispatch(getProfile() as any);

@@ -51,7 +51,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const getSizes = async () => {
     try {
-      const sizes = await apiCompany.getAllSizesCompany();
+      const sizes = await apiCompany.getAllSizesCompany("vi");
 
       if (sizes) {
         setDataSizes(sizes);
@@ -62,7 +62,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   };
   const getCateogrys = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise();
+      const result = await categoriesApi.getAllCategorise("vi");
       if (result) {
         setDataCategories(result.data);
       }

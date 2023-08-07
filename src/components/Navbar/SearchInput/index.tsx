@@ -158,12 +158,12 @@ const SearchInput: React.FC<SearchProps> = ({
       var response = null;
       setLoading(true);
       if (localStorage.getItem('accessToken')) {
-        const result = await searchApi.getHistoryKeyWord(10);
+        const result = await searchApi.getHistoryKeyWord(10, "vi");
         if (result) {
           response = result.data.listHistorySearch;
         }
       } else {
-        const result = await searchApi.getSuggestKeyWord(10);
+        const result = await searchApi.getSuggestKeyWord(10, "vi");
         if (result) {
           response = result.data;
         }
@@ -189,10 +189,10 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getDataSearch = async () => {
     try {
-      const resultSuggest = await searchApi.getSuggestKeyWord(10);
+      const resultSuggest = await searchApi.getSuggestKeyWord(10, "vi");
       let resultHistory;
       if (isLogin) {
-        resultHistory = await searchApi.getHistoryKeyWord(10);
+        resultHistory = await searchApi.getHistoryKeyWord(10, "vi");
         resultHistory && setDataHistory(resultHistory.data);
       }
       // if (resultHistory || resultSuggest) {
@@ -250,8 +250,7 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${
-            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          `/search-results?${value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
           }`,
         );
       } else {
@@ -307,11 +306,11 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getTotalUserSearch = async () => {
     try {
-      const result = await apiTotalJob.getTotalJob();
+      const result = await apiTotalJob.getTotalJob("vi");
       if (result) {
         setTotalJob(result?.data?.total);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -413,7 +412,7 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-        // open={openDropdown}
+      // open={openDropdown}
       />
 
       <Button

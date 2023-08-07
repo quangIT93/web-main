@@ -69,16 +69,16 @@ const CategoryCarousel: React.FC = () => {
     setRefCatelory,
     navTouchCatelory,
   }: // openCollapseFilter,
-  {
-    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
-    childCateloriesArray: number[];
-    valueJobChild: IvalueJobChild;
-    setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
-    setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
-    setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
-    navTouchCatelory: boolean;
-    openCollapseFilter: boolean;
-  } = useContext(HomeValueContext);
+    {
+      setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
+      childCateloriesArray: number[];
+      valueJobChild: IvalueJobChild;
+      setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
+      setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
+      setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
+      navTouchCatelory: boolean;
+      openCollapseFilter: boolean;
+    } = useContext(HomeValueContext);
 
   const [value, setValue] = React.useState(0);
   const [categoryIdCookie, setCategorieIdCookie] = React.useState(0);
@@ -190,7 +190,7 @@ const CategoryCarousel: React.FC = () => {
   const getAllParentCategories = async () => {
     try {
       setLoading(true);
-      const result = await categoriesApi.getAllParentCategories();
+      const result = await categoriesApi.getAllParentCategories("vi");
       if (result) {
         setTimeout(() => {
           setLoading(false);
