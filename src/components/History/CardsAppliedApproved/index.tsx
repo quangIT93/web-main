@@ -42,6 +42,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
       lastPostId,
       11,
       1,
+      'vi',
     );
     if (result.data.length <= 10) {
       setIsVisible(false);
@@ -55,7 +56,12 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
 
   const getAllApproved = async () => {
     try {
-      const result = await historyApplicator.getAllSubmitedApplied(null, 10, 1);
+      const result = await historyApplicator.getAllSubmitedApplied(
+        null,
+        10,
+        1,
+        'vi',
+      );
 
       if (result) {
         setDataApplied(result.data);
@@ -93,6 +99,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
         lastPostId,
         10,
         1,
+        'vi',
       );
       if (result) {
         setUploading(false);

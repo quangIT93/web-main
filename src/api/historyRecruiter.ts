@@ -1,8 +1,8 @@
 import axiosClient from './axiosClient'
 // api/productApi.js
 const historyRecruiter = {
-  getAllPosted: (page: number | null, limit: number, status: number| null) => {
-    const URL = `/v1/history/recruiter/posts?threshold=${page}&limit=${limit}&status=${status}`
+  getAllPosted: (page: number | null, limit: number, status: number| null, lang: string) => {
+    const URL = `/v1/history/recruiter/posts?threshold=${page}&limit=${limit}&status=${status}&lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

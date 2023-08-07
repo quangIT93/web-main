@@ -45,7 +45,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
-    const result = await historyBookmark.getAllBookmark(lastPostId, 11);
+    const result = await historyBookmark.getAllBookmark(lastPostId, 11, 'vi');
     if (result.data.length <= 10) {
       setIsVisible(false);
     }
@@ -58,7 +58,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
 
   const getAllPosted = async (newCount: number) => {
     try {
-      const result = await historyBookmark.getAllBookmark(newCount, 10);
+      const result = await historyBookmark.getAllBookmark(newCount, 10, 'vi');
 
       if (result) {
         setLastPostId(result.data[result.data.length - 1].bookmark_id);
@@ -98,7 +98,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const handleClickAddItem = async () => {
     try {
       setUploading(true);
-      const result = await historyBookmark.getAllBookmark(lastPostId, 10);
+      const result = await historyBookmark.getAllBookmark(lastPostId, 10, 'vi');
 
       if (result) {
         // if (result?.data?.is_over === true) {

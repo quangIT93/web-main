@@ -128,7 +128,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const allPost = async () => {
     try {
       // const result = await applitedPostedApi.getAllApplitedPostedApi(0);
-      const result = await historyRecruiter.getAllPosted(0, 20, null);
+      const result = await historyRecruiter.getAllPosted(0, 20, null, 'vi');
       if (result) {
         setDataPost(result.data);
       }
