@@ -145,6 +145,7 @@ const BreadcrumbsCpn: React.FC = () => {
         null,
         9,
         thersholdId,
+        "vi"
       );
       if (result) {
         setPostNewest(result);

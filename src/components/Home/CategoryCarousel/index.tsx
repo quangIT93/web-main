@@ -172,9 +172,9 @@ const CategoryCarousel: React.FC = () => {
       }
       var result;
       if (newValue === 1) {
-        result = await postApi.getPostNewest(null, null, null, 19);
+        result = await postApi.getPostNewest(null, null, null, 19, null, "vi");
       } else {
-        result = await postApi.getPostNewest(Number(newValue), null, null, 19);
+        result = await postApi.getPostNewest(Number(newValue), null, null, 19, null, "vi")
       }
 
       if (result) {
@@ -224,9 +224,9 @@ const CategoryCarousel: React.FC = () => {
       const themeId = searchParams.get('categories-id');
       var result;
       if (themeId === 'all') {
-        result = await postApi.getPostNewest(null, null, null, 19);
+        result = await postApi.getPostNewest(null, null, null, 19, null, "vi");
       } else {
-        result = await postApi.getPostNewest(Number(themeId), null, null, 19);
+        result = await postApi.getPostNewest(Number(themeId), null, null, 19, null, "vi");
       }
       if (result) {
         setPostNewest(result);
@@ -243,9 +243,9 @@ const CategoryCarousel: React.FC = () => {
       const themeId = userSelectedId;
       var result;
       if (themeId === 1) {
-        result = await postApi.getPostNewest(null, null, null, 19);
+        result = await postApi.getPostNewest(null, null, null, 19, null, "vi");
       } else {
-        result = await postApi.getPostNewest(Number(themeId), null, null, 19);
+        result = await postApi.getPostNewest(Number(themeId), null, null, 19, null, "vi");
       }
       if (result) {
         setPostNewest(result);
