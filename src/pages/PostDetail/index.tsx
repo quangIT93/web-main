@@ -201,6 +201,7 @@ const Detail: React.FC = () => {
 
   // const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const POST_ID = Number(searchParams.get('post-id'));
   // const openNotification = () => {
   //   api.info({
@@ -244,7 +245,7 @@ const Detail: React.FC = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -258,7 +259,9 @@ const Detail: React.FC = () => {
       // setIsLoading(true);
       const accountId = localStorage.getItem('accountId');
       // const result = await postApi.getById(POST_ID);
-      const result = await postApi.getPostV3(POST_ID);
+      const result = await postApi.getPostV3(POST_ID,
+        languageRedux == 1 ? 'vi' : 'en'
+      );
       // console.log('result', result2);
       if (result) {
         // const list = result?.data.categories.map((category: any) =>
@@ -310,7 +313,9 @@ const Detail: React.FC = () => {
           setBookmarked(false);
         }
         // get post related by id post
-        const postNewest = await postApi.getPostRelated(POST_ID);
+        const postNewest = await postApi.getPostRelated(POST_ID,
+          languageRedux == 1 ? 'vi' : 'en'
+        );
         //setPost related
         setPostNewest(postNewest);
       }
@@ -322,7 +327,9 @@ const Detail: React.FC = () => {
   const getAnotherPost = async (postID: number, position: number) => {
     try {
       // setIsLoading(true);
-      const result = await postApi.getById(postID, 'vi');
+      const result = await postApi.getById(postID,
+        languageRedux == 1 ? 'vi' : 'en'
+      );
       if (result) {
         // setIsLoading(false);
         position === 0 ? setPostPrev(result.data) : setPostNext(result.data);
@@ -353,7 +360,7 @@ const Detail: React.FC = () => {
     //get post next
     getAnotherPost(POST_ID + 1, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookmarked, POST_ID]);
+  }, [bookmarked, POST_ID, languageRedux]);
 
   // set size for Breadcrumb
   // React.useEffect(() => {
@@ -595,17 +602,14 @@ const Detail: React.FC = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address}, ${
-          post?.data.location ? post?.data.location.fullName : ''
-        }, ${
-          post?.data?.location?.district
-            ? post?.data?.location?.district?.fullName
-            : ''
-        }, ${
-          post?.data?.location?.district?.province
-            ? post?.data.district?.province?.fullName
-            : ''
-        }`,
+      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
+      }, ${post?.data?.location?.district
+        ? post?.data?.location?.district?.fullName
+        : ''
+      }, ${post?.data?.location?.district?.province
+        ? post?.data.district?.province?.fullName
+        : ''
+      }`,
     );
   };
 
@@ -844,15 +848,14 @@ const Detail: React.FC = () => {
               }}
               onClick={() =>
                 window.open(
-                  `/message?post_id=${searchParams.get('post-id')}&user_id=${
-                    post?.data?.accountId
+                  `/message?post_id=${searchParams.get('post-id')}&user_id=${post?.data?.accountId
                   } `,
                   '_blank',
                 )
               }
-              // onClick={() => {
-              //   console.log(post?.data);
-              // }}
+            // onClick={() => {
+            //   console.log(post?.data);
+            // }}
             ></Button>
             <Button
               onClick={onclick}
@@ -955,8 +958,8 @@ const Detail: React.FC = () => {
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
                         : 'Chưa cập nhật'}
                     </h5>
                   </div>
@@ -1064,17 +1067,14 @@ const Detail: React.FC = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${
-                      post?.data?.location ? post?.data?.location?.fullName : ''
-                    }, ${
-                      post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
+                      }, ${post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                    }, ${
-                      post?.data?.location?.district?.province
+                      }, ${post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                    }`}</h3>
+                      }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -1272,7 +1272,7 @@ const Detail: React.FC = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                          // onClick={handlePreviousPost}
+                        // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1427,8 +1427,8 @@ const Detail: React.FC = () => {
                 {post?.data?.companyResourceData?.name === 'HIJOB'
                   ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Bạn có muốn ứng tuyển công việc này không?'
                   : isApplied
-                  ? 'Bạn đã ứng tuyển công việc này chưa?'
-                  : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
+                    ? 'Bạn đã ứng tuyển công việc này chưa?'
+                    : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
               </Typography>
 
               <Box
@@ -1456,8 +1456,8 @@ const Detail: React.FC = () => {
                     post?.data?.companyResourceData?.name === 'HIJOB'
                       ? handleApply
                       : isApplied
-                      ? handleChangeStatus
-                      : handleClickChangePage
+                        ? handleChangeStatus
+                        : handleClickChangePage
                   }
                   style={{
                     width: '300px',

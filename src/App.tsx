@@ -17,6 +17,8 @@ import ScrollObserver from './utils/ScrollObserver';
 // import HomeContextProvider from 'context/HomeContextProvider';
 import HomeValueContextProvider from 'context/HomeValueContextProvider';
 import ChatContextProvider from 'context/ChatContextProvider';
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 // Initialize Firebase
@@ -49,28 +51,32 @@ const App: React.FC = () => {
   //   profile_picture: 'imageUrl',
   // });
 
+  let persistor = persistStore(store);
+
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
       <Provider store={store}>
-        <BrowserRouter>
-          <HomeValueContextProvider>
-            <ChatContextProvider>
-              <ScrollObserver>
-                <Layout>
-                  <Routes>
-                    {/* @ts-ignore */}
-                    {routes.map(({ path, component }: RouteProps) => {
-                      return (
-                        <Route path={path} element={component} key={path} />
-                      );
-                    })}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Layout>
-              </ScrollObserver>
-            </ChatContextProvider>
-          </HomeValueContextProvider>
-        </BrowserRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <HomeValueContextProvider>
+              <ChatContextProvider>
+                <ScrollObserver>
+                  <Layout>
+                    <Routes>
+                      {/* @ts-ignore */}
+                      {routes.map(({ path, component }: RouteProps) => {
+                        return (
+                          <Route path={path} element={component} key={path} />
+                        );
+                      })}
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Layout>
+                </ScrollObserver>
+              </ChatContextProvider>
+            </HomeValueContextProvider>
+          </BrowserRouter>
+        </PersistGate>
       </Provider>
     </React.Suspense>
   );

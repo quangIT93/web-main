@@ -39,10 +39,11 @@ const postApi = {
   getPostByThemeId: (
     themeId: number,
     limit: Number,
-    threshold: Number | null
+    threshold: Number | null,
+    lang: string
   ) => {
     const URL = `v1/posts/theme?tid=${themeId}&limit=${limit}&threshold=${threshold ? threshold : ''
-      }`
+      }&lang=${lang}`
     return axiosClient.get(URL,
       {
         headers: {
@@ -55,7 +56,8 @@ const postApi = {
     ccid?: number[] | null,
     dtid?: [] | null,
     limit?: Number,
-    threshold?: Number
+    threshold?: Number,
+    lang?: string
   ) => {
     const URL =
       `/v1/posts/newest?` +
@@ -68,7 +70,8 @@ const postApi = {
         ? `&${dtid?.map((n, index) => `dtid[${index}]=${n}`).join('&')}`
         : ``
       }` +
-      `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}`
+      `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}` +
+      `&lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         'Cache-Control': 'private, max-age=300'
@@ -87,12 +90,12 @@ const postApi = {
       }
     )
   },
-  getPostRelated: (postId: number) => {
-    const URL = `/v1/posts/related/${postId}`
+  getPostRelated: (postId: number, lang: string) => {
+    const URL = `/v1/posts/related/${postId}&lang=${lang}`
     return axiosClient.get(URL)
   },
-  getPostbyId: (params: number) => {
-    const URL = `/v1/posts/${params}`
+  getPostbyId: (params: number, lang: string) => {
+    const URL = `/v1/posts/${params}&lang=${lang}`
     return axiosClient.get(URL)
   },
   updatePostedInfo: (updatePost: FormValues) => {
@@ -106,8 +109,8 @@ const postApi = {
     })
   },
 
-  getPostV3: (id: number) => {
-    const URL = `v3/posts/${id}`
+  getPostV3: (id: number, lang: string) => {
+    const URL = `v3/posts/${id}?lang=${lang}`
     return axiosClient.get(URL)
   }
 }

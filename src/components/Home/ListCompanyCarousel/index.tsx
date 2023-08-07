@@ -103,7 +103,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         setSearchParams({ 'theme-id': `${newValue}` });
       }
 
-      const result = await postApi.getPostByThemeId(newValue, 19, null);
+      const result = await postApi.getPostByThemeId(newValue, 19, null, "vi");
       if (result) {
         setPostByTheme(result);
         // set backdrop
@@ -126,7 +126,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       var result;
       if (themeId) {
         setOpenBackdrop(true);
-        result = await postApi.getPostByThemeId(Number(themeId), 19, null);
+        result = await postApi.getPostByThemeId(Number(themeId), 19, null, "vi");
       }
 
       if (result) {
