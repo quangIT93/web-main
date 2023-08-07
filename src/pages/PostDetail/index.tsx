@@ -851,8 +851,8 @@ const Detail: React.FC = () => {
                 >
                   <h5>
                     {post?.data.expiredDate
-                      ? `${moment(new Date(post?.data.expiredDate)).format(
-                          'HH:mm',
+                      ? `${new Date(post?.data.expiredDate).toLocaleDateString(
+                          'en-GB',
                         )}`
                       : `Vô thời hạn`}
                   </h5>
