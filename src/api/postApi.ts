@@ -52,12 +52,12 @@ const postApi = {
       })
   },
   getPostNewest: (
-    pcid?: Number | null,
-    ccid?: number[] | null,
-    dtid?: [] | null,
-    limit?: Number,
-    threshold?: Number,
-    lang?: string
+    pcid: number | null,
+    ccid: number[] | null,
+    dtid: [] | null,
+    limit: number | null,
+    threshold: number | null,
+    lang: string
   ) => {
     const URL =
       `/v1/posts/newest?` +
