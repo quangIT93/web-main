@@ -56,6 +56,9 @@ export const home = {
     "candidate_nguyen_van_an_has_just_applied_for_the_position_of_......_for_your_.....": "Ứng viên Nguyễn Văn An vừa nộp hồ sơ ứng tuyển vị trí Phục vụ bàn nhà hàng cho Nhà hàng Ai Works của bạn",
     "job_has_been_saved": "Đã lưu công việc",
     "application_approved!": "Đơn ứng tuyển đã được duyệt",
+    "approved": "Được phê duyệt:",
+    "pending": "Chờ xử lý:",
+    "waiting": "Chờ phê duyệt:",
 }
 
 

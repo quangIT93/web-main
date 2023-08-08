@@ -70,10 +70,13 @@ export interface PostNewest {
   };
   created_at_text: string;
   bookmarked: boolean;
+  money_type_text: string;
 }
 
 const NewJobs: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [page, setPage] = React.useState(1);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
@@ -133,7 +136,7 @@ const NewJobs: React.FC = () => {
       null,
       9,
       thersholdId,
-      languageRedux == 1 ? "vi" : "en"
+      languageRedux == 1 ? 'vi' : 'en',
     );
 
     if (result) {
@@ -149,8 +152,13 @@ const NewJobs: React.FC = () => {
   const getPostNewest = async () => {
     try {
       setOpenBackdrop(true);
-      const result = await postApi.getPostNewest(null, null, null, 19, null,
-        languageRedux == 1 ? "vi" : "en"
+      const result = await postApi.getPostNewest(
+        null,
+        null,
+        null,
+        19,
+        null,
+        languageRedux == 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -198,11 +206,7 @@ const NewJobs: React.FC = () => {
           <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
             <NewJobIcon width={25} height={25} />
             <h2>
-              {
-                languageRedux == 1 ?
-                  home.newest_jobs :
-                  homeEn.newest_jobs
-              }
+              {languageRedux == 1 ? home.newest_jobs : homeEn.newest_jobs}
             </h2>
           </div>
 
@@ -226,13 +230,7 @@ const NewJobs: React.FC = () => {
                 handleChange(e, page);
               }}
             >
-              <p>
-                {
-                  languageRedux == 1 ?
-                    home.more :
-                    homeEn.more
-                }
-              </p>
+              <p>{languageRedux == 1 ? home.more : homeEn.more}</p>
               <MoreICon width={20} height={20} />
             </Space>
           </Stack>
@@ -244,7 +242,7 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-          //  onClick={handleClose}
+            //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

@@ -5,6 +5,10 @@
   .item-swiperSlide {
     width: fit-content;
     margin-left: 25px;
+    &:nth-child(1) {
+      margin-left: 0;
+    }
+
     .category-item-container {
       display: flex;
       position: relative;
@@ -26,6 +30,16 @@
         flex-direction: column;
         gap: 10px;
         align-items: center;
+
+      
+        &:hover {
+          .category-item-image {
+          }
+          .category-item-title {
+            color: #000000;
+            font-weight: 500;
+          }
+        }
     
         .category-item-image {
           height: 40px !important;
@@ -44,8 +58,8 @@
     
         .category-item-title {
           font-size: 12px;
-          font-weight: 400;
-          color: #000000;
+          font-weight: 500;
+          color: #575757;
           
           @include breakpoint(mobile) {
             white-space: nowrap;

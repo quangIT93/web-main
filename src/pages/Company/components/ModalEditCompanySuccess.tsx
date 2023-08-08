@@ -21,23 +21,19 @@ const style = {
 };
 
 interface IModalEditPost {
-  openModalEditPost: boolean;
-  setOpenModalEditPost: React.Dispatch<React.SetStateAction<boolean>>;
+  openModalEditCompany: boolean;
+  setOpenModalEditCompanySuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
-  const { openModalEditPost, setOpenModalEditPost } = props;
-  const handleClose = () => setOpenModalEditPost(false);
+const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
+  const { openModalEditCompany, setOpenModalEditCompanySuccess } = props;
 
-  const handleClickCloseModal = () => {
-    setOpenModalEditPost(false);
-  };
-  const handleClickChangePage = () => {
-    window.open(`/history`, '_parent');
+  const handleClose = () => {
+    setOpenModalEditCompanySuccess(false);
   };
   return (
     <Modal
-      open={openModalEditPost}
+      open={openModalEditCompany}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -49,7 +45,7 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           component="h2"
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
-          Đã chỉnh sửa bài tuyển dụng thành công!
+          Đã chỉnh sửa thông tin công ty thành công!
         </Typography>
         <Typography
           id="modal-modal-title"
@@ -57,7 +53,7 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           component="h4"
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
-          Bạn có muốn quay về trang lịch sử để kiểm tra thông tin!
+          Bạn có muốn quay về trang thông tin cá nhân!
         </Typography>
 
         <Box
@@ -72,7 +68,7 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           <Button
             type="primary"
             danger
-            onClick={handleClickCloseModal}
+            onClick={handleClose}
             style={{
               width: '300px',
             }}
@@ -81,7 +77,10 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           </Button>
           <Button
             type="primary"
-            onClick={handleClickChangePage}
+            onClick={() => {
+              setOpenModalEditCompanySuccess(false);
+              window.open('/profile', '_self');
+            }}
             style={{
               width: '300px',
             }}
@@ -94,4 +93,4 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
   );
 };
 
-export default ModalEditSuccess;
+export default ModalEditCompanySuccess;

@@ -122,9 +122,11 @@
 
     @include breakpoint(mobile) {
         width: 30%;
+        // width: 80px;
     }
 
     @include breakpoint(largeTablet) {
         width: 30%;
+        // width: 80px;
     }
 }

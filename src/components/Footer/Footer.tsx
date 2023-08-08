@@ -293,7 +293,7 @@ const Footer: React.FC = () => {
                 ? 'Tổng đài CSKH:'
                 : 'Customer Service Center'}
             </p>
-            <p style={{ color: '#AAAAAA', marginLeft: '5px' }}>
+            <p style={{ color: '#575757', marginLeft: '5px' }}>
               (028) 35358983
             </p>
             {/* <p style={{ color: '#575757', marginLeft: '2px' }}>

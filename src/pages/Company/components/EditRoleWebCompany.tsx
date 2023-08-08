@@ -8,6 +8,11 @@ import TextField from '@mui/material/TextField';
 
 import apiCompany from 'api/apiCompany';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import { company } from 'validations/lang/vi/company';
+import { companyEn } from 'validations/lang/en/company';
+
 // import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
   fontWeight: 700,
@@ -20,6 +25,7 @@ interface IEditPostAddress {
 }
 
 const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { setDataCompany, dataCompany } = props;
 
   const [dataRoles, setDataRoles] = useState<any>(null);
@@ -39,7 +45,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const getRoles = async () => {
     try {
-      const roles = await apiCompany.getAllRolesCompany("vi");
+      const roles = await apiCompany.getAllRolesCompany(
+        languageRedux === 1 ? "vi" : "en"
+      );
 
       if (roles) {
         setDataRoles(roles);
@@ -52,7 +60,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   useEffect(() => {
     getRoles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const handleEditCompanyRole = (event: any, value: any) => {
     setSelectedRole(value);
@@ -83,7 +91,12 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="addressTitle"
         >
-          Vai trò của bạn trong doanh nghiệp{' '}
+          {
+            languageRedux === 1 ?
+              company.role :
+              companyEn.role
+          }
+          {' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
 
@@ -95,7 +108,11 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder="Chọn vai trò của bạn"
+              placeholder={
+                languageRedux === 1 ?
+                  company.place_role :
+                  companyEn.place_role
+              }
               size="small"
             // value={dataCompany?.companyRole?.name}
             />
@@ -124,7 +141,11 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           onChange={handleEditCompanyWeb}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder="http://"
+          placeholder={
+            languageRedux === 1 ?
+              company.place_web :
+              companyEn.place_web
+          }
         //   error={titleError} // Đánh dấu lỗi
         />
       </div>

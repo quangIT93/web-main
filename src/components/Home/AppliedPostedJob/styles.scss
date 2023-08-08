@@ -123,7 +123,50 @@
 
                             .div-card-post-info_left {
                                 width: 181px;
+
+                                
+                                @include breakpoint(mobile) {
+                                    width: 180px;
+                                }
+                                
+                                @media screen and (min-width: 300px) and (max-width: 400px) {
+                                    width: 120px;
+                                  }
+
+                                @include breakpoint(tablet) {
+                                    width: 210px;
+                                }
                             }
+
+                            .div-card-post-right {
+                                @include breakpoint(mobile) {
+                                    width: 60px;
+             
+                                    .ant-space-item {
+                                        p {
+                                            width: 80px;
+                                            text-align: end;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;
+                                            overflow: hidden;
+                                        }
+                                    }
+                                }
+
+                                @include breakpoint(tablet) {
+                                    width: 70px;
+                                    .ant-space-item {
+                                        p {
+                                            width: 80px;
+                                            text-align: end;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;
+                                            overflow: hidden;
+                                        }
+                                    }
+                                }
+                            }
+
                         }
                     }
 
@@ -131,7 +174,11 @@
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
-
+                        .applied-posted-card_date {
+                            span {
+                                color: #575757;
+                            }
+                        }
                         .button-approved {
                             width: 155px;
                             height: 36px;
@@ -141,6 +188,7 @@
                             justify-content: center;
                             font-size: 14px;
                             font-weight: 500;
+                            color: #575757;
                         }
 
                         .button-check {

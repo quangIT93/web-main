@@ -326,7 +326,7 @@ const CategoryCarousel: React.FC = () => {
       }
 
       getNewstJobBycookie(storedSettings.userSelectedId);
-    }, 5000);
+    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
@@ -496,7 +496,8 @@ const CategoryCarousel: React.FC = () => {
           initialSlide={selectedItemIndex - 1}
         >
           {categories?.data.map((item: CategoryItem, index: number) => {
-            // console.log("id: ", item.id);
+            console.log('id: ', item.id);
+            console.log('index: ', index);
             return (
               <SwiperSlide
                 key={index}
@@ -526,7 +527,14 @@ const CategoryCarousel: React.FC = () => {
                       src={item.image}
                       alt={item.name}
                     />
-                    <span className="category-item-title">
+                    <span
+                      className="category-item-title"
+                      style={
+                        item.id === categoryIdCookie
+                          ? { color: 'black' }
+                          : { color: '' }
+                      }
+                    >
                       {isLogin && item.id === 1
                         ? languageRedux === 1
                           ? 'Công việc gợi ý'

@@ -29,6 +29,7 @@ const AnotherPost: React.FC<any> = (props) => {
   // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
   //   window.open(`/post-detail?post-id=${id}`);
   // };
+  console.log('props', props);
 
   return (
     <>
@@ -149,8 +150,9 @@ const AnotherPost: React.FC<any> = (props) => {
                 }}
               >
                 {new Intl.NumberFormat('en-US').format(props.item?.salary_min)}{' '}
-                -{' '}
+                {props.item.money_type_text}-{' '}
                 {new Intl.NumberFormat('en-US').format(props.item?.salary_max) +
+                  ` ${props.item.money_type_text}` +
                   `/${props.item?.salary_type}`}
               </Typography>
             </div>

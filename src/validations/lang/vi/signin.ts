@@ -16,5 +16,5 @@ export const signin = {
     "otp_resent": "Đã gửi lại mã code",
     "need_login": "Bạn cần đăng nhập để thực hiện tính năng này.",
     "no_otp": "Nếu không nhận được mã OTP qua email, bạn vui lòng kiểm tra lại email đã nhập chính xác chưa hoặc kiểm tra trong thư mục spam.",
-    "wrong_mail": "Email không đúng cú pháp vui lòng nhập lại."
+    "wrong_mail": "Email không đúng cú pháp vui lòng nhập lại.",
 }
