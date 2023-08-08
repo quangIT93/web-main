@@ -1,24 +1,24 @@
-import React, { memo } from 'react'
-import { Box } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
+import React, { memo } from 'react';
+import { Box } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 //@ts-ignore
-import { styleLabel } from '../CssEditPost'
+import { styleLabel } from '../CssEditPost';
 
 interface IEditDescription {
-  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
-  editDataPosted: any
+  setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
+  editDataPosted: any;
 }
 
 const EditDescription: React.FC<IEditDescription> = (props) => {
-  const { setEditDataPosted, editDataPosted } = props
+  const { setEditDataPosted, editDataPosted } = props;
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       description: e.target.value,
-    }))
-  }
+    }));
+  };
   return (
     <Box sx={{ marginTop: '24px' }}>
       <Typography
@@ -43,7 +43,7 @@ Vị trí, yêu cầu công việc
 Mô tả yêu cầu kỹ năng, bằng cấp nếu có"
       />
     </Box>
-  )
-}
+  );
+};
 
-export default memo(EditDescription)
+export default memo(EditDescription);

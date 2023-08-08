@@ -125,7 +125,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           <div className="edit-icon">
             <DeleteIcon width={15} height={15} />
           </div>
-          <p style={{ color: 'gray', fontSize: '14px' }}>Xoá</p>
+          <p style={{ color: '#575757', fontSize: '14px' }}>Xoá</p>
         </Space>
       </div>
       <ModalDeleteEducation

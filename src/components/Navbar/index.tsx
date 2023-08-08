@@ -1353,6 +1353,8 @@ const Navbar: React.FC = () => {
               >
                 <div className="button-download">
                   <DownloadIcon />
+
+                  {/* <img src="./images/cloud-downloading.gif" alt="" /> */}
                 </div>
                 {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
               </Button>

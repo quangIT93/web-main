@@ -160,7 +160,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                     overflow: 'hidden',
                     fontWeight: '400',
                     lineheight: '16px',
-                    color: '#000000',
+                    color: '#575757',
                   }}
                 >
                   {/* {props?.item?.company_name?.length > 50
@@ -241,7 +241,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
-                  {props?.item?.money_type_text}-{' '}
+                  {props?.item?.money_type_text} -{' '}
                   {new Intl.NumberFormat('en-US').format(
                     props.item.salary_max,
                   ) +
