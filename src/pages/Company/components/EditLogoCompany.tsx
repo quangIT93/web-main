@@ -6,10 +6,15 @@ import Typography from '@mui/material/Typography';
 import { Modal, Upload, message } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+
 import {
   UploadLogoCompanyicon,
   ChangeLogoCompanyicon,
 } from '#components/Icons';
+import { company } from 'validations/lang/vi/company';
+import { companyEn } from 'validations/lang/en/company';
 
 interface IEditLogoCompany {
   dataCompany: any;
@@ -17,6 +22,7 @@ interface IEditLogoCompany {
 }
 
 const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { dataCompany, setDataCompany } = props;
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
@@ -62,7 +68,11 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
       // } else
       if (file.size > 1024 * 1024 * 5) {
         checFileSize = false;
-        message.error(`File lon hon 5mb`);
+        message.error(
+          languageRedux === 1 ?
+            company.err_file :
+            companyEn.err_file
+        );
       } else {
         setFileList([file]);
         return false;
@@ -109,7 +119,12 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          Logo công ty <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1 ?
+              company.company_logo :
+              companyEn.company_logo
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <div className="company-logo">
           <Upload {...propsUpload}>

@@ -19,6 +19,10 @@ import EditDescripeCompany from './components/EditDescripeCompany';
 
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 import ModalEditCompanySuccess from './components/ModalEditCompanySuccess';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer';
+
 // import NotFound from 'pages/NotFound';
 import './style.scss';
 
@@ -31,6 +35,8 @@ import './style.scss';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import apiCompany from 'api/apiCompany';
+import { company } from 'validations/lang/vi/company';
+import { companyEn } from 'validations/lang/en/company';
 
 export interface FormValues {
   id: string;
@@ -85,6 +91,9 @@ export interface FormCompanyValues {
 }
 
 const Company = () => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [haveCompany, setHaveCompany] = useState(false);
@@ -117,18 +126,21 @@ const Company = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = 'HiJob - Thông tin công ty';
+    document.title =
+      languageRedux === 1 ? company.title_page : companyEn.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_company' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const getCompanyInforByAccount = async () => {
     try {
       setLoading(true);
-      const result = await apiCompany.getCampanyByAccountApi('vi');
+      const result = await apiCompany.getCampanyByAccountApi(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result && result?.data?.companyInfomation?.id != null) {
         setTimeout(() => {
           setLoading(false);
@@ -150,7 +162,7 @@ const Company = () => {
   useEffect(() => {
     getCompanyInforByAccount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   // console.log("dataCompany api: ", dataCompany);
 
@@ -176,13 +188,15 @@ const Company = () => {
       dataCompany?.logoPath?.status === 'removed'
     ) {
       return {
-        message: 'Vui lòng chọn logo công ty',
+        message:
+          languageRedux === 1 ? company.err_logo_mess : companyEn.err_logo_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.name === '') {
       return {
-        message: 'Vui lòng nhập tên công ty',
+        message:
+          languageRedux === 1 ? company.err_name_mess : companyEn.err_name_mess,
         checkForm: false,
       };
     }
@@ -194,13 +208,19 @@ const Company = () => {
     // }
     if (dataCompany?.companyLocation === '') {
       return {
-        message: 'Vui lòng chọn tỉnh thành phố',
+        message:
+          languageRedux === 1
+            ? company.err_location_mess
+            : companyEn.err_location_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.address === '' || dataCompany?.address.length <= 10) {
       return {
-        message: 'Địa chỉ phải dài hơn 10 ký tự',
+        message:
+          languageRedux === 1
+            ? company.err_address_mess
+            : companyEn.err_address_mess,
         checkForm: false,
       };
     }
@@ -210,55 +230,72 @@ const Company = () => {
       (dataCompany?.phone && dataCompany?.phone?.length > 11)
     ) {
       return {
-        message: 'Số điện thoại sai định dạng',
+        message:
+          languageRedux === 1
+            ? company.err_phone_mess
+            : companyEn.err_phone_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.email === '') {
       return {
-        message: 'Vui lòng nhập email công ty',
+        message:
+          languageRedux === 1
+            ? company.err_email_mess
+            : companyEn.err_email_mess,
         checkForm: false,
       };
     }
     if (regexCheckEmail.test(dataCompany?.email) === false) {
       return {
-        message: 'Định dạng email không đúng',
+        message:
+          languageRedux === 1
+            ? company.err_verify_email_mess
+            : companyEn.err_verify_email_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.companyRoleInfomation === '') {
       return {
-        message: 'Vui lòng chọn vai trò của bạn',
+        message:
+          languageRedux === 1 ? company.err_role_mess : companyEn.err_role_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.website === '') {
       return {
-        message: 'Vui lòng nhập website công ty',
+        message:
+          languageRedux === 1 ? company.err_web_mess : companyEn.err_web_mess,
         checkForm: false,
       };
     }
     if (validURL(dataCompany?.website) === false) {
       return {
-        message: 'Định dạng website không chính xác',
+        message:
+          languageRedux === 1
+            ? company.err_verify_web_mess
+            : companyEn.err_verify_web_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.companyCategory === '') {
       return {
-        message: 'Vui lòng chọn danh mục nghề nghiệp',
+        message:
+          languageRedux === 1 ? company.err_cate_mess : companyEn.err_cate_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.companySizeInfomation === '') {
       return {
-        message: 'Vui lòng chọn quy mô công ty',
+        message:
+          languageRedux === 1 ? company.err_size_mess : companyEn.err_size_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.description === '') {
       return {
-        message: 'Vui lòng nhập mô tả công việc',
+        message:
+          languageRedux === 1 ? company.err_des_mess : companyEn.err_des_mess,
         checkForm: false,
       };
     }
@@ -280,13 +317,19 @@ const Company = () => {
             // setOpenModalEditPost(true);
             messageApi.open({
               type: 'success',
-              content: 'Tạo công ty thành công',
+              content:
+                languageRedux === 1
+                  ? company.create_success
+                  : companyEn.create_success,
             });
             // console.log("create company result", result);
           } else {
             messageApi.open({
               type: 'error',
-              content: 'Tạo công ty không thành công',
+              content:
+                languageRedux === 1
+                  ? company.create_error
+                  : companyEn.create_error,
             });
           }
         }
@@ -311,7 +354,10 @@ const Company = () => {
             setOpenModalEditCompanySuccess(true);
             messageApi.open({
               type: 'success',
-              content: 'Cập nhật thông tin công ty thành công',
+              content:
+                languageRedux === 1
+                  ? company.update_success
+                  : companyEn.update_success,
             });
             // console.log("update company result", result);
           }
@@ -371,7 +417,9 @@ const Company = () => {
       {contextHolder}
       <Navbar />
       <div className="company-content">
-        <h1>Thông tin công ty</h1>
+        <h1>
+          {languageRedux === 1 ? company.company_info : companyEn.company_info}
+        </h1>
         <Skeleton loading={loading} active>
           <form action="">
             <EditLogoCompany
@@ -409,7 +457,7 @@ const Company = () => {
               onClick={handleSubmit}
               className="btn-edit_submitForm"
             >
-              Hoàn thành
+              {languageRedux === 1 ? company.finish : companyEn.finish}
             </button>
           </form>
         </Skeleton>

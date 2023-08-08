@@ -3,6 +3,11 @@ import React, { memo } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import { company } from 'validations/lang/vi/company';
+import { companyEn } from 'validations/lang/en/company';
+
 const styleLabel = {
   fontWeight: 700,
   color: '#000000',
@@ -14,6 +19,7 @@ interface IEditDescripeCompany {
 }
 
 const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { dataCompany, setDataCompany } = props;
 
   const handleEditCompanyDes = (
@@ -35,7 +41,12 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          Mô tả công ty <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1 ?
+              company.company_des :
+              companyEn.company_des
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -46,7 +57,11 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           value={dataCompany?.description}
           onChange={handleEditCompanyDes}
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder="Nhập vào nội dung"
+          placeholder={
+            languageRedux === 1 ?
+              company.place_des :
+              companyEn.place_des
+          }
         //   error={titleError} // Đánh dấu lỗi
         />
       </div>

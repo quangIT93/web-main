@@ -17,7 +17,7 @@ const locationApi = {
   },
 
   getWardsId: (idWard: string, lang: string | null) => {
-    const URL = `/v1/locations/w?did=${idWard}&lang${lang ? lang : 'vi'}`
+    const URL = `/v1/locations/w?did=${idWard}&lang=${lang ? lang : 'vi'}`
     return axiosClient.get(URL)
   },
 }
