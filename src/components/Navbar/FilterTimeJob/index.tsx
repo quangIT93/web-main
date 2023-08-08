@@ -47,7 +47,9 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   // const [inputValue, setInputValue] = useState('')
   // const [checkboxIsWeekend, setCheckboxIsWeekend] = useState(0);
   // const [checksetIsRemotely, setChecksetIsRemotely] = useState(0);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [collapseOpen, setCollapseOpen] = useState(false);
   const collapseRef = useRef<any>(null);
   // const [searchParams, setSearchParams] = useSearchParams();
@@ -159,8 +161,9 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <CalendarFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
-          }`}
+        className={`inputFilterTimeJob input-filter_nav ${
+          isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
+        }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -169,20 +172,30 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <Panel
           header={
             isRemotely || isWorkingWeekend
-              ? `${isWorkingWeekend ?
-                languageRedux == 1 ? 'Làm việc cuối tuần' : 'Weekend work'
-                : ''} 
+              ? `${
+                  isWorkingWeekend
+                    ? languageRedux === 1
+                      ? 'Làm việc cuối tuần'
+                      : 'Weekend work'
+                    : ''
+                } 
             ${isWorkingWeekend && isRemotely ? '-' : ''}
             
-            ${isRemotely ?
-                languageRedux == 1 ? 'Làm việc từ xa' : 'Working remotely'
-                : ''}`
-              : languageRedux == 1 ? `Thời gian làm việc` : `Working time`
+            ${
+              isRemotely
+                ? languageRedux === 1
+                  ? 'Làm việc từ xa'
+                  : 'Working remotely'
+                : ''
+            }`
+              : languageRedux === 1
+              ? `Thời gian làm việc`
+              : `Working time`
           }
           key="1"
         >
           <Text className="title-filter_timeJob">
-            {languageRedux == 1 ? `Thời gian làm việc` : `Working time`}
+            {languageRedux === 1 ? `Thời gian làm việc` : `Working time`}
           </Text>
 
           {/* <Radio.Group

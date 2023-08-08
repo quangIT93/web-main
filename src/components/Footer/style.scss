@@ -93,7 +93,7 @@
 
 .footer-left>img {
   height: 100px;
-
+  width: 100px;
   @include breakpoint(mobile) {
     height: 80px;
     width: 80px;
@@ -170,10 +170,13 @@
 
   @include breakpoint(mobile) {
     height: 0px;
+    width: 0px;
   }
 
   @include breakpoint(tablet) {
     height: 0px;
+    width: 0px;
+
   }
 }
 

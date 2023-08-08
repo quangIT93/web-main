@@ -44,8 +44,8 @@ import { Skeleton } from 'antd';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import { RootState } from '../../../store/reducer';
-import { homeEn } from 'validations/lang/en/home';
-import { home } from 'validations/lang/vi/home';
+// import { homeEn } from 'validations/lang/en/home';
+// import { home } from 'validations/lang/vi/home';
 
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
@@ -72,18 +72,20 @@ const CategoryCarousel: React.FC = () => {
     setRefCatelory,
     navTouchCatelory,
   }: // openCollapseFilter,
-    {
-      setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
-      childCateloriesArray: number[];
-      valueJobChild: IvalueJobChild;
-      setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
-      setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
-      setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
-      navTouchCatelory: boolean;
-      openCollapseFilter: boolean;
-    } = useContext(HomeValueContext);
+  {
+    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
+    childCateloriesArray: number[];
+    valueJobChild: IvalueJobChild;
+    setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
+    setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
+    setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
+    navTouchCatelory: boolean;
+    openCollapseFilter: boolean;
+  } = useContext(HomeValueContext);
 
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [value, setValue] = React.useState(0);
   const [categoryIdCookie, setCategorieIdCookie] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
@@ -176,13 +178,23 @@ const CategoryCarousel: React.FC = () => {
       }
       var result;
       if (newValue === 1) {
-        result = await postApi.getPostNewest(null, null, null, 19, null,
-          languageRedux == 1 ? "vi" : "en"
+        result = await postApi.getPostNewest(
+          null,
+          null,
+          null,
+          19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
         );
       } else {
-        result = await postApi.getPostNewest(Number(newValue), null, null, 19, null,
-          languageRedux == 1 ? "vi" : "en"
-        )
+        result = await postApi.getPostNewest(
+          Number(newValue),
+          null,
+          null,
+          19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
       }
 
       if (result) {
@@ -199,7 +211,7 @@ const CategoryCarousel: React.FC = () => {
     try {
       setLoading(true);
       const result = await categoriesApi.getAllParentCategories(
-        languageRedux == 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setTimeout(() => {
@@ -234,12 +246,22 @@ const CategoryCarousel: React.FC = () => {
       const themeId = searchParams.get('categories-id');
       var result;
       if (themeId === 'all') {
-        result = await postApi.getPostNewest(null, null, null, 19, null,
-          languageRedux == 1 ? "vi" : "en"
+        result = await postApi.getPostNewest(
+          null,
+          null,
+          null,
+          19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
         );
       } else {
-        result = await postApi.getPostNewest(Number(themeId), null, null, 19, null,
-          languageRedux == 1 ? "vi" : "en"
+        result = await postApi.getPostNewest(
+          Number(themeId),
+          null,
+          null,
+          19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
         );
       }
       if (result) {
@@ -257,12 +279,22 @@ const CategoryCarousel: React.FC = () => {
       const themeId = userSelectedId;
       var result;
       if (themeId === 1) {
-        result = await postApi.getPostNewest(null, null, null, 19, null,
-          languageRedux == 1 ? "vi" : "en"
+        result = await postApi.getPostNewest(
+          null,
+          null,
+          null,
+          19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
         );
       } else {
-        result = await postApi.getPostNewest(Number(themeId), null, null, 19, null,
-          languageRedux == 1 ? "vi" : "en"
+        result = await postApi.getPostNewest(
+          Number(themeId),
+          null,
+          null,
+          19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
         );
       }
       if (result) {
@@ -429,7 +461,7 @@ const CategoryCarousel: React.FC = () => {
           navigation={true}
           // mousewheel={true}
           slidesPerView="auto"
-          spaceBetween={25}
+          // spaceBetween={25}
           // breakpoints={{
           //   320: {
           //     slidesPerView: 3,
@@ -477,7 +509,8 @@ const CategoryCarousel: React.FC = () => {
 
                   handleChange(event, item.id);
                 }}
-                style={{ width: 'fit-content' }}
+                // style={{ width: 'fit-content', marginLeft: '25px' }}
+                className="item-swiperSlide"
               >
                 {/* <CategoryItem
                   content={item.name}
@@ -493,19 +526,12 @@ const CategoryCarousel: React.FC = () => {
                       src={item.image}
                       alt={item.name}
                     />
-                    <span
-                      className="category-item-title"
-                      style={{
-                        fontSize: '12px',
-                        fontWeight: '400',
-                        color: '#000000',
-                      }}
-                    >
-                      {isLogin && item.id === 1 ?
-                        languageRedux == 1 ?
-                          'Công việc gợi ý' :
-                          'Suggested work' :
-                        item.name}
+                    <span className="category-item-title">
+                      {isLogin && item.id === 1
+                        ? languageRedux === 1
+                          ? 'Công việc gợi ý'
+                          : 'Suggested work'
+                        : item.name}
                     </span>
                   </div>
                   <div

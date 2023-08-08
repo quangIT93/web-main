@@ -39,6 +39,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
     <div>
       <Modal
         open={openModalPost}
+        // open={true}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -118,10 +119,16 @@ const ModalPost: React.FC<IModalPost> = (props) => {
           </div>
           <div
             className="div-img-footer"
-            style={{ display: 'flex', justifyContent: 'space-around', gap: '8px' }}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              gap: '8px',
+            }}
           >
             <Button
-              onClick={() => { window.open(`/history?post=2`, '_parent') }}
+              onClick={() => {
+                window.open(`/history?post=2`, '_parent');
+              }}
               className="btn-apply"
               type={'primary'}
               style={{

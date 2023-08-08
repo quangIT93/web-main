@@ -80,7 +80,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
         }}
       >
         <div className="detail-history-top">
-          <div className="div-card-post-left">
+          <ul className="div-card-post-left">
             <ImageListItem
               key={props.item.image}
               sx={{ flex: 1, display: 'flex' }}
@@ -215,7 +215,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 </div>
               </div>
             </ImageListItem>
-          </div>
+          </ul>
           <Space direction="vertical" align="center">
             <SubIcon
               postId={props.item?.id}

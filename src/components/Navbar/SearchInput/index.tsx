@@ -12,7 +12,7 @@ import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index';
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   // useNavigate,
   // createSearchParams,
@@ -116,7 +116,9 @@ const SearchInput: React.FC<SearchProps> = ({
     search: boolean;
   } = useContext(HomeValueContext);
 
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState<SelectProps['options']>([]);
   // const [fetching, setFet] = useState(false)
@@ -161,12 +163,12 @@ const SearchInput: React.FC<SearchProps> = ({
       var response = null;
       setLoading(true);
       if (localStorage.getItem('accessToken')) {
-        const result = await searchApi.getHistoryKeyWord(10, "vi");
+        const result = await searchApi.getHistoryKeyWord(10, 'vi');
         if (result) {
           response = result.data.listHistorySearch;
         }
       } else {
-        const result = await searchApi.getSuggestKeyWord(10, "vi");
+        const result = await searchApi.getSuggestKeyWord(10, 'vi');
         if (result) {
           response = result.data;
         }
@@ -192,10 +194,10 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getDataSearch = async () => {
     try {
-      const resultSuggest = await searchApi.getSuggestKeyWord(10, "vi");
+      const resultSuggest = await searchApi.getSuggestKeyWord(10, 'vi');
       let resultHistory;
       if (isLogin) {
-        resultHistory = await searchApi.getHistoryKeyWord(10, "vi");
+        resultHistory = await searchApi.getHistoryKeyWord(10, 'vi');
         resultHistory && setDataHistory(resultHistory.data);
       }
       // if (resultHistory || resultSuggest) {
@@ -253,7 +255,8 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          `/search-results?${
+            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
           }`,
         );
       } else {
@@ -309,11 +312,11 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getTotalUserSearch = async () => {
     try {
-      const result = await apiTotalJob.getTotalJob("vi");
+      const result = await apiTotalJob.getTotalJob('vi');
       if (result) {
         setTotalJob(result?.data?.total);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -383,6 +386,7 @@ const SearchInput: React.FC<SearchProps> = ({
   return (
     <div className="search-input-wrapper">
       <Select
+        labelInValue
         showSearch
         autoClearSearchValue
         optionFilterProp="children"
@@ -392,13 +396,11 @@ const SearchInput: React.FC<SearchProps> = ({
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
         placeholder={
-          languageRedux == 1 ?
-            `Tìm kiếm hơn ${totalJob.toLocaleString(
-              'en-US',
-            )} công việc tại Việt Nam` :
-            `Search over ${totalJob.toLocaleString(
-              'en-US',
-            )} jobs in Vietnam`
+          languageRedux === 1
+            ? `Tìm kiếm hơn ${totalJob.toLocaleString(
+                'en-US',
+              )} công việc tại Việt Nam`
+            : `Search over ${totalJob.toLocaleString('en-US')} jobs in Vietnam`
         }
         defaultActiveFirstOption={false}
         showArrow={false}
@@ -421,13 +423,14 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-      // open={openDropdown}
+        // open={openDropdown}
       />
 
       <Button
         className="search-input-wrapper-iconSearch"
         shape="circle"
         onClick={(event) => handleSearchIcon(event, value)}
+        name="search-input-wrapper-iconSearch"
       >
         <SearchIcon width={24} height={24} />
       </Button>
@@ -435,6 +438,7 @@ const SearchInput: React.FC<SearchProps> = ({
         className="search-input-wrapper-iconFilter"
         shape="circle"
         onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
+        name="search-input-wrapper-iconFilter"
       >
         {checkSearch ? (
           <LightFilterIcon width={20} height={20} />
