@@ -57,5 +57,8 @@ export const homeEn = {
     "new_candidate_have_applied": "New candidate have applied",
     "candidate_nguyen_van_an_has_just_applied_for_the_position_of_......_for_your_.....": "Candidate Nguyen Van An has just applied for the position of ...... for your .....",
     "job_has_been_saved": "Job has been saved",
+    "approved": "Approved:",
+    "pending": "Pending:",
+    "waiting": "Waiting:",
 }
 

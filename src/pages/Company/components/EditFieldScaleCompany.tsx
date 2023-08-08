@@ -7,6 +7,11 @@ import TextField from '@mui/material/TextField';
 import apiCompany from 'api/apiCompany';
 import categoriesApi from 'api/categoriesApi';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import { company } from 'validations/lang/vi/company';
+import { companyEn } from 'validations/lang/en/company';
+
 // import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
   fontWeight: 700,
@@ -19,6 +24,7 @@ interface IEditPostAddress {
 }
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { setDataCompany, dataCompany } = props;
 
   const [dataSizes, setDataSizes] = useState<any>(null);
@@ -51,7 +57,9 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const getSizes = async () => {
     try {
-      const sizes = await apiCompany.getAllSizesCompany("vi");
+      const sizes = await apiCompany.getAllSizesCompany(
+        languageRedux === 1 ? "vi" : "en"
+      );
 
       if (sizes) {
         setDataSizes(sizes);
@@ -62,7 +70,9 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   };
   const getCateogrys = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise("vi");
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -111,7 +121,12 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="addressTitle"
         >
-          Lĩnh vực hoạt động <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1 ?
+              company.field :
+              companyEn.field
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
 
         <Autocomplete
@@ -122,7 +137,11 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder="Chọn lĩnh vực hoạt động"
+              placeholder={
+                languageRedux === 1 ?
+                  company.place_field :
+                  companyEn.place_field
+              }
               size="small"
               value={selectedCategory?.parent_category}
             />
@@ -141,7 +160,12 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          Quy mô công ty <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1 ?
+              company.company_size :
+              companyEn.company_size
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <Autocomplete
           options={dataSizes ? dataSizes : []}
@@ -151,7 +175,11 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder="Chọn quy mô công ty"
+              placeholder={
+                languageRedux === 1 ?
+                  company.place_size :
+                  companyEn.place_size
+              }
               size="small"
               value={selectedSize?.nameText}
             />

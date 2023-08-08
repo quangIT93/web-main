@@ -3,6 +3,11 @@ import React, { memo } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import { company } from 'validations/lang/vi/company';
+import { companyEn } from 'validations/lang/en/company';
+
 const styleLabel = {
   fontWeight: 700,
   color: '#000000',
@@ -14,6 +19,7 @@ interface IEditNameFaxCompany {
 }
 
 const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { dataCompany, setDataCompany } = props;
 
   const handleEditCompanyFax = (
@@ -45,7 +51,12 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          Tên công ty <span style={{ color: 'red' }}>*</span>
+          {
+            languageRedux === 1 ?
+              company.company_name :
+              companyEn.company_name
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -55,7 +66,11 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           onChange={handleEditCompanyName}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder="Nhập tên công ty"
+          placeholder={
+            languageRedux === 1 ?
+              company.place_name :
+              companyEn.place_name
+          }
         //   error={titleError} // Đánh dấu lỗi
         />
       </div>
@@ -66,7 +81,11 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          Mã số thuế
+          {
+            languageRedux === 1 ?
+              company.tax_code :
+              companyEn.tax_code
+          }
         </Typography>
         <TextField
           type="text"
@@ -76,7 +95,11 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           onChange={handleEditCompanyFax}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder="Nhập mã số thuế"
+          placeholder={
+            languageRedux === 1 ?
+              company.place_tax :
+              companyEn.place_tax
+          }
         //   error={titleError} // Đánh dấu lỗi
         />
       </div>

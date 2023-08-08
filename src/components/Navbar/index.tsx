@@ -1054,11 +1054,32 @@ const Navbar: React.FC = () => {
                 </div>
               </Link>
               <div className="sub-history_status">
-                <span>Approved: {`${approved}`}</span>
+                <span>
+                  {
+                    languageRedux === 1 ?
+                      home.approved :
+                      homeEn.approved
+                  }{' '}
+                  {`${approved}`}
+                </span>
                 {/* <span>|</span> */}
-                <span>Pending: {`${pending}`}</span>
+                <span>
+                  {
+                    languageRedux === 1 ?
+                      home.pending :
+                      homeEn.pending
+                  }{' '}
+                  {`${pending}`}
+                </span>
                 {/* <span>|</span> */}
-                <span>Waiting: {`${waiting}`}</span>
+                <span>
+                  {
+                    languageRedux === 1 ?
+                      home.waiting :
+                      homeEn.waiting
+                  }{' '}
+                  {`${waiting}`}
+                </span>
               </div>
               {/* <div className="sub-login_item">
                 <KeyOutlined />
