@@ -1,0 +1,20 @@
+export const signinEn = {
+    "sign_in": "Sign in",
+    "phone": "Phone number",
+    "otp_send_mail": "A verification code will be sent to the email you entered.",
+    "or": "Or",
+    "email_signin": "Sign in with email",
+    "face_signin": "Sign in with Facebook",
+    "gg_signin": "Sign in with Google account",
+    "apple_signin": "Sign in with AppleID",
+    "skip": "Skip",
+    "verify_phone": "Verify phone number",
+    "enter_otp_phone": "Please enter the OTP code sent to the phone number:",
+    "resend_otp": "Resend code",
+    "verify_mail": "Verify email",
+    "enter_otp_email": "Please enter the OTP code sent to the email:",
+    "otp_resent": "The OTP code has been resent",
+    "need_login": "You need to be logged in to use this feature.",
+    "no_otp": " If you do not receive the OTP by email, please check whether the email has been entered correctly or check in the spam folder.",
+    "wrong_mail": "Please enter the correct email."
+}

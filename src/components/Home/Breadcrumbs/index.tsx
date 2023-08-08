@@ -81,13 +81,13 @@ const BreadcrumbsCpn: React.FC = () => {
 
   const getAllChildCategoriesById = async () => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       const result = await categoriesApi.getAllChildCategories(
         valueJobChild?.id,
         languageRedux == 1 ? "vi" : "en"
       );
       if (result) {
-        setIsLoading(false);
+        // setIsLoading(false);
         setChildCatelories(result.data);
       }
     } catch (error) {
