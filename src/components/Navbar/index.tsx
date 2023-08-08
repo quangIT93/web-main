@@ -32,6 +32,8 @@ import {
   TranslateSubLoginIcon,
   LogoutSubLoginIcon,
   ArrowSubLoginIcon,
+  VNSubLoginIcon,
+  ENSubLoginIcon,
 } from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
@@ -1090,7 +1092,7 @@ const Navbar: React.FC = () => {
               <div
                 className="sub-translate_status"
                 style={{
-                  height: openRadioGroup ? 'fit-content' : '0',
+                  height: openRadioGroup ? '100%' : '0',
                 }}
               >
                 <Radio.Group
@@ -1104,12 +1106,19 @@ const Navbar: React.FC = () => {
                   }}
                 >
                   <Radio value={1}>
-                    {languageRedux === 1 ? 'Tiếng Việt' : 'Vietnamese'}
+                    <VNSubLoginIcon />
+                    <span>
+                      {languageRedux === 1 ? 'Tiếng Việt' : 'Vietnamese'}
+                    </span>
                   </Radio>
                   <Radio value={2}>
-                    {languageRedux === 1 ? 'Tiếng Anh' : 'English'}
+                    <ENSubLoginIcon />
+                    <span>{languageRedux === 1 ? 'Tiếng Anh' : 'English'}</span>
                   </Radio>
-                  {/* <Radio value={3}>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</Radio> */}
+                  {/* <Radio value={3}>
+                    <ENSubLoginIcon />
+                    <span>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</span>
+                  </Radio> */}
                 </Radio.Group>
               </div>
 

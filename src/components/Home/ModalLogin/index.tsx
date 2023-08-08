@@ -43,6 +43,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 // import login from action
 
 import './style.scss';
+import { signin } from 'validations/lang/vi/signin';
+import { signinEn } from 'validations/lang/en/signin';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -86,6 +88,9 @@ interface AuthReponse {
 }
 
 const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const isEmailValid = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -212,7 +217,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
 
     // console.log('facebook', response)
   };
@@ -330,7 +335,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             position: 'relative',
           }}
         >
-          Đăng nhập
+          {languageRedux === 1 ? signin.sign_in : signinEn.sign_in}
           <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -369,12 +374,12 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   >
                     <img
                       src="loginLogo/facebookOriginal.png"
-                      alt="Ảnh lỗi"
+                      alt={languageRedux === 1 ? "Ảnh lỗi" : "Error Photo"}
                       width={29}
                       height={30}
                     />
                     <p className="text-login ">
-                      Đăng nhập bằng tài khoản Facebook
+                      {languageRedux === 1 ? signin.face_signin : signinEn.face_signin}
                     </p>
                   </div>
                 )}
@@ -394,19 +399,21 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                       height={30}
                     />
                     <p className="text-login">
-                      Đăng nhập bằng tài khoản Google
+                      {languageRedux === 1 ? signin.gg_signin : signinEn.gg_signin}
                     </p>
                   </div>
                 )}
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-                // cookiePolicy={'single_host_origin'}
+              // cookiePolicy={'single_host_origin'}
               />
 
               <div className="line-with-text">
                 <span className="line"></span>
-                <span className="text">Hoặc</span>
+                <span className="text">
+                  {languageRedux === 1 ? signin.or : signinEn.or}
+                </span>
                 <span className="line"></span>
               </div>
 
@@ -418,21 +425,25 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   name="email"
                   value={loginData.email}
                   onChange={handleInputChange}
-                  placeholder="Nhập email của bạn..."
+                  placeholder={languageRedux === 1 ? "Nhập email của bạn..." : "Enter your email address..."}
                 />
                 <small className={!invalid ? 'alert' : 'alert error'}>
-                  Email không đúng cú pháp vui lòng nhập lại
+                  {
+                    languageRedux === 1 ?
+                      signin.wrong_mail :
+                      signinEn.wrong_mail
+                  }
                 </small>
               </div>
               <p className="text-sent_otp">
-                Mã xác nhận sẽ được gửi vào email bạn đăng nhập.
+                {languageRedux === 1 ? signin.otp_send_mail : signinEn.otp_send_mail}
               </p>
               <button
                 type="button"
                 onClick={handleLogin}
                 className="button-login"
               >
-                Login
+                {languageRedux === 1 ? signin.sign_in : signinEn.sign_in}
               </button>
 
               {/* <div
@@ -467,11 +478,16 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               }}
               onClick={handleBackLogin}
             />
-            <p className="textOpt">Bạn hãy nhập mã OTP được gửi đến email:</p>
+            <p className="textOpt">
+              {languageRedux === 1 ? signin.enter_otp_email : signinEn.enter_otp_email}
+            </p>
             <p className="textOpt-email">{loginData.email}</p>
             <p className="textOpt-notice">
-              Nếu không nhận được mã OTP qua email, bạn vui lòng kiểm tra lại
-              email đã nhập chính xác chưa hoặc kiểm tra trong thư mục spam
+              {
+                languageRedux === 1 ?
+                  signin.no_otp :
+                  signinEn.no_otp
+              }
             </p>
             <div className="otp-inputs">
               <OtpInput
@@ -495,11 +511,12 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               onClick={handleLoginOtp}
               disabled={!isInputFilled}
             >
-              Xác nhận email
+              {languageRedux === 1 ? signin.verify_mail : signinEn.verify_mail}
             </button>
             <div className="wrap-countDown">
               <p className="resend-otp" onClick={handleResendCode}>
-                Gửi lại mã{' '}
+                {languageRedux === 1 ? signin.resend_otp : signinEn.resend_otp}
+                {' '}
               </p>
               {!resendCode ? (
                 <p className="resend-otp_countDown"></p>

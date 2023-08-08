@@ -424,12 +424,16 @@ const Detail: React.FC = () => {
           post?.data?.companyResourceData?.name !== 'HIJOB') ||
         (checkApply && post?.data?.companyResourceData?.name !== 'HIJOB')
       ) {
-        window.open(post?.data?.companyResourceData?.postUrl, '_blank');
+        window.open(
+          post?.data?.companyResourceData?.postUrl,
+          '_blank',
+          'width=800,height=600',
+        );
         return;
       }
       // navigate to edit post
       if (checkPostUser) {
-        window.open(`edit-posted/?postId=${POST_ID}`);
+        window.open(`edit-posted/?postId=${POST_ID}`, 'width=800,height=600');
         return;
       }
       if (
@@ -842,7 +846,7 @@ const Detail: React.FC = () => {
               </div>
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
-                  <WorkPostIcon />
+                  <ClockPostIcon />
                   <p>Ngày hết hạn</p>
                 </div>
                 <div
