@@ -1077,12 +1077,12 @@ const Navbar: React.FC = () => {
               <div
                 className="sub-login_item__translate"
                 onClick={handleOpenRadioGroup}
-                style={{
-                  borderBottom: openRadioGroup
-                    ? 'none'
-                    : '1px solid rgba(170, 170, 170, 1)',
-                }}
-                // style={{ display: 'none' }}
+                // style={{
+                //   borderBottom: openRadioGroup
+                //     ? 'none'
+                //     : '1px solid rgba(170, 170, 170, 1)',
+                // }}
+                style={{ display: 'none' }}
               >
                 <div className="sub-translate_header_left">
                   <TranslateSubLoginIcon />
