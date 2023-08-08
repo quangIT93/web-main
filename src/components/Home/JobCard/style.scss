@@ -26,6 +26,9 @@
         height: 120px;
         justify-content: space-between;
         width: 80%;
+        p {
+            color: #575757;
+        }
 
         @include breakpoint(mobile) {
             width: 94%;
@@ -126,6 +129,7 @@
                 .text-card-post-left_info {
                         .MuiTypography-root {
                             width: 77% !important;
+                            color: #575757;
                         }
                     
                 }

@@ -212,7 +212,7 @@
 
             h3 {
               font-size: 16px;
-              color: #AAAAAA;
+              color: #575757;
               font-weight: 400;
             }
           }
@@ -676,15 +676,15 @@
                       }
 
                       p {
-                        color: #575757;
+                        color: #000000;
                         font-size: 16px;
                         font-weight: 500;
                       }
 
                       h5 {
-                        color: #001424;
+                        color: #575757;
                         font-size: 16px;
-                        font-weight: 500;
+                        font-weight: 400;
                         margin-left: 28px;
 
                         @include breakpoint(tablet) {
@@ -989,13 +989,63 @@
 
                     .anotherPost_image {
                       width: 94px !important;
+                      min-width: 94px !important;
                       height: 76px !important;
+                      min-height: 76px !important;
                       border-radius: 10px;
                       object-fit: cover;
                     }
 
                     .anotherPost_info {
-                      width: 160px;
+                      width: 220px;
+
+                      @include breakpoint(mobile) {
+                        width: 40px;
+
+                      }
+
+                      @include breakpoint(tablet) {
+                        width: 150px;
+
+                      }
+
+                      @include breakpoint(largeTablet) {
+                        width: 60px;
+
+                      }
+
+                      @include breakpoint(destop) {
+                        width: 110px;
+
+                      }
+
+                       @include breakpoint(an_order) {
+                        width: 200px;
+                       }
+
+                      .MuiTypography-root {
+                         p {
+                            font-size: 12px;
+                        }
+                      }
+
+                      .MuiTypography-root:first-child {
+                        color: #000000;
+                        font-size: 16px;
+                   
+                      }
+
+                      .MuiTypography-root:nth-child(2) {
+                        color: #575757;
+                        font-size: 12px;
+                      }
+
+                      p {
+                        font-size: 12px;
+                        color: #575757;
+                      }
+                      
+                      
 
                       @media screen and (max-width: 724px) {
                         width: 100%;

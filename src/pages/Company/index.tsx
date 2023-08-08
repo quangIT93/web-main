@@ -18,7 +18,7 @@ import EditFieldScaleCompany from './components/EditFieldScaleCompany';
 import EditDescripeCompany from './components/EditDescripeCompany';
 
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
-
+import ModalEditCompanySuccess from './components/ModalEditCompanySuccess';
 // import NotFound from 'pages/NotFound';
 import './style.scss';
 
@@ -108,7 +108,8 @@ const Company = () => {
   });
 
   console.log('dataCompany', dataCompany);
-  const [openModalEditPost, setOpenModalEditPost] = React.useState(false);
+  const [openModalEditCompany, setOpenModalEditCompanySuccess] =
+    React.useState(false);
 
   // const [loadingNotFound, setLoadingNotFound] = React.useState(false);
 
@@ -127,7 +128,7 @@ const Company = () => {
   const getCompanyInforByAccount = async () => {
     try {
       setLoading(true);
-      const result = await apiCompany.getCampanyByAccountApi("vi");
+      const result = await apiCompany.getCampanyByAccountApi('vi');
       if (result && result?.data?.companyInfomation?.id != null) {
         setTimeout(() => {
           setLoading(false);
@@ -156,11 +157,11 @@ const Company = () => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -307,7 +308,7 @@ const Company = () => {
         if (Array.from(formData.values()).some((value) => value !== '')) {
           const result = await apiCompany.updateCampany(companyId, formData);
           if (result) {
-            // setOpenModalEditPost(true);
+            setOpenModalEditCompanySuccess(true);
             messageApi.open({
               type: 'success',
               content: 'Cập nhật thông tin công ty thành công',
@@ -413,9 +414,9 @@ const Company = () => {
           </form>
         </Skeleton>
       </div>
-      <ModalEditSuccess
-        openModalEditPost={openModalEditPost}
-        setOpenModalEditPost={setOpenModalEditPost}
+      <ModalEditCompanySuccess
+        openModalEditCompany={openModalEditCompany}
+        setOpenModalEditCompanySuccess={setOpenModalEditCompanySuccess}
       />
       <Footer />
     </div>

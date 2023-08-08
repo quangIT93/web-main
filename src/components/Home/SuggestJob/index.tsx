@@ -79,6 +79,7 @@ interface PostTheme {
   };
   created_at_text: string;
   bookmarked: boolean;
+  money_type_text: string;
 }
 
 const ThemesJob: React.FC = () => {

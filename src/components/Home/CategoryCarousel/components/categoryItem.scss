@@ -5,6 +5,10 @@
   .item-swiperSlide {
     width: fit-content;
     margin-left: 25px;
+    &:nth-child(1) {
+      margin-left: 0;
+    }
+
     .category-item-container {
       display: flex;
       position: relative;
@@ -45,7 +49,7 @@
         .category-item-title {
           font-size: 12px;
           font-weight: 400;
-          color: #000000;
+          color: #575757;
           
           @include breakpoint(mobile) {
             white-space: nowrap;

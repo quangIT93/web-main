@@ -46,6 +46,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
+import { number } from 'yargs';
 
 // interface ItemTheme {
 //   id: number;
@@ -118,6 +119,23 @@ const AppliedPostedJob: React.FC = () => {
     localStorage.getItem('accessToken') && setIslogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
+
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  const slidesPerView = windowWidth <= 576 ? 1 : 'auto';
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // const slidesPerView = windowWidth <= 576 ? 1 : 'auto';
 
   // const getPostNewestByThemeId = async () => {
   //     try {
@@ -195,7 +213,8 @@ const AppliedPostedJob: React.FC = () => {
         <Swiper
           navigation={true}
           // mousewheel={true}
-          slidesPerView="auto"
+          // slidesPerView={1}
+          slidesPerView={slidesPerView}
           spaceBetween={24}
           modules={[Mousewheel, Navigation, Pagination]}
           className="applied-posted-jobs_swiper"

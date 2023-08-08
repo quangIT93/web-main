@@ -76,10 +76,13 @@ interface PostTheme {
   };
   created_at_text: string;
   bookmarked: boolean;
+  money_type_text: string;
 }
 
 const ThemesJob: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [page, setPage] = React.useState(1);
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
   const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
@@ -116,7 +119,7 @@ const ThemesJob: React.FC = () => {
       Number(themeId),
       9,
       threshold,
-      languageRedux == 1 ? "vi" : "en"
+      languageRedux == 1 ? 'vi' : 'en',
     );
 
     if (result) {
@@ -140,7 +143,7 @@ const ThemesJob: React.FC = () => {
   const getPostByThemeId = async () => {
     try {
       const result = await themeApi.getThemesEnable(
-        languageRedux == 1 ? "vi" : "en"
+        languageRedux == 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -150,7 +153,7 @@ const ThemesJob: React.FC = () => {
           result.data[0].id,
           19,
           null,
-          languageRedux == 1 ? "vi" : "en"
+          languageRedux == 1 ? 'vi' : 'en',
         );
         if (list) {
           setPostByTheme(list);
@@ -194,29 +197,21 @@ const ThemesJob: React.FC = () => {
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <TopicJobIcon width={25} height={25} />
         <h2>
-          {
-            languageRedux == 1 ?
-              home.jobs_by_theme :
-              homeEn.jobs_by_theme
-          }
+          {languageRedux == 1 ? home.jobs_by_theme : homeEn.jobs_by_theme}
         </h2>
       </div>
 
       {!localStorage.getItem('accessToken') ? (
         <div className="title-location-job">
           <h3>
-            {
-              languageRedux == 1 ?
-                'Vị trí công việc lý tưởng' :
-                'Ideal job location'
-            }
+            {languageRedux == 1
+              ? 'Vị trí công việc lý tưởng'
+              : 'Ideal job location'}
           </h3>
           <p>
-            {
-              languageRedux == 1 ?
-                "Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn." :
-                "Search for jobs in famous locations in your city."
-            }
+            {languageRedux == 1
+              ? 'Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.'
+              : 'Search for jobs in famous locations in your city.'}
           </p>
         </div>
       ) : (
@@ -261,13 +256,7 @@ const ThemesJob: React.FC = () => {
                     handleChange(e, page);
                   }}
                 >
-                  <p>
-                    {
-                      languageRedux == 1 ?
-                        home.more :
-                        homeEn.more
-                    }
-                  </p>
+                  <p>{languageRedux == 1 ? home.more : homeEn.more}</p>
                   <MoreICon width={20} height={20} />
                 </Space>
               </Stack>
@@ -278,7 +267,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-              //   onClick={handleClose}
+                //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

@@ -98,6 +98,7 @@ import ShowCopy from '#components/ShowCopy';
 
 //@ts-ignore
 import AnotherPost from './components/AnotherPost';
+import { height, width } from '@mui/system';
 
 const itemsShare = [
   {
@@ -424,11 +425,7 @@ const Detail: React.FC = () => {
           post?.data?.companyResourceData?.name !== 'HIJOB') ||
         (checkApply && post?.data?.companyResourceData?.name !== 'HIJOB')
       ) {
-        window.open(
-          post?.data?.companyResourceData?.postUrl,
-          '_blank',
-          'width=800,height=600',
-        );
+        window.open(post?.data?.companyResourceData?.postUrl, '_blank');
         return;
       }
       // navigate to edit post
