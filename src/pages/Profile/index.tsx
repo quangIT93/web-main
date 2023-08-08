@@ -53,6 +53,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../store/index';
 
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+import languageApi from 'api/languageApi';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -78,6 +79,7 @@ interface ICategories {
   child_category: string;
 }
 const Profile: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const dispatch = useDispatch();
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
   // const [dataProfile, setDataProfile] = useState(null)
@@ -107,6 +109,7 @@ const Profile: React.FC = () => {
   const [open, setOpen] = useState(false);
   // const [checkRemove, setCheckRemove] = useState(2);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [language, setLanguage] = useState<UploadFile[]>([]);
 
   // const [user, setUser] = useState<any>(null);
 
@@ -121,9 +124,32 @@ const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
+
+  console.log("language", language);
+
+
   const fecthDataProfile = async () => {
     try {
-      const result = await profileApi.getProfile('vi');
+      const result = await profileApi.getProfile(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setProfileUser(result.data);
         setLoading(false);
@@ -158,6 +184,7 @@ const Profile: React.FC = () => {
     openModalLocation,
     openModalEducationCreate,
     openModalExperienceCreate,
+    languageRedux
   ]);
 
   const handleAvatarClick = () => {
@@ -226,7 +253,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success('Xóa CV thành công.');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -573,7 +600,7 @@ const Profile: React.FC = () => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-                // direction="vertical"
+              // direction="vertical"
               >
                 {profile.cv_url && fileList?.length === 0 ? (
                   <Popconfirm
@@ -609,9 +636,8 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${
-                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                    }`,
+                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                      }`,
                     alignItems: 'flex-start',
                   }}
                 >
@@ -646,12 +672,12 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                    (item: ICategories, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item.child_category}
-                      </Button>
-                    ),
-                  )
+                  (item: ICategories, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.child_category}
+                    </Button>
+                  ),
+                )
                 : 'Chưa cập nhật'}
             </Space>
           </div>
@@ -680,10 +706,10 @@ const Profile: React.FC = () => {
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item?.district}
-                    </Button>
-                  ))
+                  <Button key={index} className="btn" type="text">
+                    {item?.district}
+                  </Button>
+                ))
                 : 'Chưa cập nhật'}
             </Space>
           </div>
