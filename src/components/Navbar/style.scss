@@ -1431,13 +1431,10 @@
     .button-download {
       border: 2px solid transparent;
       // border-radius: 50%;
-      top: 0%;
-      animation: jumpAndStop 2.5s linear infinite;
+      animation: jumpAndStop 2s linear infinite;
       position: absolute;
       transform: translate(-50%, -50%);
-      left: 0px;
-      animation-delay: 2s;
-      position: relative;
+      left: 14.5px;
     }
   }
 
