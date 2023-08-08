@@ -116,7 +116,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     overflow: 'hidden',
                     fontWeight: '700',
                     lineheight: '20px',
-                    color: '#575757',
+                    color: '#000000',
                   }}
                 >
                   {/* {props?.item?.title?.length > 50
@@ -229,7 +229,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   )}
                 </div>
               </div>
-              <p style={{ fontSize: 12, fontWeight: 500, color: '#575757' }}>
+              <p style={{ fontSize: 12, fontWeight: 500, color: '#0d99ff' }}>
                 {props.item.job_type.job_type_name}
               </p>
             </Space>

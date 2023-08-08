@@ -120,10 +120,10 @@
                             display: flex;
                             justify-content: space-between;
                             width: 300px;
-
+                            
                             .div-card-post-info_left {
-                                width: 181px;
-
+                                width: 220px;
+                          
                                 
                                 @include breakpoint(mobile) {
                                     width: 180px;
@@ -149,6 +149,7 @@
                                             white-space: nowrap;
                                             text-overflow: ellipsis;
                                             overflow: hidden;
+                                           color: #0d99ff;
                                         }
                                     }
                                 }
