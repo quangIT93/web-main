@@ -135,6 +135,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
     getAllProvinces();
     // getAllLocations()
     // delete param when back to page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

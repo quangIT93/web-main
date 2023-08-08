@@ -106,7 +106,7 @@ const JobCard: React.FC<Iprops> = (props) => {
           handleClickItem(e, props.item.id);
         }}
       >
-        <div className="div-card-post-left">
+        <ul className="div-card-post-left">
           <ImageListItem
             key={props.item.image}
             sx={{ flex: 1, display: 'flex' }}
@@ -170,6 +170,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                 </Typography>
               </Tooltip>
               <div
+                className="text-card-post-left_info"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -217,6 +218,7 @@ const JobCard: React.FC<Iprops> = (props) => {
               </Typography>
             </div> */}
               <div
+                className="text-card-post-left_info"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -263,7 +265,7 @@ const JobCard: React.FC<Iprops> = (props) => {
               </div>
             </div>
           </ImageListItem>
-        </div>
+        </ul>
 
         <Space
           style={{ justifyContent: 'space-between' }}

@@ -31,17 +31,15 @@
         position: relative;
         top: 0;
         .ant-collapse-content-box {
-          .MuiBox-root {
-            label {
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              justify-content: flex-start;
-              span {
-                width: 80px;
-              }
-            }
+          .title-filterSalary {
+            width: 110px;
+            white-space:nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            margin: 0;
           }
+
         }
       }
     }
@@ -128,6 +126,93 @@
       .wrap-button_filter {
         display: flex;
         justify-content: space-evenly;
+      }
+    }
+  }
+
+
+  @include breakpoint(mobile){
+    .ant-collapse-item {
+      .ant-collapse-header {
+        .ant-collapse-header-text {
+          width: 52px;
+          white-space:nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .ant-collapse-content  {
+        .ant-collapse-content-box {
+          .title-filter_timeJob {
+            width: 110px;
+            white-space:nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            margin: 0;
+          }
+
+          .MuiBox-root {
+            .MuiFormControlLabel-root {
+              margin: 0;
+              display: flex;
+              flex-direction: column;
+              align-self: flex-start;
+              justify-content: flex-start;
+              width: 100%;
+              span:nth-child(2) {
+                width: 104px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @include breakpoint(tablet){
+    .ant-collapse-item {
+      .ant-collapse-header {
+        .ant-collapse-header-text {
+          width: 120px;
+          white-space:nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .ant-collapse-content  {
+        .ant-collapse-content-box {
+          .title-filter_timeJob {
+            width: 100%;
+            white-space:nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+          }
+
+          .MuiBox-root {
+            .MuiFormControlLabel-root {
+              // margin: 0;
+              // display: flex;
+              // flex-direction: column;
+              // align-self: flex-start;
+              // justify-content: flex-start;
+              // width: 100%;
+              span:nth-child(2) {
+                width: 120px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 14px;
+              }
+            }
+          }
+        }
       }
     }
   }

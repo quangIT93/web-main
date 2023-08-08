@@ -64,7 +64,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
           handleClickItem(e, props.item?.id);
         }}
       >
-        <div className="div-card-post-left">
+        <ul className="div-card-post-left">
           <ImageListItem
             key={props.item?.image}
             sx={{ flex: 1, display: 'flex' }}
@@ -187,7 +187,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
               </div>
             </div>
           </ImageListItem>
-        </div>
+        </ul>
 
         <Space
           style={{ justifyContent: 'space-between' }}

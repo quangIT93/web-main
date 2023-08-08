@@ -63,7 +63,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise("vi");
+      const result = await categoriesApi.getAllCategorise('vi');
       if (result) {
         setDataCategories(result.data);
       }
@@ -116,7 +116,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
         return;
       }
       const result = await profileApi.updateProfileCareer(
-        value.map((v) => parseInt(v)),
+        value.map((v: any) => parseInt(v.value)),
       );
       if (result) {
         await dispatch(getProfile() as any);

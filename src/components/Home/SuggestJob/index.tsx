@@ -82,7 +82,9 @@ interface PostTheme {
 }
 
 const ThemesJob: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const [page, setPage] = React.useState(1);
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
   // const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
@@ -120,7 +122,7 @@ const ThemesJob: React.FC = () => {
       userProfile?.address?.id,
       11,
       threshold,
-      languageRedux == 1 ? "vi" : "en"
+      languageRedux === 1 ? 'vi' : 'en',
     );
     // const result = await postApi.getPostByThemeId(
     //   Number(themeId),
@@ -155,7 +157,7 @@ const ThemesJob: React.FC = () => {
         userProfile?.address?.id,
         11,
         null,
-        languageRedux == 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -212,11 +214,9 @@ const ThemesJob: React.FC = () => {
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <SuggestIcon width={25} height={25} />
         <h2>
-          {
-            languageRedux == 1 ?
-              home.suggested_jobs_in_your_city :
-              homeEn.suggested_jobs_in_your_city
-          }
+          {languageRedux === 1
+            ? home.suggested_jobs_in_your_city
+            : homeEn.suggested_jobs_in_your_city}
         </h2>
       </div>
 
@@ -260,11 +260,7 @@ const ThemesJob: React.FC = () => {
                 {localStorage.getItem('accessToken') ? (
                   <div className="more-job">
                     <p onClick={handleChange}>
-                      {
-                        languageRedux == 1 ?
-                          home.more :
-                          homeEn.more
-                      }
+                      {languageRedux === 1 ? home.more : homeEn.more}
                     </p>
                     <MoreICon width={20} height={20} />
                   </div>
@@ -272,18 +268,14 @@ const ThemesJob: React.FC = () => {
                   <div className="suggest-job-not-loging">
                     <div className="suggest-job-not-loging_left">
                       <h3>
-                        {
-                          languageRedux == 1 ?
-                            'Hijob gợi ý công việc cho bạn' :
-                            'Hijob suggests a job for you'
-                        }
+                        {languageRedux === 1
+                          ? 'Hijob gợi ý công việc cho bạn'
+                          : 'Hijob suggests a job for you'}
                       </h3>
                       <p>
-                        {
-                          languageRedux == 1 ?
-                            'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.' :
-                            'Quickly find a job that fits your needs.'
-                        }
+                        {languageRedux === 1
+                          ? 'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.'
+                          : 'Quickly find a job that fits your needs.'}
                       </p>
                     </div>
                     <div className="suggest-job-not-loging_right">
@@ -294,7 +286,7 @@ const ThemesJob: React.FC = () => {
                         }}
                       >
                         <LoginArrowIcon />
-                        {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+                        {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
                       </Button>
                     </div>
                   </div>
@@ -308,7 +300,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //   onClick={handleClose}
+              //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

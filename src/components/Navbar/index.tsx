@@ -22,7 +22,7 @@ import {
   MapInfoIcon,
   BagInfoJob,
   DownloadIcon,
-  TransalteIcon,
+  // TransalteIcon,
   // LoginArrowIcon,
   LoginArrowBlackIcon,
   // LoginHomeIcon,
@@ -32,6 +32,8 @@ import {
   TranslateSubLoginIcon,
   LogoutSubLoginIcon,
   ArrowSubLoginIcon,
+  VNSubLoginIcon,
+  ENSubLoginIcon,
 } from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
@@ -77,7 +79,7 @@ import FilterTimeJob from './FilterTimeJob';
 import Notificate from './Notificate';
 import PostButton from './PostButton';
 
-import { Avatar, Button, Space, Spin, Badge, Radio, Select } from 'antd';
+import { Avatar, Button, Space, Spin, Badge, Radio } from 'antd';
 
 import authApi from 'api/authApi';
 import profileApi from 'api/profileApi';
@@ -110,7 +112,7 @@ import { setLanguage } from 'store/reducer/changeLanguageReducer';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
-import { set } from 'immer/dist/internal';
+// import { set } from 'immer/dist/internal';
 
 // import redux
 
@@ -293,7 +295,7 @@ const Navbar: React.FC = () => {
   const getCompanyInforByAccount = async () => {
     try {
       const result = await apiCompany.getCampanyByAccountApi(
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result && result?.data?.companyInfomation?.id != null) {
         setCompanyName(result?.data?.companyInfomation?.name);
@@ -326,7 +328,7 @@ const Navbar: React.FC = () => {
       await dispatch(getProfile() as any);
 
       const result = await profileApi.getProfile(
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         dispatch(getProfile() as any);
@@ -359,7 +361,7 @@ const Navbar: React.FC = () => {
   const getCountUnread = async () => {
     try {
       const result = await messageApi.getUnread(
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setCountChat(result.data.quantity);
@@ -371,6 +373,7 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     getCountUnread();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     receivedMessages,
     sendMessages,
@@ -881,7 +884,7 @@ const Navbar: React.FC = () => {
     >
       <FormOutlined style={{ color: 'white' }} />
       <p style={{ marginLeft: 10, color: 'white' }}>
-        {languageRedux == 1 ? home.post : homeEn.post}
+        {languageRedux === 1 ? home.post : homeEn.post}
       </p>
     </button>,
     <div
@@ -904,7 +907,7 @@ const Navbar: React.FC = () => {
             {localStorage.getItem('accessToken') && dataProfile ? (
               <span>{dataProfile?.name}</span>
             ) : (
-              <span>{languageRedux == 1 ? 'Đăng nhập' : homeEn.sign_in}</span>
+              <span>{languageRedux === 1 ? 'Đăng nhập' : homeEn.sign_in}</span>
             )}
           </div>
         </div>
@@ -925,15 +928,15 @@ const Navbar: React.FC = () => {
         }}
       >
         <div className="login__hover">
-          <h3>{languageRedux == 1 ? 'Đăng nhập ở đây' : 'Sign in here'}</h3>
+          <h3>{languageRedux === 1 ? 'Đăng nhập ở đây' : 'Sign in here'}</h3>
           <div className="login__hover__p">
             <p>
-              {languageRedux == 1
+              {languageRedux === 1
                 ? 'Chọn vị trí và danh mục của bạn'
                 : 'Choose your location and category'}
             </p>
             <p>
-              {languageRedux == 1
+              {languageRedux === 1
                 ? 'Chúng tôi sẽ cung cấp thông tin tuyển dụng tốt nhất'
                 : 'We will provide the best recruitment information'}
             </p>
@@ -945,7 +948,7 @@ const Navbar: React.FC = () => {
             }}
           >
             <LoginArrowBlackIcon />
-            {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
           </Button>
         </div>
       </div>
@@ -1002,7 +1005,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.locations.map((location: any) => {
                             return `${location.district} , `;
                           })
-                        : languageRedux == 1
+                        : languageRedux === 1
                         ? 'Chưa cập nhật thông tin'
                         : 'The information has not been updated'}
                     </p>
@@ -1018,7 +1021,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.categories.map((profile: any) => {
                             return `${profile.parent_category} / ${profile.child_category}, `;
                           })
-                        : languageRedux == 1
+                        : languageRedux === 1
                         ? 'Chưa cập nhật thông tin'
                         : 'The information has not been updated'}
                     </p>
@@ -1031,7 +1034,7 @@ const Navbar: React.FC = () => {
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
                   <span>
-                    {languageRedux == 1
+                    {languageRedux === 1
                       ? 'Cập nhật thông tin'
                       : 'Update information'}
                   </span>
@@ -1048,7 +1051,7 @@ const Navbar: React.FC = () => {
                   // }}
                 >
                   <PaperSubLoginIcon />
-                  <span>{languageRedux == 1 ? 'Lịch sử' : 'History'}</span>
+                  <span>{languageRedux === 1 ? 'Lịch sử' : 'History'}</span>
                 </div>
               </Link>
               <div className="sub-history_status">
@@ -1074,7 +1077,7 @@ const Navbar: React.FC = () => {
               >
                 <div className="sub-translate_header_left">
                   <TranslateSubLoginIcon />
-                  <span>{languageRedux == 1 ? 'Ngôn ngữ' : 'Language'}</span>
+                  <span>{languageRedux === 1 ? 'Ngôn ngữ' : 'Language'}</span>
                 </div>
                 <div
                   className="sub-translate_header_right"
@@ -1089,7 +1092,7 @@ const Navbar: React.FC = () => {
               <div
                 className="sub-translate_status"
                 style={{
-                  height: openRadioGroup ? 'fit-content' : '0',
+                  height: openRadioGroup ? '100%' : '0',
                 }}
               >
                 <Radio.Group
@@ -1103,12 +1106,19 @@ const Navbar: React.FC = () => {
                   }}
                 >
                   <Radio value={1}>
-                    {languageRedux == 1 ? 'Tiếng Việt' : 'Vietnamese'}
+                    <VNSubLoginIcon />
+                    <span>
+                      {languageRedux === 1 ? 'Tiếng Việt' : 'Vietnamese'}
+                    </span>
                   </Radio>
                   <Radio value={2}>
-                    {languageRedux == 1 ? 'Tiếng Anh' : 'English'}
+                    <ENSubLoginIcon />
+                    <span>{languageRedux === 1 ? 'Tiếng Anh' : 'English'}</span>
                   </Radio>
-                  {/* <Radio value={3}>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</Radio> */}
+                  {/* <Radio value={3}>
+                    <ENSubLoginIcon />
+                    <span>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</span>
+                  </Radio> */}
                 </Radio.Group>
               </div>
 
@@ -1119,7 +1129,7 @@ const Navbar: React.FC = () => {
               >
                 <LogoutSubLoginIcon />
 
-                <span>{languageRedux == 1 ? 'Đăng xuất' : 'Log out'}</span>
+                <span>{languageRedux === 1 ? 'Đăng xuất' : 'Log out'}</span>
               </div>
 
               {/* <div className="sub-login_item" onClick={handleLogout}>
@@ -1151,6 +1161,7 @@ const Navbar: React.FC = () => {
             setOpenModalLogin(true);
           }
         }}
+        name="btn-chat"
         type="link"
       >
         <ChatIcon />
@@ -1160,6 +1171,7 @@ const Navbar: React.FC = () => {
       <Button
         key="3"
         className="btn-notice"
+        name="btn-notice"
         onClick={() => {
           if (dataProfile && localStorage.getItem('accessToken')) {
             setOpenNotificate(!openNotificate);
@@ -1178,7 +1190,7 @@ const Navbar: React.FC = () => {
       ref={refLogin}
       key="4"
     >
-      <Button className="menu-button">
+      <Button className="menu-button" name="menu-button">
         <MenuOutlined style={{ fontSize: '1.5em' }} />
       </Button>
       <Spin indicator={antIcon} spinning={spinning}>
@@ -1201,7 +1213,7 @@ const Navbar: React.FC = () => {
                 <div className="sub-login_item">
                   <SyncOutlined />
                   <span>
-                    {languageRedux == 1
+                    {languageRedux === 1
                       ? 'Cập nhật thông tin'
                       : 'Update information'}
                   </span>
@@ -1215,7 +1227,7 @@ const Navbar: React.FC = () => {
                   // }}
                 >
                   <ClockCircleOutlined />
-                  <span>{languageRedux == 1 ? 'Lịch sử' : 'History'}</span>
+                  <span>{languageRedux === 1 ? 'Lịch sử' : 'History'}</span>
                 </div>
               </Link>
               {/* <div className="sub-login_item">
@@ -1224,7 +1236,7 @@ const Navbar: React.FC = () => {
               </div> */}
               <div className="sub-login_item" onClick={handleLogout}>
                 <LogoutOutlined />
-                <span>{languageRedux == 1 ? 'Đăng xuất' : 'Log out'}</span>
+                <span>{languageRedux === 1 ? 'Đăng xuất' : 'Log out'}</span>
               </div>
             </div>
           </div>
@@ -1286,6 +1298,7 @@ const Navbar: React.FC = () => {
             <Badge count={countChat} className="btn-badge">
               <Button
                 className="btn-notice"
+                name="btn-chat"
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
                     window.open(`/message`, '_parent');
@@ -1303,6 +1316,7 @@ const Navbar: React.FC = () => {
             <div className="wrap-btn_notice ">
               <Button
                 className="btn-notice"
+                name="btn-notice"
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('accessToken')) {
                     setOpenNotificate(!openNotificate);
@@ -1325,6 +1339,7 @@ const Navbar: React.FC = () => {
               <Button
                 className="btn-notice"
                 // onClick={() => setOpenNotificate(!openNotificate)}
+                name="btn-down"
                 ref={bellRef}
               >
                 <div className="button-download">
@@ -1334,13 +1349,13 @@ const Navbar: React.FC = () => {
               </Button>
               <div className="sub-icon_qr">
                 <h2>
-                  {languageRedux == 1
+                  {languageRedux === 1
                     ? 'Tải Ứng dụng HiJob!'
                     : 'Download the HiJob App!'}
                 </h2>
                 <img
                   src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
-                  alt={languageRedux == 1 ? 'Ảnh lỗi' : 'Error photo'}
+                  alt={languageRedux === 1 ? 'Ảnh lỗi' : 'Error photo'}
                 />
                 <div className="sub-icon_apps">
                   <Link
@@ -1350,7 +1365,7 @@ const Navbar: React.FC = () => {
                     <img
                       id="img-gallery"
                       src={require('../../img/langdingPage/image 43.png')}
-                      alt={languageRedux == 1 ? 'Ảnh lỗi' : 'Error photo'}
+                      alt={languageRedux === 1 ? 'Ảnh lỗi' : 'Error photo'}
                     />
                   </Link>
                   <Link
@@ -1359,7 +1374,7 @@ const Navbar: React.FC = () => {
                   >
                     <img
                       src={require('../../img/langdingPage/image 45.png')}
-                      alt={languageRedux == 1 ? 'Ảnh lỗi' : 'Error photo'}
+                      alt={languageRedux === 1 ? 'Ảnh lỗi' : 'Error photo'}
                     />
                   </Link>
                 </div>
@@ -1518,13 +1533,13 @@ const Navbar: React.FC = () => {
 
           <div className="btn-filter_nav">
             <Button type="default" onClick={handleResetValue}>
-              {languageRedux == 1 ? 'Đặt Lại' : 'Reset'}
+              {languageRedux === 1 ? 'Đặt Lại' : 'Reset'}
             </Button>
             <Button
               type="primary"
               onClick={(e) => handleSearch(e, valueSearchInput)}
             >
-              {languageRedux == 1 ? 'Áp dụng' : 'Apply'}
+              {languageRedux === 1 ? 'Áp dụng' : 'Apply'}
             </Button>
           </div>
         </Collapse>

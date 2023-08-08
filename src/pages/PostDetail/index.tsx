@@ -263,7 +263,7 @@ const Detail: React.FC = () => {
       // const result = await postApi.getById(POST_ID);
       const result = await postApi.getPostV3(
         POST_ID,
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       // console.log('result', result2);
       if (result) {
@@ -333,7 +333,7 @@ const Detail: React.FC = () => {
       // setIsLoading(true);
       const result = await postApi.getById(
         postID,
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         // setIsLoading(false);
@@ -424,12 +424,16 @@ const Detail: React.FC = () => {
           post?.data?.companyResourceData?.name !== 'HIJOB') ||
         (checkApply && post?.data?.companyResourceData?.name !== 'HIJOB')
       ) {
-        window.open(post?.data?.companyResourceData?.postUrl, '_blank');
+        window.open(
+          post?.data?.companyResourceData?.postUrl,
+          '_blank',
+          'width=800,height=600',
+        );
         return;
       }
       // navigate to edit post
       if (checkPostUser) {
-        window.open(`edit-posted/?postId=${POST_ID}`);
+        window.open(`edit-posted/?postId=${POST_ID}`, 'width=800,height=600');
         return;
       }
       if (

@@ -47,7 +47,9 @@ const BreadcrumbsCpn: React.FC = () => {
     setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
   } = useContext(HomeValueContext);
 
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   // const [checked, setChecked] = React.useState(true)
@@ -81,13 +83,13 @@ const BreadcrumbsCpn: React.FC = () => {
 
   const getAllChildCategoriesById = async () => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       const result = await categoriesApi.getAllChildCategories(
         valueJobChild?.id,
-        languageRedux == 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
-        setIsLoading(false);
+        // setIsLoading(false);
         setChildCatelories(result.data);
       }
     } catch (error) {
@@ -150,7 +152,7 @@ const BreadcrumbsCpn: React.FC = () => {
         null,
         9,
         thersholdId,
-        languageRedux == 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setPostNewest(result);
@@ -260,14 +262,16 @@ const BreadcrumbsCpn: React.FC = () => {
           }}
         >
           {arrayChild?.length === 0
-            ? languageRedux == 1 ? home.all : homeEn.all
+            ? languageRedux === 1
+              ? home.all
+              : homeEn.all
             : arrayChild?.map(
-              (value: { id: number; name: string }, index: number) => (
-                <div key={index}>
-                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                </div>
-              ),
-            )}
+                (value: { id: number; name: string }, index: number) => (
+                  <div key={index}>
+                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                  </div>
+                ),
+              )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -295,6 +299,9 @@ const BreadcrumbsCpn: React.FC = () => {
         left: 0,
         right: 0,
         borderBottom: '1px solid #e5e5e5',
+        '@media (max-width: 767px)': {
+          marginTop: '180px',
+        },
       }}
     >
       {isLoading ? (
@@ -312,11 +319,7 @@ const BreadcrumbsCpn: React.FC = () => {
         className="collapse-breadcrumbs"
       >
         <Typography className="header-breabcrumb_text">
-          {
-            languageRedux == 1 ?
-              "Danh sách" :
-              "List"
-          }
+          {languageRedux === 1 ? 'Danh sách' : 'List'}
         </Typography>
         <Box padding={0} className="box-breadcrumbs">
           <FormGroup>
@@ -340,7 +343,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                        checkItemsCount >= MAX_CHECKED_ITEMS
+                          checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />
@@ -356,7 +359,7 @@ const BreadcrumbsCpn: React.FC = () => {
             className="btn-breadcrumb_nav"
             onClick={handleClickChoose}
           >
-            {languageRedux == 1 ? 'Chọn' : 'Select'}
+            {languageRedux === 1 ? 'Chọn' : 'Select'}
           </button>
         </div>
       </Collapse>

@@ -26,6 +26,22 @@
     .ant-collapse-content {
       border-top: 1px solid transparent !important;
       top: 50px;
+      @include breakpoint(mobile) {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        position: relative;
+        top: 0;
+        .ant-collapse-content-box {
+          .title-filterSalary {
+            width: 110px;
+            white-space:nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            margin: 0;
+          }
+
+        }
+      }
     }
   }
 
