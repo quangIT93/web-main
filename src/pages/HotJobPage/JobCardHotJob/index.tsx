@@ -164,10 +164,12 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item?.salaryMin)}{' '}
-                  -{' '}
+                  {props?.item?.moneyType} -{' '}
                   {new Intl.NumberFormat('en-US').format(
                     props.item?.salaryMax,
-                  ) + `/${props.item?.salaryType?.name}`}
+                  ) +
+                    ` ${props?.item?.moneyType}` +
+                    `/${props.item?.salaryType?.name}`}
                 </Typography>
               </div>
               <div

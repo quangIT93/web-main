@@ -193,23 +193,23 @@ const ThemesJob: React.FC = () => {
   // }, [localStorage.getItem("accessToken")])
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }}>
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <TopicJobIcon width={25} height={25} />
         <h2>
-          {languageRedux == 1 ? home.jobs_by_theme : homeEn.jobs_by_theme}
+          {languageRedux === 1 ? home.jobs_by_theme : homeEn.jobs_by_theme}
         </h2>
       </div>
 
       {!localStorage.getItem('accessToken') ? (
         <div className="title-location-job">
           <h3>
-            {languageRedux == 1
+            {languageRedux === 1
               ? 'Vị trí công việc lý tưởng'
               : 'Ideal job location'}
           </h3>
           <p>
-            {languageRedux == 1
+            {languageRedux === 1
               ? 'Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.'
               : 'Search for jobs in famous locations in your city.'}
           </p>
@@ -256,7 +256,7 @@ const ThemesJob: React.FC = () => {
                     handleChange(e, page);
                   }}
                 >
-                  <p>{languageRedux == 1 ? home.more : homeEn.more}</p>
+                  <p>{languageRedux === 1 ? home.more : homeEn.more}</p>
                   <MoreICon width={20} height={20} />
                 </Space>
               </Stack>

@@ -49,6 +49,7 @@ interface IitemNewJob {
     created_at: number;
     status: number;
     bookmarked: boolean;
+    money_type_text: string;
   };
   handleDeleteBookmark: (event: any, index: number, bookmarkId: number) => any;
   index: number;
@@ -204,10 +205,12 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
-                  -{' '}
+                  {props?.item?.money_type_text}-{' '}
                   {new Intl.NumberFormat('en-US').format(
                     props.item.salary_max,
-                  ) + `/${props.item.salary_type}`}
+                  ) +
+                    ` ${props?.item?.money_type_text}` +
+                    `/${props.item.salary_type}`}
                 </Typography>
               </div>
               <div

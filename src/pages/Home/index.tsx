@@ -63,7 +63,6 @@ const Home: React.FC = () => {
         <HotJob />
         <NewJobs />
         <SuggestJob />
-
         <ThemesJob />
       </div>
       <RollTop />
