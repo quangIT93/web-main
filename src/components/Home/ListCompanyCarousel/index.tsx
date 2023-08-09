@@ -160,7 +160,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, languageRedux]);
 
-  console.log('value', value);
+  // console.log('value', value);
 
   return (
     <Box

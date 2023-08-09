@@ -496,8 +496,6 @@ const CategoryCarousel: React.FC = () => {
           initialSlide={selectedItemIndex - 1}
         >
           {categories?.data.map((item: CategoryItem, index: number) => {
-            console.log('id: ', item.id);
-            console.log('index: ', index);
             return (
               <SwiperSlide
                 key={index}

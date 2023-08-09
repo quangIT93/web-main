@@ -49,6 +49,7 @@ interface IitemNewJob {
     status: number;
     num_of_application: number;
     bookmarked: boolean;
+    money_type_text: string;
   };
   handleShowDetail: (event: any, params: any) => any;
   isHide: boolean;
@@ -193,10 +194,12 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
-                  -{' '}
+                  {props?.item?.money_type_text}-{' '}
                   {new Intl.NumberFormat('en-US').format(
                     props.item.salary_max,
-                  ) + `/${props.item.salary_type}`}
+                  ) +
+                    ` ${props?.item?.money_type_text}` +
+                    `/${props.item.salary_type}`}
                 </Typography>
               </div>
               <div

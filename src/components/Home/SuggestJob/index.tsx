@@ -211,7 +211,7 @@ const ThemesJob: React.FC = () => {
   // }, [localStorage.getItem("accessToken")])
 
   return (
-    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }}>
+    <Box sx={{ flexGrow: 1 }}>
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <SuggestIcon width={25} height={25} />
         <h2>
@@ -242,7 +242,7 @@ const ThemesJob: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 margin: '24px 0',
-                marginBottom: '50px',
+                // marginBottom: '50px',
               }}
             >
               {/* <Pagination count={10} shape="rounded" /> */}
