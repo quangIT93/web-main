@@ -42,6 +42,8 @@
 
       .ant-select-selection-item {
         text-align: left;
+        font-size: 12px !important;
+        color: #000000 !important;
       }
 
       span {
@@ -90,6 +92,55 @@
 
 }
 
+.filter-wraps {
+  .filter-wrap_bottom,
+  .filter-wrap_top {
+    .ant-select {
+      .ant-select-selector {
+        .ant-select-selection-overflow {
+          .ant-select-selection-overflow-item {
+            .ant-select-selection-item {
+              color: #000000;
+              font-size: 12px;
+            }
+          }
+        }
+        .ant-select-selection-item {
+          color: #000000;
+          font-size: 12px;
+        }
+      }
+    }
+
+    .filter-input {
+      .ant-collapse {
+        .ant-collapse-item {
+          .ant-collapse-header {
+            .ant-collapse-header-text {
+              color: #575757;
+              font-size: 12px;
+            }
+          }
+
+          .ant-collapse-content {
+            .ant-collapse-content-box {
+              .MuiBox-root {
+                label {
+                  span {
+                    font-size: 12px;
+                    // color: #000000;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+}
+
 .ant-select-clear {
   background-color: initial !important;
 }
@@ -118,6 +169,7 @@
       margin-left: 4px;
       margin-bottom: 4px;
       padding: 4px 8px;
+      font-size: 12px;
       cursor: pointer;
 
       &:hover {
@@ -127,7 +179,8 @@
 
       .item-search_text {
         padding: 4px 4px 4px 6px;
-
+ 
+        // font-size: 10px;
         // padding: 30px 16px;
         // padding-left: 4px;
       }

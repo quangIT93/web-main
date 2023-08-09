@@ -193,6 +193,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
               : `Working time`
           }
           key="1"
+          style={{ fontSize: '12px' }}
         >
           <Text className="title-filter_timeJob">
             {languageRedux === 1 ? `Thời gian làm việc` : `Working time`}

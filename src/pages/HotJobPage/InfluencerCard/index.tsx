@@ -40,6 +40,8 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
 
+  // console.log('props', props);
+
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
   };
@@ -171,7 +173,7 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
                 }}
               >
                 {new Intl.NumberFormat('en-US').format(props.item?.salaryMin)}{' '}
-                {props?.item?.moneyType}-{' '}
+                {props?.item?.moneyType} -{' '}
                 {new Intl.NumberFormat('en-US').format(props.item?.salaryMax) +
                   ` ${props?.item?.moneyType}` +
                   `/${props.item?.salaryType.name}`}
