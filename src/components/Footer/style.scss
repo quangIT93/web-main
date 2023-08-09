@@ -167,6 +167,8 @@
 .div-img-footer>img {
   height: auto;
   max-width: 100%;
+  width: 124px;
+  height: 124px;
 
   @include breakpoint(mobile) {
     height: 0px;
@@ -199,15 +201,18 @@
 .div-link-app>a>img {
   height: 35px;
   width: auto;
+  width: 114px;
 
   @include breakpoint(mobile) {
     //height: 35px;
     //width: 70px;
+    height: 35px;
+    width: 120px;
   }
 
   @include breakpoint(tablet) {
-    height: 40px;
-    // width: 90px;
+    height: 35px;
+    width: 120px;
   }
 }
 

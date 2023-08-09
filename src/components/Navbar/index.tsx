@@ -1352,9 +1352,9 @@ const Navbar: React.FC = () => {
                 ref={bellRef}
               >
                 <div className="button-download">
-                  <DownloadIcon />
+                  {/* <DownloadIcon /> */}
 
-                  {/* <img src="./images/cloud-downloading.gif" alt="" /> */}
+                  <img src="./images/down.gif" alt="" />
                 </div>
                 {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
               </Button>

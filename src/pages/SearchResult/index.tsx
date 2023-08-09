@@ -531,9 +531,6 @@ const NewJobs: React.FC = () => {
     }
   };
 
-  console.log('loca', locationOneItem);
-  console.log('cae', cateloryOneItem);
-
   const DropdownRenderLocation = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
       <Text className="title-filter_location">Chọn địa điểm</Text>
