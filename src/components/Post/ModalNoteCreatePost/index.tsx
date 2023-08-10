@@ -8,8 +8,6 @@ import IconButton from '@mui/material/IconButton';
 
 import { Button } from 'antd';
 
-import apiCompany from 'api/apiCompany';
-
 import './style.scss';
 
 const style = {
