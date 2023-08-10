@@ -95,7 +95,9 @@ const Comunity = () => {
                 alt=""
                 style={{ width: '50px', height: '50px' }}
               />
-              <input type="text" multiple />
+
+              {/* <textarea name="Text" rows={5}></textarea> */}
+              {/* <input type="text" aria-colspan={2} /> */}
             </div>
             <div className="comunityDetail-list_comment">
               <img

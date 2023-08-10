@@ -941,7 +941,7 @@ const Navbar: React.FC = () => {
                 : 'We will provide the best recruitment information'}
             </p>
           </div>
-          <Button
+          {/* <Button
             type="primary"
             onClick={() => {
               setOpenModalLogin(true);
@@ -949,7 +949,7 @@ const Navbar: React.FC = () => {
           >
             <LoginArrowBlackIcon />
             {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
-          </Button>
+          </Button> */}
         </div>
       </div>
       <Spin indicator={antIcon} spinning={spinning}>
