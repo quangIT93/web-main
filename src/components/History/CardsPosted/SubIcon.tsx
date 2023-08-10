@@ -6,14 +6,18 @@ import {
 } from '@ant-design/icons';
 
 import postApi from 'api/postApi';
+import { postDetail } from 'validations/lang/vi/postDetail';
+import { postDetailEn } from 'validations/lang/en/postDetail';
 
 interface ISubicon {
   postId: number;
   setStatus: React.Dispatch<React.SetStateAction<number>>;
   status: number;
+  language: any;
+  languageRedux: any;
 }
 const SubIcon: React.FC<ISubicon> = (props) => {
-  const { postId, setStatus, status } = props;
+  const { postId, setStatus, status, language, languageRedux } = props;
   // const [accepted, setAccepted] = React.useState('');
   // const [closed, setClosed] = React.useState('');
 
@@ -51,23 +55,27 @@ const SubIcon: React.FC<ISubicon> = (props) => {
       <div
         className="sub-icon_moreOutlined sub-edit_post"
         onClick={handleClickEditPost}
-        // style={
-        //   status !== 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
-        // }
+      // style={
+      //   status !== 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
+      // }
       >
         <EditOutlined />
-        Chỉnh sửa bài tuyển dụng
+        {
+          languageRedux === 1 ?
+            postDetail.edit :
+            postDetailEn.edit
+        }
       </div>
 
       <div
         className="sub-icon_moreOutlined sub-close_post"
-        onClick={status !== 3 ? handleClickClosePost : () => {}}
+        onClick={status !== 3 ? handleClickClosePost : () => { }}
         style={
           status === 3 ? { cursor: 'not-allowed', background: '#aaa' } : {}
         }
       >
         <CloseSquareOutlined />
-        {status === 3 ? '     Đóng bài tuyển dụng' : 'Bài tuyển dụng đã đóng'}
+        {status === 3 ? language?.the_job_posting_has_been_closed : language?.close_post}
       </div>
 
       {/* {status === 3 ? (

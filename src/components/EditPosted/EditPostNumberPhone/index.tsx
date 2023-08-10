@@ -4,20 +4,25 @@ import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 // import TextField from '@mui/material/TextField';
 import { Input } from 'antd';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 interface NumericInputProps {
   style: React.CSSProperties;
   value: any;
   onChange: (value: any) => any;
+  languageRedux: any;
 }
 
 interface IEditPostNumberPhone {
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
   editDataPosted: any;
+  language: any;
+  languageRedux: any;
 }
 
 const NumericInput = (props: NumericInputProps) => {
-  const { value, onChange } = props;
+  const { value, onChange, languageRedux } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
@@ -43,14 +48,16 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder="Nhập số điện thoại"
+      placeholder={languageRedux === 1 ?
+        post.place_phone :
+        postEn.place_phone}
       maxLength={16}
     />
   );
 };
 
 const EditPostNumberPhone: React.FC<IEditPostNumberPhone> = (props) => {
-  const { setEditDataPosted, editDataPosted } = props;
+  const { setEditDataPosted, editDataPosted, language, languageRedux } = props;
 
   // const [phone, setPhoneNumber] = useState<string>('');
   const styleLabel = {
@@ -65,7 +72,10 @@ const EditPostNumberPhone: React.FC<IEditPostNumberPhone> = (props) => {
         component="label"
         htmlFor="company"
       >
-        Số điện thoại liên hệ <span style={{ color: 'red' }}>*</span>
+        {
+          language?.contact_phone_number
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </Typography>
       <NumericInput
         style={{
@@ -81,6 +91,7 @@ const EditPostNumberPhone: React.FC<IEditPostNumberPhone> = (props) => {
         }}
         value={editDataPosted.phoneNumber}
         onChange={setEditDataPosted}
+        languageRedux={languageRedux}
       />
       {/* <Input
     value={`${phone}d`}

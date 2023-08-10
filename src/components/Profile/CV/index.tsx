@@ -6,7 +6,10 @@ import { FilePdfOutlined, DeleteOutlined } from '@ant-design/icons';
 
 // import moment from 'moment';
 import './style.scss';
-
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
 interface Url_CV {
   url: string;
   open?: boolean;
@@ -15,6 +18,7 @@ interface Url_CV {
 }
 
 const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   return (
     <Space>
       <div
@@ -37,7 +41,11 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
         </Space>
       </div>
       {isProfile && (
-        <Tooltip placement="right" title={'Xóa CV'} style={{ fontSize: 5 }}>
+        <Tooltip placement="right" title={
+          languageRedux === 1 ?
+            profileVi.delete_cv :
+            profileEn.delete_cv
+        } style={{ fontSize: 5 }}>
           <DeleteOutlined
             onClick={() => {
               setOpen(true);

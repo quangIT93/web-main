@@ -42,8 +42,14 @@ import './style.scss';
 
 // import data
 import postApi from 'api/postApi';
+import languageApi from 'api/languageApi';
 
 import { message } from 'antd';
+
+import { RootState } from '../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 // redux
 // import { RootState } from 'store';
@@ -155,6 +161,7 @@ const Post: React.FC = () => {
     email: '',
   };
 
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [titleJob, setTitleJob] = useState<string>('');
   const [companyName, setCompanyName] = useState<string>('');
 
@@ -213,6 +220,25 @@ const Post: React.FC = () => {
   const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
     [],
   );
+  const [language, setLanguage] = useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // submit
   const handleSubmit = (
@@ -271,31 +297,41 @@ const Post: React.FC = () => {
   const validValue = () => {
     if (titleJob === '') {
       return {
-        message: 'Vui lòng nhập tên công việc',
+        message: languageRedux === 1 ?
+          post.err_job_title :
+          postEn.err_job_title,
         checkForm: false,
       };
     }
     if (companyName === '') {
       return {
-        message: 'Vui lòng nhập tên công ty',
+        message: languageRedux === 1 ?
+          post.err_company_name :
+          postEn.err_company_name,
         checkForm: false,
       };
     }
     if (address === '') {
       return {
-        message: 'Vui lòng nhập dia chi',
+        message: languageRedux === 1 ?
+          post.err_address :
+          postEn.err_address,
         checkForm: false,
       };
     }
     if (wardId === '') {
       return {
-        message: 'Vui lòng chọn tỉnh thành phố',
+        message: languageRedux === 1 ?
+          post.err_location :
+          postEn.err_location,
         checkForm: false,
       };
     }
     if (categoriesId.length <= 0) {
       return {
-        message: 'Vui lòng chọn danh mục nghề nghiệp',
+        message: languageRedux === 1 ?
+          post.err_cate :
+          postEn.err_cate,
         checkForm: false,
       };
     }
@@ -304,32 +340,42 @@ const Post: React.FC = () => {
       (Number(salaryMin) === 0 && salaryType !== 6)
     ) {
       return {
-        message: 'Vui lòng nhập mức lương',
+        message: languageRedux === 1 ?
+          post.err_salary :
+          postEn.err_salary,
         checkForm: false,
       };
     }
     if (Number(salaryMax) < Number(salaryMin)) {
       return {
-        message: 'Lương tối đa phải lớn hơn lương tối thiểu',
+        message: languageRedux === 1 ?
+          post.err_verify_salary :
+          postEn.err_verify_salary,
         checkForm: false,
       };
     }
     if (phoneNumber === '' || phoneNumber.length < 10) {
       return {
-        message: 'Số điện thoại sai định dạng',
+        message: languageRedux === 1 ?
+          post.err_phone_mess :
+          postEn.err_phone_mess,
         checkForm: false,
       };
     }
     if (description === '') {
       return {
-        message: 'Vui lòng nhập mô tả công việc',
+        message: languageRedux === 1 ?
+          post.err_des_mess :
+          postEn.err_des_mess,
         checkForm: false,
       };
     }
 
     if (startDate > endDate) {
       return {
-        message: 'Bạn đã nhập ngày bắt đầu lớn hơn ngày kết thúc',
+        message: languageRedux === 1 ?
+          post.err_date :
+          postEn.err_date,
         checkForm: false,
       };
     }
@@ -364,12 +410,16 @@ const Post: React.FC = () => {
       if (error?.response?.data?.message === 'You only can post 1 job/day') {
         messageApi.open({
           type: 'error',
-          content: 'Bạn chỉ có thể đăng 1 bài trong 1 ngày',
+          content: languageRedux === 1 ?
+            post.err_1_post_per_day :
+            postEn.err_1_post_per_day,
         });
       } else if (error?.response?.data?.message === 'Invalid date value') {
         messageApi.open({
           type: 'error',
-          content: 'Vui lòng nhập lại ngày làm việc',
+          content: languageRedux === 1 ?
+            post.err_date :
+            postEn.err_date,
         });
       }
     }
@@ -379,13 +429,15 @@ const Post: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = 'HiJob - Tạo bài đăng tuyển dụng';
+    document.title = languageRedux === 1 ?
+      post.title_page :
+      postEn.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_createPost' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   // console.log('phone', phoneNumber);
 
@@ -398,13 +450,22 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-            // style={{ textAlign: 'center', display: 'block' }}
+          // style={{ textAlign: 'center', display: 'block' }}
           >
-            <h1>Tạo bài đăng tuyển dụng</h1>
+            <h1>
+              {
+                languageRedux === 1 ?
+                  post.create_post :
+                  postEn.create_post
+              }
+            </h1>
             <div className="post-main_switch">
               <h4>
-                HiJob sẽ tự động điền tất cả các thông tin công việc trước đó
-                của bạn!
+                {
+                  languageRedux === 1 ?
+                    post.auto_fill :
+                    postEn.auto_fill
+                }
               </h4>
               <Switch
                 checked={openModalFillDataPost}
@@ -422,6 +483,7 @@ const Post: React.FC = () => {
               // companyError={companyError}
               titleJob={titleJob}
               companyName={companyName}
+              language={language}
             />
             <PostAddress
               setWardId={setWardId}
@@ -434,6 +496,8 @@ const Post: React.FC = () => {
               setFillDistrict={setFillDistrict}
               setFillProvince={setFillProvince}
               setFillWardId={setFillWardId}
+              language={language}
+              languageRedux={languageRedux}
             />
             <PostImage
               selectedFiles={selectedFiles}
@@ -441,11 +505,16 @@ const Post: React.FC = () => {
               setSelectedImages={setSelectedImages}
               selectedImages={selectedImages}
               selectedFillImages={selectedFillImages}
+              languageRedux={languageRedux}
             />
-            <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob} />
+            <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob}
+              language={language}
+              languageRedux={languageRedux} />
             <PostPeriodDate
               setIsPeriodDate={setIsPeriodDate}
               isPeriodDate={isPeriodDate}
+              language={language}
+              languageRedux={languageRedux}
             />
             {isPeriodDate === 1 ? (
               <RecruitmentTime
@@ -453,6 +522,8 @@ const Post: React.FC = () => {
                 endDate={endDate}
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
+                language={language}
+                languageRedux={languageRedux}
               />
             ) : (
               <></>
@@ -462,12 +533,14 @@ const Post: React.FC = () => {
               isRemotely={isRemotely}
               setIsWorkingWeekend={setIsWorkingWeekend}
               setIsRemotely={setIsRemotely}
+              language={language}
             />
             <PostTime
               startTime={startTime}
               endTime={endTime}
               setStartTime={setStartTime}
               setEndTime={setEndTime}
+              language={language}
             />
 
             <PostCategoryId
@@ -475,14 +548,19 @@ const Post: React.FC = () => {
               categoriesId={categoriesId}
               fillCate={fillCate}
               setFillCate={setFillCate}
+              language={language}
+              languageRedux={languageRedux}
             />
 
-            <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
+            <SalaryType salaryType={salaryType} setSalaryType={setSalaryType}
+              language={language}
+              languageRedux={languageRedux} />
 
             <PostSalaryType
               setMoneyType={setMoneyType}
               moneyType={moneyType}
               salaryType={salaryType}
+              language={language}
             />
 
             <PostFilterSalary
@@ -491,15 +569,21 @@ const Post: React.FC = () => {
               salaryMax={salaryMax}
               setSalaryMax={setSalaryMax}
               salaryType={salaryType}
+              language={language}
+              languageRedux={languageRedux}
             />
 
             <PostNumberPhone
               phone={phoneNumber}
               setPhoneNumber={setPhoneNumber}
+              language={language}
+              languageRedux={languageRedux}
             />
             <Description
               setDescription={setDescription}
               description={description}
+              language={language}
+              languageRedux={languageRedux}
             />
             {/* <EditText /> */}
             <button
@@ -507,7 +591,9 @@ const Post: React.FC = () => {
               onClick={handleSubmit}
               className="btn-submitForm"
             >
-              Đăng
+              {
+                language?.post1
+              }
             </button>
           </form>
         </div>
@@ -520,6 +606,7 @@ const Post: React.FC = () => {
         <ModalNoteCreatePost
           setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
           openModalNoteCreatePost={openModalNoteCreatePost}
+          language={language}
         />
 
         <ModalFillDataPost
@@ -550,6 +637,8 @@ const Post: React.FC = () => {
           setSalaryType={setSalaryType}
           setMoneyType={setMoneyType}
           setSelectedFillImages={setSelectedFillImages}
+          language={language}
+          languageRedux={languageRedux}
         />
       </div>
     );

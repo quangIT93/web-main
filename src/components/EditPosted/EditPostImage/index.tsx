@@ -15,15 +15,18 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { message } from 'antd';
 // import axios from 'axios';
 import './style.scss';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 interface IEditPostImage {
   editDataPosted: any;
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
   dataPosted: any;
+  languageRedux: any;
 }
 
 const EditPostImage: React.FC<IEditPostImage> = (props) => {
-  const { editDataPosted, setEditDataPosted, dataPosted } = props;
+  const { editDataPosted, setEditDataPosted, dataPosted, languageRedux } = props;
 
   const [selectedFiles, setSelectedFiles] = React.useState<
     {
@@ -94,7 +97,9 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       if (fileUploaded.length > 5) {
         messageApi.open({
           type: 'error',
-          content: 'Chỉ có thể tối đa 5 ảnh',
+          content: languageRedux === 1 ?
+            post.limit_5_img :
+            postEn.limit_5_img,
         });
         return;
       }
@@ -110,7 +115,9 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       if (newFileSelected.length > 5) {
         messageApi.open({
           type: 'error',
-          content: 'Chỉ có thể tối đa 5 ảnh',
+          content: languageRedux === 1 ?
+            post.limit_5_img :
+            postEn.limit_5_img,
         });
 
         return;
@@ -144,7 +151,9 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: 'Chỉ có thể tối đa 5 ảnh',
+                content: languageRedux === 1 ?
+                  post.limit_5_img :
+                  postEn.limit_5_img,
               });
 
               return;
@@ -253,7 +262,9 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
         // console.log('::: Invalid images')
-        return toast.warn('Ảnh không đúng định dạng');
+        return toast.warn(languageRedux === 1 ?
+          post.err_img :
+          postEn.err_img);
       } else {
         try {
           const compressedImages: any = [];
@@ -299,7 +310,9 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       if (files.length > 5) {
         messageApi.open({
           type: 'error',
-          content: 'Chỉ có thể tối đa 5 ảnh',
+          content: languageRedux === 1 ?
+            post.limit_5_img :
+            postEn.limit_5_img,
         });
         return;
       }
@@ -392,7 +405,11 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
             <p>
-              Kéo và thả nhiều file ảnh ở đây, hoặc click vào để chọn file ảnh
+              {
+                languageRedux === 1 ?
+                  post.drag_drop_multi :
+                  postEn.drag_drop_multi
+              }
             </p>
             {/* <aside className="thumbs-containter">
               {thumbs}
@@ -407,7 +424,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               className="item-editPost_image"
               style={{
                 // padding: '12px',
-                border: '1px solid #ccc',
+                // border: '1px solid #ccc',
                 position: 'relative',
                 marginRight: '12px',
                 height: '150px',
@@ -418,7 +435,11 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               <img
                 key={index}
                 src={image.image}
-                alt={`ảnh bị lỗi`}
+                alt={
+                  languageRedux === 1 ?
+                    post.err_none_img :
+                    postEn.err_none_img
+                }
                 style={{
                   height: '150px',
                   width: '150px',
@@ -445,15 +466,18 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
           ))}
         </Box>
 
-        <Typography
+        {/* <Typography
           variant="body1"
           color="#ccc"
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          Có thể tải tối đa 5 ảnh, 5 ảnh không quá 5MB. (Định dạng cho phép:
-          jpeg, jpg, png)
-        </Typography>
+          {
+            languageRedux === 1 ?
+              post.verify_upload :
+              postEn.verify_upload
+          }
+        </Typography> */}
 
         {/* <Box>
       <CreatePostImages
@@ -463,12 +487,28 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
     </Box> */}
       </Box>
       <Box mt="0">
+        <Typography
+          variant="body1"
+          color="#ccc"
+          p="1rem 0"
+          sx={{ fontStyle: 'italic' }}
+        >
+          {
+            languageRedux === 1 ?
+              post.verify_upload :
+              postEn.verify_upload
+          }
+        </Typography>
         <Button
           variant="outlined"
           component="label"
           disabled={selectedImages?.length === 5}
         >
-          Tải ảnh
+          {
+            languageRedux === 1 ?
+              post.upload_img :
+              postEn.upload_img
+          }
           <input
             type="file"
             name="images"

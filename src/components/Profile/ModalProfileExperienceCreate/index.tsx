@@ -9,6 +9,11 @@ import moment from 'moment';
 import Button from '@mui/material/Button';
 import { CloseOutlined } from '@ant-design/icons';
 
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+
 // data
 import profileApi from 'api/profileApi';
 // import { useDispatch } from 'react-redux';
@@ -61,6 +66,7 @@ interface IInfoExperience {
 const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
   props,
 ) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const {
     openModalExperienceCreate,
     setOpenModalExperienceCreate,
@@ -186,7 +192,11 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Thêm thông tin kinh nghiệm làm việc
+          {
+            languageRedux === 1 ?
+              profileVi.add_working_experience :
+              profileEn.add_working_experience
+          }
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -195,7 +205,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chức danh <span className="color-asterisk">*</span>
+            {
+              languageRedux === 1 ?
+                profileVi.professional_titles :
+                profileEn.professional_titles
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -205,8 +220,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             onChange={handleChangeTitle}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Chức danh"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              languageRedux === 1 ?
+                profileVi.professional_titles :
+                profileEn.professional_titles
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -216,7 +235,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Công ty/Tổ chức <span className="color-asterisk">*</span>
+            {
+              languageRedux === 1 ?
+                profileVi.company_organization :
+                profileEn.company_organization
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -226,8 +250,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Nhập tên công ty hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              languageRedux === 1 ?
+                profileVi.place_company_organization :
+                profileEn.place_company_organization
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -244,7 +272,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu <span className="color-asterisk">*</span>
+                  {
+                    languageRedux === 1 ?
+                      profileVi.start_time :
+                      profileEn.start_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(experience.startDate)}
@@ -261,7 +294,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc <span className="color-asterisk">*</span>
+                  {
+                    languageRedux === 1 ?
+                      profileVi.finish_time :
+                      profileEn.finish_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(experience.endDate)}
@@ -282,7 +320,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung <span className="color-asterisk">*</span>
+            {
+              languageRedux === 1 ?
+                profileVi.additional_information :
+                profileEn.additional_information
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}
@@ -291,12 +334,20 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             multiline
             rows={4}
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder="Để được nhà tuyển dụng quan tâm và tăng cơ hội ứng tuyển vào công ty mong muốn. Hẫy nhập thông tin bổ sung của bạn vào đây!"
+            placeholder={
+              languageRedux === 1 ?
+                profileVi.place_additional_information :
+                profileEn.place_additional_information
+            }
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            languageRedux === 1 ?
+              profileVi.save_info :
+              profileEn.save_info
+          }
         </Button>
       </Box>
     </Modal>

@@ -6,13 +6,17 @@ import TextField from '@mui/material/TextField';
 import { styleLabel } from '#components/Post/CssPost';
 
 import './style.scss';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 interface IDescription {
   setDescription: React.Dispatch<React.SetStateAction<string>>;
   description: string;
+  language: any;
+  languageRedux: any;
 }
 
 const Description: React.FC<IDescription> = (props) => {
-  const { setDescription, description } = props;
+  const { setDescription, description, language, languageRedux } = props;
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
   };
@@ -24,7 +28,10 @@ const Description: React.FC<IDescription> = (props) => {
         component="label"
         htmlFor="startTime"
       >
-        Mô tả công việc <span style={{ color: 'red' }}>*</span>
+        {
+          language?.job_description
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </Typography>
       <TextField
         // className={classes.textarea}
@@ -33,10 +40,11 @@ const Description: React.FC<IDescription> = (props) => {
         multiline
         rows={6}
         // label="Một số đặc điểm nhận diện công ty"
-        placeholder="Một số đặc điểm nhận diện công ty:
-    Tên công ty, địa chỉ, hình thức, mặt hàng kinh doanh
-    Vị trí, yêu cầu công việc
-    Mô tả yêu cầu kỹ năng, bằng cấp nếu có"
+        placeholder={
+          languageRedux === 1 ?
+            post.place_des :
+            postEn.place_des
+        }
         value={description}
       />
     </Box>

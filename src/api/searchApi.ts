@@ -38,7 +38,8 @@ const searchApi = {
     jobTypeId: number[] | [],
     category_ids: number[] | null,
     district_ids: string[] | null,
-    salary_type: number | null
+    salary_type: number | null,
+    lang: string | null,
   ) => {
     const URL =
       `/v2/search?` +
@@ -59,7 +60,8 @@ const searchApi = {
       `${district_ids != null ? `${district_ids.length > 0 ?
         `&${district_ids?.map((n, index) => `district_ids[${index}]=${n}`).join('&')}` : `&district_ids`}` : ""}` +
       `${category_ids != null ? `${category_ids.length > 0 ?
-        `&${category_ids?.map((n, index) => `category_ids[${index}]=${n}`).join('&')}` : `&category_ids`}` : ""}`
+        `&${category_ids?.map((n, index) => `category_ids[${index}]=${n}`).join('&')}` : `&category_ids`}` : ""}` +
+      `${lang ? `&lang=${lang}` : 'vi'}`
 
     return axiosClient.get(URL)
   },

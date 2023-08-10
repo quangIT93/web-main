@@ -9,6 +9,11 @@ import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
 
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -40,6 +45,7 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
 
   const dispatch = useDispatch();
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
 
   const handleClose = () => setOpenModalDeleteExperience(false);
 
@@ -77,7 +83,11 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Bạn có chắc chắn muốn xoá thông tin này chứ?
+          {
+            languageRedux === 1 ?
+              profileVi.alert_delete_info :
+              profileEn.alert_delete_info
+          }
         </Typography>
         <Box sx={{ display: 'flex', gap: '100px' }}>
           <Button
@@ -86,11 +96,19 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
             onClick={handleSubmitDelete}
             color="error"
           >
-            Xóa
+            {
+              languageRedux === 1 ?
+                profileVi.delete :
+                profileEn.delete
+            }
           </Button>
 
           <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>
-            Trở về
+            {
+              languageRedux === 1 ?
+                profileVi.return :
+                profileEn.return
+            }
           </Button>
         </Box>
       </Box>

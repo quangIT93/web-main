@@ -15,6 +15,11 @@ import ModalDeleteEducation from '#components/Profile/ModalDeleteEducation';
 import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
 import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate';
 import ModalDeleteExperience from '#components/Profile/ModalDeleteExperience';
+
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
 interface SuggestItemProps {
   typeItem?: string;
   item?: ItemAppy;
@@ -37,6 +42,7 @@ interface ItemAppy {
 // });
 
 const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [openModalDeleteEducation, setOpenModalDeleteEducation] =
     useState(false);
   const [openModalEducationUpdate, setOpenModalEducationUpdate] =
@@ -112,7 +118,13 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <PencilIcon width={15} height={15} />
           </div>
 
-          <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+          <p style={{ color: '#0D99FF', fontSize: '14px' }}>
+            {
+              languageRedux === 1 ?
+                profileVi.edit :
+                profileEn.edit
+            }
+          </p>
         </Space>
         <Space
           onClick={
@@ -125,7 +137,13 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           <div className="edit-icon">
             <DeleteIcon width={15} height={15} />
           </div>
-          <p style={{ color: 'gray', fontSize: '14px' }}>Xoá</p>
+          <p style={{ color: 'gray', fontSize: '14px' }}>
+            {
+              languageRedux === 1 ?
+                profileVi.delete :
+                profileEn.delete
+            }
+          </p>
         </Space>
       </div>
       <ModalDeleteEducation

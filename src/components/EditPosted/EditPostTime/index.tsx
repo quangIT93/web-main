@@ -14,10 +14,11 @@ import './style.scss';
 interface IEditPostTime {
   editDataPosted: any;
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
+  language: any;
 }
 
 const EditPostTime: React.FC<IEditPostTime> = (props) => {
-  const { editDataPosted, setEditDataPosted } = props;
+  const { editDataPosted, setEditDataPosted, language } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
     setEditDataPosted((preValue: any) => ({
@@ -51,7 +52,10 @@ const EditPostTime: React.FC<IEditPostTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Giờ làm việc <span style={{ color: 'red' }}>*</span>
+            {
+              language?.working_hour
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Space
             direction="horizontal"

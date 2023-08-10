@@ -111,7 +111,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       } else {
         if (selectedProvince) {
           const districts = await locationApi.getDistrictsById(
-            selectedProvince?.id,
+            selectedProvince?.province_id,
             languageRedux === 1 ? "vi" : "en",
           );
           if (districts) {

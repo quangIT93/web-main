@@ -60,5 +60,7 @@ export const homeEn = {
     "approved": "Approved:",
     "pending": "Pending:",
     "waiting": "Waiting:",
+    "there_are_has_been_saved": "There are:",
+    "keywords_has_been_saved": "keywords has been saved",
 }
 

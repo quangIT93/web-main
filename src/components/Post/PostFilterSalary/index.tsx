@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import { styleLabel } from '#components/Post/CssPost';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 interface PropsSalaryFilterSubnav {
   setSalaryMin: React.Dispatch<React.SetStateAction<any>>;
@@ -13,10 +15,12 @@ interface PropsSalaryFilterSubnav {
   setSalaryMax: React.Dispatch<React.SetStateAction<any>>;
   salaryMax: number;
   salaryType?: number;
+  language: any;
+  languageRedux: any;
 }
 
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
-  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType } =
+  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType, languageRedux } =
     props;
   // const VND_TO_USD = 0.000043; // Conversion rate: 1 VND = 0.000043 USD
   // const USD_TO_VND = 23155;
@@ -122,7 +126,12 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Lương tối thiểu <span style={{ color: 'red' }}>*</span>
+            {
+              languageRedux === 1 ?
+                post.min_salary :
+                postEn.min_salary
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}
@@ -146,7 +155,12 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Lương tối đa <span style={{ color: 'red' }}>*</span>
+            {
+              languageRedux === 1 ?
+                post.max_salary :
+                postEn.max_salary
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}

@@ -18,6 +18,8 @@ import { LocationHomeIcon, DolaIcon, SaveIconFill } from '#components/Icons';
 import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
 // import bookMarkApi from 'api/bookMarkApi';
 
 // import HomeValueContextProvider, {
@@ -52,6 +54,8 @@ interface IitemNewJob {
   };
   handleDeleteBookmark: (event: any, index: number, bookmarkId: number) => any;
   index: number;
+  language: any;
+  languageRedux: any;
 }
 
 const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
@@ -64,6 +68,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
   // } = React.useContext(HomeValueContext);
   // const dispatch = useDispatch();
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
+  const { language, languageRedux } = props;
   const [error, setError] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -242,10 +247,14 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 fontStyle: 'italic',
               }}
             >
-              Đã đăng vào:{' '}
+              {
+                languageRedux === 1 ?
+                  historyVi.posted_on :
+                  historyEn.posted_on
+              }{' '}
               {props.item?.created_at != null
                 ? moment(props.item?.created_at).format('DD/MM/YY')
-                : 'Chưa cập nhật'}
+                : language?.unupdated}
             </p>
             {props.item?.status === 1 ? (
               <p
@@ -258,7 +267,9 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                   fontStyle: 'italic',
                 }}
               >
-                Đang tuyển
+                {
+                  language?.recruiting
+                }
               </p>
             ) : props.item?.status === 3 ? (
               <p
@@ -271,7 +282,9 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                   fontStyle: 'italic',
                 }}
               >
-                Đã đóng
+                {
+                  language?.closed
+                }
               </p>
             ) : (
               <p
@@ -284,7 +297,11 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                   fontStyle: 'italic',
                 }}
               >
-                Không chấp nhận
+                {
+                  languageRedux === 1 ?
+                    historyVi.does_not_accept :
+                    historyEn.does_not_accept
+                }
               </p>
             )}
           </Box>

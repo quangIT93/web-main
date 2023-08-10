@@ -20,12 +20,18 @@ import sortData from 'utils/SortDataHistory/sortData';
 import NoDataComponent from 'utils/NoDataPage';
 
 import JobCardHistory from '../JobCardHistory';
+import languageApi from 'api/languageApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
 
 interface ICardsAppliedPending {
   activeChild: string;
 }
 
 const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataApplied, setDataApplied] = useState<any>(null);
@@ -35,6 +41,25 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
   const [uploading, setUploading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
@@ -42,7 +67,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
       lastPostId,
       11,
       1,
-      'vi',
+      languageRedux === 1 ? "vi" : "en",
     );
     if (result.data.length <= 10) {
       setIsVisible(false);
@@ -52,7 +77,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
   useEffect(() => {
     getAllPostToCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const getAllPending = async () => {
     try {
@@ -60,7 +85,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
         null,
         10,
         1,
-        'vi',
+        languageRedux === 1 ? "vi" : "en",
       );
 
       if (result) {
@@ -85,7 +110,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
       isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value);
@@ -99,7 +124,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
         lastPostId,
         10,
         1,
-        'vi',
+        languageRedux === 1 ? "vi" : "en",
       );
       if (result) {
         setUploading(false);
@@ -107,7 +132,9 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: 'Đã hết công việc để hiển thị',
+            content: languageRedux === 1 ?
+              historyVi.out_job :
+              historyEn.out_job,
           });
           return;
         }
@@ -117,7 +144,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // click card
@@ -168,7 +195,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
           <div className="history-post">
             <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
               {dataApplied?.map((posted: any, i: number) => (
-                <JobCardHistory item={posted} />
+                <JobCardHistory item={posted} language={language} languageRedux={languageRedux} />
               ))}
             </Grid>
             <Box

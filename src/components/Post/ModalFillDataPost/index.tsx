@@ -20,6 +20,8 @@ import postApi from 'api/postApi';
 
 import './style.scss';
 import { Button } from 'antd';
+import { postEn } from 'validations/lang/en/post';
+import { post } from 'validations/lang/vi/post';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -63,6 +65,8 @@ interface IModalFillDataPost {
   setSelectedFillImages: React.Dispatch<React.SetStateAction<string[]>>;
   setSalaryType: React.Dispatch<React.SetStateAction<number>>;
   setMoneyType: React.Dispatch<React.SetStateAction<number>>;
+  language: any;
+  languageRedux: any;
 }
 const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const {
@@ -93,6 +97,8 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setSelectedFillImages,
     setSalaryType,
     setMoneyType,
+    language,
+    languageRedux,
   } = props;
 
   const [dataPost, setDataPost] = React.useState<any>([]);
@@ -115,7 +121,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setPhoneNumber(null);
     setSalaryMax(12000000);
     setSalaryMin(0);
-    setDescription('Chưa cập nhật');
+    setDescription(language?.unupdated);
     setSelectedValue(-1);
     setSelectedImages([]);
     setSelectedFillImages([]);
@@ -128,7 +134,8 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const allPost = async () => {
     try {
       // const result = await applitedPostedApi.getAllApplitedPostedApi(0);
-      const result = await historyRecruiter.getAllPosted(0, 20, null, 'vi');
+      const result = await historyRecruiter.getAllPosted(0, 20, null,
+        languageRedux === 1 ? "vi" : "en");
       if (result) {
         setDataPost(result.data);
       }
@@ -140,7 +147,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   React.useEffect(() => {
     allPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const [selectedValue, setSelectedValue] = React.useState<number>(0);
 
@@ -164,7 +171,9 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     // console.log('itemPost', itemPost);
 
     try {
-      const result = await postApi.getById(itemPost.post_id, 'vi');
+      const result = await postApi.getById(itemPost.post_id,
+        languageRedux === 1 ? "vi" : "en"
+      );
       // console.log('reuslt', result.data);
       if (result) {
         setTypeJob(result.data.job_type.job_type_id);
@@ -197,7 +206,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         setSalaryType(result.data.salary_type_id);
         setMoneyType(result.data.money_type);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleSubmitValueFill = () => {
@@ -223,7 +232,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     setPhoneNumber(null);
     setSalaryMax(12000000);
     setSalaryMin(0);
-    setDescription('Chưa cập nhật');
+    setDescription(language?.unupdated);
     setSelectedValue(-1);
     setSelectedImages([]);
     setSelectedFillImages([]);
@@ -254,8 +263,11 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
               fontWeight: '600',
             }}
           >
-            HiJob sẽ tự động điền tất cả các thông tin công việc trước đó của
-            bạn!
+            {
+              languageRedux === 1 ?
+                post.auto_fill :
+                postEn.auto_fill
+            }
             {/* <IconButton
               aria-label="close"
               sx={{
@@ -275,7 +287,11 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
               fontSize: '16px',
             }}
           >
-            Bài tuyển dụng mà bạn muốn HiJob lấy thông tin tự động
+            {
+              languageRedux === 1 ?
+                post.job_want_to_auto_fill :
+                postEn.job_want_to_auto_fill
+            }
           </p>
           <div className="post_items_old">
             {dataPost ? (
@@ -319,10 +335,18 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
 
           <div className="wrap-button_filterPost">
             <Button type="primary" block onClick={handleSubmitValueFill}>
-              Yes
+              {
+                languageRedux === 1 ?
+                  post.yes :
+                  postEn.yes
+              }
             </Button>
             <Button block onClick={handleCancleFillData}>
-              No
+              {
+                languageRedux === 1 ?
+                  post.no :
+                  postEn.no
+              }
             </Button>
           </div>
 

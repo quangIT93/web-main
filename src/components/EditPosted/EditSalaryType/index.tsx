@@ -13,10 +13,12 @@ import siteApi from 'api/siteApi'
 interface ISalaryType {
   editDataPosted: any
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
+  language: any;
+  languageRedux: any;
 }
 
 const EditSalaryType: React.FC<ISalaryType> = (props) => {
-  const { editDataPosted, setEditDataPosted } = props
+  const { editDataPosted, setEditDataPosted, language, languageRedux } = props
 
   const handleChangeSalaryType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => ({
@@ -29,7 +31,9 @@ const EditSalaryType: React.FC<ISalaryType> = (props) => {
 
   // call api get salaryType
   const getSalaryType = async () => {
-    const result = await siteApi.getSalaryType("vi")
+    const result = await siteApi.getSalaryType(
+      languageRedux === 1 ? "vi" : "en"
+    )
     if (result) {
       setSalary(result)
     }
@@ -37,13 +41,16 @@ const EditSalaryType: React.FC<ISalaryType> = (props) => {
 
   React.useEffect(() => {
     getSalaryType()
-  }, [])
+  }, [languageRedux])
 
   return (
     <Box sx={{ marginTop: '24px' }}>
       <FormControl sx={{ width: '100%' }}>
         <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>
-          Trả lương theo <span style={{ color: 'red' }}>*</span>
+          {
+            language?.job_type
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row
