@@ -35,6 +35,7 @@ import {
   AppliedPostedIcon,
   // DoubleArrowIcon,
   LoginArrowIcon,
+  Advertisement,
 } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
@@ -186,7 +187,7 @@ const AppliedPostedJob: React.FC = () => {
           </h2>
         </div>
 
-        <div
+        {/* <div
           className="applied-posted-job-not-loging"
           style={{ display: !isLogined ? 'flex' : 'none' }}
         >
@@ -198,6 +199,37 @@ const AppliedPostedJob: React.FC = () => {
             </p>
           </div>
           <div className="applied-posted-job-not-loging_right">
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpenModalLogin(true);
+              }}
+            >
+              <LoginArrowIcon />
+              {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+            </Button>
+          </div>
+        </div> */}
+
+        <div
+          className="advertisement-job-not-loging"
+          style={{ display: !isLogined ? 'flex' : 'none' }}
+        >
+          {/* <Advertisement /> */}
+          <img
+            src="../images/absHijob.png"
+            alt="Ảnh lỗi"
+            style={{ width: '50%', height: '350px', borderRadius: '12px' }}
+          />
+
+          <div className="advertisement-job-not-loging-content">
+            <h3>Dễ dàng tìm kiếm ứng viên tại HiJob</h3>
+            <ul>
+              Chúng tôi cung cấp dịch vụ giúp nhà tuyển dụng dễ dàng tiếp cận
+              <li>Đăng bài tuyển dụng miễn phí</li>
+              <li>Công cụ tìm kiếm thông minh</li>
+              <li>Giao tiếp dễ dàng với Ứng viên</li>
+            </ul>
             <Button
               type="primary"
               onClick={() => {

@@ -124,12 +124,24 @@
             }
 
             .comunityDetail-wrap_comment {
-
+                border: 1px solid;
                 .comunityDetail-comment_chater {
+                    border: 1px solid red;
+                    display: flex;
+                    align-items: center;
+                  
+                    textarea {
+                        // height: 100%;        
+                        width: 100%;
+                        // border: none;
+                        // outline: none;  
+                        padding: 4px 8px;          
+                    }
 
                 }
 
                 .comunityDetail-list_comment {
+                    border: 1px solid blue;
                     img {
                         
                     }
