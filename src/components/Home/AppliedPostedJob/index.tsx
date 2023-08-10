@@ -219,7 +219,7 @@ const AppliedPostedJob: React.FC = () => {
           <img
             src="../images/absHijob.png"
             alt="Ảnh lỗi"
-            style={{ width: '50%', height: '350px', borderRadius: '12px' }}
+            style={{ width: '50%', height: '350px', borderRadius: '20px' }}
           />
 
           <div className="advertisement-job-not-loging-content">
