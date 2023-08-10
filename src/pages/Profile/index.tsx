@@ -36,6 +36,8 @@ import ModalProfileEducationCreate from '#components/Profile/ModalProfileEducati
 import ModalProfileLocation from '#components/Profile/ModalProfileLocation';
 // import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate';
 import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperienceCreate';
+
+import RollTop from '#components/RollTop';
 // import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
 import CVItem from '#components/Profile/CV';
 
@@ -270,8 +272,10 @@ const Profile: React.FC = () => {
     // const file = e.target.files[0]
     const files = Array.from(e.target.files); // Chuyển đổi FileList thành mảng các đối tượng file
     if (files) {
-      // const imageUrl = await uploadImage(e, files);
-      dispatch(getProfile() as any);
+      const imageUrl = await uploadImage(e, files);
+      if (imageUrl) {
+        // dispatch(getProfile() as any);
+      }
       // window.location.reload();
       // if (imageUrl)
       // Cập nhật URL của ảnh mới vào trạng thái của component
@@ -280,27 +284,27 @@ const Profile: React.FC = () => {
   };
 
   // upload avatar
-  // const uploadImage = async (e: any, files: any) => {
-  //   const formData = new FormData();
+  const uploadImage = async (e: any, files: any) => {
+    const formData = new FormData();
 
-  //   files.forEach((file: File) => {
-  //     if (file instanceof File) {
-  //       formData.append(`images`, file);
-  //     }
-  //   });
-  //   try {
-  //     const response = await profileApi.postAvatar(formData);
-  //     if (response) {
-  //       dispatch(getProfile() as any);
-  //       return profile.avatar;
-  //     } else {
-  //       throw new Error('Failed to upload image');
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Xử lý lỗi tải lên ảnh
-  //   }
-  // };
+    files.forEach((file: File) => {
+      if (file instanceof File) {
+        formData.append(`images`, file);
+      }
+    });
+    try {
+      const response = await profileApi.postAvatar(formData);
+      if (response) {
+        dispatch(getProfile() as any);
+        return profile.avatar;
+      } else {
+        throw new Error('Failed to upload image');
+      }
+    } catch (error) {
+      console.error(error);
+      // Xử lý lỗi tải lên ảnh
+    }
+  };
 
   const alert = useSelector((state: any) => state.alertProfile.alert);
 
@@ -314,13 +318,7 @@ const Profile: React.FC = () => {
         <Skeleton className="skeleton-item" avatar loading={loading} active>
           <div className="div-profile-avatar">
             <div className="div-avatar">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
+              <div className="div-avatar_profile">
                 <Badge
                   overlap="circular"
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -810,6 +808,7 @@ const Profile: React.FC = () => {
           </Snackbar>
         </Stack>
       </div>
+      <RollTop />
       <Footer />
     </div>
   );

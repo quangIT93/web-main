@@ -101,6 +101,8 @@ import AnotherPost from './components/AnotherPost';
 // import { height, width } from '@mui/system';
 import { postDetail } from 'validations/lang/vi/postDetail';
 import { postDetailEn } from 'validations/lang/en/postDetail';
+
+import RollTop from '#components/RollTop';
 // import { Language } from '#components/Navbar/Css';
 
 // const itemsShare = [
@@ -1706,6 +1708,7 @@ const Detail: React.FC = () => {
             openModalLogin={openModalLogin}
             setOpenModalLogin={setOpenModalLogin}
           />
+          <RollTop />
           <Footer />
         </div>
       )}

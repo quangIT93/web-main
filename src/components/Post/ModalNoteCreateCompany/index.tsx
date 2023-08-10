@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
-import { CheckedBlueIcon } from '#components/Icons';
+// import { CheckedBlueIcon } from '#components/Icons';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
@@ -32,21 +32,23 @@ const style = {
 };
 
 interface IPropModalNoteCreatePost {
-  openModalNoteCreatePost: boolean;
-  setOpenModalNoteCreatePost: React.Dispatch<React.SetStateAction<boolean>>;
+  openModalNoteCreateCompany: boolean;
+  setOpenModalNoteCreateCompany: React.Dispatch<React.SetStateAction<boolean>>;
 }
+const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
+  const { openModalNoteCreateCompany, setOpenModalNoteCreateCompany } = props;
 
-const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
-  const { openModalNoteCreatePost, setOpenModalNoteCreatePost } = props;
-
-  const handleClose = () => {
-    setOpenModalNoteCreatePost(false);
+  const handleCreateCompany = () => {
+    setOpenModalNoteCreateCompany(false);
+    window.open('company-infor', '_self');
   };
 
+  const handleClose = () => setOpenModalNoteCreateCompany(false);
   return (
     <div>
       <Modal
-        open={openModalNoteCreatePost}
+        // open={openModalNoteCreateCompany}
+        open={openModalNoteCreateCompany}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -64,7 +66,7 @@ const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
           >
             <CloseIcon />
           </IconButton>
-          <h2 className="title-post_guide">Hướng dẫn tạo bài đăng</h2>
+          <h2 className="title-post_guide">Bạn chưa có thông tin công ty!</h2>
           <div className="wrap-imagePost_guide">
             <img
               src="./images/guide.png"
@@ -74,11 +76,11 @@ const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
           </div>
           <div className="wrap-textPost_guide">
             <p>
-              Bài đăng của bạn sẽ được kiểm duyệt nội dung trước khi công khai.
-              Hãy đảm bảo các thông tin tuyển dụng của bạn là chính xác!
+              Bài đăng của bạn sẽ được nhiều ứng viên hơn khi có thông tin công
+              ty. Hãy cập nhật thông tin công ty để nhiều ứng viên quan tâm hơn!
             </p>
           </div>
-          <div className="wrap-list_guide">
+          {/* <div className="wrap-list_guide">
             <ul>
               <li>
                 <CheckedBlueIcon />
@@ -107,14 +109,14 @@ const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
                 Bạn có thể đăng tối đa 1 bài viết một ngày.
               </li>
             </ul>
-          </div>
+          </div> */}
           <Button
             block
             style={{ marginTop: '12px' }}
             type="primary"
-            onClick={handleClose}
+            onClick={handleCreateCompany}
           >
-            Tôi đã hiểu
+            Tạo thông tin công ty
           </Button>
         </Box>
       </Modal>
@@ -122,4 +124,4 @@ const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
   );
 };
 
-export default ModalNoteCreatePost;
+export default ModalNoteCreateCompany;

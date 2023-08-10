@@ -18,6 +18,8 @@ interface Iprops {
 const PostButton: React.FC<Iprops> = (props) => {
   const dataProfile = useSelector((state: RootState) => state.profileUser);
   const [height, setHeight] = React.useState(0);
+  // const currentPath = window.location.pathname;
+  // console.log('ccc', currentPath);
 
   const listenToScroll = () => {
     const winScroll =
@@ -26,6 +28,8 @@ const PostButton: React.FC<Iprops> = (props) => {
   };
 
   React.useEffect(() => {
+    // if (currentPath === '/') {
+    // }
     window.addEventListener('scroll', listenToScroll);
     return () => window.removeEventListener('scroll', listenToScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps

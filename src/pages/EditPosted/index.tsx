@@ -27,6 +27,8 @@ import EditDescription from '#components/EditPosted/EditDescription';
 import EditPostTypeSalary from '#components/EditPosted/EditPostTypeSalary';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 
+import RollTop from '#components/RollTop';
+
 import NotFound from 'pages/NotFound';
 
 import './style.scss';
@@ -179,7 +181,7 @@ const EditPosted = () => {
 
   const getDataPosted = async () => {
     try {
-      const result = await postApi.getPostbyId(postId, "vi");
+      const result = await postApi.getPostbyId(postId, 'vi');
       if (
         result &&
         dataPostAccount.find((item: any) => item.post_id === postId)
@@ -549,6 +551,7 @@ const EditPosted = () => {
           openModalEditPost={openModalEditPost}
           setOpenModalEditPost={setOpenModalEditPost}
         />
+        <RollTop />
         <Footer />
       </div>
     );

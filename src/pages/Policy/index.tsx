@@ -5,6 +5,7 @@ import Footer from '../../components/Footer/Footer';
 import { ScrollContext } from '#utils';
 import './style.scss';
 import Category from './components/Category';
+import RollTop from '#components/RollTop';
 
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
@@ -530,6 +531,7 @@ const Policy: React.FC = () => {
           </section>
         </div>
       </div>
+      <RollTop />
       <Footer />
     </>
   );

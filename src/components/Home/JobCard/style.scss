@@ -1,12 +1,13 @@
 @import '../../../scss//mixins';
-
-.MuiGrid-item {
-    @include breakpoint(mobile) {
-        height: 142px;
-    }
-
-    @media (max-width: 768px) {
-        max-width: 100% !important;
+.new-job {
+    .MuiGrid-item {
+        @include breakpoint(mobile) {
+            height: 142px;
+        }
+    
+        @media (max-width: 768px) {
+            max-width: 100% !important;
+        }
     }
 }
 

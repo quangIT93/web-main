@@ -960,6 +960,31 @@
       width: 380px;
       z-index: 10;
 
+      @media screen and (min-width: 210px) and (max-width: 420px) {
+        width: 300px;
+        .sub-login_info {
+          .ant-space-item {
+            .sub-login_info__bottom {
+              .sub-login_detail__bottom {
+                .sub-login_text__bottom {
+                  p {
+                    width: 220px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: -webkit-box;
+                  }
+                }
+              }
+            }
+          }
+        }
+        }
+
+      @media screen and (min-width: 421px) and (max-width: 600px) {
+        width: 340px;
+        }
+
       .ant-space-item {
         width: 100%;
       }
@@ -1379,6 +1404,9 @@
     }
 
     @include breakpoint(mobile) {
+      
+    
+
       .notification {
         display: block;
         left: 24px;

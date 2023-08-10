@@ -37,6 +37,10 @@
 
     .div-profile-avatar {
       width: 100%;
+
+      .div-avatar {
+
+      }
     }
 
     .div-avatar {
@@ -45,66 +49,100 @@
       align-items: center;
       width: 100%;
       justify-content: space-between;
-
-      .user-company {
+      .div-avatar_profile {
         display: flex;
-        flex-direction: column;
-        gap: 8px;
-        width: 100%;
-        .wrap-company {
+        flex-direction: row;
+        align-items: center;
+        @include breakpoint(mobile){
+          align-items: flex-start;
+        }
+
+        @include breakpoint(tablet){
+          align-items: flex-start;
+        }
+        .user-company {
           display: flex;
-          align-items: center;
-          justify-content: space-between;
-          .wrap-company_info {
-            display: flex;
-            justify-content: space-between;
-            h2:nth-child(2) {
-              margin: 0 24px;
-              background: #252525;
-              // font-weight: 100;
-            }
-
-            h2 {
-              font-family: Roboto;
-              font-size: 16px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: 24px; 
-            }
-          }
-
-          button {
-            padding: 12px 24px;
+          flex-direction: column;
+          gap: 8px;
+          width: 100%;
+          .wrap-company {
             display: flex;
             align-items: center;
-            border-radius: 20px;
-            border-radius: 37px;
-            background: #252525;
-            height: 48px;
-            gap: 8px;
+            justify-content: space-between;
+            
+            @include breakpoint(mobile){
+              flex-direction: column;
+              justify-content: flex-end;
+              align-items: flex-end;
+              .wrap-company_info  {
+                width: 100%;
+                margin-bottom: 8px;
+              }
+  
+            }
+  
+            @include breakpoint(tablet){
+              flex-direction: column;
+              justify-content: flex-end;
+              align-items: flex-end;
+              .wrap-company_info  {
+                width: 100%;
+                margin-bottom: 8px;
+              }
+            }
+  
+            .wrap-company_info {
+              display: flex;
+              justify-content: space-between;
+              h2:nth-child(2) {
+                margin: 0 24px;
+                background: #252525;
+                // font-weight: 100;
+                width: 4px;
+              }
+  
+              h2 {
+                font-family: Roboto;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px; 
+              }
+            }
+  
+            button {
+              padding: 12px 24px;
+              display: flex;
+              align-items: center;
+              border-radius: 20px;
+              border-radius: 37px;
+              background: #252525;
+              height: 48px;
+              gap: 8px;
+            }
           }
-        }
-
-        .company-name {
-          color: rgba(189, 49, 49, 1);
-          font-family: Roboto;
-          font-size: 20px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 30px;
-          text-decoration-line: underline;
-          cursor: pointer;
-        }
-
-        .have-company {
-          color: #0D99FF;
-          font-family: Roboto;
-          font-size: 20px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 30px;
-          text-decoration-line: underline;
-          cursor: pointer;
+  
+          .company-name {
+            color: rgba(189, 49, 49, 1);
+            font-family: Roboto;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 30px;
+            text-decoration-line: underline;
+            cursor: pointer;
+          }
+  
+          .have-company {
+            color: #0D99FF;
+            font-family: Roboto;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 30px;
+            text-decoration-line: underline;
+            cursor: pointer;
+          }
         }
       }
     }

@@ -203,6 +203,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                       item={posted}
                       handleShowDetail={handleShowDetail}
                       isHide={true}
+                      key={i}
                     />
                   ))}
                 </Grid>

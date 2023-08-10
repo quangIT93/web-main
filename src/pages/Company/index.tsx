@@ -23,6 +23,8 @@ import ModalEditCompanySuccess from './components/ModalEditCompanySuccess';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 
+import RollTop from '#components/RollTop';
+
 // import NotFound from 'pages/NotFound';
 import './style.scss';
 
@@ -116,7 +118,7 @@ const Company = () => {
     logoPath: '',
   });
 
-  console.log('dataCompany', dataCompany);
+  // console.log('dataCompany', dataCompany);
   const [openModalEditCompany, setOpenModalEditCompanySuccess] =
     React.useState(false);
 
@@ -466,6 +468,7 @@ const Company = () => {
         openModalEditCompany={openModalEditCompany}
         setOpenModalEditCompanySuccess={setOpenModalEditCompanySuccess}
       />
+      <RollTop />
       <Footer />
     </div>
   );

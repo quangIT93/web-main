@@ -209,7 +209,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
               >
                 <p
                   style={{
-                    color: '#AAAAAA',
+                    color: '#aaaaaa',
                     fontSize: 14,
                     fontStyle: 'italic',
                     fontWeight: '400',
