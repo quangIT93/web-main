@@ -33,6 +33,13 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+
+  '@media (min-width: 400px) and (max-width: 640px)': {
+    width: 410,
+  },
 };
 
 interface IModalFillDataPost {

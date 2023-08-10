@@ -141,9 +141,11 @@ const CardsPosted: React.FC<ICardsApplied> = (props) => {
 
   return (
     <>
-      {PostedAll}
-      {PostedClose}
-      {PostedOpen}
+      <>
+        {PostedAll}
+        {PostedClose}
+        {PostedOpen}
+      </>
     </>
   );
 };

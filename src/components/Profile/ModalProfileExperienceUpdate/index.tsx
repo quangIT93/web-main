@@ -28,6 +28,17 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
 };
 
 const styleChildBox = {
@@ -192,7 +203,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileExperience(experience);
         if (result) {
-          const profile = await profileApi.getProfile("vi");
+          const profile = await profileApi.getProfile('vi');
           if (profile) {
             setProfileUser(profile.data);
           }
@@ -270,7 +281,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Chức danh"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -291,7 +302,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Nhập tên công ty hoặc tổ chức"
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 

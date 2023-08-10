@@ -140,15 +140,17 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           alignItems: 'center',
         }}
       >
-        <Typography
-          sx={{
-            fontWeight: '600',
-            fontSize: '16px',
-            lineHeight: '24px',
-          }}
-        >
-          Tất cả công việc đã ứng tuyển
-        </Typography>
+        <div className="back-container">
+          <Typography
+            sx={{
+              fontWeight: '600',
+              fontSize: '16px',
+              lineHeight: '24px',
+            }}
+          >
+            Tất cả công việc đã ứng tuyển
+          </Typography>
+        </div>
         <TextField
           select
           id="sex"

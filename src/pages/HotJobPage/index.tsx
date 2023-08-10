@@ -17,6 +17,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import { Box } from '@mui/material';
+
+import RollTop from '#components/RollTop';
 // import redux
 
 // import { bindActionCreators } from 'redux';
@@ -191,6 +193,8 @@ const HotJobpage: React.FC = () => {
     }
   };
 
+  console.log('getHost', localStorage.getItem('hotjobApi'));
+
   const getMoreHotJob = async () => {
     try {
       setOpenBackdrop(!openBackdrop);
@@ -347,6 +351,7 @@ const HotJobpage: React.FC = () => {
       </div>
       <ShowNotificativeSave />
       <ShowCancleSave />
+      <RollTop />
       <Footer />
     </>
   );

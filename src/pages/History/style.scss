@@ -1,3 +1,5 @@
+@import "../../scss/mixins";
+
 .post-history {
   margin-top: 70px;
 
@@ -16,16 +18,60 @@
       }
 
       .history-post_left {
-        flex: 1;
+        // flex: 1;
         margin-top: 16px;
         height: fit-content;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         border-radius: 8px;
         padding: 16px 24px;
+        width: 30%;
+
+        @include breakpoint(mobile){
+          .ant-collapse {
+     
+            .ant-collapse-item {
+              .ant-collapse-header {
+                .ant-collapse-header-text {
+                  // overflow: hidden;
+                  // width: 100px;
+                  // text-overflow: ellipsis;
+                  // white-space: nowrap;
+                }
+              }
+            }
+          }
+        }
+
+        @include breakpoint(tablet){
+          .ant-collapse {
+            display: flex;
+            justify-content: space-between;
+            gap: 1;
+            .ant-collapse-item {
+              .ant-collapse-header {
+                background-color: red;
+                .ant-collapse-header-text {
+                  .activeItem {
+                    // overflow: hidden;
+                    // width: 100px;
+                    // text-overflow: ellipsis;
+                    white-space: nowrap;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+
+        @media screen and (max-width: 1024px) {
+          margin: 0;
+          width: 100%;
+        }
+
+
 
         &__collapse {
-
-
           @media screen and (max-width: 1024px) and (min-width: 630px) {
             display: flex;
             justify-content: space-between;
@@ -53,11 +99,13 @@
       }
 
       .history-post_right {
-        flex: 3;
+        // flex: 3;
+        width: 70%;
         margin: 0 12px;
 
         @media screen and (max-width: 1024px) {
           margin: 0;
+          width: 100%;
         }
       }
     }

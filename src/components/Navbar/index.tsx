@@ -1199,28 +1199,94 @@ const Navbar: React.FC = () => {
       ref={refLogin}
       key="4"
     >
-      <Button className="menu-button" name="menu-button">
+      <Button
+        className="menu-button"
+        name="menu-button"
+        onClick={handleClickLogin}
+      >
         <MenuOutlined style={{ fontSize: '1.5em' }} />
       </Button>
       <Spin indicator={antIcon} spinning={spinning}>
         {openInfoUser && (
           <div className="sub-login" ref={refInfoUser}>
-            <Space className="sub-login_info">
-              <Avatar
-                style={{ backgroundColor: '#0D99FF' }}
-                icon={<UserOutlined style={{ fontSize: 30 }} />}
-                size={50}
-                src={dataProfile?.avatar ? dataProfile.avatar : null}
-              />
-              <div>
-                <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
-                <span>{dataProfile?.email ? dataProfile?.email : ''}</span>
+            <Space
+              className="sub-login_info"
+              style={{
+                flexDirection: 'column',
+                paddingBottom: '12px',
+                borderBottom: '1px solid rgba(170, 170, 170, 1)',
+              }}
+            >
+              <div className="sub-login_info__top">
+                <Avatar
+                  style={{
+                    backgroundColor: '#0D99FF',
+                    minWidth: '80px',
+                    minHeight: '80px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  icon={<UserOutlined style={{ fontSize: 30 }} />}
+                  size={50}
+                  src={dataProfile?.avatar ? dataProfile.avatar : null}
+                />
+                <div className="sub-login_detail">
+                  <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
+                  <span className="sub-login_text">
+                    <CompanySubLoginIcon />
+                    {companyName ? companyName : ''}
+                  </span>
+                  <span className="sub-login_text">
+                    <MailInfoIcon />
+                    {dataProfile?.email ? dataProfile?.email : ''}
+                  </span>
+                  {/* <span className="sub-login_text">
+                <LoginHomeIcon />
+                {dataProfile?.email ? dataProfile?.email : ''}
+              </span> */}
+                </div>
+              </div>
+              <div className="sub-login_info__bottom">
+                <div className="sub-login_detail__bottom">
+                  <span
+                    className="sub-login_text__bottom"
+                    onClick={() => window.open(`/profile`, '_parent')}
+                  >
+                    <MapInfoIcon />
+                    <p>
+                      {dataProfile?.locations.length > 0
+                        ? dataProfile?.locations.map((location: any) => {
+                            return `${location.district} , `;
+                          })
+                        : languageRedux === 1
+                        ? 'Chưa cập nhật thông tin'
+                        : 'The information has not been updated'}
+                    </p>
+                  </span>
+                  <span
+                    className="sub-login_text__bottom"
+                    onClick={() => window.open(`/profile`, '_parent')}
+                  >
+                    <BagInfoJob />
+
+                    <p>
+                      {dataProfile?.categories.length > 0
+                        ? dataProfile?.categories.map((profile: any) => {
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
+                        : languageRedux === 1
+                        ? 'Chưa cập nhật thông tin'
+                        : 'The information has not been updated'}
+                    </p>
+                  </span>
+                </div>
               </div>
             </Space>
             <div className="sub-login_items">
               <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
-                  <SyncOutlined />
+                  <UserPersonSubLoginIcon />
                   <span>
                     {languageRedux === 1
                       ? 'Cập nhật thông tin'
@@ -1231,22 +1297,108 @@ const Navbar: React.FC = () => {
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
+                  style={{
+                    borderBottom: 'none',
+                  }}
                   // onClick={() => {
                   //   window.open('/history', "_top")
                   // }}
                 >
-                  <ClockCircleOutlined />
+                  <PaperSubLoginIcon />
                   <span>{languageRedux === 1 ? 'Lịch sử' : 'History'}</span>
                 </div>
               </Link>
+              <div className="sub-history_status">
+                <span>
+                  {languageRedux === 1 ? home.approved : homeEn.approved}{' '}
+                  {`${approved}`}
+                </span>
+                {/* <span>|</span> */}
+                <span>
+                  {languageRedux === 1 ? home.pending : homeEn.pending}{' '}
+                  {`${pending}`}
+                </span>
+                {/* <span>|</span> */}
+                <span>
+                  {languageRedux === 1 ? home.waiting : homeEn.waiting}{' '}
+                  {`${waiting}`}
+                </span>
+              </div>
               {/* <div className="sub-login_item">
-                <KeyOutlined />
-                <span>Đổi mật khẩu</span>
-              </div> */}
-              <div className="sub-login_item" onClick={handleLogout}>
-                <LogoutOutlined />
+              <KeyOutlined />
+              <span>Đổi mật khẩu</span>
+            </div> */}
+              <div
+                className="sub-login_item__translate"
+                onClick={handleOpenRadioGroup}
+                // style={{
+                //   borderBottom: openRadioGroup
+                //     ? 'none'
+                //     : '1px solid rgba(170, 170, 170, 1)',
+                // }}
+                style={{ display: 'none' }}
+              >
+                <div className="sub-translate_header_left">
+                  <TranslateSubLoginIcon />
+                  <span>{languageRedux === 1 ? 'Ngôn ngữ' : 'Language'}</span>
+                </div>
+                <div
+                  className="sub-translate_header_right"
+                  style={{
+                    transform: openRadioGroup ? 'rotate(-90deg)' : 'unset',
+                  }}
+                >
+                  <ArrowSubLoginIcon />
+                </div>
+              </div>
+
+              <div
+                className="sub-translate_status"
+                style={{
+                  height: openRadioGroup ? '100%' : '0',
+                }}
+              >
+                <Radio.Group
+                  name="radiogroup"
+                  value={languageRedux}
+                  defaultValue={languageId}
+                  className="sub-login-radio-group"
+                  onChange={handleChangeLanguage}
+                  style={{
+                    display: openRadioGroup ? 'flex' : 'none',
+                  }}
+                >
+                  <Radio value={1}>
+                    <VNSubLoginIcon />
+                    <span>
+                      {languageRedux === 1 ? 'Tiếng Việt' : 'Vietnamese'}
+                    </span>
+                  </Radio>
+                  <Radio value={2}>
+                    <ENSubLoginIcon />
+                    <span>{languageRedux === 1 ? 'Tiếng Anh' : 'English'}</span>
+                  </Radio>
+                  {/* <Radio value={3}>
+                  <ENSubLoginIcon />
+                  <span>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</span>
+                </Radio> */}
+                </Radio.Group>
+              </div>
+
+              <div
+                className="sub-login_item"
+                onClick={handleLogout}
+                style={{ borderBottom: 'none' }}
+              >
+                <LogoutSubLoginIcon />
+
                 <span>{languageRedux === 1 ? 'Đăng xuất' : 'Log out'}</span>
               </div>
+
+              {/* <div className="sub-login_item" onClick={handleLogout}>
+              <FlagVNIcon />
+              <span>Đổi ngôn ngữ</span>
+            </div> */}
             </div>
           </div>
         )}

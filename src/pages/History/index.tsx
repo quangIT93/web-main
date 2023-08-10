@@ -13,6 +13,8 @@ import CardsPosted from '#components/History/CardsPosted';
 import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
 
+import RollTop from '#components/RollTop';
+
 import ShowCancleSave from '#components/ShowCancleSave';
 
 // firebase
@@ -207,36 +209,38 @@ const HistoryPost = () => {
               ghost={true}
               className="history-post_left__collapse"
             >
-              {dataItem.map((item: any, index: number) => (
-                <Panel
-                  header={
-                    <div
-                      onClick={() => handleClickSubTitle(index)}
-                      className={`${
-                        ItemLeft === index ? 'activeItem' : ''
-                      } panel-title_text`}
-                    >
-                      {item.title}
-                    </div>
-                  }
-                  key={index}
-                  className={`history-left_item`}
-                >
-                  {item.childs.map((child: string, idx: number) => (
-                    <div
-                      key={idx}
-                      className={
-                        activeChild === `${index}-${idx}`
-                          ? 'active-child child-item'
-                          : 'child-item'
-                      }
-                      onClick={() => handleChildClick(`${index}-${idx}`)}
-                    >
-                      {child}
-                    </div>
-                  ))}
-                </Panel>
-              ))}
+              {dataItem.map((item: any, index: number) => {
+                return (
+                  <Panel
+                    header={
+                      <div
+                        onClick={() => handleClickSubTitle(index)}
+                        className={`${
+                          ItemLeft === index ? 'activeItem' : ''
+                        } panel-title_text`}
+                      >
+                        {item.title}
+                      </div>
+                    }
+                    key={index}
+                    className={`history-left_item`}
+                  >
+                    {item.childs.map((child: string, idx: number) => (
+                      <div
+                        key={idx}
+                        className={
+                          activeChild === `${index}-${idx}`
+                            ? 'active-child child-item'
+                            : 'child-item'
+                        }
+                        onClick={() => handleChildClick(`${index}-${idx}`)}
+                      >
+                        {child}
+                      </div>
+                    ))}
+                  </Panel>
+                );
+              })}
             </Collapse>
           </Box>
 
@@ -249,6 +253,7 @@ const HistoryPost = () => {
       </div>
       <ShowCancleSave />
       <ShowNotificativeSave />
+      <RollTop />
       <Footer />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react';
 // import moment, { Moment } from 'moment'
 // import Grid from '@mui/material/Grid'
 // import Card from '@mui/material/Card'
@@ -16,46 +16,46 @@ import React, { useEffect, useState, useMemo } from 'react'
 // import historyApplicator from 'api/historyApplicator'
 
 // import component
-import CardsAppliedAll from '../CardsAppliedAll'
-import CardsAppliedApproved from '../CardsAppliedApproved'
-import CardsAppliedPending from '../CardsAppliedPending'
+import CardsAppliedAll from '../CardsAppliedAll';
+import CardsAppliedApproved from '../CardsAppliedApproved';
+import CardsAppliedPending from '../CardsAppliedPending';
 
 interface ICardsApplied {
-  activeChild: string
+  activeChild: string;
 }
 
 const CardsApplied: React.FC<ICardsApplied> = (props) => {
-  const { activeChild } = props
+  const { activeChild } = props;
 
   const AppliedAll = useMemo(() => {
     if (activeChild === '0-0') {
-      return <CardsAppliedAll activeChild={activeChild} />
+      return <CardsAppliedAll activeChild={activeChild} />;
     }
-  }, [activeChild])
+  }, [activeChild]);
 
   const AppliedPending = useMemo(() => {
     if (activeChild === '0-2') {
-      return <CardsAppliedPending activeChild={activeChild} />
+      return <CardsAppliedPending activeChild={activeChild} />;
     }
-    return null
-  }, [activeChild])
+    return null;
+  }, [activeChild]);
 
   const AppliedApproved = useMemo(() => {
     if (activeChild === '0-1') {
-      return <CardsAppliedApproved activeChild={activeChild} />
+      return <CardsAppliedApproved activeChild={activeChild} />;
     }
-    return null
-  }, [activeChild])
+    return null;
+  }, [activeChild]);
 
   return (
     <>
-      <div>
+      <>
         {AppliedAll}
         {AppliedApproved}
         {AppliedPending}
-      </div>
+      </>
     </>
-  )
-}
+  );
+};
 
-export default CardsApplied
+export default CardsApplied;

@@ -8,6 +8,7 @@ import ItemInfoRight from '../Landing/components/item/itemInfoRight';
 // import Popup from './popup/index'
 // import useModal from './popup/useModal'
 import Footer from '../../components/Footer/index';
+import RollTop from '#components/RollTop';
 import './style.scss';
 
 // import firebase
@@ -163,6 +164,7 @@ const Landing: React.FC = () => {
       </div>
 
       {/* <Popup isOpen={isOpen} toggle={toggle}></Popup> */}
+      <RollTop />
       <Footer />
     </div>
   );
