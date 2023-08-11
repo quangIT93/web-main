@@ -66,10 +66,11 @@
         display: flex;
         align-items: center;
         margin-top: 12px;
-
+        
         .img-advertisement-job-not-loging {
             height: 300px ;
             width: 50% ;
+            border-radius: 20px;
          }
          .advertisement-job-not-loging-content {
              margin-left: 30px;
@@ -96,7 +97,6 @@
                      font-style: normal;
                      font-weight: 400;
                      line-height: 24px;
- 
                  }                
              }
  
@@ -132,6 +132,8 @@
             .img-advertisement-job-not-loging {
                 height: auto ;
                 width: 100% ;
+                border-radius: 20px;
+
              }
 
             .advertisement-job-not-loging-content {
@@ -234,6 +236,7 @@
                         }
 
                         .div-card-post-info {
+                            position: relative;
                             display: flex;
                             justify-content: space-between;
                             width: 300px;
@@ -243,11 +246,11 @@
                           
                                 
                                 @include breakpoint(mobile) {
-                                    width: 180px;
+                                    width: 220px;
                                 }
                                 
                                 @media screen and (min-width: 300px) and (max-width: 400px) {
-                                    width: 120px;
+                                    width: 150px;
                                   }
 
                                 @include breakpoint(tablet) {
@@ -255,9 +258,15 @@
                                 }
                             }
 
-                            .div-card-post-right {
+                            .div-cardApplied-post-right {
                                 @include breakpoint(mobile) {
                                     width: 60px;
+                                    position: absolute;
+                                    right: 4px;
+                                    top: 0px;
+                                    height: 100%;
+                                    display: flex;
+                                    align-items: flex-end;
              
                                     .ant-space-item {
                                         p {
@@ -273,6 +282,12 @@
 
                                 @include breakpoint(tablet) {
                                     width: 70px;
+                                    position: absolute;
+                                    right: 4px;
+                                    top: 0px;
+                                    height: 80%;
+                                    display: flex;
+                                    align-items: flex-end;
                                     .ant-space-item {
                                         p {
                                             width: 80px;
@@ -280,6 +295,27 @@
                                             white-space: nowrap;
                                             text-overflow: ellipsis;
                                             overflow: hidden;
+                                        }
+                                    }
+                                }
+
+                                @include breakpoint(largeTablet) {
+                                    width: 60px;
+                                    position: absolute;
+                                    right: 4px;
+                                    top: 0px;
+                                    height: 100%;
+                                    display: flex;
+                                    align-items: flex-end;
+             
+                                    .ant-space-item {
+                                        p {
+                                            width: 80px;
+                                            text-align: end;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;
+                                            overflow: hidden;
+                                           color: #0d99ff;
                                         }
                                     }
                                 }

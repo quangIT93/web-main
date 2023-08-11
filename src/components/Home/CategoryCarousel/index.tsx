@@ -1,8 +1,8 @@
 import React, { useContext, memo } from 'react';
 
 import Box from '@mui/material/Box';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+// import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
 
 import './style.scss';
 import './components/categoryItem.scss';
@@ -137,7 +137,7 @@ const CategoryCarousel: React.FC = () => {
 
   const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
     try {
-      setOpenBackdrop(true); // Mở backdrop
+      // setOpenBackdrop(true); // Mở backdrop
       window.scrollTo(0, 0);
       // window.scrollTo(0, 300)
 
@@ -203,7 +203,7 @@ const CategoryCarousel: React.FC = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setOpenBackdrop(false); // Đóng backdrop sau khi API call hoàn thành
+      // setOpenBackdrop(false); // Đóng backdrop sau khi API call hoàn thành
     }
   };
 
@@ -242,7 +242,7 @@ const CategoryCarousel: React.FC = () => {
 
   const getPostNewestByCategori = async () => {
     try {
-      setOpenBackdrop(true);
+      // setOpenBackdrop(true);
       const themeId = searchParams.get('categories-id');
       var result;
       if (themeId === 'all') {
@@ -266,7 +266,7 @@ const CategoryCarousel: React.FC = () => {
       }
       if (result) {
         setPostNewest(result);
-        setOpenBackdrop(false);
+        // setOpenBackdrop(false);
       }
     } catch (error) {
       console.error(error);
@@ -275,7 +275,7 @@ const CategoryCarousel: React.FC = () => {
 
   const getNewstJobBycookie = async (userSelectedId: any) => {
     try {
-      setOpenBackdrop(true);
+      // setOpenBackdrop(true);
       const themeId = userSelectedId;
       var result;
       if (themeId === 1) {
@@ -299,7 +299,7 @@ const CategoryCarousel: React.FC = () => {
       }
       if (result) {
         setPostNewest(result);
-        setOpenBackdrop(false);
+        // setOpenBackdrop(false);
       }
     } catch (error) {
       console.error(error);
@@ -355,10 +355,10 @@ const CategoryCarousel: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('categories-id')]);
 
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
   // const handleOpen = () => {
   //   setOpenBackdrop(true);
   // };
@@ -556,7 +556,7 @@ const CategoryCarousel: React.FC = () => {
           })}
         </Swiper>
 
-        <Backdrop
+        {/* <Backdrop
           sx={{
             color: '#0d99ff ',
             backgroundColor: 'transparent',
@@ -566,7 +566,7 @@ const CategoryCarousel: React.FC = () => {
           onClick={handleClose}
         >
           <CircularProgress color="inherit" />
-        </Backdrop>
+        </Backdrop> */}
         {/* <Tabs
         value={value === 0 ? categories?.data[0].id : value}
         onChange={handleChange}

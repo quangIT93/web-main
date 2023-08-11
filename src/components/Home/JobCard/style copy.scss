@@ -154,23 +154,31 @@
 
 .div-card-post-right {
     width: 100px;
-    align-items: flex-end;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    position: absolute !important;
+    right: 0;
+    top: 10px;
+    display: flex;
+    /* justify-content: space-around; */
+    height: 80.5%;
+    margin-right: 12px;
+
+
+    .ant-space-item {
+        p {
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+            // white-space: nowrap;
+            // width: 90px;
+            color: #0d99ff;
+            font-size: 12px;
+        }
+    }
 
     @include breakpoint(mobile) {
         width: 30%;
-        position: absolute;
-        right: 12px;
-        top: 12px;
-        height: 78%;
-        
-    }
-
-    @include breakpoint(tablet) {
-        width: 30%;
-        position: absolute;
-        right: 12px;
-        top: 12px;
-        height: 82%;
     }
 
     @include breakpoint(largeTablet) {

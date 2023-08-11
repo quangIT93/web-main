@@ -222,7 +222,6 @@ const AppliedPostedJob: React.FC = () => {
             className="img-advertisement-job-not-loging"
             // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
           />
-
           <div className="advertisement-job-not-loging-content">
             <h3>Dễ dàng tìm kiếm ứng viên tại HiJob</h3>
             <ul>

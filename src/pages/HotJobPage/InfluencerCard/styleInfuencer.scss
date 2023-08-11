@@ -1,72 +1,83 @@
 @import "../../../scss/mixins";
 
-.influencer-card {
-    padding: 0 !important;
+.hot-job-page-container {
 
-    .div-influencer-card-top {
-        .MuiImageListItem-img {
-            width: 100% !important;
-            height: 300px !important;
-            border-radius: 8px;
-        }
-
-        @include breakpoint(mobile){
-            .MuiImageListItem-img {
-                margin-top: 16px;
-                min-width: 100% !important;
-                min-height: 240px !important;
-                border-radius: 8px !important;
-                object-fit: contain !important;
+    .MuiBox-root {
+        .MuiGrid-container{
+            .MuiGrid-item {
+                height: auto;
             }
         }
-
-        @include breakpoint(tablet){
-            .MuiImageListItem-img {
-                margin-top: 16px;
-                min-width: 100% !important;
-                min-height: 240px !important;
-                border-radius: 8px !important;
-                object-fit: contain !important;
-            }
-        }
-
-        @include breakpoint(largeTablet){
-            .MuiImageListItem-img {
-                margin-top: 16px;
-                min-width: 100% !important;
-                min-height: 240px !important;
-                border-radius: 8px !important;
-                object-fit: contain !important;
-                
-            }
-        }
-
-
     }
 
-    .div-influencer-card-bottom {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 12px;
-
-        .div-influencer-card-bottom_left {
-            width: 75%;
-
-            // .MuiTypography-h6 {
-            //     white-space: unset !important;
-            //     text-overflow: unset !important;
-            //     overflow: unset !important;
-            //     word-break: break-word;
-            // }
+    .influencer-card {
+        padding: 0 !important;
+        height: auto !important;
+        .div-influencer-card-top {
+            .MuiImageListItem-img {
+                width: 100% !important;
+                height: 300px !important;
+                border-radius: 8px;
+            }
+    
+            @include breakpoint(mobile){
+                .MuiImageListItem-img {
+                    margin-top: 16px;
+                    min-width: 100% !important;
+                    min-height: 240px !important;
+                    border-radius: 8px !important;
+                    object-fit: contain !important;
+                }
+            }
+    
+            @include breakpoint(tablet){
+                .MuiImageListItem-img {
+                    margin-top: 16px;
+                    min-width: 100% !important;
+                    min-height: 240px !important;
+                    border-radius: 8px !important;
+                    object-fit: contain !important;
+                }
+            }
+    
+            @include breakpoint(largeTablet){
+                .MuiImageListItem-img {
+                    margin-top: 16px;
+                    min-width: 100% !important;
+                    min-height: 240px !important;
+                    border-radius: 8px !important;
+                    object-fit: contain !important;
+                    
+                }
+            }
+    
+    
         }
-
-        .div-influencer-card-bottom_right {
-            height: 100%;
+    
+        .div-influencer-card-bottom {
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: space-between;
-            align-items: flex-end;
+            margin: 12px;
+    
+            .div-influencer-card-bottom_left {
+                width: 75%;
+    
+                // .MuiTypography-h6 {
+                //     white-space: unset !important;
+                //     text-overflow: unset !important;
+                //     overflow: unset !important;
+                //     word-break: break-word;
+                // }
+            }
+    
+            .div-influencer-card-bottom_right {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
         }
     }
 }
