@@ -24,6 +24,7 @@ import {
 // @ts-ignore
 
 import { Navbar } from '#components';
+import RollTop from '#components/RollTop';
 
 import './style.scss';
 
@@ -36,6 +37,27 @@ const Comunity = () => {
     setShowText('showText');
   };
 
+  const footerRef = React.useRef<any>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (footerRef.current && !footerRef.current.contains(event.target)) {
+        setOpenMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleClickItemMenu = () => {
+    console.log("hello")
+  }
+
   console.log(openMenu);
 
   return (
@@ -46,7 +68,7 @@ const Comunity = () => {
           <div className="title-comunity">
             <h3>Hôm nay, HiJob có 10 bài viết mới</h3>
             <div className="title-comunity_icon">
-              <div className="dropdown dropdown-4" onClick={() => setOpenMenu(!openMenu)}>
+              <div className="dropdown dropdown-4" ref={footerRef} onClick={() => setOpenMenu(!openMenu)}>
                 <FilterComunity />
                 <ul className="dropdown_menu dropdown_menu-4">
                   <li className="dropdown_item-1" style={{ display: openMenu ? "flex" : "none" }}>
@@ -259,6 +281,7 @@ const Comunity = () => {
           </div>
         </div>
       </div>
+      <RollTop />
       <Footer />
     </div>
   );

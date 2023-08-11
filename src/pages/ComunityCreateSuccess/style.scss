@@ -1,0 +1,98 @@
+.comunity-create-success-container {
+    margin-top: 70px;
+
+    .comunity-create-success-content {
+        padding: 50px 180px;
+        margin: 0 auto;
+        transition: all l;
+        margin-bottom: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 24px;
+
+        @media screen and (max-width: 768px) {
+            padding: 50px 24px;
+        }
+
+        .create-success-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+
+            .create-success-message_header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 24px;
+
+                h3 {
+                    color: #000;
+                    font-family: Roboto;
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 32px;
+                    /* 133.333% */
+                }
+            }
+
+            .create-success-message_body {
+                p {
+                    color: #000;
+                    text-align: center;
+                    font-family: Roboto;
+                    font-size: 16px;
+                    font-style: italic;
+                    font-weight: 400;
+                    line-height: 24px;
+                    /* 150% */
+                }
+            }
+        }
+
+        .create-success-btns {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+
+            button {
+                font-family: Roboto;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 24px;
+                display: flex;
+                Width: 375px;
+                Height: 56px;
+                padding: 16px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+
+                @media screen and (max-width: 375px) {
+                    Width: 250px;
+                }
+
+                &:first-child {
+                    background: #0D99FF;
+                    color: white;
+                }
+
+                &:last-child {
+                    color: #0D99FF;
+                    border-color: #0D99FF;
+                    background: white;
+                }
+            }
+
+        }
+
+    }
+}

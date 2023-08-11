@@ -1,0 +1,190 @@
+.comunity-create-post-container {
+    margin-top: 70px;
+
+    .comunity-create-post-content {
+        padding: 50px 180px;
+        margin: 0 auto;
+        transition: all l;
+        margin-bottom: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 24px;
+
+        @media screen and (max-width: 768px) {
+            padding: 50px 24px;
+        }
+
+        .create-post-body {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+
+            .create-post-body_input {
+                h3 {
+                    margin-bottom: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    p {
+                        cursor: pointer;
+                        color: #0D99FF;
+                        text-align: right;
+                        font-family: Roboto;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 400;
+                        // line-height: 24px;
+                        /* 150% */
+                    }
+                }
+
+                .input-title {
+                    display: flex;
+                    width: 766px;
+                    padding: 24px;
+                    align-items: center;
+                    height: 78px;
+                    /* 150% */
+                    font-family: Roboto;
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 30px;
+                }
+
+                .input-content {
+                    display: flex;
+                    width: 766px;
+                    // height: 260px;
+                    padding: 24px;
+                    align-items: flex-start;
+                    gap: 10px;
+
+                    font-family: Roboto;
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 30px;
+                }
+
+
+                .ant-upload-wrapper {
+                    position: relative;
+                    height: fit-content;
+
+                    .ant-upload-drag {
+                        display: flex;
+                        width: 766px;
+                        height: 340px;
+                        padding: 24px;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 10px;
+                        border-radius: 8px;
+                        // border: 0.5px solid #AAA;
+                        background: white;
+
+                        &:hover {
+                            border: 0.5px solid #0D99FF;
+                        }
+
+                        p {
+                            color: #AAA;
+                            font-family: Roboto;
+                            font-size: 20px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: 30px;
+                            /* 150% */
+                        }
+                    }
+
+                    .ant-upload-list {
+                        position: absolute;
+                        top: 0;
+                        display: flex;
+                        max-width: 766px;
+                        flex-wrap: wrap;
+                        // // height: 340px;
+                        // padding: 24px;
+                        // justify-content: space-between;
+                        // align-items: center;
+                        // gap: 10px;
+                        // border-radius: 8px;
+                        // // border: 0.5px solid #AAA;
+                        // background: white;
+                        // z-index: 1;
+
+                        .ant-upload-list-item-container {
+                            margin-right: 15px;
+                            margin-top: 15px;
+
+                            .ant-upload-list-item {
+                                margin-top: 0;
+                                width: 176px;
+                                height: 176px;
+
+                                .ant-upload-list-item-thumbnail {
+                                    width: 100%;
+                                    height: 100%;
+                                }
+
+                                .ant-upload-list-item-name {
+                                    display: none;
+                                }
+
+                                .ant-upload-list-item-actions {
+                                    position: absolute;
+                                    top: 10px;
+                                    right: 10px;
+                                    background: #575757;
+                                    width: fit-content;
+                                    z-index: 2;
+                                    border-radius: 4px;
+
+
+                                    a {
+                                        padding: 4px;
+                                    }
+
+                                    svg {
+                                        display: block;
+                                        color: white;
+                                        opacity: 1;
+                                    }
+
+                                    button {
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .save_btn {
+                .submit {
+                    width: 100%;
+                    height: 56px;
+                    background: #F1F0F0;
+                    font-family: Roboto;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 24px;
+                    /* 150% */
+
+                    &:hover {
+                        background: rgba(13, 153, 255, 1);
+                        color: white;
+                    }
+                }
+            }
+        }
+
+    }
+}
