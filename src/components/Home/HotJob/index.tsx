@@ -152,7 +152,7 @@ const HotJob: React.FC = () => {
         navigation={true}
         // mousewheel={true}
         slidesPerView="auto"
-        spaceBetween={24}
+        spaceBetween={12}
         // breakpoints={{
         //   320: {
         //     slidesPerView: 1,

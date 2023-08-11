@@ -1490,7 +1490,6 @@ const Navbar: React.FC = () => {
               </Button>
               {openNotificate ? <Notificate /> : <></>}
             </div>
-
             <div
               className="wrap-btn_notice btn-noti_icon 
             border-aniation_download

@@ -216,12 +216,13 @@ const AppliedPostedJob: React.FC = () => {
           style={{ display: !isLogined ? 'flex' : 'none' }}
         >
           {/* <Advertisement /> */}
-          <img
+          {/* <img
             src="../images/absHijob.png"
             alt="Ảnh lỗi"
             className="img-advertisement-job-not-loging"
             // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
-          />
+          /> */}
+          <Advertisement />
           <div className="advertisement-job-not-loging-content">
             <h3>Dễ dàng tìm kiếm ứng viên tại HiJob</h3>
             <ul>
@@ -230,16 +231,16 @@ const AppliedPostedJob: React.FC = () => {
               <li>Công cụ tìm kiếm thông minh</li>
               <li>Giao tiếp dễ dàng với Ứng viên</li>
             </ul>
-            <Button
-              type="primary"
-              onClick={() => {
-                setOpenModalLogin(true);
-              }}
-            >
-              <LoginArrowIcon />
-              {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
-            </Button>
           </div>
+          <Button
+            type="primary"
+            onClick={() => {
+              setOpenModalLogin(true);
+            }}
+          >
+            <LoginArrowIcon />
+            {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+          </Button>
         </div>
 
         <Swiper
