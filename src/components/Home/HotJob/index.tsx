@@ -3,8 +3,8 @@ import React from 'react';
 // import Tab from '@mui/material/Tab'
 // import { Radio, Tabs } from 'antd';
 import Box from '@mui/material/Box';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+// import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
 // import { AxiosResponse } from 'axios';
 // import api
 // import postApi from 'api/postApi';
@@ -42,8 +42,8 @@ import './style.scss';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
-import { home } from 'validations/lang/vi/home';
-import { homeEn } from 'validations/lang/en/home';
+// import { home } from 'validations/lang/vi/home';
+// import { homeEn } from 'validations/lang/en/home';
 
 // interface ItemTheme {
 //   id: number;
@@ -56,7 +56,7 @@ const HotJob: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  // const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
   const [hotjob, setHotJob] = React.useState<any>([]);
 
@@ -84,9 +84,9 @@ const HotJob: React.FC = () => {
   };
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   const getHotJob = async () => {
     try {
@@ -238,7 +238,7 @@ const HotJob: React.FC = () => {
           );
         })}
       </Swiper>
-      <Backdrop
+      {/* <Backdrop
         sx={{
           color: '#0d99ff ',
           backgroundColor: 'transparent',
@@ -248,7 +248,7 @@ const HotJob: React.FC = () => {
         onClick={handleClose}
       >
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </Backdrop> */}
     </Box>
   );
 };

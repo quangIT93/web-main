@@ -3,8 +3,8 @@ import React from 'react';
 // import Tab from '@mui/material/Tab'
 
 import Box from '@mui/material/Box';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+// import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
 import { AxiosResponse } from 'axios';
 // import api
 import postApi from 'api/postApi';
@@ -54,7 +54,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     (state: RootState) => state.changeLaguage.language,
   );
   const [value, setValue] = React.useState<Number>(0);
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  // const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [index, setIndex] = React.useState(0);
 
   // const [addressIdCookie, setAddressIdCookie] = React.useState(0);
@@ -98,7 +98,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     try {
       setValue(newValue);
       // setIndex(newValue);
-      setOpenBackdrop(!openBackdrop);
+      // setOpenBackdrop(!openBackdrop);
       const categoryId = searchParams.get('categories-id');
       if (categoryId) {
         setSearchParams({
@@ -113,21 +113,21 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         newValue,
         19,
         null,
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setPostByTheme(result);
         // set backdrop
-        setOpenBackdrop(false);
+        // setOpenBackdrop(false);
       }
     } catch (error) {
       console.log(error);
     }
   };
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
   const getPostNewestByThemeId = async () => {
     try {
       const themeId = searchParams.get(`theme-id`)
@@ -136,22 +136,22 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
 
       var result;
       if (themeId) {
-        setOpenBackdrop(true);
+        // setOpenBackdrop(true);
         result = await postApi.getPostByThemeId(
           Number(themeId),
           19,
           null,
-          languageRedux == 1 ? 'vi' : 'en',
+          languageRedux === 1 ? 'vi' : 'en',
         );
       }
 
       if (result) {
         setPostByTheme(result);
-        setOpenBackdrop(false);
+        // setOpenBackdrop(false);
       }
     } catch (error) {
       console.error(error);
-      setOpenBackdrop(false);
+      // setOpenBackdrop(false);
     }
   };
   React.useEffect(() => {
@@ -279,7 +279,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
               <div className="slide-item">
                 <img
                   src={item.image}
-                  alt={languageRedux == 1 ? 'ảnh bị lỗi' : 'Error Photo'}
+                  alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error Photo'}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -291,7 +291,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                   <Space size={3} direction={'vertical'} style={{ width: 150 }}>
                     <h5>{item.title}</h5>
                     <h6>
-                      {languageRedux == 1
+                      {languageRedux === 1
                         ? `${item.number_of_posts} việc làm`
                         : `${item.number_of_posts} jobs`}
                     </h6>
@@ -302,7 +302,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
           );
         })}
       </Swiper>
-      <Backdrop
+      {/* <Backdrop
         sx={{
           color: '#0d99ff ',
           backgroundColor: 'transparent',
@@ -312,7 +312,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         onClick={handleClose}
       >
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </Backdrop> */}
     </Box>
   );
 };

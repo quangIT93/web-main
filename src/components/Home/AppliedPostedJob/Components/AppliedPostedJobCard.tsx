@@ -204,7 +204,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               }}
               direction="vertical"
               align="center"
-              className="div-card-post-right"
+              className="div-cardApplied-post-right"
             >
               <div
                 style={{
@@ -243,7 +243,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 fontSize: '12px',
               }}
             >
-              {languageRedux == 1 ? home.applied_on : homeEn.applied_on}
+              {languageRedux === 1 ? home.applied_on : homeEn.applied_on}
               &nbsp;
               {new Date(props.item.created_at).toLocaleDateString('en-GB')}
               ,&nbsp;
@@ -264,7 +264,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 {props.item.num_of_application}
               </strong>
               &nbsp;
-              {languageRedux == 1
+              {languageRedux === 1
                 ? home.x_candidates_have_applied
                 : homeEn.x_candidates_have_applied}
             </span>
@@ -289,18 +289,18 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             className="button-approved"
           >
             {props.item.application_status === 1
-              ? languageRedux == 1
+              ? languageRedux === 1
                 ? 'Đã ứng tuyển'
                 : 'Applied'
               : props.item.application_status === 2
-              ? languageRedux == 1
+              ? languageRedux === 1
                 ? 'Đã được duyệt'
                 : 'Approved'
               : props.item.application_status === 3
-              ? languageRedux == 1
+              ? languageRedux === 1
                 ? 'Đã từ chối'
                 : 'Denied'
-              : languageRedux == 1
+              : languageRedux === 1
               ? 'Đã tuyển'
               : 'Recruited'}
           </div>
@@ -308,7 +308,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             style={{ display: props.item.type === 'post' ? 'flex' : 'none' }}
             className="button-check"
           >
-            {languageRedux == 1 ? 'Kiểm tra ngay' : 'Check now'}
+            {languageRedux === 1 ? 'Kiểm tra ngay' : 'Check now'}
             <div className="icon">
               <BackIcon fill="white" />
             </div>

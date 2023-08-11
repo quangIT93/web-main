@@ -90,6 +90,7 @@ const JobCard: React.FC<Iprops> = (props) => {
       />
       <Card
         sx={{
+          position: 'relative',
           minWidth: '100%',
           display: 'flex',
           padding: '12px',
