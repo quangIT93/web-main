@@ -8,6 +8,8 @@ import { Navbar } from '#components';
 //@ts-ignore
 import ModalNoteCreatePost from '#components/Post/ModalNoteCreatePost';
 
+import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
+
 // import component
 import PostFilterSalary from '../../components/Post/PostFilterSalary';
 import PostJobCompany from '../../components/Post/PostJobCompany';
@@ -21,6 +23,8 @@ import StyleWork from '#components/Post/StyleWork';
 import SalaryType from '#components/Post/SalaryType';
 import Description from '#components/Post/Description';
 import PostImage from '#components/Post/PostImage';
+
+import RollTop from '#components/RollTop';
 // import PostCategoryIds from '#components/Post/PostCategoryIds'
 import PostTime from '#components/Post/PostTime';
 
@@ -43,6 +47,7 @@ import './style.scss';
 // import data
 import postApi from 'api/postApi';
 import languageApi from 'api/languageApi';
+import apiCompany from 'api/apiCompany';
 
 import { message } from 'antd';
 
@@ -206,6 +211,9 @@ const Post: React.FC = () => {
 
   const [openModalNoteCreatePost, setOpenModalNoteCreatePost] =
     React.useState(true);
+
+  const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
+    React.useState(false);
 
   // fill data
   const [fillWardId, setFillWardId] = React.useState<any>({
@@ -441,6 +449,38 @@ const Post: React.FC = () => {
 
   // console.log('phone', phoneNumber);
 
+  const handleFillCompany = async () => {
+    try {
+      const result = await apiCompany.getCampanyByAccountApi('vi');
+      if (result.data.companyInfomation) {
+        setCompanyName(result.data.companyInfomation.name);
+        setFillDistrict({
+          id: result.data.companyInfomation.companyLocation.district.id,
+          full_name:
+            result.data.companyInfomation.companyLocation.district.fullName,
+        });
+        setFillProvince({
+          id: result.data.companyInfomation.companyLocation.district.province
+            .id,
+          name: result.data.companyInfomation.companyLocation.district.province
+            .fullName,
+        });
+
+        setFillWardId({
+          id: result.data.companyInfomation.companyLocation.id,
+          full_name: result.data.companyInfomation.companyLocation.fullName,
+        });
+        setWardId(result.data.companyInfomation.companyLocation.id);
+
+        setAddress(result.data.companyInfomation.address);
+      } else {
+        setOpenModalNoteCreateCompany(true);
+      }
+    } catch (error) { }
+  };
+
+  console.log('wardId', wardId);
+
   if (localStorage.getItem('accessToken')) {
     return (
       <div className="post">
@@ -474,6 +514,9 @@ const Post: React.FC = () => {
                 onChange={() => setOpenFillDataPost(!openModalFillDataPost)}
               />
             </div>
+          </div>
+          <div className="fill-company" onClick={handleFillCompany}>
+            <h3>Điền nhanh thông tin công ty</h3>
           </div>
           <form onSubmit={handleSubmit}>
             <PostJobCompany
@@ -598,6 +641,7 @@ const Post: React.FC = () => {
           </form>
         </div>
         <Footer />
+        <RollTop />
         <ModalPost
           openModalPost={openModalPost}
           setOpenModalPost={setOpenModalPost}
@@ -607,6 +651,11 @@ const Post: React.FC = () => {
           setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
           openModalNoteCreatePost={openModalNoteCreatePost}
           language={language}
+        />
+
+        <ModalNoteCreateCompany
+          openModalNoteCreateCompany={openModalNoteCreateCompany}
+          setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
         />
 
         <ModalFillDataPost

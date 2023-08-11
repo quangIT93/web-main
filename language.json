@@ -19,6 +19,13 @@
     "search_over": "Tìm kiếm hơn",
     "jobs_in_vietnam": "công việc tại Việt Nam",
     "posted_on": "Đã đăng vào:",
+    "applied_posted_jobs": {
+        "easily_find_candidates_at_HiJob": "Dễ dàng tìm kiếm ứng viên tại HiJob",
+        "provide_service_for_employers": "Chúng tôi cung cấp dịch vụ giúp nhà tuyển dụng dễ dàng tiếp cận",
+        "post_jobs_for_free": "Đăng bài tuyển dụng miễn phí",
+        "smart_search_engine": "Công cụ tìm kiếm thông minh",
+        "easy_communication_with_candidates": "Giao tiếp dễ dàng với Ứng viên"
+    },
     "company_page": {
         "title_page": "HiJob - Thông tin công ty",
         "err_logo_mess": "Vui lòng chọn logo công ty",

@@ -7,6 +7,7 @@ import ListUserChat from '#components/Message/ListUser/ListUser';
 // @ts-ignore
 import Navbar from '#components/Navbar';
 import Footer from '#components/Footer/Footer';
+import RollTop from '#components/RollTop';
 // import ui antd
 // import { Typography } from 'antd';
 
@@ -123,6 +124,7 @@ const Message = () => {
           {/* </div> */}
         </div>
       </div>
+      <RollTop />
       <Footer />
     </div>
   );

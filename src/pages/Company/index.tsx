@@ -24,6 +24,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 import languageApi from 'api/languageApi';
 
+import RollTop from '#components/RollTop';
+
 // import NotFound from 'pages/NotFound';
 import './style.scss';
 
@@ -487,6 +489,7 @@ const Company = () => {
         languageRedux={languageRedux}
         language={language}
       />
+      <RollTop />
       <Footer />
     </div>
   );

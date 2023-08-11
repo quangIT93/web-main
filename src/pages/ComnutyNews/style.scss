@@ -1,5 +1,6 @@
 .comunity-container {
     margin-top: 70px;
+
     .comunity-content {
         padding: 50px 180px;
         margin: 0 auto;
@@ -10,15 +11,16 @@
         align-items: center;
         justify-content: center;
         // .comunityNew {
-            
+
         // }
         .comunityPostNew {
             width: 1000px;
-    
+
             .title-comunity {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+
                 h3 {
                     color: #000;
                     font-family: Roboto;
@@ -27,20 +29,116 @@
                     font-weight: 700;
                     line-height: 30px;
                 }
-    
+
                 .title-comunity_icon {
                     display: flex;
                     gap: 12px;
+
+                    .dropdown {
+                        // padding: 20px 40px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: white;
+                        // background: #C06162;
+                        // background: #34495e;
+                        position: relative;
+                        font-size: 18px;
+                        perspective: 1000px;
+                        z-index: 100;
+
+                        &:hover {
+                            // background: #2980b9;
+                            cursor: pointer;
+                        }
+
+                        // &:hover {
+                        //     .dropdown_menu {
+                        //         li {
+                        //             display: block;
+                        //         }
+                        //     }
+                        // }
+
+                        .dropdown_menu {
+                            position: absolute;
+                            border-radius: 4px;
+                            gap: 4px;
+                            box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.08),
+                                0px -2px 7px 0px rgba(0, 0, 0, 0.07),
+                                0px -2px 5px 0px rgba(0, 0, 0, 0.01);
+                            top: 160%;
+                            left: 0;
+                            width: 162px;
+                            // width: 100%;
+                            perspective: 1000px;
+                            z-index: -1;
+
+                            li {
+                                // display: block;
+                                color: white;
+                                background-color: white;
+                                padding: 8px 12px 8px 12px;
+                                font-size: 16px;
+                                font-weight: 400;
+                                opacity: 0;
+                                color: #000;
+                                gap: 12px;
+                                align-items: center;
+                                // justify-content: center;
+
+                                &:first-child {
+                                    border-radius: 4px 4px 0 0;
+                                }
+
+                                &:last-child {
+                                    border-radius: 0 0 4px 4px;
+                                }
+
+                                &:hover {
+                                    color: white;
+                                    background: rgba(87, 87, 87, 1);
+                                }
+                            }
+                        }
+
+                        .dropdown_menu-4 {
+                            @for $i from 1 to 4 {
+                                .dropdown_item-#{$i} {
+                                    transform-origin: top center;
+                                    animation: scaleZ 300ms ($i * 60ms) ease-in-out forwards;
+                                }
+                            }
+
+                            @keyframes scaleZ {
+                                0% {
+                                    opacity: 0;
+                                    transform: scale(0);
+                                }
+
+                                80% {
+                                    transform: scale(1.07);
+                                }
+
+                                100% {
+                                    opacity: 1;
+                                    transform: scale(1);
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            
-          
-            .comunitypostNew-wrap_content { 
+
+
+            .comunitypostNew-wrap_content {
                 border: 1px solid #ccc;
                 padding: 12px 24px;
                 border-radius: 12px;
                 margin: 24px 0;
+
                 .comunityPostNew-content {
+
                     // display: flex;
                     h3 {
                         color: #001424;
@@ -48,16 +146,17 @@
                         font-size: 20px;
                         font-style: normal;
                         font-weight: 700;
-                        line-height: 24px; 
+                        line-height: 24px;
                     }
-    
+
                     .comunityPostNew-content_info {
                         padding: 12px 0;
                         border-bottom: 1px solid #ccc;
-    
+
                         .text-content_postNew {
                             height: 90px;
                             overflow: hidden;
+
                             li {
                                 color: #000;
                                 font-family: Roboto;
@@ -69,52 +168,57 @@
                                 margin-left: 12px;
                             }
                         }
-    
+
                         .text-content_postNew.showText {
                             height: auto;
                             overflow: unset;
                         }
-    
-                     
-    
+
+
+
                         span {
                             color: #0d99ff;
                             cursor: pointer;
                         }
                     }
-    
+
                 }
+
                 .comunitypostNew-wrap_status {
                     display: flex;
                     padding: 12px 0;
                     border-bottom: 1px solid #ccc;
                     gap: 30px;
+
                     .status-item {
                         display: flex;
                         align-items: center;
+
                         p {
                             margin-left: 8px;
                         }
                     }
                 }
-    
+
                 .comunitypostNew-wrap_actor {
                     display: flex;
                     padding: 12px 0;
                     // align-items: center;
                     justify-content: space-between;
+
                     .comunitypostNew-wrap {
                         display: flex;
                         align-items: center;
-    
+
                         img {
                             width: 50px;
                             height: 50px;
                             border-radius: 10px;
                         }
-                        
+
                         .info-actor_comunity {
                             margin-left: 12px;
+
                             p {
                                 &:nth-child(1) {
                                     color: #575757;
@@ -124,30 +228,30 @@
                                     font-weight: 400;
                                     line-height: 18px;
                                 }
-    
+
                                 &:nth-child(2) {
                                     color: #000000;
                                     font-family: Roboto;
                                     font-size: 16px;
                                     font-style: normal;
                                     font-weight: 700;
-                                    line-height: 24px; 
+                                    line-height: 24px;
                                 }
                             }
-                            
+
                         }
                     }
-    
+
                     p {
                         color: #575757;
                         font-family: Roboto;
                         font-size: 16px;
                         font-style: italic;
                         font-weight: 400;
-                        line-height: 24px; 
+                        line-height: 24px;
                     }
-    
-                 
+
+
                 }
             }
         }

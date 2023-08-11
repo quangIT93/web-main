@@ -37,6 +37,17 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
 };
 interface ICategories {
   child_category_id: number;
@@ -206,6 +217,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     },
     size: 'Giờ làm việc large',
     treeIcon: false,
+    className: 'tree-modal_category',
     // dropdownRender: CustomRenderCatelory,
   };
 

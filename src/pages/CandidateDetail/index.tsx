@@ -20,6 +20,7 @@ import {
 import postApi from 'api/postApi';
 import historyRecruiter from 'api/historyRecruiter';
 // import component
+import RollTop from '#components/RollTop';
 
 import Footer from '../../components/Footer/Footer';
 import 'intl';
@@ -740,6 +741,7 @@ const CandidateDetail: React.FC = () => {
           </Box>
         </Skeleton>
       </Box>
+      <RollTop />
       <Footer />
     </div>
   );

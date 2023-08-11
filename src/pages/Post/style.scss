@@ -1,3 +1,5 @@
+@import "../../scss/mixins";
+
 .post {
   margin-top: 70px;
 
@@ -9,11 +11,59 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-bottom: 24px;
+
+      
+
       .post-main_switch {
         display: flex;
         align-items: center;
         h4 {
           margin-right: 8px;
+        }
+      }
+    }
+
+    .fill-company {
+      margin-bottom: 12px;
+      h3 {
+        color: #0d99ff;
+        // text-decoration:underline;
+        cursor: pointer;
+      }
+    }
+
+    
+    @include breakpoint(mobile){
+      .post-main_fillData {
+        flex-direction: column;
+
+        h1 {
+          margin-bottom: 24px;
+        }
+    
+        .post-main_switch {
+          margin-bottom: 12px;
+          h4 {
+        
+          }
+        }
+      }
+    }
+
+    @include breakpoint(tablet){
+      .post-main_fillData {
+        flex-direction: column;
+
+        h1 {
+          margin-bottom: 24px;
+        }
+    
+        .post-main_switch {
+          margin-bottom: 12px;
+          h4 {
+        
+          }
         }
       }
     }
@@ -43,7 +93,6 @@
       font-weight: 700;
       font-size: 32px;
       line-height: 24px;
-      margin-bottom: 32px;
     }
 
     form {

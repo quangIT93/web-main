@@ -43,6 +43,17 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
 };
 
 interface IModalProfileLocation {
@@ -280,6 +291,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
       zIndex: '1302',
       margin: '12px auto',
     },
+    className: 'modal-localtion_profile',
     size: 'Giờ làm việc large',
     treeIcon: false,
     // dropdownRender: CustomRenderCatelory,

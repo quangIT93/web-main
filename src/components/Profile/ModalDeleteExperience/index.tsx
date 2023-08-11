@@ -25,6 +25,17 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
 };
 
 // const styleChildBox = {
@@ -53,7 +64,7 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
     try {
       const result = await profileApi.deleteProfileExperience(experienceId);
       if (result) {
-        const profile = await profileApi.getProfile("vi");
+        const profile = await profileApi.getProfile('vi');
         if (profile) {
           setProfileUser(profile.data);
         }

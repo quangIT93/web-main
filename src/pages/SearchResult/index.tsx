@@ -28,6 +28,7 @@ import profileApi from 'api/profileApi';
 import locationApi from 'api/locationApi';
 import categoriesApi from 'api/categoriesApi';
 import Footer from '../../components/Footer/Footer';
+import RollTop from '#components/RollTop';
 
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -1278,9 +1279,8 @@ const NewJobs: React.FC = () => {
         </Modal>
       </div>
       <ShowCancleSave />
-
       <ShowNotificativeSave />
-
+      <RollTop />
       <Footer />
     </>
   );

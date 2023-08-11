@@ -110,7 +110,7 @@ const HotJob: React.FC = () => {
   const getHotJob = async () => {
     try {
       const result = await hotJobApi.getHotJobTheme(
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setHotJob(result.data);
@@ -235,7 +235,7 @@ const HotJob: React.FC = () => {
               <div className="slide-item">
                 <img
                   src={item.image}
-                  alt={languageRedux == 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                  alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
                   style={{
                     width: '160px',
                     height: '160px',

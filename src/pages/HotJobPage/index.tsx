@@ -17,6 +17,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import { Box } from '@mui/material';
+
+import RollTop from '#components/RollTop';
 // import redux
 
 // import { bindActionCreators } from 'redux';
@@ -134,7 +136,8 @@ const HotJobpage: React.FC = () => {
   const [pageNumber, setPageNumber] = React.useState(0);
   const [language, setLanguage] = React.useState<any>();
   const [totalPage, setTotalPage] = React.useState<any>(
-    Math.round(Number(searchParams.get('hotjob-total')) / 21) + 1)
+    Math.round(Number(
+      searchParams.get('hotjob-total')) / 20) + 1)
     ;
 
   const getlanguageApi = async () => {
@@ -223,9 +226,11 @@ const HotJobpage: React.FC = () => {
     }
   };
 
+  // console.log('getHost', localStorage.getItem('hotjobApi'));
 
   const getMoreHotJob = async () => {
     try {
+      const nextPage = pageNumber + 1;
       if (pageNumber + 1 === totalPage) {
         setIsVisible(false);
         setOpenBackdrop(false);
@@ -240,9 +245,9 @@ const HotJobpage: React.FC = () => {
         return;
       }
       setOpenBackdrop(true);
-      setPageNumber(pageNumber + 1);
+      setPageNumber(nextPage);
       const url = localStorage.getItem('hotjobApi');
-      const result = await hotJobApi.getHotJobById(url, pageNumber,
+      const result = await hotJobApi.getHotJobById(url, nextPage,
         searchParams.get('hotjob-id') === '1' ? 20 : 19,
         languageRedux === 1 ? "vi" : "en");
       if (result) {
@@ -400,6 +405,7 @@ const HotJobpage: React.FC = () => {
       </div>
       <ShowNotificativeSave />
       <ShowCancleSave />
+      <RollTop />
       <Footer />
     </>
   );

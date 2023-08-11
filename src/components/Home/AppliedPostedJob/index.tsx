@@ -35,6 +35,7 @@ import {
   AppliedPostedIcon,
   // DoubleArrowIcon,
   LoginArrowIcon,
+  Advertisement,
 } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
@@ -186,7 +187,7 @@ const AppliedPostedJob: React.FC = () => {
           </h2>
         </div>
 
-        <div
+        {/* <div
           className="applied-posted-job-not-loging"
           style={{ display: !isLogined ? 'flex' : 'none' }}
         >
@@ -198,6 +199,56 @@ const AppliedPostedJob: React.FC = () => {
             </p>
           </div>
           <div className="applied-posted-job-not-loging_right">
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpenModalLogin(true);
+              }}
+            >
+              <LoginArrowIcon />
+              {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+            </Button>
+          </div>
+        </div> */}
+
+        <div
+          className="advertisement-job-not-loging"
+          style={{ display: !isLogined ? 'flex' : 'none' }}
+        >
+          {/* <Advertisement /> */}
+          <img
+            src="../images/absHijob.png"
+            alt="Ảnh lỗi"
+            className="img-advertisement-job-not-loging"
+          // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
+          />
+
+          <div className="advertisement-job-not-loging-content">
+            <h3>
+              {languageRedux === 1 ?
+                "Dễ dàng tìm kiếm ứng viên tại HiJob" :
+                "Easily find candidates at HiJob"}
+            </h3>
+            <ul>
+              {languageRedux === 1 ?
+                "Chúng tôi cung cấp dịch vụ giúp nhà tuyển dụng dễ dàng tiếp cận" :
+                "We provide a service that makes it easy for employers to access"}
+              <li>
+                {languageRedux === 1 ?
+                  "Đăng bài tuyển dụng miễn phí" :
+                  "Post jobs for free"}
+              </li>
+              <li>
+                {languageRedux === 1 ?
+                  "Công cụ tìm kiếm thông minh" :
+                  "Smart search engine"}
+              </li>
+              <li>
+                {languageRedux === 1 ?
+                  "Giao tiếp dễ dàng với Ứng viên" :
+                  "Easy communication with Candidates"}
+              </li>
+            </ul>
             <Button
               type="primary"
               onClick={() => {

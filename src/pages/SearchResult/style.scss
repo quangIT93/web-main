@@ -8,11 +8,16 @@
   margin-bottom: 50px;
 
   @media screen and (min-width:1025px) and (max-width: 1280px) {
-    // width: 95%;
+    padding-inline: 24px;
+    // padding-inline: 10px;
   }
 
   @media screen and (max-width: 1220px) {
-    // width: 95%;
+    padding-inline: 24px;
+  }
+
+  @media screen and (max-width: 1200px) {
+    padding-inline: 14px;
   }
 
   .MuiPaginationItem-root.Mui-selected {

@@ -19,6 +19,13 @@
     "search_over": "Search more",
     "jobs_in_vietnam": "jobs in Vietnam",
     "posted_on": "Posted on:",
+    "applied_posted_jobs": {
+        "easily_find_candidates_at_HiJob": "Easily find candidates at HiJob",
+        "provide_service_for_employers": "We provide a service that makes it easy for employers to access",
+        "post_jobs_for_free": "Post jobs for free",
+        "smart_search_engine": "Smart search engine",
+        "easy_communication_with_candidates": "Easy communication with Candidates"
+    },
     "company_page": {
         "title_page": "HiJob - Company Information",
         "err_logo_mess": "Please select company logo",
