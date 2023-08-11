@@ -31,6 +31,12 @@
                 .title-comunity_icon {
                     display: flex;
                     gap: 12px;
+                    span {
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                        cursor: pointer;
+                    }
                 }
             }
             
@@ -42,13 +48,19 @@
                 margin: 24px 0;
                 .comunityDetail-content {
                     // display: flex;
-                    h3 {
-                        color: #001424;
-                        font-family: Roboto;
-                        font-size: 20px;
-                        font-style: normal;
-                        font-weight: 700;
-                        line-height: 24px; 
+                    // h3 {
+                    //     color: #001424;
+                    //     font-family: Roboto;
+                    //     font-size: 20px;
+                    //     font-style: normal;
+                    //     font-weight: 700;
+                    //     line-height: 24px; 
+                    // }
+
+                    ul {
+                        li {
+                            margin-left: 16px;
+                        }
                     }
     
                     .comunityDetail-content_info {
@@ -65,7 +77,10 @@
             }
 
             .comunityDetail-wrap_img {
-
+                border-radius: 12px;
+                img {
+                    border-radius: 12px;
+                }
             }
 
             .comunityDetail-wrap_status {
@@ -94,7 +109,9 @@
                     img {
                         width: 50px;
                         height: 50px;
-                        border-radius: 10px;
+                        // border-radius: 10px;
+                        border-radius: 50%;
+
                     }
                 }
 
@@ -124,32 +141,90 @@
             }
 
             .comunityDetail-wrap_comment {
-                border: 1px solid;
+                // border: 1px solid;
+                margin: 12px 0;
                 .comunityDetail-comment_chater {
-                    border: 1px solid red;
+                    // border: 1px solid red;
                     display: flex;
-                    align-items: center;
-                  
-                    textarea {
-                        // height: 100%;        
-                        width: 100%;
-                        // border: none;
-                        // outline: none;  
-                        padding: 4px 8px;          
+                    align-items: flex-start;
+
+                    img {
+                        border-radius: 50%;
+
                     }
+
+                    .comunityDetail-comment_chaterInput {
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        width: 100%;
+                        input {
+                            // height: 100%;       
+                            width: 100%;
+                            outline: none;
+                            border: 1px solid #aaaaaa;
+                            padding: 24px 8px; 
+                            border-radius: 12px;  
+                            margin-left: 12px;
+                            background-color: #cccccc;    
+                        }
+
+                        .comment-chaterInput_send {
+                            position: absolute;
+                            right: 12px;
+                            bottom: 4px;
+                            cursor: pointer;
+
+                        }
+    
+
+                    }
+                  
 
                 }
 
                 .comunityDetail-list_comment {
-                    border: 1px solid blue;
+                    display: flex;
+                    align-items: flex-start;
+                    margin: 12px 0;
+                    // border: 1px solid blue;
                     img {
-                        
+                        border-radius: 50%;
                     }
     
                     .comunityDetail-comment {
+                        margin-left: 12px;
+                        background-color: #f1f0f0;
+                        border-radius: 8px;
+                        display: flex;
+                        padding: 8px 12px;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 12px;
+                        flex: 1 0 0;
+                        align-self: stretch;
                         .comunityDetail-comment_top {
+                            display: flex;
+                            align-items: center;
+
                             h3 {
-    
+                                font-family: Roboto;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 700;
+                                line-height: 24px;
+                            }
+
+                            h3:nth-child(2){
+                                padding: 0 8px;
+                            }
+
+                            p {
+                                font-family: Roboto;
+                                font-size: 12px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 16px;
                             }
                         }
     

@@ -12,6 +12,7 @@ import Footer from '../../components/Footer/Footer';
 import CardsPosted from '#components/History/CardsPosted';
 import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
+// import CardsListBlog from '#components/History/CardsListBlog';
 
 import RollTop from '#components/RollTop';
 
@@ -52,6 +53,11 @@ const dataItem = [
     title: 'Các công việc đã đăng tuyển',
     childs: ['Tất cả', 'Chưa đóng', 'Đã đóng'],
   },
+  // {
+  //   id: 4,
+  //   title: 'Danh sách bài viết',
+  //   childs: ['Đã lưu', 'Đã được tạo'],
+  // },
 ];
 const HistoryPost = () => {
   const queryParams = queryString.parse(window.location.search);
@@ -129,6 +135,12 @@ const HistoryPost = () => {
         : activeChild === '2-2'
         ? 'Đã đóng'
         : ''}
+
+      {activeChild === '3-0'
+        ? 'Đã lưu'
+        : activeChild === '3-1'
+        ? 'Đã được tạo'
+        : ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {
@@ -159,8 +171,16 @@ const HistoryPost = () => {
     return null;
   }, [ItemLeft, activeChild]);
 
+  // const CardListBlog = useMemo(() => {
+  //   if (ItemLeft === 3) {
+  //     return <CardsListBlog activeChild={activeChild} />;
+  //   }
+  //   return null;
+  // }, [ItemLeft, activeChild]);
+
   const handleChildClick = useCallback((childKey: string) => {
     setActiveChild(childKey);
+    // console.log('childKey', childKey);
 
     if (childKey === '2-0') setShowDetailPosted(false);
     if (childKey === '2-1') setShowDetailPosted(false);
@@ -169,6 +189,8 @@ const HistoryPost = () => {
   }, []);
 
   const handleClickSubTitle = useCallback((index: number) => {
+    // console.log('title', index);
+
     setItemLeft(index);
     setActiveChild(`${index}-0`);
     setShowDetailPosted(false);
@@ -248,6 +270,7 @@ const HistoryPost = () => {
             {CardsPost}
             {CardsApply}
             {CardsSave}
+            {/* {CardListBlog} */}
           </Box>
         </Box>
       </div>
