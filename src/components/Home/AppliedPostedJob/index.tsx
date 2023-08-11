@@ -227,6 +227,7 @@ const AppliedPostedJob: React.FC = () => {
             <h3>Dễ dàng tìm kiếm ứng viên tại HiJob</h3>
             <ul>
               Chúng tôi cung cấp dịch vụ giúp nhà tuyển dụng dễ dàng tiếp cận
+              với nhiều nhân tài:
               <li>Đăng bài tuyển dụng miễn phí</li>
               <li>Công cụ tìm kiếm thông minh</li>
               <li>Giao tiếp dễ dàng với Ứng viên</li>
