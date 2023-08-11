@@ -20,7 +20,7 @@ import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
-
+import languageApi from 'api/languageApi';
 interface InfoContact {
   phone: string;
   email: string;
@@ -60,6 +60,25 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   const [linkIn, setLinkIn] = useState(
     profile?.linkedin ? profile?.linkedin : '',
   );
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleClose = () => setOpenModalContact(false);
   // const dispatch = useDispatch();
@@ -141,9 +160,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
           sx={{ marginBottom: '12px' }}
         >
           {
-            languageRedux === 1 ?
-              profileVi.contact_information :
-              profileEn.contact_information
+            language?.contact_information
           }
         </Typography>
         <Box sx={styleChildBox}>
@@ -154,9 +171,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             htmlFor="nameProfile"
           >
             {
-              languageRedux === 1 ?
-                profileVi.phone_number :
-                profileEn.phone_number
+              language?.phone_number
             }{' '}
             <span className="color-asterisk">*</span>
           </Typography>
@@ -169,9 +184,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={
-              languageRedux === 1 ?
-                profileVi.phone_number :
-                profileEn.phone_number
+              language?.phone_number
             }
             inputMode="numeric"
           // error={titleError} // Đánh dấu lỗi

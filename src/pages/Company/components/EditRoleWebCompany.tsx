@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
+import languageApi from 'api/languageApi';
 
 // import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
@@ -30,6 +31,25 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const [dataRoles, setDataRoles] = useState<any>(null);
   const [selectedRole, setSelectedRole] = useState<any>(null);
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   useEffect(() => {
     if (dataRoles && !selectedRole) {
@@ -92,9 +112,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           htmlFor="addressTitle"
         >
           {
-            languageRedux === 1 ?
-              company.role :
-              companyEn.role
+            language?.role_at_business
           }
           {' '}
           <span style={{ color: 'red' }}>*</span>

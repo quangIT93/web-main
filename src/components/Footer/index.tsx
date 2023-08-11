@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
         <div id="div-policy-footer-right">
           <div style={{ flexDirection: 'row', display: 'flex' }}>
             <p style={{ color: '#575757' }}>Tổng đài CSKH: </p>
-            <p style={{ color: '#AAAAAA', marginLeft: '5px' }}>
+            <p style={{ color: '#575757', marginLeft: '5px' }}>
               (028) 35358983
             </p>
             {/* <p style={{ color: '#575757', marginLeft: '2px' }}>

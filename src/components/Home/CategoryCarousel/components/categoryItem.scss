@@ -30,6 +30,16 @@
         flex-direction: column;
         gap: 10px;
         align-items: center;
+
+      
+        &:hover {
+          .category-item-image {
+          }
+          .category-item-title {
+            color: #000000;
+            font-weight: 500;
+          }
+        }
     
         .category-item-image {
           height: 40px !important;
@@ -48,7 +58,7 @@
     
         .category-item-title {
           font-size: 12px;
-          font-weight: 400;
+          font-weight: 500;
           color: #575757;
           
           @include breakpoint(mobile) {

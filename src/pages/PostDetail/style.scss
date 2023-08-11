@@ -978,50 +978,63 @@
 
                   .anotherPost-content {
                     display: flex;
-                    gap: 12px;
-                    align-items: center;
+                    // gap: 12px;
+                    // align-items: center;
                     justify-content: space-between;
                     width: 100%;
 
-                    @media screen and (max-width: 724px) {
-                      flex-direction: column;
-                    }
-
-                    .anotherPost_image {
-                      width: 94px !important;
-                      min-width: 94px !important;
-                      height: 76px !important;
-                      min-height: 76px !important;
-                      border-radius: 10px;
-                      object-fit: cover;
-                    }
-
-                    .anotherPost_info {
-                      width: 220px;
-
-                      @include breakpoint(mobile) {
-                        width: 40px;
-
-                      }
-
-                      @include breakpoint(tablet) {
-                        width: 150px;
-
-                      }
-
-                      @include breakpoint(largeTablet) {
-                        width: 60px;
-
-                      }
-
-                      @include breakpoint(destop) {
-                        width: 110px;
-
-                      }
-
-                       @include breakpoint(an_order) {
-                        width: 200px;
+                    .wrap-anotherPost_info {
+                      display: flex;
+                      gap: 8px;
+                      width: 100%;
+                      .anotherPost_image {
+                          width: 94px !important;
+                          min-width: 94px !important;
+                          height: 94px !important;
+                          min-height: 94px !important;
+                          border-radius: 10px;
+                          object-fit: cover;
                        }
+
+                      @media screen and (max-width: 724px) {
+                        flex-direction: column;
+                      }
+
+                      .anotherPost_info {
+                        width: 240px;
+
+                        @media screen and (min-width: 1800px)and (max-width: 2000px) {
+                          width: 220px;
+                        }
+        
+                        @media screen and (min-width: 1600px) and (max-width: 1799px) {
+                          width: 180px;
+                        }
+
+                        @media screen and (min-width: 1530px) and (max-width: 1599px) {
+                          width: 170px;
+                        }
+
+                        @media screen and (min-width: 1400px) and (max-width: 1529px) {
+                          width: 130px;
+                        }
+
+                        @media screen and (min-width: 1200px) and (max-width: 1399px) {
+                          width: 110px;
+                        }
+
+                        @media screen and (min-width: 1000px) and (max-width: 1199px) {
+                          width: 80px;
+                        }
+
+                        @media screen and (min-width: 769px) and (max-width: 999px) {
+                          // width: 50px;
+                          display: none;
+                        }
+
+
+                      
+                      
 
                       .MuiTypography-root {
                          p {
@@ -1056,8 +1069,8 @@
                       // text-overflow: unset;
                       // overflow: unset !important;
                       // }
+                     }
                     }
-
                     .anotherPost_logo {
                       display: flex;
                       height: 100%;

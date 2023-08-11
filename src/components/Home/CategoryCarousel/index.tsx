@@ -46,6 +46,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import { RootState } from '../../../store/reducer';
 // import { homeEn } from 'validations/lang/en/home';
 // import { home } from 'validations/lang/vi/home';
+import languageApi from 'api/languageApi';
 
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
@@ -106,6 +107,24 @@ const CategoryCarousel: React.FC = () => {
   const [categories, setCategories] = React.useState<AxiosResponse | null>(
     null,
   );
+  const [language, setLanguage] = React.useState<any>();
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // Set the cookie
   function setCookie(name: string, value: string, days: number) {
@@ -496,7 +515,6 @@ const CategoryCarousel: React.FC = () => {
           initialSlide={selectedItemIndex - 1}
         >
           {categories?.data.map((item: CategoryItem, index: number) => {
-            // console.log("id: ", item.id);
             return (
               <SwiperSlide
                 key={index}
@@ -526,7 +544,14 @@ const CategoryCarousel: React.FC = () => {
                       src={item.image}
                       alt={item.name}
                     />
-                    <span className="category-item-title">
+                    <span
+                      className="category-item-title"
+                      style={
+                        item.id === categoryIdCookie
+                          ? { color: 'black' }
+                          : { color: '' }
+                      }
+                    >
                       {isLogin && item.id === 1
                         ? languageRedux === 1
                           ? 'Công việc gợi ý'

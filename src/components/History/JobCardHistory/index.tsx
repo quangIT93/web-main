@@ -214,11 +214,11 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
-                  {props.item.money_type_text} -{' '}
+                  {props.item?.money_type_text} -{' '}
                   {new Intl.NumberFormat('en-US').format(
                     props.item.salary_max,
                   ) +
-                    ` ${props.item.money_type_text}` +
+                    ` ${props.item?.money_type_text}` +
                     `/${props.item.salary_type}`}
                 </Typography>
               </div>

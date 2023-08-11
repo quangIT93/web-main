@@ -180,7 +180,7 @@ const AppliedPostedJob: React.FC = () => {
         >
           <AppliedPostedIcon width={30} height={30} />
           <h2>
-            {languageRedux == 1
+            {languageRedux === 1
               ? 'Công việc đã Ứng tuyển/ Đăng tuyển'
               : 'Applied / Posted Job'}
           </h2>

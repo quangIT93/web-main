@@ -207,7 +207,8 @@ const HotJobpage: React.FC = () => {
   const getHotJob = async () => {
     try {
       const url = localStorage.getItem('hotjobApi');
-      let hotjob = await hotJobApi.getHotJobById(url, pageNumber, 20,
+      let hotjob = await hotJobApi.getHotJobById(url, pageNumber,
+        searchParams.get('hotjob-id') === '1' ? 20 : 19,
         languageRedux === 1 ? "vi" : "en");
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       const hotjobtotal = Number(searchParams.get('hotjob-total'));
@@ -241,7 +242,8 @@ const HotJobpage: React.FC = () => {
       setOpenBackdrop(true);
       setPageNumber(pageNumber + 1);
       const url = localStorage.getItem('hotjobApi');
-      const result = await hotJobApi.getHotJobById(url, pageNumber, 20,
+      const result = await hotJobApi.getHotJobById(url, pageNumber,
+        searchParams.get('hotjob-id') === '1' ? 20 : 19,
         languageRedux === 1 ? "vi" : "en");
       if (result) {
         setHotJob([...hotjob, ...result.data]);

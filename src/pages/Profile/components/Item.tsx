@@ -9,6 +9,7 @@ import './styleItem.scss';
 
 import { PencilIcon, DeleteIcon } from '#components/Icons';
 import moment from 'moment';
+import languageApi from 'api/languageApi';
 
 // import component
 import ModalDeleteEducation from '#components/Profile/ModalDeleteEducation';
@@ -51,6 +52,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
     useState(false);
   const [openModalExperienceUpdate, setOpenModalExperienceUpdate] =
     useState(false);
+  const [language, setLanguage] = useState<any>();
 
   const handleDeleteEducation = (id?: number | null) => {
     setOpenModalDeleteEducation(true);
@@ -67,6 +69,24 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const handleUpdateExperience = (id?: number | null) => {
     setOpenModalExperienceUpdate(true);
   };
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
+
   // console.log('item?.start_date', item?.start_date);
   return (
     <div className="div-apply-item">
@@ -120,9 +140,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
 
           <p style={{ color: '#0D99FF', fontSize: '14px' }}>
             {
-              languageRedux === 1 ?
-                profileVi.edit :
-                profileEn.edit
+              language?.edit
             }
           </p>
         </Space>
@@ -137,7 +155,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           <div className="edit-icon">
             <DeleteIcon width={15} height={15} />
           </div>
-          <p style={{ color: 'gray', fontSize: '14px' }}>
+          <p style={{ color: '#575757', fontSize: '14px' }}>
             {
               languageRedux === 1 ?
                 profileVi.delete :

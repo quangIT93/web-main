@@ -334,9 +334,7 @@ const Notificate = () => {
           onClick={handleClickActiveKeyword}
         >
           {
-            languageRedux === 1 ?
-              searchResultVi.keyword :
-              searchResultEn.keyword
+            language?.keyword2
           }
         </div>
       </div>

@@ -18,6 +18,7 @@ import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
 
 import {
   getProfile,
@@ -66,6 +67,25 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const [treeData, setTransformedData] = React.useState<any>(null);
   const dispatch = useDispatch();
   const handleClose = () => setOpenModalCareerObjective(false);
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const getCategories = async () => {
     try {
@@ -177,9 +197,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
     placeholder:
-      languageRedux === 1 ?
-        profileVi.career_objective :
-        profileEn.career_objective
+      language?.career_objective
     ,
     style: {
       width: '100%',
@@ -227,9 +245,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
           align="center"
         >
           {
-            languageRedux === 1 ?
-              profileVi.career_objective :
-              profileEn.career_objective
+            language?.career_objective
           }
         </Typography>
         <TreeSelect {...tProps} />

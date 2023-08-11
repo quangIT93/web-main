@@ -1,7 +1,7 @@
-import React, { memo } from 'react'
-import { Box } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
+import React, { memo } from 'react';
+import { Box } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 //@ts-ignore
 import { styleLabel } from '../CssEditPost'
 import { post } from 'validations/lang/vi/post'
@@ -21,8 +21,8 @@ const EditDescription: React.FC<IEditDescription> = (props) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       description: e.target.value,
-    }))
-  }
+    }));
+  };
   return (
     <Box sx={{ marginTop: '24px' }}>
       <Typography
@@ -51,7 +51,7 @@ const EditDescription: React.FC<IEditDescription> = (props) => {
         }
       />
     </Box>
-  )
-}
+  );
+};
 
-export default memo(EditDescription)
+export default memo(EditDescription);

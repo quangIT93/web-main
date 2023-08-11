@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
+import languageApi from 'api/languageApi';
 
 const { mobile, tablet } = breakpoints;
 
@@ -81,6 +82,25 @@ const Footer: React.FC = () => {
   // const [position, setPosition] = React.useState('0')
 
   const footerRef = React.useRef<HTMLDivElement | null>(null);
+  const [language, setLanguage] = useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // const mail = useRef('contact.hijob@gmail.com');
   // const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
@@ -107,7 +127,7 @@ const Footer: React.FC = () => {
     }
   };
 
-  useEffect(() => {}, [languageRedux]);
+  useEffect(() => { }, [languageRedux]);
 
   useEffect(() => {
     updateWindowWidth();
@@ -141,14 +161,14 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-                transform: 'translateY(calc(-100% - 36px))',
-              }
+              transform: 'translateY(calc(-100% - 36px))',
+            }
             : !open && !windowWidth
-            ? {
+              ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-            : { transform: 'none' }
+              : { transform: 'none' }
         }
       >
         <div className="container-footer">
@@ -168,7 +188,7 @@ const Footer: React.FC = () => {
             </div>
 
             <h3>
-              {languageRedux === 1 ? 'Kết nối tài năng' : 'Talent connection'}
+              {language?.connect_talent}
             </h3>
             <p>
               {languageRedux === 1
@@ -256,7 +276,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <div className="div-socal-link">
-              <h4 style={{ color: '#0D99FF' }}>LIÊN KẾT</h4>
+              <h4 style={{ color: '#0D99FF' }}>{languageRedux === 1 ? 'Liên kết' : 'Connect'}</h4>
               <div id="div-img-socal">
                 <Link to="https://www.facebook.com/hijobOfficial/">
                   <img
@@ -293,7 +313,7 @@ const Footer: React.FC = () => {
                 ? 'Tổng đài CSKH:'
                 : 'Customer Service Center'}
             </p>
-            <p style={{ color: '#AAAAAA', marginLeft: '5px' }}>
+            <p style={{ color: '#575757', marginLeft: '5px' }}>
               (028) 35358983
             </p>
             {/* <p style={{ color: '#575757', marginLeft: '2px' }}>

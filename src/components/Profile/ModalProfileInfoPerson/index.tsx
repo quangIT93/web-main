@@ -30,7 +30,7 @@ import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
-
+import languageApi from 'api/languageApi';
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -80,6 +80,26 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [introduction, setIntroduction] = useState(profile?.introduction);
 
   const [messageApi, contextHolder] = message.useMessage();
+
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const dispatch = useDispatch();
   // const dataProfile = useSelector((state: RootState) => state.profile.profile);
@@ -227,9 +247,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             sx={{ marginBottom: '12px' }}
           >
             {
-              languageRedux === 1 ?
-                profileVi.personal_information :
-                profileEn.personal_information
+              language?.personal_information
             }
           </Typography>
           <Box sx={styleChildBox}>
@@ -240,9 +258,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               htmlFor="nameProfile"
             >
               {
-                languageRedux === 1 ?
-                  profileVi.full_name :
-                  profileEn.full_name
+                language?.full_name
               }{' '}
               <span className="color-asterisk">*</span>
             </Typography>
@@ -266,9 +282,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               htmlFor="sex"
             >
               {
-                languageRedux === 1 ?
-                  profileVi.sex :
-                  profileEn.sex
+                language?.sex
               }{' '}
               <span className="color-asterisk">*</span>
             </Typography>
@@ -280,9 +294,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               onChange={handleChange}
               variant="outlined"
               placeholder={
-                languageRedux === 1 ?
-                  profileVi.sex :
-                  profileEn.sex
+                language?.sex
               }
               size="small"
               sx={{ width: '100%' }}
@@ -290,16 +302,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             >
               <MenuItem value="Nam">
                 {
-                  languageRedux === 1 ?
-                    profileVi.male :
-                    profileEn.male
+                  language?.male
                 }
               </MenuItem>
               <MenuItem value="Nữ">
                 {
-                  languageRedux === 1 ?
-                    profileVi.female :
-                    profileEn.female
+                  language?.female
                 }
               </MenuItem>
             </TextField>
@@ -313,9 +321,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   htmlFor="startTime"
                 >
                   {
-                    languageRedux === 1 ?
-                      profileVi.date_of_birth :
-                      profileEn.date_of_birth
+                    language?.date_of_birth
                   }{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
@@ -340,9 +346,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               htmlFor="jobTitle"
             >
               {
-                languageRedux === 1 ?
-                  profileVi.location :
-                  profileEn.location
+                language?.location
               }{' '}
               <span className="color-asterisk">*</span>
             </Typography>
@@ -380,9 +384,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               htmlFor="startTime"
             >
               {
-                languageRedux === 1 ?
-                  profileVi.self_describtion :
-                  profileEn.self_describtion
+                language?.self_describtion
               }{' '}
               <span className="color-asterisk">*</span>
             </Typography>
@@ -396,9 +398,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               id="profile-introduction"
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={
-                languageRedux === 1 ?
-                  profileVi.place_self_des :
-                  profileEn.place_self_des
+                language?.introduce_yourself_to_the_recruiter
               }
               error={!introduction} // Đánh dấu lỗi
             // onKeyDown={(event) => {

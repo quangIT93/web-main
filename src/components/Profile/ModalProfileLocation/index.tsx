@@ -28,6 +28,7 @@ import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -68,6 +69,25 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
   // const [open, setOpen] = React.useState<any>([]);
   const [treeData, setTransformedData] = React.useState<any>(null);
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const [value, setValue] = React.useState(
     locations?.map((v: any, i) => v.district_id),
@@ -254,9 +274,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
-    placeholder: languageRedux === 1 ?
-      profileVi.place_working_location :
-      profileEn.place_working_location,
+    placeholder: language?.working_location,
     style: {
       width: '100%',
       zIndex: '1302',
@@ -296,9 +314,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
           align="center"
         >
           {
-            languageRedux === 1 ?
-              profileVi.working_location :
-              profileEn.working_location
+            language?.working_location
           }
         </Typography>
 

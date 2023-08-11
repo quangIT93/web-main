@@ -60,10 +60,10 @@ const Home: React.FC = () => {
         <CategoryCarousel />
         <Breadcrumbs />
         <AppliedPostedJob />
-        <NewJobs />
         <HotJob />
-        <ThemesJob />
+        <NewJobs />
         <SuggestJob />
+        <ThemesJob />
       </div>
       <RollTop />
       <Footer />

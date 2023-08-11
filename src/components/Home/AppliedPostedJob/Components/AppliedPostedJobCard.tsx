@@ -21,12 +21,14 @@ import { RootState } from '../../../../store/reducer';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
 // import bookMarkApi from 'api/bookMarkApi';
+import languageApi from 'api/languageApi';
 
 const AppliedPostedJobCard: React.FC<any> = (props) => {
   // const dispatch = useDispatch();
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
   // const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const [language, setLanguage] = React.useState<any>();
 
   const handleClickItem = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -45,6 +47,24 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
   const handleImageError = () => {
     setError(true);
   };
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   return (
     <>
@@ -116,7 +136,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     overflow: 'hidden',
                     fontWeight: '700',
                     lineheight: '20px',
-                    color: '#575757',
+                    color: '#000000',
                   }}
                 >
                   {/* {props?.item?.title?.length > 50
@@ -229,7 +249,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   )}
                 </div>
               </div>
-              <p style={{ fontSize: 12, fontWeight: 500, color: '#575757' }}>
+              <p style={{ fontSize: 12, fontWeight: 500, color: '#0d99ff' }}>
                 {props.item.job_type.job_type_name}
               </p>
             </Space>
@@ -276,10 +296,10 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 props.item.application_status === 1
                   ? 'rgba(220, 220, 220, 1)'
                   : props.item.application_status === 2
-                  ? 'rgba(92, 178, 101, 1)'
-                  : props.item.application_status === 3
-                  ? 'rgba(189, 49, 49, 1)'
-                  : 'rgba(13, 153, 255, 1)',
+                    ? 'rgba(92, 178, 101, 1)'
+                    : props.item.application_status === 3
+                      ? 'rgba(189, 49, 49, 1)'
+                      : 'rgba(13, 153, 255, 1)',
               color:
                 props.item.application_status === 1
                   ? '#575757'
@@ -289,26 +309,18 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             className="button-approved"
           >
             {props.item.application_status === 1
-              ? languageRedux == 1
-                ? 'Đã ứng tuyển'
-                : 'Applied'
+              ? language?.applied1
               : props.item.application_status === 2
-              ? languageRedux == 1
-                ? 'Đã được duyệt'
-                : 'Approved'
-              : props.item.application_status === 3
-              ? languageRedux == 1
-                ? 'Đã từ chối'
-                : 'Denied'
-              : languageRedux == 1
-              ? 'Đã tuyển'
-              : 'Recruited'}
+                ? language?.approved
+                : props.item.application_status === 3
+                  ? language?.rejected
+                  : language?.hired}
           </div>
           <div
             style={{ display: props.item.type === 'post' ? 'flex' : 'none' }}
             className="button-check"
           >
-            {languageRedux == 1 ? 'Kiểm tra ngay' : 'Check now'}
+            {language?.check_now}
             <div className="icon">
               <BackIcon fill="white" />
             </div>

@@ -201,7 +201,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                     {new Intl.NumberFormat('en-US').format(
                       props.item?.salaryMin,
                     )}{' '}
-                    -{' '}
+                    {/* {props.item?.money_type_text} */}-{' '}
                     {new Intl.NumberFormat('en-US').format(
                       props.item?.salaryMax,
                     ) + `/${props.item?.postSalaryType?.fullName}`}

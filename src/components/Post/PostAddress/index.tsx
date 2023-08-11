@@ -155,6 +155,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setAddress(e.target.value);
   };
 
+  console.log("fillProvince", fillProvince);
+
+
   return (
     <div className="post-address">
       <div className="post-address_top">

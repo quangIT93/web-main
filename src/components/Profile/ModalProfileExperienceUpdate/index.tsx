@@ -21,6 +21,7 @@ import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -90,6 +91,26 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
     endDate: experienceValue.end_date,
     extraInformation: experienceValue.extra_information,
   });
+
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleClose = () => setOpenModalExperienceUpdate(false);
 
@@ -284,9 +305,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             htmlFor="nameProfile"
           >
             {
-              languageRedux === 1 ?
-                profileVi.professional_titles :
-                profileEn.professional_titles
+              language?.professional_titles
             }{' '}
             <span className="color-asterisk">*</span>
           </Typography>
@@ -299,9 +318,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={
-              languageRedux === 1 ?
-                profileVi.professional_titles :
-                profileEn.professional_titles
+              language?.professional_titles
             }
           // error={titleError} // Đánh dấu lỗi
           />
@@ -351,9 +368,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   htmlFor="startTime"
                 >
                   {
-                    languageRedux === 1 ?
-                      profileVi.start_time :
-                      profileEn.start_time
+                    language?.start_time
                   }{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
@@ -373,9 +388,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   htmlFor="startTime"
                 >
                   {
-                    languageRedux === 1 ?
-                      profileVi.finish_time :
-                      profileEn.finish_time
+                    language?.finish_time
                   }{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
@@ -399,9 +412,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             htmlFor="startTime"
           >
             {
-              languageRedux === 1 ?
-                profileVi.additional_information :
-                profileEn.additional_information
+              language?.additional_information
             }{' '}
             <span className="color-asterisk">*</span>
           </Typography>

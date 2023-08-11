@@ -53,6 +53,7 @@ import JobCard from '../JobCard';
 import { Skeleton } from 'antd';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
+import languageApi from 'api/languageApi';
 
 interface PostTheme {
   id: number;
@@ -99,6 +100,25 @@ const ThemesJob: React.FC = () => {
     actionCreators,
     dispatch,
   );
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
@@ -193,23 +213,23 @@ const ThemesJob: React.FC = () => {
   // }, [localStorage.getItem("accessToken")])
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }}>
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <TopicJobIcon width={25} height={25} />
         <h2>
-          {languageRedux == 1 ? home.jobs_by_theme : homeEn.jobs_by_theme}
+          {language?.jobs_by_theme}
         </h2>
       </div>
 
       {!localStorage.getItem('accessToken') ? (
         <div className="title-location-job">
           <h3>
-            {languageRedux == 1
+            {languageRedux === 1
               ? 'Vị trí công việc lý tưởng'
               : 'Ideal job location'}
           </h3>
           <p>
-            {languageRedux == 1
+            {languageRedux === 1
               ? 'Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.'
               : 'Search for jobs in famous locations in your city.'}
           </p>
@@ -256,7 +276,7 @@ const ThemesJob: React.FC = () => {
                     handleChange(e, page);
                   }}
                 >
-                  <p>{languageRedux == 1 ? home.more : homeEn.more}</p>
+                  <p>{language?.more}</p>
                   <MoreICon width={20} height={20} />
                 </Space>
               </Stack>
@@ -267,7 +287,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

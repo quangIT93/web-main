@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
-
+import languageApi from 'api/languageApi';
 // import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
   fontWeight: 700,
@@ -32,6 +32,26 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedWard, setSelectedWard] = useState<any>(null);
+
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // console.log("dataDistricts", dataDistricts);
   // console.log("dataWards", dataWards);
@@ -321,9 +341,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                company.address :
-                companyEn.address
+              language?.address1
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

@@ -53,7 +53,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../store/index';
 
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
-// import languageApi from 'api/languageApi';
+import languageApi from 'api/languageApi';
 import { profileEn } from 'validations/lang/en/profile';
 import { profileVi } from 'validations/lang/vi/profile';
 
@@ -111,7 +111,7 @@ const Profile: React.FC = () => {
   const [open, setOpen] = useState(false);
   // const [checkRemove, setCheckRemove] = useState(2);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  // const [language, setLanguage] = useState<any>();
+  const [language, setLanguage] = useState<any>();
 
   // const [user, setUser] = useState<any>(null);
 
@@ -126,23 +126,23 @@ const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const getlanguageApi = async () => {
-  //   try {
-  //     const result = await languageApi.getLanguage(
-  //       languageRedux === 1 ? "vi" : "en"
-  //     );
-  //     if (result) {
-  //       setLanguage(result.data);
-  //       // setUser(result);
-  //     }
-  //   } catch (error) {
-  //     // setLoading(false);
-  //   }
-  // };
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
 
-  // React.useEffect(() => {
-  //   getlanguageApi()
-  // }, [languageRedux])
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // console.log("language", language);
 
@@ -419,9 +419,7 @@ const Profile: React.FC = () => {
                 </Badge>
                 <div className="user-company" style={{ marginLeft: '10px' }}>
                   <h2>{profile?.name ? profile?.name :
-                    languageRedux === 1 ?
-                      profileVi.unupdated :
-                      profileEn.unupdated}
+                    language?.unupdated}
                   </h2>
                   <div className="wrap-company">
                     <div className="wrap-company_info">
@@ -502,9 +500,7 @@ const Profile: React.FC = () => {
               }}
             >
               {profile?.introduction ? profile?.introduction :
-                languageRedux === 1 ?
-                  profileVi.unupdated :
-                  profileEn.unupdated}
+                language?.unupdated}
             </div>
           </div>
         </Skeleton>
@@ -539,9 +535,7 @@ const Profile: React.FC = () => {
                   }}
                 >
                   {
-                    languageRedux === 1 ?
-                      profileVi.edit :
-                      profileEn.edit
+                    language?.edit
                   }
                 </p>
               </Space>
@@ -550,22 +544,16 @@ const Profile: React.FC = () => {
               <div className="div-detail-row left">
                 <p>
                   {
-                    languageRedux === 1 ?
-                      profileVi.date_of_birth :
-                      profileEn.date_of_birth
+                    language?.date_of_birth
                   }
                 </p>
                 <p>
                   {
-                    languageRedux === 1 ?
-                      profileVi.sex :
-                      profileEn.sex
+                    language?.sex
                   }</p>
                 <p>
                   {
-                    languageRedux === 1 ?
-                      profileVi.location :
-                      profileEn.location
+                    language?.location
                   }
                 </p>
               </div>
@@ -581,25 +569,17 @@ const Profile: React.FC = () => {
                 <p>
                   {profile ? (profile?.gender === 1 ?
 
-                    languageRedux === 1 ?
-                      profileVi.male :
-                      profileEn.male
+                    language?.male
                     :
-                    languageRedux === 1 ?
-                      profileVi.female :
-                      profileEn.female
+                    language?.female
                   ) :
-                    languageRedux === 1 ?
-                      profileVi.male :
-                      profileEn.male
+                    language?.male
                   }
                 </p>
                 <p>
                   {profile?.address?.name
                     ? profile?.address?.name
-                    : languageRedux === 1 ?
-                      profileVi.unupdated :
-                      profileEn.unupdated}
+                    : language?.unupdated}
                 </p>
               </div>
             </div>
@@ -617,9 +597,7 @@ const Profile: React.FC = () => {
             >
               <h3>
                 {
-                  languageRedux === 1 ?
-                    profileVi.contact_information :
-                    profileEn.contact_information
+                  language?.contact_information
                 }
               </h3>
               <Space
@@ -632,9 +610,7 @@ const Profile: React.FC = () => {
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
                   {
-                    languageRedux === 1 ?
-                      profileVi.edit :
-                      profileEn.edit
+                    language?.edit
                   }
                 </p>
               </Space>
@@ -643,9 +619,7 @@ const Profile: React.FC = () => {
               <div className="div-detail-row left">
                 <p>
                   {
-                    languageRedux === 1 ?
-                      profileVi.phone_number :
-                      profileEn.phone_number
+                    language?.phone_number
                   }
                 </p>
                 <p>Email</p>
@@ -656,23 +630,15 @@ const Profile: React.FC = () => {
               </div>
               <div className="div-detail-row right">
                 <p>{profile?.phone ? profile?.phone :
-                  languageRedux === 1 ?
-                    profileVi.unupdated :
-                    profileEn.unupdated}</p>
+                  language?.unupdated}</p>
                 <p>{profile?.email ? profile?.email :
-                  languageRedux === 1 ?
-                    profileVi.unupdated :
-                    profileEn.unupdated}</p>
+                  language?.unupdated}</p>
 
                 <p>{profile?.facebook ? profile?.facebook :
-                  languageRedux === 1 ?
-                    profileVi.unupdated :
-                    profileEn.unupdated}</p>
+                  language?.unupdated}</p>
 
                 <p>{profile?.linkedin ? profile?.linkedin :
-                  languageRedux === 1 ?
-                    profileVi.unupdated :
-                    profileEn.unupdated}</p>
+                  language?.unupdated}</p>
               </div>
             </div>
           </div>
@@ -709,9 +675,7 @@ const Profile: React.FC = () => {
                     languageRedux === 1 ?
                       profileVi.update_cv :
                       profileEn.update_cv :
-                    languageRedux === 1 ?
-                      profileVi.upload_cv :
-                      profileEn.upload_cv
+                    language?.upload_cv
                   }{' '}
                 </Button>
               </Upload>
@@ -811,9 +775,7 @@ const Profile: React.FC = () => {
             >
               <h3>
                 {
-                  languageRedux === 1 ?
-                    profileVi.career_objective :
-                    profileEn.career_objective
+                  language?.career_objective
                 }
               </h3>
               <Space
@@ -826,9 +788,7 @@ const Profile: React.FC = () => {
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
                   {
-                    languageRedux === 1 ?
-                      profileVi.edit :
-                      profileEn.edit
+                    language?.edit
                   }
                 </p>
               </Space>
@@ -842,9 +802,7 @@ const Profile: React.FC = () => {
                     </Button>
                   ),
                 )
-                : languageRedux === 1 ?
-                  profileVi.unupdated :
-                  profileEn.unupdated}
+                : language?.unupdated}
             </Space>
           </div>
         </Skeleton>
@@ -859,9 +817,7 @@ const Profile: React.FC = () => {
             >
               <h3>
                 {
-                  languageRedux === 1 ?
-                    profileVi.working_location :
-                    profileEn.working_location
+                  language?.working_location
                 }
               </h3>
               <Space
@@ -874,9 +830,7 @@ const Profile: React.FC = () => {
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
                   {
-                    languageRedux === 1 ?
-                      profileVi.edit :
-                      profileEn.edit
+                    language?.edit
                   }
                 </p>
               </Space>
@@ -889,9 +843,7 @@ const Profile: React.FC = () => {
                   </Button>
                 ))
                 :
-                languageRedux === 1 ?
-                  profileVi.unupdated :
-                  profileEn.unupdated
+                language?.unupdated
               }
             </Space>
           </div>
@@ -907,9 +859,7 @@ const Profile: React.FC = () => {
             >
               <h3>
                 {
-                  languageRedux === 1 ?
-                    profileVi.education :
-                    profileEn.education
+                  language?.education
                 }
               </h3>
             </div>
@@ -920,9 +870,7 @@ const Profile: React.FC = () => {
             ) : (
               <div style={{ marginTop: '16px' }}>
                 {
-                  languageRedux === 1 ?
-                    profileVi.unupdated :
-                    profileEn.unupdated
+                  language?.unupdated
                 }
               </div>
             )}
@@ -942,9 +890,7 @@ const Profile: React.FC = () => {
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
                   {
-                    languageRedux === 1 ?
-                      profileVi.add :
-                      profileEn.add
+                    language?.add
                   }
                 </p>
               </Space>
@@ -962,9 +908,7 @@ const Profile: React.FC = () => {
             >
               <h3>
                 {
-                  languageRedux === 1 ?
-                    profileVi.working_experience :
-                    profileEn.working_experience
+                  language?.working_experience
                 }
               </h3>
             </div>
@@ -975,9 +919,7 @@ const Profile: React.FC = () => {
             ) : (
               <div style={{ marginTop: '16px' }}>
                 {
-                  languageRedux === 1 ?
-                    profileVi.unupdated :
-                    profileEn.unupdated
+                  language?.unupdated
                 }
               </div>
             )}
@@ -997,9 +939,7 @@ const Profile: React.FC = () => {
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
                   {
-                    languageRedux === 1 ?
-                      profileVi.add :
-                      profileEn.add
+                    language?.add
                   }
                 </p>
               </Space>

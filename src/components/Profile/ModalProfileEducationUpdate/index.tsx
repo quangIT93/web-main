@@ -18,7 +18,7 @@ import { profileEn } from 'validations/lang/en/profile';
 
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
-
+import languageApi from 'api/languageApi';
 import { message } from 'antd';
 
 const style = {
@@ -78,6 +78,25 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   const dispatch = useDispatch();
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const [education, setEducation] = useState<IInfoEducation>({
     educationId: educationId,
@@ -290,9 +309,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             htmlFor="nameProfile"
           >
             {
-              languageRedux === 1 ?
-                profileVi.school_organization :
-                profileEn.school_organization
+              language?.school_organization
             }{' '}
             <span className="color-asterisk">*</span>
           </Typography>
@@ -321,9 +338,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             htmlFor="nameProfile"
           >
             {
-              languageRedux === 1 ?
-                profileVi.major :
-                profileEn.major
+              language?.major
             }{' '}
             <span className="color-asterisk">*</span>
           </Typography>
@@ -336,9 +351,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={
-              languageRedux === 1 ?
-                profileVi.major :
-                profileEn.major
+              language?.major
             }
           // error={titleError} // Đánh dấu lỗi
           />
@@ -357,9 +370,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   htmlFor="startTime"
                 >
                   {
-                    languageRedux === 1 ?
-                      profileVi.start_time :
-                      profileEn.start_time
+                    language?.start_time
                   }{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
@@ -383,9 +394,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   htmlFor="startTime"
                 >
                   {
-                    languageRedux === 1 ?
-                      profileVi.finish_time :
-                      profileEn.finish_time
+                    language?.finish_time
                   }{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
@@ -410,9 +419,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             htmlFor="startTime"
           >
             {
-              languageRedux === 1 ?
-                profileVi.additional_information :
-                profileEn.additional_information
+              language?.additional_information
             }{' '}
             <span className="color-asterisk">*</span>
           </Typography>

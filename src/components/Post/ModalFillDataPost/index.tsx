@@ -152,7 +152,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const [selectedValue, setSelectedValue] = React.useState<number>(0);
 
   const handleRadioChange = async (e: any, itemPost: any) => {
-    // console.log('value', typeof event.target.value);
+    console.log('value', itemPost);
     setSelectedValue(parseInt(e?.target?.value));
     setTitleJob(itemPost.title);
     setCompanyName(itemPost.company_name);
@@ -161,7 +161,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
 
     setFillProvince({
       id: itemPost.province_id,
-      name: itemPost.province,
+      province_fullName: itemPost.province,
     });
     setFillDistrict({
       id: itemPost.district_id,
