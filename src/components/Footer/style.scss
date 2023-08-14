@@ -12,8 +12,8 @@
   justify-content: space-between;
   // padding-top: 20px;
   // padding-bottom: 20px;
-  border-bottom: 1px solid #cccccc;
-  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #dcdcdc;
+  border-top: 1px solid #dcdcdc;
   padding: 20px 180px 0;
 
   @media screen and (max-width: 1280px) {
@@ -22,7 +22,7 @@
 
   @include breakpoint(mobile) {
     flex-wrap: wrap-reverse;
-    border-bottom: 0px solid #cccccc;
+    border-bottom: 0px solid #dcdcdc;
     padding-bottom: 0px;
     border-top: 0px;
     padding-top: 0px;
@@ -37,9 +37,6 @@
 
 .footer-left {
   flex-direction: column;
-  height: 100px;
-  width: 100px;
-
 
   & h3 {
     color: #0d99ff;
@@ -81,8 +78,6 @@
     padding-top: 10px;
     width: 100%;
     border-top: 1px solid #dcdcdc;
-    height: 80px;
-    width: 80px;
   }
 
   @include breakpoint(tablet) {
@@ -93,11 +88,22 @@
     padding-top: 10px;
     width: 100%;
     border-top: 1px solid #dcdcdc;
+  }
+}
+
+.footer-left>img {
+  height: 100px;
+
+  @include breakpoint(mobile) {
+    height: 80px;
+    width: 80px;
+  }
+
+  @include breakpoint(tablet) {
     height: 100px;
     width: 100px;
   }
 }
-
 
 .footer-center {
   display: flex;
@@ -156,80 +162,51 @@
 .right-top .div-img-footer {
   display: flex;
   flex-direction: row;
-  img {
-    height: auto;
-    max-width: 100%;
-    width: 124px;
-    height: 124px;
-
-    @include breakpoint(mobile) {
-      height: 0px;
-      width: 0px;
-    }
-  
-    @include breakpoint(tablet) {
-      height: 0px;
-      width: 0px;
-  
-    }
-  }
-  
 }
 
+.div-img-footer>img {
+  height: auto;
+  max-width: 100%;
+
+  @include breakpoint(mobile) {
+    height: 0px;
+  }
+
+  @include breakpoint(tablet) {
+    height: 0px;
+  }
+}
 
 .div-link-app {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  a {
-    img {
-      height: 35px;
-      width: auto;
-      width: 114px;
-    }
-  }
 
   // margin-left: 20px;
   @include breakpoint(mobile) {
     flex-direction: column;
     width: 80%;
-
-    a {
-      img {
-        height: 35px;
-        width: 120px;
-      }
-    }
   }
 
   @include breakpoint(tablet) {
     flex-direction: column;
-    a {
-      img {
-        height: 35px;
-        width: 120px;
-      }
-    }
   }
 }
 
-// .div-link-app>a>img {
-//   height: 35px;
-//   width: auto;
-//   width: 114px;
+.div-link-app>a>img {
+  height: 35px;
+  width: auto;
 
-//   @include breakpoint(mobile) {
-//     //height: 35px;
-//     //width: 70px;
-//     height: 35px;
-//     width: 120px;
-//   }
+  @include breakpoint(mobile) {
+    //height: 35px;
+    //width: 70px;
+  }
 
-//   @include breakpoint(tablet) {
-//     height: 35px;
-//     width: 120px;
-//   }
-// }
+  @include breakpoint(tablet) {
+    height: 40px;
+    // width: 90px;
+  }
+}
 
 #div-img-socal {
   display: flex;
@@ -282,6 +259,7 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 10px 180px;
+  align-items: center;
 
   @media screen and (min-width: 1220px) and (max-width: 1280px) {
     padding: 10px 24px;
@@ -319,39 +297,39 @@
   }
 }
 
-#div-policy-footer-right {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 40%;
-  align-items: center;
+// #div-policy-footer-right {
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   align-items: center;
+//   // width: 40%;
 
-  & p {
-    font-size: 12px;
+//   & p {
+//     font-size: 12px;
 
-    @include breakpoint(mobile) {
-      font-size: 13px;
-      margin-top: 5px;
-    }
+//     @include breakpoint(mobile) {
+//       font-size: 13px;
+//       margin-top: 5px;
+//     }
 
-    @include breakpoint(tablet) {
-      font-size: 14px;
-      margin-top: 5px;
-    }
-  }
+//     @include breakpoint(tablet) {
+//       font-size: 14px;
+//       margin-top: 5px;
+//     }
+//   }
 
-  @include breakpoint(mobile) {
-    flex-wrap: wrap-reverse;
-    width: 100%;
-    justify-content: center;
-  }
+//   @include breakpoint(mobile) {
+//     flex-wrap: wrap-reverse;
+//     width: 100%;
+//     justify-content: center;
+//   }
 
-  @include breakpoint(tablet) {
-    flex-wrap: wrap-reverse;
-    width: 100%;
-    justify-content: center;
-  }
-}
+//   @include breakpoint(tablet) {
+//     flex-wrap: wrap-reverse;
+//     width: 100%;
+//     justify-content: center;
+//   }
+// }
 
 .footer-right {
   @include breakpoint(mobile) {
