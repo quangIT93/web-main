@@ -159,6 +159,19 @@
           h2 {
             font-size: 24px;
             font-weight: 700;
+            @include breakpoint(mobile){
+              width: 200px;
+              white-space:  nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            @include breakpoint(tablet){
+              width: 400px;
+              white-space:  nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
 
           }
 
@@ -599,12 +612,12 @@
 
           @include breakpoint(mobile) {
             width: 100%;
-            height: auto;
+            height: 300px;
           }
 
           @include breakpoint(tablet) {
             width: 100%;
-            height: auto;
+            height: 400px;
           }
 
           @include breakpoint(largeTablet) {
@@ -897,15 +910,15 @@
           gap: 50px;
 
           .div-job-img {
-            .div-job-img-swipper {
-              .swiper-wrapper {
-                .div-job-img-swipper_item {
-                  img {
+            // .div-job-img-swipper {
+            //   .swiper-wrapper {
+            //     .div-job-img-swipper_item {
+            //       img {
 
-                  }
-                }
-              }
-            }
+            //       }
+            //     }
+            //   }
+            // }
 
             .div-job-img-swipper_Thumbs {
               min-width: 100%;
@@ -1174,6 +1187,10 @@
                             object-fit: contain;
                             margin-bottom: 12px;
                             // display: none;
+                          }
+
+                          @include breakpoint(mobile){
+                            height: 115px !important;
                           }
                        }
 
