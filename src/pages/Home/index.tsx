@@ -21,6 +21,8 @@ import HotJob from '#components/Home/HotJob';
 
 import RollTop from '#components/RollTop';
 
+import Community from '#components/Home/Community';
+
 // import ModalLogin from '#components/Home/ModalLogin'
 // import { useHomeState } from './HomeState'
 import './style.scss';
@@ -64,6 +66,7 @@ const Home: React.FC = () => {
         <NewJobs />
         <SuggestJob />
         <ThemesJob />
+        <Community />
       </div>
       <RollTop />
       <Footer />
