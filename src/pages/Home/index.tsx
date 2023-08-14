@@ -24,7 +24,6 @@ import RollTop from '#components/RollTop';
 // import ModalLogin from '#components/Home/ModalLogin'
 // import { useHomeState } from './HomeState'
 import './style.scss';
-import Footer from '../../components/Footer/Footer';
 
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
@@ -33,6 +32,10 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // import { HomeContext } from 'context/HomeContextProvider'
 
 // import { IvalueJobChild } from 'context/HomeValueContextProvider'
+
+// component
+import Community from '#components/Home/Community';
+import Footer from '../../components/Footer/Footer';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -64,6 +67,7 @@ const Home: React.FC = () => {
         <NewJobs />
         <SuggestJob />
         <ThemesJob />
+        <Community />
       </div>
       <RollTop />
       <Footer />
