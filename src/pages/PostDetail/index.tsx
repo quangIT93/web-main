@@ -166,7 +166,7 @@ const style = {
 const ACCESS_TOKEN = localStorage.getItem('accessToken');
 
 // page view details post
-const Detail: React.FC = () => {
+const Detail = () => {
   // const { Search } = Input
   // test redux
   // const userProfile = useSelector((state: RootState) => state.profileUser);

@@ -12,7 +12,7 @@ import Footer from '../../components/Footer/Footer';
 import CardsPosted from '#components/History/CardsPosted';
 import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
-// import CardsListBlog from '#components/History/CardsListBlog';
+import CardsListBlog from '#components/History/CardsListBlog';
 
 import RollTop from '#components/RollTop';
 
@@ -133,6 +133,11 @@ const HistoryPost = () => {
 
         language?.closed],
     },
+    {
+      id: 4,
+      title: 'Danh sách bài viết',
+      childs: ['Đã lưu', 'Đã được tạo'],
+    },
   ];
 
   React.useEffect(() => {
@@ -203,6 +208,11 @@ const HistoryPost = () => {
           : activeChild === '2-2'
             ? language?.closed
             : ''}
+      {activeChild === '3-0'
+        ? 'Đã lưu'
+        : activeChild === '3-1'
+          ? 'Đã được tạo'
+          : ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {
@@ -233,12 +243,12 @@ const HistoryPost = () => {
     return null;
   }, [ItemLeft, activeChild]);
 
-  // const CardListBlog = useMemo(() => {
-  //   if (ItemLeft === 3) {
-  //     return <CardsListBlog activeChild={activeChild} />;
-  //   }
-  //   return null;
-  // }, [ItemLeft, activeChild]);
+  const CardListBlog = useMemo(() => {
+    if (ItemLeft === 3) {
+      return <CardsListBlog activeChild={activeChild} />;
+    }
+    return null;
+  }, [ItemLeft, activeChild]);
 
   const handleChildClick = useCallback((childKey: string) => {
     setActiveChild(childKey);
@@ -331,7 +341,7 @@ const HistoryPost = () => {
             {CardsPost}
             {CardsApply}
             {CardsSave}
-            {/* {CardListBlog} */}
+            {CardListBlog}
           </Box>
         </Box>
       </div>

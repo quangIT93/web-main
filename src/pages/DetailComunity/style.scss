@@ -1,5 +1,6 @@
 .comunity-container {
     margin-top: 70px;
+
     .comunity-content {
         padding: 50px 180px;
         margin: 0 auto;
@@ -10,15 +11,20 @@
         align-items: center;
         justify-content: center;
         // .comunityNew {
-            
+
         // }
+        @media screen and (max-width: 768px) {
+            padding: 50px 24px;
+        }
+
         .comunity-detail_post {
             width: 1000px;
-    
+
             .title-comunity {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+
                 h3 {
                     color: #000;
                     font-family: Roboto;
@@ -27,10 +33,11 @@
                     font-weight: 700;
                     line-height: 30px;
                 }
-    
+
                 .title-comunity_icon {
                     display: flex;
                     gap: 12px;
+
                     span {
                         display: flex;
                         align-items: center;
@@ -39,13 +46,14 @@
                     }
                 }
             }
-            
-          
-            .comunityDetail-wrap_content { 
+
+
+            .comunityDetail-wrap_content {
                 // border: 1px solid #ccc;
                 padding: 12px 24px;
                 border-radius: 12px;
                 margin: 24px 0;
+
                 .comunityDetail-content {
                     // display: flex;
                     // h3 {
@@ -62,22 +70,22 @@
                             margin-left: 16px;
                         }
                     }
-    
+
                     .comunityDetail-content_info {
                         padding: 12px 0;
                         border-bottom: 1px solid #ccc;
-    
-                
+
+
                     }
-    
+
                 }
-   
-                .comunityDetail-wrap_actor {
-                }
+
+                .comunityDetail-wrap_actor {}
             }
 
             .comunityDetail-wrap_img {
                 border-radius: 12px;
+
                 img {
                     border-radius: 12px;
                 }
@@ -88,11 +96,18 @@
                 padding: 12px 0;
                 border-bottom: 1px solid #ccc;
                 gap: 30px;
+
                 .comunitypostNew-status_item {
                     display: flex;
                     align-items: center;
+
                     p {
                         margin-left: 8px;
+                    }
+
+                    svg {
+                        color: #ffffff;
+                        stroke: #575757;
                     }
                 }
             }
@@ -103,9 +118,11 @@
                 // align-items: center;
                 justify-content: space-between;
                 border-bottom: 1px solid #ccc;
+
                 .comunityDetail-wrap {
                     display: flex;
                     align-items: center;
+
                     img {
                         width: 50px;
                         height: 50px;
@@ -134,7 +151,7 @@
                             font-size: 16px;
                             font-style: normal;
                             font-weight: 700;
-                            line-height: 24px; 
+                            line-height: 24px;
                         }
                     }
                 }
@@ -143,6 +160,7 @@
             .comunityDetail-wrap_comment {
                 // border: 1px solid;
                 margin: 12px 0;
+
                 .comunityDetail-comment_chater {
                     // border: 1px solid red;
                     display: flex;
@@ -158,15 +176,16 @@
                         align-items: center;
                         position: relative;
                         width: 100%;
+
                         input {
                             // height: 100%;       
                             width: 100%;
                             outline: none;
                             border: 1px solid #aaaaaa;
-                            padding: 24px 8px; 
-                            border-radius: 12px;  
+                            padding: 24px 8px;
+                            border-radius: 12px;
                             margin-left: 12px;
-                            background-color: #cccccc;    
+                            background-color: #cccccc;
                         }
 
                         .comment-chaterInput_send {
@@ -176,10 +195,10 @@
                             cursor: pointer;
 
                         }
-    
+
 
                     }
-                  
+
 
                 }
 
@@ -187,11 +206,12 @@
                     display: flex;
                     align-items: flex-start;
                     margin: 12px 0;
+
                     // border: 1px solid blue;
                     img {
                         border-radius: 50%;
                     }
-    
+
                     .comunityDetail-comment {
                         margin-left: 12px;
                         background-color: #f1f0f0;
@@ -203,6 +223,7 @@
                         gap: 12px;
                         flex: 1 0 0;
                         align-self: stretch;
+
                         .comunityDetail-comment_top {
                             display: flex;
                             align-items: center;
@@ -215,7 +236,7 @@
                                 line-height: 24px;
                             }
 
-                            h3:nth-child(2){
+                            h3:nth-child(2) {
                                 padding: 0 8px;
                             }
 
@@ -227,10 +248,8 @@
                                 line-height: 16px;
                             }
                         }
-    
-                        .comunityDetail-comment_bottom {
-    
-                        }
+
+                        .comunityDetail-comment_bottom {}
                     }
                 }
             }

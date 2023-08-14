@@ -13,6 +13,11 @@
         // .comunityNew {
 
         // }
+
+        @media screen and (max-width: 768px) {
+            padding: 50px 24px;
+        }
+
         .comunityPostNew {
             width: 1000px;
 
@@ -199,6 +204,7 @@
                     padding: 12px 0;
                     border-bottom: 1px solid #ccc;
                     gap: 30px;
+                    flex-wrap: wrap;
 
                     .status-item {
                         display: flex;
@@ -216,8 +222,8 @@
                         &:nth-child(2) {
 
                             svg {
-                                color: #0d99ff;
-                                stroke: white;
+                                // color: #0d99ff;
+                                // stroke: white;
                             }
                         }
 
@@ -229,6 +235,7 @@
                     padding: 12px 0;
                     // align-items: center;
                     justify-content: space-between;
+                    flex-wrap: wrap;
 
                     .comunitypostNew-wrap {
                         display: flex;

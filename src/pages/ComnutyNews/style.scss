@@ -13,8 +13,12 @@
         // .comunityNew {
 
         // }
+        @media screen and (max-width: 768px) {
+            padding: 50px 24px;
+        }
+
         .comunityPostNews {
-            width: 1000px;
+            width: 100%;
 
             .title-comunity-news {
                 display: flex;
@@ -161,6 +165,10 @@
                 .comunitypostNews-wrap_content__left {
                     height: 100%;
 
+                    @media screen and (max-width: 768px) {
+                        width: 100%;
+                    }
+
                     span {
                         height: 225px;
                         width: 225px;
@@ -240,6 +248,7 @@
                             // align-items: center;
                             justify-content: space-between;
                             border-bottom: 1px solid #ccc;
+                            flex-wrap: wrap;
 
                             .comunitypostNew-wrap {
                                 display: flex;
@@ -294,6 +303,7 @@
                             padding: 12px 0 0;
                             // border-bottom: 1px solid #ccc;
                             gap: 30px;
+                            flex-wrap: wrap;
 
                             .status-item {
                                 display: flex;
@@ -310,10 +320,10 @@
 
                                 &:nth-child(2) {
 
-                                    svg {
-                                        color: #0d99ff;
-                                        stroke: white;
-                                    }
+                                    // svg {
+                                    //     color: #0d99ff;
+                                    //     stroke: white;
+                                    // }
                                 }
 
                             }
