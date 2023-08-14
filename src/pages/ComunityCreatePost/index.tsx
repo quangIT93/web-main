@@ -13,101 +13,25 @@ import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import RollTop from '#components/RollTop';
 import { InboxOutlined } from '@ant-design/icons';
 // import type { UploadProps } from 'antd';
-import { CameraComunityIcon } from '#components/Icons';
+import { CameraComunityIcon, DeleteImageComunityIcon } from '#components/Icons';
+import { useDropzone } from 'react-dropzone';
+import { Box, Typography } from '@mui/material';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { validatePostImages } from 'validations';
 
 const ComunityCreatePost = () => {
     const { TextArea } = Input;
     const [valueTitle, setValueTitle] = useState('');
     const [valueContent, setValueContent] = useState('');
-    const [valueImage, setValueImage] = useState<any>([]);
-    const { Dragger } = Upload;
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewTitle, setPreviewTitle] = useState('');
     const [previewImage, setPreviewImage] = useState('');
-    const [isDrag, setIsDrag] = useState(false);
+    const [isDragActive, setIsDragActive] = React.useState(false);
+    const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
+    const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
 
-    const [fileList, setFileList] = useState<UploadFile[]>(
-        // dataCompany?.logoPath && dataCompany?.logopath !== ''
-        //   ? [
-        //     {
-        //       uid: '-1',
-        //       name: 'logo.png',
-        //       status: 'done',
-        //       url: dataCompany?.logoPath,
-        //       thumbUrl: dataCompany?.logoPath,
-        //     },
-        //   ]
-        //   : 
-        [],
-    );
-
-    const props: UploadProps = {
-        name: 'file',
-        multiple: true,
-        // action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-        listType: "picture-card",
-        // fileList,
-        // onChange: ({ fileList: newFileList }) => {
-        //     setFileList(newFileList);
-        //     setValueImage(newFileList);
-
-        //     // console.log('newFileList', newFileList);
-        // },
-        onChange(info) {
-            const { status } = info.file;
-            if (status !== 'uploading') {
-                console.log(info.file, info.fileList);
-                setFileList(info.fileList);
-                setValueImage((preValue: any) => ({
-                    ...preValue,
-                    ...info.fileList,
-                }));
-            }
-            if (status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-        onRemove: (file) => {
-            const index = fileList.indexOf(file);
-            const newFileList = fileList.slice();
-            newFileList.splice(index, 1);
-            setFileList(newFileList);
-            setValueImage(newFileList);
-
-            return true;
-        },
-        beforeUpload: (file) => {
-            // const isPNG = file.type === 'application/pdf';
-            var checFileSize = true;
-            // if (!isPNG) {
-            //   message.error(`${file.name} không phải là file pdf`);
-            // } else
-            if (file.size > 1024 * 1024 * 5) {
-                checFileSize = false;
-                message.error("File phải nhỏ hơn 5mb");
-            } else {
-                setFileList([file]);
-                return false;
-            }
-            return Upload.LIST_IGNORE || checFileSize;
-        },
-        onPreview: async (file: UploadFile) => {
-            handlePreview(file)
-        },
-        onDrop(e) {
-            console.log('Dropped files', e.dataTransfer.files);
-            // setFileList(e.dataTransfer.files);
-            // setValueImage((preValue: any) => ({
-            //     ...preValue,
-            //     ...e.dataTransfer.files,
-            // }));
-        },
-    };
-
-    console.log("valueImage", valueImage);
-    console.log("fileLisst", fileList);
+    console.log("selectedFiles", selectedFiles);
+    console.log("selectedImages", selectedImages);
 
 
     const getBase64 = (file: RcFile): Promise<string> =>
@@ -135,34 +59,198 @@ const ComunityCreatePost = () => {
     //     maxWidthOrHeight: 840,
     // };
 
-    const handleImageChange = async (event: any) => {
+    const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 840,
+    };
+
+    const handleImageChange = async (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
         const files = event.target.files;
+
+        // setImage(event.target.files && event.target.files[0]);
+
         const imagesUpload: any = Array.from(
             event.target.files ? event.target.files : [],
         );
-        // const imagesToCheck =
-        //     valueImage.length + imagesUpload.length > 5
-        //         ? imagesUpload.slice(0, 5 - valueImage.length)
-        //         : imagesUpload;
 
-        // if (imagesToCheck.length > 0) {
-        //     const compressedImages: any = [];
-        //     await Promise.all(
-        //         imagesToCheck.map(async (image: any) => {
-        //             const compressedImage = await imageCompression(image, options);
-        //             compressedImages.push(
-        //                 new File([compressedImage], compressedImage.name, {
-        //                     type: compressedImage.type,
-        //                 }),
-        //             );
-        //         }),
-        //     );
-        //     setValueImage((prevState: any) => [
-        //         ...prevState,
-        //         ...compressedImages,
-        //     ]);
-        // }
+        selectedFiles.forEach((file: any) => URL.revokeObjectURL(file.preview));
+
+        const imagesToCheck =
+            selectedFiles.length + imagesUpload.length > 5
+                ? imagesUpload.slice(0, 5 - selectedImages.length)
+                : imagesUpload;
+
+        // console.log(
+        //   ' imagesUpload.slice(0, 5 - selectedImages.length)',
+        //   imagesUpload.slice(0, 5 - selectedImages.length)
+        // )
+        // console.log(' imagesToCheck', imagesToCheck)
+        // console.log(' imagesToCheck.length', imagesToCheck.length)
+        // console.log('imagesToCheck', imagesToCheck);
+
+        if (imagesToCheck.length > 0) {
+            const validateImagesReply = validatePostImages(imagesToCheck);
+            if (validateImagesReply.isError) {
+                // console.log('::: Invalid images');
+                message.error("Hình không đúng định dạng");
+                return;
+            } else {
+                try {
+                    console.log('imagesToCheck', imagesToCheck);
+
+                    const compressedImages: any = [];
+                    await Promise.all(
+                        imagesToCheck.map(async (image: any) => {
+                            const compressedImage = await imageCompression(image, options);
+                            compressedImages.push(
+                                new File([compressedImage], compressedImage.name, {
+                                    type: compressedImage.type,
+                                }),
+                            );
+                        }),
+                    );
+                    setSelectedFiles((prevState) => [
+                        ...prevState,
+                        ...compressedImages
+                        // .map((image: any) => ({
+                        //     image,
+                        //     preview: window.URL.createObjectURL(image),
+                        // })),
+                    ]);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }
+
+        if (files) {
+            if (files.length > 5) {
+                message.error("Tối đa 5 hình");
+                return;
+            }
+            const newImages: string[] = [];
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                // console.log(reader);
+
+                reader.onload = () => {
+                    const imageDataURL = reader.result as string;
+                    newImages.push(imageDataURL);
+
+                    if (newImages.length === files.length) {
+                        const newImageSelected = [...selectedImages, ...newImages];
+                        if (newImageSelected.length > 5) {
+                            message.error("Tối đa 5 hình");
+                            return;
+                        }
+                        setSelectedImages(newImageSelected);
+                        event.target.value = '';
+                    }
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+    };
+
+    const handleDeleteImage = (index: number) => {
+        setSelectedImages((prevImages) => {
+            const updatedImages = [...prevImages];
+            updatedImages.splice(index, 1);
+            return updatedImages;
+        });
+        setSelectedFiles((prevFiles) => {
+            const updatedFiles = [...prevFiles];
+            updatedFiles.splice(index, 1);
+            return updatedFiles;
+        });
     }
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: {
+            'image/*': [],
+        },
+        // maxFiles: 5,
+        onDragEnter: () => {
+            setIsDragActive(true);
+        },
+        onDragLeave: () => {
+            setIsDragActive(false);
+        },
+        onDrop: async (acceptedFiles: File[]) => {
+            setIsDragActive(false);
+
+            const fileUploaded = acceptedFiles.map((file: any) =>
+                Object.assign(file, {
+                    preview: URL.createObjectURL(file),
+                }),
+            );
+            // setFiles(acceptedFiles.map((file: any) => Object.assign(file, {
+            //   preview: URL.createObjectURL(file)
+            // })));
+            // console.log('fileUploaded : ', fileUploaded);
+
+            if (fileUploaded.length > 5) {
+                message.error("Tối đa 5 hình");
+                return;
+            }
+
+            const newFileSelected = [
+                ...selectedFiles,
+                ...fileUploaded
+                // .map((file: any) => ({
+                //   image: file,
+                //   preview: file.preview,
+                // })),
+            ];
+
+            if (newFileSelected.length > 5) {
+                message.error("Tối đa 5 hình");
+
+                return;
+            }
+
+            setSelectedFiles(newFileSelected);
+
+            const newImages: string[] = [];
+
+            for (let i = 0; i < fileUploaded.length; i++) {
+                const file = fileUploaded[i];
+                const reader = new FileReader();
+                // console.log(reader);
+
+                reader.onload = () => {
+                    const imageDataURL = reader.result as string;
+                    newImages.push(imageDataURL);
+
+                    if (newImages.length === fileUploaded.length) {
+                        const newImageSelected = [...selectedImages, ...newImages];
+                        if (newImageSelected.length > 5) {
+                            message.error("Tối đa 5 hình");
+
+                            return;
+                        }
+                        setSelectedImages(newImageSelected);
+                        // event.target.value = '';
+                    }
+                };
+
+                reader.readAsDataURL(file);
+            }
+        },
+    });
+
+    React.useEffect(() => {
+        return () => {
+            selectedFiles.length !== 0 &&
+                selectedFiles.forEach((file: any) => URL.revokeObjectURL(file.preview));
+        };
+    }, [selectedFiles]);
+
     return (
         <div className="comunity-create-post-container">
             <Navbar />
@@ -195,7 +283,8 @@ const ComunityCreatePost = () => {
                             <span>3. Thêm hình ảnh</span>
                             <p
                                 style={{
-                                    display: fileList.length > 0 ? "block" : "none"
+                                    display: selectedFiles.length > 0 ? "block" : "none",
+                                    cursor: "pointer"
                                 }}
                             >
                                 <label htmlFor="submit">Thêm hình ảnh</label>
@@ -210,36 +299,74 @@ const ComunityCreatePost = () => {
                                 />
                             </p>
                         </h3>
-                        <Dragger {...props}
+                        <div className="post-comunity-images"
                             style={{
-                                height: fileList.length === 0 ? "340px" :
-                                    fileList.length <= 4 ? "200px" :
-                                        "390px",
-                                border: fileList.length === 0 ? "0.5px solid #d9d9d9" : "none",
-                                background: fileList.length === 0 ? "white" : "transparent",
-                                zIndex: 1
+                                height: selectedFiles.length > 0 ? "fit-content" : "310px",
+                                border: selectedFiles.length > 0 ? "none" : "1px solid #ccc",
                             }}
                         >
-                            <p className="ant-upload-drag-icon"
-                                style={{
-                                    display: fileList.length === 0 ? "block" : "none"
-                                }}
-                            >
-                                <CameraComunityIcon />
-                            </p>
-                            {/* <p className="ant-upload-text">Click or drag file to this area to upload</p> */}
-                            <p className="ant-upload-hint"
-                                style={{
-                                    display: fileList.length === 0 ? "block" : "none"
-                                }}
-                            >
-                                Thêm hình ảnh cho bài viết
-                            </p>
-                        </Dragger>
+                            <Box p="0rem 0">
+                                <section className="drag-img-container">
+                                    <div
+                                        {...getRootProps({
+                                            className: isDragActive ? 'dropzone on-drag' : 'dropzone',
+                                        })}
+                                    >
+                                        <input {...getInputProps()} />
+                                        <div
+                                            className="drag-img-camera"
+                                            style={{
+                                                display: selectedFiles.length === 0 || isDragActive
+                                                    ? "flex" : "none"
+                                            }}
+                                        >
+                                            <CameraComunityIcon />
+                                            <p>Thêm hình ảnh cho bài viết</p>
+                                        </div>
+                                    </div>
+                                </section>
+                                <Box className="list_iamges">
+                                    {selectedImages.map((image: any, index: number) => (
+                                        <div
+                                            className="item-image"
+                                            key={index}
+                                        >
+                                            <img
+                                                key={index}
+                                                src={image}
+                                                alt="Ảnh lỗi"
+                                            />
+                                            <div
+                                                className="deleteButton"
+                                                style={{
+                                                    zIndex: isDragActive ? "0" : "2"
+                                                }}
+                                                onClick={() => handleDeleteImage(index)}
+                                            >
+                                                <DeleteImageComunityIcon />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </Box>
+
+                                {/* <Box>
+          <CreatePostImages
+          images={images}
+          handleRemoveImage={handleRemoveImage}
+          />
+        </Box> */}
+                            </Box>
+                        </div>
                     </div>
                     <div className="save_btn">
-                        <Button className="submit">
-                            Lưu bài
+                        <Button className={
+                            valueTitle == '' || valueContent == '' || selectedFiles.length === 0 ?
+                                "submit" : "submit full-info"}>
+                            {
+                                valueTitle == '' || valueContent == '' || selectedFiles.length === 0 ?
+                                    "Lưu bài" :
+                                    "Đăng bài viết"
+                            }
                         </Button>
                     </div>
                 </div>
