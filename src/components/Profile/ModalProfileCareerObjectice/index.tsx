@@ -14,6 +14,12 @@ import categoriesApi from '../../../api/categoriesApi';
 import { useDispatch } from 'react-redux';
 import { message } from 'antd';
 
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
+
 import {
   getProfile,
   // resetProfileState,
@@ -59,6 +65,7 @@ interface IModalProfileCareerObjectice {
 const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   props,
 ) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { openModalCareerObjective, setOpenModalCareerObjective, categories } =
     props;
   const [value, setValue] = useState(
@@ -71,10 +78,31 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const [treeData, setTransformedData] = React.useState<any>(null);
   const dispatch = useDispatch();
   const handleClose = () => setOpenModalCareerObjective(false);
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise('vi');
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -86,7 +114,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   React.useEffect(() => {
     getCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
   // const onChange = (newValue: string[] | any) => {
   //   setValue(newValue);
   // };
@@ -123,7 +151,11 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const handleSubmit = async () => {
     try {
       if (value.length > 10) {
-        message.error('Chỉ được chọn tối đa 10 lĩnh vực quan tâm ');
+        message.error(
+          languageRedux === 1 ?
+            profileVi.limit_10_careers :
+            profileEn.limit_10_careers
+        );
         return;
       }
       const result = await profileApi.updateProfileCareer(
@@ -175,7 +207,9 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
-    placeholder: 'Please select',
+    placeholder:
+      language?.career_objective
+    ,
     style: {
       width: '100%',
       zIndex: '1302',
@@ -222,11 +256,17 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
           component="h2"
           align="center"
         >
-          Lĩnh vực quan tâm
+          {
+            language?.career_objective
+          }
         </Typography>
         <TreeSelect {...tProps} />
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            languageRedux === 1 ?
+              profileVi.save_info :
+              profileEn.save_info
+          }
         </Button>
       </Box>
     </Modal>

@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
+import languageApi from 'api/languageApi';
 
 const styleLabel = {
   fontWeight: 700,
@@ -67,6 +68,25 @@ const NumericInput = (props: NumericInputProps) => {
 const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { dataCompany, setDataCompany } = props;
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleEditCompanyMail = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -98,9 +118,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           htmlFor="editCompany"
         >
           {
-            languageRedux === 1 ?
-              company.phone :
-              companyEn.phone
+            language?.phone_number
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>

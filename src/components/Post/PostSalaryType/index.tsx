@@ -13,10 +13,11 @@ interface IPostSalaryType {
   setMoneyType: React.Dispatch<React.SetStateAction<any>>;
   moneyType: number;
   salaryType?: number;
+  language: any;
 }
 
 const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
-  const { moneyType, setMoneyType, salaryType } = props;
+  const { moneyType, setMoneyType, salaryType, language } = props;
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMoneyType(Number(e.target.value));
@@ -40,7 +41,10 @@ const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
             opacity: salaryType === 6 ? 0.5 : 1, // Thiết lập opacity thành 0.5 nếu salaryType === 6
           }}
         >
-          Mức lương <span style={{ color: 'red' }}>*</span>
+          {
+            language?.salary
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row

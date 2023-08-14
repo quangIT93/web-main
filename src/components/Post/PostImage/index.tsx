@@ -13,10 +13,13 @@ import { useDropzone } from 'react-dropzone';
 
 import { message } from 'antd';
 
+import { post } from 'validations/lang/vi/post';
+
 import axios from 'axios';
 // import { saveAs } from 'file-saver';
 
 import './style.scss';
+import { postEn } from 'validations/lang/en/post';
 // import { blob } from 'stream/consumers';
 interface PostImageProps {
   selectedFiles: any;
@@ -24,6 +27,7 @@ interface PostImageProps {
   selectedFillImages: any;
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
   setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>;
+  languageRedux: any;
 }
 
 const PostImage: React.FC<PostImageProps> = (props) => {
@@ -33,6 +37,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     setSelectedImages,
     selectedImages,
     selectedFillImages,
+    languageRedux,
   } = props;
 
   const [isDragActive, setIsDragActive] = React.useState(false);
@@ -68,7 +73,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         const validateImagesReply = validatePostImages(convertedFiles);
         if (validateImagesReply.isError) {
           // console.log('::: Invalid images');
-          return toast.warn('Ảnh không đúng định dạng');
+          return toast.warn(
+            languageRedux === 1 ?
+              post.err_img :
+              postEn.err_img
+          );
         } else {
           const compressedImages: any = [];
 
@@ -138,7 +147,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (fileUploaded.length > 5) {
         messageApi.open({
           type: 'error',
-          content: 'Chỉ có thể tối đa 5 ảnh',
+          content: languageRedux === 1 ?
+            post.limit_5_img :
+            postEn.limit_5_img,
         });
         return;
       }
@@ -186,7 +197,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (newFileSelected.length > 5) {
         messageApi.open({
           type: 'error',
-          content: 'Chỉ có thể tối đa 5 ảnh',
+          content: languageRedux === 1 ?
+            post.limit_5_img :
+            postEn.limit_5_img,
         });
 
         return;
@@ -215,7 +228,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: 'Chỉ có thể tối đa 5 ảnh',
+                content: languageRedux === 1 ?
+                  post.limit_5_img :
+                  postEn.limit_5_img,
               });
 
               return;
@@ -266,13 +281,15 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     // )
     // console.log(' imagesToCheck', imagesToCheck)
     // console.log(' imagesToCheck.length', imagesToCheck.length)
-    console.log('imagesToCheck', imagesToCheck);
+    // console.log('imagesToCheck', imagesToCheck);
 
     if (imagesToCheck.length > 0) {
       const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
         // console.log('::: Invalid images');
-        return toast.warn('Ảnh không đúng định dạng');
+        return toast.warn(languageRedux === 1 ?
+          post.err_img :
+          postEn.err_img);
       } else {
         try {
           console.log('imagesToCheck', imagesToCheck);
@@ -298,7 +315,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
               preview: window.URL.createObjectURL(image),
             })),
           ]);
-          console.log('imagesToCheck', imagesToCheck);
+          // console.log('imagesToCheck', imagesToCheck);
         } catch (error) {
           console.log(error);
         }
@@ -309,7 +326,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (files.length > 5) {
         messageApi.open({
           type: 'error',
-          content: 'Chỉ có thể tối đa 5 ảnh',
+          content: languageRedux === 1 ?
+            post.limit_5_img :
+            postEn.limit_5_img,
         });
         return;
       }
@@ -329,7 +348,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: 'Chỉ có thể tối đa 5 ảnh',
+                content: languageRedux === 1 ?
+                  post.limit_5_img :
+                  postEn.limit_5_img,
               });
               return;
             }
@@ -369,7 +390,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
             <p>
-              Kéo và thả nhiều file ảnh ở đây, hoặc click vào để chọn file ảnh
+              {
+                languageRedux === 1 ?
+                  post.drag_drop_multi :
+                  postEn.drag_drop_multi
+              }
             </p>
             {/* <aside className="thumbs-containter">
               {thumbs}
@@ -393,7 +418,11 @@ const PostImage: React.FC<PostImageProps> = (props) => {
               <img
                 key={index}
                 src={image}
-                alt={`ảnh bị lỗi`}
+                alt={
+                  languageRedux === 1 ?
+                    post.err_none_img :
+                    postEn.err_none_img
+                }
                 style={{
                   height: '150px',
                   width: '150px',
@@ -434,15 +463,22 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          Có thể tải tối đa 5 ảnh, 5 ảnh không quá 5MB. (Định dạng cho phép:
-          jpeg, jpg, png)
+          {
+            languageRedux === 1 ?
+              post.verify_upload :
+              postEn.verify_upload
+          }
         </Typography>
         <Button
           variant="outlined"
           component="label"
           disabled={selectedImages.length === 5}
         >
-          Tải ảnh
+          {
+            languageRedux === 1 ?
+              post.upload_img :
+              postEn.upload_img
+          }
           <input
             type="file"
             name="images"

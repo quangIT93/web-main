@@ -44,6 +44,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 // import { home } from 'validations/lang/vi/home';
 // import { homeEn } from 'validations/lang/en/home';
+import languageApi from 'api/languageApi';
 
 // interface ItemTheme {
 //   id: number;
@@ -62,6 +63,24 @@ const HotJob: React.FC = () => {
 
   // const dispatch = useDispatch();
   // const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
+  const [language, setLanguage] = React.useState<any>();
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleClickItem = (
     event: any,
@@ -146,7 +165,7 @@ const HotJob: React.FC = () => {
     >
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <FireIcon width={25} height={25} />
-        <h2>{languageRedux === 1 ? 'Công việc nổi bật' : 'Hot jobs'}</h2>
+        <h2>{language?.hot_jobs}</h2>
       </div>
       <Swiper
         navigation={true}

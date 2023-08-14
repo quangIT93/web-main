@@ -16,6 +16,11 @@ import { CloseOutlined } from '@ant-design/icons';
 // } from 'store/reducer/profileReducer/getProfileReducer';
 import './style.scss';
 
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
 interface InfoContact {
   phone: string;
   email: string;
@@ -58,6 +63,7 @@ interface IModalProfileContact {
 }
 
 const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { openModalContact, setOpenModalContact, profile } = props;
   const [phone, setPhone] = useState(profile?.phone ? profile?.phone : '');
   const [email, setEmail] = useState(profile?.email ? profile?.email : '');
@@ -65,6 +71,25 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   const [linkIn, setLinkIn] = useState(
     profile?.linkedin ? profile?.linkedin : '',
   );
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleClose = () => setOpenModalContact(false);
   // const dispatch = useDispatch();
@@ -145,7 +170,9 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Thông tin liên hệ
+          {
+            language?.contact_information
+          }
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -154,7 +181,10 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Số điện thoại <span className="color-asterisk">*</span>
+            {
+              language?.phone_number
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="tel"
@@ -164,9 +194,11 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             onChange={handleSetPhone}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Số điện thoại"
+            placeholder={
+              language?.phone_number
+            }
             inputMode="numeric"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -188,7 +220,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Email"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -210,7 +242,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Facebook"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -232,12 +264,16 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Linkedin"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            languageRedux === 1 ?
+              profileVi.save_info :
+              profileEn.save_info
+          }
         </Button>
       </Box>
     </Modal>

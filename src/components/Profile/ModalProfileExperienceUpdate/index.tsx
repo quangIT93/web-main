@@ -17,6 +17,12 @@ import { actionCreators } from 'store/index';
 
 import { message } from 'antd';
 
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -74,6 +80,7 @@ interface IInfoExperience {
 const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   props,
 ) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const {
     openModalExperienceUpdate,
     setOpenModalExperienceUpdate,
@@ -95,6 +102,26 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
     endDate: experienceValue.end_date,
     extraInformation: experienceValue.extra_information,
   });
+
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleClose = () => setOpenModalExperienceUpdate(false);
 
@@ -150,36 +177,46 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   const validValue = () => {
     if (experience.title === '') {
       return {
-        message: 'Vui lòng nhập tên chuyên ngành',
+        message: languageRedux === 1 ?
+          profileVi.err_professional :
+          profileEn.err_professional,
         checkForm: false,
       };
     }
 
     if (experience.companyName === '') {
       return {
-        message: 'Vui lòng nhập tên trường/tổ chức',
+        message: languageRedux === 1 ?
+          profileVi.err_company :
+          profileEn.err_company,
         checkForm: false,
       };
     }
 
     if (experience.extraInformation === '') {
       return {
-        message: 'Vui lòng nhập thông tin bổ sung',
+        message: languageRedux === 1 ?
+          profileVi.err_additional_information :
+          profileEn.err_additional_information,
         checkForm: false,
       };
     }
-    console.log('NaN', experience.startDate);
+    // console.log('NaN', experience.startDate);
 
     if (!experience.startDate) {
       return {
-        message: 'Vui lòng nhập ngày bắt đầu',
+        message: languageRedux === 1 ?
+          profileVi.err_start_time :
+          profileEn.err_start_time,
         checkForm: false,
       };
     }
 
     if (!experience.endDate) {
       return {
-        message: 'Vui lòng nhập Ngày kết thúc',
+        message: languageRedux === 1 ?
+          profileVi.err_finish_time :
+          profileEn.err_finish_time,
         checkForm: false,
       };
     }
@@ -203,7 +240,9 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileExperience(experience);
         if (result) {
-          const profile = await profileApi.getProfile('vi');
+          const profile = await profileApi.getProfile(
+            languageRedux === 1 ? "vi" : "en"
+          );
           if (profile) {
             setProfileUser(profile.data);
           }
@@ -219,7 +258,9 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       console.log(error);
       messageApi.open({
         type: 'error',
-        content: 'Vui lòng kiểm tra lại thông tin đã nhập',
+        content: languageRedux === 1 ?
+          profileVi.check_info_please :
+          profileEn.check_info_please,
       });
     }
   };
@@ -261,7 +302,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Sửa thông tin kinh nghiệm làm việc
+          {
+            languageRedux === 1 ?
+              profileVi.edit_working_experience :
+              profileEn.edit_working_experience
+          }
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -270,7 +315,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chức danh <span className="color-asterisk">*</span>
+            {
+              language?.professional_titles
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -280,8 +328,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             onChange={handleChangeTitle}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Chức danh"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.professional_titles
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -291,7 +341,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Công ty/Tổ chức <span className="color-asterisk">*</span>
+            {
+              languageRedux === 1 ?
+                profileVi.company_organization :
+                profileEn.company_organization
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -301,8 +356,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Nhập tên công ty hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              languageRedux === 1 ?
+                profileVi.place_company_organization :
+                profileEn.place_company_organization
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -319,7 +378,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu <span className="color-asterisk">*</span>
+                  {
+                    language?.start_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(experience.startDate)}
@@ -336,7 +398,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc <span className="color-asterisk">*</span>
+                  {
+                    language?.finish_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(experience.endDate)}
@@ -357,7 +422,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung <span className="color-asterisk">*</span>
+            {
+              language?.additional_information
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}
@@ -368,12 +436,20 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             rows={4}
             id="extraExp_info"
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder="Để được nhà tuyển dụng quan tâm và tăng cơ hội ứng tuyển vào công ty mong muốn. Hẫy nhập thông tin bổ sung của bạn vào đây!"
+            placeholder={
+              languageRedux === 1 ?
+                profileVi.place_additional_information :
+                profileEn.place_additional_information
+            }
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            languageRedux === 1 ?
+              profileVi.save_info :
+              profileEn.save_info
+          }
         </Button>
       </Box>
     </Modal>

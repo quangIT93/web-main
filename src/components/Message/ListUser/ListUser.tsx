@@ -15,15 +15,20 @@ import './style.scss';
 import { ChatContext } from 'context/ChatContextProvider';
 
 import { SeenIcon } from '#components/Icons';
+import { messVi } from 'validations/lang/vi/mess';
+import { messEn } from 'validations/lang/en/mess';
 
 // const { Search } = Input;
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
   openListChat: boolean;
+  language: any;
+  languageRedux: any;
 }
 
 const ListUserChat: React.FC<IOpenListChat> = (props) => {
+  const { language, languageRedux } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const [windowWidth, setWindowWidth] = useState(false);
   const [openBackDrop, setBackDrop] = useState(false);
@@ -40,7 +45,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   const getAllUserChat = async () => {
     try {
-      const result = await messageApi.getUserChated('vi');
+      const result = await messageApi.getUserChated(
+        languageRedux === 1 ? "vi" : "en"
+      );
 
       if (result) {
         setStateUserChat(result.data);
@@ -52,7 +59,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   useEffect(() => {
     getAllUserChat();
-  }, [sendMessages, receivedMessages]);
+  }, [sendMessages, receivedMessages, languageRedux]);
 
   const getApplicationByIdAndPost = async () => {
     try {
@@ -68,14 +75,14 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           await historyRecruiter.GetAJobApplication(
             Number(searchParams.get('post_id')),
             searchParams.get('application_id') ?? '',
-            'vi',
+            languageRedux === 1 ? "vi" : "en",
           );
 
         if (resultHistoryRecruiter) {
           // console.log('ressssss', result.data);
           const resultPost = await postApi.getPostV3(
             Number(searchParams.get('post_id')),
-            "vi"
+            languageRedux === 1 ? "vi" : "en"
           );
           console.log(resultHistoryRecruiter.data);
           console.log('resultPost', resultPost);
@@ -100,7 +107,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           }
         }
       } else {
-        const resultGetUserChated = await messageApi.getUserChated('vi');
+        const resultGetUserChated = await messageApi.getUserChated(
+          languageRedux === 1 ? "vi" : "en"
+        );
         console.log('result.data', resultGetUserChated.data);
 
         if (resultGetUserChated.data) {
@@ -124,7 +133,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
             } else {
               const resultGetPostV3 = await postApi.getPostV3(
                 Number(searchParams.get('post_id')),
-                "vi"
+                languageRedux === 1 ? "vi" : "en"
               );
 
               console.log('v3', resultGetPostV3);
@@ -162,7 +171,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         if (searchParams.get('post_id') && searchParams.get('user_id')) {
           const result = await postApi.getPostV3(
             Number(searchParams.get('post_id')),
-            "vi"
+            languageRedux === 1 ? "vi" : "en"
           );
 
           setUserInfoChat({
@@ -191,7 +200,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     getApplicationByIdAndPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const updateWindowWidth = () => {
     if (window.innerWidth <= 555) {
@@ -286,7 +295,11 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           }`}
       >
         <div className="header-list_userChat">
-          <h4 className="title-header_listUserChat">Tin nhắn</h4>
+          <h4 className="title-header_listUserChat">
+            {
+              language?.message
+            }
+          </h4>
           <div className="header-listSearch_userChat">
             {/* <Search
               className="searh-user_chat"
@@ -379,7 +392,11 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       <div className="list_userChat">
         <div className="wrap-img_chat">
           <img src="./images/imageListChatBegin.png" alt="" />
-          <div>Bạn chưa có cuộc trò chuyện nào!</div>
+          <div>
+            {
+              language?.you_have_no_conversation
+            }
+          </div>
         </div>
       </div>
     );

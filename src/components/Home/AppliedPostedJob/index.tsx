@@ -224,13 +224,30 @@ const AppliedPostedJob: React.FC = () => {
           /> */}
           <Advertisement />
           <div className="advertisement-job-not-loging-content">
-            <h3>Dễ dàng tìm kiếm ứng viên tại HiJob</h3>
+            <h3>
+              {languageRedux === 1 ?
+                "Dễ dàng tìm kiếm ứng viên tại HiJob" :
+                "Easily find candidates at HiJob"}
+            </h3>
             <ul>
-              Chúng tôi cung cấp dịch vụ giúp nhà tuyển dụng dễ dàng tiếp cận
-              với nhiều nhân tài:
-              <li>Đăng bài tuyển dụng miễn phí</li>
-              <li>Công cụ tìm kiếm thông minh</li>
-              <li>Giao tiếp dễ dàng với Ứng viên</li>
+              {languageRedux === 1 ?
+                "Chúng tôi cung cấp dịch vụ giúp nhà tuyển dụng dễ dàng tiếp cận" :
+                "We provide a service that makes it easy for employers to access"}
+              <li>
+                {languageRedux === 1 ?
+                  "Đăng bài tuyển dụng miễn phí" :
+                  "Post jobs for free"}
+              </li>
+              <li>
+                {languageRedux === 1 ?
+                  "Công cụ tìm kiếm thông minh" :
+                  "Smart search engine"}
+              </li>
+              <li>
+                {languageRedux === 1 ?
+                  "Giao tiếp dễ dàng với Ứng viên" :
+                  "Easy communication with Candidates"}
+              </li>
             </ul>
           </div>
           <Button

@@ -22,6 +22,7 @@ import ModalEditCompanySuccess from './components/ModalEditCompanySuccess';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
+import languageApi from 'api/languageApi';
 
 import RollTop from '#components/RollTop';
 
@@ -117,8 +118,26 @@ const Company = () => {
     description: '',
     logoPath: '',
   });
+  const [language, setLanguageState] = React.useState<any>();
 
-  // console.log('dataCompany', dataCompany);
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
+  console.log('dataCompany', dataCompany);
   const [openModalEditCompany, setOpenModalEditCompanySuccess] =
     React.useState(false);
 
@@ -171,11 +190,11 @@ const Company = () => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -420,7 +439,7 @@ const Company = () => {
       <Navbar />
       <div className="company-content">
         <h1>
-          {languageRedux === 1 ? company.company_info : companyEn.company_info}
+          {language?.company_info}
         </h1>
         <Skeleton loading={loading} active>
           <form action="">
@@ -467,6 +486,8 @@ const Company = () => {
       <ModalEditCompanySuccess
         openModalEditCompany={openModalEditCompany}
         setOpenModalEditCompanySuccess={setOpenModalEditCompanySuccess}
+        languageRedux={languageRedux}
+        language={language}
       />
       <RollTop />
       <Footer />

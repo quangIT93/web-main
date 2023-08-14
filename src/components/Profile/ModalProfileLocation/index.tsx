@@ -24,7 +24,11 @@ import {
   // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
 
-import './style.scss';
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -71,10 +75,30 @@ interface IModalProfileLocation {
 // };
 
 const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { openModalLocation, setOpenModalLocation, locations } = props;
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
   // const [open, setOpen] = React.useState<any>([]);
   const [treeData, setTransformedData] = React.useState<any>(null);
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const [value, setValue] = React.useState(
     locations?.map((v: any, i) => v.district_id),
@@ -92,7 +116,9 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleClose = () => setOpenModalLocation(false);
   const allLocation = async () => {
     try {
-      const allLocation = await locationApi.getAllLocation('vi');
+      const allLocation = await locationApi.getAllLocation(
+        languageRedux === 1 ? "vi" : "en"
+      );
 
       if (allLocation) {
         setDataAllLocation(allLocation.data);
@@ -107,7 +133,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     // getAllLocations()
     // delete param when back to page
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   React.useEffect(() => {
     if (dataAllLocation) {
@@ -204,7 +230,11 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleSubmit = async () => {
     try {
       if (value.length > 3) {
-        message.error('Chỉ được chọn tối đa 3 khu vực ');
+        message.error(
+          languageRedux === 1 ?
+            profileVi.limit_3_careers :
+            profileEn.limit_3_careers
+        );
         return;
       }
       const result = await profileApi.updateProfileLocation(
@@ -255,7 +285,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
-    placeholder: 'Please select',
+    placeholder: language?.working_location,
     style: {
       width: '100%',
       zIndex: '1302',
@@ -295,7 +325,9 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
           component="h2"
           align="center"
         >
-          Khu vực làm việc
+          {
+            language?.working_location
+          }
         </Typography>
 
         {/* <FormControl sx={{ width: '100%', margin: '12px auto' }} size="small">
@@ -335,7 +367,11 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         <TreeSelect {...tProps} />
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            languageRedux === 1 ?
+              profileVi.save_info :
+              profileEn.save_info
+          }
         </Button>
       </Box>
     </Modal>

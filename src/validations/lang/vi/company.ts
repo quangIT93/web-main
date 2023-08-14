@@ -44,4 +44,7 @@ export const company = {
     "place_field": "Chọn lĩnh vực hoạt động",
     "place_size": "Chọn quy mô công ty",
     "place_des": "Nhập mô tả về công ty",
+    "alert_update_success": "Đã chỉnh sửa thông tin công ty thành công!",
+    "alert_move_to_profile": "Bạn có muốn quay về trang thông tin cá nhân!",
+
 }

@@ -32,6 +32,7 @@ import { HomeValueContext } from 'context/HomeValueContextProvider';
 import { IvalueJobChild } from 'context/HomeValueContextProvider';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
+import languageApi from 'api/languageApi';
 
 const BreadcrumbsCpn: React.FC = () => {
   // Contexts
@@ -80,6 +81,25 @@ const BreadcrumbsCpn: React.FC = () => {
   // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setChecked(event.target.checked)
   // }
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const getAllChildCategoriesById = async () => {
     try {
@@ -262,16 +282,14 @@ const BreadcrumbsCpn: React.FC = () => {
           }}
         >
           {arrayChild?.length === 0
-            ? languageRedux === 1
-              ? home.all
-              : homeEn.all
+            ? language?.all
             : arrayChild?.map(
-                (value: { id: number; name: string }, index: number) => (
-                  <div key={index}>
-                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                  </div>
-                ),
-              )}
+              (value: { id: number; name: string }, index: number) => (
+                <div key={index}>
+                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                </div>
+              ),
+            )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -343,7 +361,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                          checkItemsCount >= MAX_CHECKED_ITEMS
+                        checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />

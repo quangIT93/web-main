@@ -63,6 +63,8 @@ import notificationKeywordApi from 'api/notificationKeyword';
 
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
+import { searchResultVi } from 'validations/lang/vi/searchResult';
+import { searchResultEn } from 'validations/lang/en/searchResult';
 
 const { SHOW_CHILD } = Cascader;
 
@@ -135,12 +137,12 @@ const NewJobs: React.FC = () => {
     // openNotificate,
     search,
   }: // setRefNav,
-  {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    search: boolean;
-  } = useContext(HomeValueContext);
-
+    {
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      search: boolean;
+    } = useContext(HomeValueContext);
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [page, setPage] = React.useState(2);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [searchData, setSearchData] = React.useState<any>();
@@ -204,13 +206,15 @@ const NewJobs: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = 'HiJob - Tìm kiếm công việc';
+    document.title = languageRedux === 1 ?
+      searchResultVi.title_page :
+      searchResultEn.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_search' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   // ----------------------------------------------------------------
 
@@ -266,7 +270,7 @@ const NewJobs: React.FC = () => {
 
   const LIST_DIS_ID =
     userFilteredCookies?.list_dis?.length > 0 ||
-    userFilteredCookies?.list_dis?.length !== undefined
+      userFilteredCookies?.list_dis?.length !== undefined
       ? userFilteredCookies?.list_dis?.map((dis: any) => dis[1])
       : [];
 
@@ -279,7 +283,7 @@ const NewJobs: React.FC = () => {
   //   .map((dis) => dis[1]);
   const LIST_CATEGORIES_ID =
     userFilteredCookies?.list_cate?.length !== 0 ||
-    userFilteredCookies?.list_cate !== undefined
+      userFilteredCookies?.list_cate !== undefined
       ? userFilteredCookies?.list_cate?.map((cate: any) => cate[1])
       : [];
   // searchParams
@@ -296,7 +300,9 @@ const NewJobs: React.FC = () => {
 
   const allLocation = async () => {
     try {
-      const allLocation = await locationApi.getAllLocation('vi');
+      const allLocation = await locationApi.getAllLocation(
+        languageRedux === 1 ? "vi" : "en"
+      );
 
       if (allLocation) {
         setDataAllLocation(allLocation.data);
@@ -312,11 +318,13 @@ const NewJobs: React.FC = () => {
     // delete param when back to page
     // console.log('search parameters: ', Number(searchParams.get('job-type')));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise('vi');
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -330,7 +338,7 @@ const NewJobs: React.FC = () => {
     // getAllLocations()
     // delete param when back to page
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   // handle click post details
   // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -466,9 +474,10 @@ const NewJobs: React.FC = () => {
       LIST_CATEGORIES_ID,
       LIST_DIS_ID,
       SALARY_TYPE,
+      languageRedux === 1 ? "vi" : "en"
     );
 
-    console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', result);
+    // console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', result);
     //
     if (result && result?.data?.posts.length !== 0) {
       setSearchData((prev: any) => {
@@ -532,12 +541,25 @@ const NewJobs: React.FC = () => {
     }
   };
 
+  // console.log('loca', locationOneItem);
+  // console.log('cae', cateloryOneItem);
+
   const DropdownRenderLocation = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
-      <Text className="title-filter_location">Chọn địa điểm</Text>
+      <Text className="title-filter_location">
+        {
+          languageRedux === 1 ?
+            searchResultVi.palce_location :
+            searchResultEn.palce_location
+        }
+      </Text>
       {menus}
       <Divider style={{ margin: 5 }}>
-        {disableLocation ? 'Chỉ có thể tối đa 10 địa điểm' : ''}
+        {disableLocation ?
+          languageRedux === 1 ?
+            searchResultVi.limit_10_location :
+            searchResultEn.limit_10_location
+          : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -552,10 +574,20 @@ const NewJobs: React.FC = () => {
 
   const DropdownRenderCategory = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
-      <Text className="title-filter_location">Chọn danh mục nghề nghiệp</Text>
+      <Text className="title-filter_location">
+        {
+          languageRedux === 1 ?
+            searchResultVi.palce_cate :
+            searchResultEn.palce_cate
+        }
+      </Text>
       {menus}
       <Divider style={{ margin: 5 }}>
-        {disableCatelory ? 'Chỉ có thể tối đa 10 danh mục' : ''}
+        {disableCatelory ?
+          languageRedux === 1 ?
+            searchResultVi.limit_10_cate :
+            searchResultEn.limit_10_cate
+          : ''}
       </Divider>
     </div>
   );
@@ -563,7 +595,9 @@ const NewJobs: React.FC = () => {
   const fetchDataProfileUser = async () => {
     try {
       await dispatch(getProfile() as any);
-      const result = await profileApi.getProfile('vi');
+      const result = await profileApi.getProfile(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setProfileUser(result.data);
       }
@@ -576,7 +610,7 @@ const NewJobs: React.FC = () => {
   useEffect(() => {
     fetchDataProfileUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   // useEffect(() => {
   //   if (dataAllLocation && dataAllLocation.length > 0) {
@@ -643,7 +677,9 @@ const NewJobs: React.FC = () => {
       } else {
         messageApi.open({
           type: 'error',
-          content: 'Tạo từ khóa công việc không thành công.',
+          content: languageRedux === 1 ?
+            searchResultVi.alert_create_fail :
+            searchResultEn.alert_create_fail,
         });
       }
     } catch (error: any) {
@@ -653,7 +689,9 @@ const NewJobs: React.FC = () => {
       ) {
         messageApi.open({
           type: 'error',
-          content: 'Bạn chỉ có thể tạo 10 từ khóa.',
+          content: languageRedux === 1 ?
+            searchResultVi.limit_10_keyword :
+            searchResultEn.limit_10_keyword,
         });
       }
     }
@@ -700,6 +738,7 @@ const NewJobs: React.FC = () => {
           LIST_CATEGORIES_ID,
           LIST_DIS_ID,
           SALARY_TYPE,
+          languageRedux === 1 ? "vi" : "en"
         );
         // const result = await searchApi.getSearchByQueryV2(
         //   'null',
@@ -718,7 +757,7 @@ const NewJobs: React.FC = () => {
         //   SALARY_TYPE,
         // );
 
-        console.log('resut', result);
+        // console.log('resut', result);
         if (result) {
           setOpenBackdrop(false);
           setSearchData(result.data);
@@ -733,7 +772,7 @@ const NewJobs: React.FC = () => {
   React.useEffect(() => {
     getPostSearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataProfile, search]);
+  }, [dataProfile, search, languageRedux]);
   // title
 
   // const [titleFirebase, setTitleFirebase] = React.useState<string>('');
@@ -812,11 +851,19 @@ const NewJobs: React.FC = () => {
                   alignItems: 'center',
                 }}
               >
-                Tìm thấy{' '}
+                {
+                  languageRedux === 1 ?
+                    searchResultVi.find :
+                    searchResultEn.find
+                }{' '}
                 <h4 style={{ margin: '0 10px' }}>
                   {searchData ? searchData?.total : 0}
                 </h4>
-                công việc phù hợp
+                {
+                  languageRedux === 1 ?
+                    searchResultVi.suitable_job :
+                    searchResultEn.suitable_job
+                }
               </div>
               <div
                 style={{
@@ -832,7 +879,11 @@ const NewJobs: React.FC = () => {
                   <>
                     <CreateKeywordIconSmall />
                     <span style={{ marginLeft: '4px', fontSize: '20px' }}>
-                      Tạo thông báo từ khóa
+                      {
+                        languageRedux === 1 ?
+                          searchResultVi.create_key_notices :
+                          searchResultEn.create_key_notices
+                      }
                     </span>
                   </>
                 ) : (
@@ -865,7 +916,13 @@ const NewJobs: React.FC = () => {
                       handleChange(e, page);
                     }}
                   >
-                    <p>Xem thêm</p>
+                    <p>
+                      {
+                        languageRedux === 1 ?
+                          searchResultVi.more :
+                          searchResultEn.more
+                      }
+                    </p>
                     <MoreICon width={20} height={20} />
                   </Space>
                 </Stack>
@@ -880,7 +937,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -908,9 +965,19 @@ const NewJobs: React.FC = () => {
             >
               <CloseOutlined style={{ fontSize: '30px' }} />
             </div>
-            <p className="title-modal_createKey">Thông báo từ khóa</p>
+            <p className="title-modal_createKey">
+              {
+                languageRedux === 1 ?
+                  searchResultVi.keyword_announcement :
+                  searchResultEn.keyword_announcement
+              }
+            </p>
             <Input
-              placeholder="Từ khóa"
+              placeholder={
+                languageRedux === 1 ?
+                  searchResultVi.keyword :
+                  searchResultEn.keyword
+              }
               // allowClear
               size="large"
               // onChange={onChange}
@@ -926,7 +993,11 @@ const NewJobs: React.FC = () => {
               multiple
               maxTagCount="responsive"
               size="large"
-              placeholder="Chọn địa điểm"
+              placeholder={
+                languageRedux === 1 ?
+                  searchResultVi.palce_location :
+                  searchResultEn.palce_location
+              }
               inputIcon={<EnvironmentOutlined />}
               dropdownRender={DropdownRenderLocation}
               // defaultValue={
@@ -943,29 +1014,29 @@ const NewJobs: React.FC = () => {
               options={
                 dataAllLocation
                   ? dataAllLocation?.map((dataLocation: any) => ({
-                      value: dataLocation.province_id,
-                      label: dataLocation.province_fullName,
-                      children: dataLocation.districts.map(
-                        (child: { district_id: string; district: string }) => {
-                          var dis = false;
-                          // setLocId([]);
-                          if (disableLocation) {
-                            dis = true;
-                            for (const elem of locId) {
-                              if (elem === child.district_id) {
-                                dis = false;
-                                break;
-                              }
+                    value: dataLocation.province_id,
+                    label: dataLocation.province_fullName,
+                    children: dataLocation.districts.map(
+                      (child: { district_id: string; district: string }) => {
+                        var dis = false;
+                        // setLocId([]);
+                        if (disableLocation) {
+                          dis = true;
+                          for (const elem of locId) {
+                            if (elem === child.district_id) {
+                              dis = false;
+                              break;
                             }
                           }
-                          return {
-                            value: child.district_id,
-                            label: child.district,
-                            disabled: dis,
-                          };
-                        },
-                      ),
-                    }))
+                        }
+                        return {
+                          value: child.district_id,
+                          label: child.district,
+                          disabled: dis,
+                        };
+                      },
+                    ),
+                  }))
                   : []
               }
               onChange={onChangeLocation}
@@ -988,27 +1059,27 @@ const NewJobs: React.FC = () => {
               options={
                 dataCategories
                   ? dataCategories.map((parentCategory: any) => ({
-                      value: parentCategory.parent_category_id,
-                      label: parentCategory.parent_category,
-                      children: parentCategory.childs.map((child: any) => {
-                        var dis = false;
-                        //check id child  when disable = true
-                        if (disableCatelory) {
-                          dis = true;
-                          for (const elem of categoriesId) {
-                            if (elem === child.id) {
-                              dis = false;
-                              break;
-                            }
+                    value: parentCategory.parent_category_id,
+                    label: parentCategory.parent_category,
+                    children: parentCategory.childs.map((child: any) => {
+                      var dis = false;
+                      //check id child  when disable = true
+                      if (disableCatelory) {
+                        dis = true;
+                        for (const elem of categoriesId) {
+                          if (elem === child.id) {
+                            dis = false;
+                            break;
                           }
                         }
-                        return {
-                          value: child.id,
-                          label: child.name,
-                          disabled: dis,
-                        };
-                      }),
-                    }))
+                      }
+                      return {
+                        value: child.id,
+                        label: child.name,
+                        disabled: dis,
+                      };
+                    }),
+                  }))
                   : []
               }
               onChange={onChangeCateLory}
@@ -1022,7 +1093,11 @@ const NewJobs: React.FC = () => {
                 borderRadius: '2px',
                 fontStyle: 'italic',
               }}
-              placeholder="Chọn danh mục ngành nghề"
+              placeholder={
+                languageRedux === 1 ?
+                  searchResultVi.palce_cate :
+                  searchResultEn.palce_cate
+              }
             />
 
             {/* <Select
@@ -1073,7 +1148,11 @@ const NewJobs: React.FC = () => {
                 onClick={handleSubmitKeyword}
                 variant="contained"
               >
-                Áp dụng
+                {
+                  languageRedux === 1 ?
+                    searchResultVi.apply :
+                    searchResultEn.apply
+                }
               </Button>
               {/* <Button
                 sx={{
@@ -1119,7 +1198,13 @@ const NewJobs: React.FC = () => {
             >
               <CloseIcon />
             </IconButton>
-            <p className="title-modal_createKeySuccess">Hoàn thành</p>
+            <p className="title-modal_createKeySuccess">
+              {
+                languageRedux === 1 ?
+                  searchResultVi.successful :
+                  searchResultEn.successful
+              }
+            </p>
             <p
               className="text-modal_createKeySuccess"
               style={{
@@ -1128,11 +1213,18 @@ const NewJobs: React.FC = () => {
                 margin: '12px 0px 4px 0px',
               }}
             >
-              Bạn đã thành công thêm từ khoá, có thể các thông báo sẽ làm phiền,
-              bạn có thể tắt thông báo trong mục Thông báo từ khoá.
+              {
+                languageRedux === 1 ?
+                  searchResultVi.alert_create_success :
+                  searchResultEn.alert_create_success
+              }
             </p>
             <p className="text-modal_createKeySuccess">
-              Bạn có muốn chuyển đến mục thông báo từ khoá không?
+              {
+                languageRedux === 1 ?
+                  searchResultVi.alert_move_to_notification :
+                  searchResultEn.alert_move_to_notification
+              }
             </p>
             <div
               style={{
@@ -1153,7 +1245,11 @@ const NewJobs: React.FC = () => {
                 onClick={handleOpenNotification}
                 variant="contained"
               >
-                Xác nhận
+                {
+                  languageRedux === 1 ?
+                    searchResultVi.confirm :
+                    searchResultEn.confirm
+                }
               </Button>
               {/* <Button
                 sx={{

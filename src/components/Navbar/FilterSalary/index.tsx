@@ -16,6 +16,7 @@ import { RootState } from 'store';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
+import languageApi from 'api/languageApi';
 
 const { Text } = Typography;
 
@@ -53,6 +54,25 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   // const [inputValueMax, setInputValueMax] = useState<string | null>(null);
 
   const [collapseOpen, setCollapseOpen] = useState(false);
+  const [language, setLanguageState] = useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // const [checkSalary, setCheckSalary] = useState(false);
 
@@ -329,9 +349,8 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
         <MoneyFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterSalary input-filter_nav ${
-          inputValueMin || salaryMax ? 'activeSalary' : ''
-        }`}
+        className={`inputFilterSalary input-filter_nav ${inputValueMin || salaryMax ? 'activeSalary' : ''
+          }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -341,24 +360,22 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           header={
             salaryMax || salaryMin
               ? `${new Intl.NumberFormat('en-US').format(
-                  Number(salaryMin?.toString().replace(',', '')),
-                )} - ${new Intl.NumberFormat('en-US').format(
-                  Number(salaryMax?.toString().replace(',', '')),
-                )}`
-              : languageRedux == 1
-              ? `Mức lương`
-              : `Salary`
+                Number(salaryMin?.toString().replace(',', '')),
+              )} - ${new Intl.NumberFormat('en-US').format(
+                Number(salaryMax?.toString().replace(',', '')),
+              )}`
+              : language?.salary
           }
           key="1"
         >
           <Text className="title-filterSalary">
-            {languageRedux == 1 ? `Mức lương` : `Salary`}
+            {language?.salary}
           </Text>
           <Radio.Group
             value={reset ? 1 : selectedValue}
             onChange={handleRadioChange}
             className="inputFilter-groupSalary_radio"
-            // defaultValue={Type_Money}
+          // defaultValue={Type_Money}
           >
             <Radio value={1}>VND</Radio>
             <Radio value={2}>USD</Radio>
@@ -375,11 +392,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMin
                 ? new Intl.NumberFormat('en-US').format(
-                    Number(salaryMin.toString().replace(',', '')),
-                  )
+                  Number(salaryMin.toString().replace(',', '')),
+                )
                 : new Intl.NumberFormat('en-US').format(
-                    Number(salaryMin?.toString().replace(',', '')),
-                  )
+                  Number(salaryMin?.toString().replace(',', '')),
+                )
             }
             onChange={handleInputChangeSalaryMin}
             className="input-text_salary"
@@ -397,11 +414,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
               //   :
               salaryMax
                 ? new Intl.NumberFormat('en-US').format(
-                    Number(salaryMax.toString().replace(',', '')),
-                  )
+                  Number(salaryMax.toString().replace(',', '')),
+                )
                 : new Intl.NumberFormat('en-US').format(
-                    Number(salaryMax?.toString().replace(',', '')),
-                  )
+                  Number(salaryMax?.toString().replace(',', '')),
+                )
             }
             onChange={handleInputChangeSalaryMax}
             className="input-text_salary"

@@ -67,88 +67,95 @@
         align-items: center;
         justify-content: space-between;
         margin-top: 12px;
-     
-        
+
+
         .img-advertisement-job-not-loging {
-            height: 212px ;
-            width: 50% ;
+            height: 212px;
+            width: 50%;
             border-radius: 20px;
-         }
-         .advertisement-job-not-loging-content {
-             margin-right: 200px;
+        }
+
+        .advertisement-job-not-loging-content {
+            margin-right: 200px;
+
             //  position: relative;
             //  top: 0;
             //  right: -50%;
             //  transform: translateX(-100%);
-             h3 {
-                 font-size: 24px;
-                 font-family: Roboto;
-                 // font-size: 24px;
-                 font-style: normal;
-                 font-weight: 700;
-                 line-height: 32px; 
-                 margin-bottom: 12px;
-             }
-             ul {
-                 color: #000;
-                 font-family: Roboto;
-                 font-size: 16px;
-                 font-style: normal;
-                 font-weight: 400;
-                 line-height: 24px;
-                 li {         
-                     color: #000;
-                     font-family: Roboto;
-                     font-size: 16px;
-                     font-style: normal;
-                     font-weight: 400;
-                     line-height: 24px;
-                     margin-left: 24px;
-                 }                
-             }
- 
-        
-         }
+            h3 {
+                font-size: 24px;
+                font-family: Roboto;
+                // font-size: 24px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 32px;
+                margin-bottom: 12px;
+            }
+
+            ul {
+                color: #000;
+                font-family: Roboto;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px;
+
+                li {
+                    color: #000;
+                    font-family: Roboto;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 24px;
+                    margin-left: 24px;
+                }
+            }
+
+
+        }
+
         .ant-btn {
-        padding: 12px 24px;
-        gap: 12px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 48px;
-        flex-shrink: 0;
-        border-radius: 37px;
-        background: rgba(37, 37, 37, 1);
-        transition: all 0.3 linear;
-        margin-top: 24px;
-        margin-right: 10px;
-        position: relative;
-        top: -60px;
-        right: 10px;
+            padding: 12px 24px;
+            gap: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+            flex-shrink: 0;
+            border-radius: 37px;
+            background: rgba(37, 37, 37, 1);
+            transition: all 0.3 linear;
+            margin-top: 24px;
+            margin-right: 10px;
+            position: relative;
+            top: -60px;
+            right: 10px;
 
 
-        &:hover {
-            transform: scale(1.1);
+            &:hover {
+                transform: scale(1.1);
+            }
+
+            &:active {
+                transform: scale(0.9);
+            }
         }
 
-        &:active {
-            transform: scale(0.9);
-        }
-        }
-        @include breakpoint(mobile){
+        @include breakpoint(mobile) {
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
+
             .img-advertisement-job-not-loging {
-                height: auto ;
-                width: 100% ;
+                height: auto;
+                width: 100%;
                 border-radius: 20px;
                 margin-left: 100px;
 
-             }
+            }
 
             .advertisement-job-not-loging-content {
-                margin-right: 0 ;
+                margin-right: 0;
 
                 ul {
                     li {
@@ -158,95 +165,105 @@
 
                 .ant-btn {
                     margin: 12px 0 0 0;
-                    
-                }
-             }
 
-             .ant-btn {
+                }
+            }
+
+            .ant-btn {
                 // position: relative;
                 top: 0px;
+
                 &:hover {
                     transform: scale(1.1);
                 }
-        
+
                 &:active {
                     transform: scale(0.9);
                 }
             }
         }
 
-        @include breakpoint(tablet){
+        @include breakpoint(tablet) {
             flex-direction: column;
             margin-left: 0;
             align-items: flex-start;
+
             .img-advertisement-job-not-loging {
                 height: auto;
                 width: 100%;
-             }
+            }
 
             .advertisement-job-not-loging-content {
                 margin-left: 0;
                 width: 100%;
+
                 ul {
                     li {
                         margin-left: 12px;
                     }
                 }
+
                 .ant-btn {
                     margin: 12px 0 0 0;
                 }
-            
-             }
 
-             .ant-btn {
+            }
+
+            .ant-btn {
                 // position: relative;
                 top: 0px;
+
                 &:hover {
                     transform: scale(1.1);
                 }
-        
+
                 &:active {
                     transform: scale(0.9);
                 }
             }
         }
 
-        @include breakpoint(largeTablet){
+        @include breakpoint(largeTablet) {
             flex-direction: column;
             margin-left: 0px;
             align-items: flex-start;
+
             .img-advertisement-job-not-loging {
                 height: auto;
                 width: 100%;
-             }
+            }
 
             .advertisement-job-not-loging-content {
                 margin-left: 0;
                 margin-right: 0;
                 width: 100%;
+
                 ul {
                     li {
                         margin-left: 12px;
                     }
                 }
+
                 .ant-btn {
                     margin: 12px 0 0 0;
-                }    
-             }
-             .ant-btn {
+                }
+            }
+
+            .ant-btn {
                 // position: relative;
-                top: 0px;    
+                top: 0px;
+
                 &:hover {
                     transform: scale(1.1);
                 }
-        
+
                 &:active {
                     transform: scale(0.9);
                 }
             }
         }
 
-        @include breakpoint(destop){
+        @include breakpoint(destop) {
             // flex-direction: column;
             // margin-left: 0px;
             // align-items: flex-start;
@@ -255,23 +272,26 @@
             .advertisement-job-not-loging-content {
                 margin-left: 20px;
                 margin-right: 50px;
+
                 // width: 100%;
                 ul {
                     li {
                         margin-left: 12px;
                     }
                 }
+
                 .ant-btn {
                     margin: 12px 0 0 0;
-                }    
-             }
+                }
+            }
+
             //  .ant-btn {
             //     // position: relative;
             //     top: 0px;    
             //     &:hover {
             //         transform: scale(1.1);
             //     }
-        
+
             //     &:active {
             //         transform: scale(0.9);
             //     }
@@ -279,7 +299,7 @@
         }
 
 
-    
+
 
     }
 
@@ -342,18 +362,18 @@
                             display: flex;
                             justify-content: space-between;
                             width: 300px;
-                            
+
                             .div-card-post-info_left {
                                 width: 220px;
-                          
-                                
+
+
                                 @include breakpoint(mobile) {
                                     width: 220px;
                                 }
-                                
+
                                 @media screen and (min-width: 300px) and (max-width: 400px) {
                                     width: 150px;
-                                  }
+                                }
 
                                 @include breakpoint(tablet) {
                                     width: 210px;
@@ -369,7 +389,7 @@
                                     height: 100%;
                                     display: flex;
                                     align-items: flex-end;
-             
+
                                     .ant-space-item {
                                         p {
                                             width: 80px;
@@ -377,7 +397,7 @@
                                             white-space: nowrap;
                                             text-overflow: ellipsis;
                                             overflow: hidden;
-                                           color: #0d99ff;
+                                            color: #0d99ff;
                                         }
                                     }
                                 }
@@ -390,6 +410,7 @@
                                     height: 80%;
                                     display: flex;
                                     align-items: flex-end;
+
                                     .ant-space-item {
                                         p {
                                             width: 80px;
@@ -409,7 +430,7 @@
                                     height: 100%;
                                     display: flex;
                                     align-items: flex-end;
-             
+
                                     .ant-space-item {
                                         p {
                                             width: 80px;
@@ -417,7 +438,7 @@
                                             white-space: nowrap;
                                             text-overflow: ellipsis;
                                             overflow: hidden;
-                                           color: #0d99ff;
+                                            color: #0d99ff;
                                         }
                                     }
                                 }
@@ -430,11 +451,13 @@
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
+
                         .applied-posted-card_date {
                             span {
                                 color: #575757;
                             }
                         }
+
                         .button-approved {
                             width: 155px;
                             height: 36px;
@@ -542,6 +565,7 @@
         .swiper-button-next {
             background: linear-gradient(270deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
             right: 0;
+
             @include breakpoint(mobile) {
                 background: none;
             }
@@ -558,24 +582,27 @@
     }
 
     @include breakpoint(mobile) {
-    .applied-posted-job-not-loging {
-        flex-direction: column;
-        align-items: flex-start;
-        .applied-posted-job-not-loging_left {
-            margin-bottom: 8px;
+        .applied-posted-job-not-loging {
+            flex-direction: column;
+            align-items: flex-start;
+
+            .applied-posted-job-not-loging_left {
+                margin-bottom: 8px;
+            }
         }
-     }
     }
 
-      @include breakpoint(tablet) {
+    @include breakpoint(tablet) {
+
         // display: none;
         .applied-posted-job-not-loging {
-           flex-direction: column;
-           align-items: flex-start;
-           .applied-posted-job-not-loging_left {
-            margin-bottom: 8px;
-           }
+            flex-direction: column;
+            align-items: flex-start;
+
+            .applied-posted-job-not-loging_left {
+                margin-bottom: 8px;
+            }
         }
-      }
+    }
 
 }

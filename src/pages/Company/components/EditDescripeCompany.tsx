@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
+import languageApi from 'api/languageApi';
 
 const styleLabel = {
   fontWeight: 700,
@@ -21,6 +22,25 @@ interface IEditDescripeCompany {
 const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { dataCompany, setDataCompany } = props;
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleEditCompanyDes = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -42,9 +62,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           htmlFor="editCompany"
         >
           {
-            languageRedux === 1 ?
-              company.company_des :
-              companyEn.company_des
+            language?.company_décription
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>

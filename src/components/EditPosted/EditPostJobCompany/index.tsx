@@ -13,10 +13,11 @@ const styleLabel = {
 interface IEditPostJobCompany {
   setEditDataPosted: any;
   editDataPosted: any;
+  language: any;
 }
 
 const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
-  const { setEditDataPosted, editDataPosted } = props;
+  const { setEditDataPosted, editDataPosted, language } = props;
 
   const handleEditJobName = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -47,7 +48,10 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          Tên công việc <span style={{ color: 'red' }}>*</span>
+          {
+            language?.job_title
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -57,8 +61,10 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           onChange={handleEditJobName}
           size="small"
           sx={{ width: '100%', marginTop: '0.5rem' }}
-          placeholder="Tên công việc"
-          //   error={titleError} // Đánh dấu lỗi
+          placeholder={
+            language?.job_title
+          }
+        //   error={titleError} // Đánh dấu lỗi
         />
       </div>
       <div className="edit-title_company edit-posted_title">
@@ -68,7 +74,9 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          Tên công ty <span style={{ color: 'red' }}>*</span>
+          {
+            language?.company
+          }{' '}<span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -78,8 +86,10 @@ const EditPostJobCompany: React.FC<IEditPostJobCompany> = (props) => {
           onChange={handleEditCompanyName}
           size="small"
           sx={{ width: '100%', marginTop: '0.5rem' }}
-          placeholder="Tên công việc"
-          //   error={titleError} // Đánh dấu lỗi akla
+          placeholder={
+            language?.company
+          }
+        //   error={titleError} // Đánh dấu lỗi akla
         />
       </div>
     </div>

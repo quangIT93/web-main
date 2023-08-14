@@ -56,6 +56,7 @@ import JobCard from '../JobCard';
 import ModalLogin from '../../../components/Home/ModalLogin';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
+import languageApi from 'api/languageApi';
 
 interface PostTheme {
   id: number;
@@ -97,6 +98,25 @@ const ThemesJob: React.FC = () => {
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [nearJob, setNearJob] = React.useState<any>([]);
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // state redux
   // const { post } = useSelector((state: RootState) => state);
@@ -215,9 +235,7 @@ const ThemesJob: React.FC = () => {
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <SuggestIcon width={25} height={25} />
         <h2>
-          {languageRedux === 1
-            ? home.suggested_jobs_in_your_city
-            : homeEn.suggested_jobs_in_your_city}
+          {language?.nearby_jobs}
         </h2>
       </div>
 
@@ -261,7 +279,7 @@ const ThemesJob: React.FC = () => {
                 {localStorage.getItem('accessToken') ? (
                   <div className="more-job">
                     <p onClick={handleChange}>
-                      {languageRedux === 1 ? home.more : homeEn.more}
+                      {language?.more}
                     </p>
                     <MoreICon width={20} height={20} />
                   </div>
@@ -287,7 +305,7 @@ const ThemesJob: React.FC = () => {
                         }}
                       >
                         <LoginArrowIcon />
-                        {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+                        {language?.login}
                       </Button>
                     </div>
                   </div>
@@ -301,7 +319,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //   onClick={handleClose}
+            //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

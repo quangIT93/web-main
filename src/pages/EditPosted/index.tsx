@@ -41,6 +41,13 @@ import historyRecruiter from 'api/historyRecruiter';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
+import languageApi from 'api/languageApi';
+
+import { RootState } from '../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
+
 export interface FormValues {
   id: string;
   title: string;
@@ -111,6 +118,7 @@ const EditPosted = () => {
     email: '',
     deletedImages: [],
   });
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
 
   const [dataPostAccount, SetDataPostAccount] = React.useState<any>([]);
 
@@ -124,15 +132,37 @@ const EditPosted = () => {
 
   const analytics: any = getAnalytics();
 
+  const [language, setLanguage] = useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
+
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = 'HiJob - Chi tiết bài đăng tuyển dụng';
+    document.title = languageRedux === 1 ?
+      post.title_edit_page :
+      postEn.title_edit_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_editPost' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   useEffect(() => {
     if (dataPostById) {
@@ -181,7 +211,9 @@ const EditPosted = () => {
 
   const getDataPosted = async () => {
     try {
-      const result = await postApi.getPostbyId(postId, 'vi');
+      const result = await postApi.getPostbyId(postId,
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (
         result &&
         dataPostAccount.find((item: any) => item.post_id === postId)
@@ -216,7 +248,7 @@ const EditPosted = () => {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataPostAccount]);
+  }, [dataPostAccount, languageRedux]);
 
   const getAllPostAccount = async () => {
     try {
@@ -224,7 +256,7 @@ const EditPosted = () => {
         0,
         20,
         '-1',
-        'vi',
+        languageRedux === 1 ? "vi" : "en",
       );
 
       if (result) {
@@ -238,7 +270,7 @@ const EditPosted = () => {
   React.useEffect(() => {
     getAllPostAccount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
@@ -325,25 +357,33 @@ const EditPosted = () => {
   const validValue = () => {
     if (editDataPosted?.title === '') {
       return {
-        message: 'Vui lòng nhập tên công việc',
+        message: languageRedux === 1 ?
+          post.err_job_title :
+          postEn.err_job_title,
         checkForm: false,
       };
     }
     if (editDataPosted?.company_name === '') {
       return {
-        message: 'Vui lòng nhập tên công ty',
+        message: languageRedux === 1 ?
+          post.err_company_name :
+          postEn.err_company_name,
         checkForm: false,
       };
     }
     if (editDataPosted?.title === '') {
       return {
-        message: 'Vui lòng nhập dia chi',
+        message: languageRedux === 1 ?
+          post.err_address :
+          postEn.err_address,
         checkForm: false,
       };
     }
     if (editDataPosted?.ward_id === '') {
       return {
-        message: 'Vui lòng chọn tỉnh thành phố',
+        message: languageRedux === 1 ?
+          post.err_location :
+          postEn.err_location,
         checkForm: false,
       };
     }
@@ -360,7 +400,9 @@ const EditPosted = () => {
       editDataPosted?.categoryIds?.length <= 0
     ) {
       return {
-        message: 'Vui lòng chọn danh mục nghề nghiệp',
+        message: languageRedux === 1 ?
+          post.err_cate :
+          postEn.err_cate,
         checkForm: false,
       };
     }
@@ -371,13 +413,17 @@ const EditPosted = () => {
         editDataPosted?.salaryType !== 6)
     ) {
       return {
-        message: 'Vui lòng nhập mức lương',
+        message: languageRedux === 1 ?
+          post.err_salary :
+          postEn.err_salary,
         checkForm: false,
       };
     }
     if (Number(editDataPosted?.salaryMax) < Number(editDataPosted?.salaryMin)) {
       return {
-        message: 'Lương tối đa phải lớn hơn lương tối thiểu',
+        message: languageRedux === 1 ?
+          post.err_verify_salary :
+          postEn.err_verify_salary,
         checkForm: false,
       };
     }
@@ -388,13 +434,17 @@ const EditPosted = () => {
       (editDataPosted?.phoneNumber && editDataPosted?.phoneNumber?.length > 11)
     ) {
       return {
-        message: 'Số điện thoại sai định dạng',
+        message: languageRedux === 1 ?
+          post.err_phone_mess :
+          postEn.err_phone_mess,
         checkForm: false,
       };
     }
     if (editDataPosted?.description === '') {
       return {
-        message: 'Vui lòng nhập mô tả công việc',
+        message: languageRedux === 1 ?
+          post.err_des_mess :
+          postEn.err_des_mess,
         checkForm: false,
       };
     }
@@ -404,7 +454,9 @@ const EditPosted = () => {
       editDataPosted?.startDate > editDataPosted?.endDate
     ) {
       return {
-        message: 'Vui lòng nhập lại ngày làm việc',
+        message: languageRedux === 1 ?
+          post.err_date :
+          postEn.err_date,
         checkForm: false,
       };
     }
@@ -437,7 +489,9 @@ const EditPosted = () => {
       if (error?.response?.data?.message === 'Invalid date value') {
         messageApi.open({
           type: 'error',
-          content: 'Vui lòng nhập lại ngày làm việc',
+          content: languageRedux === 1 ?
+            post.err_date :
+            postEn.err_date,
         });
       }
     }
@@ -452,40 +506,56 @@ const EditPosted = () => {
         <Navbar />
         <div className="edit-posted_main">
           <div className="edit-title_post">
-            <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
+            <h1>
+              {
+                languageRedux === 1 ?
+                  post.edit_post :
+                  postEn.edit_post
+              }
+            </h1>
           </div>
           <Skeleton loading={loading} active>
             <form action="">
               <EditPostJobCompany
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
               />
 
               <EditPostAddress
                 dataPostById={dataPostById}
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostImage
                 editDataPosted={memoizedEditDataPosted}
                 setEditDataPosted={setEditDataPosted}
                 dataPosted={dataPostById?.images}
+                languageRedux={languageRedux}
               />
 
               <EditPostTypeJob
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostPeriodDate
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
               {editDataPosted?.isDatePeriod === 1 ? (
                 <EditRecruitmentTime
                   setEditDataPosted={setEditDataPosted}
                   editDataPosted={memoizedEditDataPosted}
+                  language={language}
+                  languageRedux={languageRedux}
                 />
               ) : (
                 <></>
@@ -494,6 +564,7 @@ const EditPosted = () => {
                 <EditStyleWork
                   setEditDataPosted={setEditDataPosted}
                   editDataPosted={memoizedEditDataPosted}
+                  language={language}
                 />
               ) : (
                 <></>
@@ -502,22 +573,28 @@ const EditPosted = () => {
               <EditPostTime
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
               />
               <EditPostCategoryId
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
                 dataPost={dataPostById?.categories}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditSalaryType
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostTypeSalary
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
                 salaryType={editDataPosted?.salaryType}
+                language={language}
               />
 
               <EditPostFilterSalary
@@ -525,16 +602,22 @@ const EditPosted = () => {
                 editDataPosted={memoizedEditDataPosted}
                 salaryType={editDataPosted?.salaryType}
                 dataOld={dataPostById}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostNumberPhone
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditDescription
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <button
@@ -542,7 +625,11 @@ const EditPosted = () => {
                 onClick={handleSubmit}
                 className="btn-edit_submitForm"
               >
-                Lưu chỉnh sửa
+                {
+                  languageRedux === 1 ?
+                    post.save_edit_post :
+                    postEn.save_edit_post
+                }
               </button>
             </form>
           </Skeleton>
@@ -550,6 +637,8 @@ const EditPosted = () => {
         <ModalEditSuccess
           openModalEditPost={openModalEditPost}
           setOpenModalEditPost={setOpenModalEditPost}
+          languageRedux={languageRedux}
+          language={language}
         />
         <RollTop />
         <Footer />

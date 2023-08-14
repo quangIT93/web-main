@@ -25,6 +25,12 @@ import {
 
 import './style.scss';
 import profileApi from 'api/profileApi';
+
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -67,9 +73,12 @@ interface IInfoPersonal {
 }
 
 const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { openModelPersonalInfo, setOpenModalPersonalInfo, profile } = props;
   const [gender, setGender] = React.useState(
-    profile?.gender != null ? (profile.gender === 1 ? 'Nam' : 'Nữ') : null,
+    profile?.gender != null ? (profile.gender === 1 ?
+      "Nam" :
+      "Nữ") : null,
   );
   const [day, setDay] = useState(
     profile?.birthday ? moment(new Date(profile?.birthday)) : moment(),
@@ -83,6 +92,26 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
+
   const dispatch = useDispatch();
   // const dataProfile = useSelector((state: RootState) => state.profile.profile);
 
@@ -92,7 +121,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
 
   const getAllProvinces = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces('vi');
+      const allLocation = await locationApi.getAllLocation(
+        languageRedux === 1 ? "vi" : "en"
+      );
 
       if (allLocation) {
         setDataProvinces(allLocation.data);
@@ -107,7 +138,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     // getAllLocations()
     // delete param when back to page
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const handleDateChange = (date: any) => {
     setDay(moment(date._d));
@@ -131,14 +162,18 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const validValue = () => {
     if (name === '') {
       return {
-        message: 'Vui lòng nhập tên',
+        message: languageRedux === 1 ?
+          profileVi.err_name :
+          profileEn.err_name,
         checkForm: false,
       };
     }
 
     if (introduction === '') {
       return {
-        message: 'Vui lòng nhập giới thiệu bản thân',
+        message: languageRedux === 1 ?
+          profileVi.err_intro :
+          profileEn.err_intro,
         checkForm: false,
       };
     }
@@ -178,7 +213,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       console.log(error);
       messageApi.open({
         type: 'error',
-        content: 'Vui lòng kiểm tra lại thông tin đã nhập',
+        content: languageRedux === 1 ?
+          profileVi.check_info_please :
+          profileEn.check_info_please,
       });
     }
   };
@@ -220,7 +257,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            Thông tin cá nhân
+            {
+              language?.personal_information
+            }
           </Typography>
           <Box sx={styleChildBox}>
             <Typography
@@ -229,7 +268,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              Họ và tên <span className="color-asterisk">*</span>
+              {
+                language?.full_name
+              }{' '}
+              <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               type="text"
@@ -240,7 +282,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -250,7 +292,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="sex"
             >
-              Giới tính <span className="color-asterisk">*</span>
+              {
+                language?.sex
+              }{' '}
+              <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               select
@@ -259,13 +304,23 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               // defaultValue={gender}
               onChange={handleChange}
               variant="outlined"
-              placeholder="Giới tính"
+              placeholder={
+                language?.sex
+              }
               size="small"
               sx={{ width: '100%' }}
               error={!gender} // Đánh dấu lỗi
             >
-              <MenuItem value="Nam">Nam</MenuItem>
-              <MenuItem value="Nữ">Nữ</MenuItem>
+              <MenuItem value="Nam">
+                {
+                  language?.male
+                }
+              </MenuItem>
+              <MenuItem value="Nữ">
+                {
+                  language?.female
+                }
+              </MenuItem>
             </TextField>
           </Box>
           <Box sx={styleChildBox}>
@@ -276,7 +331,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   component="label"
                   htmlFor="startTime"
                 >
-                  Ngày sinh <span className="color-asterisk">*</span>
+                  {
+                    language?.date_of_birth
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={day}
@@ -286,7 +344,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       helperText: 'DD/MM/yyyy',
                     },
                   }}
-                  // format="DD/MM/YYYY"
+                // format="DD/MM/YYYY"
                 />
               </div>
             </LocalizationProvider>
@@ -298,16 +356,19 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="jobTitle"
             >
-              Địa điểm <span className="color-asterisk">*</span>
+              {
+                language?.location
+              }{' '}
+              <span className="color-asterisk">*</span>
             </Typography>
             <Autocomplete
               options={dataProvinces ? dataProvinces : []}
-              getOptionLabel={(option: any) => option?.name || ''}
+              getOptionLabel={(option: any) => option?.province_fullName || ''}
               value={
                 selectedProvince
                   ? dataProvinces?.find(
-                      (province: any) => province.id === selectedProvince.id,
-                    )
+                    (province: any) => province.province_id === selectedProvince.id,
+                  )
                   : null
               }
               defaultValue={dataProvinces}
@@ -315,7 +376,11 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  placeholder="Tỉnh/TP"
+                  placeholder={
+                    languageRedux === 1 ?
+                      profileVi.place_address :
+                      profileEn.place_address
+                  }
                   size="small"
                   error={!selectedProvince}
                 />
@@ -329,7 +394,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="startTime"
             >
-              Giới thiệu bản thân <span className="color-asterisk">*</span>
+              {
+                language?.self_describtion
+              }{' '}
+              <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               // className={classes.textarea}
@@ -340,20 +408,25 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={introduction}
               id="profile-introduction"
               // label="Một số đặc điểm nhận diện công ty"
-              placeholder="Giới thiệu bản thân với Nhà Tuyển dụng
-            Nêu sở trường và mong muốn của bạn liên quan đến công việc để gây chú ý với Nhà Tuyển dụng"
+              placeholder={
+                language?.introduce_yourself_to_the_recruiter
+              }
               error={!introduction} // Đánh dấu lỗi
-              // onKeyDown={(event) => {
-              //   // if (event.key === 'Enter') {
-              //   //   event.preventDefault();
-              //   // }
-              //   console.log(event.target);
-              // }}
+            // onKeyDown={(event) => {
+            //   // if (event.key === 'Enter') {
+            //   //   event.preventDefault();
+            //   // }
+            //   console.log(event.target);
+            // }}
             />
           </Box>
         </form>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            languageRedux === 1 ?
+              profileVi.save_info :
+              profileEn.save_info
+          }
         </Button>
       </Box>
     </Modal>

@@ -112,6 +112,7 @@ import { setLanguage } from 'store/reducer/changeLanguageReducer';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
+import languageApi from 'api/languageApi';
 // import { set } from 'immer/dist/internal';
 
 // import redux
@@ -127,17 +128,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean;
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-    search: boolean;
-  } = useContext(HomeValueContext);
+    {
+      openCollapseFilter: boolean;
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+      search: boolean;
+    } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -185,6 +186,7 @@ const Navbar: React.FC = () => {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   // const [isSearch, setIsSearch] = useState<boolean>(false);
+  const [language, setLanguageState] = useState<any>();
 
   useEffect(() => {
     // if(localStorage.getItem('accessToken')){
@@ -280,6 +282,26 @@ const Navbar: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
+
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
   // handle show tap on screen mobile
   // const handleTap = () => {
   //   setShowTap(!showTap);
@@ -890,8 +912,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="2"
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -920,8 +942,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-            openLogin &&
-            location?.pathname === '/'
+              openLogin &&
+              location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1002,11 +1024,11 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                            return `${location.district} , `;
-                          })
+                          return `${location.district} , `;
+                        })
                         : languageRedux === 1
-                        ? 'Chưa cập nhật thông tin'
-                        : 'The information has not been updated'}
+                          ? 'Chưa cập nhật thông tin'
+                          : 'The information has not been updated'}
                     </p>
                   </span>
                   <span
@@ -1018,11 +1040,11 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                            return `${profile.parent_category} / ${profile.child_category}, `;
-                          })
+                          return `${profile.parent_category} / ${profile.child_category}, `;
+                        })
                         : languageRedux === 1
-                        ? 'Chưa cập nhật thông tin'
-                        : 'The information has not been updated'}
+                          ? 'Chưa cập nhật thông tin'
+                          : 'The information has not been updated'}
                     </p>
                   </span>
                 </div>
@@ -1045,9 +1067,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageRedux === 1 ? 'Lịch sử' : 'History'}</span>
@@ -1055,7 +1077,7 @@ const Navbar: React.FC = () => {
               </Link>
               <div className="sub-history_status">
                 <span>
-                  {languageRedux === 1 ? home.approved : homeEn.approved}{' '}
+                  {language?.approved}{' '}
                   {`${approved}`}
                 </span>
                 {/* <span>|</span> */}
@@ -1073,15 +1095,15 @@ const Navbar: React.FC = () => {
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
               </div> */}
-              <div
+              {/* <div
                 className="sub-login_item__translate"
                 onClick={handleOpenRadioGroup}
-                // style={{
-                //   borderBottom: openRadioGroup
-                //     ? 'none'
-                //     : '1px solid rgba(170, 170, 170, 1)',
-                // }}
-                style={{ display: 'none' }}
+                style={{
+                  borderBottom: openRadioGroup
+                    ? 'none'
+                    : '1px solid rgba(170, 170, 170, 1)',
+                }}
+              // style={{ display: 'none' }}
               >
                 <div className="sub-translate_header_left">
                   <TranslateSubLoginIcon />
@@ -1095,12 +1117,12 @@ const Navbar: React.FC = () => {
                 >
                   <ArrowSubLoginIcon />
                 </div>
-              </div>
+              </div> */}
 
               <div
                 className="sub-translate_status"
                 style={{
-                  height: openRadioGroup ? '100%' : '0',
+                  // height: openRadioGroup ? '100%' : '0',
                 }}
               >
                 <Radio.Group
@@ -1109,23 +1131,23 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                  style={{
-                    display: openRadioGroup ? 'flex' : 'none',
-                  }}
+                // style={{
+                //   display: openRadioGroup ? 'flex' : 'none',
+                // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
                     <span>
-                      {languageRedux === 1 ? 'Tiếng Việt' : 'Vietnamese'}
+                      {language?.vietnamese}
                     </span>
                   </Radio>
                   <Radio value={2}>
                     <ENSubLoginIcon />
-                    <span>{languageRedux === 1 ? 'Tiếng Anh' : 'English'}</span>
+                    <span>{language?.english}</span>
                   </Radio>
                   {/* <Radio value={3}>
                     <ENSubLoginIcon />
-                    <span>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</span>
+                    <span>{language?.korean}</span>
                   </Radio> */}
                 </Radio.Group>
               </div>
@@ -1137,7 +1159,7 @@ const Navbar: React.FC = () => {
               >
                 <LogoutSubLoginIcon />
 
-                <span>{languageRedux === 1 ? 'Đăng xuất' : 'Log out'}</span>
+                <span>{language?.sign_out}</span>
               </div>
 
               {/* <div className="sub-login_item" onClick={handleLogout}>
@@ -1256,11 +1278,11 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                            return `${location.district} , `;
-                          })
+                          return `${location.district} , `;
+                        })
                         : languageRedux === 1
-                        ? 'Chưa cập nhật thông tin'
-                        : 'The information has not been updated'}
+                          ? 'Chưa cập nhật thông tin'
+                          : 'The information has not been updated'}
                     </p>
                   </span>
                   <span
@@ -1272,11 +1294,11 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                            return `${profile.parent_category} / ${profile.child_category}, `;
-                          })
+                          return `${profile.parent_category} / ${profile.child_category}, `;
+                        })
                         : languageRedux === 1
-                        ? 'Chưa cập nhật thông tin'
-                        : 'The information has not been updated'}
+                          ? 'Chưa cập nhật thông tin'
+                          : 'The information has not been updated'}
                     </p>
                   </span>
                 </div>
@@ -1299,9 +1321,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageRedux === 1 ? 'Lịch sử' : 'History'}</span>
@@ -1407,9 +1429,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1694,13 +1715,13 @@ const Navbar: React.FC = () => {
 
           <div className="btn-filter_nav">
             <Button type="default" onClick={handleResetValue}>
-              {languageRedux === 1 ? 'Đặt Lại' : 'Reset'}
+              {language?.reset}
             </Button>
             <Button
               type="primary"
               onClick={(e) => handleSearch(e, valueSearchInput)}
             >
-              {languageRedux === 1 ? 'Áp dụng' : 'Apply'}
+              {language?.apply}
             </Button>
           </div>
         </Collapse>

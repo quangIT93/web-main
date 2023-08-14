@@ -11,6 +11,11 @@ import { CloseOutlined } from '@ant-design/icons';
 
 // data
 import profileApi from 'api/profileApi';
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
 // import { useDispatch } from 'react-redux';
 // import {
 //   getProfile,
@@ -72,6 +77,7 @@ interface IInfoEducation {
 const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
   props,
 ) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const {
     openModalEducationCreate,
     setOpenModalEducationCreate,
@@ -96,6 +102,26 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
     endDate: new Date(2023, 4, 30, 0, 0).getTime(),
     extraInformation: '',
   });
+
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleClose = () => setOpenModalEducationCreate(false);
 
@@ -190,7 +216,11 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Thêm thông tin trình độ học vấn
+          {
+            languageRedux === 1 ?
+              profileVi.add_education :
+              profileEn.add_education
+          }
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -199,7 +229,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Trường/Tổ chức <span className="color-asterisk">*</span>
+            {
+              language?.school_organization
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -209,8 +242,12 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Nhập tên trường hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              languageRedux === 1 ?
+                profileVi.place_school :
+                profileEn.place_school
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -221,7 +258,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chuyên ngành <span className="color-asterisk">*</span>
+            {
+              language?.major
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -231,8 +271,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             onChange={handleChangeMajor}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Ngành"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.major
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -248,7 +290,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu <span className="color-asterisk">*</span>
+                  {
+                    language?.start_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.startDate)}
@@ -265,7 +310,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc <span className="color-asterisk">*</span>
+                  {
+                    language?.finish_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.endDate)}
@@ -286,7 +334,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung <span className="color-asterisk">*</span>
+            {
+              language?.additional_information
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}
@@ -295,12 +346,21 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             multiline
             rows={4}
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder="Để được nhà tuyển dụng quan tâm và tăng cơ hội ứng tuyển vào công ty mong muốn. Hẫy nhập thông tin bổ sung của bạn vào đây!"
+            placeholder={
+              languageRedux === 1 ?
+                profileVi.place_additional_information :
+                profileEn.place_additional_information
+            }
+
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            languageRedux === 1 ?
+              profileVi.save_info :
+              profileEn.save_info
+          }
         </Button>
       </Box>
     </Modal>
