@@ -216,13 +216,13 @@ const AppliedPostedJob: React.FC = () => {
           style={{ display: !isLogined ? 'flex' : 'none' }}
         >
           {/* <Advertisement /> */}
-          <img
+          {/* <img
             src="../images/absHijob.png"
             alt="Ảnh lỗi"
             className="img-advertisement-job-not-loging"
-          // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
-          />
-
+            // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
+          /> */}
+          <Advertisement />
           <div className="advertisement-job-not-loging-content">
             <h3>
               {languageRedux === 1 ?
@@ -249,16 +249,16 @@ const AppliedPostedJob: React.FC = () => {
                   "Easy communication with Candidates"}
               </li>
             </ul>
-            <Button
-              type="primary"
-              onClick={() => {
-                setOpenModalLogin(true);
-              }}
-            >
-              <LoginArrowIcon />
-              {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
-            </Button>
           </div>
+          <Button
+            type="primary"
+            onClick={() => {
+              setOpenModalLogin(true);
+            }}
+          >
+            <LoginArrowIcon />
+            {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+          </Button>
         </div>
 
         <Swiper

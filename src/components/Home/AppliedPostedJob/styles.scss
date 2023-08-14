@@ -65,17 +65,23 @@
     .advertisement-job-not-loging {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         margin-top: 12px;
 
+
         .img-advertisement-job-not-loging {
-            height: 300px;
+            height: 212px;
             width: 50%;
             border-radius: 20px;
         }
 
         .advertisement-job-not-loging-content {
-            margin-left: 30px;
+            margin-right: 200px;
 
+            //  position: relative;
+            //  top: 0;
+            //  right: -50%;
+            //  transform: translateX(-100%);
             h3 {
                 font-size: 24px;
                 font-family: Roboto;
@@ -101,32 +107,37 @@
                     font-style: normal;
                     font-weight: 400;
                     line-height: 24px;
-
+                    margin-left: 24px;
                 }
             }
 
-            .ant-btn {
-                padding: 12px 24px;
-                gap: 12px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 48px;
-                flex-shrink: 0;
-                border-radius: 37px;
-                background: rgba(37, 37, 37, 1);
-                transition: all 0.3 linear;
-                margin-top: 24px;
-                margin-left: 10px;
+
+        }
+
+        .ant-btn {
+            padding: 12px 24px;
+            gap: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+            flex-shrink: 0;
+            border-radius: 37px;
+            background: rgba(37, 37, 37, 1);
+            transition: all 0.3 linear;
+            margin-top: 24px;
+            margin-right: 10px;
+            position: relative;
+            top: -60px;
+            right: 10px;
 
 
-                &:hover {
-                    transform: scale(1.1);
-                }
+            &:hover {
+                transform: scale(1.1);
+            }
 
-                &:active {
-                    transform: scale(0.9);
-                }
+            &:active {
+                transform: scale(0.9);
             }
         }
 
@@ -138,11 +149,13 @@
             .img-advertisement-job-not-loging {
                 height: auto;
                 width: 100%;
+                border-radius: 20px;
+                margin-left: 100px;
+
             }
 
             .advertisement-job-not-loging-content {
-
-                margin-left: 0;
+                margin-right: 0;
 
                 ul {
                     li {
@@ -155,10 +168,25 @@
 
                 }
             }
+
+            .ant-btn {
+                // position: relative;
+                top: 0px;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+
+                &:active {
+                    transform: scale(0.9);
+                }
+            }
         }
 
         @include breakpoint(tablet) {
             flex-direction: column;
+            margin-left: 0;
+            align-items: flex-start;
 
             .img-advertisement-job-not-loging {
                 height: auto;
@@ -181,6 +209,93 @@
 
             }
 
+            .ant-btn {
+                // position: relative;
+                top: 0px;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+
+                &:active {
+                    transform: scale(0.9);
+                }
+            }
+        }
+
+        @include breakpoint(largeTablet) {
+            flex-direction: column;
+            margin-left: 0px;
+            align-items: flex-start;
+
+            .img-advertisement-job-not-loging {
+                height: auto;
+                width: 100%;
+            }
+
+            .advertisement-job-not-loging-content {
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+
+                ul {
+                    li {
+                        margin-left: 12px;
+                    }
+                }
+
+                .ant-btn {
+                    margin: 12px 0 0 0;
+                }
+            }
+
+            .ant-btn {
+                // position: relative;
+                top: 0px;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+
+                &:active {
+                    transform: scale(0.9);
+                }
+            }
+        }
+
+        @include breakpoint(destop) {
+            // flex-direction: column;
+            // margin-left: 0px;
+            // align-items: flex-start;
+
+
+            .advertisement-job-not-loging-content {
+                margin-left: 20px;
+                margin-right: 50px;
+
+                // width: 100%;
+                ul {
+                    li {
+                        margin-left: 12px;
+                    }
+                }
+
+                .ant-btn {
+                    margin: 12px 0 0 0;
+                }
+            }
+
+            //  .ant-btn {
+            //     // position: relative;
+            //     top: 0px;    
+            //     &:hover {
+            //         transform: scale(1.1);
+            //     }
+
+            //     &:active {
+            //         transform: scale(0.9);
+            //     }
+            // }
         }
 
 
@@ -243,6 +358,7 @@
                         }
 
                         .div-card-post-info {
+                            position: relative;
                             display: flex;
                             justify-content: space-between;
                             width: 300px;
@@ -252,11 +368,11 @@
 
 
                                 @include breakpoint(mobile) {
-                                    width: 180px;
+                                    width: 220px;
                                 }
 
                                 @media screen and (min-width: 300px) and (max-width: 400px) {
-                                    width: 120px;
+                                    width: 150px;
                                 }
 
                                 @include breakpoint(tablet) {
@@ -264,9 +380,15 @@
                                 }
                             }
 
-                            .div-card-post-right {
+                            .div-cardApplied-post-right {
                                 @include breakpoint(mobile) {
                                     width: 60px;
+                                    position: absolute;
+                                    right: 4px;
+                                    top: 0px;
+                                    height: 100%;
+                                    display: flex;
+                                    align-items: flex-end;
 
                                     .ant-space-item {
                                         p {
@@ -282,6 +404,12 @@
 
                                 @include breakpoint(tablet) {
                                     width: 70px;
+                                    position: absolute;
+                                    right: 4px;
+                                    top: 0px;
+                                    height: 80%;
+                                    display: flex;
+                                    align-items: flex-end;
 
                                     .ant-space-item {
                                         p {
@@ -290,6 +418,27 @@
                                             white-space: nowrap;
                                             text-overflow: ellipsis;
                                             overflow: hidden;
+                                        }
+                                    }
+                                }
+
+                                @include breakpoint(largeTablet) {
+                                    width: 60px;
+                                    position: absolute;
+                                    right: 4px;
+                                    top: 0px;
+                                    height: 100%;
+                                    display: flex;
+                                    align-items: flex-end;
+
+                                    .ant-space-item {
+                                        p {
+                                            width: 80px;
+                                            text-align: end;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;
+                                            overflow: hidden;
+                                            color: #0d99ff;
                                         }
                                     }
                                 }

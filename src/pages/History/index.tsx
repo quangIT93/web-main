@@ -12,6 +12,7 @@ import Footer from '../../components/Footer/Footer';
 import CardsPosted from '#components/History/CardsPosted';
 import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
+// import CardsListBlog from '#components/History/CardsListBlog';
 
 import RollTop from '#components/RollTop';
 
@@ -232,8 +233,16 @@ const HistoryPost = () => {
     return null;
   }, [ItemLeft, activeChild]);
 
+  // const CardListBlog = useMemo(() => {
+  //   if (ItemLeft === 3) {
+  //     return <CardsListBlog activeChild={activeChild} />;
+  //   }
+  //   return null;
+  // }, [ItemLeft, activeChild]);
+
   const handleChildClick = useCallback((childKey: string) => {
     setActiveChild(childKey);
+    // console.log('childKey', childKey);
 
     if (childKey === '2-0') setShowDetailPosted(false);
     if (childKey === '2-1') setShowDetailPosted(false);
@@ -242,6 +251,8 @@ const HistoryPost = () => {
   }, []);
 
   const handleClickSubTitle = useCallback((index: number) => {
+    // console.log('title', index);
+
     setItemLeft(index);
     setActiveChild(`${index}-0`);
     setShowDetailPosted(false);
@@ -320,6 +331,7 @@ const HistoryPost = () => {
             {CardsPost}
             {CardsApply}
             {CardsSave}
+            {/* {CardListBlog} */}
           </Box>
         </Box>
       </div>

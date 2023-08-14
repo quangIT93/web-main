@@ -21,10 +21,10 @@ import {
   MailInfoIcon,
   MapInfoIcon,
   BagInfoJob,
-  DownloadIcon,
+  // DownloadIcon,
   // TransalteIcon,
   // LoginArrowIcon,
-  LoginArrowBlackIcon,
+  // LoginArrowBlackIcon,
   // LoginHomeIcon,
   CompanySubLoginIcon,
   UserPersonSubLoginIcon,
@@ -46,8 +46,8 @@ import './style.scss';
 
 import Box from '@mui/material/Box';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+// import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
 import { BlackSearchIcon } from '#components/Icons';
 // import icon
 // import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
@@ -57,9 +57,9 @@ import {
   UserOutlined,
   RightOutlined,
   MenuOutlined,
-  SyncOutlined,
-  ClockCircleOutlined,
-  LogoutOutlined,
+  // SyncOutlined,
+  // ClockCircleOutlined,
+  // LogoutOutlined,
   // KeyOutlined,
   LoadingOutlined,
   // CloseOutlined,
@@ -154,7 +154,7 @@ const Navbar: React.FC = () => {
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [openInfoUser, setOpenInfoUser] = React.useState(false);
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  // const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [openLogin, setOpenLogin] = React.useState(true);
   const [spinning, setSpinning] = React.useState(false);
   const [reset, setReset] = React.useState<Boolean>(false);
@@ -333,9 +333,9 @@ const Navbar: React.FC = () => {
   }, [languageRedux]);
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   // React.useEffect(() => {
   //   setIsLoading(true);
@@ -356,7 +356,7 @@ const Navbar: React.FC = () => {
         dispatch(getProfile() as any);
       }
     } catch (error) {
-      setOpenBackdrop(false);
+      // setOpenBackdrop(false);
       // error authentication
       // setOpenBackdrop(true)
       // if (!localStorage.getItem('accessToken')) {
@@ -365,7 +365,6 @@ const Navbar: React.FC = () => {
       // }
       // const result = await profileApi.getProfile()
       // if (result) {
-
       //   setProfileUser(result.data)
       //   setOpenBackdrop(false)
       // }
@@ -1438,7 +1437,7 @@ const Navbar: React.FC = () => {
           openModalLogin={openModalLogin}
           setOpenModalLogin={setOpenModalLogin}
         />
-        <Backdrop
+        {/* <Backdrop
           sx={{
             color: '#0d99ff ',
             backgroundColor: 'transparent',
@@ -1448,7 +1447,7 @@ const Navbar: React.FC = () => {
           onClick={handleClose}
         >
           <CircularProgress color="inherit" />
-        </Backdrop>
+        </Backdrop> */}
         <Wrapper>
           <Left>
             <Logo />
@@ -1512,7 +1511,6 @@ const Navbar: React.FC = () => {
               </Button>
               {openNotificate ? <Notificate /> : <></>}
             </div>
-
             <div
               className="wrap-btn_notice btn-noti_icon 
             border-aniation_download

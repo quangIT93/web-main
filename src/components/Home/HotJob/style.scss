@@ -2,8 +2,28 @@
 
 .hot-job-container {
     // margin: 32px 0;
-    margin-bottom: 24px;
+    margin-bottom: 24px !important;
     padding: 0 !important;
+    
+    @include breakpoint(mobile) {
+        margin-bottom: 24px !important;
+   
+       }
+   
+       @include breakpoint(tablet) {
+           margin-bottom: 24px !important;
+      
+       }
+   
+       @include breakpoint(largeTablet) {
+       margin-bottom: 24px !important;
+   
+       }
+
+       @include breakpoint(destop) {
+        margin-bottom: 24px !important;
+    
+    }
 
     .mySwiper {
         z-index: 0;
@@ -15,8 +35,8 @@
                 // padding: 12px 16px;
                 // height: 230px !important;
                 cursor: pointer;
-                width: 326px !important;
-                height: 230px !important;
+                width: 300px !important;
+                height: 212px !important;
 
                 // &:active {
                 //     border-bottom: 2px solid #0d99ff;
@@ -28,13 +48,15 @@
 
                 .slide-item {
                     position: relative;
-                    height: 230px !important;
+                    height: 212px !important;
 
                     img {
                         // width: 100% !important;
                         // height: 230px !important;
-                        width: 326px !important;
-                        height: 230px !important;
+                        // width: 326px !important;
+                        // height: 230px !important;
+                        width: 300px !important;
+                        height: 212px !important;
                     }
 
                     .div-info-themes-item {

@@ -867,9 +867,10 @@
         border: none;
       }
 
-      // @include breakpoint(tablet) {
-      //   display: none;
-      // }
+      @include breakpoint(tablet) {
+        // display: none;
+        margin-left: 6px;
+      }
     }
 
     @include breakpoint(mobile) {
@@ -901,7 +902,8 @@
     @include breakpoint(tablet) {
       display: flex;
       // flex: none;
-      margin-right: 10px;
+      margin-right: 0px;
+
 
       .ant-select {
         display: none;
@@ -962,6 +964,7 @@
 
       @media screen and (min-width: 210px) and (max-width: 420px) {
         width: 300px;
+
         .sub-login_info {
           .ant-space-item {
             .sub-login_info__bottom {
@@ -979,11 +982,11 @@
             }
           }
         }
-        }
+      }
 
       @media screen and (min-width: 421px) and (max-width: 600px) {
         width: 340px;
-        }
+      }
 
       .ant-space-item {
         width: 100%;
@@ -1218,6 +1221,11 @@
     }
 
     .box-right-responsive {
+      margin: 0;
+
+      .ant-btn {
+        margin-left: 4px;
+      }
 
       button {
         padding: 20px 10px;
@@ -1404,8 +1412,8 @@
     }
 
     @include breakpoint(mobile) {
-      
-    
+
+
 
       .notification {
         display: block;
@@ -1602,12 +1610,21 @@
   }
 }
 
-.btn-noti_icon {
-  button {
-    min-width: 52px;
-    min-height: 50px;
+.div-nav-center {
 
+  .btn-noti_icon {
+    @include breakpoint(mobile) {
+      display: none;
+    }
+
+    button {
+      min-width: 52px;
+      min-height: 50px;
+
+    }
   }
+
+
 }
 
 .search-input-wrapper {
