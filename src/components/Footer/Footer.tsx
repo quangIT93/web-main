@@ -287,8 +287,10 @@ const Footer: React.FC = () => {
           <p>{languageRedux === 1 ? 'Chính sách sử dụng' : 'Usage Policy'}</p>
         </Link>
         <div id="div-policy-footer-right">
-          <div style={{ flexDirection: 'row', display: 'flex' }}>
-            <p style={{ color: '#575757' }}>
+          <div
+            style={{ flexDirection: 'row', display: 'flex', fontSize: '12px' }}
+          >
+            <p style={{ color: '#575757', fontSize: '12px' }}>
               {languageRedux === 1
                 ? 'Tổng đài CSKH:'
                 : 'Customer Service Center'}
