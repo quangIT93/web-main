@@ -104,23 +104,33 @@ const Footer: React.FC = () => {
           {' '}
           <p>Chính sách sử dụng</p>{' '}
         </Link>
-        <div id="div-policy-footer-right">
-          <div style={{ flexDirection: 'row', display: 'flex' }}>
-            <p style={{ color: '#575757' }}>Tổng đài CSKH: </p>
-            <p style={{ color: '#575757', marginLeft: '5px' }}>
-              (028) 35358983
-            </p>
-            {/* <p style={{ color: '#575757', marginLeft: '2px' }}>
+
+        <div
+          style={{
+            flexDirection: 'row',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <p style={{ color: '#575757', fontSize: '12px' }}>Tổng đài CSKH: </p>
+          <p style={{ color: '#575757', marginLeft: '5px', fontSize: '12px' }}>
+            (028) 35358983
+          </p>
+          {/* <p style={{ color: '#575757', marginLeft: '2px' }}>
               (1.000 đồng/phút)
             </p> */}
-          </div>
-          <Link
-            to={`mailto:contact.hijob@gmail.com`}
-            style={{ color: '#0d99ff', textDecoration: 'underline' }}
-          >
-            Email: contact.hijob@gmail.com
-          </Link>
         </div>
+
+        <Link
+          to={`mailto:contact.hijob@gmail.com`}
+          style={{
+            color: '#0d99ff',
+            textDecoration: 'underline',
+            fontSize: '12px',
+          }}
+        >
+          Email: contact.hijob@gmail.com
+        </Link>
       </div>
     </div>
   );
