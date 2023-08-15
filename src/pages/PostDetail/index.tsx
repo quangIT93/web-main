@@ -1102,7 +1102,7 @@ const Detail = () => {
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
-                      {post?.data?.postCompanyInformation
+                      {post?.data?.postCompanyInformation.taxCode
                         ? post?.data?.postCompanyInformation?.taxCode
                         : languageRedux === 1
                         ? postDetail.not_update

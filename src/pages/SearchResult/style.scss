@@ -171,6 +171,17 @@
     }
   }
 
+  .title-modal_noteKeyword {
+    margin: 8px 0;
+    text-align: center;
+    font-size: 14px;
+
+    input::placeholder {
+      font: 1.25rem/3 sans-serif;
+  }
+
+  }
+
   // .ant-input-clear-icon {
   //   margin-right: 25px;
   // } 

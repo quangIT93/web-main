@@ -909,13 +909,16 @@ const NewJobs: React.FC = () => {
               <CloseOutlined style={{ fontSize: '30px' }} />
             </div>
             <p className="title-modal_createKey">Thông báo từ khóa</p>
+            <p className="title-modal_noteKeyword">
+              Thêm từ khóa liên quan đến công việc hoặc tên công ty bạn muốn
+            </p>
             <Input
               placeholder="Từ khóa"
               // allowClear
               size="large"
               // onChange={onChange}
               type=""
-              style={{ marginTop: '12px' }}
+              style={{ marginTop: '12px', fontSize: '12px' }}
               value={valueKeyword}
               // disabled
               // error={companyError} // Đánh dấu lỗi
@@ -977,6 +980,7 @@ const NewJobs: React.FC = () => {
                 borderRadius: '2px',
                 fontStyle: 'italic',
                 margin: '12px 0',
+                fontSize: '12px',
               }}
             />
             {/* 
@@ -1021,6 +1025,7 @@ const NewJobs: React.FC = () => {
                 width: '100%',
                 borderRadius: '2px',
                 fontStyle: 'italic',
+                fontSize: '12px',
               }}
               placeholder="Chọn danh mục ngành nghề"
             />
