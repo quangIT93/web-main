@@ -24,7 +24,7 @@
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         border-radius: 8px;
         padding: 16px 24px;
-        width: 30%;
+        width: 32%;
 
         @include breakpoint(mobile){
           .ant-collapse {
@@ -73,12 +73,12 @@
 
         &__collapse {
           @media screen and (max-width: 1024px) and (min-width: 630px) {
-            display: flex;
-            justify-content: space-between;
-
+            // display: flex;
+            // justify-content: space-between;
+            // width: 400px;
             .history-left_item {
               .ant-collapse-header {
-                border-bottom: none;
+                // border-bottom: none;
               }
             }
 
@@ -100,8 +100,34 @@
 
       .history-post_right {
         // flex: 3;
-        width: 70%;
+        width: 68%;
         margin: 0 12px;
+        .div-card-post-left {
+          .MuiBox-root {
+            margin-top: 12px !important;
+            // p {
+            // }
+            p:nth-child(1){
+              // margin-left: 32px !important;
+              text-align: center;
+              font-size: 12px !important;
+            }
+
+            p:nth-child(3){
+              margin-left: 32px !important;
+              text-align: center;
+              font-size: 12px;
+            }
+
+            p:nth-child(2){
+              margin-left: 32px !important;
+              text-align: center;
+              font-size: 12px;
+            }
+          }
+        }
+
+
 
         @media screen and (max-width: 1024px) {
           margin: 0;
@@ -115,11 +141,13 @@
             .div-card-post-left {
               .MuiBox-root {
                 margin-top: 0 !important;
+
                 p {
-                  margin-left: 0 !important;
+                  margin-left: 4px !important;
                   text-align: center;
-                  font-size: 12px;
+                  font-size: 12px !important;
                 }
+
               }
             }
 
@@ -130,6 +158,7 @@
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
+                  font-size: 12px !important;
                 }
               }
             }
@@ -144,7 +173,7 @@
               .MuiBox-root {
                 margin-top: 12px !important;
                 p {
-                  margin-left: 12px !important;
+                  margin-left: 8px !important;
                   text-align: center;
                   font-size: 12px;
                 }
