@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -99,8 +99,8 @@ const Footer: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // const mail = useRef('contact.hijob@gmail.com');
   // const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
@@ -127,7 +127,7 @@ const Footer: React.FC = () => {
     }
   };
 
-  useEffect(() => { }, [languageRedux]);
+  useEffect(() => {}, [languageRedux]);
 
   useEffect(() => {
     updateWindowWidth();
@@ -161,14 +161,14 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-              transform: 'translateY(calc(-100% - 36px))',
-            }
+                transform: 'translateY(calc(-100% - 36px))',
+              }
             : !open && !windowWidth
-              ? {
+            ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-              : { transform: 'none' }
+            : { transform: 'none' }
         }
       >
         <div className="container-footer">
@@ -187,9 +187,7 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            <h3>
-              {language?.connect_talent}
-            </h3>
+            <h3>{language?.connect_talent}</h3>
             <p>
               {languageRedux === 1
                 ? 'Công ty TNHH NeoWorks., LTD'
@@ -276,7 +274,9 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <div className="div-socal-link">
-              <h4 style={{ color: '#0D99FF' }}>{languageRedux === 1 ? 'Liên kết' : 'Connect'}</h4>
+              <h4 style={{ color: '#0D99FF' }}>
+                {languageRedux === 1 ? 'Liên kết' : 'Connect'}
+              </h4>
               <div id="div-img-socal">
                 <Link to="https://www.facebook.com/hijobOfficial/">
                   <img

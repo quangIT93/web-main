@@ -43,6 +43,15 @@
   justify-content: space-between;
   margin-left: 24px;
   // margin-right: 20px;
+  .login__center {
+    span {
+      width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
 
   @include breakpoint(mobile) {
     margin-left: 0px;
@@ -179,7 +188,7 @@
 
           .login__center {
             span {
-              display: none;
+              // display: none;
             }
           }
         }
