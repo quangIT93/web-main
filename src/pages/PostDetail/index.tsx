@@ -936,13 +936,13 @@ const Detail = () => {
                   className="div-detail-row-titleItem"
                   style={{ flexDirection: 'column', alignItems: 'flex-start' }}
                 >
-                  {post?.data.postCategories.map(
-                    (item: any, index: null | number) => (
-                      <h5 key={index}>
-                        {item.parentCategory.fullName}/{item.fullName}
-                      </h5>
-                    ),
-                  )}
+                  <h5>
+                    {post?.data.postCategories.map(
+                      (item: any, index: null | number) => `
+                      ${item.parentCategory.fullName}/${item.fullName}/
+                      `,
+                    )}
+                  </h5>
                 </div>
               </div>
               <div className="div-detail-row">
