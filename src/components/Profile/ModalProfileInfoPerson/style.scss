@@ -10,3 +10,10 @@
     padding: 8px;
   }
 }
+
+.Modal-personnal-info {
+  @media screen and (max-width: 375px) {
+    height: 435px;
+    overflow-y: scroll;
+  }
+}

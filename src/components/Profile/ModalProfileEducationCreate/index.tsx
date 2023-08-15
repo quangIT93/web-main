@@ -36,6 +36,9 @@ const style = {
   '@media (max-width: 399px)': {
     width: 360,
   },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
 
   '@media (min-width: 400px) and (max-width: 639px)': {
     width: 410,
@@ -194,7 +197,9 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style}>
+      <Box sx={style}
+        className="Modal-personnal-info"
+      >
         <div
           style={{
             position: 'absolute',

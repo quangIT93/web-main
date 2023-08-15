@@ -3812,7 +3812,6 @@ export const SendComunityIcon = ({ width = 16, height = 17 }) => {
     </svg>
   );
 };
-
 export const UseCircleIcon = ({ width = 24, height = 24 }) => {
   return (
     <svg
@@ -4135,6 +4134,44 @@ export const NewsPaperIcon = ({ width = 30, height = 30 }) => {
           <stop offset="0.9583" stop-color="#A8A8A9" />
           <stop offset="1" stop-color="#9E9E9F" />
         </linearGradient>
+      </defs>
+    </svg>
+  );
+};
+export const SettingIcon = ({ width = 24, height = 24 }) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_10643_122264)">
+        <path
+          d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+          stroke="#252525"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12 12.9375C12.5178 12.9375 12.9375 12.5178 12.9375 12C12.9375 11.4822 12.5178 11.0625 12 11.0625C11.4822 11.0625 11.0625 11.4822 11.0625 12C11.0625 12.5178 11.4822 12.9375 12 12.9375Z"
+          fill="#252525"
+        />
+        <path
+          d="M7.875 12.9375C8.39277 12.9375 8.8125 12.5178 8.8125 12C8.8125 11.4822 8.39277 11.0625 7.875 11.0625C7.35723 11.0625 6.9375 11.4822 6.9375 12C6.9375 12.5178 7.35723 12.9375 7.875 12.9375Z"
+          fill="#252525"
+        />
+        <path
+          d="M16.125 12.9375C16.6428 12.9375 17.0625 12.5178 17.0625 12C17.0625 11.4822 16.6428 11.0625 16.125 11.0625C15.6072 11.0625 15.1875 11.4822 15.1875 12C15.1875 12.5178 15.6072 12.9375 16.125 12.9375Z"
+          fill="#252525"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_10643_122264">
+          <rect width="24" height="24" fill="white" />
+        </clipPath>
       </defs>
     </svg>
   );

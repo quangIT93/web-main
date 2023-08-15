@@ -45,6 +45,9 @@ const style = {
   '@media (max-width: 399px)': {
     width: 360,
   },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
 
   '@media (min-width: 400px) and (max-width: 639px)': {
     width: 410,
@@ -232,8 +235,11 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
+      sx={{ minWidth: "300px" }}
     >
-      <Box sx={style}>
+      <Box sx={style}
+        className="Modal-personnal-info"
+      >
         {contextHolder}
         <form action="">
           <div

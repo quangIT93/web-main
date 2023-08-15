@@ -18,9 +18,11 @@ interface Url_CV {
 }
 
 const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   return (
-    <Space>
+    <Space className="cv-item-container">
       <div
         className="cv-item-container"
         style={{
@@ -33,7 +35,7 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
           window.open(`${url}`);
         }}
       >
-        <Space>
+        <Space className="cv-item">
           <p style={{ color: '#575757', wordBreak: 'break-all' }}>
             {url.substring(url.lastIndexOf('/') + 1, url.length)}
           </p>
@@ -42,11 +44,13 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
         </Space>
       </div>
       {isProfile && (
-        <Tooltip placement="right" title={
-          languageRedux === 1 ?
-            profileVi.delete_cv :
-            profileEn.delete_cv
-        } style={{ fontSize: 5 }}>
+        <Tooltip
+          placement="right"
+          title={
+            languageRedux === 1 ? profileVi.delete_cv : profileEn.delete_cv
+          }
+          style={{ fontSize: 5 }}
+        >
           <DeleteOutlined
             onClick={() => {
               setOpen(true);
