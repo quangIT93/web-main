@@ -20,7 +20,7 @@ interface Url_CV {
 const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   return (
-    <Space>
+    <Space className='cv-item-container'>
       <div
         style={{
           backgroundColor: '#F1F0F0',
@@ -32,8 +32,8 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
           window.open(`${url}`);
         }}
       >
-        <Space>
-          <p style={{ color: '#575757' }}>
+        <Space className='cv-item'>
+          <p style={{ color: '#575757', wordBreak: 'break-all' }}>
             {url.substring(url.lastIndexOf('/') + 1, url.length)}
           </p>
 

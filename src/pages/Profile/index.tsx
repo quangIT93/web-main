@@ -658,6 +658,7 @@ const Profile: React.FC = () => {
               size={20}
               direction="vertical"
               style={{ marginTop: 20 }}
+              className="cv-input-container"
             >
               <Upload {...props}>
                 <Button
