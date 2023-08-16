@@ -232,10 +232,11 @@ const AppliedPostedJob: React.FC = () => {
               Bạn có phải là nhà tuyển dụng không?
             </h3>
             <p style={{ marginBottom: '12px' }}>
-              Đăng tuyển ngay, bài đăng của bạn sẽ xuất hiện trên đầu trang
+              Đăng tuyển ngay, bài đăng của bạn sẽ xuất hiện trên đầu trang hoàn
+              toàn miễn phí.
             </p>
             <h3>Bạn đang tìm kiếm việc làm?</h3>
-            <p>Ở đây chúng tôi có mọi việc làm tại Việt Nam</p>
+            <p>Ở đây chúng tôi có mọi việc làm tại Việt Nam.</p>
           </div>
           <Button
             type="primary"
