@@ -370,7 +370,7 @@ const CategoryCarousel: React.FC = () => {
         // setOpenBackdrop(false);
       }
     } catch (error) {
-      console.error(error);
+      console.error('error', error);
     }
   };
 
