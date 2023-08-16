@@ -1,7 +1,10 @@
 import thunk from 'redux-thunk'
 import reducers from './reducer'
 import { configureStore } from '@reduxjs/toolkit'
-import { persistStore, persistReducer } from 'redux-persist'
+import {
+  // persistStore,
+  persistReducer
+} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 const persistConfig = {

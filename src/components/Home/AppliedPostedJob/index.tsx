@@ -245,7 +245,7 @@ const AppliedPostedJob: React.FC = () => {
             }}
           >
             <LoginArrowIcon />
-            {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
           </Button>
         </div>
 
