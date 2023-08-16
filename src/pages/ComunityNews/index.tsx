@@ -1,18 +1,13 @@
-import React, { useEffect, FormEvent, useState } from 'react';
+import React, { useEffect } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
-import { Box, Typography } from '@mui/material';
+
 import { UserOutlined } from '@ant-design/icons';
 // import moment, { Moment } from 'moment';
 
-import { Collapse } from 'antd';
-import { Skeleton } from 'antd';
-import { message } from 'antd';
 import { Avatar } from 'antd';
-import { SaveIconOutline, SaveIconFill } from '#components/Icons';
+import { SaveIconOutline } from '#components/Icons';
 import RollTop from '#components/RollTop';
 
 // import component
@@ -21,7 +16,7 @@ import {
   EysIcon,
   CommentIcon,
   LikeIcon,
-  EditComunity,
+  // EditComunity,
   FilterComunity,
 } from '#components/Icons';
 

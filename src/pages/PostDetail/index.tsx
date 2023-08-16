@@ -1188,6 +1188,8 @@ const Detail = () => {
     },
   ];
   // console.log('post?.data?', post?.data);
+  console.log('dispatch(setPostNewestApi(result));', postNewest);
+
   return (
     <>
       {automatic && (

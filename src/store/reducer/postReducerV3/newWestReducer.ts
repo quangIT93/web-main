@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   data: []
-  // Giá trị khởi tạo là null hoặc một giá trị mặc định khác
 };
 
 const postApiSlice = createSlice({
@@ -13,9 +12,7 @@ const postApiSlice = createSlice({
       state.data = action.payload.data ?? [];
     },
     setPostNewestMoreApi: (state: any, action) => {
-  
        state.data = [...state.data, ...action.payload.data]
-
     },
   },
 });

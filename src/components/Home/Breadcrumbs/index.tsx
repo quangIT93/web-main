@@ -22,6 +22,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
+import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
 // import api
 import categoriesApi from '../../../api/categoriesApi';
 import postApi from 'api/postApi';
@@ -60,7 +61,7 @@ const BreadcrumbsCpn: React.FC = () => {
   const [arrayChild, setArrayChild] = useState<any>([]);
 
   // state redux
-  const { postNewest } = useSelector((state: RootState) => state);
+  // const { postNewest } = useSelector((state: RootState) => state);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -138,9 +139,6 @@ const BreadcrumbsCpn: React.FC = () => {
       .filter((filterArrayId: any | null) => filterArrayId !== null);
 
     setArrayChild(array);
-    console.log('valueJobChild', valueJobChild);
-    console.log('array', array);
-    console.log('checkedItems', checkedItems);
 
     setChildCateloriesArray(
       array.map((arr: { id: number; name: string }) => arr.id),
@@ -163,12 +161,13 @@ const BreadcrumbsCpn: React.FC = () => {
         Number(valueJobChild?.id),
         null,
         null,
-        9,
-        1,
+        10,
+        null,
         languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
-        setPostNewest(result);
+        // setPostNewest(result);
+        dispatch(setPostNewestApi(result));
         // setOpenBackdrop(false)
       }
     } catch (error) {

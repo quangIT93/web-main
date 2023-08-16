@@ -147,7 +147,7 @@ const NewJobs: React.FC = () => {
 
   const newestApi = useSelector((state: any) => state.newWestReducer.data);
 
-  const [postNewestV3, setPostNewestv3] = useState<any>({});
+  // const [postNewestV3, setPostNewestv3] = useState<any>({});
 
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
@@ -259,15 +259,12 @@ const NewJobs: React.FC = () => {
     setTimeout(() => {
       const AppliedPostedJobs = localStorage.getItem('numberAppliedPostedJobs');
       Number(AppliedPostedJobs) > 0 && setIsAppliedPostedJobs(true);
-      if (postNewestV3) {
+      if (newestApi) {
         setLoading(false);
       }
     }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
-
-  console.log('possible', postNewestV3);
-  console.log('newestApi', newestApi);
 
   return (
     <>
