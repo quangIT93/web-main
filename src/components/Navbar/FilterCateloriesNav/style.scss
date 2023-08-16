@@ -11,3 +11,11 @@
         color: #0d99ff;
     }
 }
+
+.filter-loca-cate {
+    .ant-cascader-menus {
+        .ant-cascader-menu {
+            height: 285px !important;
+        }
+    }
+}

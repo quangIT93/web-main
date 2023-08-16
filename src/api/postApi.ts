@@ -78,6 +78,33 @@ const postApi = {
       },
     })
   },
+  getPostNewestV3: (
+    pcid: number | null,
+    ccid: number[] | null,
+    dtid: [] | null,
+    limit: number | null,
+    threshold: number | null,
+    lang: string
+  ) => {
+    const URL =
+      `/v1/posts/newest?` +
+      `${pcid ? `pcid=${pcid}` : ``}` +
+      `${ccid
+        ? `&${ccid?.map((n, index) => `ccid[${index}]=${n}`).join('&')}`
+        : ``
+      }` +
+      `${dtid
+        ? `&${dtid?.map((n, index) => `dtid[${index}]=${n}`).join('&')}`
+        : ``
+      }` +
+      `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}` +
+      `&lang=${lang}`
+    return axiosClient.get(URL, {
+      headers: {
+        'Cache-Control': 'private, max-age=300'
+      },
+    })
+  },
   updateStatusPost: (id: number, status: number) => {
     const URL = `/v1/posts/sta`
     return axiosClient.put(
