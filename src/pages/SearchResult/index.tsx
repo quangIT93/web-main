@@ -468,7 +468,6 @@ const NewJobs: React.FC = () => {
       SALARY_TYPE,
     );
 
-    console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', result);
     //
     if (result && result?.data?.posts.length !== 0) {
       setSearchData((prev: any) => {
@@ -674,17 +673,17 @@ const NewJobs: React.FC = () => {
     try {
       if (dataProfile) {
         setOpenBackdrop(true);
-        console.log('QUERY', QUERY);
-        console.log('page', page);
-        console.log('MONEY_TYPE', MONEY_TYPE);
-        console.log('IS_WORKING_WEEKEND', IS_WORKING_WEEKEND);
-        console.log('IS_REMOTELY', IS_REMOTELY);
-        console.log('SALARY_MIN', SALARY_MIN);
-        console.log('SALARY_MAX', SALARY_MAX);
-        console.log('JOB_TYPE', JOB_TYPE);
-        console.log('LIST_CATEGORIES_ID', LIST_CATEGORIES_ID);
-        console.log('LIST_DIS_ID', LIST_DIS_ID);
-        console.log('SALARY_TYPE', SALARY_TYPE);
+        // console.log('QUERY', QUERY);
+        // console.log('page', page);
+        // console.log('MONEY_TYPE', MONEY_TYPE);
+        // console.log('IS_WORKING_WEEKEND', IS_WORKING_WEEKEND);
+        // console.log('IS_REMOTELY', IS_REMOTELY);
+        // console.log('SALARY_MIN', SALARY_MIN);
+        // console.log('SALARY_MAX', SALARY_MAX);
+        // console.log('JOB_TYPE', JOB_TYPE);
+        // console.log('LIST_CATEGORIES_ID', LIST_CATEGORIES_ID);
+        // console.log('LIST_DIS_ID', LIST_DIS_ID);
+        // console.log('SALARY_TYPE', SALARY_TYPE);
         const result = await searchApi.getSearchByQueryV2(
           QUERY,
           null,

@@ -1,6 +1,8 @@
+
 import { combineReducers } from 'redux'
 import postReducer from './postReducer/postReducer'
 import postNewestReducer from './postReducer/postNewest'
+import postNewestV3Reducer from './postReducer/postNewestV3'
 import provincesReducer from './provincesReducer'
 
 import authReducer from './authReducer/signGmailReducer'
@@ -15,10 +17,14 @@ import alertReducer from './alertReducer'
 
 import navbarSlice from './navbarReducer/navbarSlice'
 
+import newWestReducer from './postReducerV3/newWestReducer'
+
 const reducers = combineReducers({
   post: postReducer,
   provice: provincesReducer,
   postNewest: postNewestReducer,
+  postNewestV3: postNewestV3Reducer,
+  newWestReducer: newWestReducer,
   profileUser: profileUser,
   auth: authReducer,
   profile: getProfileReducer,

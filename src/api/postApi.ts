@@ -79,25 +79,27 @@ const postApi = {
     })
   },
   getPostNewestV3: (
-    pcid: number | null,
-    ccid: number[] | null,
-    dtid: [] | null,
+    childrenCategoryId: number[] | null,
+    parentCategoryId: number | null,
+    districtIds: [] | null,
+    provinceId:  number | null,
     limit: number | null,
-    threshold: number | null,
+    page: number | null,
     lang: string
   ) => {
     const URL =
-      `/v1/posts/newest?` +
-      `${pcid ? `pcid=${pcid}` : ``}` +
-      `${ccid
-        ? `&${ccid?.map((n, index) => `ccid[${index}]=${n}`).join('&')}`
+      `/v3/posts/newest?` +
+      `${childrenCategoryId
+        ? `&${childrenCategoryId?.map((n, index) => `childrenCategoryId=${n}`).join('&')}`
         : ``
       }` +
-      `${dtid
-        ? `&${dtid?.map((n, index) => `dtid[${index}]=${n}`).join('&')}`
+      `${parentCategoryId ? `&parentCategoryId=${parentCategoryId}` : ``}` +
+      `${districtIds
+        ? `&${districtIds?.map((n, index) => `districtIds[${index}]=${n}`).join('&')}`
         : ``
       }` +
-      `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}` +
+      `${provinceId ? `provinceId=${provinceId}` : ``}` +
+      `&limit=${limit}${page ? `&page=${page}` : ``}` +
       `&lang=${lang}`
     return axiosClient.get(URL, {
       headers: {

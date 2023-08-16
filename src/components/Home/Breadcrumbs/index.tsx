@@ -138,20 +138,33 @@ const BreadcrumbsCpn: React.FC = () => {
       .filter((filterArrayId: any | null) => filterArrayId !== null);
 
     setArrayChild(array);
+    console.log('valueJobChild', valueJobChild);
+    console.log('array', array);
+    console.log('checkedItems', checkedItems);
 
     setChildCateloriesArray(
       array.map((arr: { id: number; name: string }) => arr.id),
     );
-    const thersholdId =
-      postNewest.data.posts[postNewest.data.posts.length - 1].id;
+    // const thersholdId =
+    //   postNewest.data.posts[postNewest.data.posts.length - 1].id;
 
     try {
-      const result = await postApi.getPostNewest(
-        Number(valueJobChild?.id),
+      // const result = await postApi.getPostNewest(
+      //   Number(valueJobChild?.id),
+      //   array.map((arr: { id: number; name: string }) => arr.id),
+      //   null,
+      //   9,
+      //   thersholdId,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+
+      const result = await postApi.getPostNewestV3(
         array.map((arr: { id: number; name: string }) => arr.id),
+        Number(valueJobChild?.id),
+        null,
         null,
         9,
-        thersholdId,
+        1,
         languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {

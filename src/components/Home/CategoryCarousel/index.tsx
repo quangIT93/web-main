@@ -177,8 +177,21 @@ const CategoryCarousel: React.FC = () => {
         });
       }
       var result;
+
+      console.log('newValue: ' + newValue);
+
       if (newValue === 1) {
-        result = await postApi.getPostNewest(
+        // result = await postApi.getPostNewest(
+        //   null,
+        //   null,
+        //   null,
+        //   19,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+
+        result = await postApi.getPostNewestV3(
+          null,
           null,
           null,
           null,
@@ -187,7 +200,17 @@ const CategoryCarousel: React.FC = () => {
           languageRedux === 1 ? 'vi' : 'en',
         );
       } else {
-        result = await postApi.getPostNewest(
+        // result = await postApi.getPostNewest(
+        //   Number(newValue),
+        //   null,
+        //   null,
+        //   19,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+
+        result = await postApi.getPostNewestV3(
+          null,
           Number(newValue),
           null,
           null,
@@ -246,7 +269,17 @@ const CategoryCarousel: React.FC = () => {
       const themeId = searchParams.get('categories-id');
       var result;
       if (themeId === 'all') {
-        result = await postApi.getPostNewest(
+        // result = await postApi.getPostNewest(
+        //   null,
+        //   null,
+        //   null,
+        //   19,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+
+        result = await postApi.getPostNewestV3(
+          null,
           null,
           null,
           null,
@@ -255,7 +288,17 @@ const CategoryCarousel: React.FC = () => {
           languageRedux === 1 ? 'vi' : 'en',
         );
       } else {
-        result = await postApi.getPostNewest(
+        // result = await postApi.getPostNewest(
+        //   Number(themeId),
+        //   null,
+        //   null,
+        //   19,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+
+        result = await postApi.getPostNewestV3(
+          null,
           Number(themeId),
           null,
           null,
@@ -279,7 +322,17 @@ const CategoryCarousel: React.FC = () => {
       const themeId = userSelectedId;
       var result;
       if (themeId === 1) {
-        result = await postApi.getPostNewest(
+        // result = await postApi.getPostNewest(
+        //   null,
+        //   null,
+        //   null,
+        //   19,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+
+        result = await postApi.getPostNewestV3(
+          null,
           null,
           null,
           null,
@@ -288,7 +341,17 @@ const CategoryCarousel: React.FC = () => {
           languageRedux === 1 ? 'vi' : 'en',
         );
       } else {
-        result = await postApi.getPostNewest(
+        // result = await postApi.getPostNewest(
+        //   Number(themeId),
+        //   null,
+        //   null,
+        //   19,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+
+        result = await postApi.getPostNewestV3(
+          null,
           Number(themeId),
           null,
           null,
