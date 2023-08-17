@@ -25,7 +25,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   // console.log("fillCate", fillCate);
 
   const DropdownRender = (menus: React.ReactNode) => (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '520px' }} className="filter-loca-cate">
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
         {disable ? 'Chỉ có thể tối đa 2 danh mục' : ''}
@@ -47,7 +47,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise("vi");
+      const result = await categoriesApi.getAllCategorise('vi');
       if (result) {
         setDataCategories(result.data);
       }
@@ -92,27 +92,27 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
-              value: parentCategory.parent_category_id,
-              label: parentCategory.parent_category,
-              children: parentCategory.childs.map((child: any) => {
-                var dis = false;
-                //check id child  when disable = true
-                if (disable) {
-                  dis = true;
-                  for (const elem of categoriesId) {
-                    if (elem === child.id) {
-                      dis = false;
-                      break;
+                value: parentCategory.parent_category_id,
+                label: parentCategory.parent_category,
+                children: parentCategory.childs.map((child: any) => {
+                  var dis = false;
+                  //check id child  when disable = true
+                  if (disable) {
+                    dis = true;
+                    for (const elem of categoriesId) {
+                      if (elem === child.id) {
+                        dis = false;
+                        break;
+                      }
                     }
                   }
-                }
-                return {
-                  value: child.id,
-                  label: child.name,
-                  disabled: dis,
-                };
-              }),
-            }))
+                  return {
+                    value: child.id,
+                    label: child.name,
+                    disabled: dis,
+                  };
+                }),
+              }))
             : []
         }
         dropdownRender={DropdownRender}

@@ -228,6 +228,7 @@ const AppliedPostedJob: React.FC = () => {
           /> */}
           <Advertisement />
           <div className="advertisement-job-not-loging-content">
+
             <h3 style={{ marginTop: '12px' }}>
               Bạn có phải là nhà tuyển dụng không?
             </h3>
@@ -236,7 +237,7 @@ const AppliedPostedJob: React.FC = () => {
               toàn miễn phí.
             </p>
             <h3>Bạn đang tìm kiếm việc làm?</h3>
-            <p>Ở đây chúng tôi có mọi việc làm tại Việt Nam.</p>
+            <p>Ở đây chúng tôi có mọi việc làm tại Việt Nam</p>
           </div>
           <Button
             type="primary"
