@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -13,10 +13,6 @@ import { NewJobIcon, MoreICon } from '#components/Icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
-import {
-  setPostNewestApi,
-  setPostNewestMoreApi,
-} from 'store/reducer/postReducerV3/newWestReducer';
 import { RootState } from '../../../store/reducer';
 // import compornent
 
@@ -47,8 +43,6 @@ import './style.scss';
 
 //import jobcard
 import JobCard from '../JobCard';
-//@ts-ignore
-import JobCardItem from '#components/JobCardItem';
 
 import { Skeleton } from 'antd';
 import { home } from 'validations/lang/vi/home';
@@ -79,50 +73,11 @@ export interface PostNewest {
   money_type_text: string;
 }
 
-export interface PostNewestV3 {
-  accountId: string;
-  address: string;
-  bookmarked: boolean;
-  companyName: string;
-  companyResourceData: {
-    logo: string;
-  };
-  createdAtText: string;
-  id: number;
-  image: string;
-  jobType: {
-    id: number;
-    name: string;
-  };
-  location: {
-    district: {
-      id: string;
-      fullName: string;
-    };
-    province: {
-      id: string;
-      fullName: string;
-    };
-    ward: {
-      id: string;
-      fullName: string;
-    };
-  };
-  moneyType: string;
-  salaryMax: number;
-  salaryMin: number;
-  salaryType: {
-    id: number;
-    name: string;
-  };
-  title: string;
-}
-
 const NewJobs: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
@@ -137,17 +92,12 @@ const NewJobs: React.FC = () => {
   // const navigate = useNavigate();
 
   // state redux
-  // const { postNewest } = useSelector((state: RootState) => state);
-  // const { postNewestV3 } = useSelector((state: RootState) => state);
+  const { postNewest } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
-  // const { setPostNewestMoreV3, setPostNewestv3 } = bindActionCreators(
-  //   actionCreators,
-  //   dispatch,
-  // );
-
-  const newestApi = useSelector((state: any) => state.newWestReducer.data);
-
-  // const [postNewestV3, setPostNewestv3] = useState<any>({});
+  const { setPostNewest, setPostNewestMore } = bindActionCreators(
+    actionCreators,
+    dispatch,
+  );
 
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
@@ -177,34 +127,20 @@ const NewJobs: React.FC = () => {
     const categoryId = searchParams.get(`categories-id`)
       ? searchParams.get(`categories-id`)
       : null;
-    // const thersholdId = postNewest.data[postNewest.data.length - 1].id;
+    const thersholdId =
+      postNewest.data.posts[postNewest.data.posts.length - 1].id;
 
-    // const result = await postApi.getPostNewest(
-    //   Number(categoryId),
-    //   childCateloriesArray,
-    //   null,
-    //   9,
-    //   thersholdId,
-    //   languageRedux == 1 ? 'vi' : 'en',
-    // );
-
-    console.log('page', page);
-
-    const result = await postApi.getPostNewestV3(
-      childCateloriesArray,
+    const result = await postApi.getPostNewest(
       Number(categoryId),
+      childCateloriesArray,
       null,
-      null,
-      10,
-      page,
-      languageRedux === 1 ? 'vi' : 'en',
+      9,
+      thersholdId,
+      languageRedux == 1 ? 'vi' : 'en',
     );
 
     if (result) {
-      console.log('result: ', result);
-
-      dispatch(setPostNewestMoreApi(result));
-      // setPostNewestv3(postNewestV3.data.push(result.data));
+      setPostNewestMore(result);
       setOpenBackdrop(false);
     }
   };
@@ -216,36 +152,24 @@ const NewJobs: React.FC = () => {
   const getPostNewest = async () => {
     try {
       setOpenBackdrop(true);
-      // const result = await postApi.getPostNewest(
-      //   null,
-      //   null,
-      //   null,
-      //   19,
-      //   null,
-      //   languageRedux === 1 ? 'vi' : 'en',
-      // );
-
-      const result = await postApi.getPostNewestV3(
+      const result = await postApi.getPostNewest(
         null,
         null,
         null,
+        19,
         null,
-        20,
-        null,
-        languageRedux === 1 ? 'vi' : 'en',
+        languageRedux == 1 ? 'vi' : 'en',
       );
 
       if (result) {
-        console.log('result: ', result);
-        dispatch(setPostNewestApi(result));
-        // setPostNewestv3(result);
+        setPostNewest(result);
 
         // set loading
         setOpenBackdrop(false);
       }
     } catch (error) {
       setOpenBackdrop(false);
-      console.log('error', error);
+      console.log(error);
     }
   };
 
@@ -259,7 +183,7 @@ const NewJobs: React.FC = () => {
     setTimeout(() => {
       const AppliedPostedJobs = localStorage.getItem('numberAppliedPostedJobs');
       Number(AppliedPostedJobs) > 0 && setIsAppliedPostedJobs(true);
-      if (newestApi) {
+      if (postNewest.data) {
         setLoading(false);
       }
     }, 1000);
@@ -282,19 +206,18 @@ const NewJobs: React.FC = () => {
           <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
             <NewJobIcon width={25} height={25} />
             <h2>
-              {languageRedux === 1 ? home.newest_jobs : homeEn.newest_jobs}
+              {languageRedux == 1 ? home.newest_jobs : homeEn.newest_jobs}
             </h2>
           </div>
 
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-            {newestApi?.length !== 0 &&
-              newestApi?.map((item: PostNewestV3, index: number) => (
-                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                  <Skeleton loading={loading} active>
-                    <JobCardItem item={item} />
-                  </Skeleton>
-                </Grid>
-              ))}
+            {postNewest.data.posts.map((item: PostNewest, index: number) => (
+              <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                <Skeleton loading={loading} active>
+                  <JobCard item={item} />
+                </Skeleton>
+              </Grid>
+            ))}
           </Grid>
           <Stack
             spacing={2}
@@ -304,10 +227,10 @@ const NewJobs: React.FC = () => {
             <Space
               className="div-hover-more"
               onClick={(e) => {
-                handleChange(e, page + 1);
+                handleChange(e, page);
               }}
             >
-              <p>{languageRedux === 1 ? home.more : homeEn.more}</p>
+              <p>{languageRedux == 1 ? home.more : homeEn.more}</p>
               <MoreICon width={20} height={20} />
             </Space>
           </Stack>

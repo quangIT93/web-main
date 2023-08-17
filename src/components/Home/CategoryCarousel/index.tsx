@@ -22,7 +22,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 
-import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
+// import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
+// import { setPostNewest } from 'store/actions';
 // import { RootState } from '../../../store/reducer';
 
 // import context
@@ -100,7 +101,7 @@ const CategoryCarousel: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useDispatch();
-  // const { setPostNewest } = bindActionCreators(actionCreators, dispatch);
+  const { setPostNewest } = bindActionCreators(actionCreators, dispatch);
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
   // const refTab = React.useRef<HTMLUListElement | null>(null);
@@ -184,48 +185,48 @@ const CategoryCarousel: React.FC = () => {
       console.log('newValue: ' + newValue);
 
       if (newValue === 1) {
-        // result = await postApi.getPostNewest(
-        //   null,
-        //   null,
-        //   null,
-        //   19,
-        //   null,
-        //   languageRedux === 1 ? 'vi' : 'en',
-        // );
-
-        result = await postApi.getPostNewestV3(
+        result = await postApi.getPostNewest(
           null,
           null,
           null,
-          null,
-          20,
+          19,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
-      } else {
-        // result = await postApi.getPostNewest(
-        //   Number(newValue),
+
+        // result = await postApi.getPostNewestV3(
         //   null,
         //   null,
-        //   19,
+        //   null,
+        //   null,
+        //   20,
         //   null,
         //   languageRedux === 1 ? 'vi' : 'en',
         // );
-
-        result = await postApi.getPostNewestV3(
-          null,
+      } else {
+        result = await postApi.getPostNewest(
           Number(newValue),
           null,
           null,
-          20,
+          19,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
+
+        // result = await postApi.getPostNewestV3(
+        //   null,
+        //   Number(newValue),
+        //   null,
+        //   null,
+        //   20,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
       }
 
       if (result) {
-        // setPostNewest(result);
-        dispatch(setPostNewestApi(result));
+        setPostNewest(result);
+        // dispatch(setPostNewestApi(result));
       }
     } catch (error) {
       console.log(error);
@@ -273,47 +274,47 @@ const CategoryCarousel: React.FC = () => {
       const themeId = searchParams.get('categories-id');
       var result;
       if (themeId === 'all') {
-        // result = await postApi.getPostNewest(
-        //   null,
-        //   null,
-        //   null,
-        //   19,
-        //   null,
-        //   languageRedux === 1 ? 'vi' : 'en',
-        // );
-
-        result = await postApi.getPostNewestV3(
+        result = await postApi.getPostNewest(
           null,
           null,
           null,
-          null,
-          20,
+          19,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
-      } else {
-        // result = await postApi.getPostNewest(
-        //   Number(themeId),
+
+        // result = await postApi.getPostNewestV3(
         //   null,
         //   null,
-        //   19,
+        //   null,
+        //   null,
+        //   20,
         //   null,
         //   languageRedux === 1 ? 'vi' : 'en',
         // );
-
-        result = await postApi.getPostNewestV3(
-          null,
+      } else {
+        result = await postApi.getPostNewest(
           Number(themeId),
           null,
           null,
-          20,
+          19,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
+
+        // result = await postApi.getPostNewestV3(
+        //   null,
+        //   Number(themeId),
+        //   null,
+        //   null,
+        //   20,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
       }
       if (result) {
-        // setPostNewest(result);
-        dispatch(setPostNewestApi(result));
+        setPostNewest(result);
+        // dispatch(setPostNewestApi(result));
         // setOpenBackdrop(false);
       }
     } catch (error) {
@@ -327,47 +328,47 @@ const CategoryCarousel: React.FC = () => {
       const themeId = userSelectedId;
       var result;
       if (themeId === 1) {
-        // result = await postApi.getPostNewest(
-        //   null,
-        //   null,
-        //   null,
-        //   19,
-        //   null,
-        //   languageRedux === 1 ? 'vi' : 'en',
-        // );
-
-        result = await postApi.getPostNewestV3(
+        result = await postApi.getPostNewest(
           null,
           null,
           null,
-          null,
-          20,
+          19,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
-      } else {
-        // result = await postApi.getPostNewest(
-        //   Number(themeId),
+
+        // result = await postApi.getPostNewestV3(
         //   null,
         //   null,
-        //   19,
+        //   null,
+        //   null,
+        //   20,
         //   null,
         //   languageRedux === 1 ? 'vi' : 'en',
         // );
-
-        result = await postApi.getPostNewestV3(
-          null,
+      } else {
+        result = await postApi.getPostNewest(
           Number(themeId),
           null,
           null,
-          20,
+          19,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
+
+        // result = await postApi.getPostNewestV3(
+        //   null,
+        //   Number(themeId),
+        //   null,
+        //   null,
+        //   20,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
       }
       if (result) {
-        // setPostNewest(result);
-        dispatch(setPostNewestApi(result));
+        setPostNewest(result);
+        // dispatch(setPostNewestApi(result));
         // setOpenBackdrop(false);
       }
     } catch (error) {
