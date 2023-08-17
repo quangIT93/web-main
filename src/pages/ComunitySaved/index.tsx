@@ -1,15 +1,11 @@
-import React, { useEffect, FormEvent, useState } from 'react';
+import React from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
-import { Box, Typography } from '@mui/material';
+
 // import moment, { Moment } from 'moment';
 
 import { Collapse } from 'antd';
-import { Skeleton } from 'antd';
-import { message } from 'antd';
 
 // import component
 
@@ -27,7 +23,7 @@ import { Navbar } from '#components';
 
 import './style.scss';
 
-const { Panel } = Collapse;
+// const { Panel } = Collapse;
 
 const Comunity = () => {
   const [showText, setShowText] = React.useState('');

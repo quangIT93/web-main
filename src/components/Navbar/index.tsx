@@ -610,6 +610,7 @@ const Navbar: React.FC = () => {
       if (location.pathname !== '/search-results') {
         window.open(
           `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}`,
+          '_parent',
         );
       } else {
         setSearchParams({
@@ -617,7 +618,7 @@ const Navbar: React.FC = () => {
         });
         setSearch(!search);
         setOpenCollapseFilter(false);
-        // window.open(`/search-results`, "_parent")
+        // window.open(`/search-results`, "_sel")
       }
     }, 100);
 
@@ -639,7 +640,7 @@ const Navbar: React.FC = () => {
     //     }` +
     //     `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
     //     `${money_type ? `&money_type=${money_type}` : ''}`,
-    //     '_parent',
+    //     '_sel',
     //   );
     // }, 100);
   };
@@ -647,8 +648,8 @@ const Navbar: React.FC = () => {
   // login
   const handleClickLogin = async (e: any) => {
     e.stopPropagation();
-    // console.log('click');
     e.preventDefault();
+    console.log('click');
     try {
       if (openInfoUser) {
         setSpinning(false);
@@ -1029,7 +1030,7 @@ const Navbar: React.FC = () => {
               </div>
             </Space>
             <div className="sub-login_items">
-              <Link to="/profile" target="_parent">
+              <Link to="/profile" target="_sel">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
                   <span>
@@ -1039,7 +1040,7 @@ const Navbar: React.FC = () => {
                   </span>
                 </div>
               </Link>
-              <Link to="/history" target="_parent">
+              <Link to="/history" target="_sel">
                 <div
                   className="sub-login_item"
                   style={{
@@ -1283,7 +1284,7 @@ const Navbar: React.FC = () => {
               </div>
             </Space>
             <div className="sub-login_items">
-              <Link to="/profile" target="_parent">
+              <Link to="/profile" target="_sel">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
                   <span>
@@ -1293,7 +1294,7 @@ const Navbar: React.FC = () => {
                   </span>
                 </div>
               </Link>
-              <Link to="/history" target="_parent">
+              <Link to="/history" target="_sel">
                 <div
                   className="sub-login_item"
                   style={{
@@ -1461,7 +1462,7 @@ const Navbar: React.FC = () => {
                 name="btn-chat"
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
-                    window.open(`/message`, '_parent');
+                    window.open(`/message`, '_sel');
                   } else {
                     setOpenModalLogin(true);
                   }

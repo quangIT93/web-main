@@ -58,7 +58,8 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '520px' }} className="filter-loca-cate">
       <Text className="title-filter_location">
-        {languageRedux == 1
+
+        {languageRedux === 1
           ? 'Chọn danh mục nghề nghiệp'
           : 'Select career categories'}
       </Text>

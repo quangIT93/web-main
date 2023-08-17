@@ -78,6 +78,35 @@ const postApi = {
       },
     })
   },
+  getPostNewestV3: (
+    childrenCategoryId: number[] | null,
+    parentCategoryId: number | null,
+    districtIds: [] | null,
+    provinceId:  number | null,
+    limit: number | null,
+    page: number | null,
+    lang: string
+  ) => {
+    const URL =
+      `/v3/posts/newest?` +
+      `${childrenCategoryId
+        ? `&${childrenCategoryId?.map((n, index) => `childrenCategoryId=${n}`).join('&')}`
+        : ``
+      }` +
+      `${parentCategoryId ? `&parentCategoryId=${parentCategoryId}` : ``}` +
+      `${districtIds
+        ? `&${districtIds?.map((n, index) => `districtIds[${index}]=${n}`).join('&')}`
+        : ``
+      }` +
+      `${provinceId ? `provinceId=${provinceId}` : ``}` +
+      `&limit=${limit}${page ? `&page=${page}` : ``}` +
+      `&lang=${lang}`
+    return axiosClient.get(URL, {
+      headers: {
+        'Cache-Control': 'private, max-age=300'
+      },
+    })
+  },
   updateStatusPost: (id: number, status: number) => {
     const URL = `/v1/posts/sta`
     return axiosClient.put(
