@@ -268,11 +268,11 @@ const ThemesJob: React.FC = () => {
                 ) : (
                   <div className="suggest-job-not-loging">
                     <div className="suggest-job-not-loging_left">
-                      <h3>
+                      {/* <h3>
                         {languageRedux === 1
                           ? 'Hijob gợi ý công việc cho bạn'
                           : 'Hijob suggests a job for you'}
-                      </h3>
+                      </h3> */}
                       <p>
                         {languageRedux === 1
                           ? 'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.'
