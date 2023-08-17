@@ -180,27 +180,21 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   const validValue = () => {
     if (experience.title === '') {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_professional :
-          profileEn.err_professional,
+        message: language?.profile_page?.err_professional,
         checkForm: false,
       };
     }
 
     if (experience.companyName === '') {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_company :
-          profileEn.err_company,
+        message: language?.profile_page?.err_company,
         checkForm: false,
       };
     }
 
     if (experience.extraInformation === '') {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_additional_information :
-          profileEn.err_additional_information,
+        message: language?.profile_page?.err_additional_information,
         checkForm: false,
       };
     }
@@ -208,18 +202,14 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
 
     if (!experience.startDate) {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_start_time :
-          profileEn.err_start_time,
+        message: language?.profile_page?.err_start_time,
         checkForm: false,
       };
     }
 
     if (!experience.endDate) {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_finish_time :
-          profileEn.err_finish_time,
+        message: language?.profile_page?.err_finish_time,
         checkForm: false,
       };
     }
@@ -261,9 +251,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       console.log(error);
       messageApi.open({
         type: 'error',
-        content: languageRedux === 1 ?
-          profileVi.check_info_please :
-          profileEn.check_info_please,
+        content: language?.profile_page?.check_info_please,
       });
     }
   };
@@ -308,9 +296,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
           sx={{ marginBottom: '12px' }}
         >
           {
-            languageRedux === 1 ?
-              profileVi.edit_working_experience :
-              profileEn.edit_working_experience
+            language?.profile_page?.edit_working_experience
           }
         </Typography>
         <Box sx={styleChildBox}>
@@ -347,9 +333,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             htmlFor="nameProfile"
           >
             {
-              languageRedux === 1 ?
-                profileVi.company_organization :
-                profileEn.company_organization
+              language?.profile_page?.company_organization
             }{' '}
             <span className="color-asterisk">*</span>
           </Typography>
@@ -362,9 +346,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={
-              languageRedux === 1 ?
-                profileVi.place_company_organization :
-                profileEn.place_company_organization
+              language?.profile_page?.place_company_organization
             }
           // error={titleError} // Đánh dấu lỗi
           />
@@ -442,18 +424,14 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             id="extraExp_info"
             // label="Một số đặc điểm nhận diện công ty"
             placeholder={
-              languageRedux === 1 ?
-                profileVi.place_additional_information :
-                profileEn.place_additional_information
+              language?.profile_page?.place_additional_information
             }
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

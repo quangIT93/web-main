@@ -23,7 +23,7 @@ interface IEditRecruitmentTime {
 }
 
 const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
-  const { setEditDataPosted, editDataPosted, languageRedux } = props;
+  const { setEditDataPosted, editDataPosted, languageRedux, language } = props;
 
   // const valueNewDate: any = moment(new Date());
 
@@ -58,9 +58,7 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             htmlFor="startTime"
           >
             {
-              languageRedux === 1 ?
-                post.start_date :
-                postEn.start_date
+              language?.post_page.start_date
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -85,9 +83,7 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             htmlFor="startTime"
           >
             {
-              languageRedux === 1 ?
-                post.end_date :
-                postEn.end_date
+              language?.post_page.end_date
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

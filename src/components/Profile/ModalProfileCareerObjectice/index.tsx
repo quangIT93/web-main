@@ -155,9 +155,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     try {
       if (value.length > 10) {
         message.error(
-          languageRedux === 1 ?
-            profileVi.limit_10_careers :
-            profileEn.limit_10_careers
+          language?.limit_10_careers
         );
         return;
       }
@@ -266,9 +264,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
         <TreeSelect {...tProps} />
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

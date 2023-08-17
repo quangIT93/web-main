@@ -906,7 +906,7 @@ const Navbar: React.FC = () => {
     >
       <FormOutlined style={{ color: 'white' }} />
       <p style={{ marginLeft: 10, color: 'white' }}>
-        {languageRedux === 1 ? home.post : homeEn.post}
+        {language?.post}
       </p>
     </button>,
     <div
@@ -929,7 +929,7 @@ const Navbar: React.FC = () => {
             {localStorage.getItem('accessToken') && dataProfile ? (
               <span>{dataProfile?.name}</span>
             ) : (
-              <span>{languageRedux === 1 ? 'Đăng nhập' : homeEn.sign_in}</span>
+              <span>{language?.sign_in}</span>
             )}
           </div>
         </div>
@@ -953,14 +953,10 @@ const Navbar: React.FC = () => {
           <h3>{languageRedux === 1 ? 'Đăng nhập ở đây' : 'Sign in here'}</h3>
           <div className="login__hover__p">
             <p>
-              {languageRedux === 1
-                ? 'Chọn vị trí và danh mục của bạn'
-                : 'Choose your location and category'}
+              {language?.home_page?.choose_your_location_category}
             </p>
             <p>
-              {languageRedux === 1
-                ? 'Chúng tôi sẽ cung cấp thông tin tuyển dụng tốt nhất'
-                : 'We will provide the best recruitment information'}
+              {language?.home_page?.provide_the_best_recruitment_information}
             </p>
           </div>
           {/* <Button
@@ -1027,9 +1023,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.locations.map((location: any) => {
                           return `${location.district} , `;
                         })
-                        : languageRedux === 1
-                          ? 'Chưa cập nhật thông tin'
-                          : 'The information has not been updated'}
+                        : language?.home_page?.un_update_infor}
                     </p>
                   </span>
                   <span
@@ -1043,9 +1037,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.categories.map((profile: any) => {
                           return `${profile.parent_category} / ${profile.child_category}, `;
                         })
-                        : languageRedux === 1
-                          ? 'Chưa cập nhật thông tin'
-                          : 'The information has not been updated'}
+                        : language?.home_page?.un_update_infor}
                     </p>
                   </span>
                 </div>
@@ -1056,9 +1048,7 @@ const Navbar: React.FC = () => {
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
                   <span>
-                    {languageRedux === 1
-                      ? 'Cập nhật thông tin'
-                      : 'Update information'}
+                    {language?.home_page?.update_infor}
                   </span>
                 </div>
               </Link>
@@ -1073,7 +1063,7 @@ const Navbar: React.FC = () => {
                 // }}
                 >
                   <PaperSubLoginIcon />
-                  <span>{languageRedux === 1 ? 'Lịch sử' : 'History'}</span>
+                  <span>{language?.history}</span>
                 </div>
               </Link>
               <div className="sub-history_status">
@@ -1083,12 +1073,12 @@ const Navbar: React.FC = () => {
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {languageRedux === 1 ? home.pending : homeEn.pending}{' '}
+                  {language?.home_page?.pending}{' '}
                   {`${pending}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {languageRedux === 1 ? home.waiting : homeEn.waiting}{' '}
+                  {language?.home_page?.waiting}{' '}
                   {`${waiting}`}
                 </span>
               </div>
@@ -1281,9 +1271,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.locations.map((location: any) => {
                           return `${location.district} , `;
                         })
-                        : languageRedux === 1
-                          ? 'Chưa cập nhật thông tin'
-                          : 'The information has not been updated'}
+                        : language?.home_page?.un_update_infor}
                     </p>
                   </span>
                   <span
@@ -1297,9 +1285,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.categories.map((profile: any) => {
                           return `${profile.parent_category} / ${profile.child_category}, `;
                         })
-                        : languageRedux === 1
-                          ? 'Chưa cập nhật thông tin'
-                          : 'The information has not been updated'}
+                        : language?.home_page?.un_update_infor}
                     </p>
                   </span>
                 </div>
@@ -1310,9 +1296,7 @@ const Navbar: React.FC = () => {
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
                   <span>
-                    {languageRedux === 1
-                      ? 'Cập nhật thông tin'
-                      : 'Update information'}
+                    {language?.home_page?.update_infor}
                   </span>
                 </div>
               </Link>
@@ -1327,22 +1311,22 @@ const Navbar: React.FC = () => {
                 // }}
                 >
                   <PaperSubLoginIcon />
-                  <span>{languageRedux === 1 ? 'Lịch sử' : 'History'}</span>
+                  <span>{language?.history}</span>
                 </div>
               </Link>
               <div className="sub-history_status">
                 <span>
-                  {languageRedux === 1 ? home.approved : homeEn.approved}{' '}
+                  {language?.approved}{' '}
                   {`${approved}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {languageRedux === 1 ? home.pending : homeEn.pending}{' '}
+                  {language?.home_page?.pending}{' '}
                   {`${pending}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {languageRedux === 1 ? home.waiting : homeEn.waiting}{' '}
+                  {language?.home_page?.waiting}{' '}
                   {`${waiting}`}
                 </span>
               </div>
@@ -1362,7 +1346,7 @@ const Navbar: React.FC = () => {
               >
                 <div className="sub-translate_header_left">
                   <TranslateSubLoginIcon />
-                  <span>{languageRedux === 1 ? 'Ngôn ngữ' : 'Language'}</span>
+                  <span>{language?.home_page?.languages}</span>
                 </div>
                 <div
                   className="sub-translate_header_right"
@@ -1393,16 +1377,16 @@ const Navbar: React.FC = () => {
                   <Radio value={1}>
                     <VNSubLoginIcon />
                     <span>
-                      {languageRedux === 1 ? 'Tiếng Việt' : 'Vietnamese'}
+                      {language?.vietnamese}
                     </span>
                   </Radio>
                   <Radio value={2}>
                     <ENSubLoginIcon />
-                    <span>{languageRedux === 1 ? 'Tiếng Anh' : 'English'}</span>
+                    <span>{language?.english}</span>
                   </Radio>
                   {/* <Radio value={3}>
                   <ENSubLoginIcon />
-                  <span>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</span>
+                  <span>{language?.korean}</span>
                 </Radio> */}
                 </Radio.Group>
               </div>
@@ -1414,7 +1398,7 @@ const Navbar: React.FC = () => {
               >
                 <LogoutSubLoginIcon />
 
-                <span>{languageRedux === 1 ? 'Đăng xuất' : 'Log out'}</span>
+                <span>{language?.sign_out}</span>
               </div>
 
               {/* <div className="sub-login_item" onClick={handleLogout}>
@@ -1532,13 +1516,11 @@ const Navbar: React.FC = () => {
               </Button>
               <div className="sub-icon_qr">
                 <h2>
-                  {languageRedux === 1
-                    ? 'Tải Ứng dụng HiJob!'
-                    : 'Download the HiJob App!'}
+                  {language?.download_hijob_app}
                 </h2>
                 <img
                   src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
-                  alt={languageRedux === 1 ? 'Ảnh lỗi' : 'Error photo'}
+                  alt={language?.err_none_img}
                 />
                 <div className="sub-icon_apps">
                   <Link
@@ -1548,7 +1530,7 @@ const Navbar: React.FC = () => {
                     <img
                       id="img-gallery"
                       src={require('../../img/langdingPage/image 43.png')}
-                      alt={languageRedux === 1 ? 'Ảnh lỗi' : 'Error photo'}
+                      alt={language?.err_none_img}
                     />
                   </Link>
                   <Link
@@ -1557,7 +1539,7 @@ const Navbar: React.FC = () => {
                   >
                     <img
                       src={require('../../img/langdingPage/image 45.png')}
-                      alt={languageRedux === 1 ? 'Ảnh lỗi' : 'Error photo'}
+                      alt={language?.err_none_img}
                     />
                   </Link>
                 </div>
@@ -1625,18 +1607,21 @@ const Navbar: React.FC = () => {
                 setListDis={setListDis}
                 reset={reset}
                 setReset={setReset}
+                language={language}
               />
               <FilterCateloriesNav
                 listCateProps={listCate}
                 setListCate={setListCate}
                 reset={reset}
                 setReset={setReset}
+                language={language}
               />
               <FilterTypeJob
                 valueTypeJob={jobType}
                 setTypeJob={setJobType}
                 reset={reset}
                 setReset={setReset}
+                language={language}
               />
             </div>
             <div className="filter-wrap_bottom">
@@ -1673,18 +1658,21 @@ const Navbar: React.FC = () => {
               setListDis={setListDis}
               reset={reset}
               setReset={setReset}
+              language={language}
             />
             <FilterCateloriesNav
               listCateProps={listCate}
               setListCate={setListCate}
               reset={reset}
               setReset={setReset}
+              language={language}
             />
             <FilterTypeJob
               valueTypeJob={jobType}
               setTypeJob={setJobType}
               reset={reset}
               setReset={setReset}
+              language={language}
             />
             <FilterTypeSalary
               setSalaryType={setSalaryType}

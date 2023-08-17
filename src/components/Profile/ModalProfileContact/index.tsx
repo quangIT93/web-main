@@ -273,9 +273,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

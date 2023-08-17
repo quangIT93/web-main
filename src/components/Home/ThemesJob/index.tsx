@@ -224,14 +224,10 @@ const ThemesJob: React.FC = () => {
       {!localStorage.getItem('accessToken') ? (
         <div className="title-location-job">
           <h3>
-            {languageRedux === 1
-              ? 'Vị trí công việc lý tưởng'
-              : 'Ideal job location'}
+            {language?.home_page?.ideal_job_location}
           </h3>
           <p>
-            {languageRedux === 1
-              ? 'Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.'
-              : 'Search for jobs in famous locations in your city.'}
+            {language?.home_page?.search_in_famous_locations_in_your_city}
           </p>
         </div>
       ) : (

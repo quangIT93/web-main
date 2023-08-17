@@ -76,9 +76,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           onChange={handleEditCompanyDes}
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={
-            languageRedux === 1 ?
-              company.place_des :
-              companyEn.place_des
+            language?.company_page?.place_des
           }
         //   error={titleError} // Đánh dấu lỗi
         />

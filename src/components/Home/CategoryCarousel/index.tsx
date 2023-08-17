@@ -621,9 +621,7 @@ const CategoryCarousel: React.FC = () => {
                       }
                     >
                       {isLogin && item.id === 1
-                        ? languageRedux === 1
-                          ? 'Công việc gợi ý'
-                          : 'Suggested work'
+                        ? language?.nearby_jobs
                         : item.name}
                     </span>
                   </div>

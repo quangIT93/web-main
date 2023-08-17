@@ -260,9 +260,7 @@ const Profile: React.FC = () => {
         setOpen(false);
         setFileList([]);
         message.success(
-          languageRedux === 1 ?
-            profileVi.alert_delete_cv_success :
-            profileEn.alert_delete_cv_success
+          language?.profile_page?.alert_delete_cv_success
         );
       }
     } catch (error) { }
@@ -272,9 +270,7 @@ const Profile: React.FC = () => {
   const cancel = () => {
     setOpen(false);
     message.error(
-      languageRedux === 1 ?
-        profileVi.cancel :
-        profileEn.cancel);
+      language?.profile_page?.cancel);
   };
 
   // handle upload cv
@@ -288,14 +284,10 @@ const Profile: React.FC = () => {
     try {
       if (profile.cv_url) {
         result = await profileApi.updateCV(formData);
-        mess = languageRedux === 1 ?
-          profileVi.alert_update_cv_success :
-          profileEn.alert_update_cv_success;
+        mess = language?.profile_page?.alert_update_cv_success;
       } else {
         result = await profileApi.createCV(formData);
-        mess = languageRedux === 1 ?
-          profileVi.alert_add_cv_success :
-          profileEn.alert_add_cv_success;
+        mess = language?.profile_page?.alert_add_cv_success;
       }
 
       if (result) {
@@ -430,9 +422,7 @@ const Profile: React.FC = () => {
                         }}
                       >
                         {companyName ? companyName :
-                          languageRedux === 1 ?
-                            profileVi.company_info :
-                            profileEn.company_info}
+                          language?.company_info}
                       </h2>
 
                       <h2>|</h2>
@@ -440,13 +430,9 @@ const Profile: React.FC = () => {
                       <h2>
                         {companyName
                           ?
-                          languageRedux === 1 ?
-                            profileVi.can_post_now :
-                            profileEn.can_post_now
+                          language?.profile_page?.can_post_now
                           :
-                          languageRedux === 1 ?
-                            profileVi.should_register :
-                            profileEn.should_register}
+                          language?.profile_page?.should_register}
                       </h2>
                     </div>
                     <Button
@@ -461,12 +447,8 @@ const Profile: React.FC = () => {
                     >
                       <LoginArrowIcon />
                       {companyName ?
-                        languageRedux === 1 ?
-                          profileVi.create_post :
-                          profileEn.create_post :
-                        languageRedux === 1 ?
-                          profileVi.register_now :
-                          profileEn.register_now}
+                        language?.profile_page?.create_post :
+                        language?.profile_page?.register_now}
                     </Button>
                   </div>
                   {/* <div
@@ -514,9 +496,7 @@ const Profile: React.FC = () => {
             >
               <h3>
                 {
-                  languageRedux === 1 ?
-                    profileVi.personal_information :
-                    profileEn.personal_information
+                  language?.personal_information
                 }
               </h3>
               <Space
@@ -560,9 +540,7 @@ const Profile: React.FC = () => {
                   {profile?.birthday
                     ? moment(new Date(profile?.birthday)).format('DD/MM/yyyy')
                     :
-                    languageRedux === 1 ?
-                      profileVi.unupdated :
-                      profileEn.unupdated}
+                    language?.unupdated}
                 </p>
                 <p>
                   {profile ? (profile?.gender === 1 ?
@@ -671,9 +649,7 @@ const Profile: React.FC = () => {
                   icon={<UploadOutlined style={{ fontSize: 18 }} />}
                 >
                   {profile.cv_url ?
-                    languageRedux === 1 ?
-                      profileVi.update_cv :
-                      profileEn.update_cv :
+                    language?.profile_page?.update_cv :
                     language?.upload_cv
                   }{' '}
                 </Button>
@@ -691,27 +667,19 @@ const Profile: React.FC = () => {
                 {profile.cv_url && fileList?.length === 0 ? (
                   <Popconfirm
                     title={
-                      languageRedux === 1 ?
-                        profileVi.delete_cv :
-                        profileEn.delete_cv
+                      language?.profile_page?.delete_cv
                     }
                     description={
-                      languageRedux === 1 ?
-                        profileVi.alert_delete_cv :
-                        profileEn.alert_delete_cv
+                      language?.profile_page?.alert_delete_cv
                     }
                     open={open}
                     onConfirm={confirm}
                     onCancel={cancel}
                     okText={
-                      languageRedux === 1 ?
-                        profileVi.yes :
-                        profileEn.yes
+                      language?.yes
                     }
                     cancelText={
-                      languageRedux === 1 ?
-                        profileVi.no :
-                        profileEn.no
+                      language?.no
                     }
                   >
                     <CVItem
@@ -719,6 +687,7 @@ const Profile: React.FC = () => {
                       open={open}
                       setOpen={setOpen}
                       isProfile={true}
+                      language={language}
                     />
                   </Popconfirm>
                 ) : (
@@ -726,9 +695,7 @@ const Profile: React.FC = () => {
                     <Space direction="vertical" align="center">
                       <p>
                         {
-                          languageRedux === 1 ?
-                            profileVi.cv_title :
-                            profileEn.cv_title
+                          language?.profile_page?.cv_title
                         }
                       </p>
                       <img style={{ width: 200 }} src="/cv3 1.png" alt="ảnh" />
@@ -750,13 +717,9 @@ const Profile: React.FC = () => {
                   }}
                 >
                   {uploading ?
-                    languageRedux === 1 ?
-                      profileVi.saving :
-                      profileEn.saving
+                    language?.profile_page?.saving
                     :
-                    languageRedux === 1 ?
-                      profileVi.save_cv :
-                      profileEn.save_cv}
+                    language?.profile_page?.save_cv}
                 </Button>
               </div>
             </Space>
@@ -990,9 +953,7 @@ const Profile: React.FC = () => {
             >
 
               {
-                languageRedux === 1 ?
-                  profileVi.alert_delete_success :
-                  profileEn.alert_delete_success
+                language?.profile_page?.alert_delete_success
               }
             </Alert>
           </Snackbar>

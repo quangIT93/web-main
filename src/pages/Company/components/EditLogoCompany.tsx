@@ -19,11 +19,12 @@ import { companyEn } from 'validations/lang/en/company';
 interface IEditLogoCompany {
   dataCompany: any;
   setDataCompany: any;
+  language: any;
 }
 
 const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const { dataCompany, setDataCompany } = props;
+  const { dataCompany, setDataCompany, language } = props;
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [previewImage, setPreviewImage] = useState('');
@@ -69,9 +70,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
       if (file.size > 1024 * 1024 * 5) {
         checFileSize = false;
         message.error(
-          languageRedux === 1 ?
-            company.err_file :
-            companyEn.err_file
+          language?.company_page?.err_file
         );
       } else {
         setFileList([file]);
@@ -120,9 +119,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
           htmlFor="editJob"
         >
           {
-            languageRedux === 1 ?
-              company.company_logo :
-              companyEn.company_logo
+            language?.company_page?.company_logo
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>

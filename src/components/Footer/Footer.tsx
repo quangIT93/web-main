@@ -183,7 +183,7 @@ const Footer: React.FC = () => {
             >
               <img
                 src={require('../../img/langdingPage/logoHiJob.png')}
-                alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                alt={language?.err_none_img}
               />
             </div>
 
@@ -191,43 +191,35 @@ const Footer: React.FC = () => {
               {language?.connect_talent}
             </h3>
             <p>
-              {languageRedux === 1
-                ? 'Công ty TNHH NeoWorks., LTD'
-                : 'NeoWorks Co., Ltd., LTD'}
+              {language?.footer?.company_name}
             </p>
             <p>
-              {languageRedux === 1
-                ? 'Địa chỉ: 79 Quốc Hương, P. Thảo Điền, Quận 2, TP HCM'
-                : 'Address: 79 Quoc Huong, Thao Dien Ward, District 2, HCMC'}
+              {language?.footer?.company_location}
             </p>
             <p>
-              {languageRedux === 1
-                ? 'Đại diện pháp luật: Kim Dongha'
-                : 'Legal representative: Kim Dongha'}
+              {language?.footer?.legal_representative}
             </p>
             <p>
-              {languageRedux === 1 ? 'Chức vụ: Giám đốc' : 'Position: Director'}
+              {language?.footer?.position_director}
             </p>
           </div>
           <div className="footer-center">
-            <h4>{languageRedux === 1 ? 'Về HiJob' : 'About HiJob'}</h4>
+            <h4>{language?.footer?.about_hijob}</h4>
             <Link to="/policy#about-us" target="_seft">
-              {languageRedux === 1 ? 'Về HiJob' : 'About HiJob'}
+              {language?.footer?.about_hijob}
             </Link>
 
             <Link to="/policy#privacy-policy" target="_seft">
               {' '}
-              {languageRedux === 1
-                ? 'Chính sách bảo mật'
-                : 'Privacy Policy'}{' '}
+              {language?.footer?.privacy_policy}{' '}
             </Link>
 
             <Link to="/policy#terms-of-use" target="_seft">
               {' '}
-              {languageRedux === 1 ? 'Điều khoản sử dụng' : 'Terms of use'}{' '}
+              {language?.footer?.terms_of_use}{' '}
             </Link>
 
-            <h4>{languageRedux === 1 ? 'Liên kết' : 'Connect'}</h4>
+            <h4>{language?.footer?.connect}</h4>
             <div className="link-facebook">
               <FaceBookIcon />
               <Link to="https://www.facebook.com/hijobOfficial" target="_blank">
@@ -238,19 +230,17 @@ const Footer: React.FC = () => {
           <div className="footer-right">
             <div className="right-top">
               <h4>
-                {languageRedux === 1
-                  ? 'Tải Ứng dụng HiJob!'
-                  : 'Download the HiJob App!'}
+                {language?.download_hijob_app}
               </h4>
               <div className="div-img-footer">
                 <img
                   src={require('../../img/langdingPage/QRcode-ggplay.png')}
-                  alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                  alt={language?.err_none_img}
                 />
                 <img
                   style={{ marginLeft: 10 }}
                   src={require('../../img/langdingPage/QRcode-appstore.png')}
-                  alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                  alt={language?.err_none_img}
                 />
               </div>
               <div className="div-link-app">
@@ -261,7 +251,7 @@ const Footer: React.FC = () => {
                   <img
                     id="img-gallery"
                     src={require('../../img/langdingPage/image 43.png')}
-                    alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                    alt={language?.err_none_img}
                   />
                 </Link>
                 <Link
@@ -270,31 +260,31 @@ const Footer: React.FC = () => {
                 >
                   <img
                     src={require('../../img/langdingPage/image 45.png')}
-                    alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                    alt={language?.err_none_img}
                   />
                 </Link>
               </div>
             </div>
             <div className="div-socal-link">
-              <h4 style={{ color: '#0D99FF' }}>{languageRedux === 1 ? 'Liên kết' : 'Connect'}</h4>
+              <h4 style={{ color: '#0D99FF' }}>{language?.footer?.connect}</h4>
               <div id="div-img-socal">
                 <Link to="https://www.facebook.com/hijobOfficial/">
                   <img
                     src={require('../../img/langdingPage/imagefb.png')}
-                    alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                    alt={language?.err_none_img}
                   />
                 </Link>
                 <Link to="#">
                   <img
                     id="img-gallery"
                     src={require('../../img/langdingPage/imagein.png')}
-                    alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                    alt={language?.err_none_img}
                   />
                 </Link>
                 <Link to="#">
                   <img
                     src={require('../../img/langdingPage/imageyou.png')}
-                    alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                    alt={language?.err_none_img}
                   />
                 </Link>
               </div>
@@ -304,16 +294,14 @@ const Footer: React.FC = () => {
       </Visibility>
       <PolicyFooter id="div-policy-footer" onClick={handleClickOpen}>
         <Link to="/policy" target="_parent">
-          <p>{languageRedux === 1 ? 'Chính sách sử dụng' : 'Usage Policy'}</p>
+          <p>{language?.footer?.usage_policy}</p>
         </Link>
         <div id="div-policy-footer-right">
           <div
             style={{ flexDirection: 'row', display: 'flex', fontSize: '12px' }}
           >
             <p style={{ color: '#575757', fontSize: '12px' }}>
-              {languageRedux === 1
-                ? 'Tổng đài CSKH:'
-                : 'Customer Service Center'}
+              {language?.footer?.customer_service_center}
             </p>
             <p style={{ color: '#575757', marginLeft: '5px' }}>
               (028) 35358983

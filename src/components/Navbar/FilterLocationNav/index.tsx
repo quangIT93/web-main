@@ -27,6 +27,7 @@ interface DistrictProps {
   setListDis: Function;
   reset: Boolean;
   setReset: React.Dispatch<React.SetStateAction<Boolean>>;
+  language: any
 }
 const { SHOW_CHILD } = Cascader;
 
@@ -53,6 +54,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   setListDis,
   reset,
   setReset,
+  language
 }) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -77,14 +79,12 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '520px' }} className="filter-loca-cate">
       <Text className="title-filter_location">
-        {languageRedux == 1 ? 'Chọn địa điểm' : 'Choose place'}
+        {language?.select_location}
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
         {disable
-          ? languageRedux == 1
-            ? 'Chỉ có thể tối đa 10 địa điểm'
-            : 'Can only max 10 locations'
+          ? language?.limit_10_location
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -102,9 +102,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       : userProfile?.locations?.map((profile: any) => [
-          profile?.province_id,
-          profile?.district_id,
-        ]),
+        profile?.province_id,
+        profile?.district_id,
+      ]),
   );
 
   // console.log('cookies', JSON.parse(getCookie('userFiltered') || '{}'));
@@ -180,19 +180,19 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             multiple
             maxTagCount="responsive"
             size="large"
-            placeholder={languageRedux == 1 ? 'Chọn địa điểm' : 'Choose place'}
+            placeholder={language?.select_location}
             inputIcon={<EnvironmentOutlined />}
             suffixIcon={<ArrowFilterIcon width={14} height={10} />}
             dropdownRender={DropdownRender}
             value={reset ? [] : listDis}
             defaultValue={
               listLocation.current?.length !== 0 &&
-              listLocation.current !== undefined
+                listLocation.current !== undefined
                 ? listLocation.current
                 : listLocation.current?.length === 0 &&
                   location?.pathname === '/search-results'
-                ? []
-                : userProfile?.locations?.map((profile: any) => [
+                  ? []
+                  : userProfile?.locations?.map((profile: any) => [
                     profile?.province_id,
                     profile?.district_id,
                   ])
@@ -200,28 +200,28 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             options={
               dataLocations
                 ? dataLocations?.map((dataLocation: any) => ({
-                    value: dataLocation.province_id,
-                    label: dataLocation.province_fullName,
-                    children: dataLocation.districts.map(
-                      (child: { district_id: string; district: string }) => {
-                        var dis = false;
-                        if (disable) {
-                          dis = true;
-                          for (const elem of locId) {
-                            if (elem === child.district_id) {
-                              dis = false;
-                              break;
-                            }
+                  value: dataLocation.province_id,
+                  label: dataLocation.province_fullName,
+                  children: dataLocation.districts.map(
+                    (child: { district_id: string; district: string }) => {
+                      var dis = false;
+                      if (disable) {
+                        dis = true;
+                        for (const elem of locId) {
+                          if (elem === child.district_id) {
+                            dis = false;
+                            break;
                           }
                         }
-                        return {
-                          value: child.district_id,
-                          label: child.district,
-                          disabled: dis,
-                        };
-                      },
-                    ),
-                  }))
+                      }
+                      return {
+                        value: child.district_id,
+                        label: child.district,
+                        disabled: dis,
+                      };
+                    },
+                  ),
+                }))
                 : []
             }
             onChange={onChange}

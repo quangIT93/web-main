@@ -63,14 +63,12 @@ const Message = () => {
   }, [languageRedux])
 
   useEffect(() => {
-    document.title = languageRedux === 1 ?
-      messVi.title_page :
-      messEn.title_page;
+    document.title = language?.message_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       page_title: '/web_message ',
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, language]);
   return (
     <div className="message-page">
       <Navbar />

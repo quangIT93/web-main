@@ -274,9 +274,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
             }}
           >
             {
-              languageRedux === 1 ?
-                post.auto_fill :
-                postEn.auto_fill
+              language?.post_page?.auto_fill
             }
             {/* <IconButton
               aria-label="close"
@@ -298,9 +296,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
             }}
           >
             {
-              languageRedux === 1 ?
-                post.job_want_to_auto_fill :
-                postEn.job_want_to_auto_fill
+              language?.post_page?.job_want_to_auto_fill
             }
           </p>
           <div className="post_items_old">
@@ -346,16 +342,12 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
           <div className="wrap-button_filterPost">
             <Button type="primary" block onClick={handleSubmitValueFill}>
               {
-                languageRedux === 1 ?
-                  post.yes :
-                  postEn.yes
+                language?.yes
               }
             </Button>
             <Button block onClick={handleCancleFillData}>
               {
-                languageRedux === 1 ?
-                  post.no :
-                  postEn.no
+                language?.no
               }
             </Button>
           </div>

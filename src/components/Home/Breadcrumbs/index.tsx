@@ -349,7 +349,7 @@ const BreadcrumbsCpn: React.FC = () => {
         className="collapse-breadcrumbs"
       >
         <Typography className="header-breabcrumb_text">
-          {languageRedux === 1 ? 'Danh sách' : 'List'}
+          {language?.home_page?.list}
         </Typography>
         <Box padding={0} className="box-breadcrumbs">
           <FormGroup>
@@ -389,7 +389,7 @@ const BreadcrumbsCpn: React.FC = () => {
             className="btn-breadcrumb_nav"
             onClick={handleClickChoose}
           >
-            {languageRedux === 1 ? 'Chọn' : 'Select'}
+            {language?.home_page?.select}
           </button>
         </div>
       </Collapse>

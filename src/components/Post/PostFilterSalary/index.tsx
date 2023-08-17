@@ -20,7 +20,7 @@ interface PropsSalaryFilterSubnav {
 }
 
 const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
-  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType, languageRedux } =
+  const { setSalaryMax, setSalaryMin, salaryMax, salaryMin, salaryType, languageRedux, language } =
     props;
   // const VND_TO_USD = 0.000043; // Conversion rate: 1 VND = 0.000043 USD
   // const USD_TO_VND = 23155;
@@ -127,9 +127,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                post.min_salary :
-                postEn.min_salary
+              language?.post_page?.min_salary
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -156,9 +154,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                post.max_salary :
-                postEn.max_salary
+              language?.post_page?.max_salary
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

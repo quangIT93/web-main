@@ -12,6 +12,7 @@ interface NumericInputProps {
   value: any;
   onChange: (value: any) => any;
   languageRedux: any;
+  language: any;
 }
 
 interface IEditPostNumberPhone {
@@ -22,7 +23,7 @@ interface IEditPostNumberPhone {
 }
 
 const NumericInput = (props: NumericInputProps) => {
-  const { value, onChange, languageRedux } = props;
+  const { value, onChange, language } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
@@ -48,9 +49,7 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder={languageRedux === 1 ?
-        post.place_phone :
-        postEn.place_phone}
+      placeholder={language?.post_page.place_phone}
       maxLength={16}
     />
   );
@@ -92,6 +91,7 @@ const EditPostNumberPhone: React.FC<IEditPostNumberPhone> = (props) => {
         value={editDataPosted.phoneNumber}
         onChange={setEditDataPosted}
         languageRedux={languageRedux}
+        language={language}
       />
       {/* <Input
     value={`${phone}d`}

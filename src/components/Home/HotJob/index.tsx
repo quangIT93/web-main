@@ -235,7 +235,7 @@ const HotJob: React.FC = () => {
               <div className="slide-item">
                 <img
                   src={item.image}
-                  alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
+                  alt={language?.err_none_img}
                   style={{
                     width: '160px',
                     height: '160px',

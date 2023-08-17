@@ -63,7 +63,7 @@ const CardListBlogCreate = () => {
                             lineHeight: '24px',
                         }}
                     >
-                        Bài viết bạn đã lưu
+                        Bài viết bạn đã tạo
                     </Typography>
                 </div>
                 <div className="title-comunity_icon">

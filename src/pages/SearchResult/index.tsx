@@ -60,7 +60,7 @@ import { HomeValueContext } from 'context/HomeValueContextProvider';
 import './style.scss';
 // import { stringify } from 'query-string/base';
 import notificationKeywordApi from 'api/notificationKeyword';
-
+import languageApi from 'api/languageApi';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import { searchResultVi } from 'validations/lang/vi/searchResult';
@@ -203,12 +203,28 @@ const NewJobs: React.FC = () => {
   const [categoriesId, setCategoriesId] = React.useState<string[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
   const analytics: any = getAnalytics();
+  const [language, setLanguage] = React.useState<any>();
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = languageRedux === 1 ?
-      searchResultVi.title_page :
-      searchResultEn.title_page;
+    document.title = language?.search_results_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_search' as string,
@@ -547,17 +563,13 @@ const NewJobs: React.FC = () => {
     <div style={{ width: '100%' }}>
       <Text className="title-filter_location">
         {
-          languageRedux === 1 ?
-            searchResultVi.palce_location :
-            searchResultEn.palce_location
+          language?.search_results_page?.palce_location
         }
       </Text>
       {menus}
       <Divider style={{ margin: 5 }}>
         {disableLocation ?
-          languageRedux === 1 ?
-            searchResultVi.limit_10_location :
-            searchResultEn.limit_10_location
+          language?.limit_10_location
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -575,17 +587,13 @@ const NewJobs: React.FC = () => {
     <div style={{ width: '100%' }}>
       <Text className="title-filter_location">
         {
-          languageRedux === 1 ?
-            searchResultVi.palce_cate :
-            searchResultEn.palce_cate
+          language?.search_results_page?.palce_cate
         }
       </Text>
       {menus}
       <Divider style={{ margin: 5 }}>
         {disableCatelory ?
-          languageRedux === 1 ?
-            searchResultVi.limit_10_cate :
-            searchResultEn.limit_10_cate
+          language?.limit_10_cate
           : ''}
       </Divider>
     </div>
@@ -676,9 +684,7 @@ const NewJobs: React.FC = () => {
       } else {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ?
-            searchResultVi.alert_create_fail :
-            searchResultEn.alert_create_fail,
+          content: language?.search_results_page.alert_create_fail,
         });
       }
     } catch (error: any) {
@@ -688,9 +694,7 @@ const NewJobs: React.FC = () => {
       ) {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ?
-            searchResultVi.limit_10_keyword :
-            searchResultEn.limit_10_keyword,
+          content: language?.limit_10_keyword,
         });
       }
     }
@@ -851,17 +855,13 @@ const NewJobs: React.FC = () => {
                 }}
               >
                 {
-                  languageRedux === 1 ?
-                    searchResultVi.find :
-                    searchResultEn.find
+                  language?.search_results_page?.find
                 }{' '}
                 <h4 style={{ margin: '0 10px' }}>
                   {searchData ? searchData?.total : 0}
                 </h4>
                 {
-                  languageRedux === 1 ?
-                    searchResultVi.suitable_job :
-                    searchResultEn.suitable_job
+                  language?.search_results_page.suitable_job
                 }
               </div>
               <div
@@ -879,9 +879,7 @@ const NewJobs: React.FC = () => {
                     <CreateKeywordIconSmall />
                     <span style={{ marginLeft: '4px', fontSize: '20px' }}>
                       {
-                        languageRedux === 1 ?
-                          searchResultVi.create_key_notices :
-                          searchResultEn.create_key_notices
+                        language?.search_results_page?.create_key_notices
                       }
                     </span>
                   </>
@@ -917,9 +915,7 @@ const NewJobs: React.FC = () => {
                   >
                     <p>
                       {
-                        languageRedux === 1 ?
-                          searchResultVi.more :
-                          searchResultEn.more
+                        language?.more
                       }
                     </p>
                     <MoreICon width={20} height={20} />
@@ -966,9 +962,7 @@ const NewJobs: React.FC = () => {
             </div>
             <p className="title-modal_createKey">
               {
-                languageRedux === 1 ?
-                  searchResultVi.keyword_announcement :
-                  searchResultEn.keyword_announcement
+                language?.search_results_page?.keyword_announcement
               }
             </p>
             <p className="title-modal_noteKeyword">
@@ -976,9 +970,7 @@ const NewJobs: React.FC = () => {
             </p>
             <Input
               placeholder={
-                languageRedux === 1 ?
-                  searchResultVi.keyword :
-                  searchResultEn.keyword
+                language?.keyword2
               }
               // allowClear
               size="large"
@@ -996,9 +988,7 @@ const NewJobs: React.FC = () => {
               maxTagCount="responsive"
               size="large"
               placeholder={
-                languageRedux === 1 ?
-                  searchResultVi.palce_location :
-                  searchResultEn.palce_location
+                language?.search_results_page?.palce_location
               }
               inputIcon={<EnvironmentOutlined />}
               dropdownRender={DropdownRenderLocation}
@@ -1098,9 +1088,7 @@ const NewJobs: React.FC = () => {
                 fontSize: '12px',
               }}
               placeholder={
-                languageRedux === 1 ?
-                  searchResultVi.palce_cate :
-                  searchResultEn.palce_cate
+                language?.search_results_page?.palce_cate
               }
             />
 
@@ -1153,9 +1141,7 @@ const NewJobs: React.FC = () => {
                 variant="contained"
               >
                 {
-                  languageRedux === 1 ?
-                    searchResultVi.apply :
-                    searchResultEn.apply
+                  language?.search_results_page.apply
                 }
               </Button>
               {/* <Button
@@ -1204,9 +1190,7 @@ const NewJobs: React.FC = () => {
             </IconButton>
             <p className="title-modal_createKeySuccess">
               {
-                languageRedux === 1 ?
-                  searchResultVi.successful :
-                  searchResultEn.successful
+                language?.search_results_page?.successful
               }
             </p>
             <p
@@ -1218,16 +1202,12 @@ const NewJobs: React.FC = () => {
               }}
             >
               {
-                languageRedux === 1 ?
-                  searchResultVi.alert_create_success :
-                  searchResultEn.alert_create_success
+                language?.search_results_page?.alert_create_success
               }
             </p>
             <p className="text-modal_createKeySuccess">
               {
-                languageRedux === 1 ?
-                  searchResultVi.alert_move_to_notification :
-                  searchResultEn.alert_move_to_notification
+                language?.search_results_page?.alert_move_to_notification
               }
             </p>
             <div
@@ -1250,9 +1230,7 @@ const NewJobs: React.FC = () => {
                 variant="contained"
               >
                 {
-                  languageRedux === 1 ?
-                    searchResultVi.confirm :
-                    searchResultEn.confirm
+                  language?.search_results_page?.confirm
                 }
               </Button>
               {/* <Button

@@ -252,9 +252,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
             }}
           >
             {
-              languageRedux === 1 ?
-                historyVi.posted_on :
-                historyEn.posted_on
+              language?.posted_on
             }
             {' '}
             {moment(props.item?.createdAt).format('DD/MM/YY')}
@@ -271,9 +269,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
             {props.dataCandidates?.applications.length}
             {' '}
             {
-              languageRedux === 1 ?
-                historyVi.application_form :
-                historyEn.application_form
+              language?.history_page?.application_form
             }
           </p>
 
@@ -313,9 +309,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               }}
             >
               {
-                languageRedux === 1 ?
-                  historyVi.does_not_accept :
-                  historyEn.does_not_accept
+                language?.does_not_accept?.does_not_accept
               }
             </p>
           )}

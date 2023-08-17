@@ -4,7 +4,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Stack from '@mui/material/Stack';
 
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-
+import languageApi from 'api/languageApi';
 import { setShowCopy } from 'store/reducer/alertReducer';
 import { RootState } from '../../store/reducer';
 import './style.scss';
@@ -30,7 +30,25 @@ const ShowCopy: React.FC = () => {
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
   const showCopy = useSelector((state: any) => state.showAlert.showCopy);
+  const [language, setLanguageState] = React.useState<any>();
 
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
   // const alert = false;
 
   const handleClose = () => dispatch<any>(setShowCopy(false));
@@ -50,9 +68,7 @@ const ShowCopy: React.FC = () => {
             onClose={handleClose}
             sx={{ width: '100%', backgroundColor: '#000000' }}
           >
-            {languageRedux === 1
-              ? postDetail.copy_link_success
-              : postDetailEn.copy_link_success}
+            {language?.post_detail_page?.copy_link_success}
           </Alert>
         </Snackbar>
       </Stack>

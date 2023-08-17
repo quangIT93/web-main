@@ -234,9 +234,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     try {
       if (value.length > 3) {
         message.error(
-          languageRedux === 1 ?
-            profileVi.limit_3_careers :
-            profileEn.limit_3_careers
+          language?.limit_3_careers
         );
         return;
       }
@@ -371,9 +369,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

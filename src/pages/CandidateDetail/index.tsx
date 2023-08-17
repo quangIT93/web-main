@@ -114,9 +114,7 @@ const CandidateDetail: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = languageRedux === 1 ?
-      candidateDetail.title_page :
-      candidateDetailEn.title_page;
+    document.title = language?.candidate_detail_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_candidate_detail' as string,
@@ -363,9 +361,7 @@ const CandidateDetail: React.FC = () => {
                   }}
                 >
                   {
-                    languageRedux === 1 ?
-                      historyVi.posted_on :
-                      historyEn.posted_on
+                    language?.posted_on
                   }{' '}
                   {moment(dataPost?.start_date).format('DD/MM/YY')}
                 </p>
@@ -406,9 +402,7 @@ const CandidateDetail: React.FC = () => {
                     }}
                   >
                     {
-                      languageRedux === 1 ?
-                        historyVi.does_not_accept :
-                        historyEn.does_not_accept
+                      language?.history_page?.does_not_accept
                     }
                   </p>
                 )}
@@ -631,6 +625,7 @@ const CandidateDetail: React.FC = () => {
                     open={open}
                     setOpen={setOpen}
                     isProfile={false}
+                    language={language}
                   />
                 ) : (
                   <>{language?.unupdated}</>

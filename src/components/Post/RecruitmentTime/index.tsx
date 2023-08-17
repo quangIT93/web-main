@@ -25,7 +25,7 @@ interface IRecruitmentTime {
 }
 
 const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
-  const { startDate, endDate, setStartDate, setEndDate, languageRedux } = props;
+  const { startDate, endDate, setStartDate, setEndDate, languageRedux, language } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
     setStartDate(new Date(newValue._d).getTime());
@@ -52,9 +52,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             htmlFor="startTime"
           >
             {
-              languageRedux === 1 ?
-                post.start_date :
-                postEn.start_date
+              language?.post_page?.start_date
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -74,9 +72,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             htmlFor="startTime"
           >
             {
-              languageRedux === 1 ?
-                post.end_date :
-                postEn.end_date
+              language?.post_page?.end_date
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

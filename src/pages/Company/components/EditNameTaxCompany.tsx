@@ -85,9 +85,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={
-            languageRedux === 1 ?
-              company.place_name :
-              companyEn.place_name
+            language?.company_page?.place_name
           }
         //   error={titleError} // Đánh dấu lỗi
         />
@@ -112,9 +110,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={
-            languageRedux === 1 ?
-              company.place_tax :
-              companyEn.place_tax
+            language?.company_page?.place_tax
           }
         //   error={titleError} // Đánh dấu lỗi
         />

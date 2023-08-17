@@ -19,10 +19,11 @@ interface NumericInputProps {
   value: string;
   onChange: (value: string) => void;
   languageRedux: any;
+  language: any;
 }
 
 const NumericInput = (props: NumericInputProps) => {
-  const { value, onChange, languageRedux } = props;
+  const { value, onChange, languageRedux, language } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
@@ -45,9 +46,7 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder={languageRedux === 1 ?
-        post.place_phone :
-        postEn.place_phone}
+      placeholder={language?.post_page?.place_phone}
       maxLength={11}
     />
   );
@@ -93,6 +92,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         value={phone}
         onChange={setPhoneNumber}
         languageRedux={languageRedux}
+        language={language}
       />
       {/* <Input
         value={`${phone}d`}

@@ -256,9 +256,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               }}
             >
               {
-                languageRedux === 1 ?
-                  historyVi.posted_on :
-                  historyEn.posted_on
+                language?.posted_on
               }{' '}
               {props.item?.created_at != null
                 ? moment(props.item?.created_at).format('DD/MM/YY')
@@ -306,9 +304,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 }}
               >
                 {
-                  languageRedux === 1 ?
-                    historyVi.does_not_accept :
-                    historyEn.does_not_accept
+                  language?.history_page?.does_not_accept
                 }
               </p>
             )}

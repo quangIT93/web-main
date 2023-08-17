@@ -45,9 +45,7 @@ const EditDescription: React.FC<IEditDescription> = (props) => {
         rows={6}
         // label="Một số đặc điểm nhận diện công ty"
         placeholder={
-          languageRedux === 1 ?
-            post.place_des :
-            postEn.place_des
+          language?.place_des
         }
       />
     </Box>

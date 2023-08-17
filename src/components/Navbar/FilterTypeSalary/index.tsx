@@ -134,7 +134,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={reset ? languageRedux == 1 ? 'Tháng' : 'Monthly' : valueRender ? valueRender.value : undefined}
+        value={reset ? language?.month : valueRender ? valueRender.value : undefined}
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder={language?.job_type}

@@ -195,15 +195,13 @@ const HotJobpage: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = languageRedux === 1 ?
-      hotjobPage.title_page :
-      hotjobPageEn.title_page;
+    document.title = language?.hot_job_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [language]);
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
 
@@ -237,9 +235,7 @@ const HotJobpage: React.FC = () => {
         setPageNumber(0)
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ?
-            historyVi.out_job :
-            historyEn.out_job,
+          content: language?.out_job,
 
         });
         return;
@@ -318,13 +314,9 @@ const HotJobpage: React.FC = () => {
                     : hotJobType === 3
                       ? 'Influencer'
                       : hotJobType === 4
-                        ? languageRedux === 1 ?
-                          hotjobPage.short_time :
-                          hotjobPageEn.short_time
+                        ? language?.hot_job_page?.short_time
                         : hotJobType === 5
-                          ? languageRedux === 1 ?
-                            hotjobPage.job_today :
-                            hotjobPageEn.job_today
+                          ? language?.hot_job_page?.to_day
                           : hotJobType === 6
                             ? 'Freelancer'
                             : ''}
@@ -334,9 +326,7 @@ const HotJobpage: React.FC = () => {
                   <span>
                     {' '}
                     {
-                      languageRedux === 1 ?
-                        hotjobPage.result :
-                        hotjobPageEn.result
+                      language?.hot_job_page?.result
                     }
                   </span>
                 </h4>

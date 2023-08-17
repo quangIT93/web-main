@@ -67,7 +67,7 @@ const Home: React.FC = () => {
         <NewJobs />
         <SuggestJob />
         <ThemesJob />
-        {/* <Community /> */}
+        <Community />
       </div>
       <RollTop />
       <Footer />

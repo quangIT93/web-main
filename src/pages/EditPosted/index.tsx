@@ -154,9 +154,7 @@ const EditPosted = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = languageRedux === 1 ?
-      post.title_edit_page :
-      postEn.title_edit_page;
+    document.title = language?.post_detail_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_editPost' as string,
@@ -357,33 +355,25 @@ const EditPosted = () => {
   const validValue = () => {
     if (editDataPosted?.title === '') {
       return {
-        message: languageRedux === 1 ?
-          post.err_job_title :
-          postEn.err_job_title,
+        message: language?.post_page?.err_job_title,
         checkForm: false,
       };
     }
     if (editDataPosted?.company_name === '') {
       return {
-        message: languageRedux === 1 ?
-          post.err_company_name :
-          postEn.err_company_name,
+        message: language?.post_page?.err_company_name,
         checkForm: false,
       };
     }
     if (editDataPosted?.title === '') {
       return {
-        message: languageRedux === 1 ?
-          post.err_address :
-          postEn.err_address,
+        message: language?.post_page?.err_address,
         checkForm: false,
       };
     }
     if (editDataPosted?.ward_id === '') {
       return {
-        message: languageRedux === 1 ?
-          post.err_location :
-          postEn.err_location,
+        message: language?.post_page?.err_location,
         checkForm: false,
       };
     }
@@ -400,9 +390,7 @@ const EditPosted = () => {
       editDataPosted?.categoryIds?.length <= 0
     ) {
       return {
-        message: languageRedux === 1 ?
-          post.err_cate :
-          postEn.err_cate,
+        message: language?.post_page?.err_cate,
         checkForm: false,
       };
     }
@@ -413,17 +401,13 @@ const EditPosted = () => {
         editDataPosted?.salaryType !== 6)
     ) {
       return {
-        message: languageRedux === 1 ?
-          post.err_salary :
-          postEn.err_salary,
+        message: language?.post_page?.err_salary,
         checkForm: false,
       };
     }
     if (Number(editDataPosted?.salaryMax) < Number(editDataPosted?.salaryMin)) {
       return {
-        message: languageRedux === 1 ?
-          post.err_verify_salary :
-          postEn.err_verify_salary,
+        message: language?.post_page?.err_verify_salary,
         checkForm: false,
       };
     }
@@ -434,17 +418,13 @@ const EditPosted = () => {
       (editDataPosted?.phoneNumber && editDataPosted?.phoneNumber?.length > 11)
     ) {
       return {
-        message: languageRedux === 1 ?
-          post.err_phone_mess :
-          postEn.err_phone_mess,
+        message: language?.post_page?.err_phone_mess,
         checkForm: false,
       };
     }
     if (editDataPosted?.description === '') {
       return {
-        message: languageRedux === 1 ?
-          post.err_des_mess :
-          postEn.err_des_mess,
+        message: language?.post_page?.err_des_mess,
         checkForm: false,
       };
     }
@@ -454,9 +434,7 @@ const EditPosted = () => {
       editDataPosted?.startDate > editDataPosted?.endDate
     ) {
       return {
-        message: languageRedux === 1 ?
-          post.err_date :
-          postEn.err_date,
+        message: language?.post_page?.err_date,
         checkForm: false,
       };
     }
@@ -489,9 +467,7 @@ const EditPosted = () => {
       if (error?.response?.data?.message === 'Invalid date value') {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ?
-            post.err_date :
-            postEn.err_date,
+          content: language?.post_page?.err_date,
         });
       }
     }
@@ -508,9 +484,7 @@ const EditPosted = () => {
           <div className="edit-title_post">
             <h1>
               {
-                languageRedux === 1 ?
-                  post.edit_post :
-                  postEn.edit_post
+                language?.post_page?.edit_post
               }
             </h1>
           </div>
@@ -535,6 +509,7 @@ const EditPosted = () => {
                 setEditDataPosted={setEditDataPosted}
                 dataPosted={dataPostById?.images}
                 languageRedux={languageRedux}
+                language={language}
               />
 
               <EditPostTypeJob
@@ -626,9 +601,7 @@ const EditPosted = () => {
                 className="btn-edit_submitForm"
               >
                 {
-                  languageRedux === 1 ?
-                    post.save_edit_post :
-                    postEn.save_edit_post
+                  language?.post_page?.save_edit_post
                 }
               </button>
             </form>

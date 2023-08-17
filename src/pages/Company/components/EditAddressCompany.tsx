@@ -232,9 +232,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             htmlFor="addressTitle"
           >
             {
-              languageRedux === 1 ?
-                company.city :
-                companyEn.city
+              language?.post_page?.city
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -251,9 +249,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
               <TextField
                 {...params}
                 placeholder={
-                  languageRedux === 1 ?
-                    company.place_city :
-                    companyEn.place_city
+                  language?.post_page?.place_city
                 }
                 size="small"
                 value={selectedProvince?.province_fullName}
@@ -274,9 +270,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                company.district :
-                companyEn.district
+              language?.post_page?.district
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -287,9 +281,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             onChange={handleDistrictChange}
             renderInput={(params: any) => (
               <TextField {...params} placeholder={
-                languageRedux === 1 ?
-                  company.place_district :
-                  companyEn.place_district
+                language?.post_page?.place_district
               } size="small" />
             )}
             isOptionEqualToValue={(option, value) => {
@@ -308,9 +300,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                company.ward :
-                companyEn.ward
+              language?.post_page?.ward
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -321,9 +311,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             onChange={handleChangeWardId}
             renderInput={(params) => (
               <TextField {...params} placeholder={
-                languageRedux === 1 ?
-                  company.place_ward :
-                  companyEn.place_ward
+                language?.post_page?.place_ward
               } size="small" />
             )}
             isOptionEqualToValue={(option, value) => {
@@ -354,9 +342,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             size="small"
             sx={{ width: '100%', marginTop: '8px' }}
             placeholder={
-              languageRedux === 1 ?
-                company.place_address :
-                companyEn.place_address
+              language?.post_page.place_address
             }
           />
         </div>

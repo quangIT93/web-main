@@ -54,9 +54,7 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
           {
-            languageRedux === 1 ?
-              post.alert_edit_success :
-              postEn.alert_edit_success
+            language?.post_page.alert_edit_success
           }
         </Typography>
         <Typography
@@ -66,9 +64,7 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
           {
-            languageRedux === 1 ?
-              post.alert_move_to_history :
-              postEn.alert_move_to_history
+            language?.post_page.alert_move_to_history
           }
         </Typography>
 
@@ -90,9 +86,7 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
             }}
           >
             {
-              languageRedux === 1 ?
-                post.no :
-                postEn.no
+              language?.no
             }
           </Button>
           <Button
@@ -103,9 +97,7 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
             }}
           >
             {
-              languageRedux === 1 ?
-                post.yes :
-                postEn.yes
+              language?.yes
             }
           </Button>
         </Box>

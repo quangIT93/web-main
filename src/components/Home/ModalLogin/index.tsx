@@ -393,7 +393,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   >
                     <img
                       src="loginLogo/facebookOriginal.png"
-                      alt={languageRedux === 1 ? "Ảnh lỗi" : "Error Photo"}
+                      alt={language?.err_none_img}
                       width={29}
                       height={30}
                     />
@@ -444,13 +444,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   name="email"
                   value={loginData.email}
                   onChange={handleInputChange}
-                  placeholder={languageRedux === 1 ? "Nhập email của bạn..." : "Enter your email address..."}
+                  placeholder={language?.modal_login?.enter_email}
                 />
                 <small className={!invalid ? 'alert' : 'alert error'}>
                   {
-                    languageRedux === 1 ?
-                      signin.wrong_mail :
-                      signinEn.wrong_mail
+                    language?.modal_login?.wrong_mail
                   }
                 </small>
               </div>
@@ -503,9 +501,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             <p className="textOpt-email">{loginData.email}</p>
             <p className="textOpt-notice">
               {
-                languageRedux === 1 ?
-                  signin.no_otp :
-                  signinEn.no_otp
+                language?.modal_login?.no_otp
               }
             </p>
             <div className="otp-inputs">
