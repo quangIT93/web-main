@@ -16,7 +16,7 @@ import OtpInput from 'react-otp-input';
 //@ts-ignore
 import FacebookLogin from '@greatsumini/react-facebook-login';
 // import { FacebookLoginClient } from '@greatsumini/react-facebook-login';
-import GoogleLogin from '@leecheuk/react-google-login';
+// import GoogleLogin from '@leecheuk/react-google-login';
 
 import { gapi } from 'gapi-script';
 
@@ -301,20 +301,48 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState.isverifyOtp]);
 
-  useEffect(() => {
-    const start = () => {
-      gapi.client.init({
-        clientId: googleClient,
-        scope: '',
-      });
-    };
-    gapi.load('client:auth2', start);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   const start = () => {
+  //     gapi.client.init({
+  //       clientId: googleClient,
+  //       scope: '',
+  //     });
+  //   };
+  //   gapi.load('client:auth2', start);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const handleResendCode = () => {
     setResendCode(true);
   };
+
+  // -------------------------------------------------------------------------------------
+
+  const handleCredentialResponse = async (response: any) => {
+    console.log('Encoded JWT ID token: ' + response);
+    try {
+      const result = await authApi.signInGoogle(response.credential);
+      if (result) {
+        console.log(result);
+        fetchDataProfile(result.data, true);
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+  React.useEffect(() => {
+    /* global google */
+    window.google.accounts.id.initialize({
+      client_id: googleClient,
+      callback: handleCredentialResponse,
+    });
+    window.google.accounts.id.renderButton(document.getElementById('button'), {
+      theme: 'outline',
+      size: 'large',
+    });
+    window.google.accounts.id.prompt();
+  }, []);
 
   return (
     <Modal
@@ -390,7 +418,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   </div>
                 )}
               />
-              <GoogleLogin
+              {/* <GoogleLogin
                 clientId={googleClient}
                 scope="profile email"
                 render={(renderProps) => {
@@ -419,7 +447,30 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
                 // cookiePolicy={'single_host_origin'}
-              />
+              /> */}
+
+              <button id="button">
+                <div
+                  id="g_id_onload"
+                  data-client_id="1052278186382-vh3u5k4l30rci9toilu8tp5gi4e9ej77.apps.googleusercontent.com"
+                  data-context="signin"
+                  data-ux_mode="popup"
+                  data-login_uri="http://10.42.0.27:5500/api/google/accounts/login"
+                  data-auto_prompt="true"
+                >
+                  a
+                </div>
+
+                <div
+                  className="g_id_signin"
+                  data-type="standard"
+                  data-shape="rectangular"
+                  data-theme="outline"
+                  data-text="signin_with"
+                  data-size="large"
+                  data-logo_alignment="left"
+                ></div>
+              </button>
 
               <div className="line-with-text">
                 <span className="line"></span>
