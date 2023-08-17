@@ -24,7 +24,7 @@
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         border-radius: 8px;
         padding: 16px 24px;
-        width: 30%;
+        width: 32%;
 
         @include breakpoint(mobile){
           .ant-collapse {
@@ -44,9 +44,9 @@
 
         @include breakpoint(tablet){
           .ant-collapse {
-            display: flex;
-            justify-content: space-between;
-            gap: 1;
+            // display: flex;
+            // justify-content: space-between;
+            // gap: 1;
             .ant-collapse-item {
               .ant-collapse-header {
                 // background-color: red;
@@ -73,12 +73,12 @@
 
         &__collapse {
           @media screen and (max-width: 1024px) and (min-width: 630px) {
-            display: flex;
-            justify-content: space-between;
-
+            // display: flex;
+            // justify-content: space-between;
+            // width: 400px;
             .history-left_item {
               .ant-collapse-header {
-                border-bottom: none;
+                // border-bottom: none;
               }
             }
 
@@ -100,12 +100,90 @@
 
       .history-post_right {
         // flex: 3;
-        width: 70%;
+        width: 68%;
         margin: 0 12px;
+        .div-card-post-left {
+          .MuiBox-root {
+            margin-top: 12px !important;
+            // p {
+            // }
+            p:nth-child(1){
+              // margin-left: 32px !important;
+              text-align: center;
+              font-size: 12px !important;
+            }
+
+            p:nth-child(3){
+              margin-left: 32px !important;
+              text-align: center;
+              font-size: 12px;
+            }
+
+            p:nth-child(2){
+              margin-left: 32px !important;
+              text-align: center;
+              font-size: 12px;
+            }
+          }
+        }
+
+
 
         @media screen and (max-width: 1024px) {
           margin: 0;
           width: 100%;
+        }
+      }
+
+      @include breakpoint(mobile){
+        .history-post_right {
+          .history-post {
+            .div-card-post-left {
+              .MuiBox-root {
+                margin-top: 0 !important;
+
+                p {
+                  margin-left: 4px !important;
+                  text-align: center;
+                  font-size: 12px !important;
+                }
+
+              }
+            }
+
+            .div-card-post-right {
+              .ant-space-item {
+                p {
+                  width: 60px;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  font-size: 14px !important;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      @include breakpoint(tablet){
+        .history-post_right {
+          .history-post {
+            .div-card-post-left {
+              .MuiBox-root {
+                margin-top: 12px !important;
+                p {
+                  margin-left: 8px !important;
+                  text-align: center;
+                  font-size: 12px;
+                }
+              }
+            }
+
+            .div-card-post-right {
+
+            }
+          }
         }
       }
     }
@@ -170,6 +248,17 @@
     .panel-title_text {
       // padding: 16px 12px;
       line-height: 3;
+    }
+  }
+
+  @include breakpoint(mobile){
+    .ant-collapse-header-text {
+      font-size: 12px;
+      .panel-title_text {
+        // padding: 16px 12px;
+      font-size: 12px;
+        line-height: 3;
+      }
     }
   }
 }

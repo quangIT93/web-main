@@ -54,7 +54,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   reset,
   setReset,
 }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [dataLocations, setDataLocations] = React.useState<any>(null);
   // const [dataDistrict, setDataDistrict] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
@@ -73,20 +75,16 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   // const listLocation = userFilteredCookies?.list_dis;
 
   const DropdownRender = (menus: React.ReactNode) => (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '520px' }} className="filter-loca-cate">
       <Text className="title-filter_location">
-        {
-          languageRedux == 1 ?
-            'Chọn địa điểm' :
-            'Choose place'
-        }
+        {languageRedux == 1 ? 'Chọn địa điểm' : 'Choose place'}
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ?
-          languageRedux == 1 ?
-            'Chỉ có thể tối đa 10 địa điểm' :
-            'Can only max 10 locations'
+        {disable
+          ? languageRedux == 1
+            ? 'Chỉ có thể tối đa 10 địa điểm'
+            : 'Can only max 10 locations'
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -104,9 +102,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       : userProfile?.locations?.map((profile: any) => [
-        profile?.province_id,
-        profile?.district_id,
-      ]),
+          profile?.province_id,
+          profile?.district_id,
+        ]),
   );
 
   // console.log('cookies', JSON.parse(getCookie('userFiltered') || '{}'));
@@ -118,7 +116,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux == 1 ? 'vi' : 'en'
+        languageRedux == 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataLocations(result.data);
@@ -182,23 +180,19 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             multiple
             maxTagCount="responsive"
             size="large"
-            placeholder={
-              languageRedux == 1 ?
-                'Chọn địa điểm' :
-                'Choose place'
-            }
+            placeholder={languageRedux == 1 ? 'Chọn địa điểm' : 'Choose place'}
             inputIcon={<EnvironmentOutlined />}
             suffixIcon={<ArrowFilterIcon width={14} height={10} />}
             dropdownRender={DropdownRender}
             value={reset ? [] : listDis}
             defaultValue={
               listLocation.current?.length !== 0 &&
-                listLocation.current !== undefined
+              listLocation.current !== undefined
                 ? listLocation.current
                 : listLocation.current?.length === 0 &&
                   location?.pathname === '/search-results'
-                  ? []
-                  : userProfile?.locations?.map((profile: any) => [
+                ? []
+                : userProfile?.locations?.map((profile: any) => [
                     profile?.province_id,
                     profile?.district_id,
                   ])
@@ -206,28 +200,28 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             options={
               dataLocations
                 ? dataLocations?.map((dataLocation: any) => ({
-                  value: dataLocation.province_id,
-                  label: dataLocation.province_fullName,
-                  children: dataLocation.districts.map(
-                    (child: { district_id: string; district: string }) => {
-                      var dis = false;
-                      if (disable) {
-                        dis = true;
-                        for (const elem of locId) {
-                          if (elem === child.district_id) {
-                            dis = false;
-                            break;
+                    value: dataLocation.province_id,
+                    label: dataLocation.province_fullName,
+                    children: dataLocation.districts.map(
+                      (child: { district_id: string; district: string }) => {
+                        var dis = false;
+                        if (disable) {
+                          dis = true;
+                          for (const elem of locId) {
+                            if (elem === child.district_id) {
+                              dis = false;
+                              break;
+                            }
                           }
                         }
-                      }
-                      return {
-                        value: child.district_id,
-                        label: child.district,
-                        disabled: dis,
-                      };
-                    },
-                  ),
-                }))
+                        return {
+                          value: child.district_id,
+                          label: child.district,
+                          disabled: dis,
+                        };
+                      },
+                    ),
+                  }))
                 : []
             }
             onChange={onChange}

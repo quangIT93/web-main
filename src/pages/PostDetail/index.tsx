@@ -936,13 +936,13 @@ const Detail = () => {
                   className="div-detail-row-titleItem"
                   style={{ flexDirection: 'column', alignItems: 'flex-start' }}
                 >
-                  {post?.data.postCategories.map(
-                    (item: any, index: null | number) => (
-                      <h5 key={index}>
-                        {item.parentCategory.fullName}/{item.fullName}
-                      </h5>
-                    ),
-                  )}
+                  <h5>
+                    {post?.data.postCategories.map(
+                      (item: any, index: null | number) => `
+                      ${item.parentCategory.fullName}/${item.fullName}/
+                      `,
+                    )}
+                  </h5>
                 </div>
               </div>
               <div className="div-detail-row">
@@ -1102,7 +1102,7 @@ const Detail = () => {
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
-                      {post?.data?.postCompanyInformation
+                      {post?.data?.postCompanyInformation.taxCode
                         ? post?.data?.postCompanyInformation?.taxCode
                         : languageRedux === 1
                         ? postDetail.not_update
@@ -1188,6 +1188,8 @@ const Detail = () => {
     },
   ];
   // console.log('post?.data?', post?.data);
+  console.log('dispatch(setPostNewestApi(result));', postNewest);
+
   return (
     <>
       {automatic && (

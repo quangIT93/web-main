@@ -176,16 +176,20 @@ const AppliedPostedJob: React.FC = () => {
       className="applied-posted-jobs-container"
     >
       <Skeleton loading={false} active>
-        <div
-          style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}
-        >
-          <AppliedPostedIcon width={30} height={30} />
-          <h2>
-            {languageRedux === 1
-              ? 'Công việc đã Ứng tuyển/ Đăng tuyển'
-              : 'Applied / Posted Job'}
-          </h2>
-        </div>
+        {localStorage.getItem('accessToken') ? (
+          <div
+            style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}
+          >
+            <AppliedPostedIcon width={30} height={30} />
+            <h2>
+              {languageRedux === 1
+                ? 'Công việc đã Ứng tuyển/ Đăng tuyển'
+                : 'Applied / Posted Job'}
+            </h2>
+          </div>
+        ) : (
+          <></>
+        )}
 
         {/* <div
           className="applied-posted-job-not-loging"
@@ -224,7 +228,7 @@ const AppliedPostedJob: React.FC = () => {
           /> */}
           <Advertisement />
           <div className="advertisement-job-not-loging-content">
-            <h3>
+            {/* <h3>
               {languageRedux === 1 ?
                 "Dễ dàng tìm kiếm ứng viên tại HiJob" :
                 "Easily find candidates at HiJob"}
@@ -248,7 +252,16 @@ const AppliedPostedJob: React.FC = () => {
                   "Giao tiếp dễ dàng với Ứng viên" :
                   "Easy communication with Candidates"}
               </li>
-            </ul>
+            </ul> */}
+            <h3 style={{ marginTop: '12px' }}>
+              Bạn có phải là nhà tuyển dụng không?
+            </h3>
+            <p style={{ marginBottom: '12px' }}>
+              Đăng tuyển ngay, bài đăng của bạn sẽ xuất hiện trên đầu trang hoàn
+              toàn miễn phí.
+            </p>
+            <h3>Bạn đang tìm kiếm việc làm?</h3>
+            <p>Ở đây chúng tôi có mọi việc làm tại Việt Nam.</p>
           </div>
           <Button
             type="primary"
@@ -257,7 +270,7 @@ const AppliedPostedJob: React.FC = () => {
             }}
           >
             <LoginArrowIcon />
-            {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
           </Button>
         </div>
 

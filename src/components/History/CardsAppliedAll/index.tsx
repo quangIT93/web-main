@@ -174,6 +174,12 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
             fontWeight: '600',
             fontSize: '16px',
             lineHeight: '24px',
+            '@media (max-width: 350px)': {
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              minWidth: '135px',
+            },
           }}
         >
           {

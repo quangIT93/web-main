@@ -22,6 +22,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
+import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
 // import api
 import categoriesApi from '../../../api/categoriesApi';
 import postApi from 'api/postApi';
@@ -61,7 +62,7 @@ const BreadcrumbsCpn: React.FC = () => {
   const [arrayChild, setArrayChild] = useState<any>([]);
 
   // state redux
-  const { postNewest } = useSelector((state: RootState) => state);
+  // const { postNewest } = useSelector((state: RootState) => state);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -162,20 +163,31 @@ const BreadcrumbsCpn: React.FC = () => {
     setChildCateloriesArray(
       array.map((arr: { id: number; name: string }) => arr.id),
     );
-    const thersholdId =
-      postNewest.data.posts[postNewest.data.posts.length - 1].id;
+    // const thersholdId =
+    //   postNewest.data.posts[postNewest.data.posts.length - 1].id;
 
     try {
-      const result = await postApi.getPostNewest(
-        Number(valueJobChild?.id),
+      // const result = await postApi.getPostNewest(
+      //   Number(valueJobChild?.id),
+      //   array.map((arr: { id: number; name: string }) => arr.id),
+      //   null,
+      //   9,
+      //   thersholdId,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+
+      const result = await postApi.getPostNewestV3(
         array.map((arr: { id: number; name: string }) => arr.id),
+        Number(valueJobChild?.id),
         null,
-        9,
-        thersholdId,
+        null,
+        10,
+        null,
         languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
-        setPostNewest(result);
+        // setPostNewest(result);
+        dispatch(setPostNewestApi(result));
         // setOpenBackdrop(false)
       }
     } catch (error) {

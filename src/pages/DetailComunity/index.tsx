@@ -33,10 +33,10 @@ import './style.scss';
 // const { Panel } = Collapse;
 
 const Comunity = () => {
-  const [showText, setShowText] = React.useState('');
-  const handleAddText = () => {
-    setShowText('showText');
-  };
+  // const [showText, setShowText] = React.useState('');
+  // const handleAddText = () => {
+  //   setShowText('showText');
+  // };
   return (
     <div className="comunity-container">
       <Navbar />

@@ -477,7 +477,6 @@ const NewJobs: React.FC = () => {
       languageRedux === 1 ? "vi" : "en"
     );
 
-    // console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', result);
     //
     if (result && result?.data?.posts.length !== 0) {
       setSearchData((prev: any) => {
@@ -712,17 +711,17 @@ const NewJobs: React.FC = () => {
     try {
       if (dataProfile) {
         setOpenBackdrop(true);
-        console.log('QUERY', QUERY);
-        console.log('page', page);
-        console.log('MONEY_TYPE', MONEY_TYPE);
-        console.log('IS_WORKING_WEEKEND', IS_WORKING_WEEKEND);
-        console.log('IS_REMOTELY', IS_REMOTELY);
-        console.log('SALARY_MIN', SALARY_MIN);
-        console.log('SALARY_MAX', SALARY_MAX);
-        console.log('JOB_TYPE', JOB_TYPE);
-        console.log('LIST_CATEGORIES_ID', LIST_CATEGORIES_ID);
-        console.log('LIST_DIS_ID', LIST_DIS_ID);
-        console.log('SALARY_TYPE', SALARY_TYPE);
+        // console.log('QUERY', QUERY);
+        // console.log('page', page);
+        // console.log('MONEY_TYPE', MONEY_TYPE);
+        // console.log('IS_WORKING_WEEKEND', IS_WORKING_WEEKEND);
+        // console.log('IS_REMOTELY', IS_REMOTELY);
+        // console.log('SALARY_MIN', SALARY_MIN);
+        // console.log('SALARY_MAX', SALARY_MAX);
+        // console.log('JOB_TYPE', JOB_TYPE);
+        // console.log('LIST_CATEGORIES_ID', LIST_CATEGORIES_ID);
+        // console.log('LIST_DIS_ID', LIST_DIS_ID);
+        // console.log('SALARY_TYPE', SALARY_TYPE);
         const result = await searchApi.getSearchByQueryV2(
           QUERY,
           null,
@@ -972,6 +971,9 @@ const NewJobs: React.FC = () => {
                   searchResultEn.keyword_announcement
               }
             </p>
+            <p className="title-modal_noteKeyword">
+              Thêm từ khóa liên quan đến công việc hoặc tên công ty bạn muốn
+            </p>
             <Input
               placeholder={
                 languageRedux === 1 ?
@@ -982,7 +984,7 @@ const NewJobs: React.FC = () => {
               size="large"
               // onChange={onChange}
               type=""
-              style={{ marginTop: '12px' }}
+              style={{ marginTop: '12px', fontSize: '12px' }}
               value={valueKeyword}
               // disabled
               // error={companyError} // Đánh dấu lỗi
@@ -1048,6 +1050,7 @@ const NewJobs: React.FC = () => {
                 borderRadius: '2px',
                 fontStyle: 'italic',
                 margin: '12px 0',
+                fontSize: '12px',
               }}
             />
             {/* 
@@ -1092,6 +1095,7 @@ const NewJobs: React.FC = () => {
                 width: '100%',
                 borderRadius: '2px',
                 fontStyle: 'italic',
+                fontSize: '12px',
               }}
               placeholder={
                 languageRedux === 1 ?

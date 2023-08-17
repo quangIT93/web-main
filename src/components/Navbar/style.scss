@@ -43,6 +43,14 @@
   justify-content: space-between;
   margin-left: 24px;
   // margin-right: 20px;
+  .login__center {
+    span {
+      width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 
   @include breakpoint(mobile) {
     margin-left: 0px;
@@ -1344,6 +1352,24 @@
             border-bottom: 13px solid rgb(37, 37, 37);
           }
 
+          @media screen and (min-width: 427px) and (max-width: 768px) {
+            &:after {
+              right: 35px;
+            }
+          }
+
+          @include breakpoint(destop){
+            &:after {
+              right: 35px;
+            }
+          }
+
+          @media screen and (min-width: 1441px) and (max-width: 1861px) {
+            &:after {
+              right: 35px;
+            }
+          }
+
           h3 {
             color: #FFF;
             font-family: Roboto;
@@ -1512,6 +1538,18 @@
     display: none;
     // display: block;
     z-index: 10;
+
+    // @include breakpoint(mobile){
+    //   left: -138px;
+    // }
+
+    @include breakpoint(tablet){
+      left: -70px;
+    }
+
+    @include breakpoint(largeTablet){
+      left: -70px;
+    }
 
 
     h2 {

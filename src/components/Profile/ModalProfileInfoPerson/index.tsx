@@ -345,6 +345,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 <DatePicker
                   value={day}
                   onChange={handleDateChange}
+                  format="DD/MM/YYYY"
                   slotProps={{
                     textField: {
                       helperText: 'DD/MM/yyyy',

@@ -24,7 +24,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 // }
 
 const ShowCopy: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
   const showCopy = useSelector((state: any) => state.showAlert.showCopy);
@@ -44,12 +46,13 @@ const ShowCopy: React.FC = () => {
             horizontal: 'center',
           }}
         >
-          <Alert onClose={handleClose} sx={{ width: '100%', backgroundColor: '#000000' }}>
-            {
-              languageRedux == 1 ?
-                postDetail.copy_link_success :
-                postDetailEn.copy_link_success
-            }
+          <Alert
+            onClose={handleClose}
+            sx={{ width: '100%', backgroundColor: '#000000' }}
+          >
+            {languageRedux === 1
+              ? postDetail.copy_link_success
+              : postDetailEn.copy_link_success}
           </Alert>
         </Snackbar>
       </Stack>

@@ -22,6 +22,7 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
   return (
     <Space className='cv-item-container'>
       <div
+        className="cv-item-container"
         style={{
           backgroundColor: '#F1F0F0',
           padding: 10,
@@ -32,7 +33,7 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile }) => {
           window.open(`${url}`);
         }}
       >
-        <Space className='cv-item'>
+        <Space>
           <p style={{ color: '#575757', wordBreak: 'break-all' }}>
             {url.substring(url.lastIndexOf('/') + 1, url.length)}
           </p>

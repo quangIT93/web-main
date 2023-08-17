@@ -70,6 +70,7 @@
 
   .bottom-notificate {
     overflow-y: scroll;
+    overflow-x: hidden;
     height: 70vh;
    
     .wrap-system {
@@ -460,14 +461,13 @@
 
   @include breakpoint(mobile) {
     right: 0;
-    // width: 300px !important;
+    width: 280px !important;
   }
 
   @include breakpoint(tablet) {
     // display: none;
   right: -106px;
   left: unset;
-  // width: 200px !important;
-
+  width: 350px !important;
   }
 }
