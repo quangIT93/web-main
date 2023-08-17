@@ -224,14 +224,13 @@ const AppliedPostedJob: React.FC = () => {
           /> */}
           <Advertisement />
           <div className="advertisement-job-not-loging-content">
-            <h3>Dễ dàng tìm kiếm ứng viên tại HiJob</h3>
-            <ul>
-              Chúng tôi cung cấp dịch vụ giúp nhà tuyển dụng dễ dàng tiếp cận
-              với nhiều nhân tài:
-              <li>Đăng bài tuyển dụng miễn phí</li>
-              <li>Công cụ tìm kiếm thông minh</li>
-              <li>Giao tiếp dễ dàng với Ứng viên</li>
-            </ul>
+            <h3>Bạn có phải là nhà tuyển dụng không?</h3>
+            <p style={{ marginBottom: '12px' }}>
+              Đăng tuyển ngay, bài đăng của bạn sẽ xuất hiện trên đầu trang hoàn
+              toàn miễn phí.
+            </p>
+            <h3>Bạn đang tìm kiếm việc làm?</h3>
+            <p>Ở đây chúng tôi có mọi việc làm tại Việt Nam</p>
           </div>
           <Button
             type="primary"
