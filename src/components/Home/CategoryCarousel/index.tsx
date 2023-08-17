@@ -182,7 +182,7 @@ const CategoryCarousel: React.FC = () => {
       }
       var result;
 
-      console.log('newValue: ' + newValue);
+      // console.log('newValue: ' + newValue);
 
       if (newValue === 1) {
         result = await postApi.getPostNewest(
@@ -268,59 +268,59 @@ const CategoryCarousel: React.FC = () => {
     }
   };
 
-  const getPostNewestByCategori = async () => {
-    try {
-      // setOpenBackdrop(true);
-      const themeId = searchParams.get('categories-id');
-      var result;
-      if (themeId === 'all') {
-        result = await postApi.getPostNewest(
-          null,
-          null,
-          null,
-          19,
-          null,
-          languageRedux === 1 ? 'vi' : 'en',
-        );
+  // const getPostNewestByCategori = async () => {
+  //   try {
+  //     // setOpenBackdrop(true);
+  //     const themeId = searchParams.get('categories-id');
+  //     var result;
+  //     if (themeId === 'all') {
+  //       result = await postApi.getPostNewest(
+  //         null,
+  //         null,
+  //         null,
+  //         19,
+  //         null,
+  //         languageRedux === 1 ? 'vi' : 'en',
+  //       );
 
-        // result = await postApi.getPostNewestV3(
-        //   null,
-        //   null,
-        //   null,
-        //   null,
-        //   20,
-        //   null,
-        //   languageRedux === 1 ? 'vi' : 'en',
-        // );
-      } else {
-        result = await postApi.getPostNewest(
-          Number(themeId),
-          null,
-          null,
-          19,
-          null,
-          languageRedux === 1 ? 'vi' : 'en',
-        );
+  //       // result = await postApi.getPostNewestV3(
+  //       //   null,
+  //       //   null,
+  //       //   null,
+  //       //   null,
+  //       //   20,
+  //       //   null,
+  //       //   languageRedux === 1 ? 'vi' : 'en',
+  //       // );
+  //     } else {
+  //       result = await postApi.getPostNewest(
+  //         Number(themeId),
+  //         null,
+  //         null,
+  //         19,
+  //         null,
+  //         languageRedux === 1 ? 'vi' : 'en',
+  //       );
 
-        // result = await postApi.getPostNewestV3(
-        //   null,
-        //   Number(themeId),
-        //   null,
-        //   null,
-        //   20,
-        //   null,
-        //   languageRedux === 1 ? 'vi' : 'en',
-        // );
-      }
-      if (result) {
-        setPostNewest(result);
-        // dispatch(setPostNewestApi(result));
-        // setOpenBackdrop(false);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //       // result = await postApi.getPostNewestV3(
+  //       //   null,
+  //       //   Number(themeId),
+  //       //   null,
+  //       //   null,
+  //       //   20,
+  //       //   null,
+  //       //   languageRedux === 1 ? 'vi' : 'en',
+  //       // );
+  //     }
+  //     if (result) {
+  //       // setPostNewest(result);
+  //       // dispatch(setPostNewestApi(result));
+  //       // setOpenBackdrop(false);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const getNewstJobBycookie = async (userSelectedId: any) => {
     try {
@@ -367,7 +367,7 @@ const CategoryCarousel: React.FC = () => {
         // );
       }
       if (result) {
-        setPostNewest(result);
+        // setPostNewest(result);
         // dispatch(setPostNewestApi(result));
         // setOpenBackdrop(false);
       }
@@ -395,7 +395,7 @@ const CategoryCarousel: React.FC = () => {
         slide?.classList.add('swiper-slide-clicked');
       }
 
-      getNewstJobBycookie(storedSettings.userSelectedId);
+      // getNewstJobBycookie(storedSettings.userSelectedId);
     }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
@@ -419,7 +419,7 @@ const CategoryCarousel: React.FC = () => {
   }, [listRef]);
 
   React.useEffect(() => {
-    getPostNewestByCategori();
+    // getPostNewestByCategori();
     setValue(Number(searchParams.get('categories-id')));
     setChildCateloriesArray([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -446,6 +446,7 @@ const CategoryCarousel: React.FC = () => {
   // };
 
   // scroll
+
   return (
     <Box
       ref={listRef}

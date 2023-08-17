@@ -61,7 +61,7 @@ const BreadcrumbsCpn: React.FC = () => {
   const [arrayChild, setArrayChild] = useState<any>([]);
 
   // state redux
-  const { postNewest } = useSelector((state: RootState) => state);
+  const postNewest = useSelector((state: RootState) => state.postNewest);
 
   const [searchParams, setSearchParams] = useSearchParams();
 

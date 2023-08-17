@@ -92,7 +92,8 @@ const NewJobs: React.FC = () => {
   // const navigate = useNavigate();
 
   // state redux
-  const { postNewest } = useSelector((state: RootState) => state);
+  const postNewest = useSelector((state: RootState) => state.postNewest);
+
   const dispatch = useDispatch();
   const { setPostNewest, setPostNewestMore } = bindActionCreators(
     actionCreators,
@@ -150,11 +151,29 @@ const NewJobs: React.FC = () => {
   // };
 
   const getPostNewest = async () => {
+    function getCookie(name: string): string | null {
+      let nameEQ = name + '=';
+      let ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1, c.length);
+        }
+        if (c.indexOf(nameEQ) === 0) {
+          return c.substring(nameEQ.length, c.length);
+        }
+      }
+      return null;
+    }
+
     try {
       setOpenBackdrop(true);
       const result = await postApi.getPostNewest(
-        Number(searchParams.get(`categories-id`)) && null,
-        childCateloriesArray && null,
+        Number(
+          JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
+        ) || null,
+        childCateloriesArray || null,
         null,
         19,
         null,
