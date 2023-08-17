@@ -29,7 +29,6 @@ const AnotherPost: React.FC<any> = (props) => {
   // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
   //   window.open(`/post-detail?post-id=${id}`);
   // };
-  console.log('props', props);
 
   return (
     <>
