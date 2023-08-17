@@ -235,11 +235,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     try {
       setOpenBackdrop(true);
       if (response.tokenId) {
-        console.log('response.tokenID', response.tokenId);
-        console.log('response', response);
+        // console.log('response.tokenID', response.tokenId);
+        // console.log('response', response);
         const result = await authApi.signInGoogle(response.tokenObj.id_token);
         if (result) {
-          console.log(result);
+          // console.log(result);
           fetchDataProfile(result.data, true);
         }
       }
