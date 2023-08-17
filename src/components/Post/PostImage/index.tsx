@@ -401,7 +401,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             </aside> */}
           </div>
         </section>
-        <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '40px' }}>
+        <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '50px', flexWrap: 'wrap' }}
+          className="list-img-post"
+        >
           {selectedImages.map((image: any, index: number) => (
             <div
               className="item-image"
