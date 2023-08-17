@@ -78,38 +78,36 @@ const Login = () => {
     ? process.env.REACT_APP_GOOGLE_CLIENT_ID
     : '';
 
-  const handleClickLogin = async () => {
-    const client = window.google.accounts.oauth2.initTokenClient({
-      client_id:
-        '436273589347-ot9ec9jhm235q3irsvjpnltr8hsun5cp.apps.googleusercontent.com',
-      scope: 'https://www.googleapis.com/auth/userinfo.email',
-      callback: async (response: any) => {
-        console.log('response: ' + response.access_token);
-        console.log('tokenID: ' + response.tokenID);
-        console.log(JSON.stringify(response, null, 2));
-        try {
-          if (response.access_token) {
-            const result = await signInEmailApi.signInGoogle(
-              response.access_token,
-            );
-
-            if (result) {
-              console.log('Result: ' + result);
-            }
-          }
-        } catch (error) {
-          console.log('error: ', error);
-        }
-      },
-    });
-    client.requestAccessToken();
+  const handleCredentialResponse = async (response: any) => {
+    console.log('Encoded JWT ID token: ' + response.credential);
+    try {
+      const result = await signInEmailApi.signInGoogle(response.credential);
+      if (result) {
+        console.log(result);
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
+  React.useEffect(() => {
+    /* global google */
+    window.google.accounts.id.initialize({
+      client_id: googleClient,
+      callback: handleCredentialResponse,
+    });
+    window.google.accounts.id.renderButton(document.getElementById('button'), {
+      theme: 'outline',
+      size: 'large',
+    });
+    window.google.accounts.id.prompt();
+  }, []);
+  React.useEffect(() => {
+    console.log('Login');
+  }, []);
 
   return (
     <div>
-      <div id="button" onClick={handleClickLogin}>
-        Đăng nhập
-      </div>
+      <div id="button">Đăng nhập</div>
     </div>
   );
 };

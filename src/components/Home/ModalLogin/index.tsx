@@ -316,6 +316,34 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     setResendCode(true);
   };
 
+  // -------------------------------------------------------------------------------------
+
+  // const handleCredentialResponse = async (response: any) => {
+  //   console.log('Encoded JWT ID token: ' + response);
+  //   try {
+  //     const result = await authApi.signInGoogle(response.credential);
+  //     if (result) {
+  //       console.log(result);
+  //       fetchDataProfile(result.data, true);
+  //     }
+  //   } catch (error) {
+  //     console.log('error: ', error);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   /* global google */
+  //   window.google.accounts.id.initialize({
+  //     client_id: googleClient,
+  //     callback: handleCredentialResponse,
+  //   });
+  //   window.google.accounts.id.renderButton(document.getElementById('button'), {
+  //     theme: 'outline',
+  //     size: 'large',
+  //   });
+  //   window.google.accounts.id.prompt();
+  // }, []);
+
   return (
     <Modal
       open={openModalLogin}
