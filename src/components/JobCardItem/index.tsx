@@ -12,6 +12,11 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 import ModalLogin from '../Home/ModalLogin';
 
+import {
+  setPostNewestApi,
+  setPostNewestMoreApi,
+} from 'store/reducer/postReducerV3/newWestReducer';
+
 //ANT
 
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
@@ -57,11 +62,11 @@ import { PostNewestV3 } from '../Home/NewJobs';
 //     bookmarked: boolean;
 //   };
 // }
-interface Iprops {
+interface IpropsPost {
   item: PostNewestV3;
 }
 
-const JobCardItem: React.FC<Iprops> = (props) => {
+const JobCardItem: React.FC<IpropsPost> = (props) => {
   // const {
   //   setOpenNotificate,
   //   openNotificate,
@@ -70,9 +75,13 @@ const JobCardItem: React.FC<Iprops> = (props) => {
   //   openNotificate: boolean;
   // } = React.useContext(HomeValueContext);
   const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  const [checkBookMark, setCheckBookMark] = React.useState(
+    props.item.bookmarked,
+  );
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
+
+  const [bookmarkedPost, setBookmarkedPost] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`, '_blank');
@@ -82,7 +91,7 @@ const JobCardItem: React.FC<Iprops> = (props) => {
     setError(true);
   };
 
-  console.log('props', props);
+  // console.log('ptops', props);
 
   return (
     <>
@@ -288,28 +297,30 @@ const JobCardItem: React.FC<Iprops> = (props) => {
               onClick={async (e) => {
                 try {
                   e.stopPropagation();
-                  // console.log('props.item, ', props.item);
 
                   if (!localStorage.getItem('accessToken')) {
                     setOpenModalLogin(true);
                   }
-                  if (props.item.bookmarked) {
+
+                  if (checkBookMark) {
                     const result = await bookMarkApi.deleteBookMark(
                       props.item.id,
                     );
-                    props.item.bookmarked = false;
+
                     if (result) {
-                      setCheckBookMark(!checkBookMark);
+                      // props.item.bookmarked = false;
+                      setCheckBookMark(false);
                       dispatch<any>(setAlertCancleSave(true));
                     }
                   } else {
                     const result = await bookMarkApi.createBookMark(
                       props.item.id,
                     );
-                    props.item.bookmarked = true;
+
                     if (result) {
+                      // props.item.bookmarked = true;
                       dispatch<any>(setAlertSave(true));
-                      setCheckBookMark(!checkBookMark);
+                      setCheckBookMark(true);
                     }
                   }
                 } catch (error) {
@@ -317,7 +328,7 @@ const JobCardItem: React.FC<Iprops> = (props) => {
                 }
               }}
             >
-              {props.item.bookmarked ? (
+              {checkBookMark ? (
                 <SaveIconFill width={24} height={24} />
               ) : (
                 <SaveIconOutline width={24} height={24} />

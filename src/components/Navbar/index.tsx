@@ -648,8 +648,8 @@ const Navbar: React.FC = () => {
   // login
   const handleClickLogin = async (e: any) => {
     e.stopPropagation();
-    // console.log('click');
     e.preventDefault();
+    console.log('click');
     try {
       if (openInfoUser) {
         setSpinning(false);
