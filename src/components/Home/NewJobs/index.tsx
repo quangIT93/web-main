@@ -153,12 +153,12 @@ const NewJobs: React.FC = () => {
     try {
       setOpenBackdrop(true);
       const result = await postApi.getPostNewest(
-        null,
-        null,
+        Number(searchParams.get(`categories-id`)) && null,
+        childCateloriesArray && null,
         null,
         19,
         null,
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
