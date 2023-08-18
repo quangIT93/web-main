@@ -4,6 +4,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
+import GoogleLoginButton from '#components/GoogleLoginButton';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -39,6 +41,7 @@ const ModalLoginNav: React.FC<PropsModalLogin> = (props) => {
   const { openModalLogin, setOpenModalLogin } = props;
 
   const handleClose = () => setOpenModalLogin(false);
+
   return (
     <Modal
       open={openModalLogin}
@@ -47,7 +50,13 @@ const ModalLoginNav: React.FC<PropsModalLogin> = (props) => {
       aria-describedby="modal-modal-description"
       sx={{ zIndex: 100000 }}
     >
-      <Box sx={style}></Box>
+      <Box sx={style}>
+        Đăng nhập
+        <GoogleLoginButton
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        />
+      </Box>
     </Modal>
   );
 };
