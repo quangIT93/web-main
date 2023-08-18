@@ -74,10 +74,12 @@ axiosClient.interceptors.response.use(
           }
         })
         .catch((error) => {
-          localStorage.clear()
-          // localStorage.clear();
-          axios.post(`${BASE_URL}/v1/sign-out`)
-          window.location.reload()
+          if (!localStorage.getItem("accessToken")) {
+            localStorage.clear()
+            // localStorage.clear();
+            axios.post(`${BASE_URL}/v1/sign-out`)
+            // window.location.reload()
+          }
         })
     }
 
