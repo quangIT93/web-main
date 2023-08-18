@@ -144,9 +144,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
   const authState = useSelector((state: RootState) => state.auth);
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
-  const handleLogin = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const handleLogin = async (e: any) => {
     try {
       e.preventDefault();
       if (isValidEmail) {
@@ -316,6 +314,12 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     setResendCode(true);
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleLogin(e);
+    }
+  };
+
   // -------------------------------------------------------------------------------------
 
   // const handleCredentialResponse = async (response: any) => {
@@ -463,6 +467,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   type="text"
                   id="username"
                   name="email"
+                  onKeyDown={handleKeyPress}
                   value={loginData.email}
                   onChange={handleInputChange}
                   placeholder={
