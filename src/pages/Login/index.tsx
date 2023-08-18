@@ -93,6 +93,7 @@ const Login = () => {
     /* global google */
     window.google.accounts.id.initialize({
       client_id: googleClient,
+      scope: 'https://www.googleapis.com/auth/calendar.readonly',
       callback: handleCredentialResponse,
     });
     window.google.accounts.id.renderButton(document.getElementById('button'), {

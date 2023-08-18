@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 const GoogleLoginButton: React.FC = () => {
   const handleGoogleLoginSuccess = (credential: any) => {
     // Xử lý thành công khi đăng nhập bằng Gmail
-    // console.log('Logged in with Google:', credential)
+    console.log('Logged in with Google:', credential);
   };
 
   const handleGoogleLoginFailure = (error: any) => {
@@ -15,6 +15,7 @@ const GoogleLoginButton: React.FC = () => {
     // Khởi tạo Google Sign-In API
     (window as any).google.accounts.id.initialize({
       client_id: '', // Thay YOUR_CLIENT_ID bằng Client ID của bạn
+      scope: 'https://www.googleapis.com/auth/calendar.readonly',
       callback: handleGoogleLoginSuccess,
       cancel_on_tap_outside: false,
     });

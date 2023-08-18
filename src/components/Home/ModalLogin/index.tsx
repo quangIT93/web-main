@@ -305,7 +305,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     const start = () => {
       gapi.client.init({
         clientId: googleClient,
-        scope: '',
+        scope: 'https://www.googleapis.com/auth/calendar.readonly',
       });
     };
     gapi.load('client:auth2', start);
