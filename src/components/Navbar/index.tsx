@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 import ModalLogin from '../../components/Home/ModalLogin';
+// import ModalLoginNav from '../../components/Navbar/ModalLogin';
 // import Skeleton from '@mui/material/Skeleton';
 
 import { setCookie, getCookie } from 'cookies';
@@ -1417,6 +1418,10 @@ const Navbar: React.FC = () => {
           openModalLogin={openModalLogin}
           setOpenModalLogin={setOpenModalLogin}
         />
+        {/* <ModalLoginNav
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        /> */}
         {/* <Backdrop
           sx={{
             color: '#0d99ff ',
