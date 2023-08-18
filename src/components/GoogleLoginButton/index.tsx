@@ -47,9 +47,19 @@ const GoogleLoginButton: React.FC<PropsModalLogin> = (props) => {
       );
 
       await dispatch(getProfile() as any);
-      const result = await profileApi.getProfile('vi');
-      if (result) {
-        setProfileUser(result.data);
+
+      try {
+        if (localStorage.getItem('accessToken')) {
+          const result = await profileApi.getProfile('vi');
+
+          console.log('result: ', result);
+
+          if (result) {
+            setProfileUser(result.data);
+          }
+        }
+      } catch (error) {
+        console.log('error: ', error);
       }
       setOpenModalLogin(false);
       setOpenBackdrop(false);
@@ -57,6 +67,7 @@ const GoogleLoginButton: React.FC<PropsModalLogin> = (props) => {
     } else {
       // console.log('Lỗi xác thực ', authState)
       // Thực hiện các hành động sau khi xác thực thất bại
+      // console.log("lấy thông tin proffile ko được", );
     }
   };
 
@@ -65,9 +76,13 @@ const GoogleLoginButton: React.FC<PropsModalLogin> = (props) => {
     console.log('Logged in with Google:', credential);
 
     const result = await signInEmailApi.signInGoogle(credential.credential);
-    if (result) {
-      fetchDataProfile(result.data, true);
-    }
+    try {
+      if (result) {
+        console.log('result: ', result.data);
+
+        fetchDataProfile(result.data, true);
+      }
+    } catch (error) {}
   };
 
   const handleGoogleLoginFailure = (error: any) => {
