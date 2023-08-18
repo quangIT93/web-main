@@ -259,7 +259,8 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 language?.posted_on
               }{' '}
               {props.item?.created_at != null
-                ? moment(props.item?.created_at).format('DD/MM/YY')
+                ? moment(props.item?.created_at).format('DD/MM/YYYY') + ' ' +
+                moment(new Date(props.item?.created_at)).format('HH:mm')
                 : language?.unupdated}
             </p>
             {props.item?.status === 1 ? (

@@ -128,6 +128,18 @@ const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    document.title = languageRedux === 1 ?
+      "HiJob - Tìm việc làm, tuyển dụng" :
+      "HiJob - Find a job, recruit";
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_hotJob' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
+
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(

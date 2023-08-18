@@ -279,7 +279,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={
-              language?.profile_page?.place_company_organization
+              language?.company_organization
             }
           // error={titleError} // Đánh dấu lỗi
           />

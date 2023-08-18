@@ -80,7 +80,10 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   // const [childValue, setChildValue] = React.useState<string[]>([]);
   const [treeData, setTransformedData] = React.useState<any>(null);
   const dispatch = useDispatch();
-  const handleClose = () => setOpenModalCareerObjective(false);
+  const handleClose = () => {
+    handleSubmit()
+    setOpenModalCareerObjective(false);
+  }
   const [language, setLanguageState] = React.useState<any>();
 
   const getlanguageApi = async () => {

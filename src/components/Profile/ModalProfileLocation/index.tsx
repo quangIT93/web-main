@@ -30,6 +30,8 @@ import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 
+import './style.scss';
+
 const { SHOW_PARENT } = TreeSelect;
 
 const style = {
@@ -116,7 +118,10 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   // );
 
   const dispatch = useDispatch();
-  const handleClose = () => setOpenModalLocation(false);
+  const handleClose = () => {
+    handleSubmit()
+    setOpenModalLocation(false);
+  }
   const allLocation = async () => {
     try {
       const allLocation = await locationApi.getAllLocation(
@@ -232,9 +237,9 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
 
   const handleSubmit = async () => {
     try {
-      if (value.length > 3) {
+      if (value.length > 10) {
         message.error(
-          language?.limit_3_location
+          language?.limit_10_location
         );
         return;
       }
