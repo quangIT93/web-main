@@ -209,7 +209,7 @@ const HotJobpage: React.FC = () => {
     try {
       const url = localStorage.getItem('hotjobApi');
       let hotjob = await hotJobApi.getHotJobById(url, pageNumber,
-        searchParams.get('hotjob-id') === '1' ? 20 : 19,
+        searchParams.get('hotjob-id') === '1' ? 18 : 20,
         languageRedux === 1 ? "vi" : "en");
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       const hotjobtotal = Number(searchParams.get('hotjob-total'));
@@ -244,7 +244,7 @@ const HotJobpage: React.FC = () => {
       setPageNumber(nextPage);
       const url = localStorage.getItem('hotjobApi');
       const result = await hotJobApi.getHotJobById(url, nextPage,
-        searchParams.get('hotjob-id') === '1' ? 20 : 19,
+        searchParams.get('hotjob-id') === '1' ? 18 : 20,
         languageRedux === 1 ? "vi" : "en");
       if (result) {
         setHotJob([...hotjob, ...result.data]);

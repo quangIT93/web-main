@@ -670,8 +670,8 @@ const Navbar: React.FC = () => {
   // login
   const handleClickLogin = async (e: any) => {
     e.stopPropagation();
-    // console.log('click');
     e.preventDefault();
+    // console.log('click');
     try {
       if (openInfoUser) {
         setSpinning(false);
@@ -996,14 +996,14 @@ const Navbar: React.FC = () => {
                   src={dataProfile?.avatar ? dataProfile.avatar : null}
                 />
                 <div className="sub-login_detail">
-                  <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
+                  <h2>{dataProfile?.name ? dataProfile.name : language?.home_page?.un_update_infor}</h2>
                   <span className="sub-login_text">
                     <CompanySubLoginIcon />
-                    {companyName ? companyName : ''}
+                    {companyName ? companyName : language?.home_page?.un_update_infor}
                   </span>
                   <span className="sub-login_text">
                     <MailInfoIcon />
-                    {dataProfile?.email ? dataProfile?.email : ''}
+                    {dataProfile?.email ? dataProfile?.email : language?.home_page?.un_update_infor}
                   </span>
                   {/* <span className="sub-login_text">
                   <LoginHomeIcon />

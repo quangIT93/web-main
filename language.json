@@ -27,7 +27,6 @@
     "jobs_by_theme": "Công việc theo Chủ đề",
     "hot_jobs": "Công việc nổi bật",
     "nearby_jobs": "Công việc gợi ý",
-    "home": "Tìm kiếm",
     "message": "Tin nhắn",
     "post": "Đăng bài",
     "history": "Lịch sử",
@@ -314,7 +313,7 @@
     "address": "Địa chỉ",
     "website": "Website",
     "company_size": "Quy mô công ty",
-    "company_décription": "Mô tả công ty",
+    "company_description": "Mô tả công ty",
     "company_info": "Thông tin công ty",
     "add_keywords": "Thêm từ khoá liên quan đến công việc hoặc tên công ty bạn muốn",
     "turn_off_notifications": "Hãy bật thông báo để nhận những cập nhật mới nhất về tìm kiếm công việc, tuyển dụng ứng viên, ...",
@@ -335,7 +334,7 @@
         "writer": "Người viết",
         "author": "Tác giả",
         "see_more": "Xem thêm",
-        "create_new_post": "Create a new post",
+        "create_new_post": "Tạo bài viết mới",
         "topic": "Chủ đề",
         "content": "Nội dung",
         "more_photos": "Thêm hình ảnh",
@@ -507,6 +506,8 @@
         "place_working_location": "Hãy chọn khu vực làm việc"
     },
     "post_page": {
+        "have_not_company_content" : "Bài đăng của bạn sẽ được nhiều ứng viên hơn khi có thông tin công ty. Hãy cập nhật thông tin công ty để nhiều ứng viên quan tâm hơn!",
+        "create_company_info":"Tạo thông tin công ty",
         "fill_company": "Điền nhanh thông tin công ty",
         "create_post": "Tạo bài đăng tuyển dụng",
         "job_want_to_auto_fill": "Bài tuyển dụng mà bạn muốn HiJob lấy thông tin tự động",
@@ -563,17 +564,6 @@
         "job_today": "Công việc hôm nay",
         "short_time": "Công việc ngắn hạn"
     },
-    "message_page": {
-        "title_page": "HiJob - Nhắn tin",
-        "list_user_none": "Bạn chưa có cuộc trò chuyện nào!",
-        "list_chat_none": "Chat giúp bạn thêm nhiều thông tin hiệu quả, nhanh chóng",
-        "online": "Đang hoạt động",
-        "negotiate": "Thương lượng",
-        "apply_now": "Ứng tuyển ngay",
-        "closed": "Đã đóng tuyển dụng",
-        "to_day": "Hôm nay",
-        "place_mess": "Nhập đoạn chat của bạn"
-    },
     "history_page": {
         "list_of_articles": "Danh sách bài viết",
         "saved": "Đã lưu",
@@ -602,6 +592,7 @@
         "application_form": "đơn ứng tuyển"
     },
     "home_page": {
+        "title_page": "HiJob - Tìm việc làm, tuyển dụng",
         "hijob_working_story": "Chuyện việc làm HiJob",
         "hijob_news": "Tin tức HiJob",
         "view_all": "Xem tất cả",
@@ -617,7 +608,7 @@
         "quickly_find_job_fits_your_needs.": "Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.",
         "ideal_job_location": "Vị trí công việc lý tưởng",
         "search_in_famous_locations_in_your_city.": "Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.",
-        "sign_in_here": "Sign in here",
+        "sign_in_here": "Đăng nhập ngay",
         "choose_your_location_category": "Chọn vị trí và danh mục của bạn",
         "provide_the_best_recruitment_information": "Chúng tôi sẽ cung cấp thông tin tuyển dụng tốt nhất",
         "un_update_infor": "Chưa cập nhật thông tin",
@@ -633,6 +624,7 @@
     },
     "messages_page": {
         "title_page": "HiJob - Nhắn tin",
+        "list_user_none": "Bạn chưa có cuộc trò chuyện nào!",
         "list_chat_none": "Chat giúp bạn thêm nhiều thông tin hiệu quả, nhanh chóng",
         "online": "Đang hoạt động",
         "negotiate": "Thương lượng",

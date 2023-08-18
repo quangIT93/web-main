@@ -124,7 +124,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              language?.language.max_salary
+              language?.post_page?.max_salary
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

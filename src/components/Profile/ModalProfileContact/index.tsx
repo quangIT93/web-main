@@ -234,7 +234,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Link Facebook <span className="color-asterisk">*</span>
+            Link Facebook
           </Typography>
           <TextField
             type="text"
@@ -256,7 +256,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Link Linkedin <span className="color-asterisk">*</span>
+            Link Linkedin
           </Typography>
           <TextField
             type="text"

@@ -342,7 +342,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   format="DD/MM/YYYY"
                   slotProps={{
                     textField: {
-                      helperText: 'DD/MM/yyyy',
+                      helperText: 'DD/MM/YYYY',
                     },
                   }}
                 // format="DD/MM/YYYY"

@@ -94,7 +94,8 @@ const ThemesJob: React.FC = () => {
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   // state redux
-  const { post } = useSelector((state: RootState) => state);
+  const post = useSelector((state: RootState) => state.post);
+
   const dispatch = useDispatch();
   const { setPostByTheme, setPostThemeMore } = bindActionCreators(
     actionCreators,

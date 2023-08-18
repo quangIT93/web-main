@@ -261,9 +261,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   //   }, 1000);
   // }, []);
 
-  console.log('info', userInfoChat);
-  console.log('allListChat', allListChat);
-  console.log('userInfoChat', userInfoChat);
+  // console.log('info', userInfoChat);
+  // console.log('allListChat', allListChat);
+  // console.log('userInfoChat', userInfoChat);
 
   const handleClickApplication = async () => {
     const result = await appplicationApi.applyAplication(
@@ -271,7 +271,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     );
 
     if (result) {
-      console.log('result', result.data);
+      // console.log('result', result.data);
     }
   };
 

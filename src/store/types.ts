@@ -1,4 +1,4 @@
-import { PostNewestV3 } from './../components/Home/NewJobs/index';
+// import { PostNewestV3 } from './../components/Home/NewJobs/index';
 import { AxiosResponse } from 'axios'
 export enum ActionType {
   SET_POST_ID = 'set_post_id',

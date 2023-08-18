@@ -121,7 +121,7 @@ const HistoryPost = () => {
       childs: [
         language?.all,
 
-        language?.history_page?.not_closed_yet,
+        language?.history_page?.unclosed_jobs,
 
         language?.history_page?.closed_jobs],
     },
@@ -194,9 +194,9 @@ const HistoryPost = () => {
             ? language?.closed
             : ''}
       {activeChild === '3-0'
-        ? 'Đã lưu'
+        ? language?.history_page?.saved
         : activeChild === '3-1'
-          ? 'Đã được tạo'
+          ? language?.history_page?.have_been_created
           : ''}
     </Typography>,
   ];

@@ -435,7 +435,7 @@ const SearchInput: React.FC<SearchProps> = ({
         // }
         placeholder={
           language?.search_over +
-          ` ${totalJob.toLocaleString('en-US')}` +
+          ` ${totalJob.toLocaleString('en-US')} ` +
           language?.jobs_in_vietnam
         }
         defaultActiveFirstOption={false}

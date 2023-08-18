@@ -11,13 +11,15 @@ import {
     SettingIcon,
 } from '#components/Icons';
 import { Box, Typography, MenuItem, TextField } from '@mui/material';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
-
+import languageApi from 'api/languageApi';
 import './style.scss'
 
 const CardListBlogCreate = () => {
+    const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const [showText, setShowText] = React.useState('');
     const [openMenu, setOpenMenu] = React.useState(false);
     const handleAddText = () => {
@@ -25,6 +27,25 @@ const CardListBlogCreate = () => {
     };
 
     const footerRef = React.useRef<any>(null);
+    const [language, setLanguage] = React.useState<any>();
+
+    const getlanguageApi = async () => {
+        try {
+            const result = await languageApi.getLanguage(
+                languageRedux === 1 ? "vi" : "en"
+            );
+            if (result) {
+                setLanguage(result.data);
+                // setUser(result);
+            }
+        } catch (error) {
+            // setLoading(false);
+        }
+    };
+
+    React.useEffect(() => {
+        getlanguageApi()
+    }, [languageRedux])
 
     React.useEffect(() => {
         const handleClickOutside = (event: any) => {
@@ -63,7 +84,9 @@ const CardListBlogCreate = () => {
                             lineHeight: '24px',
                         }}
                     >
-                        Bài viết bạn đã tạo
+                        {
+                            language?.history_page?.posts_created
+                        }
                     </Typography>
                 </div>
                 <div className="title-comunity_icon">
@@ -72,15 +95,27 @@ const CardListBlogCreate = () => {
                         <ul className="dropdown_menu dropdown_menu-4">
                             <li className="dropdown_item-1" style={{ display: openMenu ? "flex" : "none" }}>
                                 <LikeIcon />
-                                <p>Lượt thích</p>
+                                <p>
+                                    {
+                                        language?.history_page?.likes
+                                    }
+                                </p>
                             </li>
                             <li className="dropdown_item-2" style={{ display: openMenu ? "flex" : "none" }}>
                                 <EysIcon />
-                                <p>Lượt xem</p>
+                                <p>
+                                    {
+                                        language?.history_page?.views
+                                    }
+                                </p>
                             </li>
                             <li className="dropdown_item-3" style={{ display: openMenu ? "flex" : "none" }}>
                                 <CommentIcon />
-                                <p>Lượt bình luận</p>
+                                <p>
+                                    {
+                                        language?.history_page?.comments
+                                    }
+                                </p>
                             </li>
                         </ul>
                     </div>

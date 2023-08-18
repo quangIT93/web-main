@@ -62,7 +62,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           htmlFor="editCompany"
         >
           {
-            language?.company_décription
+            language?.company_description
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>

@@ -234,7 +234,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     try {
       if (value.length > 3) {
         message.error(
-          language?.limit_3_careers
+          language?.limit_3_location
         );
         return;
       }

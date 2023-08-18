@@ -160,7 +160,7 @@ const EditPosted = () => {
       page_title: '/web_editPost' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, language]);
 
   useEffect(() => {
     if (dataPostById) {

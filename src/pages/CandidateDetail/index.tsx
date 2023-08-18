@@ -120,7 +120,7 @@ const CandidateDetail: React.FC = () => {
       page_title: '/web_candidate_detail' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [language]);
 
   // when dataCandidate changed, statusApplication change
   useEffect(() => {
@@ -389,7 +389,7 @@ const CandidateDetail: React.FC = () => {
                       fontStyle: 'italic',
                     }}
                   >
-                    {language?.closed}
+                    {language?.post_detail_page?.closed}
                   </p>
                 ) : (
                   <p
@@ -715,7 +715,9 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>Kinh nghiệm làm việc</h3>
+                <h3>
+                  {language?.working_experience}
+                </h3>
               </div>
               {dataCandidate?.experiences?.length !== 0 ? (
                 dataCandidate?.experiences?.map((item: any, index: number) => (

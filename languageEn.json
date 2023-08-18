@@ -27,7 +27,6 @@
     "jobs_by_theme": "Jobs by Theme",
     "hot_jobs": "Featured Jobs",
     "nearby_jobs": "Suggested jobs",
-    "home": "Search",
     "message": "Message",
     "post": "Post",
     "history": "History",
@@ -507,6 +506,8 @@
         "place_working_location": "Please select a work area"
     },
     "post_page": {
+        "have_not_company_content" : "Your post will be more candidates when there is company information. Please update company information so that more candidates are interested!",
+        "create_company_info":"Create company information",
         "fill_company": "Quickly fill in company information",
         "create_post": "Create job posting",
         "job_want_to_auto_fill": "Job post that you want HiJob to get information automatically",
@@ -517,8 +518,8 @@
         "place_ward": "Ward/Commune",
         "place_phone": "Enter phone number",
         "place_address": "Street name, building, house number",
-        "city": "city",
-        "district": "district",
+        "city": "City",
+        "district": "District",
         "ward": "Ward/Commune",
         "address": "Address",
         "min_salary": "Min_salary",
@@ -563,17 +564,6 @@
         "job_today": "Today's work",
         "short_time": "Short-term work"
     },
-    "message_page": {
-        "title_page": "HiJob - Message",
-        "list_user_none": "You don't have any chats yet!",
-        "list_chat_none": "Chat helps you to add more information effectively and quickly",
-        "online": "Active",
-        "negotiate": "Negotiate",
-        "apply_now": "Apply now",
-        "closed": "Recruitment closed",
-        "to_day": "Today",
-        "place_mess": "Enter your chat"
-    },
     "history_page": {
         "list_of_articles": "List of articles",
         "saved": "Saved",
@@ -590,7 +580,7 @@
         "posted_jobs": "Posted jobs",
         "not_closed_yet": "Not yet closed",
         "latest": "Latest",
-        "oldest": "oldest",
+        "oldest": "Oldest",
         "title_page": "HiJob - Job application/posting history",
         "out_job": "Out of work to display",
         "application_has_been_applied": "applied profile",
@@ -602,6 +592,7 @@
         "application_form": "application form"
     },
     "home_page": {
+        "title_page": "HiJob - Find a job, recruit",
         "hijob_working_story": "HiJob Job Story",
         "hijob_news": "HiJob News",
         "view_all": "View all",
@@ -633,6 +624,7 @@
     },
     "messages_page": {
         "title_page": "HiJob - Messaging",
+        "list_user_none": "You don't have any chats yet!",
         "list_chat_none": "Chat helps you to add more information effectively and quickly",
         "online": "Active",
         "negotiate": "Negotiate",

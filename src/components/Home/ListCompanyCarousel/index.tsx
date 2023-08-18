@@ -277,7 +277,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                 //   // screen_name: screenName as string,
                 //   page_title: `/web_click_place_category` as string,
                 // });
-                console.log('item', item);
+                // console.log('item', item);
 
                 logEvent(analytics, 'event_web_click_HiJob' as string, {
                   // screen_name: screenName as string,

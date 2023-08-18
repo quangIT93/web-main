@@ -291,7 +291,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 }}
               >
                 {
-                  language?.closed
+                  language?.post_detail_page?.closed
                 }
               </p>
             ) : (

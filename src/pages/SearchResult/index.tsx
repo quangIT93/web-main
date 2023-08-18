@@ -230,7 +230,7 @@ const NewJobs: React.FC = () => {
       page_title: '/web_search' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, language]);
 
   // ----------------------------------------------------------------
 

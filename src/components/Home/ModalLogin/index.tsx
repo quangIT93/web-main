@@ -47,6 +47,9 @@ import { signin } from 'validations/lang/vi/signin';
 import { signinEn } from 'validations/lang/en/signin';
 import languageApi from 'api/languageApi';
 
+//
+// import { google } from 'googleapis';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -161,7 +164,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   const authState = useSelector((state: RootState) => state.auth);
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
   const handleLogin = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e: any,
   ) => {
     try {
       e.preventDefault();
@@ -251,10 +255,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     try {
       setOpenBackdrop(true);
       if (response.tokenId) {
-        // console.log('response.tokenID', response.tokenId)
+        // console.log('response.tokenID', response.tokenId);
+        // console.log('response', response);
         const result = await authApi.signInGoogle(response.tokenObj.id_token);
-        // console.log(result)
         if (result) {
+          // console.log(result);
           fetchDataProfile(result.data, true);
         }
       }
@@ -330,6 +335,39 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   const handleResendCode = () => {
     setResendCode(true);
   };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleLogin(e);
+    }
+  };
+  // -------------------------------------------------------------------------------------
+
+  // const handleCredentialResponse = async (response: any) => {
+  //   console.log('Encoded JWT ID token: ' + response);
+  //   try {
+  //     const result = await authApi.signInGoogle(response.credential);
+  //     if (result) {
+  //       console.log(result);
+  //       fetchDataProfile(result.data, true);
+  //     }
+  //   } catch (error) {
+  //     console.log('error: ', error);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   /* global google */
+  //   window.google.accounts.id.initialize({
+  //     client_id: googleClient,
+  //     callback: handleCredentialResponse,
+  //   });
+  //   window.google.accounts.id.renderButton(document.getElementById('button'), {
+  //     theme: 'outline',
+  //     size: 'large',
+  //   });
+  //   window.google.accounts.id.prompt();
+  // }, []);
 
   return (
     <Modal
@@ -442,6 +480,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   type="text"
                   id="username"
                   name="email"
+                  onKeyDown={handleKeyPress}
                   value={loginData.email}
                   onChange={handleInputChange}
                   placeholder={language?.modal_login?.enter_email}
