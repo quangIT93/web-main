@@ -192,7 +192,11 @@ const NewJobs: React.FC = () => {
       const result = await postApi.getPostNewest(
         Number(
           JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
-        ) || null,
+        ) !== 1
+          ? Number(
+              JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
+            )
+          : null || null,
         childCateloriesArray || null,
         null,
         19,
