@@ -162,6 +162,8 @@ const Footer: React.FC = () => {
               }}
             >
               <img
+                width={66}
+                height={80}
                 src={require('../../img/langdingPage/logoHiJob.png')}
                 alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
               />
@@ -224,10 +226,14 @@ const Footer: React.FC = () => {
               </h4>
               <div className="div-img-footer">
                 <img
+                  width={124}
+                  height={124}
                   src={require('../../img/langdingPage/QRcode-ggplay.png')}
                   alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
                 />
                 <img
+                  width={124}
+                  height={124}
                   style={{ marginLeft: 10 }}
                   src={require('../../img/langdingPage/QRcode-appstore.png')}
                   alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
@@ -239,6 +245,8 @@ const Footer: React.FC = () => {
                   target="_seft"
                 >
                   <img
+                    width={117}
+                    height={35}
                     id="img-gallery"
                     src={require('../../img/langdingPage/image 43.png')}
                     alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
@@ -249,6 +257,8 @@ const Footer: React.FC = () => {
                   target="_seft"
                 >
                   <img
+                    width={117}
+                    height={35}
                     src={require('../../img/langdingPage/image 45.png')}
                     alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error photo'}
                   />
