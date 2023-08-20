@@ -364,10 +364,14 @@ const Notificate = () => {
                         >
                           <h3>{notificate.data.postTitle}</h3>
                         </Tooltip>
-                        <img
-                          src={notificate.data.companyResource.logo}
-                          alt=""
-                        />
+                        {notificate.data.companyResource.log ? (
+                          <img
+                            src={notificate.data.companyResource.logo}
+                            alt=""
+                          />
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <Tooltip
                         placement="top"

@@ -149,6 +149,18 @@ const BreadcrumbsCpn: React.FC = () => {
   const handleClickChoose = async () => {
     setOpen(false);
 
+    // Lấy chiều cao của màn hình
+    const windowWidth =
+      window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+
+    if (windowWidth > 480) {
+      window.scrollTo(0, 530);
+    } else {
+      window.scrollTo(0, 560);
+    }
+
     const array = checkedItems
       .map((checkedItem: any) => {
         if (checkedItem?.checked === true) {

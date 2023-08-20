@@ -693,15 +693,18 @@ const Navbar: React.FC = () => {
         setSpinning(false);
       }
     } catch (error) {
-      console.log(error);
-      // if (!localStorage.getItem("accessToken")) {
-      //   setSpinning(false)
-      //   setOpenInfoUser(false)
-      //   setOpenModalLogin(true)
-      // } else {
-      //   setSpinning(false)
-      //   setOpenInfoUser(!openInfoUser)
-      // }
+      // localStorage.clear();
+      if (!localStorage.getItem('accessToken')) {
+        setSpinning(false);
+        setOpenInfoUser(false);
+        setOpenModalLogin(true);
+      } else {
+        setSpinning(false);
+        setOpenModalLogin(true);
+
+        // setOpenInfoUser(!openInfoUser);
+        setOpenInfoUser(false);
+      }
       setSpinning(false);
     }
   };

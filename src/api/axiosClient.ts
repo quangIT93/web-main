@@ -50,12 +50,17 @@ axiosClient.interceptors.response.use(
     response.headers.Authorization = `Bearer ${accessToken}`
     return response
   },
-  (error) => {
+  async (error) => {
     let originalRequest = error.config
     let refreshToken = localStorage.getItem('refreshToken')
-    console.log("error", error)
+    if (!refreshToken) {
+      localStorage.removeItem('accessToken');
+      return
+    }
+
+
     if (
-      (refreshToken && error.response?.status === 403) ||
+      (refreshToken && error.response?.status === 403) && (error.response?.message === "Forbiden") ||
       (refreshToken && error.response?.status === 401)
     ) {
       axios
@@ -74,9 +79,9 @@ axiosClient.interceptors.response.use(
           }
         })
         .catch((error) => {
-          if (!localStorage.getItem("accessToken")) {
-            localStorage.clear()
-            // localStorage.clear();
+          // resetAccessToken()
+          if (!localStorage.getItem("refreshToken")) {
+            localStorage.clear();
             axios.post(`${BASE_URL}/v1/sign-out`)
             // window.location.reload()
           }
@@ -86,5 +91,6 @@ axiosClient.interceptors.response.use(
     throw error
   }
 )
+
 
 export default axiosClient

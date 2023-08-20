@@ -135,7 +135,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -147,8 +147,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const handleClose = () => setOpenModalLogin(false);
 
@@ -162,6 +162,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // const regexCheckMail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const authState = useSelector((state: RootState) => state.auth);
+
+  const dataProfile = useSelector((state: RootState) => state.profile.profile);
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
   const handleLogin = async (
     // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -240,7 +242,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
 
     // console.log('facebook', response)
   };
@@ -259,12 +261,12 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
         // console.log('response', response);
         const result = await authApi.signInGoogle(response.tokenObj.id_token);
         if (result) {
-          // console.log(result);
           fetchDataProfile(result.data, true);
+          setOpenBackdrop(false);
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log('error gg', error);
       setOpenBackdrop(false);
     }
 
@@ -302,9 +304,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       );
 
       await dispatch(getProfile() as any);
-      const result = await profileApi.getProfile('vi');
-      if (result) {
-        setProfileUser(result.data);
+      // const result = await profileApi.getProfile('vi');
+      if (dataProfile) {
+        setProfileUser(dataProfile.data);
       }
       setOpenModalLogin(false);
       setOpenBackdrop(false);
@@ -435,9 +437,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                       width={29}
                       height={30}
                     />
-                    <p className="text-login ">
-                      {language?.signin_with_fb}
-                    </p>
+                    <p className="text-login ">{language?.signin_with_fb}</p>
                   </div>
                 )}
               />
@@ -455,22 +455,18 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                       width={30}
                       height={30}
                     />
-                    <p className="text-login">
-                      {language?.signin_with_google}
-                    </p>
+                    <p className="text-login">{language?.signin_with_google}</p>
                   </div>
                 )}
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
-              // cookiePolicy={'single_host_origin'}
+                // cookiePolicy={'single_host_origin'}
               />
 
               <div className="line-with-text">
                 <span className="line"></span>
-                <span className="text">
-                  {language?.or}
-                </span>
+                <span className="text">{language?.or}</span>
                 <span className="line"></span>
               </div>
 
@@ -486,9 +482,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   placeholder={language?.modal_login?.enter_email}
                 />
                 <small className={!invalid ? 'alert' : 'alert error'}>
-                  {
-                    language?.modal_login?.wrong_mail
-                  }
+                  {language?.modal_login?.wrong_mail}
                 </small>
               </div>
               <p className="text-sent_otp">
@@ -534,15 +528,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               }}
               onClick={handleBackLogin}
             />
-            <p className="textOpt">
-              {language?.type_otp_email}
-            </p>
+            <p className="textOpt">{language?.type_otp_email}</p>
             <p className="textOpt-email">{loginData.email}</p>
-            <p className="textOpt-notice">
-              {
-                language?.modal_login?.no_otp
-              }
-            </p>
+            <p className="textOpt-notice">{language?.modal_login?.no_otp}</p>
             <div className="otp-inputs">
               <OtpInput
                 value={otp}
@@ -569,8 +557,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             </button>
             <div className="wrap-countDown">
               <p className="resend-otp" onClick={handleResendCode}>
-                {language?.resend_code}
-                {' '}
+                {language?.resend_code}{' '}
               </p>
               {!resendCode ? (
                 <p className="resend-otp_countDown"></p>
