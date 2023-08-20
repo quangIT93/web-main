@@ -137,7 +137,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
       );
       if (result) {
         setUploading(false);
-        if (result.data.length == 0) {
+        if (result.data.length === 0) {
           setIsVisible(false);
           messageApi.open({
             type: 'error',

@@ -46,7 +46,7 @@ const CustomOption = ({
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguageState(result.data);
@@ -58,8 +58,8 @@ const CustomOption = ({
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   return (
     <Radio.Group
@@ -67,7 +67,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={jobType ? jobType : 5}
-    // defaultValue={jobType ? jobType : 5}
+      // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -87,7 +87,7 @@ interface TypeJob {
   valueTypeJob: any;
   reset: Boolean;
   setReset: React.Dispatch<React.SetStateAction<Boolean>>;
-  language: any
+  language: any;
 }
 
 const { Option } = Select;
@@ -96,9 +96,11 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   valueTypeJob,
   reset,
   setReset,
-  language
+  language,
 }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const [data, setData] = React.useState()
   const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
   const [valueRender, setValueRender] = React.useState<any>();
@@ -129,9 +131,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   const TYPE_JOB = userFilteredCookies?.id;
   // console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType(
-      languageRedux == 1 ? "vi" : "en"
-    );
+    const result = await siteApi.getJobType(languageRedux === 1 ? 'vi' : 'en');
     const updatedData = [{ id: 5, name: language?.all }, ...result.data];
     // console.log('updatedData', updatedData);
     if (updatedData) {
@@ -163,7 +163,9 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={reset ? language?.all : valueRender ? valueRender.name : undefined}
+        value={
+          reset ? language?.all : valueRender ? valueRender.name : undefined
+        }
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder={language?.job_type1}

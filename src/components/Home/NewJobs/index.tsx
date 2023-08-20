@@ -109,7 +109,7 @@ const NewJobs: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -121,8 +121,8 @@ const NewJobs: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const {
     // setChildCateloriesArray,
@@ -157,7 +157,7 @@ const NewJobs: React.FC = () => {
       null,
       9,
       thersholdId,
-      languageRedux == 1 ? 'vi' : 'en',
+      languageRedux === 1 ? 'vi' : 'en',
     );
 
     if (result) {
@@ -248,9 +248,7 @@ const NewJobs: React.FC = () => {
         >
           <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
             <NewJobIcon width={25} height={25} />
-            <h2>
-              {language?.newest_jobs}
-            </h2>
+            <h2>{language?.newest_jobs}</h2>
           </div>
 
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
@@ -285,7 +283,7 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-          //  onClick={handleClose}
+            //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

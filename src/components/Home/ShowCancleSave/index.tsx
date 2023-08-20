@@ -27,7 +27,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 // }
 
 const ShowCancleSave: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
   const cancleSave = useSelector((state: any) => state.showAlert.alert);
@@ -36,7 +38,7 @@ const ShowCancleSave: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -48,8 +50,8 @@ const ShowCancleSave: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // const alert = false;
 
@@ -71,9 +73,7 @@ const ShowCancleSave: React.FC = () => {
             severity="error"
             sx={{ width: '100%', backgroundColor: '#000000' }}
           >
-            {
-              language?.unsaved_this_job
-            }
+            {language?.unsaved_this_job}
           </Alert>
         </Snackbar>
       </Stack>

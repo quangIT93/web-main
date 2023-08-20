@@ -129,17 +129,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -284,12 +284,10 @@ const Navbar: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
-
-
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguageState(result.data);
@@ -301,8 +299,8 @@ const Navbar: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
   // handle show tap on screen mobile
   // const handleTap = () => {
   //   setShowTap(!showTap);
@@ -483,10 +481,10 @@ const Navbar: React.FC = () => {
   //   let ca = document.cookie.split(';');
   //   for (let i = 0; i < ca.length; i++) {
   //     let c = ca[i];
-  //     while (c.charAt(0) == ' ') {
+  //     while (c.charAt(0) === ' ') {
   //       c = c.substring(1, c.length);
   //     }
-  //     if (c.indexOf(nameEQ) == 0) {
+  //     if (c.indexOf(nameEQ) === 0) {
   //       return c.substring(nameEQ.length, c.length);
   //     }
   //   }
@@ -909,16 +907,14 @@ const Navbar: React.FC = () => {
       }}
     >
       <FormOutlined style={{ color: 'white' }} />
-      <p style={{ marginLeft: 10, color: 'white' }}>
-        {language?.post}
-      </p>
+      <p style={{ marginLeft: 10, color: 'white' }}>{language?.post}</p>
     </button>,
     <div
       className="actions-login"
       ref={refLogin}
       key="2"
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -947,8 +943,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-              openLogin &&
-              location?.pathname === '/'
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -956,9 +952,7 @@ const Navbar: React.FC = () => {
         <div className="login__hover">
           <h3>{languageRedux === 1 ? 'Đăng nhập ở đây' : 'Sign in here'}</h3>
           <div className="login__hover__p">
-            <p>
-              {language?.home_page?.choose_your_location_category}
-            </p>
+            <p>{language?.home_page?.choose_your_location_category}</p>
             <p>
               {language?.home_page?.provide_the_best_recruitment_information}
             </p>
@@ -1000,14 +994,22 @@ const Navbar: React.FC = () => {
                   src={dataProfile?.avatar ? dataProfile.avatar : null}
                 />
                 <div className="sub-login_detail">
-                  <h2>{dataProfile?.name ? dataProfile.name : language?.home_page?.un_update_infor}</h2>
+                  <h2>
+                    {dataProfile?.name
+                      ? dataProfile.name
+                      : language?.home_page?.un_update_infor}
+                  </h2>
                   <span className="sub-login_text">
                     <CompanySubLoginIcon />
-                    {companyName ? companyName : language?.home_page?.un_update_infor}
+                    {companyName
+                      ? companyName
+                      : language?.home_page?.un_update_infor}
                   </span>
                   <span className="sub-login_text">
                     <MailInfoIcon />
-                    {dataProfile?.email ? dataProfile?.email : language?.home_page?.un_update_infor}
+                    {dataProfile?.email
+                      ? dataProfile?.email
+                      : language?.home_page?.un_update_infor}
                   </span>
                   {/* <span className="sub-login_text">
                   <LoginHomeIcon />
@@ -1025,8 +1027,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                            return `${location.district} , `;
+                          })
                         : language?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1039,8 +1041,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
                         : language?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1051,9 +1053,7 @@ const Navbar: React.FC = () => {
               <Link to="/profile" target="_sel">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
-                  <span>
-                    {language?.home_page?.update_infor}
-                  </span>
+                  <span>{language?.home_page?.update_infor}</span>
                 </div>
               </Link>
               <Link to="/history" target="_sel">
@@ -1062,9 +1062,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{language?.history}</span>
@@ -1072,18 +1072,15 @@ const Navbar: React.FC = () => {
               </Link>
               <div className="sub-history_status">
                 <span>
-                  {language?.approved}{' '}
-                  {`${approved}`}
+                  {language?.approved} {`${approved}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {language?.home_page?.pending}{' '}
-                  {`${pending}`}
+                  {language?.home_page?.pending} {`${pending}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {language?.home_page?.waiting}{' '}
-                  {`${waiting}`}
+                  {language?.home_page?.waiting} {`${waiting}`}
                 </span>
               </div>
               {/* <div className="sub-login_item">
@@ -1116,9 +1113,11 @@ const Navbar: React.FC = () => {
 
               <div
                 className="sub-translate_status"
-                style={{
-                  // height: openRadioGroup ? '100%' : '0',
-                }}
+                style={
+                  {
+                    // height: openRadioGroup ? '100%' : '0',
+                  }
+                }
               >
                 <Radio.Group
                   name="radiogroup"
@@ -1126,15 +1125,13 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                // style={{
-                //   display: openRadioGroup ? 'flex' : 'none',
-                // }}
+                  // style={{
+                  //   display: openRadioGroup ? 'flex' : 'none',
+                  // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
-                    <span>
-                      {language?.vietnamese}
-                    </span>
+                    <span>{language?.vietnamese}</span>
                   </Radio>
                   <Radio value={2}>
                     <ENSubLoginIcon />
@@ -1273,8 +1270,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                            return `${location.district} , `;
+                          })
                         : language?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1287,8 +1284,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
                         : language?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1299,9 +1296,7 @@ const Navbar: React.FC = () => {
               <Link to="/profile" target="_sel">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
-                  <span>
-                    {language?.home_page?.update_infor}
-                  </span>
+                  <span>{language?.home_page?.update_infor}</span>
                 </div>
               </Link>
               <Link to="/history" target="_sel">
@@ -1310,9 +1305,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{language?.history}</span>
@@ -1320,18 +1315,15 @@ const Navbar: React.FC = () => {
               </Link>
               <div className="sub-history_status">
                 <span>
-                  {language?.approved}{' '}
-                  {`${approved}`}
+                  {language?.approved} {`${approved}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {language?.home_page?.pending}{' '}
-                  {`${pending}`}
+                  {language?.home_page?.pending} {`${pending}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {language?.home_page?.waiting}{' '}
-                  {`${waiting}`}
+                  {language?.home_page?.waiting} {`${waiting}`}
                 </span>
               </div>
               {/* <div className="sub-login_item">
@@ -1380,9 +1372,7 @@ const Navbar: React.FC = () => {
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
-                    <span>
-                      {language?.vietnamese}
-                    </span>
+                    <span>{language?.vietnamese}</span>
                   </Radio>
                   <Radio value={2}>
                     <ENSubLoginIcon />
@@ -1418,8 +1408,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1523,9 +1514,7 @@ const Navbar: React.FC = () => {
                 {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
               </Button>
               <div className="sub-icon_qr">
-                <h2>
-                  {language?.download_hijob_app}
-                </h2>
+                <h2>{language?.download_hijob_app}</h2>
                 <img
                   src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
                   alt={language?.err_none_img}

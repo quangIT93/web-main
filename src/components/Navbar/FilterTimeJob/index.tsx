@@ -64,7 +64,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguageState(result.data);
@@ -76,8 +76,8 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   useEffect(() => {
     if (is_working_weekend) {
@@ -182,8 +182,9 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <CalendarFilterIcon width={20} height={20} />
       </div>
       <Collapse
-        className={`inputFilterTimeJob input-filter_nav ${isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
-          }`}
+        className={`inputFilterTimeJob input-filter_nav ${
+          isRemotely || isWorkingWeekend ? 'activeTimeJob' : ''
+        }`}
         activeKey={collapseOpen ? '1' : ''}
         ref={collapseRef}
         expandIconPosition="end"
@@ -192,24 +193,16 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <Panel
           header={
             isRemotely || isWorkingWeekend
-              ? `${isWorkingWeekend
-                ? language?.working_on_the_weekend
-                : ''
-              } 
+              ? `${isWorkingWeekend ? language?.working_on_the_weekend : ''} 
             ${isWorkingWeekend && isRemotely ? '-' : ''}
             
-            ${isRemotely
-                ? language?.remote_work
-                : ''
-              }`
+            ${isRemotely ? language?.remote_work : ''}`
               : language?.working_time
           }
           key="1"
           style={{ fontSize: '12px' }}
         >
-          <Text className="title-filter_timeJob">
-            {language?.working_time}
-          </Text>
+          <Text className="title-filter_timeJob">{language?.working_time}</Text>
 
           {/* <Radio.Group
           value={selectedValue}
