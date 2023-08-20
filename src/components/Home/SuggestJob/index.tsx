@@ -209,8 +209,9 @@ const ThemesJob: React.FC = () => {
   //   // setSearchParams(searchParams)
 
   // }, [localStorage.getItem("accessToken")])
+
   return (
-    <Box sx={{ flexGrow: 1 }} className="box-subjectJob">
+    <Box sx={{ flexGrow: 1 }} className="box-subjectJob" id="box-subjectJob">
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <SuggestIcon width={25} height={25} />
         <h2>
