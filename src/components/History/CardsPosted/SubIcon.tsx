@@ -61,9 +61,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
       >
         <EditOutlined />
         {
-          languageRedux === 1 ?
-            postDetail.edit :
-            postDetailEn.edit
+          language?.edit
         }
       </div>
 

@@ -187,27 +187,21 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   const validValue = () => {
     if (education.major === '') {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_major :
-          profileEn.err_major,
+        message: language?.profile_page?.err_major,
         checkForm: false,
       };
     }
 
     if (education.companyName === '') {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_school :
-          profileEn.err_school,
+        message: language?.profile_page?.err_school,
         checkForm: false,
       };
     }
 
     if (education.extraInformation === '') {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_additional_information :
-          profileEn.err_additional_information,
+        message: language?.profile_page?.err_additional_information,
         checkForm: false,
       };
     }
@@ -215,18 +209,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
     if (!education.startDate) {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_start_time :
-          profileEn.err_start_time,
+        message: language?.profile_page?.err_start_time,
         checkForm: false,
       };
     }
 
     if (!education.endDate) {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_finish_time :
-          profileEn.err_finish_time,
+        message: language?.profile_page?.err_finish_time,
         checkForm: false,
       };
     }
@@ -268,9 +258,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       console.log('error', error);
       messageApi.open({
         type: 'error',
-        content: languageRedux === 1 ?
-          profileVi.check_info_please :
-          profileEn.check_info_please,
+        content: language?.profile_page?.check_info_please,
       });
     }
   };
@@ -314,9 +302,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           sx={{ marginBottom: '12px' }}
         >
           {
-            languageRedux === 1 ?
-              profileVi.edit_education :
-              profileEn.edit_education
+            language?.profile_page?.edit_education
           }
         </Typography>
         <Box sx={styleChildBox}>
@@ -340,9 +326,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={
-              languageRedux === 1 ?
-                profileVi.place_school :
-                profileEn.place_school
+              language?.profile_page?.place_school
             }
           // error={titleError} // Đánh dấu lỗi
           />
@@ -451,18 +435,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             id="extra-info"
             // label="Một số đặc điểm nhận diện công ty"
             placeholder={
-              languageRedux === 1 ?
-                profileVi.place_additional_information :
-                profileEn.place_additional_information
+              language?.profile_page?.place_additional_information
             }
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

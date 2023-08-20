@@ -169,9 +169,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                post.city :
-                postEn.city
+              language?.post_page?.city
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -183,9 +181,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             disableClearable
             renderInput={(params) => (
               <TextField {...params} placeholder={
-                languageRedux === 1 ?
-                  post.place_city :
-                  postEn.place_city
+                language?.post_page?.place_city
               } size="small" />
             )}
             style={{ marginTop: '0.5rem' }}
@@ -199,9 +195,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                post.district :
-                postEn.district
+              language?.post_page?.district
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -213,9 +207,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             disableClearable
             renderInput={(params: any) => (
               <TextField {...params} placeholder={
-                languageRedux === 1 ?
-                  post.place_district :
-                  postEn.place_district
+                language?.post_page?.place_district
               } size="small" />
             )}
             style={{ marginTop: '0.5rem' }}
@@ -231,9 +223,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                post.ward :
-                postEn.ward
+              language?.post_page?.ward
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -245,9 +235,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             disableClearable
             renderInput={(params) => (
               <TextField {...params} placeholder={
-                languageRedux === 1 ?
-                  post.place_ward :
-                  postEn.place_ward
+                language?.post_page?.place_ward
               } size="small" />
             )}
             style={{ marginTop: '0.5rem' }}
@@ -261,9 +249,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                post.address :
-                postEn.address
+              language?.post_page?.address
             }{' '}<span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
@@ -275,9 +261,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '0.5rem' }}
             placeholder={
-              languageRedux === 1 ?
-                post.place_address :
-                postEn.place_address
+              language?.post_page?.place_address
             }
           />
         </div>

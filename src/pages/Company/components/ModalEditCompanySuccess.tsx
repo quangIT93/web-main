@@ -52,9 +52,7 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
           {
-            languageRedux === 1 ?
-              company.alert_update_success :
-              companyEn.alert_update_success
+            language?.company_page?.alert_update_success
           }
         </Typography>
         <Typography
@@ -64,9 +62,7 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
           {
-            languageRedux === 1 ?
-              company.alert_move_to_profile :
-              companyEn.alert_move_to_profile
+            language?.company_page?.alert_move_to_profile
           }
         </Typography>
 
@@ -88,9 +84,7 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
             }}
           >
             {
-              languageRedux === 1 ?
-                profileVi.no :
-                profileEn.no
+              language?.no
             }
           </Button>
           <Button
@@ -104,9 +98,7 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
             }}
           >
             {
-              languageRedux === 1 ?
-                profileVi.yes :
-                profileEn.yes
+              language?.yes
             }
           </Button>
         </Box>

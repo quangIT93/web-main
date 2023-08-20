@@ -229,9 +229,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
           sx={{ marginBottom: '12px' }}
         >
           {
-            languageRedux === 1 ?
-              profileVi.add_working_experience :
-              profileEn.add_working_experience
+            language?.profile_page?.add_working_experience
           }
         </Typography>
         <Box sx={styleChildBox}>
@@ -281,9 +279,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={
-              languageRedux === 1 ?
-                profileVi.place_company_organization :
-                profileEn.place_company_organization
+              language?.company_organization
             }
           // error={titleError} // Đánh dấu lỗi
           />
@@ -359,18 +355,14 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             rows={4}
             // label="Một số đặc điểm nhận diện công ty"
             placeholder={
-              languageRedux === 1 ?
-                profileVi.place_additional_information :
-                profileEn.place_additional_information
+              language?.profile_page?.place_additional_information
             }
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

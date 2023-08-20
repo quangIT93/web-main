@@ -234,7 +234,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Link Facebook <span className="color-asterisk">*</span>
+            Link Facebook
           </Typography>
           <TextField
             type="text"
@@ -256,7 +256,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            Link Linkedin <span className="color-asterisk">*</span>
+            Link Linkedin
           </Typography>
           <TextField
             type="text"
@@ -273,9 +273,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

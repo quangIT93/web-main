@@ -138,8 +138,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content:
-              languageRedux === 1 ? historyVi.out_job : historyEn.out_job,
+            content: language?.out_job,
           });
           return;
         }
@@ -170,25 +169,21 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           alignItems: 'center',
         }}
       >
-        <div className="back-container">
-          <Typography
-            sx={{
-              fontWeight: '600',
-              fontSize: '16px',
-              lineHeight: '24px',
-              '@media (max-width: 350px)': {
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                minWidth: '135px',
-              },
-            }}
-          >
-            {languageRedux === 1
-              ? historyVi.applied_jobs
-              : historyEn.applied_jobs}
-          </Typography>
-        </div>
+        <Typography
+          sx={{
+            fontWeight: '600',
+            fontSize: '16px',
+            lineHeight: '24px',
+            '@media (max-width: 350px)': {
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              minWidth: '135px',
+            },
+          }}
+        >
+          {language?.history_page?.applied_jobs}
+        </Typography>
         <TextField
           select
           id="sex"
@@ -199,12 +194,8 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">
-            {languageRedux === 1 ? historyVi.latest : historyEn.latest}
-          </MenuItem>
-          <MenuItem value="Cũ nhất">
-            {languageRedux === 1 ? historyVi.oldest : historyEn.oldest}
-          </MenuItem>
+          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
+          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
         </TextField>
       </Box>
       {/* <Skeleton loading={loading} active> */}

@@ -23,7 +23,7 @@ export const getProfile = createAsyncThunk(
       if (accessToken) {
         const response = await profileApi.getProfile(
           languageRedux ?
-            languageRedux == 1 ?
+            languageRedux === 1 ?
               "vi" :
               "en" :
             // languageRedux && 

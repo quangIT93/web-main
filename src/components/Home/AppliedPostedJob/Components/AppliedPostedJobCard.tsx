@@ -263,7 +263,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 fontSize: '12px',
               }}
             >
-              {languageRedux === 1 ? home.applied_on : homeEn.applied_on}
+              {language?.home_page?.applied_on}
               &nbsp;
               {new Date(props.item.created_at).toLocaleDateString('en-GB')}
               ,&nbsp;
@@ -284,9 +284,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 {props.item.num_of_application}
               </strong>
               &nbsp;
-              {languageRedux === 1
-                ? home.x_candidates_have_applied
-                : homeEn.x_candidates_have_applied}
+              {language?.home_page?.x_candidates_have_applied}
             </span>
           </div>
           <div

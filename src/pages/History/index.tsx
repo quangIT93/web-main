@@ -104,9 +104,7 @@ const HistoryPost = () => {
   const dataItem = [
     {
       id: 1,
-      title: languageRedux === 1 ?
-        historyVi.applied_jobs :
-        historyEn.applied_jobs,
+      title: language?.history_page?.applied_jobs,
       childs: [
         language?.all,
         // 'Đã được duyệt', 'Đang chờ duyệt'
@@ -114,43 +112,36 @@ const HistoryPost = () => {
     },
     {
       id: 2,
-      title: languageRedux === 1 ?
-        historyVi.saved_jobs :
-        historyEn.saved_jobs,
+      title: language?.history_page?.saved_jobs,
       childs: [language?.all],
     },
     {
       id: 3,
-      title: languageRedux === 1 ?
-        historyVi.posted_jobs :
-        historyEn.posted_jobs,
+      title: language?.history_page?.posted_jobs,
       childs: [
         language?.all,
 
-        languageRedux === 1 ?
-          historyVi.not_closed_yet :
-          historyEn.not_closed_yet,
+        language?.history_page?.unclosed_jobs,
 
-        language?.closed],
+        language?.history_page?.closed_jobs],
     },
     {
       id: 4,
-      title: 'Danh sách bài viết',
-      childs: ['Đã lưu', 'Đã được tạo'],
+      title: language?.history_page?.list_of_articles,
+      childs: [language?.history_page?.saved,
+      language?.history_page?.have_been_created],
     },
   ];
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = languageRedux === 1 ?
-      historyVi.title_page :
-      historyEn.title_page;
+    document.title = language?.history_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_history' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, language]);
 
   const breadcrumbs = [
     <Link
@@ -162,9 +153,7 @@ const HistoryPost = () => {
       target="_parent"
     >
       {
-        languageRedux === 1 ?
-          historyVi.home :
-          historyEn.home
+        language?.history_page?.home
       }
     </Link>,
     <Link
@@ -176,9 +165,7 @@ const HistoryPost = () => {
       target="_parent"
     >
       {
-        languageRedux === 1 ?
-          historyVi.history :
-          historyEn.history
+        language?.history_page?.history
       }
     </Link>,
     <Typography key="3" color="text.primary">
@@ -202,16 +189,14 @@ const HistoryPost = () => {
       {activeChild === '2-0'
         ? language?.all
         : activeChild === '2-1'
-          ? languageRedux === 1 ?
-            historyVi.not_closed_yet :
-            historyEn.not_closed_yet
+          ? language?.history_page?.not_closed_yet
           : activeChild === '2-2'
             ? language?.closed
             : ''}
       {activeChild === '3-0'
-        ? 'Đã lưu'
+        ? language?.history_page?.saved
         : activeChild === '3-1'
-          ? 'Đã được tạo'
+          ? language?.history_page?.have_been_created
           : ''}
     </Typography>,
   ];

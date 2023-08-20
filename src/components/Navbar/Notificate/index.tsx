@@ -353,9 +353,7 @@ const Notificate = () => {
                   >
                     <div className="wrap-img_keyword">
                       <img src={notificate.data.image} alt={
-                        languageRedux === 1 ?
-                          postDetail.error_photo :
-                          postDetailEn.error_photo
+                        language?.err_none_img
                       } />
                     </div>
                     <div className="content-notificate">
@@ -500,18 +498,14 @@ const Notificate = () => {
             <div className="count-keyword">
               <p>
                 {
-                  languageRedux === 1 ?
-                    home.there_are_has_been_saved :
-                    homeEn.there_are_has_been_saved
+                  language?.there_are_has_been_saved
                 }
                 <strong>{` ${dataNotificationKeyword.keywords.length > 0
                   ? dataNotificationKeyword.keywords.length
                   : 0
                   }/10 `}</strong>
                 {
-                  languageRedux === 1 ?
-                    home.keywords_has_been_saved :
-                    homeEn.keywords_has_been_saved
+                  language?.keywords_has_been_saved
                 }
               </p>
             </div>

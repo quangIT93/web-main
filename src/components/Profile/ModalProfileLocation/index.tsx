@@ -30,6 +30,8 @@ import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 
+import './style.scss';
+
 const { SHOW_PARENT } = TreeSelect;
 
 const style = {
@@ -116,7 +118,10 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   // );
 
   const dispatch = useDispatch();
-  const handleClose = () => setOpenModalLocation(false);
+  const handleClose = () => {
+    handleSubmit()
+    setOpenModalLocation(false);
+  }
   const allLocation = async () => {
     try {
       const allLocation = await locationApi.getAllLocation(
@@ -232,11 +237,9 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
 
   const handleSubmit = async () => {
     try {
-      if (value.length > 3) {
+      if (value.length > 10) {
         message.error(
-          languageRedux === 1 ?
-            profileVi.limit_3_careers :
-            profileEn.limit_3_careers
+          language?.limit_10_location
         );
         return;
       }
@@ -371,9 +374,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

@@ -222,9 +222,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
           sx={{ marginBottom: '12px' }}
         >
           {
-            languageRedux === 1 ?
-              profileVi.add_education :
-              profileEn.add_education
+            language?.profile_page?.add_education
           }
         </Typography>
         <Box sx={styleChildBox}>
@@ -248,9 +246,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={
-              languageRedux === 1 ?
-                profileVi.place_school :
-                profileEn.place_school
+              language?.profile_page?.place_school
             }
           // error={titleError} // Đánh dấu lỗi
           />
@@ -352,9 +348,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             rows={4}
             // label="Một số đặc điểm nhận diện công ty"
             placeholder={
-              languageRedux === 1 ?
-                profileVi.place_additional_information :
-                profileEn.place_additional_information
+              language?.profile_page?.place_additional_information
             }
 
           />
@@ -362,9 +356,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

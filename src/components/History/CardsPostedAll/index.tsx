@@ -147,9 +147,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: languageRedux === 1 ?
-              historyVi.out_job :
-              historyEn.out_job,
+            content: language?.out_job,
           });
           return;
         }
@@ -212,9 +210,7 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
             }}
           >
             {
-              languageRedux === 1 ?
-                historyVi.posted_jobs :
-                historyEn.posted_jobs
+              language?.history_page?.posted_jobs
             }
           </Typography>
         </div>
@@ -230,16 +226,12 @@ const CardsPostedAll: React.FC<ICardsPostedAll> = (props) => {
         >
           <MenuItem value="Mới nhất">
             {
-              languageRedux === 1 ?
-                historyVi.latest :
-                historyEn.latest
+              language?.history_page?.latest
             }
           </MenuItem>
           <MenuItem value="Cũ nhất">
             {
-              languageRedux === 1 ?
-                historyVi.oldest :
-                historyEn.oldest
+              language?.history_page?.oldest
             }
           </MenuItem>
         </TextField>

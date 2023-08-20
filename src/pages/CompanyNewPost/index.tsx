@@ -1,15 +1,11 @@
-import React, { useEffect, FormEvent, useState } from 'react';
+import React, { useEffect } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
-import { Box, Typography } from '@mui/material';
+
 // import moment, { Moment } from 'moment';
 
-import { Collapse } from 'antd';
-import { Skeleton } from 'antd';
-import { message } from 'antd';
+// import { Collapse } from 'antd';
 
 // import component
 
@@ -25,18 +21,39 @@ import {
 
 import { Navbar } from '#components';
 import RollTop from '#components/RollTop';
-
+import languageApi from 'api/languageApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer/index';
 import './style.scss';
 
-const { Panel } = Collapse;
+// const { Panel } = Collapse;
 
 const Comunity = () => {
+    const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const [showText, setShowText] = React.useState('');
     const [openMenu, setOpenMenu] = React.useState(false);
     const handleAddText = () => {
         setShowText('showText');
     };
+    const [language, setLanguage] = React.useState<any>();
 
+    const getlanguageApi = async () => {
+        try {
+            const result = await languageApi.getLanguage(
+                languageRedux === 1 ? "vi" : "en"
+            );
+            if (result) {
+                setLanguage(result.data);
+                // setUser(result);
+            }
+        } catch (error) {
+            // setLoading(false);
+        }
+    };
+
+    React.useEffect(() => {
+        getlanguageApi()
+    }, [languageRedux])
     const footerRef = React.useRef<any>(null);
 
     useEffect(() => {
@@ -73,15 +90,27 @@ const Comunity = () => {
                                 <ul className="dropdown_menu dropdown_menu-4">
                                     <li className="dropdown_item-1" style={{ display: openMenu ? "flex" : "none" }}>
                                         <LikeIcon />
-                                        <p>Lượt thích</p>
+                                        <p>
+                                            {
+                                                language?.history_page?.likes
+                                            }
+                                        </p>
                                     </li>
                                     <li className="dropdown_item-2" style={{ display: openMenu ? "flex" : "none" }}>
                                         <EysIcon />
-                                        <p>Lượt xem</p>
+                                        <p>
+                                            {
+                                                language?.history_page?.views
+                                            }
+                                        </p>
                                     </li>
                                     <li className="dropdown_item-3" style={{ display: openMenu ? "flex" : "none" }}>
                                         <CommentIcon />
-                                        <p>Lượt bình luận</p>
+                                        <p>
+                                            {
+                                                language?.history_page?.comments
+                                            }
+                                        </p>
                                     </li>
                                 </ul>
                             </div>

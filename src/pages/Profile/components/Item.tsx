@@ -157,9 +157,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           </div>
           <p style={{ color: '#575757', fontSize: '14px' }}>
             {
-              languageRedux === 1 ?
-                profileVi.delete :
-                profileEn.delete
+              language?.profile_page?.delete
             }
           </p>
         </Space>

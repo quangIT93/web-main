@@ -84,8 +84,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
             Number(searchParams.get('post_id')),
             languageRedux === 1 ? "vi" : "en"
           );
-          console.log(resultHistoryRecruiter.data);
-          console.log('resultPost', resultPost);
+          // console.log(resultHistoryRecruiter.data);
+          // console.log('resultPost', resultPost);
 
           if (resultPost && resultHistoryRecruiter) {
             return setUserInfoChat({
@@ -136,7 +136,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
                 languageRedux === 1 ? "vi" : "en"
               );
 
-              console.log('v3', resultGetPostV3);
+              // console.log('v3', resultGetPostV3);
 
               if (resultGetPostV3) {
                 if (
@@ -250,7 +250,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   };
 
   useEffect(() => {
-    console.log('lis', listUserChat);
+    // console.log('lis', listUserChat);
 
     listUserChat.map((userChat: any) => {
       if (userChat.user_id === searchParams.get('user_id')) {

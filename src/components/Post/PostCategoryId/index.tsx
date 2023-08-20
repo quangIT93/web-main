@@ -33,9 +33,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
         {disable ?
-          languageRedux === 1 ?
-            post.limit_2_cate :
-            postEn.limit_2_cate
+          language?.limit_2_cate
           : ''}
       </Divider>
     </div>

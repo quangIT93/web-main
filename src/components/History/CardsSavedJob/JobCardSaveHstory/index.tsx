@@ -251,12 +251,11 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
               }}
             >
               {
-                languageRedux === 1 ?
-                  historyVi.posted_on :
-                  historyEn.posted_on
+                language?.posted_on
               }{' '}
               {props.item?.created_at != null
-                ? moment(props.item?.created_at).format('DD/MM/YY')
+                ? moment(props.item?.created_at).format('DD/MM/YYYY') + ' ' +
+                moment(new Date(props.item?.created_at)).format('HH:mm')
                 : language?.unupdated}
             </p>
             {props.item?.status === 1 ? (
@@ -301,9 +300,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 }}
               >
                 {
-                  languageRedux === 1 ?
-                    historyVi.does_not_accept :
-                    historyEn.does_not_accept
+                  language?.history_page?.does_not_accept
                 }
               </p>
             )}

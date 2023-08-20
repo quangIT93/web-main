@@ -22,6 +22,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
+import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
 // import api
 import categoriesApi from '../../../api/categoriesApi';
 import postApi from 'api/postApi';
@@ -61,7 +62,7 @@ const BreadcrumbsCpn: React.FC = () => {
   const [arrayChild, setArrayChild] = useState<any>([]);
 
   // state redux
-  const { postNewest } = useSelector((state: RootState) => state);
+  const postNewest = useSelector((state: RootState) => state.postNewest);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -174,8 +175,19 @@ const BreadcrumbsCpn: React.FC = () => {
         thersholdId,
         languageRedux === 1 ? 'vi' : 'en',
       );
+
+      // const result = await postApi.getPostNewestV3(
+      //   array.map((arr: { id: number; name: string }) => arr.id),
+      //   Number(valueJobChild?.id),
+      //   null,
+      //   null,
+      //   10,
+      //   null,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
       if (result) {
         setPostNewest(result);
+        // dispatch(setPostNewestApi(result));
         // setOpenBackdrop(false)
       }
     } catch (error) {
@@ -337,7 +349,7 @@ const BreadcrumbsCpn: React.FC = () => {
         className="collapse-breadcrumbs"
       >
         <Typography className="header-breabcrumb_text">
-          {languageRedux === 1 ? 'Danh sách' : 'List'}
+          {language?.home_page?.list}
         </Typography>
         <Box padding={0} className="box-breadcrumbs">
           <FormGroup>
@@ -377,7 +389,7 @@ const BreadcrumbsCpn: React.FC = () => {
             className="btn-breadcrumb_nav"
             onClick={handleClickChoose}
           >
-            {languageRedux === 1 ? 'Chọn' : 'Select'}
+            {language?.home_page?.select}
           </button>
         </div>
       </Collapse>

@@ -19,7 +19,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Mousewheel, Pagination } from 'swiper';
-
+import languageApi from 'api/languageApi';
 // @ts-ignore
 // import { useSearchParams } from 'react-router-dom';
 
@@ -66,6 +66,25 @@ const AppliedPostedJob: React.FC = () => {
   // const [index, setIndex] = React.useState(0);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // const [searchParams, setSearchParams] = useSearchParams();
   // const dispatch = useDispatch();
@@ -176,16 +195,18 @@ const AppliedPostedJob: React.FC = () => {
       className="applied-posted-jobs-container"
     >
       <Skeleton loading={false} active>
-        <div
-          style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}
-        >
-          <AppliedPostedIcon width={30} height={30} />
-          <h2>
-            {languageRedux === 1
-              ? 'Công việc đã Ứng tuyển/ Đăng tuyển'
-              : 'Applied / Posted Job'}
-          </h2>
-        </div>
+        {localStorage.getItem('accessToken') ? (
+          <div
+            style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}
+          >
+            <AppliedPostedIcon width={30} height={30} />
+            <h2>
+              {language?.home_page?.applied_posted_job}
+            </h2>
+          </div>
+        ) : (
+          <></>
+        )}
 
         {/* <div
           className="applied-posted-job-not-loging"
@@ -224,31 +245,26 @@ const AppliedPostedJob: React.FC = () => {
           /> */}
           <Advertisement />
           <div className="advertisement-job-not-loging-content">
-            <h3>
-              {languageRedux === 1 ?
-                "Dễ dàng tìm kiếm ứng viên tại HiJob" :
-                "Easily find candidates at HiJob"}
+            <h3 style={{ marginTop: '12px' }}>
+              {
+                language?.applied_posted_jobs?.are_you_a_recruiter
+              }
             </h3>
-            <ul>
-              {languageRedux === 1 ?
-                "Chúng tôi cung cấp dịch vụ giúp nhà tuyển dụng dễ dàng tiếp cận" :
-                "We provide a service that makes it easy for employers to access"}
-              <li>
-                {languageRedux === 1 ?
-                  "Đăng bài tuyển dụng miễn phí" :
-                  "Post jobs for free"}
-              </li>
-              <li>
-                {languageRedux === 1 ?
-                  "Công cụ tìm kiếm thông minh" :
-                  "Smart search engine"}
-              </li>
-              <li>
-                {languageRedux === 1 ?
-                  "Giao tiếp dễ dàng với Ứng viên" :
-                  "Easy communication with Candidates"}
-              </li>
-            </ul>
+            <p style={{ marginBottom: '12px' }}>
+              {
+                language?.applied_posted_jobs?.post_now
+              }
+            </p>
+            <h3>
+              {
+                language?.applied_posted_jobs?.are_you_looking_for_job
+              }
+            </h3>
+            <p>
+              {
+                language?.applied_posted_jobs?.all_jobs_in_VN
+              }
+            </p>
           </div>
           <Button
             type="primary"
@@ -257,7 +273,7 @@ const AppliedPostedJob: React.FC = () => {
             }}
           >
             <LoginArrowIcon />
-            {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+            {language?.sign_in}
           </Button>
         </div>
 

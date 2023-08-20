@@ -132,9 +132,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: languageRedux === 1 ?
-              historyVi.out_job :
-              historyEn.out_job,
+            content: language?.history_page.out_job,
           });
           return;
         }
@@ -219,7 +217,7 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
                 loading={uploading}
                 onClick={handleClickAddItem}
               >
-                Xem thêm
+                {language?.more}
               </Button>
             </Box>
           </div>

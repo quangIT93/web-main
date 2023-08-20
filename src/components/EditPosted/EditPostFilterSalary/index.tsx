@@ -25,7 +25,7 @@ interface IEditPostFilterSalary {
 }
 
 const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
-  const { setEditDataPosted, editDataPosted, salaryType, dataOld, languageRedux } = props
+  const { setEditDataPosted, editDataPosted, salaryType, dataOld, language, languageRedux } = props
 
   const [valueSalaryMax, setValueSalaryMax] = useState(dataOld?.salary_max)
   const [valueSalaryMin, setValueSalaryMin] = useState(dataOld?.salary_min)
@@ -97,9 +97,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                post.min_salary :
-                postEn.min_salary
+              language?.post_page.min_salary
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
@@ -126,9 +124,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             htmlFor="jobTitle"
           >
             {
-              languageRedux === 1 ?
-                post.max_salary :
-                postEn.max_salary
+              language?.post_page?.max_salary
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

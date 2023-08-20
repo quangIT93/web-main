@@ -165,18 +165,14 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const validValue = () => {
     if (name === '') {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_name :
-          profileEn.err_name,
+        message: language?.profile_page?.err_name,
         checkForm: false,
       };
     }
 
     if (introduction === '') {
       return {
-        message: languageRedux === 1 ?
-          profileVi.err_intro :
-          profileEn.err_intro,
+        message: language?.profile_page?.err_intro,
         checkForm: false,
       };
     }
@@ -216,9 +212,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       console.log(error);
       messageApi.open({
         type: 'error',
-        content: languageRedux === 1 ?
-          profileVi.check_info_please :
-          profileEn.check_info_please,
+        content: language?.profile_page?.check_info_please,
       });
     }
   };
@@ -345,9 +339,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 <DatePicker
                   value={day}
                   onChange={handleDateChange}
+                  format="DD/MM/YYYY"
                   slotProps={{
                     textField: {
-                      helperText: 'DD/MM/yyyy',
+                      helperText: 'DD/MM/YYYY',
                     },
                   }}
                 // format="DD/MM/YYYY"
@@ -383,9 +378,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                 <TextField
                   {...params}
                   placeholder={
-                    languageRedux === 1 ?
-                      profileVi.place_address :
-                      profileEn.place_address
+                    language?.profile_page?.place_address
                   }
                   size="small"
                   error={!selectedProvince}
@@ -429,9 +422,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         </form>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {
-            languageRedux === 1 ?
-              profileVi.save_info :
-              profileEn.save_info
+            language?.profile_page?.save_info
           }
         </Button>
       </Box>

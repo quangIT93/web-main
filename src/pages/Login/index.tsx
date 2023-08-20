@@ -58,10 +58,59 @@
 
 // export default LoginPage
 
-import React from 'react'
+import React from 'react';
 
-const Login = () => {
-  return <div>Login</div>
+import signInEmailApi from 'api/authApi';
+
+declare global {
+  interface Window {
+    google: any;
+    gapi: any; // Thay 'any' bằng kiểu dữ liệu chính xác nếu có thể
+  }
 }
 
-export default Login
+declare global {
+  interface Window {}
+}
+
+const Login = () => {
+  const googleClient = process.env.REACT_APP_GOOGLE_CLIENT_ID
+    ? process.env.REACT_APP_GOOGLE_CLIENT_ID
+    : '';
+
+  const handleCredentialResponse = async (response: any) => {
+    console.log('Encoded JWT ID token: ' + response.credential);
+    try {
+      const result = await signInEmailApi.signInGoogle(response.credential);
+      if (result) {
+        console.log(result);
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+  React.useEffect(() => {
+    /* global google */
+    window.google.accounts.id.initialize({
+      client_id: googleClient,
+      scope: '',
+      callback: handleCredentialResponse,
+    });
+    window.google.accounts.id.renderButton(document.getElementById('button'), {
+      theme: 'outline',
+      size: 'large',
+    });
+    window.google.accounts.id.prompt();
+  }, []);
+  React.useEffect(() => {
+    console.log('Login');
+  }, []);
+
+  return (
+    <div>
+      <div id="button">Đăng nhập</div>
+    </div>
+  );
+};
+
+export default Login;

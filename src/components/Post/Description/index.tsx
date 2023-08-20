@@ -41,9 +41,7 @@ const Description: React.FC<IDescription> = (props) => {
         rows={6}
         // label="Một số đặc điểm nhận diện công ty"
         placeholder={
-          languageRedux === 1 ?
-            post.place_des :
-            postEn.place_des
+          language?.post_page?.place_des
         }
         value={description}
       />

@@ -27,6 +27,7 @@ interface DistrictProps {
   setListDis: Function;
   reset: Boolean;
   setReset: React.Dispatch<React.SetStateAction<Boolean>>;
+  language: any
 }
 const { SHOW_CHILD } = Cascader;
 
@@ -53,8 +54,11 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   setListDis,
   reset,
   setReset,
+  language
 }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [dataLocations, setDataLocations] = React.useState<any>(null);
   // const [dataDistrict, setDataDistrict] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
@@ -73,20 +77,14 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   // const listLocation = userFilteredCookies?.list_dis;
 
   const DropdownRender = (menus: React.ReactNode) => (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '520px' }} className="filter-loca-cate">
       <Text className="title-filter_location">
-        {
-          languageRedux == 1 ?
-            'Chọn địa điểm' :
-            'Choose place'
-        }
+        {language?.select_location}
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ?
-          languageRedux == 1 ?
-            'Chỉ có thể tối đa 10 địa điểm' :
-            'Can only max 10 locations'
+        {disable
+          ? language?.limit_10_location
           : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
@@ -118,7 +116,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux == 1 ? 'vi' : 'en'
+        languageRedux == 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataLocations(result.data);
@@ -182,11 +180,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             multiple
             maxTagCount="responsive"
             size="large"
-            placeholder={
-              languageRedux == 1 ?
-                'Chọn địa điểm' :
-                'Choose place'
-            }
+            placeholder={language?.select_location}
             inputIcon={<EnvironmentOutlined />}
             suffixIcon={<ArrowFilterIcon width={14} height={10} />}
             dropdownRender={DropdownRender}

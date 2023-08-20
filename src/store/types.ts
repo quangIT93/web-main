@@ -1,3 +1,4 @@
+// import { PostNewestV3 } from './../components/Home/NewJobs/index';
 import { AxiosResponse } from 'axios'
 export enum ActionType {
   SET_POST_ID = 'set_post_id',
@@ -6,7 +7,9 @@ export enum ActionType {
   SET_PROVINCE = 'set_province',
   SET_DISTRICTS = 'set_districts',
   SET_POST_NEWEST = 'set_post_newest',
+  SET_POST_NEWESTV3 = 'set_post_newestV3',
   GET_POST_NEWEST_MORE = 'get_post_newest_more',
+  GET_POST_NEWEST_MOREV3 = 'get_post_newest_moreV3',
   GET_PROFILE_USER = 'get_profile_user',
 
 }
@@ -25,6 +28,14 @@ export interface PostTypes {
     postThemeMore: any
     postNewest: any
     postNewestMore: any
+  }
+}
+
+export interface PostTypesV3 {
+  type: string
+  payload: {
+    postNewestV3: any
+    postNewestMoreV3: any
   }
 }
 

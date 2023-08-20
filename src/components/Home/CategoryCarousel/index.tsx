@@ -21,6 +21,9 @@ import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
+
+// import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
+// import { setPostNewest } from 'store/actions';
 // import { RootState } from '../../../store/reducer';
 
 // import context
@@ -134,7 +137,8 @@ const CategoryCarousel: React.FC = () => {
       date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
       expires = '; expires=' + date.toUTCString();
     }
-    document.cookie = name + '=' + (value || '') + expires + '; path=/';
+    document.cookie =
+      name + '=' + (value || '') + expires + '; path=/; SameSite=None; Secure';
   }
 
   // Get the cookie
@@ -196,6 +200,9 @@ const CategoryCarousel: React.FC = () => {
         });
       }
       var result;
+
+      // console.log('newValue: ' + newValue);
+
       if (newValue === 1) {
         result = await postApi.getPostNewest(
           null,
@@ -205,6 +212,16 @@ const CategoryCarousel: React.FC = () => {
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
+
+        // result = await postApi.getPostNewestV3(
+        //   null,
+        //   null,
+        //   null,
+        //   null,
+        //   20,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
       } else {
         result = await postApi.getPostNewest(
           Number(newValue),
@@ -214,10 +231,21 @@ const CategoryCarousel: React.FC = () => {
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
+
+        // result = await postApi.getPostNewestV3(
+        //   null,
+        //   Number(newValue),
+        //   null,
+        //   null,
+        //   20,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
       }
 
       if (result) {
         setPostNewest(result);
+        // dispatch(setPostNewestApi(result));
       }
     } catch (error) {
       console.log(error);
@@ -259,38 +287,59 @@ const CategoryCarousel: React.FC = () => {
     }
   };
 
-  const getPostNewestByCategori = async () => {
-    try {
-      // setOpenBackdrop(true);
-      const themeId = searchParams.get('categories-id');
-      var result;
-      if (themeId === 'all') {
-        result = await postApi.getPostNewest(
-          null,
-          null,
-          null,
-          19,
-          null,
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-      } else {
-        result = await postApi.getPostNewest(
-          Number(themeId),
-          null,
-          null,
-          19,
-          null,
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-      }
-      if (result) {
-        setPostNewest(result);
-        // setOpenBackdrop(false);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getPostNewestByCategori = async () => {
+  //   try {
+  //     // setOpenBackdrop(true);
+  //     const themeId = searchParams.get('categories-id');
+  //     var result;
+  //     if (themeId === 'all') {
+  //       result = await postApi.getPostNewest(
+  //         null,
+  //         null,
+  //         null,
+  //         19,
+  //         null,
+  //         languageRedux === 1 ? 'vi' : 'en',
+  //       );
+
+  //       // result = await postApi.getPostNewestV3(
+  //       //   null,
+  //       //   null,
+  //       //   null,
+  //       //   null,
+  //       //   20,
+  //       //   null,
+  //       //   languageRedux === 1 ? 'vi' : 'en',
+  //       // );
+  //     } else {
+  //       result = await postApi.getPostNewest(
+  //         Number(themeId),
+  //         null,
+  //         null,
+  //         19,
+  //         null,
+  //         languageRedux === 1 ? 'vi' : 'en',
+  //       );
+
+  //       // result = await postApi.getPostNewestV3(
+  //       //   null,
+  //       //   Number(themeId),
+  //       //   null,
+  //       //   null,
+  //       //   20,
+  //       //   null,
+  //       //   languageRedux === 1 ? 'vi' : 'en',
+  //       // );
+  //     }
+  //     if (result) {
+  //       // setPostNewest(result);
+  //       // dispatch(setPostNewestApi(result));
+  //       // setOpenBackdrop(false);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const getNewstJobBycookie = async (userSelectedId: any) => {
     try {
@@ -306,6 +355,16 @@ const CategoryCarousel: React.FC = () => {
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
+
+        // result = await postApi.getPostNewestV3(
+        //   null,
+        //   null,
+        //   null,
+        //   null,
+        //   20,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
       } else {
         result = await postApi.getPostNewest(
           Number(themeId),
@@ -315,13 +374,24 @@ const CategoryCarousel: React.FC = () => {
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
+
+        // result = await postApi.getPostNewestV3(
+        //   null,
+        //   Number(themeId),
+        //   null,
+        //   null,
+        //   20,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
       }
       if (result) {
-        setPostNewest(result);
+        // setPostNewest(result);
+        // dispatch(setPostNewestApi(result));
         // setOpenBackdrop(false);
       }
     } catch (error) {
-      console.error(error);
+      console.error('error', error);
     }
   };
 
@@ -344,7 +414,7 @@ const CategoryCarousel: React.FC = () => {
         slide?.classList.add('swiper-slide-clicked');
       }
 
-      getNewstJobBycookie(storedSettings.userSelectedId);
+      // getNewstJobBycookie(storedSettings.userSelectedId);
     }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
@@ -368,7 +438,7 @@ const CategoryCarousel: React.FC = () => {
   }, [listRef]);
 
   React.useEffect(() => {
-    getPostNewestByCategori();
+    // getPostNewestByCategori();
     setValue(Number(searchParams.get('categories-id')));
     setChildCateloriesArray([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -395,6 +465,7 @@ const CategoryCarousel: React.FC = () => {
   // };
 
   // scroll
+
   return (
     <Box
       ref={listRef}
@@ -553,9 +624,7 @@ const CategoryCarousel: React.FC = () => {
                       }
                     >
                       {isLogin && item.id === 1
-                        ? languageRedux === 1
-                          ? 'Công việc gợi ý'
-                          : 'Suggested work'
+                        ? language?.nearby_jobs
                         : item.name}
                     </span>
                   </div>

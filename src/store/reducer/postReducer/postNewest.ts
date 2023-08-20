@@ -8,6 +8,8 @@ const initialState: any = {
   }
 }
 const postNewest = (state = initialState, { type, payload }: PostTypes) => {
+      // console.log("payload", payload);
+      // console.log("state.data", state.data);
     switch (type) {
       case ActionType.SET_POST_NEWEST:
         return payload.postNewest;

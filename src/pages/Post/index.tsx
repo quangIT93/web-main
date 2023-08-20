@@ -307,33 +307,31 @@ const Post: React.FC = () => {
   const validValue = () => {
     if (titleJob === '') {
       return {
-        message:
-          languageRedux === 1 ? post.err_job_title : postEn.err_job_title,
+        message: language?.post_page?.err_job_title,
         checkForm: false,
       };
     }
     if (companyName === '') {
       return {
-        message:
-          languageRedux === 1 ? post.err_company_name : postEn.err_company_name,
+        message: language?.post_page?.err_company_name,
         checkForm: false,
       };
     }
     if (address === '') {
       return {
-        message: languageRedux === 1 ? post.err_address : postEn.err_address,
+        message: language?.post_page?.err_address,
         checkForm: false,
       };
     }
     if (wardId === '') {
       return {
-        message: languageRedux === 1 ? post.err_location : postEn.err_location,
+        message: language?.post_page?.err_location,
         checkForm: false,
       };
     }
     if (categoriesId.length <= 0) {
       return {
-        message: languageRedux === 1 ? post.err_cate : postEn.err_cate,
+        message: language?.post_page?.err_cate,
         checkForm: false,
       };
     }
@@ -342,36 +340,32 @@ const Post: React.FC = () => {
       (Number(salaryMin) === 0 && salaryType !== 6)
     ) {
       return {
-        message: languageRedux === 1 ? post.err_salary : postEn.err_salary,
+        message: language?.post_page?.err_salary,
         checkForm: false,
       };
     }
     if (Number(salaryMax) < Number(salaryMin)) {
       return {
-        message:
-          languageRedux === 1
-            ? post.err_verify_salary
-            : postEn.err_verify_salary,
+        message: language?.post_page?.err_verify_salary,
         checkForm: false,
       };
     }
     if (phoneNumber === '' || phoneNumber.length < 10) {
       return {
-        message:
-          languageRedux === 1 ? post.err_phone_mess : postEn.err_phone_mess,
+        message: language?.company_page?.err_phone_mess,
         checkForm: false,
       };
     }
     if (description === '') {
       return {
-        message: languageRedux === 1 ? post.err_des_mess : postEn.err_des_mess,
+        message: language?.company_page?.err_des_mess,
         checkForm: false,
       };
     }
 
     if (startDate > endDate) {
       return {
-        message: languageRedux === 1 ? post.err_date : postEn.err_date,
+        message: language?.post_page?.err_date,
         checkForm: false,
       };
     }
@@ -406,15 +400,12 @@ const Post: React.FC = () => {
       if (error?.response?.data?.message === 'You only can post 1 job/day') {
         messageApi.open({
           type: 'error',
-          content:
-            languageRedux === 1
-              ? post.err_1_post_per_day
-              : postEn.err_1_post_per_day,
+          content: language?.post_page?.err_1_post_per_day,
         });
       } else if (error?.response?.data?.message === 'Invalid date value') {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ? post.err_date : postEn.err_date,
+          content: language?.post_page?.err_date,
         });
       }
     }
@@ -424,13 +415,13 @@ const Post: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = languageRedux === 1 ? post.title_page : postEn.title_page;
+    document.title = language?.post_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_createPost' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, language]);
 
   // console.log('phone', phoneNumber);
 
@@ -477,11 +468,9 @@ const Post: React.FC = () => {
             className="post-main_fillData"
             // style={{ textAlign: 'center', display: 'block' }}
           >
-            <h1>
-              {languageRedux === 1 ? post.create_post : postEn.create_post}
-            </h1>
+            <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">
-              <h4>{languageRedux === 1 ? post.auto_fill : postEn.auto_fill}</h4>
+              <h4>{language?.post_page?.auto_fill}</h4>
               <Switch
                 checked={openModalFillDataPost}
                 checkedChildren=""
@@ -491,7 +480,7 @@ const Post: React.FC = () => {
             </div>
           </div>
           <div className="fill-company" onClick={handleFillCompany}>
-            <h3>Điền nhanh thông tin công ty</h3>
+            <h3>{language?.post_page?.fill_company}</h3>
           </div>
           <form onSubmit={handleSubmit}>
             <PostJobCompany
@@ -524,6 +513,7 @@ const Post: React.FC = () => {
               selectedImages={selectedImages}
               selectedFillImages={selectedFillImages}
               languageRedux={languageRedux}
+              language={language}
             />
             <PostTypeJob
               typeJob={typeJob}

@@ -127,9 +127,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
             <TextField
               {...params}
               placeholder={
-                languageRedux === 1 ?
-                  company.place_role :
-                  companyEn.place_role
+                language?.company_page?.place_role
               }
               size="small"
             // value={dataCompany?.companyRole?.name}
@@ -160,9 +158,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={
-            languageRedux === 1 ?
-              company.place_web :
-              companyEn.place_web
+            language?.company_page?.place_web
           }
         //   error={titleError} // Đánh dấu lỗi
         />

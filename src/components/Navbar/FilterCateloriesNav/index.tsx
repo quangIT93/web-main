@@ -20,6 +20,7 @@ interface DistrictProps {
   setListCate: Function;
   reset: Boolean;
   setReset: React.Dispatch<React.SetStateAction<Boolean>>;
+  language: any;
 }
 const { SHOW_CHILD } = Cascader;
 
@@ -44,8 +45,11 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   setListCate,
   reset,
   setReset,
+  language
 }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [categoriesId, setCategoriesId] = useState<string[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -54,21 +58,15 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   const DropdownRender = (menus: React.ReactNode) => (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '520px' }} className="filter-loca-cate">
       <Text className="title-filter_location">
-        {
-          languageRedux == 1 ?
-            'Chọn danh mục nghề nghiệp' :
-            'Select career categories'
-        }
+        {language?.select_cate}
       </Text>
       {menus}
       <Divider style={{ margin: 4 }}>
-        {disable ?
-          languageRedux == 1 ?
-            'Chỉ có thể tối đa 10 danh mục' :
-            'Can only max 10 categories' :
-          ''}
+        {disable
+          ? language?.limit_10_cate
+          : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -98,7 +96,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux == 1 ? "vi" : "en"
+        languageRedux == 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataCategories(result.data);
@@ -205,9 +203,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           showCheckedStrategy={SHOW_CHILD}
           style={{ width: '100%', borderRadius: '2px' }}
           placeholder={
-            languageRedux == 1 ?
-              'Chọn danh mục nghề nghiệp' :
-              'Select career categories'
+            language?.select_cate
           }
         />
       </div>

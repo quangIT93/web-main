@@ -148,13 +148,13 @@ const Company = () => {
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
     document.title =
-      languageRedux === 1 ? company.title_page : companyEn.title_page;
+      language?.company_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_company' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, language]);
 
   const getCompanyInforByAccount = async () => {
     try {
@@ -210,14 +210,14 @@ const Company = () => {
     ) {
       return {
         message:
-          languageRedux === 1 ? company.err_logo_mess : companyEn.err_logo_mess,
+          language?.company_page?.err_logo_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.name === '') {
       return {
         message:
-          languageRedux === 1 ? company.err_name_mess : companyEn.err_name_mess,
+          language?.company_page?.err_name_mess,
         checkForm: false,
       };
     }
@@ -230,18 +230,14 @@ const Company = () => {
     if (dataCompany?.companyLocation === '') {
       return {
         message:
-          languageRedux === 1
-            ? company.err_location_mess
-            : companyEn.err_location_mess,
+          language?.company_page?.err_location_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.address === '' || dataCompany?.address.length <= 10) {
       return {
         message:
-          languageRedux === 1
-            ? company.err_address_mess
-            : companyEn.err_address_mess,
+          language?.company_page?.err_address_mess,
         checkForm: false,
       };
     }
@@ -252,71 +248,63 @@ const Company = () => {
     ) {
       return {
         message:
-          languageRedux === 1
-            ? company.err_phone_mess
-            : companyEn.err_phone_mess,
+          language?.company_page?.err_phone_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.email === '') {
       return {
         message:
-          languageRedux === 1
-            ? company.err_email_mess
-            : companyEn.err_email_mess,
+          language?.company_page?.err_email_mess,
         checkForm: false,
       };
     }
     if (regexCheckEmail.test(dataCompany?.email) === false) {
       return {
         message:
-          languageRedux === 1
-            ? company.err_verify_email_mess
-            : companyEn.err_verify_email_mess,
+          language?.company_page?.err_verify_email_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.companyRoleInfomation === '') {
       return {
         message:
-          languageRedux === 1 ? company.err_role_mess : companyEn.err_role_mess,
+          language?.company_page?.err_role_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.website === '') {
       return {
         message:
-          languageRedux === 1 ? company.err_web_mess : companyEn.err_web_mess,
+          language?.company_page?.err_web_mess,
         checkForm: false,
       };
     }
     if (validURL(dataCompany?.website) === false) {
       return {
         message:
-          languageRedux === 1
-            ? company.err_verify_web_mess
-            : companyEn.err_verify_web_mess,
+          language?.company_page?.err_verify_web_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.companyCategory === '') {
       return {
         message:
-          languageRedux === 1 ? company.err_cate_mess : companyEn.err_cate_mess,
+          language?.company_page?.err_cate_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.companySizeInfomation === '') {
       return {
         message:
-          languageRedux === 1 ? company.err_size_mess : companyEn.err_size_mess,
+          language?.company_page?.err_size_mess,
         checkForm: false,
       };
     }
     if (dataCompany?.description === '') {
       return {
         message:
-          languageRedux === 1 ? company.err_des_mess : companyEn.err_des_mess,
+          language?.company_page?.err_des_mess,
         checkForm: false,
       };
     }
@@ -339,18 +327,14 @@ const Company = () => {
             messageApi.open({
               type: 'success',
               content:
-                languageRedux === 1
-                  ? company.create_success
-                  : companyEn.create_success,
+                language?.company_page?.create_success,
             });
             // console.log("create company result", result);
           } else {
             messageApi.open({
               type: 'error',
               content:
-                languageRedux === 1
-                  ? company.create_error
-                  : companyEn.create_error,
+                language?.company_page?.create_error,
             });
           }
         }
@@ -376,9 +360,7 @@ const Company = () => {
             messageApi.open({
               type: 'success',
               content:
-                languageRedux === 1
-                  ? company.update_success
-                  : companyEn.update_success,
+                language?.company_page?.update_success,
             });
             // console.log("update company result", result);
           }
@@ -446,6 +428,7 @@ const Company = () => {
             <EditLogoCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              language={language}
             />
             <EditNameTaxCompany
               dataCompany={dataCompany}
@@ -478,7 +461,7 @@ const Company = () => {
               onClick={handleSubmit}
               className="btn-edit_submitForm"
             >
-              {languageRedux === 1 ? company.finish : companyEn.finish}
+              {language?.company_page?.finish}
             </button>
           </form>
         </Skeleton>

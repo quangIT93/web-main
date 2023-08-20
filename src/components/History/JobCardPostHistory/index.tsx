@@ -241,12 +241,11 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
               }}
             >
               {
-                languageRedux === 1 ?
-                  historyVi.posted_on :
-                  historyEn.posted_on
+                language?.posted_on
               }{' '}
-              {props.item.created_at != null
-                ? moment(props.item.created_at).format('DD/MM/YY')
+              {props.item?.created_at != null
+                ? moment(props.item?.created_at).format('DD/MM/YYYY') + ' ' +
+                moment(new Date(props.item?.created_at)).format('HH:mm')
                 : language?.unupdated}
             </p>
 
@@ -263,9 +262,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
               {props.item.num_of_application}
               {' '}
               {
-                languageRedux === 1 ?
-                  historyVi.application_has_been_applied :
-                  historyEn.application_has_been_applied
+                language?.history_page?.application_has_been_applied
               }
             </p>
             {props.item.status === 1 ? (
@@ -295,7 +292,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 }}
               >
                 {
-                  language?.closed
+                  language?.post_detail_page?.closed
                 }
               </p>
             ) : (
@@ -309,9 +306,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 }}
               >
                 {
-                  languageRedux === 1 ?
-                    historyVi.does_not_accept :
-                    historyEn.does_not_accept
+                  language?.history_page?.does_not_accept
                 }
               </p>
             )}

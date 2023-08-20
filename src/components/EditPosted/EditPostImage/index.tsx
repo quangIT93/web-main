@@ -23,11 +23,17 @@ interface IEditPostImage {
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
   dataPosted: any;
   languageRedux: any;
+  language: any;
 }
 
 const EditPostImage: React.FC<IEditPostImage> = (props) => {
-  const { editDataPosted, setEditDataPosted, dataPosted, languageRedux } =
-    props;
+  const {
+    editDataPosted,
+    setEditDataPosted,
+    dataPosted,
+    language,
+    languageRedux,
+  } = props;
 
   const [selectedFiles, setSelectedFiles] = React.useState<
     {
@@ -98,7 +104,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       if (fileUploaded.length > 5) {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ? post.limit_5_img : postEn.limit_5_img,
+          content: language?.limit_5_img,
         });
         return;
       }
@@ -114,7 +120,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       if (newFileSelected.length > 5) {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ? post.limit_5_img : postEn.limit_5_img,
+          content: language?.limit_5_img,
         });
 
         return;
@@ -396,11 +402,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
           >
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
-            <p>
-              {languageRedux === 1
-                ? post.drag_drop_multi
-                : postEn.drag_drop_multi}
-            </p>
+            <p>{language?.post_page.drag_drop_multi}</p>
             {/* <aside className="thumbs-containter">
               {thumbs}
             </aside> */}
@@ -408,7 +410,15 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
         </section>
       </Box>
       <Box p="0rem 0">
-        <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '40px' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            minWidth: '150px',
+            marginTop: '50px',
+            flexWrap: 'wrap',
+          }}
+          className="list-img-edit-post"
+        >
           {selectedImages?.map((image: any, index: number) => (
             <div
               className="item-editPost_image"
@@ -425,9 +435,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               <img
                 key={index}
                 src={image.image}
-                alt={
-                  languageRedux === 1 ? post.err_none_img : postEn.err_none_img
-                }
+                alt={language?.err_none_img}
                 style={{
                   height: '150px',
                   width: '150px',
@@ -481,14 +489,14 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          {languageRedux === 1 ? post.verify_upload : postEn.verify_upload}
+          {language?.post_page.verify_upload}
         </Typography>
         <Button
           variant="outlined"
           component="label"
           disabled={selectedImages?.length === 5}
         >
-          {languageRedux === 1 ? post.upload_img : postEn.upload_img}
+          {language?.post_page.upload_img}
           <input
             type="file"
             name="images"

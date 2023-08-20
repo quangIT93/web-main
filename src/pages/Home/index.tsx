@@ -36,9 +36,31 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // component
 import Community from '#components/Home/Community';
 import Footer from '../../components/Footer/Footer';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer';
+import languageApi from 'api/languageApi';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language,);
+  const [language, setLanguage] = React.useState<any>();
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   useEffect(() => {
     logEvent(analytics, 'screen_view' as string, {
@@ -48,6 +70,18 @@ const Home: React.FC = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    document.title = languageRedux === 1 ?
+      "HiJob - Tìm việc làm, tuyển dụng" :
+      "HiJob - Find a job, recruit";
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_hotJob' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   return (
     <div className="home">
@@ -67,7 +101,7 @@ const Home: React.FC = () => {
         <NewJobs />
         <SuggestJob />
         <ThemesJob />
-        {/* <Community /> */}
+        <Community />
       </div>
       <RollTop />
       <Footer />

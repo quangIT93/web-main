@@ -28,6 +28,7 @@ interface PostImageProps {
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
   setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>;
   languageRedux: any;
+  language: any;
 }
 
 const PostImage: React.FC<PostImageProps> = (props) => {
@@ -38,6 +39,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     selectedImages,
     selectedFillImages,
     languageRedux,
+    language
   } = props;
 
   const [isDragActive, setIsDragActive] = React.useState(false);
@@ -74,9 +76,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         if (validateImagesReply.isError) {
           // console.log('::: Invalid images');
           return toast.warn(
-            languageRedux === 1 ?
-              post.err_img :
-              postEn.err_img
+            language?.err_none_img
           );
         } else {
           const compressedImages: any = [];
@@ -147,9 +147,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (fileUploaded.length > 5) {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ?
-            post.limit_5_img :
-            postEn.limit_5_img,
+          content: language?.limit_5_img,
         });
         return;
       }
@@ -197,9 +195,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (newFileSelected.length > 5) {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ?
-            post.limit_5_img :
-            postEn.limit_5_img,
+          content: language?.limit_5_img,
         });
 
         return;
@@ -228,9 +224,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: languageRedux === 1 ?
-                  post.limit_5_img :
-                  postEn.limit_5_img,
+                content: language?.limit_5_img,
               });
 
               return;
@@ -287,9 +281,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
         // console.log('::: Invalid images');
-        return toast.warn(languageRedux === 1 ?
-          post.err_img :
-          postEn.err_img);
+        return toast.warn(language?.err_none_img);
       } else {
         try {
           console.log('imagesToCheck', imagesToCheck);
@@ -326,9 +318,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
       if (files.length > 5) {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ?
-            post.limit_5_img :
-            postEn.limit_5_img,
+          content: language?.limit_5_img,
         });
         return;
       }
@@ -348,9 +338,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: languageRedux === 1 ?
-                  post.limit_5_img :
-                  postEn.limit_5_img,
+                content: language?.limit_5_img,
               });
               return;
             }
@@ -391,9 +379,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             {/* <p>Drag and drop some files here, or click to select files</p> */}
             <p>
               {
-                languageRedux === 1 ?
-                  post.drag_drop_multi :
-                  postEn.drag_drop_multi
+                language?.post_page?.drag_drop_multi
               }
             </p>
             {/* <aside className="thumbs-containter">
@@ -401,7 +387,9 @@ const PostImage: React.FC<PostImageProps> = (props) => {
             </aside> */}
           </div>
         </section>
-        <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '40px' }}>
+        <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '50px', flexWrap: 'wrap' }}
+          className="list-img-post"
+        >
           {selectedImages.map((image: any, index: number) => (
             <div
               className="item-image"
@@ -419,9 +407,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
                 key={index}
                 src={image}
                 alt={
-                  languageRedux === 1 ?
-                    post.err_none_img :
-                    postEn.err_none_img
+                  language?.err_none_img
                 }
                 style={{
                   height: '150px',
@@ -464,9 +450,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           sx={{ fontStyle: 'italic' }}
         >
           {
-            languageRedux === 1 ?
-              post.verify_upload :
-              postEn.verify_upload
+            language?.post_page?.verify_upload
           }
         </Typography>
         <Button
@@ -475,9 +459,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           disabled={selectedImages.length === 5}
         >
           {
-            languageRedux === 1 ?
-              post.upload_img :
-              postEn.upload_img
+            language?.post_page?.upload_img
           }
           <input
             type="file"

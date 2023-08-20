@@ -8,7 +8,7 @@ import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
-
+import languageApi from 'api/languageApi';
 import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
@@ -61,6 +61,26 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
 
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
+
   const handleClose = () => setOpenModalDeleteExperience(false);
 
   const handleSubmitDelete = async () => {
@@ -98,9 +118,7 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
           sx={{ marginBottom: '12px' }}
         >
           {
-            languageRedux === 1 ?
-              profileVi.alert_delete_info :
-              profileEn.alert_delete_info
+            language?.profile_page?.alert_delete_info
           }
         </Typography>
         <Box sx={{ display: 'flex', gap: '100px' }}>
@@ -111,17 +129,13 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
             color="error"
           >
             {
-              languageRedux === 1 ?
-                profileVi.delete :
-                profileEn.delete
+              language?.profile_page?.delete
             }
           </Button>
 
           <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>
             {
-              languageRedux === 1 ?
-                profileVi.return :
-                profileEn.return
+              language?.profile_page?.return
             }
           </Button>
         </Box>

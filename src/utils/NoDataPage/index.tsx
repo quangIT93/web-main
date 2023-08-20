@@ -1,9 +1,11 @@
+import languageApi from 'api/languageApi';
 import React from 'react';
 // @ts-ignore
-
+import { useSelector } from 'react-redux';
 // import nodata from '../../../public/images/history/nodata.png'
-
+import { RootState } from '../../store/reducer/index';
 const NoDataComponent: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   return (
     <div
       style={{
@@ -23,7 +25,11 @@ const NoDataComponent: React.FC = () => {
         height="245px"
       />
       <p style={{ fontSize: 20, color: 'gray', marginBottom: 20 }}>
-        Chưa tìm thấy công việc
+        {
+          languageRedux === 1 ?
+            "Chưa tìm thấy công việc" :
+            "Job not found"
+        }
       </p>
     </div>
   );

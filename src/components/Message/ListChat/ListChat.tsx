@@ -261,9 +261,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   //   }, 1000);
   // }, []);
 
-  console.log('info', userInfoChat);
-  console.log('allListChat', allListChat);
-  console.log('userInfoChat', userInfoChat);
+  // console.log('info', userInfoChat);
+  // console.log('allListChat', allListChat);
+  // console.log('userInfoChat', userInfoChat);
 
   const handleClickApplication = async () => {
     const result = await appplicationApi.applyAplication(
@@ -271,7 +271,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     );
 
     if (result) {
-      console.log('result', result.data);
+      // console.log('result', result.data);
     }
   };
 
@@ -321,9 +321,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
               {userInfoChat.isOnline ? (
                 <span>
                   {
-                    languageRedux === 1 ?
-                      messVi.online :
-                      messEn.online
+                    language?.message_page?.online
                   }
                 </span>
               ) : (
@@ -347,9 +345,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   <img
                     src={userInfoChat.imageCompany}
                     alt={
-                      languageRedux === 1 ?
-                        postDetail.error_photo :
-                        postDetailEn.error_photo
+                      language?.err_none_img
                     }
                     onError={(e: any) => {
                       e.target.onerror = null; // Ngăn sự kiện lặp lại
@@ -375,9 +371,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                             : userInfoChat.salary_type_id === 5
                               ? language?.tasks
                               : userInfoChat.salary_type_id === 6
-                                ? languageRedux === 1 ?
-                                  messVi.negotiate :
-                                  messEn.negotiate
+                                ? language?.message_page?.negotiate
                                 : ''}
                   </p>
                 </div>
@@ -398,13 +392,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                 onClick={handleClickApplication}
               >
                 {userInfoChat.applied && userInfoChat.statusPost !== 3
-                  ? languageRedux === 1 ?
-                    messVi.apply_now :
-                    messEn.apply_now
+                  ? language?.message_page?.apply_now
                   : userInfoChat.statusPost === 3
-                    ? languageRedux === 1 ?
-                      messVi.closed :
-                      messEn.closed
+                    ? language?.message_page?.closed
                     : language?.applied1}
               </Button>
             </div>
@@ -496,9 +486,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                       <span className="date-chat">
                         {chatDate === new Date().toLocaleDateString()
                           ?
-                          languageRedux === 1 ?
-                            messVi.to_day :
-                            messEn.to_day
+                          language?.message_page?.to_day
                           : chatDate}
                       </span>
                       <hr className="horizontal-line"></hr>
@@ -585,9 +573,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
           <img src="./images/imageChatBegin.png" alt="" />
           <div>
             {
-              languageRedux === 1 ?
-                messVi.list_chat_none :
-                messEn.list_chat_none
+              language?.message_page?.list_chat_none
             }
           </div>
         </div>

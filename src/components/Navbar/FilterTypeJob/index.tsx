@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
-
+import languageApi from 'api/languageApi';
 import './style.scss';
 
 const CustomOption = ({
@@ -38,6 +38,28 @@ const CustomOption = ({
     setValue(value);
     setCookie('userTypejobFiltered', JSON.stringify(valueRender), 365);
   };
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   return (
     <Radio.Group
@@ -65,6 +87,7 @@ interface TypeJob {
   valueTypeJob: any;
   reset: Boolean;
   setReset: React.Dispatch<React.SetStateAction<Boolean>>;
+  language: any
 }
 
 const { Option } = Select;
@@ -73,12 +96,32 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   valueTypeJob,
   reset,
   setReset,
+  language
 }) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   // const [data, setData] = React.useState()
   const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
   const [valueRender, setValueRender] = React.useState<any>();
   // const [searchParams, setSearchParams] = useSearchParams();
+  // const [language, setLanguageState] = React.useState<any>();
+
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
 
   let userFilteredCookies = JSON.parse(
     getCookie('userTypejobFiltered') || '{}',
@@ -89,7 +132,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
     const result = await siteApi.getJobType(
       languageRedux == 1 ? "vi" : "en"
     );
-    const updatedData = [{ id: 5, name: languageRedux == 1 ? home.all : homeEn.all }, ...result.data];
+    const updatedData = [{ id: 5, name: language?.all }, ...result.data];
     // console.log('updatedData', updatedData);
     if (updatedData) {
       setData(updatedData);
@@ -98,7 +141,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         const value = updatedData.find((item: any) => item.id === TYPE_JOB);
         setValueRender(value);
       } else {
-        setValueRender({ id: 5, name: languageRedux == 1 ? home.all : homeEn.all });
+        setValueRender({ id: 5, name: language?.all });
       }
     }
   };
@@ -120,10 +163,10 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={reset ? languageRedux == 1 ? home.all : homeEn.all : valueRender ? valueRender.name : undefined}
+        value={reset ? language?.all : valueRender ? valueRender.name : undefined}
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder={languageRedux == 1 ? "Loại công việc" : "Type of work"}
+        placeholder={language?.job_type1}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="5" label="">

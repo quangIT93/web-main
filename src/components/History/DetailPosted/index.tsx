@@ -161,9 +161,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     {
       id: 2,
       statusId: 1,
-      statusName: languageRedux === 1 ?
-        historyVi.seen :
-        historyEn.seen,
+      statusName: language?.history_page?.seen,
       background: '#aaaaaa',
       position: '60%',
       borderRadius: '15px',
@@ -271,9 +269,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
       <Box>
         <h3 style={{ margin: '12px 0' }}>
           {
-            languageRedux === 1 ?
-              historyVi.list_of_candidates :
-              historyEn.list_of_candidates
+            language?.history_page?.list_of_candidates
           }
         </h3>
         {dataCandidates?.applications.map((candidate: any, index: number) => (

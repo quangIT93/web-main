@@ -797,12 +797,12 @@
                         }
                       }
                     }
-
+                    
                     .div-detail-rowCompany {
                       display: flex;
                       flex-direction: column;
                       margin-top: 10px;
-
+                      padding-right: 12px;
                       .div-detail_descCompany {
                         display: -webkit-box;
                         -webkit-box-orient: vertical;
@@ -837,6 +837,7 @@
                         color: #575757;
                         font-size: 16px;
                         font-weight: 400;
+                        word-break: break-word;
                       }
 
                       h5 {
