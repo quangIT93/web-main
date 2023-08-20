@@ -214,7 +214,9 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <FormControlLabel
-              label={languageRedux == 1 ? 'Làm việc cuối tuần' : 'Weekend work'}
+              label={
+                languageRedux === 1 ? 'Làm việc cuối tuần' : 'Weekend work'
+              }
               control={
                 <Checkbox
                   checked={
@@ -225,7 +227,9 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
               }
             />
             <FormControlLabel
-              label={languageRedux == 1 ? 'Làm việc từ xa' : 'Working remotely'}
+              label={
+                languageRedux === 1 ? 'Làm việc từ xa' : 'Working remotely'
+              }
               control={
                 <Checkbox
                   checked={reset ? false : isRemotely === 0 ? false : true}

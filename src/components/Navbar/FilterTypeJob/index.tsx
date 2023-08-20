@@ -45,7 +45,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={jobType ? jobType : 5}
-    // defaultValue={jobType ? jobType : 5}
+      // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -74,7 +74,9 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   reset,
   setReset,
 }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const [data, setData] = React.useState()
   const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
   const [valueRender, setValueRender] = React.useState<any>();
@@ -86,10 +88,11 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   const TYPE_JOB = userFilteredCookies?.id;
   // console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType(
-      languageRedux == 1 ? "vi" : "en"
-    );
-    const updatedData = [{ id: 5, name: languageRedux == 1 ? home.all : homeEn.all }, ...result.data];
+    const result = await siteApi.getJobType(languageRedux === 1 ? 'vi' : 'en');
+    const updatedData = [
+      { id: 5, name: languageRedux === 1 ? home.all : homeEn.all },
+      ...result.data,
+    ];
     // console.log('updatedData', updatedData);
     if (updatedData) {
       setData(updatedData);
@@ -98,7 +101,10 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         const value = updatedData.find((item: any) => item.id === TYPE_JOB);
         setValueRender(value);
       } else {
-        setValueRender({ id: 5, name: languageRedux == 1 ? home.all : homeEn.all });
+        setValueRender({
+          id: 5,
+          name: languageRedux === 1 ? home.all : homeEn.all,
+        });
       }
     }
   };
@@ -120,10 +126,18 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={reset ? languageRedux == 1 ? home.all : homeEn.all : valueRender ? valueRender.name : undefined}
+        value={
+          reset
+            ? languageRedux === 1
+              ? home.all
+              : homeEn.all
+            : valueRender
+            ? valueRender.name
+            : undefined
+        }
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder={languageRedux == 1 ? "Loại công việc" : "Type of work"}
+        placeholder={languageRedux === 1 ? 'Loại công việc' : 'Type of work'}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="5" label="">

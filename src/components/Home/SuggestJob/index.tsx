@@ -209,9 +209,8 @@ const ThemesJob: React.FC = () => {
   //   // setSearchParams(searchParams)
 
   // }, [localStorage.getItem("accessToken")])
-
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} className="box-subjectJob">
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <SuggestIcon width={25} height={25} />
         <h2>
@@ -220,6 +219,36 @@ const ThemesJob: React.FC = () => {
             : homeEn.suggested_jobs_in_your_city}
         </h2>
       </div>
+
+      {!localStorage.getItem('accessToken') ? (
+        <div className="suggest-job-not-loging">
+          <div className="suggest-job-not-loging_left">
+            {/* <h3>
+           {languageRedux === 1
+             ? 'Hijob gợi ý công việc cho bạn'
+             : 'Hijob suggests a job for you'}
+         </h3> */}
+            <p>
+              {languageRedux === 1
+                ? 'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.'
+                : 'Quickly find a job that fits your needs.'}
+            </p>
+          </div>
+          <div className="suggest-job-not-loging_right">
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpenModalLogin(true);
+              }}
+            >
+              <LoginArrowIcon />
+              {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
 
       <>
         {automatic && (
@@ -266,31 +295,7 @@ const ThemesJob: React.FC = () => {
                     <MoreICon width={20} height={20} />
                   </div>
                 ) : (
-                  <div className="suggest-job-not-loging">
-                    <div className="suggest-job-not-loging_left">
-                      {/* <h3>
-                        {languageRedux === 1
-                          ? 'Hijob gợi ý công việc cho bạn'
-                          : 'Hijob suggests a job for you'}
-                      </h3> */}
-                      <p>
-                        {languageRedux === 1
-                          ? 'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.'
-                          : 'Quickly find a job that fits your needs.'}
-                      </p>
-                    </div>
-                    <div className="suggest-job-not-loging_right">
-                      <Button
-                        type="primary"
-                        onClick={() => {
-                          setOpenModalLogin(true);
-                        }}
-                      >
-                        <LoginArrowIcon />
-                        {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
-                      </Button>
-                    </div>
-                  </div>
+                  <></>
                 )}
               </Space>
             </Stack>
@@ -305,13 +310,13 @@ const ThemesJob: React.FC = () => {
             >
               <CircularProgress color="inherit" />
             </Backdrop>
-            <ModalLogin
-              openModalLogin={openModalLogin}
-              setOpenModalLogin={setOpenModalLogin}
-            />
           </>
         )}
       </>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </Box>
   );
 };

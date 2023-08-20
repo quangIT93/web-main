@@ -461,10 +461,10 @@ const Navbar: React.FC = () => {
   //   let ca = document.cookie.split(';');
   //   for (let i = 0; i < ca.length; i++) {
   //     let c = ca[i];
-  //     while (c.charAt(0) == ' ') {
+  //     while (c.charAt(0) === ' ') {
   //       c = c.substring(1, c.length);
   //     }
-  //     if (c.indexOf(nameEQ) == 0) {
+  //     if (c.indexOf(nameEQ) === 0) {
   //       return c.substring(nameEQ.length, c.length);
   //     }
   //   }
@@ -1130,7 +1130,7 @@ const Navbar: React.FC = () => {
                   </Radio>
                   {/* <Radio value={3}>
                     <ENSubLoginIcon />
-                    <span>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</span>
+                    <span>{languageRedux === 1 ? 'Tiếng Hàn' : 'Korean'}</span>
                   </Radio> */}
                 </Radio.Group>
               </div>
@@ -1384,7 +1384,7 @@ const Navbar: React.FC = () => {
                   </Radio>
                   {/* <Radio value={3}>
                   <ENSubLoginIcon />
-                  <span>{languageRedux == 1 ? 'Tiếng Hàn' : 'Korean'}</span>
+                  <span>{languageRedux === 1 ? 'Tiếng Hàn' : 'Korean'}</span>
                 </Radio> */}
                 </Radio.Group>
               </div>
