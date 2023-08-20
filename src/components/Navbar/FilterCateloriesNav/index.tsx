@@ -98,7 +98,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataCategories(result.data);
@@ -205,7 +205,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           showCheckedStrategy={SHOW_CHILD}
           style={{ width: '100%', borderRadius: '2px' }}
           placeholder={
-            languageRedux == 1
+            languageRedux === 1
               ? 'Chọn danh mục nghề nghiệp'
               : 'Select career categories'
           }

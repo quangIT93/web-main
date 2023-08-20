@@ -25,7 +25,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 // }
 
 const ShowCancleSave: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
   const cancleSave = useSelector((state: any) => state.showAlert.cancalAlert);
@@ -45,12 +47,14 @@ const ShowCancleSave: React.FC = () => {
             horizontal: 'center',
           }}
         >
-          <Alert onClose={handleClose} severity="error" sx={{ width: '100%', backgroundColor: '#000000' }}>
-            {
-              languageRedux == 1 ?
-                home.unsaved_this_job :
-                homeEn.unsaved_this_job
-            }
+          <Alert
+            onClose={handleClose}
+            severity="error"
+            sx={{ width: '100%', backgroundColor: '#000000' }}
+          >
+            {languageRedux === 1
+              ? home.unsaved_this_job
+              : homeEn.unsaved_this_job}
           </Alert>
         </Snackbar>
       </Stack>

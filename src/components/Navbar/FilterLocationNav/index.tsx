@@ -77,12 +77,12 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '520px' }} className="filter-loca-cate">
       <Text className="title-filter_location">
-        {languageRedux == 1 ? 'Chọn địa điểm' : 'Choose place'}
+        {languageRedux === 1 ? 'Chọn địa điểm' : 'Choose place'}
       </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
         {disable
-          ? languageRedux == 1
+          ? languageRedux === 1
             ? 'Chỉ có thể tối đa 10 địa điểm'
             : 'Can only max 10 locations'
           : ''}
@@ -116,7 +116,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataLocations(result.data);
@@ -180,7 +180,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             multiple
             maxTagCount="responsive"
             size="large"
-            placeholder={languageRedux == 1 ? 'Chọn địa điểm' : 'Choose place'}
+            placeholder={languageRedux === 1 ? 'Chọn địa điểm' : 'Choose place'}
             inputIcon={<EnvironmentOutlined />}
             suffixIcon={<ArrowFilterIcon width={14} height={10} />}
             dropdownRender={DropdownRender}

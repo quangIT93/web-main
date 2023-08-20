@@ -345,14 +345,14 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
                 )} - ${new Intl.NumberFormat('en-US').format(
                   Number(salaryMax?.toString().replace(',', '')),
                 )}`
-              : languageRedux == 1
+              : languageRedux === 1
               ? `Mức lương`
               : `Salary`
           }
           key="1"
         >
           <Text className="title-filterSalary">
-            {languageRedux == 1 ? `Mức lương` : `Salary`}
+            {languageRedux === 1 ? `Mức lương` : `Salary`}
           </Text>
           <Radio.Group
             value={reset ? 1 : selectedValue}
@@ -410,7 +410,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           />
           {checkSalary ? (
             <i style={{ color: 'red', marginBottom: '24px' }}>
-              {languageRedux == 1
+              {languageRedux === 1
                 ? 'Tiền tối thiểu không được lớn hơn tiền tối đa'
                 : 'The minimum amount cannot be greater than the maximum amount'}
             </i>

@@ -101,7 +101,7 @@ const AppliedPostedJob: React.FC = () => {
       setloading(true);
       const result = await applitedPostedApi.getAllApplitedPostedApi(
         0,
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
@@ -197,7 +197,7 @@ const AppliedPostedJob: React.FC = () => {
         >
           <div className="applied-posted-job-not-loging_left">
             <p>
-              {languageRedux == 1
+              {languageRedux === 1
                 ? 'Đăng nhập để đăng ký việc làm miễn phí.'
                 : 'Sign in to apply for free jobs.'}
             </p>
@@ -210,7 +210,7 @@ const AppliedPostedJob: React.FC = () => {
               }}
             >
               <LoginArrowIcon />
-              {languageRedux == 1 ? home.sign_in : homeEn.sign_in}
+              {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
             </Button>
           </div>
         </div> */}

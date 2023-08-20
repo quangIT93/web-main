@@ -120,7 +120,7 @@ const ThemesJob: React.FC = () => {
       Number(themeId),
       9,
       threshold,
-      languageRedux == 1 ? 'vi' : 'en',
+      languageRedux === 1 ? 'vi' : 'en',
     );
 
     if (result) {
@@ -144,7 +144,7 @@ const ThemesJob: React.FC = () => {
   const getPostByThemeId = async () => {
     try {
       const result = await themeApi.getThemesEnable(
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -154,7 +154,7 @@ const ThemesJob: React.FC = () => {
           result.data[0].id,
           19,
           null,
-          languageRedux == 1 ? 'vi' : 'en',
+          languageRedux === 1 ? 'vi' : 'en',
         );
         if (list) {
           setPostByTheme(list);
