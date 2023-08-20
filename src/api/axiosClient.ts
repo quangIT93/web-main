@@ -60,7 +60,9 @@ axiosClient.interceptors.response.use(
 
 
     if (
-      (refreshToken && error.response?.status === 403) && (error.response?.message === "Forbiden") ||
+      (refreshToken && error.response?.status === 403)
+      // && (error.response?.message === "Forbiden")
+      ||
       (refreshToken && error.response?.status === 401)
     ) {
       axios
@@ -85,6 +87,7 @@ axiosClient.interceptors.response.use(
             axios.post(`${BASE_URL}/v1/sign-out`)
             // window.location.reload()
           }
+          
         })
     }
 

@@ -677,6 +677,8 @@ const Navbar: React.FC = () => {
         setOpenInfoUser(false);
         setOpenModalLogin(true);
       } else {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         setSpinning(false);
         setOpenModalLogin(true);
 
