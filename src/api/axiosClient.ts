@@ -75,9 +75,11 @@ axiosClient.interceptors.response.use(
         })
         .catch((error) => {
           if (!localStorage.getItem("accessToken")) {
-            localStorage.clear()
-            // localStorage.clear();
+            localStorage.clear();
             axios.post(`${BASE_URL}/v1/sign-out`)
+            window.location.reload()
+          } else {
+            // localStorage.clear() 
             // window.location.reload()
           }
         })
