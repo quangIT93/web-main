@@ -672,7 +672,7 @@ const Navbar: React.FC = () => {
       }
     } catch (error) {
       // localStorage.clear();
-      if (!localStorage.getItem('accessToken')) {
+      if (!localStorage.getItem('refreshToken')) {
         setSpinning(false);
         setOpenInfoUser(false);
         setOpenModalLogin(true);
@@ -719,7 +719,6 @@ const Navbar: React.FC = () => {
 
       if (refreshToken) {
         const result = await authApi.signOut(refreshToken);
-
         if (result) {
           window.location.replace('/');
           // localStorage.clear();
@@ -737,6 +736,10 @@ const Navbar: React.FC = () => {
         }
       }
     } catch (error) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('accountId');
+      window.open('/');
       console.log(error);
     }
   };
