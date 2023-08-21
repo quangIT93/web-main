@@ -148,7 +148,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   React.useEffect(() => {
     getTypeJob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TYPE_JOB, languageRedux]);
+  }, [TYPE_JOB, languageRedux, language]);
 
   const handleChange = (value1: string) => {
     setReset(false);
