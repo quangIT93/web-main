@@ -214,7 +214,7 @@ const Detail = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -226,12 +226,11 @@ const Detail = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
   const itemsShare = [
     {
-      nameShare:
-        language?.post_detail_page?.copy_link,
+      nameShare: language?.post_detail_page?.copy_link,
       icon: <CopyIcon />,
       source: '',
     },
@@ -300,7 +299,7 @@ const Detail = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -334,28 +333,20 @@ const Detail = () => {
         console.log('data', result.data);
 
         if (result.data.accountId === accountId) {
-          setTextButton(
-            language?.post_detail_page?.edit,
-          );
+          setTextButton(language?.post_detail_page?.edit);
           setBackgroundButton('black');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
-          setTextButton(
-            language?.post_detail_page?.closed,
-          );
+          setTextButton(language?.post_detail_page?.closed);
           setBackgroundButton('gray');
           // setBackgroundButton('#0D99FF');
           result.data.applied = true;
         } else if (result.data.applied) {
-          setTextButton(
-            language?.post_detail_page?.applied,
-          );
+          setTextButton(language?.post_detail_page?.applied);
           // setBackgroundButton('gray');
           setBackgroundButton('#0D99FF');
         } else {
-          setTextButton(
-            language?.post_detail_page?.apply,
-          );
+          setTextButton(language?.post_detail_page?.apply);
           setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
         }
@@ -468,10 +459,8 @@ const Detail = () => {
         (checkApply && post?.data?.companyResourceData?.name === 'HIJOB')
       ) {
         api.info({
-          message:
-            language?.post_detail_page?.applied_alert_mess,
-          description:
-            language?.post_detail_page?.applied_alert_des,
+          message: language?.post_detail_page?.applied_alert_mess,
+          description: language?.post_detail_page?.applied_alert_des,
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'blue' }} />,
         });
@@ -504,10 +493,8 @@ const Detail = () => {
         !userProfile.email
       ) {
         api.info({
-          message:
-            language?.post_detail_page?.update_infor_mess,
-          description:
-            language?.post_detail_page?.update_infor_des,
+          message: language?.post_detail_page?.update_infor_mess,
+          description: language?.post_detail_page?.update_infor_des,
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
         });
@@ -632,7 +619,8 @@ const Detail = () => {
       copy(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
-          : post?.data.companyResourceData.postUrl,
+          : post?.data.shareLink,
+        // : post?.data.companyResourceData.postUrl,
       );
       // setCopied(true);
       dispatch<any>(setShowCopy(true));
@@ -650,8 +638,7 @@ const Detail = () => {
 
   useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title =
-      language?.post_detail_page?.title_page;
+    document.title = language?.post_detail_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_post_detail' as string,
@@ -672,14 +659,17 @@ const Detail = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
-      }, ${post?.data?.location?.district
-        ? post?.data?.location?.district?.fullName
-        : ''
-      }, ${post?.data?.location?.district?.province
-        ? post?.data.district?.province?.fullName
-        : ''
-      }`,
+        `${post?.data.address}, ${
+          post?.data.location ? post?.data.location.fullName : ''
+        }, ${
+          post?.data?.location?.district
+            ? post?.data?.location?.district?.fullName
+            : ''
+        }, ${
+          post?.data?.location?.district?.province
+            ? post?.data.district?.province?.fullName
+            : ''
+        }`,
     );
   };
 
@@ -694,27 +684,21 @@ const Detail = () => {
       // console.log('result ung tiyen', result);
       if (post?.data?.applied) {
         // openNotification();
-        setTextButton(
-          language?.post_detail_page?.applied,
-        );
+        setTextButton(language?.post_detail_page?.applied);
         // setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
       } else {
         // openNotification();
-        setTextButton(
-          language?.post_detail_page?.applied,
-        );
+        setTextButton(language?.post_detail_page?.applied);
         // setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
       }
     } catch (error) {
-      setTextButton(
-        language?.post_detail_page?.applied,
-      );
+      setTextButton(language?.post_detail_page?.applied);
       // setBackgroundButton('gray');
       setCheckApply(true);
       // window.open(post?.data.resource.url, '_blank');
@@ -733,10 +717,8 @@ const Detail = () => {
       !userProfile.email
     ) {
       api.info({
-        message:
-          language?.post_detail_page?.update_infor_mess,
-        description:
-          language?.post_detail_page?.update_infor_des,
+        message: language?.post_detail_page?.update_infor_mess,
+        description: language?.post_detail_page?.update_infor_des,
         placement: 'top',
         icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
       });
@@ -752,9 +734,7 @@ const Detail = () => {
         (result.code as number) === (201 as any)
       ) {
         // openNotification();
-        setTextButton(
-          language?.post_detail_page?.applied,
-        );
+        setTextButton(language?.post_detail_page?.applied);
         // setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
@@ -784,8 +764,7 @@ const Detail = () => {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label:
-        language?.post_detail_page?.job_information,
+      label: language?.post_detail_page?.job_information,
       children: (
         <>
           <div className="job-title-container">
@@ -803,9 +782,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <JobTypePostIcon />
-                  <p>
-                    {language?.post_detail_page?.job_type}
-                  </p>
+                  <p>{language?.post_detail_page?.job_type}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>{post?.data.postJobType.fullName}</h5>
@@ -814,9 +791,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <ClockPostIcon />
-                  <p>
-                    {language?.post_detail_page?.working_hour}
-                  </p>
+                  <p>{language?.post_detail_page?.working_hour}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -836,9 +811,7 @@ const Detail = () => {
               >
                 <div className="div-detail-row-titleItem">
                   <CalendarPostIcon />
-                  <p>
-                    {language?.post_detail_page?.working_time}
-                  </p>
+                  <p>{language?.post_detail_page?.working_time}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -853,9 +826,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <CalendarPostIcon />
-                  <p>
-                    {language?.post_detail_page?.work_on_weekends}
-                  </p>
+                  <p>{language?.post_detail_page?.work_on_weekends}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -868,9 +839,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <MonitorPostIcon />
-                  <p>
-                    {language?.post_detail_page?.work_remotely}
-                  </p>
+                  <p>{language?.post_detail_page?.work_remotely}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -883,9 +852,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <DollarPostIcon />
-                  <p>
-                    {language?.post_detail_page?.salary}
-                  </p>
+                  <p>{language?.post_detail_page?.salary}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   {post?.data.postSalaryType.id === 6 ? (
@@ -906,9 +873,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <WorkPostIcon />
-                  <p>
-                    {language?.post_detail_page?.job_category}
-                  </p>
+                  <p>{language?.post_detail_page?.job_category}</p>
                 </div>
                 <div
                   className="div-detail-row-titleItem"
@@ -926,9 +891,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <ClockPostIcon />
-                  <p>
-                    {language?.post_detail_page?.expiration_date}
-                  </p>
+                  <p>{language?.post_detail_page?.expiration_date}</p>
                 </div>
                 <div
                   className="div-detail-row-titleItem"
@@ -937,8 +900,8 @@ const Detail = () => {
                   <h5>
                     {post?.data.expiredDate
                       ? `${new Date(post?.data.expiredDate).toLocaleDateString(
-                        'en-GB',
-                      )}`
+                          'en-GB',
+                        )}`
                       : language?.post_detail_page?.indefinite}
                   </h5>
                 </div>
@@ -963,14 +926,15 @@ const Detail = () => {
               }}
               onClick={() =>
                 window.open(
-                  `/message?post_id=${searchParams.get('post-id')}&user_id=${post?.data?.accountId
+                  `/message?post_id=${searchParams.get('post-id')}&user_id=${
+                    post?.data?.accountId
                   } `,
                   '_blank',
                 )
               }
-            // onClick={() => {
-            //   console.log(post?.data);
-            // }}
+              // onClick={() => {
+              //   console.log(post?.data);
+              // }}
             ></Button>
             <Button
               onClick={onclick}
@@ -995,8 +959,7 @@ const Detail = () => {
     },
     post?.data?.postCompanyInformation && {
       key: '2',
-      label:
-        language?.post_detail_page?.company_infor,
+      label: language?.post_detail_page?.company_infor,
       style: {
         display:
           post?.data?.postCompanyInformation && key === '2' ? 'flex' : 'none',
@@ -1053,15 +1016,11 @@ const Detail = () => {
                 </div>
               </div>
               <div className="div-detail-rowCompany">
-                <h3>
-                  {language?.post_detail_page?.basic_info}
-                </h3>
+                <h3>{language?.post_detail_page?.basic_info}</h3>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <TaxCodeDetailPostIcon />
-                    <p>
-                      {language?.post_detail_page?.tax_code}
-                    </p>
+                    <p>{language?.post_detail_page?.tax_code}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
@@ -1074,16 +1033,14 @@ const Detail = () => {
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <LocationDetailPostIcon />
-                    <p>
-                      {language?.post_detail_page?.address}
-                    </p>
+                    <p>{language?.post_detail_page?.address}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
                         : language?.post_detail_page?.not_update}
                     </h5>
                   </div>
@@ -1104,9 +1061,7 @@ const Detail = () => {
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <PhoneDetailPostIcon />
-                    <p>
-                      {language?.post_detail_page?.phone_number}
-                    </p>
+                    <p>{language?.post_detail_page?.phone_number}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
@@ -1190,14 +1145,17 @@ const Detail = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
-                      }, ${post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${
+                      post?.data?.location ? post?.data?.location?.fullName : ''
+                    }, ${
+                      post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                      }, ${post?.data?.location?.district?.province
+                    }, ${
+                      post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                      }`}</h3>
+                    }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -1239,9 +1197,7 @@ const Detail = () => {
                             send
                           </Link>
                         </div> */}
-                      <h3>
-                        {language?.post_detail_page?.share}
-                      </h3>
+                      <h3>{language?.post_detail_page?.share}</h3>
                     </div>
                     <div className="actions-item" onClick={handleClickSave}>
                       {bookmarked ? (
@@ -1250,9 +1206,7 @@ const Detail = () => {
                       ) : (
                         <SaveIconOutline width={24} height={24} />
                       )}
-                      <h3>
-                        {language?.post_detail_page?.save}
-                      </h3>
+                      <h3>{language?.post_detail_page?.save}</h3>
                     </div>
                   </div>
                 </div>
@@ -1322,12 +1276,7 @@ const Detail = () => {
                             className="div-job-img-swipper_item"
                             key={index}
                           >
-                            <img
-                              src={item.url}
-                              alt={
-                                language?.err_none_img
-                              }
-                            />
+                            <img src={item.url} alt={language?.err_none_img} />
                           </SwiperSlide>
                         );
                       })
@@ -1335,9 +1284,7 @@ const Detail = () => {
                       <SwiperSlide className="div-job-img-swipper_item">
                         <img
                           src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
-                          alt={
-                            language?.err_none_img
-                          }
+                          alt={language?.err_none_img}
                           style={{ objectFit: 'cover' }}
                         />
                       </SwiperSlide>
@@ -1391,9 +1338,7 @@ const Detail = () => {
               <div className="description-container">
                 <div className="div-description-mo">
                   <div className="description">
-                    <h3>
-                      {language?.post_detail_page?.job_description}
-                    </h3>
+                    <h3>{language?.post_detail_page?.job_description}</h3>
                     <div
                       style={{
                         whiteSpace: 'pre-line',
@@ -1408,14 +1353,12 @@ const Detail = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                        // onClick={handlePreviousPost}
+                          // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
                           </div>
-                          <span>
-                            {language?.post_detail_page?.pre_job}
-                          </span>
+                          <span>{language?.post_detail_page?.pre_job}</span>
                         </div>
                         <div
                           className="description-button_next"
@@ -1424,9 +1367,7 @@ const Detail = () => {
                             color: postNext ? 'black' : '#cccc',
                           }}
                         >
-                          <span>
-                            {language?.post_detail_page?.next_job}
-                          </span>
+                          <span>{language?.post_detail_page?.next_job}</span>
                           <div
                             className="icon"
                             style={
@@ -1469,9 +1410,7 @@ const Detail = () => {
                   </Button> */}
                 </div>
                 <div className="div-suggest">
-                  <h3>
-                    {language?.post_detail_page?.similar_jobs}
-                  </h3>
+                  <h3>{language?.post_detail_page?.similar_jobs}</h3>
                   <div className="item">
                     {postNewest?.data?.posts.map(
                       (item: PostNewest, index: null | number) => (
@@ -1569,8 +1508,8 @@ const Detail = () => {
                 {post?.data?.companyResourceData?.name === 'HIJOB'
                   ? language?.post_detail_page?.apply_this_job_des
                   : isApplied
-                    ? language?.post_detail_page?.have_applied_yet
-                    : language?.post_detail_page?.forward_des}
+                  ? language?.post_detail_page?.have_applied_yet
+                  : language?.post_detail_page?.forward_des}
               </Typography>
 
               <Box
@@ -1600,8 +1539,8 @@ const Detail = () => {
                     post?.data?.companyResourceData?.name === 'HIJOB'
                       ? handleApply
                       : isApplied
-                        ? handleChangeStatus
-                        : handleClickChangePage
+                      ? handleChangeStatus
+                      : handleClickChangePage
                   }
                   style={{
                     width: '300px',
