@@ -39,10 +39,16 @@ const Comunity = () => {
     const [stories, setStories] = React.useState<any>();
     const [page, setPage] = React.useState<any>("0");
     const [isVisible, setIsVisible] = React.useState(true);
+    const [sort, setSort] = React.useState('');
+
+    const handleSortBy = (sort: string) => {
+        //cm: comment, l: likes, v: views
+        setSort(sort);
+    }
 
     const handleGetAllWorkingStory = async () => {
         try {
-            const result = await communityApi.getCommunitations(page, "9", "", 1);
+            const result = await communityApi.getCommunitations(page, "9", sort, 1);
             if (result) {
                 setStories(result?.data?.communications);
                 if (result?.data?.communications?.length < 10) {
@@ -56,13 +62,11 @@ const Comunity = () => {
 
     React.useEffect(() => {
         handleGetAllWorkingStory();
-    }, [])
-
-    console.log("stories,", stories);
+    }, [sort])
 
     const handleChange = async () => {
         const nextPage = (parseInt(page) + 1).toString()
-        const result = await communityApi.getCommunitations(nextPage, "9", "", 1);
+        const result = await communityApi.getCommunitations(nextPage, "9", sort, 1);
 
         //
         if (result && result?.data?.communications?.length !== 0) {
@@ -75,7 +79,6 @@ const Comunity = () => {
             // console.log('da het data', result);
         }
     };
-
 
     const handleAddText = () => {
         setShowText('showText');
@@ -116,11 +119,9 @@ const Comunity = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleClickItemMenu = () => {
-        console.log("hello")
+    const handleMoveToCreate = () => {
+        window.open('/comunity_create_post', '_parent')
     }
-
-    console.log(openMenu);
 
     return (
         <div className="comunity-container">
@@ -133,7 +134,8 @@ const Comunity = () => {
                             <div className="dropdown dropdown-4" ref={footerRef} onClick={() => setOpenMenu(!openMenu)}>
                                 <FilterComunity />
                                 <ul className="dropdown_menu dropdown_menu-4">
-                                    <li className="dropdown_item-1" style={{ display: openMenu ? "flex" : "none" }}>
+                                    <li className="dropdown_item-1" style={{ display: openMenu ? "flex" : "none" }}
+                                        onClick={() => { handleSortBy('l') }}>
                                         <LikeIcon />
                                         <p>
                                             {
@@ -141,7 +143,8 @@ const Comunity = () => {
                                             }
                                         </p>
                                     </li>
-                                    <li className="dropdown_item-2" style={{ display: openMenu ? "flex" : "none" }}>
+                                    <li className="dropdown_item-2" style={{ display: openMenu ? "flex" : "none" }}
+                                        onClick={() => { handleSortBy('v') }}>
                                         <EysIcon />
                                         <p>
                                             {
@@ -149,7 +152,8 @@ const Comunity = () => {
                                             }
                                         </p>
                                     </li>
-                                    <li className="dropdown_item-3" style={{ display: openMenu ? "flex" : "none" }}>
+                                    <li className="dropdown_item-3" style={{ display: openMenu ? "flex" : "none" }}
+                                        onClick={() => { handleSortBy('cm') }}>
                                         <CommentIcon />
                                         <p>
                                             {
@@ -159,7 +163,9 @@ const Comunity = () => {
                                     </li>
                                 </ul>
                             </div>
-                            <EditComunity />
+                            <div className="create-community-post" onClick={handleMoveToCreate}>
+                                <EditComunity />
+                            </div>
                         </div>
                     </div>
 

@@ -15,6 +15,10 @@ const WorkingStory = () => {
 
     const [stories, setStories] = React.useState<any>();
 
+    const handleMoveToDetailPage = (id: any) => {
+        window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
+    }
+
     const handleGetWorkingStory = async () => {
         try {
             const result = await communityApi.getCommunitations('', '5', '', 1);
@@ -43,7 +47,9 @@ const WorkingStory = () => {
             </div>
             <div className="community-content-body">
                 {stories && stories.map((story: any, index: any) => (
-                    <div className="community-content-body_item" key={index}>
+                    <div className="community-content-body_item" key={index}
+                        onClick={() => handleMoveToDetailPage(story?.id)}
+                    >
                         <div className="body-item-title">
                             <h3>{story?.title}</h3>
                             <p>{story?.createdAtText}</p>

@@ -632,7 +632,8 @@ const Detail = () => {
       copy(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
-          : post?.data.companyResourceData.postUrl,
+          : post?.data.shareLink,
+        // : post?.data.companyResourceData.postUrl,
       );
       // setCopied(true);
       dispatch<any>(setShowCopy(true));
@@ -692,7 +693,7 @@ const Detail = () => {
     try {
       const result = await appplicationApi.applyAplication(POST_ID);
       // console.log('result ung tiyen', result);
-      if (post?.data?.applied) {
+      if (result && post?.data?.applied) {
         // openNotification();
         setTextButton(
           language?.post_detail_page?.applied,

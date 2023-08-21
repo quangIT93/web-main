@@ -10,7 +10,8 @@ import Footer from '../../components/Footer/Footer';
 // import { Collapse } from 'antd';
 // import { Skeleton } from 'antd';
 // import { message } from 'antd';
-
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
 // import component
 
 // @ts-ignore
@@ -91,11 +92,11 @@ const Comunity = () => {
             <div className="title-comunity_icon">
               {/* <CommentIcon /> */}
               <span>
-                <SaveIconOutline width={24} height={24} />
+                <ShareIcon width={24} height={24} />
                 Chia sẻ
               </span>
               <span>
-                <ShareIcon width={24} height={24} />
+                <SaveIconOutline width={24} height={24} />
                 Lưu
               </span>
             </div>
@@ -110,7 +111,6 @@ const Comunity = () => {
           </div>
           <ImageList
             className="comunityDetail-wrap_img"
-            sx={{ gap: '10px !important' }}
             variant="quilted"
             cols={detail?.communicationImagesData?.images.length >= 4 ? 4 : detail?.communicationImagesData?.images.length}
             rowHeight={detail?.communicationImagesData?.images.length >= 4 ? 200 : 400}
@@ -193,25 +193,21 @@ const Comunity = () => {
             {
               detail?.communicationCommentsData.map((cmtData: any, index: any) => (
                 <div className="comunityDetail-list_comment" key={index}>
-                  <img
-                    src="../images/banner.png"
+                  {/* <img
+                    src={cmtData?.profileData?.avatar}
                     alt=""
                     style={{ width: '50px', height: '50px' }}
-                  />
-
+                  /> */}
+                  <Avatar size={50} src={cmtData?.profileData?.avatar} icon={<UserOutlined />} />
                   <div className="comunityDetail-comment">
                     <div className="comunityDetail-comment_top">
-                      <h3>Nguyễn Thị Anh</h3>
+                      <h3>{cmtData?.profileData?.name}</h3>
                       <h3>|</h3>
-                      <p>2 tiếng trước</p>
+                      <p>{cmtData?.createdAtText}</p>
                     </div>
                     <div className="comunityDetail-comment_bottom">
                       <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                        Temporibus tempora facilis laboriosam similique architecto
-                        voluptas nihil, veniam dolorem, eius alias commodi!
-                        Praesentium magni harum assumenda quibusdam maxime
-                        perferendis quidem aliquam.
+                        {cmtData?.content}
                       </p>
                     </div>
                   </div>

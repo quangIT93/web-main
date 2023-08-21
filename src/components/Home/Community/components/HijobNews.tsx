@@ -31,7 +31,9 @@ const HijobNews = () => {
         handleGetHijobNews()
     }, [])
 
-    console.log("news", news);
+    const handleMoveToDetailPage = (id: any) => {
+        window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
+    }
 
 
     return (
@@ -47,7 +49,9 @@ const HijobNews = () => {
             </div>
             <div className="community-content-body">
                 {news && news.map((newsItem: any, index: any) => (
-                    <div className="community-content-body-right_item" key={index}>
+                    <div className="community-content-body-right_item" key={index}
+                        onClick={() => handleMoveToDetailPage(newsItem?.id)}
+                    >
                         <div className="community-content-body_left">
                             <Avatar shape="square" size={88} src={newsItem?.image} />
                         </div>

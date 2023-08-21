@@ -20,7 +20,7 @@ const HijobNewsCard: React.FC<IHijobNewsCard> = (props) => {
     const { item, index } = props;
 
     const handleMoveToDetailPage = (id: any) => {
-        window.open(`/detail-comunity?post-community=${id}`, '_parent');
+        window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
     }
 
     return (

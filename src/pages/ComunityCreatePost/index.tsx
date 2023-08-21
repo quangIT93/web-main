@@ -1,6 +1,7 @@
-import React, { useEffect, FormEvent, useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
+
 import Footer from '../../components/Footer/Footer';
 // import moment, { Moment } from 'moment';
 // @ts-ignore
@@ -10,14 +11,23 @@ import imageCompression from 'browser-image-compression';
 
 import { Button, Input, message, Upload, Modal } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+
+// @ts-ignore
 import RollTop from '#components/RollTop';
-import { InboxOutlined } from '@ant-design/icons';
+// import { InboxOutlined } from '@ant-design/icons';
 // import type { UploadProps } from 'antd';
+
+// @ts-ignore
 import { CameraComunityIcon, DeleteImageComunityIcon } from '#components/Icons';
 import { useDropzone } from 'react-dropzone';
-import { Box, Typography } from '@mui/material';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { Box } from '@mui/material';
+// import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+
+// @ts-ignore
 import { validatePostImages } from 'validations';
+
+// @ts- ignore
+import apiCommunity from '../../api/apiCommunity';
 
 const ComunityCreatePost = () => {
     const { TextArea } = Input;
@@ -30,9 +40,12 @@ const ComunityCreatePost = () => {
     const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
     const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
 
-    console.log("selectedFiles", selectedFiles);
-    console.log("selectedImages", selectedImages);
+    const [messageApi, contextHolder] = message.useMessage();
 
+    console.log('selectedFiles', selectedFiles);
+    console.log('selectedImages', selectedImages);
+    console.log('valueTitle', valueTitle);
+    console.log('valueContent', valueContent);
 
     const getBase64 = (file: RcFile): Promise<string> =>
         new Promise((resolve, reject) => {
@@ -49,7 +62,9 @@ const ComunityCreatePost = () => {
 
         setPreviewImage(file.url || (file.preview as string));
         setPreviewOpen(true);
-        setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+        setPreviewTitle(
+            file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1),
+        );
     };
 
     const handleCancel = () => setPreviewOpen(false);
@@ -94,7 +109,7 @@ const ComunityCreatePost = () => {
             const validateImagesReply = validatePostImages(imagesToCheck);
             if (validateImagesReply.isError) {
                 // console.log('::: Invalid images');
-                message.error("Hình không đúng định dạng");
+                message.error('Hình không đúng định dạng');
                 return;
             } else {
                 try {
@@ -113,7 +128,7 @@ const ComunityCreatePost = () => {
                     );
                     setSelectedFiles((prevState) => [
                         ...prevState,
-                        ...compressedImages
+                        ...compressedImages,
                         // .map((image: any) => ({
                         //     image,
                         //     preview: window.URL.createObjectURL(image),
@@ -127,7 +142,7 @@ const ComunityCreatePost = () => {
 
         if (files) {
             if (files.length > 5) {
-                message.error("Tối đa 5 hình");
+                message.error('Tối đa 5 hình');
                 return;
             }
             const newImages: string[] = [];
@@ -144,7 +159,7 @@ const ComunityCreatePost = () => {
                     if (newImages.length === files.length) {
                         const newImageSelected = [...selectedImages, ...newImages];
                         if (newImageSelected.length > 5) {
-                            message.error("Tối đa 5 hình");
+                            message.error('Tối đa 5 hình');
                             return;
                         }
                         setSelectedImages(newImageSelected);
@@ -168,7 +183,7 @@ const ComunityCreatePost = () => {
             updatedFiles.splice(index, 1);
             return updatedFiles;
         });
-    }
+    };
 
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
@@ -195,13 +210,13 @@ const ComunityCreatePost = () => {
             // console.log('fileUploaded : ', fileUploaded);
 
             if (fileUploaded.length > 5) {
-                message.error("Tối đa 5 hình");
+                message.error('Tối đa 5 hình');
                 return;
             }
 
             const newFileSelected = [
                 ...selectedFiles,
-                ...fileUploaded
+                ...fileUploaded,
                 // .map((file: any) => ({
                 //   image: file,
                 //   preview: file.preview,
@@ -209,7 +224,7 @@ const ComunityCreatePost = () => {
             ];
 
             if (newFileSelected.length > 5) {
-                message.error("Tối đa 5 hình");
+                message.error('Tối đa 5 hình');
 
                 return;
             }
@@ -230,7 +245,7 @@ const ComunityCreatePost = () => {
                     if (newImages.length === fileUploaded.length) {
                         const newImageSelected = [...selectedImages, ...newImages];
                         if (newImageSelected.length > 5) {
-                            message.error("Tối đa 5 hình");
+                            message.error('Tối đa 5 hình');
 
                             return;
                         }
@@ -251,9 +266,79 @@ const ComunityCreatePost = () => {
         };
     }, [selectedFiles]);
 
+    // valid values form data
+    const validValue = () => {
+        if (valueTitle === '') {
+            return {
+                message: 'Vui lòng nhập tiêu đề bài viết',
+                checkForm: false,
+            };
+        }
+
+        if (valueContent === '') {
+            return {
+                message: 'Vui lòng nhập nội dung bài viết',
+                checkForm: false,
+            };
+        }
+
+        return {
+            message: '',
+            checkForm: true,
+        };
+    };
+
+    const handleSaveCommunity = (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
+    ) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+
+        formData.append('title', valueTitle);
+        formData.append('content', valueContent);
+        selectedFiles.forEach((image: any) => {
+            formData.append('images', image);
+        });
+
+        for (const pair of formData.entries()) {
+            console.log(`${pair[0]}, ${pair[1]}`);
+        }
+
+        if (formData) {
+            createCommunity(formData);
+        }
+    };
+
+    const createCommunity = async (formData: any) => {
+        // console.log('form saved', form);
+
+        const { message, checkForm } = validValue();
+        try {
+            if (checkForm) {
+                const result = await apiCommunity.postCommunications(formData);
+
+                if (result) {
+                    console.log('tạo bài viết thành công');
+                    window.open('/comunity_create_success', '_parent')
+                } else {
+                    console.log('tạo bài viết thất bại');
+                }
+            } else {
+                messageApi.open({
+                    type: 'error',
+                    content: message,
+                });
+            }
+        } catch (error) {
+            console.log('Error', error);
+        }
+    };
+
     return (
         <div className="comunity-create-post-container">
             <Navbar />
+            {contextHolder}
             <div className="comunity-create-post-content">
                 <div className="create-post-header">
                     <h3>Tạo bài viết mới</h3>
@@ -283,13 +368,13 @@ const ComunityCreatePost = () => {
                             <span>3. Thêm hình ảnh</span>
                             <p
                                 style={{
-                                    display: selectedFiles.length > 0 ? "block" : "none",
-                                    cursor: "pointer"
+                                    display: selectedFiles.length > 0 ? 'block' : 'none',
+                                    cursor: 'pointer',
                                 }}
                             >
                                 <label htmlFor="submit">Thêm hình ảnh</label>
                                 <input
-                                    id='submit'
+                                    id="submit"
                                     type="file"
                                     name="images"
                                     hidden
@@ -299,10 +384,11 @@ const ComunityCreatePost = () => {
                                 />
                             </p>
                         </h3>
-                        <div className="post-comunity-images"
+                        <div
+                            className="post-comunity-images"
                             style={{
-                                height: selectedFiles.length > 0 ? "fit-content" : "310px",
-                                border: selectedFiles.length > 0 ? "none" : "1px solid #ccc",
+                                height: selectedFiles.length > 0 ? 'fit-content' : '310px',
+                                border: selectedFiles.length > 0 ? 'none' : '1px solid #ccc',
                             }}
                         >
                             <Box p="0rem 0">
@@ -316,8 +402,10 @@ const ComunityCreatePost = () => {
                                         <div
                                             className="drag-img-camera"
                                             style={{
-                                                display: selectedFiles.length === 0 || isDragActive
-                                                    ? "flex" : "none"
+                                                display:
+                                                    selectedFiles.length === 0 || isDragActive
+                                                        ? 'flex'
+                                                        : 'none',
                                             }}
                                         >
                                             <CameraComunityIcon />
@@ -327,19 +415,12 @@ const ComunityCreatePost = () => {
                                 </section>
                                 <Box className="list_iamges">
                                     {selectedImages.map((image: any, index: number) => (
-                                        <div
-                                            className="item-image"
-                                            key={index}
-                                        >
-                                            <img
-                                                key={index}
-                                                src={image}
-                                                alt="Ảnh lỗi"
-                                            />
+                                        <div className="item-image" key={index}>
+                                            <img key={index} src={image} alt="Ảnh lỗi" />
                                             <div
                                                 className="deleteButton"
                                                 style={{
-                                                    zIndex: isDragActive ? "0" : "2"
+                                                    zIndex: isDragActive ? '0' : '2',
                                                 }}
                                                 onClick={() => handleDeleteImage(index)}
                                             >
@@ -359,24 +440,36 @@ const ComunityCreatePost = () => {
                         </div>
                     </div>
                     <div className="save_btn">
-                        <Button className={
-                            valueTitle == '' || valueContent == '' || selectedFiles.length === 0 ?
-                                "submit" : "submit full-info"}>
-                            {
-                                valueTitle == '' || valueContent == '' || selectedFiles.length === 0 ?
-                                    "Lưu bài" :
-                                    "Đăng bài viết"
+                        <Button
+                            onClick={handleSaveCommunity}
+                            className={
+                                valueTitle === '' ||
+                                    valueContent === '' ||
+                                    selectedFiles.length === 0
+                                    ? 'submit'
+                                    : 'submit full-info'
                             }
+                        >
+                            {valueTitle === '' ||
+                                valueContent === '' ||
+                                selectedFiles.length === 0
+                                ? 'Lưu bài'
+                                : 'Đăng bài viết'}
                         </Button>
                     </div>
                 </div>
             </div>
             <RollTop />
-            <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+            <Modal
+                open={previewOpen}
+                title={previewTitle}
+                footer={null}
+                onCancel={handleCancel}
+            >
                 <img alt="example" style={{ width: '100%' }} src={previewImage} />
             </Modal>
             <Footer />
-        </div >
+        </div>
     );
 };
 

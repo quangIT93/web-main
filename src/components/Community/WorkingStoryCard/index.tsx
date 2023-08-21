@@ -20,7 +20,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     const { item, showText, index, handleAddText } = props;
 
     const handleMoveToDetailPage = (id: any) => {
-        window.open(`/detail-comunity?post-community=${id}`, '_parent');
+        window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
     }
 
     return (
