@@ -4,6 +4,8 @@ import { Avatar } from 'antd';
 
 import './style.scss';
 
+import communityApi from 'api/apiCommunity';
+
 import {
   ThinkingIcon,
   NewsPaperIcon,
@@ -14,6 +16,23 @@ import {
 } from '#components/Icons';
 
 const Community = () => {
+  const [setStore, setStories] = React.useState(true);
+
+  const handleGetWorkingStory = async () => {
+    try {
+      const result = await communityApi.getCommunityWorkingStory();
+      if (result) {
+        setStories(result.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    handleGetWorkingStory();
+  }, []);
+
   return (
     <div className="community-container">
       <div className="community-content">

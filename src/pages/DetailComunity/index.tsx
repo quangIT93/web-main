@@ -25,6 +25,8 @@ import {
   SendComunityIcon,
 } from '#components/Icons';
 
+import apiCompany from 'api/apiCompany';
+
 // @ts-ignore
 import { Navbar } from '#components';
 
@@ -37,6 +39,17 @@ const Comunity = () => {
   // const handleAddText = () => {
   //   setShowText('showText');
   // };
+
+  const dataDetailCommunity = () => {
+    try {
+      // const result = await
+    } catch (error) {}
+  };
+
+  React.useEffect(() => {
+    dataDetailCommunity();
+  }, []);
+
   return (
     <div className="comunity-container">
       <Navbar />
