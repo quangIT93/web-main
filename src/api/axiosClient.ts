@@ -85,9 +85,7 @@ axiosClient.interceptors.response.use(
             axios.post(`${BASE_URL}/v1/sign-out`)
             window.location.reload()
           } else {
-            localStorage.removeItem("accessToken")
-            localStorage.removeItem("refreshToken")
-            axios.post(`${BASE_URL}/v1/sign-out`)
+
 
           }
           
