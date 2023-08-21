@@ -731,8 +731,8 @@ const Navbar: React.FC = () => {
 
   // handle logout
   const handleLogout = async () => {
+    console.log('logout thành công');
     try {
-      // console.log('logout thành công');
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (refreshToken) {

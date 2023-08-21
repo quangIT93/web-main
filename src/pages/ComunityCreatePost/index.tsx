@@ -1,6 +1,7 @@
-import React, { useEffect, FormEvent, useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
+
 import Footer from '../../components/Footer/Footer';
 // import moment, { Moment } from 'moment';
 // @ts-ignore
@@ -10,14 +11,23 @@ import imageCompression from 'browser-image-compression';
 
 import { Button, Input, message, Upload, Modal } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+
+// @ts-ignore
 import RollTop from '#components/RollTop';
-import { InboxOutlined } from '@ant-design/icons';
+// import { InboxOutlined } from '@ant-design/icons';
 // import type { UploadProps } from 'antd';
+
+// @ts-ignore
 import { CameraComunityIcon, DeleteImageComunityIcon } from '#components/Icons';
 import { useDropzone } from 'react-dropzone';
-import { Box, Typography } from '@mui/material';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { Box } from '@mui/material';
+// import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+
+// @ts-ignore
 import { validatePostImages } from 'validations';
+
+// @ts- ignore
+import apiCommunity from '../../api/apiCommunity';
 
 const ComunityCreatePost = () => {
   const { TextArea } = Input;
@@ -30,8 +40,12 @@ const ComunityCreatePost = () => {
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
   const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   console.log('selectedFiles', selectedFiles);
   console.log('selectedImages', selectedImages);
+  console.log('valueTitle', valueTitle);
+  console.log('valueContent', valueContent);
 
   const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -252,9 +266,78 @@ const ComunityCreatePost = () => {
     };
   }, [selectedFiles]);
 
+  // valid values form data
+  const validValue = () => {
+    if (valueTitle === '') {
+      return {
+        message: 'Vui lòng nhập tiêu đề bài viết',
+        checkForm: false,
+      };
+    }
+
+    if (valueContent === '') {
+      return {
+        message: 'Vui lòng nhập nội dung bài viết',
+        checkForm: false,
+      };
+    }
+
+    return {
+      message: '',
+      checkForm: true,
+    };
+  };
+
+  const handleSaveCommunity = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
+  ) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append('title', valueTitle);
+    formData.append('content', valueContent);
+    selectedFiles.forEach((image: any) => {
+      formData.append('images', image);
+    });
+
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    }
+
+    if (formData) {
+      createCommunity(formData);
+    }
+  };
+
+  const createCommunity = async (formData: any) => {
+    // console.log('form saved', form);
+
+    const { message, checkForm } = validValue();
+    try {
+      if (checkForm) {
+        const result = await apiCommunity.postCommunications(formData);
+
+        if (result) {
+          console.log('tạo bài viết thành công');
+        } else {
+          console.log('tạo bài viết thất bại');
+        }
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: message,
+        });
+      }
+    } catch (error) {
+      console.log('Error', error);
+    }
+  };
+
   return (
     <div className="comunity-create-post-container">
       <Navbar />
+      {contextHolder}
       <div className="comunity-create-post-content">
         <div className="create-post-header">
           <h3>Tạo bài viết mới</h3>
@@ -357,6 +440,7 @@ const ComunityCreatePost = () => {
           </div>
           <div className="save_btn">
             <Button
+              onClick={handleSaveCommunity}
               className={
                 valueTitle === '' ||
                 valueContent === '' ||
