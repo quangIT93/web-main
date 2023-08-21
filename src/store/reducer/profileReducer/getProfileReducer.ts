@@ -34,6 +34,8 @@ export const getProfile = createAsyncThunk(
       }
     } catch (error) {
       if (error instanceof AxiosError) {
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("refreshToken")
         return rejectWithValue(error.response?.data?.message)
       } else {
         return rejectWithValue('An error occurred')
