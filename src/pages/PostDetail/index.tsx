@@ -623,7 +623,8 @@ const Detail = () => {
       copy(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
-          : post?.data.companyResourceData.postUrl,
+          : post?.data.shareLink,
+        // : post?.data.companyResourceData.postUrl,
       );
       // setCopied(true);
       dispatch<any>(setShowCopy(true));

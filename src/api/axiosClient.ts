@@ -61,7 +61,7 @@ axiosClient.interceptors.response.use(
 
 
     if (
-      (refreshToken && error.response?.status === 403) || (refreshToken && error.response?.status === 401)
+      (refreshToken && error.response?.status === 403) || (refreshToken && error.response?.status === 400) || (refreshToken && error.response?.status === 401)
     ) {
       axios
         .post(`${BASE_URL}/v1/reset-access-token`, {
@@ -85,9 +85,7 @@ axiosClient.interceptors.response.use(
             axios.post(`${BASE_URL}/v1/sign-out`)
             window.location.reload()
           } else {
-            localStorage.removeItem("accessToken")
-            localStorage.removeItem("refreshToken")
-            axios.post(`${BASE_URL}/v1/sign-out`)
+
 
           }
           
