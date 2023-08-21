@@ -13,14 +13,14 @@
     z-index: 10;
     @include breakpoint(mobile) {
         display: block;
-        bottom: 300px !important;
+        bottom: 130px !important;
 
     }
 
 
     @media screen and (min-height: 431px) and (max-width: 599px) {
         display: block;
-        bottom: 300px !important;
+        bottom: 130px !important;
 
         
     }
