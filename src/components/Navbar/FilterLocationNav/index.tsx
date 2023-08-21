@@ -116,7 +116,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const getAllLocaitions = async () => {
     try {
       const result = await locationApi.getAllLocation(
-        languageRedux == 1 ? 'vi' : 'en',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataLocations(result.data);

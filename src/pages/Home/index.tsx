@@ -82,6 +82,22 @@ const Home: React.FC = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
+  const [reachedEndShowSubjectJob, setReachedEndShowSubjectJob] =
+    React.useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        setReachedEndShowSubjectJob(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div className="home">
@@ -99,9 +115,15 @@ const Home: React.FC = () => {
         <AppliedPostedJob />
         <HotJob />
         <NewJobs />
-        <SuggestJob />
-        <ThemesJob />
-        <Community />
+        {reachedEndShowSubjectJob ? (
+          <>
+            <SuggestJob />
+            <ThemesJob />
+            <Community />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <RollTop />
       <Footer />

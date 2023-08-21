@@ -8,8 +8,32 @@ import {
     LikeIcon,
     CommentIcon,
 } from '#components/Icons';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
+import communityApi from 'api/apiCommunity';
 
 const HijobNews = () => {
+    const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+    const [news, setNews] = React.useState<any>();
+
+    const handleGetHijobNews = async () => {
+        try {
+            const result = await communityApi.getCommunitations('', '5', '', 0);
+            if (result) {
+                setNews(result?.data?.communications);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    React.useEffect(() => {
+        handleGetHijobNews()
+    }, [])
+
+    console.log("news", news);
+
+
     return (
         <>
             <div className="community-content-title">
@@ -22,28 +46,28 @@ const HijobNews = () => {
                 </p>
             </div>
             <div className="community-content-body">
-                {[...Array(5)].map((item) => (
-                    <div className="community-content-body-right_item">
+                {news && news.map((newsItem: any, index: any) => (
+                    <div className="community-content-body-right_item" key={index}>
                         <div className="community-content-body_left">
-                            <Avatar shape="square" size={88} src="../images/banner.png" />
+                            <Avatar shape="square" size={88} src={newsItem?.image} />
                         </div>
                         <div className="community-content-body_right">
                             <div className="body-item-title">
-                                <h3>Gợi ý những câu hỏi khi phỏng vấn công việc kế toán</h3>
-                                <p>1 ngày trước</p>
+                                <h3>{newsItem?.title}</h3>
+                                <p>{newsItem?.createdAtText}</p>
                             </div>
                             <div className="body-item-actions">
                                 <div className="action-item">
                                     <EysIcon />
-                                    <p>1234</p>
+                                    <p>{newsItem?.communicationViewsCount}</p>
                                 </div>
                                 <div className="action-item">
                                     <LikeIcon />
-                                    <p>300</p>
+                                    <p>{newsItem?.communicationLikesCount}</p>
                                 </div>
                                 <div className="action-item">
                                     <CommentIcon />
-                                    <p>30</p>
+                                    <p>{newsItem?.communicationCommentsCount}</p>
                                 </div>
                             </div>
                         </div>

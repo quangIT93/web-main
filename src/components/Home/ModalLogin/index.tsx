@@ -162,11 +162,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // const regexCheckMail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const authState = useSelector((state: RootState) => state.auth);
+
+  const dataProfile = useSelector((state: RootState) => state.profile.profile);
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
-  const handleLogin = async (
-    // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    e: any,
-  ) => {
+  const handleLogin = async (e: any) => {
     try {
       e.preventDefault();
       if (isValidEmail) {
@@ -259,12 +258,12 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
         // console.log('response', response);
         const result = await authApi.signInGoogle(response.tokenObj.id_token);
         if (result) {
-          // console.log(result);
           fetchDataProfile(result.data, true);
+          setOpenBackdrop(false);
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log('error gg', error);
       setOpenBackdrop(false);
     }
 
@@ -302,9 +301,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       );
 
       await dispatch(getProfile() as any);
-      const result = await profileApi.getProfile('vi');
-      if (result) {
-        setProfileUser(result.data);
+      // const result = await profileApi.getProfile('vi');
+      if (dataProfile) {
+        setProfileUser(dataProfile.data);
       }
       setOpenModalLogin(false);
       setOpenBackdrop(false);

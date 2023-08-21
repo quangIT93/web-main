@@ -98,7 +98,9 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   setReset,
   language
 }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const [data, setData] = React.useState()
   const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
   const [valueRender, setValueRender] = React.useState<any>();

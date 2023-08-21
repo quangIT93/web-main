@@ -161,7 +161,19 @@ const CategoryCarousel: React.FC = () => {
   const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
     try {
       // setOpenBackdrop(true); // Mở backdrop
-      window.scrollTo(0, 0);
+
+      // Lấy chiều cao của màn hình
+      const windowWidth =
+        window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
+
+      if (windowWidth > 480) {
+        window.scrollTo(0, 530);
+      } else {
+        window.scrollTo(0, 560);
+      }
+
       // window.scrollTo(0, 300)
 
       if (newValue === undefined || newValue === 1) {

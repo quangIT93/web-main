@@ -7,7 +7,7 @@ export interface FormCommunity {
     content: string;
     images: File[];
 }
- 
+
 export interface FormPutCommunity {
     title: string;
     content: string;
@@ -17,27 +17,27 @@ export interface FormPutCommunity {
     id: number;
     status: number;
 }
- 
+
 export interface FormPostCommunityComment {
     communicationId: number;
     content: string;
     images: string[];
 
- }
+}
 
 const communityApi = {
     postCommunications: (newCommunity: FormCommunity) => {
         const URL = `/v3/communications`
         return axiosClient.post(URL, newCommunity, {
             headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                'Content-Type': 'multipart/form-data',
             },
         })
     },
 
-    getCommunitations: (page: string, limit: string, sort: string) => {
-        const URL = `/v3/communications?page=${page}&limit=${limit}&sort=${sort}`
+    getCommunitations: (page: string, limit: string, sort: string, type: number) => {
+        const URL = `/v3/communications?page=${page}&limit=${limit}&sort=${sort}&type=${type}`
         return axiosClient.get(URL)
     },
 
@@ -45,7 +45,7 @@ const communityApi = {
         const URL = `/v3/communications/news`
         return axiosClient.get(URL)
     },
-    
+
     getCommunityWorkingStory: () => {
         const URL = `/v3/communications/working-story`
         return axiosClient.get(URL)
@@ -103,8 +103,8 @@ const communityApi = {
         const URL = `/v3/communications/by-admin`
         return axiosClient.post(URL, newCommunityAdmin, {
             headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                'Content-Type': 'multipart/form-data',
             },
         })
     },
@@ -127,8 +127,8 @@ const communityApi = {
             communicationId: communicationId
         }, {
             headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                'Content-Type': 'multipart/form-data',
             },
         })
     },
@@ -163,7 +163,7 @@ const communityApi = {
         })
     },
 
-    putCommunityComment: (communicationId: number,  commentId : number, putCommunityComment: FormPutCommunity) => {
+    putCommunityComment: (communicationId: number, commentId: number, putCommunityComment: FormPutCommunity) => {
         const URL = `v3/communication-comments/${communicationId}/${commentId}`
         return axiosClient.put(URL, putCommunityComment, {
             headers: {
@@ -174,15 +174,15 @@ const communityApi = {
     },
 
     // ---------------------------------------------------------------------------------------- bookmarked
-    
+
     postCommunityBookmarked: (communicationId: number) => {
         const URL = `/v3/communication-likes`
         return axiosClient.post(URL, {
             communicationId: communicationId
         }, {
             headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                'Content-Type': 'multipart/form-data',
             },
         })
     },
@@ -197,7 +197,7 @@ const communityApi = {
     },
 
 
-    
+
 
 }
 

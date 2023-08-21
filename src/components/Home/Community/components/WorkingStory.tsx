@@ -13,13 +13,13 @@ import { RootState } from "store";
 const WorkingStory = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
 
-    const [stories, setStories] = React.useState();
+    const [stories, setStories] = React.useState<any>();
 
     const handleGetWorkingStory = async () => {
         try {
-            const result = await communityApi.getCommunityWorkingStory();
+            const result = await communityApi.getCommunitations('', '5', '', 1);
             if (result) {
-                setStories(result.data)
+                setStories(result?.data?.communications)
             }
         } catch (error) {
             console.log(error);
@@ -29,9 +29,6 @@ const WorkingStory = () => {
     React.useEffect(() => {
         handleGetWorkingStory();
     }, [])
-
-    console.log("story:", stories);
-
 
     return (
         <>
@@ -45,28 +42,28 @@ const WorkingStory = () => {
                 </p>
             </div>
             <div className="community-content-body">
-                {[...Array(5)].map((item) => (
-                    <div className="community-content-body_item">
+                {stories && stories.map((story: any, index: any) => (
+                    <div className="community-content-body_item" key={index}>
                         <div className="body-item-title">
-                            <h3>Kinh nghiệm tìm việc nhà hàng</h3>
-                            <p>1 ngày trước</p>
+                            <h3>{story?.title}</h3>
+                            <p>{story?.createdAtText}</p>
                         </div>
                         <div className="body-item-user">
                             <UseCircleIcon />
-                            <p>Trần Văn An</p>
+                            <p>{story?.profileData?.name}</p>
                         </div>
                         <div className="body-item-actions">
                             <div className="action-item">
                                 <EysIcon />
-                                <p>1234</p>
+                                <p>{story?.communicationViewsCount}</p>
                             </div>
                             <div className="action-item">
                                 <LikeIcon />
-                                <p>300</p>
+                                <p>{story?.communicationLikesCount}</p>
                             </div>
                             <div className="action-item">
                                 <CommentIcon />
-                                <p>30</p>
+                                <p>{story?.communicationCommentsCount}</p>
                             </div>
                         </div>
                     </div>

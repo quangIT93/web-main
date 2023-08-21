@@ -17,8 +17,8 @@ import ScrollObserver from './utils/ScrollObserver';
 // import HomeContextProvider from 'context/HomeContextProvider';
 import HomeValueContextProvider from 'context/HomeValueContextProvider';
 import ChatContextProvider from 'context/ChatContextProvider';
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 // Initialize Firebase
@@ -32,25 +32,6 @@ interface RouteProps {
 }
 
 const App: React.FC = () => {
-  // const dbRef = ref(getDatabase(app));
-  // get(child(dbRef, `user`))
-  //   .then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //       console.log(snapshot.val());
-  //     } else {
-  //       console.log('No data available');
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
-
-  // set(child(dbRef, 'user/'), {
-  //   username: 'quang',
-  //   email: 'quang@gmail.com',
-  //   profile_picture: 'imageUrl',
-  // });
-
   let persistor = persistStore(store);
 
   return (

@@ -72,7 +72,9 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
   reset,
   setReset,
 }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = React.useState();
   const [valueRender, setValueRender] = React.useState<any>();
@@ -104,7 +106,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
 
   const getTypeSalary = async () => {
     const result = await siteApi.getSalaryType(
-      languageRedux == 1 ? "vi" : "en"
+      languageRedux === 1 ? 'vi' : 'en',
     );
 
     if (result) {

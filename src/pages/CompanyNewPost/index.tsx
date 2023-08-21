@@ -2,19 +2,20 @@ import React, { useEffect } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-
+import { UserOutlined } from '@ant-design/icons';
 // import moment, { Moment } from 'moment';
 
 // import { Collapse } from 'antd';
-
+import { Avatar, Space, message } from 'antd';
 // import component
-
+import { Stack } from '@mui/material';
 import {
     EysIcon,
     CommentIcon,
     LikeIcon,
     EditComunity,
     FilterComunity,
+    MoreICon
 } from '#components/Icons';
 
 // @ts-ignore
@@ -25,6 +26,9 @@ import languageApi from 'api/languageApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer/index';
 import './style.scss';
+import communityApi from 'api/apiCommunity';
+
+import WorkingStoryCard from '#components/Community/WorkingStoryCard';
 
 // const { Panel } = Collapse;
 
@@ -32,6 +36,47 @@ const Comunity = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const [showText, setShowText] = React.useState('');
     const [openMenu, setOpenMenu] = React.useState(false);
+    const [stories, setStories] = React.useState<any>();
+    const [page, setPage] = React.useState<any>("0");
+    const [isVisible, setIsVisible] = React.useState(true);
+
+    const handleGetAllWorkingStory = async () => {
+        try {
+            const result = await communityApi.getCommunitations(page, "9", "", 1);
+            if (result) {
+                setStories(result?.data?.communications);
+                if (result?.data?.communications?.length < 10) {
+                    setIsVisible(false);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    React.useEffect(() => {
+        handleGetAllWorkingStory();
+    }, [])
+
+    console.log("stories,", stories);
+
+    const handleChange = async () => {
+        const nextPage = (parseInt(page) + 1).toString()
+        const result = await communityApi.getCommunitations(nextPage, "9", "", 1);
+
+        //
+        if (result && result?.data?.communications?.length !== 0) {
+            setStories((prev: any) => [...prev, ...result?.data?.communications]);
+            setPage(nextPage);
+        } else {
+            setPage("0");
+            message.error("da het data");
+            setIsVisible(false);
+            // console.log('da het data', result);
+        }
+    };
+
+
     const handleAddText = () => {
         setShowText('showText');
     };
@@ -118,197 +163,39 @@ const Comunity = () => {
                         </div>
                     </div>
 
-                    <div className="comunitypostNew-wrap_content">
-                        <div className="comunityPostNew-content">
-                            <h3>Kinh nghiệm tìm việc nhà hàng</h3>
-                            <div className="comunityPostNew-content_info">
-                                <ul className={`text-content_postNew ${showText}`}>
-                                    Kinh nghiệm phục vụ nhà hàng cho người mới bắt đầu:
-                                    <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                    <li>Hiểu rõ công việc mình làm</li>
-                                    <li>Hiểu thực đơn của nhà hàng</li>
-                                    <li>Hiểu rõ công việc mình làm</li>
-                                    <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                    <li>Hiểu thực đơn của nhà hàng</li>
-                                </ul>
-                                {!showText ? (
-                                    <span onClick={handleAddText}>Xem thêm...</span>
-                                ) : (
-                                    <></>
-                                )}
-                            </div>
-                        </div>
-                        <div className="comunitypostNew-wrap_status">
-                            <div className="status-item">
-                                <EysIcon />
-                                <p>123</p>
-                            </div>
-                            <div className="status-item">
-                                <LikeIcon />
-                                <p>2321</p>
-                            </div>
-                            <div className="status-item">
-                                <CommentIcon />
-                                <p>2321</p>
-                            </div>
-                        </div>
+                    {
+                        stories && stories.map((item: any, index: any) => (
+                            <WorkingStoryCard
+                                item={item}
+                                index={index}
+                                showText={showText}
+                                handleAddText={handleAddText}
+                            />
+                        ))
+                    }
 
-                        <div className="comunitypostNew-wrap_actor">
-                            <div className="comunitypostNew-wrap">
-                                <img src="../images/banner.png" alt="anh loi" />
-
-                                <div className="info-actor_comunity">
-                                    <p>Tác giả</p>
-                                    <p>Trần Văn An</p>
-                                </div>
-                            </div>
-                            <p>2 tiếng trước</p>
-                        </div>
-                    </div>
-
-                    <div className="comunitypostNew-wrap_content">
-                        <div className="comunityPostNew-content">
-                            <h3>Kinh nghiệm tìm việc nhà hàng</h3>
-                            <div className="comunityPostNew-content_info">
-                                <ul className={`text-content_postNew ${showText}`}>
-                                    Kinh nghiệm phục vụ nhà hàng cho người mới bắt đầu:
-                                    <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                    <li>Hiểu rõ công việc mình làm</li>
-                                    <li>Hiểu thực đơn của nhà hàng</li>
-                                    <li>Hiểu rõ công việc mình làm</li>
-                                    <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                    <li>Hiểu thực đơn của nhà hàng</li>
-                                </ul>
-                                {!showText ? (
-                                    <span onClick={handleAddText}>Xem thêm...</span>
-                                ) : (
-                                    <></>
-                                )}
-                            </div>
-                        </div>
-                        <div className="comunitypostNew-wrap_status">
-                            <div className="status-item">
-                                <EysIcon />
-                                <p>123</p>
-                            </div>
-                            <div className="status-item">
-                                <LikeIcon />
-                                <p>2321</p>
-                            </div>
-                            <div className="status-item">
-                                <CommentIcon />
-                                <p>2321</p>
-                            </div>
-                        </div>
-
-                        <div className="comunitypostNew-wrap_actor">
-                            <div className="comunitypostNew-wrap">
-                                <img src="../images/banner.png" alt="anh loi" />
-
-                                <div className="info-actor_comunity">
-                                    <p>Tác giả</p>
-                                    <p>Trần Văn An</p>
-                                </div>
-                            </div>
-                            <p>2 tiếng trước</p>
-                        </div>
-                    </div>
-
-                    <div className="comunitypostNew-wrap_content">
-                        <div className="comunityPostNew-content">
-                            <h3>Kinh nghiệm tìm việc nhà hàng</h3>
-                            <div className="comunityPostNew-content_info">
-                                <ul className={`text-content_postNew ${showText}`}>
-                                    Kinh nghiệm phục vụ nhà hàng cho người mới bắt đầu:
-                                    <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                    <li>Hiểu rõ công việc mình làm</li>
-                                    <li>Hiểu thực đơn của nhà hàng</li>
-                                    <li>Hiểu rõ công việc mình làm</li>
-                                    <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                    <li>Hiểu thực đơn của nhà hàng</li>
-                                </ul>
-                                {!showText ? (
-                                    <span onClick={handleAddText}>Xem thêm...</span>
-                                ) : (
-                                    <></>
-                                )}
-                            </div>
-                        </div>
-                        <div className="comunitypostNew-wrap_status">
-                            <div className="status-item">
-                                <EysIcon />
-                                <p>123</p>
-                            </div>
-                            <div className="status-item">
-                                <LikeIcon />
-                                <p>2321</p>
-                            </div>
-                            <div className="status-item">
-                                <CommentIcon />
-                                <p>2321</p>
-                            </div>
-                        </div>
-
-                        <div className="comunitypostNew-wrap_actor">
-                            <div className="comunitypostNew-wrap">
-                                <img src="../images/banner.png" alt="anh loi" />
-
-                                <div className="info-actor_comunity">
-                                    <p>Tác giả</p>
-                                    <p>Trần Văn An</p>
-                                </div>
-                            </div>
-                            <p>2 tiếng trước</p>
-                        </div>
-                    </div>
-                    <div className="comunitypostNew-wrap_content">
-                        <div className="comunityPostNew-content">
-                            <h3>Kinh nghiệm tìm việc nhà hàng</h3>
-                            <div className="comunityPostNew-content_info">
-                                <ul className={`text-content_postNew ${showText}`}>
-                                    Kinh nghiệm phục vụ nhà hàng cho người mới bắt đầu:
-                                    <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                    <li>Hiểu rõ công việc mình làm</li>
-                                    <li>Hiểu thực đơn của nhà hàng</li>
-                                    <li>Hiểu rõ công việc mình làm</li>
-                                    <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                    <li>Hiểu thực đơn của nhà hàng</li>
-                                </ul>
-                                {!showText ? (
-                                    <span onClick={handleAddText}>Xem thêm...</span>
-                                ) : (
-                                    <></>
-                                )}
-                            </div>
-                        </div>
-                        <div className="comunitypostNew-wrap_status">
-                            <div className="status-item">
-                                <EysIcon />
-                                <p>123</p>
-                            </div>
-                            <div className="status-item">
-                                <LikeIcon />
-                                <p>2321</p>
-                            </div>
-                            <div className="status-item">
-                                <CommentIcon />
-                                <p>2321</p>
-                            </div>
-                        </div>
-
-                        <div className="comunitypostNew-wrap_actor">
-                            <div className="comunitypostNew-wrap">
-                                <img src="../images/banner.png" alt="anh loi" />
-
-                                <div className="info-actor_comunity">
-                                    <p>Tác giả</p>
-                                    <p>Trần Văn An</p>
-                                </div>
-                            </div>
-                            <p>2 tiếng trước</p>
-                        </div>
-                    </div>
                 </div>
+                <Stack
+                    spacing={2}
+                    sx={{
+                        display: isVisible ? 'flex' : "none",
+                        alignItems: 'center',
+                        margin: '24px 0',
+                    }}
+                >
+                    {/* <Pagination count={10} shape="rounded" /> */}
+                    <Space
+                        className="div-hover-more"
+                        onClick={handleChange}
+                    >
+                        <p>
+                            {
+                                language?.more
+                            }
+                        </p>
+                        <MoreICon width={20} height={20} />
+                    </Space>
+                </Stack>
             </div>
             <RollTop />
             <Footer />

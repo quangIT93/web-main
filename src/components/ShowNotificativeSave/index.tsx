@@ -24,7 +24,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 // }
 
 const ShowNotificativeSave: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
   const alert = useSelector((state: any) => state.showAlert.alert);
@@ -68,8 +70,7 @@ const ShowNotificativeSave: React.FC = () => {
             severity="success"
             sx={{
               width: '100%',
-              backgroundColor: '#000000'
-
+              backgroundColor: '#000000',
             }}
           >
             {

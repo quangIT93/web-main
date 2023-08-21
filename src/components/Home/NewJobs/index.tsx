@@ -157,7 +157,7 @@ const NewJobs: React.FC = () => {
       null,
       9,
       thersholdId,
-      languageRedux == 1 ? 'vi' : 'en',
+      languageRedux === 1 ? 'vi' : 'en',
     );
 
     if (result) {
@@ -194,8 +194,8 @@ const NewJobs: React.FC = () => {
           JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
         ) !== 1
           ? Number(
-              JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
-            )
+            JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
+          )
           : null || null,
         childCateloriesArray || null,
         null,

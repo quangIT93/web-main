@@ -18,6 +18,8 @@ const Footer: React.FC = () => {
             }}
           >
             <img
+              width={66}
+              height={80}
               src={require('../../img/langdingPage/logoHiJob.png')}
               alt="ảnh bị lỗi"
             />
@@ -42,10 +44,14 @@ const Footer: React.FC = () => {
             <h4>TẢI ỨNG DỤNG HIJOB</h4>
             <div className="div-img-footer">
               <img
+                width={124}
+                height={124}
                 src={require('../../img/langdingPage/QRcode-ggplay.png')}
                 alt="Ảnh lỗi"
               />
               <img
+                width={124}
+                height={124}
                 style={{ marginLeft: 10 }}
                 src={require('../../img/langdingPage/QRcode-appstore.png')}
                 alt="Ảnh lỗi"
@@ -57,6 +63,8 @@ const Footer: React.FC = () => {
                 target="_blank"
               >
                 <img
+                  width={117}
+                  height={35}
                   id="img-gallery"
                   src={require('../../img/langdingPage/image 43.png')}
                   alt="Ảnh lỗi"
@@ -67,6 +75,8 @@ const Footer: React.FC = () => {
                 target="_blank"
               >
                 <img
+                  width={117}
+                  height={35}
                   src={require('../../img/langdingPage/image 45.png')}
                   alt="Ảnh lỗi"
                 />

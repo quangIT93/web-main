@@ -1,31 +1,18 @@
 import React, { useEffect, FormEvent, useState } from 'react';
-// import { useHomeState } from '../Home/HomeState'
-// import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
-import { Box, Typography } from '@mui/material';
-import { UserOutlined } from '@ant-design/icons';
-// import moment, { Moment } from 'moment';
 
-import { Collapse } from 'antd';
-import { Skeleton } from 'antd';
 import { message } from 'antd';
-import { Avatar } from 'antd';
-import {
-    SaveIconOutline,
-    SaveIconFill,
-} from '#components/Icons';
+import { Space } from 'antd';
 import RollTop from '#components/RollTop';
-
+import { Stack } from '@mui/material';
 // import component
 
 import {
     EysIcon,
     CommentIcon,
     LikeIcon,
-    EditComunity,
     FilterComunity,
+    MoreICon
 } from '#components/Icons';
 
 // @ts-ignore
@@ -35,12 +22,53 @@ import languageApi from 'api/languageApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer/index';
 import './style.scss';
+import communityApi from 'api/apiCommunity';
+
+import HijobNewsCard from '#components/Community/HijobNewsCard';
 
 const ComunityNews = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const [openMenu, setOpenMenu] = React.useState(false);
     const footerRef = React.useRef<any>(null);
     const [language, setLanguage] = React.useState<any>();
+    const [hijobNews, setHijobNews] = React.useState<any>();
+    const [page, setPage] = React.useState<any>("0");
+    const [isVisible, setIsVisible] = React.useState(true);
+
+    const handleGetAllHijobNews = async () => {
+        try {
+            const result = await communityApi.getCommunitations(page, "9", "", 0);
+            if (result) {
+                setHijobNews(result?.data?.communications);
+                if (result?.data?.communications?.length < 10) {
+                    setIsVisible(false);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    React.useEffect(() => {
+        handleGetAllHijobNews()
+    }, [])
+
+    const handleChange = async () => {
+        const nextPage = (parseInt(page) + 1).toString()
+        const result = await communityApi.getCommunitations(nextPage, "9", "", 0);
+
+        //
+        if (result && result?.data?.communications?.length !== 0) {
+            setHijobNews((prev: any) => [...prev, ...result?.data?.communications]);
+            setPage(nextPage);
+        } else {
+            setPage("0");
+            message.error("da het data");
+            setIsVisible(false);
+            // console.log('da het data', result);
+        }
+
+    };
 
     const getlanguageApi = async () => {
         try {
@@ -120,232 +148,34 @@ const ComunityNews = () => {
                             {/* <EditComunity /> */}
                         </div>
                     </div>
+                    {
+                        hijobNews && hijobNews.map((item: any, index: any) => (
+                            <HijobNewsCard item={item} index={index} />
+                        ))
+                    }
 
-                    <div className="comunitypostNews-wrap_content">
-                        <div className="comunitypostNews-wrap_content__left">
-                            <Avatar shape="square" src="../images/banner.png" icon={<UserOutlined />} />
-                        </div>
-                        <div className="comunitypostNews-wrap_content__right">
-                            <div className="comunityPostNews-content">
-                                <div className="comunityPostNews-content-title">
-                                    <h3>Kinh nghiệm tìm việc nhà hàng</h3>
-                                    <SaveIconOutline width={24} height={24} />
-                                </div>
-                                <div className="comunityPostNews-content_info">
-                                    <ul className={`text-content_postNew `}>
-                                        Kinh nghiệm phục vụ nhà hàng cho người mới bắt đầu:
-                                        <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                        <li>Hiểu rõ công việc mình làm</li>
-                                        {/* <li>Hiểu thực đơn của nhà hàng</li>
-                                        <li>Hiểu rõ công việc mình làm</li>
-                                        <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                        <li>Hiểu thực đơn của nhà hàng</li> */}
-                                    </ul>
-                                    {/* {!showText ? (
-                                        <span onClick={handleAddText}>Xem thêm...</span>
-                                    ) : (
-                                        <></>
-                                    )} */}
-                                </div>
-                            </div>
-                            <div className="comunityPostNews-interaction">
-                                <div className="comunitypostNew-wrap_actor">
-                                    <div className="comunitypostNew-wrap">
-                                        {/* <img src="../images/banner.png" alt="anh loi" /> */}
-                                        <Avatar size={42} src="../images/banner.png" icon={<UserOutlined />} />
-                                        <div className="info-actor_comunity">
-                                            <p>Người viết</p>
-                                            <p>Trần Văn An</p>
-                                        </div>
-                                    </div>
-                                    <p>09/08/2023</p>
-                                </div>
-                                <div className="comunitypostNew-wrap_status">
-                                    <div className="status-item">
-                                        <EysIcon />
-                                        <p>123</p>
-                                    </div>
-                                    <div className="status-item">
-                                        <LikeIcon />
-                                        <p>2321</p>
-                                    </div>
-                                    <div className="status-item">
-                                        <CommentIcon />
-                                        <p>2321</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="comunitypostNews-wrap_content">
-                        <div className="comunitypostNews-wrap_content__left">
-                            <Avatar shape="square" src="../images/banner.png" icon={<UserOutlined />} />
-                        </div>
-                        <div className="comunitypostNews-wrap_content__right">
-                            <div className="comunityPostNews-content">
-                                <div className="comunityPostNews-content-title">
-                                    <h3>Kinh nghiệm tìm việc nhà hàng</h3>
-                                    <SaveIconOutline width={24} height={24} />
-                                </div>
-                                <div className="comunityPostNews-content_info">
-                                    <ul className={`text-content_postNew `}>
-                                        Kinh nghiệm phục vụ nhà hàng cho người mới bắt đầu:
-                                        <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                        <li>Hiểu rõ công việc mình làm</li>
-                                        {/* <li>Hiểu thực đơn của nhà hàng</li>
-                                        <li>Hiểu rõ công việc mình làm</li>
-                                        <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                        <li>Hiểu thực đơn của nhà hàng</li> */}
-                                    </ul>
-                                    {/* {!showText ? (
-                                        <span onClick={handleAddText}>Xem thêm...</span>
-                                    ) : (
-                                        <></>
-                                    )} */}
-                                </div>
-                            </div>
-                            <div className="comunityPostNews-interaction">
-                                <div className="comunitypostNew-wrap_actor">
-                                    <div className="comunitypostNew-wrap">
-                                        {/* <img src="../images/banner.png" alt="anh loi" /> */}
-                                        <Avatar size={42} src="../images/banner.png" icon={<UserOutlined />} />
-                                        <div className="info-actor_comunity">
-                                            <p>Người viết</p>
-                                            <p>Trần Văn An</p>
-                                        </div>
-                                    </div>
-                                    <p>09/08/2023</p>
-                                </div>
-                                <div className="comunitypostNew-wrap_status">
-                                    <div className="status-item">
-                                        <EysIcon />
-                                        <p>123</p>
-                                    </div>
-                                    <div className="status-item">
-                                        <LikeIcon />
-                                        <p>2321</p>
-                                    </div>
-                                    <div className="status-item">
-                                        <CommentIcon />
-                                        <p>2321</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="comunitypostNews-wrap_content">
-                        <div className="comunitypostNews-wrap_content__left">
-                            <Avatar shape="square" src="../images/banner.png" icon={<UserOutlined />} />
-                        </div>
-                        <div className="comunitypostNews-wrap_content__right">
-                            <div className="comunityPostNews-content">
-                                <div className="comunityPostNews-content-title">
-                                    <h3>Kinh nghiệm tìm việc nhà hàng</h3>
-                                    <SaveIconOutline width={24} height={24} />
-                                </div>
-                                <div className="comunityPostNews-content_info">
-                                    <ul className={`text-content_postNew `}>
-                                        Kinh nghiệm phục vụ nhà hàng cho người mới bắt đầu:
-                                        <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                        <li>Hiểu rõ công việc mình làm</li>
-                                        {/* <li>Hiểu thực đơn của nhà hàng</li>
-                                        <li>Hiểu rõ công việc mình làm</li>
-                                        <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                        <li>Hiểu thực đơn của nhà hàng</li> */}
-                                    </ul>
-                                    {/* {!showText ? (
-                                        <span onClick={handleAddText}>Xem thêm...</span>
-                                    ) : (
-                                        <></>
-                                    )} */}
-                                </div>
-                            </div>
-                            <div className="comunityPostNews-interaction">
-                                <div className="comunitypostNew-wrap_actor">
-                                    <div className="comunitypostNew-wrap">
-                                        {/* <img src="../images/banner.png" alt="anh loi" /> */}
-                                        <Avatar size={42} src="../images/banner.png" icon={<UserOutlined />} />
-                                        <div className="info-actor_comunity">
-                                            <p>Người viết</p>
-                                            <p>Trần Văn An</p>
-                                        </div>
-                                    </div>
-                                    <p>09/08/2023</p>
-                                </div>
-                                <div className="comunitypostNew-wrap_status">
-                                    <div className="status-item">
-                                        <EysIcon />
-                                        <p>123</p>
-                                    </div>
-                                    <div className="status-item">
-                                        <LikeIcon />
-                                        <p>2321</p>
-                                    </div>
-                                    <div className="status-item">
-                                        <CommentIcon />
-                                        <p>2321</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="comunitypostNews-wrap_content">
-                        <div className="comunitypostNews-wrap_content__left">
-                            <Avatar shape="square" src="../images/banner.png" icon={<UserOutlined />} />
-                        </div>
-                        <div className="comunitypostNews-wrap_content__right">
-                            <div className="comunityPostNews-content">
-                                <div className="comunityPostNews-content-title">
-                                    <h3>Kinh nghiệm tìm việc nhà hàng</h3>
-                                    <SaveIconOutline width={24} height={24} />
-                                </div>
-                                <div className="comunityPostNews-content_info">
-                                    <ul className={`text-content_postNew `}>
-                                        Kinh nghiệm phục vụ nhà hàng cho người mới bắt đầu:
-                                        <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                        <li>Hiểu rõ công việc mình làm</li>
-                                        {/* <li>Hiểu thực đơn của nhà hàng</li>
-                                        <li>Hiểu rõ công việc mình làm</li>
-                                        <li>Hiểu và tuân thủ những quy định về đồng phục</li>
-                                        <li>Hiểu thực đơn của nhà hàng</li> */}
-                                    </ul>
-                                    {/* {!showText ? (
-                                        <span onClick={handleAddText}>Xem thêm...</span>
-                                    ) : (
-                                        <></>
-                                    )} */}
-                                </div>
-                            </div>
-                            <div className="comunityPostNews-interaction">
-                                <div className="comunitypostNew-wrap_actor">
-                                    <div className="comunitypostNew-wrap">
-                                        {/* <img src="../images/banner.png" alt="anh loi" /> */}
-                                        <Avatar size={42} src="../images/banner.png" icon={<UserOutlined />} />
-                                        <div className="info-actor_comunity">
-                                            <p>Người viết</p>
-                                            <p>Trần Văn An</p>
-                                        </div>
-                                    </div>
-                                    <p>09/08/2023</p>
-                                </div>
-                                <div className="comunitypostNew-wrap_status">
-                                    <div className="status-item">
-                                        <EysIcon />
-                                        <p>123</p>
-                                    </div>
-                                    <div className="status-item">
-                                        <LikeIcon />
-                                        <p>2321</p>
-                                    </div>
-                                    <div className="status-item">
-                                        <CommentIcon />
-                                        <p>2321</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+                <Stack
+                    spacing={2}
+                    sx={{
+                        display: isVisible ? 'flex' : "none",
+                        alignItems: 'center',
+                        margin: '24px 0',
+                    }}
+                >
+                    {/* <Pagination count={10} shape="rounded" /> */}
+                    <Space
+                        className="div-hover-more"
+                        onClick={handleChange}
+                    >
+                        <p>
+                            {
+                                language?.more
+                            }
+                        </p>
+                        <MoreICon width={20} height={20} />
+                    </Space>
+                </Stack>
             </div>
             <RollTop />
             <Footer />
