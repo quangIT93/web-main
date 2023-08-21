@@ -684,9 +684,9 @@ const Detail = () => {
 
   const handleChangeStatus = async () => {
     try {
-      // const result = await appplicationApi.applyAplication(POST_ID);
+      const result = await appplicationApi.applyAplication(POST_ID);
       // console.log('result ung tiyen', result);
-      if (post?.data?.applied) {
+      if (result && post?.data?.applied) {
         // openNotification();
         setTextButton(
           languageRedux === 1 ? postDetail.applied : postDetailEn.applied,
