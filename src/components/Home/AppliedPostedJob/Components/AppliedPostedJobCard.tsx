@@ -263,7 +263,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                 fontSize: '12px',
               }}
             >
-              {language?.home_page?.applied_on}
+              {language?.history_page?.applied_on}
               &nbsp;
               {new Date(props.item.created_at).toLocaleDateString('en-GB')}
               ,&nbsp;

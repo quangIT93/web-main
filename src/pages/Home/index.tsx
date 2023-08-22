@@ -42,12 +42,14 @@ import languageApi from 'api/languageApi';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language,);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [language, setLanguage] = React.useState<any>();
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -59,8 +61,8 @@ const Home: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   useEffect(() => {
     logEvent(analytics, 'screen_view' as string, {
@@ -73,15 +75,32 @@ const Home: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = languageRedux === 1 ?
-      "HiJob - Tìm việc làm, tuyển dụng" :
-      "HiJob - Find a job, recruit";
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Tìm việc làm, tuyển dụng'
+        : 'HiJob - Find a job, recruit';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
+  const [reachedEndShowSubjectJob, setReachedEndShowSubjectJob] =
+    React.useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        setReachedEndShowSubjectJob(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div className="home">
@@ -99,9 +118,15 @@ const Home: React.FC = () => {
         <AppliedPostedJob />
         <HotJob />
         <NewJobs />
-        <SuggestJob />
-        <ThemesJob />
-        <Community />
+        {reachedEndShowSubjectJob ? (
+          <>
+            <SuggestJob />
+            <ThemesJob />
+            {/* <Community /> */}
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <RollTop />
       <Footer />

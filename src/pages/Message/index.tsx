@@ -63,7 +63,7 @@ const Message = () => {
   }, [languageRedux])
 
   useEffect(() => {
-    document.title = language?.message_page?.title_page;
+    document.title = language?.messages_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       page_title: '/web_message ',
     });

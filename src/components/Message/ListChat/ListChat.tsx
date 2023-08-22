@@ -321,7 +321,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
               {userInfoChat.isOnline ? (
                 <span>
                   {
-                    language?.message_page?.online
+                    language?.messages_page?.online
                   }
                 </span>
               ) : (
@@ -371,7 +371,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                             : userInfoChat.salary_type_id === 5
                               ? language?.tasks
                               : userInfoChat.salary_type_id === 6
-                                ? language?.message_page?.negotiate
+                                ? language?.messages_page?.negotiate
                                 : ''}
                   </p>
                 </div>
@@ -392,9 +392,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                 onClick={handleClickApplication}
               >
                 {userInfoChat.applied && userInfoChat.statusPost !== 3
-                  ? language?.message_page?.apply_now
+                  ? language?.messages_page?.apply_now
                   : userInfoChat.statusPost === 3
-                    ? language?.message_page?.closed
+                    ? language?.messages_page?.closed
                     : language?.applied1}
               </Button>
             </div>
@@ -486,7 +486,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                       <span className="date-chat">
                         {chatDate === new Date().toLocaleDateString()
                           ?
-                          language?.message_page?.to_day
+                          language?.messages_page?.to_day
                           : chatDate}
                       </span>
                       <hr className="horizontal-line"></hr>
@@ -573,7 +573,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
           <img src="./images/imageChatBegin.png" alt="" />
           <div>
             {
-              language?.message_page?.list_chat_none
+              language?.messages_page?.list_chat_none
             }
           </div>
         </div>

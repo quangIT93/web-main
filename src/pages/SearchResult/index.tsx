@@ -966,7 +966,9 @@ const NewJobs: React.FC = () => {
               }
             </p>
             <p className="title-modal_noteKeyword">
-              Thêm từ khóa liên quan đến công việc hoặc tên công ty bạn muốn
+              {
+                language?.search_results_page?.add_keyword_titles
+              }
             </p>
             <Input
               placeholder={

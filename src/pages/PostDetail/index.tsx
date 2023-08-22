@@ -192,7 +192,8 @@ const Detail = () => {
     null,
   );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-  const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển');
+  const [language, setLanguage] = React.useState<any>();
+  const [textButton, setTextButton] = React.useState<string>(language?.post_detail_page?.apply);
   const [key, setKeyTab] = React.useState<string>('1');
   const [backgroundButton, setBackgroundButton] =
     React.useState<string>('#0D99FF');
@@ -204,7 +205,6 @@ const Detail = () => {
   const [openModalApply, setOpenModalApply] = React.useState(false);
   const [isApplied, setIsApplied] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-  const [language, setLanguage] = React.useState<any>();
   // const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
   const languageRedux = useSelector(
@@ -305,7 +305,7 @@ const Detail = () => {
   useEffect(() => {
     getDataCompany();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [language]);
 
   // get post by id-post
   const getPostById = async () => {
@@ -417,7 +417,7 @@ const Detail = () => {
     //get post next
     getAnotherPost(POST_ID + 1, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookmarked, POST_ID, languageRedux]);
+  }, [bookmarked, POST_ID, languageRedux, language]);
 
   // set size for Breadcrumb
   // React.useEffect(() => {
@@ -680,9 +680,9 @@ const Detail = () => {
 
   const handleChangeStatus = async () => {
     try {
-      // const result = await appplicationApi.applyAplication(POST_ID);
+      const result = await appplicationApi.applyAplication(POST_ID);
       // console.log('result ung tiyen', result);
-      if (post?.data?.applied) {
+      if (result && post?.data?.applied) {
         // openNotification();
         setTextButton(language?.post_detail_page?.applied);
         // setBackgroundButton('gray');

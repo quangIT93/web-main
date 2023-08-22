@@ -252,8 +252,14 @@ const BreadcrumbsCpn: React.FC = () => {
       !event.target.closest('.icon-breadcrumb')
     ) {
       setOpen(false);
+      // handleClickChoose()
     }
   };
+
+  useEffect(() => {
+    !open && handleClickChoose()
+  }, [open])
+
 
   useEffect(() => {
     window.addEventListener('click', handleOutsideClick);

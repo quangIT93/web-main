@@ -131,7 +131,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   const TYPE_JOB = userFilteredCookies?.id;
   // console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType(languageRedux === 1 ? 'vi' : 'en');
+    const result = await siteApi.getJobType(languageRedux == 1 ? 'vi' : 'en');
     const updatedData = [{ id: 5, name: language?.all }, ...result.data];
     // console.log('updatedData', updatedData);
     if (updatedData) {
@@ -148,7 +148,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   React.useEffect(() => {
     getTypeJob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TYPE_JOB, languageRedux]);
+  }, [TYPE_JOB, languageRedux, language]);
 
   const handleChange = (value1: string) => {
     setReset(false);

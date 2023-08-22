@@ -6,6 +6,25 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer/index';
 const NoDataComponent: React.FC = () => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
   return (
     <div
       style={{
@@ -26,9 +45,7 @@ const NoDataComponent: React.FC = () => {
       />
       <p style={{ fontSize: 20, color: 'gray', marginBottom: 20 }}>
         {
-          languageRedux === 1 ?
-            "Chưa tìm thấy công việc" :
-            "Job not found"
+          language?.history_page?.no_job_page
         }
       </p>
     </div>
