@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext, memo, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 // import Backdrop from '@mui/material/Backdrop';
@@ -168,6 +168,7 @@ const CategoryCarousel: React.FC = () => {
       let userSelected: UserSelected = {
         userSelectedId: newValue,
       };
+
       setCookie('userSelected', JSON.stringify(userSelected), 365);
 
       const selectedCategory = categories?.data.find(
@@ -246,6 +247,21 @@ const CategoryCarousel: React.FC = () => {
       // setOpenBackdrop(false); // Đóng backdrop sau khi API call hoàn thành
     }
   };
+
+  useEffect(() => {
+    if (JSON.parse(getCookie('userSelected') as any)) {
+      const userSelected = Number(
+        JSON.parse(getCookie('userSelected') || '').userSelectedId,
+      );
+      setCookie(
+        'userSelected',
+        JSON.stringify({ userSelectedId: userSelected }),
+        365,
+      );
+    } else {
+      setCookie('userSelected', JSON.stringify({ userSelectedId: 1 }), 365);
+    }
+  }, []);
 
   const getAllParentCategories = async () => {
     try {
