@@ -129,7 +129,7 @@ const HistoryPost = () => {
       id: 4,
       title: language?.history_page?.list_of_articles,
       childs: [language?.history_page?.saved,
-      language?.history_page?.have_been_created],
+      language?.history_page?.posts_created],
     },
   ];
 

@@ -76,7 +76,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           htmlFor="company"
         >
           {
-            language?.company
+            language?.company_name
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>

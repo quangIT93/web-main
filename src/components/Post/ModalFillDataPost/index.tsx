@@ -342,12 +342,12 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
           <div className="wrap-button_filterPost">
             <Button type="primary" block onClick={handleSubmitValueFill}>
               {
-                language?.yes
+                language?.ok1
               }
             </Button>
             <Button block onClick={handleCancleFillData}>
               {
-                language?.no
+                language?.cancel
               }
             </Button>
           </div>

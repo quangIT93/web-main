@@ -262,7 +262,9 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
               {props.item.num_of_application}
               {' '}
               {
-                language?.history_page?.application_has_been_applied
+                props.item.num_of_application <= 1 ?
+                  language?.history_page?.application :
+                  language?.history_page?.applications
               }
             </p>
             {props.item.status === 1 ? (
