@@ -55,13 +55,13 @@ axiosClient.interceptors.response.use(
     let refreshToken = localStorage.getItem('refreshToken')
     if (!refreshToken) {
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
       return
     }
 
 
     if (
-      (refreshToken && error.response?.status === 403) || (refreshToken && error.response?.status === 400) || (refreshToken && error.response?.status === 401)
+      (refreshToken && error.response?.status === 403) ||
+      (refreshToken && error.response?.status === 401)
     ) {
       axios
         .post(`${BASE_URL}/v1/reset-access-token`, {
@@ -83,12 +83,13 @@ axiosClient.interceptors.response.use(
           if (!localStorage.getItem("refreshToken")) {
             localStorage.clear();
             axios.post(`${BASE_URL}/v1/sign-out`)
+            // window.location.reload()
+          } else if ((error.response.status === 401 && localStorage.getItem("refreshToken")) || (error.response.status === 401 && localStorage.getItem("accessToken")) || (error.response.status === 401 && localStorage.getItem("accessToken"))) {
+            localStorage.clear();
+            axios.post(`${BASE_URL}/v1/sign-out`)
             window.location.reload()
-          } else {
-
-
+            
           }
-          
         })
     }
 
