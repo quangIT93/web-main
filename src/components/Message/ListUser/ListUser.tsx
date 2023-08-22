@@ -42,6 +42,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     try {
       const result = await messageApi.getUserChated('vi');
 
+      console.log('result', result);
+
       if (result) {
         setStateUserChat(result.data);
       }
@@ -96,6 +98,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
               money_type_text: resultPost.data.moneyTypeText,
               salary_type_id: resultPost.data.postSalaryType.id,
               statusPost: resultPost.status,
+              is_owner: true,
             });
           }
         }
@@ -213,7 +216,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     getAllUserChat();
     setReceivedMessages([
       {
-        receiverId: userInfoChat.user_id,
+        receiverId: searchParams.get('user_id'),
         message: '',
         createdAt: 0,
         type: '',
@@ -222,7 +225,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     ]);
     setSendMessages([
       {
-        receiverId: userInfoChat.user_id,
+        receiverId: searchParams.get('user_id'),
         message: '',
         createdAt: 0,
         type: '',
@@ -338,7 +341,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           {listUserChat.map((user: any, index: number) => (
             <div
               className={`wrap-userInfo ${
-                userInfoChat.user_id === user.user_id ? 'readed-message' : ''
+                searchParams.get('user_id') === user.user_id
+                  ? 'readed-message'
+                  : ''
               } `}
               key={index}
               onClick={() => handleClickUserInfo(user)}
