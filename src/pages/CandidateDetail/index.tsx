@@ -47,6 +47,14 @@ import ApprovedApplication from '#components/CandidateDetail/ApprovedApplication
 import RecuitApplication from '#components/CandidateDetail/RecuitApplication';
 import CVItem from '#components/Profile/CV';
 import './style.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer';
+import languageApi from 'api/languageApi';
+import { candidateDetail } from 'validations/lang/vi/candidateDetail';
+import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
+
 // const SmallAvatar = styled(Avatar)(({ theme }) => ({
 //   width: 22,
 //   height: 22,
@@ -72,6 +80,7 @@ interface ICategories {
 }
 
 const CandidateDetail: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language,);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [dataPost, setDataPost] = useState<any>(null);
@@ -81,18 +90,37 @@ const CandidateDetail: React.FC = () => {
     dataCandidate?.applicationProfile?.application_status,
   );
   const [open, setOpen] = useState(false);
+  const [language, setLanguage] = useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const analytics: any = getAnalytics();
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = 'HiJob - Chi tiết ứng viên';
+    document.title = language?.candidate_detail_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_candidate_detail' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [language]);
 
   // when dataCandidate changed, statusApplication change
   useEffect(() => {
@@ -109,7 +137,9 @@ const CandidateDetail: React.FC = () => {
     try {
       const postId = parseInt(searchParams.get('post-id') ?? '');
       const candidateId = searchParams.get('application_id') ?? '';
-      const result = await postApi.getById(postId, 'vi');
+      const result = await postApi.getById(postId,
+        languageRedux === 1 ? "vi" : "en"
+      );
 
       if (result) {
         setDataPost(result.data);
@@ -117,7 +147,7 @@ const CandidateDetail: React.FC = () => {
       const detailCandidate = await historyRecruiter.GetAJobApplication(
         postId,
         candidateId,
-        'vi',
+        languageRedux === 1 ? "vi" : "en",
       );
 
       if (detailCandidate) {
@@ -141,7 +171,7 @@ const CandidateDetail: React.FC = () => {
       isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const handleClickPost = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -330,7 +360,10 @@ const CandidateDetail: React.FC = () => {
                     fontStyle: 'italic',
                   }}
                 >
-                  Đã đăng vào: {moment(dataPost?.start_date).format('DD/MM/YY')}
+                  {
+                    language?.posted_on
+                  }{' '}
+                  {moment(dataPost?.start_date).format('DD/MM/YY')}
                 </p>
                 {dataPost?.status === 1 ? (
                   <p
@@ -343,7 +376,7 @@ const CandidateDetail: React.FC = () => {
                       fontStyle: 'italic',
                     }}
                   >
-                    Đang tuyển
+                    {language?.recruiting}
                   </p>
                 ) : dataPost?.status === 3 ? (
                   <p
@@ -356,7 +389,7 @@ const CandidateDetail: React.FC = () => {
                       fontStyle: 'italic',
                     }}
                   >
-                    Đã đóng
+                    {language?.post_detail_page?.closed}
                   </p>
                 ) : (
                   <p
@@ -368,7 +401,9 @@ const CandidateDetail: React.FC = () => {
                       fontStyle: 'italic',
                     }}
                   >
-                    Không chấp nhận
+                    {
+                      language?.history_page?.does_not_accept
+                    }
                   </p>
                 )}
               </Box>
@@ -404,7 +439,7 @@ const CandidateDetail: React.FC = () => {
               textDecoration: 'underline',
             }}
           >
-            Hồ sơ ứng viên
+            {language?.candidate_resume}
           </p>
           <Box sx={{ marginTop: '10px' }}>
             <div className="div-profile-avatar">
@@ -434,7 +469,7 @@ const CandidateDetail: React.FC = () => {
                     <h2>
                       {dataCandidate?.applicationProfile?.name
                         ? dataCandidate?.applicationProfile?.name
-                        : 'Chưa cập nhật'}
+                        : language?.unupdated}
                     </h2>
                   </div>
                 </div>
@@ -459,8 +494,7 @@ const CandidateDetail: React.FC = () => {
                         window.open(
                           `/message?post_id=${searchParams.get(
                             'post-id',
-                          )}&user_id=${
-                            dataCandidate.applicationProfile.account_id
+                          )}&user_id=${dataCandidate.applicationProfile.account_id
                           }&application_id=${searchParams.get(
                             'application_id',
                           )} `,
@@ -485,7 +519,7 @@ const CandidateDetail: React.FC = () => {
               >
                 {dataCandidate?.applicationProfile?.introduction
                   ? dataCandidate?.applicationProfile?.introduction
-                  : 'Chưa cập nhật'}
+                  : language?.unupdated}
               </div>
             </div>
             <div className="div-profile-info">
@@ -496,33 +530,33 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>Thông tin cá nhân</h3>
+                <h3>{language?.personal_information}</h3>
               </div>
               <div className="info-detail">
                 <div className="div-detail-row left">
-                  <p>Ngày sinh</p>
-                  <p>Giới tính</p>
-                  <p>Địa điểm</p>
+                  <p>{language?.date_of_birth}</p>
+                  <p>{language?.sex}</p>
+                  <p>{language?.location}</p>
                 </div>
                 <div className="div-detail-row right">
                   <p>
                     {dataCandidate?.applicationProfile?.birthday
                       ? moment(
-                          new Date(dataCandidate?.applicationProfile?.birthday),
-                        ).format('DD/MM/yyyy')
-                      : 'Chưa cập nhật'}
+                        new Date(dataCandidate?.applicationProfile?.birthday),
+                      ).format('DD/MM/yyyy')
+                      : language?.unupdated}
                   </p>
                   <p>
                     {dataCandidate?.applicationProfile?.gender
                       ? dataCandidate?.applicationProfile?.gender === 1
-                        ? 'Nam'
-                        : 'Nữ'
-                      : 'Nam'}
+                        ? language?.male
+                        : language?.female
+                      : language?.male}
                   </p>
                   <p>
                     {dataCandidate?.applicationProfile?.address?.name
                       ? dataCandidate?.applicationProfile?.address?.name
-                      : 'Chưa cập nhật'}
+                      : language?.unupdated}
                   </p>
                 </div>
               </div>
@@ -536,11 +570,11 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>Thông tin liên hệ</h3>
+                <h3>{language?.contact_information}</h3>
               </div>
               <div className="info-detail">
                 <div className="div-detail-row left">
-                  <p>Số điện thoại</p>
+                  <p>{language?.phone_number}</p>
                   <p>Email</p>
 
                   <p>Facebook</p>
@@ -551,24 +585,24 @@ const CandidateDetail: React.FC = () => {
                   <p>
                     {dataCandidate?.applicationProfile?.phone
                       ? dataCandidate?.applicationProfile?.phone
-                      : 'Chưa cập nhật'}
+                      : language?.unupdated}
                   </p>
                   <p>
                     {dataCandidate?.applicationProfile?.email
                       ? dataCandidate?.applicationProfile?.email
-                      : 'Chưa cập nhật'}
+                      : language?.unupdated}
                   </p>
 
                   <p>
                     {dataCandidate?.applicationProfile?.facebook
                       ? dataCandidate?.applicationProfile?.facebook
-                      : 'Chưa cập nhật'}
+                      : language?.unupdated}
                   </p>
 
                   <p>
                     {dataCandidate?.applicationProfile?.linkedin
                       ? dataCandidate?.applicationProfile?.linkedin
-                      : 'Chưa cập nhật'}
+                      : language?.unupdated}
                   </p>
                 </div>
               </div>
@@ -591,9 +625,10 @@ const CandidateDetail: React.FC = () => {
                     open={open}
                     setOpen={setOpen}
                     isProfile={false}
+                    language={language}
                   />
                 ) : (
-                  <>Chưa cập nhật</>
+                  <>{language?.unupdated}</>
                 )}
               </Space>
             </div>
@@ -606,18 +641,18 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>Lĩnh vực quan tâm</h3>
+                <h3>{language?.career_objective}</h3>
               </div>
               <Space wrap className="item-info-work">
                 {dataCandidate?.categories?.length !== 0
                   ? dataCandidate?.categories?.map(
-                      (item: ICategories, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item.child_category}
-                        </Button>
-                      ),
-                    )
-                  : 'Chưa cập nhật'}
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    ),
+                  )
+                  : language?.unupdated}
               </Space>
             </div>
             <div className="div-profile-info">
@@ -628,18 +663,18 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>Khu vực làm việc</h3>
+                <h3>{language?.working_location}</h3>
               </div>
               <Space wrap className="item-info-work">
                 {dataCandidate?.locations?.length !== 0
                   ? dataCandidate?.locations?.map(
-                      (item: any, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item?.district}
-                        </Button>
-                      ),
-                    )
-                  : 'Chưa cập nhật'}
+                    (item: any, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item?.district}
+                      </Button>
+                    ),
+                  )
+                  : language?.unupdated}
               </Space>
             </div>
 
@@ -651,7 +686,7 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>Trình độ học vấn</h3>
+                <h3>{language?.education}</h3>
               </div>
               {dataCandidate?.educations?.length !== 0 ? (
                 dataCandidate?.educations?.map(
@@ -660,7 +695,7 @@ const CandidateDetail: React.FC = () => {
                   ),
                 )
               ) : (
-                <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
               )}
 
               <div
@@ -680,14 +715,16 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>Kinh nghiệm làm việc</h3>
+                <h3>
+                  {language?.working_experience}
+                </h3>
               </div>
               {dataCandidate?.experiences?.length !== 0 ? (
                 dataCandidate?.experiences?.map((item: any, index: number) => (
                   <ItemApply typeItem="experiences" key={index} item={item} />
                 ))
               ) : (
-                <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
               )}
 
               <div

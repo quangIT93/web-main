@@ -16,10 +16,11 @@ interface IEditPostTypeSalary {
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
   editDataPosted: any
   salaryType?: number
+  language: any;
 }
 
 const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
-  const { editDataPosted, setEditDataPosted, salaryType } = props
+  const { editDataPosted, setEditDataPosted, salaryType, language } = props
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => ({
@@ -46,7 +47,10 @@ const EditPostTypeSalary: React.FC<IEditPostTypeSalary> = (props) => {
           }}
           color="warning"
         >
-          Mức lương <span style={{ color: 'red' }}>*</span>
+          {
+            language?.salary
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row

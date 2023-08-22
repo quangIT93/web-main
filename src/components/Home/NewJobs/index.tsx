@@ -32,6 +32,7 @@ import { useSearchParams } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 // import { AxiosResponse } from 'axios';
 // import icon
+import languageApi from 'api/languageApi';
 
 import { Space } from 'antd';
 
@@ -103,6 +104,25 @@ const NewJobs: React.FC = () => {
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [loading, setLoading] = React.useState(false);
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
 
   const {
     // setChildCateloriesArray,
@@ -228,9 +248,7 @@ const NewJobs: React.FC = () => {
         >
           <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
             <NewJobIcon width={25} height={25} />
-            <h2>
-              {languageRedux === 1 ? home.newest_jobs : homeEn.newest_jobs}
-            </h2>
+            <h2>{language?.newest_jobs}</h2>
           </div>
 
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
@@ -253,7 +271,7 @@ const NewJobs: React.FC = () => {
                 handleChange(e, page);
               }}
             >
-              <p>{languageRedux === 1 ? home.more : homeEn.more}</p>
+              <p>{language?.more}</p>
               <MoreICon width={20} height={20} />
             </Space>
           </Stack>

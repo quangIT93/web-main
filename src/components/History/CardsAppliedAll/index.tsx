@@ -8,6 +8,8 @@ import { message, Button } from 'antd';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Box, Typography, MenuItem, TextField } from '@mui/material';
 // import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Nodata from 'utils/NoDataPage';
 import sortData from 'utils/SortDataHistory/sortData';
@@ -22,12 +24,20 @@ import './style.scss';
 import historyApplicator from 'api/historyApplicator';
 
 import JobCardHistory from '../JobCardHistory';
+import languageApi from 'api/languageApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
 
 interface ICardsAppliedAll {
   activeChild: string;
 }
 
 const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataApplied, setDataApplied] = useState<any>(null);
@@ -37,6 +47,25 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   const [uploading, setUploading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
 
   const getAllApproved = async () => {
     try {
@@ -44,7 +73,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
         null,
         10,
         1,
-        'vi',
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -69,7 +98,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
       isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
@@ -77,7 +106,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
       lastPostId,
       11,
       1,
-      'vi',
+      languageRedux === 1 ? 'vi' : 'en',
     );
     if (result.data.length <= 10) {
       setIsVisible(false);
@@ -87,7 +116,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
   useEffect(() => {
     getAllPostToCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value);
@@ -101,7 +130,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
         lastPostId,
         10,
         1,
-        'vi',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setUploading(false);
@@ -109,7 +138,7 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
-            content: 'Đã hết công việc để hiển thị',
+            content: language?.out_job,
           });
           return;
         }
@@ -140,23 +169,21 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           alignItems: 'center',
         }}
       >
-        <div className="back-container">
-          <Typography
-            sx={{
-              fontWeight: '600',
-              fontSize: '16px',
-              lineHeight: '24px',
-              '@media (max-width: 350px)': {
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                minWidth: '135px',
-              },
-            }}
-          >
-            Tất cả công việc đã ứng tuyển
-          </Typography>
-        </div>
+        <Typography
+          sx={{
+            fontWeight: '600',
+            fontSize: '16px',
+            lineHeight: '24px',
+            '@media (max-width: 350px)': {
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              minWidth: '135px',
+            },
+          }}
+        >
+          {language?.history_page?.applied_jobs}
+        </Typography>
         <TextField
           select
           id="sex"
@@ -167,47 +194,63 @@ const CardsAppliedAll: React.FC<ICardsAppliedAll> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">Mới nhất</MenuItem>
-          <MenuItem value="Cũ nhất">Cũ nhất</MenuItem>
+          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
+          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
         </TextField>
       </Box>
-      <Skeleton loading={loading} active>
-        {dataApplied?.length > 0 ? (
-          <div className="history-post">
-            <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
-              {dataApplied?.map((posted: any, i: number) => (
-                <JobCardHistory item={posted} key={i} />
-              ))}
-            </Grid>
-            <Box
-              sx={{
-                margin: '12px auto',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+      {/* <Skeleton loading={loading} active> */}
+      <Backdrop
+        sx={{
+          color: '#0d99ff ',
+          backgroundColor: 'transparent',
+          zIndex: (theme: any) => theme.zIndex.drawer + 1,
+        }}
+        open={loading}
+        // onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      {dataApplied?.length > 0 ? (
+        <div className="history-post">
+          <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
+            {dataApplied?.map((posted: any, i: number) => (
+              <JobCardHistory
+                item={posted}
+                key={i}
+                language={language}
+                languageRedux={languageRedux}
+              />
+            ))}
+          </Grid>
+          <Box
+            sx={{
+              margin: '12px auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              style={{
+                width: 130,
+                height: 40,
+                backgroundColor: `#0D99FF`,
+                marginBottom: '2rem',
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                display: isVisible ? 'block' : 'none',
               }}
+              loading={uploading}
+              onClick={handleClickAddItem}
             >
-              <Button
-                style={{
-                  width: 130,
-                  height: 40,
-                  backgroundColor: `#0D99FF`,
-                  marginBottom: '2rem',
-                  color: '#FFFFFF',
-                  fontWeight: 'bold',
-                  display: isVisible ? 'block' : 'none',
-                }}
-                loading={uploading}
-                onClick={handleClickAddItem}
-              >
-                Xem thêm
-              </Button>
-            </Box>
-          </div>
-        ) : (
-          <Nodata />
-        )}
-      </Skeleton>
+              {language?.more}
+            </Button>
+          </Box>
+        </div>
+      ) : (
+        <Nodata />
+      )}
+      {/* </Skeleton> */}
     </>
   );
 };

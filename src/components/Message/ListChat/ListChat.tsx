@@ -20,13 +20,20 @@ import { ImageIcon, SendIcon, CloseIcon } from '#components/Icons';
 import './style.scss';
 
 import { ChatContext } from 'context/ChatContextProvider';
+import { messVi } from 'validations/lang/vi/mess';
+import { messEn } from 'validations/lang/en/mess';
+import { postDetail } from 'validations/lang/vi/postDetail';
+import { postDetailEn } from 'validations/lang/en/postDetail';
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
   openListChat: boolean;
+  language: any;
+  languageRedux: any;
 }
 
 const ListChat: React.FC<IOpenListChat> = (props) => {
+  const { language, languageRedux } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const [windowWidth, setWindowWidth] = useState(false);
 
@@ -92,7 +99,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         searchParams.get('user_id'),
         // 36353,
         Number(searchParams.get('post_id')),
-        'vi',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         // setTimeout(() => {
@@ -108,7 +115,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     getAllListChat();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [receivedMessages, sendMessages, userInfoChat]);
+  }, [receivedMessages, sendMessages, userInfoChat, languageRedux]);
 
   // const getProfileUser = async () => {
   //   try {
@@ -291,114 +298,116 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         >
           <CircularProgress color="inherit" />
         </Backdrop>
-
-        <div className="list-content_chat" ref={listRef}>
-          <div className="header-list_chat">
-            <div className="wrap-img_Userchat">
-              <div className="wrap_img">
-                <img
-                  src={
-                    userInfoChat.avatar
-                      ? userInfoChat.avatar
-                      : userInfoChat.imageCompany
-                  }
-                  alt={userInfoChat.company_name}
-                  onError={(e: any) => {
-                    e.target.onerror = null; // Ngăn sự kiện lặp lại
-                    e.target.src =
-                      'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png'; // Đường dẫn của hình ảnh mặc định
-                  }}
-                />
-                <span
-                  className={`user-chat_online ${
-                    userInfoChat.isOnline ? 'user-chat_onlineTrue' : ''
-                  }`}
-                ></span>
-              </div>
-              <div className="wrap-infoUser_chat">
-                <h4>{userInfoChat.name}</h4>
-                {userInfoChat.isOnline ? (
-                  <span>Đang hoạt động</span>
-                ) : (
-                  <span>offline</span>
-                )}
-              </div>
+        <div className="header-list_chat">
+          <div className="wrap-img_Userchat">
+            <div className="wrap_img">
+              <img
+                src={
+                  userInfoChat.avatar ? userInfoChat.avatar : userInfoChat.image
+                }
+                alt={userInfoChat.company_name}
+                onError={(e: any) => {
+                  e.target.onerror = null; // Ngăn sự kiện lặp lại
+                  e.target.src =
+                    'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png'; // Đường dẫn của hình ảnh mặc định
+                }}
+              />
+              <span
+                className={`user-chat_online ${
+                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                }`}
+              ></span>
             </div>
-            {userInfoChat.company_name ? (
-              <div className="wrap-icon_chat">
-                {/* <span>
+            <div className="wrap-infoUser_chat">
+              <h4>{userInfoChat.name}</h4>
+              {userInfoChat.isOnline ? (
+                <span>Đang hoạt động</span>
+              ) : (
+                <span>offline</span>
+              )}
+            </div>
+          </div>
+          {userInfoChat.company_name ? (
+            <div className="wrap-icon_chat">
+              {/* <span>
             <VideoIcon />
           </span>
           <span>
             <CallIcon />
           </span> */}
-                {/* <span>
+              {/* <span>
               <DotIcon />
             </span> */}
-                <div className="wrap-infoCompany_chat">
-                  <div className="imgCompany_chat">
-                    <img
-                      src={userInfoChat.imageCompany}
-                      alt="Ảnh lỗi"
-                      onError={(e: any) => {
-                        e.target.onerror = null; // Ngăn sự kiện lặp lại
-                        e.target.src =
-                          'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png'; // Đường dẫn của hình ảnh mặc định
-                      }}
-                    />
-                  </div>
-                  <div className="infoCompany_chat">
-                    <h4>{userInfoChat.post_title}</h4>
-                    <h6>{userInfoChat.company_name}</h6>
-                    <p>
-                      {userInfoChat.salary_min} - {userInfoChat.salary_max}{' '}
-                      {userInfoChat.money_type_text}/
-                      {userInfoChat.salary_type_id === 1
-                        ? 'Giờ'
-                        : userInfoChat.salary_type_id === 2
-                        ? 'Ngày'
-                        : userInfoChat.salary_type_id === 3
-                        ? 'Tháng'
-                        : userInfoChat.salary_type_id === 4
-                        ? 'Tuần'
-                        : userInfoChat.salary_type_id === 5
-                        ? 'Công việc'
-                        : userInfoChat.salary_type_id === 6
-                        ? 'Thương lượng'
-                        : ''}
-                    </p>
-                  </div>
+              <div className="wrap-infoCompany_chat">
+                <div className="imgCompany_chat">
+                  <img
+                    src={userInfoChat.image}
+                    alt="Ảnh lỗi"
+                    onError={(e: any) => {
+                      e.target.onerror = null; // Ngăn sự kiện lặp lại
+                      e.target.src =
+                        'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png'; // Đường dẫn của hình ảnh mặc định
+                    }}
+                  />
                 </div>
-
-                <Button
-                  type={
-                    userInfoChat.applied && userInfoChat.statusPost !== 3
-                      ? 'primary'
-                      : userInfoChat.statusPost === 3
-                      ? 'default'
-                      : 'default'
-                  }
-                  disabled={
-                    !userInfoChat.applied || userInfoChat.statusPost === 3
-                  }
-                  // disabled={true}
-                  onClick={handleClickApplication}
-                >
-                  {userInfoChat.applied && userInfoChat.statusPost !== 3
-                    ? 'Ứng tuyển ngay'
-                    : userInfoChat.statusPost === 3
-                    ? 'Đã đóng tuyển dụng'
-                    : 'Đã ứng tuyển'}
-                </Button>
+                <div className="infoCompany_chat">
+                  <h4>{userInfoChat.post_title}</h4>
+                  <h6>{userInfoChat.company_name}</h6>
+                  <p>
+                    {userInfoChat.salary_min} - {userInfoChat.salary_max}{' '}
+                    {userInfoChat.money_type_text}/
+                    {userInfoChat.salary_type_id === 1
+                      ? 'Giờ'
+                      : userInfoChat.salary_type_id === 2
+                      ? 'Ngày'
+                      : userInfoChat.salary_type_id === 3
+                      ? 'Tháng'
+                      : userInfoChat.salary_type_id === 4
+                      ? 'Tuần'
+                      : userInfoChat.salary_type_id === 5
+                      ? 'Công việc'
+                      : userInfoChat.salary_type_id === 6
+                      ? 'Thương lượng'
+                      : ''}
+                  </p>
+                </div>
               </div>
-            ) : (
-              <></>
-            )}
-            <div className="wrap-icon_close" onClick={() => closeListChat()}>
-              <CloseIcon />
-            </div>
-          </div>
 
+              <Button
+                type={userInfoChat.applied ? 'default' : 'primary'}
+                disabled={
+                  userInfoChat.post_status === 3 ||
+                  userInfoChat.post_status === 1
+                }
+                style={
+                  userInfoChat.is_owner === true
+                    ? { display: 'none' }
+                    : { display: '' }
+                }
+                onClick={handleClickApplication}
+              >
+                {userInfoChat.post_status === 3
+                  ? 'Đã đóng'
+                  : userInfoChat.applied === false &&
+                    userInfoChat.post_status === 0
+                  ? 'Chưa duyệt'
+                  : userInfoChat.applied === false &&
+                    userInfoChat.post_status === 1
+                  ? 'Ứng tuyển ngay'
+                  : userInfoChat.applied === true
+                  ? 'Đã ứng tuyển'
+                  : ''}
+              </Button>
+            </div>
+          ) : (
+            <></>
+          )}
+          <div className="wrap-icon_close" onClick={() => closeListChat()}>
+            <CloseIcon />
+          </div>
+        </div>
+
+        <div className="list-content_chat" ref={listRef}>
           {allListChat.map((chat: any, index: number) => {
             const chatDate = new Date(chat.created_at).toLocaleDateString();
             let showDate = false;
@@ -481,7 +490,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                       <hr className="horizontal-line"></hr>
                       <span className="date-chat">
                         {chatDate === new Date().toLocaleDateString()
-                          ? 'Hôm nay'
+                          ? language?.messages_page?.to_day
                           : chatDate}
                       </span>
                       <hr className="horizontal-line"></hr>
@@ -523,7 +532,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
         <div className="inputs-chat">
           <input
-            placeholder="Nhập đoạn chat của bạn"
+            placeholder={language?.write_a_message}
             value={message}
             onChange={(e) => {
               listRef?.current?.scrollIntoView({
@@ -565,7 +574,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       <div className="list-chat">
         <div className="wrap-img_chat">
           <img src="./images/imageChatBegin.png" alt="" />
-          <div>Chat giúp bạn thêm nhiều thông tin hiệu quả, nhanh chóng</div>
+          <div>{language?.messages_page?.list_chat_none}</div>
         </div>
       </div>
     );

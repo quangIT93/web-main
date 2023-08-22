@@ -66,7 +66,7 @@ import { PostNewest } from '#components/Home/NewJobs';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Avatar } from 'antd';
-
+import languageApi from 'api/languageApi';
 import IconButton from '@mui/material/IconButton';
 import { CloseIcon } from '#components/Icons';
 // import icon
@@ -192,7 +192,10 @@ const Detail = () => {
     null,
   );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-  const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển');
+  const [language, setLanguage] = React.useState<any>();
+  const [textButton, setTextButton] = React.useState<string>(
+    language?.post_detail_page?.apply,
+  );
   const [key, setKeyTab] = React.useState<string>('1');
   const [backgroundButton, setBackgroundButton] =
     React.useState<string>('#0D99FF');
@@ -204,17 +207,32 @@ const Detail = () => {
   const [openModalApply, setOpenModalApply] = React.useState(false);
   const [isApplied, setIsApplied] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
   // const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
 
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
   const itemsShare = [
     {
-      nameShare:
-        languageRedux === 1 ? postDetail.copy_link : postDetailEn.copy_link,
+      nameShare: language?.post_detail_page?.copy_link,
       icon: <CopyIcon />,
       source: '',
     },
@@ -289,7 +307,7 @@ const Detail = () => {
   useEffect(() => {
     getDataCompany();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [language]);
 
   // get post by id-post
   const getPostById = async () => {
@@ -309,36 +327,22 @@ const Detail = () => {
         // console.log('postId', result.data);
         // check  application status
         // setIsLoading(false);
-        console.log(
-          'result.data.accountId === accountId',
-          result.data.accountId === accountId,
-        );
-
-        console.log('data', result.data);
 
         if (result.data.accountId === accountId) {
-          setTextButton(
-            languageRedux === 1 ? postDetail.edit : postDetailEn.edit,
-          );
+          setTextButton(language?.post_detail_page?.edit);
           setBackgroundButton('black');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
-          setTextButton(
-            languageRedux === 1 ? postDetail.closed : postDetailEn.closed,
-          );
+          setTextButton(language?.post_detail_page?.closed);
           setBackgroundButton('gray');
           // setBackgroundButton('#0D99FF');
           result.data.applied = true;
         } else if (result.data.applied) {
-          setTextButton(
-            languageRedux === 1 ? postDetail.applied : postDetailEn.applied,
-          );
+          setTextButton(language?.post_detail_page?.applied);
           // setBackgroundButton('gray');
           setBackgroundButton('#0D99FF');
         } else {
-          setTextButton(
-            languageRedux === 1 ? postDetail.apply : postDetailEn.apply,
-          );
+          setTextButton(language?.post_detail_page?.apply);
           setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
         }
@@ -369,6 +373,7 @@ const Detail = () => {
       }
     } catch (error) {
       console.error(error);
+      window.open('/', '_parent');
     }
   };
 
@@ -409,7 +414,7 @@ const Detail = () => {
     //get post next
     getAnotherPost(POST_ID + 1, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookmarked, POST_ID, languageRedux]);
+  }, [bookmarked, POST_ID, languageRedux, language]);
 
   // set size for Breadcrumb
   // React.useEffect(() => {
@@ -451,14 +456,8 @@ const Detail = () => {
         (checkApply && post?.data?.companyResourceData?.name === 'HIJOB')
       ) {
         api.info({
-          message:
-            languageRedux === 1
-              ? postDetail.applied_alert_mess
-              : postDetailEn.applied_alert_mess,
-          description:
-            languageRedux === 1
-              ? postDetail.applied_alert_des
-              : postDetailEn.applied_alert_des,
+          message: language?.post_detail_page?.applied_alert_mess,
+          description: language?.post_detail_page?.applied_alert_des,
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'blue' }} />,
         });
@@ -491,14 +490,8 @@ const Detail = () => {
         !userProfile.email
       ) {
         api.info({
-          message:
-            languageRedux === 1
-              ? postDetail.update_infor_mess
-              : postDetailEn.update_infor_mess,
-          description:
-            languageRedux === 1
-              ? postDetail.update_infor_des
-              : postDetailEn.update_infor_des,
+          message: language?.post_detail_page?.update_infor_mess,
+          description: language?.post_detail_page?.update_infor_des,
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
         });
@@ -642,14 +635,13 @@ const Detail = () => {
 
   useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title =
-      languageRedux === 1 ? postDetail.title_page : postDetailEn.title_page;
+    document.title = language?.post_detail_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_post_detail' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, language]);
 
   // const handleClickSearch = () => {
   //   window.location.href = `/search?q=${post?.data.company_name}`;
@@ -689,27 +681,21 @@ const Detail = () => {
       // console.log('result ung tiyen', result);
       if (result && post?.data?.applied) {
         // openNotification();
-        setTextButton(
-          languageRedux === 1 ? postDetail.applied : postDetailEn.applied,
-        );
+        setTextButton(language?.post_detail_page?.applied);
         // setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
       } else {
         // openNotification();
-        setTextButton(
-          languageRedux === 1 ? postDetail.applied : postDetailEn.applied,
-        );
+        setTextButton(language?.post_detail_page?.applied);
         // setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
       }
     } catch (error) {
-      setTextButton(
-        languageRedux === 1 ? postDetail.applied : postDetailEn.applied,
-      );
+      setTextButton(language?.post_detail_page?.applied);
       // setBackgroundButton('gray');
       setCheckApply(true);
       // window.open(post?.data.resource.url, '_blank');
@@ -728,14 +714,8 @@ const Detail = () => {
       !userProfile.email
     ) {
       api.info({
-        message:
-          languageRedux === 1
-            ? postDetail.update_infor_mess
-            : postDetailEn.update_infor_mess,
-        description:
-          languageRedux === 1
-            ? postDetail.update_infor_des
-            : postDetailEn.update_infor_des,
+        message: language?.post_detail_page?.update_infor_mess,
+        description: language?.post_detail_page?.update_infor_des,
         placement: 'top',
         icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
       });
@@ -751,9 +731,7 @@ const Detail = () => {
         (result.code as number) === (201 as any)
       ) {
         // openNotification();
-        setTextButton(
-          languageRedux === 1 ? postDetail.applied : postDetailEn.applied,
-        );
+        setTextButton(language?.post_detail_page?.applied);
         // setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
@@ -783,10 +761,7 @@ const Detail = () => {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label:
-        languageRedux === 1
-          ? postDetail.job_information
-          : postDetailEn.job_information,
+      label: language?.post_detail_page?.job_information,
       children: (
         <>
           <div className="job-title-container">
@@ -804,11 +779,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <JobTypePostIcon />
-                  <p>
-                    {languageRedux === 1
-                      ? postDetail.job_type
-                      : postDetailEn.job_type}
-                  </p>
+                  <p>{language?.post_detail_page?.job_type}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>{post?.data.postJobType.fullName}</h5>
@@ -817,11 +788,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <ClockPostIcon />
-                  <p>
-                    {languageRedux === 1
-                      ? postDetail.working_hour
-                      : postDetailEn.working_hour}
-                  </p>
+                  <p>{language?.post_detail_page?.working_hour}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -841,11 +808,7 @@ const Detail = () => {
               >
                 <div className="div-detail-row-titleItem">
                   <CalendarPostIcon />
-                  <p>
-                    {languageRedux === 1
-                      ? postDetail.working_time
-                      : postDetailEn.working_time}
-                  </p>
+                  <p>{language?.post_detail_page?.working_time}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
@@ -860,53 +823,33 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <CalendarPostIcon />
-                  <p>
-                    {languageRedux === 1
-                      ? postDetail.work_on_weekends
-                      : postDetailEn.work_on_weekends}
-                  </p>
+                  <p>{language?.post_detail_page?.work_on_weekends}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
                     {post?.data.isWorkingWeekend === 0
-                      ? languageRedux === 1
-                        ? postDetail.weekend_no
-                        : postDetailEn.weekend_no
-                      : languageRedux === 1
-                      ? postDetail.weekend_yes
-                      : postDetailEn.weekend_yes}
+                      ? language?.post_detail_page?.weekend_no
+                      : language?.post_detail_page?.weekend_yes}
                   </h5>
                 </div>
               </div>
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <MonitorPostIcon />
-                  <p>
-                    {languageRedux === 1
-                      ? postDetail.work_remotely
-                      : postDetailEn.work_remotely}
-                  </p>
+                  <p>{language?.post_detail_page?.work_remotely}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   <h5>
                     {post?.data.isRemotely === 0
-                      ? languageRedux === 1
-                        ? postDetail.remote_no
-                        : postDetailEn.remote_no
-                      : languageRedux === 1
-                      ? postDetail.remote_yes
-                      : postDetailEn.remote_yes}
+                      ? language?.post_detail_page?.remote_no
+                      : language?.post_detail_page?.remote_yes}
                   </h5>
                 </div>
               </div>
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <DollarPostIcon />
-                  <p>
-                    {languageRedux === 1
-                      ? postDetail.salary
-                      : postDetailEn.salary}
-                  </p>
+                  <p>{language?.post_detail_page?.salary}</p>
                 </div>
                 <div className="div-detail-row-titleItem">
                   {post?.data.postSalaryType.id === 6 ? (
@@ -927,11 +870,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <WorkPostIcon />
-                  <p>
-                    {languageRedux === 1
-                      ? postDetail.job_category
-                      : postDetailEn.job_category}
-                  </p>
+                  <p>{language?.post_detail_page?.job_category}</p>
                 </div>
                 <div
                   className="div-detail-row-titleItem"
@@ -949,11 +888,7 @@ const Detail = () => {
               <div className="div-detail-row">
                 <div className="div-detail-row-titleItem">
                   <ClockPostIcon />
-                  <p>
-                    {languageRedux === 1
-                      ? postDetail.expiration_date
-                      : postDetailEn.expiration_date}
-                  </p>
+                  <p>{language?.post_detail_page?.expiration_date}</p>
                 </div>
                 <div
                   className="div-detail-row-titleItem"
@@ -964,9 +899,7 @@ const Detail = () => {
                       ? `${new Date(post?.data.expiredDate).toLocaleDateString(
                           'en-GB',
                         )}`
-                      : languageRedux === 1
-                      ? postDetail.indefinite
-                      : postDetailEn.indefinite}
+                      : language?.post_detail_page?.indefinite}
                   </h5>
                 </div>
               </div>
@@ -1023,10 +956,7 @@ const Detail = () => {
     },
     post?.data?.postCompanyInformation && {
       key: '2',
-      label:
-        languageRedux === 1
-          ? postDetail.company_infor
-          : postDetailEn.company_infor,
+      label: language?.post_detail_page?.company_infor,
       style: {
         display:
           post?.data?.postCompanyInformation && key === '2' ? 'flex' : 'none',
@@ -1072,53 +1002,35 @@ const Detail = () => {
               </div>
               <div className="div-detail-rowCompany">
                 <h3 style={{ display: 'block' }}>
-                  {languageRedux === 1
-                    ? postDetail.company_description
-                    : postDetailEn.company_description}
+                  {language?.post_detail_page?.company_description}
                 </h3>
                 <div className="div-detail_descCompany">
                   <p>
                     {post?.data.postCompanyInformation
                       ? post?.data.postCompanyInformation?.description
-                      : languageRedux === 1
-                      ? postDetail.not_update
-                      : postDetailEn.not_update}
+                      : language?.post_detail_page?.not_update}
                   </p>
                 </div>
               </div>
               <div className="div-detail-rowCompany">
-                <h3>
-                  {languageRedux === 1
-                    ? postDetail.basic_info
-                    : postDetailEn.basic_info}
-                </h3>
+                <h3>{language?.post_detail_page?.basic_info}</h3>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <TaxCodeDetailPostIcon />
-                    <p>
-                      {languageRedux === 1
-                        ? postDetail.tax_code
-                        : postDetailEn.tax_code}
-                    </p>
+                    <p>{language?.post_detail_page?.tax_code}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation.taxCode
                         ? post?.data?.postCompanyInformation?.taxCode
-                        : languageRedux === 1
-                        ? postDetail.not_update
-                        : postDetailEn.not_update}
+                        : language?.post_detail_page?.not_update}
                     </h5>
                   </div>
                 </div>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <LocationDetailPostIcon />
-                    <p>
-                      {languageRedux === 1
-                        ? postDetail.address
-                        : postDetailEn.address}
-                    </p>
+                    <p>{language?.post_detail_page?.address}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
@@ -1126,9 +1038,7 @@ const Detail = () => {
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
                           `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
                           `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
-                        : languageRedux === 1
-                        ? postDetail.not_update
-                        : postDetailEn.not_update}
+                        : language?.post_detail_page?.not_update}
                     </h5>
                   </div>
                 </div>
@@ -1141,28 +1051,20 @@ const Detail = () => {
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.email
-                        : languageRedux === 1
-                        ? postDetail.not_update
-                        : postDetailEn.not_update}
+                        : language?.post_detail_page?.not_update}
                     </h5>
                   </div>
                 </div>
                 <div className="div-detail-items">
                   <div className="div-detail-titleItem">
                     <PhoneDetailPostIcon />
-                    <p>
-                      {languageRedux === 1
-                        ? postDetail.phone_number
-                        : postDetailEn.phone_number}
-                    </p>
+                    <p>{language?.post_detail_page?.phone_number}</p>
                   </div>
                   <div className="div-detail-titleItem">
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.phone
-                        : languageRedux === 1
-                        ? postDetail.not_update
-                        : postDetailEn.not_update}
+                        : language?.post_detail_page?.not_update}
                     </h5>
                   </div>
                 </div>
@@ -1175,9 +1077,7 @@ const Detail = () => {
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? post?.data?.postCompanyInformation?.website
-                        : languageRedux === 1
-                        ? postDetail.not_update
-                        : postDetailEn.not_update}
+                        : language?.post_detail_page?.not_update}
                     </h5>
                   </div>
                 </div>
@@ -1237,9 +1137,7 @@ const Detail = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      {languageRedux === 1
-                        ? postDetail.see_all
-                        : postDetailEn.see_all}
+                      {language?.post_detail_page?.see_all}
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
@@ -1261,9 +1159,7 @@ const Detail = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      {languageRedux === 1
-                        ? postDetail.see_on_map
-                        : postDetailEn.see_on_map}
+                      {language?.post_detail_page?.see_on_map}
                     </h3>
                   </div>
                 </div>
@@ -1298,11 +1194,7 @@ const Detail = () => {
                             send
                           </Link>
                         </div> */}
-                      <h3>
-                        {languageRedux === 1
-                          ? postDetail.share
-                          : postDetailEn.share}
-                      </h3>
+                      <h3>{language?.post_detail_page?.share}</h3>
                     </div>
                     <div className="actions-item" onClick={handleClickSave}>
                       {bookmarked ? (
@@ -1311,11 +1203,7 @@ const Detail = () => {
                       ) : (
                         <SaveIconOutline width={24} height={24} />
                       )}
-                      <h3>
-                        {languageRedux === 1
-                          ? postDetail.save
-                          : postDetailEn.save}
-                      </h3>
+                      <h3>{language?.post_detail_page?.save}</h3>
                     </div>
                   </div>
                 </div>
@@ -1385,14 +1273,7 @@ const Detail = () => {
                             className="div-job-img-swipper_item"
                             key={index}
                           >
-                            <img
-                              src={item.url}
-                              alt={
-                                languageRedux === 1
-                                  ? postDetail.error_photo
-                                  : postDetailEn.error_photo
-                              }
-                            />
+                            <img src={item.url} alt={language?.err_none_img} />
                           </SwiperSlide>
                         );
                       })
@@ -1400,11 +1281,7 @@ const Detail = () => {
                       <SwiperSlide className="div-job-img-swipper_item">
                         <img
                           src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
-                          alt={
-                            languageRedux === 1
-                              ? postDetail.error_photo
-                              : postDetailEn.error_photo
-                          }
+                          alt={language?.err_none_img}
                           style={{ objectFit: 'cover' }}
                         />
                       </SwiperSlide>
@@ -1458,11 +1335,7 @@ const Detail = () => {
               <div className="description-container">
                 <div className="div-description-mo">
                   <div className="description">
-                    <h3>
-                      {languageRedux === 1
-                        ? postDetail.job_description
-                        : postDetailEn.job_description}
-                    </h3>
+                    <h3>{language?.post_detail_page?.job_description}</h3>
                     <div
                       style={{
                         whiteSpace: 'pre-line',
@@ -1482,11 +1355,7 @@ const Detail = () => {
                           <div className="icon">
                             <BackIcon width={17} height={17} />
                           </div>
-                          <span>
-                            {languageRedux === 1
-                              ? postDetail.pre_job
-                              : postDetailEn.pre_job}
-                          </span>
+                          <span>{language?.post_detail_page?.pre_job}</span>
                         </div>
                         <div
                           className="description-button_next"
@@ -1495,11 +1364,7 @@ const Detail = () => {
                             color: postNext ? 'black' : '#cccc',
                           }}
                         >
-                          <span>
-                            {languageRedux === 1
-                              ? postDetail.next_job
-                              : postDetailEn.next_job}
-                          </span>
+                          <span>{language?.post_detail_page?.next_job}</span>
                           <div
                             className="icon"
                             style={
@@ -1542,11 +1407,7 @@ const Detail = () => {
                   </Button> */}
                 </div>
                 <div className="div-suggest">
-                  <h3>
-                    {languageRedux === 1
-                      ? postDetail.similar_jobs
-                      : postDetailEn.similar_jobs}
-                  </h3>
+                  <h3>{language?.post_detail_page?.similar_jobs}</h3>
                   <div className="item">
                     {postNewest?.data?.posts.map(
                       (item: PostNewest, index: null | number) => (
@@ -1575,9 +1436,7 @@ const Detail = () => {
                 component="h2"
                 style={{ position: 'relative' }}
               >
-                {languageRedux === 1
-                  ? postDetail.share_this_job
-                  : postDetailEn.share_this_job}
+                {language?.post_detail_page?.share_this_job}
                 <IconButton
                   aria-label="close"
                   onClick={handleCloseModalShare}
@@ -1635,9 +1494,7 @@ const Detail = () => {
                 component="h2"
                 sx={{ textAlign: 'center', color: '#0d99ff' }}
               >
-                {languageRedux === 1
-                  ? postDetail.apply_this_job_mess
-                  : postDetailEn.apply_this_job_mess}
+                {language?.post_detail_page?.apply_this_job_mess}
               </Typography>
               <Typography
                 id="modal-modal-title"
@@ -1646,16 +1503,10 @@ const Detail = () => {
                 sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
               >
                 {post?.data?.companyResourceData?.name === 'HIJOB'
-                  ? languageRedux === 1
-                    ? postDetail.apply_this_job_des
-                    : postDetailEn.apply_this_job_des
+                  ? language?.post_detail_page?.apply_this_job_des
                   : isApplied
-                  ? languageRedux === 1
-                    ? postDetail.have_applied_yet
-                    : postDetailEn.have_applied_yet
-                  : languageRedux === 1
-                  ? postDetail.foward_des
-                  : postDetailEn.foward_des}
+                  ? language?.post_detail_page?.have_applied_yet
+                  : language?.post_detail_page?.forward_des}
               </Typography>
 
               <Box
@@ -1676,12 +1527,8 @@ const Detail = () => {
                   }}
                 >
                   {isApplied
-                    ? languageRedux === 1
-                      ? postDetail.not_yet
-                      : postDetailEn.not_yet
-                    : languageRedux === 1
-                    ? postDetail.no
-                    : postDetailEn.no}
+                    ? language?.post_detail_page?.not_yet
+                    : language?.no}
                 </Button>
                 <Button
                   type="primary"
@@ -1697,12 +1544,8 @@ const Detail = () => {
                   }}
                 >
                   {isApplied
-                    ? languageRedux === 1
-                      ? postDetail.already
-                      : postDetailEn.already
-                    : languageRedux === 1
-                    ? postDetail.yes
-                    : postDetailEn.yes}
+                    ? language?.post_detail_page?.already
+                    : language?.yes}
                 </Button>
               </Box>
             </Box>

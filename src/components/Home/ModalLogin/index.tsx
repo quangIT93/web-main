@@ -45,6 +45,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import './style.scss';
 import { signin } from 'validations/lang/vi/signin';
 import { signinEn } from 'validations/lang/en/signin';
+import languageApi from 'api/languageApi';
 
 //
 // import { google } from 'googleapis';
@@ -130,6 +131,24 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   const [otp, setOTP] = useState('');
   const [resendCode, setResendCode] = useState(true);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  const [language, setLanguage] = useState<any>();
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
 
   const handleClose = () => setOpenModalLogin(false);
 
@@ -146,7 +165,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
-  const handleLogin = async (e: any) => {
+  const handleLogin = async (
+    // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e: any,
+  ) => {
     try {
       e.preventDefault();
       if (isValidEmail) {
@@ -218,9 +240,13 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
         const result = await authApi.signInFacebook(response.accessToken);
         if (result) {
           fetchDataProfile(result.data, true);
+          setOpenBackdrop(false);
+          setOpenModalLogin(false);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      setOpenBackdrop(false);
+    }
 
     // console.log('facebook', response)
   };
@@ -241,6 +267,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
         if (result) {
           fetchDataProfile(result.data, true);
           setOpenBackdrop(false);
+          setOpenModalLogin(false);
         }
       }
     } catch (error) {
@@ -321,7 +348,6 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       handleLogin(e);
     }
   };
-
   // -------------------------------------------------------------------------------------
 
   // const handleCredentialResponse = async (response: any) => {
@@ -373,7 +399,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             position: 'relative',
           }}
         >
-          {languageRedux === 1 ? signin.sign_in : signinEn.sign_in}
+          {language?.login}
           <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -412,43 +438,31 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   >
                     <img
                       src="loginLogo/facebookOriginal.png"
-                      alt={languageRedux === 1 ? 'Ảnh lỗi' : 'Error Photo'}
+                      alt={language?.err_none_img}
                       width={29}
                       height={30}
                     />
-                    <p className="text-login ">
-                      {languageRedux === 1
-                        ? signin.face_signin
-                        : signinEn.face_signin}
-                    </p>
+                    <p className="text-login ">{language?.signin_with_fb}</p>
                   </div>
                 )}
               />
               <GoogleLogin
                 clientId={googleClient}
                 scope="profile email"
-                render={(renderProps) => {
-                  // console.log('rendering profile', renderProps);
-
-                  return (
-                    <div
-                      className="bnt-login_google bnt-login"
-                      onClick={renderProps.onClick}
-                    >
-                      <img
-                        src="loginLogo/googleOriginal.png"
-                        alt=""
-                        width={30}
-                        height={30}
-                      />
-                      <p className="text-login">
-                        {languageRedux === 1
-                          ? signin.gg_signin
-                          : signinEn.gg_signin}
-                      </p>
-                    </div>
-                  );
-                }}
+                render={(renderProps) => (
+                  <div
+                    className="bnt-login_google bnt-login"
+                    onClick={renderProps.onClick}
+                  >
+                    <img
+                      src="loginLogo/googleOriginal.png"
+                      alt=""
+                      width={30}
+                      height={30}
+                    />
+                    <p className="text-login">{language?.signin_with_google}</p>
+                  </div>
+                )}
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseFailFacebookAndGoogle}
@@ -457,9 +471,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
               <div className="line-with-text">
                 <span className="line"></span>
-                <span className="text">
-                  {languageRedux === 1 ? signin.or : signinEn.or}
-                </span>
+                <span className="text">{language?.or}</span>
                 <span className="line"></span>
               </div>
 
@@ -472,29 +484,21 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   onKeyDown={handleKeyPress}
                   value={loginData.email}
                   onChange={handleInputChange}
-                  placeholder={
-                    languageRedux === 1
-                      ? 'Nhập email của bạn...'
-                      : 'Enter your email address...'
-                  }
+                  placeholder={language?.modal_login?.enter_email}
                 />
                 <small className={!invalid ? 'alert' : 'alert error'}>
-                  {languageRedux === 1
-                    ? signin.wrong_mail
-                    : signinEn.wrong_mail}
+                  {language?.modal_login?.wrong_mail}
                 </small>
               </div>
               <p className="text-sent_otp">
-                {languageRedux === 1
-                  ? signin.otp_send_mail
-                  : signinEn.otp_send_mail}
+                {language?.code_will_send_to_email}
               </p>
               <button
                 type="button"
                 onClick={handleLogin}
                 className="button-login"
               >
-                {languageRedux === 1 ? signin.sign_in : signinEn.sign_in}
+                {language?.login}
               </button>
 
               {/* <div
@@ -529,15 +533,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               }}
               onClick={handleBackLogin}
             />
-            <p className="textOpt">
-              {languageRedux === 1
-                ? signin.enter_otp_email
-                : signinEn.enter_otp_email}
-            </p>
+            <p className="textOpt">{language?.type_otp_email}</p>
             <p className="textOpt-email">{loginData.email}</p>
-            <p className="textOpt-notice">
-              {languageRedux === 1 ? signin.no_otp : signinEn.no_otp}
-            </p>
+            <p className="textOpt-notice">{language?.modal_login?.no_otp}</p>
             <div className="otp-inputs">
               <OtpInput
                 value={otp}
@@ -560,11 +558,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               onClick={handleLoginOtp}
               disabled={!isInputFilled}
             >
-              {languageRedux === 1 ? signin.verify_mail : signinEn.verify_mail}
+              {language?.verify_email}
             </button>
             <div className="wrap-countDown">
               <p className="resend-otp" onClick={handleResendCode}>
-                {languageRedux === 1 ? signin.resend_otp : signinEn.resend_otp}{' '}
+                {language?.resend_code}{' '}
               </p>
               {!resendCode ? (
                 <p className="resend-otp_countDown"></p>

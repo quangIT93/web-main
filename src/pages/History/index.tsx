@@ -12,7 +12,7 @@ import Footer from '../../components/Footer/Footer';
 import CardsPosted from '#components/History/CardsPosted';
 import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
-// import CardsListBlog from '#components/History/CardsListBlog';
+import CardsListBlog from '#components/History/CardsListBlog';
 
 import RollTop from '#components/RollTop';
 
@@ -31,35 +31,39 @@ import './style.scss';
 // @ts-ignore
 import { Navbar } from '#components';
 // import Item from 'antd/es/list/Item'
+import languageApi from 'api/languageApi';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer/index';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
 
 const { Panel } = Collapse;
 
-const dataItem = [
-  {
-    id: 1,
-    title: 'Các công việc đã ứng tuyển',
-    childs: [
-      'Tất cả',
-      // 'Đã được duyệt', 'Đang chờ duyệt'
-    ],
-  },
-  {
-    id: 2,
-    title: 'Các công việc đã lưu',
-    childs: ['Tất cả'],
-  },
-  {
-    id: 3,
-    title: 'Các công việc đã đăng tuyển',
-    childs: ['Tất cả', 'Chưa đóng', 'Đã đóng'],
-  },
-  // {
-  //   id: 4,
-  //   title: 'Danh sách bài viết',
-  //   childs: ['Đã lưu', 'Đã được tạo'],
-  // },
-];
+// const dataItem = [
+//   {
+//     id: 1,
+//     title: 'Các công việc đã ứng tuyển',
+//     childs: [
+//       'Tất cả',
+//       // 'Đã được duyệt', 'Đang chờ duyệt'
+//     ],
+//   },
+//   {
+//     id: 2,
+//     title: 'Các công việc đã lưu',
+//     childs: ['Tất cả'],
+//   },
+//   {
+//     id: 3,
+//     title: 'Các công việc đã đăng tuyển',
+//     childs: ['Tất cả', 'Chưa đóng', 'Đã đóng'],
+//   },
+// ];
 const HistoryPost = () => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const queryParams = queryString.parse(window.location.search);
   // const hotjobtype = Number(searchParams.get('post'));
   const hotjobtype = Number(queryParams['post']);
@@ -79,15 +83,68 @@ const HistoryPost = () => {
 
   const analytics: any = getAnalytics();
 
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
+
+  const dataItem = [
+    {
+      id: 1,
+      title: language?.history_page?.applied_jobs,
+      childs: [
+        language?.all,
+        // 'Đã được duyệt', 'Đang chờ duyệt'
+      ],
+    },
+    {
+      id: 2,
+      title: language?.history_page?.saved_jobs,
+      childs: [language?.all],
+    },
+    {
+      id: 3,
+      title: language?.history_page?.posted_jobs,
+      childs: [
+        language?.all,
+
+        language?.history_page?.unclosed_jobs,
+
+        language?.history_page?.closed_jobs,
+      ],
+    },
+    // {
+    //   id: 4,
+    //   title: language?.history_page?.list_of_articles,
+    //   childs: [language?.history_page?.saved,
+    //   language?.history_page?.posts_created],
+    // },
+  ];
+
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = 'HiJob - Lịch sử ứng tuyển/đăng tuyển';
+    document.title = language?.history_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_history' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux, language]);
 
   const breadcrumbs = [
     <Link
@@ -98,7 +155,7 @@ const HistoryPost = () => {
       onClick={handleClick}
       target="_parent"
     >
-      Trang chủ
+      {language?.history_page?.home}
     </Link>,
     <Link
       underline="hover"
@@ -108,7 +165,7 @@ const HistoryPost = () => {
       onClick={handleClick}
       target="_parent"
     >
-      Lịch sử
+      {language?.history_page?.history}
     </Link>,
     <Typography key="3" color="text.primary">
       {ItemLeft === dataItem[0].id - 1
@@ -119,27 +176,26 @@ const HistoryPost = () => {
     </Typography>,
     <Typography key="3" color="text.primary">
       {activeChild === '0-0'
-        ? 'Tất cả'
+        ? language?.all
         : // : activeChild === '0-1'
           // ? 'Đã được duyệt'
           // : activeChild === '0-2'
           // ? 'Đang chờ duyệt'
           ''}
 
-      {activeChild === '1-0' ? 'Tất cả' : ''}
+      {activeChild === '1-0' ? language?.all : ''}
 
       {activeChild === '2-0'
-        ? 'Tất cả'
+        ? language?.all
         : activeChild === '2-1'
-        ? 'Chưa đóng'
+        ? language?.history_page?.not_closed_yet
         : activeChild === '2-2'
-        ? 'Đã đóng'
+        ? language?.closed
         : ''}
-
       {activeChild === '3-0'
-        ? 'Đã lưu'
+        ? language?.history_page?.saved
         : activeChild === '3-1'
-        ? 'Đã được tạo'
+        ? language?.history_page?.have_been_created
         : ''}
     </Typography>,
   ];
@@ -171,12 +227,12 @@ const HistoryPost = () => {
     return null;
   }, [ItemLeft, activeChild]);
 
-  // const CardListBlog = useMemo(() => {
-  //   if (ItemLeft === 3) {
-  //     return <CardsListBlog activeChild={activeChild} />;
-  //   }
-  //   return null;
-  // }, [ItemLeft, activeChild]);
+  const CardListBlog = useMemo(() => {
+    if (ItemLeft === 3) {
+      return <CardsListBlog activeChild={activeChild} />;
+    }
+    return null;
+  }, [ItemLeft, activeChild]);
 
   const handleChildClick = useCallback((childKey: string) => {
     setActiveChild(childKey);
@@ -270,7 +326,7 @@ const HistoryPost = () => {
             {CardsPost}
             {CardsApply}
             {CardsSave}
-            {/* {CardListBlog} */}
+            {CardListBlog}
           </Box>
         </Box>
       </div>

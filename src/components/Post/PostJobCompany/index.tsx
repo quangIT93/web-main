@@ -13,6 +13,7 @@ interface PropsPostCompanyJob {
   // companyError: boolean;
   titleJob: string;
   companyName: string;
+  language: any;
 }
 
 const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
@@ -23,6 +24,7 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
     // companyError,
     titleJob,
     companyName,
+    language
   } = props;
 
   const handleChangeTitleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +48,10 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          Tên công việc <span style={{ color: 'red' }}>*</span>
+          {
+            language?.job_title
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -56,7 +61,9 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           onChange={handleChangeTitleForm}
           size="small"
           sx={{ width: '100%', marginTop: '0.5rem' }}
-          placeholder="Tên công việc"
+          placeholder={
+            language?.job_title
+          }
           // error={titleError} // Đánh dấu lỗi
           value={titleJob ? titleJob : ''}
         />
@@ -68,7 +75,10 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="company"
         >
-          Công ty <span style={{ color: 'red' }}>*</span>
+          {
+            language?.company_name
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -78,7 +88,9 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           size="small"
           onChange={handleChangeCompanyForm}
           sx={{ width: '100%', marginTop: '0.5rem' }}
-          placeholder="Tên công ty"
+          placeholder={
+            language?.company
+          }
           // error={companyError} // Đánh dấu lỗi
           value={companyName}
         />

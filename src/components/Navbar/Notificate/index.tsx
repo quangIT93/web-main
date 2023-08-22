@@ -56,6 +56,17 @@ import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
+import languageApi from 'api/languageApi';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
+import { searchResultVi } from 'validations/lang/vi/searchResult';
+import { searchResultEn } from 'validations/lang/en/searchResult';
+import { postDetail } from 'validations/lang/vi/postDetail';
+import { postDetailEn } from 'validations/lang/en/postDetail';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
+
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
 
@@ -76,6 +87,7 @@ const Notificate = () => {
     setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
     openNotificate: boolean;
   } = React.useContext(HomeValueContext);
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [dataNotification, setDataNotification] = useState<any>([]);
   const [dataNotificationKeyword, setDataNotificationkeyword] = useState<any>(
     [],
@@ -100,8 +112,28 @@ const Notificate = () => {
     React.useState(false);
 
   const refNotification = React.useRef<HTMLDivElement | null>(null);
-
+  const [language, setLanguage] = useState<any>();
   // const inputRef = useRef<InputRef>(null);
+
+  // console.log("dataNotification", dataNotification);
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleClickActiveSystem = (e: any) => {
     setActiveSystem(true);
@@ -118,12 +150,14 @@ const Notificate = () => {
   const getApiNotificate = async () => {
     try {
       setIsLoading(true);
-      const result = await notificationApi.getNotificationV2('vi');
+      const result = await notificationApi.getNotificationV2(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setIsLoading(false);
         setDataNotification(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -135,15 +169,15 @@ const Notificate = () => {
     try {
       // const result = await notificationKeywordApi.getNotificationKeyword();
       const result = await notificationKeywordApi.getNotificationKeywordV3(
-        'vi',
+        languageRedux === 1 ? "vi" : "en",
       );
-      console.log('keyword v3', result);
+      // console.log('keyword v3', result);
       if (result) {
         setDataNotificationkeyword(result.data);
         setValueApp(result.data.status.pushStatus);
         setValueMall(result.data.status.emailStatus);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -286,20 +320,22 @@ const Notificate = () => {
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
-          className={`top-notificate_system ${
-            activeSystem ? 'active-system' : ''
-          }`}
+          className={`top-notificate_system ${activeSystem ? 'active-system' : ''
+            }`}
           onClick={handleClickActiveSystem}
         >
-          Thông báo
+          {
+            language?.notification
+          }
         </div>
         <div
-          className={`top-notificate_keyword ${
-            activeKeyword ? 'active-keyword' : ''
-          }`}
+          className={`top-notificate_keyword ${activeKeyword ? 'active-keyword' : ''
+            }`}
           onClick={handleClickActiveKeyword}
         >
-          Từ khoá
+          {
+            language?.keyword2
+          }
         </div>
       </div>
       <div className="bottom-notificate">
@@ -316,7 +352,9 @@ const Notificate = () => {
                     onClick={() => handleClickNotiKey(notificate.data.postId)}
                   >
                     <div className="wrap-img_keyword">
-                      <img src={notificate.data.image} alt="ảnh lỗi" />
+                      <img src={notificate.data.image} alt={
+                        language?.err_none_img
+                      } />
                     </div>
                     <div className="content-notificate">
                       <div className="wrap-title_contentNotificate">
@@ -429,8 +467,9 @@ const Notificate = () => {
         ) : (
           <div className="wrap-keyword">
             <p>
-              Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh
-              chóng qua:
+              {
+                language?.get_job_listings_by_keyword_via
+              }
             </p>
             <div className="wrap-checkbox_keyword">
               <div className="checkbox-keyword">
@@ -462,22 +501,24 @@ const Notificate = () => {
             </div>
             <div className="count-keyword">
               <p>
-                Bạn đã lưu trữ được:
-                <strong>{` ${
-                  dataNotificationKeyword.keywords.length > 0
-                    ? dataNotificationKeyword.keywords.length
-                    : 0
-                }/10 `}</strong>
-                gợi ý công việc
+                {
+                  language?.there_are_has_been_saved
+                }
+                <strong>{` ${dataNotificationKeyword.keywords.length > 0
+                  ? dataNotificationKeyword.keywords.length
+                  : 0
+                  }/10 `}</strong>
+                {
+                  language?.keywords_has_been_saved
+                }
               </p>
             </div>
             {dataNotificationKeyword ? (
               dataNotificationKeyword?.keywords?.map(
                 (dataKeyword: any, index: number) => (
                   <div
-                    className={`wrap-content_keyword ${
-                      idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
-                    }`}
+                    className={`wrap-content_keyword ${idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
+                      }`}
                     key={index}
                   >
                     <div
@@ -494,12 +535,11 @@ const Notificate = () => {
                           <Tooltip
                             title={dataKeyword.keywordDistricts.map(
                               (location: any, index: number) => {
-                                return `${location.fullName}${
-                                  index ===
+                                return `${location.fullName}${index ===
                                   dataKeyword.keywordDistricts.length - 1
-                                    ? ''
-                                    : ', '
-                                }`;
+                                  ? ''
+                                  : ', '
+                                  }`;
                               },
                             )}
                             placement="top"
@@ -507,12 +547,11 @@ const Notificate = () => {
                             <p>
                               {dataKeyword.keywordDistricts.map(
                                 (location: any, index: number) => {
-                                  return `${location.fullName}${
-                                    index ===
+                                  return `${location.fullName}${index ===
                                     dataKeyword.keywordDistricts.length - 1
-                                      ? ''
-                                      : ', '
-                                  }`;
+                                    ? ''
+                                    : ', '
+                                    }`;
                                 },
                               )}
                             </p>
@@ -524,12 +563,11 @@ const Notificate = () => {
                           <Tooltip
                             title={dataKeyword.keywordCategories.map(
                               (cate: any, index: number) => {
-                                return `${cate.fullName}${
-                                  index ===
+                                return `${cate.fullName}${index ===
                                   dataKeyword.keywordCategories.length - 1
-                                    ? ''
-                                    : ', '
-                                }`;
+                                  ? ''
+                                  : ', '
+                                  }`;
                               },
                             )}
                             placement="top"
@@ -537,12 +575,11 @@ const Notificate = () => {
                             <p>
                               {dataKeyword.keywordCategories.map(
                                 (cate: any, index: number) => {
-                                  return `${cate.fullName}${
-                                    index ===
+                                  return `${cate.fullName}${index ===
                                     dataKeyword.keywordCategories.length - 1
-                                      ? ''
-                                      : ', '
-                                  }`;
+                                    ? ''
+                                    : ', '
+                                    }`;
                                 },
                               )}
                             </p>
@@ -585,11 +622,10 @@ const Notificate = () => {
           </div>
         )}
         <div
-          className={`modal-delete_keyword ${
-            openModalDeleteKeyword && !activeSystem
-              ? 'open-modal_deleteKeyword'
-              : ''
-          }`}
+          className={`modal-delete_keyword ${openModalDeleteKeyword && !activeSystem
+            ? 'open-modal_deleteKeyword'
+            : ''
+            }`}
         >
           <h4>Xóa gợi ý công việc</h4>
           <p>Từ khoá sẽ không thể khôi phục sau khi xoá, bạn có chắc không?</p>

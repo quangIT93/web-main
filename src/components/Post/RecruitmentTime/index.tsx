@@ -12,16 +12,20 @@ import { Space } from 'antd';
 
 import { styleLabel } from '../CssPost';
 import './style.scss';
+import { postEn } from 'validations/lang/en/post';
+import { post } from 'validations/lang/vi/post';
 
 interface IRecruitmentTime {
   startDate: any;
   endDate: any;
   setStartDate: any;
   setEndDate: any;
+  language: any;
+  languageRedux: any;
 }
 
 const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
-  const { startDate, endDate, setStartDate, setEndDate } = props;
+  const { startDate, endDate, setStartDate, setEndDate, languageRedux, language } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
     setStartDate(new Date(newValue._d).getTime());
@@ -47,7 +51,10 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Ngày bắt đầu <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page?.start_date
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
             value={startDate ? moment(startDate) : moment(new Date().getTime())}
@@ -64,7 +71,10 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Ngày kết thúc <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page?.end_date
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
             value={endDate ? moment(endDate) : moment(new Date().getTime())}

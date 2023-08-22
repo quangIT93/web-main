@@ -20,11 +20,22 @@ import './style.scss';
 // import firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
+import languageApi from 'api/languageApi';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer/index';
+import { messVi } from 'validations/lang/vi/mess';
+import { messEn } from 'validations/lang/en/mess';
+
 // const { Text } = Typography;
 
 const Message = () => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const { openCollapseFilter } = useContext(HomeValueContext);
   const [openListChat, setOpenListChat] = useState(false);
+  const [language, setLanguage] = useState<any>();
 
   // const [titleFirebase, setTitleFirebase] = React.useState<string>('');
 
@@ -35,13 +46,31 @@ const Message = () => {
   //   document.title = 'Hijob - Nhắn tin';
   // });
 
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
+
   useEffect(() => {
-    document.title = 'HiJob - Nhắn tin';
+    document.title = language?.messages_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       page_title: '/web_message ',
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux, language]);
   return (
     <div className="message-page">
       <Navbar />
@@ -55,6 +84,8 @@ const Message = () => {
             <ListUserChat
               setOpenListChat={setOpenListChat}
               openListChat={openListChat}
+              language={language}
+              languageRedux={languageRedux}
             />
           </div>
 
@@ -62,6 +93,8 @@ const Message = () => {
             <ListChat
               setOpenListChat={setOpenListChat}
               openListChat={openListChat}
+              language={language}
+              languageRedux={languageRedux}
             />
           </div>
         </div>
@@ -76,6 +109,8 @@ const Message = () => {
           <ListUserChat
             setOpenListChat={setOpenListChat}
             openListChat={openListChat}
+            language={language}
+            languageRedux={languageRedux}
           />
           {/* </div> */}
 
@@ -83,6 +118,8 @@ const Message = () => {
           <ListChat
             setOpenListChat={setOpenListChat}
             openListChat={openListChat}
+            language={language}
+            languageRedux={languageRedux}
           />
           {/* </div> */}
         </div>

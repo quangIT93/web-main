@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
+import languageApi from 'api/languageApi';
 
 const styleLabel = {
   fontWeight: 700,
@@ -21,6 +22,25 @@ interface IEditNameFaxCompany {
 const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { dataCompany, setDataCompany } = props;
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleEditCompanyFax = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -52,9 +72,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           htmlFor="editCompany"
         >
           {
-            languageRedux === 1 ?
-              company.company_name :
-              companyEn.company_name
+            language?.company_name
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
@@ -67,9 +85,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={
-            languageRedux === 1 ?
-              company.place_name :
-              companyEn.place_name
+            language?.company_page?.place_name
           }
         //   error={titleError} // Đánh dấu lỗi
         />
@@ -82,9 +98,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           htmlFor="editJob"
         >
           {
-            languageRedux === 1 ?
-              company.tax_code :
-              companyEn.tax_code
+            language?.tax_code
           }
         </Typography>
         <TextField
@@ -96,9 +110,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={
-            languageRedux === 1 ?
-              company.place_tax :
-              companyEn.place_tax
+            language?.company_page?.place_tax
           }
         //   error={titleError} // Đánh dấu lỗi
         />

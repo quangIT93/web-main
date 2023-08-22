@@ -20,6 +20,7 @@ interface DistrictProps {
   setListCate: Function;
   reset: Boolean;
   setReset: React.Dispatch<React.SetStateAction<Boolean>>;
+  language: any;
 }
 const { SHOW_CHILD } = Cascader;
 
@@ -44,6 +45,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   setListCate,
   reset,
   setReset,
+  language,
 }) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -57,18 +59,10 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
 
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '520px' }} className="filter-loca-cate">
-      <Text className="title-filter_location">
-        {languageRedux === 1
-          ? 'Chọn danh mục nghề nghiệp'
-          : 'Select career categories'}
-      </Text>
+      <Text className="title-filter_location">{language?.select_cate}</Text>
       {menus}
       <Divider style={{ margin: 4 }}>
-        {disable
-          ? languageRedux === 1
-            ? 'Chỉ có thể tối đa 10 danh mục'
-            : 'Can only max 10 categories'
-          : ''}
+        {disable ? language?.limit_10_cate : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -204,11 +198,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           className="inputCategories input-filter_nav"
           showCheckedStrategy={SHOW_CHILD}
           style={{ width: '100%', borderRadius: '2px' }}
-          placeholder={
-            languageRedux === 1
-              ? 'Chọn danh mục nghề nghiệp'
-              : 'Select career categories'
-          }
+          placeholder={language?.select_cate}
         />
       </div>
     );

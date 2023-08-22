@@ -16,6 +16,7 @@ import { RootState } from 'store';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
+import languageApi from 'api/languageApi';
 
 const { Text } = Typography;
 
@@ -53,6 +54,25 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   // const [inputValueMax, setInputValueMax] = useState<string | null>(null);
 
   const [collapseOpen, setCollapseOpen] = useState(false);
+  const [language, setLanguageState] = useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
 
   // const [checkSalary, setCheckSalary] = useState(false);
 
@@ -345,15 +365,11 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
                 )} - ${new Intl.NumberFormat('en-US').format(
                   Number(salaryMax?.toString().replace(',', '')),
                 )}`
-              : languageRedux === 1
-              ? `Mức lương`
-              : `Salary`
+              : language?.salary
           }
           key="1"
         >
-          <Text className="title-filterSalary">
-            {languageRedux === 1 ? `Mức lương` : `Salary`}
-          </Text>
+          <Text className="title-filterSalary">{language?.salary}</Text>
           <Radio.Group
             value={reset ? 1 : selectedValue}
             onChange={handleRadioChange}
@@ -410,9 +426,7 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
           />
           {checkSalary ? (
             <i style={{ color: 'red', marginBottom: '24px' }}>
-              {languageRedux === 1
-                ? 'Tiền tối thiểu không được lớn hơn tiền tối đa'
-                : 'The minimum amount cannot be greater than the maximum amount'}
+              {language?.verify_max_min_salary}
             </i>
           ) : (
             <></>

@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
+import languageApi from 'api/languageApi';
 
 import './style.scss';
 
@@ -77,6 +78,25 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
   // const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = React.useState();
   const [valueRender, setValueRender] = React.useState<any>();
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
 
   let userFilteredCookies = JSON.parse(
     getCookie('userTypeSalaryFiltered') || '{}',
@@ -100,7 +120,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
   React.useEffect(() => {
     getTypeSalary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [SALARY_TYPE]);
+  }, [SALARY_TYPE, languageRedux]);
 
   const handleChange = (value1: string) => {
     setReset(false);
@@ -117,26 +137,14 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
         onChange={handleChange}
         optionLabelProp="label"
         value={
-          reset
-            ? languageRedux === 1
-              ? 'Tháng'
-              : 'Monthly'
-            : valueRender
-            ? valueRender.value
-            : undefined
+          reset ? language?.month : valueRender ? valueRender.value : undefined
         }
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder={
-          languageRedux === 1 ? 'Trả lương theo' : 'Pay according to'
-        }
+        placeholder={language?.job_type}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
-        <Option
-          className="type-salary"
-          value="1"
-          label={languageRedux === 1 ? 'Trả lương theo' : 'Pay according to'}
-        >
+        <Option className="type-salary" value="1" label={language?.job_type}>
           <CustomOption
             salaryType={SALARY_TYPE}
             data={data}

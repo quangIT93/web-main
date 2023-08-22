@@ -15,15 +15,20 @@ import './style.scss';
 import { ChatContext } from 'context/ChatContextProvider';
 
 import { SeenIcon } from '#components/Icons';
+import { messVi } from 'validations/lang/vi/mess';
+import { messEn } from 'validations/lang/en/mess';
 
 // const { Search } = Input;
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
   openListChat: boolean;
+  language: any;
+  languageRedux: any;
 }
 
 const ListUserChat: React.FC<IOpenListChat> = (props) => {
+  const { language, languageRedux } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const [windowWidth, setWindowWidth] = useState(false);
   const [openBackDrop, setBackDrop] = useState(false);
@@ -40,7 +45,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   const getAllUserChat = async () => {
     try {
-      const result = await messageApi.getUserChated('vi');
+      const result = await messageApi.getUserChated(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       console.log('result', result);
 
@@ -54,147 +61,166 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   useEffect(() => {
     getAllUserChat();
-  }, [sendMessages, receivedMessages]);
+  }, [sendMessages, receivedMessages, languageRedux]);
 
-  const getApplicationByIdAndPost = async () => {
-    try {
-      // const result = await historyRecruiter.GetAJobApplication(
-      //   Number(searchParams.get('post_id')),
-      //   searchParams.get('application_id') ?? '',
-      // );
-      // console.log('chat', result.data);
-      // const result = await messageApi.getUserChated();
+  // const getApplicationByIdAndPost = async () => {
+  //   try {
+  //     // const result = await historyRecruiter.GetAJobApplication(
+  //     //   Number(searchParams.get('post_id')),
+  //     //   searchParams.get('application_id') ?? '',
+  //     // );
+  //     // console.log('chat', result.data);
+  //     // const result = await messageApi.getUserChated();
 
-      if (searchParams.get('application_id')) {
-        const resultHistoryRecruiter =
-          await historyRecruiter.GetAJobApplication(
-            Number(searchParams.get('post_id')),
-            searchParams.get('application_id') ?? '',
-            'vi',
-          );
+  //     if (searchParams.get('application_id')) {
+  //       const resultHistoryRecruiter =
+  //         await historyRecruiter.GetAJobApplication(
+  //           Number(searchParams.get('post_id')),
+  //           searchParams.get('application_id') ?? '',
+  //           languageRedux === 1 ? 'vi' : 'en',
+  //         );
 
-        if (resultHistoryRecruiter) {
-          // console.log('ressssss', result.data);
-          const resultPost = await postApi.getPostV3(
-            Number(searchParams.get('post_id')),
-            'vi',
-          );
-          // console.log(resultHistoryRecruiter.data);
-          // console.log('resultPost', resultPost);
+  //       if (resultHistoryRecruiter) {
+  //         // console.log('ressssss', result.data);
+  //         const resultPost = await postApi.getPostV3(
+  //           Number(searchParams.get('post_id')),
+  //           languageRedux === 1 ? 'vi' : 'en',
+  //         );
+  //         // console.log(resultHistoryRecruiter.data);
+  //         // console.log('resultPost', resultPost);
 
-          if (resultPost && resultHistoryRecruiter) {
-            return setUserInfoChat({
-              user_id:
-                resultHistoryRecruiter.data.applicationProfile?.account_id,
-              name: resultHistoryRecruiter.data.applicationProfile?.name,
-              avatar: resultHistoryRecruiter.data.applicationProfile?.avatar,
-              imageCompany: resultPost.data?.image,
-              isOnline: false,
-              company_name: resultPost.data?.companyName,
-              image: resultPost.data.image,
-              applied: resultPost.data.applied,
-              salary_max: resultPost.data.salaryMax,
-              salary_min: resultPost.data.salaryMin,
-              money_type_text: resultPost.data.moneyTypeText,
-              salary_type_id: resultPost.data.postSalaryType.id,
-              statusPost: resultPost.status,
-              is_owner: true,
-            });
-          }
-        }
-      } else {
-        const resultGetUserChated = await messageApi.getUserChated('vi');
-        // console.log('result.data', resultGetUserChated.data);
+  //         if (resultPost && resultHistoryRecruiter) {
+  //           return setUserInfoChat({
+  //             user_id:
+  //               resultHistoryRecruiter.data.applicationProfile?.account_id,
+  //             name: resultHistoryRecruiter.data.applicationProfile?.name,
+  //             avatar: resultHistoryRecruiter.data.applicationProfile?.avatar,
+  //             imageCompany: resultPost.data?.image,
+  //             isOnline: false,
+  //             company_name: resultPost.data?.companyName,
+  //             image: resultPost.data.image,
+  //             applied: resultPost.data.applied,
+  //             salary_max: resultPost.data.salaryMax,
+  //             salary_min: resultPost.data.salaryMin,
+  //             money_type_text: resultPost.data.moneyTypeText,
+  //             salary_type_id: resultPost.data.postSalaryType.id,
+  //             statusPost: resultPost.status,
+  //             is_owner: true,
+  //           });
+  //         }
+  //       }
+  //     } else {
+  //       const resultGetUserChated = await messageApi.getUserChated(
+  //         languageRedux === 1 ? 'vi' : 'en',
+  //       );
+  //       console.log('result.data', resultGetUserChated.data);
 
-        if (resultGetUserChated.data) {
-          resultGetUserChated.data.map(async (userChat: any) => {
-            if (userChat.user_id === searchParams.get('user_id')) {
-              setUserInfoChat({
-                user_id: userChat.user_id,
-                name: userChat.name,
-                avatar: userChat.avatar,
-                imageCompany: userChat.image,
-                isOnline: userChat.is_online,
-                company_name: userChat.company_name,
-                image: userChat.avatar,
-                applied: userChat.applied,
-                salary_max: userChat.salary_max,
-                salary_min: userChat.salary_min,
-                money_type_text: userChat.money_type_text,
-                salary_type_id: userChat.salary_type_id,
-                statusPost: userChat.status,
-              });
-            } else {
-              const resultGetPostV3 = await postApi.getPostV3(
-                Number(searchParams.get('post_id')),
-                'vi',
-              );
+  //       if (resultGetUserChated.data) {
+  //         resultGetUserChated.data.map(async (userChat: any) => {
+  //           if (userChat.user_id === searchParams.get('user_id')) {
+  //             setUserInfoChat({
+  //               user_id: userChat.user_id,
+  //               name: userChat.name,
+  //               avatar: userChat.avatar,
+  //               imageCompany: userChat.image,
+  //               isOnline: userChat.is_online,
+  //               company_name: userChat.company_name,
+  //               image: userChat.avatar,
+  //               applied: userChat.applied,
+  //               salary_max: userChat.salary_max,
+  //               salary_min: userChat.salary_min,
+  //               money_type_text: userChat.money_type_text,
+  //               salary_type_id: userChat.salary_type_id,
+  //               statusPost: userChat.status,
+  //             });
+  //           } else {
+  //             const resultGetPostV3 = await postApi.getPostV3(
+  //               Number(searchParams.get('post_id')),
+  //               languageRedux === 1 ? 'vi' : 'en',
+  //             );
 
-              // console.log('v3', resultGetPostV3);
+  //             // console.log('v3', resultGetPostV3);
 
-              if (resultGetPostV3) {
-                if (
-                  searchParams.get('post_id') &&
-                  searchParams.get('user_id')
-                ) {
-                  setUserInfoChat({
-                    user_id: searchParams.get('user_id'),
-                    name: resultGetPostV3.data.companyName,
-                    avatar: resultGetPostV3.data.image,
-                    imageCompany: resultGetPostV3.data.image,
-                    isOnline: null,
-                    company_name: resultGetPostV3.data.companyName,
-                    image: resultGetPostV3.data.image,
-                    applied: resultGetPostV3.data.applied,
-                    salary_max: resultGetPostV3.data.salaryMax,
-                    salary_min: resultGetPostV3.data.salaryMin,
-                    money_type_text: resultGetPostV3.data.moneyTypeText,
-                    salary_type_id: resultGetPostV3.data.postSalaryType.id,
-                    post_title: resultGetPostV3.data.title,
-                    statusPost: resultGetPostV3.data.status,
-                  });
-                }
-              }
-            }
-          });
-        }
-      }
-    } catch (error) {
-      console.error('error', error);
-      try {
-        if (searchParams.get('post_id') && searchParams.get('user_id')) {
-          const result = await postApi.getPostV3(
-            Number(searchParams.get('post_id')),
-            'vi',
-          );
+  //             if (resultGetPostV3) {
+  //               if (
+  //                 searchParams.get('post_id') &&
+  //                 searchParams.get('user_id')
+  //               ) {
+  //                 setUserInfoChat({
+  //                   user_id: searchParams.get('user_id'),
+  //                   name: resultGetPostV3.data.companyName,
+  //                   avatar: resultGetPostV3.data.image,
+  //                   imageCompany: resultGetPostV3.data.image,
+  //                   isOnline: null,
+  //                   company_name: resultGetPostV3.data.companyName,
+  //                   image: resultGetPostV3.data.image,
+  //                   applied: resultGetPostV3.data.applied,
+  //                   salary_max: resultGetPostV3.data.salaryMax,
+  //                   salary_min: resultGetPostV3.data.salaryMin,
+  //                   money_type_text: resultGetPostV3.data.moneyTypeText,
+  //                   salary_type_id: resultGetPostV3.data.postSalaryType.id,
+  //                   post_title: resultGetPostV3.data.title,
+  //                   statusPost: resultGetPostV3.data.status,
+  //                 });
+  //               }
+  //             }
+  //           }
+  //         });
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('error', error);
+  //     try {
+  //       if (searchParams.get('post_id') && searchParams.get('user_id')) {
+  //         const result = await postApi.getPostV3(
+  //           Number(searchParams.get('post_id')),
+  //           languageRedux === 1 ? 'vi' : 'en',
+  //         );
 
-          setUserInfoChat({
-            user_id: searchParams.get('user_id'),
-            name: result.data.companyName,
-            avatar: result.data.image,
-            imageCompany: result.data.image,
-            isOnline: null,
-            company_name: result.data.companyName,
-            image: result.data.image,
-            applied: result.data.applied,
-            salary_max: result.data.salaryMax,
-            salary_min: result.data.salaryMin,
-            money_type_text: result.data.moneyTypeText,
-            salary_type_id: result.data.postSalaryType.id,
-            post_title: result.data.title,
-            statusPost: result.data.status,
-          });
-        }
-      } catch (error) {
-        console.error('error', error);
-      }
-    }
-  };
+  //         setUserInfoChat({
+  //           user_id: searchParams.get('user_id'),
+  //           name: result.data.companyName,
+  //           avatar: result.data.image,
+  //           imageCompany: result.data.image,
+  //           isOnline: null,
+  //           company_name: result.data.companyName,
+  //           image: result.data.image,
+  //           applied: result.data.applied,
+  //           salary_max: result.data.salaryMax,
+  //           salary_min: result.data.salaryMin,
+  //           money_type_text: result.data.moneyTypeText,
+  //           salary_type_id: result.data.postSalaryType.id,
+  //           post_title: result.data.title,
+  //           statusPost: result.data.status,
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error('error', error);
+  //     }
+  //   }
+  // };
 
-  useEffect(() => {
-    getApplicationByIdAndPost();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getApplicationByIdAndPost();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [languageRedux]);
+
+  // const getInfoUserApplied = async () => {
+  //   try {
+  //     const result = await messageApi.getUserChated('vi');
+
+  //     if (result) {
+  //       setUserInfoChat(result.data);
+  //     }
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getInfoUserApplied();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [languageRedux]);
 
   const updateWindowWidth = () => {
     if (window.innerWidth <= 555) {
@@ -209,6 +235,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   }, [windowWidth]);
 
   const handleClickUserInfo = (user: any) => {
+    setUserInfoChat(user);
     // console.log(user);
 
     setBackDrop(true);
@@ -243,33 +270,33 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     }
   };
 
-  useEffect(() => {
-    // console.log('lis', listUserChat);
+  // useEffect(() => {
+  //   // console.log('lis', listUserChat);
 
-    listUserChat.map((userChat: any) => {
-      if (userChat.user_id === searchParams.get('user_id')) {
-        setUserInfoChat({
-          user_id: userChat.user_id,
-          name: userChat.name ? userChat.name : userChat.company_name,
-          avatar: userChat.avatar,
-          imageCompany: userChat.image,
-          isOnline: userChat.is_online,
-          company_name: userChat.company_name,
-          image: userChat.image,
-          applied: userChat.applied,
-          salary_max: userChat.salary_max,
-          salary_min: userChat.salary_min,
-          money_type_text: userChat.money_type_text,
-          salary_type_id: userChat.salary_type_id,
-          post_title: userChat.post_title,
-          statusPost: userChat.status,
-        });
-      }
-      return null;
-    });
+  //   listUserChat.map((userChat: any) => {
+  //     if (userChat.user_id === searchParams.get('user_id')) {
+  //       setUserInfoChat({
+  //         user_id: userChat.user_id,
+  //         name: userChat.name ? userChat.name : userChat.company_name,
+  //         avatar: userChat.avatar,
+  //         imageCompany: userChat.image,
+  //         isOnline: userChat.is_online,
+  //         company_name: userChat.company_name,
+  //         image: userChat.image,
+  //         applied: userChat.applied,
+  //         salary_max: userChat.salary_max,
+  //         salary_min: userChat.salary_min,
+  //         money_type_text: userChat.money_type_text,
+  //         salary_type_id: userChat.salary_type_id,
+  //         post_title: userChat.post_title,
+  //         statusPost: userChat.status,
+  //       });
+  //     }
+  //     return null;
+  //   });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listUserChat]);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [listUserChat]);
 
   // console.log('tin nhan duoc nhan', receivedMessages)
   // console.log('tin nhan da gui', sendMessages)
@@ -290,7 +317,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
         }`}
       >
         <div className="header-list_userChat">
-          <h4 className="title-header_listUserChat">Tin nhắn</h4>
+          <h4 className="title-header_listUserChat">{language?.message}</h4>
           <div className="header-listSearch_userChat">
             {/* <Search
               className="searh-user_chat"
@@ -387,7 +414,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       <div className="list_userChat">
         <div className="wrap-img_chat">
           <img src="./images/imageListChatBegin.png" alt="" />
-          <div>Bạn chưa có cuộc trò chuyện nào!</div>
+          <div>{language?.you_have_no_conversation}</div>
         </div>
       </div>
     );

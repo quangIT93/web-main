@@ -68,6 +68,13 @@ import './style.scss';
 
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import ShowCancleSave from '#components/ShowCancleSave';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer';
+import languageApi from 'api/languageApi';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
+import { hotjobPage } from 'validations/lang/vi/hotjobPage';
+import { hotjobPageEn } from 'validations/lang/en/hotjobPage';
 
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
@@ -113,6 +120,7 @@ export interface PostHotJob {
 }
 
 const HotJobpage: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language,);
   const [hotjob, setHotJob] = React.useState<any>([]);
   const [hotJobType, setHotJobType] = React.useState<any>([]);
   const [hotJobTotal, setHotJobTotal] = React.useState<any>([]);
@@ -126,6 +134,29 @@ const HotJobpage: React.FC = () => {
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [pageNumber, setPageNumber] = React.useState(0);
+  const [language, setLanguage] = React.useState<any>();
+  const [totalPage, setTotalPage] = React.useState<any>(
+    Math.round(Number(
+      searchParams.get('hotjob-total')) / 20) + 1)
+    ;
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // modal keyword
 
@@ -164,59 +195,58 @@ const HotJobpage: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = 'HiJob - Bài tuyển dụng nổi bật';
+    document.title = language?.hot_job_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [language]);
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
 
   const getHotJob = async () => {
     try {
       const url = localStorage.getItem('hotjobApi');
-      const hotjob = await hotJobApi.getHotJobById(
-        url,
-        pageNumber,
-        searchParams.get('hotjob-id') === '1' ? 20 : 19,
-        'vi',
-      );
+      let hotjob = await hotJobApi.getHotJobById(url, pageNumber,
+        searchParams.get('hotjob-id') === '1' ? 18 : 20,
+        languageRedux === 1 ? "vi" : "en");
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       const hotjobtotal = Number(searchParams.get('hotjob-total'));
+      // hotjobtotal / 20
       setHotJob(hotjob.data);
       setHotJobType(hotjobtype);
       setHotJobTotal(hotjobtotal);
+      setIsVisible(true);
+      // setTotalPage(Math.round(hotjobtotal / 20) + 1);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log('getHost', localStorage.getItem('hotjobApi'));
+  // console.log('getHost', localStorage.getItem('hotjobApi'));
 
   const getMoreHotJob = async () => {
     try {
-      setOpenBackdrop(!openBackdrop);
+      const nextPage = pageNumber + 1;
+      if (pageNumber + 1 === totalPage) {
+        setIsVisible(false);
+        setOpenBackdrop(false);
+        setPageNumber(0)
+        messageApi.open({
+          type: 'error',
+          content: language?.out_job,
+
+        });
+        return;
+      }
+      setOpenBackdrop(true);
+      setPageNumber(nextPage);
       const url = localStorage.getItem('hotjobApi');
-
-      const result = await hotJobApi.getHotJobById(
-        url,
-        pageNumber,
-        searchParams.get('hotjob-id') === '1' ? 20 : 19,
-        'vi',
-      );
+      const result = await hotJobApi.getHotJobById(url, nextPage,
+        searchParams.get('hotjob-id') === '1' ? 18 : 20,
+        languageRedux === 1 ? "vi" : "en");
       if (result) {
-        if (result.data.length === 0) {
-          setIsVisible(false);
-          setOpenBackdrop(false);
-          messageApi.open({
-            type: 'error',
-            content: 'Đã hết công việc để hiển thị',
-          });
-          return;
-        }
-
         setHotJob([...hotjob, ...result.data]);
         setOpenBackdrop(false);
       }
@@ -226,23 +256,30 @@ const HotJobpage: React.FC = () => {
   };
 
   React.useEffect(() => {
+    // setPageNumber(0)
     getHotJob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
-  React.useEffect(() => {
-    getMoreHotJob();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageNumber]);
+  // React.useEffect(() => {
+  //   getMoreHotJob();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [pageNumber]);
 
   // handle click post details
+  console.log("page number", pageNumber);
+  console.log("totalPage", totalPage);
+
 
   // handle change paginaton
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
     pageNumber: number,
   ) => {
-    setPageNumber(pageNumber + 1);
+    // pageNumber === totalPage ?
+    //   setPageNumber(pageNumber - 1) :
+    getMoreHotJob()
+    // setPageNumber(pageNumber + 1);
   };
 
   // handle close backdrop
@@ -271,22 +308,27 @@ const HotJobpage: React.FC = () => {
             >
               <div className="hot-job-title-container">
                 <h3>
-                  Việc làm{' '}
+                  {language?.title_hot_jobs}{' '}
                   {hotJobType === 1
-                    ? 'Remote'
+                    ? language?.remote_work
                     : hotJobType === 3
-                    ? 'Influencer'
-                    : hotJobType === 4
-                    ? 'Short time'
-                    : hotJobType === 5
-                    ? 'Job today'
-                    : hotJobType === 6
-                    ? 'Freelancer'
-                    : ''}
+                      ? 'Influencer'
+                      : hotJobType === 4
+                        ? language?.hot_job_page?.short_time
+                        : hotJobType === 5
+                          ? language?.hot_job_page?.to_day
+                          : hotJobType === 6
+                            ? 'Freelancer'
+                            : ''}
                 </h3>
                 <h4>
                   {hotJobTotal ? hotJobTotal : 0}
-                  <span> kết quả</span>
+                  <span>
+                    {' '}
+                    {
+                      language?.hot_job_page?.result
+                    }
+                  </span>
                 </h4>
               </div>
             </div>
@@ -326,7 +368,9 @@ const HotJobpage: React.FC = () => {
                       handleChange(e, pageNumber);
                     }}
                   >
-                    <p>Xem thêm</p>
+                    <p>
+                      {language?.more}
+                    </p>
                     <MoreICon width={20} height={20} />
                   </Space>
                 </Stack>
@@ -341,7 +385,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

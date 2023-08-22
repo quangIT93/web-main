@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField';
 
 // data
 import locationApi from '../../../api/locationApi';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 interface IPostAddress {
   setWardId: React.Dispatch<React.SetStateAction<any>>;
@@ -17,6 +19,8 @@ interface IPostAddress {
   fillWardId: any;
   fillProvince: any;
   fillDistrict: any;
+  language: any;
+  languageRedux: any;
 }
 
 const PostAddress: React.FC<IPostAddress> = (props) => {
@@ -31,6 +35,8 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     // setFillProvince,
     setFillDistrict,
     setFillWardId,
+    language,
+    languageRedux
   } = props;
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
@@ -38,6 +44,8 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   const [dataDistrict, setDataDistrict] = useState<any>(null);
   const [dataWard, setDataWard] = useState<any>(null);
   const [selectedWard, setSelectedWard] = useState<any>(null);
+  console.log("selectedProvince", selectedProvince);
+
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
@@ -59,7 +67,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   // get All locations by location id
   const getAllProvinces = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces('vi');
+      const allLocation = await locationApi.getAllLocation(
+        languageRedux === 1 ? "vi" : "en"
+      );
 
       if (allLocation) {
         setDataProvinces(allLocation.data);
@@ -76,8 +86,8 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     try {
       if (selectedProvince) {
         const districts = await locationApi.getDistrictsById(
-          selectedProvince.id,
-          'vi',
+          selectedProvince.province_id,
+          languageRedux === 1 ? "vi" : "en",
         );
         if (districts) {
           setDataDistrict(districts.data);
@@ -92,7 +102,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   const getDataWard = async () => {
     try {
       if (selectedDistrict) {
-        const allward = await locationApi.getWardsId(selectedDistrict.id, '');
+        const allward = await locationApi.getWardsId(selectedDistrict.id,
+          languageRedux === 1 ? "vi" : "en",
+        );
         if (allward) {
           setDataWard(allward.data);
         }
@@ -107,19 +119,19 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     // getAllLocations()
     // delete param when back to page
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   React.useEffect(() => {
     getDataDistrict();
     // delete param when back to page
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedProvince]);
+  }, [selectedProvince, languageRedux]);
 
   React.useEffect(() => {
     getDataWard();
     // delete param when back to page
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDistrict]);
+  }, [selectedDistrict, languageRedux]);
 
   const handleProvinceChange = (event: any, value: any) => {
     setSelectedDistrict(null);
@@ -143,6 +155,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setAddress(e.target.value);
   };
 
+  console.log("fillProvince", fillProvince);
+
+
   return (
     <div className="post-address">
       <div className="post-address_top">
@@ -153,16 +168,21 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Thành Phố <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page?.city
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataProvinces ? dataProvinces : []}
-            getOptionLabel={(option: any) => option?.name || ''}
+            getOptionLabel={(option: any) => option?.province_fullName || ''}
             value={fillProvince || selectedProvince || null}
             onChange={handleProvinceChange}
             disableClearable
             renderInput={(params) => (
-              <TextField {...params} placeholder="Tỉnh/TP" size="small" />
+              <TextField {...params} placeholder={
+                language?.post_page?.place_city
+              } size="small" />
             )}
             style={{ marginTop: '0.5rem' }}
           />
@@ -174,7 +194,10 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Quận <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page?.district
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataDistrict ? dataDistrict : []}
@@ -183,7 +206,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             onChange={handleDistrictChange}
             disableClearable
             renderInput={(params: any) => (
-              <TextField {...params} placeholder="Quận/Huyện" size="small" />
+              <TextField {...params} placeholder={
+                language?.post_page?.place_district
+              } size="small" />
             )}
             style={{ marginTop: '0.5rem' }}
           />
@@ -197,7 +222,10 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Phường/Xã <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page?.ward
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataWard ? dataWard : []}
@@ -206,7 +234,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             onChange={handleChangeWardId}
             disableClearable
             renderInput={(params) => (
-              <TextField {...params} placeholder="Phường/Xã" size="small" />
+              <TextField {...params} placeholder={
+                language?.post_page?.place_ward
+              } size="small" />
             )}
             style={{ marginTop: '0.5rem' }}
           />
@@ -218,7 +248,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Địa chỉ <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page?.address
+            }{' '}<span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
             type="text"
@@ -228,7 +260,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             onChange={handleChangeAddress}
             size="small"
             sx={{ width: '100%', marginTop: '0.5rem' }}
-            placeholder="Tên đường, toà nhà, số nhà"
+            placeholder={
+              language?.post_page?.place_address
+            }
           />
         </div>
       </div>

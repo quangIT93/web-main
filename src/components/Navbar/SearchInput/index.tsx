@@ -19,7 +19,7 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import { RootState } from '../../../store/reducer';
-
+import languageApi from 'api/languageApi';
 // let timeout: ReturnType<typeof setTimeout> | null;
 // let currentValue: string | undefined;
 
@@ -129,6 +129,28 @@ const SearchInput: React.FC<SearchProps> = ({
   // const [openDropdown, setOpenDropdown] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(false);
   const [totalJob, setTotalJob] = React.useState<number>(0);
+  const [language, setLanguage] = useState<any>();
+  // const inputRef = useRef<InputRef>(null);
+
+  // console.log("dataNotification", dataNotification);
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const QUERY = searchParams.get('q');
   const location = useLocation();
@@ -194,10 +216,14 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getDataSearch = async () => {
     try {
-      const resultSuggest = await searchApi.getSuggestKeyWord(10, 'vi');
+      const resultSuggest = await searchApi.getSuggestKeyWord(10,
+        languageRedux === 1 ? 'vi' : 'en'
+      );
       let resultHistory;
       if (isLogin) {
-        resultHistory = await searchApi.getHistoryKeyWord(10, 'vi');
+        resultHistory = await searchApi.getHistoryKeyWord(10,
+          languageRedux === 1 ? 'vi' : 'en'
+        );
         resultHistory && setDataHistory(resultHistory.data);
       }
       // if (resultHistory || resultSuggest) {
@@ -255,8 +281,7 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${
-            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          `/search-results?${value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
           }`,
         );
       } else {
@@ -316,7 +341,7 @@ const SearchInput: React.FC<SearchProps> = ({
       if (result) {
         setTotalJob(result?.data?.total);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -336,7 +361,13 @@ const SearchInput: React.FC<SearchProps> = ({
       {/* {d.value} */}
 
       <div className="items-history items-search_keyword">
-        <h4>Từ khóa phổ biến</h4>
+        <h4>
+          {
+            languageRedux === 1 ?
+              "Từ khóa phổ biến" :
+              "Popular keywords"
+          }
+        </h4>
         <div className="wrap-items-history wrap-items-search">
           {dataSuggest?.map((suggest: any, index: number) => (
             <div className="item-history item-search" key={index}>
@@ -357,7 +388,7 @@ const SearchInput: React.FC<SearchProps> = ({
           display: isLogin ? 'block' : 'none',
         }}
       >
-        <h4>Tìm kiếm gần đây</h4>
+        <h4>{language?.recently}</h4>
         <div className="wrap-items-history wrap-items-search">
           {dataHistory?.listHistorySearch?.map(
             (history: any, index: number) => (
@@ -395,12 +426,17 @@ const SearchInput: React.FC<SearchProps> = ({
         searchValue={value}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
+        // placeholder={
+        //   languageRedux === 1
+        //     ? `Tìm kiếm hơn ${totalJob.toLocaleString(
+        //         'en-US',
+        //       )} công việc tại Việt Nam`
+        //     : `Search over ${totalJob.toLocaleString('en-US')} jobs in Vietnam`
+        // }
         placeholder={
-          languageRedux === 1
-            ? `Tìm kiếm hơn ${totalJob.toLocaleString(
-                'en-US',
-              )} công việc tại Việt Nam`
-            : `Search over ${totalJob.toLocaleString('en-US')} jobs in Vietnam`
+          language?.search_over +
+          ` ${totalJob.toLocaleString('en-US')} ` +
+          language?.jobs_in_vietnam
         }
         defaultActiveFirstOption={false}
         showArrow={false}
@@ -423,7 +459,7 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-        // open={openDropdown}
+      // open={openDropdown}
       />
 
       <Button

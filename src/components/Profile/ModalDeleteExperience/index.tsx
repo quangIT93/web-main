@@ -8,6 +8,11 @@ import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
+import languageApi from 'api/languageApi';
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -22,6 +27,9 @@ const style = {
   p: 4,
   '@media (max-width: 399px)': {
     width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
   },
 
   '@media (min-width: 400px) and (max-width: 639px)': {
@@ -51,6 +59,27 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
 
   const dispatch = useDispatch();
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleClose = () => setOpenModalDeleteExperience(false);
 
@@ -88,7 +117,9 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Bạn có chắc chắn muốn xoá thông tin này chứ?
+          {
+            language?.profile_page?.alert_delete_info
+          }
         </Typography>
         <Box sx={{ display: 'flex', gap: '100px' }}>
           <Button
@@ -97,11 +128,15 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
             onClick={handleSubmitDelete}
             color="error"
           >
-            Xóa
+            {
+              language?.profile_page?.delete
+            }
           </Button>
 
           <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>
-            Trở về
+            {
+              language?.profile_page?.return
+            }
           </Button>
         </Box>
       </Box>

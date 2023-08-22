@@ -11,11 +11,14 @@ import { CloseOutlined } from '@ant-design/icons';
 
 // data
 import profileApi from 'api/profileApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
 
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
-
+import languageApi from 'api/languageApi';
 import { message } from 'antd';
 
 import '../style.scss';
@@ -33,6 +36,9 @@ const style = {
   p: 4,
   '@media (max-width: 399px)': {
     width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
   },
 
   '@media (min-width: 400px) and (max-width: 639px)': {
@@ -86,7 +92,27 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   } = props;
   // console.log('typeItem', typeItem)
   const dispatch = useDispatch();
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const [education, setEducation] = useState<IInfoEducation>({
     educationId: educationId,
@@ -161,36 +187,36 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   const validValue = () => {
     if (education.major === '') {
       return {
-        message: 'Vui lòng nhập tên chuyên ngành',
+        message: language?.profile_page?.err_major,
         checkForm: false,
       };
     }
 
     if (education.companyName === '') {
       return {
-        message: 'Vui lòng nhập tên trường/tổ chức',
+        message: language?.profile_page?.err_school,
         checkForm: false,
       };
     }
 
     if (education.extraInformation === '') {
       return {
-        message: 'Vui lòng nhập thông tin bổ sung',
+        message: language?.profile_page?.err_additional_information,
         checkForm: false,
       };
     }
-    console.log('NaN', education.startDate);
+    // console.log('NaN', education.startDate);
 
     if (!education.startDate) {
       return {
-        message: 'Vui lòng nhập ngày bắt đầu',
+        message: language?.profile_page?.err_start_time,
         checkForm: false,
       };
     }
 
     if (!education.endDate) {
       return {
-        message: 'Vui lòng nhập Ngày kết thúc',
+        message: language?.profile_page?.err_finish_time,
         checkForm: false,
       };
     }
@@ -214,7 +240,9 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileEducation(education);
         if (result) {
-          const profile = await profileApi.getProfile('vi');
+          const profile = await profileApi.getProfile(
+            languageRedux === 1 ? "vi" : "en"
+          );
           if (profile) {
             setProfileUser(profile.data);
           }
@@ -230,7 +258,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       console.log('error', error);
       messageApi.open({
         type: 'error',
-        content: 'Vui lòng kiểm tra lại thông tin đã nhập',
+        content: language?.profile_page?.check_info_please,
       });
     }
   };
@@ -248,7 +276,9 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style}>
+      <Box sx={style}
+        className="Modal-personnal-info"
+      >
         {contextHolder}
         <div
           style={{
@@ -271,7 +301,9 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Sửa thông tin trình độ học vấn
+          {
+            language?.profile_page?.edit_education
+          }
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -280,7 +312,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Trường/Tổ chức <span className="color-asterisk">*</span>
+            {
+              language?.school_organization
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -290,8 +325,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Nhập tên trường hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.profile_page?.place_school
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -302,7 +339,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chuyên ngành <span className="color-asterisk">*</span>
+            {
+              language?.major
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -312,8 +352,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             onChange={handleChangeMajor}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Ngành"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.major
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -329,7 +371,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu <span className="color-asterisk">*</span>
+                  {
+                    language?.start_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={
@@ -350,7 +395,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc <span className="color-asterisk">*</span>
+                  {
+                    language?.finish_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.endDate)}
@@ -372,7 +420,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung <span className="color-asterisk">*</span>
+            {
+              language?.additional_information
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}
@@ -383,12 +434,16 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             rows={4}
             id="extra-info"
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder="Để được nhà tuyển dụng quan tâm và tăng cơ hội ứng tuyển vào công ty mong muốn. Hẫy nhập thông tin bổ sung của bạn vào đây!"
+            placeholder={
+              language?.profile_page?.place_additional_information
+            }
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            language?.profile_page?.save_info
+          }
         </Button>
       </Box>
     </Modal>

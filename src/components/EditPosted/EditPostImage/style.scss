@@ -7,7 +7,15 @@
   flex-direction: column;
   justify-content: space-between;
 
-  height: 310px;
+  // height: 310px;
+  min-height: 320px;
+  height: fit-content;
+
+  @media screen and (max-width: 369px) {
+    .list-img-edit-post {
+      justify-content: center;
+    }
+  }
 
   .drag-img-container {
     .dropzone {
@@ -82,6 +90,13 @@
       background-color: #e3e2e2;
       color: #0d99ff;
       transition: all 0.2s ease-in-out;
+    }
+  }
+
+  .item-image {
+
+    img {
+      border: 1px solid #ccc;
     }
   }
 
