@@ -20,13 +20,20 @@ import { ImageIcon, SendIcon, CloseIcon } from '#components/Icons';
 import './style.scss';
 
 import { ChatContext } from 'context/ChatContextProvider';
+import { messVi } from 'validations/lang/vi/mess';
+import { messEn } from 'validations/lang/en/mess';
+import { postDetail } from 'validations/lang/vi/postDetail';
+import { postDetailEn } from 'validations/lang/en/postDetail';
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
   openListChat: boolean;
+  language: any;
+  languageRedux: any;
 }
 
 const ListChat: React.FC<IOpenListChat> = (props) => {
+  const { language, languageRedux } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const [windowWidth, setWindowWidth] = useState(false);
 
@@ -74,8 +81,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     socket.current = io(
       // 'https://181f-14-161-42-152.ngrok-free.app/',
-      'https://neoworks.vn',
-      // 'https://aiworks.vn',
+      // 'https://neoworks.vn',
+      'https://aiworks.vn',
       {
         extraHeaders: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -89,10 +96,10 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     setOpenBackdrop(true);
     try {
       const result = await messageApi.getChatMessage(
-        userInfoChat.user_id,
+        searchParams.get('user_id'),
         // 36353,
         Number(searchParams.get('post_id')),
-        'vi',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         // setTimeout(() => {
@@ -108,7 +115,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   useEffect(() => {
     getAllListChat();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [receivedMessages, sendMessages, userInfoChat]);
+  }, [receivedMessages, sendMessages, userInfoChat, languageRedux]);
 
   // const getProfileUser = async () => {
   //   try {
@@ -182,7 +189,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     // const socket = io('https://aiworks.vn')
     if (message !== '')
       socket.current.emit('client-send-message', {
-        receiverId: userInfoChat.user_id,
+        receiverId: searchParams.get('user_id'),
         message: message,
         createdAt: Date.now(),
         type: 'text',
@@ -268,6 +275,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     }
   };
 
+  console.log('userInfoChat', userInfoChat);
+
   if (userInfoChat.length !== 0) {
     return (
       <div
@@ -294,9 +303,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             <div className="wrap_img">
               <img
                 src={
-                  userInfoChat.avatar
-                    ? userInfoChat.avatar
-                    : userInfoChat.imageCompany
+                  userInfoChat.avatar ? userInfoChat.avatar : userInfoChat.image
                 }
                 alt={userInfoChat.company_name}
                 onError={(e: any) => {
@@ -307,7 +314,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
               />
               <span
                 className={`user-chat_online ${
-                  userInfoChat.isOnline ? 'user-chat_onlineTrue' : ''
+                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
                 }`}
               ></span>
             </div>
@@ -334,7 +341,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
               <div className="wrap-infoCompany_chat">
                 <div className="imgCompany_chat">
                   <img
-                    src={userInfoChat.imageCompany}
+                    src={userInfoChat.image}
                     alt="Ảnh lỗi"
                     onError={(e: any) => {
                       e.target.onerror = null; // Ngăn sự kiện lặp lại
@@ -367,24 +374,29 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
               </div>
 
               <Button
-                type={
-                  userInfoChat.applied && userInfoChat.statusPost !== 3
-                    ? 'primary'
-                    : userInfoChat.statusPost === 3
-                    ? 'default'
-                    : 'default'
-                }
+                type={userInfoChat.applied ? 'default' : 'primary'}
                 disabled={
-                  !userInfoChat.applied || userInfoChat.statusPost === 3
+                  userInfoChat.post_status === 3 ||
+                  userInfoChat.post_status === 1
                 }
-                // disabled={true}
+                style={
+                  userInfoChat.is_owner === true
+                    ? { display: 'none' }
+                    : { display: '' }
+                }
                 onClick={handleClickApplication}
               >
-                {userInfoChat.applied && userInfoChat.statusPost !== 3
+                {userInfoChat.post_status === 3
+                  ? 'Đã đóng'
+                  : userInfoChat.applied === false &&
+                    userInfoChat.post_status === 0
+                  ? 'Chưa duyệt'
+                  : userInfoChat.applied === false &&
+                    userInfoChat.post_status === 1
                   ? 'Ứng tuyển ngay'
-                  : userInfoChat.statusPost === 3
-                  ? 'Đã đóng tuyển dụng'
-                  : 'Đã ứng tuyển'}
+                  : userInfoChat.applied === true
+                  ? 'Đã ứng tuyển'
+                  : ''}
               </Button>
             </div>
           ) : (
@@ -414,6 +426,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   alt=""
                   className="content-chat_img"
                 /> */}
+
                   {showDate && (
                     <div className="wrap-date_chat">
                       <hr className="horizontal-line"></hr>
@@ -477,7 +490,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                       <hr className="horizontal-line"></hr>
                       <span className="date-chat">
                         {chatDate === new Date().toLocaleDateString()
-                          ? 'Hôm nay'
+                          ? language?.messages_page?.to_day
                           : chatDate}
                       </span>
                       <hr className="horizontal-line"></hr>
@@ -519,7 +532,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
         <div className="inputs-chat">
           <input
-            placeholder="Nhập đoạn chat của bạn"
+            placeholder={language?.write_a_message}
             value={message}
             onChange={(e) => {
               listRef?.current?.scrollIntoView({
@@ -561,7 +574,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       <div className="list-chat">
         <div className="wrap-img_chat">
           <img src="./images/imageChatBegin.png" alt="" />
-          <div>Chat giúp bạn thêm nhiều thông tin hiệu quả, nhanh chóng</div>
+          <div>{language?.messages_page?.list_chat_none}</div>
         </div>
       </div>
     );

@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient'
 
 const messageApi = {
-  getChatMessage: (uid: string, pid: number, lang: string) => {
+  getChatMessage: (uid: string | null, pid: number, lang: string) => {
     const URL = `/v1/chats/messages?uid=${uid}&pid=${pid}&lang=${lang}`
     return axiosClient.get(URL, {
       headers: {

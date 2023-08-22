@@ -5,6 +5,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Button } from 'antd';
+import { postEn } from 'validations/lang/en/post';
+import { post } from 'validations/lang/vi/post';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -23,10 +25,12 @@ const style = {
 interface IModalEditPost {
   openModalEditPost: boolean;
   setOpenModalEditPost: React.Dispatch<React.SetStateAction<boolean>>;
+  languageRedux: any;
+  language: any;
 }
 
 const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
-  const { openModalEditPost, setOpenModalEditPost } = props;
+  const { openModalEditPost, setOpenModalEditPost, language, languageRedux } = props;
   const handleClose = () => setOpenModalEditPost(false);
 
   const handleClickCloseModal = () => {
@@ -49,7 +53,9 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           component="h2"
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
-          Đã chỉnh sửa bài tuyển dụng thành công!
+          {
+            language?.post_page.alert_edit_success
+          }
         </Typography>
         <Typography
           id="modal-modal-title"
@@ -57,7 +63,9 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
           component="h4"
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
-          Bạn có muốn quay về trang lịch sử để kiểm tra thông tin!
+          {
+            language?.post_page.alert_move_to_history
+          }
         </Typography>
 
         <Box
@@ -77,7 +85,9 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
               width: '300px',
             }}
           >
-            Không
+            {
+              language?.no
+            }
           </Button>
           <Button
             type="primary"
@@ -86,7 +96,9 @@ const ModalEditSuccess: React.FC<IModalEditPost> = (props) => {
               width: '300px',
             }}
           >
-            Có
+            {
+              language?.yes
+            }
           </Button>
         </Box>
       </Box>

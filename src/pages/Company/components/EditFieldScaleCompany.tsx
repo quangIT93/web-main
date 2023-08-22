@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
+import languageApi from 'api/languageApi';
 
 // import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
@@ -31,7 +32,25 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const [selectedSize, setSelectedSize] = useState<any>(null);
   const [dataCategories, setDataCategories] = useState<any>(null);
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [language, setLanguageState] = React.useState<any>();
 
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
   useEffect(() => {
     if (dataSizes && !selectedSize) {
       setSelectedSize(
@@ -122,9 +141,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           htmlFor="addressTitle"
         >
           {
-            languageRedux === 1 ?
-              company.field :
-              companyEn.field
+            language?.company_page?.field
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
@@ -138,9 +155,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
             <TextField
               {...params}
               placeholder={
-                languageRedux === 1 ?
-                  company.place_field :
-                  companyEn.place_field
+                language?.company_page?.place_field
               }
               size="small"
               value={selectedCategory?.parent_category}
@@ -161,9 +176,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           htmlFor="jobTitle"
         >
           {
-            languageRedux === 1 ?
-              company.company_size :
-              companyEn.company_size
+            language?.company_size
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
@@ -176,9 +189,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
             <TextField
               {...params}
               placeholder={
-                languageRedux === 1 ?
-                  company.place_size :
-                  companyEn.place_size
+                language?.company_page?.place_size
               }
               size="small"
               value={selectedSize?.nameText}

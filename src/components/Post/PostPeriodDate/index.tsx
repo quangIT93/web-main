@@ -10,10 +10,12 @@ import { styleLabel } from '#components/Post/CssPost';
 interface IPostPeriodDate {
   setIsPeriodDate: React.Dispatch<React.SetStateAction<number>>;
   isPeriodDate: number;
+  language: any;
+  languageRedux: any;
 }
 
 const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
-  const { setIsPeriodDate, isPeriodDate } = props;
+  const { setIsPeriodDate, isPeriodDate, language } = props;
 
   const handleChangePeriodDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log('thoi gian lam viec', e.target.value);
@@ -27,7 +29,10 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
         component="legend"
         sx={styleLabel}
       >
-        Thời gian làm việc <span style={{ color: 'red' }}>*</span>
+        {
+          language?.working_time
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row
@@ -39,13 +44,17 @@ const PostPeriodDate: React.FC<IPostPeriodDate> = (props) => {
         <FormControlLabel
           value={0}
           control={<Radio id="limited-time-radio1" />}
-          label="Không thời hạn"
+          label={
+            language?.indefinite_term
+          }
           htmlFor="limited-time-radio1"
         />
         <FormControlLabel
           value={1}
           control={<Radio id="limited-time-radio" />}
-          label="Có thời hạn"
+          label={
+            language?.fixed_term
+          }
           htmlFor="limited-time-radio"
         />
       </RadioGroup>

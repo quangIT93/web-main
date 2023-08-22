@@ -44,4 +44,6 @@ export const companyEn = {
     "place_field": "Choose company's field of activity",
     "place_size": "Choose company's size",
     "place_des": "Enter a description of the company",
+    "alert_update_success": "Edited company information successfully!",
+    "alert_move_to_profile": "Do you want to return to your profile page!",
 }

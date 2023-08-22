@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import { Cascader, Divider } from 'antd';
 import categoriesApi from '../../../api/categoriesApi';
 import './style.scss';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 const { SHOW_CHILD } = Cascader;
 
@@ -12,10 +14,12 @@ interface ICategories {
   setFillCate: React.Dispatch<React.SetStateAction<string[]>>;
   categoriesId: string[];
   fillCate: string[];
+  language: any;
+  languageRedux: any;
 }
 
 const CheckboxesTags: React.FC<ICategories> = (props) => {
-  const { setCategoriesId, categoriesId, fillCate, setFillCate } = props;
+  const { setCategoriesId, categoriesId, fillCate, setFillCate, language, languageRedux } = props;
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
@@ -28,7 +32,9 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     <div style={{ width: '520px' }} className="filter-loca-cate">
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ? 'Chỉ có thể tối đa 2 danh mục' : ''}
+        {disable ?
+          language?.limit_2_cate
+          : ''}
       </Divider>
     </div>
   );
@@ -47,7 +53,9 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise('vi');
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -59,7 +67,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   React.useEffect(() => {
     getCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   React.useEffect(() => {
     fillCate.length >= 2 ? setDisable(true) : setDisable(false);
@@ -84,7 +92,10 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         component="label"
         htmlFor="jobTitle"
       >
-        Danh mục nghề <span style={{ color: 'red' }}>*</span>
+        {
+          language?.category
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
         defaultValue={fillCate}

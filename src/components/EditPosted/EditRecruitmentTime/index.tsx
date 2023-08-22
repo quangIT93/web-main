@@ -12,14 +12,18 @@ import { Space } from 'antd';
 
 import { styleLabel } from '../CssEditPost';
 import './style.scss';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 interface IEditRecruitmentTime {
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
   editDataPosted: any;
+  language: any;
+  languageRedux: any;
 }
 
 const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
-  const { setEditDataPosted, editDataPosted } = props;
+  const { setEditDataPosted, editDataPosted, languageRedux, language } = props;
 
   // const valueNewDate: any = moment(new Date());
 
@@ -53,7 +57,10 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Ngày bắt đầu <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page.start_date
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
             value={
@@ -75,7 +82,10 @@ const EditRecruitmentTime: React.FC<IEditRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Ngày kết thúc <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page.end_date
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
             value={

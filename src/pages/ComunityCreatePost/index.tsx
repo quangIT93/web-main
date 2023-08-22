@@ -320,6 +320,7 @@ const ComunityCreatePost = () => {
 
         if (result) {
           console.log('tạo bài viết thành công');
+          window.open('/comunity_create_success', '_parent');
         } else {
           console.log('tạo bài viết thất bại');
         }

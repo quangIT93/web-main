@@ -1,0 +1,185 @@
+.comunitypostNews-card-wrap_content {
+    border: 1px solid #ccc;
+    padding: 24px 32px;
+    border-radius: 12px;
+    margin: 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 225px;
+    cursor: pointer;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
+
+    .comunitypostNews-card-wrap_content__left {
+        height: 100%;
+
+        @media screen and (max-width: 768px) {
+            width: 100%;
+        }
+
+        span {
+            height: 225px;
+            width: 225px;
+            z-index: -1;
+
+            @media screen and (max-width: 768px) {
+                width: 100%;
+            }
+        }
+
+    }
+
+    .comunitypostNews-card-wrap_content__right {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .comunityPostNews-card-content {
+
+            // display: flex;
+            .comunityPostNews-card-content-title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                h3 {
+                    color: #001424;
+                    font-family: Roboto;
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 24px;
+                }
+            }
+
+            .comunityPostNews-card-content_info {
+                padding: 12px 0 0;
+                // border-bottom: 1px solid #ccc;
+
+                .text-content_postNew {
+                    // height: 90px;
+                    // overflow: hidden;
+
+                    li {
+                        color: #000;
+                        font-family: Roboto;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 24px;
+                        list-style: none;
+                        margin-left: 12px;
+                    }
+                }
+
+                .text-content_postNew.showText {
+                    height: auto;
+                    overflow: unset;
+                }
+
+
+
+                span {
+                    color: #0d99ff;
+                    cursor: pointer;
+                }
+            }
+
+        }
+
+        .comunityPostNews-card-interaction {
+
+            .comunitypostNew-card-wrap_actor {
+                display: flex;
+                padding: 12px 0;
+                // align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid #ccc;
+                flex-wrap: wrap;
+
+                .comunitypostNew-wrap {
+                    display: flex;
+                    align-items: center;
+
+                    // img {
+                    //     width: 50px;
+                    //     height: 50px;
+                    //     border-radius: 25px;
+                    // }
+
+                    .info-actor_comunity {
+                        margin-left: 12px;
+
+                        p {
+                            &:nth-child(1) {
+                                color: #575757;
+                                font-family: Roboto;
+                                font-size: 14px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 18px;
+                            }
+
+                            &:nth-child(2) {
+                                color: #000000;
+                                font-family: Roboto;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 700;
+                                line-height: 24px;
+                            }
+                        }
+
+                    }
+                }
+
+                p {
+                    color: #575757;
+                    font-family: Roboto;
+                    font-size: 16px;
+                    font-style: italic;
+                    font-weight: 400;
+                    line-height: 24px;
+                }
+
+
+            }
+
+            .comunitypostNew-card-wrap_status {
+                display: flex;
+                padding: 12px 0 0;
+                // border-bottom: 1px solid #ccc;
+                gap: 30px;
+                flex-wrap: wrap;
+
+                .status-item {
+                    display: flex;
+                    align-items: center;
+
+                    p {
+                        margin-left: 8px;
+                    }
+
+                    svg {
+                        color: white;
+                        stroke: #575757;
+                    }
+
+                    &:nth-child(2) {
+
+                        // svg {
+                        //     color: #0d99ff;
+                        //     stroke: white;
+                        // }
+                    }
+
+                }
+            }
+        }
+
+    }
+}

@@ -27,6 +27,7 @@ interface DistrictProps {
   setListDis: Function;
   reset: Boolean;
   setReset: React.Dispatch<React.SetStateAction<Boolean>>;
+  language: any;
 }
 const { SHOW_CHILD } = Cascader;
 
@@ -53,6 +54,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   setListDis,
   reset,
   setReset,
+  language,
 }) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -76,16 +78,10 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
 
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '520px' }} className="filter-loca-cate">
-      <Text className="title-filter_location">
-        {languageRedux === 1 ? 'Chọn địa điểm' : 'Choose place'}
-      </Text>
+      <Text className="title-filter_location">{language?.select_location}</Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable
-          ? languageRedux === 1
-            ? 'Chỉ có thể tối đa 10 địa điểm'
-            : 'Can only max 10 locations'
-          : ''}
+        {disable ? language?.limit_10_location : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -180,7 +176,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             multiple
             maxTagCount="responsive"
             size="large"
-            placeholder={languageRedux === 1 ? 'Chọn địa điểm' : 'Choose place'}
+            placeholder={language?.select_location}
             inputIcon={<EnvironmentOutlined />}
             suffixIcon={<ArrowFilterIcon width={14} height={10} />}
             dropdownRender={DropdownRender}

@@ -8,10 +8,11 @@ interface IStyleWork {
   isRemotely: number;
   setIsWorkingWeekend: React.Dispatch<React.SetStateAction<number>>;
   setIsRemotely: React.Dispatch<React.SetStateAction<number>>;
+  language: any;
 }
 
 const StyleWork: React.FC<IStyleWork> = (props) => {
-  const { isWorkingWeekend, isRemotely, setIsWorkingWeekend, setIsRemotely } =
+  const { isWorkingWeekend, isRemotely, setIsWorkingWeekend, setIsRemotely, language } =
     props;
 
   const handleWeekendChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +27,9 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <FormControlLabel
-        label="Làm việc cuối tuần"
+        label={
+          language?.working_on_the_weekend
+        }
         control={
           <Checkbox
             checked={isWorkingWeekend === 0 ? false : true}
@@ -35,7 +38,9 @@ const StyleWork: React.FC<IStyleWork> = (props) => {
         }
       />
       <FormControlLabel
-        label="Làm việc từ xa"
+        label={
+          language?.remote_work
+        }
         control={
           <Checkbox
             checked={isRemotely === 0 ? false : true}

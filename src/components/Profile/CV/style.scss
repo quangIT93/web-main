@@ -1,27 +1,29 @@
-
 .icon-remove {
   color: #575757;
   padding: 4px;
   border-radius: 5px;
+
   &:hover {
-  background-color: #f1f0f0;
-.cv-item-container {
-  @media screen and (max-width: 360px) {
-    flex-direction: column;
-    align-items: flex-start;
+    background-color: #f1f0f0;
 
-    .cv-item {
-      .ant-space-item {
-        width: fit-content !important;
+    .cv-item-container {
+      @media screen and (max-width: 360px) {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .cv-item {
+          .ant-space-item {
+            width: fit-content !important;
+          }
+        }
+
+        .ant-space-item {
+          width: 100%;
+        }
       }
-    }
 
-    .ant-space-item {
-      width: 100%;
+      cursor: pointer;
     }
-  }
-  cursor: pointer;
-}
 
     .icon-remove {
       color: #575757;

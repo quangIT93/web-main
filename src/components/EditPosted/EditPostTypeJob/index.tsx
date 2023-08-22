@@ -11,6 +11,8 @@ import { AxiosResponse } from 'axios';
 interface IEditPostTypeJob {
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
   editDataPosted: any;
+  language: any;
+  languageRedux: any;
 }
 
 const styleLabel = {
@@ -19,12 +21,14 @@ const styleLabel = {
 };
 
 const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
-  const { editDataPosted, setEditDataPosted } = props;
+  const { editDataPosted, setEditDataPosted, language, languageRedux } = props;
 
   const [jobTypes, setJobTypes] = useState<AxiosResponse | null>(null);
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType("vi");
+    const result = await siteApi.getJobType(
+      languageRedux === 1 ? "vi" : "en"
+    );
     if (result) {
       setJobTypes(result);
     }
@@ -33,7 +37,7 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
   React.useEffect(() => {
     getTypeJob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => ({
@@ -45,7 +49,10 @@ const EditPostTypeJob: React.FC<IEditPostTypeJob> = (props) => {
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>
       <FormLabel id="editPostTypeJob" sx={styleLabel}>
-        Loại công việc <span style={{ color: 'red' }}>*</span>
+        {
+          language?.job_type1
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row

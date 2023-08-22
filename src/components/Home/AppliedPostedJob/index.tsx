@@ -19,7 +19,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Mousewheel, Pagination } from 'swiper';
-
+import languageApi from 'api/languageApi';
 // @ts-ignore
 // import { useSearchParams } from 'react-router-dom';
 
@@ -66,6 +66,25 @@ const AppliedPostedJob: React.FC = () => {
   // const [index, setIndex] = React.useState(0);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // const [searchParams, setSearchParams] = useSearchParams();
   // const dispatch = useDispatch();
@@ -182,9 +201,7 @@ const AppliedPostedJob: React.FC = () => {
           >
             <AppliedPostedIcon width={30} height={30} />
             <h2>
-              {languageRedux === 1
-                ? 'Công việc đã Ứng tuyển/ Đăng tuyển'
-                : 'Applied / Posted Job'}
+              {language?.home_page?.applied_posted_job}
             </h2>
           </div>
         ) : (
@@ -230,14 +247,25 @@ const AppliedPostedJob: React.FC = () => {
           <div className="advertisement-job-not-loging-content">
 
             <h3 style={{ marginTop: '12px' }}>
-              Bạn có phải là nhà tuyển dụng không?
+              {
+                language?.applied_posted_jobs?.are_you_a_recruiter
+              }
             </h3>
             <p style={{ marginBottom: '12px' }}>
-              Đăng tuyển ngay, bài đăng của bạn sẽ xuất hiện trên đầu trang hoàn
-              toàn miễn phí.
+              {
+                language?.applied_posted_jobs?.post_now
+              }
             </p>
-            <h3>Bạn đang tìm kiếm việc làm?</h3>
-            <p>Ở đây chúng tôi có mọi việc làm tại Việt Nam</p>
+            <h3>
+              {
+                language?.applied_posted_jobs?.are_you_looking_for_job
+              }
+            </h3>
+            <p>
+              {
+                language?.applied_posted_jobs?.all_jobs_in_VN
+              }
+            </p>
           </div>
           <Button
             type="primary"
@@ -246,7 +274,7 @@ const AppliedPostedJob: React.FC = () => {
             }}
           >
             <LoginArrowIcon />
-            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+            {language?.sign_in}
           </Button>
         </div>
 

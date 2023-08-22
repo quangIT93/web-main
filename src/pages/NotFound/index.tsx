@@ -11,7 +11,7 @@ const NotFound: React.FC = () => {
     <div className="not-found">
       <Navbar />
       <div className="notFound-page">
-        <strong>NotFound</strong>
+        {/* <strong>NotFound</strong> */}
       </div>
       <Footer />
     </div>

@@ -29,7 +29,7 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 // import { RootState } from '../../../store/reducer';
-
+import languageApi from 'api/languageApi';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
@@ -63,6 +63,25 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   const dispatch = useDispatch();
   const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
   // get post by theme id when click theme item
+
+  const [language, setLanguage] = React.useState<any>();
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // Set the cookie
   // function setCookie(name: string, value: string, days: number) {
@@ -272,14 +291,14 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                   item.id === value
                     ? '2px solid #0d99ff'
                     : index === 0 && value === 0
-                    ? '2px solid #0d99ff'
-                    : '',
+                      ? '2px solid #0d99ff'
+                      : '',
               }}
             >
               <div className="slide-item">
                 <img
                   src={item.image}
-                  alt={languageRedux === 1 ? 'ảnh bị lỗi' : 'Error Photo'}
+                  alt={language?.err_none_img}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -291,9 +310,13 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                   <Space size={3} direction={'vertical'} style={{ width: 150 }}>
                     <h5>{item.title}</h5>
                     <h6>
-                      {languageRedux === 1
+                      {/* {languageRedux === 1
                         ? `${item.number_of_posts} việc làm`
-                        : `${item.number_of_posts} jobs`}
+                        : `${item.number_of_posts} jobs`} */}
+                      {
+                        `${item.number_of_posts} `
+                      }
+                      {language?.home_page?.x_jobs}
                     </h6>
                   </Space>
                 </div>

@@ -16,9 +16,10 @@ interface IPostTime {
   endTime: any;
   setStartTime: any;
   setEndTime: any;
+  language: any;
 }
 const PostTime: React.FC<IPostTime> = (props) => {
-  const { startTime, endTime, setStartTime, setEndTime } = props;
+  const { startTime, endTime, setStartTime, setEndTime, language } = props;
 
   // const [startTime, setStartTime] = React.useState<any>(
   //   new Date(1970, 0, 2, 7, 0).getTime(),
@@ -57,7 +58,10 @@ const PostTime: React.FC<IPostTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Giờ làm việc <span style={{ color: 'red' }}>*</span>
+            {
+              language?.working_hour
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Space
             direction="horizontal"

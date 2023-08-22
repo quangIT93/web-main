@@ -59,6 +59,8 @@ export const home = {
     "approved": "Được phê duyệt:",
     "pending": "Chờ xử lý:",
     "waiting": "Chờ phê duyệt:",
+    "there_are_has_been_saved": "Bạn đã lưu trữ được:",
+    "keywords_has_been_saved": "gợi ý công việc",
 }
 
 

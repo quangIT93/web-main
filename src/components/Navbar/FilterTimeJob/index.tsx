@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
+import languageApi from 'api/languageApi';
 // import { AnyMxRecord } from 'dns';
 
 const { Text } = Typography;
@@ -57,6 +58,26 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
   const is_working_weekend = userFilteredCookies?.is_working_weekend;
   const is_remotely = userFilteredCookies?.is_remotely;
+
+  const [language, setLanguageState] = useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
 
   useEffect(() => {
     if (is_working_weekend) {
@@ -172,32 +193,16 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <Panel
           header={
             isRemotely || isWorkingWeekend
-              ? `${
-                  isWorkingWeekend
-                    ? languageRedux === 1
-                      ? 'Làm việc cuối tuần'
-                      : 'Weekend work'
-                    : ''
-                } 
+              ? `${isWorkingWeekend ? language?.working_on_the_weekend : ''} 
             ${isWorkingWeekend && isRemotely ? '-' : ''}
             
-            ${
-              isRemotely
-                ? languageRedux === 1
-                  ? 'Làm việc từ xa'
-                  : 'Working remotely'
-                : ''
-            }`
-              : languageRedux === 1
-              ? `Thời gian làm việc`
-              : `Working time`
+            ${isRemotely ? language?.remote_work : ''}`
+              : language?.working_time
           }
           key="1"
           style={{ fontSize: '12px' }}
         >
-          <Text className="title-filter_timeJob">
-            {languageRedux === 1 ? `Thời gian làm việc` : `Working time`}
-          </Text>
+          <Text className="title-filter_timeJob">{language?.working_time}</Text>
 
           {/* <Radio.Group
           value={selectedValue}
@@ -214,9 +219,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
 
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <FormControlLabel
-              label={
-                languageRedux === 1 ? 'Làm việc cuối tuần' : 'Weekend work'
-              }
+              label={language?.working_on_the_weekend}
               control={
                 <Checkbox
                   checked={
@@ -227,9 +230,7 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
               }
             />
             <FormControlLabel
-              label={
-                languageRedux === 1 ? 'Làm việc từ xa' : 'Working remotely'
-              }
+              label={language?.remote_work}
               control={
                 <Checkbox
                   checked={reset ? false : isRemotely === 0 ? false : true}

@@ -10,6 +10,7 @@ import './style.scss';
 import { RootState } from '../../../store/reducer';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
+import languageApi from 'api/languageApi';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -30,6 +31,25 @@ const ShowNotificativeSave: React.FC = () => {
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
   const alert = useSelector((state: any) => state.alertProfile.alert);
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
 
   // const alert = false;
 
@@ -55,9 +75,7 @@ const ShowNotificativeSave: React.FC = () => {
               backgroundColor: '#000000',
             }}
           >
-            {languageRedux === 1
-              ? home.job_has_been_saved
-              : homeEn.job_has_been_saved}
+            {language?.job_has_been_saved}
           </Alert>
         </Snackbar>
       </Stack>

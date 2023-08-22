@@ -5,6 +5,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Button } from 'antd';
+import { company } from 'validations/lang/vi/company';
+import { companyEn } from 'validations/lang/en/company';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -23,10 +27,12 @@ const style = {
 interface IModalEditPost {
   openModalEditCompany: boolean;
   setOpenModalEditCompanySuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  languageRedux: any;
+  language: any;
 }
 
 const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
-  const { openModalEditCompany, setOpenModalEditCompanySuccess } = props;
+  const { openModalEditCompany, setOpenModalEditCompanySuccess, languageRedux, language } = props;
 
   const handleClose = () => {
     setOpenModalEditCompanySuccess(false);
@@ -45,7 +51,9 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
           component="h2"
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
-          Đã chỉnh sửa thông tin công ty thành công!
+          {
+            language?.company_page?.alert_update_success
+          }
         </Typography>
         <Typography
           id="modal-modal-title"
@@ -53,7 +61,9 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
           component="h4"
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
-          Bạn có muốn quay về trang thông tin cá nhân!
+          {
+            language?.company_page?.alert_move_to_profile
+          }
         </Typography>
 
         <Box
@@ -73,7 +83,9 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
               width: '300px',
             }}
           >
-            Không
+            {
+              language?.no
+            }
           </Button>
           <Button
             type="primary"
@@ -85,7 +97,9 @@ const ModalEditCompanySuccess: React.FC<IModalEditPost> = (props) => {
               width: '300px',
             }}
           >
-            Có
+            {
+              language?.yes
+            }
           </Button>
         </Box>
       </Box>

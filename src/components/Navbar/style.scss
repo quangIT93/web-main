@@ -187,7 +187,7 @@
 
           .login__center {
             span {
-              display: none;
+              // display: none;
             }
           }
         }
@@ -481,7 +481,7 @@
     gap: 24px;
     align-items: flex-end;
 
-  
+
 
     @media screen and (max-width: 1024px) {
       flex-wrap: wrap;
@@ -524,7 +524,7 @@
     }
 
     .search-input-nav {
- 
+
       .ant-select-selector {
         .ant-select-selection-overflow {
           .ant-select-selection-overflow-item {
@@ -535,7 +535,7 @@
           }
         }
       }
-    
+
 
       @include breakpoint(mobile) {
         width: 100% !important;
@@ -877,7 +877,7 @@
 
       @include breakpoint(tablet) {
         // display: none;
-        margin-left:  6px;
+        margin-left: 6px;
       }
     }
 
@@ -911,7 +911,7 @@
       display: flex;
       // flex: none;
       margin-right: 0px;
-  
+
 
       .ant-select {
         display: none;
@@ -972,6 +972,7 @@
 
       @media screen and (min-width: 210px) and (max-width: 420px) {
         width: 300px;
+
         .sub-login_info {
           .ant-space-item {
             .sub-login_info__bottom {
@@ -989,11 +990,11 @@
             }
           }
         }
-        }
+      }
 
       @media screen and (min-width: 421px) and (max-width: 600px) {
         width: 340px;
-        }
+      }
 
       .ant-space-item {
         width: 100%;
@@ -1078,7 +1079,7 @@
       }
 
       .sub-login_items {
-        margin-top: 12px;
+        // margin-top: 12px;
 
         .sub-login_item__translate {
           // background-color: #AAAAAA;
@@ -1142,10 +1143,10 @@
 
           .sub-login-radio-group {
             width: 100%;
-            padding: 0 24px 12px;
+            padding: 12px 24px 12px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 8px;
             border-bottom: 1px solid rgba(170, 170, 170, 1);
 
             .ant-radio-wrapper {
@@ -1229,6 +1230,7 @@
 
     .box-right-responsive {
       margin: 0;
+
       .ant-btn {
         margin-left: 4px;
       }
@@ -1436,8 +1438,8 @@
     }
 
     @include breakpoint(mobile) {
-      
-    
+
+
 
       .notification {
         display: block;
@@ -1597,11 +1599,12 @@
       // left: 6px;
       // // left: 2.5px;
 
-    border: 2px solid transparent;
-    position: absolute;
-    /* transform: translate(-50%, -50%); */
-    left: 6px;
-    top: 4px;
+      border: 2px solid transparent;
+      position: absolute;
+      /* transform: translate(-50%, -50%); */
+      left: 6px;
+      top: 4px;
+
       img {
         width: 36px;
         height: 36px;
@@ -1648,14 +1651,14 @@
 .div-nav-center {
 
   .btn-noti_icon {
-    @include breakpoint(mobile){
+    @include breakpoint(mobile) {
       display: none;
     }
-  
+
     button {
       min-width: 52px;
       min-height: 50px;
-      
+
     }
   }
 

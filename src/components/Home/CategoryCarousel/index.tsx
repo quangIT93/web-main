@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext, memo, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 // import Backdrop from '@mui/material/Backdrop';
@@ -49,6 +49,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import { RootState } from '../../../store/reducer';
 // import { homeEn } from 'validations/lang/en/home';
 // import { home } from 'validations/lang/vi/home';
+import languageApi from 'api/languageApi';
 
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
@@ -75,16 +76,16 @@ const CategoryCarousel: React.FC = () => {
     setRefCatelory,
     navTouchCatelory,
   }: // openCollapseFilter,
-  {
-    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
-    childCateloriesArray: number[];
-    valueJobChild: IvalueJobChild;
-    setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
-    setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
-    setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
-    navTouchCatelory: boolean;
-    openCollapseFilter: boolean;
-  } = useContext(HomeValueContext);
+    {
+      setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
+      childCateloriesArray: number[];
+      valueJobChild: IvalueJobChild;
+      setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
+      setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
+      setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
+      navTouchCatelory: boolean;
+      openCollapseFilter: boolean;
+    } = useContext(HomeValueContext);
 
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -109,6 +110,24 @@ const CategoryCarousel: React.FC = () => {
   const [categories, setCategories] = React.useState<AxiosResponse | null>(
     null,
   );
+  const [language, setLanguage] = React.useState<any>();
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // Set the cookie
   function setCookie(name: string, value: string, days: number) {
@@ -168,6 +187,7 @@ const CategoryCarousel: React.FC = () => {
       let userSelected: UserSelected = {
         userSelectedId: newValue,
       };
+
       setCookie('userSelected', JSON.stringify(userSelected), 365);
 
       const selectedCategory = categories?.data.find(
@@ -246,6 +266,21 @@ const CategoryCarousel: React.FC = () => {
       // setOpenBackdrop(false); // Đóng backdrop sau khi API call hoàn thành
     }
   };
+
+  useEffect(() => {
+    if (JSON.parse(getCookie('userSelected') as any)) {
+      const userSelected = Number(
+        JSON.parse(getCookie('userSelected') || '').userSelectedId,
+      );
+      setCookie(
+        'userSelected',
+        JSON.stringify({ userSelectedId: userSelected }),
+        365,
+      );
+    } else {
+      setCookie('userSelected', JSON.stringify({ userSelectedId: 1 }), 365);
+    }
+  }, []);
 
   const getAllParentCategories = async () => {
     try {
@@ -617,9 +652,7 @@ const CategoryCarousel: React.FC = () => {
                       }
                     >
                       {isLogin && item.id === 1
-                        ? languageRedux === 1
-                          ? 'Công việc gợi ý'
-                          : 'Suggested work'
+                        ? language?.nearby_jobs
                         : item.name}
                     </span>
                   </div>

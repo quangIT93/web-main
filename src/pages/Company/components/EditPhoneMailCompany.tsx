@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
+import languageApi from 'api/languageApi';
 
 const styleLabel = {
   fontWeight: 700,
@@ -17,7 +18,8 @@ interface NumericInputProps {
   // style: React.CSSProperties;
   value: any;
   onChange: (value: any) => any;
-  languageRedux: any
+  languageRedux: any;
+  language: any;
 }
 
 interface IEditPhoneMailCompany {
@@ -26,7 +28,7 @@ interface IEditPhoneMailCompany {
 }
 
 const NumericInput = (props: NumericInputProps) => {
-  const { value, onChange, languageRedux } = props;
+  const { value, onChange, languageRedux, language } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
@@ -53,9 +55,7 @@ const NumericInput = (props: NumericInputProps) => {
       onChange={handleChange}
       onBlur={handleBlur}
       placeholder={
-        languageRedux === 1 ?
-          company.place_phone :
-          companyEn.place_phone
+        language?.post_page?.place_phone
       }
       inputProps={{ maxLength: 10 }}
       size="small"
@@ -67,6 +67,25 @@ const NumericInput = (props: NumericInputProps) => {
 const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { dataCompany, setDataCompany } = props;
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleEditCompanyMail = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -98,13 +117,16 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           htmlFor="editCompany"
         >
           {
-            languageRedux === 1 ?
-              company.phone :
-              companyEn.phone
+            language?.phone_number
           }{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
-        <NumericInput value={dataCompany?.phone} onChange={setDataCompany} languageRedux={languageRedux} />
+        <NumericInput
+          value={dataCompany?.phone}
+          onChange={setDataCompany}
+          languageRedux={languageRedux}
+          language={language}
+        />
       </div>
       <div className="edit-mail-company">
         <Typography
@@ -124,9 +146,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={
-            languageRedux === 1 ?
-              company.place_email :
-              companyEn.place_email
+            language?.company_page?.place_email
           }
         //   error={titleError} // Đánh dấu lỗi
         />

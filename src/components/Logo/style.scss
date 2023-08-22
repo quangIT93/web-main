@@ -5,15 +5,17 @@
   display: flex;
   align-items: center;
   margin-right: 24px;
+
   img {
     width: 50px;
     height: 50px;
-    @include breakpoint(mobile){
+
+    @include breakpoint(mobile) {
       min-width: 50px;
       min-height: 50px;
     }
 
-    @include breakpoint(tablet){
+    @include breakpoint(tablet) {
       min-width: 50px;
       min-height: 50px;
     }
@@ -51,28 +53,28 @@
 
 @include breakpoint(mobile) {
   // .logo {
-    // & img {
-      // width: 24px;
-      // height: 30px;
-    // }
+  // & img {
+  // width: 24px;
+  // height: 30px;
+  // }
   // }
 }
 
 @include breakpoint(tablet) {
   .logo {
-    padding-left: 12px;
+    // padding-left: 12px;
     // & img {
-      // width: 40px;
-      // height: 40px;
+    // width: 40px;
+    // height: 40px;
     // }
   }
 }
 
 @include breakpoint(largeTablet) {
   // .logo {
-    // & img {
-      // width: 24px;
-      // height: 30px;
-    // }
+  // & img {
+  // width: 24px;
+  // height: 30px;
+  // }
   // }
 }
