@@ -41,8 +41,8 @@ const communityApi = {
         return axiosClient.get(URL)
     },
 
-    getCommunityNews: () => {
-        const URL = `/v3/communications/news`
+    getCommunityNews: (page: string, limit: string, sort: string, type: number) => {
+        const URL = `/v3/communications/news?page=${page}&limit=${limit}&sort=${sort}&type=${type}`
         return axiosClient.get(URL)
     },
 
@@ -60,7 +60,7 @@ const communityApi = {
         })
     },
 
-    getCommunityById: (page: string, limit: string, sort: string) => {
+    getCommunityById: (page: string, limit: string, sort: string | null) => {
         const URL = `/v3/communications/by-account?page=${page}&limit=${limit}&sort=${sort}`
         return axiosClient.get(URL, {
             headers: {
@@ -128,7 +128,8 @@ const communityApi = {
         }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                'Content-Type': 'multipart/form-data',
+                // 'Content-Type': 'multipart/form-data',
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
         })
     },
@@ -144,8 +145,18 @@ const communityApi = {
 
     // ---------------------------------------------------------------------------------------- Comment
 
-    postCommunityComment: (newCommentCommunity: FormPostCommunityComment) => {
+    postCommunityCommentByAdmin: (newCommentCommunity: FormPostCommunityComment) => {
         const URL = `/v3/communications/by-admin`
+        return axiosClient.post(URL, newCommentCommunity, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+    },
+
+    postCommunityComment: (newCommentCommunity: FormPostCommunityComment) => {
+        const URL = `/v3/communication-comments`
         return axiosClient.post(URL, newCommentCommunity, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -176,19 +187,20 @@ const communityApi = {
     // ---------------------------------------------------------------------------------------- bookmarked
 
     postCommunityBookmarked: (communicationId: number) => {
-        const URL = `/v3/communication-likes`
+        const URL = `/v3/communication-bookmarked`
         return axiosClient.post(URL, {
             communicationId: communicationId
         }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                'Content-Type': 'multipart/form-data',
+                // 'Content-Type': 'multipart/form-data',
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
         })
     },
 
     getCommunityBookmarked: (id: string) => {
-        const URL = `/v3/communication-likes/${id}`
+        const URL = `/v3/communication-bookmarked/${id}`
         return axiosClient.get(URL, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

@@ -10,12 +10,12 @@ import { Avatar, Space, message } from 'antd';
 // import component
 import { Stack } from '@mui/material';
 import {
-    EysIcon,
-    CommentIcon,
-    LikeIcon,
-    EditComunity,
-    FilterComunity,
-    MoreICon
+  EysIcon,
+  CommentIcon,
+  LikeIcon,
+  EditComunity,
+  FilterComunity,
+  MoreICon,
 } from '#components/Icons';
 
 // @ts-ignore
@@ -33,180 +33,183 @@ import WorkingStoryCard from '#components/Community/WorkingStoryCard';
 // const { Panel } = Collapse;
 
 const Comunity = () => {
-    const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-    const [showText, setShowText] = React.useState('');
-    const [openMenu, setOpenMenu] = React.useState(false);
-    const [stories, setStories] = React.useState<any>();
-    const [page, setPage] = React.useState<any>("0");
-    const [isVisible, setIsVisible] = React.useState(true);
-    const [sort, setSort] = React.useState('');
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const [showText, setShowText] = React.useState('');
+  const [openMenu, setOpenMenu] = React.useState(false);
+  const [stories, setStories] = React.useState<any>();
+  const [page, setPage] = React.useState<any>('0');
+  const [isVisible, setIsVisible] = React.useState(true);
+  const [sort, setSort] = React.useState('');
 
-    const handleSortBy = (sort: string) => {
-        //cm: comment, l: likes, v: views
-        setSort(sort);
-    }
+  const handleSortBy = (sort: string) => {
+    //cm: comment, l: likes, v: views
+    setSort(sort);
+  };
 
-    const handleGetAllWorkingStory = async () => {
-        try {
-            const result = await communityApi.getCommunitations(page, "9", sort, 1);
-            if (result) {
-                setStories(result?.data?.communications);
-                if (result?.data?.communications?.length < 10) {
-                    setIsVisible(false);
-                }
-            }
-        } catch (error) {
-            console.log(error);
+  const handleGetAllWorkingStory = async () => {
+    try {
+      const result = await communityApi.getCommunityNews(page, '9', sort, 1);
+      if (result) {
+        setStories(result?.data);
+        if (result?.data?.length < 10) {
+          setIsVisible(false);
         }
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    React.useEffect(() => {
-        handleGetAllWorkingStory();
-    }, [sort])
+  React.useEffect(() => {
+    handleGetAllWorkingStory();
+  }, [sort]);
 
-    const handleChange = async () => {
-        const nextPage = (parseInt(page) + 1).toString()
-        const result = await communityApi.getCommunitations(nextPage, "9", sort, 1);
+  const handleChange = async () => {
+    const nextPage = (parseInt(page) + 1).toString();
+    const result = await communityApi.getCommunityNews(nextPage, '9', sort, 1);
 
-        //
-        if (result && result?.data?.communications?.length !== 0) {
-            setStories((prev: any) => [...prev, ...result?.data?.communications]);
-            setPage(nextPage);
-        } else {
-            setPage("0");
-            message.error("da het data");
-            setIsVisible(false);
-            // console.log('da het data', result);
-        }
+    //
+    if (result && result?.data?.length !== 0) {
+      setStories((prev: any) => [...prev, ...result?.data]);
+      setPage(nextPage);
+    } else {
+      setPage('0');
+      message.error('da het data');
+      setIsVisible(false);
+      // console.log('da het data', result);
+    }
+  };
+
+  const handleAddText = () => {
+    setShowText('showText');
+  };
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
+  const footerRef = React.useRef<any>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (footerRef.current && !footerRef.current.contains(event.target)) {
+        setOpenMenu(false);
+      }
     };
 
-    const handleAddText = () => {
-        setShowText('showText');
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-    const [language, setLanguage] = React.useState<any>();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    const getlanguageApi = async () => {
-        try {
-            const result = await languageApi.getLanguage(
-                languageRedux === 1 ? "vi" : "en"
-            );
-            if (result) {
-                setLanguage(result.data);
-                // setUser(result);
-            }
-        } catch (error) {
-            // setLoading(false);
-        }
-    };
+  const handleMoveToCreate = () => {
+    window.open('/comunity_create_post', '_parent');
+  };
 
-    React.useEffect(() => {
-        getlanguageApi()
-    }, [languageRedux])
-    const footerRef = React.useRef<any>(null);
-
-    useEffect(() => {
-        const handleClickOutside = (event: any) => {
-            if (footerRef.current && !footerRef.current.contains(event.target)) {
-                setOpenMenu(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const handleMoveToCreate = () => {
-        window.open('/comunity_create_post', '_parent')
-    }
-
-    return (
-        <div className="comunity-container">
-            <Navbar />
-            <div className="comunity-content">
-                <div className="comunityPostNew">
-                    <div className="title-comunity">
-                        <h3>Hôm nay, HiJob có 10 bài viết mới</h3>
-                        <div className="title-comunity_icon">
-                            <div className="dropdown dropdown-4" ref={footerRef} onClick={() => setOpenMenu(!openMenu)}>
-                                <FilterComunity />
-                                <ul className="dropdown_menu dropdown_menu-4">
-                                    <li className="dropdown_item-1" style={{ display: openMenu ? "flex" : "none" }}
-                                        onClick={() => { handleSortBy('l') }}>
-                                        <LikeIcon />
-                                        <p>
-                                            {
-                                                language?.history_page?.likes
-                                            }
-                                        </p>
-                                    </li>
-                                    <li className="dropdown_item-2" style={{ display: openMenu ? "flex" : "none" }}
-                                        onClick={() => { handleSortBy('v') }}>
-                                        <EysIcon />
-                                        <p>
-                                            {
-                                                language?.history_page?.views
-                                            }
-                                        </p>
-                                    </li>
-                                    <li className="dropdown_item-3" style={{ display: openMenu ? "flex" : "none" }}
-                                        onClick={() => { handleSortBy('cm') }}>
-                                        <CommentIcon />
-                                        <p>
-                                            {
-                                                language?.history_page?.comments
-                                            }
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="create-community-post" onClick={handleMoveToCreate}>
-                                <EditComunity />
-                            </div>
-                        </div>
-                    </div>
-
-                    {
-                        stories && stories.map((item: any, index: any) => (
-                            <WorkingStoryCard
-                                item={item}
-                                index={index}
-                                showText={showText}
-                                handleAddText={handleAddText}
-                            />
-                        ))
-                    }
-
-                </div>
-                <Stack
-                    spacing={2}
-                    sx={{
-                        display: isVisible ? 'flex' : "none",
-                        alignItems: 'center',
-                        margin: '24px 0',
+  return (
+    <div className="comunity-container">
+      <Navbar />
+      <div className="comunity-content">
+        <div className="comunityPostNew">
+          <div className="title-comunity">
+            <h3>Hôm nay, HiJob có 10 bài viết mới</h3>
+            <div className="title-comunity_icon">
+              <div
+                className="dropdown dropdown-4"
+                ref={footerRef}
+                onClick={() => setOpenMenu(!openMenu)}
+              >
+                <FilterComunity />
+                <ul className="dropdown_menu dropdown_menu-4">
+                  <li
+                    className="dropdown_item-1"
+                    style={{ display: openMenu ? 'flex' : 'none' }}
+                    onClick={() => {
+                      handleSortBy('l');
                     }}
-                >
-                    {/* <Pagination count={10} shape="rounded" /> */}
-                    <Space
-                        className="div-hover-more"
-                        onClick={handleChange}
-                    >
-                        <p>
-                            {
-                                language?.more
-                            }
-                        </p>
-                        <MoreICon width={20} height={20} />
-                    </Space>
-                </Stack>
+                  >
+                    <LikeIcon />
+                    <p>{language?.history_page?.likes}</p>
+                  </li>
+                  <li
+                    className="dropdown_item-2"
+                    style={{ display: openMenu ? 'flex' : 'none' }}
+                    onClick={() => {
+                      handleSortBy('v');
+                    }}
+                  >
+                    <EysIcon />
+                    <p>{language?.history_page?.views}</p>
+                  </li>
+                  <li
+                    className="dropdown_item-3"
+                    style={{ display: openMenu ? 'flex' : 'none' }}
+                    onClick={() => {
+                      handleSortBy('cm');
+                    }}
+                  >
+                    <CommentIcon />
+                    <p>{language?.history_page?.comments}</p>
+                  </li>
+                </ul>
+              </div>
+              <div
+                className="create-community-post"
+                onClick={handleMoveToCreate}
+              >
+                <EditComunity />
+              </div>
             </div>
-            <RollTop />
-            <Footer />
+          </div>
+
+          {stories &&
+            stories.map((item: any, index: any) => (
+              <WorkingStoryCard
+                item={item}
+                index={index}
+                showText={showText}
+                handleAddText={handleAddText}
+              />
+            ))}
         </div>
-    );
+        <Stack
+          spacing={2}
+          sx={{
+            display: isVisible ? 'flex' : 'none',
+            alignItems: 'center',
+            margin: '24px 0',
+          }}
+        >
+          {/* <Pagination count={10} shape="rounded" /> */}
+          <Space className="div-hover-more" onClick={handleChange}>
+            <p>{language?.more}</p>
+            <MoreICon width={20} height={20} />
+          </Space>
+        </Stack>
+      </div>
+      <RollTop />
+      <Footer />
+    </div>
+  );
 };
 
 export default Comunity;

@@ -21,9 +21,9 @@ const WorkingStory = () => {
 
     const handleGetWorkingStory = async () => {
         try {
-            const result = await communityApi.getCommunitations('', '5', '', 1);
+            const result = await communityApi.getCommunityNews('', '5', '', 1);
             if (result) {
-                setStories(result?.data?.communications)
+                setStories(result?.data)
             }
         } catch (error) {
             console.log(error);

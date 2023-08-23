@@ -16,7 +16,7 @@ import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import RollTop from '#components/RollTop';
 // import { InboxOutlined } from '@ant-design/icons';
 // import type { UploadProps } from 'antd';
-
+import { useSearchParams } from 'react-router-dom';
 // @ts-ignore
 import { CameraComunityIcon, DeleteImageComunityIcon } from '#components/Icons';
 import { useDropzone } from 'react-dropzone';
@@ -28,6 +28,7 @@ import { validatePostImages } from 'validations';
 
 // @ts- ignore
 import apiCommunity from '../../api/apiCommunity';
+import communityApi from '../../api/apiCommunity';
 
 const ComunityCreatePost = () => {
   const { TextArea } = Input;
@@ -39,13 +40,36 @@ const ComunityCreatePost = () => {
   const [isDragActive, setIsDragActive] = React.useState(false);
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
   const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const POST_COMMUNITY_ID = searchParams.get('post-community')
+  const [communityPost, setCommunityPost] = React.useState<any>();
 
   const [messageApi, contextHolder] = message.useMessage();
 
   console.log('selectedFiles', selectedFiles);
   console.log('selectedImages', selectedImages);
-  console.log('valueTitle', valueTitle);
-  console.log('valueContent', valueContent);
+  // console.log('valueTitle', valueTitle);
+  // console.log('valueContent', valueContent);
+
+  const handleGetDetailCommunityById = async () => {
+    try {
+      if (POST_COMMUNITY_ID) {
+        const result = await communityApi.getCommunityDetailId(POST_COMMUNITY_ID);
+        if (result) {
+          setCommunityPost(result?.data);
+          setValueTitle(result?.data?.title);
+          setValueContent(result?.data?.content);
+          setSelectedImages(result?.data?.communicationImagesData?.images);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  React.useEffect(() => {
+    handleGetDetailCommunityById();
+  }, [POST_COMMUNITY_ID])
 
   const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -306,9 +330,45 @@ const ComunityCreatePost = () => {
     }
 
     if (formData) {
-      createCommunity(formData);
+      POST_COMMUNITY_ID ?
+        updateCommunity(formData) :
+        createCommunity(formData);
     }
   };
+
+  const updateCommunity = async (formData: any) => {
+    const { message, checkForm } = validValue();
+    try {
+      if (checkForm) {
+        const result = await apiCommunity.putCommunityByAccount(
+          Number(POST_COMMUNITY_ID),
+          formData
+        );
+        if (result) {
+          console.log('sửa bài viết thành công');
+          messageApi.open({
+            type: 'success',
+            content: 'sửa bài viết thành công',
+          });
+          // window.open('/comunity_create_success', '_parent')
+        } else {
+          console.log('sửa bài viết thất bại');
+          messageApi.open({
+            type: 'error',
+            content: 'sửa bài viết thất bại',
+          });
+        }
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: message,
+        });
+      }
+
+    } catch (error) {
+
+    }
+  }
 
   const createCommunity = async (formData: any) => {
     // console.log('form saved', form);
@@ -320,7 +380,7 @@ const ComunityCreatePost = () => {
 
         if (result) {
           console.log('tạo bài viết thành công');
-          window.open('/comunity_create_success', '_parent');
+          window.open('/comunity_create_success', '_parent')
         } else {
           console.log('tạo bài viết thất bại');
         }
@@ -368,7 +428,8 @@ const ComunityCreatePost = () => {
               <span>3. Thêm hình ảnh</span>
               <p
                 style={{
-                  display: selectedFiles.length > 0 ? 'block' : 'none',
+                  display: selectedImages.length > 0 ||
+                    selectedFiles.length > 0 ? 'block' : 'none',
                   cursor: 'pointer',
                 }}
               >
@@ -387,8 +448,10 @@ const ComunityCreatePost = () => {
             <div
               className="post-comunity-images"
               style={{
-                height: selectedFiles.length > 0 ? 'fit-content' : '310px',
-                border: selectedFiles.length > 0 ? 'none' : '1px solid #ccc',
+                height: selectedImages.length > 0 ||
+                  selectedFiles.length > 0 ? 'fit-content' : '310px',
+                border: selectedImages.length > 0 ||
+                  selectedFiles.length > 0 ? 'none' : '1px solid #ccc',
               }}
             >
               <Box p="0rem 0">
@@ -403,7 +466,8 @@ const ComunityCreatePost = () => {
                       className="drag-img-camera"
                       style={{
                         display:
-                          selectedFiles.length === 0 || isDragActive
+                          selectedImages.length === 0 &&
+                            selectedFiles.length === 0 || isDragActive
                             ? 'flex'
                             : 'none',
                       }}
@@ -444,15 +508,17 @@ const ComunityCreatePost = () => {
               onClick={handleSaveCommunity}
               className={
                 valueTitle === '' ||
-                valueContent === '' ||
-                selectedFiles.length === 0
+                  valueContent === '' ||
+                  selectedImages.length === 0 &&
+                  selectedFiles.length === 0
                   ? 'submit'
                   : 'submit full-info'
               }
             >
               {valueTitle === '' ||
-              valueContent === '' ||
-              selectedFiles.length === 0
+                valueContent === '' ||
+                selectedImages.length === 0 &&
+                selectedFiles.length === 0
                 ? 'Lưu bài'
                 : 'Đăng bài viết'}
             </Button>

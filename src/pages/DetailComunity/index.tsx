@@ -24,6 +24,7 @@ import {
   SaveIconOutline,
   ShareIcon,
   SendComunityIcon,
+  SaveIconFill
 } from '#components/Icons';
 import { useSearchParams } from 'react-router-dom';
 import ImageList from '@mui/material/ImageList';
@@ -36,6 +37,15 @@ import communityApi from 'api/apiCommunity';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 // const { Panel } = Collapse;
+import { Input } from 'antd';
+
+const { TextArea } = Input;
+interface FormPostCommunityComment {
+  communicationId: number;
+  content: string;
+  images: string[];
+
+}
 
 const Comunity = () => {
   // const [showText, setShowText] = React.useState('');
@@ -47,8 +57,15 @@ const Comunity = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const POST_COMMUNITY_ID = searchParams.get('post-community')
   const [previewOpen, setPreviewOpen] = React.useState(false);
-  const [previewTitle, setPreviewTitle] = React.useState('');
+  const [cmtContent, setCmtContent] = React.useState('');
   const [previewImage, setPreviewImage] = React.useState('');
+  const [like, setLike] = React.useState(false);
+  const [bookmark, setBookmark] = React.useState(false);
+  const [cmt, setCmt] = React.useState(false);
+
+  const handelChangeCmt = (event: any) => {
+    setCmtContent(event.target.value)
+  }
 
   const handleGetDetailCommunityById = async () => {
     try {
@@ -65,7 +82,7 @@ const Comunity = () => {
 
   React.useEffect(() => {
     handleGetDetailCommunityById();
-  }, [POST_COMMUNITY_ID])
+  }, [POST_COMMUNITY_ID, like, bookmark, cmt])
 
   const srcset = (image: string, size: number, rows = 1, cols = 1) => {
     return {
@@ -75,11 +92,67 @@ const Comunity = () => {
     };
   }
 
+  const handleLikeCommunity = async (communicationId: number) => {
+    try {
+      const result = await communityApi.postCommunityLike(communicationId);
+      if (result && result?.status === 201) {
+        setLike(!like)
+      }
+      console.log(result);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleSaveCommunity = async (communicationId: number) => {
+    try {
+      const result = await communityApi.postCommunityBookmarked(communicationId);
+      if (result && result?.status === 201) {
+        setBookmark(!bookmark)
+      }
+      console.log(result);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleCommentCommunity = async () => {
+    const form = {
+      'communicationId': detail?.id,
+      "content": cmtContent,
+      "images": [],
+    }
+    try {
+      const result = await communityApi.postCommunityComment(form);
+      if (result) {
+        setCmt(!cmt)
+      }
+      console.log(result);
+
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log("content", cmtContent);
+  }
+
   const handleCancel = () => setPreviewOpen(false);
 
   const handlePreview = (img: any) => {
     setPreviewImage(img);
     setPreviewOpen(true);
+  };
+
+  const handleKeyPress = (e: any) => {
+    e.preventDefault();
+    if (e.shiftKey) {
+      // Insert a new line into the textArea
+      e.target.value += '\n';
+    } else
+      // if (e.key === 'Enter') {
+      handleCommentCommunity();
+    // }
   };
 
   return (
@@ -95,8 +168,13 @@ const Comunity = () => {
                 <ShareIcon width={24} height={24} />
                 Chia sẻ
               </span>
-              <span>
-                <SaveIconOutline width={24} height={24} />
+              <span onClick={() => handleSaveCommunity(detail?.id)}>
+                {
+                  bookmark ?
+                    <SaveIconFill width={24} height={24} />
+                    :
+                    <SaveIconOutline width={24} height={24} />
+                }
                 Lưu
               </span>
             </div>
@@ -148,7 +226,9 @@ const Comunity = () => {
             }
           </div> */}
           <div className="comunityDetail-wrap_status">
-            <div className="comunitypostNew-status_item">
+            <div className={like ? `comunitypostNew-status_item liked` : `comunitypostNew-status_item`}
+              onClick={() => handleLikeCommunity(detail?.id)}
+            >
               <LikeIcon />
               <p>{detail?.totalLikes}</p>
             </div>
@@ -163,8 +243,8 @@ const Comunity = () => {
           </div>
           <div className="comunityDetail-wrap_actor">
             <div className="comunityDetail-wrap">
-              <img src={detail?.profileData?.avatar} alt="anh loi" />
-
+              {/* <img src={detail?.profileData?.avatar} alt="anh loi" /> */}
+              <Avatar size={50} src={detail?.profileData?.avatar} icon={<UserOutlined />} />
               <div className="info-actor_comunityDetail">
                 <p>Tác giả</p>
                 <p>{detail?.profileData?.name}</p>
@@ -175,45 +255,63 @@ const Comunity = () => {
 
           <div className="comunityDetail-wrap_comment">
             <div className="comunityDetail-comment_chater">
-              <img
+              {/* <img
                 src={dataProfile?.avatar ? dataProfile?.avatar : ''}
                 alt=""
                 style={{ width: '50px', height: '50px' }}
-              />
-
+              /> */}
+              <Avatar size={50} src={dataProfile?.avatar} icon={<UserOutlined />} />
               {/* <textarea name="Text" rows={5}></textarea> */}
               <div className="comunityDetail-comment_chaterInput">
-                <input type="text" multiple />
-                <div className="comment-chaterInput_send">
-                  <SendComunityIcon />
+                {/* <input
+                  type="text"
+                  value={cmtContent}
+                  multiple
+                  onKeyDown={handleKeyPress}
+                  onChange={handelChangeCmt}
+                /> */}
+                <TextArea
+                  value={cmtContent}
+                  onPressEnter={(e: any) => handleKeyPress(e)}
+                  onChange={handelChangeCmt}
+                  placeholder="Enter comment"
+                  autoSize={{ minRows: 3, maxRows: 5 }}
+                />
+                <div className="comment-interaction">
+                  <div className="comment-chaterInput_send"
+                    onClick={handleCommentCommunity}
+                  >
+                    <SendComunityIcon />
+                  </div>
                 </div>
               </div>
             </div>
-
-            {
-              detail?.communicationCommentsData.map((cmtData: any, index: any) => (
-                <div className="comunityDetail-list_comment" key={index}>
-                  {/* <img
+            <div className="comunityDetail-list_comment">
+              {
+                detail?.communicationCommentsData.map((cmtData: any, index: any) => (
+                  <div className="comunityDetail-list_comment__item" key={index}>
+                    {/* <img
                     src={cmtData?.profileData?.avatar}
                     alt=""
                     style={{ width: '50px', height: '50px' }}
                   /> */}
-                  <Avatar size={50} src={cmtData?.profileData?.avatar} icon={<UserOutlined />} />
-                  <div className="comunityDetail-comment">
-                    <div className="comunityDetail-comment_top">
-                      <h3>{cmtData?.profileData?.name}</h3>
-                      <h3>|</h3>
-                      <p>{cmtData?.createdAtText}</p>
-                    </div>
-                    <div className="comunityDetail-comment_bottom">
-                      <p>
-                        {cmtData?.content}
-                      </p>
+                    <Avatar size={50} src={cmtData?.profileData?.avatar} icon={<UserOutlined />} />
+                    <div className="comunityDetail-comment">
+                      <div className="comunityDetail-comment_top">
+                        <h3>{cmtData?.profileData?.name}</h3>
+                        <h3>|</h3>
+                        <p>{cmtData?.createdAtText}</p>
+                      </div>
+                      <div className="comunityDetail-comment_bottom">
+                        <p>
+                          {cmtData?.content}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            }
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>

@@ -13,18 +13,18 @@ import { message } from 'antd';
 
 // import component
 
+// @ts-ignore
+import { Navbar } from '#components';
+// @ts-ignore
+import RollTop from '#components/RollTop';
+// @ts-ignore
 import {
   EysIcon,
   CommentIcon,
   LikeIcon,
   EditComunity,
   FilterComunity,
-} from '#components/Icons';
-
-// @ts-ignore
-
-import { Navbar } from '#components';
-import RollTop from '#components/RollTop';
+} from '../../components/Icons';
 
 import './style.scss';
 

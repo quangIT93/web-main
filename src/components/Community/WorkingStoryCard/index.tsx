@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import './style.scss';
@@ -8,6 +8,7 @@ import {
     CommentIcon,
     LikeIcon,
 } from '#components/Icons';
+import communityApi from "api/apiCommunity";
 
 interface IWorkingStoryCard {
     item: any,
@@ -18,18 +19,48 @@ interface IWorkingStoryCard {
 
 const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     const { item, showText, index, handleAddText } = props;
+    const [like, setLike] = React.useState(false);
+    const [totalLike, setTotalLike] = React.useState(item?.communicationLikesCount);
+
+    const handleLikeCommunity = async (communicationId: number) => {
+        try {
+            const result = await communityApi.postCommunityLike(communicationId);
+            if (result) {
+                setLike(!like)
+                if (result?.data?.communicationId) {
+                    setTotalLike(totalLike + 1);
+                } else {
+                    setTotalLike(totalLike - 1);
+                }
+            }
+            console.log(result);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    React.useEffect(() => {
+    }, [like])
 
     const handleMoveToDetailPage = (id: any) => {
         window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
     }
 
+    React.useEffect(() => {
+        const content = document.querySelector('.text-content_postNew');
+    }, [])
+
+    console.log("item", item);
+
+
     return (
         <>
-            <div className="comunitypostNew-card-wrap_content" key={index}
-                onClick={() => handleMoveToDetailPage(item?.id)}
-            >
+            <div className="comunitypostNew-card-wrap_content" key={index}>
                 <div className="comunityPostNew-card-content">
-                    <h3>{item?.title}</h3>
+                    <h3
+                        onClick={() => handleMoveToDetailPage(item?.id)}
+                    >{item?.title}</h3>
                     <div className="comunityPostNew-card-content_info">
                         <ul className={`text-content_postNew ${showText}`}>
                             {item?.content}
@@ -44,15 +75,19 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
                 <div className="comunitypostNew-wrap_status">
                     <div className="status-item">
                         <EysIcon />
-                        <p>{item?.communicationViewsCount}</p>
+                        <p>{item?.totalViews}</p>
                     </div>
-                    <div className="status-item">
+                    <div className={like ? "status-item liked" : "status-item"}
+                        onClick={() => handleLikeCommunity(item?.id)}
+                    >
                         <LikeIcon />
-                        <p>{item?.communicationLikesCount}</p>
+                        <p>{totalLike}</p>
                     </div>
-                    <div className="status-item">
+                    <div className="status-item"
+                        onClick={() => handleMoveToDetailPage(item?.id)}
+                    >
                         <CommentIcon />
-                        <p>{item?.communicationCommentsCount}</p>
+                        <p>{item?.totalComments}</p>
                     </div>
                 </div>
 
@@ -72,4 +107,4 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     )
 }
 
-export default WorkingStoryCard;
+export default memo(WorkingStoryCard);
