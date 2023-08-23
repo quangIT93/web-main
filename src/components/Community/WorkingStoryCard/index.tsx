@@ -77,11 +77,17 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     }
   };
 
+  console.log('item', item);
+
   return (
     <>
       <div className="comunitypostNew-card-wrap_content" key={index}>
         <div className="bookmark" onClick={handleClickSave}>
-          <SaveIconFill width={24} height={24} />
+          {item.bookmarked === true ? (
+            <SaveIconFill width={24} height={24} />
+          ) : (
+            <SaveIconOutline width={24} height={24} />
+          )}
         </div>
 
         <div className="comunityPostNew-card-content">
@@ -102,7 +108,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
         <div className="comunitypostNew-wrap_status">
           <div className="status-item">
             <EysIcon />
-            <p>{item?.totalViews}</p>
+            <p>{item?.communicationViewsCount}</p>
           </div>
           <div
             className={like ? 'status-item liked' : 'status-item'}
@@ -116,7 +122,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
             onClick={() => handleMoveToDetailPage(item?.id)}
           >
             <CommentIcon />
-            <p>{item?.totalComments}</p>
+            <p>{item?.communicationCommentsCount}</p>
           </div>
         </div>
 

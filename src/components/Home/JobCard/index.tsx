@@ -324,7 +324,7 @@ const JobCard: React.FC<Iprops> = (props) => {
               )}
             </div>
             <div>
-              {!error && (
+              {props.item.resource.company_icon && (
                 <img
                   className="img-resource-company"
                   src={
@@ -333,7 +333,6 @@ const JobCard: React.FC<Iprops> = (props) => {
                       : ''
                   }
                   alt="ảnh"
-                  onError={handleImageError}
                 />
               )}
             </div>

@@ -102,6 +102,22 @@ const Home: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const communityDiv = localStorage.getItem('community');
+    console.log('communityDiv', communityDiv);
+    if (communityDiv) {
+      setReachedEndShowSubjectJob(true);
+      document
+        .querySelector('.community-container')
+        ?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest',
+        });
+    }
+    localStorage.removeItem('community');
+  }, []);
+
   return (
     <div className="home">
       <Navbar />
