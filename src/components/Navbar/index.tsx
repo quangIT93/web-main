@@ -1138,12 +1138,12 @@ const Navbar: React.FC = () => {
                   <Radio value={1}>
                     <VNSubLoginIcon />
                     <span>
-                      {language?.vietnamese}
+                      Tiếng Việt
                     </span>
                   </Radio>
                   <Radio value={2}>
                     <ENSubLoginIcon />
-                    <span>{language?.english}</span>
+                    <span>English</span>
                   </Radio>
                   {/* <Radio value={3}>
                     <ENSubLoginIcon />
@@ -1386,12 +1386,12 @@ const Navbar: React.FC = () => {
                   <Radio value={1}>
                     <VNSubLoginIcon />
                     <span>
-                      {language?.vietnamese}
+                      Tiếng Việt
                     </span>
                   </Radio>
                   <Radio value={2}>
                     <ENSubLoginIcon />
-                    <span>{language?.english}</span>
+                    <span>English</span>
                   </Radio>
                   {/* <Radio value={3}>
                   <ENSubLoginIcon />

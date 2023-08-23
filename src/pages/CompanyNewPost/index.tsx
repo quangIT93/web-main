@@ -48,10 +48,10 @@ const Comunity = () => {
 
     const handleGetAllWorkingStory = async () => {
         try {
-            const result = await communityApi.getCommunitations(page, "9", sort, 1);
+            const result = await communityApi.getCommunityNews(page, "9", sort, 1);
             if (result) {
-                setStories(result?.data?.communications);
-                if (result?.data?.communications?.length < 10) {
+                setStories(result?.data);
+                if (result?.data?.length < 10) {
                     setIsVisible(false);
                 }
             }
@@ -66,11 +66,11 @@ const Comunity = () => {
 
     const handleChange = async () => {
         const nextPage = (parseInt(page) + 1).toString()
-        const result = await communityApi.getCommunitations(nextPage, "9", sort, 1);
+        const result = await communityApi.getCommunityNews(nextPage, "9", sort, 1);
 
         //
-        if (result && result?.data?.communications?.length !== 0) {
-            setStories((prev: any) => [...prev, ...result?.data?.communications]);
+        if (result && result?.data?.length !== 0) {
+            setStories((prev: any) => [...prev, ...result?.data]);
             setPage(nextPage);
         } else {
             setPage("0");

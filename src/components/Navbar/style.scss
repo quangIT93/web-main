@@ -42,6 +42,7 @@
   display: flex;
   justify-content: space-between;
   margin-left: 24px;
+
   // margin-right: 20px;
   .login__center {
     span {
@@ -1358,7 +1359,7 @@
             }
           }
 
-          @include breakpoint(destop){
+          @include breakpoint(destop) {
             &:after {
               right: 35px;
             }
@@ -1537,17 +1538,17 @@
     // border: 1px solid #aaa;
     display: none;
     // display: block;
-    z-index: 10;
+    z-index: 2000;
 
     // @include breakpoint(mobile){
     //   left: -138px;
     // }
 
-    @include breakpoint(tablet){
+    @include breakpoint(tablet) {
       left: -70px;
     }
 
-    @include breakpoint(largeTablet){
+    @include breakpoint(largeTablet) {
       left: -70px;
     }
 

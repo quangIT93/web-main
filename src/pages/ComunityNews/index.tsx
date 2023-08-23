@@ -43,10 +43,10 @@ const ComunityNews = () => {
 
     const handleGetAllHijobNews = async () => {
         try {
-            const result = await communityApi.getCommunitations(page, "9", sort, 0);
+            const result = await communityApi.getCommunityNews(page, "9", sort, 0);
             if (result) {
-                setHijobNews(result?.data?.communications);
-                if (result?.data?.communications?.length < 10) {
+                setHijobNews(result?.data);
+                if (result?.data?.length < 10) {
                     setIsVisible(false);
                 }
             }
@@ -61,11 +61,11 @@ const ComunityNews = () => {
 
     const handleChange = async () => {
         const nextPage = (parseInt(page) + 1).toString()
-        const result = await communityApi.getCommunitations(nextPage, "9", sort, 0);
+        const result = await communityApi.getCommunityNews(nextPage, "9", sort, 0);
 
         //
-        if (result && result?.data?.communications?.length !== 0) {
-            setHijobNews((prev: any) => [...prev, ...result?.data?.communications]);
+        if (result && result?.data?.length !== 0) {
+            setHijobNews((prev: any) => [...prev, ...result?.data]);
             setPage(nextPage);
         } else {
             setPage("0");

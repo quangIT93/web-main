@@ -18,9 +18,9 @@ const HijobNews = () => {
 
     const handleGetHijobNews = async () => {
         try {
-            const result = await communityApi.getCommunitations('', '5', '', 0);
+            const result = await communityApi.getCommunityNews('', '5', '', 0);
             if (result) {
-                setNews(result?.data?.communications);
+                setNews(result?.data);
             }
         } catch (error) {
             console.log(error);

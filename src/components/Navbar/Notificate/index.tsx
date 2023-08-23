@@ -416,7 +416,7 @@ const Notificate = () => {
                           <p>
                             {new Date(
                               notificate.data.createdAt,
-                            ).toLocaleDateString()}
+                            ).toLocaleDateString('en-GB')}
                           </p>
                         </div>
                         <p>{notificate.data.jobType.name}</p>
@@ -456,7 +456,7 @@ const Notificate = () => {
                       <p>
                         {new Date(
                           notificate.data.createdAt,
-                        ).toLocaleDateString()}
+                        ).toLocaleDateString('en-GB')}
                       </p>
                     </div>
                   </div>
@@ -598,7 +598,7 @@ const Notificate = () => {
                         </p>
 
                         <p>
-                          {new Date(dataKeyword.createdAt).toLocaleDateString()}
+                          {new Date(dataKeyword.createdAt).toLocaleDateString('en-GB')}
                         </p>
                       </div>
                     </div>
@@ -627,14 +627,24 @@ const Notificate = () => {
             : ''
             }`}
         >
-          <h4>Xóa gợi ý công việc</h4>
-          <p>Từ khoá sẽ không thể khôi phục sau khi xoá, bạn có chắc không?</p>
+          <h4>
+            {
+              language?.delete_this_keyword
+            }
+          </h4>
+          <p>
+            {
+              language?.keywords_will_not_be_recoverable_after_deletion
+            }
+          </p>
           <Button
             type="primary"
             className="submit-delete_submitKeyWord"
             onClick={handleClickDeleteItemKeyword}
           >
-            Đồng ý
+            {
+              language?.ok1
+            }
           </Button>
           <IconButton
             aria-label="close"
