@@ -78,7 +78,7 @@ const CardListBlogSave = () => {
   // commun
   const handleGetAllWorkingStory = async () => {
     try {
-      const result = await communityApi.getCommunityById('1', '20', null);
+      const result = await communityApi.getCommunityByAccount('1', '20', '');
       if (result) {
         setStories(result?.data);
         if (result?.data?.length < 10) {

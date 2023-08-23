@@ -35,6 +35,7 @@ const HijobNews = () => {
 
   const handleMoveToDetailPage = (id: any) => {
     window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
+    localStorage.setItem('community', '.community-container');
   };
 
   return (

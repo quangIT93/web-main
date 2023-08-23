@@ -14,9 +14,11 @@ const WorkingStory = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
 
     const [stories, setStories] = React.useState<any>();
+    const [position, setPosition] = React.useState<any>();
 
     const handleMoveToDetailPage = (id: any) => {
         window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
+        localStorage.setItem('community', ".community-container");
     }
 
     const handleGetWorkingStory = async () => {
@@ -41,7 +43,10 @@ const WorkingStory = () => {
                     <ThinkingIcon />
                     <h3>HiJob Working story</h3>
                 </div>
-                <p onClick={() => window.open('/new-comunity', '_parent')}>
+                <p onClick={() => {
+                    window.open('/new-comunity', '_parent')
+                    localStorage.setItem('community', ".community-container");
+                }}>
                     View all
                 </p>
             </div>
