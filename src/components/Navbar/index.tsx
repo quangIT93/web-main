@@ -709,9 +709,6 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
-      // console.log('e.tảtget', refInfoUser?.current)
-      // console.log('e.tảtget', refInfoUser?.current?.contains(event.target))
-      // console.log('e.tảtget', refLogin?.current?.contains(event.target))
       if (refInfoUser.current && !refInfoUser.current.contains(event.target)) {
         setOpenInfoUser(false);
       }
@@ -901,9 +898,7 @@ const Navbar: React.FC = () => {
         setOpenCollapseFilter(false);
       }
     };
-
     window.addEventListener('click', handleCloseFilter);
-
     return () => {
       window.removeEventListener('click', handleCloseFilter);
     };
