@@ -1138,10 +1138,12 @@ const Navbar: React.FC = () => {
 
               <div
                 className="sub-translate_status"
-                style={{
-                  // height: openRadioGroup ? '100%' : '0',
-                  display: 'none',
-                }}
+                style={
+                  {
+                    // height: openRadioGroup ? '100%' : '0',
+                    // display: 'none',
+                  }
+                }
               >
                 <Radio.Group
                   name="radiogroup"
@@ -1382,7 +1384,7 @@ const Navbar: React.FC = () => {
                 className="sub-translate_status"
                 style={{
                   height: openRadioGroup ? '100%' : '0',
-                  display: 'none',
+                  // display: 'none',
                 }}
               >
                 <Radio.Group
