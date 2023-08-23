@@ -43,6 +43,8 @@ const Comunity = () => {
   const [isVisible, setIsVisible] = React.useState(true);
   const [sort, setSort] = React.useState('');
 
+  const [saveListPost, setSaveListPost] = React.useState(false);
+
   const handleSortBy = (sort: string) => {
     //cm: comment, l: likes, v: views
     setSort(sort);
@@ -64,7 +66,7 @@ const Comunity = () => {
 
   React.useEffect(() => {
     handleGetAllWorkingStory();
-  }, [sort]);
+  }, [sort, saveListPost]);
 
   const handleChange = async () => {
     const nextPage = (parseInt(page) + 1).toString();
@@ -188,8 +190,8 @@ const Comunity = () => {
                 index={index}
                 showText={showText}
                 handleAddText={handleAddText}
-                setSaveListPost={() => {}}
-                saveListPost={false}
+                setSaveListPost={setSaveListPost}
+                saveListPost={saveListPost}
               />
             ))}
         </div>

@@ -77,11 +77,17 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     }
   };
 
+  console.log('item', item);
+
   return (
     <>
       <div className="comunitypostNew-card-wrap_content" key={index}>
         <div className="bookmark" onClick={handleClickSave}>
-          <SaveIconFill width={24} height={24} />
+          {item.bookmarked === true ? (
+            <SaveIconFill width={24} height={24} />
+          ) : (
+            <SaveIconOutline width={24} height={24} />
+          )}
         </div>
 
         <div className="comunityPostNew-card-content">

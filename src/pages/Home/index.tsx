@@ -122,7 +122,7 @@ const Home: React.FC = () => {
           <>
             <SuggestJob />
             <ThemesJob />
-            {/* <Community /> */}
+            <Community />
           </>
         ) : (
           <></>
