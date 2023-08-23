@@ -1,12 +1,13 @@
 import React, { useEffect, FormEvent, useState } from 'react';
 import Footer from '../../components/Footer/Footer';
-
+import { Spin } from 'antd';
 import { message } from 'antd';
 import { Space } from 'antd';
 import RollTop from '#components/RollTop';
 import { Stack } from '@mui/material';
 // import component
-
+// @ts-ignore
+import InfiniteScroll from "react-infinite-scroll-component";
 import {
     EysIcon,
     CommentIcon,
@@ -14,7 +15,7 @@ import {
     FilterComunity,
     MoreICon
 } from '#components/Icons';
-
+import { LoadingOutlined } from '@ant-design/icons';
 // @ts-ignore
 
 import { Navbar } from '#components';
@@ -31,10 +32,32 @@ const ComunityNews = () => {
     const [openMenu, setOpenMenu] = React.useState(false);
     const footerRef = React.useRef<any>(null);
     const [language, setLanguage] = React.useState<any>();
-    const [hijobNews, setHijobNews] = React.useState<any>();
+    const [hijobNews, setHijobNews] = React.useState<any>([]);
     const [page, setPage] = React.useState<any>("0");
     const [isVisible, setIsVisible] = React.useState(true);
     const [sort, setSort] = React.useState('');
+    const [hasMore, setHasMore] = React.useState(true);
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+    console.log("hijobNews", hijobNews);
+
+
+    const fetchMoreData = async () => {
+        const nextPage = (parseInt(page) + 1).toString()
+        const result = await communityApi.getCommunityNews(nextPage, "10", sort, 1);
+
+        //
+        if (result && result?.data?.length !== 0) {
+            setHijobNews((prev: any) => [...prev, ...result?.data]);
+            setPage(nextPage);
+        } else {
+            setHasMore(false);
+            setPage("0");
+            message.error("Đã hết bài viết");
+            setIsVisible(false);
+            // console.log('da het data', result);
+        }
+    };
 
     const handleSortBy = (sort: string) => {
         //cm: comment, l: likes, v: views
@@ -43,13 +66,15 @@ const ComunityNews = () => {
 
     const handleGetAllHijobNews = async () => {
         try {
-            const result = await communityApi.getCommunityNews(page, "9", sort, 0);
+            const result = await communityApi.getCommunityNews(page, "10", sort, 0);
             if (result) {
+                console.log(result?.data);
                 setHijobNews(result?.data);
                 if (result?.data?.length < 10) {
                     setIsVisible(false);
                 }
             }
+
         } catch (error) {
             console.log(error);
         }
@@ -57,11 +82,12 @@ const ComunityNews = () => {
 
     React.useEffect(() => {
         handleGetAllHijobNews()
+        setHasMore(true);
     }, [sort])
 
     const handleChange = async () => {
         const nextPage = (parseInt(page) + 1).toString()
-        const result = await communityApi.getCommunityNews(nextPage, "9", sort, 0);
+        const result = await communityApi.getCommunityNews(nextPage, "10", sort, 0);
 
         //
         if (result && result?.data?.length !== 0) {
@@ -152,14 +178,26 @@ const ComunityNews = () => {
                             {/* <EditComunity /> */}
                         </div>
                     </div>
-                    {
+                    <InfiniteScroll
+                        dataLength={hijobNews?.length}
+                        next={fetchMoreData}
+                        hasMore={hasMore}
+                        loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
+                    >
+                        {
+                            hijobNews?.map((item: any, index: any) => (
+                                <HijobNewsCard item={item} index={index} />
+                            ))
+                        }
+                    </InfiniteScroll>
+                    {/* {
                         hijobNews && hijobNews.map((item: any, index: any) => (
                             <HijobNewsCard item={item} index={index} />
                         ))
-                    }
+                    } */}
 
                 </div>
-                <Stack
+                {/* <Stack
                     spacing={2}
                     sx={{
                         display: isVisible ? 'flex' : "none",
@@ -167,7 +205,6 @@ const ComunityNews = () => {
                         margin: '24px 0',
                     }}
                 >
-                    {/* <Pagination count={10} shape="rounded" /> */}
                     <Space
                         className="div-hover-more"
                         onClick={handleChange}
@@ -179,7 +216,7 @@ const ComunityNews = () => {
                         </p>
                         <MoreICon width={20} height={20} />
                     </Space>
-                </Stack>
+                </Stack> */}
             </div>
             <RollTop />
             <Footer />

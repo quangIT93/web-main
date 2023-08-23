@@ -13,6 +13,13 @@ import { Button } from 'antd';
 import RollTop from '#components/RollTop';
 
 const ComunityCreateSuccess = () => {
+    const handleMoveToHijobNews = () => {
+        window.open('/news-comunity', '_parent')
+    }
+
+    const handleMoveToCommunityPost = () => {
+        window.open('/history', '_parent')
+    }
 
     return (
         <div className="comunity-create-success-container">
@@ -33,10 +40,10 @@ const ComunityCreateSuccess = () => {
                     </div>
                 </div>
                 <div className="create-success-btns">
-                    <Button type="primary">
+                    <Button type="primary" onClick={handleMoveToHijobNews}>
                         Bài viết HiJob
                     </Button>
-                    <Button>
+                    <Button onClick={handleMoveToCommunityPost}>
                         Xem bài viết của bạn
                     </Button>
                 </div>

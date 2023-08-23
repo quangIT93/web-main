@@ -19,7 +19,7 @@ interface IWorkingStoryCard {
 
 const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     const { item, showText, index, handleAddText } = props;
-    const [like, setLike] = React.useState(false);
+    const [like, setLike] = React.useState(item?.liked);
     const [totalLike, setTotalLike] = React.useState(item?.communicationLikesCount);
 
     const handleLikeCommunity = async (communicationId: number) => {
@@ -75,7 +75,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
                 <div className="comunitypostNew-wrap_status">
                     <div className="status-item">
                         <EysIcon />
-                        <p>{item?.totalViews}</p>
+                        <p>{item?.communicationViewsCount}</p>
                     </div>
                     <div className={like ? "status-item liked" : "status-item"}
                         onClick={() => handleLikeCommunity(item?.id)}
@@ -87,7 +87,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
                         onClick={() => handleMoveToDetailPage(item?.id)}
                     >
                         <CommentIcon />
-                        <p>{item?.totalComments}</p>
+                        <p>{item?.communicationCommentsCount}</p>
                     </div>
                 </div>
 

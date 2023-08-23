@@ -33,6 +33,7 @@ const HijobNews = () => {
 
     const handleMoveToDetailPage = (id: any) => {
         window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
+        localStorage.setItem('community', ".community-container");
     }
 
 
@@ -43,7 +44,11 @@ const HijobNews = () => {
                     <NewsPaperIcon />
                     <h3>HiJob News</h3>
                 </div>
-                <p onClick={() => window.open('/news-comunity', '_parent')}>
+                <p onClick={() => {
+                    window.open('/news-comunity', '_parent')
+                    localStorage.setItem('community', ".community-container");
+                }
+                }>
                     View all
                 </p>
             </div>

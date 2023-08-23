@@ -73,6 +73,8 @@ const Comunity = () => {
         const result = await communityApi.getCommunityDetailId(POST_COMMUNITY_ID);
         if (result) {
           setDetail(result?.data);
+          setLike(result?.data?.liked)
+          setBookmark(result?.data?.bookmarked)
         }
       }
     } catch (error) {
@@ -190,29 +192,29 @@ const Comunity = () => {
           <ImageList
             className="comunityDetail-wrap_img"
             variant="quilted"
-            cols={detail?.communicationImagesData?.images.length >= 4 ? 4 : detail?.communicationImagesData?.images.length}
-            rowHeight={detail?.communicationImagesData?.images.length >= 4 ? 200 : 400}
+            cols={detail?.communicationImagesData.length >= 4 ? 4 : detail?.communicationImagesData.length}
+            rowHeight={detail?.communicationImagesData.length >= 4 ? 200 : 400}
           >
-            {detail?.communicationImagesData?.images.map((item: any, index: any) => (
-              <ImageListItem key={item}
+            {detail?.communicationImagesData.map((item: any, index: any) => (
+              <ImageListItem key={item.id}
                 cols={
-                  detail?.communicationImagesData?.images.length >= 4 &&
+                  detail?.communicationImagesData.length >= 4 &&
                     index === 0 ? 2 : 1
                 }
                 rows={
-                  detail?.communicationImagesData?.images.length >= 4 &&
+                  detail?.communicationImagesData.length >= 4 &&
                     index === 0 ? 2 : 1
                 }
               >
                 <img
-                  onClick={() => { handlePreview(item) }}
-                  {...srcset(item, 200,
-                    detail?.communicationImagesData?.images.length >= 4 &&
+                  onClick={() => { handlePreview(item.image) }}
+                  {...srcset(item.image, 200,
+                    detail?.communicationImagesData?.length >= 4 &&
                       index === 0 ? 2 : 1,
-                    detail?.communicationImagesData?.images.length >= 4 &&
+                    detail?.communicationImagesData?.length >= 4 &&
                       index === 0 ? 2 : 1
                   )}
-                  alt={item.title}
+                  alt={item.image}
                   loading="lazy"
                 />
               </ImageListItem>
