@@ -103,7 +103,7 @@ const ThemesJob: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -115,8 +115,8 @@ const ThemesJob: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // state redux
   // const { post } = useSelector((state: RootState) => state);
@@ -234,9 +234,7 @@ const ThemesJob: React.FC = () => {
     <Box sx={{ flexGrow: 1 }} className="box-subjectJob" id="box-subjectJob">
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <SuggestIcon width={25} height={25} />
-        <h2>
-          {language?.nearby_jobs}
-        </h2>
+        <h2>{language?.nearby_jobs}</h2>
       </div>
 
       {!localStorage.getItem('accessToken') ? (
@@ -308,17 +306,15 @@ const ThemesJob: React.FC = () => {
               >
                 {localStorage.getItem('accessToken') ? (
                   <div className="more-job">
-                    <p onClick={handleChange}>
-                      {language?.more}
-                    </p>
-                    <MoreICon width={20} height={20} />
+                    <button onClick={handleChange}>
+                      <p>{language?.more}</p>
+                      <MoreICon width={20} height={20} />
+                    </button>
                   </div>
                 ) : (
                   <div className="suggest-job-not-loging">
                     <div className="suggest-job-not-loging_left">
-                      <h3>
-                        {language?.home_page?.hijob_suggest_for_u}
-                      </h3>
+                      <h3>{language?.home_page?.hijob_suggest_for_u}</h3>
                       <p>
                         {language?.home_page?.quickly_find_job_fits_your_needs}
                       </p>
@@ -345,7 +341,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //   onClick={handleClose}
+              //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
