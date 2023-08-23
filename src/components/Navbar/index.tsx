@@ -954,7 +954,8 @@ const Navbar: React.FC = () => {
             {localStorage.getItem('accessToken') && dataProfile ? (
               <span>{dataProfile?.name}</span>
             ) : (
-              <span>{languageData?.sign_in}</span>
+              // <span>{languageData?.login}</span>
+              <span>{languageRedux === 1 ? `Đăng nhập` : `Sign in`}</span>
             )}
           </div>
         </div>
