@@ -44,6 +44,7 @@ const ComunityNewPost = () => {
     const [sort, setSort] = React.useState('');
     const [hasMore, setHasMore] = React.useState(true);
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+    const [saveListPost, setSaveListPost] = React.useState(false);
     const handleSortBy = (sort: string) => {
         //cm: comment, l: likes, v: views
         setSort(sort);
@@ -83,7 +84,7 @@ const ComunityNewPost = () => {
     React.useEffect(() => {
         handleGetAllWorkingStory();
         setHasMore(true);
-    }, [sort])
+    }, [sort, saveListPost])
 
     // const handleChange = async () => {
     //     const nextPage = (parseInt(page) + 1).toString()
@@ -205,6 +206,8 @@ const ComunityNewPost = () => {
                                     index={index}
                                     showText={showText}
                                     handleAddText={handleAddText}
+                                    setSaveListPost={setSaveListPost}
+                                    saveListPost={saveListPost}
                                 />
                             ))
                         }

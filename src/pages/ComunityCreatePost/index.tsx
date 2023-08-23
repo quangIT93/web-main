@@ -43,6 +43,7 @@ const ComunityCreatePost = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const POST_COMMUNITY_ID = searchParams.get('post-community')
   const [communityPost, setCommunityPost] = React.useState<any>();
+  const [deleteImages, setDeleteImages] = React.useState<any[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -59,9 +60,7 @@ const ComunityCreatePost = () => {
           setCommunityPost(result?.data);
           setValueTitle(result?.data?.title);
           setValueContent(result?.data?.content);
-          setSelectedImages(
-            result?.data?.communicationImagesData.map((item: any) => item.image)
-          );
+          setSelectedImages(result?.data?.communicationImagesData);
         }
       }
     } catch (error) {
@@ -198,7 +197,7 @@ const ComunityCreatePost = () => {
     }
   };
 
-  const handleDeleteImage = (index: number) => {
+  const handleDeleteImage = (index: number, deleteId: any) => {
     setSelectedImages((prevImages) => {
       const updatedImages = [...prevImages];
       updatedImages.splice(index, 1);
@@ -209,7 +208,15 @@ const ComunityCreatePost = () => {
       updatedFiles.splice(index, 1);
       return updatedFiles;
     });
+    setDeleteImages((prevImages) => {
+      const deletedImages = [...prevImages];
+      deletedImages.push(deleteId);
+      return deletedImages;
+    });
   };
+
+  console.log(deleteImages);
+
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -325,6 +332,10 @@ const ComunityCreatePost = () => {
     formData.append('content', valueContent);
     selectedFiles.forEach((image: any) => {
       formData.append('images', image);
+    });
+    // POST_COMMUNITY_ID &&
+    deleteImages.forEach((id: any) => {
+      formData.append('deleteImages', id);
     });
 
     for (const pair of formData.entries()) {
@@ -480,15 +491,15 @@ const ComunityCreatePost = () => {
                   </div>
                 </section>
                 <Box className="list_iamges">
-                  {selectedImages.map((image: any, index: number) => (
+                  {selectedImages.map((item: any, index: number) => (
                     <div className="item-image" key={index}>
-                      <img key={index} src={image} alt="Ảnh lỗi" />
+                      <img key={index} src={item?.image} alt="Ảnh lỗi" />
                       <div
                         className="deleteButton"
                         style={{
                           zIndex: isDragActive ? '0' : '2',
                         }}
-                        onClick={() => handleDeleteImage(index)}
+                        onClick={() => handleDeleteImage(index, item?.id)}
                       >
                         <DeleteImageComunityIcon />
                       </div>

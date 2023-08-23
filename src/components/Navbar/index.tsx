@@ -131,17 +131,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -929,14 +929,17 @@ const Navbar: React.FC = () => {
       }}
     >
       <FormOutlined style={{ color: 'white' }} />
-      <p style={{ marginLeft: 10, color: 'white' }}>{languageData?.post}</p>
+      <p style={{ marginLeft: 10, color: 'white' }}>
+        {/* {languageData ? languageData?.post : ''} */}
+        {languageRedux === 1 ? `Đăng bài` : `Post`}
+      </p>
     </button>,
     <div
       className="actions-login"
       ref={refLogin}
       key="2"
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -951,7 +954,8 @@ const Navbar: React.FC = () => {
             {localStorage.getItem('accessToken') && dataProfile ? (
               <span>{dataProfile?.name}</span>
             ) : (
-              <span>{languageData?.sign_in}</span>
+              // <span>{languageData?.login}</span>
+              <span>{languageRedux === 1 ? `Đăng nhập` : `Sign in`}</span>
             )}
           </div>
         </div>
@@ -965,8 +969,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-              openLogin &&
-              location?.pathname === '/'
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1052,8 +1056,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                            return `${location.district} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1066,8 +1070,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1087,9 +1091,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1151,15 +1155,13 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                // style={{
-                //   display: openRadioGroup ? 'flex' : 'none',
-                // }}
+                  // style={{
+                  //   display: openRadioGroup ? 'flex' : 'none',
+                  // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
-                    <span>
-                      Tiếng Việt
-                    </span>
+                    <span>Tiếng Việt</span>
                   </Radio>
                   <Radio value={2}>
                     <ENSubLoginIcon />
@@ -1298,8 +1300,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                            return `${location.district} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1312,8 +1314,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1333,9 +1335,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1361,12 +1363,12 @@ const Navbar: React.FC = () => {
               <div
                 className="sub-login_item__translate"
                 onClick={handleOpenRadioGroup}
-              // style={{
-              //   borderBottom: openRadioGroup
-              //     ? 'none'
-              //     : '1px solid rgba(170, 170, 170, 1)',
-              // }}
-              // style={{ display: 'none' }}
+                // style={{
+                //   borderBottom: openRadioGroup
+                //     ? 'none'
+                //     : '1px solid rgba(170, 170, 170, 1)',
+                // }}
+                // style={{ display: 'none' }}
               >
                 <div className="sub-translate_header_left">
                   <TranslateSubLoginIcon />
@@ -1401,9 +1403,7 @@ const Navbar: React.FC = () => {
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
-                    <span>
-                      Tiếng Việt
-                    </span>
+                    <span>Tiếng Việt</span>
                   </Radio>
                   <Radio value={2}>
                     <ENSubLoginIcon />
@@ -1439,8 +1439,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin

@@ -268,6 +268,9 @@ const BreadcrumbsCpn: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log('languageRedux', languageRedux);
+  console.log('arrayChild', arrayChild);
+
   const breadcrumbs = [
     <Typography
       key="2"
@@ -310,8 +313,10 @@ const BreadcrumbsCpn: React.FC = () => {
             background: '#ffffff',
           }}
         >
-          {arrayChild?.length === 0
-            ? language?.all
+          {arrayChild?.length === 0 || arrayChild?.length === undefined
+            ? languageRedux === 1
+              ? `Tất cả`
+              : `All`
             : arrayChild?.map(
                 (value: { id: number; name: string }, index: number) => (
                   <div key={index}>

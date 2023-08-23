@@ -137,7 +137,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -149,8 +149,8 @@ const SearchInput: React.FC<SearchProps> = ({
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const QUERY = searchParams.get('q');
   const location = useLocation();
@@ -216,13 +216,15 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getDataSearch = async () => {
     try {
-      const resultSuggest = await searchApi.getSuggestKeyWord(10,
-        languageRedux === 1 ? 'vi' : 'en'
+      const resultSuggest = await searchApi.getSuggestKeyWord(
+        10,
+        languageRedux === 1 ? 'vi' : 'en',
       );
       let resultHistory;
       if (isLogin) {
-        resultHistory = await searchApi.getHistoryKeyWord(10,
-          languageRedux === 1 ? 'vi' : 'en'
+        resultHistory = await searchApi.getHistoryKeyWord(
+          10,
+          languageRedux === 1 ? 'vi' : 'en',
         );
         resultHistory && setDataHistory(resultHistory.data);
       }
@@ -281,7 +283,8 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          `/search-results?${
+            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
           }`,
         );
       } else {
@@ -341,7 +344,7 @@ const SearchInput: React.FC<SearchProps> = ({
       if (result) {
         setTotalJob(result?.data?.total);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -361,13 +364,7 @@ const SearchInput: React.FC<SearchProps> = ({
       {/* {d.value} */}
 
       <div className="items-history items-search_keyword">
-        <h4>
-          {
-            languageRedux === 1 ?
-              "Từ khóa phổ biến" :
-              "Popular keywords"
-          }
-        </h4>
+        <h4>{languageRedux === 1 ? 'Từ khóa phổ biến' : 'Popular keywords'}</h4>
         <div className="wrap-items-history wrap-items-search">
           {dataSuggest?.map((suggest: any, index: number) => (
             <div className="item-history item-search" key={index}>
@@ -426,18 +423,18 @@ const SearchInput: React.FC<SearchProps> = ({
         searchValue={value}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
-        // placeholder={
-        //   languageRedux === 1
-        //     ? `Tìm kiếm hơn ${totalJob.toLocaleString(
-        //         'en-US',
-        //       )} công việc tại Việt Nam`
-        //     : `Search over ${totalJob.toLocaleString('en-US')} jobs in Vietnam`
-        // }
         placeholder={
-          language?.search_over +
-          ` ${totalJob.toLocaleString('en-US')} ` +
-          language?.jobs_in_vietnam
+          languageRedux === 1
+            ? `Tìm kiếm hơn ${totalJob.toLocaleString(
+                'en-US',
+              )} công việc tại Việt Nam`
+            : `Search over ${totalJob.toLocaleString('en-US')} jobs in Vietnam`
         }
+        // placeholder={
+        //   language?.search_over +
+        //   ` ${totalJob.toLocaleString('en-US')} ` +
+        //   language?.jobs_in_vietnam
+        // }
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}
@@ -459,7 +456,7 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-      // open={openDropdown}
+        // open={openDropdown}
       />
 
       <Button

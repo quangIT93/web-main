@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo } from 'react';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import './style.scss';
@@ -7,26 +7,42 @@ import {
     EysIcon,
     CommentIcon,
     LikeIcon,
+    SaveIconFill,
+    SaveIconOutline,
 } from '#components/Icons';
-import communityApi from "api/apiCommunity";
+
+import communityApi from 'api/apiCommunity';
 
 interface IWorkingStoryCard {
-    item: any,
-    index: any,
-    showText: any,
-    handleAddText: any
+    item: any;
+    index: any;
+    showText: any;
+    handleAddText: any;
+    setSaveListPost: React.Dispatch<React.SetStateAction<boolean>>;
+    saveListPost: boolean;
 }
 
 const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
-    const { item, showText, index, handleAddText } = props;
+    const {
+        item,
+        showText,
+        index,
+        handleAddText,
+        setSaveListPost,
+        saveListPost,
+    } = props;
     const [like, setLike] = React.useState(item?.liked);
-    const [totalLike, setTotalLike] = React.useState(item?.communicationLikesCount);
+    const [totalLike, setTotalLike] = React.useState(
+        item?.communicationLikesCount,
+    );
+
+    console.log('item', item);
 
     const handleLikeCommunity = async (communicationId: number) => {
         try {
             const result = await communityApi.postCommunityLike(communicationId);
             if (result) {
-                setLike(!like)
+                setLike(!like);
                 if (result?.data?.communicationId) {
                     setTotalLike(totalLike + 1);
                 } else {
@@ -34,33 +50,59 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
                 }
             }
             console.log(result);
-
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
-    React.useEffect(() => {
-    }, [like])
+    React.useEffect(() => { }, [like]);
 
     const handleMoveToDetailPage = (id: any) => {
         window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
-    }
+    };
 
     React.useEffect(() => {
         const content = document.querySelector('.text-content_postNew');
-    }, [])
+    }, []);
 
-    console.log("item", item);
+    const handleClickSave = async () => {
+        console.log('handleClick save');
+        try {
+            const result = await communityApi.postCommunityBookmarked(item.id);
+            if (result) {
+                setSaveListPost(!saveListPost);
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    };
 
+    console.log('item', item);
 
     return (
         <>
             <div className="comunitypostNew-card-wrap_content" key={index}>
+                {/* <div className="bookmark" onClick={handleClickSave}>
+                    {item.bookmarked === true ? (
+                        <SaveIconFill width={24} height={24} />
+                    ) : (
+                        <SaveIconOutline width={24} height={24} />
+                    )}
+                </div> */}
+
                 <div className="comunityPostNew-card-content">
-                    <h3
-                        onClick={() => handleMoveToDetailPage(item?.id)}
-                    >{item?.title}</h3>
+                    <div className="comunityPostNew-card-content-title">
+                        <h3 onClick={() => handleMoveToDetailPage(item?.id)}>
+                            {item?.title}
+                        </h3>
+                        <div className="bookmark" onClick={handleClickSave}>
+                            {item.bookmarked === true ? (
+                                <SaveIconFill width={24} height={24} />
+                            ) : (
+                                <SaveIconOutline width={24} height={24} />
+                            )}
+                        </div>
+                    </div>
                     <div className="comunityPostNew-card-content_info">
                         <ul className={`text-content_postNew ${showText}`}>
                             {item?.content}
@@ -77,13 +119,15 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
                         <EysIcon />
                         <p>{item?.communicationViewsCount}</p>
                     </div>
-                    <div className={like ? "status-item liked" : "status-item"}
+                    <div
+                        className={like ? 'status-item liked' : 'status-item'}
                         onClick={() => handleLikeCommunity(item?.id)}
                     >
                         <LikeIcon />
                         <p>{totalLike}</p>
                     </div>
-                    <div className="status-item"
+                    <div
+                        className="status-item"
                         onClick={() => handleMoveToDetailPage(item?.id)}
                     >
                         <CommentIcon />
@@ -94,7 +138,11 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
                 <div className="comunitypostNew-wrap_actor">
                     <div className="comunitypostNew-wrap">
                         {/* <img src={item?.profileData?.avatarPath} alt="anh loi" /> */}
-                        <Avatar size={50} src={item?.profileData?.avatarPath} icon={<UserOutlined />} />
+                        <Avatar
+                            size={50}
+                            src={item?.profileData?.avatarPath}
+                            icon={<UserOutlined />}
+                        />
                         <div className="info-actor_comunity">
                             <p>Tác giả</p>
                             <p>{item?.profileData?.name}</p>
@@ -104,7 +152,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
 export default memo(WorkingStoryCard);
