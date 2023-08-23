@@ -140,7 +140,7 @@ const ThemesJob: React.FC = () => {
     const threshold = nearJob[nearJob.length - 1]?.id;
 
     const result = await nearByApi.getNearByJob(
-      userProfile?.address?.id,
+      null,
       11,
       threshold,
       languageRedux === 1 ? 'vi' : 'en',
