@@ -59,7 +59,9 @@ const ComunityCreatePost = () => {
           setCommunityPost(result?.data);
           setValueTitle(result?.data?.title);
           setValueContent(result?.data?.content);
-          setSelectedImages(result?.data?.communicationImagesData?.images);
+          setSelectedImages(
+            result?.data?.communicationImagesData.map((item: any) => item.image)
+          );
         }
       }
     } catch (error) {
