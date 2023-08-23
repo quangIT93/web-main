@@ -245,6 +245,7 @@ const AppliedPostedJob: React.FC = () => {
           /> */}
           <Advertisement />
           <div className="advertisement-job-not-loging-content">
+
             <h3 style={{ marginTop: '12px' }}>
               {
                 language?.applied_posted_jobs?.are_you_a_recruiter
