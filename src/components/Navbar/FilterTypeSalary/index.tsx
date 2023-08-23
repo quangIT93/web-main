@@ -45,7 +45,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={SALARY_TYPE}
-    // defaultValue={SALARY_TYPE}
+      // defaultValue={SALARY_TYPE}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -83,7 +83,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguageState(result.data);
@@ -95,8 +95,8 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   let userFilteredCookies = JSON.parse(
     getCookie('userTypeSalaryFiltered') || '{}',
@@ -136,7 +136,9 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={reset ? language?.month : valueRender ? valueRender.value : undefined}
+        value={
+          reset ? language?.month : valueRender ? valueRender.value : undefined
+        }
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder={language?.job_type}

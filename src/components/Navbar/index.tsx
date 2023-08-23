@@ -99,6 +99,7 @@ import {
 } from './Css';
 
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
+import { getLanguages } from 'store/reducer/dataLanguage';
 
 import { RootState } from '../../store/reducer';
 // import { bindActionCreators } from 'redux';
@@ -110,6 +111,7 @@ import { ChatContext } from 'context/ChatContextProvider';
 import { DivRef1 } from 'context/HomeValueContextProvider';
 import { useSearchParams } from 'react-router-dom';
 import { setLanguage } from 'store/reducer/changeLanguageReducer';
+// import { setLanguageApi } from 'store/reducer/dataLanguage';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
@@ -187,7 +189,7 @@ const Navbar: React.FC = () => {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   // const [isSearch, setIsSearch] = useState<boolean>(false);
-  const [language, setLanguageState] = useState<any>();
+  // const [language, setLanguageState] = useState<any>();
 
   useEffect(() => {
     // if(localStorage.getItem('accessToken')){
@@ -280,29 +282,19 @@ const Navbar: React.FC = () => {
   // const dataProfile = useSelector((state: RootState) => state.profileUser);
 
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
+
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
 
+  const languageData = useSelector((state: RootState) => {
+    console.log('state', state);
 
+    return state.dataLanguage.languages;
+  });
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // console.log('state', languageData);
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
   // handle show tap on screen mobile
   // const handleTap = () => {
   //   setShowTap(!showTap);
@@ -681,8 +673,12 @@ const Navbar: React.FC = () => {
         setSpinning(true);
       }
       var result = null;
-      if (localStorage.getItem('accessToken')) {
+      if (localStorage.getItem('refreshToken')) {
         result = await profileApi.getProfile('vi');
+      } else {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('accountId');
       }
       if (result) {
         dispatch(getProfile() as any);
@@ -713,9 +709,6 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
-      // console.log('e.tảtget', refInfoUser?.current)
-      // console.log('e.tảtget', refInfoUser?.current?.contains(event.target))
-      // console.log('e.tảtget', refLogin?.current?.contains(event.target))
       if (refInfoUser.current && !refInfoUser.current.contains(event.target)) {
         setOpenInfoUser(false);
       }
@@ -735,8 +728,8 @@ const Navbar: React.FC = () => {
 
   // handle logout
   const handleLogout = async () => {
+    console.log('logout thành công');
     try {
-      // console.log('logout thành công');
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (refreshToken) {
@@ -863,11 +856,35 @@ const Navbar: React.FC = () => {
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };
 
-  const handleChangeLanguage = (e: any) => {
+  const handleChangeLanguage = async (e: any) => {
+    console.log('e.target.value = ' + e.target.value);
+
     setLanguageId(e.target.value);
-    // setCookie('languageId', JSON.stringify(e.target.value), 365);
-    dispatch<any>(setLanguage(e.target.value));
+    setCookie('languageId', JSON.stringify(e.target.value), 365);
+    await dispatch<any>(setLanguage(e.target.value));
+    await dispatch(getLanguages(e.target.value) as any);
+
+    // try {
+    //   const result = await languageApi.getLanguage(
+    //     languageRedux === 1 ? 'vi' : 'en',
+    //   );
+    //   if (result) {
+    //     setLanguageState(result.data);
+    //     // setUser(result);
+    //   }
+    // } catch (error) {
+    //   // setLoading(false);
+    // }
   };
+
+  useEffect(() => {
+    let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
+    if (userLanguageSelected) {
+      dispatch(getLanguages(userLanguageSelected) as any);
+    } else {
+      dispatch(getLanguages('vi') as any);
+    }
+  }, [languageId]);
 
   React.useEffect(() => {
     const handleCloseFilter = (event: any) => {
@@ -881,9 +898,7 @@ const Navbar: React.FC = () => {
         setOpenCollapseFilter(false);
       }
     };
-
     window.addEventListener('click', handleCloseFilter);
-
     return () => {
       window.removeEventListener('click', handleCloseFilter);
     };
@@ -914,9 +929,7 @@ const Navbar: React.FC = () => {
       }}
     >
       <FormOutlined style={{ color: 'white' }} />
-      <p style={{ marginLeft: 10, color: 'white' }}>
-        {language?.post}
-      </p>
+      <p style={{ marginLeft: 10, color: 'white' }}>{languageData?.post}</p>
     </button>,
     <div
       className="actions-login"
@@ -938,7 +951,7 @@ const Navbar: React.FC = () => {
             {localStorage.getItem('accessToken') && dataProfile ? (
               <span>{dataProfile?.name}</span>
             ) : (
-              <span>{language?.sign_in}</span>
+              <span>{languageData?.sign_in}</span>
             )}
           </div>
         </div>
@@ -961,11 +974,12 @@ const Navbar: React.FC = () => {
         <div className="login__hover">
           <h3>{languageRedux === 1 ? 'Đăng nhập ở đây' : 'Sign in here'}</h3>
           <div className="login__hover__p">
+            <p>{languageData?.home_page?.choose_your_location_category}</p>
             <p>
-              {language?.home_page?.choose_your_location_category}
-            </p>
-            <p>
-              {language?.home_page?.provide_the_best_recruitment_information}
+              {
+                languageData?.home_page
+                  ?.provide_the_best_recruitment_information
+              }
             </p>
           </div>
           {/* <Button
@@ -1005,14 +1019,22 @@ const Navbar: React.FC = () => {
                   src={dataProfile?.avatar ? dataProfile.avatar : null}
                 />
                 <div className="sub-login_detail">
-                  <h2>{dataProfile?.name ? dataProfile.name : language?.home_page?.un_update_infor}</h2>
+                  <h2>
+                    {dataProfile?.name
+                      ? dataProfile.name
+                      : languageData?.home_page?.un_update_infor}
+                  </h2>
                   <span className="sub-login_text">
                     <CompanySubLoginIcon />
-                    {companyName ? companyName : language?.home_page?.un_update_infor}
+                    {companyName
+                      ? companyName
+                      : languageData?.home_page?.un_update_infor}
                   </span>
                   <span className="sub-login_text">
                     <MailInfoIcon />
-                    {dataProfile?.email ? dataProfile?.email : language?.home_page?.un_update_infor}
+                    {dataProfile?.email
+                      ? dataProfile?.email
+                      : languageData?.home_page?.un_update_infor}
                   </span>
                   {/* <span className="sub-login_text">
                   <LoginHomeIcon />
@@ -1032,7 +1054,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.locations.map((location: any) => {
                           return `${location.district} , `;
                         })
-                        : language?.home_page?.un_update_infor}
+                        : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
                   <span
@@ -1046,7 +1068,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.categories.map((profile: any) => {
                           return `${profile.parent_category} / ${profile.child_category}, `;
                         })
-                        : language?.home_page?.un_update_infor}
+                        : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
                 </div>
@@ -1056,9 +1078,7 @@ const Navbar: React.FC = () => {
               <Link to="/profile" target="_sel">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
-                  <span>
-                    {language?.home_page?.update_infor}
-                  </span>
+                  <span>{languageData?.home_page?.update_infor}</span>
                 </div>
               </Link>
               <Link to="/history" target="_sel">
@@ -1072,23 +1092,20 @@ const Navbar: React.FC = () => {
                 // }}
                 >
                   <PaperSubLoginIcon />
-                  <span>{language?.history}</span>
+                  <span>{languageData?.history}</span>
                 </div>
               </Link>
               <div className="sub-history_status">
                 <span>
-                  {language?.approved}{' '}
-                  {`${approved}`}
+                  {languageData?.approved} {`${approved}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {language?.home_page?.pending}{' '}
-                  {`${pending}`}
+                  {languageData?.home_page?.pending} {`${pending}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {language?.home_page?.waiting}{' '}
-                  {`${waiting}`}
+                  {languageData?.home_page?.waiting} {`${waiting}`}
                 </span>
               </div>
               {/* <div className="sub-login_item">
@@ -1121,9 +1138,12 @@ const Navbar: React.FC = () => {
 
               <div
                 className="sub-translate_status"
-                style={{
-                  // height: openRadioGroup ? '100%' : '0',
-                }}
+                style={
+                  {
+                    // height: openRadioGroup ? '100%' : '0',
+                    // display: 'none',
+                  }
+                }
               >
                 <Radio.Group
                   name="radiogroup"
@@ -1159,7 +1179,7 @@ const Navbar: React.FC = () => {
               >
                 <LogoutSubLoginIcon />
 
-                <span>{language?.sign_out}</span>
+                <span>{languageData?.sign_out}</span>
               </div>
 
               {/* <div className="sub-login_item" onClick={handleLogout}>
@@ -1280,7 +1300,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.locations.map((location: any) => {
                           return `${location.district} , `;
                         })
-                        : language?.home_page?.un_update_infor}
+                        : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
                   <span
@@ -1294,7 +1314,7 @@ const Navbar: React.FC = () => {
                         ? dataProfile?.categories.map((profile: any) => {
                           return `${profile.parent_category} / ${profile.child_category}, `;
                         })
-                        : language?.home_page?.un_update_infor}
+                        : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
                 </div>
@@ -1304,9 +1324,7 @@ const Navbar: React.FC = () => {
               <Link to="/profile" target="_sel">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
-                  <span>
-                    {language?.home_page?.update_infor}
-                  </span>
+                  <span>{languageData?.home_page?.update_infor}</span>
                 </div>
               </Link>
               <Link to="/history" target="_sel">
@@ -1320,23 +1338,20 @@ const Navbar: React.FC = () => {
                 // }}
                 >
                   <PaperSubLoginIcon />
-                  <span>{language?.history}</span>
+                  <span>{languageData?.history}</span>
                 </div>
               </Link>
               <div className="sub-history_status">
                 <span>
-                  {language?.approved}{' '}
-                  {`${approved}`}
+                  {languageData?.approved} {`${approved}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {language?.home_page?.pending}{' '}
-                  {`${pending}`}
+                  {languageData?.home_page?.pending} {`${pending}`}
                 </span>
                 {/* <span>|</span> */}
                 <span>
-                  {language?.home_page?.waiting}{' '}
-                  {`${waiting}`}
+                  {languageData?.home_page?.waiting} {`${waiting}`}
                 </span>
               </div>
               {/* <div className="sub-login_item">
@@ -1346,16 +1361,16 @@ const Navbar: React.FC = () => {
               <div
                 className="sub-login_item__translate"
                 onClick={handleOpenRadioGroup}
-                // style={{
-                //   borderBottom: openRadioGroup
-                //     ? 'none'
-                //     : '1px solid rgba(170, 170, 170, 1)',
-                // }}
-                style={{ display: 'none' }}
+              // style={{
+              //   borderBottom: openRadioGroup
+              //     ? 'none'
+              //     : '1px solid rgba(170, 170, 170, 1)',
+              // }}
+              // style={{ display: 'none' }}
               >
                 <div className="sub-translate_header_left">
                   <TranslateSubLoginIcon />
-                  <span>{language?.home_page?.languages}</span>
+                  <span>{languageData?.home_page?.languages}</span>
                 </div>
                 <div
                   className="sub-translate_header_right"
@@ -1371,6 +1386,7 @@ const Navbar: React.FC = () => {
                 className="sub-translate_status"
                 style={{
                   height: openRadioGroup ? '100%' : '0',
+                  // display: 'none',
                 }}
               >
                 <Radio.Group
@@ -1407,7 +1423,7 @@ const Navbar: React.FC = () => {
               >
                 <LogoutSubLoginIcon />
 
-                <span>{language?.sign_out}</span>
+                <span>{languageData?.sign_out}</span>
               </div>
 
               {/* <div className="sub-login_item" onClick={handleLogout}>
@@ -1528,12 +1544,10 @@ const Navbar: React.FC = () => {
                 {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
               </Button>
               <div className="sub-icon_qr">
-                <h2>
-                  {language?.download_hijob_app}
-                </h2>
+                <h2>{languageData?.download_hijob_app}</h2>
                 <img
                   src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
-                  alt={language?.err_none_img}
+                  alt={languageData?.err_none_img}
                 />
                 <div className="sub-icon_apps">
                   <Link
@@ -1543,7 +1557,7 @@ const Navbar: React.FC = () => {
                     <img
                       id="img-gallery"
                       src={require('../../img/langdingPage/image 43.png')}
-                      alt={language?.err_none_img}
+                      alt={languageData?.err_none_img}
                     />
                   </Link>
                   <Link
@@ -1552,7 +1566,7 @@ const Navbar: React.FC = () => {
                   >
                     <img
                       src={require('../../img/langdingPage/image 45.png')}
-                      alt={language?.err_none_img}
+                      alt={languageData?.err_none_img}
                     />
                   </Link>
                 </div>
@@ -1620,21 +1634,21 @@ const Navbar: React.FC = () => {
                 setListDis={setListDis}
                 reset={reset}
                 setReset={setReset}
-                language={language}
+                language={languageData}
               />
               <FilterCateloriesNav
                 listCateProps={listCate}
                 setListCate={setListCate}
                 reset={reset}
                 setReset={setReset}
-                language={language}
+                language={languageData}
               />
               <FilterTypeJob
                 valueTypeJob={jobType}
                 setTypeJob={setJobType}
                 reset={reset}
                 setReset={setReset}
-                language={language}
+                language={languageData}
               />
             </div>
             <div className="filter-wrap_bottom">
@@ -1671,21 +1685,21 @@ const Navbar: React.FC = () => {
               setListDis={setListDis}
               reset={reset}
               setReset={setReset}
-              language={language}
+              language={languageData}
             />
             <FilterCateloriesNav
               listCateProps={listCate}
               setListCate={setListCate}
               reset={reset}
               setReset={setReset}
-              language={language}
+              language={languageData}
             />
             <FilterTypeJob
               valueTypeJob={jobType}
               setTypeJob={setJobType}
               reset={reset}
               setReset={setReset}
-              language={language}
+              language={languageData}
             />
             <FilterTypeSalary
               setSalaryType={setSalaryType}
@@ -1717,13 +1731,13 @@ const Navbar: React.FC = () => {
 
           <div className="btn-filter_nav">
             <Button type="default" onClick={handleResetValue}>
-              {language?.reset}
+              {languageData?.reset}
             </Button>
             <Button
               type="primary"
               onClick={(e) => handleSearch(e, valueSearchInput)}
             >
-              {language?.apply}
+              {languageData?.apply}
             </Button>
           </div>
         </Collapse>

@@ -18,6 +18,8 @@ import navbarSlice from './navbarReducer/navbarSlice'
 
 import newWestReducer from './postReducerV3/newWestReducer'
 
+import dataLanguage from './dataLanguage'
+
 const reducers = combineReducers({
   post: postReducer,
   postNewest: postNewestReducer,
@@ -33,6 +35,8 @@ const reducers = combineReducers({
 
   //quản lý state navbar
   navbarState: navbarSlice,
+
+  dataLanguage: dataLanguage
 
 })
 

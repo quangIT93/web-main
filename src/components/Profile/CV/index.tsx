@@ -15,13 +15,21 @@ interface Url_CV {
   open?: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isProfile: boolean;
-  language: any
+  language: any;
 }
 
-const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile, language }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+const ItemInfoLeft: React.FC<Url_CV> = ({
+  url,
+  open,
+  setOpen,
+  isProfile,
+  language,
+}) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   return (
-    <Space className='cv-item-container'>
+    <Space className="cv-item-container">
       <div
         className="cv-item-container"
         style={{
@@ -43,9 +51,11 @@ const ItemInfoLeft: React.FC<Url_CV> = ({ url, open, setOpen, isProfile, languag
         </Space>
       </div>
       {isProfile && (
-        <Tooltip placement="right" title={
-          language?.profile_page?.delete_cv
-        } style={{ fontSize: 5 }}>
+        <Tooltip
+          placement="right"
+          title={language?.profile_page?.delete_cv}
+          style={{ fontSize: 5 }}
+        >
           <DeleteOutlined
             onClick={() => {
               setOpen(true);

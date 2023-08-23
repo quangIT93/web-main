@@ -38,7 +38,7 @@ const ShowCancleSave: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -50,8 +50,8 @@ const ShowCancleSave: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // const alert = false;
 
@@ -73,9 +73,7 @@ const ShowCancleSave: React.FC = () => {
             severity="error"
             sx={{ width: '100%', backgroundColor: '#000000' }}
           >
-            {
-              language?.unsaved_this_job
-            }
+            {language?.unsaved_this_job}
           </Alert>
         </Snackbar>
       </Stack>

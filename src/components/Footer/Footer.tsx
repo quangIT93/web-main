@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -99,8 +99,8 @@ const Footer: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // const mail = useRef('contact.hijob@gmail.com');
   // const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];
@@ -127,7 +127,7 @@ const Footer: React.FC = () => {
     }
   };
 
-  useEffect(() => { }, [languageRedux]);
+  useEffect(() => {}, [languageRedux]);
 
   useEffect(() => {
     updateWindowWidth();
@@ -161,14 +161,14 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-              transform: 'translateY(calc(-100% - 36px))',
-            }
+                transform: 'translateY(calc(-100% - 36px))',
+              }
             : !open && !windowWidth
-              ? {
+            ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-              : { transform: 'none' }
+            : { transform: 'none' }
         }
       >
         <div className="container-footer">
@@ -189,21 +189,11 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            <h3>
-              {language?.connect_talent}
-            </h3>
-            <p>
-              {language?.footer?.company_name}
-            </p>
-            <p>
-              {language?.footer?.company_location}
-            </p>
-            <p>
-              {language?.footer?.legal_representative}
-            </p>
-            <p>
-              {language?.footer?.position_director}
-            </p>
+            <h3>{language?.connect_talent}</h3>
+            <p>{language?.footer?.company_name}</p>
+            <p>{language?.footer?.company_location}</p>
+            <p>{language?.footer?.legal_representative}</p>
+            <p>{language?.footer?.position_director}</p>
           </div>
           <div className="footer-center">
             <h4>{language?.footer?.about_hijob}</h4>
@@ -231,9 +221,7 @@ const Footer: React.FC = () => {
           </div>
           <div className="footer-right">
             <div className="right-top">
-              <h4>
-                {language?.download_hijob_app}
-              </h4>
+              <h4>{language?.download_hijob_app}</h4>
               <div className="div-img-footer">
                 <img
                   width={124}

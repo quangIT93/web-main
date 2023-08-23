@@ -63,12 +63,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
       color: #0D99FF;
       gap: 8px;
       cursor: pointer;
-
-      p {
-        // width: 84px;
+      button {
+        display: flex;
+        align-items: center;
+        border: none;
+        outline: none;
+        background-color: #fff;
+        color: #0D99FF;
+        font-size: 16px;
+        cursor: pointer;
+        p {
+          // width: 84px;
+          margin-right: 12px;
+        }
       }
 
     }

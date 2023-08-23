@@ -30,7 +30,9 @@ import { messEn } from 'validations/lang/en/mess';
 // const { Text } = Typography;
 
 const Message = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const { openCollapseFilter } = useContext(HomeValueContext);
   const [openListChat, setOpenListChat] = useState(false);
   const [language, setLanguage] = useState<any>();
@@ -47,7 +49,7 @@ const Message = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -59,8 +61,8 @@ const Message = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   useEffect(() => {
     document.title = language?.messages_page?.title_page;

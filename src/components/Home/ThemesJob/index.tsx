@@ -106,7 +106,7 @@ const ThemesJob: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -118,8 +118,8 @@ const ThemesJob: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
@@ -217,18 +217,17 @@ const ThemesJob: React.FC = () => {
     <Box sx={{ flexGrow: 1, paddingBottom: '24px' }}>
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <TopicJobIcon width={25} height={25} />
-        <h2>
-          {language?.jobs_by_theme}
-        </h2>
+        <h2>{language?.jobs_by_theme}</h2>
       </div>
 
       {!localStorage.getItem('accessToken') ? (
         <div className="title-location-job">
-          <h3>
-            {language?.home_page?.ideal_job_location}
-          </h3>
+          {/* <h3>{language?.home_page?.ideal_job_location}</h3> */}
+          {/* <p>{language?.home_page?.search_in_famous_locations_in_your_city}</p> */}
           <p>
-            {language?.home_page?.search_in_famous_locations_in_your_city}
+            {languageRedux === 1
+              ? 'Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.'
+              : 'Search for jobs in famous locations in your city.'}
           </p>
         </div>
       ) : (
@@ -284,7 +283,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-              //   onClick={handleClose}
+                //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

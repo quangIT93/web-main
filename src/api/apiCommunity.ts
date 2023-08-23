@@ -5,7 +5,7 @@ import axiosClient from './axiosClient'
 export interface FormCommunity {
     title: string;
     content: string;
-    images: File[];
+    images: File[] | null;
 }
 
 export interface FormPutCommunity {

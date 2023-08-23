@@ -1,9 +1,9 @@
 // import React, { lazy } from 'react'
-import ComunityNew from '.';
+import ComunityNewPost from '.';
 import RouteProps from '../routes';
 const route: RouteProps = {
   path: '/new-comunity',
-  component: <ComunityNew />,
+  component: <ComunityNewPost />,
 };
 
 export default route;

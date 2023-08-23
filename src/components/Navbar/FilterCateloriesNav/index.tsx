@@ -45,7 +45,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   setListCate,
   reset,
   setReset,
-  language
+  language,
 }) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -59,14 +59,10 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
 
   const DropdownRender = (menus: React.ReactNode) => (
     <div style={{ width: '520px' }} className="filter-loca-cate">
-      <Text className="title-filter_location">
-        {language?.select_cate}
-      </Text>
+      <Text className="title-filter_location">{language?.select_cate}</Text>
       {menus}
       <Divider style={{ margin: 4 }}>
-        {disable
-          ? language?.limit_10_cate
-          : ''}
+        {disable ? language?.limit_10_cate : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -83,9 +79,9 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
     JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
       : userProfile?.categories.map((profile: any) => [
-        profile?.parent_category_id,
-        profile?.child_category_id,
-      ]),
+          profile?.parent_category_id,
+          profile?.child_category_id,
+        ]),
   );
 
   searchParams
@@ -160,27 +156,27 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           options={
             dataCategories
               ? dataCategories.map((parentCategory: any) => ({
-                value: parentCategory.parent_category_id,
-                label: parentCategory.parent_category,
-                children: parentCategory.childs.map((child: any) => {
-                  var dis = false;
-                  //check id child  when disable = true
-                  if (disable) {
-                    dis = true;
-                    for (const elem of categoriesId) {
-                      if (elem === child.id) {
-                        dis = false;
-                        break;
+                  value: parentCategory.parent_category_id,
+                  label: parentCategory.parent_category,
+                  children: parentCategory.childs.map((child: any) => {
+                    var dis = false;
+                    //check id child  when disable = true
+                    if (disable) {
+                      dis = true;
+                      for (const elem of categoriesId) {
+                        if (elem === child.id) {
+                          dis = false;
+                          break;
+                        }
                       }
                     }
-                  }
-                  return {
-                    value: child.id,
-                    label: child.name,
-                    disabled: dis,
-                  };
-                }),
-              }))
+                    return {
+                      value: child.id,
+                      label: child.name,
+                      disabled: dis,
+                    };
+                  }),
+                }))
               : []
           }
           onChange={onChange}
@@ -189,8 +185,8 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
               ? listCate?.current
               : listCate?.current?.length === 0 &&
                 location?.pathname === '/search-results'
-                ? []
-                : userProfile?.categories.map((profile: any) => [
+              ? []
+              : userProfile?.categories.map((profile: any) => [
                   profile?.parent_category_id,
                   profile?.child_category_id,
                 ])
@@ -202,9 +198,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           className="inputCategories input-filter_nav"
           showCheckedStrategy={SHOW_CHILD}
           style={{ width: '100%', borderRadius: '2px' }}
-          placeholder={
-            language?.select_cate
-          }
+          placeholder={language?.select_cate}
         />
       </div>
     );

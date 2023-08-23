@@ -27,7 +27,13 @@ interface IEditPostImage {
 }
 
 const EditPostImage: React.FC<IEditPostImage> = (props) => {
-  const { editDataPosted, setEditDataPosted, dataPosted, language, languageRedux } = props;
+  const {
+    editDataPosted,
+    setEditDataPosted,
+    dataPosted,
+    language,
+    languageRedux,
+  } = props;
 
   const [selectedFiles, setSelectedFiles] = React.useState<
     {
@@ -148,9 +154,8 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
             if (newImageSelected.length > 5) {
               messageApi.open({
                 type: 'error',
-                content: languageRedux === 1 ?
-                  post.limit_5_img :
-                  postEn.limit_5_img,
+                content:
+                  languageRedux === 1 ? post.limit_5_img : postEn.limit_5_img,
               });
 
               return;
@@ -259,9 +264,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       const validateImagesReply = validatePostImages(imagesToCheck);
       if (validateImagesReply.isError) {
         // console.log('::: Invalid images')
-        return toast.warn(languageRedux === 1 ?
-          post.err_img :
-          postEn.err_img);
+        return toast.warn(languageRedux === 1 ? post.err_img : postEn.err_img);
       } else {
         try {
           const compressedImages: any = [];
@@ -307,9 +310,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
       if (files.length > 5) {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ?
-            post.limit_5_img :
-            postEn.limit_5_img,
+          content: languageRedux === 1 ? post.limit_5_img : postEn.limit_5_img,
         });
         return;
       }
@@ -401,11 +402,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
           >
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
-            <p>
-              {
-                language?.post_page.drag_drop_multi
-              }
-            </p>
+            <p>{language?.post_page.drag_drop_multi}</p>
             {/* <aside className="thumbs-containter">
               {thumbs}
             </aside> */}
@@ -413,7 +410,13 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
         </section>
       </Box>
       <Box p="0rem 0">
-        <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '50px', flexWrap: 'wrap' }}
+        <Box
+          sx={{
+            display: 'flex',
+            minWidth: '150px',
+            marginTop: '50px',
+            flexWrap: 'wrap',
+          }}
           className="list-img-edit-post"
         >
           {selectedImages?.map((image: any, index: number) => (
@@ -432,9 +435,7 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
               <img
                 key={index}
                 src={image.image}
-                alt={
-                  language?.err_none_img
-                }
+                alt={language?.err_none_img}
                 style={{
                   height: '150px',
                   width: '150px',
@@ -488,18 +489,14 @@ const EditPostImage: React.FC<IEditPostImage> = (props) => {
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          {
-            language?.post_page.verify_upload
-          }
+          {language?.post_page.verify_upload}
         </Typography>
         <Button
           variant="outlined"
           component="label"
           disabled={selectedImages?.length === 5}
         >
-          {
-            language?.post_page.upload_img
-          }
+          {language?.post_page.upload_img}
           <input
             type="file"
             name="images"

@@ -36,7 +36,7 @@ const ShowNotificativeSave: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -48,8 +48,8 @@ const ShowNotificativeSave: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // const alert = false;
 
@@ -75,9 +75,7 @@ const ShowNotificativeSave: React.FC = () => {
               backgroundColor: '#000000',
             }}
           >
-            {
-              language?.job_has_been_saved
-            }
+            {language?.job_has_been_saved}
           </Alert>
         </Snackbar>
       </Stack>
