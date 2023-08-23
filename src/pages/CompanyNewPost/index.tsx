@@ -188,6 +188,8 @@ const Comunity = () => {
                 index={index}
                 showText={showText}
                 handleAddText={handleAddText}
+                setSaveListPost={() => {}}
+                saveListPost={false}
               />
             ))}
         </div>
