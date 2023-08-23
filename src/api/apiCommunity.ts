@@ -60,7 +60,7 @@ const communityApi = {
         })
     },
 
-    getCommunityById: (page: string, limit: string, sort: string | null) => {
+    getCommunityByAccount: (page: string, limit: string, sort: string) => {
         const URL = `/v3/communications/by-account?page=${page}&limit=${limit}&sort=${sort}`
         return axiosClient.get(URL, {
             headers: {

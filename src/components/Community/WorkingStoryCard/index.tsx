@@ -108,7 +108,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
         <div className="comunitypostNew-wrap_status">
           <div className="status-item">
             <EysIcon />
-            <p>{item?.totalViews}</p>
+            <p>{item?.communicationViewsCount}</p>
           </div>
           <div
             className={like ? 'status-item liked' : 'status-item'}
@@ -122,7 +122,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
             onClick={() => handleMoveToDetailPage(item?.id)}
           >
             <CommentIcon />
-            <p>{item?.totalComments}</p>
+            <p>{item?.communicationCommentsCount}</p>
           </div>
         </div>
 
