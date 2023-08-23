@@ -4,23 +4,36 @@
     border-radius: 12px;
     margin: 24px 0;
     cursor: pointer;
-    position: relative;
-    .bookmark {
-        position: absolute;
-        right: 12px;
-        top: 12px;
-    }
+    // position: relative;
+    // z-index: -1;
+
+    // .bookmark {
+    //     position: absolute;
+    //     right: 12px;
+    //     top: 12px;
+    // }
 
     .comunityPostNew-card-content {
 
-        // display: flex;
-        h3 {
-            color: #001424;
-            font-family: Roboto;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 24px;
+        .comunityPostNew-card-content-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            h3 {
+                color: #001424;
+                font-family: Roboto;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 24px;
+            }
+
+            .bookmark {
+                // position: absolute;
+                // right: 12px;
+                // top: 12px;
+            }
         }
 
         .comunityPostNew-card-content_info {
