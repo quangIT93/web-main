@@ -4,6 +4,12 @@
     border-radius: 12px;
     margin: 24px 0;
     cursor: pointer;
+    position: relative;
+    .bookmark {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+    }
 
     .comunityPostNew-card-content {
 
