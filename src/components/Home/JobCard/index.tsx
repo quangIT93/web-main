@@ -82,268 +82,276 @@ const JobCard: React.FC<Iprops> = (props) => {
     setError(true);
   };
 
-  return (
-    <>
-      <ModalLogin
-        openModalLogin={openModalLogin}
-        setOpenModalLogin={setOpenModalLogin}
-      />
-      <Card
-        sx={{
-          position: 'relative',
-          minWidth: '100%',
-          display: 'flex',
-          padding: '12px',
-          cursor: 'pointer',
-          '&:hover': {
-            background: '#E7E7ED',
-            transition: 'all 0.3s linear',
-          },
-          boxShadow: 'none',
-          borderRadius: '5px',
-          justifyContent: 'space-between',
-        }}
-        onClick={(e) => {
-          handleClickItem(e, props.item.id);
-        }}
-      >
-        <ul className="div-card-post-left">
-          <ImageListItem
-            key={props.item.image}
-            sx={{ flex: 1, display: 'flex' }}
-          >
-            <img
-              src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={props.item.title}
-              loading="lazy"
-              style={{
-                width: '120px',
-                height: '120px',
-                borderRadius: 10,
-              }}
-            />
-            <div className="div-card-post-left_info">
-              {' '}
-              <Tooltip placement="top" title={props.item.title}>
-                <Typography
-                  gutterBottom
-                  variant="h6"
-                  component="div"
-                  sx={{
-                    fontSize: '16px',
-                    margin: 0,
-                    whiteSpace: 'nowrap',
-                    width: '100%',
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    fontWeight: '700',
-                    lineheight: '20px',
-                    color: '#000000',
-                  }}
-                >
-                  {/* {props?.item?.title?.length > 50
-                    ? `${props.item.title.substring(0, 50)} ...`
-                    : props.item.title} */}
-                  {props?.item?.title}
-                </Typography>
-              </Tooltip>
-              <Tooltip placement="top" title={props.item.company_name}>
-                <Typography
-                  gutterBottom
-                  variant="h6"
-                  component="div"
-                  sx={{
-                    fontSize: '12px',
-                    whiteSpace: 'nowrap',
-                    width: '100%',
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    fontWeight: '400',
-                    lineheight: '16px',
-                    color: '#575757',
-                  }}
-                >
-                  {/* {props?.item?.company_name?.length > 50
-                    ? `${props.item.company_name.substring(0, 50)} ...`
-                    : props.item.company_name} */}
-                  {props?.item?.company_name}
-                </Typography>
-              </Tooltip>
-              <div
-                className="text-card-post-left_info"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                }}
-              >
-                <LocationHomeIcon />
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{
-                    whiteSpace: 'nowrap',
-                    width: '100%',
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    marginLeft: '4px',
-                    fontSize: '12px',
-                    fontWeight: '400',
-                    color: '#000000',
-                  }}
-                >
-                  {`${props.item.district}, ${props.item.province}`}
-                </Typography>
-              </div>
-              {/* <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-              }}
-            >
-              <ClockCircleFilled className="div-card-post-left_info__icon" />
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{
-                  whiteSpace: 'nowrap',
-                  width: '100%',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                }}
-              >
-                {moment(new Date(props.item.start_time)).format('HH:mm')} -{' '}
-                {moment(new Date(props.item.end_time)).format('HH:mm')}
-              </Typography>
-            </div> */}
-              <div
-                className="text-card-post-left_info"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                }}
-              >
-                <DolaIcon />
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{
-                    whiteSpace: 'nowrap',
-                    width: '100%',
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    marginLeft: '4px',
-                    fontSize: '12px',
-                    fontWeight: '400',
-                    color: '#000000',
-                  }}
-                >
-                  {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
-                  {props?.item?.money_type_text} -{' '}
-                  {new Intl.NumberFormat('en-US').format(
-                    props.item.salary_max,
-                  ) +
-                    ` ${props?.item?.money_type_text}` +
-                    `/${props.item.salary_type}`}
-                </Typography>
-              </div>
-              <div
-                style={{
-                  marginTop: 5,
-                }}
-              >
-                <p
-                  style={{
-                    color: '#575757',
-                    fontSize: 12,
-                    fontStyle: 'italic',
-                    fontWeight: '400',
-                  }}
-                >
-                  {props.item.created_at_text}
-                </p>
-              </div>
-            </div>
-          </ImageListItem>
-        </ul>
-
-        <Space
-          style={{ justifyContent: 'space-between' }}
-          direction="vertical"
-          align="center"
-          className="div-card-post-right"
+  if (props) {
+    return (
+      <>
+        <ModalLogin
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        />
+        <Card
+          sx={{
+            position: 'relative',
+            minWidth: '100%',
+            display: 'flex',
+            padding: '12px',
+            cursor: 'pointer',
+            '&:hover': {
+              background: '#E7E7ED',
+              transition: 'all 0.3s linear',
+            },
+            boxShadow: 'none',
+            borderRadius: '5px',
+            justifyContent: 'space-between',
+          }}
+          onClick={(e) => {
+            handleClickItem(e, props.item.id);
+          }}
         >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'center',
-              flexDirection: 'column',
-            }}
+          <ul className="div-card-post-left">
+            <ImageListItem
+              key={props.item.image}
+              sx={{ flex: 1, display: 'flex' }}
+            >
+              <img
+                src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                alt={props.item.title}
+                loading="lazy"
+                style={{
+                  width: '120px',
+                  height: '120px',
+                  borderRadius: 10,
+                }}
+              />
+              <div className="div-card-post-left_info">
+                {' '}
+                <Tooltip placement="top" title={props.item.title}>
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    component="div"
+                    sx={{
+                      fontSize: '16px',
+                      margin: 0,
+                      whiteSpace: 'nowrap',
+                      width: '100%',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      fontWeight: '700',
+                      lineheight: '20px',
+                      color: '#000000',
+                    }}
+                  >
+                    {/* {props?.item?.title?.length > 50
+                        ? `${props.item.title.substring(0, 50)} ...`
+                        : props.item.title} */}
+                    {props?.item?.title}
+                  </Typography>
+                </Tooltip>
+                <Tooltip placement="top" title={props.item.company_name}>
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    component="div"
+                    sx={{
+                      fontSize: '12px',
+                      whiteSpace: 'nowrap',
+                      width: '100%',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      fontWeight: '400',
+                      lineheight: '16px',
+                      color: '#575757',
+                    }}
+                  >
+                    {/* {props?.item?.company_name?.length > 50
+                        ? `${props.item.company_name.substring(0, 50)} ...`
+                        : props.item.company_name} */}
+                    {props?.item?.company_name}
+                  </Typography>
+                </Tooltip>
+                <div
+                  className="text-card-post-left_info"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}
+                >
+                  <LocationHomeIcon />
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      whiteSpace: 'nowrap',
+                      width: '100%',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      marginLeft: '4px',
+                      fontSize: '12px',
+                      fontWeight: '400',
+                      color: '#000000',
+                    }}
+                  >
+                    {`${props.item.district}, ${props.item.province}`}
+                  </Typography>
+                </div>
+                {/* <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}
+                >
+                  <ClockCircleFilled className="div-card-post-left_info__icon" />
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      whiteSpace: 'nowrap',
+                      width: '100%',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {moment(new Date(props.item.start_time)).format('HH:mm')} -{' '}
+                    {moment(new Date(props.item.end_time)).format('HH:mm')}
+                  </Typography>
+                </div> */}
+                <div
+                  className="text-card-post-left_info"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}
+                >
+                  <DolaIcon />
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      whiteSpace: 'nowrap',
+                      width: '100%',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      marginLeft: '4px',
+                      fontSize: '12px',
+                      fontWeight: '400',
+                      color: '#000000',
+                    }}
+                  >
+                    {new Intl.NumberFormat('en-US').format(
+                      props.item.salary_min,
+                    )}{' '}
+                    {props?.item?.money_type_text} -{' '}
+                    {new Intl.NumberFormat('en-US').format(
+                      props.item.salary_max,
+                    ) +
+                      ` ${props?.item?.money_type_text}` +
+                      `/${props.item.salary_type}`}
+                  </Typography>
+                </div>
+                <div
+                  style={{
+                    marginTop: 5,
+                  }}
+                >
+                  <p
+                    style={{
+                      color: '#575757',
+                      fontSize: 12,
+                      fontStyle: 'italic',
+                      fontWeight: '400',
+                    }}
+                  >
+                    {props.item.created_at_text}
+                  </p>
+                </div>
+              </div>
+            </ImageListItem>
+          </ul>
+
+          <Space
+            style={{ justifyContent: 'space-between' }}
+            direction="vertical"
+            align="center"
+            className="div-card-post-right"
           >
             <div
-              onClick={async (e) => {
-                try {
-                  e.stopPropagation();
-                  // console.log('props.item, ', props.item);
-
-                  if (!localStorage.getItem('accessToken')) {
-                    setOpenModalLogin(true);
-                  }
-                  if (props.item.bookmarked) {
-                    const result = await bookMarkApi.deleteBookMark(
-                      props.item.id,
-                    );
-                    props.item.bookmarked = false;
-                    if (result) {
-                      setCheckBookMark(!checkBookMark);
-                      dispatch<any>(setAlertCancleSave(true));
-                    }
-                  } else {
-                    const result = await bookMarkApi.createBookMark(
-                      props.item.id,
-                    );
-                    props.item.bookmarked = true;
-                    if (result) {
-                      dispatch<any>(setAlertSave(true));
-                      setCheckBookMark(!checkBookMark);
-                    }
-                  }
-                } catch (error) {
-                  console.log(error);
-                }
+              style={{
+                display: 'flex',
+                alignItems: 'flex-end',
+                justifyContent: 'center',
+                flexDirection: 'column',
               }}
             >
-              {props.item.bookmarked ? (
-                <SaveIconFill width={24} height={24} />
-              ) : (
-                <SaveIconOutline width={24} height={24} />
-              )}
-            </div>
-            <div>
-              {props.item.resource.company_icon && (
-                <img
-                  className="img-resource-company"
-                  src={
-                    props.item.resource.company_icon
-                      ? props.item.resource.company_icon
-                      : ''
+              <div
+                onClick={async (e) => {
+                  try {
+                    e.stopPropagation();
+                    // console.log('props.item, ', props.item);
+
+                    if (!localStorage.getItem('accessToken')) {
+                      setOpenModalLogin(true);
+                    }
+                    if (props.item.bookmarked) {
+                      const result = await bookMarkApi.deleteBookMark(
+                        props.item.id,
+                      );
+                      props.item.bookmarked = false;
+                      if (result) {
+                        setCheckBookMark(!checkBookMark);
+                        dispatch<any>(setAlertCancleSave(true));
+                      }
+                    } else {
+                      const result = await bookMarkApi.createBookMark(
+                        props.item.id,
+                      );
+                      props.item.bookmarked = true;
+                      if (result) {
+                        dispatch<any>(setAlertSave(true));
+                        setCheckBookMark(!checkBookMark);
+                      }
+                    }
+                  } catch (error) {
+                    console.log(error);
                   }
-                  alt="ảnh"
-                />
-              )}
+                }}
+              >
+                {props.item.bookmarked ? (
+                  <SaveIconFill width={24} height={24} />
+                ) : (
+                  <SaveIconOutline width={24} height={24} />
+                )}
+              </div>
+              <div>
+                {props.item.resource.company_icon ? (
+                  <img
+                    className="img-resource-company"
+                    src={
+                      props.item.resource.company_icon
+                        ? props.item.resource.company_icon
+                        : ''
+                    }
+                    alt="ảnh"
+                  />
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
-          </div>
-          <p style={{ fontSize: 12, color: '#0d99ff', fontWeight: 500 }}>
-            {props.item.job_type.job_type_name}
-          </p>
-        </Space>
-      </Card>
-    </>
-  );
+            <p style={{ fontSize: 12, color: '#0d99ff', fontWeight: 500 }}>
+              {props.item.job_type.job_type_name}
+            </p>
+          </Space>
+        </Card>
+      </>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default JobCard;
