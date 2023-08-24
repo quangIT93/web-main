@@ -11,7 +11,7 @@ import Footer from '../../components/Footer/Footer';
 // import { Skeleton } from 'antd';
 // import { message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import { Avatar, Tooltip, message } from 'antd';
 // import component
 
 // @ts-ignore
@@ -104,7 +104,9 @@ const Comunity = () => {
     try {
       const result = await communityApi.postCommunityLike(communicationId);
       if (result) {
-        setLike(!like);
+        result.status === 201 ?
+          setLike(true) :
+          setLike(false)
       }
       console.log(result);
     } catch (error) {
@@ -141,6 +143,10 @@ const Comunity = () => {
   };
 
   const handleCommentCommunity = async () => {
+    if (cmtContent.trim() == '') {
+      message.error("Bạn chưa nhập bình luận")
+      return
+    }
     const form = {
       communicationId: detail?.id,
       content: cmtContent,
@@ -169,14 +175,17 @@ const Comunity = () => {
   };
 
   const handleKeyPress = (e: any) => {
-    e.preventDefault();
+    // e.preventDefault();
 
-    if (e.shiftKey) {
-      // Insert a new line into the textArea
-      e.target.value += '\n';
-    }
-    // if (e.key === 'Enter') {
-    else handleCommentCommunity();
+    if (!e.shiftKey) {
+      //   // Insert a new line into the textArea
+      //   // e.target.value += '\n';
+      // }
+      // // if (e.key === 'Enter') {
+      // else {
+
+      handleCommentCommunity()
+    };
     // }
   };
 
@@ -188,7 +197,9 @@ const Comunity = () => {
       <div className="comunity-content">
         <div className="comunity-detail_post">
           <div className="title-comunity">
-            <h3>{detail?.title}</h3>
+            <Tooltip title={detail?.title}>
+              <h3>{detail?.title}</h3>
+            </Tooltip>
             <div className="title-comunity_icon">
               {/* <CommentIcon /> */}
               <span>
@@ -208,7 +219,12 @@ const Comunity = () => {
 
           <div className="comunityDetail-wrap_content">
             <div className="comunityDetail-content">
-              <div>{detail?.content}</div>
+              {/* <div>{detail?.content}</div> */}
+              <TextArea
+                value={detail?.content}
+                autoSize
+              // showCount
+              />
             </div>
           </div>
           <ImageList
@@ -325,11 +341,14 @@ const Comunity = () => {
                   onPressEnter={(e: any) => handleKeyPress(e)}
                   onChange={handelChangeCmt}
                   placeholder="Enter comment"
-                  autoSize={{ minRows: 3, maxRows: 5 }}
+                  autoSize
+                // showCount
                 />
                 <div className="comment-interaction">
                   <div
-                    className="comment-chaterInput_send"
+                    className={cmtContent.trim() != "" ?
+                      "comment-chaterInput_send active" :
+                      "comment-chaterInput_send"}
                     onClick={handleCommentCommunity}
                   >
                     <SendComunityIcon />
@@ -361,7 +380,12 @@ const Comunity = () => {
                         <p>{cmtData?.createdAtText}</p>
                       </div>
                       <div className="comunityDetail-comment_bottom">
-                        <p>{cmtData?.content}</p>
+                        <TextArea
+                          value={cmtData?.content}
+                          autoSize
+                        // showCount
+                        />
+                        {/* <p>{cmtData?.content}</p> */}
                       </div>
                     </div>
                   </div>

@@ -34,6 +34,10 @@
                     font-style: normal;
                     font-weight: 700;
                     line-height: 30px;
+                    width: 75%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
 
                 .title-comunity_icon {

@@ -42,13 +42,14 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
     const dispatch = useDispatch();
     console.log('item', item);
+    console.log('totalLike', totalLike);
 
     const handleLikeCommunity = async (communicationId: number) => {
         try {
             const result = await communityApi.postCommunityLike(communicationId);
             if (result) {
                 setLike(!like);
-                if (result?.data?.communicationId) {
+                if (result.status === 201) {
                     setTotalLike(totalLike + 1);
                 } else {
                     setTotalLike(totalLike - 1);
@@ -60,7 +61,9 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
         }
     };
 
-    React.useEffect(() => { }, [like]);
+    React.useEffect(() => {
+        setTotalLike(item?.communicationLikesCount,)
+    }, [item]);
 
     const handleMoveToDetailPage = (id: any) => {
         window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
@@ -88,7 +91,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
         }
     };
 
-    console.log('item', item);
+    // console.log('item', item);
 
     return (
         <>
