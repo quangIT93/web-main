@@ -116,6 +116,16 @@
                                     }
                                 }
                             }
+
+                            .active {
+                                color: white;
+                                background: #575757;
+
+                                svg {
+                                    color: #575757;
+                                    stroke: white;
+                                }
+                            }
                         }
 
                         .dropdown_menu-4 {

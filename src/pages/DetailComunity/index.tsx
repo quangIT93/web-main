@@ -95,9 +95,8 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${
-        size * rows
-      }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${size * rows
+        }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -339,7 +338,7 @@ const Comunity = () => {
               </div>
             </div>
             <div className="comunityDetail-list_comment">
-              {detail?.communicationCommentsData.map(
+              {detail?.communicationCommentsData && detail?.communicationCommentsData.map(
                 (cmtData: any, index: any) => (
                   <div
                     className="comunityDetail-list_comment__item"
@@ -352,12 +351,12 @@ const Comunity = () => {
                   /> */}
                     <Avatar
                       size={50}
-                      src={cmtData?.profileData?.avatar}
+                      src={cmtData?.profile?.avatar}
                       icon={<UserOutlined />}
                     />
                     <div className="comunityDetail-comment">
                       <div className="comunityDetail-comment_top">
-                        <h3>{cmtData?.profileData?.name}</h3>
+                        <h3>{cmtData?.profile?.name}</h3>
                         <h3>|</h3>
                         <p>{cmtData?.createdAtText}</p>
                       </div>

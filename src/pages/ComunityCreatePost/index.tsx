@@ -60,7 +60,7 @@ const ComunityCreatePost = () => {
           setCommunityPost(result?.data);
           setValueTitle(result?.data?.title);
           setValueContent(result?.data?.content);
-          setSelectedImages(result?.data?.communicationImagesData);
+          setSelectedImages(result?.data?.image);
         }
       }
     } catch (error) {
@@ -490,7 +490,7 @@ const ComunityCreatePost = () => {
                     </div>
                   </div>
                 </section>
-                <Box className="list_iamges">
+                {/* <Box className="list_iamges">
                   {selectedImages.map((item: any, index: number) => (
                     <div className="item-image" key={index}>
                       <img key={index} src={item?.image} alt="Ảnh lỗi" />
@@ -505,7 +505,7 @@ const ComunityCreatePost = () => {
                       </div>
                     </div>
                   ))}
-                </Box>
+                </Box> */}
 
                 {/* <Box>
           <CreatePostImages

@@ -32,6 +32,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
         saveListPost,
     } = props;
     const [like, setLike] = React.useState(item?.liked);
+    const [bookmark, setBookmark] = React.useState(item?.bookmarked);
     const [totalLike, setTotalLike] = React.useState(
         item?.communicationLikesCount,
     );
@@ -70,7 +71,13 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
         try {
             const result = await communityApi.postCommunityBookmarked(item.id);
             if (result) {
-                setSaveListPost(!saveListPost);
+                //create bookmark
+                if (result.status === 201) {
+                    // setSaveListPost(!saveListPost);
+                    setBookmark(true);
+                } else {
+                    setBookmark(false);
+                }
             }
         } catch (error) {
             console.log('error', error);
@@ -96,7 +103,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
                             {item?.title}
                         </h3>
                         <div className="bookmark" onClick={handleClickSave}>
-                            {item.bookmarked === true ? (
+                            {bookmark === true ? (
                                 <SaveIconFill width={24} height={24} />
                             ) : (
                                 <SaveIconOutline width={24} height={24} />
