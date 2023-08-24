@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import './style.scss';
+import { useDispatch } from 'react-redux';
 
 import {
     EysIcon,
@@ -12,6 +13,8 @@ import {
 } from '#components/Icons';
 
 import communityApi from 'api/apiCommunity';
+
+import { setAlertCancleSave } from 'store/reducer/alertReducer';
 
 interface IWorkingStoryCard {
     item: any;
@@ -37,6 +40,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
         item?.communicationLikesCount,
     );
 
+    const dispatch = useDispatch();
     console.log('item', item);
 
     const handleLikeCommunity = async (communicationId: number) => {

@@ -16,13 +16,13 @@ import {
     LikeIcon,
     EditComunity,
     FilterComunity,
-    MoreICon
+    MoreICon,
 } from '#components/Icons';
 
 // @ts-ignore
 import { Navbar } from '#components';
 // @ts-ignore
-import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from 'react-infinite-scroll-component';
 import RollTop from '#components/RollTop';
 import languageApi from 'api/languageApi';
 import { useSelector } from 'react-redux';
@@ -57,8 +57,8 @@ const ComunityNewPost = () => {
     }
 
     const fetchMoreData = async () => {
-        const nextPage = (parseInt(page) + 1).toString()
-        const result = await communityApi.getCommunityNews(nextPage, "10", sort, 1);
+        const nextPage = (parseInt(page) + 1).toString();
+        const result = await communityApi.getCommunityNews(nextPage, '10', sort, 1);
 
         //
         if (result && result?.data?.length !== 0) {
@@ -66,8 +66,8 @@ const ComunityNewPost = () => {
             setPage(nextPage);
         } else {
             setHasMore(false);
-            setPage("0");
-            message.error("Đã hết bài viết");
+            setPage('0');
+            message.error('Đã hết bài viết');
             setIsVisible(false);
             // console.log('da het data', result);
         }
@@ -75,7 +75,7 @@ const ComunityNewPost = () => {
 
     const handleGetAllWorkingStory = async () => {
         try {
-            const result = await communityApi.getCommunityNews(page, "10", sort, 1);
+            const result = await communityApi.getCommunityNews(page, '10', sort, 1);
             if (result) {
                 setStories(result?.data);
                 if (result?.data?.length < 10) {
@@ -85,12 +85,12 @@ const ComunityNewPost = () => {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     React.useEffect(() => {
         handleGetAllWorkingStory();
         setHasMore(true);
-    }, [sort, saveListPost])
+    }, [sort, saveListPost]);
 
     // const handleChange = async () => {
     //     const nextPage = (parseInt(page) + 1).toString()
@@ -108,8 +108,7 @@ const ComunityNewPost = () => {
     //     }
     // };
 
-    console.log("page", page);
-
+    console.log('page', page);
 
     const handleAddText = () => {
         setShowText('showText');
@@ -119,7 +118,7 @@ const ComunityNewPost = () => {
     const getlanguageApi = async () => {
         try {
             const result = await languageApi.getLanguage(
-                languageRedux === 1 ? "vi" : "en"
+                languageRedux === 1 ? 'vi' : 'en',
             );
             if (result) {
                 setLanguage(result.data);
@@ -131,8 +130,8 @@ const ComunityNewPost = () => {
     };
 
     React.useEffect(() => {
-        getlanguageApi()
-    }, [languageRedux])
+        getlanguageApi();
+    }, [languageRedux]);
     const footerRef = React.useRef<any>(null);
 
     useEffect(() => {
@@ -151,8 +150,8 @@ const ComunityNewPost = () => {
     }, []);
 
     const handleMoveToCreate = () => {
-        window.open('/comunity_create_post', '_parent')
-    }
+        window.open('/comunity_create_post', '_parent');
+    };
 
     return (
         <div className="comunity-container">
@@ -238,7 +237,6 @@ const ComunityNewPost = () => {
                             />
                         ))
                     } */}
-
                 </div>
                 {/* <Stack
                     spacing={2}
