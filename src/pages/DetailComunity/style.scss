@@ -40,7 +40,11 @@
                     font-style: normal;
                     font-weight: 700;
                     line-height: 30px;
-                    word-break: break-all;
+                    // word-break: break-word;
+                    width: 75%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
 
                     @media screen and (max-width:600px) {
                         width: 100%;
@@ -74,6 +78,7 @@
                 margin: 24px 0;
 
                 .comunityDetail-content {
+
                     // display: flex;
                     // h3 {
                     //     color: #001424;
@@ -83,6 +88,16 @@
                     //     font-weight: 700;
                     //     line-height: 24px; 
                     // }
+                    textarea {
+                        pointer-events: none;
+                        border: none;
+                        outline: none;
+                        background: transparent;
+
+                        font-family: Roboto;
+                        font-size: 16px;
+                        font-weight: 400;
+                    }
 
                     div {
                         word-break: break-word;
@@ -204,11 +219,11 @@
                         align-items: center;
                         /* position: relative; */
                         width: 100%;
-                        border: 1px solid #aaaaaa;
-                        padding: 10px;
+                        // border: 1px solid #aaaa;
+                        padding: 8px 12px;
                         border-radius: 12px;
                         margin-left: 12px;
-                        background-color: #cccccc;
+                        background-color: #f1f0f0;
                         flex-direction: column;
                         justify-content: space-between;
 
@@ -247,6 +262,9 @@
                                 //     position: absolute;
                                 // right: 12px;
                                 // bottom: 4px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
                                 cursor: pointer;
 
                                 svg {
@@ -259,6 +277,12 @@
                                     &:active {
                                         transform: translate(0.123rem, 0.125rem);
                                     }
+                                }
+                            }
+
+                            .active {
+                                svg {
+                                    color: #0d99ff
                                 }
                             }
                         }
@@ -292,7 +316,7 @@
                             padding: 8px 12px;
                             flex-direction: column;
                             align-items: flex-start;
-                            gap: 12px;
+                            // gap: 12px;
                             flex: 1 0 0;
                             align-self: stretch;
 
@@ -322,8 +346,20 @@
                             }
 
                             .comunityDetail-comment_bottom {
+                                textarea {
+                                    pointer-events: none;
+                                    border: none;
+                                    outline: none;
+                                    background: transparent;
+
+                                    font-family: Roboto;
+                                    font-size: 12px;
+                                    font-weight: 400;
+
+                                }
+
                                 p {
-                                    word-break: break-all;
+                                    word-break: break-word;
                                 }
                             }
                         }

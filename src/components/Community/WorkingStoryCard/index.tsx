@@ -42,22 +42,17 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
   const dispatch = useDispatch();
   console.log('item', item);
-  console.log('like', like);
 
   const handleLikeCommunity = async (communicationId: number) => {
     try {
       const result = await communityApi.postCommunityLike(communicationId);
-      if (result.status === 201) {
-        setLike(true);
-        setTotalLike(totalLike + 1);
-
-        // if (result?.data?.communicationId && item.bookmarked) {
-        // } else {
-        //   setTotalLike(totalLike - 1);
-        // }
-      } else {
-        setLike(false);
-        setTotalLike(totalLike - 1);
+      if (result) {
+        setLike(!like);
+        if (result?.data?.communicationId) {
+          setTotalLike(totalLike + 1);
+        } else {
+          setTotalLike(totalLike - 1);
+        }
       }
       console.log(result);
     } catch (error) {
@@ -66,18 +61,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   };
 
   React.useEffect(() => {
-    console.log('bookmarked', item.bookmarked);
-
-    if (item !== undefined && item.liked) {
-      setLike(true);
-
-      // if (result?.data?.communicationId && item.bookmarked) {
-      // } else {
-      //   setTotalLike(totalLike - 1);
-      // }
-    } else if (item && item) {
-      setLike(false);
-    }
+    setTotalLike(item?.communicationLikesCount);
   }, [item]);
 
   const handleMoveToDetailPage = (id: any) => {
