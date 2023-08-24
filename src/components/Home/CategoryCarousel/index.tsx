@@ -76,16 +76,16 @@ const CategoryCarousel: React.FC = () => {
     setRefCatelory,
     navTouchCatelory,
   }: // openCollapseFilter,
-    {
-      setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
-      childCateloriesArray: number[];
-      valueJobChild: IvalueJobChild;
-      setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
-      setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
-      setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
-      navTouchCatelory: boolean;
-      openCollapseFilter: boolean;
-    } = useContext(HomeValueContext);
+  {
+    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
+    childCateloriesArray: number[];
+    valueJobChild: IvalueJobChild;
+    setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
+    setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
+    setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
+    navTouchCatelory: boolean;
+    openCollapseFilter: boolean;
+  } = useContext(HomeValueContext);
 
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -114,7 +114,7 @@ const CategoryCarousel: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -126,8 +126,8 @@ const CategoryCarousel: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // Set the cookie
   function setCookie(name: string, value: string, days: number) {
@@ -168,9 +168,9 @@ const CategoryCarousel: React.FC = () => {
         document.documentElement.clientWidth ||
         document.body.clientWidth;
 
-      if (windowWidth > 480) {
+      if (windowWidth > 480 && localStorage.getItem('accessToken')) {
         window.scrollTo(0, 530);
-      } else {
+      } else if (windowWidth <= 480 && localStorage.getItem('accessToken')) {
         window.scrollTo(0, 560);
       }
 
@@ -652,7 +652,7 @@ const CategoryCarousel: React.FC = () => {
                       }
                     >
                       {isLogin && item.id === 1
-                        ? language?.nearby_jobs
+                        ? language?.home_page?.suggested_work
                         : item.name}
                     </span>
                   </div>

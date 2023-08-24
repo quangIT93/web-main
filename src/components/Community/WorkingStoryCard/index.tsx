@@ -34,24 +34,30 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     setSaveListPost,
     saveListPost,
   } = props;
-  const [like, setLike] = React.useState(item?.liked);
+  const [like, setLike] = React.useState(item && item?.liked);
+  const [bookmark, setBookmark] = React.useState(item?.bookmarked);
   const [totalLike, setTotalLike] = React.useState(
     item?.communicationLikesCount,
   );
 
   const dispatch = useDispatch();
   console.log('item', item);
+  console.log('like', like);
 
   const handleLikeCommunity = async (communicationId: number) => {
     try {
       const result = await communityApi.postCommunityLike(communicationId);
-      if (result) {
-        setLike(!like);
-        if (result?.data?.communicationId) {
-          setTotalLike(totalLike + 1);
-        } else {
-          setTotalLike(totalLike - 1);
-        }
+      if (result.status === 201) {
+        setLike(true);
+        setTotalLike(totalLike + 1);
+
+        // if (result?.data?.communicationId && item.bookmarked) {
+        // } else {
+        //   setTotalLike(totalLike - 1);
+        // }
+      } else {
+        setLike(false);
+        setTotalLike(totalLike - 1);
       }
       console.log(result);
     } catch (error) {
@@ -59,7 +65,20 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     }
   };
 
-  React.useEffect(() => {}, [like]);
+  React.useEffect(() => {
+    console.log('bookmarked', item.bookmarked);
+
+    if (item !== undefined && item.liked) {
+      setLike(true);
+
+      // if (result?.data?.communicationId && item.bookmarked) {
+      // } else {
+      //   setTotalLike(totalLike - 1);
+      // }
+    } else if (item && item) {
+      setLike(false);
+    }
+  }, [item]);
 
   const handleMoveToDetailPage = (id: any) => {
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
@@ -74,12 +93,12 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     try {
       const result = await communityApi.postCommunityBookmarked(item.id);
       if (result) {
-        setSaveListPost(!saveListPost);
-        console.log('result.data', result);
-        if (item.bookmarked) {
-          dispatch<any>(setAlertCancleSave(true));
+        //create bookmark
+        if (result.status === 201) {
+          // setSaveListPost(!saveListPost);
+          setBookmark(true);
         } else {
-          dispatch<any>(setAlertSave(true));
+          setBookmark(false);
         }
       }
     } catch (error) {
@@ -106,7 +125,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
               {item?.title}
             </h3>
             <div className="bookmark" onClick={handleClickSave}>
-              {item.bookmarked === true ? (
+              {bookmark === true ? (
                 <SaveIconFill width={24} height={24} />
               ) : (
                 <SaveIconOutline width={24} height={24} />

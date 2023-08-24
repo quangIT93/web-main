@@ -52,12 +52,16 @@ const ComunityNewPost = () => {
   const [hasMore, setHasMore] = React.useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [saveListPost, setSaveListPost] = React.useState(false);
-  const handleSortBy = (sort: string) => {
+  const handleSortBy = (sortString: string) => {
     //cm: comment, l: likes, v: views
-    setSort(sort);
+    if (sort == sortString) {
+      setSort('');
+      // console.log(sort);
+    } else {
+      setHasMore(true);
+      setSort(sortString);
+    }
   };
-
-  const dispatch = useDispatch();
 
   const fetchMoreData = async () => {
     const nextPage = (parseInt(page) + 1).toString();
@@ -162,7 +166,7 @@ const ComunityNewPost = () => {
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
-            <h3>Các bài viết mới hôm nay </h3>
+            <h3>Hôm nay, HiJob có 10 bài viết mới</h3>
             <div className="title-comunity_icon">
               <div
                 className="dropdown dropdown-4"
@@ -172,7 +176,11 @@ const ComunityNewPost = () => {
                 <FilterComunity />
                 <ul className="dropdown_menu dropdown_menu-4">
                   <li
-                    className="dropdown_item-1"
+                    className={
+                      sort !== '' && sort == 'l'
+                        ? 'dropdown_item-1  active'
+                        : 'dropdown_item-1'
+                    }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
                       handleSortBy('l');
@@ -182,7 +190,11 @@ const ComunityNewPost = () => {
                     <p>{language?.history_page?.likes}</p>
                   </li>
                   <li
-                    className="dropdown_item-2"
+                    className={
+                      sort !== '' && sort == 'v'
+                        ? 'dropdown_item-2  active'
+                        : 'dropdown_item-2'
+                    }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
                       handleSortBy('v');
@@ -192,7 +204,11 @@ const ComunityNewPost = () => {
                     <p>{language?.history_page?.views}</p>
                   </li>
                   <li
-                    className="dropdown_item-3"
+                    className={
+                      sort !== '' && sort == 'cm'
+                        ? 'dropdown_item-3  active'
+                        : 'dropdown_item-3'
+                    }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
                       handleSortBy('cm');
@@ -211,25 +227,23 @@ const ComunityNewPost = () => {
               </div>
             </div>
           </div>
-          <div className="">
-            <InfiniteScroll
-              dataLength={stories?.length}
-              next={fetchMoreData}
-              hasMore={hasMore}
-              loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
-            >
-              {stories?.map((item: any, index: any) => (
-                <WorkingStoryCard
-                  item={item}
-                  index={index}
-                  showText={showText}
-                  handleAddText={handleAddText}
-                  setSaveListPost={setSaveListPost}
-                  saveListPost={saveListPost}
-                />
-              ))}
-            </InfiniteScroll>
-          </div>
+          <InfiniteScroll
+            dataLength={stories?.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
+          >
+            {stories?.map((item: any, index: any) => (
+              <WorkingStoryCard
+                item={item}
+                index={index}
+                showText={showText}
+                handleAddText={handleAddText}
+                setSaveListPost={setSaveListPost}
+                saveListPost={saveListPost}
+              />
+            ))}
+          </InfiniteScroll>
 
           {/* {
                         stories && stories.map((item: any, index: any) => (

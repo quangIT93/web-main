@@ -3030,7 +3030,7 @@ export const LikeIcon = ({ width = 16, height = 17 }) => {
         stroke-linecap="round"
         stroke-linejoin="round"
         fill="currentColor"
-        // fill="#0d99ff"
+      // fill="#0d99ff"
       />
     </svg>
   );

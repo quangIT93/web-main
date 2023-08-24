@@ -56,7 +56,7 @@ const HijobNews = () => {
               onClick={() => handleMoveToDetailPage(newsItem?.id)}
             >
               <div className="community-content-body_left">
-                <Avatar shape="square" size={88} src={newsItem?.image} />
+                <Avatar shape="square" size={88} src={newsItem?.images[0]?.image} />
               </div>
               <div className="community-content-body_right">
                 <div className="body-item-title">
