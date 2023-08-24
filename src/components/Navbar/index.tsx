@@ -857,7 +857,7 @@ const Navbar: React.FC = () => {
   };
 
   const handleChangeLanguage = async (e: any) => {
-    console.log('e.target.value = ' + e.target.value);
+    // console.log('e.target.value = ' + e.target.value);
 
     setLanguageId(e.target.value);
     setCookie('languageId', JSON.stringify(e.target.value), 365);
@@ -1360,7 +1360,7 @@ const Navbar: React.FC = () => {
               <KeyOutlined />
               <span>Đổi mật khẩu</span>
             </div> */}
-              <div
+              {/* <div
                 className="sub-login_item__translate"
                 onClick={handleOpenRadioGroup}
                 // style={{
@@ -1382,12 +1382,12 @@ const Navbar: React.FC = () => {
                 >
                   <ArrowSubLoginIcon />
                 </div>
-              </div>
+              </div> */}
 
               <div
                 className="sub-translate_status"
                 style={{
-                  height: openRadioGroup ? '100%' : '0',
+                  height: openRadioGroup ? '100%' : '100%',
                   // display: 'none',
                 }}
               >
@@ -1397,9 +1397,11 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                  style={{
-                    display: openRadioGroup ? 'flex' : 'none',
-                  }}
+                  style={
+                    {
+                      // display: openRadioGroup ? 'flex' : 'flex',
+                    }
+                  }
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
