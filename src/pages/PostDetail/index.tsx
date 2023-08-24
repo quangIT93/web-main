@@ -329,20 +329,24 @@ const Detail = () => {
         // setIsLoading(false);
 
         if (result.data.accountId === accountId) {
-          setTextButton(language?.post_detail_page?.edit);
+          setTextButton(
+            languageRedux === 1
+              ? 'Chỉnh sửa bài tuyển dụng'
+              : 'Edit job posting',
+          );
           setBackgroundButton('black');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
-          setTextButton(language?.post_detail_page?.closed);
+          setTextButton(languageRedux === 1 ? 'Bài đăng đã đóng' : 'Closed');
           setBackgroundButton('gray');
           // setBackgroundButton('#0D99FF');
           result.data.applied = true;
         } else if (result.data.applied) {
-          setTextButton(language?.post_detail_page?.applied);
+          setTextButton(languageRedux === 1 ? 'Đã ứng tuyển' : 'Applied');
           // setBackgroundButton('gray');
           setBackgroundButton('#0D99FF');
         } else {
-          setTextButton(language?.post_detail_page?.apply);
+          setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
           setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
         }
