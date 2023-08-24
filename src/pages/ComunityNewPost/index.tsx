@@ -10,6 +10,9 @@ import { Spin } from 'antd';
 import { Avatar, Space, message } from 'antd';
 // import component
 import { Stack } from '@mui/material';
+
+import { useDispatch } from 'react-redux';
+
 import {
   EysIcon,
   CommentIcon,
@@ -32,6 +35,8 @@ import communityApi from 'api/apiCommunity';
 
 import WorkingStoryCard from '#components/Community/WorkingStoryCard';
 
+import { setAlertSave } from 'store/reducer/alertReducer';
+
 // const { Panel } = Collapse;
 
 const ComunityNewPost = () => {
@@ -51,6 +56,8 @@ const ComunityNewPost = () => {
     //cm: comment, l: likes, v: views
     setSort(sort);
   };
+
+  const dispatch = useDispatch();
 
   const fetchMoreData = async () => {
     const nextPage = (parseInt(page) + 1).toString();
@@ -155,7 +162,7 @@ const ComunityNewPost = () => {
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
-            <h3>Hôm nay, HiJob có 10 bài viết mới </h3>
+            <h3>Các bài viết mới hôm nay </h3>
             <div className="title-comunity_icon">
               <div
                 className="dropdown dropdown-4"
@@ -204,23 +211,25 @@ const ComunityNewPost = () => {
               </div>
             </div>
           </div>
-          <InfiniteScroll
-            dataLength={stories?.length}
-            next={fetchMoreData}
-            hasMore={hasMore}
-            loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
-          >
-            {stories?.map((item: any, index: any) => (
-              <WorkingStoryCard
-                item={item}
-                index={index}
-                showText={showText}
-                handleAddText={handleAddText}
-                setSaveListPost={setSaveListPost}
-                saveListPost={saveListPost}
-              />
-            ))}
-          </InfiniteScroll>
+          <div className="">
+            <InfiniteScroll
+              dataLength={stories?.length}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
+            >
+              {stories?.map((item: any, index: any) => (
+                <WorkingStoryCard
+                  item={item}
+                  index={index}
+                  showText={showText}
+                  handleAddText={handleAddText}
+                  setSaveListPost={setSaveListPost}
+                  saveListPost={saveListPost}
+                />
+              ))}
+            </InfiniteScroll>
+          </div>
 
           {/* {
                         stories && stories.map((item: any, index: any) => (

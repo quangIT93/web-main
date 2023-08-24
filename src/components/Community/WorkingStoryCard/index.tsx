@@ -14,7 +14,7 @@ import {
 
 import communityApi from 'api/apiCommunity';
 
-import { setAlertCancleSave } from 'store/reducer/alertReducer';
+import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
 interface IWorkingStoryCard {
   item: any;
@@ -75,7 +75,12 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
       const result = await communityApi.postCommunityBookmarked(item.id);
       if (result) {
         setSaveListPost(!saveListPost);
-        dispatch<any>(setAlertCancleSave(true));
+        console.log('result.data', result);
+        if (item.bookmarked) {
+          dispatch<any>(setAlertCancleSave(true));
+        } else {
+          dispatch<any>(setAlertSave(true));
+        }
       }
     } catch (error) {
       console.log('error', error);
