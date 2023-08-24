@@ -73,7 +73,7 @@ const HijobNewsCard: React.FC<IHijobNewsCard> = (props) => {
       // onClick={() => handleMoveToDetailPage(item?.id)}
       >
         <div className="comunitypostNews-card-wrap_content__left">
-          <Avatar shape="square" src={item?.image} icon={<UserOutlined />} />
+          <Avatar shape="square" src={item?.images[0]?.image} icon={<UserOutlined />} />
         </div>
         <div className="comunitypostNews-card-wrap_content__right">
           <div className="comunityPostNews-card-content">
