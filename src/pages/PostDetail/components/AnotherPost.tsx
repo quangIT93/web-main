@@ -41,9 +41,13 @@ const AnotherPost: React.FC<any> = (props) => {
             background: '#E7E7ED',
             transition: 'all 0.3s linear',
           },
-          boxShadow: 'none',
-          borderRadius: '5px',
+          // boxShadow: 'none',
+          // borderRadius: '12px',
           justifyContent: 'space-between',
+          // border: '1px solid #d9d9d9',
+          backgroundColor: '#ffffff',
+          background: '#ffffff',
+          overlow: 'unset',
         }}
         className="anotherPost-container"
         onClick={props.onClick}

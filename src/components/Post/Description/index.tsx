@@ -28,10 +28,7 @@ const Description: React.FC<IDescription> = (props) => {
         component="label"
         htmlFor="startTime"
       >
-        {
-          language?.job_description
-        }{' '}
-        <span style={{ color: 'red' }}>*</span>
+        {language?.job_description} <span style={{ color: 'red' }}>*</span>
       </Typography>
       <TextField
         // className={classes.textarea}
@@ -40,9 +37,7 @@ const Description: React.FC<IDescription> = (props) => {
         multiline
         rows={6}
         // label="Một số đặc điểm nhận diện công ty"
-        placeholder={
-          language?.post_page?.place_des
-        }
+        placeholder={language?.post_page?.place_des}
         value={description}
       />
     </Box>

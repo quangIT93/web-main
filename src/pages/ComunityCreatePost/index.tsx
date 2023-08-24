@@ -382,6 +382,8 @@ const ComunityCreatePost = () => {
             type: 'success',
             content: 'sửa bài viết thành công',
           });
+          window.open('/comunity_create_success', '_parent')
+          localStorage.setItem('community_success', 'true')
           // window.open('/comunity_create_success', '_parent')
         } else {
           console.log('sửa bài viết thất bại');
@@ -413,6 +415,7 @@ const ComunityCreatePost = () => {
         if (result) {
           console.log('tạo bài viết thành công');
           window.open('/comunity_create_success', '_parent')
+          localStorage.setItem('community_success', 'true')
         } else {
           console.log('tạo bài viết thất bại');
         }
@@ -433,7 +436,13 @@ const ComunityCreatePost = () => {
       {contextHolder}
       <div className="comunity-create-post-content">
         <div className="create-post-header">
-          <h3>Tạo bài viết mới</h3>
+          <h3>
+            {
+              POST_COMMUNITY_ID ?
+                "Sửa bài viết" :
+                "Tạo bài viết mới"
+            }
+          </h3>
         </div>
         <div className="create-post-body">
           <div className="create-post-body_input">

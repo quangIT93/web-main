@@ -126,6 +126,7 @@ const CardListBlogCreate = () => {
 
     const handleSortBy = (sortString: string) => {
         //cm: comment, l: likes, v: views
+        setPage("0")
         if (sort == sortString) {
             setSort('');
             // console.log(sort);

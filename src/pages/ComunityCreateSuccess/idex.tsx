@@ -11,14 +11,26 @@ import './style.scss';
 
 import { Button } from 'antd';
 import RollTop from '#components/RollTop';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const ComunityCreateSuccess = () => {
-    const handleMoveToHijobNews = () => {
-        window.open('/news-comunity', '_parent')
+    const dataProfile = useSelector((state: RootState) => state.profile.profile);
+    useEffect(() => {
+        const community_success = localStorage.getItem('community_success')
+        const accountId = localStorage.getItem('accountId')
+        if ((dataProfile && dataProfile.accountId != accountId) || !community_success) {
+            window.open('/', '_parent')
+        }
+    }, [])
+    const handleMoveWorkingStory = () => {
+        localStorage.removeItem('community_success')
+        window.open('/new-comunity', '_parent')
     }
 
     const handleMoveToCommunityPost = () => {
-        window.open('/history', '_parent')
+        localStorage.removeItem('community_success')
+        window.open('/history?community_post=3', '_parent')
     }
 
     return (
@@ -40,7 +52,7 @@ const ComunityCreateSuccess = () => {
                     </div>
                 </div>
                 <div className="create-success-btns">
-                    <Button type="primary" onClick={handleMoveToHijobNews}>
+                    <Button type="primary" onClick={handleMoveWorkingStory}>
                         Bài viết HiJob
                     </Button>
                     <Button onClick={handleMoveToCommunityPost}>
