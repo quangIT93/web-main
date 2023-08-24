@@ -101,7 +101,7 @@ const JobCard: React.FC<Iprops> = (props) => {
               transition: 'all 0.3s linear',
             },
             boxShadow: 'none',
-            borderRadius: '5px',
+            borderRadius: '12px',
             justifyContent: 'space-between',
             border: '2px solid #d9d9d9',
             // backgroundColor: 'none !important',
