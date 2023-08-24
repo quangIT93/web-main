@@ -211,26 +211,26 @@ const Comunity = () => {
               <div>{detail?.content}</div>
             </div>
           </div>
-          {/* <ImageList
+          <ImageList
             className="comunityDetail-wrap_img"
             variant="quilted"
             cols={
-              detail?.communicationImagesData.length >= 4
+              detail?.image.length >= 4
                 ? 4
-                : detail?.communicationImagesData.length
+                : detail?.image.length
             }
-            rowHeight={detail?.communicationImagesData.length >= 4 ? 200 : 400}
+            rowHeight={detail?.image.length >= 4 ? 200 : 400}
           >
-            {detail?.communicationImagesData.map((item: any, index: any) => (
+            {detail?.image.map((item: any, index: any) => (
               <ImageListItem
                 key={item.id}
                 cols={
-                  detail?.communicationImagesData.length >= 4 && index === 0
+                  detail?.image.length >= 4 && index === 0
                     ? 2
                     : 1
                 }
                 rows={
-                  detail?.communicationImagesData.length >= 4 && index === 0
+                  detail?.image.length >= 4 && index === 0
                     ? 2
                     : 1
                 }
@@ -242,10 +242,10 @@ const Comunity = () => {
                   {...srcset(
                     item.image,
                     200,
-                    detail?.communicationImagesData?.length >= 4 && index === 0
+                    detail?.image?.length >= 4 && index === 0
                       ? 2
                       : 1,
-                    detail?.communicationImagesData?.length >= 4 && index === 0
+                    detail?.image?.length >= 4 && index === 0
                       ? 2
                       : 1,
                   )}
@@ -254,10 +254,10 @@ const Comunity = () => {
                 />
               </ImageListItem>
             ))}
-          </ImageList> */}
+          </ImageList>
           {/* <div className="comunityDetail-wrap_img">
             {
-              detail?.communicationImagesData?.images.map((img: any, index: any) => (
+              detail?.image?.images.map((img: any, index: any) => (
                 <img key={index} src={img} alt="" />
               ))
             }

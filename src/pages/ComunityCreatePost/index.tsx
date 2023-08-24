@@ -39,7 +39,10 @@ const ComunityCreatePost = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [isDragActive, setIsDragActive] = React.useState(false);
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
-  const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
+  const [selectedImages, setSelectedImages] = React.useState<{
+    id: any,
+    image: any,
+  }[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const POST_COMMUNITY_ID = searchParams.get('post-community')
   const [communityPost, setCommunityPost] = React.useState<any>();
@@ -151,14 +154,16 @@ const ComunityCreatePost = () => {
               );
             }),
           );
-          setSelectedFiles((prevState) => [
-            ...prevState,
-            ...compressedImages,
-            // .map((image: any) => ({
-            //     image,
-            //     preview: window.URL.createObjectURL(image),
-            // })),
-          ]);
+          if (selectedImages.length < 5) {
+            setSelectedFiles((prevState) => [
+              ...prevState,
+              ...compressedImages,
+              // .map((image: any) => ({
+              //     image,
+              //     preview: window.URL.createObjectURL(image),
+              // })),
+            ]);
+          }
         } catch (error) {
           console.log(error);
         }
@@ -182,7 +187,12 @@ const ComunityCreatePost = () => {
           newImages.push(imageDataURL);
 
           if (newImages.length === files.length) {
-            const newImageSelected = [...selectedImages, ...newImages];
+            const newImageSelected = [...selectedImages,
+            ...newImages.map((item: any, index: number) => ({
+              id: index,
+              image: item
+            }))
+            ];
             if (newImageSelected.length > 5) {
               message.error('Tối đa 5 hình');
               return;
@@ -193,6 +203,8 @@ const ComunityCreatePost = () => {
         };
 
         reader.readAsDataURL(file);
+        console.log("newImages", newImages);
+
       }
     }
   };
@@ -262,7 +274,9 @@ const ComunityCreatePost = () => {
         return;
       }
 
-      setSelectedFiles(newFileSelected);
+      if (selectedImages.length < 5) {
+        setSelectedFiles(newFileSelected);
+      }
 
       const newImages: string[] = [];
 
@@ -276,7 +290,12 @@ const ComunityCreatePost = () => {
           newImages.push(imageDataURL);
 
           if (newImages.length === fileUploaded.length) {
-            const newImageSelected = [...selectedImages, ...newImages];
+            const newImageSelected = [...selectedImages,
+            ...newImages.map((item: any, index: number) => ({
+              id: index,
+              image: item
+            }))
+            ];
             if (newImageSelected.length > 5) {
               message.error('Tối đa 5 hình');
 
@@ -490,7 +509,7 @@ const ComunityCreatePost = () => {
                     </div>
                   </div>
                 </section>
-                {/* <Box className="list_iamges">
+                <Box className="list_iamges">
                   {selectedImages.map((item: any, index: number) => (
                     <div className="item-image" key={index}>
                       <img key={index} src={item?.image} alt="Ảnh lỗi" />
@@ -505,7 +524,7 @@ const ComunityCreatePost = () => {
                       </div>
                     </div>
                   ))}
-                </Box> */}
+                </Box>
 
                 {/* <Box>
           <CreatePostImages
