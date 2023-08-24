@@ -339,35 +339,36 @@ const Comunity = () => {
               </div>
             </div>
             <div className="comunityDetail-list_comment">
-              {detail?.communicationCommentsData.map(
-                (cmtData: any, index: any) => (
-                  <div
-                    className="comunityDetail-list_comment__item"
-                    key={index}
-                  >
-                    {/* <img
+              {detail?.communicationCommentsData &&
+                detail?.communicationCommentsData.map(
+                  (cmtData: any, index: any) => (
+                    <div
+                      className="comunityDetail-list_comment__item"
+                      key={index}
+                    >
+                      {/* <img
                     src={cmtData?.profileData?.avatar}
                     alt=""
                     style={{ width: '50px', height: '50px' }}
                   /> */}
-                    <Avatar
-                      size={50}
-                      src={cmtData?.profileData?.avatar}
-                      icon={<UserOutlined />}
-                    />
-                    <div className="comunityDetail-comment">
-                      <div className="comunityDetail-comment_top">
-                        <h3>{cmtData?.profileData?.name}</h3>
-                        <h3>|</h3>
-                        <p>{cmtData?.createdAtText}</p>
-                      </div>
-                      <div className="comunityDetail-comment_bottom">
-                        <p>{cmtData?.content}</p>
+                      <Avatar
+                        size={50}
+                        src={cmtData?.profileData?.avatar}
+                        icon={<UserOutlined />}
+                      />
+                      <div className="comunityDetail-comment">
+                        <div className="comunityDetail-comment_top">
+                          <h3>{cmtData?.profileData?.name}</h3>
+                          <h3>|</h3>
+                          <p>{cmtData?.createdAtText}</p>
+                        </div>
+                        <div className="comunityDetail-comment_bottom">
+                          <p>{cmtData?.content}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ),
-              )}
+                  ),
+                )}
             </div>
           </div>
         </div>

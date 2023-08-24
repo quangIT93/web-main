@@ -42,8 +42,8 @@
 
             .text-content_postNew {
                 height: 90px;
-                overflow: hidden;
-
+                // overflow: hidden;
+                word-wrap: break-word;
                 li {
                     color: #000;
                     font-family: Roboto;

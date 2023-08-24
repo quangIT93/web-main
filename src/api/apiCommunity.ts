@@ -199,8 +199,8 @@ const communityApi = {
         })
     },
 
-    getCommunityBookmarked: () => {
-        const URL = `/v3/communication-bookmarked`
+    getCommunityBookmarked: (page: number) => {
+        const URL = `/v3/communication-bookmarked?page=${page}`
         return axiosClient.get(URL, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
