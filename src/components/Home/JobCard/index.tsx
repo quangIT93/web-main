@@ -103,6 +103,8 @@ const JobCard: React.FC<Iprops> = (props) => {
             boxShadow: 'none',
             borderRadius: '5px',
             justifyContent: 'space-between',
+            border: '2px solid #d9d9d9',
+            // backgroundColor: 'none !important',
           }}
           onClick={(e) => {
             handleClickItem(e, props.item.id);

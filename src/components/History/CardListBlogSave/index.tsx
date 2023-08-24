@@ -12,7 +12,7 @@ import {
 import { Box, Typography, MenuItem, TextField } from '@mui/material';
 import languageApi from 'api/languageApi';
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import { Avatar, Button, message } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 
@@ -31,9 +31,12 @@ const CardListBlogSave = () => {
   const [language, setLanguage] = React.useState<any>();
 
   const [stories, setStories] = React.useState<any>();
-  const [page, setPage] = React.useState<any>('0');
+  const [page, setPage] = React.useState<any>(0);
   const [isVisible, setIsVisible] = React.useState(true);
   const [sort, setSort] = React.useState('');
+
+  const [createdPost, setCreatedPost] = React.useState<any>();
+  const [uploading, setUploading] = React.useState(false);
 
   const [saveListPost, setSaveListPost] = React.useState(false);
 
@@ -82,7 +85,7 @@ const CardListBlogSave = () => {
   // commun
   const handleGetAllWorkingStory = async () => {
     try {
-      const result = await communityApi.getCommunityBookmarked();
+      const result = await communityApi.getCommunityBookmarked(page);
       if (result) {
         console.log('log', result);
         setStories(result.data);
@@ -100,6 +103,33 @@ const CardListBlogSave = () => {
   React.useEffect(() => {
     handleGetAllWorkingStory();
   }, [saveListPost]);
+
+  // more
+  const handleChange = async () => {
+    try {
+      setUploading(true);
+      const nextPage = (parseInt(page) + 1).toString();
+      const result = await communityApi.getCommunityByAccount(
+        nextPage,
+        '10',
+        sort,
+      );
+
+      //
+      if (result && result?.data?.length !== 0) {
+        setUploading(false);
+        setStories((prev: any) => [...prev, ...result?.data]);
+        setPage(nextPage);
+      } else {
+        setPage('0');
+        message.error('da het data');
+        setIsVisible(false);
+        // console.log('da het data', result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -167,21 +197,46 @@ const CardListBlogSave = () => {
         {/* <EditComunity /> */}
         {/* </div> */}
       </Box>
-
-      {stories ? (
-        stories.map((item: any, index: any) => (
-          <WorkingStoryCard
-            item={item.communicationData}
-            index={index}
-            showText={showText}
-            handleAddText={handleAddText}
-            setSaveListPost={setSaveListPost}
-            saveListPost={saveListPost}
-          />
-        ))
-      ) : (
-        <></>
-      )}
+      <div className="list-blog-create-data">
+        {stories ? (
+          stories.map((item: any, index: any) => (
+            <WorkingStoryCard
+              item={item.communicationData}
+              index={index}
+              showText={showText}
+              handleAddText={handleAddText}
+              setSaveListPost={setSaveListPost}
+              saveListPost={saveListPost}
+            />
+          ))
+        ) : (
+          <></>
+        )}
+        <Box
+          sx={{
+            margin: '12px auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            style={{
+              width: 130,
+              height: 40,
+              backgroundColor: `#0D99FF`,
+              marginBottom: '2rem',
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+              display: isVisible ? 'block' : 'none',
+            }}
+            loading={uploading}
+            onClick={handleChange}
+          >
+            {language?.more}
+          </Button>
+        </Box>
+      </div>
     </>
   );
 };

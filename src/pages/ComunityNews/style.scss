@@ -18,7 +18,7 @@
         }
 
         .comunityPostNews {
-            width: 100%;
+            width: 70%;
 
             .title-comunity-news {
                 display: flex;
@@ -115,6 +115,16 @@
                                         color: #575757;
                                         stroke: white;
                                     }
+                                }
+                            }
+
+                            .active {
+                                color: white;
+                                background: #575757;
+
+                                svg {
+                                    color: #575757;
+                                    stroke: white;
                                 }
                             }
                         }

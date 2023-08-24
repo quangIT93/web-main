@@ -4,11 +4,15 @@ import React, { useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
 import { UserOutlined } from '@ant-design/icons';
 // import moment, { Moment } from 'moment';
-
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 // import { Collapse } from 'antd';
 import { Avatar, Space, message } from 'antd';
 // import component
 import { Stack } from '@mui/material';
+
+import { useDispatch } from 'react-redux';
+
 import {
   EysIcon,
   CommentIcon,
@@ -19,8 +23,9 @@ import {
 } from '#components/Icons';
 
 // @ts-ignore
-
 import { Navbar } from '#components';
+// @ts-ignore
+import InfiniteScroll from 'react-infinite-scroll-component';
 import RollTop from '#components/RollTop';
 import languageApi from 'api/languageApi';
 import { useSelector } from 'react-redux';
@@ -30,29 +35,54 @@ import communityApi from 'api/apiCommunity';
 
 import WorkingStoryCard from '#components/Community/WorkingStoryCard';
 
+import { setAlertSave } from 'store/reducer/alertReducer';
+
 // const { Panel } = Collapse;
 
-const Comunity = () => {
+const ComunityNewPost = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
   const [showText, setShowText] = React.useState('');
   const [openMenu, setOpenMenu] = React.useState(false);
-  const [stories, setStories] = React.useState<any>();
+  const [stories, setStories] = React.useState<any>([]);
   const [page, setPage] = React.useState<any>('0');
   const [isVisible, setIsVisible] = React.useState(true);
   const [sort, setSort] = React.useState('');
-
+  const [hasMore, setHasMore] = React.useState(true);
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [saveListPost, setSaveListPost] = React.useState(false);
-
-  const handleSortBy = (sort: string) => {
+  const handleSortBy = (sortString: string) => {
     //cm: comment, l: likes, v: views
-    setSort(sort);
+    if (sort == sortString) {
+      setSort('');
+      // console.log(sort);
+    } else {
+      setHasMore(true);
+      setSort(sortString);
+    }
+  };
+
+  const fetchMoreData = async () => {
+    const nextPage = (parseInt(page) + 1).toString();
+    const result = await communityApi.getCommunityNews(nextPage, '10', sort, 1);
+
+    //
+    if (result && result?.data?.length !== 0) {
+      setStories((prev: any) => [...prev, ...result?.data]);
+      setPage(nextPage);
+    } else {
+      setHasMore(false);
+      setPage('0');
+      message.error('Đã hết bài viết');
+      setIsVisible(false);
+      // console.log('da het data', result);
+    }
   };
 
   const handleGetAllWorkingStory = async () => {
     try {
-      const result = await communityApi.getCommunityNews(page, '9', sort, 1);
+      const result = await communityApi.getCommunityNews(page, '10', sort, 1);
       if (result) {
         setStories(result?.data);
         if (result?.data?.length < 10) {
@@ -66,23 +96,26 @@ const Comunity = () => {
 
   React.useEffect(() => {
     handleGetAllWorkingStory();
+    setHasMore(true);
   }, [sort, saveListPost]);
 
-  const handleChange = async () => {
-    const nextPage = (parseInt(page) + 1).toString();
-    const result = await communityApi.getCommunityNews(nextPage, '9', sort, 1);
+  // const handleChange = async () => {
+  //     const nextPage = (parseInt(page) + 1).toString()
+  //     const result = await communityApi.getCommunityNews(nextPage, "10", sort, 1);
 
-    //
-    if (result && result?.data?.length !== 0) {
-      setStories((prev: any) => [...prev, ...result?.data]);
-      setPage(nextPage);
-    } else {
-      setPage('0');
-      message.error('da het data');
-      setIsVisible(false);
-      // console.log('da het data', result);
-    }
-  };
+  //     //
+  //     if (result && result?.data?.length !== 0) {
+  //         setStories((prev: any) => [...prev, ...result?.data]);
+  //         setPage(nextPage);
+  //     } else {
+  //         setPage("0");
+  //         message.error("da het data");
+  //         setIsVisible(false);
+  //         // console.log('da het data', result);
+  //     }
+  // };
+
+  console.log('page', page);
 
   const handleAddText = () => {
     setShowText('showText');
@@ -143,7 +176,11 @@ const Comunity = () => {
                 <FilterComunity />
                 <ul className="dropdown_menu dropdown_menu-4">
                   <li
-                    className="dropdown_item-1"
+                    className={
+                      sort !== '' && sort == 'l'
+                        ? 'dropdown_item-1  active'
+                        : 'dropdown_item-1'
+                    }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
                       handleSortBy('l');
@@ -153,7 +190,11 @@ const Comunity = () => {
                     <p>{language?.history_page?.likes}</p>
                   </li>
                   <li
-                    className="dropdown_item-2"
+                    className={
+                      sort !== '' && sort == 'v'
+                        ? 'dropdown_item-2  active'
+                        : 'dropdown_item-2'
+                    }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
                       handleSortBy('v');
@@ -163,7 +204,11 @@ const Comunity = () => {
                     <p>{language?.history_page?.views}</p>
                   </li>
                   <li
-                    className="dropdown_item-3"
+                    className={
+                      sort !== '' && sort == 'cm'
+                        ? 'dropdown_item-3  active'
+                        : 'dropdown_item-3'
+                    }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
                       handleSortBy('cm');
@@ -182,9 +227,13 @@ const Comunity = () => {
               </div>
             </div>
           </div>
-
-          {stories &&
-            stories.map((item: any, index: any) => (
+          <InfiniteScroll
+            dataLength={stories?.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
+          >
+            {stories?.map((item: any, index: any) => (
               <WorkingStoryCard
                 item={item}
                 index={index}
@@ -194,21 +243,39 @@ const Comunity = () => {
                 saveListPost={saveListPost}
               />
             ))}
+          </InfiniteScroll>
+
+          {/* {
+                        stories && stories.map((item: any, index: any) => (
+                            <WorkingStoryCard
+                                item={item}
+                                index={index}
+                                showText={showText}
+                                handleAddText={handleAddText}
+                            />
+                        ))
+                    } */}
         </div>
-        <Stack
-          spacing={2}
-          sx={{
-            display: isVisible ? 'flex' : 'none',
-            alignItems: 'center',
-            margin: '24px 0',
-          }}
-        >
-          {/* <Pagination count={10} shape="rounded" /> */}
-          <Space className="div-hover-more" onClick={handleChange}>
-            <p>{language?.more}</p>
-            <MoreICon width={20} height={20} />
-          </Space>
-        </Stack>
+        {/* <Stack
+                    spacing={2}
+                    sx={{
+                        display: isVisible ? 'flex' : "none",
+                        alignItems: 'center',
+                        margin: '24px 0',
+                    }}
+                >
+                    <Space
+                        className="div-hover-more"
+                        onClick={handleChange}
+                    >
+                        <p>
+                            {
+                                language?.more
+                            }
+                        </p>
+                        <MoreICon width={20} height={20} />
+                    </Space>
+                </Stack> */}
       </div>
       <RollTop />
       <Footer />
@@ -216,4 +283,4 @@ const Comunity = () => {
   );
 };
 
-export default Comunity;
+export default ComunityNewPost;

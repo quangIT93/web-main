@@ -24,7 +24,7 @@ import {
   SaveIconOutline,
   ShareIcon,
   SendComunityIcon,
-  SaveIconFill
+  SaveIconFill,
 } from '#components/Icons';
 import { useSearchParams } from 'react-router-dom';
 import ImageList from '@mui/material/ImageList';
@@ -44,7 +44,6 @@ interface FormPostCommunityComment {
   communicationId: number;
   content: string;
   images: string[];
-
 }
 
 const Comunity = () => {
@@ -55,7 +54,7 @@ const Comunity = () => {
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
   const [detail, setDetail] = React.useState<any>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const POST_COMMUNITY_ID = searchParams.get('post-community')
+  const POST_COMMUNITY_ID = searchParams.get('post-community');
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [cmtContent, setCmtContent] = React.useState('');
   const [previewImage, setPreviewImage] = React.useState('');
@@ -64,80 +63,103 @@ const Comunity = () => {
   const [cmt, setCmt] = React.useState(false);
 
   const handelChangeCmt = (event: any) => {
-    setCmtContent(event.target.value)
-  }
+    setCmtContent(event.target.value);
+  };
 
   const handleGetDetailCommunityById = async () => {
+    console.log('vooooooooooooo');
+
     try {
       if (POST_COMMUNITY_ID) {
-        const result = await communityApi.getCommunityDetailId(POST_COMMUNITY_ID);
+        const result = await communityApi.getCommunityDetailId(
+          POST_COMMUNITY_ID,
+        );
         if (result) {
+          setLike(result?.data?.liked);
           setDetail(result?.data);
-          setLike(result?.data?.liked)
-          setBookmark(result?.data?.bookmarked)
+          setBookmark(result?.data?.bookmarked);
         }
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   React.useEffect(() => {
     handleGetDetailCommunityById();
-  }, [POST_COMMUNITY_ID, like, bookmark, cmt])
+  }, [POST_COMMUNITY_ID, like, bookmark, cmt]);
+
+  console.log('detail', detail);
 
   const srcset = (image: string, size: number, rows = 1, cols = 1) => {
+    console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
       srcSet: `${image}?w=${size * cols}&h=${size * rows
         }&fit=crop&auto=format&dpr=2 2x`,
     };
-  }
+  };
 
   const handleLikeCommunity = async (communicationId: number) => {
     try {
       const result = await communityApi.postCommunityLike(communicationId);
-      if (result && result?.status === 201) {
-        setLike(!like)
+      if (result) {
+        setLike(!like);
       }
       console.log(result);
-
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  React.useEffect(() => {
+    if (detail && detail.liked) {
+      setLike(true);
+    } else if (detail && !detail.liked) {
+      setLike(false);
+    }
+
+    if (detail && detail.bookmarked) {
+      setBookmark(true);
+    } else if (detail && !detail.bookmarked) {
+      setBookmark(false);
+    }
+  }, [detail]);
 
   const handleSaveCommunity = async (communicationId: number) => {
     try {
-      const result = await communityApi.postCommunityBookmarked(communicationId);
-      if (result && result?.status === 201) {
-        setBookmark(!bookmark)
+      const result = await communityApi.postCommunityBookmarked(
+        communicationId,
+      );
+      if (result) {
+        setBookmark(!bookmark);
       }
       console.log(result);
-
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const handleCommentCommunity = async () => {
     const form = {
-      'communicationId': detail?.id,
-      "content": cmtContent,
-      "images": [],
-    }
+      communicationId: detail?.id,
+      content: cmtContent,
+      images: [],
+    };
     try {
       const result = await communityApi.postCommunityComment(form);
       if (result) {
-        setCmt(!cmt)
+        setCmt(!cmt);
+        setCmtContent('');
       }
       console.log(result);
-
     } catch (error) {
       console.log(error);
     }
     // console.log("content", cmtContent);
-  }
+  };
+
+  // console.log('detail', detail);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -148,14 +170,17 @@ const Comunity = () => {
 
   const handleKeyPress = (e: any) => {
     e.preventDefault();
+
     if (e.shiftKey) {
       // Insert a new line into the textArea
       e.target.value += '\n';
-    } else
-      // if (e.key === 'Enter') {
-      handleCommentCommunity();
+    }
+    // if (e.key === 'Enter') {
+    else handleCommentCommunity();
     // }
   };
+
+  console.log('detail', detail);
 
   return (
     <div className="comunity-container">
@@ -171,12 +196,11 @@ const Comunity = () => {
                 Chia sẻ
               </span>
               <span onClick={() => handleSaveCommunity(detail?.id)}>
-                {
-                  bookmark ?
-                    <SaveIconFill width={24} height={24} />
-                    :
-                    <SaveIconOutline width={24} height={24} />
-                }
+                {bookmark ? (
+                  <SaveIconFill width={24} height={24} />
+                ) : (
+                  <SaveIconOutline width={24} height={24} />
+                )}
                 Lưu
               </span>
             </div>
@@ -184,35 +208,46 @@ const Comunity = () => {
 
           <div className="comunityDetail-wrap_content">
             <div className="comunityDetail-content">
-              <ul>
-                {detail?.content}
-              </ul>
+              <div>{detail?.content}</div>
             </div>
           </div>
           <ImageList
             className="comunityDetail-wrap_img"
             variant="quilted"
-            cols={detail?.communicationImagesData.length >= 4 ? 4 : detail?.communicationImagesData.length}
-            rowHeight={detail?.communicationImagesData.length >= 4 ? 200 : 400}
+            cols={
+              detail?.image.length >= 4
+                ? 4
+                : detail?.image.length
+            }
+            rowHeight={detail?.image.length >= 4 ? 200 : 400}
           >
-            {detail?.communicationImagesData.map((item: any, index: any) => (
-              <ImageListItem key={item.id}
+            {detail?.image.map((item: any, index: any) => (
+              <ImageListItem
+                key={item.id}
                 cols={
-                  detail?.communicationImagesData.length >= 4 &&
-                    index === 0 ? 2 : 1
+                  detail?.image.length >= 4 && index === 0
+                    ? 2
+                    : 1
                 }
                 rows={
-                  detail?.communicationImagesData.length >= 4 &&
-                    index === 0 ? 2 : 1
+                  detail?.image.length >= 4 && index === 0
+                    ? 2
+                    : 1
                 }
               >
                 <img
-                  onClick={() => { handlePreview(item.image) }}
-                  {...srcset(item.image, 200,
-                    detail?.communicationImagesData?.length >= 4 &&
-                      index === 0 ? 2 : 1,
-                    detail?.communicationImagesData?.length >= 4 &&
-                      index === 0 ? 2 : 1
+                  onClick={() => {
+                    handlePreview(item.image);
+                  }}
+                  {...srcset(
+                    item.image,
+                    200,
+                    detail?.image?.length >= 4 && index === 0
+                      ? 2
+                      : 1,
+                    detail?.image?.length >= 4 && index === 0
+                      ? 2
+                      : 1,
                   )}
                   alt={item.image}
                   loading="lazy"
@@ -222,31 +257,40 @@ const Comunity = () => {
           </ImageList>
           {/* <div className="comunityDetail-wrap_img">
             {
-              detail?.communicationImagesData?.images.map((img: any, index: any) => (
+              detail?.image?.images.map((img: any, index: any) => (
                 <img key={index} src={img} alt="" />
               ))
             }
           </div> */}
           <div className="comunityDetail-wrap_status">
-            <div className={like ? `comunitypostNew-status_item liked` : `comunitypostNew-status_item`}
+            <div
+              className={
+                like
+                  ? `comunitypostNew-status_item liked`
+                  : `comunitypostNew-status_item`
+              }
               onClick={() => handleLikeCommunity(detail?.id)}
             >
               <LikeIcon />
-              <p>{detail?.totalLikes}</p>
+              <p>{detail?.communicationLikesCount}</p>
             </div>
             <div className="comunitypostNew-status_item">
               <CommentIcon />
-              <p>{detail?.totalComments}</p>
+              <p>{detail?.communicationCommentsCount}</p>
             </div>
             <div className="comunitypostNew-status_item">
               <EysIcon />
-              <p>{detail?.totalViews}</p>
+              <p>{detail?.communicationViewsCount}</p>
             </div>
           </div>
           <div className="comunityDetail-wrap_actor">
             <div className="comunityDetail-wrap">
               {/* <img src={detail?.profileData?.avatar} alt="anh loi" /> */}
-              <Avatar size={50} src={detail?.profileData?.avatar} icon={<UserOutlined />} />
+              <Avatar
+                size={50}
+                src={detail?.profileData?.avatar}
+                icon={<UserOutlined />}
+              />
               <div className="info-actor_comunityDetail">
                 <p>Tác giả</p>
                 <p>{detail?.profileData?.name}</p>
@@ -262,7 +306,11 @@ const Comunity = () => {
                 alt=""
                 style={{ width: '50px', height: '50px' }}
               /> */}
-              <Avatar size={50} src={dataProfile?.avatar} icon={<UserOutlined />} />
+              <Avatar
+                size={50}
+                src={dataProfile?.avatar}
+                icon={<UserOutlined />}
+              />
               {/* <textarea name="Text" rows={5}></textarea> */}
               <div className="comunityDetail-comment_chaterInput">
                 {/* <input
@@ -280,7 +328,8 @@ const Comunity = () => {
                   autoSize={{ minRows: 3, maxRows: 5 }}
                 />
                 <div className="comment-interaction">
-                  <div className="comment-chaterInput_send"
+                  <div
+                    className="comment-chaterInput_send"
                     onClick={handleCommentCommunity}
                   >
                     <SendComunityIcon />
@@ -289,35 +338,45 @@ const Comunity = () => {
               </div>
             </div>
             <div className="comunityDetail-list_comment">
-              {
-                detail?.communicationCommentsData.map((cmtData: any, index: any) => (
-                  <div className="comunityDetail-list_comment__item" key={index}>
+              {detail?.communicationCommentsData && detail?.communicationCommentsData.map(
+                (cmtData: any, index: any) => (
+                  <div
+                    className="comunityDetail-list_comment__item"
+                    key={index}
+                  >
                     {/* <img
                     src={cmtData?.profileData?.avatar}
                     alt=""
                     style={{ width: '50px', height: '50px' }}
                   /> */}
-                    <Avatar size={50} src={cmtData?.profileData?.avatar} icon={<UserOutlined />} />
+                    <Avatar
+                      size={50}
+                      src={cmtData?.profile?.avatar}
+                      icon={<UserOutlined />}
+                    />
                     <div className="comunityDetail-comment">
                       <div className="comunityDetail-comment_top">
-                        <h3>{cmtData?.profileData?.name}</h3>
+                        <h3>{cmtData?.profile?.name}</h3>
                         <h3>|</h3>
                         <p>{cmtData?.createdAtText}</p>
                       </div>
                       <div className="comunityDetail-comment_bottom">
-                        <p>
-                          {cmtData?.content}
-                        </p>
+                        <p>{cmtData?.content}</p>
                       </div>
                     </div>
                   </div>
-                ))
-              }
+                ),
+              )}
             </div>
           </div>
         </div>
       </div>
-      <Modal open={previewOpen} title="Image" footer={null} onCancel={handleCancel}>
+      <Modal
+        open={previewOpen}
+        title="Image"
+        footer={null}
+        onCancel={handleCancel}
+      >
         <img alt="example" style={{ width: '100%' }} src={previewImage} />
       </Modal>
       <Footer />

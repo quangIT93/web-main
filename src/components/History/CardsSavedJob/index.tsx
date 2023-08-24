@@ -35,7 +35,9 @@ interface ICardsApplied {
 }
 
 const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataBookmarks, setDataBookmarks] = useState<any>(null);
@@ -53,7 +55,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -65,12 +67,15 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
-    const result = await historyBookmark.getAllBookmark(lastPostId, 11,
-      languageRedux === 1 ? "vi" : "en");
+    const result = await historyBookmark.getAllBookmark(
+      lastPostId,
+      11,
+      languageRedux === 1 ? 'vi' : 'en',
+    );
     if (result.data.length <= 10) {
       setIsVisible(false);
     }
@@ -83,8 +88,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
 
   const getAllPosted = async (newCount: number) => {
     try {
-      const result = await historyBookmark.getAllBookmark(newCount, 10,
-        languageRedux === 1 ? "vi" : "en");
+      const result = await historyBookmark.getAllBookmark(
+        newCount,
+        10,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       if (result) {
         setLastPostId(result.data[result.data.length - 1].bookmark_id);
@@ -124,8 +132,11 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const handleClickAddItem = async () => {
     try {
       setUploading(true);
-      const result = await historyBookmark.getAllBookmark(lastPostId, 10,
-        languageRedux === 1 ? "vi" : "en");
+      const result = await historyBookmark.getAllBookmark(
+        lastPostId,
+        10,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       if (result) {
         // if (result?.data?.is_over === true) {
@@ -200,9 +211,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
             lineHeight: '24px',
           }}
         >
-          {
-            language?.history_page?.saved_jobs
-          }
+          {language?.history_page?.saved_jobs}
         </Typography>
         <TextField
           select
@@ -214,16 +223,8 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">
-            {
-              language?.history_page?.latest
-            }
-          </MenuItem>
-          <MenuItem value="Cũ nhất">
-            {
-              language?.history_page?.oldest
-            }
-          </MenuItem>
+          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
+          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
         </TextField>
       </Box>
       <Backdrop
@@ -233,7 +234,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={loading}
-      // onClick={handleClose}
+        // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -274,9 +275,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
               loading={uploading}
               onClick={handleClickAddItem}
             >
-              {
-                language?.more
-              }
+              {language?.more}
             </Button>
           </Box>
         </div>

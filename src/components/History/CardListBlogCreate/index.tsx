@@ -124,9 +124,16 @@ const CardListBlogCreate = () => {
         window.open('/comunity_create_post', '_parent')
     }
 
-    const handleSortBy = (sort: string) => {
+    const handleSortBy = (sortString: string) => {
         //cm: comment, l: likes, v: views
-        setSort(sort);
+        if (sort == sortString) {
+            setSort('');
+            // console.log(sort);
+        } else {
+            setUploading(false)
+            setIsVisible(true);
+            setSort(sortString);
+        }
     }
 
     return (
@@ -156,7 +163,10 @@ const CardListBlogCreate = () => {
                     <div className="dropdown dropdown-4" ref={footerRef} onClick={() => setOpenMenu(!openMenu)}>
                         <FilterComunity />
                         <ul className="dropdown_menu dropdown_menu-4">
-                            <li className="dropdown_item-1" style={{ display: openMenu ? "flex" : "none" }}
+                            <li className={sort !== '' && sort == 'l' ?
+                                "dropdown_item-1  active"
+                                : "dropdown_item-1"}
+                                style={{ display: openMenu ? "flex" : "none" }}
                                 onClick={() => { handleSortBy('l') }}>
                                 <LikeIcon />
                                 <p>
@@ -165,7 +175,10 @@ const CardListBlogCreate = () => {
                                     }
                                 </p>
                             </li>
-                            <li className="dropdown_item-2" style={{ display: openMenu ? "flex" : "none" }}
+                            <li className={sort !== '' && sort == 'v' ?
+                                "dropdown_item-2  active"
+                                : "dropdown_item-2"}
+                                style={{ display: openMenu ? "flex" : "none" }}
                                 onClick={() => { handleSortBy('v') }}>
                                 <EysIcon />
                                 <p>
@@ -174,7 +187,10 @@ const CardListBlogCreate = () => {
                                     }
                                 </p>
                             </li>
-                            <li className="dropdown_item-3" style={{ display: openMenu ? "flex" : "none" }}
+                            <li className={sort !== '' && sort == 'cm' ?
+                                "dropdown_item-3  active"
+                                : "dropdown_item-3"}
+                                style={{ display: openMenu ? "flex" : "none" }}
                                 onClick={() => { handleSortBy('cm') }}>
                                 <CommentIcon />
                                 <p>

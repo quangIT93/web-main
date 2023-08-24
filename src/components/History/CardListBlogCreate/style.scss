@@ -41,7 +41,7 @@
                 width: 162px;
                 // width: 100%;
                 perspective: 1000px;
-                z-index: -1;
+                // z-index: -1;
 
                 li {
                     // display: block;
@@ -77,6 +77,16 @@
                             color: #575757;
                             stroke: white;
                         }
+                    }
+                }
+
+                .active {
+                    color: white;
+                    background: #575757;
+
+                    svg {
+                        color: #575757;
+                        stroke: white;
                     }
                 }
             }
@@ -129,6 +139,7 @@
         box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.25);
         margin: 24px 0 0;
         cursor: pointer;
+
 
         @media screen and (max-width: 920px) {
             height: fit-content;
