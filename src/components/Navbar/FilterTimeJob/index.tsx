@@ -193,16 +193,26 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
         <Panel
           header={
             isRemotely || isWorkingWeekend
-              ? `${isWorkingWeekend ? language?.working_on_the_weekend : ''} 
+              ? `${
+                  isWorkingWeekend
+                    ? languageRedux === 1
+                      ? 'Làm việc cuối tuần'
+                      : 'Working on the weekend'
+                    : ''
+                } 
             ${isWorkingWeekend && isRemotely ? '-' : ''}
             
             ${isRemotely ? language?.remote_work : ''}`
-              : language?.working_time
+              : languageRedux === 1
+              ? 'Làm việc từ xa'
+              : 'Remote work'
           }
           key="1"
           style={{ fontSize: '12px' }}
         >
-          <Text className="title-filter_timeJob">{language?.working_time}</Text>
+          <Text className="title-filter_timeJob">
+            {languageRedux === 1 ? 'Thời gian làm việc' : 'Working period'}
+          </Text>
 
           {/* <Radio.Group
           value={selectedValue}

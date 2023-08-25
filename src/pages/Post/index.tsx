@@ -233,6 +233,10 @@ const Post: React.FC = () => {
   const [language, setLanguage] = useState<any>();
 
   const getlanguageApi = async () => {
+    if (!localStorage.getItem('accessToken')) {
+      window.location.replace(`/`);
+      return;
+    }
     try {
       const result = await languageApi.getLanguage(
         languageRedux === 1 ? 'vi' : 'en',
@@ -415,6 +419,7 @@ const Post: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+
     document.title = language?.post_page?.title_page;
     // document.title = language?.post_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {

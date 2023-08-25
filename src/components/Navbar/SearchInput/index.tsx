@@ -20,6 +20,8 @@ import {
 } from 'react-router-dom';
 import { RootState } from '../../../store/reducer';
 import languageApi from 'api/languageApi';
+
+import ModalLogin from '../../../components/Home/ModalLogin';
 // let timeout: ReturnType<typeof setTimeout> | null;
 // let currentValue: string | undefined;
 
@@ -130,6 +132,8 @@ const SearchInput: React.FC<SearchProps> = ({
   const [isLogin, setIsLogin] = React.useState(false);
   const [totalJob, setTotalJob] = React.useState<number>(0);
   const [language, setLanguage] = useState<any>();
+
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // const inputRef = useRef<InputRef>(null);
 
   // console.log("dataNotification", dataNotification);
@@ -470,7 +474,13 @@ const SearchInput: React.FC<SearchProps> = ({
       <Button
         className="search-input-wrapper-iconFilter"
         shape="circle"
-        onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
+        onClick={() => {
+          if (!localStorage.getItem('accessToken')) {
+            setOpenModalLogin(true);
+          } else {
+            setOpenCollapseFilter(!openCollapseFilter);
+          }
+        }}
         name="search-input-wrapper-iconFilter"
       >
         {checkSearch ? (
@@ -479,6 +489,10 @@ const SearchInput: React.FC<SearchProps> = ({
           <FilterIcon width={20} height={20} />
         )}
       </Button>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </div>
   );
 };

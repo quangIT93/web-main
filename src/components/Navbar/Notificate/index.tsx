@@ -87,7 +87,9 @@ const Notificate = () => {
     setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
     openNotificate: boolean;
   } = React.useContext(HomeValueContext);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [dataNotification, setDataNotification] = useState<any>([]);
   const [dataNotificationKeyword, setDataNotificationkeyword] = useState<any>(
     [],
@@ -120,7 +122,7 @@ const Notificate = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -132,8 +134,8 @@ const Notificate = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const handleClickActiveSystem = (e: any) => {
     setActiveSystem(true);
@@ -151,13 +153,13 @@ const Notificate = () => {
     try {
       setIsLoading(true);
       const result = await notificationApi.getNotificationV2(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setIsLoading(false);
         setDataNotification(result.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -169,7 +171,7 @@ const Notificate = () => {
     try {
       // const result = await notificationKeywordApi.getNotificationKeyword();
       const result = await notificationKeywordApi.getNotificationKeywordV3(
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 1 ? 'vi' : 'en',
       );
       // console.log('keyword v3', result);
       if (result) {
@@ -177,11 +179,30 @@ const Notificate = () => {
         setValueApp(result.data.status.pushStatus);
         setValueMall(result.data.status.emailStatus);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
+  const [dataNotificationAll, setDataNotificationAll] = useState<any>([]);
+
+  const getApiNotificateKeywordAll = async () => {
+    try {
+      const result = await notificationKeywordApi.getNotificationKeyword('vi');
+      // const result = await notificationKeywordApi.getNotificationKeywordV3(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+      // console.log('keyword v3', result);
+      if (result) {
+        setDataNotificationAll(result.data);
+        setValueApp(result.data.status.pushStatus);
+        setValueMall(result.data.status.emailStatus);
+      }
+    } catch (error) {}
+  };
+
+  console.log('dataNotificationAll', dataNotificationAll);
 
   useEffect(() => {
     getApiNotificateKeyword();
+    getApiNotificateKeywordAll();
   }, [input, valueApp, valueMall]);
 
   const handleChangeStatusKeyword = async (id: number, status: number) => {
@@ -316,26 +337,27 @@ const Notificate = () => {
     setOpenModalDeleteKeyword(false);
   };
 
+  console.log('DataNotification', dataNotification);
+  console.log('dataNotificationKeyword', dataNotificationKeyword);
+
   return (
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
         <div
-          className={`top-notificate_system ${activeSystem ? 'active-system' : ''
-            }`}
+          className={`top-notificate_system ${
+            activeSystem ? 'active-system' : ''
+          }`}
           onClick={handleClickActiveSystem}
         >
-          {
-            language?.notification
-          }
+          {language?.notification}
         </div>
         <div
-          className={`top-notificate_keyword ${activeKeyword ? 'active-keyword' : ''
-            }`}
+          className={`top-notificate_keyword ${
+            activeKeyword ? 'active-keyword' : ''
+          }`}
           onClick={handleClickActiveKeyword}
         >
-          {
-            language?.keyword2
-          }
+          {language?.keyword2}
         </div>
       </div>
       <div className="bottom-notificate">
@@ -352,9 +374,10 @@ const Notificate = () => {
                     onClick={() => handleClickNotiKey(notificate.data.postId)}
                   >
                     <div className="wrap-img_keyword">
-                      <img src={notificate.data.image} alt={
-                        language?.err_none_img
-                      } />
+                      <img
+                        src={notificate.data.image}
+                        alt={language?.err_none_img}
+                      />
                     </div>
                     <div className="content-notificate">
                       <div className="wrap-title_contentNotificate">
@@ -454,9 +477,9 @@ const Notificate = () => {
                         )}
                       </p>
                       <p>
-                        {new Date(
-                          notificate.data.createdAt,
-                        ).toLocaleDateString('en-GB')}
+                        {new Date(notificate.data.createdAt).toLocaleDateString(
+                          'en-GB',
+                        )}
                       </p>
                     </div>
                   </div>
@@ -466,11 +489,7 @@ const Notificate = () => {
           )
         ) : (
           <div className="wrap-keyword">
-            <p>
-              {
-                language?.get_job_listings_by_keyword_via
-              }
-            </p>
+            <p>{language?.get_job_listings_by_keyword_via}</p>
             <div className="wrap-checkbox_keyword">
               <div className="checkbox-keyword">
                 <input
@@ -501,24 +520,22 @@ const Notificate = () => {
             </div>
             <div className="count-keyword">
               <p>
-                {
-                  language?.there_are_has_been_saved
-                }
-                <strong>{` ${dataNotificationKeyword.keywords.length > 0
-                  ? dataNotificationKeyword.keywords.length
-                  : 0
-                  }/10 `}</strong>
-                {
-                  language?.keywords_has_been_saved
-                }
+                {language?.there_are_has_been_saved}
+                <strong>{` ${
+                  dataNotificationKeyword.keywords.length > 0
+                    ? dataNotificationKeyword.keywords.length
+                    : 0
+                }/10 `}</strong>
+                {language?.keywords_has_been_saved}
               </p>
             </div>
             {dataNotificationKeyword ? (
               dataNotificationKeyword?.keywords?.map(
                 (dataKeyword: any, index: number) => (
                   <div
-                    className={`wrap-content_keyword ${idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
-                      }`}
+                    className={`wrap-content_keyword ${
+                      idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
+                    }`}
                     key={index}
                   >
                     <div
@@ -535,11 +552,12 @@ const Notificate = () => {
                           <Tooltip
                             title={dataKeyword.keywordDistricts.map(
                               (location: any, index: number) => {
-                                return `${location.fullName}${index ===
+                                return `${location.fullName}${
+                                  index ===
                                   dataKeyword.keywordDistricts.length - 1
-                                  ? ''
-                                  : ', '
-                                  }`;
+                                    ? ''
+                                    : ', '
+                                }`;
                               },
                             )}
                             placement="top"
@@ -547,11 +565,12 @@ const Notificate = () => {
                             <p>
                               {dataKeyword.keywordDistricts.map(
                                 (location: any, index: number) => {
-                                  return `${location.fullName}${index ===
+                                  return `${location.fullName}${
+                                    index ===
                                     dataKeyword.keywordDistricts.length - 1
-                                    ? ''
-                                    : ', '
-                                    }`;
+                                      ? ''
+                                      : ', '
+                                  }`;
                                 },
                               )}
                             </p>
@@ -563,11 +582,12 @@ const Notificate = () => {
                           <Tooltip
                             title={dataKeyword.keywordCategories.map(
                               (cate: any, index: number) => {
-                                return `${cate.fullName}${index ===
+                                return `${cate.fullName}${
+                                  index ===
                                   dataKeyword.keywordCategories.length - 1
-                                  ? ''
-                                  : ', '
-                                  }`;
+                                    ? ''
+                                    : ', '
+                                }`;
                               },
                             )}
                             placement="top"
@@ -575,11 +595,12 @@ const Notificate = () => {
                             <p>
                               {dataKeyword.keywordCategories.map(
                                 (cate: any, index: number) => {
-                                  return `${cate.fullName}${index ===
+                                  return `${cate.fullName}${
+                                    index ===
                                     dataKeyword.keywordCategories.length - 1
-                                    ? ''
-                                    : ', '
-                                    }`;
+                                      ? ''
+                                      : ', '
+                                  }`;
                                 },
                               )}
                             </p>
@@ -598,7 +619,9 @@ const Notificate = () => {
                         </p>
 
                         <p>
-                          {new Date(dataKeyword.createdAt).toLocaleDateString('en-GB')}
+                          {new Date(dataKeyword.createdAt).toLocaleDateString(
+                            'en-GB',
+                          )}
                         </p>
                       </div>
                     </div>
@@ -622,29 +645,20 @@ const Notificate = () => {
           </div>
         )}
         <div
-          className={`modal-delete_keyword ${openModalDeleteKeyword && !activeSystem
-            ? 'open-modal_deleteKeyword'
-            : ''
-            }`}
+          className={`modal-delete_keyword ${
+            openModalDeleteKeyword && !activeSystem
+              ? 'open-modal_deleteKeyword'
+              : ''
+          }`}
         >
-          <h4>
-            {
-              language?.delete_this_keyword
-            }
-          </h4>
-          <p>
-            {
-              language?.keywords_will_not_be_recoverable_after_deletion
-            }
-          </p>
+          <h4>{language?.delete_this_keyword}</h4>
+          <p>{language?.keywords_will_not_be_recoverable_after_deletion}</p>
           <Button
             type="primary"
             className="submit-delete_submitKeyWord"
             onClick={handleClickDeleteItemKeyword}
           >
-            {
-              language?.ok1
-            }
+            {language?.ok1}
           </Button>
           <IconButton
             aria-label="close"
