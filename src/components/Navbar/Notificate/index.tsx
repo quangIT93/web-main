@@ -352,7 +352,7 @@ const Notificate = () => {
         ) : activeSystem ? (
           dataNotification?.notifications?.map(
             (notificate: any, index: number) => {
-              if (notificate.data.typeText === 'keyword') {
+              if (notificate.typeText === 'keyword') {
                 return (
                   <div
                     key={index}
@@ -361,7 +361,7 @@ const Notificate = () => {
                   >
                     <div className="wrap-img_keyword">
                       <img
-                        src={notificate.data.image}
+                        src={notificate.image}
                         alt={language?.err_none_img}
                       />
                     </div>
