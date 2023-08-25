@@ -258,6 +258,10 @@ const Notificate = () => {
     if (typeText === 'applicator') {
       window.open(`post-detail?post-id=${postId}`, '_parent');
     }
+
+    if (typeText === 'communicationComment') {
+      window.open(`post-detail?post-id=${postId}`, '_parent');
+    }
   };
 
   const handleChangeEmail = async (e: any) => {
