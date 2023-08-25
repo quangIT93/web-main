@@ -68,8 +68,8 @@ const ComunityNewPost = () => {
     const result = await communityApi.getCommunityNews(nextPage, '10', sort, 1);
 
     //
-    if (result && result?.data?.length !== 0) {
-      setStories((prev: any) => [...prev, ...result?.data]);
+    if (result && result?.data?.communications?.length !== 0) {
+      setStories((prev: any) => [...prev, ...result?.data?.communications]);
       setPage(nextPage);
     } else {
       setHasMore(false);
@@ -84,8 +84,8 @@ const ComunityNewPost = () => {
     try {
       const result = await communityApi.getCommunityNews(page, '10', sort, 1);
       if (result) {
-        setStories(result?.data);
-        if (result?.data?.length < 10) {
+        setStories(result?.data?.communications);
+        if (result?.data?.communications?.length < 10) {
           setIsVisible(false);
         }
       }
@@ -154,7 +154,11 @@ const ComunityNewPost = () => {
   }, []);
 
   const handleMoveToCreate = () => {
-    window.open('/comunity_create_post', '_parent');
+    if (!localStorage.getItem('accessToken')) {
+      message.error(`Vui lòng đăng nhập để tạo bài đăng`);
+    } else {
+      window.open('/comunity_create_post', '_parent');
+    }
   };
 
   return (
@@ -163,7 +167,7 @@ const ComunityNewPost = () => {
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
-            <h3>Hôm nay, HiJob có 10 bài viết mới</h3>
+            <h3>Các bài đăng mới nhất hôm nay</h3>
             <div className="title-comunity_icon">
               <div
                 className="dropdown dropdown-4"

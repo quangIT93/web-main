@@ -1,5 +1,5 @@
 import React, { memo, useRef } from 'react';
-import { Avatar } from 'antd';
+import { Avatar, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import './style.scss';
 import { useDispatch } from 'react-redux';
@@ -67,6 +67,10 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   };
 
   const handleLikeCommunity = async (communicationId: number) => {
+    if (!localStorage.getItem('accessToken')) {
+      message.error('Vui lòng đăng nhập để thực hiện chức năng');
+      return;
+    }
     try {
       const result = await communityApi.postCommunityLike(communicationId);
       if (result) {
@@ -76,6 +80,8 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
         } else {
           setTotalLike(totalLike - 1);
         }
+      } else {
+        message.error('Vui lòng đăng nhập để thực hiện chức năng');
       }
       console.log(result);
     } catch (error) {

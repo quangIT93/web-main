@@ -245,6 +245,7 @@ const NewJobs: React.FC = () => {
           }}
           className="new-job"
           ref={listRef}
+          id="new-job"
         >
           <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
             <NewJobIcon width={25} height={25} />

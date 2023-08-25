@@ -83,6 +83,10 @@ interface PostTheme {
   money_type_text: string;
 }
 
+interface UserSelected {
+  userSelectedId: any;
+}
+
 const ThemesJob: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -137,9 +141,15 @@ const ThemesJob: React.FC = () => {
     //   ? searchParams.get(`theme-id`)
     //   : listTheme?.data[0].id;
 
+    const categoryId = searchParams.get(`categories-id`)
+      ? searchParams.get(`categories-id`)
+      : null;
+
     const threshold = nearJob[nearJob.length - 1]?.id;
 
     const result = await nearByApi.getNearByJob(
+      null,
+      Number(searchParams.get('categories-id')),
       null,
       11,
       threshold,
@@ -172,10 +182,13 @@ const ThemesJob: React.FC = () => {
   const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   // get post by theme id
+
   const getPostByThemeId = async () => {
     try {
       const result = await nearByApi.getNearByJob(
-        userProfile?.address?.id,
+        null,
+        Number(searchParams.get('categories-id')),
+        null,
         11,
         null,
         languageRedux === 1 ? 'vi' : 'en',
@@ -205,10 +218,10 @@ const ThemesJob: React.FC = () => {
 
     // delete param when back to page
     searchParams.delete('theme-id');
-    searchParams.delete('categories-id');
-    setSearchParams(searchParams);
+    // searchParams.delete('categories-id');
+    // setSearchParams(searchParams);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProfile, languageRedux]);
+  }, [userProfile, languageRedux, searchParams.get('categories-id')]);
 
   const listSuggestJob = () => {
     try {
@@ -216,11 +229,13 @@ const ThemesJob: React.FC = () => {
       console.log('error', error);
     }
   };
+  console.log('redux');
 
   useEffect(() => {
     listSuggestJob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   // React.useEffect(() => {
   //   console.log("vap")
   //   getPostByThemeId()

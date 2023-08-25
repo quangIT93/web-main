@@ -3,11 +3,16 @@ import axiosClient from './axiosClient'
 const nearByApi = {
   getNearByJob: (
     pvId: number | null,
+    pcid: number | null,
+    ccid: number | null,
     limit: Number,
     threshold: Number | null,
     lang: string
   ) => {
-    const URL = `/v1/posts/nearby?${pvId ? `pvid=${pvId}&`: `pvid=${79}&`}limit=${limit}&threshold=${threshold ? threshold : ''}&lang=${lang}`
+    const URL = `/v1/posts/nearby?${pvId ? `pvid=${pvId}&` : `pvid=${79}&`}` +
+      `${pcid ? `pcid=${pcid}&` : ``}` +
+      `${ccid ? `ccid=${ccid}&` : ``}` +
+    `limit=${limit}&threshold=${threshold ? threshold : ''}&lang=${lang}`
     return axiosClient.get(URL,{
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

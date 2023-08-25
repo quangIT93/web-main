@@ -168,10 +168,18 @@ const CategoryCarousel: React.FC = () => {
         document.documentElement.clientWidth ||
         document.body.clientWidth;
 
+      // const element = document.getElementById('new-job');
+      // element?.scrollIntoView();
+
       if (windowWidth > 480 && localStorage.getItem('accessToken')) {
         window.scrollTo(0, 530);
+        // window.location.hash = 'hot-job-container';
+        // window.location.hash = 'new-job';
+        // document.create;
       } else if (windowWidth <= 480 && localStorage.getItem('accessToken')) {
         window.scrollTo(0, 560);
+        // window.location.hash = 'hot-job-container';
+        // window.location.hash = 'new-job';
       }
 
       // window.scrollTo(0, 300)

@@ -1,5 +1,6 @@
 @import '../../../scss//mixins';
 .new-job {
+    
     .MuiGrid-item {
         @include breakpoint(mobile) {
             height: 142px;

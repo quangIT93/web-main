@@ -39,6 +39,15 @@ import { RootState } from 'store';
 // const { Panel } = Collapse;
 import { Input } from 'antd';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+// import required modules
+import { EffectCoverflow, Navigation } from 'swiper';
+
 const { TextArea } = Input;
 interface FormPostCommunityComment {
   communicationId: number;
@@ -95,18 +104,22 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${size * rows
-        }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${
+        size * rows
+      }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
   const handleLikeCommunity = async (communicationId: number) => {
+    if (!localStorage.getItem('accessToken')) {
+      message.error('Vui lòng đăng nhập để thực hiện chức năng');
+      return;
+    }
+
     try {
       const result = await communityApi.postCommunityLike(communicationId);
       if (result) {
-        result.status === 201 ?
-          setLike(true) :
-          setLike(false)
+        result.status === 201 ? setLike(true) : setLike(false);
       }
       console.log(result);
     } catch (error) {
@@ -129,6 +142,11 @@ const Comunity = () => {
   }, [detail]);
 
   const handleSaveCommunity = async (communicationId: number) => {
+    if (!localStorage.getItem('accessToken')) {
+      message.error('Vui lòng đăng nhập để thực hiện chức năng');
+      return;
+    }
+
     try {
       const result = await communityApi.postCommunityBookmarked(
         communicationId,
@@ -143,9 +161,14 @@ const Comunity = () => {
   };
 
   const handleCommentCommunity = async () => {
+    if (!localStorage.getItem('accessToken')) {
+      message.error('Vui lòng đăng nhập để thực hiện chức năng');
+      return;
+    }
+
     if (cmtContent.trim() == '') {
-      message.error("Bạn chưa nhập bình luận")
-      return
+      message.error('Bạn chưa nhập bình luận');
+      return;
     }
     const form = {
       communicationId: detail?.id,
@@ -184,8 +207,8 @@ const Comunity = () => {
       // // if (e.key === 'Enter') {
       // else {
 
-      handleCommentCommunity()
-    };
+      handleCommentCommunity();
+    }
     // }
   };
 
@@ -223,11 +246,11 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-              // showCount
+                // showCount
               />
             </div>
           </div>
-          <ImageList
+          {/* <ImageList
             className="comunityDetail-wrap_img"
             variant="quilted"
             cols={
@@ -270,7 +293,45 @@ const Comunity = () => {
                 />
               </ImageListItem>
             ))}
-          </ImageList>
+          </ImageList> */}
+          <Swiper
+            effect={'coverflow'}
+            grabCursor={true}
+            centeredSlides={true}
+            slidesPerView={'auto'}
+            coverflowEffect={{
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: true,
+            }}
+            initialSlide={1}
+            // slidesPerView={1}
+            // spaceBetween={30}
+            // loop={true}
+            // navigation={true}
+            modules={[EffectCoverflow, Navigation]}
+            className="detail-community-img-swipper"
+          >
+            {detail?.image.map((item: any, index: any) => (
+              <SwiperSlide className="detail-community-img-swipper_item">
+                <img
+                  onClick={() => {
+                    handlePreview(item.image);
+                  }}
+                  {...srcset(
+                    item.image,
+                    200,
+                    detail?.image?.length >= 4 && index === 0 ? 2 : 1,
+                    detail?.image?.length >= 4 && index === 0 ? 2 : 1,
+                  )}
+                  alt={item.image}
+                  loading="lazy"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
           {/* <div className="comunityDetail-wrap_img">
             {
               detail?.image?.images.map((img: any, index: any) => (
@@ -342,13 +403,15 @@ const Comunity = () => {
                   onChange={handelChangeCmt}
                   placeholder="Enter comment"
                   autoSize
-                // showCount
+                  // showCount
                 />
                 <div className="comment-interaction">
                   <div
-                    className={cmtContent.trim() != "" ?
-                      "comment-chaterInput_send active" :
-                      "comment-chaterInput_send"}
+                    className={
+                      cmtContent.trim() != ''
+                        ? 'comment-chaterInput_send active'
+                        : 'comment-chaterInput_send'
+                    }
                     onClick={handleCommentCommunity}
                   >
                     <SendComunityIcon />
@@ -357,40 +420,41 @@ const Comunity = () => {
               </div>
             </div>
             <div className="comunityDetail-list_comment">
-              {detail?.communicationCommentsData && detail?.communicationCommentsData.map(
-                (cmtData: any, index: any) => (
-                  <div
-                    className="comunityDetail-list_comment__item"
-                    key={index}
-                  >
-                    {/* <img
+              {detail?.communicationCommentsData &&
+                detail?.communicationCommentsData.map(
+                  (cmtData: any, index: any) => (
+                    <div
+                      className="comunityDetail-list_comment__item"
+                      key={index}
+                    >
+                      {/* <img
                     src={cmtData?.profileData?.avatar}
                     alt=""
                     style={{ width: '50px', height: '50px' }}
                   /> */}
-                    <Avatar
-                      size={50}
-                      src={cmtData?.profile?.avatar}
-                      icon={<UserOutlined />}
-                    />
-                    <div className="comunityDetail-comment">
-                      <div className="comunityDetail-comment_top">
-                        <h3>{cmtData?.profile?.name}</h3>
-                        <h3>|</h3>
-                        <p>{cmtData?.createdAtText}</p>
-                      </div>
-                      <div className="comunityDetail-comment_bottom">
-                        <TextArea
-                          value={cmtData?.content}
-                          autoSize
-                        // showCount
-                        />
-                        {/* <p>{cmtData?.content}</p> */}
+                      <Avatar
+                        size={50}
+                        src={cmtData?.profile?.avatar}
+                        icon={<UserOutlined />}
+                      />
+                      <div className="comunityDetail-comment">
+                        <div className="comunityDetail-comment_top">
+                          <h3>{cmtData?.profile?.name}</h3>
+                          <h3>|</h3>
+                          <p>{cmtData?.createdAtText}</p>
+                        </div>
+                        <div className="comunityDetail-comment_bottom">
+                          <TextArea
+                            value={cmtData?.content}
+                            autoSize
+                            // showCount
+                          />
+                          {/* <p>{cmtData?.content}</p> */}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ),
-              )}
+                  ),
+                )}
             </div>
           </div>
         </div>
