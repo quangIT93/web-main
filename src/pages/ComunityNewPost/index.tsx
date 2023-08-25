@@ -167,7 +167,7 @@ const ComunityNewPost = () => {
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
-            <h3>Hôm nay, HiJob có 10 bài viết mới</h3>
+            <h3>Các bài đăng mới nhất hôm nay</h3>
             <div className="title-comunity_icon">
               <div
                 className="dropdown dropdown-4"

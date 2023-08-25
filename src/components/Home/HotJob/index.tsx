@@ -67,7 +67,7 @@ const HotJob: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -79,8 +79,8 @@ const HotJob: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const handleClickItem = (
     event: any,
@@ -162,6 +162,7 @@ const HotJob: React.FC = () => {
         paddingBottom: '28px',
       }}
       className="hot-job-container"
+      id="hot-job-container"
     >
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <FireIcon width={25} height={25} />
