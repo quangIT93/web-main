@@ -121,10 +121,11 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
       if (result) {
         //create bookmark
         if (result.status === 201) {
-          // setSaveListPost(!saveListPost);
+          setSaveListPost(!saveListPost);
           dispatch<any>(setAlertSave(true));
           setBookmark(true);
         } else {
+          setSaveListPost(!saveListPost);
           dispatch<any>(setAlertCancleSave(true));
           setBookmark(false);
         }

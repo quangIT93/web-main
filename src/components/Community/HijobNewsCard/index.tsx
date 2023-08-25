@@ -17,13 +17,13 @@ import ShowCancleSave from '#components/ShowCancleSave';
 import { useDispatch } from 'react-redux';
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 const { TextArea } = Input;
-interface IHijobNewsCard {
-  item: any;
-  index: any;
-}
+// interface IHijobNewsCard {
+//   item: any;
+//   index: any;
+// }
 
-const HijobNewsCard: React.FC<IHijobNewsCard> = (props) => {
-  const { item, index } = props;
+const HijobNewsCard: React.FC<any> = (props) => {
+  const { item, index, setSaveListPost, saveListPost } = props;
   const [like, setLike] = React.useState(item?.liked);
   const [bookmark, setBookmark] = React.useState(item?.bookmarked);
   const [totalLike, setTotalLike] = React.useState(
@@ -66,9 +66,11 @@ const HijobNewsCard: React.FC<IHijobNewsCard> = (props) => {
         if (result.status === 201) {
           // setSaveListPost(!saveListPost);
           dispatch<any>(setAlertSave(true));
+          setSaveListPost(!saveListPost);
           setBookmark(true);
         } else {
           dispatch<any>(setAlertCancleSave(true));
+          setSaveListPost(!saveListPost);
           setBookmark(false);
         }
       } else {
