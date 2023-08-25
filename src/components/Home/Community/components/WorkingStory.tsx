@@ -9,6 +9,7 @@ import {
 import communityApi from 'api/apiCommunity';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import { Tooltip } from 'antd';
 
 const WorkingStory = () => {
   const languageRedux = useSelector(
@@ -17,6 +18,7 @@ const WorkingStory = () => {
 
   const [stories, setStories] = React.useState<any>();
   const [position, setPosition] = React.useState<any>();
+  const [like, setLike] = React.useState(false);
 
   const handleMoveToDetailPage = (id: any) => {
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
@@ -28,7 +30,21 @@ const WorkingStory = () => {
       const result = await communityApi.getCommunityNews('', '5', '', 1);
       if (result) {
         setStories(result?.data);
+        setLike(result?.data?.liked)
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleLikeCommunity = async (communicationId: number, e: any) => {
+    try {
+      e.stopPropagation()
+      const result = await communityApi.postCommunityLike(communicationId);
+      if (result) {
+        setLike(!like);
+      }
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +52,7 @@ const WorkingStory = () => {
 
   React.useEffect(() => {
     handleGetWorkingStory();
-  }, []);
+  }, [like]);
 
   return (
     <>
@@ -63,7 +79,9 @@ const WorkingStory = () => {
               onClick={() => handleMoveToDetailPage(story?.id)}
             >
               <div className="body-item-title">
-                <h3>{story?.title}</h3>
+                <Tooltip title={story?.title}>
+                  <h3>{story?.title}</h3>
+                </Tooltip>
                 <p>{story?.createdAtText}</p>
               </div>
               <div className="body-item-user">
@@ -75,7 +93,9 @@ const WorkingStory = () => {
                   <EysIcon />
                   <p>{story?.communicationViewsCount}</p>
                 </div>
-                <div className="action-item">
+                <div className={story.liked ? "action-item liked" : "action-item"}
+                  onClick={(e) => handleLikeCommunity(story?.id, e)}
+                >
                   <LikeIcon />
                   <p>{story?.communicationLikesCount}</p>
                 </div>

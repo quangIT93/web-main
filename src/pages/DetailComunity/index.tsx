@@ -39,6 +39,15 @@ import { RootState } from 'store';
 // const { Panel } = Collapse;
 import { Input } from 'antd';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+// import required modules
+import { EffectCoverflow, Navigation } from 'swiper';
+
 const { TextArea } = Input;
 interface FormPostCommunityComment {
   communicationId: number;
@@ -227,7 +236,7 @@ const Comunity = () => {
               />
             </div>
           </div>
-          <ImageList
+          {/* <ImageList
             className="comunityDetail-wrap_img"
             variant="quilted"
             cols={
@@ -270,7 +279,51 @@ const Comunity = () => {
                 />
               </ImageListItem>
             ))}
-          </ImageList>
+          </ImageList> */}
+          <Swiper
+            effect={'coverflow'}
+            grabCursor={true}
+            centeredSlides={true}
+            slidesPerView={'auto'}
+            coverflowEffect={{
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: true,
+            }}
+            // slidesPerView={1}
+            // spaceBetween={30}
+            // loop={true}
+            // navigation={true}
+            modules={[EffectCoverflow, Navigation]}
+            className="detail-community-img-swipper"
+          >
+            {
+              detail?.image.map((item: any, index: any) =>
+                <SwiperSlide className="detail-community-img-swipper_item">
+                  <img
+                    onClick={() => {
+                      handlePreview(item.image);
+                    }}
+                    {...srcset(
+                      item.image,
+                      200,
+                      detail?.image?.length >= 4 && index === 0
+                        ? 2
+                        : 1,
+                      detail?.image?.length >= 4 && index === 0
+                        ? 2
+                        : 1,
+                    )}
+                    alt={item.image}
+                    loading="lazy"
+                  />
+                </SwiperSlide>
+              )
+            }
+
+          </Swiper>
           {/* <div className="comunityDetail-wrap_img">
             {
               detail?.image?.images.map((img: any, index: any) => (
