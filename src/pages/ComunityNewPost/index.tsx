@@ -46,6 +46,7 @@ const ComunityNewPost = () => {
   const [openMenu, setOpenMenu] = React.useState(false);
   const [stories, setStories] = React.useState<any>([]);
   const [page, setPage] = React.useState<any>('0');
+  const [total, setTotal] = React.useState<any>(0);
   const [isVisible, setIsVisible] = React.useState(true);
   const [sort, setSort] = React.useState('');
   const [hasMore, setHasMore] = React.useState(true);
@@ -85,6 +86,7 @@ const ComunityNewPost = () => {
       const result = await communityApi.getCommunityNews(page, '10', sort, 1);
       if (result) {
         setStories(result?.data?.communications);
+        setTotal(result?.data?.total);
         if (result?.data?.communications?.length < 10) {
           setIsVisible(false);
         }
@@ -167,7 +169,7 @@ const ComunityNewPost = () => {
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
-            <h3>Các bài đăng mới nhất hôm nay</h3>
+            <h3>{'Hôm nay, HiJob có ' + total + ' bài viết mới'}</h3>
             <div className="title-comunity_icon">
               <div
                 className="dropdown dropdown-4"

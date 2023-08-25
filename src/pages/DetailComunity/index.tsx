@@ -86,7 +86,9 @@ const Comunity = () => {
           setDetail(result?.data);
           setBookmark(result?.data?.bookmarked);
         } else {
-          window.location.replace('new-comunity');
+          POST_COMMUNITY_ID === '1'
+            ? window.open('/new-comunity', '_parent')
+            : window.open('/news-comunity', '_parent');
         }
       }
     } catch (error) {
@@ -306,7 +308,7 @@ const Comunity = () => {
               modifier: 1,
               slideShadows: true,
             }}
-            initialSlide={1}
+            // initialSlide={-1}
             // slidesPerView={1}
             // spaceBetween={30}
             // loop={true}

@@ -159,28 +159,33 @@ const CategoryCarousel: React.FC = () => {
   }
 
   const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
+    const windowWidth =
+      window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+
+    const sectionToNavigate = document.getElementById('new-job');
+    if (windowWidth > 480 && localStorage.getItem('accessToken')) {
+      window.scrollTo(0, 530);
+
+      // sectionToNavigate?.scrollIntoView();
+      // window.scrollTo({ top: 0, behavior: 'smooth' });
+      // document.create;
+    } else if (windowWidth <= 480 && localStorage.getItem('accessToken')) {
+      window.scrollTo(0, 560);
+    } else if (windowWidth > 480) {
+      window.scrollTo(0, 530);
+    } else if (windowWidth <= 480) {
+      window.scrollTo(0, 780);
+    }
+
     try {
       // setOpenBackdrop(true); // Mở backdrop
 
       // Lấy chiều cao của màn hình
-      const windowWidth =
-        window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth;
 
       // const element = document.getElementById('new-job');
       // element?.scrollIntoView();
-
-      if (windowWidth > 480 && localStorage.getItem('accessToken')) {
-        window.scrollTo(0, 530);
-        // window.location.hash = 'hot-job-container';
-        // window.location.hash = 'new-job';
-        // document.create;
-      } else if (windowWidth <= 480 && localStorage.getItem('accessToken')) {
-        window.scrollTo(0, 560);
-        // window.location.hash = 'hot-job-container';
-        // window.location.hash = 'new-job';
-      }
 
       // window.scrollTo(0, 300)
 
