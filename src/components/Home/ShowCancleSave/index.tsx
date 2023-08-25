@@ -9,7 +9,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { setAlertCancleSave } from 'store/reducer/alertReducer';
 import { RootState } from '../../../store/reducer';
 
-import './style.scss';
+// import './style.scss';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
 import languageApi from 'api/languageApi';

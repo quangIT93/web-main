@@ -36,6 +36,7 @@ const ComunityNews = () => {
   const [language, setLanguage] = React.useState<any>();
   const [hijobNews, setHijobNews] = React.useState<any>([]);
   const [page, setPage] = React.useState<any>('0');
+  const [total, setTotal] = React.useState<any>(0);
   const [isVisible, setIsVisible] = React.useState(true);
   const [sort, setSort] = React.useState('');
   const [hasMore, setHasMore] = React.useState(true);
@@ -45,7 +46,7 @@ const ComunityNews = () => {
 
   const fetchMoreData = async () => {
     const nextPage = (parseInt(page) + 1).toString();
-    const result = await communityApi.getCommunityNews(nextPage, '10', sort, 1);
+    const result = await communityApi.getCommunityNews(nextPage, '10', sort, 0);
 
     //
     if (result && result?.data?.communications?.length !== 0) {
@@ -78,6 +79,7 @@ const ComunityNews = () => {
       if (result) {
         console.log(result?.data?.communications);
         setHijobNews(result?.data?.communications);
+        setTotal(result?.data?.total)
         if (result?.data?.communications?.length < 10) {
           setIsVisible(false);
         }
@@ -147,7 +149,7 @@ const ComunityNews = () => {
       <div className="comunity-news-content">
         <div className="comunityPostNews">
           <div className="title-comunity-news">
-            <h3>Hôm nay, HiJob có 10 bài viết mới</h3>
+            <h3>{"Hôm nay, HiJob có " + total + " bài viết mới"}</h3>
             <div className="title-comunity-news_icon">
               <div
                 className="dropdown dropdown-4"

@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
-import './style.scss';
+// import './style.scss';
 import { RootState } from '../../../store/reducer';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';

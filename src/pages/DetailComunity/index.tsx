@@ -87,6 +87,10 @@ const Comunity = () => {
           setLike(result?.data?.liked);
           setDetail(result?.data);
           setBookmark(result?.data?.bookmarked);
+        } else if (!result) {
+          POST_COMMUNITY_ID === "1" ?
+            window.open('/new-comunity', '_parent') :
+            window.open('/news-comunity', '_parent')
         }
       }
     } catch (error) {
@@ -104,9 +108,8 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${
-        size * rows
-      }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${size * rows
+        }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -246,7 +249,7 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-                // showCount
+              // showCount
               />
             </div>
           </div>
@@ -306,7 +309,7 @@ const Comunity = () => {
               modifier: 1,
               slideShadows: true,
             }}
-            initialSlide={1}
+            // initialSlide={-1}
             // slidesPerView={1}
             // spaceBetween={30}
             // loop={true}
@@ -403,7 +406,7 @@ const Comunity = () => {
                   onChange={handelChangeCmt}
                   placeholder="Enter comment"
                   autoSize
-                  // showCount
+                // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -447,7 +450,7 @@ const Comunity = () => {
                           <TextArea
                             value={cmtData?.content}
                             autoSize
-                            // showCount
+                          // showCount
                           />
                           {/* <p>{cmtData?.content}</p> */}
                         </div>

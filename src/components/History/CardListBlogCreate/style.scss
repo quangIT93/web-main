@@ -168,6 +168,12 @@
                     font-weight: 700;
                     letter-spacing: 0em;
                     text-align: left;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    width: 80%;
                 }
 
                 .title-icon {

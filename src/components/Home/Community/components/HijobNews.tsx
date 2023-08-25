@@ -104,6 +104,7 @@ const HijobNews = () => {
                   </div>
                 </div>
               </div>
+              <div className="border-line"></div>
             </div>
           ))}
       </div>

@@ -410,7 +410,7 @@ const ComunityCreatePost = () => {
           content: message,
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const createCommunity = async (formData: any) => {
@@ -532,7 +532,7 @@ const ComunityCreatePost = () => {
                         display:
                           (selectedImages.length === 0 &&
                             selectedFiles.length === 0) ||
-                          isDragActive
+                            isDragActive
                             ? 'flex'
                             : 'none',
                       }}
@@ -573,15 +573,15 @@ const ComunityCreatePost = () => {
               onClick={handleSaveCommunity}
               className={
                 valueTitle === '' ||
-                valueContent === '' ||
-                (selectedImages.length === 0 && selectedFiles.length === 0)
+                  valueContent === ''
+                  // (selectedImages.length === 0 && selectedFiles.length === 0)
                   ? 'submit'
                   : 'submit full-info'
               }
             >
               {valueTitle === '' ||
-              valueContent === '' ||
-              (selectedImages.length === 0 && selectedFiles.length === 0)
+                valueContent === ''
+                // (selectedImages.length === 0 && selectedFiles.length === 0)
                 ? 'Lưu bài'
                 : 'Đăng bài viết'}
             </Button>
