@@ -83,7 +83,9 @@ interface ICategories {
   child_category: string;
 }
 const Profile: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const dispatch = useDispatch();
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
   // const [dataProfile, setDataProfile] = useState(null)
@@ -130,9 +132,11 @@ const Profile: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = languageRedux === 1 ?
-      "HiJob - Tìm việc làm, tuyển dụng" :
-      "HiJob - Find a job, recruit";
+
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Tìm việc làm, tuyển dụng'
+        : 'HiJob - Find a job, recruit';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -143,7 +147,7 @@ const Profile: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -155,16 +159,15 @@ const Profile: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // console.log("language", language);
-
 
   const fecthDataProfile = async () => {
     try {
       const result = await profileApi.getProfile(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setProfileUser(result.data);
@@ -179,6 +182,10 @@ const Profile: React.FC = () => {
   // fecth data
   useEffect(() => {
     // Gọi action để lấy thông tin profile
+    if (!localStorage.getItem('accessToken')) {
+      window.location.replace(`/`);
+      return;
+    }
     setLoading(true);
     // dispatch<any>(getProfile());
     //   .unwrap()
@@ -191,6 +198,10 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     // Gọi action để lấy thông tin profile
+    if (!localStorage.getItem('accessToken')) {
+      window.open('/');
+      return;
+    }
     fecthDataProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -200,7 +211,7 @@ const Profile: React.FC = () => {
     openModalLocation,
     openModalEducationCreate,
     openModalExperienceCreate,
-    languageRedux
+    languageRedux,
   ]);
 
   const handleAvatarClick = () => {
@@ -243,7 +254,7 @@ const Profile: React.FC = () => {
   const getCompanyInforByAccount = async () => {
     try {
       const result = await apiCompany.getCampanyByAccountApi(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result && result?.data?.companyInfomation?.id != null) {
         setCompanyName(result?.data?.companyInfomation?.name);
@@ -264,25 +275,22 @@ const Profile: React.FC = () => {
       const result = await profileApi.deleteCV();
       if (result) {
         const result = await profileApi.getProfile(
-          languageRedux === 1 ? "vi" : "en"
+          languageRedux === 1 ? 'vi' : 'en',
         );
         if (result) {
           setProfileUser(result.data);
         }
         setOpen(false);
         setFileList([]);
-        message.success(
-          language?.profile_page?.alert_delete_cv_success
-        );
+        message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
   const cancel = () => {
     setOpen(false);
-    message.error(
-      language?.profile_page?.cancel);
+    message.error(language?.profile_page?.cancel);
   };
 
   // handle upload cv
@@ -304,7 +312,7 @@ const Profile: React.FC = () => {
 
       if (result) {
         const result = await profileApi.getProfile(
-          languageRedux === 1 ? "vi" : "en"
+          languageRedux === 1 ? 'vi' : 'en',
         );
         if (result) {
           setProfileUser(result.data);
@@ -420,9 +428,7 @@ const Profile: React.FC = () => {
                   />
                 </Badge>
                 <div className="user-company" style={{ marginLeft: '10px' }}>
-                  <h2>{profile?.name ? profile?.name :
-                    language?.unupdated}
-                  </h2>
+                  <h2>{profile?.name ? profile?.name : language?.unupdated}</h2>
                   <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2
@@ -433,18 +439,15 @@ const Profile: React.FC = () => {
                           window.open('/company-infor', '_self');
                         }}
                       >
-                        {companyName ? companyName :
-                          language?.company_info}
+                        {companyName ? companyName : language?.company_info}
                       </h2>
 
                       <h2>|</h2>
 
                       <h2>
                         {companyName
-                          ?
-                          language?.profile_page?.can_post_now
-                          :
-                          language?.profile_page?.should_register}
+                          ? language?.profile_page?.can_post_now
+                          : language?.profile_page?.should_register}
                       </h2>
                     </div>
                     <Button
@@ -458,9 +461,9 @@ const Profile: React.FC = () => {
                       }}
                     >
                       <LoginArrowIcon />
-                      {companyName ?
-                        language?.profile_page?.create_post :
-                        language?.profile_page?.register_now}
+                      {companyName
+                        ? language?.profile_page?.create_post
+                        : language?.profile_page?.register_now}
                     </Button>
                   </div>
                   {/* <div
@@ -491,8 +494,9 @@ const Profile: React.FC = () => {
                 color: '#575757',
               }}
             >
-              {profile?.introduction ? profile?.introduction :
-                language?.unupdated}
+              {profile?.introduction
+                ? profile?.introduction
+                : language?.unupdated}
             </div>
           </div>
         </Skeleton>
@@ -506,11 +510,7 @@ const Profile: React.FC = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <h3>
-                {
-                  language?.personal_information
-                }
-              </h3>
+              <h3>{language?.personal_information}</h3>
               <Space
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalPersonalInfo(true)}
@@ -524,45 +524,28 @@ const Profile: React.FC = () => {
                     fontSize: '14px',
                   }}
                 >
-                  {
-                    language?.edit
-                  }
+                  {language?.edit}
                 </p>
               </Space>
             </div>
             <div className="info-detail">
               <div className="div-detail-row left">
-                <p>
-                  {
-                    language?.date_of_birth
-                  }
-                </p>
-                <p>
-                  {
-                    language?.sex
-                  }</p>
-                <p>
-                  {
-                    language?.location
-                  }
-                </p>
+                <p>{language?.date_of_birth}</p>
+                <p>{language?.sex}</p>
+                <p>{language?.location}</p>
               </div>
               <div className="div-detail-row right">
                 <p>
                   {profile?.birthday
                     ? moment(new Date(profile?.birthday)).format('DD/MM/yyyy')
-                    :
-                    language?.unupdated}
+                    : language?.unupdated}
                 </p>
                 <p>
-                  {profile ? (profile?.gender === 1 ?
-
-                    language?.male
-                    :
-                    language?.female
-                  ) :
-                    language?.male
-                  }
+                  {profile
+                    ? profile?.gender === 1
+                      ? language?.male
+                      : language?.female
+                    : language?.male}
                 </p>
                 <p>
                   {profile?.address?.name
@@ -583,11 +566,7 @@ const Profile: React.FC = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <h3>
-                {
-                  language?.contact_information
-                }
-              </h3>
+              <h3>{language?.contact_information}</h3>
               <Space
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalContact(true)}
@@ -597,19 +576,13 @@ const Profile: React.FC = () => {
                 </div>
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {
-                    language?.edit
-                  }
+                  {language?.edit}
                 </p>
               </Space>
             </div>
             <div className="info-detail">
               <div className="div-detail-row left">
-                <p>
-                  {
-                    language?.phone_number
-                  }
-                </p>
+                <p>{language?.phone_number}</p>
                 <p>Email</p>
 
                 <p>Facebook</p>
@@ -617,16 +590,16 @@ const Profile: React.FC = () => {
                 <p>LinkedIn</p>
               </div>
               <div className="div-detail-row right">
-                <p>{profile?.phone ? profile?.phone :
-                  language?.unupdated}</p>
-                <p>{profile?.email ? profile?.email :
-                  language?.unupdated}</p>
+                <p>{profile?.phone ? profile?.phone : language?.unupdated}</p>
+                <p>{profile?.email ? profile?.email : language?.unupdated}</p>
 
-                <p>{profile?.facebook ? profile?.facebook :
-                  language?.unupdated}</p>
+                <p>
+                  {profile?.facebook ? profile?.facebook : language?.unupdated}
+                </p>
 
-                <p>{profile?.linkedin ? profile?.linkedin :
-                  language?.unupdated}</p>
+                <p>
+                  {profile?.linkedin ? profile?.linkedin : language?.unupdated}
+                </p>
               </div>
             </div>
           </div>
@@ -660,10 +633,9 @@ const Profile: React.FC = () => {
                   }}
                   icon={<UploadOutlined style={{ fontSize: 18 }} />}
                 >
-                  {profile.cv_url ?
-                    language?.profile_page?.update_cv :
-                    language?.upload_cv
-                  }{' '}
+                  {profile.cv_url
+                    ? language?.profile_page?.update_cv
+                    : language?.upload_cv}{' '}
                 </Button>
               </Upload>
 
@@ -674,25 +646,17 @@ const Profile: React.FC = () => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-              // direction="vertical"
+                // direction="vertical"
               >
                 {profile.cv_url && fileList?.length === 0 ? (
                   <Popconfirm
-                    title={
-                      language?.profile_page?.delete_cv
-                    }
-                    description={
-                      language?.profile_page?.alert_delete_cv
-                    }
+                    title={language?.profile_page?.delete_cv}
+                    description={language?.profile_page?.alert_delete_cv}
                     open={open}
                     onConfirm={confirm}
                     onCancel={cancel}
-                    okText={
-                      language?.yes
-                    }
-                    cancelText={
-                      language?.no
-                    }
+                    okText={language?.yes}
+                    cancelText={language?.no}
                   >
                     <CVItem
                       url={profile.cv_url}
@@ -705,11 +669,7 @@ const Profile: React.FC = () => {
                 ) : (
                   fileList?.length <= 0 && (
                     <Space direction="vertical" align="center">
-                      <p>
-                        {
-                          language?.profile_page?.cv_title
-                        }
-                      </p>
+                      <p>{language?.profile_page?.cv_title}</p>
                       <img style={{ width: 200 }} src="/cv3 1.png" alt="ảnh" />
                     </Space>
                   )
@@ -723,15 +683,15 @@ const Profile: React.FC = () => {
                     marginTop: 16,
                     width: 300,
                     height: 40,
-                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                      }`,
+                    backgroundColor: `${
+                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
+                    }`,
                     alignItems: 'flex-start',
                   }}
                 >
-                  {uploading ?
-                    language?.profile_page?.saving
-                    :
-                    language?.profile_page?.save_cv}
+                  {uploading
+                    ? language?.profile_page?.saving
+                    : language?.profile_page?.save_cv}
                 </Button>
               </div>
             </Space>
@@ -747,11 +707,7 @@ const Profile: React.FC = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <h3>
-                {
-                  language?.career_objective
-                }
-              </h3>
+              <h3>{language?.career_objective}</h3>
               <Space
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalCareerObjective(true)}
@@ -761,21 +717,19 @@ const Profile: React.FC = () => {
                 </div>
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {
-                    language?.edit
-                  }
+                  {language?.edit}
                 </p>
               </Space>
             </div>
             <Space wrap className="item-info-work">
               {profile?.categories?.length !== 0
                 ? profile?.categories?.map(
-                  (item: ICategories, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.child_category}
-                    </Button>
-                  ),
-                )
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    ),
+                  )
                 : language?.unupdated}
             </Space>
           </div>
@@ -789,11 +743,7 @@ const Profile: React.FC = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <h3>
-                {
-                  language?.working_location
-                }
-              </h3>
+              <h3>{language?.working_location}</h3>
               <Space
                 style={{ cursor: 'pointer' }}
                 onClick={() => setOpenModalLocation(true)}
@@ -803,22 +753,18 @@ const Profile: React.FC = () => {
                 </div>
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {
-                    language?.edit
-                  }
+                  {language?.edit}
                 </p>
               </Space>
             </div>
             <Space wrap className="item-info-work">
               {profile?.locations?.length !== 0
                 ? profile?.locations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.district}
-                  </Button>
-                ))
-                :
-                language?.unupdated
-              }
+                    <Button key={index} className="btn" type="text">
+                      {item?.district}
+                    </Button>
+                  ))
+                : language?.unupdated}
             </Space>
           </div>
         </Skeleton>
@@ -831,22 +777,14 @@ const Profile: React.FC = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <h3>
-                {
-                  language?.education
-                }
-              </h3>
+              <h3>{language?.education}</h3>
             </div>
             {profile?.educations?.length !== 0 ? (
               profile?.educations?.map((education: ItemAppy, index: number) => (
                 <ItemApply item={education} key={index} />
               ))
             ) : (
-              <div style={{ marginTop: '16px' }}>
-                {
-                  language?.unupdated
-                }
-              </div>
+              <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
             )}
 
             <div
@@ -863,9 +801,7 @@ const Profile: React.FC = () => {
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {
-                    language?.add
-                  }
+                  {language?.add}
                 </p>
               </Space>
             </div>
@@ -880,22 +816,14 @@ const Profile: React.FC = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <h3>
-                {
-                  language?.working_experience
-                }
-              </h3>
+              <h3>{language?.working_experience}</h3>
             </div>
             {profile?.experiences?.length !== 0 ? (
               profile?.experiences?.map((item: any, index: number) => (
                 <ItemApply typeItem="experiences" key={index} item={item} />
               ))
             ) : (
-              <div style={{ marginTop: '16px' }}>
-                {
-                  language?.unupdated
-                }
-              </div>
+              <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
             )}
 
             <div
@@ -912,9 +840,7 @@ const Profile: React.FC = () => {
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
                 <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {
-                    language?.add
-                  }
+                  {language?.add}
                 </p>
               </Space>
             </div>
@@ -963,10 +889,7 @@ const Profile: React.FC = () => {
               severity="success"
               sx={{ width: '100%' }}
             >
-
-              {
-                language?.profile_page?.alert_delete_success
-              }
+              {language?.profile_page?.alert_delete_success}
             </Alert>
           </Snackbar>
         </Stack>
