@@ -1,3 +1,5 @@
+@import '../../scss/mixins';
+
 .comunity-container {
     margin-top: 70px;
 
@@ -123,6 +125,123 @@
 
                 img {
                     border-radius: 12px;
+                }
+            }
+
+            .detail-community-img-swipper {
+                height: 100%;
+                // border-radius: 12px;
+
+                &_item {
+                    height: 100%;
+                    border-radius: 12px;
+                    width: fit-content;
+                    height: fit-content;
+
+                    img {
+                        height: 100% !important;
+                        // width: 100% !important;
+                        // object-fit: contain !important;
+                        border-radius: 12px;
+                    }
+
+                    .swiper-slide-shadow-left,
+                    .swiper-slide-shadow-right {
+                        height: fit-content;
+                        background: transparent;
+                    }
+                }
+
+                .swiper-pagination-fraction {
+                    position: absolute;
+                    bottom: 1px;
+                    z-index: 1;
+                    /* text-align: center; */
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: #ccc;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                }
+
+                .swiper-button-prev,
+                .swiper-button-next {
+                    width: 40px !important;
+                    height: 100% !important;
+                    top: 0 !important;
+                    margin-top: 0 !important;
+                    background-color: transparent;
+
+                    &:hover {
+
+                        &:after {
+                            transform: scale(1.1);
+                        }
+
+                        &:active {
+                            &:after {
+                                transform: scale(0.7);
+                            }
+                        }
+                    }
+
+                    &:after {
+                        background-color: #fff;
+                        border: 1px solid #ccc;
+                        border-radius: 50%;
+                        color: #000;
+                        font-size: 18px;
+                        height: 30px;
+                        width: 10px;
+                        line-height: 30px;
+                        padding: 0px 10px;
+                        transition: 0.3s linear all;
+                    }
+
+                    @include breakpoint(mobile) {
+                        &:after {
+                            background-color: #fff;
+                            border: 1px solid #ccc;
+                            border-radius: 50%;
+                            color: #000;
+                            font-size: 10px;
+                            height: 24px;
+                            width: 4px;
+                            line-height: 24px;
+                            padding: 0px 10px;
+                            transition: 0.3s linear all;
+                        }
+                    }
+                }
+
+                .swiper-button-prev {
+                    left: 0;
+                    background: linear-gradient(90deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
+
+                    @include breakpoint(mobile) {
+                        background: none;
+                    }
+
+                    @include breakpoint(tablet) {
+                        background: none;
+                    }
+                }
+
+                .swiper-button-next {
+                    background: linear-gradient(270deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
+                    right: 0;
+
+                    @include breakpoint(mobile) {
+                        background: none;
+                    }
+
+                    @include breakpoint(tablet) {
+                        background: none;
+                    }
+                }
+
+                .swiper-button-disabled {
+                    display: none !important;
                 }
             }
 
