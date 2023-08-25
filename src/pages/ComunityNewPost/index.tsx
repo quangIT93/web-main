@@ -154,7 +154,11 @@ const ComunityNewPost = () => {
   }, []);
 
   const handleMoveToCreate = () => {
-    window.open('/comunity_create_post', '_parent');
+    if (!localStorage.getItem('accessToken')) {
+      message.error(`Vui lòng đăng nhập để tạo bài đăng`);
+    } else {
+      window.open('/comunity_create_post', '_parent');
+    }
   };
 
   return (

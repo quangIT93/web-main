@@ -168,10 +168,14 @@ const CategoryCarousel: React.FC = () => {
         document.documentElement.clientWidth ||
         document.body.clientWidth;
 
+      // const element = document.getElementById('new-job');
+      // element?.scrollIntoView();
+
       if (windowWidth > 480 && localStorage.getItem('accessToken')) {
-        window.scrollTo(0, 530);
+        window.scroll({ top: 530 });
+        // document.create;
       } else if (windowWidth <= 480 && localStorage.getItem('accessToken')) {
-        window.scrollTo(0, 560);
+        window.scroll({ top: 560 });
       }
 
       // window.scrollTo(0, 300)
