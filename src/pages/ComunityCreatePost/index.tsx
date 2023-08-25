@@ -57,7 +57,7 @@ const ComunityCreatePost = () => {
   React.useEffect(() => {
     const community_success = localStorage.getItem('community_success');
     const accountId = localStorage.getItem('accountId');
-    if ((dataProfile && dataProfile.accountId != accountId) || !community_success) {
+    if (dataProfile && dataProfile.accountId !== accountId) {
       window.open('/', '_parent');
     }
   }, []);

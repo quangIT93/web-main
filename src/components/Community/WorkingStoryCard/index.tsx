@@ -39,7 +39,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   const [owner, setOwner] = React.useState(false);
 
   const dispatch = useDispatch();
-  console.log('item', item);
+  // console.log('item', item);
 
   React.useEffect(() => {
     if (contentRef.current) {
@@ -50,10 +50,10 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
       const numLines = Math.floor(contentHeight / lineHeight);
 
-      console.log('contentHeight', contentHeight);
-      console.log('lineHeight', lineHeight);
-      console.log('numLines', numLines);
-      console.log('numLines', numLines);
+      // console.log('contentHeight', contentHeight);
+      // console.log('lineHeight', lineHeight);
+      // console.log('numLines', numLines);
+      // console.log('numLines', numLines);
 
       setShouldShowMoreButton(numLines >= 2);
     }
@@ -98,14 +98,22 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   React.useEffect(() => {
     setTotalLike(item?.communicationLikesCount);
     if (item?.profileData?.id === localStorage.getItem('accountId')) {
-      setOwner(true)
+      setOwner(true);
     } else {
-      setOwner(false)
+      setOwner(false);
+    }
+
+    if (item?.liked) {
+      setLike(true);
+    } else {
+      setLike(false);
     }
   }, [item]);
 
   const handleMoveToDetailPage = (id: any, e: any) => {
     e.stopPropagation();
+
+    localStorage.setItem('reload', 'true');
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
   };
 
@@ -146,7 +154,9 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
   return (
     <>
-      <div className="comunitypostNew-card-wrap_content" key={index}
+      <div
+        className="comunitypostNew-card-wrap_content"
+        key={index}
         onClick={(e) => handleMoveToDetailPage(item?.id, e)}
       >
         {/* <div className="bookmark" onClick={handleClickSave}>
@@ -159,24 +169,20 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
         <div className="comunityPostNew-card-content">
           <div className="comunityPostNew-card-content-title">
-            <h3>
-              {item?.title}
-            </h3>
-            <div className="bookmark" onClick={
-              (e) => {
-                owner ?
-                  handleMoveToEdit(item?.id, e) :
-                  handleClickSave(e)
-              }
-            }>
-              {
-                owner ?
-                  <SettingIcon /> :
-                  bookmark === true ? (
-                    <SaveIconFill width={24} height={24} />
-                  ) : (
-                    <SaveIconOutline width={24} height={24} />
-                  )}
+            <h3>{item?.title}</h3>
+            <div
+              className="bookmark"
+              onClick={(e) => {
+                owner ? handleMoveToEdit(item?.id, e) : handleClickSave(e);
+              }}
+            >
+              {owner ? (
+                <SettingIcon />
+              ) : bookmark === true ? (
+                <SaveIconFill width={24} height={24} />
+              ) : (
+                <SaveIconOutline width={24} height={24} />
+              )}
             </div>
           </div>
           <div className="comunityPostNew-card-content_info">

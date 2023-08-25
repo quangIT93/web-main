@@ -52,6 +52,7 @@ const ComunityNewPost = () => {
   const [hasMore, setHasMore] = React.useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [saveListPost, setSaveListPost] = React.useState(false);
+  const [readLoad, setReload] = React.useState(false);
   const handleSortBy = (sortString: string) => {
     //cm: comment, l: likes, v: views
     setPage('0');
@@ -83,6 +84,7 @@ const ComunityNewPost = () => {
 
   const handleGetAllWorkingStory = async () => {
     try {
+      // localStorage.removeItem('reload');
       const result = await communityApi.getCommunityNews(page, '10', sort, 1);
       if (result) {
         setStories(result?.data?.communications);
@@ -99,7 +101,7 @@ const ComunityNewPost = () => {
   React.useEffect(() => {
     handleGetAllWorkingStory();
     setHasMore(true);
-  }, [sort]);
+  }, [sort, readLoad]);
 
   // const handleChange = async () => {
   //     const nextPage = (parseInt(page) + 1).toString()
@@ -117,7 +119,7 @@ const ComunityNewPost = () => {
   //     }
   // };
 
-  console.log('page', page);
+  // console.log('page', page);
 
   const [language, setLanguage] = React.useState<any>();
 
@@ -139,6 +141,13 @@ const ComunityNewPost = () => {
     getlanguageApi();
   }, [languageRedux]);
   const footerRef = React.useRef<any>(null);
+
+  React.useEffect(() => {
+    const reload = localStorage.getItem('reload');
+    if (reload) {
+      setReload(true);
+    }
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
