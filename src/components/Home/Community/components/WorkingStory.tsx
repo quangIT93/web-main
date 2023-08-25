@@ -29,8 +29,8 @@ const WorkingStory = () => {
     try {
       const result = await communityApi.getCommunityNews('', '5', '', 1);
       if (result) {
-        setStories(result?.data);
-        setLike(result?.data?.liked)
+        setStories(result?.data?.communications);
+        setLike(result?.data?.communications?.liked);
       }
     } catch (error) {
       console.log(error);
@@ -39,7 +39,7 @@ const WorkingStory = () => {
 
   const handleLikeCommunity = async (communicationId: number, e: any) => {
     try {
-      e.stopPropagation()
+      e.stopPropagation();
       const result = await communityApi.postCommunityLike(communicationId);
       if (result) {
         setLike(!like);
@@ -93,7 +93,8 @@ const WorkingStory = () => {
                   <EysIcon />
                   <p>{story?.communicationViewsCount}</p>
                 </div>
-                <div className={story.liked ? "action-item liked" : "action-item"}
+                <div
+                  className={story.liked ? 'action-item liked' : 'action-item'}
                   onClick={(e) => handleLikeCommunity(story?.id, e)}
                 >
                   <LikeIcon />

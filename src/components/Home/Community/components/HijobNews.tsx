@@ -24,7 +24,7 @@ const HijobNews = () => {
     try {
       const result = await communityApi.getCommunityNews('', '5', '', 0);
       if (result) {
-        setNews(result?.data);
+        setNews(result?.data?.communications);
       }
     } catch (error) {
       console.log(error);
@@ -33,7 +33,7 @@ const HijobNews = () => {
 
   const handleLikeCommunity = async (communicationId: number, e: any) => {
     try {
-      e.stopPropagation()
+      e.stopPropagation();
       const result = await communityApi.postCommunityLike(communicationId);
       if (result) {
         setLike(!like);
@@ -71,7 +71,11 @@ const HijobNews = () => {
               onClick={() => handleMoveToDetailPage(newsItem?.id)}
             >
               <div className="community-content-body_left">
-                <Avatar shape="square" size={88} src={newsItem?.images[0]?.image} />
+                <Avatar
+                  shape="square"
+                  size={88}
+                  src={newsItem?.images[0]?.image}
+                />
               </div>
               <div className="community-content-body_right">
                 <div className="body-item-title">
@@ -85,7 +89,10 @@ const HijobNews = () => {
                     <EysIcon />
                     <p>{newsItem?.communicationViewsCount}</p>
                   </div>
-                  <div className={newsItem.liked ? "action-item liked" : "action-item"}
+                  <div
+                    className={
+                      newsItem.liked ? 'action-item liked' : 'action-item'
+                    }
                     onClick={(e) => handleLikeCommunity(newsItem?.id, e)}
                   >
                     <LikeIcon />

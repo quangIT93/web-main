@@ -472,7 +472,7 @@ const ComunityCreatePost = () => {
                   setValueContent(e.target.value);
                 } else {
                   message.error(
-                    'Nội dung bài viết không được vượt quá 500 ký tự',
+                    'Nội dung bài viết không được vượt quá 1000 ký tự',
                   );
                 }
               }}

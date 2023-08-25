@@ -87,9 +87,8 @@ const CardListBlogSave = () => {
     try {
       const result = await communityApi.getCommunityBookmarked(page);
       if (result) {
-        console.log('log', result);
-        setStories(result.data);
-        if (result?.data?.length < 10) {
+        setStories(result?.data?.communications);
+        if (result?.data?.communications?.length < 10) {
           setIsVisible(false);
         }
       }
@@ -116,9 +115,9 @@ const CardListBlogSave = () => {
       );
 
       //
-      if (result && result?.data?.length !== 0) {
+      if (result && result?.data?.communications?.length !== 0) {
         setUploading(false);
-        setStories((prev: any) => [...prev, ...result?.data]);
+        setStories((prev: any) => [...prev, ...result?.data?.communications]);
         setPage(nextPage);
       } else {
         setPage('0');

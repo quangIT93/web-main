@@ -68,8 +68,8 @@ const ComunityNewPost = () => {
     const result = await communityApi.getCommunityNews(nextPage, '10', sort, 1);
 
     //
-    if (result && result?.data?.length !== 0) {
-      setStories((prev: any) => [...prev, ...result?.data]);
+    if (result && result?.data?.communications?.length !== 0) {
+      setStories((prev: any) => [...prev, ...result?.data?.communications]);
       setPage(nextPage);
     } else {
       setHasMore(false);
@@ -84,8 +84,8 @@ const ComunityNewPost = () => {
     try {
       const result = await communityApi.getCommunityNews(page, '10', sort, 1);
       if (result) {
-        setStories(result?.data);
-        if (result?.data?.length < 10) {
+        setStories(result?.data?.communications);
+        if (result?.data?.communications?.length < 10) {
           setIsVisible(false);
         }
       }
