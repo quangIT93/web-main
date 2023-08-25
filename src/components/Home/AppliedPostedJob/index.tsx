@@ -260,6 +260,8 @@ const AppliedPostedJob: React.FC = () => {
             <Button
               type="primary"
               onClick={() => {
+                console.log('click');
+
                 setOpenModalLogin(true);
               }}
             >
@@ -329,7 +331,39 @@ const AppliedPostedJob: React.FC = () => {
           flexDirection: 'column',
         }}
         className="applied-posted-jobs-container"
-      ></Box>
+      >
+        <div
+          className="advertisement-job-not-loging"
+          style={{ display: !isLogined ? 'flex' : 'none' }}
+        >
+          {/* <Advertisement /> */}
+          {/* <img
+              src="../images/absHijob.png"
+              alt="Ảnh lỗi"
+              className="img-advertisement-job-not-loging"
+              // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
+            /> */}
+          <Advertisement />
+          <div className="advertisement-job-not-loging-content">
+            <h3 style={{ marginTop: '12px' }}>
+              {language?.applied_posted_jobs?.are_you_a_recruiter}
+            </h3>
+            <p style={{ marginBottom: '12px' }}>
+              {language?.applied_posted_jobs?.post_now}
+            </p>
+            <h3>{language?.applied_posted_jobs?.are_you_looking_for_job}</h3>
+            <p>{language?.applied_posted_jobs?.all_jobs_in_VN}</p>
+          </div>
+          <Button type="primary" onClick={() => setOpenModalLogin(true)}>
+            <LoginArrowIcon />
+            {language?.sign_in}
+          </Button>
+        </div>
+        <ModalLogin
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        />
+      </Box>
     );
   }
 };
