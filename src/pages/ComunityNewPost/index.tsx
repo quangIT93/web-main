@@ -99,7 +99,7 @@ const ComunityNewPost = () => {
   React.useEffect(() => {
     handleGetAllWorkingStory();
     setHasMore(true);
-  }, [sort, saveListPost]);
+  }, [sort]);
 
   // const handleChange = async () => {
   //     const nextPage = (parseInt(page) + 1).toString()

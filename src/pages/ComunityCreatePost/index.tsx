@@ -366,10 +366,10 @@ const ComunityCreatePost = () => {
     selectedFiles.forEach((image: any) => {
       formData.append('images', image);
     });
-    // POST_COMMUNITY_ID &&
-    deleteImages.forEach((id: any) => {
-      formData.append('deleteImages', id);
-    });
+    POST_COMMUNITY_ID &&
+      deleteImages.forEach((id: any) => {
+        formData.append('deleteImages', id);
+      });
 
     for (const pair of formData.entries()) {
       console.log(`${pair[0]}, ${pair[1]}`);

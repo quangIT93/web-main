@@ -203,7 +203,12 @@ const CardListBlogSave = () => {
                 setSaveListPost={setSaveListPost}
                 saveListPost={saveListPost}
               /> :
-              <HijobNewsCard item={item.communicationData} index={index} />
+              <HijobNewsCard
+                item={item.communicationData}
+                index={index}
+                setSaveListPost={setSaveListPost}
+                saveListPost={saveListPost}
+              />
           ))
         ) : (
           <></>
