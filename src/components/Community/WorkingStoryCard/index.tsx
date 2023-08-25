@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import './style.scss';
@@ -19,29 +19,52 @@ import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 interface IWorkingStoryCard {
   item: any;
   index: any;
-  showText: any;
-  handleAddText: any;
   setSaveListPost: React.Dispatch<React.SetStateAction<boolean>>;
   saveListPost: boolean;
 }
 
 const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
-  const {
-    item,
-    showText,
-    index,
-    handleAddText,
-    setSaveListPost,
-    saveListPost,
-  } = props;
+  const { item, index, setSaveListPost, saveListPost } = props;
   const [like, setLike] = React.useState(item && item?.liked);
   const [bookmark, setBookmark] = React.useState(item?.bookmarked);
   const [totalLike, setTotalLike] = React.useState(
     item?.communicationLikesCount,
   );
+  const [shouldShowMoreButton, setShouldShowMoreButton] = React.useState(false);
+  const [showText, setShowText] = React.useState('');
+  const contentRef = useRef<any>(null);
 
   const dispatch = useDispatch();
   console.log('item', item);
+
+  React.useEffect(() => {
+    if (contentRef.current) {
+      const contentHeight = contentRef.current.scrollHeight;
+      const lineHeight = parseInt(
+        window.getComputedStyle(contentRef.current).lineHeight,
+      );
+
+      const numLines = Math.floor(contentHeight / lineHeight);
+
+      console.log('contentHeight', contentHeight);
+      console.log('lineHeight', lineHeight);
+      console.log('numLines', numLines);
+      console.log('numLines', numLines);
+
+      setShouldShowMoreButton(numLines >= 2);
+    }
+  }, [item?.content]);
+  console.log('showText', showText);
+
+  const handleAddText = () => {
+    if (showText === '') {
+      setShowText('showText');
+      setShouldShowMoreButton(!shouldShowMoreButton);
+    } else {
+      setShowText('');
+      setShouldShowMoreButton(!shouldShowMoreButton);
+    }
+  };
 
   const handleLikeCommunity = async (communicationId: number) => {
     try {
@@ -117,12 +140,16 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
             </div>
           </div>
           <div className="comunityPostNew-card-content_info">
-            <ul className={`text-content_postNew ${showText}`}>
+            <ul className={`text-content_postNew ${showText}`} ref={contentRef}>
               {item?.content}
             </ul>
-            {!showText ? (
-              <span onClick={handleAddText}>Xem thêm...</span>
+            {shouldShowMoreButton ? (
+              <span onClick={handleAddText}>
+                {!showText ? 'Xem thêm...' : 'Xem ít...'}
+              </span>
             ) : (
+              // <span onClick={handleAddText}>Xem ít...</span>
+
               <></>
             )}
           </div>

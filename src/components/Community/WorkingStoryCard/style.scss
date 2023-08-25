@@ -41,9 +41,11 @@
             border-bottom: 1px solid #ccc;
 
             .text-content_postNew {
-                height: 90px;
+                height: 47px;
                 // overflow: hidden;
+                line-height: 24px;
                 word-wrap: break-word;
+                overflow: hidden;
                 li {
                     color: #000;
                     font-family: Roboto;
