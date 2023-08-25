@@ -45,6 +45,7 @@ import { RootState } from '../../../store/reducer';
 // import { home } from 'validations/lang/vi/home';
 // import { homeEn } from 'validations/lang/en/home';
 import languageApi from 'api/languageApi';
+import { setCookie } from 'cookies';
 
 // interface ItemTheme {
 //   id: number;
@@ -95,9 +96,10 @@ const HotJob: React.FC = () => {
     let url =
       api.replace('/api', '') + '?' + keyOfQuery + '=' + queyObj[keyOfQuery];
 
+    setCookie('hotjobTotal', JSON.stringify(total), 365);
     localStorage.setItem('hotjobApi', url);
     window.open(
-      `/hotjobs?hotjob-id=${id}&hotjob-type=${type}&hotjob-total=${total}`,
+      `/hotjobs?hotjob-id=${id}&hotjob-type=${type}`,
       '_self',
     );
   };
