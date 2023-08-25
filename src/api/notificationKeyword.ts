@@ -1,6 +1,17 @@
 import axiosClient from './axiosClient'
 
 const notificationKeywordApi = {
+
+  getNotificationAll: (lang: string) => {
+    const URL = `/v1/notification/keyword?lang=${lang}`
+
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  },
+
   getNotificationKeyword: (lang: string) => {
     const URL = `/v1/notification/keyword?lang=${lang}`
 
