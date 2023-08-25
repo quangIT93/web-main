@@ -76,17 +76,17 @@ const Comunity = () => {
   };
 
   const handleGetDetailCommunityById = async () => {
-    console.log('vooooooooooooo');
-
     try {
       if (POST_COMMUNITY_ID) {
         const result = await communityApi.getCommunityDetailId(
           POST_COMMUNITY_ID,
         );
-        if (result) {
+        if (result && result.status !== 400) {
           setLike(result?.data?.liked);
           setDetail(result?.data);
           setBookmark(result?.data?.bookmarked);
+        } else {
+          window.location.replace('new-comunity');
         }
       }
     } catch (error) {

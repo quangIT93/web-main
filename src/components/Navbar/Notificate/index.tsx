@@ -181,28 +181,9 @@ const Notificate = () => {
       }
     } catch (error) {}
   };
-  const [dataNotificationAll, setDataNotificationAll] = useState<any>([]);
-
-  const getApiNotificateKeywordAll = async () => {
-    try {
-      const result = await notificationKeywordApi.getNotificationKeyword('vi');
-      // const result = await notificationKeywordApi.getNotificationKeywordV3(
-      //   languageRedux === 1 ? 'vi' : 'en',
-      // );
-      // console.log('keyword v3', result);
-      if (result) {
-        setDataNotificationAll(result.data);
-        setValueApp(result.data.status.pushStatus);
-        setValueMall(result.data.status.emailStatus);
-      }
-    } catch (error) {}
-  };
-
-  console.log('dataNotificationAll', dataNotificationAll);
 
   useEffect(() => {
     getApiNotificateKeyword();
-    getApiNotificateKeywordAll();
   }, [input, valueApp, valueMall]);
 
   const handleChangeStatusKeyword = async (id: number, status: number) => {
@@ -245,6 +226,7 @@ const Notificate = () => {
 
   const handleClickNoty = (
     postId: number,
+    commentId: number,
     applicationId: number,
     typeText: string,
   ) => {
@@ -260,7 +242,7 @@ const Notificate = () => {
     }
 
     if (typeText === 'communicationComment') {
-      window.open(`post-detail?post-id=${postId}`, '_parent');
+      window.open(`detail-comunity?post-community=${commentId}`, '_parent');
     }
   };
 
@@ -459,6 +441,7 @@ const Notificate = () => {
                     onClick={() =>
                       handleClickNoty(
                         notificate.data.postId,
+                        notificate.data.communicationId,
                         notificate.data.applicationId,
                         notificate.data.typeText,
                       )
