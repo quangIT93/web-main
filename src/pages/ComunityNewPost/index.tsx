@@ -43,7 +43,6 @@ const ComunityNewPost = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [showText, setShowText] = React.useState('');
   const [openMenu, setOpenMenu] = React.useState(false);
   const [stories, setStories] = React.useState<any>([]);
   const [page, setPage] = React.useState<any>('0');
@@ -118,9 +117,6 @@ const ComunityNewPost = () => {
 
   console.log('page', page);
 
-  const handleAddText = () => {
-    setShowText('showText');
-  };
   const [language, setLanguage] = React.useState<any>();
 
   const getlanguageApi = async () => {
@@ -237,9 +233,7 @@ const ComunityNewPost = () => {
             {stories?.map((item: any, index: any) => (
               <WorkingStoryCard
                 item={item}
-                index={index}
-                showText={showText}
-                handleAddText={handleAddText}
+                index={item.id}
                 setSaveListPost={setSaveListPost}
                 saveListPost={saveListPost}
               />

@@ -203,8 +203,6 @@ const CardListBlogSave = () => {
             <WorkingStoryCard
               item={item.communicationData}
               index={index}
-              showText={showText}
-              handleAddText={handleAddText}
               setSaveListPost={setSaveListPost}
               saveListPost={saveListPost}
             />
