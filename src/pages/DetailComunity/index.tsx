@@ -34,7 +34,7 @@ import { Navbar } from '#components';
 import { Modal } from 'antd';
 import './style.scss';
 import communityApi from 'api/apiCommunity';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 // const { Panel } = Collapse;
 import { Input } from 'antd';
@@ -47,6 +47,9 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 // import required modules
 import { EffectCoverflow, Navigation } from 'swiper';
+import ShowCancleSave from '#components/ShowCancleSave';
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
+import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
 const { TextArea } = Input;
 interface FormPostCommunityComment {
@@ -70,23 +73,26 @@ const Comunity = () => {
   const [like, setLike] = React.useState(false);
   const [bookmark, setBookmark] = React.useState(false);
   const [cmt, setCmt] = React.useState(false);
+  const dispatch = useDispatch()
 
   const handelChangeCmt = (event: any) => {
     setCmtContent(event.target.value);
   };
 
   const handleGetDetailCommunityById = async () => {
-    console.log('vooooooooooooo');
-
     try {
       if (POST_COMMUNITY_ID) {
         const result = await communityApi.getCommunityDetailId(
           POST_COMMUNITY_ID,
         );
-        if (result) {
+        if (result && result.status !== 400) {
           setLike(result?.data?.liked);
           setDetail(result?.data);
           setBookmark(result?.data?.bookmarked);
+        } else {
+          POST_COMMUNITY_ID === '1'
+            ? window.open('/new-comunity', '_parent')
+            : window.open('/news-comunity', '_parent');
         }
       }
     } catch (error) {
@@ -152,7 +158,15 @@ const Comunity = () => {
         communicationId,
       );
       if (result) {
-        setBookmark(!bookmark);
+        // setBookmark(!bookmark);
+        if (result.status === 201) {
+          // setSaveListPost(!saveListPost);
+          dispatch<any>(setAlertSave(true));
+          setBookmark(true);
+        } else {
+          dispatch<any>(setAlertCancleSave(true));
+          setBookmark(false);
+        }
       }
       console.log(result);
     } catch (error) {
@@ -207,7 +221,11 @@ const Comunity = () => {
       // // if (e.key === 'Enter') {
       // else {
 
-      handleCommentCommunity();
+      // handleCommentCommunity();
+      if (e.key === 'Enter') {
+        e.preventDefault()
+        handleCommentCommunity();
+      }
     }
     // }
   };
@@ -306,7 +324,7 @@ const Comunity = () => {
               modifier: 1,
               slideShadows: true,
             }}
-            initialSlide={1}
+            // initialSlide={-1}
             // slidesPerView={1}
             // spaceBetween={30}
             // loop={true}
@@ -394,14 +412,14 @@ const Comunity = () => {
                   type="text"
                   value={cmtContent}
                   multiple
-                  onKeyDown={handleKeyPress}
                   onChange={handelChangeCmt}
                 /> */}
                 <TextArea
                   value={cmtContent}
-                  onPressEnter={(e: any) => handleKeyPress(e)}
+                  onKeyDown={(e: any) => handleKeyPress(e)}
+                  // onPressEnter={(e: any) => handleKeyPress(e)}
                   onChange={handelChangeCmt}
-                  placeholder="Enter comment"
+                  placeholder="Nhập bình luận của bạn ..."
                   autoSize
                   // showCount
                 />
@@ -467,6 +485,8 @@ const Comunity = () => {
       >
         <img alt="example" style={{ width: '100%' }} src={previewImage} />
       </Modal>
+      <ShowCancleSave />
+      <ShowNotificativeSave />
       <Footer />
     </div>
   );

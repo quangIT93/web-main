@@ -2,7 +2,7 @@ import React, { memo, useRef } from 'react';
 import { Avatar, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import './style.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   EysIcon,
@@ -10,11 +10,14 @@ import {
   LikeIcon,
   SaveIconFill,
   SaveIconOutline,
+  SettingIcon,
 } from '#components/Icons';
 
 import communityApi from 'api/apiCommunity';
-
+import { Tooltip } from 'antd';
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+import ShowCancleSave from '#components/ShowCancleSave';
+import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
 interface IWorkingStoryCard {
   item: any;
@@ -33,9 +36,10 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   const [shouldShowMoreButton, setShouldShowMoreButton] = React.useState(false);
   const [showText, setShowText] = React.useState('');
   const contentRef = useRef<any>(null);
+  const [owner, setOwner] = React.useState(false);
 
   const dispatch = useDispatch();
-  console.log('item', item);
+  // console.log('item', item);
 
   React.useEffect(() => {
     if (contentRef.current) {
@@ -46,17 +50,18 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
       const numLines = Math.floor(contentHeight / lineHeight);
 
-      console.log('contentHeight', contentHeight);
-      console.log('lineHeight', lineHeight);
-      console.log('numLines', numLines);
-      console.log('numLines', numLines);
+      // console.log('contentHeight', contentHeight);
+      // console.log('lineHeight', lineHeight);
+      // console.log('numLines', numLines);
+      // console.log('numLines', numLines);
 
       setShouldShowMoreButton(numLines >= 2);
     }
   }, [item?.content]);
   console.log('showText', showText);
 
-  const handleAddText = () => {
+  const handleAddText = (e: any) => {
+    e.stopPropagation();
     if (showText === '') {
       setShowText('showText');
       setShouldShowMoreButton(!shouldShowMoreButton);
@@ -66,7 +71,8 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     }
   };
 
-  const handleLikeCommunity = async (communicationId: number) => {
+  const handleLikeCommunity = async (communicationId: number, e: any) => {
+    e.stopPropagation();
     if (!localStorage.getItem('accessToken')) {
       message.error('Vui lòng đăng nhập để thực hiện chức năng');
       return;
@@ -91,9 +97,23 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
   React.useEffect(() => {
     setTotalLike(item?.communicationLikesCount);
+    if (item?.profileData?.id === localStorage.getItem('accountId')) {
+      setOwner(true);
+    } else {
+      setOwner(false);
+    }
+
+    if (item?.liked) {
+      setLike(true);
+    } else {
+      setLike(false);
+    }
   }, [item]);
 
-  const handleMoveToDetailPage = (id: any) => {
+  const handleMoveToDetailPage = (id: any, e: any) => {
+    e.stopPropagation();
+
+    localStorage.setItem('reload', 'true');
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
   };
 
@@ -101,29 +121,44 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     const content = document.querySelector('.text-content_postNew');
   }, []);
 
-  const handleClickSave = async () => {
+  const handleClickSave = async (e: any) => {
+    e.stopPropagation();
     console.log('handleClick save');
     try {
       const result = await communityApi.postCommunityBookmarked(item.id);
       if (result) {
         //create bookmark
         if (result.status === 201) {
-          // setSaveListPost(!saveListPost);
+          setSaveListPost(!saveListPost);
+          dispatch<any>(setAlertSave(true));
           setBookmark(true);
         } else {
+          setSaveListPost(!saveListPost);
+          dispatch<any>(setAlertCancleSave(true));
           setBookmark(false);
         }
+      } else {
+        message.error('Vui lòng đăng nhập để thực hiện chức năng');
       }
     } catch (error) {
       console.log('error', error);
     }
   };
 
+  const handleMoveToEdit = (id: any, e: any) => {
+    e.stopPropagation();
+    window.open(`/comunity_create_post?post-community=${id}`, '_parent');
+  };
+
   console.log('item', item);
 
   return (
     <>
-      <div className="comunitypostNew-card-wrap_content" key={index}>
+      <div
+        className="comunitypostNew-card-wrap_content"
+        key={index}
+        onClick={(e) => handleMoveToDetailPage(item?.id, e)}
+      >
         {/* <div className="bookmark" onClick={handleClickSave}>
                     {item.bookmarked === true ? (
                         <SaveIconFill width={24} height={24} />
@@ -134,11 +169,16 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
         <div className="comunityPostNew-card-content">
           <div className="comunityPostNew-card-content-title">
-            <h3 onClick={() => handleMoveToDetailPage(item?.id)}>
-              {item?.title}
-            </h3>
-            <div className="bookmark" onClick={handleClickSave}>
-              {bookmark === true ? (
+            <h3>{item?.title}</h3>
+            <div
+              className="bookmark"
+              onClick={(e) => {
+                owner ? handleMoveToEdit(item?.id, e) : handleClickSave(e);
+              }}
+            >
+              {owner ? (
+                <SettingIcon />
+              ) : bookmark === true ? (
                 <SaveIconFill width={24} height={24} />
               ) : (
                 <SaveIconOutline width={24} height={24} />
@@ -150,7 +190,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
               {item?.content}
             </ul>
             {shouldShowMoreButton ? (
-              <span onClick={handleAddText}>
+              <span onClick={(e) => handleAddText(e)}>
                 {!showText ? 'Xem thêm...' : 'Xem ít...'}
               </span>
             ) : (
@@ -167,14 +207,14 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
           </div>
           <div
             className={like ? 'status-item liked' : 'status-item'}
-            onClick={() => handleLikeCommunity(item?.id)}
+            onClick={(e) => handleLikeCommunity(item?.id, e)}
           >
             <LikeIcon />
             <p>{totalLike}</p>
           </div>
           <div
             className="status-item"
-            onClick={() => handleMoveToDetailPage(item?.id)}
+            onClick={(e) => handleMoveToDetailPage(item?.id, e)}
           >
             <CommentIcon />
             <p>{item?.communicationCommentsCount}</p>
@@ -197,6 +237,8 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
           <p>{item?.createdAtText}</p>
         </div>
       </div>
+      <ShowCancleSave />
+      <ShowNotificativeSave />
     </>
   );
 };

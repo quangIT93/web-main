@@ -10,6 +10,7 @@ import communityApi from 'api/apiCommunity';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Tooltip } from 'antd';
+import ModalLogin from '../../../../components/Home/ModalLogin';
 
 const WorkingStory = () => {
   const languageRedux = useSelector(
@@ -19,6 +20,7 @@ const WorkingStory = () => {
   const [stories, setStories] = React.useState<any>();
   const [position, setPosition] = React.useState<any>();
   const [like, setLike] = React.useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleMoveToDetailPage = (id: any) => {
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
@@ -40,6 +42,11 @@ const WorkingStory = () => {
   const handleLikeCommunity = async (communicationId: number, e: any) => {
     try {
       e.stopPropagation();
+      if (!localStorage.getItem('accessToken')) {
+        setOpenModalLogin(true);
+        // CheckWasLogin();
+        return;
+      }
       const result = await communityApi.postCommunityLike(communicationId);
       if (result) {
         setLike(!like);
@@ -109,6 +116,10 @@ const WorkingStory = () => {
             </div>
           ))}
       </div>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </>
   );
 };

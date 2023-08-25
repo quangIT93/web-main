@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import communityApi from 'api/apiCommunity';
 import { Tooltip } from 'antd';
+import ModalLogin from '../../../../components/Home/ModalLogin';
 
 const HijobNews = () => {
   const languageRedux = useSelector(
@@ -19,6 +20,7 @@ const HijobNews = () => {
   );
   const [news, setNews] = React.useState<any>();
   const [like, setLike] = React.useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleGetHijobNews = async () => {
     try {
@@ -34,6 +36,11 @@ const HijobNews = () => {
   const handleLikeCommunity = async (communicationId: number, e: any) => {
     try {
       e.stopPropagation();
+      if (!localStorage.getItem('accessToken')) {
+        setOpenModalLogin(true);
+        // CheckWasLogin();
+        return;
+      }
       const result = await communityApi.postCommunityLike(communicationId);
       if (result) {
         setLike(!like);
@@ -104,9 +111,14 @@ const HijobNews = () => {
                   </div>
                 </div>
               </div>
+              <div className="border-line"></div>
             </div>
           ))}
       </div>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </>
   );
 };

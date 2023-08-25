@@ -21,6 +21,7 @@ import WorkingStoryCard from '#components/Community/WorkingStoryCard';
 import communityApi from 'api/apiCommunity';
 
 import './style.scss';
+import HijobNewsCard from '#components/Community/HijobNewsCard';
 
 const CardListBlogSave = () => {
   const languageRedux = useSelector(
@@ -107,12 +108,8 @@ const CardListBlogSave = () => {
   const handleChange = async () => {
     try {
       setUploading(true);
-      const nextPage = (parseInt(page) + 1).toString();
-      const result = await communityApi.getCommunityByAccount(
-        nextPage,
-        '10',
-        sort,
-      );
+      const nextPage = (parseInt(page) + 1);
+      const result = await communityApi.getCommunityBookmarked(nextPage);
 
       //
       if (result && result?.data?.communications?.length !== 0) {
@@ -199,12 +196,19 @@ const CardListBlogSave = () => {
       <div className="list-blog-create-data">
         {stories ? (
           stories.map((item: any, index: any) => (
-            <WorkingStoryCard
-              item={item.communicationData}
-              index={index}
-              setSaveListPost={setSaveListPost}
-              saveListPost={saveListPost}
-            />
+            item?.communicationData?.type === 1 ?
+              <WorkingStoryCard
+                item={item.communicationData}
+                index={index}
+                setSaveListPost={setSaveListPost}
+                saveListPost={saveListPost}
+              /> :
+              <HijobNewsCard
+                item={item.communicationData}
+                index={index}
+                setSaveListPost={setSaveListPost}
+                saveListPost={saveListPost}
+              />
           ))
         ) : (
           <></>

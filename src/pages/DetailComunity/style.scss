@@ -129,25 +129,46 @@
             }
 
             .detail-community-img-swipper {
-                height: 100%;
+                // height: 100%;
                 // border-radius: 12px;
+                // width: 100%;
 
                 &_item {
-                    height: 100%;
+                    // border: 1px solid red;
+                    // height: 100%;
                     border-radius: 12px;
-                    width: fit-content;
-                    height: fit-content;
+                    width: 500px;
+                    height: 500px;
+                    background-position: center;
+                    background-size: cover;
+
+                    @media screen and (max-width: 900px) {
+                        width: 300px;
+                        height: 300px;
+                    }
+
+                    @media screen and (max-width: 600px) {
+                        width: 250px;
+                        height: 250px;
+                    }
+
+                    @media screen and (max-width: 375px) {
+                        width: 150px;
+                        height: 150px;
+                    }
 
                     img {
-                        height: 100% !important;
+                        // height: 100% !important;
                         // width: 100% !important;
                         // object-fit: contain !important;
+                        width: 100%;
+                        display: block;
                         border-radius: 12px;
                     }
 
                     .swiper-slide-shadow-left,
                     .swiper-slide-shadow-right {
-                        height: fit-content;
+                        // height: fit-content;
                         background: transparent;
                     }
                 }
@@ -346,6 +367,11 @@
                         flex-direction: column;
                         justify-content: space-between;
 
+                        @media screen and (max-width: 375px) {
+                            width: unset;
+                            flex: 1;
+                        }
+
                         input {
                             // height: 100%;       
                             width: 100%;
@@ -465,6 +491,8 @@
                             }
 
                             .comunityDetail-comment_bottom {
+                                width: 100%;
+
                                 textarea {
                                     pointer-events: none;
                                     border: none;

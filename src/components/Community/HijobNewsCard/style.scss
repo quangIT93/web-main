@@ -45,6 +45,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                gap: 10px;
 
                 h3 {
                     color: #001424;
@@ -53,6 +54,7 @@
                     font-style: normal;
                     font-weight: 700;
                     line-height: 24px;
+                    word-break: break-word;
                 }
             }
 
@@ -60,25 +62,34 @@
                 padding: 12px 0 0;
                 // border-bottom: 1px solid #ccc;
 
-                .text-content_postNew {
-                    // height: 90px;
-                    // overflow: hidden;
+                textarea {
+                    pointer-events: none;
+                    border: none;
+                    outline: none;
+                    background: transparent;
+                    font-family: Roboto;
+                    font-size: 16px;
+                    font-weight: 400;
+                    overflow: hidden;
 
-                    li {
-                        color: #000;
-                        font-family: Roboto;
-                        font-size: 16px;
-                        font-style: normal;
-                        font-weight: 400;
-                        line-height: 24px;
-                        list-style: none;
-                        margin-left: 12px;
+                    &:focus {
+                        border: none;
+                        box-shadow: none;
                     }
                 }
 
-                .text-content_postNew.showText {
-                    height: auto;
-                    overflow: unset;
+                .text-content_postNew {
+                    // height: 90px;
+                    // overflow: hidden;
+                    overflow: hidden;
+                    height: 47px !important;
+                    line-height: 24px;
+                    word-Break: break-word;
+                }
+
+                .showText {
+                    height: unset !important;
+                    // overflow: unset;
                 }
 
 

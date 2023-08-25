@@ -70,9 +70,9 @@ const ShowCancleSave: React.FC = () => {
           <Alert
             onClose={handleClose}
             severity="error"
-            sx={{ width: '100%', backgroundColor: '#000000' }}
+            sx={{ width: '100%', backgroundColor: '#000000', boxShadow: 'none' }}
           >
-            {languageRedux === 1 ? 'Đã bỏ lưu thành công!' : 'Unsaved this job'}
+            {languageRedux === 1 ? 'Đã bỏ lưu thành công!' : 'Unsaved successfully'}
           </Alert>
         </Snackbar>
       </Stack>

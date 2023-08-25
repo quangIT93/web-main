@@ -46,11 +46,13 @@ const ComunityNewPost = () => {
   const [openMenu, setOpenMenu] = React.useState(false);
   const [stories, setStories] = React.useState<any>([]);
   const [page, setPage] = React.useState<any>('0');
+  const [total, setTotal] = React.useState<any>(0);
   const [isVisible, setIsVisible] = React.useState(true);
   const [sort, setSort] = React.useState('');
   const [hasMore, setHasMore] = React.useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [saveListPost, setSaveListPost] = React.useState(false);
+  const [readLoad, setReload] = React.useState(false);
   const handleSortBy = (sortString: string) => {
     //cm: comment, l: likes, v: views
     setPage('0');
@@ -82,9 +84,11 @@ const ComunityNewPost = () => {
 
   const handleGetAllWorkingStory = async () => {
     try {
+      // localStorage.removeItem('reload');
       const result = await communityApi.getCommunityNews(page, '10', sort, 1);
       if (result) {
         setStories(result?.data?.communications);
+        setTotal(result?.data?.total);
         if (result?.data?.communications?.length < 10) {
           setIsVisible(false);
         }
@@ -97,7 +101,7 @@ const ComunityNewPost = () => {
   React.useEffect(() => {
     handleGetAllWorkingStory();
     setHasMore(true);
-  }, [sort, saveListPost]);
+  }, [sort, readLoad]);
 
   // const handleChange = async () => {
   //     const nextPage = (parseInt(page) + 1).toString()
@@ -115,7 +119,7 @@ const ComunityNewPost = () => {
   //     }
   // };
 
-  console.log('page', page);
+  // console.log('page', page);
 
   const [language, setLanguage] = React.useState<any>();
 
@@ -137,6 +141,13 @@ const ComunityNewPost = () => {
     getlanguageApi();
   }, [languageRedux]);
   const footerRef = React.useRef<any>(null);
+
+  React.useEffect(() => {
+    const reload = localStorage.getItem('reload');
+    if (reload) {
+      setReload(true);
+    }
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -167,7 +178,7 @@ const ComunityNewPost = () => {
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
-            <h3>Các bài đăng mới nhất hôm nay</h3>
+            <h3>{'Hôm nay, HiJob có ' + total + ' bài viết mới'}</h3>
             <div className="title-comunity_icon">
               <div
                 className="dropdown dropdown-4"
