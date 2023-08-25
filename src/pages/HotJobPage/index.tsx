@@ -75,6 +75,7 @@ import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
 import { hotjobPage } from 'validations/lang/vi/hotjobPage';
 import { hotjobPageEn } from 'validations/lang/en/hotjobPage';
+import { getCookie } from 'cookies';
 
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
@@ -212,7 +213,8 @@ const HotJobpage: React.FC = () => {
         searchParams.get('hotjob-id') === '1' ? 18 : 20,
         languageRedux === 1 ? "vi" : "en");
       const hotjobtype = Number(searchParams.get('hotjob-type'));
-      const hotjobtotal = Number(searchParams.get('hotjob-total'));
+      // const hotjobtotal = Number(searchParams.get('hotjob-total'));
+      const hotjobtotal = getCookie('hotjobTotal');
       // hotjobtotal / 20
       setHotJob(hotjob.data);
       setHotJobType(hotjobtype);
@@ -308,7 +310,7 @@ const HotJobpage: React.FC = () => {
             >
               <div className="hot-job-title-container">
                 <h3>
-                  {language?.title_hot_jobs}{' '}
+                  {/* {language?.title_hot_jobs}{' '} */}
                   {hotJobType === 1
                     ? language?.remote_work
                     : hotJobType === 3
@@ -319,9 +321,20 @@ const HotJobpage: React.FC = () => {
                           ? language?.hot_job_page?.to_day
                           : hotJobType === 6
                             ? 'Freelancer'
-                            : ''}
+                            : hotJobType === 7
+                              ? 'Delivery'
+                              : ''}
+                  {' '}{hotJobTotal ? hotJobTotal : 0}
+                  <span>
+                    {' '}
+                    {
+                      // language?.hot_job_page?.result
+                      languageRedux === 1 ? "kết quả" :
+                        hotJobTotal > 1 ? "results" : "result"
+                    }
+                  </span>
                 </h3>
-                <h4>
+                {/* <h4>
                   {hotJobTotal ? hotJobTotal : 0}
                   <span>
                     {' '}
@@ -329,7 +342,7 @@ const HotJobpage: React.FC = () => {
                       language?.hot_job_page?.result
                     }
                   </span>
-                </h4>
+                </h4> */}
               </div>
             </div>
 
