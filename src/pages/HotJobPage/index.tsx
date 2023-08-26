@@ -196,7 +196,11 @@ const HotJobpage: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = language?.hot_job_page?.title_page;
+    // document.title = language?.hot_job_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Bài tuyển dụng nổi bật'
+        : 'HiJob - Featured Job Post';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,

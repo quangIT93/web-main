@@ -7,6 +7,9 @@ import './style.scss';
 import Category from './components/Category';
 import RollTop from '#components/RollTop';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer/index';
+
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
@@ -72,9 +75,17 @@ const Policy: React.FC = () => {
 
   const analytics: any = getAnalytics();
 
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = 'HiJob - Chính sách công ty';
+    // document.title = 'HiJob - Chính sách công ty';
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Chính sách công ty'
+        : 'HiJob - Company policy';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_policy' as string,

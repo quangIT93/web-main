@@ -639,7 +639,11 @@ const Detail = () => {
 
   useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = language?.post_detail_page?.title_page;
+    // document.title = language?.post_detail_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Chi tiết bài tuyển dụng'
+        : 'HiJob - Job Post Details';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_post_detail' as string,

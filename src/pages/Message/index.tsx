@@ -65,7 +65,10 @@ const Message = () => {
   }, [languageRedux]);
 
   useEffect(() => {
-    document.title = language?.messages_page?.title_page;
+    // document.title = language?.messages_page?.title_page;
+
+    document.title =
+      languageRedux === 1 ? 'HiJob - Nhắn tin' : 'HiJob - Messaging';
     logEvent(analytics, 'screen_view' as string, {
       page_title: '/web_message ',
     });
