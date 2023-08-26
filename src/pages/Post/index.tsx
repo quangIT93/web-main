@@ -420,7 +420,11 @@ const Post: React.FC = () => {
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
 
-    document.title = language?.post_page?.title_page;
+    // document.title = language?.post_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Tạo bài đăng tuyển dụng'
+        : 'HiJob - Create job posting';
     // document.title = language?.post_page?.title_page;
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,

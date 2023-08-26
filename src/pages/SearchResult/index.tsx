@@ -137,12 +137,14 @@ const NewJobs: React.FC = () => {
     // openNotificate,
     search,
   }: // setRefNav,
-    {
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      search: boolean;
-    } = useContext(HomeValueContext);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  {
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    search: boolean;
+  } = useContext(HomeValueContext);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [page, setPage] = React.useState(2);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [searchData, setSearchData] = React.useState<any>();
@@ -207,7 +209,7 @@ const NewJobs: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -219,12 +221,14 @@ const NewJobs: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = language?.search_results_page?.title_page;
+    // document.title = language?.search_results_page?.title_page;
+    document.title =
+      languageRedux === 1 ? 'HiJob - Tìm kiếm công việc' : 'HiJob - Job Search';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_search' as string,
@@ -286,7 +290,7 @@ const NewJobs: React.FC = () => {
 
   const LIST_DIS_ID =
     userFilteredCookies?.list_dis?.length > 0 ||
-      userFilteredCookies?.list_dis?.length !== undefined
+    userFilteredCookies?.list_dis?.length !== undefined
       ? userFilteredCookies?.list_dis?.map((dis: any) => dis[1])
       : [];
 
@@ -299,7 +303,7 @@ const NewJobs: React.FC = () => {
   //   .map((dis) => dis[1]);
   const LIST_CATEGORIES_ID =
     userFilteredCookies?.list_cate?.length !== 0 ||
-      userFilteredCookies?.list_cate !== undefined
+    userFilteredCookies?.list_cate !== undefined
       ? userFilteredCookies?.list_cate?.map((cate: any) => cate[1])
       : [];
   // searchParams
@@ -317,7 +321,7 @@ const NewJobs: React.FC = () => {
   const allLocation = async () => {
     try {
       const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (allLocation) {
@@ -339,7 +343,7 @@ const NewJobs: React.FC = () => {
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataCategories(result.data);
@@ -490,7 +494,7 @@ const NewJobs: React.FC = () => {
       LIST_CATEGORIES_ID,
       LIST_DIS_ID,
       SALARY_TYPE,
-      languageRedux === 1 ? "vi" : "en"
+      languageRedux === 1 ? 'vi' : 'en',
     );
 
     //
@@ -562,15 +566,11 @@ const NewJobs: React.FC = () => {
   const DropdownRenderLocation = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
       <Text className="title-filter_location">
-        {
-          language?.search_results_page?.palce_location
-        }
+        {language?.search_results_page?.palce_location}
       </Text>
       {menus}
       <Divider style={{ margin: 5 }}>
-        {disableLocation ?
-          language?.limit_10_location
-          : ''}
+        {disableLocation ? language?.limit_10_location : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -586,15 +586,11 @@ const NewJobs: React.FC = () => {
   const DropdownRenderCategory = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
       <Text className="title-filter_location">
-        {
-          language?.search_results_page?.palce_cate
-        }
+        {language?.search_results_page?.palce_cate}
       </Text>
       {menus}
       <Divider style={{ margin: 5 }}>
-        {disableCatelory ?
-          language?.limit_10_cate
-          : ''}
+        {disableCatelory ? language?.limit_10_cate : ''}
       </Divider>
     </div>
   );
@@ -603,7 +599,7 @@ const NewJobs: React.FC = () => {
     try {
       await dispatch(getProfile() as any);
       const result = await profileApi.getProfile(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setProfileUser(result.data);
@@ -741,7 +737,7 @@ const NewJobs: React.FC = () => {
           LIST_CATEGORIES_ID,
           LIST_DIS_ID,
           SALARY_TYPE,
-          languageRedux === 1 ? "vi" : "en"
+          languageRedux === 1 ? 'vi' : 'en',
         );
         // const result = await searchApi.getSearchByQueryV2(
         //   'null',
@@ -854,15 +850,11 @@ const NewJobs: React.FC = () => {
                   alignItems: 'center',
                 }}
               >
-                {
-                  language?.search_results_page?.find
-                }{' '}
+                {language?.search_results_page?.find}{' '}
                 <h4 style={{ margin: '0 10px' }}>
                   {searchData ? searchData?.total : 0}
                 </h4>
-                {
-                  language?.search_results_page.suitable_job
-                }
+                {language?.search_results_page.suitable_job}
               </div>
               <div
                 style={{
@@ -878,9 +870,7 @@ const NewJobs: React.FC = () => {
                   <>
                     <CreateKeywordIconSmall />
                     <span style={{ marginLeft: '4px', fontSize: '20px' }}>
-                      {
-                        language?.search_results_page?.create_key_notices
-                      }
+                      {language?.search_results_page?.create_key_notices}
                     </span>
                   </>
                 ) : (
@@ -913,11 +903,7 @@ const NewJobs: React.FC = () => {
                       handleChange(e, page);
                     }}
                   >
-                    <p>
-                      {
-                        language?.more
-                      }
-                    </p>
+                    <p>{language?.more}</p>
                     <MoreICon width={20} height={20} />
                   </Space>
                 </Stack>
@@ -932,7 +918,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -961,19 +947,13 @@ const NewJobs: React.FC = () => {
               <CloseOutlined style={{ fontSize: '30px' }} />
             </div>
             <p className="title-modal_createKey">
-              {
-                language?.search_results_page?.keyword_announcement
-              }
+              {language?.search_results_page?.keyword_announcement}
             </p>
             <p className="title-modal_noteKeyword">
-              {
-                language?.search_results_page?.add_keyword_titles
-              }
+              {language?.search_results_page?.add_keyword_titles}
             </p>
             <Input
-              placeholder={
-                language?.keyword2
-              }
+              placeholder={language?.keyword2}
               // allowClear
               size="large"
               // onChange={onChange}
@@ -989,9 +969,7 @@ const NewJobs: React.FC = () => {
               multiple
               maxTagCount="responsive"
               size="large"
-              placeholder={
-                language?.search_results_page?.palce_location
-              }
+              placeholder={language?.search_results_page?.palce_location}
               inputIcon={<EnvironmentOutlined />}
               dropdownRender={DropdownRenderLocation}
               // defaultValue={
@@ -1008,29 +986,29 @@ const NewJobs: React.FC = () => {
               options={
                 dataAllLocation
                   ? dataAllLocation?.map((dataLocation: any) => ({
-                    value: dataLocation.province_id,
-                    label: dataLocation.province_fullName,
-                    children: dataLocation.districts.map(
-                      (child: { district_id: string; district: string }) => {
-                        var dis = false;
-                        // setLocId([]);
-                        if (disableLocation) {
-                          dis = true;
-                          for (const elem of locId) {
-                            if (elem === child.district_id) {
-                              dis = false;
-                              break;
+                      value: dataLocation.province_id,
+                      label: dataLocation.province_fullName,
+                      children: dataLocation.districts.map(
+                        (child: { district_id: string; district: string }) => {
+                          var dis = false;
+                          // setLocId([]);
+                          if (disableLocation) {
+                            dis = true;
+                            for (const elem of locId) {
+                              if (elem === child.district_id) {
+                                dis = false;
+                                break;
+                              }
                             }
                           }
-                        }
-                        return {
-                          value: child.district_id,
-                          label: child.district,
-                          disabled: dis,
-                        };
-                      },
-                    ),
-                  }))
+                          return {
+                            value: child.district_id,
+                            label: child.district,
+                            disabled: dis,
+                          };
+                        },
+                      ),
+                    }))
                   : []
               }
               onChange={onChangeLocation}
@@ -1054,27 +1032,27 @@ const NewJobs: React.FC = () => {
               options={
                 dataCategories
                   ? dataCategories.map((parentCategory: any) => ({
-                    value: parentCategory.parent_category_id,
-                    label: parentCategory.parent_category,
-                    children: parentCategory.childs.map((child: any) => {
-                      var dis = false;
-                      //check id child  when disable = true
-                      if (disableCatelory) {
-                        dis = true;
-                        for (const elem of categoriesId) {
-                          if (elem === child.id) {
-                            dis = false;
-                            break;
+                      value: parentCategory.parent_category_id,
+                      label: parentCategory.parent_category,
+                      children: parentCategory.childs.map((child: any) => {
+                        var dis = false;
+                        //check id child  when disable = true
+                        if (disableCatelory) {
+                          dis = true;
+                          for (const elem of categoriesId) {
+                            if (elem === child.id) {
+                              dis = false;
+                              break;
+                            }
                           }
                         }
-                      }
-                      return {
-                        value: child.id,
-                        label: child.name,
-                        disabled: dis,
-                      };
-                    }),
-                  }))
+                        return {
+                          value: child.id,
+                          label: child.name,
+                          disabled: dis,
+                        };
+                      }),
+                    }))
                   : []
               }
               onChange={onChangeCateLory}
@@ -1089,9 +1067,7 @@ const NewJobs: React.FC = () => {
                 fontStyle: 'italic',
                 fontSize: '12px',
               }}
-              placeholder={
-                language?.search_results_page?.palce_cate
-              }
+              placeholder={language?.search_results_page?.palce_cate}
             />
 
             {/* <Select
@@ -1142,9 +1118,7 @@ const NewJobs: React.FC = () => {
                 onClick={handleSubmitKeyword}
                 variant="contained"
               >
-                {
-                  language?.search_results_page.apply
-                }
+                {language?.search_results_page.apply}
               </Button>
               {/* <Button
                 sx={{
@@ -1191,9 +1165,7 @@ const NewJobs: React.FC = () => {
               <CloseIcon />
             </IconButton>
             <p className="title-modal_createKeySuccess">
-              {
-                language?.search_results_page?.successful
-              }
+              {language?.search_results_page?.successful}
             </p>
             <p
               className="text-modal_createKeySuccess"
@@ -1203,14 +1175,10 @@ const NewJobs: React.FC = () => {
                 margin: '12px 0px 4px 0px',
               }}
             >
-              {
-                language?.search_results_page?.alert_create_success
-              }
+              {language?.search_results_page?.alert_create_success}
             </p>
             <p className="text-modal_createKeySuccess">
-              {
-                language?.search_results_page?.alert_move_to_notification
-              }
+              {language?.search_results_page?.alert_move_to_notification}
             </p>
             <div
               style={{
@@ -1231,9 +1199,7 @@ const NewJobs: React.FC = () => {
                 onClick={handleOpenNotification}
                 variant="contained"
               >
-                {
-                  language?.search_results_page?.confirm
-                }
+                {language?.search_results_page?.confirm}
               </Button>
               {/* <Button
                 sx={{

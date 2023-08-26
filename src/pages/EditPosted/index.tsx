@@ -118,7 +118,9 @@ const EditPosted = () => {
     email: '',
     deletedImages: [],
   });
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
 
   const [dataPostAccount, SetDataPostAccount] = React.useState<any>([]);
 
@@ -137,7 +139,7 @@ const EditPosted = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -149,12 +151,16 @@ const EditPosted = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = language?.post_detail_page?.title_page;
+    // document.title = language?.post_detail_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - HiJob - Chi tiết bài tuyển dụng'
+        : 'HiJob - Job Post Details';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_editPost' as string,
@@ -209,8 +215,9 @@ const EditPosted = () => {
 
   const getDataPosted = async () => {
     try {
-      const result = await postApi.getPostbyId(postId,
-        languageRedux === 1 ? "vi" : "en"
+      const result = await postApi.getPostbyId(
+        postId,
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (
         result &&
@@ -254,7 +261,7 @@ const EditPosted = () => {
         0,
         20,
         '-1',
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -482,11 +489,7 @@ const EditPosted = () => {
         <Navbar />
         <div className="edit-posted_main">
           <div className="edit-title_post">
-            <h1>
-              {
-                language?.post_page?.edit_post
-              }
-            </h1>
+            <h1>{language?.post_page?.edit_post}</h1>
           </div>
           <Skeleton loading={loading} active>
             <form action="">
@@ -600,9 +603,7 @@ const EditPosted = () => {
                 onClick={handleSubmit}
                 className="btn-edit_submitForm"
               >
-                {
-                  language?.post_page?.save_edit_post
-                }
+                {language?.post_page?.save_edit_post}
               </button>
             </form>
           </Skeleton>

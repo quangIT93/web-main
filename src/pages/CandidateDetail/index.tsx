@@ -80,7 +80,9 @@ interface ICategories {
 }
 
 const CandidateDetail: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language,);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [loading, setLoading] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [dataPost, setDataPost] = useState<any>(null);
@@ -95,7 +97,7 @@ const CandidateDetail: React.FC = () => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -107,14 +109,18 @@ const CandidateDetail: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const analytics: any = getAnalytics();
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
-    document.title = language?.candidate_detail_page?.title_page;
+    // document.title = language?.candidate_detail_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Chi tiết ứng viên'
+        : 'HiJob - Candidate Details';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_candidate_detail' as string,
@@ -137,8 +143,9 @@ const CandidateDetail: React.FC = () => {
     try {
       const postId = parseInt(searchParams.get('post-id') ?? '');
       const candidateId = searchParams.get('application_id') ?? '';
-      const result = await postApi.getById(postId,
-        languageRedux === 1 ? "vi" : "en"
+      const result = await postApi.getById(
+        postId,
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -147,7 +154,7 @@ const CandidateDetail: React.FC = () => {
       const detailCandidate = await historyRecruiter.GetAJobApplication(
         postId,
         candidateId,
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (detailCandidate) {
@@ -360,9 +367,7 @@ const CandidateDetail: React.FC = () => {
                     fontStyle: 'italic',
                   }}
                 >
-                  {
-                    language?.posted_on
-                  }{' '}
+                  {language?.posted_on}{' '}
                   {moment(dataPost?.start_date).format('DD/MM/YY')}
                 </p>
                 {dataPost?.status === 1 ? (
@@ -401,9 +406,7 @@ const CandidateDetail: React.FC = () => {
                       fontStyle: 'italic',
                     }}
                   >
-                    {
-                      language?.history_page?.does_not_accept
-                    }
+                    {language?.history_page?.does_not_accept}
                   </p>
                 )}
               </Box>
@@ -494,7 +497,8 @@ const CandidateDetail: React.FC = () => {
                         window.open(
                           `/message?post_id=${searchParams.get(
                             'post-id',
-                          )}&user_id=${dataCandidate.applicationProfile.account_id
+                          )}&user_id=${
+                            dataCandidate.applicationProfile.account_id
                           }&application_id=${searchParams.get(
                             'application_id',
                           )} `,
@@ -542,8 +546,8 @@ const CandidateDetail: React.FC = () => {
                   <p>
                     {dataCandidate?.applicationProfile?.birthday
                       ? moment(
-                        new Date(dataCandidate?.applicationProfile?.birthday),
-                      ).format('DD/MM/yyyy')
+                          new Date(dataCandidate?.applicationProfile?.birthday),
+                        ).format('DD/MM/yyyy')
                       : language?.unupdated}
                   </p>
                   <p>
@@ -646,12 +650,12 @@ const CandidateDetail: React.FC = () => {
               <Space wrap className="item-info-work">
                 {dataCandidate?.categories?.length !== 0
                   ? dataCandidate?.categories?.map(
-                    (item: ICategories, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item.child_category}
-                      </Button>
-                    ),
-                  )
+                      (item: ICategories, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          {item.child_category}
+                        </Button>
+                      ),
+                    )
                   : language?.unupdated}
               </Space>
             </div>
@@ -668,12 +672,12 @@ const CandidateDetail: React.FC = () => {
               <Space wrap className="item-info-work">
                 {dataCandidate?.locations?.length !== 0
                   ? dataCandidate?.locations?.map(
-                    (item: any, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item?.district}
-                      </Button>
-                    ),
-                  )
+                      (item: any, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          {item?.district}
+                        </Button>
+                      ),
+                    )
                   : language?.unupdated}
               </Space>
             </div>
@@ -715,9 +719,7 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>
-                  {language?.working_experience}
-                </h3>
+                <h3>{language?.working_experience}</h3>
               </div>
               {dataCandidate?.experiences?.length !== 0 ? (
                 dataCandidate?.experiences?.map((item: any, index: number) => (
