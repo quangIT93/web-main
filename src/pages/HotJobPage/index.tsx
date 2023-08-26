@@ -138,7 +138,7 @@ const HotJobpage: React.FC = () => {
 
   const [pageNumber, setPageNumber] = React.useState(0);
   const [language, setLanguage] = React.useState<any>();
-  const [totalPage, setTotalPage] = React.useState<any>(
+  const [totalPage, setTotalPage] = React.useState<number>(
     Math.round(Number(searchParams.get('hotjob-total')) / 20) + 1,
   );
   const getlanguageApi = async () => {
@@ -223,7 +223,8 @@ const HotJobpage: React.FC = () => {
       setHotJobType(hotjobtype);
       setHotJobTotal(hotjobtotal);
       setIsVisible(true);
-      // setTotalPage(Math.round(hotjobtotal / 20) + 1);
+
+      setTotalPage(Math.round(Number(hotjobtotal) / 20) + 1);
     } catch (error) {
       console.log(error);
     }
@@ -274,8 +275,6 @@ const HotJobpage: React.FC = () => {
   // }, [pageNumber]);
 
   // handle click post details
-  console.log('page number', pageNumber);
-  console.log('totalPage', totalPage);
 
   // handle change paginaton
   const handleChange = async (
