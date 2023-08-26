@@ -138,9 +138,7 @@ const HotJobpage: React.FC = () => {
 
   const [pageNumber, setPageNumber] = React.useState(0);
   const [language, setLanguage] = React.useState<any>();
-  const [totalPage, setTotalPage] = React.useState<any>(
-    Math.round(Number(searchParams.get('hotjob-total')) / 20) + 1,
-  );
+  const [totalPage, setTotalPage] = React.useState<any>();
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
@@ -201,6 +199,8 @@ const HotJobpage: React.FC = () => {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
     });
+
+    setTotalPage(Math.round(hotJobTotal / 20) + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
   // state redux
@@ -274,8 +274,8 @@ const HotJobpage: React.FC = () => {
   // }, [pageNumber]);
 
   // handle click post details
-  console.log('page number', pageNumber);
-  console.log('totalPage', totalPage);
+  // console.log('page number', pageNumber);
+  // console.log('totalPage', totalPage);
 
   // handle change paginaton
   const handleChange = async (
