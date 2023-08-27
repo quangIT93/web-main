@@ -133,7 +133,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const [totalJob, setTotalJob] = React.useState<number>(0);
   const [language, setLanguage] = useState<any>();
 
-  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  // const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // const inputRef = useRef<InputRef>(null);
 
   // console.log("dataNotification", dataNotification);
@@ -475,11 +475,7 @@ const SearchInput: React.FC<SearchProps> = ({
         className="search-input-wrapper-iconFilter"
         shape="circle"
         onClick={() => {
-          if (!localStorage.getItem('accessToken')) {
-            setOpenModalLogin(true);
-          } else {
-            setOpenCollapseFilter(!openCollapseFilter);
-          }
+          setOpenCollapseFilter(!openCollapseFilter);
         }}
         name="search-input-wrapper-iconFilter"
       >
@@ -489,10 +485,6 @@ const SearchInput: React.FC<SearchProps> = ({
           <FilterIcon width={20} height={20} />
         )}
       </Button>
-      <ModalLogin
-        openModalLogin={openModalLogin}
-        setOpenModalLogin={setOpenModalLogin}
-      />
     </div>
   );
 };
