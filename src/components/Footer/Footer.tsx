@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
-import languageApi from 'api/languageApi';
 
 const { mobile, tablet } = breakpoints;
 
@@ -82,25 +81,10 @@ const Footer: React.FC = () => {
   // const [position, setPosition] = React.useState('0')
 
   const footerRef = React.useRef<HTMLDivElement | null>(null);
-  const [language, setLanguage] = useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   // const mail = useRef('contact.hijob@gmail.com');
   // const email = ['contact.hijob@gmail.com', 'contact.hijob@gmail.com'];

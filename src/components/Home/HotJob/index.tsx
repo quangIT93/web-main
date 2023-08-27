@@ -44,7 +44,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 // import { home } from 'validations/lang/vi/home';
 // import { homeEn } from 'validations/lang/en/home';
-import languageApi from 'api/languageApi';
+
 import { setCookie } from 'cookies';
 
 // interface ItemTheme {
@@ -64,24 +64,10 @@ const HotJob: React.FC = () => {
 
   // const dispatch = useDispatch();
   // const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
-  const [language, setLanguage] = React.useState<any>();
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const handleClickItem = (
     event: any,
@@ -98,10 +84,7 @@ const HotJob: React.FC = () => {
 
     setCookie('hotjobTotal', JSON.stringify(total), 365);
     localStorage.setItem('hotjobApi', url);
-    window.open(
-      `/hotjobs?hotjob-id=${id}&hotjob-type=${type}`,
-      '_self',
-    );
+    window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`, '_self');
   };
 
   // handle close backdrop

@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store/reducer';
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
-import languageApi from 'api/languageApi';
+
 // import { AnyMxRecord } from 'dns';
 
 const { Text } = Typography;
@@ -59,25 +59,9 @@ const FilterTimeJob: React.FC<IFilterTimeJob> = (props) => {
   const is_working_weekend = userFilteredCookies?.is_working_weekend;
   const is_remotely = userFilteredCookies?.is_remotely;
 
-  const [language, setLanguageState] = useState<any>();
-
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   useEffect(() => {
     if (is_working_weekend) {

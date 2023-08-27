@@ -56,8 +56,6 @@ import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
-import languageApi from 'api/languageApi';
-
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 import { searchResultVi } from 'validations/lang/vi/searchResult';
@@ -114,28 +112,13 @@ const Notificate = () => {
     React.useState(false);
 
   const refNotification = React.useRef<HTMLDivElement | null>(null);
-  const [language, setLanguage] = useState<any>();
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   // const inputRef = useRef<InputRef>(null);
 
   // console.log("dataNotification", dataNotification);
-
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
 
   const handleClickActiveSystem = (e: any) => {
     setActiveSystem(true);

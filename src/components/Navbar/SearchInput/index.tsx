@@ -131,30 +131,15 @@ const SearchInput: React.FC<SearchProps> = ({
   // const [openDropdown, setOpenDropdown] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(false);
   const [totalJob, setTotalJob] = React.useState<number>(0);
-  const [language, setLanguage] = useState<any>();
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   // const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // const inputRef = useRef<InputRef>(null);
 
   // console.log("dataNotification", dataNotification);
-
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
 
   const QUERY = searchParams.get('q');
   const location = useLocation();

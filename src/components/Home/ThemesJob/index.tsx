@@ -53,7 +53,6 @@ import JobCard from '../JobCard';
 import { Skeleton } from 'antd';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
-import languageApi from 'api/languageApi';
 
 interface PostTheme {
   id: number;
@@ -101,25 +100,10 @@ const ThemesJob: React.FC = () => {
     actionCreators,
     dispatch,
   );
-  const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const handleChange = async (
     event: React.ChangeEvent<unknown>,

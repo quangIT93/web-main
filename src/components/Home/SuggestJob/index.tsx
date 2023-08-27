@@ -56,7 +56,6 @@ import JobCard from '../JobCard';
 import ModalLogin from '../../../components/Home/ModalLogin';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
-import languageApi from 'api/languageApi';
 
 interface PostTheme {
   id: number;
@@ -102,25 +101,10 @@ const ThemesJob: React.FC = () => {
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [nearJob, setNearJob] = React.useState<any>([]);
-  const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   // state redux
   // const { post } = useSelector((state: RootState) => state);
