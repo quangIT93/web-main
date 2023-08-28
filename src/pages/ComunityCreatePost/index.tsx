@@ -32,6 +32,9 @@ import apiCommunity from '../../api/apiCommunity';
 import communityApi from '../../api/apiCommunity';
 
 const ComunityCreatePost = () => {
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const { TextArea } = Input;
   const [valueTitle, setValueTitle] = useState('');
   const [valueContent, setValueContent] = useState('');
@@ -50,7 +53,9 @@ const ComunityCreatePost = () => {
   const POST_COMMUNITY_ID = searchParams.get('post-community');
   const [communityPost, setCommunityPost] = React.useState<any>();
   const [deleteImages, setDeleteImages] = React.useState<any[]>([]);
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [messageApi, contextHolder] = message.useMessage();
 
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
@@ -58,13 +63,13 @@ const ComunityCreatePost = () => {
     const community_success = localStorage.getItem('community_success');
     const accountId = localStorage.getItem('accountId');
     const accessToken = localStorage.getItem('accessToken');
-    if (dataProfile && dataProfile.accountId !== accountId || !accessToken) {
+    if ((dataProfile && dataProfile.accountId !== accountId) || !accessToken) {
       window.open('/', '_parent');
     }
   }, []);
 
-  console.log('selectedFiles', selectedFiles);
-  console.log('selectedImages', selectedImages);
+  // console.log('selectedFiles', selectedFiles);
+  // console.log('selectedImages', selectedImages);
   // console.log('valueTitle', valueTitle);
   // console.log('valueContent', valueContent);
 
@@ -73,6 +78,7 @@ const ComunityCreatePost = () => {
       if (POST_COMMUNITY_ID) {
         const result = await communityApi.getCommunityDetailId(
           POST_COMMUNITY_ID,
+          languageRedux === 1 ? 'vi' : 'en',
         );
         if (result) {
           setCommunityPost(result?.data);
@@ -88,7 +94,7 @@ const ComunityCreatePost = () => {
 
   React.useEffect(() => {
     handleGetDetailCommunityById();
-  }, [POST_COMMUNITY_ID]);
+  }, [POST_COMMUNITY_ID, languageRedux]);
 
   const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -187,7 +193,7 @@ const ComunityCreatePost = () => {
 
     if (files) {
       if (files.length > 5) {
-        message.error('Tối đa 5 hình');
+        message.error(language?.limit_5_img);
         return;
       }
       const newImages: string[] = [];
@@ -210,7 +216,7 @@ const ComunityCreatePost = () => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error('Tối đa 5 hình');
+              message.error(language?.limit_5_img);
               return;
             }
             setSelectedImages(newImageSelected);
@@ -269,7 +275,7 @@ const ComunityCreatePost = () => {
       // console.log('fileUploaded : ', fileUploaded);
 
       if (fileUploaded.length > 5) {
-        message.error('Tối đa 5 hình');
+        message.error(language?.limit_5_img);
         return;
       }
 
@@ -283,7 +289,7 @@ const ComunityCreatePost = () => {
       ];
 
       if (newFileSelected.length > 5) {
-        message.error('Tối đa 5 hình');
+        message.error(language?.limit_5_img);
 
         return;
       }
@@ -312,7 +318,7 @@ const ComunityCreatePost = () => {
               })),
             ];
             if (newImageSelected.length > 5) {
-              message.error('Tối đa 5 hình');
+              message.error(language?.limit_5_img);
 
               return;
             }
@@ -337,14 +343,20 @@ const ComunityCreatePost = () => {
   const validValue = () => {
     if (valueTitle === '') {
       return {
-        message: 'Vui lòng nhập tiêu đề bài viết',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập chủ đề bài viết'
+            : 'Please enter the topic of the post',
         checkForm: false,
       };
     }
 
     if (valueContent === '') {
       return {
-        message: 'Vui lòng nhập nội dung bài viết',
+        message:
+          languageRedux === 1
+            ? 'Vui lòng nhập nội dung bài viết'
+            : 'Please enter the content of the post',
         checkForm: false,
       };
     }
@@ -390,19 +402,22 @@ const ComunityCreatePost = () => {
           formData,
         );
         if (result) {
-          console.log('sửa bài viết thành công');
-          messageApi.open({
-            type: 'success',
-            content: 'sửa bài viết thành công',
-          });
+          // console.log('sửa bài viết thành công');
+          // messageApi.open({
+          //   type: 'success',
+          //   content: 'sửa bài viết thành công',
+          // });
           window.open('/comunity_create_success', '_parent');
           localStorage.setItem('community_success', 'true');
           // window.open('/comunity_create_success', '_parent')
         } else {
-          console.log('sửa bài viết thất bại');
+          // console.log('sửa bài viết thất bại');
           messageApi.open({
             type: 'error',
-            content: 'sửa bài viết thất bại',
+            content:
+              languageRedux === 1
+                ? 'Sửa bài viết không thành công'
+                : 'Edit post failed',
           });
         }
       } else {
@@ -411,7 +426,7 @@ const ComunityCreatePost = () => {
           content: message,
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const createCommunity = async (formData: any) => {
@@ -423,7 +438,7 @@ const ComunityCreatePost = () => {
         const result = await apiCommunity.postCommunications(formData);
 
         if (result) {
-          console.log('tạo bài viết thành công');
+          // console.log('tạo bài viết thành công');
           window.open('/comunity_create_success', '_parent');
           localStorage.setItem('community_success', 'true');
         } else {
@@ -446,26 +461,40 @@ const ComunityCreatePost = () => {
       {contextHolder}
       <div className="comunity-create-post-content">
         <div className="create-post-header">
-          <h3>{POST_COMMUNITY_ID ? 'Sửa bài viết' : 'Tạo bài viết mới'}</h3>
+          <h3>
+            {POST_COMMUNITY_ID
+              ? languageRedux === 1
+                ? 'Sửa bài viết'
+                : 'Edit post'
+              : languageRedux === 1
+              ? 'Tạo bài viết mới'
+              : 'Creat new post'}
+          </h3>
         </div>
         <div className="create-post-body">
           <div className="create-post-body_input">
-            <h3>1. Chủ đề</h3>
+            <h3>{languageRedux === 1 ? '1. Chủ đề' : '1. Topic'}</h3>
             <Input
               value={valueTitle}
               onChange={(e: any) => {
                 if (e.target.value.length <= 500) {
                   setValueTitle(e.target.value);
                 } else {
-                  message.error('Tiêu đề không được vượt quá 500 ký tự');
+                  message.error(
+                    languageRedux === 1
+                      ? 'Tiêu đề không được vượt quá 500 ký tự'
+                      : "Topics can't exceed 500 characters",
+                  );
                 }
               }}
               className="input-title"
-              placeholder="Chủ đề cần chia sẻ"
+              placeholder={
+                languageRedux === 1 ? 'Chủ đề cần chia sẻ' : 'Topics to share'
+              }
             />
           </div>
           <div className="create-post-body_input">
-            <h3>2. Nội dung</h3>
+            <h3>{languageRedux === 1 ? '2. Nội dung' : '2. Contents'}</h3>
             <TextArea
               value={valueContent}
               onChange={(e: any) => {
@@ -473,18 +502,26 @@ const ComunityCreatePost = () => {
                   setValueContent(e.target.value);
                 } else {
                   message.error(
-                    'Nội dung bài viết không được vượt quá 1000 ký tự',
+                    languageRedux === 1
+                      ? 'Nội dung bài viết không được vượt quá 1000 ký tự'
+                      : 'Post content should not exceed 1000 characters',
                   );
                 }
               }}
               className="input-content"
-              placeholder="Nội dung cần chia sẻ"
+              placeholder={
+                languageRedux === 1
+                  ? 'Nội dung cần chia sẻ'
+                  : 'Content to share'
+              }
               autoSize={{ minRows: 5, maxRows: 9 }}
             />
           </div>
           <div className="create-post-body_input">
             <h3>
-              <span>3. Thêm hình ảnh</span>
+              <span>
+                {languageRedux === 1 ? '3. Thêm hình ảnh' : '3. Add images'}
+              </span>
               <p
                 style={{
                   display:
@@ -494,7 +531,9 @@ const ComunityCreatePost = () => {
                   cursor: 'pointer',
                 }}
               >
-                <label htmlFor="submit">Thêm hình ảnh</label>
+                <label htmlFor="submit">
+                  {languageRedux === 1 ? 'Thêm hình ảnh' : 'Add images'}
+                </label>
                 <input
                   id="submit"
                   type="file"
@@ -533,20 +572,28 @@ const ComunityCreatePost = () => {
                         display:
                           (selectedImages.length === 0 &&
                             selectedFiles.length === 0) ||
-                            isDragActive
+                          isDragActive
                             ? 'flex'
                             : 'none',
                       }}
                     >
                       <CameraComunityIcon />
-                      <p>Thêm hình ảnh cho bài viết</p>
+                      <p>
+                        {languageRedux === 1
+                          ? 'Thêm hình ảnh cho bài viết'
+                          : 'Add an image to the post'}
+                      </p>
                     </div>
                   </div>
                 </section>
                 <Box className="list_iamges">
                   {selectedImages.map((item: any, index: number) => (
                     <div className="item-image" key={index}>
-                      <img key={index} src={item?.image} alt="Ảnh lỗi" />
+                      <img
+                        key={index}
+                        src={item?.image}
+                        alt={language?.err_none_img}
+                      />
                       <div
                         className="deleteButton"
                         style={{
@@ -575,14 +622,18 @@ const ComunityCreatePost = () => {
               className={
                 valueTitle === '' || valueContent === ''
                   ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                  'submit'
+                    'submit'
                   : 'submit full-info'
               }
             >
               {valueTitle === '' || valueContent === ''
                 ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                'Lưu bài'
-                : 'Đăng bài viết'}
+                  languageRedux === 1
+                  ? 'Lưu bài'
+                  : 'Save post'
+                : languageRedux === 1
+                ? 'Đăng bài viết'
+                : 'Post an article'}
             </Button>
           </div>
         </div>

@@ -22,6 +22,7 @@ import {
   EditComunity,
   FilterComunity,
   MoreICon,
+  NewestIcon,
 } from '#components/Icons';
 
 // @ts-ignore
@@ -57,6 +58,7 @@ const ComunityNewPost = () => {
   const [readLoad, setReload] = React.useState(false);
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const handleSortBy = (sortString: string) => {
     //cm: comment, l: likes, v: views
     setPage('0');
@@ -71,10 +73,16 @@ const ComunityNewPost = () => {
 
   const fetchMoreData = async () => {
     const nextPage = (parseInt(page) + 1).toString();
-    const result = await communityApi.getCommunityNews(nextPage, '10', sort, 1);
+    const result = await communityApi.getCommunityNews(
+      nextPage,
+      '10',
+      sort,
+      1,
+      languageRedux === 1 ? 'vi' : 'en',
+    );
 
     //
-    if (result && result?.data?.communications?.length !== 0) {
+    if (result && !result?.data?.is_over) {
       setStories((prev: any) => [...prev, ...result?.data?.communications]);
       setPage(nextPage);
     } else {
@@ -82,19 +90,28 @@ const ComunityNewPost = () => {
       setPage('0');
       message.error('Đã hết bài viết');
       setIsVisible(false);
-      // console.log('da het data', result);
+      // console.log('Đã hết bài viết để hiển thị', result);
     }
   };
 
   const handleGetAllWorkingStory = async () => {
     try {
       // localStorage.removeItem('reload');
-      const result = await communityApi.getCommunityNews(page, '10', sort, 1);
+      setLoading(true);
+      const result = await communityApi.getCommunityNews(
+        page,
+        '10',
+        sort,
+        1,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setStories(result?.data?.communications);
         setTotal(result?.data?.total);
-        if (result?.data?.communications?.length < 10) {
+        setLoading(false);
+        if (result?.data?.is_over) {
           setIsVisible(false);
+          setHasMore(false);
         }
       }
     } catch (error) {
@@ -105,7 +122,7 @@ const ComunityNewPost = () => {
   React.useEffect(() => {
     handleGetAllWorkingStory();
     setHasMore(true);
-  }, [sort, readLoad]);
+  }, [sort, readLoad, languageRedux]);
 
   // const handleChange = async () => {
   //     const nextPage = (parseInt(page) + 1).toString()
@@ -117,9 +134,9 @@ const ComunityNewPost = () => {
   //         setPage(nextPage);
   //     } else {
   //         setPage("0");
-  //         message.error("da het data");
+  //         message.error("Đã hết bài viết để hiển thị");
   //         setIsVisible(false);
-  //         // console.log('da het data', result);
+  //         // console.log('Đã hết bài viết để hiển thị', result);
   //     }
   // };
 
@@ -182,7 +199,15 @@ const ComunityNewPost = () => {
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
-            <h3>{'Hôm nay, HiJob có ' + total + ' bài viết mới'}</h3>
+            <h3>
+              {loading
+                ? 'Loading...'
+                : language?.community_page?.today_hijob_has +
+                  ' ' +
+                  total +
+                  ' ' +
+                  language?.community_page?.new_posts}
+            </h3>
             <div className="title-comunity_icon">
               <div
                 className="dropdown dropdown-4"
@@ -193,9 +218,23 @@ const ComunityNewPost = () => {
                 <ul className="dropdown_menu dropdown_menu-4">
                   <li
                     className={
-                      sort !== '' && sort == 'l'
+                      sort === ''
                         ? 'dropdown_item-1  active'
                         : 'dropdown_item-1'
+                    }
+                    style={{ display: openMenu ? 'flex' : 'none' }}
+                    onClick={() => {
+                      handleSortBy('');
+                    }}
+                  >
+                    <NewestIcon />
+                    <p>{language?.history_page?.latest}</p>
+                  </li>
+                  <li
+                    className={
+                      sort !== '' && sort == 'l'
+                        ? 'dropdown_item-2  active'
+                        : 'dropdown_item-2'
                     }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
@@ -208,8 +247,8 @@ const ComunityNewPost = () => {
                   <li
                     className={
                       sort !== '' && sort == 'v'
-                        ? 'dropdown_item-2  active'
-                        : 'dropdown_item-2'
+                        ? 'dropdown_item-3  active'
+                        : 'dropdown_item-3'
                     }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
@@ -222,8 +261,8 @@ const ComunityNewPost = () => {
                   <li
                     className={
                       sort !== '' && sort == 'cm'
-                        ? 'dropdown_item-3  active'
-                        : 'dropdown_item-3'
+                        ? 'dropdown_item-4  active'
+                        : 'dropdown_item-4'
                     }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {

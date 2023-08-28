@@ -301,6 +301,7 @@ const JobCard: React.FC<Iprops> = (props) => {
 
                     if (!localStorage.getItem('accessToken')) {
                       setOpenModalLogin(true);
+                      return;
                     }
                     if (props.item.bookmarked) {
                       const result = await bookMarkApi.deleteBookMark(

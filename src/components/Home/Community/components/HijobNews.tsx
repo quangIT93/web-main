@@ -19,13 +19,17 @@ const HijobNews = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [news, setNews] = React.useState<any>();
   const [like, setLike] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleGetHijobNews = async () => {
     try {
-      const result = await communityApi.getCommunityNews('', '5', '', 0);
+      const result = await communityApi.getCommunityNews('', '5', '', 0,
+        languageRedux === 1 ? "vi" : "en");
       if (result) {
         setNews(result?.data?.communications);
       }
@@ -68,7 +72,7 @@ const HijobNews = () => {
           <NewsPaperIcon />
           <h3>HiJob News</h3>
         </div>
-        <p onClick={() => window.open('/news-comunity', '_parent')}>View all</p>
+        <p onClick={() => window.open('/news-comunity', '_parent')}>{language?.home_page?.view_all}</p>
       </div>
       <div className="community-content-body">
         {news &&

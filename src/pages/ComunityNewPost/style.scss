@@ -133,7 +133,7 @@
                         }
 
                         .dropdown_menu-4 {
-                            @for $i from 1 to 4 {
+                            @for $i from 1 to 5 {
                                 .dropdown_item-#{$i} {
                                     transform-origin: top center;
                                     animation: scaleZ 300ms ($i * 60ms) ease-in-out forwards;

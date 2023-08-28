@@ -17,6 +17,9 @@ const WorkingStory = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const [stories, setStories] = React.useState<any>();
   const [position, setPosition] = React.useState<any>();
@@ -30,7 +33,9 @@ const WorkingStory = () => {
 
   const handleGetWorkingStory = async () => {
     try {
-      const result = await communityApi.getCommunityNews('', '5', '', 1);
+      const result = await communityApi.getCommunityNews('', '5', '', 1,
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setStories(result?.data?.communications);
         setLike(result?.data?.communications?.liked);
@@ -75,7 +80,7 @@ const WorkingStory = () => {
             localStorage.setItem('community', '.community-container');
           }}
         >
-          View all
+          {language?.home_page?.view_all}
         </p>
       </div>
       <div className="community-content-body">
@@ -102,7 +107,7 @@ const WorkingStory = () => {
               </div>
               <div className="body-item-user">
                 <UseCircleIcon />
-                <p>{story?.profileData?.name}</p>
+                <p>{story?.profileData?.name.slice(0, 2) + "..."}</p>
               </div>
               <div className="body-item-actions">
                 <div className="action-item">

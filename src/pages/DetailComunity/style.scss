@@ -31,6 +31,7 @@
                 align-items: center;
                 gap: 8px;
                 cursor: pointer;
+                margin-bottom: 24px;
                 // width: fit-content;
 
                 .icon-back {
@@ -54,7 +55,7 @@
             .title-comunity {
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
+                align-items:flex-start;
 
                 @media screen and (max-width:600px) {
                     flex-direction: column;
@@ -68,10 +69,11 @@
                     font-weight: 700;
                     line-height: 30px;
                     // word-break: break-word;
-                    width: 75%;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                    // width: 75%;
+                    // overflow: hidden;
+                    // text-overflow: ellipsis;
+                    // white-space: nowrap;
+                    word-break: break-word;
 
                     @media screen and (max-width:600px) {
                         width: 100%;
@@ -100,7 +102,7 @@
 
             .comunityDetail-wrap_content {
                 // border: 1px solid #ccc;
-                padding: 12px 24px;
+                // padding: 12px 24px;
                 border-radius: 12px;
                 margin: 24px 0;
 
@@ -140,16 +142,33 @@
 
                     }
 
+              
+
                 }
 
-                .comunityDetail-wrap_actor {}
+                .comunityDetail-wrap_actor {
+                    p {
+                        
+                    }
+                }
             }
 
             .comunityDetail-wrap_img {
                 border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
 
                 img {
                     border-radius: 12px;
+                    width: 500px;
+                    height: 500px;
+
+                    @include breakpoint(mobile) {
+                        height: 250px;
+                    }
                 }
             }
 
@@ -331,12 +350,17 @@
                     display: flex;
                     align-items: center;
 
-                    img {
-                        width: 50px;
-                        height: 50px;
-                        // border-radius: 10px;
-                        border-radius: 50%;
+                    span {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
 
+                        img {
+                            width: 30px;
+                            height: 30px;
+                            // border-radius: 10px;
+
+                        }
                     }
                 }
 
@@ -360,8 +384,19 @@
                             font-style: normal;
                             font-weight: 700;
                             line-height: 24px;
+                            // text-overflow: ellipsis;
+                            // max-width: 2ch;
+                            // overflow: hidden;
+                            // white-space: nowrap;
                         }
                     }
+                }
+
+                p {
+                    font-size: 14px;
+                    display: flex;
+                    align-items: flex-end;
+
                 }
             }
 
@@ -376,7 +411,7 @@
 
                     img {
                         border-radius: 50%;
-
+                        filter: blur(1px);
                     }
 
                     .comunityDetail-comment_chaterInput {
@@ -476,6 +511,7 @@
                         // border: 1px solid blue;
                         img {
                             border-radius: 50%;
+                            filter: blur(1px);
                         }
 
                         .comunityDetail-comment {
@@ -493,25 +529,43 @@
                             .comunityDetail-comment_top {
                                 display: flex;
                                 align-items: center;
+                                justify-content: space-between;
 
-                                h3 {
-                                    font-family: Roboto;
-                                    font-size: 16px;
-                                    font-style: normal;
-                                    font-weight: 700;
-                                    line-height: 24px;
+                                &__left {
+                                    display: flex;
+                                    align-items: center;
+
+                                    h3 {
+                                        font-family: Roboto;
+                                        font-size: 16px;
+                                        font-style: normal;
+                                        font-weight: 700;
+                                        line-height: 24px;
+
+                                        // &:first-child {
+                                        //     text-overflow: ellipsis;
+                                        //     max-width: 2ch;
+                                        //     overflow: hidden;
+                                        //     white-space: nowrap;
+                                        // }
+                                    }
+
+                                    h3:nth-child(2) {
+                                        padding: 0 8px;
+                                    }
+
+                                    p {
+                                        font-family: Roboto;
+                                        font-size: 12px;
+                                        font-style: normal;
+                                        font-weight: 400;
+                                        line-height: 16px;
+                                    }
                                 }
 
-                                h3:nth-child(2) {
-                                    padding: 0 8px;
-                                }
-
-                                p {
-                                    font-family: Roboto;
-                                    font-size: 12px;
-                                    font-style: normal;
-                                    font-weight: 400;
-                                    line-height: 16px;
+                                &__right {
+                                    display: flex;
+                                    align-items: center;
                                 }
                             }
 

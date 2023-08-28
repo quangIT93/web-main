@@ -19,6 +19,7 @@ import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 import ShowCancleSave from '#components/ShowCancleSave';
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import ModalLogin from '../../Home/ModalLogin';
+import { RootState } from 'store';
 
 interface IWorkingStoryCard {
   item: any;
@@ -28,6 +29,9 @@ interface IWorkingStoryCard {
 }
 
 const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const { item, index, setSaveListPost, saveListPost } = props;
   const [like, setLike] = React.useState(item && item?.liked);
   const [bookmark, setBookmark] = React.useState(item?.bookmarked);
@@ -248,8 +252,8 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
               icon={<UserOutlined />}
             />
             <div className="info-actor_comunity">
-              <p>Tác giả</p>
-              <p>{item?.profileData?.name}</p>
+              <p>{language?.community_page?.author}</p>
+              <p>{item?.profileData?.name.slice(0, 2) + '...'}</p>
             </div>
           </div>
           <p>{item?.createdAtText}</p>
