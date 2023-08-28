@@ -252,9 +252,6 @@ const BreadcrumbsCpn: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log('languageRedux', languageRedux);
-  console.log('arrayChild', arrayChild);
-
   const breadcrumbs = [
     <Typography
       key="2"

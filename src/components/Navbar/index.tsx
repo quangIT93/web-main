@@ -288,8 +288,6 @@ const Navbar: React.FC = () => {
   );
 
   const languageData = useSelector((state: RootState) => {
-    console.log('state', state);
-
     return state.dataLanguage.languages;
   });
 
@@ -915,8 +913,6 @@ const Navbar: React.FC = () => {
   //   return () => clearInterval(interval);
   // }, []);
   // console.log('click');
-
-  console.log('language: ' + languageData);
 
   const buttons = [
     <button

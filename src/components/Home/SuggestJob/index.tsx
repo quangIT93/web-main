@@ -213,7 +213,6 @@ const ThemesJob: React.FC = () => {
       console.log('error', error);
     }
   };
-  console.log('redux');
 
   useEffect(() => {
     listSuggestJob();
