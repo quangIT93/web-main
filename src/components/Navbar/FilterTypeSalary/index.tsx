@@ -75,7 +75,9 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
     (state: RootState) => state.changeLaguage.language,
   );
   // const [searchParams, setSearchParams] = useSearchParams();
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState<[{ id: number; value: string }]>([
+    { id: 0, value: 'Tất cả' },
+  ]);
   const [valueRender, setValueRender] = React.useState<any>();
 
   const language = useSelector(
@@ -92,11 +94,18 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
     const result = await siteApi.getSalaryType(
       languageRedux === 1 ? 'vi' : 'en',
     );
+    const updatedData: any = [
+      { id: 0, value: languageRedux === 1 ? 'Tất cả' : 'All' },
+      ...result.data,
+    ];
+    console.log('updatedata', updatedData);
 
-    if (result) {
-      setData(result.data);
+    if (updatedData) {
+      // setData(updatedData);
+      setData(updatedData);
+
       if (SALARY_TYPE) {
-        const value = result.data.find((item: any) => item.id === SALARY_TYPE);
+        const value = updatedData.find((item: any) => item.id === SALARY_TYPE);
         setValueRender(value);
       }
     }
@@ -110,6 +119,10 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
     setReset(false);
   };
 
+  console.log('SALARY_TYPE', SALARY_TYPE);
+  console.log('data', data);
+  console.log('valueRender', valueRender);
+
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
@@ -121,7 +134,15 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
         onChange={handleChange}
         optionLabelProp="label"
         value={
-          reset ? language?.month : valueRender ? valueRender.value : undefined
+          reset
+            ? languageRedux === 1
+              ? 'Tất cả'
+              : 'All'
+            : valueRender
+            ? valueRender.value
+            : languageRedux === 1
+            ? 'Tất cả'
+            : 'All'
         }
         className="inputTypeSalary input-filter_nav"
         size="large"

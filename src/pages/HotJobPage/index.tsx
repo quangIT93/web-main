@@ -333,7 +333,7 @@ const HotJobpage: React.FC = () => {
                     : hotJobType === 7
                     ? 'Delivery'
                     : ''}{' '}
-                  {hotJobTotal ? hotJobTotal : 0}
+                  {hotJobTotal ? Number(hotJobTotal).toLocaleString() : 0}
                   <span>
                     {' '}
                     {

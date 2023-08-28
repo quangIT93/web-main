@@ -848,8 +848,8 @@ const Navbar: React.FC = () => {
     setCookie('userTypejobFiltered', JSON.stringify(typeJobReset), 365);
 
     let typeSalaryReset = {
-      id: 4,
-      value: 'Tháng',
+      id: 0,
+      value: 'Tất cả',
     };
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };

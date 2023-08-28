@@ -852,7 +852,7 @@ const NewJobs: React.FC = () => {
               >
                 {language?.search_results_page?.find}{' '}
                 <h4 style={{ margin: '0 10px' }}>
-                  {searchData ? searchData?.total : 0}
+                  {searchData ? searchData?.total.toLocaleString() : 0}
                 </h4>
                 {language?.search_results_page.suitable_job}
               </div>
