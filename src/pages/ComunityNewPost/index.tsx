@@ -8,6 +8,8 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 // import { Collapse } from 'antd';
 import { Avatar, Space, message } from 'antd';
+
+import ModalLogin from '../../components/Home/ModalLogin';
 // import component
 import { Stack } from '@mui/material';
 
@@ -53,6 +55,8 @@ const ComunityNewPost = () => {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [saveListPost, setSaveListPost] = React.useState(false);
   const [readLoad, setReload] = React.useState(false);
+
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const handleSortBy = (sortString: string) => {
     //cm: comment, l: likes, v: views
     setPage('0');
@@ -166,7 +170,7 @@ const ComunityNewPost = () => {
 
   const handleMoveToCreate = () => {
     if (!localStorage.getItem('accessToken')) {
-      message.error(`Vui lòng đăng nhập để tạo bài đăng`);
+      setOpenModalLogin(true);
     } else {
       window.open('/comunity_create_post', '_parent');
     }
@@ -289,6 +293,10 @@ const ComunityNewPost = () => {
       </div>
       <RollTop />
       <Footer />
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </div>
   );
 };

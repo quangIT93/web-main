@@ -19,6 +19,8 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import { Box } from '@mui/material';
 
 import RollTop from '#components/RollTop';
+
+import { Skeleton } from 'antd';
 // import redux
 
 // import { bindActionCreators } from 'redux';
@@ -133,6 +135,7 @@ const HotJobpage: React.FC = () => {
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [loading, setLoading] = React.useState(false);
   // const navigate = useNavigate()
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
@@ -273,6 +276,14 @@ const HotJobpage: React.FC = () => {
   React.useEffect(() => {
     // setPageNumber(0)
     getHotJob();
+    setLoading(true);
+    setTimeout(() => {
+      if (hotjob.length !== 0) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
@@ -323,33 +334,35 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? language?.remote_work
                     : hotJobType === 3
-                      ? 'Influencer'
-                      : hotJobType === 4
-                        ? language?.hot_job_page?.short_time
-                        : hotJobType === 5
-                          ? language?.hot_job_page?.job_today
-                          : hotJobType === 6
-                            ? 'Freelancer'
-                            : hotJobType === 7
-                              ? 'Delivery/Driver'
-                              : ''}{' '}
-                  {hotJobTotal ?
-                    new Intl.NumberFormat('en-US').format(
-                      hotJobTotal,
-                    ) :
-                    0}
+                    ? 'Influencer'
+                    : hotJobType === 4
+                    ? language?.hot_job_page?.short_time
+                    : hotJobType === 5
+                    ? language?.hot_job_page?.job_today
+                    : hotJobType === 6
+                    ? 'Freelancer'
+                    : hotJobType === 7
+                    ? 'Delivery/Driver'
+                    : 'Loading...'}{' '}
+                  {hotjob.length !== 0
+                    ? // ? new Intl.NumberFormat('en-US').format(hotJobTotal)
+                      Number(hotJobTotal.toLocaleString())
+                    : ''}
                   <span>
                     {' '}
                     {
                       // language?.hot_job_page?.result
-                      languageRedux === 1
+                      languageRedux === 1 && hotjob.length !== 0
                         ? 'kết quả'
-                        : hotJobTotal > 1
-                          ? 'results'
-                          : 'result'
+                        : hotJobTotal > 1 && hotjob.length !== 0
+                        ? 'results'
+                        : hotJobTotal < 1 && hotjob.length !== 0
+                        ? 'result'
+                        : ''
                     }
                   </span>
                 </h3>
+
                 {/* <h4>
                   {hotJobTotal ? hotJobTotal : 0}
                   <span>
@@ -366,20 +379,22 @@ const HotJobpage: React.FC = () => {
               <>
                 <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
                   {hotjob.map((item: PostHotJob, index: number) => (
-                    <Grid
-                      item
-                      xs={12}
-                      sm={6}
-                      md={hotJobType === 3 ? 4 : 6}
-                      lg={4}
-                      key={index}
-                    >
-                      {hotJobType === 3 ? (
-                        <InfluencerCard item={item} />
-                      ) : (
-                        <JobCardHotJob item={item} />
-                      )}
-                    </Grid>
+                    <Skeleton loading={loading} active>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        md={hotJobType === 3 ? 4 : 6}
+                        lg={4}
+                        key={index}
+                      >
+                        {hotJobType === 3 ? (
+                          <InfluencerCard item={item} />
+                        ) : (
+                          <JobCardHotJob item={item} />
+                        )}
+                      </Grid>
+                    </Skeleton>
                   ))}
                 </Grid>
                 <Stack
@@ -412,7 +427,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

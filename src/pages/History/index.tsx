@@ -129,14 +129,14 @@ const HistoryPost = () => {
         language?.history_page?.closed_jobs,
       ],
     },
-    // {
-    //   id: 4,
-    //   title: language?.history_page?.list_of_articles,
-    //   childs: [
-    //     language?.history_page?.saved,
-    //     language?.history_page?.posts_created,
-    //   ],
-    // },
+    {
+      id: 4,
+      title: language?.history_page?.list_of_articles,
+      childs: [
+        language?.history_page?.saved,
+        language?.history_page?.posts_created,
+      ],
+    },
   ];
 
   React.useEffect(() => {

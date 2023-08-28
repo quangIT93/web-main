@@ -16,6 +16,8 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import ShowCancleSave from '#components/ShowCancleSave';
 import { useDispatch } from 'react-redux';
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+//@ts-ignore
+import ModalLogin from '#components/Home/ModalLogin';
 const { TextArea } = Input;
 // interface IHijobNewsCard {
 //   item: any;
@@ -32,10 +34,15 @@ const HijobNewsCard: React.FC<any> = (props) => {
   const [shouldShowMoreButton, setShouldShowMoreButton] = React.useState(false);
   const [showText, setShowText] = React.useState('');
   const contentRef = React.useRef<any>(null);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const dispatch = useDispatch();
 
   const handleLikeCommunity = async (communicationId: number, e: any) => {
     e.stopPropagation();
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    }
     try {
       const result = await communityApi.postCommunityLike(communicationId);
       if (result) {
@@ -54,11 +61,15 @@ const HijobNewsCard: React.FC<any> = (props) => {
     }
   };
 
-  React.useEffect(() => { }, [like]);
+  React.useEffect(() => {}, [like]);
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
-    console.log('handleClick save');
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    }
+
     try {
       const result = await communityApi.postCommunityBookmarked(item.id);
       if (result) {
@@ -74,7 +85,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
           setBookmark(false);
         }
       } else {
-        message.error('Vui lòng đăng nhập để thực hiện chức năng');
+        setOpenModalLogin(true);
       }
     } catch (error) {
       console.log('error', error);
@@ -134,12 +145,16 @@ const HijobNewsCard: React.FC<any> = (props) => {
         onClick={(e) => handleMoveToDetailPage(item?.id, e)}
       >
         <div className="comunitypostNews-card-wrap_content__left">
-          <Avatar shape="square" src={item?.images[0]?.image} icon={<UserOutlined />} />
+          <Avatar
+            shape="square"
+            src={item?.images[0]?.image}
+            icon={<UserOutlined />}
+          />
         </div>
         <div className="comunitypostNews-card-wrap_content__right">
           <div className="comunityPostNews-card-content">
             <div className="comunityPostNews-card-content-title">
-              <h3 >{item?.title}</h3>
+              <h3>{item?.title}</h3>
               <div className="bookmark" onClick={(e) => handleClickSave(e)}>
                 {bookmark === true ? (
                   <SaveIconFill width={24} height={24} />
@@ -149,7 +164,10 @@ const HijobNewsCard: React.FC<any> = (props) => {
               </div>
             </div>
             <div className="comunityPostNews-card-content_info">
-              <ul className={`text-content_postNew ${showText}`} ref={contentRef}>
+              <ul
+                className={`text-content_postNew ${showText}`}
+                ref={contentRef}
+              >
                 {item?.content}
               </ul>
               {/* <TextArea
@@ -202,7 +220,10 @@ const HijobNewsCard: React.FC<any> = (props) => {
                 <LikeIcon />
                 <p>{totalLike}</p>
               </div>
-              <div className="status-item" onClick={(e) => handleMoveToDetailPage(item?.id, e)}>
+              <div
+                className="status-item"
+                onClick={(e) => handleMoveToDetailPage(item?.id, e)}
+              >
                 <CommentIcon />
                 <p>{item?.communicationCommentsCount}</p>
               </div>
@@ -212,6 +233,10 @@ const HijobNewsCard: React.FC<any> = (props) => {
       </div>
       <ShowCancleSave />
       <ShowNotificativeSave />
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </>
   );
 };

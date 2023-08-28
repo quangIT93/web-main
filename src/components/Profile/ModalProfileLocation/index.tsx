@@ -80,7 +80,9 @@ interface IModalProfileLocation {
 // };
 
 const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const { openModalLocation, setOpenModalLocation, locations } = props;
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
   // const [open, setOpen] = React.useState<any>([]);
@@ -90,7 +92,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguageState(result.data);
@@ -102,8 +104,8 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const [value, setValue] = React.useState(
     locations?.map((v: any, i) => v.district_id),
@@ -119,13 +121,13 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
 
   const dispatch = useDispatch();
   const handleClose = () => {
-    handleSubmit()
+    handleSubmit();
     setOpenModalLocation(false);
-  }
+  };
   const allLocation = async () => {
     try {
       const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (allLocation) {
@@ -238,9 +240,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const handleSubmit = async () => {
     try {
       if (value.length > 10) {
-        message.error(
-          language?.limit_10_location
-        );
+        message.error(language?.limit_10_location);
         return;
       }
       const result = await profileApi.updateProfileLocation(
@@ -257,22 +257,25 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   };
 
   const renderTreeNode = (data: any) => {
-    return data?.map((node: any) => {
-      if (node.children) {
-        return {
-          ...node,
-          disableCheckbox: true,
-          selectable: true,
-          checkable: false,
+    return (
+      data &&
+      data?.map((node: any) => {
+        if (node.children) {
+          return {
+            ...node,
+            disableCheckbox: true,
+            selectable: true,
+            checkable: false,
 
-          // Set the value of disableCheckbox
-        };
-      }
+            // Set the value of disableCheckbox
+          };
+        }
 
-      // console.log('node location', node);
-      return node.children;
-      // <TreeNode key={node.value} value={node.value} title={node.title} />
-    });
+        // console.log('node location', node);
+        return node.children;
+        // <TreeNode key={node.value} value={node.value} title={node.title} />
+      })
+    );
   };
 
   const tProps: any = {
@@ -331,9 +334,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
           component="h2"
           align="center"
         >
-          {
-            language?.working_location
-          }
+          {language?.working_location}
         </Typography>
 
         {/* <FormControl sx={{ width: '100%', margin: '12px auto' }} size="small">
@@ -373,9 +374,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         <TreeSelect {...tProps} />
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {
-            language?.profile_page?.save_info
-          }
+          {language?.profile_page?.save_info}
         </Button>
       </Box>
     </Modal>

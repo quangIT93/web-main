@@ -41,6 +41,8 @@ const CardListBlogSave = () => {
 
   const [saveListPost, setSaveListPost] = React.useState(false);
 
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
@@ -108,7 +110,7 @@ const CardListBlogSave = () => {
   const handleChange = async () => {
     try {
       setUploading(true);
-      const nextPage = (parseInt(page) + 1);
+      const nextPage = parseInt(page) + 1;
       const result = await communityApi.getCommunityBookmarked(nextPage);
 
       //
@@ -195,21 +197,23 @@ const CardListBlogSave = () => {
       </Box>
       <div className="list-blog-create-data">
         {stories ? (
-          stories.map((item: any, index: any) => (
-            item?.communicationData?.type === 1 ?
+          stories.map((item: any, index: any) =>
+            item?.communicationData?.type === 1 ? (
               <WorkingStoryCard
                 item={item.communicationData}
                 index={index}
                 setSaveListPost={setSaveListPost}
                 saveListPost={saveListPost}
-              /> :
+              />
+            ) : (
               <HijobNewsCard
                 item={item.communicationData}
                 index={index}
                 setSaveListPost={setSaveListPost}
                 saveListPost={saveListPost}
               />
-          ))
+            ),
+          )
         ) : (
           <></>
         )}

@@ -52,6 +52,7 @@ import ShowCancleSave from '#components/ShowCancleSave';
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
+import ModalLogin from '../../components/Home/ModalLogin';
 const { TextArea } = Input;
 interface FormPostCommunityComment {
   communicationId: number;
@@ -74,7 +75,9 @@ const Comunity = () => {
   const [like, setLike] = React.useState(false);
   const [bookmark, setBookmark] = React.useState(false);
   const [cmt, setCmt] = React.useState(false);
-  const dispatch = useDispatch()
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const handelChangeCmt = (event: any) => {
     setCmtContent(event.target.value);
@@ -111,14 +114,15 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${size * rows
-        }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${
+        size * rows
+      }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
   const handleLikeCommunity = async (communicationId: number) => {
     if (!localStorage.getItem('accessToken')) {
-      message.error('Vui lòng đăng nhập để thực hiện chức năng');
+      setOpenModalLogin(true);
       return;
     }
 
@@ -149,7 +153,7 @@ const Comunity = () => {
 
   const handleSaveCommunity = async (communicationId: number) => {
     if (!localStorage.getItem('accessToken')) {
-      message.error('Vui lòng đăng nhập để thực hiện chức năng');
+      setOpenModalLogin(true);
       return;
     }
 
@@ -176,7 +180,7 @@ const Comunity = () => {
 
   const handleCommentCommunity = async () => {
     if (!localStorage.getItem('accessToken')) {
-      message.error('Vui lòng đăng nhập để thực hiện chức năng');
+      setOpenModalLogin(true);
       return;
     }
 
@@ -223,7 +227,7 @@ const Comunity = () => {
 
       // handleCommentCommunity();
       if (e.key === 'Enter') {
-        e.preventDefault()
+        e.preventDefault();
         handleCommentCommunity();
       }
     }
@@ -232,12 +236,10 @@ const Comunity = () => {
 
   const handleMoveToList = () => {
     window.open(
-      detail?.type === 1 ?
-        '/new-comunity' :
-        '/news-comunity',
+      detail?.type === 1 ? '/new-comunity' : '/news-comunity',
       '_parent',
-    )
-  }
+    );
+  };
 
   console.log('detail', detail);
 
@@ -246,19 +248,11 @@ const Comunity = () => {
       <Navbar />
       <div className="comunity-content">
         <div className="comunity-detail_post">
-          <div className="back"
-            onClick={handleMoveToList}
-          >
+          <div className="back" onClick={handleMoveToList}>
             <div className="icon-back">
-              <BackIcon width={15} height={15} fill='white' />
+              <BackIcon width={15} height={15} fill="white" />
             </div>
-            <h3>
-              {
-                detail?.type === 1 ?
-                  "Working story" :
-                  "HiJob news"
-              }
-            </h3>
+            <h3>{detail?.type === 1 ? 'Working story' : 'HiJob news'}</h3>
           </div>
           <div className="title-comunity">
             <Tooltip title={detail?.title}>
@@ -266,10 +260,10 @@ const Comunity = () => {
             </Tooltip>
             <div className="title-comunity_icon">
               {/* <CommentIcon /> */}
-              <span>
+              {/* <span>
                 <ShareIcon width={24} height={24} />
                 Chia sẻ
-              </span>
+              </span> */}
               <span onClick={() => handleSaveCommunity(detail?.id)}>
                 {bookmark ? (
                   <SaveIconFill width={24} height={24} />
@@ -287,7 +281,7 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-              // showCount
+                // showCount
               />
             </div>
           </div>
@@ -444,7 +438,7 @@ const Comunity = () => {
                   onChange={handelChangeCmt}
                   placeholder="Nhập bình luận của bạn ..."
                   autoSize
-                // showCount
+                  // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -488,7 +482,7 @@ const Comunity = () => {
                           <TextArea
                             value={cmtData?.content}
                             autoSize
-                          // showCount
+                            // showCount
                           />
                           {/* <p>{cmtData?.content}</p> */}
                         </div>
@@ -511,6 +505,10 @@ const Comunity = () => {
       <ShowCancleSave />
       <ShowNotificativeSave />
       <Footer />
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </div>
   );
 };

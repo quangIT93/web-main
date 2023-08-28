@@ -18,6 +18,7 @@ import { Tooltip } from 'antd';
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 import ShowCancleSave from '#components/ShowCancleSave';
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
+import ModalLogin from '../../Home/ModalLogin';
 
 interface IWorkingStoryCard {
   item: any;
@@ -37,6 +38,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   const [showText, setShowText] = React.useState('');
   const contentRef = useRef<any>(null);
   const [owner, setOwner] = React.useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const dispatch = useDispatch();
   // console.log('item', item);
@@ -74,7 +76,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   const handleLikeCommunity = async (communicationId: number, e: any) => {
     e.stopPropagation();
     if (!localStorage.getItem('accessToken')) {
-      message.error('Vui lòng đăng nhập để thực hiện chức năng');
+      setOpenModalLogin(true);
       return;
     }
     try {
@@ -124,6 +126,10 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
     console.log('handleClick save');
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    }
     try {
       const result = await communityApi.postCommunityBookmarked(item.id);
       if (result) {
@@ -147,7 +153,12 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
   const handleMoveToEdit = (id: any, e: any) => {
     e.stopPropagation();
-    window.open(`/comunity_create_post?post-community=${id}`, '_parent');
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    } else {
+      window.open(`/comunity_create_post?post-community=${id}`, '_parent');
+    }
   };
 
   console.log('item', item);
@@ -173,7 +184,14 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
             <div
               className="bookmark"
               onClick={(e) => {
-                owner ? handleMoveToEdit(item?.id, e) : handleClickSave(e);
+                e.stopPropagation();
+
+                if (!localStorage.getItem('accessToken')) {
+                  setOpenModalLogin(true);
+                  return;
+                } else {
+                  owner ? handleMoveToEdit(item?.id, e) : handleClickSave(e);
+                }
               }}
             >
               {owner ? (
@@ -239,6 +257,10 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
       </div>
       <ShowCancleSave />
       <ShowNotificativeSave />
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </>
   );
 };
