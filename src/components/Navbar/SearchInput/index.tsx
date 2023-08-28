@@ -272,8 +272,7 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${
-            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          `/search-results?${value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
           }`,
         );
       } else {
@@ -333,7 +332,7 @@ const SearchInput: React.FC<SearchProps> = ({
       if (result) {
         setTotalJob(result?.data?.total);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -408,15 +407,15 @@ const SearchInput: React.FC<SearchProps> = ({
         autoClearSearchValue
         optionFilterProp="children"
         size="large"
-        value={value}
+        value={value !== '' ? value : undefined}
         searchValue={value}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
         placeholder={
           languageRedux === 1
             ? `Tìm kiếm hơn ${totalJob.toLocaleString(
-                'en-US',
-              )} công việc tại Việt Nam`
+              'en-US',
+            )} công việc tại Việt Nam`
             : `Search over ${totalJob.toLocaleString('en-US')} jobs in Vietnam`
         }
         // placeholder={
@@ -445,7 +444,7 @@ const SearchInput: React.FC<SearchProps> = ({
         menuItemSelectedIcon={<CheckOutlined />}
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
-        // open={openDropdown}
+      // open={openDropdown}
       />
 
       <Button

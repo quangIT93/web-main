@@ -25,6 +25,7 @@ import {
   ShareIcon,
   SendComunityIcon,
   SaveIconFill,
+  BackIcon,
 } from '#components/Icons';
 import { useSearchParams } from 'react-router-dom';
 import ImageList from '@mui/material/ImageList';
@@ -110,9 +111,8 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${
-        size * rows
-      }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${size * rows
+        }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -230,6 +230,15 @@ const Comunity = () => {
     // }
   };
 
+  const handleMoveToList = () => {
+    window.open(
+      detail?.type === 1 ?
+        '/new-comunity' :
+        '/news-comunity',
+      '_parent',
+    )
+  }
+
   console.log('detail', detail);
 
   return (
@@ -237,6 +246,20 @@ const Comunity = () => {
       <Navbar />
       <div className="comunity-content">
         <div className="comunity-detail_post">
+          <div className="back"
+            onClick={handleMoveToList}
+          >
+            <div className="icon-back">
+              <BackIcon width={15} height={15} fill='white' />
+            </div>
+            <h3>
+              {
+                detail?.type === 1 ?
+                  "Working story" :
+                  "HiJob news"
+              }
+            </h3>
+          </div>
           <div className="title-comunity">
             <Tooltip title={detail?.title}>
               <h3>{detail?.title}</h3>
@@ -264,7 +287,7 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-                // showCount
+              // showCount
               />
             </div>
           </div>
@@ -421,7 +444,7 @@ const Comunity = () => {
                   onChange={handelChangeCmt}
                   placeholder="Nhập bình luận của bạn ..."
                   autoSize
-                  // showCount
+                // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -465,7 +488,7 @@ const Comunity = () => {
                           <TextArea
                             value={cmtData?.content}
                             autoSize
-                            // showCount
+                          // showCount
                           />
                           {/* <p>{cmtData?.content}</p> */}
                         </div>

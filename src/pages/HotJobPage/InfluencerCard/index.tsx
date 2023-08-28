@@ -28,7 +28,7 @@ import { PostHotJob } from '..';
 
 //import scss
 import './styleInfuencer.scss';
-
+import ModalLogin from '../../../components/Home/ModalLogin';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
 interface Iprops {
@@ -39,7 +39,7 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
   const dispatch = useDispatch();
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
-
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // console.log('props', props);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -212,6 +212,9 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
                 onClick={async (e) => {
                   try {
                     e.stopPropagation();
+                    if (!localStorage.getItem('accessToken')) {
+                      setOpenModalLogin(true);
+                    }
                     if (props.item?.bookmarked) {
                       const result = await bookMarkApi.deleteBookMark(
                         props.item?.id,
@@ -263,6 +266,10 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
           </Space>
         </div>
       </Card>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </>
   );
 };

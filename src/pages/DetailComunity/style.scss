@@ -26,6 +26,31 @@
         .comunity-detail_post {
             width: 70%;
 
+            .back {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                // width: fit-content;
+
+                .icon-back {
+                    background-color: #000;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 25px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                &:hover {
+                    text-decoration: underline;
+                    // border-bottom: 1px solid rgb(26, 158, 253);
+                    transition: 0.3s linear all;
+                    // color: rgb(26, 158, 253);
+                }
+            }
+
             .title-comunity {
                 display: flex;
                 justify-content: space-between;

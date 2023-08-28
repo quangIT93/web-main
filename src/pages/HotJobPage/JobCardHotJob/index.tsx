@@ -24,9 +24,8 @@ import { Space, Tooltip } from 'antd';
 import bookMarkApi from 'api/bookMarkApi';
 
 import { PostHotJob } from '..';
-
+import ModalLogin from '../../../components/Home/ModalLogin';
 // import ShowNotificativeSave from '#components/ShowNotificativeSave';
-
 interface Iprops {
   item: PostHotJob;
 }
@@ -35,6 +34,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
   const dispatch = useDispatch();
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
@@ -108,6 +108,9 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                   onClick={async (e) => {
                     try {
                       e.stopPropagation();
+                      if (!localStorage.getItem('accessToken')) {
+                        setOpenModalLogin(true);
+                      }
                       if (props.item?.bookmarked) {
                         const result = await bookMarkApi.deleteBookMark(
                           props.item?.id,
@@ -315,6 +318,10 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
           </p>
         </Space> */}
       </Card>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </>
   );
 };

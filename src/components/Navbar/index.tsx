@@ -131,17 +131,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean;
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-    search: boolean;
-  } = useContext(HomeValueContext);
+    {
+      openCollapseFilter: boolean;
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+      search: boolean;
+    } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -941,8 +941,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="2"
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -972,8 +972,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-            openLogin &&
-            location?.pathname === '/'
+              openLogin &&
+              location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1059,8 +1059,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                            return `${location.district} , `;
-                          })
+                          return `${location.district} , `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1073,8 +1073,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                            return `${profile.parent_category} / ${profile.child_category}, `;
-                          })
+                          return `${profile.parent_category} / ${profile.child_category}, `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1082,21 +1082,21 @@ const Navbar: React.FC = () => {
               </div>
             </Space>
             <div className="sub-login_items">
-              <Link to="/profile" target="_sel">
+              <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
                   <span>{languageData?.home_page?.update_infor}</span>
                 </div>
               </Link>
-              <Link to="/history" target="_sel">
+              <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
                   style={{
                     borderBottom: 'none',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1158,9 +1158,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                  // style={{
-                  //   display: openRadioGroup ? 'flex' : 'none',
-                  // }}
+                // style={{
+                //   display: openRadioGroup ? 'flex' : 'none',
+                // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1303,8 +1303,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                            return `${location.district} , `;
-                          })
+                          return `${location.district} , `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1317,8 +1317,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                            return `${profile.parent_category} / ${profile.child_category}, `;
-                          })
+                          return `${profile.parent_category} / ${profile.child_category}, `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1326,21 +1326,21 @@ const Navbar: React.FC = () => {
               </div>
             </Space>
             <div className="sub-login_items">
-              <Link to="/profile" target="_sel">
+              <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
                   <UserPersonSubLoginIcon />
                   <span>{languageData?.home_page?.update_infor}</span>
                 </div>
               </Link>
-              <Link to="/history" target="_sel">
+              <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
                   style={{
                     borderBottom: 'none',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1444,9 +1444,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1502,7 +1501,7 @@ const Navbar: React.FC = () => {
                 name="btn-chat"
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
-                    window.open(`/message`, '_sel');
+                    window.open(`/message`, '_parent');
                   } else {
                     setOpenModalLogin(true);
                   }
