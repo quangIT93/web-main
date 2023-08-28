@@ -131,30 +131,15 @@ const SearchInput: React.FC<SearchProps> = ({
   // const [openDropdown, setOpenDropdown] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(false);
   const [totalJob, setTotalJob] = React.useState<number>(0);
-  const [language, setLanguage] = useState<any>();
 
-  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+
+  // const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // const inputRef = useRef<InputRef>(null);
 
   // console.log("dataNotification", dataNotification);
-
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
 
   const QUERY = searchParams.get('q');
   const location = useLocation();
@@ -475,11 +460,7 @@ const SearchInput: React.FC<SearchProps> = ({
         className="search-input-wrapper-iconFilter"
         shape="circle"
         onClick={() => {
-          if (!localStorage.getItem('accessToken')) {
-            setOpenModalLogin(true);
-          } else {
-            setOpenCollapseFilter(!openCollapseFilter);
-          }
+          setOpenCollapseFilter(!openCollapseFilter);
         }}
         name="search-input-wrapper-iconFilter"
       >
@@ -489,10 +470,6 @@ const SearchInput: React.FC<SearchProps> = ({
           <FilterIcon width={20} height={20} />
         )}
       </Button>
-      <ModalLogin
-        openModalLogin={openModalLogin}
-        setOpenModalLogin={setOpenModalLogin}
-      />
     </div>
   );
 };

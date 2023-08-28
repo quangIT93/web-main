@@ -110,24 +110,10 @@ const CategoryCarousel: React.FC = () => {
   const [categories, setCategories] = React.useState<AxiosResponse | null>(
     null,
   );
-  const [language, setLanguage] = React.useState<any>();
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   // Set the cookie
   function setCookie(name: string, value: string, days: number) {

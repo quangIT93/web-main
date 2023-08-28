@@ -12,7 +12,6 @@ import { RootState } from '../../../store/reducer';
 // import './style.scss';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
-import languageApi from 'api/languageApi';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -33,25 +32,10 @@ const ShowCancleSave: React.FC = () => {
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
   const cancleSave = useSelector((state: any) => state.showAlert.alert);
-  const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   // const alert = false;
 

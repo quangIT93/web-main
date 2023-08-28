@@ -22,7 +22,7 @@ $navbar-height: 90px;
 $text-color: #000000;
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scroll-padding: calc($navbar-height + 10px);
 }
 

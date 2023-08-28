@@ -45,7 +45,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import './style.scss';
 import { signin } from 'validations/lang/vi/signin';
 import { signinEn } from 'validations/lang/en/signin';
-import languageApi from 'api/languageApi';
 
 //
 // import { google } from 'googleapis';
@@ -131,24 +130,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   const [otp, setOTP] = useState('');
   const [resendCode, setResendCode] = useState(true);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [language, setLanguage] = useState<any>();
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const handleClose = () => setOpenModalLogin(false);
 
