@@ -14,8 +14,9 @@ import communityApi from 'api/apiCommunity';
 import { Input } from 'antd';
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import ShowCancleSave from '#components/ShowCancleSave';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
+import { RootState } from 'store';
 const { TextArea } = Input;
 // interface IHijobNewsCard {
 //   item: any;
@@ -23,6 +24,7 @@ const { TextArea } = Input;
 // }
 
 const HijobNewsCard: React.FC<any> = (props) => {
+  const language = useSelector((state: RootState) => state.dataLanguage.languages)
   const { item, index, setSaveListPost, saveListPost } = props;
   const [like, setLike] = React.useState(item?.liked);
   const [bookmark, setBookmark] = React.useState(item?.bookmarked);
@@ -33,6 +35,15 @@ const HijobNewsCard: React.FC<any> = (props) => {
   const [showText, setShowText] = React.useState('');
   const contentRef = React.useRef<any>(null);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    setTotalLike(item?.communicationLikesCount);
+    if (item?.liked) {
+      setLike(true);
+    } else {
+      setLike(false);
+    }
+  }, [item]);
 
   const handleLikeCommunity = async (communicationId: number, e: any) => {
     e.stopPropagation();
@@ -167,7 +178,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
               /> */}
               {shouldShowMoreButton ? (
                 <span onClick={(e) => handleAddText(e)}>
-                  {!showText ? 'Xem thêm...' : 'Xem ít...'}
+                  {!showText ? language?.more : 'Xem ít...'}
                 </span>
               ) : (
                 <></>
@@ -177,15 +188,15 @@ const HijobNewsCard: React.FC<any> = (props) => {
           <div className="comunityPostNews-card-interaction">
             <div className="comunitypostNew-card-wrap_actor">
               <div className="comunitypostNew-wrap">
-                {/* <img src="../images/banner.png" alt="anh loi" /> */}
-                <Avatar
+                <img src="favicon.ico" alt="anh loi" />
+                {/* <Avatar
                   size={42}
-                  src={item?.profileData?.avatarPath}
+                  src="favicon.ico"
                   icon={<UserOutlined />}
-                />
+                /> */}
                 <div className="info-actor_comunity">
-                  <p>Người viết</p>
-                  <p>{item?.profileData?.name}</p>
+                  <p>{language?.community_page?.writer}</p>
+                  <p>Hijob</p>
                 </div>
               </div>
               <p>{new Date(item?.createdAt).toLocaleDateString('en-GB')}</p>

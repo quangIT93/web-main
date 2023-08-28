@@ -118,9 +118,13 @@ const CardListBlogSave = () => {
         setPage(nextPage);
       } else {
         setPage('0');
-        message.error('da het data');
+        message.error(
+          languageRedux === 1 ?
+            'Đã hết bài viết để hiển thị' :
+            'Out of posts to show'
+        );
         setIsVisible(false);
-        // console.log('da het data', result);
+        // console.log('Đã hết bài viết để hiển thị', result);
       }
     } catch (error) {
       console.log(error);

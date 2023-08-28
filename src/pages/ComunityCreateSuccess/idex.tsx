@@ -16,6 +16,7 @@ import { RootState } from 'store';
 
 const ComunityCreateSuccess = () => {
     const dataProfile = useSelector((state: RootState) => state.profile.profile);
+    const language = useSelector((state: RootState) => state.dataLanguage.languages);
     useEffect(() => {
         const community_success = localStorage.getItem('community_success')
         const accountId = localStorage.getItem('accountId')
@@ -39,24 +40,24 @@ const ComunityCreateSuccess = () => {
             <div className="comunity-create-success-content">
                 <div className="create-success-message">
                     <div className="create-success-message_header">
-                        <h3>Đăng bài viết thành công</h3>
+                        <h3>{language?.community_page?.post_successfully_posted}</h3>
                         <img src="../images/comunity_create_success.png" alt='ảnh lỗi' ></img>
                     </div>
                     <div className="create-success-message_body">
                         <p>
-                            Bài viết của bạn sẽ được kiểm duyệt nội dung trước khi công khai.
+                            {language?.community_page?.successfully_title_1}
                         </p>
                         <p>
-                            Hãy đảm bảo các thông tin bài viết của bạn là chính xác!
+                            {language?.community_page?.successfully_title_2}
                         </p>
                     </div>
                 </div>
                 <div className="create-success-btns">
                     <Button type="primary" onClick={handleMoveWorkingStory}>
-                        Bài viết HiJob
+                        {language?.community_page?.hijob_articles}
                     </Button>
                     <Button onClick={handleMoveToCommunityPost}>
-                        Xem bài viết của bạn
+                        {language?.community_page?.view_your_post}
                     </Button>
                 </div>
             </div>

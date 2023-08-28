@@ -926,13 +926,17 @@ const Detail = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onClick={() =>
+              onClick={() => {
+                if (!localStorage.getItem('accessToken')) {
+                  setOpenModalLogin(true);
+                  return;
+                }
                 window.open(
                   `/message?post_id=${searchParams.get('post-id')}&user_id=${post?.data?.accountId
                   } `,
                   '_blank',
                 )
-              }
+              }}
             // onClick={() => {
             //   console.log(post?.data);
             // }}

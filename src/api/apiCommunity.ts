@@ -41,8 +41,8 @@ const communityApi = {
         return axiosClient.get(URL)
     },
 
-    getCommunityNews: (page: string, limit: string, sort: string, type: number) => {
-        const URL = `/v3/communications/news?page=${page}&limit=${limit}&sort=${sort}&type=${type}`
+    getCommunityNews: (page: string, limit: string, sort: string, type: number, lang: any) => {
+        const URL = `/v3/communications/news?page=${page}&limit=${limit}&sort=${sort}&type=${type}&lang=${lang}`
         return axiosClient.get(URL)
     },
 
@@ -60,8 +60,8 @@ const communityApi = {
         })
     },
 
-    getCommunityByAccount: (page: string, limit: string, sort: string) => {
-        const URL = `/v3/communications/by-account?page=${page}&limit=${limit}&sort=${sort}`
+    getCommunityByAccount: (page: string, limit: string, sort: string, lang: any) => {
+        const URL = `/v3/communications/by-account?page=${page}&limit=${limit}&sort=${sort}&lang=${lang}`
         return axiosClient.get(URL, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -93,8 +93,8 @@ const communityApi = {
         })
     },
 
-    getCommunityDetailId: (id: string) => {
-        const URL = `/v3/communications/detail/${id}`
+    getCommunityDetailId: (id: string, lang: any) => {
+        const URL = `/v3/communications/detail/${id}?lang=${lang}`;
         return axiosClient.get(URL)
     },
 

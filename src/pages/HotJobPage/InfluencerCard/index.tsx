@@ -214,6 +214,7 @@ const InfluencerCard: React.FC<Iprops> = (props) => {
                     e.stopPropagation();
                     if (!localStorage.getItem('accessToken')) {
                       setOpenModalLogin(true);
+                      return;
                     }
                     if (props.item?.bookmarked) {
                       const result = await bookMarkApi.deleteBookMark(

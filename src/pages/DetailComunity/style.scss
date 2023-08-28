@@ -31,6 +31,7 @@
                 align-items: center;
                 gap: 8px;
                 cursor: pointer;
+                margin-bottom: 8px;
                 // width: fit-content;
 
                 .icon-back {
@@ -147,9 +148,20 @@
 
             .comunityDetail-wrap_img {
                 border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
 
                 img {
                     border-radius: 12px;
+                    width: 500px;
+                    height: 500px;
+
+                    @include breakpoint(mobile) {
+                        height: 250px;
+                    }
                 }
             }
 
@@ -331,12 +343,17 @@
                     display: flex;
                     align-items: center;
 
-                    img {
-                        width: 50px;
-                        height: 50px;
-                        // border-radius: 10px;
-                        border-radius: 50%;
+                    span {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
 
+                        img {
+                            width: 30px;
+                            height: 30px;
+                            // border-radius: 10px;
+
+                        }
                     }
                 }
 
@@ -360,6 +377,10 @@
                             font-style: normal;
                             font-weight: 700;
                             line-height: 24px;
+                            // text-overflow: ellipsis;
+                            // max-width: 2ch;
+                            // overflow: hidden;
+                            // white-space: nowrap;
                         }
                     }
                 }
@@ -376,7 +397,7 @@
 
                     img {
                         border-radius: 50%;
-
+                        filter: blur(1px);
                     }
 
                     .comunityDetail-comment_chaterInput {
@@ -476,6 +497,7 @@
                         // border: 1px solid blue;
                         img {
                             border-radius: 50%;
+                            filter: blur(1px);
                         }
 
                         .comunityDetail-comment {
@@ -493,25 +515,43 @@
                             .comunityDetail-comment_top {
                                 display: flex;
                                 align-items: center;
+                                justify-content: space-between;
 
-                                h3 {
-                                    font-family: Roboto;
-                                    font-size: 16px;
-                                    font-style: normal;
-                                    font-weight: 700;
-                                    line-height: 24px;
+                                &__left {
+                                    display: flex;
+                                    align-items: center;
+
+                                    h3 {
+                                        font-family: Roboto;
+                                        font-size: 16px;
+                                        font-style: normal;
+                                        font-weight: 700;
+                                        line-height: 24px;
+
+                                        // &:first-child {
+                                        //     text-overflow: ellipsis;
+                                        //     max-width: 2ch;
+                                        //     overflow: hidden;
+                                        //     white-space: nowrap;
+                                        // }
+                                    }
+
+                                    h3:nth-child(2) {
+                                        padding: 0 8px;
+                                    }
+
+                                    p {
+                                        font-family: Roboto;
+                                        font-size: 12px;
+                                        font-style: normal;
+                                        font-weight: 400;
+                                        line-height: 16px;
+                                    }
                                 }
 
-                                h3:nth-child(2) {
-                                    padding: 0 8px;
-                                }
-
-                                p {
-                                    font-family: Roboto;
-                                    font-size: 12px;
-                                    font-style: normal;
-                                    font-weight: 400;
-                                    line-height: 16px;
+                                &__right {
+                                    display: flex;
+                                    align-items: center;
                                 }
                             }
 

@@ -64,6 +64,8 @@ const Comunity = () => {
   // const handleAddText = () => {
   //   setShowText('showText');
   // };
+  const language = useSelector((state: RootState) => { return state.dataLanguage.languages; });
+  const languageRedux = useSelector((state: RootState) => { return state.changeLaguage.language });
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
   const [detail, setDetail] = React.useState<any>();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -85,6 +87,7 @@ const Comunity = () => {
       if (POST_COMMUNITY_ID) {
         const result = await communityApi.getCommunityDetailId(
           POST_COMMUNITY_ID,
+          languageRedux === 1 ? "vi" : "en"
         );
         if (result && result.status !== 400) {
           setLike(result?.data?.liked);
@@ -266,21 +269,48 @@ const Comunity = () => {
             </Tooltip>
             <div className="title-comunity_icon">
               {/* <CommentIcon /> */}
-              <span>
+              {/* <span>
                 <ShareIcon width={24} height={24} />
                 Chia sẻ
-              </span>
+              </span> */}
               <span onClick={() => handleSaveCommunity(detail?.id)}>
                 {bookmark ? (
                   <SaveIconFill width={24} height={24} />
                 ) : (
                   <SaveIconOutline width={24} height={24} />
                 )}
-                Lưu
+                {language?.save}
               </span>
             </div>
           </div>
-
+          <div className="comunityDetail-wrap_actor">
+            <div className="comunityDetail-wrap">
+              {/* <img src={detail?.profileData?.avatar} alt="anh loi" /> */}
+              <Avatar
+                size={50}
+                src={
+                  detail?.type === 1 ?
+                    detail?.profileData?.avatar :
+                    "favicon.ico"
+                }
+                icon={<UserOutlined />}
+                style={{
+                  filter: detail?.type === 1 ? "blur(1px)" : "none"
+                }}
+              />
+              <div className="info-actor_comunityDetail">
+                <p>{language?.community_page?.author}</p>
+                <p>
+                  {
+                    detail?.type === 1 ?
+                      detail?.profileData?.name.slice(0, 2) + "..." :
+                      "Hijob"
+                  }
+                </p>
+              </div>
+            </div>
+            <p>{detail?.createdAtText}</p>
+          </div>
           <div className="comunityDetail-wrap_content">
             <div className="comunityDetail-content">
               {/* <div>{detail?.content}</div> */}
@@ -335,7 +365,7 @@ const Comunity = () => {
               </ImageListItem>
             ))}
           </ImageList> */}
-          <Swiper
+          {/* <Swiper
             effect={'coverflow'}
             grabCursor={true}
             centeredSlides={true}
@@ -372,14 +402,27 @@ const Comunity = () => {
                 />
               </SwiperSlide>
             ))}
-          </Swiper>
-          {/* <div className="comunityDetail-wrap_img">
+          </Swiper> */}
+          <div className="comunityDetail-wrap_img">
             {
-              detail?.image?.images.map((img: any, index: any) => (
-                <img key={index} src={img} alt="" />
+              detail?.image.map((item: any, index: any) => (
+                <img
+                  onClick={() => {
+                    handlePreview(item.image);
+                  }}
+                  // {...srcset(
+                  //   item.image,
+                  //   200,
+                  //   detail?.image?.length >= 4 && index === 0 ? 2 : 1,
+                  //   detail?.image?.length >= 4 && index === 0 ? 2 : 1,
+                  // )}
+                  src={item.image}
+                  alt={item.image}
+                  loading="lazy"
+                />
               ))
             }
-          </div> */}
+          </div>
           <div className="comunityDetail-wrap_status">
             <div
               className={
@@ -401,9 +444,9 @@ const Comunity = () => {
               <p>{detail?.communicationViewsCount}</p>
             </div>
           </div>
-          <div className="comunityDetail-wrap_actor">
+          {/* <div className="comunityDetail-wrap_actor">
             <div className="comunityDetail-wrap">
-              {/* <img src={detail?.profileData?.avatar} alt="anh loi" /> */}
+              <img src={detail?.profileData?.avatar} alt="anh loi" />
               <Avatar
                 size={50}
                 src={detail?.profileData?.avatar}
@@ -415,7 +458,7 @@ const Comunity = () => {
               </div>
             </div>
             <p>{detail?.createdAtText}</p>
-          </div>
+          </div> */}
 
           <div className="comunityDetail-wrap_comment">
             <div className="comunityDetail-comment_chater">
@@ -442,7 +485,11 @@ const Comunity = () => {
                   onKeyDown={(e: any) => handleKeyPress(e)}
                   // onPressEnter={(e: any) => handleKeyPress(e)}
                   onChange={handelChangeCmt}
-                  placeholder="Nhập bình luận của bạn ..."
+                  placeholder={
+                    languageRedux === 1 ?
+                      "Nhập bình luận của bạn ..." :
+                      "Enter your comment ..."
+                  }
                   autoSize
                 // showCount
                 />
@@ -480,9 +527,16 @@ const Comunity = () => {
                       />
                       <div className="comunityDetail-comment">
                         <div className="comunityDetail-comment_top">
-                          <h3>{cmtData?.profile?.name}</h3>
-                          <h3>|</h3>
-                          <p>{cmtData?.createdAtText}</p>
+                          <div className="comunityDetail-comment_top__left">
+                            <h3>{cmtData?.profile?.name.slice(0, 2) + "..."}</h3>
+                            <h3>|</h3>
+                            <p>{cmtData?.createdAtText}</p>
+                          </div>
+                          <div className="comunityDetail-comment_top__right"
+                            style={{
+
+                            }}
+                          ></div>
                         </div>
                         <div className="comunityDetail-comment_bottom">
                           <TextArea
