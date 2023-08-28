@@ -1,6 +1,13 @@
 .hot-job-page-container {
     margin: 100px 180px;
 
+    .MuiGrid-root {
+        .MuiPaper-root {
+            position: relative;
+        }
+    }
+    
+
     .hot-job-title-container {
         display: flex;
         align-items: flex-start;

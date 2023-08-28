@@ -288,8 +288,6 @@ const Navbar: React.FC = () => {
   );
 
   const languageData = useSelector((state: RootState) => {
-    console.log('state', state);
-
     return state.dataLanguage.languages;
   });
 
@@ -882,7 +880,7 @@ const Navbar: React.FC = () => {
     if (userLanguageSelected) {
       dispatch(getLanguages(userLanguageSelected) as any);
     } else {
-      dispatch(getLanguages('vi') as any);
+      dispatch(getLanguages('1') as any);
     }
   }, [languageId]);
 
@@ -930,8 +928,13 @@ const Navbar: React.FC = () => {
     >
       <FormOutlined style={{ color: 'white' }} />
       <p style={{ marginLeft: 10, color: 'white' }}>
-        {/* {languageData ? languageData?.post : ''} */}
-        {languageRedux === 1 ? `Đăng bài` : `Post`}
+        {/* {languageData
+          ? languageData.post
+          : languageRedux === 1
+          ? `Đăng bài`
+          : `Post`} */}
+        {languageData ? languageData.post : ''}
+        {/* {languageRedux === 1 ? `Đăng bài` : `Post`} */}
       </p>
     </button>,
     <div

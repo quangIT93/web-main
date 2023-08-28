@@ -32,7 +32,6 @@ import { useSearchParams } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 // import { AxiosResponse } from 'axios';
 // import icon
-import languageApi from 'api/languageApi';
 
 import { Space } from 'antd';
 
@@ -104,25 +103,10 @@ const NewJobs: React.FC = () => {
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [loading, setLoading] = React.useState(false);
-  const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const {
     // setChildCateloriesArray,

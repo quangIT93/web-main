@@ -15,7 +15,6 @@ import { useSelector } from 'react-redux';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
-import languageApi from 'api/languageApi';
 
 import './style.scss';
 
@@ -78,25 +77,10 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
   // const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = React.useState();
   const [valueRender, setValueRender] = React.useState<any>();
-  const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   let userFilteredCookies = JSON.parse(
     getCookie('userTypeSalaryFiltered') || '{}',

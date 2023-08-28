@@ -9,19 +9,13 @@ interface ProfileState {
 
 const initialState: ProfileState = {
     languages: null,
-  error: null,
+    error: null,
 }
 
 export const getLanguages = createAsyncThunk(
   'getLanguage',
   async (selectedLanguage: string, { getState, rejectWithValue }) => {
     try {
-      const accessToken = localStorage.getItem('accessToken')
-      // Gọi API để lấy thông tin profile với accessToken đã có
-    //   const languageRedux = JSON.parse(JSON.parse(localStorage.getItem("persist:root") as string)?.changeLaguage)["language"]
-        console.log("selectedLanguage", selectedLanguage);
-        
-      if (accessToken) {
         const response = await languageApi.getLanguage(
             selectedLanguage ?
             Number(selectedLanguage) === 1 ?
@@ -30,12 +24,11 @@ export const getLanguages = createAsyncThunk(
             // languageRedux && 
             "vi"
             )
-            console.log("selectedLanguage", selectedLanguage);
-          console.log("response: " + response);
+ 
           
 
         return response.data
-      }
+     
     } catch (error) {
         // if (error instanceof AxiosError) {
           

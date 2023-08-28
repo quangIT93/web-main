@@ -16,7 +16,6 @@ import { RootState } from 'store';
 
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
-import languageApi from 'api/languageApi';
 
 const { Text } = Typography;
 
@@ -54,25 +53,10 @@ const FilterSalary: React.FC<IFilterSalary> = (props) => {
   // const [inputValueMax, setInputValueMax] = useState<string | null>(null);
 
   const [collapseOpen, setCollapseOpen] = useState(false);
-  const [language, setLanguageState] = useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   // const [checkSalary, setCheckSalary] = useState(false);
 
