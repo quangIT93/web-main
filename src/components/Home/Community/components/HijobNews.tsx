@@ -28,8 +28,13 @@ const HijobNews = () => {
 
   const handleGetHijobNews = async () => {
     try {
-      const result = await communityApi.getCommunityNews('', '5', '', 0,
-        languageRedux === 1 ? "vi" : "en");
+      const result = await communityApi.getCommunityNews(
+        '',
+        '5',
+        '',
+        0,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setNews(result?.data?.communications);
       }
@@ -64,15 +69,18 @@ const HijobNews = () => {
     window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
     localStorage.setItem('community', '.community-container');
   };
+  console.log('new', news);
 
   return (
     <>
       <div className="community-content-title">
         <div className="community-content-title_left">
           <NewsPaperIcon />
-          <h3>HiJob News</h3>
+          <h3>{languageRedux === 1 ? 'Tin tức' : 'HiJob News'}</h3>
         </div>
-        <p onClick={() => window.open('/news-comunity', '_parent')}>{language?.home_page?.view_all}</p>
+        <p onClick={() => window.open('/news-comunity', '_parent')}>
+          {language?.home_page?.view_all}
+        </p>
       </div>
       <div className="community-content-body">
         {news &&
@@ -83,11 +91,19 @@ const HijobNews = () => {
               onClick={() => handleMoveToDetailPage(newsItem?.id)}
             >
               <div className="community-content-body_left">
-                <Avatar
-                  shape="square"
-                  size={88}
-                  src={newsItem?.images[0]?.image}
-                />
+                {newsItem?.images.length !== 0 ? (
+                  <Avatar
+                    shape="square"
+                    size={88}
+                    src={newsItem?.images[0]?.image}
+                  />
+                ) : (
+                  <Avatar
+                    shape="square"
+                    size={88}
+                    src="https://static.vecteezy.com/system/resources/thumbnails/005/720/387/small/newspaper-line-icon-on-white-background-outline-sign-of-newspaper-news-symbol-linear-pictogram-free-vector.jpg"
+                  />
+                )}
               </div>
               <div className="community-content-body_right">
                 <div className="body-item-title">
@@ -95,10 +111,7 @@ const HijobNews = () => {
                   {/* <h3>{newsItem?.title}</h3> */}
                   {/* </Tooltip> */}
                   <div className="title">
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                    >
+                    <Typography variant="body2" color="text.secondary">
                       {newsItem?.title}
                     </Typography>
                   </div>
