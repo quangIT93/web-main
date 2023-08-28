@@ -119,10 +119,6 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
     setReset(false);
   };
 
-  console.log('SALARY_TYPE', SALARY_TYPE);
-  console.log('data', data);
-  console.log('valueRender', valueRender);
-
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
