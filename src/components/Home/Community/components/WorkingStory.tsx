@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Tooltip } from 'antd';
 import ModalLogin from '../../../../components/Home/ModalLogin';
+import { Typography } from '@mui/material';
 
 const WorkingStory = () => {
   const languageRedux = useSelector(
@@ -86,9 +87,17 @@ const WorkingStory = () => {
               onClick={() => handleMoveToDetailPage(story?.id)}
             >
               <div className="body-item-title">
-                <Tooltip title={story?.title}>
-                  <h3>{story?.title}</h3>
-                </Tooltip>
+                {/* <Tooltip title={story?.title}> */}
+                {/* <h3>{story?.title}</h3> */}
+                {/* </Tooltip> */}
+                <div className="title">
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    {story?.title}
+                  </Typography>
+                </div>
                 <p>{story?.createdAtText}</p>
               </div>
               <div className="body-item-user">

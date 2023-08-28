@@ -323,17 +323,21 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? language?.remote_work
                     : hotJobType === 3
-                    ? 'Influencer'
-                    : hotJobType === 4
-                    ? language?.hot_job_page?.short_time
-                    : hotJobType === 5
-                    ? language?.hot_job_page?.job_today
-                    : hotJobType === 6
-                    ? 'Freelancer'
-                    : hotJobType === 7
-                    ? 'Delivery'
-                    : ''}{' '}
-                  {hotJobTotal ? hotJobTotal : 0}
+                      ? 'Influencer'
+                      : hotJobType === 4
+                        ? language?.hot_job_page?.short_time
+                        : hotJobType === 5
+                          ? language?.hot_job_page?.job_today
+                          : hotJobType === 6
+                            ? 'Freelancer'
+                            : hotJobType === 7
+                              ? 'Delivery/Driver'
+                              : ''}{' '}
+                  {hotJobTotal ?
+                    new Intl.NumberFormat('en-US').format(
+                      hotJobTotal,
+                    ) :
+                    0}
                   <span>
                     {' '}
                     {
@@ -341,8 +345,8 @@ const HotJobpage: React.FC = () => {
                       languageRedux === 1
                         ? 'kết quả'
                         : hotJobTotal > 1
-                        ? 'results'
-                        : 'result'
+                          ? 'results'
+                          : 'result'
                     }
                   </span>
                 </h3>
@@ -408,7 +412,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

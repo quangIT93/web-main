@@ -13,6 +13,7 @@ import { RootState } from 'store';
 import communityApi from 'api/apiCommunity';
 import { Tooltip } from 'antd';
 import ModalLogin from '../../../../components/Home/ModalLogin';
+import { Typography } from '@mui/material';
 
 const HijobNews = () => {
   const languageRedux = useSelector(
@@ -86,9 +87,17 @@ const HijobNews = () => {
               </div>
               <div className="community-content-body_right">
                 <div className="body-item-title">
-                  <Tooltip title={newsItem?.title}>
-                    <h3>{newsItem?.title}</h3>
-                  </Tooltip>
+                  {/* <Tooltip title={newsItem?.title}> */}
+                  {/* <h3>{newsItem?.title}</h3> */}
+                  {/* </Tooltip> */}
+                  <div className="title">
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      {newsItem?.title}
+                    </Typography>
+                  </div>
                   <p>{newsItem?.createdAtText}</p>
                 </div>
                 <div className="body-item-actions">
