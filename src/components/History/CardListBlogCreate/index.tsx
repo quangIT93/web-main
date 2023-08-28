@@ -9,6 +9,7 @@ import {
   SaveIconOutline,
   SaveIconFill,
   SettingIcon,
+  NewestIcon,
 } from '#components/Icons';
 import { Box, Typography, MenuItem, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -33,7 +34,12 @@ const CardListBlogCreate = () => {
 
   const handleGetCreatedPost = async () => {
     try {
-      const result = await communityApi.getCommunityByAccount(page, '10', sort);
+      const result = await communityApi.getCommunityByAccount(
+        page,
+        '10',
+        sort,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setCreatedPost(result?.data?.communications);
         if (result?.data?.communications?.length < 10) {
@@ -56,7 +62,7 @@ const CardListBlogCreate = () => {
 
   React.useEffect(() => {
     handleGetCreatedPost();
-  }, [sort]);
+  }, [sort, languageRedux]);
 
   const handleAddText = () => {
     setShowText('showText');
@@ -106,6 +112,7 @@ const CardListBlogCreate = () => {
         nextPage,
         '10',
         sort,
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       //
@@ -118,9 +125,13 @@ const CardListBlogCreate = () => {
         setPage(nextPage);
       } else {
         setPage('0');
-        message.error('da het data');
+        message.error(
+          languageRedux === 1
+            ? 'Đã hết bài viết để hiển thị'
+            : 'Out of posts to show',
+        );
         setIsVisible(false);
-        // console.log('da het data', result);
+        // console.log('Đã hết bài viết để hiển thị', result);
       }
     } catch (error) {
       console.log(error);
@@ -175,9 +186,21 @@ const CardListBlogCreate = () => {
             <ul className="dropdown_menu dropdown_menu-4">
               <li
                 className={
+                  sort === '' ? 'dropdown_item-1  active' : 'dropdown_item-1'
+                }
+                style={{ display: openMenu ? 'flex' : 'none' }}
+                onClick={() => {
+                  handleSortBy('');
+                }}
+              >
+                <NewestIcon />
+                <p>{language?.history_page?.latest}</p>
+              </li>
+              <li
+                className={
                   sort !== '' && sort == 'l'
-                    ? 'dropdown_item-1  active'
-                    : 'dropdown_item-1'
+                    ? 'dropdown_item-2  active'
+                    : 'dropdown_item-2'
                 }
                 style={{ display: openMenu ? 'flex' : 'none' }}
                 onClick={() => {
@@ -190,8 +213,8 @@ const CardListBlogCreate = () => {
               <li
                 className={
                   sort !== '' && sort == 'v'
-                    ? 'dropdown_item-2  active'
-                    : 'dropdown_item-2'
+                    ? 'dropdown_item-3  active'
+                    : 'dropdown_item-3'
                 }
                 style={{ display: openMenu ? 'flex' : 'none' }}
                 onClick={() => {
@@ -204,8 +227,8 @@ const CardListBlogCreate = () => {
               <li
                 className={
                   sort !== '' && sort == 'cm'
-                    ? 'dropdown_item-3  active'
-                    : 'dropdown_item-3'
+                    ? 'dropdown_item-4  active'
+                    : 'dropdown_item-4'
                 }
                 style={{ display: openMenu ? 'flex' : 'none' }}
                 onClick={() => {

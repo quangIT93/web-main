@@ -13,10 +13,14 @@ import { RootState } from 'store';
 import communityApi from 'api/apiCommunity';
 import { Tooltip } from 'antd';
 import ModalLogin from '../../../../components/Home/ModalLogin';
+import { Typography } from '@mui/material';
 
 const HijobNews = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
   );
   const [news, setNews] = React.useState<any>();
   const [like, setLike] = React.useState(false);
@@ -24,7 +28,8 @@ const HijobNews = () => {
 
   const handleGetHijobNews = async () => {
     try {
-      const result = await communityApi.getCommunityNews('', '5', '', 0);
+      const result = await communityApi.getCommunityNews('', '5', '', 0,
+        languageRedux === 1 ? "vi" : "en");
       if (result) {
         setNews(result?.data?.communications);
       }
@@ -67,7 +72,7 @@ const HijobNews = () => {
           <NewsPaperIcon />
           <h3>HiJob News</h3>
         </div>
-        <p onClick={() => window.open('/news-comunity', '_parent')}>View all</p>
+        <p onClick={() => window.open('/news-comunity', '_parent')}>{language?.home_page?.view_all}</p>
       </div>
       <div className="community-content-body">
         {news &&
@@ -86,9 +91,17 @@ const HijobNews = () => {
               </div>
               <div className="community-content-body_right">
                 <div className="body-item-title">
-                  <Tooltip title={newsItem?.title}>
-                    <h3>{newsItem?.title}</h3>
-                  </Tooltip>
+                  {/* <Tooltip title={newsItem?.title}> */}
+                  {/* <h3>{newsItem?.title}</h3> */}
+                  {/* </Tooltip> */}
+                  <div className="title">
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      {newsItem?.title}
+                    </Typography>
+                  </div>
                   <p>{newsItem?.createdAtText}</p>
                 </div>
                 <div className="body-item-actions">

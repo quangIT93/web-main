@@ -83,7 +83,9 @@ const FilterTypeJob: React.FC<TypeJob> = ({
     (state: RootState) => state.changeLaguage.language,
   );
   // const [data, setData] = React.useState()
-  const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
+  const [data, setData] = React.useState<{ id: number; value: string }[]>([
+    { id: 0, value: 'Tất cả' },
+  ]);
   const [valueRender, setValueRender] = React.useState<any>();
   // const [searchParams, setSearchParams] = useSearchParams();
   // const [language, setLanguageState] = React.useState<any>();

@@ -41,6 +41,8 @@ const CardListBlogSave = () => {
 
   const [saveListPost, setSaveListPost] = React.useState(false);
 
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
@@ -108,7 +110,7 @@ const CardListBlogSave = () => {
   const handleChange = async () => {
     try {
       setUploading(true);
-      const nextPage = (parseInt(page) + 1);
+      const nextPage = parseInt(page) + 1;
       const result = await communityApi.getCommunityBookmarked(nextPage);
 
       //
@@ -118,9 +120,13 @@ const CardListBlogSave = () => {
         setPage(nextPage);
       } else {
         setPage('0');
-        message.error('da het data');
+        message.error(
+          languageRedux === 1 ?
+            'Đã hết bài viết để hiển thị' :
+            'Out of posts to show'
+        );
         setIsVisible(false);
-        // console.log('da het data', result);
+        // console.log('Đã hết bài viết để hiển thị', result);
       }
     } catch (error) {
       console.log(error);
@@ -195,21 +201,23 @@ const CardListBlogSave = () => {
       </Box>
       <div className="list-blog-create-data">
         {stories ? (
-          stories.map((item: any, index: any) => (
-            item?.communicationData?.type === 1 ?
+          stories.map((item: any, index: any) =>
+            item?.communicationData?.type === 1 ? (
               <WorkingStoryCard
                 item={item.communicationData}
                 index={index}
                 setSaveListPost={setSaveListPost}
                 saveListPost={saveListPost}
-              /> :
+              />
+            ) : (
               <HijobNewsCard
                 item={item.communicationData}
                 index={index}
                 setSaveListPost={setSaveListPost}
                 saveListPost={saveListPost}
               />
-          ))
+            ),
+          )
         ) : (
           <></>
         )}

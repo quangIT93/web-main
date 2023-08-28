@@ -14,6 +14,7 @@ import {
   LikeIcon,
   FilterComunity,
   MoreICon,
+  NewestIcon,
 } from '#components/Icons';
 import { LoadingOutlined } from '@ant-design/icons';
 // @ts-ignore
@@ -31,9 +32,12 @@ const ComunityNews = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [openMenu, setOpenMenu] = React.useState(false);
   const footerRef = React.useRef<any>(null);
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
   const [hijobNews, setHijobNews] = React.useState<any>([]);
   const [page, setPage] = React.useState<any>('0');
   const [total, setTotal] = React.useState<any>(0);
@@ -41,15 +45,32 @@ const ComunityNews = () => {
   const [sort, setSort] = React.useState('');
   const [hasMore, setHasMore] = React.useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
+  const [readLoad, setReload] = React.useState(false);
+  const [saveListPost, setSaveListPost] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   console.log('hijobNews', hijobNews);
 
+  React.useEffect(() => {
+    const reload = localStorage.getItem('reload');
+    if (reload) {
+      setReload(true);
+    }
+  }, []);
+
   const fetchMoreData = async () => {
+    console.log('moreeeee');
+
     const nextPage = (parseInt(page) + 1).toString();
-    const result = await communityApi.getCommunityNews(nextPage, '10', sort, 0);
+    const result = await communityApi.getCommunityNews(
+      nextPage,
+      '10',
+      sort,
+      0,
+      languageRedux === 1 ? 'vi' : 'en',
+    );
 
     //
-    if (result && result?.data?.communications?.length !== 0) {
+    if (result && !result?.data?.is_over) {
       setHijobNews((prev: any) => [...prev, ...result?.data?.communications]);
       setPage(nextPage);
     } else {
@@ -57,7 +78,7 @@ const ComunityNews = () => {
       setPage('0');
       message.error('Đã hết bài viết');
       setIsVisible(false);
-      // console.log('da het data', result);
+      // console.log('Đã hết bài viết để hiển thị', result);
     }
   };
 
@@ -75,13 +96,22 @@ const ComunityNews = () => {
 
   const handleGetAllHijobNews = async () => {
     try {
-      const result = await communityApi.getCommunityNews(page, '10', sort, 0);
+      setLoading(true);
+      const result = await communityApi.getCommunityNews(
+        page,
+        '10',
+        sort,
+        0,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         console.log(result?.data?.communications);
         setHijobNews(result?.data?.communications);
-        setTotal(result?.data?.total)
-        if (result?.data?.communications?.length < 10) {
+        setTotal(result?.data?.total);
+        setLoading(false);
+        if (result?.data?.is_over) {
           setIsVisible(false);
+          setHasMore(false);
         }
       }
     } catch (error) {
@@ -92,11 +122,17 @@ const ComunityNews = () => {
   React.useEffect(() => {
     handleGetAllHijobNews();
     setHasMore(true);
-  }, [sort]);
+  }, [sort, readLoad, languageRedux]);
 
   const handleChange = async () => {
     const nextPage = (parseInt(page) + 1).toString();
-    const result = await communityApi.getCommunityNews(nextPage, '10', sort, 0);
+    const result = await communityApi.getCommunityNews(
+      nextPage,
+      '10',
+      sort,
+      0,
+      languageRedux === 1 ? 'vi' : 'en',
+    );
 
     //
     if (result && result?.data?.communications?.length !== 0) {
@@ -104,29 +140,33 @@ const ComunityNews = () => {
       setPage(nextPage);
     } else {
       setPage('0');
-      message.error('da het data');
-      setIsVisible(false);
-      // console.log('da het data', result);
-    }
-  };
-
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
+      message.error(
+        languageRedux === 1
+          ? 'Đã hết bài viết để hiển thị'
+          : 'Out of posts to show',
       );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
+      setIsVisible(false);
+      // console.log('Đã hết bài viết để hiển thị', result);
     }
   };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -149,7 +189,15 @@ const ComunityNews = () => {
       <div className="comunity-news-content">
         <div className="comunityPostNews">
           <div className="title-comunity-news">
-            <h3>{"Hôm nay, HiJob có " + total + " bài viết mới"}</h3>
+            <h3>
+              {loading
+                ? 'Loading...'
+                : language?.community_page?.today_hijob_has +
+                  ' ' +
+                  total +
+                  ' ' +
+                  language?.community_page?.new_posts}
+            </h3>
             <div className="title-comunity-news_icon">
               <div
                 className="dropdown dropdown-4"
@@ -160,9 +208,23 @@ const ComunityNews = () => {
                 <ul className="dropdown_menu dropdown_menu-4">
                   <li
                     className={
-                      sort !== '' && sort == 'l'
+                      sort === ''
                         ? 'dropdown_item-1  active'
                         : 'dropdown_item-1'
+                    }
+                    style={{ display: openMenu ? 'flex' : 'none' }}
+                    onClick={() => {
+                      handleSortBy('');
+                    }}
+                  >
+                    <NewestIcon />
+                    <p>{language?.history_page?.latest}</p>
+                  </li>
+                  <li
+                    className={
+                      sort !== '' && sort == 'l'
+                        ? 'dropdown_item-2  active'
+                        : 'dropdown_item-2'
                     }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
@@ -175,8 +237,8 @@ const ComunityNews = () => {
                   <li
                     className={
                       sort !== '' && sort == 'v'
-                        ? 'dropdown_item-2  active'
-                        : 'dropdown_item-2'
+                        ? 'dropdown_item-3  active'
+                        : 'dropdown_item-3'
                     }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
@@ -189,8 +251,8 @@ const ComunityNews = () => {
                   <li
                     className={
                       sort !== '' && sort == 'cm'
-                        ? 'dropdown_item-3  active'
-                        : 'dropdown_item-3'
+                        ? 'dropdown_item-4  active'
+                        : 'dropdown_item-4'
                     }
                     style={{ display: openMenu ? 'flex' : 'none' }}
                     onClick={() => {
@@ -212,7 +274,12 @@ const ComunityNews = () => {
             loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
           >
             {hijobNews?.map((item: any, index: any) => (
-              <HijobNewsCard item={item} index={index} />
+              <HijobNewsCard
+                item={item}
+                index={index}
+                setSaveListPost={setSaveListPost}
+                saveListPost={saveListPost}
+              />
             ))}
           </InfiniteScroll>
           {/* {
