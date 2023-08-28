@@ -211,6 +211,22 @@
                         }
                     }
                 }
+
+                @media screen and (max-width: 449px) {
+
+                    width: 320px;
+                 }
+
+                @media screen and (min-width: 450px) and (max-width: 600px) {
+                    width: 420px;
+
+                }
+
+                @media screen and (min-width: 601px) and (max-width: 767px) {
+                    width: 500px;
+
+                }
+
             }
 
             .save_btn {

@@ -286,7 +286,7 @@ const Comunity = () => {
                 size={50}
                 src={
                   detail?.type === 1
-                    ? detail?.profileData?.avatar
+                    ? detail?.profileData?.avatarPath
                     : 'favicon.ico'
                 }
                 icon={<UserOutlined />}
@@ -502,46 +502,50 @@ const Comunity = () => {
             <div className="comunityDetail-list_comment">
               {detail?.communicationCommentsData &&
                 detail?.communicationCommentsData.map(
-                  (cmtData: any, index: any) => (
-                    <div
-                      className="comunityDetail-list_comment__item"
-                      key={index}
-                    >
-                      {/* <img
+                  (cmtData: any, index: any) => {
+                    console.log('cmtData', cmtData);
+
+                    return (
+                      <div
+                        className="comunityDetail-list_comment__item"
+                        key={index}
+                      >
+                        {/* <img
                     src={cmtData?.profileData?.avatar}
                     alt=""
                     style={{ width: '50px', height: '50px' }}
                   /> */}
-                      <Avatar
-                        size={50}
-                        src={cmtData?.profile?.avatar}
-                        icon={<UserOutlined />}
-                      />
-                      <div className="comunityDetail-comment">
-                        <div className="comunityDetail-comment_top">
-                          <div className="comunityDetail-comment_top__left">
-                            <h3>
-                              {cmtData?.profile?.name.slice(0, 2) + '...'}
-                            </h3>
-                            <h3>|</h3>
-                            <p>{cmtData?.createdAtText}</p>
+                        <Avatar
+                          size={50}
+                          src={cmtData?.profile?.avatar}
+                          icon={<UserOutlined />}
+                        />
+                        <div className="comunityDetail-comment">
+                          <div className="comunityDetail-comment_top">
+                            <div className="comunityDetail-comment_top__left">
+                              <h3>
+                                {cmtData?.profile?.name.slice(0, 2) + '...'}
+                              </h3>
+                              <h3>|</h3>
+                              <p>{cmtData?.createdAtText}</p>
+                            </div>
+                            <div
+                              className="comunityDetail-comment_top__right"
+                              style={{}}
+                            ></div>
                           </div>
-                          <div
-                            className="comunityDetail-comment_top__right"
-                            style={{}}
-                          ></div>
-                        </div>
-                        <div className="comunityDetail-comment_bottom">
-                          <TextArea
-                            value={cmtData?.content}
-                            autoSize
-                            // showCount
-                          />
-                          {/* <p>{cmtData?.content}</p> */}
+                          <div className="comunityDetail-comment_bottom">
+                            <TextArea
+                              value={cmtData?.content}
+                              autoSize
+                              // showCount
+                            />
+                            {/* <p>{cmtData?.content}</p> */}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ),
+                    );
+                  },
                 )}
             </div>
           </div>

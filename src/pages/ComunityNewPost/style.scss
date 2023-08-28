@@ -16,7 +16,11 @@
         // }
 
         @media screen and (max-width: 768px) {
-            padding: 50px 24px;
+            padding: 50px 0px;
+
+            .comunity-detail_post {
+                width: 90% !important;
+            }
         }
 
         .comunityPostNew {

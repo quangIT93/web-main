@@ -33,8 +33,12 @@ const WorkingStory = () => {
 
   const handleGetWorkingStory = async () => {
     try {
-      const result = await communityApi.getCommunityNews('', '5', '', 1,
-        languageRedux === 1 ? "vi" : "en"
+      const result = await communityApi.getCommunityNews(
+        '',
+        '5',
+        '',
+        1,
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setStories(result?.data?.communications);
@@ -72,7 +76,11 @@ const WorkingStory = () => {
       <div className="community-content-title">
         <div className="community-content-title_left">
           <ThinkingIcon />
-          <h3>HiJob Working story</h3>
+          <h3>
+            {languageRedux === 1
+              ? 'Chia sẻ kinh nghiệm làm việc'
+              : 'HiJob Working story'}
+          </h3>
         </div>
         <p
           onClick={() => {
@@ -96,10 +104,7 @@ const WorkingStory = () => {
                 {/* <h3>{story?.title}</h3> */}
                 {/* </Tooltip> */}
                 <div className="title">
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                  >
+                  <Typography variant="body2" color="text.secondary">
                     {story?.title}
                   </Typography>
                 </div>
@@ -107,7 +112,7 @@ const WorkingStory = () => {
               </div>
               <div className="body-item-user">
                 <UseCircleIcon />
-                <p>{story?.profileData?.name.slice(0, 2) + "..."}</p>
+                <p>{story?.profileData?.name.slice(0, 2) + '...'}</p>
               </div>
               <div className="body-item-actions">
                 <div className="action-item">

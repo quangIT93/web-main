@@ -345,8 +345,8 @@ const HotJobpage: React.FC = () => {
                     ? 'Delivery/Driver'
                     : 'Loading...'}{' '}
                   {hotjob.length !== 0
-                    ? // ? new Intl.NumberFormat('en-US').format(hotJobTotal)
-                      Number(hotJobTotal.toLocaleString())
+                    ? // ? Number(hotJobTotal.toLocaleString())
+                      new Intl.NumberFormat('en-US').format(hotJobTotal)
                     : ''}
                   <span>
                     {' '}
