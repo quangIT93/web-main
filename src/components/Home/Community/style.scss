@@ -74,7 +74,7 @@
 
                     h3 {
                         font-family: Roboto;
-                        font-size: 20px;
+                        font-size: 16px;
                         font-weight: 700;
                         letter-spacing: 0em;
                         text-align: left;
@@ -83,7 +83,7 @@
 
                 p {
                     font-family: Roboto;
-                    font-size: 6;
+                    // font-size: 16px;
                     // font-weight: 700;
                     letter-spacing: 0em;
                     text-align: right;
@@ -109,8 +109,8 @@
                     cursor: pointer;
                     display: flex;
                     flex-direction: column;
-                    height: 136px;
-                    padding: 24px 12px;
+                    // height: 136px;
+                    padding: 12px;
                     gap: 8px;
                     border-radius: 12px;
                     position: relative;
@@ -171,7 +171,7 @@
                                 width: 500px;
                                 text-overflow: ellipsis;
                                 overflow: hidden;
-                                font-size: 20px;
+                                font-size: 16px;
                                 font-weight: 500;
                                 color: #000;
                                 font-style: normal;
@@ -210,7 +210,7 @@
 
                         p {
                             font-family: Roboto;
-                            font-size: 16px;
+                            font-size: 12px;
                             font-style: italic;
                             font-weight: 400;
                             letter-spacing: 0em;
@@ -236,7 +236,7 @@
 
                             p {
                                 font-family: Roboto;
-                                font-size: 16px;
+                                font-size: 14px;
                                 font-weight: 700;
                                 letter-spacing: 0em;
                                 text-align: left;
@@ -247,8 +247,10 @@
                         .body-item-actions {
                             display: flex;
                             align-items: center;
-                            gap: 24px;
+                            // gap: 12px;
                             flex-wrap: wrap;
+                            width: 160px;
+                            justify-content: space-between;
 
                             .action-item {
                                 display: flex;
@@ -342,7 +344,7 @@
                                     width: 500px;
                                     text-overflow: ellipsis;
                                     overflow: hidden;
-                                    font-size: 20px;
+                                    font-size: 16px;
                                     font-weight: 500;
                                     color: #000;
                                     font-style: normal;
@@ -377,7 +379,7 @@
 
                             p {
                                 font-family: Roboto;
-                                font-size: 16px;
+                                font-size: 12px;
                                 font-style: italic;
                                 font-weight: 400;
                                 letter-spacing: 0em;
@@ -389,9 +391,10 @@
                         .body-item-actions {
                             display: flex;
                             align-items: center;
-                            gap: 24px;
-                            flex-wrap: wrap;
-
+                            // gap: 12px;
+                            // flex-wrap: wrap;
+                            justify-content: space-between;
+                            width: 160px;
                             .action-item {
                                 display: flex;
                                 align-items: center;

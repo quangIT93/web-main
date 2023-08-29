@@ -120,8 +120,9 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${size * rows
-        }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${
+        size * rows
+      }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -191,9 +192,9 @@ const Comunity = () => {
 
     if (cmtContent.trim() == '') {
       message.error(
-        languageRedux === 1 ?
-          'Bạn chưa nhập bình luận' :
-          'You have not entered a comment'
+        languageRedux === 1
+          ? 'Bạn chưa nhập bình luận'
+          : 'You have not entered a comment',
       );
       setCmtContent('');
       return;
@@ -262,14 +263,15 @@ const Comunity = () => {
             <div className="icon-back">
               <BackIcon width={15} height={15} fill="white" />
             </div>
-            <h3>{detail?.type === 1 ?
-              languageRedux === 1 ?
-                'Câu chuyện việc làm' :
-                'Working story' :
-              languageRedux === 1 ?
-                'Tin tức HiJob' :
-                'HiJob news'
-            }</h3>
+            <h3>
+              {detail?.type === 1
+                ? languageRedux === 1
+                  ? 'Câu chuyện việc làm'
+                  : 'Working story'
+                : languageRedux === 1
+                ? 'Tin tức HiJob'
+                : 'HiJob news'}
+            </h3>
           </div>
           <div className="title-comunity">
             {/* <Tooltip title={detail?.title}>
@@ -323,7 +325,7 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-              // showCount
+                // showCount
               />
             </div>
           </div>
@@ -428,6 +430,10 @@ const Comunity = () => {
             ))}
           </div>
           <div className="comunityDetail-wrap_status">
+            <div className="comunitypostNew-status_item">
+              <EysIcon />
+              <p>{detail?.communicationViewsCount}</p>
+            </div>
             <div
               className={
                 like
@@ -442,10 +448,6 @@ const Comunity = () => {
             <div className="comunitypostNew-status_item">
               <CommentIcon />
               <p>{detail?.communicationCommentsCount}</p>
-            </div>
-            <div className="comunitypostNew-status_item">
-              <EysIcon />
-              <p>{detail?.communicationViewsCount}</p>
             </div>
           </div>
           {/* <div className="comunityDetail-wrap_actor">
@@ -495,7 +497,7 @@ const Comunity = () => {
                       : 'Enter your comment ...'
                   }
                   autoSize
-                // showCount
+                  // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -544,9 +546,13 @@ const Comunity = () => {
                             <div
                               className="comunityDetail-comment_top__right"
                               style={{
-                                display: detail?.profileData?.id === localStorage.getItem('accountId') ||
-                                  cmtData?.profile?.id === localStorage.getItem('accountId') ?
-                                  'block' : 'none'
+                                display:
+                                  detail?.profileData?.id ===
+                                    localStorage.getItem('accountId') ||
+                                  cmtData?.profile?.id ===
+                                    localStorage.getItem('accountId')
+                                    ? 'block'
+                                    : 'none',
                               }}
                             >
                               <DeleteCmtIcon />
@@ -556,7 +562,7 @@ const Comunity = () => {
                             <TextArea
                               value={cmtData?.content}
                               autoSize
-                            // showCount
+                              // showCount
                             />
                             {/* <p>{cmtData?.content}</p> */}
                           </div>

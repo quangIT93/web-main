@@ -74,7 +74,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
     }
   };
 
-  React.useEffect(() => { }, [like]);
+  React.useEffect(() => {}, [like]);
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
@@ -158,20 +158,19 @@ const HijobNewsCard: React.FC<any> = (props) => {
         onClick={(e) => handleMoveToDetailPage(item?.id, e)}
       >
         <div className="comunitypostNews-card-wrap_content__left">
-          {
-            item?.images.length !== 0 ? (
-              <Avatar
-                shape="square"
-                src={item?.images[0]?.image}
-                icon={<UserOutlined />}
-              />) : (
-              <Avatar
-                shape="square"
-                size={88}
-                src="https://static.vecteezy.com/system/resources/thumbnails/005/720/387/small/newspaper-line-icon-on-white-background-outline-sign-of-newspaper-news-symbol-linear-pictogram-free-vector.jpg"
-              />
-            )
-          }
+          {item?.images.length !== 0 ? (
+            <Avatar
+              shape="square"
+              src={item?.images[0]?.image}
+              icon={<UserOutlined />}
+            />
+          ) : (
+            <Avatar
+              shape="square"
+              size={88}
+              src="https://static.vecteezy.com/system/resources/thumbnails/005/720/387/small/newspaper-line-icon-on-white-background-outline-sign-of-newspaper-news-symbol-linear-pictogram-free-vector.jpg"
+            />
+          )}
         </div>
         <div className="comunitypostNews-card-wrap_content__right">
           <div className="comunityPostNews-card-content">
@@ -207,7 +206,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
               /> */}
               {shouldShowMoreButton ? (
                 <span onClick={(e) => handleAddText(e)}>
-                  {!showText ? language?.more : 'Xem ít...'}
+                  {!showText ? `${language?.more}...` : 'Xem ít...'}
                 </span>
               ) : (
                 <></>
