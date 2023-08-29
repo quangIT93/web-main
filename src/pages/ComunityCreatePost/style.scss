@@ -212,19 +212,53 @@
                     }
                 }
 
-                @media screen and (max-width: 449px) {
-
+                @media screen and (max-width: 379px) {
                     width: 320px;
+                    .input-title {
+                        padding: 12px;
+                        height: 52px;
+                        font-size: 16px;
+                    }
                  }
 
-                @media screen and (min-width: 450px) and (max-width: 600px) {
-                    width: 420px;
+                 @media screen and (min-width: 380px) and (max-width: 449px) {
+                    width: 380px;
+                    .input-title {
+                        padding: 12px;
+                        height: 52px;
+                        font-size: 16px;
+                    }
+                    .input-content {
+                        padding: 12px ;
+                        font-size: 16px ;
+                    }
+                    
+                }
 
+                @media screen and (min-width: 450px) and (max-width: 600px) {
+                    width: 440px;
+                    .input-title {
+                        padding: 12px;
+                        height: 52px;
+                        font-size: 16px;
+                    }
+                    .input-content {
+                        padding: 12px ;
+                        font-size: 16px ;
+                    }
                 }
 
                 @media screen and (min-width: 601px) and (max-width: 767px) {
                     width: 500px;
-
+                    .input-title {
+                        padding: 12px;
+                        height: 52px;
+                        font-size: 16px;
+                    }
+                    .input-content {
+                        padding: 12px ;
+                        font-size: 16px ;
+                    }
                 }
 
             }

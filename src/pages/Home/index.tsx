@@ -21,6 +21,8 @@ import HotJob from '#components/Home/HotJob';
 
 import RollTop from '#components/RollTop';
 
+import Box from '@mui/material/Box';
+
 // import ModalLogin from '#components/Home/ModalLogin'
 // import { useHomeState } from './HomeState'
 import './style.scss';
@@ -127,6 +129,16 @@ const Home: React.FC = () => {
         Đa dạng ngành nghề, mức lương hấp dẫn
       </h1>
       <div className="home__main">
+        <Box
+          sx={{
+            marginTop: '15rem',
+          }}
+        ></Box>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8881781217169539"
+          crossOrigin="anonymous"
+        ></script>
         <CategoryCarousel />
         <Breadcrumbs />
         <AppliedPostedJob />

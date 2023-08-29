@@ -279,7 +279,8 @@
   @include breakpoint(tablet) {
     flex-wrap: wrap;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 10px 24px;
   }
 }
 

@@ -98,11 +98,7 @@ const HijobNews = () => {
                     src={newsItem?.images[0]?.image}
                   />
                 ) : (
-                  <Avatar
-                    shape="square"
-                    size={88}
-                    src="https://static.vecteezy.com/system/resources/thumbnails/005/720/387/small/newspaper-line-icon-on-white-background-outline-sign-of-newspaper-news-symbol-linear-pictogram-free-vector.jpg"
-                  />
+                  <Avatar shape="square" size={88} src="./images/news.jpg" />
                 )}
               </div>
               <div className="community-content-body_right">
