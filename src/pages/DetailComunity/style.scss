@@ -55,7 +55,7 @@
             .title-comunity {
                 display: flex;
                 justify-content: space-between;
-                align-items:flex-start;
+                align-items: flex-start;
 
                 @media screen and (max-width:600px) {
                     flex-direction: column;
@@ -142,14 +142,12 @@
 
                     }
 
-              
+
 
                 }
 
                 .comunityDetail-wrap_actor {
-                    p {
-                        
-                    }
+                    p {}
                 }
             }
 
@@ -530,6 +528,7 @@
                                 display: flex;
                                 align-items: center;
                                 justify-content: space-between;
+                                width: 100%;
 
                                 &__left {
                                     display: flex;
@@ -566,6 +565,7 @@
                                 &__right {
                                     display: flex;
                                     align-items: center;
+                                    cursor: pointer;
                                 }
                             }
 
