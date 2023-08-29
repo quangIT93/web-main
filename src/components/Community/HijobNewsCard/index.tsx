@@ -61,12 +61,11 @@ const HijobNewsCard: React.FC<any> = (props) => {
     try {
       const result = await communityApi.postCommunityLike(communicationId);
       if (result) {
+        setLike(!like);
         if (result?.data?.communicationId) {
           setTotalLike(totalLike + 1);
-          setLike(true);
         } else {
           setTotalLike(totalLike - 1);
-          setLike(false);
         }
       } else {
         message.error('Vui lòng đăng nhập để thực hiện chức năng');
