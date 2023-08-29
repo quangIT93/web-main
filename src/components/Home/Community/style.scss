@@ -1,3 +1,5 @@
+@import '/src/scss//mixins';
+
 .community-container {
     margin-bottom: 90px;
     // border-radius: 16px;
@@ -113,6 +115,7 @@
                     border-radius: 12px;
                     position: relative;
                     margin: 4px 0;
+                    justify-content: center;
 
                     .border-line {
                         position: absolute;
@@ -191,11 +194,15 @@
                                 }
 
                                 @media screen and (max-width: 560px) {
-                                    width: 200px;
+                                    width: 300px;
                                 }
 
                                 @media screen and (max-width: 430px) {
-                                    width: 100px;
+                                    width: 260px;
+                                    font-size: 20px !important;
+                                }
+                                @media screen and (max-width: 392px) {
+                                    width: 200px;
                                     font-size: 20px !important;
                                 }
                             }
@@ -212,50 +219,61 @@
                         }
                     }
 
-                    .body-item-user {
+                    .body-item_bottom {
                         display: flex;
                         align-items: center;
-                        gap: 8px;
+                        justify-content: space-between;
 
-                        p {
-                            font-family: Roboto;
-                            font-size: 16px;
-                            font-weight: 700;
-                            letter-spacing: 0em;
-                            text-align: left;
-                            color: rgba(87, 87, 87, 1);
+                        @include breakpoint(mobile) {
+                            flex-direction: column;
+                            align-items: flex-start;
                         }
-                    }
 
-                    .body-item-actions {
-                        display: flex;
-                        align-items: center;
-                        gap: 24px;
-                        flex-wrap: wrap;
-
-                        .action-item {
+                        .body-item-user {
                             display: flex;
                             align-items: center;
                             gap: 8px;
 
-                            svg {
-                                color: transparent;
-                                stroke: #575757;
-                            }
-
                             p {
                                 font-family: Roboto;
                                 font-size: 16px;
-                                font-weight: 400;
+                                font-weight: 700;
                                 letter-spacing: 0em;
                                 text-align: left;
+                                color: rgba(87, 87, 87, 1);
                             }
                         }
 
-                        .liked {
-                            svg {
-                                color: #0d99ff;
-                                stroke: #ffffff;
+                        .body-item-actions {
+                            display: flex;
+                            align-items: center;
+                            gap: 24px;
+                            flex-wrap: wrap;
+
+                            .action-item {
+                                display: flex;
+                                align-items: center;
+                                gap: 8px;
+
+                                svg {
+                                    color: transparent;
+                                    stroke: #575757;
+                                }
+
+                                p {
+                                    font-family: Roboto;
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    letter-spacing: 0em;
+                                    text-align: left;
+                                }
+                            }
+
+                            .liked {
+                                svg {
+                                    color: #0d99ff;
+                                    stroke: #ffffff;
+                                }
                             }
                         }
                     }
@@ -270,16 +288,24 @@
                     }
 
                     .community-content-body_left {
+
+
+
                         @media screen and (max-width: 425px) {
                             width: 100%;
+                  
                         }
 
                         span {
                             @media screen and (max-width: 425px) {
                                 width: 100% !important;
                                 height: 176px !important;
+                                img {
+                                    object-fit: contain;
+                                }
                             }
                         }
+                        
                     }
 
                     .community-content-body_right {
@@ -287,6 +313,7 @@
                         display: flex;
                         flex-direction: column;
                         gap: 8px;
+                        justify-content: center;
 
                         .body-item-title {
                             display: flex;
@@ -342,7 +369,7 @@
                                     }
 
                                     @media screen and (max-width: 430px) {
-                                        width: 100px;
+                                        width: 150px;
                                         font-size: 20px !important;
                                     }
                                 }

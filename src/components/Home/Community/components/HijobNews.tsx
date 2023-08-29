@@ -30,7 +30,7 @@ const HijobNews = () => {
     try {
       const result = await communityApi.getCommunityNews(
         '',
-        '5',
+        '10',
         '',
         0,
         languageRedux === 1 ? 'vi' : 'en',
@@ -75,7 +75,7 @@ const HijobNews = () => {
     <>
       <div className="community-content-title">
         <div className="community-content-title_left">
-          <NewsPaperIcon />
+          <NewsPaperIcon width={24} height={24} />
           <h3>{languageRedux === 1 ? 'Tin tức' : 'HiJob News'}</h3>
         </div>
         <p onClick={() => window.open('/news-comunity', '_parent')}>
@@ -98,11 +98,7 @@ const HijobNews = () => {
                     src={newsItem?.images[0]?.image}
                   />
                 ) : (
-                  <Avatar
-                    shape="square"
-                    size={88}
-                    src="https://static.vecteezy.com/system/resources/thumbnails/005/720/387/small/newspaper-line-icon-on-white-background-outline-sign-of-newspaper-news-symbol-linear-pictogram-free-vector.jpg"
-                  />
+                  <Avatar shape="square" size={88} src="./images/news.jpg" />
                 )}
               </div>
               <div className="community-content-body_right">
