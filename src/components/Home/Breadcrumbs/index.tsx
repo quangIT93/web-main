@@ -168,7 +168,7 @@ const BreadcrumbsCpn: React.FC = () => {
         array.map((arr: { id: number; name: string }) => arr.id),
         null,
         9,
-        thersholdId,
+        0,
         languageRedux === 1 ? 'vi' : 'en',
       );
 
@@ -299,12 +299,12 @@ const BreadcrumbsCpn: React.FC = () => {
               ? `Tất cả`
               : `All`
             : arrayChild?.map(
-                (value: { id: number; name: string }, index: number) => (
-                  <div key={index}>
-                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                  </div>
-                ),
-              )}
+              (value: { id: number; name: string }, index: number) => (
+                <div key={index}>
+                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                </div>
+              ),
+            )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -376,7 +376,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                          checkItemsCount >= MAX_CHECKED_ITEMS
+                        checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />

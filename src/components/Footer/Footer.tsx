@@ -111,7 +111,7 @@ const Footer: React.FC = () => {
     }
   };
 
-  useEffect(() => {}, [languageRedux]);
+  useEffect(() => { }, [languageRedux]);
 
   useEffect(() => {
     updateWindowWidth();
@@ -145,14 +145,14 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-                transform: 'translateY(calc(-100% - 36px))',
-              }
+              transform: 'translateY(calc(-100% - 36px))',
+            }
             : !open && !windowWidth
-            ? {
+              ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-            : { transform: 'none' }
+              : { transform: 'none' }
         }
       >
         <div className="container-footer">
@@ -256,14 +256,14 @@ const Footer: React.FC = () => {
                     alt={language?.err_none_img}
                   />
                 </Link>
-                <Link to="#">
+                <Link to={document.URL}>
                   <img
                     id="img-gallery"
                     src={require('../../img/langdingPage/imagein.png')}
                     alt={language?.err_none_img}
                   />
                 </Link>
-                <Link to="#">
+                <Link to={document.URL}>
                   <img
                     src={require('../../img/langdingPage/imageyou.png')}
                     alt={language?.err_none_img}

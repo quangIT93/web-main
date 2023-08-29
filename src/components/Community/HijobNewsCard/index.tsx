@@ -19,6 +19,8 @@ import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 //@ts-ignore
 import ModalLogin from '#components/Home/ModalLogin';
 import { RootState } from 'store';
+import { setCookie } from 'cookies';
+import { useLocation } from 'react-router-dom';
 const { TextArea } = Input;
 // interface IHijobNewsCard {
 //   item: any;
@@ -40,7 +42,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
   const contentRef = React.useRef<any>(null);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const dispatch = useDispatch();
-
+  const location = useLocation();
   React.useEffect(() => {
     setTotalLike(item?.communicationLikesCount);
     if (item?.liked) {
@@ -107,6 +109,9 @@ const HijobNewsCard: React.FC<any> = (props) => {
 
   const handleMoveToDetailPage = (id: any, e: any) => {
     e.stopPropagation();
+    location?.pathname === '/history' ?
+      setCookie('fromHistory', '30', 365) :
+      setCookie('fromHistory', '0', 365)
     window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
   };
 
