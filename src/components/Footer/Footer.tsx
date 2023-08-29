@@ -256,7 +256,7 @@ const Footer: React.FC = () => {
                     alt={language?.err_none_img}
                   />
                 </Link>
-                <Link to={document.URL}>
+                {/* <Link to={document.URL}>
                   <img
                     id="img-gallery"
                     src={require('../../img/langdingPage/imagein.png')}
@@ -268,7 +268,7 @@ const Footer: React.FC = () => {
                     src={require('../../img/langdingPage/imageyou.png')}
                     alt={language?.err_none_img}
                   />
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
