@@ -26,6 +26,7 @@ import {
   SendComunityIcon,
   SaveIconFill,
   BackIcon,
+  DeleteCmtIcon,
 } from '#components/Icons';
 import { useSearchParams } from 'react-router-dom';
 import ImageList from '@mui/material/ImageList';
@@ -119,9 +120,8 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${
-        size * rows
-      }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${size * rows
+        }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -190,12 +190,17 @@ const Comunity = () => {
     }
 
     if (cmtContent.trim() == '') {
-      message.error('Bạn chưa nhập bình luận');
+      message.error(
+        languageRedux === 1 ?
+          'Bạn chưa nhập bình luận' :
+          'You have not entered a comment'
+      );
+      setCmtContent('');
       return;
     }
     const form = {
       communicationId: detail?.id,
-      content: cmtContent,
+      content: cmtContent.trim(),
       images: [],
     };
     try {
@@ -257,7 +262,14 @@ const Comunity = () => {
             <div className="icon-back">
               <BackIcon width={15} height={15} fill="white" />
             </div>
-            <h3>{detail?.type === 1 ? 'Working story' : 'HiJob news'}</h3>
+            <h3>{detail?.type === 1 ?
+              languageRedux === 1 ?
+                'Câu chuyện việc làm' :
+                'Working story' :
+              languageRedux === 1 ?
+                'Tin tức HiJob' :
+                'HiJob news'
+            }</h3>
           </div>
           <div className="title-comunity">
             {/* <Tooltip title={detail?.title}>
@@ -311,7 +323,7 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-                // showCount
+              // showCount
               />
             </div>
           </div>
@@ -483,7 +495,7 @@ const Comunity = () => {
                       : 'Enter your comment ...'
                   }
                   autoSize
-                  // showCount
+                // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -531,14 +543,20 @@ const Comunity = () => {
                             </div>
                             <div
                               className="comunityDetail-comment_top__right"
-                              style={{}}
-                            ></div>
+                              style={{
+                                display: detail?.profileData?.id === localStorage.getItem('accountId') ||
+                                  cmtData?.profile?.id === localStorage.getItem('accountId') ?
+                                  'block' : 'none'
+                              }}
+                            >
+                              <DeleteCmtIcon />
+                            </div>
                           </div>
                           <div className="comunityDetail-comment_bottom">
                             <TextArea
                               value={cmtData?.content}
                               autoSize
-                              // showCount
+                            // showCount
                             />
                             {/* <p>{cmtData?.content}</p> */}
                           </div>

@@ -74,7 +74,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
     }
   };
 
-  React.useEffect(() => {}, [like]);
+  React.useEffect(() => { }, [like]);
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
@@ -158,11 +158,20 @@ const HijobNewsCard: React.FC<any> = (props) => {
         onClick={(e) => handleMoveToDetailPage(item?.id, e)}
       >
         <div className="comunitypostNews-card-wrap_content__left">
-          <Avatar
-            shape="square"
-            src={item?.images[0]?.image}
-            icon={<UserOutlined />}
-          />
+          {
+            item?.images.length !== 0 ? (
+              <Avatar
+                shape="square"
+                src={item?.images[0]?.image}
+                icon={<UserOutlined />}
+              />) : (
+              <Avatar
+                shape="square"
+                size={88}
+                src="https://static.vecteezy.com/system/resources/thumbnails/005/720/387/small/newspaper-line-icon-on-white-background-outline-sign-of-newspaper-news-symbol-linear-pictogram-free-vector.jpg"
+              />
+            )
+          }
         </div>
         <div className="comunitypostNews-card-wrap_content__right">
           <div className="comunityPostNews-card-content">
@@ -215,7 +224,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
                   icon={<UserOutlined />}
                 /> */}
                 <div className="info-actor_comunity">
-                  <p>{language?.community_page?.writer}</p>
+                  <p>{language?.community_page?.author}</p>
                   <p>Hijob</p>
                 </div>
               </div>

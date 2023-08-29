@@ -30,7 +30,7 @@ const HijobNews = () => {
     try {
       const result = await communityApi.getCommunityNews(
         '',
-        '5',
+        '10',
         '',
         0,
         languageRedux === 1 ? 'vi' : 'en',
@@ -75,7 +75,7 @@ const HijobNews = () => {
     <>
       <div className="community-content-title">
         <div className="community-content-title_left">
-          <NewsPaperIcon />
+          <NewsPaperIcon width={24} height={24} />
           <h3>{languageRedux === 1 ? 'Tin tức' : 'HiJob News'}</h3>
         </div>
         <p onClick={() => window.open('/news-comunity', '_parent')}>
