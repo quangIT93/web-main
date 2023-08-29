@@ -19,6 +19,8 @@ import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 //@ts-ignore
 import ModalLogin from '#components/Home/ModalLogin';
 import { RootState } from 'store';
+import { setCookie } from 'cookies';
+import { useLocation } from 'react-router-dom';
 const { TextArea } = Input;
 // interface IHijobNewsCard {
 //   item: any;
@@ -40,7 +42,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
   const contentRef = React.useRef<any>(null);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const dispatch = useDispatch();
-
+  const location = useLocation();
   React.useEffect(() => {
     setTotalLike(item?.communicationLikesCount);
     if (item?.liked) {
@@ -74,7 +76,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
     }
   };
 
-  React.useEffect(() => { }, [like]);
+  React.useEffect(() => {}, [like]);
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
@@ -107,6 +109,9 @@ const HijobNewsCard: React.FC<any> = (props) => {
 
   const handleMoveToDetailPage = (id: any, e: any) => {
     e.stopPropagation();
+    location?.pathname === '/history' ?
+      setCookie('fromHistory', '30', 365) :
+      setCookie('fromHistory', '0', 365)
     window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
   };
 
@@ -158,20 +163,19 @@ const HijobNewsCard: React.FC<any> = (props) => {
         onClick={(e) => handleMoveToDetailPage(item?.id, e)}
       >
         <div className="comunitypostNews-card-wrap_content__left">
-          {
-            item?.images.length !== 0 ? (
-              <Avatar
-                shape="square"
-                src={item?.images[0]?.image}
-                icon={<UserOutlined />}
-              />) : (
-              <Avatar
-                shape="square"
-                size={88}
-                src="https://static.vecteezy.com/system/resources/thumbnails/005/720/387/small/newspaper-line-icon-on-white-background-outline-sign-of-newspaper-news-symbol-linear-pictogram-free-vector.jpg"
-              />
-            )
-          }
+          {item?.images.length !== 0 ? (
+            <Avatar
+              shape="square"
+              src={item?.images[0]?.image}
+              icon={<UserOutlined />}
+            />
+          ) : (
+            <Avatar
+              shape="square"
+              size={88}
+              src="https://static.vecteezy.com/system/resources/thumbnails/005/720/387/small/newspaper-line-icon-on-white-background-outline-sign-of-newspaper-news-symbol-linear-pictogram-free-vector.jpg"
+            />
+          )}
         </div>
         <div className="comunitypostNews-card-wrap_content__right">
           <div className="comunityPostNews-card-content">
@@ -207,7 +211,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
               /> */}
               {shouldShowMoreButton ? (
                 <span onClick={(e) => handleAddText(e)}>
-                  {!showText ? language?.more : 'Xem ít...'}
+                  {!showText ? `${language?.more}...` : 'Xem ít...'}
                 </span>
               ) : (
                 <></>

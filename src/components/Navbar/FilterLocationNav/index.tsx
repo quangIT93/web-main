@@ -98,9 +98,9 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       ? JSON.parse(getCookie('userFiltered') || '{}')?.list_dis
       : userProfile?.locations?.map((profile: any) => [
-          profile?.province_id,
-          profile?.district_id,
-        ]),
+        profile?.province_id,
+        profile?.district_id,
+      ]),
   );
 
   // console.log('cookies', JSON.parse(getCookie('userFiltered') || '{}'));
@@ -183,12 +183,12 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             value={reset ? [] : listDis}
             defaultValue={
               listLocation.current?.length !== 0 &&
-              listLocation.current !== undefined
+                listLocation.current !== undefined
                 ? listLocation.current
                 : listLocation.current?.length === 0 &&
                   location?.pathname === '/search-results'
-                ? []
-                : userProfile?.locations?.map((profile: any) => [
+                  ? []
+                  : userProfile?.locations?.map((profile: any) => [
                     profile?.province_id,
                     profile?.district_id,
                   ])
@@ -196,28 +196,28 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             options={
               dataLocations
                 ? dataLocations?.map((dataLocation: any) => ({
-                    value: dataLocation.province_id,
-                    label: dataLocation.province_fullName,
-                    children: dataLocation.districts.map(
-                      (child: { district_id: string; district: string }) => {
-                        var dis = false;
-                        if (disable) {
-                          dis = true;
-                          for (const elem of locId) {
-                            if (elem === child.district_id) {
-                              dis = false;
-                              break;
-                            }
+                  value: dataLocation.province_id,
+                  label: dataLocation.province_fullName,
+                  children: dataLocation.districts.map(
+                    (child: { district_id: string; district: string }) => {
+                      var dis = false;
+                      if (disable) {
+                        dis = true;
+                        for (const elem of locId) {
+                          if (elem === child.district_id) {
+                            dis = false;
+                            break;
                           }
                         }
-                        return {
-                          value: child.district_id,
-                          label: child.district,
-                          disabled: dis,
-                        };
-                      },
-                    ),
-                  }))
+                      }
+                      return {
+                        value: child.district_id,
+                        label: child.district,
+                        disabled: dis,
+                      };
+                    },
+                  ),
+                }))
                 : []
             }
             onChange={onChange}

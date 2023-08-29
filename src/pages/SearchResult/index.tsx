@@ -195,6 +195,7 @@ const NewJobs: React.FC = () => {
 
   const [disableLocation, setDisableLocation] = React.useState<Boolean>(false);
   const [disableCatelory, setDisableCatelory] = React.useState<Boolean>(false);
+  const [loading, setLoading] = React.useState<Boolean>(false);
   const [locId, setLocId] = React.useState<string[]>([]);
 
   const [locationOneItem, setLocationOneItem] = React.useState<string[]>([]);
@@ -711,6 +712,7 @@ const NewJobs: React.FC = () => {
     try {
       if (dataProfile) {
         setOpenBackdrop(true);
+        setLoading(true)
         // console.log('QUERY', QUERY);
         // console.log('page', page);
         // console.log('MONEY_TYPE', MONEY_TYPE);
@@ -759,6 +761,7 @@ const NewJobs: React.FC = () => {
         // console.log('resut', result);
         if (result) {
           setOpenBackdrop(false);
+          setLoading(false)
           setSearchData(result.data);
         }
       }
@@ -846,7 +849,7 @@ const NewJobs: React.FC = () => {
             >
               <div
                 style={{
-                  display: 'flex',
+                  display: loading ? 'none' : 'flex',
                   alignItems: 'center',
                 }}
               >
@@ -859,7 +862,7 @@ const NewJobs: React.FC = () => {
               <div
                 style={{
                   color: '#0d99ff ',
-                  display: 'flex',
+                  display: loading ? 'none' : 'flex',
                   alignItems: 'center',
                   cursor: 'pointer',
                   // textDecoration: 'underline',

@@ -2,6 +2,7 @@
 
 .bread-crumb-container {
   top: -45px;
+  transition: all 400ms;
 
   @media screen and (min-width: 2561px) {
     top: -45px;

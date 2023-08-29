@@ -44,7 +44,9 @@ interface ICardsPostedClose {
 
 const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
   const { setShowDetailPosted, showDetailPosted } = props;
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [detailPosted, setDetailPosted] = React.useState<any>(null);
   const [dataPosted, setDataPosted] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -60,7 +62,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -72,8 +74,8 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   //get post to check if length <= 10
   // const getAllPostToCheck = async () => {
@@ -97,7 +99,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
         newCount,
         10,
         '3',
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -133,7 +135,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
         lastPostId,
         5,
         '3',
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setUploading(false);
@@ -199,13 +201,11 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
           <Typography
             sx={{
               fontWeight: '600',
-              fontSize: '16px',
+              fontSize: '24px',
               lineHeight: '24px',
             }}
           >
-            {
-              language?.history_page?.closed_jobs
-            }
+            {language?.history_page?.closed_jobs}
           </Typography>
         </div>
         <TextField
@@ -218,16 +218,8 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">
-            {
-              language?.history_page?.latest
-            }
-          </MenuItem>
-          <MenuItem value="Cũ nhất">
-            {
-              language?.history_page?.oldest
-            }
-          </MenuItem>
+          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
+          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
         </TextField>
       </Box>
 
@@ -241,7 +233,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={loading}
-          // onClick={handleClose}
+            // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -280,9 +272,7 @@ const CardsPostedClose: React.FC<ICardsPostedClose> = (props) => {
                   loading={uploading}
                   onClick={handleAddItem}
                 >
-                  {
-                    language?.more
-                  }
+                  {language?.more}
                 </Button>
               </Box>
             </div>

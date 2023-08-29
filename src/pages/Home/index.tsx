@@ -118,10 +118,34 @@ const Home: React.FC = () => {
     localStorage.removeItem('community');
   }, []);
 
+
+  const tabs = document.querySelector('.tabs') as HTMLElement;
+  const breadCrumb = document.querySelector('.bread-crumb-container') as HTMLElement;
+  var prevHeight = window.innerHeight;
+
+  const handleScroll = () => {
+    var currentHeight = window.scrollY;
+
+    if (currentHeight >= prevHeight && tabs != null && breadCrumb != null) {
+      tabs.style.top = '-70px';
+      breadCrumb.style.marginTop = '-192px';
+    } else {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
+    }
+    prevHeight = currentHeight;
+  };
+
+  window.addEventListener('scroll', handleScroll);
+
   return (
     <div className="home">
       <Navbar />
-
+      {/* <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8881781217169539"
+        crossOrigin="anonymous"
+      ></script> */}
       {/* <Carousel /> */}
       <h1 style={{ visibility: 'hidden', display: 'none' }}>
         Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được
@@ -129,16 +153,6 @@ const Home: React.FC = () => {
         Đa dạng ngành nghề, mức lương hấp dẫn
       </h1>
       <div className="home__main">
-        <Box
-          sx={{
-            marginTop: '15rem',
-          }}
-        ></Box>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8881781217169539"
-          crossOrigin="anonymous"
-        ></script>
         <CategoryCarousel />
         <Breadcrumbs />
         <AppliedPostedJob />

@@ -44,11 +44,31 @@
                     justify-content: center;
                 }
 
-                &:hover {
-                    text-decoration: underline;
-                    // border-bottom: 1px solid rgb(26, 158, 253);
-                    transition: 0.3s linear all;
-                    // color: rgb(26, 158, 253);
+                // &:hover {
+                //     text-decoration: underline;
+                //     // border-bottom: 1px solid rgb(26, 158, 253);
+                //     transition: 0.3s linear all;
+                //     // color: rgb(26, 158, 253);
+                // }
+                h3 {
+                    position: relative;
+                    font-size: 24px;
+                    &:after {
+                        // padding: 4px;
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        bottom: -4px;
+                        height: 2px;
+                        width: 100%;
+                        background: right / 0% 100% no-repeat linear-gradient(#000000, #000000);
+                        transition: background-size 400ms;
+
+                    }
+
+                    &:hover:after {
+                        background: left / 100% 100% no-repeat linear-gradient(#000000, #000000);
+                    }
                 }
             }
 
@@ -64,7 +84,7 @@
                 h3 {
                     color: #000;
                     font-family: Roboto;
-                    font-size: 24px;
+                    font-size: 16px;
                     font-style: normal;
                     font-weight: 700;
                     line-height: 30px;
@@ -95,6 +115,7 @@
                         align-items: center;
                         gap: 4px;
                         cursor: pointer;
+                        font-size: 12px;
                     }
                 }
             }
@@ -104,7 +125,7 @@
                 // border: 1px solid #ccc;
                 // padding: 12px 24px;
                 border-radius: 12px;
-                margin: 24px 0;
+                margin: 12px 0 0 0;
 
                 .comunityDetail-content {
 
@@ -124,8 +145,9 @@
                         background: transparent;
 
                         font-family: Roboto;
-                        font-size: 16px;
+                        font-size: 12px;
                         font-weight: 400;
+                        text-indent: 12px;
                     }
 
                     div {
@@ -146,9 +168,7 @@
 
                 }
 
-                .comunityDetail-wrap_actor {
-                    p {}
-                }
+      
             }
 
             .comunityDetail-wrap_img {
@@ -312,7 +332,8 @@
                 display: flex;
                 padding: 12px 0;
                 border-bottom: 1px solid #ccc;
-                gap: 30px;
+                gap: 16px;
+                align-items: center;
 
                 .comunitypostNew-status_item {
                     display: flex;
@@ -354,8 +375,8 @@
                         align-items: center;
 
                         img {
-                            width: 30px;
-                            height: 30px;
+                            // width: 30px;
+                            // height: 30px;
                             // border-radius: 10px;
 
                         }
@@ -369,7 +390,7 @@
                         &:nth-child(1) {
                             color: #575757;
                             font-family: Roboto;
-                            font-size: 14px;
+                            font-size: 12px;
                             font-style: normal;
                             font-weight: 400;
                             line-height: 18px;
@@ -378,7 +399,7 @@
                         &:nth-child(2) {
                             color: #000000;
                             font-family: Roboto;
-                            font-size: 16px;
+                            font-size: 12px;
                             font-style: normal;
                             font-weight: 700;
                             line-height: 24px;
@@ -391,7 +412,7 @@
                 }
 
                 p {
-                    font-size: 14px;
+                    font-size: 12px;
                     display: flex;
                     align-items: flex-end;
 
@@ -536,7 +557,7 @@
 
                                     h3 {
                                         font-family: Roboto;
-                                        font-size: 16px;
+                                        font-size: 12px;
                                         font-style: normal;
                                         font-weight: 700;
                                         line-height: 24px;
@@ -566,6 +587,14 @@
                                     display: flex;
                                     align-items: center;
                                     cursor: pointer;
+
+                                    svg {
+                                        color: #AAAAAA;
+
+                                        &:hover {
+                                            color: red
+                                        }
+                                    }
                                 }
                             }
 

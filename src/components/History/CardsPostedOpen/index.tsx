@@ -43,7 +43,9 @@ interface CardsPostedOpen {
 }
 const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   const { setShowDetailPosted, showDetailPosted } = props;
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [detailPosted, setDetailPosted] = React.useState<any>(null);
   const [dataPosted, setDataPosted] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -60,7 +62,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -72,8 +74,8 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   //get post to check if length <= 10
   // const getAllPostToCheck = async () => {
@@ -97,7 +99,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
         newCount,
         10,
         '1',
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -134,7 +136,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
         lastPostId,
         5,
         '1',
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setUploading(false);
@@ -152,7 +154,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleShowDetail = (
@@ -198,13 +200,11 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
           <Typography
             sx={{
               fontWeight: '600',
-              fontSize: '16px',
+              fontSize: '24px',
               lineHeight: '24px',
             }}
           >
-            {
-              language?.history_page?.unclosed_jobs
-            }
+            {language?.history_page?.unclosed_jobs}
           </Typography>
         </div>
 
@@ -218,16 +218,8 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
           size="small"
           sx={{ width: '120px' }}
         >
-          <MenuItem value="Mới nhất">
-            {
-              language?.history_page?.latest
-            }
-          </MenuItem>
-          <MenuItem value="Cũ nhất">
-            {
-              language?.history_page?.oldest
-            }
-          </MenuItem>
+          <MenuItem value="Mới nhất">{language?.history_page?.latest}</MenuItem>
+          <MenuItem value="Cũ nhất">{language?.history_page?.oldest}</MenuItem>
         </TextField>
       </Box>
 
@@ -241,7 +233,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={loading}
-          // onClick={handleClose}
+            // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -279,9 +271,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
                   loading={uploading}
                   onClick={handleAddItem}
                 >
-                  {
-                    language?.more
-                  }
+                  {language?.more}
                 </Button>
               </Box>
             </div>

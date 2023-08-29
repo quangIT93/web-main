@@ -31,7 +31,7 @@ const ComunityCreateSuccess = () => {
 
     const handleMoveToCommunityPost = () => {
         localStorage.removeItem('community_success')
-        window.open('/history?community_post=3', '_parent')
+        window.open('/history?community_post=31', '_parent')
     }
 
     return (

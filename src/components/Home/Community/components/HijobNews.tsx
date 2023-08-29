@@ -94,11 +94,11 @@ const HijobNews = () => {
                 {newsItem?.images.length !== 0 ? (
                   <Avatar
                     shape="square"
-                    size={88}
+                    size={50}
                     src={newsItem?.images[0]?.image}
                   />
                 ) : (
-                  <Avatar shape="square" size={88} src="./images/news.jpg" />
+                  <Avatar shape="square" size={50} src="./images/news.jpg" />
                 )}
               </div>
               <div className="community-content-body_right">
@@ -113,23 +113,28 @@ const HijobNews = () => {
                   </div>
                   <p>{newsItem?.createdAtText}</p>
                 </div>
-                <div className="body-item-actions">
-                  <div className="action-item">
-                    <EysIcon />
-                    <p>{newsItem?.communicationViewsCount}</p>
-                  </div>
-                  <div
-                    className={
-                      newsItem.liked ? 'action-item liked' : 'action-item'
-                    }
-                    onClick={(e) => handleLikeCommunity(newsItem?.id, e)}
-                  >
-                    <LikeIcon />
-                    <p>{newsItem?.communicationLikesCount}</p>
-                  </div>
-                  <div className="action-item">
-                    <CommentIcon />
-                    <p>{newsItem?.communicationCommentsCount}</p>
+                <div
+                  style={{ display: 'flex', justifyContent: 'space-between' }}
+                >
+                  <div></div>
+                  <div className="body-item-actions">
+                    <div className="action-item">
+                      <EysIcon />
+                      <p>{newsItem?.communicationViewsCount}</p>
+                    </div>
+                    <div
+                      className={
+                        newsItem.liked ? 'action-item liked' : 'action-item'
+                      }
+                      onClick={(e) => handleLikeCommunity(newsItem?.id, e)}
+                    >
+                      <LikeIcon />
+                      <p>{newsItem?.communicationLikesCount}</p>
+                    </div>
+                    <div className="action-item">
+                      <CommentIcon />
+                      <p>{newsItem?.communicationCommentsCount}</p>
+                    </div>
                   </div>
                 </div>
               </div>

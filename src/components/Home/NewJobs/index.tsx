@@ -44,6 +44,8 @@ import './style.scss';
 //import jobcard
 import JobCard from '../JobCard';
 
+import { QuestionMarkIcon } from '#components/Icons';
+
 import { Skeleton } from 'antd';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
@@ -217,6 +219,8 @@ const NewJobs: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
+  const handleClickHelpSearch = () => {};
+
   return (
     <>
       {
@@ -234,6 +238,29 @@ const NewJobs: React.FC = () => {
           <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
             <NewJobIcon width={25} height={25} />
             <h2>{language?.newest_jobs}</h2>
+            <div className="help-search" onClick={handleClickHelpSearch}>
+              <QuestionMarkIcon />
+              <div className={`login__hover__container `}>
+                <div className="login__hover">
+                  <div className="login__hover__p">
+                    <p>
+                      {languageRedux === 1
+                        ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
+                        : 'Newest Jobs will show jobs rely on your Career Objective in Profile.'}
+                    </p>
+                  </div>
+                  {/* <Button
+            type="primary"
+            onClick={() => {
+              setOpenModalLogin(true);
+            }}
+          >
+            <LoginArrowBlackIcon />
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+          </Button> */}
+                </div>
+              </div>
+            </div>
           </div>
 
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
