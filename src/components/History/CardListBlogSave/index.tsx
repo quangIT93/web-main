@@ -121,9 +121,9 @@ const CardListBlogSave = () => {
       } else {
         setPage('0');
         message.error(
-          languageRedux === 1 ?
-            'Đã hết bài viết để hiển thị' :
-            'Out of posts to show'
+          languageRedux === 1
+            ? 'Đã hết bài viết để hiển thị'
+            : 'Out of posts to show',
         );
         setIsVisible(false);
         // console.log('Đã hết bài viết để hiển thị', result);
@@ -157,7 +157,7 @@ const CardListBlogSave = () => {
           <Typography
             sx={{
               fontWeight: '600',
-              fontSize: '16px',
+              fontSize: '24px',
               lineHeight: '24px',
             }}
           >

@@ -20,6 +20,7 @@ import languageApi from 'api/languageApi';
 import './style.scss';
 import communityApi from 'api/apiCommunity';
 import moment from 'moment';
+import { setCookie } from 'cookies';
 const CardListBlogCreate = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -58,6 +59,7 @@ const CardListBlogCreate = () => {
 
   const handleMoveToDetail = (id: any) => {
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
+    setCookie('fromHistory', '31', 365);
   };
 
   React.useEffect(() => {
@@ -169,7 +171,7 @@ const CardListBlogCreate = () => {
           <Typography
             sx={{
               fontWeight: '600',
-              fontSize: '16px',
+              fontSize: '24px',
               lineHeight: '24px',
             }}
           >

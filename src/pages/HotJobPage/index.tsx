@@ -204,7 +204,7 @@ const HotJobpage: React.FC = () => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Bài tuyển dụng nổi bật'
-        : 'HiJob - Featured Job Post';
+        : 'HiJob - Hot Job Post';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
@@ -334,19 +334,19 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? language?.remote_work
                     : hotJobType === 3
-                    ? 'Influencer'
-                    : hotJobType === 4
-                    ? language?.hot_job_page?.short_time
-                    : hotJobType === 5
-                    ? language?.hot_job_page?.job_today
-                    : hotJobType === 6
-                    ? 'Freelancer'
-                    : hotJobType === 7
-                    ? 'Delivery/Driver'
-                    : 'Loading...'}{' '}
+                      ? 'Influencer'
+                      : hotJobType === 4
+                        ? language?.hot_job_page?.short_time
+                        : hotJobType === 5
+                          ? language?.hot_job_page?.job_today
+                          : hotJobType === 6
+                            ? 'Freelancer'
+                            : hotJobType === 7
+                              ? 'Delivery/Driver'
+                              : 'Loading...'}{' '}
                   {hotjob.length !== 0
                     ? // ? Number(hotJobTotal.toLocaleString())
-                      new Intl.NumberFormat('en-US').format(hotJobTotal)
+                    new Intl.NumberFormat('en-US').format(hotJobTotal)
                     : ''}
                   <span>
                     {' '}
@@ -355,10 +355,10 @@ const HotJobpage: React.FC = () => {
                       languageRedux === 1 && hotjob.length !== 0
                         ? 'kết quả'
                         : hotJobTotal > 1 && hotjob.length !== 0
-                        ? 'results'
-                        : hotJobTotal < 1 && hotjob.length !== 0
-                        ? 'result'
-                        : ''
+                          ? 'results'
+                          : hotJobTotal < 1 && hotjob.length !== 0
+                            ? 'result'
+                            : ''
                     }
                   </span>
                 </h3>
@@ -427,7 +427,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

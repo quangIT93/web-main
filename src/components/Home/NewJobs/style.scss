@@ -53,13 +53,22 @@
       animation-fill-mode: backwards;
       
       @media screen and (max-width: 500px) {
-        left: -182px;
+        left: -240px;
         .login__hover  {
           &:after {
-            left: 190px;
+            left: 250px;
           }
         }
  
+      }
+
+      @media screen and (min-width: 501px) and (max-width: 780px){
+        left: -100px;
+        .login__hover  {
+          &:after {
+            left: 110px;
+          }
+        }
       }
 
 

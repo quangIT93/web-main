@@ -20,6 +20,8 @@ import ShowCancleSave from '#components/ShowCancleSave';
 import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import ModalLogin from '../../Home/ModalLogin';
 import { RootState } from 'store';
+import { useLocation } from 'react-router-dom';
+import { setCookie } from 'cookies';
 
 interface IWorkingStoryCard {
   item: any;
@@ -43,7 +45,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   const contentRef = useRef<any>(null);
   const [owner, setOwner] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const location = useLocation();
   const dispatch = useDispatch();
   // console.log('item', item);
 
@@ -118,7 +120,9 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
   const handleMoveToDetailPage = (id: any, e: any) => {
     e.stopPropagation();
-
+    location?.pathname === '/history' ?
+      setCookie('fromHistory', '30', 365) :
+      setCookie('fromHistory', '0', 365)
     localStorage.setItem('reload', 'true');
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
   };
@@ -207,6 +211,20 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
               )}
             </div>
           </div>
+          <div className="comunitypostNew-wrap_actor">
+            <div className="comunitypostNew-wrap">
+              <Avatar
+                size={50}
+                src={item?.profileData?.avatarPath}
+                icon={<UserOutlined />}
+              />
+              <div className="info-actor_comunity">
+                <p>{language?.community_page?.author}</p>
+                <p>{item?.profileData?.name.slice(0, 2) + '...'}</p>
+              </div>
+            </div>
+            <p>{item?.createdAtText}</p>
+          </div>
           <div className="comunityPostNew-card-content_info">
             <ul className={`text-content_postNew ${showText}`} ref={contentRef}>
               {item?.content}
@@ -243,9 +261,8 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
           </div>
         </div>
 
-        <div className="comunitypostNew-wrap_actor">
+        {/* <div className="comunitypostNew-wrap_actor">
           <div className="comunitypostNew-wrap">
-            {/* <img src={item?.profileData?.avatarPath} alt="anh loi" /> */}
             <Avatar
               size={50}
               src={item?.profileData?.avatarPath}
@@ -257,7 +274,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
             </div>
           </div>
           <p>{item?.createdAtText}</p>
-        </div>
+        </div> */}
       </div>
       <ShowCancleSave />
       <ShowNotificativeSave />

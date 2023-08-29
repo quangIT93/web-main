@@ -11,7 +11,7 @@ import Footer from '../../components/Footer/Footer';
 // import { Skeleton } from 'antd';
 // import { message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Tooltip, message } from 'antd';
+import { Avatar, Button, Tooltip, message } from 'antd';
 // import component
 
 // @ts-ignore
@@ -54,6 +54,7 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
 import ModalLogin from '../../components/Home/ModalLogin';
+import { getCookie, setCookie } from 'cookies';
 const { TextArea } = Input;
 interface FormPostCommunityComment {
   communicationId: number;
@@ -82,12 +83,23 @@ const Comunity = () => {
   const [like, setLike] = React.useState(false);
   const [bookmark, setBookmark] = React.useState(false);
   const [cmt, setCmt] = React.useState(false);
+  const [deleteCmt, setDeleteCmt] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const [fromHistory, setFromHistory] = React.useState<any>('0');
+  const { confirm } = Modal;
   const dispatch = useDispatch();
 
   const handelChangeCmt = (event: any) => {
     setCmtContent(event.target.value);
+  };
+
+  const handleDeleteCmt = async (postId: any, cmtId: any) => {
+    try {
+      const result = await communityApi.deleteComent(postId, cmtId);
+      if (result.status === 200) {
+        setDeleteCmt(!deleteCmt);
+      }
+    } catch (error) {}
   };
 
   const handleGetDetailCommunityById = async () => {
@@ -113,8 +125,20 @@ const Comunity = () => {
   };
 
   React.useEffect(() => {
+    setFromHistory(getCookie('fromHistory'));
+  }, []);
+
+  React.useEffect(() => {
     handleGetDetailCommunityById();
-  }, [POST_COMMUNITY_ID, like, bookmark, cmt, languageRedux, language]);
+  }, [
+    POST_COMMUNITY_ID,
+    like,
+    bookmark,
+    cmt,
+    languageRedux,
+    language,
+    deleteCmt,
+  ]);
 
   const srcset = (image: string, size: number, rows = 1, cols = 1) => {
     console.log('image', image);
@@ -124,6 +148,30 @@ const Comunity = () => {
         size * rows
       }&fit=crop&auto=format&dpr=2 2x`,
     };
+  };
+
+  const showDeleteConfirm = (postId: any, cmtId: any) => {
+    confirm({
+      centered: true,
+      closable: true,
+      title:
+        languageRedux === 1
+          ? 'Bạn có chắc muốn xóa bình luận này'
+          : 'Are you sure delete this comment',
+      content:
+        languageRedux === 1
+          ? 'Sau khi xóa, bình luận này sẽ không còn xuất hiện nữa'
+          : 'Once deleted, this comment will no longer appear',
+      okText: languageRedux === 1 ? 'Có' : 'Yes',
+      okType: 'danger',
+      cancelText: languageRedux === 1 ? 'Không' : 'No',
+      onOk() {
+        handleDeleteCmt(postId, cmtId);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   };
 
   const handleLikeCommunity = async (communicationId: number) => {
@@ -246,10 +294,15 @@ const Comunity = () => {
   };
 
   const handleMoveToList = () => {
-    window.open(
-      detail?.type === 1 ? '/new-comunity' : '/news-comunity',
-      '_parent',
-    );
+    setCookie('fromHistory', '0', 365);
+    fromHistory === '31'
+      ? window.open('/history?community_post=31', '_parent')
+      : fromHistory === '30'
+      ? window.open('/history?community_post=30', '_parent')
+      : window.open(
+          detail?.type === 1 ? '/new-comunity' : '/news-comunity',
+          '_parent',
+        );
   };
 
   console.log('detail', detail);
@@ -264,7 +317,9 @@ const Comunity = () => {
               <BackIcon width={15} height={15} fill="white" />
             </div>
             <h3>
-              {detail?.type === 1
+              {fromHistory === '31' || fromHistory === '30'
+                ? language?.history
+                : detail?.type === 1
                 ? languageRedux === 1
                   ? 'Câu chuyện việc làm'
                   : 'Working story'
@@ -554,6 +609,9 @@ const Comunity = () => {
                                     ? 'block'
                                     : 'none',
                               }}
+                              onClick={() =>
+                                showDeleteConfirm(detail?.id, cmtData?.id)
+                              }
                             >
                               <DeleteCmtIcon />
                             </div>

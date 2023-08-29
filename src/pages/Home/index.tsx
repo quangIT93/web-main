@@ -118,6 +118,26 @@ const Home: React.FC = () => {
     localStorage.removeItem('community');
   }, []);
 
+
+  const tabs = document.querySelector('.tabs') as HTMLElement;
+  const breadCrumb = document.querySelector('.bread-crumb-container') as HTMLElement;
+  var prevHeight = window.innerHeight;
+
+  const handleScroll = () => {
+    var currentHeight = window.scrollY;
+
+    if (currentHeight >= prevHeight && tabs != null && breadCrumb != null) {
+      tabs.style.top = '-70px';
+      breadCrumb.style.marginTop = '-192px';
+    } else {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
+    }
+    prevHeight = currentHeight;
+  };
+
+  window.addEventListener('scroll', handleScroll);
+
   return (
     <div className="home">
       <Navbar />

@@ -36,6 +36,16 @@ const communityApi = {
         })
     },
 
+    deleteComent: (postId: any, cmtId: any) => {
+        const URL = `/v3/communication-comments/${postId}/${cmtId}`
+        return axiosClient.delete(URL, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+    },
+
     getCommunitations: (page: string, limit: string, sort: string, type: number) => {
         const URL = `/v3/communications?page=${page}&limit=${limit}&sort=${sort}&type=${type}`
         return axiosClient.get(URL)
