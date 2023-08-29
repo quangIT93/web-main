@@ -13,12 +13,32 @@
         // .comunityNew {
 
         // }
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 599px) {
             padding: 50px 24px;
         }
 
+        @media screen and (min-width: 600px) and (max-width: 767px) {
+            padding: 50px 24px;
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+            padding: 50px 24px;
+        }
+
+        @media screen and (min-width: 1024px) and (max-width: 1199px) {
+            padding: 50px 24px;
+        }
+
+        @media screen and (min-width: 1200px) and (max-width: 1420px) {
+            padding: 50px 24px;
+        }
+
+        // @media screen and (max-width: 768px) {
+        //     padding: 50px 24px;
+        // }
+
         .comunityPostNews {
-            width: 70%;
+            width: 98%;
 
             .title-comunity-news {
                 display: flex;

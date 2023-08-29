@@ -78,6 +78,20 @@
                         font-weight: 700;
                         letter-spacing: 0em;
                         text-align: left;
+
+                        @media screen and (max-width: 379px) {
+                            width: 120px;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+                        }
+
+                        @media screen and (min-width: 380px) and (max-width: 430px) {
+                            width: 160px;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+                        }
                     }
                 }
 
@@ -194,16 +208,17 @@
                                 }
 
                                 @media screen and (max-width: 560px) {
-                                    width: 300px;
+                                    width: 270px;
                                 }
 
                                 @media screen and (max-width: 430px) {
-                                    width: 260px;
-                                    font-size: 20px !important;
+                                    width: 160px !important;
+                                    // font-size: 20px !important;
+                                    font-size: 16px !important;
                                 }
                                 @media screen and (max-width: 392px) {
-                                    width: 200px;
-                                    font-size: 20px !important;
+                                    width: 140px;
+                                    font-size: 16px !important;
                                 }
                             }
                         }
@@ -225,8 +240,13 @@
                         justify-content: space-between;
 
                         @include breakpoint(mobile) {
-                            flex-direction: column;
+                            // flex-direction: column;
                             align-items: flex-start;
+                        }
+
+                        @media screen and (max-width: 330px) {
+                            flex-direction: column;
+                            
                         }
 
                         .body-item-user {
@@ -367,12 +387,13 @@
                                     }
 
                                     @media screen and (max-width: 560px) {
-                                        width: 200px;
+                                        width: 200px !important;
+                                        font-size: 16px !important;
                                     }
 
                                     @media screen and (max-width: 430px) {
                                         width: 150px;
-                                        font-size: 20px !important;
+                                        font-size: 16px !important;
                                     }
                                 }
                             }
