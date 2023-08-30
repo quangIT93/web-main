@@ -199,8 +199,11 @@ const NewJobs: React.FC = () => {
     } catch (error) {
       setOpenBackdrop(false);
       console.log(error);
+      console.log('loiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', error);
     }
   };
+
+  console.log('postNew', postNewest);
 
   React.useEffect(() => {
     localStorage.getItem('accessToken') && setIslogined(true);

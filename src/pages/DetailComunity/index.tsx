@@ -356,7 +356,7 @@ const Comunity = () => {
                 src={
                   detail?.type === 1
                     ? detail?.profileData?.avatarPath
-                    : 'favicon.ico'
+                    : './images/logoHijobCommunity.jpg'
                 }
                 icon={<UserOutlined />}
                 style={{
