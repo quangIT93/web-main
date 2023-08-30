@@ -190,6 +190,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                   variant="body2"
                   color="text.secondary"
                   sx={{
+                    fontSize: '12px',
                     whiteSpace: 'nowrap',
                     width: '100%',
                     textOverflow: 'ellipsis',
@@ -213,6 +214,7 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
                   variant="body2"
                   color="text.secondary"
                   sx={{
+                    fontSize: '12px',
                     whiteSpace: 'nowrap',
                     width: '100%',
                     textOverflow: 'ellipsis',
@@ -236,9 +238,10 @@ const JobCardHotJob: React.FC<Iprops> = (props) => {
               >
                 <p
                   style={{
-                    color: '#AAAAAA',
-                    fontSize: 13,
+                    color: '#575757',
+                    fontSize: 12,
                     fontStyle: 'italic',
+                    fontWeight: '400',
                   }}
                 >
                   {props.item?.createdAtText}

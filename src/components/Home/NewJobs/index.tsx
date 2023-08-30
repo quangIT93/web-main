@@ -146,6 +146,15 @@ const NewJobs: React.FC = () => {
       languageRedux === 1 ? 'vi' : 'en',
     );
 
+    // const result2 = await postApi.getPostNewestV3(
+    //   Number(categoryId),
+    //   childCateloriesArray,
+    //   null,
+    //   9,
+    //   thersholdId,
+    //   languageRedux === 1 ? 'vi' : 'en',
+    // )
+
     if (result) {
       setPostNewestMore(result);
       setOpenBackdrop(false);
