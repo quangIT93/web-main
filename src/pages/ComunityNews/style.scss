@@ -20,6 +20,10 @@
         .comunityPostNews {
             width: 70%;
 
+            @media screen and (max-width: 1024px) {
+                width: 100%;
+            }
+
             .title-comunity-news {
                 display: flex;
                 justify-content: space-between;

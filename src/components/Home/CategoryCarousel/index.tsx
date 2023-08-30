@@ -149,7 +149,12 @@ const CategoryCarousel: React.FC = () => {
       window.innerWidth ||
       document.documentElement.clientWidth ||
       document.body.clientWidth;
-
+    const tabs = document.querySelector('.tabs') as HTMLElement;
+    const breadCrumb = document.querySelector('.bread-crumb-container') as HTMLElement;
+    if (tabs != null && breadCrumb != null) {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
+    }
     const sectionToNavigate = document.getElementById('new-job');
     if (windowWidth > 480 && localStorage.getItem('accessToken')) {
       window.scrollTo(0, 530);

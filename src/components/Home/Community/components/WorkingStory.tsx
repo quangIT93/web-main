@@ -104,7 +104,7 @@ const WorkingStory = () => {
                 {/* <h3>{story?.title}</h3> */}
                 {/* </Tooltip> */}
                 <div className="title">
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography gutterBottom component="div" variant="body2" color="text.secondary">
                     {story?.title}
                   </Typography>
                 </div>
