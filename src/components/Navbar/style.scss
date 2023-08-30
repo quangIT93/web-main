@@ -547,7 +547,7 @@
 
           .ant-select-selection-search {
             padding: unset !important;
-          
+
           }
 
           .ant-select-selection-item {
@@ -577,7 +577,7 @@
 
           .ant-select-selection-search {
             padding: unset !important;
-          
+
           }
 
           .ant-select-selection-item {
@@ -607,7 +607,7 @@
 
           .ant-select-selection-search {
             padding: unset !important;
-          
+
           }
 
           .ant-select-selection-item {
@@ -966,6 +966,16 @@
 
   .div-nav-right {
 
+    .language {
+      display: flex;
+      align-items: center;
+      margin: 0 10px;
+
+      svg {
+        cursor: pointer
+      }
+    }
+
     .sub-login {
       position: absolute;
       background-color: #ffffff;
@@ -1147,6 +1157,7 @@
           animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
           animation-fill-mode: backwards;
           transition: all 0.3s linear;
+          display: none;
 
           .sub-login-radio-group {
             width: 100%;
