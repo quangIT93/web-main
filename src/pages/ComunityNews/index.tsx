@@ -192,11 +192,15 @@ const ComunityNews = () => {
             <h3>
               {loading
                 ? 'Loading...'
-                : language?.community_page?.today_hijob_has +
-                  ' ' +
-                  total +
-                  ' ' +
-                  language?.community_page?.new_posts}
+                : languageRedux === 1
+                  ? `Hôm nay, HiJob có ${total} bài viết mới`
+                  : `Today, HiJob has ${total} new posts`
+                // : language?.community_page?.today_hijob_has +
+                //   ' ' +
+                //   total +
+                //   ' ' +
+                //   language?.community_page?.new_posts
+              }
             </h3>
             <div className="title-comunity-news_icon">
               <div

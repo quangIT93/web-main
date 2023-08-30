@@ -116,6 +116,8 @@ const Home: React.FC = () => {
       });
     }
     localStorage.removeItem('community');
+
+    window.scrollTo(0, 0);
   }, []);
 
   const tabs = document.querySelector('.tabs') as HTMLElement;
@@ -134,7 +136,7 @@ const Home: React.FC = () => {
         currentHeight = 0;
         tabs.style.top = '70px';
         breadCrumb.style.marginTop = '192px';
-      }, 1500);
+      }, 500);
     } else {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';
