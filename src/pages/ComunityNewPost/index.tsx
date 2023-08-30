@@ -204,8 +204,8 @@ const ComunityNewPost = () => {
                 loading
                   ? 'Loading...'
                   : languageRedux === 1
-                  ? `Hôm nay, HiJob có ${total} bài viết mới`
-                  : ''
+                    ? `Hôm nay, HiJob có ${total} bài viết mới`
+                    : `Today, HiJob has ${total} new posts`
 
                 // language?.community_page?.today_hijob_has +
                 //   ' ' +
