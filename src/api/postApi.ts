@@ -83,7 +83,7 @@ const postApi = {
     )
   },
   getPostNewestV3: (
-    childrenCategoryId:  number[] | null,
+    childrenCategoryId: number[] | null,
     parentCategoryId: number | null,
     districtIds: [] | null,
     provinceId: number | null,
@@ -91,16 +91,16 @@ const postApi = {
     threshold: number | null,
     lang: string
   ) => {
-    
+
     const URL =
       `/v3/posts/newest?` +
       `${childrenCategoryId
         ? `${childrenCategoryId?.map((n, index) => `childrenCategoryId[${index}]=${n}`).join('&')}`
         : ``
       }` +
-      `${parentCategoryId && parentCategoryId !== 1 ? `&parentCategoryId=${parentCategoryId}` : ``}` +
+      `${parentCategoryId && parentCategoryId !== 1 ? `&parentCategoryId=${parentCategoryId}&` : ``}` +
       `${districtIds
-        ? `&${districtIds?.map((n, index) => `districtIds[${index}]=${n}`).join('&')}`
+        ? `${districtIds?.map((n, index) => `districtIds[${index}]=${n}`).join('&')}`
         : ``
       }` +
       `${provinceId ? `provinceId=${provinceId}&` : ``}` +
