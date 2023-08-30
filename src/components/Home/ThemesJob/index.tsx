@@ -12,7 +12,7 @@ import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { TopicJobIcon, MoreICon } from '#components/Icons';
+import { TopicJobIcon, MoreICon, QuestionMarkIcon } from '#components/Icons';
 
 // @ts-ignore
 // import moment from 'moment';
@@ -196,12 +196,35 @@ const ThemesJob: React.FC = () => {
   //   // setSearchParams(searchParams)
 
   // }, [localStorage.getItem("accessToken")])
-
+  const handleClickHelpSearch = () => { };
   return (
-    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }}>
+    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }} className="theme-job">
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <TopicJobIcon width={25} height={25} />
         <h2>{language?.jobs_by_theme}</h2>
+        <div className="help-search" onClick={handleClickHelpSearch}>
+          <QuestionMarkIcon />
+          <div className={`login__hover__container `}>
+            <div className="login__hover">
+              <div className="login__hover__p">
+                <p>
+                  {languageRedux === 1
+                    ? 'Mục này sẽ gợi ý cho bạn việc làm gần các địa điểm nổi tiếng trong thành phố của bạn.'
+                    : 'This section will suggest you some jobs near hot places in your city.'}
+                </p>
+              </div>
+              {/* <Button
+            type="primary"
+            onClick={() => {
+              setOpenModalLogin(true);
+            }}
+          >
+            <LoginArrowBlackIcon />
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+          </Button> */}
+            </div>
+          </div>
+        </div>
       </div>
 
       {!localStorage.getItem('accessToken') ? (
@@ -267,7 +290,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
