@@ -143,9 +143,11 @@ const BreadcrumbsCpn: React.FC = () => {
       document.documentElement.clientWidth ||
       document.body.clientWidth;
 
-    if (windowWidth > 480) {
+    console.log('windowWidth=', windowWidth);
+
+    if (windowWidth > 519) {
       window.scrollTo(0, 530);
-    } else {
+    } else if (windowWidth <= 519) {
       window.scrollTo(0, 560);
     }
 
