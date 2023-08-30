@@ -914,7 +914,28 @@ const Navbar: React.FC = () => {
   // }, []);
   // console.log('click');
 
+  const totgleLanguage = async (value: any) => {
+    // setLanguageId(e.target.value);
+    // let value = 1;
+    // value === 1 ? value = 2 : 1;
+    setCookie('languageId', JSON.stringify(value), 365);
+    await dispatch<any>(setLanguage(value));
+    await dispatch(getLanguages(value.toString()) as any);
+
+  };
+
   const buttons = [
+    <div className='language'
+      onClick={() => {
+        languageRedux === 1 ?
+          totgleLanguage(2) :
+          totgleLanguage(1)
+      }}
+    >
+      {languageRedux === 1 ?
+        <VNSubLoginIcon width={24} height={24} /> :
+        <ENSubLoginIcon width={24} height={24} />}
+    </div>,
     <button
       key="1"
       className="btn btn__post"
@@ -1238,7 +1259,17 @@ const Navbar: React.FC = () => {
         <BellIcon />
       </Button>
     </Badge>,
-
+    <div className='language'
+      onClick={() => {
+        languageRedux === 1 ?
+          totgleLanguage(2) :
+          totgleLanguage(1)
+      }}
+    >
+      {languageRedux === 1 ?
+        <VNSubLoginIcon width={24} height={24} /> :
+        <ENSubLoginIcon width={24} height={24} />}
+    </div>,
     <div
       className="menu"
       // onClick={handleClickLogin}
