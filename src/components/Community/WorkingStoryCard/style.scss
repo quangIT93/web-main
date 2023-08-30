@@ -24,7 +24,7 @@
             h3 {
                 color: #000;
                 font-family: Roboto;
-                font-size: 24px;
+                font-size: 16px;
                 font-style: normal;
                 font-weight: 700;
                 line-height: 30px;
@@ -43,7 +43,7 @@
         }
 
         .comunityPostNew-card-content_info {
-            padding: 12px 0;
+            padding: 4px 0;
             border-bottom: 1px solid #ccc;
 
             .text-content_postNew {
@@ -52,11 +52,12 @@
                 line-height: 24px;
                 word-wrap: break-word;
                 overflow: hidden;
-
+                font-size: 12px;
+                text-indent: 12px;
                 li {
                     color: #000;
                     font-family: Roboto;
-                    font-size: 16px;
+                    font-size: 12px;
                     font-style: normal;
                     font-weight: 400;
                     line-height: 24px;
@@ -86,6 +87,7 @@
             span {
                 color: #0d99ff;
                 cursor: pointer;
+                font-size: 12px;
             }
         }
 
@@ -95,7 +97,7 @@
         display: flex;
         padding: 12px 0;
         // border-bottom: 1px solid #ccc;
-        gap: 30px;
+        gap: 16px;
         flex-wrap: wrap;
 
         .status-item {
@@ -144,7 +146,7 @@
                 width: 50px;
                 height: 50px;
                 border-radius: 10px;
-                filter: blur(1px);
+                filter: blur(3px);
             }
 
             .info-actor_comunity {
@@ -154,7 +156,7 @@
                     &:nth-child(1) {
                         color: #575757;
                         font-family: Roboto;
-                        font-size: 14px;
+                        font-size: 12px;
                         font-style: normal;
                         font-weight: 400;
                         line-height: 18px;
@@ -163,7 +165,7 @@
                     &:nth-child(2) {
                         color: #000000;
                         font-family: Roboto;
-                        font-size: 16px;
+                        font-size: 12px;
                         font-style: normal;
                         font-weight: 700;
                         line-height: 24px;
@@ -176,7 +178,7 @@
         p {
             color: #575757;
             font-family: Roboto;
-            font-size: 16px;
+            font-size: 12px;
             font-style: italic;
             font-weight: 400;
             line-height: 24px;

@@ -157,15 +157,15 @@ const BreadcrumbsCpn: React.FC = () => {
     setArrayChild(array);
 
     setChildCateloriesArray(
-      array.map((arr: { id: number; name: string }) => arr.id),
+      array?.map((arr: { id: number; name: string }) => arr.id),
     );
     const thersholdId =
-      postNewest.data.posts[postNewest.data.posts.length - 1].id;
+      postNewest?.data?.posts[postNewest.data.posts.length - 1]?.id;
 
     try {
       const result = await postApi.getPostNewest(
         Number(valueJobChild?.id),
-        array.map((arr: { id: number; name: string }) => arr.id),
+        array?.map((arr: { id: number; name: string }) => arr.id),
         null,
         9,
         0,

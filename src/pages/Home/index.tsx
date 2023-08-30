@@ -21,6 +21,8 @@ import HotJob from '#components/Home/HotJob';
 
 import RollTop from '#components/RollTop';
 
+import Box from '@mui/material/Box';
+
 // import ModalLogin from '#components/Home/ModalLogin'
 // import { useHomeState } from './HomeState'
 import './style.scss';
@@ -139,7 +141,11 @@ const Home: React.FC = () => {
   return (
     <div className="home">
       <Navbar />
-
+      {/* <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8881781217169539"
+        crossOrigin="anonymous"
+      ></script> */}
       {/* <Carousel /> */}
       <h1 style={{ visibility: 'hidden', display: 'none' }}>
         Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được

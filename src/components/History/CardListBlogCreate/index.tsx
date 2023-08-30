@@ -59,7 +59,7 @@ const CardListBlogCreate = () => {
 
   const handleMoveToDetail = (id: any) => {
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
-    setCookie('fromHistory', '31', 365,);
+    setCookie('fromHistory', '31', 365);
   };
 
   React.useEffect(() => {
@@ -171,7 +171,7 @@ const CardListBlogCreate = () => {
           <Typography
             sx={{
               fontWeight: '600',
-              fontSize: '16px',
+              fontSize: '24px',
               lineHeight: '24px',
             }}
           >
@@ -269,8 +269,8 @@ const CardListBlogCreate = () => {
                   {item?.createdAtText
                     ? item?.createdAtText
                     : new Date(item?.createdAt).toLocaleDateString('en-GB') +
-                    ', ' +
-                    moment(new Date(item?.createdAt)).format('HH:mm')}
+                      ', ' +
+                      moment(new Date(item?.createdAt)).format('HH:mm')}
                 </p>
               </div>
               <div className="body-item-actions">

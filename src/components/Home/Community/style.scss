@@ -1,7 +1,7 @@
 @import '/src/scss//mixins';
 
 .community-container {
-    margin-bottom: 90px;
+    margin-bottom: 90px !important;
     // border-radius: 16px;
     // border: 1px solid rgba(170, 170, 170, 1);
     display: flex;
@@ -74,16 +74,30 @@
 
                     h3 {
                         font-family: Roboto;
-                        font-size: 20px;
+                        font-size: 16px;
                         font-weight: 700;
                         letter-spacing: 0em;
                         text-align: left;
+
+                        @media screen and (max-width: 379px) {
+                            width: 120px;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+                        }
+
+                        @media screen and (min-width: 380px) and (max-width: 430px) {
+                            width: 160px;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+                        }
                     }
                 }
 
                 p {
                     font-family: Roboto;
-                    font-size: 6;
+                    // font-size: 16px;
                     // font-weight: 700;
                     letter-spacing: 0em;
                     text-align: right;
@@ -109,8 +123,8 @@
                     cursor: pointer;
                     display: flex;
                     flex-direction: column;
-                    height: 136px;
-                    padding: 24px 12px;
+                    // height: 136px;
+                    padding: 12px;
                     gap: 8px;
                     border-radius: 12px;
                     position: relative;
@@ -171,7 +185,7 @@
                                 width: 500px;
                                 text-overflow: ellipsis;
                                 overflow: hidden;
-                                font-size: 20px;
+                                font-size: 16px;
                                 font-weight: 500;
                                 color: #000;
                                 font-style: normal;
@@ -194,19 +208,24 @@
                                 }
 
                                 @media screen and (max-width: 560px) {
-                                    width: 200px;
+                                    width: 270px;
                                 }
 
                                 @media screen and (max-width: 430px) {
-                                    width: 100px;
-                                    font-size: 20px !important;
+                                    width: 160px !important;
+                                    // font-size: 20px !important;
+                                    font-size: 16px !important;
+                                }
+                                @media screen and (max-width: 392px) {
+                                    width: 140px;
+                                    font-size: 16px !important;
                                 }
                             }
                         }
 
                         p {
                             font-family: Roboto;
-                            font-size: 16px;
+                            font-size: 12px;
                             font-style: italic;
                             font-weight: 400;
                             letter-spacing: 0em;
@@ -221,8 +240,13 @@
                         justify-content: space-between;
 
                         @include breakpoint(mobile) {
-                            flex-direction: column;
+                            // flex-direction: column;
                             align-items: flex-start;
+                        }
+
+                        @media screen and (max-width: 330px) {
+                            flex-direction: column;
+                            
                         }
 
                         .body-item-user {
@@ -232,7 +256,7 @@
 
                             p {
                                 font-family: Roboto;
-                                font-size: 16px;
+                                font-size: 14px;
                                 font-weight: 700;
                                 letter-spacing: 0em;
                                 text-align: left;
@@ -243,8 +267,10 @@
                         .body-item-actions {
                             display: flex;
                             align-items: center;
-                            gap: 24px;
+                            // gap: 12px;
                             flex-wrap: wrap;
+                            width: 160px;
+                            justify-content: space-between;
 
                             .action-item {
                                 display: flex;
@@ -284,16 +310,24 @@
                     }
 
                     .community-content-body_left {
+
+
+
                         @media screen and (max-width: 425px) {
                             width: 100%;
+                  
                         }
 
                         span {
                             @media screen and (max-width: 425px) {
                                 width: 100% !important;
                                 height: 176px !important;
+                                img {
+                                    object-fit: contain;
+                                }
                             }
                         }
+                        
                     }
 
                     .community-content-body_right {
@@ -330,7 +364,7 @@
                                     width: 500px;
                                     text-overflow: ellipsis;
                                     overflow: hidden;
-                                    font-size: 20px;
+                                    font-size: 16px;
                                     font-weight: 500;
                                     color: #000;
                                     font-style: normal;
@@ -353,19 +387,20 @@
                                     }
 
                                     @media screen and (max-width: 560px) {
-                                        width: 200px;
+                                        width: 200px !important;
+                                        font-size: 16px !important;
                                     }
 
                                     @media screen and (max-width: 430px) {
-                                        width: 100px;
-                                        font-size: 20px !important;
+                                        width: 150px;
+                                        font-size: 16px !important;
                                     }
                                 }
                             }
 
                             p {
                                 font-family: Roboto;
-                                font-size: 16px;
+                                font-size: 12px;
                                 font-style: italic;
                                 font-weight: 400;
                                 letter-spacing: 0em;
@@ -377,9 +412,10 @@
                         .body-item-actions {
                             display: flex;
                             align-items: center;
-                            gap: 24px;
-                            flex-wrap: wrap;
-
+                            // gap: 12px;
+                            // flex-wrap: wrap;
+                            justify-content: space-between;
+                            width: 160px;
                             .action-item {
                                 display: flex;
                                 align-items: center;

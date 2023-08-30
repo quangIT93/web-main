@@ -52,7 +52,7 @@
                 // }
                 h3 {
                     position: relative;
-
+                    font-size: 24px;
                     &:after {
                         // padding: 4px;
                         content: "";
@@ -84,7 +84,7 @@
                 h3 {
                     color: #000;
                     font-family: Roboto;
-                    font-size: 24px;
+                    font-size: 16px;
                     font-style: normal;
                     font-weight: 700;
                     line-height: 30px;
@@ -115,6 +115,7 @@
                         align-items: center;
                         gap: 4px;
                         cursor: pointer;
+                        font-size: 12px;
                     }
                 }
             }
@@ -124,7 +125,7 @@
                 // border: 1px solid #ccc;
                 // padding: 12px 24px;
                 border-radius: 12px;
-                margin: 24px 0;
+                margin: 12px 0 0 0;
 
                 .comunityDetail-content {
 
@@ -144,8 +145,9 @@
                         background: transparent;
 
                         font-family: Roboto;
-                        font-size: 16px;
+                        font-size: 12px;
                         font-weight: 400;
+                        text-indent: 12px;
                     }
 
                     div {
@@ -166,9 +168,7 @@
 
                 }
 
-                .comunityDetail-wrap_actor {
-                    p {}
-                }
+      
             }
 
             .comunityDetail-wrap_img {
@@ -332,7 +332,8 @@
                 display: flex;
                 padding: 12px 0;
                 border-bottom: 1px solid #ccc;
-                gap: 30px;
+                gap: 16px;
+                align-items: center;
 
                 .comunitypostNew-status_item {
                     display: flex;
@@ -389,7 +390,7 @@
                         &:nth-child(1) {
                             color: #575757;
                             font-family: Roboto;
-                            font-size: 14px;
+                            font-size: 12px;
                             font-style: normal;
                             font-weight: 400;
                             line-height: 18px;
@@ -398,7 +399,7 @@
                         &:nth-child(2) {
                             color: #000000;
                             font-family: Roboto;
-                            font-size: 16px;
+                            font-size: 12px;
                             font-style: normal;
                             font-weight: 700;
                             line-height: 24px;
@@ -411,7 +412,7 @@
                 }
 
                 p {
-                    font-size: 14px;
+                    font-size: 12px;
                     display: flex;
                     align-items: flex-end;
 
@@ -556,7 +557,7 @@
 
                                     h3 {
                                         font-family: Roboto;
-                                        font-size: 16px;
+                                        font-size: 12px;
                                         font-style: normal;
                                         font-weight: 700;
                                         line-height: 24px;

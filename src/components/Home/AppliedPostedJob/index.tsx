@@ -25,6 +25,8 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 import { Button } from 'antd';
 // import { Skeleton } from 'antd';
 
+import { QuestionMarkIcon } from '#components/Icons';
+
 // import redux
 // import { useDispatch } from 'react-redux';
 
@@ -167,6 +169,8 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
+  const handleClickHelpSearch = () => {};
+
   if (appliedPostedJob.length !== 0 && localStorage.getItem('accessToken')) {
     return (
       <Box
@@ -190,6 +194,31 @@ const AppliedPostedJob: React.FC = () => {
             >
               <AppliedPostedIcon width={30} height={30} />
               <h2>{language?.home_page?.applied_posted_job}</h2>
+              <div className="help-search" onClick={handleClickHelpSearch}>
+                <QuestionMarkIcon />
+                <div className="login__hover__container">
+                  <div className="login__hover">
+                    <div className="login__hover__p">
+                      <p>
+                        {languageRedux === 1
+                          ? `Công việc đã ứng tuyển/Đăng tuyển sẽ hiển thị trạng thái
+                        trong vòng 30 ngày, sau 30 ngày bạn có thể kiểm tra các
+                        công việc đã Ứng tuyển/Đăng tuyển trong lịch sử.`
+                          : `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`}
+                      </p>
+                    </div>
+                    {/* <Button
+            type="primary"
+            onClick={() => {
+              setOpenModalLogin(true);
+            }}
+          >
+            <LoginArrowBlackIcon />
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+          </Button> */}
+                  </div>
+                </div>
+              </div>
             </div>
           ) : (
             <></>

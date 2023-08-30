@@ -99,9 +99,7 @@ const Comunity = () => {
       if (result.status === 200) {
         setDeleteCmt(!deleteCmt);
       }
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 
   const handleGetDetailCommunityById = async () => {
@@ -127,19 +125,28 @@ const Comunity = () => {
   };
 
   React.useEffect(() => {
-    setFromHistory(getCookie('fromHistory'))
-  }, [])
+    setFromHistory(getCookie('fromHistory'));
+  }, []);
 
   React.useEffect(() => {
     handleGetDetailCommunityById();
-  }, [POST_COMMUNITY_ID, like, bookmark, cmt, languageRedux, language, deleteCmt]);
+  }, [
+    POST_COMMUNITY_ID,
+    like,
+    bookmark,
+    cmt,
+    languageRedux,
+    language,
+    deleteCmt,
+  ]);
 
   const srcset = (image: string, size: number, rows = 1, cols = 1) => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${size * rows
-        }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${
+        size * rows
+      }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -147,12 +154,14 @@ const Comunity = () => {
     confirm({
       centered: true,
       closable: true,
-      title: languageRedux === 1 ?
-        'Bạn có chắc muốn xóa bình luận này' :
-        'Are you sure delete this comment',
-      content: languageRedux === 1 ?
-        "Sau khi xóa, bình luận này sẽ không còn xuất hiện nữa" :
-        "Once deleted, this comment will no longer appear",
+      title:
+        languageRedux === 1
+          ? 'Bạn có chắc muốn xóa bình luận này'
+          : 'Are you sure delete this comment',
+      content:
+        languageRedux === 1
+          ? 'Sau khi xóa, bình luận này sẽ không còn xuất hiện nữa'
+          : 'Once deleted, this comment will no longer appear',
       okText: languageRedux === 1 ? 'Có' : 'Yes',
       okType: 'danger',
       cancelText: languageRedux === 1 ? 'Không' : 'No',
@@ -163,7 +172,7 @@ const Comunity = () => {
         console.log('Cancel');
       },
     });
-  }
+  };
 
   const handleLikeCommunity = async (communicationId: number) => {
     if (!localStorage.getItem('accessToken')) {
@@ -231,9 +240,9 @@ const Comunity = () => {
 
     if (cmtContent.trim() == '') {
       message.error(
-        languageRedux === 1 ?
-          'Bạn chưa nhập bình luận' :
-          'You have not entered a comment'
+        languageRedux === 1
+          ? 'Bạn chưa nhập bình luận'
+          : 'You have not entered a comment',
       );
       setCmtContent('');
       return;
@@ -285,12 +294,12 @@ const Comunity = () => {
   };
 
   const handleMoveToList = () => {
-    setCookie('fromHistory', '0', 365)
-    fromHistory === '31' ?
-      window.open('/history?community_post=31', '_parent') :
-      fromHistory === '30' ?
-        window.open('/history?community_post=30', '_parent') :
-        window.open(
+    setCookie('fromHistory', '0', 365);
+    fromHistory === '31'
+      ? window.open('/history?community_post=31', '_parent')
+      : fromHistory === '30'
+      ? window.open('/history?community_post=30', '_parent')
+      : window.open(
           detail?.type === 1 ? '/new-comunity' : '/news-comunity',
           '_parent',
         );
@@ -307,17 +316,17 @@ const Comunity = () => {
             <div className="icon-back">
               <BackIcon width={15} height={15} fill="white" />
             </div>
-            <h3>{
-              fromHistory === '31' || fromHistory === '30' ?
-                language?.history :
-                detail?.type === 1 ?
-                  languageRedux === 1 ?
-                    'Câu chuyện việc làm' :
-                    'Working story' :
-                  languageRedux === 1 ?
-                    'Tin tức HiJob' :
-                    'HiJob news'
-            }</h3>
+            <h3>
+              {fromHistory === '31' || fromHistory === '30'
+                ? language?.history
+                : detail?.type === 1
+                ? languageRedux === 1
+                  ? 'Câu chuyện việc làm'
+                  : 'Working story'
+                : languageRedux === 1
+                ? 'Tin tức HiJob'
+                : 'HiJob news'}
+            </h3>
           </div>
           <div className="title-comunity">
             {/* <Tooltip title={detail?.title}>
@@ -371,7 +380,7 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-              // showCount
+                // showCount
               />
             </div>
           </div>
@@ -543,7 +552,7 @@ const Comunity = () => {
                       : 'Enter your comment ...'
                   }
                   autoSize
-                // showCount
+                  // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -592,11 +601,17 @@ const Comunity = () => {
                             <div
                               className="comunityDetail-comment_top__right"
                               style={{
-                                display: detail?.profileData?.id === localStorage.getItem('accountId') ||
-                                  cmtData?.profile?.id === localStorage.getItem('accountId') ?
-                                  'block' : 'none'
+                                display:
+                                  detail?.profileData?.id ===
+                                    localStorage.getItem('accountId') ||
+                                  cmtData?.profile?.id ===
+                                    localStorage.getItem('accountId')
+                                    ? 'block'
+                                    : 'none',
                               }}
-                              onClick={() => showDeleteConfirm(detail?.id, cmtData?.id)}
+                              onClick={() =>
+                                showDeleteConfirm(detail?.id, cmtData?.id)
+                              }
                             >
                               <DeleteCmtIcon />
                             </div>
@@ -605,7 +620,7 @@ const Comunity = () => {
                             <TextArea
                               value={cmtData?.content}
                               autoSize
-                            // showCount
+                              // showCount
                             />
                             {/* <p>{cmtData?.content}</p> */}
                           </div>
