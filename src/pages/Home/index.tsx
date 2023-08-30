@@ -116,6 +116,8 @@ const Home: React.FC = () => {
       });
     }
     localStorage.removeItem('community');
+
+    window.scrollTo(0, 0);
   }, []);
 
   const tabs = document.querySelector('.tabs') as HTMLElement;
