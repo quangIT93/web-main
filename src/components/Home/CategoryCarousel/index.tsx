@@ -158,19 +158,20 @@ const CategoryCarousel: React.FC = () => {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';
     }
+
     // const sectionToNavigate = document.getElementById('new-job');
-    if (windowWidth > 480 && localStorage.getItem('accessToken')) {
+    if (windowWidth > 519 && localStorage.getItem('accessToken')) {
       window.scrollTo(0, 530);
 
       // sectionToNavigate?.scrollIntoView();
       // window.scrollTo({ top: 0, behavior: 'smooth' });
       // document.create;
-    } else if (windowWidth <= 480 && localStorage.getItem('accessToken')) {
+    } else if (windowWidth <= 519 && localStorage.getItem('accessToken')) {
       window.scrollTo(0, 560);
-    } else if (windowWidth > 480) {
+    } else if (windowWidth > 519) {
       window.scrollTo(0, 530);
-    } else if (windowWidth <= 480) {
-      window.scrollTo(0, 780);
+    } else if (windowWidth <= 519) {
+      window.scrollTo(0, 800);
     }
 
     try {
