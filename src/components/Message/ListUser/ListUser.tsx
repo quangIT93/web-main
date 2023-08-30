@@ -17,6 +17,7 @@ import { ChatContext } from 'context/ChatContextProvider';
 import { SeenIcon } from '#components/Icons';
 import { messVi } from 'validations/lang/vi/mess';
 import { messEn } from 'validations/lang/en/mess';
+import moment from 'moment';
 
 // const { Search } = Input;
 
@@ -32,8 +33,9 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [windowWidth, setWindowWidth] = useState(false);
   const [openBackDrop, setBackDrop] = useState(false);
-
   const [listUserChat, setStateUserChat] = useState<any>([]);
+  const [firstTime, setFirstTime] = useState<any>(true);
+
   const {
     setUserInfoChat,
     setReceivedMessages,
@@ -43,16 +45,106 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     receivedMessages,
   } = useContext(ChatContext);
 
+  const getPostById = async () => {
+    try {
+      const result = await postApi.getPostV3(
+        Number(searchParams.get('post_id')),
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result.data !== null) {
+        // setUserChat({
+        //   user_id: result?.data?.accountId,
+        //   avatar: result?.data?.posterAvatar,
+        //   is_online: false,
+        //   name: result?.data?.companyResourceData?.name,
+        //   company_name: result?.data?.companyResourceData?.name,
+        //   post_title: result?.data?.title,
+        //   message: '',
+        //   status: 0,
+        //   post_id: result?.data?.id,
+        //   image: result?.data?.image,
+        //   salary_min: result?.data?.salaryMin,
+        //   salary_max: result?.data?.salaryMax,
+        //   money_type_text: result?.data?.moneyTypeText,
+        //   salary_type_id: result?.data?.postSalaryType?.id,
+        //   post_status: result?.data?.status,
+        //   is_owner: false,
+        //   applied: result?.data?.applied,
+        // })
+        setUserInfoChat({
+          avatar: result?.data?.image,
+          image: result?.data?.image,
+          company_name: result?.data?.companyResourceData?.name,
+          is_online: false,
+          name: result?.data?.companyResourceData?.name,
+          post_title: result?.data?.title,
+          salary_min: result?.data?.salaryMin,
+          salary_max: result?.data?.salaryMax,
+          money_type_text: result?.data?.moneyTypeText,
+          salary_type_id: result?.data?.postSalaryType?.id,
+          post_status: result?.data?.status,
+          is_owner: false,
+          post_id: result?.data?.id,
+          applied: result?.data?.applied,
+          user_id: result?.data?.accountId,
+          message: '',
+          status: 0,
+        })
+      }
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+  useEffect(() => {
+    getPostById()
+  }, [firstTime])
+
+  // console.log("post", post);
+  // console.log("listUserChat", listUserChat);
+
   const getAllUserChat = async () => {
     try {
       const result = await messageApi.getUserChated(
         languageRedux === 1 ? 'vi' : 'en',
       );
 
+      const post = await postApi.getPostV3(
+        Number(searchParams.get('post_id')),
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       console.log('result', result);
 
       if (result) {
-        setStateUserChat(result.data);
+        if (post.data !== null) {
+          setStateUserChat([
+            {
+              user_id: post?.data?.accountId,
+              avatar: post?.data?.posterAvatar,
+              is_online: false,
+              name: post?.data?.companyResourceData?.name,
+              company_name: post?.data?.companyResourceData?.name,
+              post_title: post?.data?.title,
+              message: '',
+              status: 0,
+              post_id: post?.data?.id,
+              image: post?.data?.image,
+              salary_min: post?.data?.salaryMin,
+              salary_max: post?.data?.salaryMax,
+              money_type_text: post?.data?.moneyTypeText,
+              salary_type_id: post?.data?.postSalaryType?.id,
+              post_status: post?.data?.status,
+              is_owner: false,
+              applied: post?.data?.applied,
+            },
+            ...result.data
+          ]);
+          setFirstTime(false)
+        } else {
+          setStateUserChat(result.data);
+        }
+        // setStateUserChat(result.data);
       }
     } catch (error) {
       console.log('error', error);
@@ -312,9 +404,8 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     return (
       <div
         // className="list_userChat"
-        className={`list_userChat ${
-          props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
-        }`}
+        className={`list_userChat ${props.openListChat === true && windowWidth ? 'hide-list-userChat' : ''
+          }`}
       >
         <div className="header-list_userChat">
           <h4 className="title-header_listUserChat">{language?.message}</h4>
@@ -339,7 +430,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackDrop}
-            // onClick={handleClose}
+          // onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -367,36 +458,40 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
           </div> */}
           {listUserChat.map((user: any, index: number) => (
             <div
-              className={`wrap-userInfo ${
-                searchParams.get('user_id') === user.user_id
-                  ? 'readed-message'
-                  : ''
-              } `}
+              className={`wrap-userInfo ${searchParams.get('user_id') === user?.user_id
+                ? 'readed-message'
+                : ''
+                } `}
               key={index}
               onClick={() => handleClickUserInfo(user)}
             >
               <div className="wrap-avatar_userChat">
-                {user.avatar ? (
-                  <img src={user.avatar} alt="" />
+                {user?.avatar ? (
+                  <img src={user?.avatar} alt="" />
                 ) : (
                   <div>Hijob</div>
                 )}
                 <span
-                  className={`user-online ${
-                    user.is_online ? 'user-online_true' : ''
-                  }`}
+                  className={`user-online ${user?.is_online ? 'user-online_true' : ''
+                    }`}
                 ></span>
               </div>
               <div className="info-user_chat">
-                <h4>{user.name ? user.name : user.company_name}</h4>
-                <h5>{user.name ? '' : user.post_title}</h5>
-                <p>{user.message}</p>
+                <h4>{user?.name ? user?.name : user?.company_name}</h4>
+                <h5>{user?.name ? '' : user?.post_title}</h5>
+                <p>{user?.message}</p>
               </div>
               <div className="info-chat_icon">
                 <small>
-                  {new Date(user.created_at).toLocaleString('en-GB')}
+                  {
+                    user?.created_at ?
+                      new Date(user?.created_at).toLocaleString('en-GB') :
+                      //   new Date().getDay()
+                      moment(new Date()).format('DD/MM/YYYY') + ' ' +
+                      moment(new Date()).format('HH:mm:ss')
+                  }
                 </small>
-                {user.status === 1 ? (
+                {user?.status === 1 ? (
                   <span className="count-message_readed">
                     <SeenIcon />
                   </span>

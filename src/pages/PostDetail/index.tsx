@@ -103,6 +103,7 @@ import { postDetail } from 'validations/lang/vi/postDetail';
 import { postDetailEn } from 'validations/lang/en/postDetail';
 
 import RollTop from '#components/RollTop';
+import { setCookie } from 'cookies';
 // import { Language } from '#components/Navbar/Css';
 
 // const itemsShare = [
@@ -934,7 +935,7 @@ const Detail = () => {
                 window.open(
                   `/message?post_id=${searchParams.get('post-id')}&user_id=${post?.data?.accountId
                   } `,
-                  '_blank',
+                  '_parent',
                 )
               }}
             // onClick={() => {
