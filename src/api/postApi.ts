@@ -94,7 +94,7 @@ const postApi = {
     const URL =
       `/v3/posts/newest?` +
       `${childrenCategoryId
-        ? `&${childrenCategoryId?.map((n, index) => `childrenCategoryId[${index}]=${n}`).join('&')}`
+        ? `${childrenCategoryId?.map((n, index) => `childrenCategoryId[${index}]=${n}`).join('&')}`
         : ``
       }` +
       `${parentCategoryId && parentCategoryId !== 1 ? `&parentCategoryId=${parentCategoryId}` : ``}` +
@@ -102,9 +102,8 @@ const postApi = {
         ? `&${districtIds?.map((n, index) => `districtIds[${index}]=${n}`).join('&')}`
         : ``
       }` +
-      `${provinceId ? `provinceId=${provinceId}` : ``}` +
-
-      `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}` +
+      `${provinceId ? `provinceId=${provinceId}&` : ``}` +
+      `limit=${limit}${threshold ? `&threshold=${threshold}` : ``}` +
       `&lang=${lang}`
     return axiosClient.get(URL
       // , {
