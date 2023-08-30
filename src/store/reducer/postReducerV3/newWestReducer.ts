@@ -8,10 +8,10 @@ const postApiSlice = createSlice({
   name: 'postApi',
   initialState,
   reducers: {
-    setPostNewestApi: (state, action) => {
+    setPostNewestApiV3: (state, action) => {
       state.data = action.payload.data ?? [];
     },
-    setPostNewestMoreApi: (state: any, action) => {
+    setPostNewestMoreApiV3: (state: any, action) => {
        state.data = [...state.data, ...action.payload.data]
     },
   },
@@ -19,5 +19,5 @@ const postApiSlice = createSlice({
 
 
 
-export const { setPostNewestApi,setPostNewestMoreApi } = postApiSlice.actions;
+export const { setPostNewestApiV3,setPostNewestMoreApiV3 } = postApiSlice.actions;
 export default postApiSlice.reducer;

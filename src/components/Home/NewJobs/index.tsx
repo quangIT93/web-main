@@ -41,8 +41,15 @@ import './style.scss';
 
 // import ChildCateloriesArray from 'context/HomeValueContextProvider';
 
+// import { setPostNewestMoreV3, setPostNewestv3 } from 'store/actions';
+import {
+  setPostNewestApiV3,
+  setPostNewestMoreApiV3,
+} from 'store/reducer/postReducerV3/newWestReducer';
+
 //import jobcard
 import JobCard from '../JobCard';
+import JobCardV3 from '../JobCardV3';
 
 import { QuestionMarkIcon } from '#components/Icons';
 
@@ -75,6 +82,46 @@ export interface PostNewest {
   money_type_text: string;
 }
 
+export interface PostNewestV3 {
+  accountId: number;
+  address: string;
+  bookmarked: boolean;
+  companyName: string;
+  companyResourceData: {
+    logo: string;
+  };
+  createdAtText: string;
+  id: number;
+  image: string;
+  jobType: {
+    id: number;
+    name: string;
+  };
+  location: {
+    district: {
+      id: string;
+      fullName: string;
+    };
+
+    province: {
+      fullName: string;
+      id: string;
+    };
+    ward: {
+      id: string;
+      fullName: string;
+    };
+  };
+  moneyType: string;
+  salaryMax: number;
+  salaryMin: number;
+  salaryType: {
+    id: number;
+    name: string;
+  };
+  title: string;
+}
+
 const NewJobs: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -95,6 +142,12 @@ const NewJobs: React.FC = () => {
 
   // state redux
   const postNewest = useSelector((state: RootState) => state.postNewest);
+  const postNewestV3 = useSelector((state: RootState) => {
+    // console.log('state', state);
+    return state.newWestReducerV3;
+  });
+
+  console.log('postNewestV3', postNewestV3);
 
   const dispatch = useDispatch();
   const { setPostNewest, setPostNewestMore } = bindActionCreators(
@@ -146,15 +199,6 @@ const NewJobs: React.FC = () => {
       languageRedux === 1 ? 'vi' : 'en',
     );
 
-    // const result2 = await postApi.getPostNewestV3(
-    //   Number(categoryId),
-    //   childCateloriesArray,
-    //   null,
-    //   9,
-    //   thersholdId,
-    //   languageRedux === 1 ? 'vi' : 'en',
-    // )
-
     if (result) {
       setPostNewestMore(result);
       setOpenBackdrop(false);
@@ -198,6 +242,24 @@ const NewJobs: React.FC = () => {
         null,
         languageRedux === 1 ? 'vi' : 'en',
       );
+
+      const result2 = await postApi.getPostNewestV3(
+        childCateloriesArray,
+        // Number(categoryId),
+        null,
+        null,
+        null,
+        9,
+        null,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      console.log('result2222222222222222', result2.data);
+      console.log('result111111111111', result.data);
+
+      if (result2) {
+        dispatch(setPostNewestApiV3(result2));
+      }
 
       if (result) {
         setPostNewest(result);
@@ -276,10 +338,10 @@ const NewJobs: React.FC = () => {
           </div>
 
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-            {postNewest.data.posts.map((item: PostNewest, index: number) => (
+            {postNewestV3.data.map((item: PostNewestV3, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                 <Skeleton loading={loading} active>
-                  <JobCard item={item} />
+                  <JobCardV3 item={item} />
                 </Skeleton>
               </Grid>
             ))}

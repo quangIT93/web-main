@@ -22,7 +22,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
-import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
+// import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
 // import api
 import categoriesApi from '../../../api/categoriesApi';
 import postApi from 'api/postApi';
@@ -299,12 +299,12 @@ const BreadcrumbsCpn: React.FC = () => {
               ? `Tất cả`
               : `All`
             : arrayChild?.map(
-              (value: { id: number; name: string }, index: number) => (
-                <div key={index}>
-                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                </div>
-              ),
-            )}
+                (value: { id: number; name: string }, index: number) => (
+                  <div key={index}>
+                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                  </div>
+                ),
+              )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -376,7 +376,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                        checkItemsCount >= MAX_CHECKED_ITEMS
+                          checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />
