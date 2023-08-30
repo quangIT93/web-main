@@ -134,7 +134,7 @@ const Home: React.FC = () => {
         currentHeight = 0;
         tabs.style.top = '70px';
         breadCrumb.style.marginTop = '192px';
-      }, 3000);
+      }, 1500);
     } else {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';

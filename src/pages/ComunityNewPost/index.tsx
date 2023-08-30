@@ -200,13 +200,19 @@ const ComunityNewPost = () => {
         <div className="comunityPostNew">
           <div className="title-comunity">
             <h3>
-              {loading
-                ? 'Loading...'
-                : language?.community_page?.today_hijob_has +
-                  ' ' +
-                  total +
-                  ' ' +
-                  language?.community_page?.new_posts}
+              {
+                loading
+                  ? 'Loading...'
+                  : languageRedux === 1
+                  ? `Hôm nay, HiJob có ${total} bài viết mới`
+                  : ''
+
+                // language?.community_page?.today_hijob_has +
+                //   ' ' +
+                //   total +
+                //   ' ' +
+                //   language?.community_page?.new_posts
+              }
             </h3>
             <div className="title-comunity_icon">
               <div

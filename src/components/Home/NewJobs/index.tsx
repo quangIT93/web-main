@@ -142,7 +142,7 @@ const NewJobs: React.FC = () => {
 
   // state redux
   const postNewest = useSelector((state: RootState) => state.postNewest);
-  const postNewestV3 = useSelector((state: RootState) => {
+  const postNewestV3: any = useSelector((state: RootState) => {
     // console.log('state', state);
     return state.newWestReducerV3;
   });
@@ -154,8 +154,6 @@ const NewJobs: React.FC = () => {
     actionCreators,
     dispatch,
   );
-
-  // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -187,20 +185,30 @@ const NewJobs: React.FC = () => {
     const categoryId = searchParams.get(`categories-id`)
       ? searchParams.get(`categories-id`)
       : null;
-    const thersholdId =
-      postNewest.data.posts[postNewest.data.posts.length - 1].id;
+    const thersholdId = postNewestV3.data[postNewestV3.data.length - 1]?.id;
 
-    const result = await postApi.getPostNewest(
-      Number(categoryId),
+    // const result = await postApi.getPostNewest(
+    //   Number(categoryId),
+    //   childCateloriesArray,
+    //   null,
+    //   9,
+    //   thersholdId,
+    //   languageRedux === 1 ? 'vi' : 'en',
+    // );
+
+    const result2 = await postApi.getPostNewestV3(
       childCateloriesArray,
+      Number(categoryId),
       null,
-      9,
+      null,
+      10,
       thersholdId,
       languageRedux === 1 ? 'vi' : 'en',
     );
 
-    if (result) {
-      setPostNewestMore(result);
+    if (result2) {
+      // setPostNewestMore(result);
+      dispatch(setPostNewestMoreApiV3(result2));
       setOpenBackdrop(false);
     }
   };
@@ -228,20 +236,20 @@ const NewJobs: React.FC = () => {
 
     try {
       setOpenBackdrop(true);
-      const result = await postApi.getPostNewest(
-        Number(
-          JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
-        ) !== 1
-          ? Number(
-              JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
-            )
-          : null || null,
-        childCateloriesArray || null,
-        null,
-        19,
-        null,
-        languageRedux === 1 ? 'vi' : 'en',
-      );
+      // const result = await postApi.getPostNewest(
+      //   Number(
+      //     JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
+      //   ) !== 1
+      //     ? Number(
+      //         JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
+      //       )
+      //     : null || null,
+      //   childCateloriesArray || null,
+      //   null,
+      //   20,
+      //   null,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
 
       const result2 = await postApi.getPostNewestV3(
         childCateloriesArray,
@@ -249,20 +257,20 @@ const NewJobs: React.FC = () => {
         null,
         null,
         null,
-        9,
+        20,
         null,
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       console.log('result2222222222222222', result2.data);
-      console.log('result111111111111', result.data);
+      // console.log('result111111111111', result.data);
 
       if (result2) {
         dispatch(setPostNewestApiV3(result2));
       }
 
-      if (result) {
-        setPostNewest(result);
+      if (result2) {
+        // setPostNewest(result);
 
         // set loading
         setOpenBackdrop(false);

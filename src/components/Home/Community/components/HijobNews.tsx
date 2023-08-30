@@ -30,7 +30,7 @@ const HijobNews = () => {
     try {
       const result = await communityApi.getCommunityNews(
         '',
-        '10',
+        '5',
         '',
         0,
         languageRedux === 1 ? 'vi' : 'en',

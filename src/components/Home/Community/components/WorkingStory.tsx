@@ -35,7 +35,7 @@ const WorkingStory = () => {
     try {
       const result = await communityApi.getCommunityNews(
         '',
-        '10',
+        '5',
         '',
         1,
         languageRedux === 1 ? 'vi' : 'en',
@@ -136,7 +136,9 @@ const WorkingStory = () => {
                     <p>{story?.communicationViewsCount}</p>
                   </div>
                   <div
-                    className={story.liked ? 'action-item liked' : 'action-item'}
+                    className={
+                      story.liked ? 'action-item liked' : 'action-item'
+                    }
                     onClick={(e) => handleLikeCommunity(story?.id, e)}
                   >
                     <LikeIcon />

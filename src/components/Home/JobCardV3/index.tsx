@@ -75,7 +75,9 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
   //   openNotificate: boolean;
   // } = React.useContext(HomeValueContext);
   const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  const [checkBookMark, setCheckBookMark] = React.useState(
+    props.item.bookmarked,
+  );
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
@@ -310,23 +312,23 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
                       setOpenModalLogin(true);
                       return;
                     }
-                    if (props.item.bookmarked) {
+                    if (checkBookMark) {
                       const result = await bookMarkApi.deleteBookMark(
                         props.item.id,
                       );
-                      props.item.bookmarked = false;
+                      // props.item.bookmarked = false;
                       if (result) {
-                        setCheckBookMark(!checkBookMark);
+                        setCheckBookMark(false);
                         dispatch<any>(setAlertCancleSave(true));
                       }
                     } else {
                       const result = await bookMarkApi.createBookMark(
                         props.item.id,
                       );
-                      props.item.bookmarked = true;
+                      // props.item.bookmarked = true;
                       if (result) {
                         dispatch<any>(setAlertSave(true));
-                        setCheckBookMark(!checkBookMark);
+                        setCheckBookMark(true);
                       }
                     }
                   } catch (error) {
@@ -334,7 +336,7 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
                   }
                 }}
               >
-                {props.item.bookmarked ? (
+                {checkBookMark ? (
                   <SaveIconFill width={24} height={24} />
                 ) : (
                   <SaveIconOutline width={24} height={24} />

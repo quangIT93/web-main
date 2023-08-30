@@ -97,7 +97,7 @@ const postApi = {
         ? `&${childrenCategoryId?.map((n, index) => `childrenCategoryId[${index}]=${n}`).join('&')}`
         : ``
       }` +
-      `${parentCategoryId ? `parentCategoryId=${parentCategoryId}` : ``}` +
+      `${parentCategoryId && parentCategoryId !== 1 ? `&parentCategoryId=${parentCategoryId}` : ``}` +
       `${districtIds
         ? `&${districtIds?.map((n, index) => `districtIds[${index}]=${n}`).join('&')}`
         : ``
