@@ -103,11 +103,26 @@ const WorkingStory = () => {
                 {/* <Tooltip title={story?.title}> */}
                 {/* <h3>{story?.title}</h3> */}
                 {/* </Tooltip> */}
-                <div className="title">
-                  <Typography gutterBottom component="div" variant="body2" color="text.secondary">
-                    {story?.title}
-                  </Typography>
-                </div>
+                {/* <div className="title"> */}
+                <Typography
+                  component="div"
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{
+                    fontSize: '16px',
+                    margin: 0,
+                    whiteSpace: 'nowrap',
+                    width: '75%',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    fontWeight: '500',
+                    lineheight: '20px',
+                    color: '#000000',
+                  }}
+                >
+                  {story?.title}
+                </Typography>
+                {/* </div> */}
                 <p>{story?.createdAtText}</p>
               </div>
               <div className="body-item_bottom">
