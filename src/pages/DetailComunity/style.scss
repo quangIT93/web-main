@@ -15,7 +15,7 @@
         // .comunityNew {
 
         // }
-        @media screen and (min-width: 767px) and (max-width: 1219px) {
+        @media screen and (min-width: 767px) and (max-width: 1024px) {
             padding: 50px 24px;
         }
 
@@ -25,6 +25,14 @@
 
         .comunity-detail_post {
             width: 70%;
+
+            @media screen and (min-width: 767px) and (max-width: 1024px) {
+                width: 98%;
+            }
+
+            @media screen and (max-width: 768px) {
+                width: 98%;
+            }
 
             .back {
                 display: flex;
@@ -145,7 +153,7 @@
                         background: transparent;
 
                         font-family: Roboto;
-                        font-size: 12px;
+                        font-size: 14px;
                         font-weight: 400;
                         text-indent: 12px;
                     }
@@ -390,7 +398,7 @@
                         &:nth-child(1) {
                             color: #575757;
                             font-family: Roboto;
-                            font-size: 12px;
+                            font-size: 14px;
                             font-style: normal;
                             font-weight: 400;
                             line-height: 18px;
@@ -399,7 +407,7 @@
                         &:nth-child(2) {
                             color: #000000;
                             font-family: Roboto;
-                            font-size: 12px;
+                            font-size: 16px;
                             font-style: normal;
                             font-weight: 700;
                             line-height: 24px;
@@ -415,6 +423,8 @@
                     font-size: 12px;
                     display: flex;
                     align-items: flex-end;
+                    font-style: italic;
+                    color: #ccc;
 
                 }
             }

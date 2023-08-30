@@ -2993,16 +2993,16 @@ export const EysIcon = ({ width = 16, height = 17 }) => {
         <path
           d="M12 5.25C4.5 5.25 1.5 12 1.5 12C1.5 12 4.5 18.75 12 18.75C19.5 18.75 22.5 12 22.5 12C22.5 12 19.5 5.25 12 5.25Z"
           stroke="currentStroke"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 8.25C9.92893 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92893 15.75 12 15.75Z"
           stroke="currentStroke"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>
@@ -3026,9 +3026,9 @@ export const LikeIcon = ({ width = 16, height = 17 }) => {
       <path
         d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z"
         stroke="currentStroke"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         fill="currentColor"
         // fill="#0d99ff"
       />
@@ -3061,9 +3061,9 @@ export const CommentIcon = ({ width = 16, height = 17 }) => {
         <path
           d="M7.49258 19.7914C9.38308 20.8856 11.607 21.2549 13.7496 20.8304C15.8923 20.406 17.8075 19.2168 19.1381 17.4846C20.4687 15.7524 21.124 13.5954 20.9817 11.4157C20.8394 9.23605 19.9093 7.18253 18.3648 5.638C16.8202 4.09348 14.7667 3.16336 12.5871 3.02108C10.4074 2.87879 8.2504 3.53405 6.51819 4.86468C4.78597 6.1953 3.59679 8.11048 3.17235 10.2531C2.74792 12.3958 3.11719 14.6197 4.21133 16.5102L3.03852 20.0118C2.99445 20.1439 2.98806 20.2857 3.02005 20.4213C3.05205 20.5569 3.12117 20.6808 3.21967 20.7794C3.31817 20.8779 3.44216 20.947 3.57774 20.979C3.71331 21.011 3.85512 21.0046 3.98727 20.9605L7.49258 19.7914Z"
           stroke="currentStroke"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>
@@ -3897,9 +3897,9 @@ export const SettingIcon = ({ width = 24, height = 24 }) => {
         <path
           d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
           stroke="#252525"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M12 12.9375C12.5178 12.9375 12.9375 12.5178 12.9375 12C12.9375 11.4822 12.5178 11.0625 12 11.0625C11.4822 11.0625 11.0625 11.4822 11.0625 12C11.0625 12.5178 11.4822 12.9375 12 12.9375Z"
@@ -4058,29 +4058,29 @@ export const QuestionMarkIcon = () => {
       <path
         d="M16.0013 29.3334C23.3651 29.3334 29.3346 23.3639 29.3346 16.0001C29.3346 8.63628 23.3651 2.66675 16.0013 2.66675C8.63751 2.66675 2.66797 8.63628 2.66797 16.0001C2.66797 23.3639 8.63751 29.3334 16.0013 29.3334Z"
         stroke="#252525"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12.1211 12C12.4346 11.1089 13.0533 10.3575 13.8677 9.87887C14.6821 9.40024 15.6396 9.22528 16.5707 9.38498C17.5017 9.54467 18.3462 10.0287 18.9545 10.7514C19.5629 11.4741 19.8958 12.3887 19.8944 13.3334C19.8944 16 16.0011 17.3334 16.0011 17.3334"
         stroke="#252525"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16 22.6667H16.0133"
         stroke="#252525"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16 17.3333V19.3333"
         stroke="#252525"
-        stroke-width="1.5"
-        stroke-linecap="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
     </svg>
   );

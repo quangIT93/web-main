@@ -44,6 +44,7 @@
             flex-direction: column;
             padding: 0 12px;
             border-right: 1px solid rgba(170, 170, 170, 1);
+            width: 50%;
 
             &:last-child {
                 border-right: none;
@@ -52,6 +53,7 @@
             @media screen and (max-width: 920px) {
                 border-bottom: 1px solid rgba(170, 170, 170, 1);
                 border-right: none;
+                width: 100%;
 
                 &:last-child {
                     border-bottom: none;
@@ -136,8 +138,8 @@
                         left: 0;
                         bottom: -4px;
                         width: 100%;
-                        height: 1px;
-                        background-color: rgba(170, 170, 170, 1);
+                        height: 0.1px;
+                        background-color: #ccc;
                         /* Màu của border */
                     }
 
@@ -216,6 +218,7 @@
                                     // font-size: 20px !important;
                                     font-size: 16px !important;
                                 }
+
                                 @media screen and (max-width: 392px) {
                                     width: 140px;
                                     font-size: 16px !important;
@@ -246,7 +249,7 @@
 
                         @media screen and (max-width: 330px) {
                             flex-direction: column;
-                            
+
                         }
 
                         .body-item-user {
@@ -315,27 +318,32 @@
 
                         @media screen and (max-width: 425px) {
                             width: 100%;
-                  
+
                         }
 
                         span {
                             @media screen and (max-width: 425px) {
                                 width: 100% !important;
                                 height: 176px !important;
+
                                 img {
                                     object-fit: contain;
                                 }
                             }
                         }
-                        
+
                     }
 
                     .community-content-body_right {
-                        width: 100%;
+                        width: calc(100% - 66px);
                         display: flex;
                         flex-direction: column;
                         gap: 8px;
                         justify-content: center;
+
+                        @media screen and (max-width: 425px) {
+                            width: 100%;
+                        }
 
                         .body-item-title {
                             display: flex;
@@ -416,6 +424,7 @@
                             // flex-wrap: wrap;
                             justify-content: space-between;
                             width: 160px;
+
                             .action-item {
                                 display: flex;
                                 align-items: center;

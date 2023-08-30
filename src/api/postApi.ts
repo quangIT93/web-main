@@ -83,34 +83,35 @@ const postApi = {
     )
   },
   getPostNewestV3: (
-    childrenCategoryId: number[] | null,
+    childrenCategoryId:  number[] | null,
     parentCategoryId: number | null,
     districtIds: [] | null,
-    provinceId:  number | null,
+    provinceId: number | null,
     limit: number | null,
-    page: number | null,
+    threshold: number | null,
     lang: string
   ) => {
     const URL =
       `/v3/posts/newest?` +
       `${childrenCategoryId
-        ? `&${childrenCategoryId?.map((n, index) => `childrenCategoryId=${n}`).join('&')}`
+        ? `&${childrenCategoryId?.map((n, index) => `childrenCategoryId[${index}]=${n}`).join('&')}`
         : ``
       }` +
-      `${parentCategoryId ? `&parentCategoryId=${parentCategoryId}` : ``}` +
+      `${parentCategoryId && parentCategoryId !== 1 ? `&parentCategoryId=${parentCategoryId}` : ``}` +
       `${districtIds
         ? `&${districtIds?.map((n, index) => `districtIds[${index}]=${n}`).join('&')}`
         : ``
       }` +
       `${provinceId ? `provinceId=${provinceId}` : ``}` +
-      `&limit=${limit}${page ? `&page=${page}` : ``}` +
+
+      `&limit=${limit}${threshold ? `&threshold=${threshold}` : ``}` +
       `&lang=${lang}`
     return axiosClient.get(URL
-    //   , {
-    //   headers: {
-    //     'Cache-Control': 'private, max-age=300'
-    //   },
-    // }
+      // , {
+      // headers: {
+      //   'Cache-Control': 'private, max-age=300'
+      // },
+      // }
     )
   },
   updateStatusPost: (id: number, status: number) => {

@@ -30,7 +30,7 @@ const HijobNews = () => {
     try {
       const result = await communityApi.getCommunityNews(
         '',
-        '10',
+        '5',
         '',
         0,
         languageRedux === 1 ? 'vi' : 'en',
@@ -106,11 +106,26 @@ const HijobNews = () => {
                   {/* <Tooltip title={newsItem?.title}> */}
                   {/* <h3>{newsItem?.title}</h3> */}
                   {/* </Tooltip> */}
-                  <div className="title">
-                    <Typography variant="body2" color="text.secondary">
-                      {newsItem?.title}
-                    </Typography>
-                  </div>
+                  {/* <div className="title"> */}
+                  <Typography
+                    component="div"
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      fontSize: '16px',
+                      margin: 0,
+                      whiteSpace: 'nowrap',
+                      width: '75%',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      fontWeight: '500',
+                      lineheight: '20px',
+                      color: '#000000',
+                    }}
+                  >
+                    {newsItem?.title}
+                  </Typography>
+                  {/* </div> */}
                   <p>{newsItem?.createdAtText}</p>
                 </div>
                 <div

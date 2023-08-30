@@ -22,7 +22,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
-import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
+// import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
 // import api
 import categoriesApi from '../../../api/categoriesApi';
 import postApi from 'api/postApi';
@@ -33,6 +33,8 @@ import { HomeValueContext } from 'context/HomeValueContextProvider';
 import { IvalueJobChild } from 'context/HomeValueContextProvider';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
+
+import { setPostNewestApiV3 } from 'store/reducer/postReducerV3/newWestReducer';
 
 const BreadcrumbsCpn: React.FC = () => {
   // Contexts
@@ -62,7 +64,9 @@ const BreadcrumbsCpn: React.FC = () => {
 
   // state redux
   const postNewest = useSelector((state: RootState) => state.postNewest);
-
+  const postNewestV3: any = useSelector(
+    (state: RootState) => state.newWestReducerV3,
+  );
   const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useDispatch();
@@ -159,16 +163,26 @@ const BreadcrumbsCpn: React.FC = () => {
     setChildCateloriesArray(
       array?.map((arr: { id: number; name: string }) => arr.id),
     );
-    const thersholdId =
-      postNewest?.data?.posts[postNewest.data.posts.length - 1]?.id;
-
+    // const thersholdId =
+    // postNewest?.data?.posts[postNewest.data.posts.length - 1]?.id;
+    const thersholdId = postNewestV3.data[postNewestV3.data.length - 1]?.id;
     try {
-      const result = await postApi.getPostNewest(
-        Number(valueJobChild?.id),
+      // const result = await postApi.getPostNewest(
+      //   Number(valueJobChild?.id),
+      //   array?.map((arr: { id: number; name: string }) => arr.id),
+      //   null,
+      //   9,
+      //   0,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+
+      const result2 = await postApi.getPostNewestV3(
         array?.map((arr: { id: number; name: string }) => arr.id),
+        Number(valueJobChild?.id),
         null,
-        9,
-        0,
+        null,
+        10,
+        thersholdId,
         languageRedux === 1 ? 'vi' : 'en',
       );
 
@@ -181,9 +195,10 @@ const BreadcrumbsCpn: React.FC = () => {
       //   null,
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
-      if (result) {
-        setPostNewest(result);
+      if (result2) {
+        // setPostNewest(result);
         // dispatch(setPostNewestApi(result));
+        dispatch(setPostNewestApiV3(result2));
         // setOpenBackdrop(false)
       }
     } catch (error) {
@@ -299,12 +314,12 @@ const BreadcrumbsCpn: React.FC = () => {
               ? `Tất cả`
               : `All`
             : arrayChild?.map(
-              (value: { id: number; name: string }, index: number) => (
-                <div key={index}>
-                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                </div>
-              ),
-            )}
+                (value: { id: number; name: string }, index: number) => (
+                  <div key={index}>
+                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                  </div>
+                ),
+              )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -376,7 +391,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                        checkItemsCount >= MAX_CHECKED_ITEMS
+                          checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />

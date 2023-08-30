@@ -109,9 +109,9 @@ const HijobNewsCard: React.FC<any> = (props) => {
 
   const handleMoveToDetailPage = (id: any, e: any) => {
     e.stopPropagation();
-    location?.pathname === '/history' ?
-      setCookie('fromHistory', '30', 365) :
-      setCookie('fromHistory', '0', 365)
+    location?.pathname === '/history'
+      ? setCookie('fromHistory', '30', 365)
+      : setCookie('fromHistory', '0', 365);
     window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
   };
 
@@ -221,12 +221,12 @@ const HijobNewsCard: React.FC<any> = (props) => {
           <div className="comunityPostNews-card-interaction">
             <div className="comunitypostNew-card-wrap_actor">
               <div className="comunitypostNew-wrap">
-                <img src="favicon.ico" alt="anh loi" />
-                {/* <Avatar
+                {/* <img src="./images/logoHijobCommunity.jpg" alt="anh loi" /> */}
+                <Avatar
                   size={42}
-                  src="favicon.ico"
+                  src="./images/logoHijobCommunity.jpg"
                   icon={<UserOutlined />}
-                /> */}
+                />
                 <div className="info-actor_comunity">
                   <p>{language?.community_page?.author}</p>
                   <p>Hijob</p>

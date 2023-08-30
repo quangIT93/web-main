@@ -118,17 +118,23 @@ const Home: React.FC = () => {
     localStorage.removeItem('community');
   }, []);
 
-
   const tabs = document.querySelector('.tabs') as HTMLElement;
-  const breadCrumb = document.querySelector('.bread-crumb-container') as HTMLElement;
+  const breadCrumb = document.querySelector(
+    '.bread-crumb-container',
+  ) as HTMLElement;
   var prevHeight = window.innerHeight;
 
   const handleScroll = () => {
     var currentHeight = window.scrollY;
 
-    if (currentHeight >= prevHeight && tabs != null && breadCrumb != null) {
+    if (currentHeight >= prevHeight && tabs !== null && breadCrumb !== null) {
       tabs.style.top = '-70px';
       breadCrumb.style.marginTop = '-192px';
+      setTimeout(() => {
+        currentHeight = 0;
+        tabs.style.top = '70px';
+        breadCrumb.style.marginTop = '192px';
+      }, 1500);
     } else {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';

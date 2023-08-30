@@ -41,8 +41,15 @@ import './style.scss';
 
 // import ChildCateloriesArray from 'context/HomeValueContextProvider';
 
+// import { setPostNewestMoreV3, setPostNewestv3 } from 'store/actions';
+import {
+  setPostNewestApiV3,
+  setPostNewestMoreApiV3,
+} from 'store/reducer/postReducerV3/newWestReducer';
+
 //import jobcard
 import JobCard from '../JobCard';
+import JobCardV3 from '../JobCardV3';
 
 import { QuestionMarkIcon } from '#components/Icons';
 
@@ -75,6 +82,46 @@ export interface PostNewest {
   money_type_text: string;
 }
 
+export interface PostNewestV3 {
+  accountId: number;
+  address: string;
+  bookmarked: boolean;
+  companyName: string;
+  companyResourceData: {
+    logo: string;
+  };
+  createdAtText: string;
+  id: number;
+  image: string;
+  jobType: {
+    id: number;
+    name: string;
+  };
+  location: {
+    district: {
+      id: string;
+      fullName: string;
+    };
+
+    province: {
+      fullName: string;
+      id: string;
+    };
+    ward: {
+      id: string;
+      fullName: string;
+    };
+  };
+  moneyType: string;
+  salaryMax: number;
+  salaryMin: number;
+  salaryType: {
+    id: number;
+    name: string;
+  };
+  title: string;
+}
+
 const NewJobs: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -95,14 +142,18 @@ const NewJobs: React.FC = () => {
 
   // state redux
   const postNewest = useSelector((state: RootState) => state.postNewest);
+  const postNewestV3: any = useSelector((state: RootState) => {
+    // console.log('state', state);
+    return state.newWestReducerV3;
+  });
+
+  console.log('postNewestV3', postNewestV3);
 
   const dispatch = useDispatch();
   const { setPostNewest, setPostNewestMore } = bindActionCreators(
     actionCreators,
     dispatch,
   );
-
-  // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -134,20 +185,30 @@ const NewJobs: React.FC = () => {
     const categoryId = searchParams.get(`categories-id`)
       ? searchParams.get(`categories-id`)
       : null;
-    const thersholdId =
-      postNewest.data.posts[postNewest.data.posts.length - 1].id;
+    const thersholdId = postNewestV3.data[postNewestV3.data.length - 1]?.id;
 
-    const result = await postApi.getPostNewest(
-      Number(categoryId),
+    // const result = await postApi.getPostNewest(
+    //   Number(categoryId),
+    //   childCateloriesArray,
+    //   null,
+    //   9,
+    //   thersholdId,
+    //   languageRedux === 1 ? 'vi' : 'en',
+    // );
+
+    const result2 = await postApi.getPostNewestV3(
       childCateloriesArray,
+      Number(categoryId),
       null,
-      9,
+      null,
+      10,
       thersholdId,
       languageRedux === 1 ? 'vi' : 'en',
     );
 
-    if (result) {
-      setPostNewestMore(result);
+    if (result2) {
+      // setPostNewestMore(result);
+      dispatch(setPostNewestMoreApiV3(result2));
       setOpenBackdrop(false);
     }
   };
@@ -175,23 +236,41 @@ const NewJobs: React.FC = () => {
 
     try {
       setOpenBackdrop(true);
-      const result = await postApi.getPostNewest(
-        Number(
-          JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
-        ) !== 1
-          ? Number(
-              JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
-            )
-          : null || null,
-        childCateloriesArray || null,
+      // const result = await postApi.getPostNewest(
+      //   Number(
+      //     JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
+      //   ) !== 1
+      //     ? Number(
+      //         JSON.parse(getCookie('userSelected') || '').userSelectedId as any,
+      //       )
+      //     : null || null,
+      //   childCateloriesArray || null,
+      //   null,
+      //   20,
+      //   null,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+
+      const result2 = await postApi.getPostNewestV3(
+        childCateloriesArray,
+        // Number(categoryId),
         null,
-        19,
+        null,
+        null,
+        20,
         null,
         languageRedux === 1 ? 'vi' : 'en',
       );
 
-      if (result) {
-        setPostNewest(result);
+      console.log('result2222222222222222', result2.data);
+      // console.log('result111111111111', result.data);
+
+      if (result2) {
+        dispatch(setPostNewestApiV3(result2));
+      }
+
+      if (result2) {
+        // setPostNewest(result);
 
         // set loading
         setOpenBackdrop(false);
@@ -199,8 +278,11 @@ const NewJobs: React.FC = () => {
     } catch (error) {
       setOpenBackdrop(false);
       console.log(error);
+      console.log('loiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', error);
     }
   };
+
+  console.log('postNew', postNewest);
 
   React.useEffect(() => {
     localStorage.getItem('accessToken') && setIslogined(true);
@@ -264,10 +346,10 @@ const NewJobs: React.FC = () => {
           </div>
 
           <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-            {postNewest.data.posts.map((item: PostNewest, index: number) => (
+            {postNewestV3.data.map((item: PostNewestV3, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                 <Skeleton loading={loading} active>
-                  <JobCard item={item} />
+                  <JobCardV3 item={item} />
                 </Skeleton>
               </Grid>
             ))}

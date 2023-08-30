@@ -9,10 +9,13 @@
     min-height: 225px;
     cursor: pointer;
     align-items: flex-start;
-
+    @media screen and (max-width: 349px) {
+        flex-direction: column;
+        
+    }
 
     
-    @media screen and (min-width: 350px) and (max-width: 1024px) {
+    @media screen and (min-width: 350px) and (max-width: 680px) {
         flex-direction: column;
         
     }
@@ -20,7 +23,7 @@
     .comunitypostNews-card-wrap_content__left {
         height: 100%;
         
-        @media screen and (min-width: 350px) and (max-width: 1024px) {
+        @media screen and (min-width: 350px) and (max-width: 680px) {
             height: 100%;
             width: 100%;
             
@@ -95,7 +98,7 @@
                     height: 47px !important;
                     line-height: 24px;
                     word-Break: break-word;
-                    font-size: 12px;
+                    font-size: 14px;
                     text-indent: 12px;
                 }
 

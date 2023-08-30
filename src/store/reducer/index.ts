@@ -16,14 +16,14 @@ import alertReducer from './alertReducer'
 
 import navbarSlice from './navbarReducer/navbarSlice'
 
-import newWestReducer from './postReducerV3/newWestReducer'
+import newWestReducerV3 from './postReducerV3/newWestReducer'
 
 import dataLanguage from './dataLanguage'
 
 const reducers = combineReducers({
   post: postReducer,
   postNewest: postNewestReducer,
-  newWestReducer: newWestReducer,
+  newWestReducerV3: newWestReducerV3,
   profileUser: profileUser,
   auth: authReducer,
   profile: getProfileReducer,

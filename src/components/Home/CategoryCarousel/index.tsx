@@ -50,6 +50,7 @@ import { RootState } from '../../../store/reducer';
 // import { homeEn } from 'validations/lang/en/home';
 // import { home } from 'validations/lang/vi/home';
 import languageApi from 'api/languageApi';
+import { setPostNewestApiV3 } from 'store/reducer/postReducerV3/newWestReducer';
 
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
@@ -76,16 +77,16 @@ const CategoryCarousel: React.FC = () => {
     setRefCatelory,
     navTouchCatelory,
   }: // openCollapseFilter,
-    {
-      setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
-      childCateloriesArray: number[];
-      valueJobChild: IvalueJobChild;
-      setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
-      setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
-      setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
-      navTouchCatelory: boolean;
-      openCollapseFilter: boolean;
-    } = useContext(HomeValueContext);
+  {
+    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
+    childCateloriesArray: number[];
+    valueJobChild: IvalueJobChild;
+    setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
+    setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
+    setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
+    navTouchCatelory: boolean;
+    openCollapseFilter: boolean;
+  } = useContext(HomeValueContext);
 
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -149,8 +150,15 @@ const CategoryCarousel: React.FC = () => {
       window.innerWidth ||
       document.documentElement.clientWidth ||
       document.body.clientWidth;
-
-    const sectionToNavigate = document.getElementById('new-job');
+    const tabs = document.querySelector('.tabs') as HTMLElement;
+    const breadCrumb = document.querySelector(
+      '.bread-crumb-container',
+    ) as HTMLElement;
+    if (tabs !== null && breadCrumb !== null) {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
+    }
+    // const sectionToNavigate = document.getElementById('new-job');
     if (windowWidth > 480 && localStorage.getItem('accessToken')) {
       window.scrollTo(0, 530);
 
@@ -211,52 +219,58 @@ const CategoryCarousel: React.FC = () => {
           'categories-id': `${newValue === 1 ? 'all' : newValue}`,
         });
       }
-      var result;
+      // var result;
+      var resultV3;
 
       // console.log('newValue: ' + newValue);
 
       if (newValue === 1) {
-        result = await postApi.getPostNewest(
-          null,
-          null,
-          null,
-          19,
-          null,
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-
-        // result = await postApi.getPostNewestV3(
+        // result = await postApi.getPostNewest(
         //   null,
         //   null,
         //   null,
-        //   null,
-        //   20,
+        //   19,
         //   null,
         //   languageRedux === 1 ? 'vi' : 'en',
         // );
-      } else {
-        result = await postApi.getPostNewest(
-          Number(newValue),
+
+        resultV3 = await postApi.getPostNewestV3(
           null,
           null,
-          19,
+          null,
+          null,
+          20,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
-
-        // result = await postApi.getPostNewestV3(
-        //   null,
+      } else {
+        // result = await postApi.getPostNewest(
         //   Number(newValue),
         //   null,
         //   null,
-        //   20,
+        //   19,
         //   null,
         //   languageRedux === 1 ? 'vi' : 'en',
         // );
+
+        resultV3 = await postApi.getPostNewestV3(
+          null,
+          Number(newValue),
+          null,
+          null,
+          20,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
       }
 
-      if (result) {
-        setPostNewest(result);
+      // if (result) {
+      //   setPostNewest(result);
+      //   // dispatch(setPostNewestApi(result));
+      // }
+
+      if (resultV3) {
+        dispatch(setPostNewestApiV3(resultV3));
         // dispatch(setPostNewestApi(result));
       }
     } catch (error) {
@@ -373,6 +387,7 @@ const CategoryCarousel: React.FC = () => {
       // setOpenBackdrop(true);
       const themeId = userSelectedId;
       var result;
+      var resultV3;
       if (themeId === 1) {
         result = await postApi.getPostNewest(
           null,
@@ -383,21 +398,31 @@ const CategoryCarousel: React.FC = () => {
           languageRedux === 1 ? 'vi' : 'en',
         );
 
-        // result = await postApi.getPostNewestV3(
-        //   null,
-        //   null,
-        //   null,
-        //   null,
-        //   20,
-        //   null,
-        //   languageRedux === 1 ? 'vi' : 'en',
-        // );
+        resultV3 = await postApi.getPostNewestV3(
+          null,
+          null,
+          null,
+          null,
+          20,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
       } else {
         result = await postApi.getPostNewest(
           Number(themeId),
           null,
           null,
           19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+
+        resultV3 = await postApi.getPostNewestV3(
+          null,
+          Number(themeId),
+          null,
+          null,
+          20,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
@@ -652,7 +677,7 @@ const CategoryCarousel: React.FC = () => {
                     >
                       {isLogin && item.id === 1
                         ? // ? language?.home_page?.suggested_work
-                        languageRedux === 1
+                          languageRedux === 1
                           ? 'Công việc gợi ý'
                           : 'Suggested'
                         : item.name}
