@@ -225,6 +225,86 @@
           height: 42px;
         }
       }
+
+      .skill-list,
+      .language-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .donot-show {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .section-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
+
+        svg {
+          color: #0D99FF;
+        }
+      }
+
+      .disable {
+        cursor: no-drop;
+        pointer-events: none;
+
+        h3 {
+
+          color: #AAAAAA !important;
+        }
+
+        svg {
+          color: #AAAAAA;
+        }
+      }
+
+      .profile-info-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+
+        .profile-info-title_actions {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+
+          .edit-icon {
+            cursor: pointer;
+
+            svg {
+              color: #AAAAAA;
+            }
+
+            &:hover {
+              svg {
+                color: #0D99FF;
+              }
+            }
+          }
+
+          .delete-icon {
+            cursor: pointer;
+
+            svg {
+              color: #AAAAAA;
+            }
+
+            &:hover {
+              svg {
+                color: red;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
