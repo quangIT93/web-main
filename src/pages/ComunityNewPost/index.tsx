@@ -200,21 +200,30 @@ const ComunityNewPost = () => {
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
-            <h3>
-              {
-                loading
-                  ? 'Loading...'
-                  : languageRedux === 1
-                    ? `Hôm nay, HiJob có ${total} bài viết mới`
-                    : `Today, HiJob has ${total} new posts`
+            <div className='title-comunity-new-content'>
+              <h3>
+                {
+                  languageRedux === 1
+                    ? `Câu chuyện công việc`
+                    : `Working story`
+                }
+              </h3>
+              <p>
+                {
+                  loading
+                    ? 'Loading...'
+                    : languageRedux === 1
+                      ? `${new Intl.NumberFormat('en-US').format(total)} bài viết mới`
+                      : `${new Intl.NumberFormat('en-US').format(total)} new posts`
 
-                // language?.community_page?.today_hijob_has +
-                //   ' ' +
-                //   total +
-                //   ' ' +
-                //   language?.community_page?.new_posts
-              }
-            </h3>
+                  // language?.community_page?.today_hijob_has +
+                  //   ' ' +
+                  //   total +
+                  //   ' ' +
+                  //   language?.community_page?.new_posts
+                }
+              </p>
+            </div>
             <div className="title-comunity_icon">
               <div
                 className="dropdown dropdown-4"
