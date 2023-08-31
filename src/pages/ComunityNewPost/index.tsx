@@ -89,6 +89,11 @@ const ComunityNewPost = () => {
     } else {
       setHasMore(false);
       setPage('0');
+      message.config({
+        top: 750,
+        duration: 20,
+        maxCount: 3,
+      });
       message.error('Đã hết bài viết');
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);

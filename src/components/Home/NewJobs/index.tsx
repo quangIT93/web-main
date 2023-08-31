@@ -56,6 +56,7 @@ import { QuestionMarkIcon } from '#components/Icons';
 import { Skeleton } from 'antd';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
+import { getCookie } from 'cookies';
 
 export interface PostNewest {
   id: number;
@@ -122,6 +123,10 @@ export interface PostNewestV3 {
   title: string;
 }
 
+interface UserSelected {
+  userSelectedId: any;
+}
+
 const NewJobs: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -146,8 +151,6 @@ const NewJobs: React.FC = () => {
     // console.log('state', state);
     return state.newWestReducerV3;
   });
-
-  console.log('postNewestV3', postNewestV3);
 
   const dispatch = useDispatch();
   const { setPostNewest, setPostNewestMore } = bindActionCreators(
@@ -182,6 +185,7 @@ const NewJobs: React.FC = () => {
     setPage(value);
     // listRef.current?.scrollIntoView();
     setOpenBackdrop(!openBackdrop);
+
     const categoryId = searchParams.get(`categories-id`)
       ? searchParams.get(`categories-id`)
       : null;
@@ -218,22 +222,6 @@ const NewJobs: React.FC = () => {
   // };
 
   const getPostNewest = async () => {
-    function getCookie(name: string): string | null {
-      let nameEQ = name + '=';
-      let ca = document.cookie.split(';');
-      for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-
-        while (c.charAt(0) === ' ') {
-          c = c.substring(1, c.length);
-        }
-        if (c.indexOf(nameEQ) === 0) {
-          return c.substring(nameEQ.length, c.length);
-        }
-      }
-      return null;
-    }
-
     try {
       setOpenBackdrop(true);
       // const result = await postApi.getPostNewest(
@@ -250,11 +238,17 @@ const NewJobs: React.FC = () => {
       //   null,
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
+      // console.log('childCateloriesArray', childCateloriesArray);
+
+      let userSelected = JSON.parse(
+        getCookie('userSelected') || '{}',
+      ) as UserSelected;
+
+      // console.log('storeduserSelectedSettings', userSelected.userSelectedId);
 
       const result2 = await postApi.getPostNewestV3(
         childCateloriesArray,
-        // Number(categoryId),
-        null,
+        userSelected.userSelectedId,
         null,
         null,
         20,
@@ -262,27 +256,25 @@ const NewJobs: React.FC = () => {
         languageRedux === 1 ? 'vi' : 'en',
       );
 
-      console.log('result2222222222222222', result2.data);
+      // console.log('result2222222222222222', result2.data);
       // console.log('result111111111111', result.data);
 
       if (result2) {
         dispatch(setPostNewestApiV3(result2));
-      }
-
-      if (result2) {
-        // setPostNewest(result);
-
-        // set loading
         setOpenBackdrop(false);
       }
+
+      // if (result2) {
+      // setPostNewest(result);
+
+      // set loading
+      // }
     } catch (error) {
       setOpenBackdrop(false);
       console.log(error);
       console.log('loiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', error);
     }
   };
-
-  console.log('postNew', postNewest);
 
   React.useEffect(() => {
     localStorage.getItem('accessToken') && setIslogined(true);

@@ -4,13 +4,34 @@ import moment from 'moment';
 
 // @ts-ignore
 import { Navbar } from '#components';
-import { CameraIcon, PencilIcon, LoginArrowIcon, SectionLanguageIcon, SectionHobbiesIcon, SectionReferencesIcon, SectionInternshipsIcon, SectionActivitiesIcon, SectionCoursesIcon, SectionAwardsIcon, SectionDeleteIcon, SectionEditIcon } from '#components/Icons';
+import {
+  CameraIcon,
+  PencilIcon,
+  LoginArrowIcon,
+  SectionLanguageIcon,
+  SectionHobbiesIcon,
+  SectionReferencesIcon,
+  SectionInternshipsIcon,
+  SectionActivitiesIcon,
+  SectionCoursesIcon,
+  SectionAwardsIcon,
+  SectionDeleteIcon,
+  SectionEditIcon,
+} from '#components/Icons';
 
 import './style.scss';
 // import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
-import { Button, Space, Skeleton, Upload, message, Popconfirm, Switch } from 'antd';
+import {
+  Button,
+  Space,
+  Skeleton,
+  Upload,
+  message,
+  Popconfirm,
+  Switch,
+} from 'antd';
 import {
   PlusCircleOutlined,
   UploadOutlined,
