@@ -39,6 +39,7 @@ import communityApi from 'api/apiCommunity';
 import WorkingStoryCard from '#components/Community/WorkingStoryCard';
 
 import { setAlertSave } from 'store/reducer/alertReducer';
+import HijobNewsCard from '#components/Community/HijobNewsCard';
 
 // const { Panel } = Collapse;
 
@@ -82,7 +83,7 @@ const ComunityNewPost = () => {
     );
 
     //
-    if (result && !result?.data?.is_over) {
+    if (result && result?.data?.communications.length !== 0) {
       setStories((prev: any) => [...prev, ...result?.data?.communications]);
       setPage(nextPage);
     } else {
@@ -109,7 +110,7 @@ const ComunityNewPost = () => {
         setStories(result?.data?.communications);
         setTotal(result?.data?.total);
         setLoading(false);
-        if (result?.data?.is_over) {
+        if (result?.data?.communications.length === 0) {
           setIsVisible(false);
           setHasMore(false);
         }

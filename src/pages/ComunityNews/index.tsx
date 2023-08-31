@@ -70,7 +70,7 @@ const ComunityNews = () => {
     );
 
     //
-    if (result && !result?.data?.is_over) {
+    if (result && result?.data?.communications.length !== 0) {
       setHijobNews((prev: any) => [...prev, ...result?.data?.communications]);
       setPage(nextPage);
     } else {
@@ -109,7 +109,7 @@ const ComunityNews = () => {
         setHijobNews(result?.data?.communications);
         setTotal(result?.data?.total);
         setLoading(false);
-        if (result?.data?.is_over) {
+        if (result?.data?.communications.length === 0) {
           setIsVisible(false);
           setHasMore(false);
         }
