@@ -95,7 +95,9 @@ const Footer: React.FC = () => {
       | React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     // e.isPropagationStopped()
-
+    console.log('click');
+    console.log('open', open);
+    console.log('windowWidth', windowWidth);
     if (!open && !windowWidth) {
       return setOpen(true);
     } else if (open && !windowWidth) {
@@ -103,19 +105,18 @@ const Footer: React.FC = () => {
     }
   };
 
-  const updateWindowWidth = () => {
-    if (window.innerWidth < 784) {
+  window.addEventListener('resize', () => {
+    const currentWidth = window.innerWidth;
+    if (currentWidth < 784) {
       setWindowWidth(true);
     } else {
       setWindowWidth(false);
+      setOpen(false);
     }
-  };
+    console.log('Current window width:', currentWidth);
+  });
 
-  useEffect(() => { }, [languageRedux]);
-
-  useEffect(() => {
-    updateWindowWidth();
-  }, [windowWidth]);
+  useEffect(() => {}, [languageRedux]);
 
   useEffect(() => {
     if (windowWidth) {
@@ -145,14 +146,14 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-              transform: 'translateY(calc(-100% - 36px))',
-            }
+                transform: 'translateY(calc(-100% - 36px))',
+              }
             : !open && !windowWidth
-              ? {
+            ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-              : { transform: 'none' }
+            : { transform: 'none' }
         }
       >
         <div className="container-footer">
