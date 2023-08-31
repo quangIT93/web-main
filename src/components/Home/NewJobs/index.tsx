@@ -238,13 +238,13 @@ const NewJobs: React.FC = () => {
       //   null,
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
-      console.log('childCateloriesArray', childCateloriesArray);
+      // console.log('childCateloriesArray', childCateloriesArray);
 
       let userSelected = JSON.parse(
         getCookie('userSelected') || '{}',
       ) as UserSelected;
 
-      console.log('storeduserSelectedSettings', userSelected.userSelectedId);
+      // console.log('storeduserSelectedSettings', userSelected.userSelectedId);
 
       const result2 = await postApi.getPostNewestV3(
         childCateloriesArray,
@@ -256,7 +256,7 @@ const NewJobs: React.FC = () => {
         languageRedux === 1 ? 'vi' : 'en',
       );
 
-      console.log('result2222222222222222', result2.data);
+      // console.log('result2222222222222222', result2.data);
       // console.log('result111111111111', result.data);
 
       if (result2) {

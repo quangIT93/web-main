@@ -76,7 +76,7 @@ const HijobNews = () => {
       <div className="community-content-title">
         <div className="community-content-title_left">
           <NewsPaperIcon width={24} height={24} />
-          <h3>{languageRedux === 1 ? 'Tin tức' : 'HiJob News'}</h3>
+          <h3>{languageRedux === 1 ? 'Tin tức' : 'Recruitment News'}</h3>
         </div>
         <p onClick={() => window.open('/news-comunity', '_parent')}>
           {language?.home_page?.view_all}

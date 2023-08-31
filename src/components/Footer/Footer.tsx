@@ -95,15 +95,25 @@ const Footer: React.FC = () => {
       | React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     // e.isPropagationStopped()
-    console.log('click');
-    console.log('open', open);
-    console.log('windowWidth', windowWidth);
+
     if (!open && !windowWidth) {
       return setOpen(true);
     } else if (open && !windowWidth) {
       setOpen(false);
     }
   };
+
+  const updateWindowWidth = () => {
+    if (window.innerWidth < 784) {
+      setWindowWidth(true);
+    } else {
+      setWindowWidth(false);
+    }
+  };
+
+  useEffect(() => {
+    updateWindowWidth();
+  }, [windowWidth]);
 
   window.addEventListener('resize', () => {
     const currentWidth = window.innerWidth;
