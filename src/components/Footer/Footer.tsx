@@ -111,11 +111,22 @@ const Footer: React.FC = () => {
     }
   };
 
-  useEffect(() => { }, [languageRedux]);
-
   useEffect(() => {
     updateWindowWidth();
   }, [windowWidth]);
+
+  window.addEventListener('resize', () => {
+    const currentWidth = window.innerWidth;
+    if (currentWidth < 784) {
+      setWindowWidth(true);
+    } else {
+      setWindowWidth(false);
+      setOpen(false);
+    }
+    console.log('Current window width:', currentWidth);
+  });
+
+  useEffect(() => {}, [languageRedux]);
 
   useEffect(() => {
     if (windowWidth) {
@@ -145,14 +156,14 @@ const Footer: React.FC = () => {
         style={
           open && !windowWidth
             ? {
-              transform: 'translateY(calc(-100% - 36px))',
-            }
+                transform: 'translateY(calc(-100% - 36px))',
+              }
             : !open && !windowWidth
-              ? {
+            ? {
                 transform: 'translateY(calc(0% + 36px))',
                 visibility: 'hidden',
               }
-              : { transform: 'none' }
+            : { transform: 'none' }
         }
       >
         <div className="container-footer">

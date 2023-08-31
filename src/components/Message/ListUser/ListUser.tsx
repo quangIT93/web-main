@@ -99,7 +99,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   useEffect(() => {
     getPostById()
-  }, [firstTime])
+  }, [])
 
   // console.log("post", post);
   // console.log("listUserChat", listUserChat);
@@ -117,34 +117,34 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       console.log('result', result);
 
       if (result) {
-        if (post.data !== null) {
-          setStateUserChat([
-            {
-              user_id: post?.data?.accountId,
-              avatar: post?.data?.posterAvatar,
-              is_online: false,
-              name: post?.data?.companyResourceData?.name,
-              company_name: post?.data?.companyResourceData?.name,
-              post_title: post?.data?.title,
-              message: '',
-              status: 0,
-              post_id: post?.data?.id,
-              image: post?.data?.image,
-              salary_min: post?.data?.salaryMin,
-              salary_max: post?.data?.salaryMax,
-              money_type_text: post?.data?.moneyTypeText,
-              salary_type_id: post?.data?.postSalaryType?.id,
-              post_status: post?.data?.status,
-              is_owner: false,
-              applied: post?.data?.applied,
-            },
-            ...result.data
-          ]);
-          setFirstTime(false)
-        } else {
-          setStateUserChat(result.data);
-        }
-        // setStateUserChat(result.data);
+        // if (post.data !== null) {
+        //   setStateUserChat([
+        //     {
+        //       user_id: post?.data?.accountId,
+        //       avatar: post?.data?.posterAvatar,
+        //       is_online: false,
+        //       name: post?.data?.companyResourceData?.name,
+        //       company_name: post?.data?.companyResourceData?.name,
+        //       post_title: post?.data?.title,
+        //       message: '',
+        //       status: 0,
+        //       post_id: post?.data?.id,
+        //       image: post?.data?.image,
+        //       salary_min: post?.data?.salaryMin,
+        //       salary_max: post?.data?.salaryMax,
+        //       money_type_text: post?.data?.moneyTypeText,
+        //       salary_type_id: post?.data?.postSalaryType?.id,
+        //       post_status: post?.data?.status,
+        //       is_owner: false,
+        //       applied: post?.data?.applied,
+        //     },
+        //     ...result.data
+        //   ]);
+        //   setFirstTime(false)
+        // } else {
+        //   setStateUserChat(result.data);
+        // }
+        setStateUserChat(result.data);
       }
     } catch (error) {
       console.log('error', error);

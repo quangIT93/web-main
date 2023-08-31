@@ -55,6 +55,7 @@ const BreadcrumbsCpn: React.FC = () => {
   );
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [reData, setReData] = React.useState(false);
   // const [checked, setChecked] = React.useState(true)
   const [childCatelories, setChildCatelories] = React.useState<any>(null);
 
@@ -254,11 +255,17 @@ const BreadcrumbsCpn: React.FC = () => {
     ) {
       setOpen(false);
       // handleClickChoose()
+      setReData(true);
     }
   };
 
   useEffect(() => {
-    !open && handleClickChoose();
+    // open === false && handleClickChoose();
+
+    if (open === false && reData === true) {
+      handleClickChoose();
+      setReData(false);
+    }
   }, [open]);
 
   useEffect(() => {

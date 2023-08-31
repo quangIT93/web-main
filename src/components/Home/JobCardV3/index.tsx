@@ -89,8 +89,6 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
     setError(true);
   };
 
-  console.log('props', props);
-
   React.useEffect(() => {
     setCheckBookMark(props.item.bookmarked);
   }, [props.item]);

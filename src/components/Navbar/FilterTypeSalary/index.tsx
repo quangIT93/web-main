@@ -98,7 +98,6 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
       { id: 0, value: languageRedux === 1 ? 'Tất cả' : 'All' },
       ...result.data,
     ];
-    console.log('updatedata', updatedData);
 
     if (updatedData) {
       // setData(updatedData);

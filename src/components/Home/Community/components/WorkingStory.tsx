@@ -79,7 +79,7 @@ const WorkingStory = () => {
           <h3>
             {languageRedux === 1
               ? 'Chia sẻ kinh nghiệm làm việc'
-              : 'HiJob Working story'}
+              : 'Working Story'}
           </h3>
         </div>
         <p
