@@ -25,6 +25,7 @@
 
         @media screen and (min-width: 768px) and (max-width: 1023px) {
             padding: 50px 24px;
+
             .comunity-detail_post {
                 width: 100% !important;
             }
@@ -69,17 +70,34 @@
                 justify-content: space-between;
                 align-items: center;
 
-                h3 {
-                    color: #000;
-                    font-family: Roboto;
-                    font-size: 24px;
-                    font-style: normal;
-                    font-weight: 700;
-                    line-height: 30px;
-                    width: 70%;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                .title-comunity-new-content {
+                    width: 75%;
+
+                    h3 {
+                        color: #000;
+                        font-family: Roboto;
+                        font-size: 24px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 30px;
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    p {
+                        color: #000;
+                        font-family: Roboto;
+                        font-size: 20px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 30px;
+                        // width: 75%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
                 }
 
                 .title-comunity_icon {
@@ -208,7 +226,7 @@
                 }
             }
 
-            @media screen and  (max-width: 349px) {
+            @media screen and (max-width: 349px) {
                 width: 100% !important;
             }
 
@@ -219,7 +237,7 @@
             @media screen and (min-width: 481px) and (max-width: 600px) {
                 width: 100% !important;
             }
-            
+
             @media screen and (min-width: 601px) and (max-width: 820px) {
                 width: 100% !important;
             }
