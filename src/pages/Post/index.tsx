@@ -438,6 +438,7 @@ const Post: React.FC = () => {
   const handleFillCompany = async () => {
     try {
       const result = await apiCompany.getCampanyByAccountApi('vi');
+
       if (result.data.companyInfomation) {
         setCompanyName(result.data.companyInfomation.name);
         setFillDistrict({
@@ -448,9 +449,12 @@ const Post: React.FC = () => {
         setFillProvince({
           id: result.data.companyInfomation.companyLocation.district.province
             .id,
-          name: result.data.companyInfomation.companyLocation.district.province
-            .fullName,
+          province_fullName:
+            result.data.companyInfomation.companyLocation.district.province
+              .fullName,
         });
+
+        // setSelectedProvince(result.data.companyInfomation.company
 
         setFillWardId({
           id: result.data.companyInfomation.companyLocation.id,
@@ -464,8 +468,6 @@ const Post: React.FC = () => {
       }
     } catch (error) {}
   };
-
-  console.log('wardId', wardId);
 
   if (localStorage.getItem('accessToken')) {
     return (

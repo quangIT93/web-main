@@ -328,6 +328,11 @@ const Detail = () => {
         // console.log('postId', result.data);
         // check  application status
         // setIsLoading(false);
+        document.title = result.data.title
+        logEvent(analytics, 'screen_view' as string, {
+          // screen_name: screenName as string,
+          page_title: '/web_post_detail' as string,
+        });
 
         if (result.data.accountId === accountId) {
           setTextButton(

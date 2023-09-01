@@ -144,8 +144,12 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const allPost = async () => {
     try {
       // const result = await applitedPostedApi.getAllApplitedPostedApi(0);
-      const result = await historyRecruiter.getAllPosted(0, 20, null,
-        languageRedux === 1 ? "vi" : "en");
+      const result = await historyRecruiter.getAllPosted(
+        0,
+        20,
+        null,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setDataPost(result.data);
       }
@@ -162,7 +166,6 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
   const [selectedValue, setSelectedValue] = React.useState<number>(0);
 
   const handleRadioChange = async (e: any, itemPost: any) => {
-    console.log('value', itemPost);
     setSelectedValue(parseInt(e?.target?.value));
     setTitleJob(itemPost.title);
     setCompanyName(itemPost.company_name);
@@ -181,8 +184,9 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
     // console.log('itemPost', itemPost);
 
     try {
-      const result = await postApi.getById(itemPost.post_id,
-        languageRedux === 1 ? "vi" : "en"
+      const result = await postApi.getById(
+        itemPost.post_id,
+        languageRedux === 1 ? 'vi' : 'en',
       );
       // console.log('reuslt', result.data);
       if (result) {
@@ -216,7 +220,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
         setSalaryType(result.data.salary_type_id);
         setMoneyType(result.data.money_type);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleSubmitValueFill = () => {
@@ -273,9 +277,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
               fontWeight: '600',
             }}
           >
-            {
-              language?.post_page?.auto_fill
-            }
+            {language?.post_page?.auto_fill}
             {/* <IconButton
               aria-label="close"
               sx={{
@@ -295,9 +297,7 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
               fontSize: '16px',
             }}
           >
-            {
-              language?.post_page?.job_want_to_auto_fill
-            }
+            {language?.post_page?.job_want_to_auto_fill}
           </p>
           <div className="post_items_old">
             {dataPost ? (
@@ -341,14 +341,10 @@ const ModalFillDataPost: React.FC<IModalFillDataPost> = (props) => {
 
           <div className="wrap-button_filterPost">
             <Button type="primary" block onClick={handleSubmitValueFill}>
-              {
-                language?.ok1
-              }
+              {language?.ok1}
             </Button>
             <Button block onClick={handleCancleFillData}>
-              {
-                language?.cancel
-              }
+              {language?.cancel}
             </Button>
           </div>
 

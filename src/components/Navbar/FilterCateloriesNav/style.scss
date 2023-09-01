@@ -13,6 +13,23 @@
 }
 
 .filter-loca-cate {
+
+    @media screen and (max-width: 419px) {
+        width: 320px;
+        
+    }
+
+    @media screen and (min-width: 420px) and (max-width: 599px) {
+        width: 400px;
+    }
+
+    @media screen and (min-width: 600px) and (max-width: 768px) {
+        width: 550px;
+    }
+
+    @media screen and (min-width: 768px){
+        width: 520px;
+    }
     .ant-cascader-menus {
         .ant-cascader-menu {
             height: 285px !important;

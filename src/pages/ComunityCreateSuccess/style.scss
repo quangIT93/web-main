@@ -2,9 +2,10 @@
     margin-top: 70px;
 
     .comunity-create-success-content {
-        padding: 50px 180px;
+        padding: 50px 0px;
+        max-width: 1080px;
         margin: 0 auto;
-        transition: all l;
+        transition: all linear 0.3s;
         margin-bottom: 36px;
         display: flex;
         align-items: center;

@@ -76,6 +76,11 @@ const ComunityNews = () => {
     } else {
       setHasMore(false);
       setPage('0');
+      message.config({
+        top: 750,
+        duration: 2,
+        maxCount: 3,
+      });
       message.error('Đã hết bài viết');
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
@@ -183,25 +188,35 @@ const ComunityNews = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(new Intl.NumberFormat('en-US').format(total));
+
   return (
     <div className="comunity-news-container">
       <Navbar />
       <div className="comunity-news-content">
         <div className="comunityPostNews">
           <div className="title-comunity-news">
-            <h3>
-              {loading
-                ? 'Loading...'
-                : languageRedux === 1
-                  ? `Hôm nay, HiJob có ${total} bài viết mới`
-                  : `Today, HiJob has ${total} new posts`
-                // : language?.community_page?.today_hijob_has +
-                //   ' ' +
-                //   total +
-                //   ' ' +
-                //   language?.community_page?.new_posts
-              }
-            </h3>
+            <div className="title-comunity-news-content">
+              <h3>{languageRedux === 1 ? `Tin tức` : `Recruitment news`}</h3>
+              <p>
+                {
+                  loading
+                    ? 'Loading...'
+                    : languageRedux === 1
+                    ? `${new Intl.NumberFormat('en-US').format(
+                        total,
+                      )} bài viết mới`
+                    : `${new Intl.NumberFormat('en-US').format(
+                        total,
+                      )} new posts`
+                  // : language?.community_page?.today_hijob_has +
+                  //   ' ' +
+                  //   total +
+                  //   ' ' +
+                  //   language?.community_page?.new_posts
+                }
+              </p>
+            </div>
             <div className="title-comunity-news_icon">
               <div
                 className="dropdown dropdown-4"
