@@ -123,7 +123,7 @@ const Footer: React.FC = () => {
       setWindowWidth(false);
       setOpen(false);
     }
-    console.log('Current window width:', currentWidth);
+    // console.log('Current window width:', currentWidth);
   });
 
   useEffect(() => {}, [languageRedux]);
