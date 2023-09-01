@@ -113,7 +113,7 @@ const Footer: React.FC = () => {
 
   useEffect(() => {
     updateWindowWidth();
-  }, [windowWidth]);
+  }, []);
 
   window.addEventListener('resize', () => {
     const currentWidth = window.innerWidth;

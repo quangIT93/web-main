@@ -30,30 +30,39 @@
             }
         }
 
-        @media screen and (min-width: 1024px) and (max-width: 1199px) {
+        @media screen and (min-width: 1024px) and (max-width: 1280px) {
             padding: 50px 24px !important;
         }
 
-        @media screen and (min-width: 1200px) and (max-width: 1600px) {
+        @media screen and (min-width: 1280px) and (max-width: 1600px) {
             padding: 50px 24px !important;
         }
 
 
 
         .comunityPostNew {
-            width: 70%;
-
-            @media screen and (min-width: 350px) and (max-width: 1023px) {
-                width: 98% !important;
+            width: 100% !important;
+            max-width: 1080px;
+            
+            @media screen and (min-width: 1024px) and (max-width: 1280px) {
+                padding: 0px 24px !important;
             }
+            // padding: 0 24px;
+            // @media screen and (min-width: 350px) and (max-width: 1023px) {
+            //     width: 98% !important;
+            // }
 
-            @media screen and (min-width: 1024px) and (max-width: 1199px) {
-                width: 90% !important;
-            }
+            // @media screen and (min-width: 1024px) and (max-width: 1199px) {
+            //     width: 90% !important;
+            // }
 
-            @media screen and (min-width: 1200px) and (max-width: 1420px) {
-                width: 80% !important;
-            }
+            // @media screen and (min-width: 1200px) and (max-width: 1420px) {
+            //     width: 80% !important;
+            // }
+
+            // @media screen and (min-width: 300px) and (max-width: 1280px) {
+            //    padding: 0 24px;
+            // }
 
             .title-comunity {
                 display: flex;

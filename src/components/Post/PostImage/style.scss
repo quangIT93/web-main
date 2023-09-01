@@ -1,3 +1,5 @@
+@import "../../../scss/mixins";
+
 .postImages {
   border: 1px solid #ccc;
   padding: 12px;
@@ -10,11 +12,17 @@
   min-height: 320px;
   height: fit-content;
 
-  @media screen and (max-width: 369px) {
+  @include breakpoint(mobile){
+    margin-top: 12px;
     .list-img-post {
       justify-content: center;
     }
   }
+
+
+
+  // @media screen and (max-width: 369px) {
+  // }
 
   .drag-img-container {
     // min-height: 150px;

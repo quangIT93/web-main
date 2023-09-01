@@ -90,6 +90,10 @@ const Comunity = () => {
   const dispatch = useDispatch();
 
   const handelChangeCmt = (event: any) => {
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    }
     setCmtContent(event.target.value);
   };
 
@@ -277,6 +281,11 @@ const Comunity = () => {
   const handleKeyPress = (e: any) => {
     // e.preventDefault();
 
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    }
+
     if (!e.shiftKey) {
       //   // Insert a new line into the textArea
       //   // e.target.value += '\n';
@@ -305,7 +314,11 @@ const Comunity = () => {
         );
   };
 
-  console.log('detail', detail);
+  const hanleClickComment = () => {
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+    }
+  };
 
   return (
     <div className="comunity-container">
@@ -360,7 +373,7 @@ const Comunity = () => {
                 }
                 icon={<UserOutlined />}
                 style={{
-                  filter: detail?.type === 1 ? 'blur(1px)' : 'none',
+                  filter: detail?.type === 1 ? 'blur(3px)' : 'none',
                 }}
               />
               <div className="info-actor_comunityDetail">
@@ -546,6 +559,7 @@ const Comunity = () => {
                   onKeyDown={(e: any) => handleKeyPress(e)}
                   // onPressEnter={(e: any) => handleKeyPress(e)}
                   onChange={handelChangeCmt}
+                  onClick={hanleClickComment}
                   placeholder={
                     languageRedux === 1
                       ? 'Nhập bình luận của bạn ...'

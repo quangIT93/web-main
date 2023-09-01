@@ -4,8 +4,9 @@
   margin-top: 70px;
 
   .post-main {
-    padding: 50px 180px;
+    padding: 50px 0px;
     margin: 0 auto;
+    max-width: 1080px;
     // transition: all l;
     .post-main_fillData {
       display: flex;
@@ -68,8 +69,10 @@
       }
     }
 
-    @media screen and (max-width: 1200px) {
-      padding-inline: 10px;
+    @media screen and (max-width: 1080px) {
+      // padding-inline: 10px;
+
+      padding-inline: 24px;
 
       // @include breakpoint(tablet) {
       //   padding: 0 0px;
@@ -101,11 +104,20 @@
         padding: 24px 0;
         flex-direction: column;
 
+
+        @include breakpoint(mobile){
+          padding: 0;
+        }
+
         .post-address_bottom,
         .post-address_top {
           gap: 32px;
           align-items: flex-end;
           display: flex;
+
+          @include breakpoint(mobile){
+            display: block;
+          }
 
           .post-title {
             flex: 1;
@@ -118,12 +130,19 @@
 
         .post-address_bottom {
           padding-top: 24px;
+          @include breakpoint(mobile){
+            padding-top: 0;
+          }
         }
       }
 
       .post-jobCompany {
         display: flex;
         gap: 32px;
+
+        @include breakpoint(mobile){
+          display: block;
+        }
 
         .post-title {
           flex: 1;

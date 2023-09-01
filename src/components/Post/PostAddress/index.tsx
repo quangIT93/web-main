@@ -32,11 +32,11 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     fillWardId,
     fillProvince,
     fillDistrict,
-    // setFillProvince,
+    setFillProvince,
     setFillDistrict,
     setFillWardId,
     language,
-    languageRedux
+    languageRedux,
   } = props;
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
@@ -44,7 +44,6 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   const [dataDistrict, setDataDistrict] = useState<any>(null);
   const [dataWard, setDataWard] = useState<any>(null);
   const [selectedWard, setSelectedWard] = useState<any>(null);
-  console.log("selectedProvince", selectedProvince);
 
   const styleLabel = {
     fontWeight: 600,
@@ -68,7 +67,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   const getAllProvinces = async () => {
     try {
       const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (allLocation) {
@@ -87,7 +86,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       if (selectedProvince) {
         const districts = await locationApi.getDistrictsById(
           selectedProvince.province_id,
-          languageRedux === 1 ? "vi" : "en",
+          languageRedux === 1 ? 'vi' : 'en',
         );
         if (districts) {
           setDataDistrict(districts.data);
@@ -102,8 +101,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   const getDataWard = async () => {
     try {
       if (selectedDistrict) {
-        const allward = await locationApi.getWardsId(selectedDistrict.id,
-          languageRedux === 1 ? "vi" : "en",
+        const allward = await locationApi.getWardsId(
+          selectedDistrict.id,
+          languageRedux === 1 ? 'vi' : 'en',
         );
         if (allward) {
           setDataWard(allward.data);
@@ -140,6 +140,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setDataWard([]);
     setFillWardId(null);
     setFillDistrict(null);
+    setFillProvince(null);
   };
 
   const handleDistrictChange = (event: any, value: any) => {
@@ -155,9 +156,6 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setAddress(e.target.value);
   };
 
-  console.log("fillProvince", fillProvince);
-
-
   return (
     <div className="post-address">
       <div className="post-address_top">
@@ -168,10 +166,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page?.city
-            }{' '}
-            <span style={{ color: 'red' }}>*</span>
+            {language?.post_page?.city} <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataProvinces ? dataProvinces : []}
@@ -180,9 +175,11 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             onChange={handleProvinceChange}
             disableClearable
             renderInput={(params) => (
-              <TextField {...params} placeholder={
-                language?.post_page?.place_city
-              } size="small" />
+              <TextField
+                {...params}
+                placeholder={language?.post_page?.place_city}
+                size="small"
+              />
             )}
             style={{ marginTop: '0.5rem' }}
           />
@@ -194,9 +191,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page?.district
-            }{' '}
+            {language?.post_page?.district}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
@@ -206,9 +201,11 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             onChange={handleDistrictChange}
             disableClearable
             renderInput={(params: any) => (
-              <TextField {...params} placeholder={
-                language?.post_page?.place_district
-              } size="small" />
+              <TextField
+                {...params}
+                placeholder={language?.post_page?.place_district}
+                size="small"
+              />
             )}
             style={{ marginTop: '0.5rem' }}
           />
@@ -222,10 +219,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page?.ward
-            }{' '}
-            <span style={{ color: 'red' }}>*</span>
+            {language?.post_page?.ward} <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataWard ? dataWard : []}
@@ -234,9 +228,11 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             onChange={handleChangeWardId}
             disableClearable
             renderInput={(params) => (
-              <TextField {...params} placeholder={
-                language?.post_page?.place_ward
-              } size="small" />
+              <TextField
+                {...params}
+                placeholder={language?.post_page?.place_ward}
+                size="small"
+              />
             )}
             style={{ marginTop: '0.5rem' }}
           />
@@ -248,9 +244,8 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page?.address
-            }{' '}<span style={{ color: 'red' }}>*</span>
+            {language?.post_page?.address}{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
             type="text"
@@ -260,9 +255,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             onChange={handleChangeAddress}
             size="small"
             sx={{ width: '100%', marginTop: '0.5rem' }}
-            placeholder={
-              language?.post_page?.place_address
-            }
+            placeholder={language?.post_page?.place_address}
           />
         </div>
       </div>

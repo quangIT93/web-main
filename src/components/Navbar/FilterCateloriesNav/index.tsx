@@ -58,7 +58,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
   const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   const DropdownRender = (menus: React.ReactNode) => (
-    <div style={{ width: '520px' }} className="filter-loca-cate">
+    <div className="filter-loca-cate">
       <Text className="title-filter_location">{language?.select_cate}</Text>
       {menus}
       <Divider style={{ margin: 4 }}>
