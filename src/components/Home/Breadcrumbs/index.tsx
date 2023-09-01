@@ -349,7 +349,7 @@ const BreadcrumbsCpn: React.FC = () => {
         // position: 'relative',
         maxWidth: '1280px',
         position: 'fixed',
-        margin: '0 auto',
+        margin: '192px auto 0 auto',
         // sua
         // top: '-60px',
         zIndex: '1',
