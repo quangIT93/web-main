@@ -281,10 +281,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     return (
       <div
         // className="list-chat"
-        className={`list-chat ${props.openListChat === true && windowWidth
+        className={`list-chat ${
+          props.openListChat === true && windowWidth
             ? 'show-list-chat-responesive'
             : ''
-          }`}
+        }`}
       >
         <Backdrop
           sx={{
@@ -293,7 +294,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             background: 'transparent',
           }}
           open={openBackdrop}
-        // onClick={handleClose}
+          // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -312,8 +313,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                 }}
               />
               <span
-                className={`user-chat_online ${userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
-                  }`}
+                className={`user-chat_online ${
+                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                }`}
               ></span>
             </div>
             <div className="wrap-infoUser_chat">
@@ -357,16 +359,16 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                     {userInfoChat.salary_type_id === 1
                       ? 'Giờ'
                       : userInfoChat.salary_type_id === 2
-                        ? 'Ngày'
-                        : userInfoChat.salary_type_id === 3
-                          ? 'Tháng'
-                          : userInfoChat.salary_type_id === 4
-                            ? 'Tuần'
-                            : userInfoChat.salary_type_id === 5
-                              ? 'Công việc'
-                              : userInfoChat.salary_type_id === 6
-                                ? 'Thương lượng'
-                                : ''}
+                      ? 'Ngày'
+                      : userInfoChat.salary_type_id === 3
+                      ? 'Tháng'
+                      : userInfoChat.salary_type_id === 4
+                      ? 'Tuần'
+                      : userInfoChat.salary_type_id === 5
+                      ? 'Công việc'
+                      : userInfoChat.salary_type_id === 6
+                      ? 'Thương lượng'
+                      : ''}
                   </p>
                 </div>
               </div>
@@ -388,13 +390,13 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   ? 'Đã đóng'
                   : userInfoChat.applied === false &&
                     userInfoChat.post_status === 0
-                    ? 'Chưa duyệt'
-                    : userInfoChat.applied === false &&
-                      userInfoChat.post_status === 1
-                      ? 'Ứng tuyển ngay'
-                      : userInfoChat.applied === true
-                        ? 'Đã ứng tuyển'
-                        : ''}
+                  ? 'Chưa duyệt'
+                  : userInfoChat.applied === false &&
+                    userInfoChat.post_status === 1
+                  ? 'Ứng tuyển ngay'
+                  : userInfoChat.applied === true
+                  ? 'Đã ứng tuyển'
+                  : ''}
               </Button>
             </div>
           ) : (
@@ -413,8 +415,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
                 <div
-                  className={`content-chat ${index === allListChat.length - 1 ? 'lastChatRef' : null
-                    }`}
+                  className={`content-chat ${
+                    index === allListChat.length - 1 ? 'lastChatRef' : null
+                  }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -437,10 +440,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat">
                     <span
-                      className={`text-chat ${chat.message === null || chat.message === ''
+                      className={`text-chat ${
+                        chat.message === null || chat.message === ''
                           ? 'text-chat_hidden'
                           : ''
-                        }`}
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -467,10 +471,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             } else {
               return (
                 <div
-                  className={`content-chat2 ${index === allListChat.length - 1
+                  className={`content-chat2 ${
+                    index === allListChat.length - 1
                       ? 'dddddddddddddddddddddddd'
                       : null
-                    }`}
+                  }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -493,10 +498,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat2">
                     <span
-                      className={`text-chat ${chat.message === '' || chat.message === null
+                      className={`text-chat ${
+                        chat.message === '' || chat.message === null
                           ? 'text-chat_hidden'
                           : ''
-                        }`}
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message

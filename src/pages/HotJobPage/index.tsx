@@ -16,11 +16,27 @@ import CircularProgress from '@mui/material/CircularProgress';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
-import { Box } from '@mui/material';
+// scroll data
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import RollTop from '#components/RollTop';
 
-import { Skeleton } from 'antd';
+// import icon
+//@ts-ignore
+import {
+  FilterIconHotjob,
+  MoreICon,
+  FilterIcon,
+  LightFilterIcon,
+} from '#components/Icons';
+
+import { Skeleton, Radio, Select, Space, message, Spin } from 'antd';
+import type { SelectProps, RadioChangeEvent } from 'antd';
+
+// import antIcon
+import { LoadingOutlined } from '@ant-design/icons';
+
+import { setCookie } from 'cookies';
 // import redux
 
 // import { bindActionCreators } from 'redux';
@@ -28,9 +44,11 @@ import { Skeleton } from 'antd';
 // import { RootState } from 'store/reducer';
 
 // import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
-import { message } from 'antd';
+
 // import api
 // import postApi from 'api/postApi'
+
+import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 
 import Footer from '../../components/Footer/Footer';
 
@@ -39,7 +57,6 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 // @ts-ignore
 import { Navbar } from '#components';
-import { MoreICon } from '#components/Icons';
 
 //import jobcard
 // import JobCard from '../../components/Home/JobCard';
@@ -62,8 +79,6 @@ import {
 //   CaretDownFilled,
 // } from '@ant-design/icons';
 
-import { Space } from 'antd';
-
 import './style.scss';
 // import { stringify } from 'query-string/base';
 // import notificationKeywordApi from 'api/notificationKeyword';
@@ -73,11 +88,14 @@ import ShowCancleSave from '#components/ShowCancleSave';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 import languageApi from 'api/languageApi';
+import locationApi from 'api/locationApi';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
 import { hotjobPage } from 'validations/lang/vi/hotjobPage';
 import { hotjobPageEn } from 'validations/lang/en/hotjobPage';
 import { getCookie } from 'cookies';
+import NoDataComponent from 'utils/NoDataPage';
+import HotJob from '#components/Home/HotJob';
 
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
@@ -145,6 +163,13 @@ const HotJobpage: React.FC = () => {
     Math.round(Number(searchParams.get('hotjob-total')) / 20) + 1,
   );
 
+  const [idFilterProvinces, setIdFilterProvinces] = React.useState('');
+
+  const [hasMore, setHasMore] = React.useState(true);
+  const [page, setPage] = React.useState<any>('0');
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
@@ -201,6 +226,7 @@ const HotJobpage: React.FC = () => {
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
     // document.title = language?.hot_job_page?.title_page;
+    getProvinces();
     document.title =
       languageRedux === 1
         ? 'HiJob - Bài tuyển dụng nổi bật'
@@ -218,21 +244,64 @@ const HotJobpage: React.FC = () => {
 
   const getHotJob = async () => {
     try {
+      // let provinceId = JSON.parse(getCookie('filterHotjobProvince') || '{}');
+
+      // console.log(localStorage.getItem('filterHotjobProvince'));
+
+      // const provinceId = localStorage.getItem('filterHotjobProvince');
+
       const url = localStorage.getItem('hotjobApi');
       let hotjob = await hotJobApi.getHotJobById(
         url,
         pageNumber,
         searchParams.get('hotjob-id') === '1' ? 18 : 20,
         languageRedux === 1 ? 'vi' : 'en',
+        // idFilterProvinces && provinceId,
+        idFilterProvinces,
       );
+
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       // const hotjobtotal = Number(searchParams.get('hotjob-total'));
       const hotjobtotal = getCookie('hotjobTotal');
+
       // hotjobtotal / 20
-      setHotJob(hotjob.data);
-      setHotJobType(hotjobtype);
-      setHotJobTotal(hotjobtotal);
-      setIsVisible(true);
+
+      setHasMore(true);
+      if (hotjob && hotjob.data.length < 18 && hotjobtype === 3) {
+        setHotJob(hotjob.data);
+        setHotJobType(hotjobtype);
+        setIsVisible(true);
+        setHotJobTotal(hotjob.data.length);
+        setHasMore(false);
+        setPage('0');
+        return;
+      } else if (hotjob && hotjob.data.length >= 18 && hotjobtype === 3) {
+        setHotJob(hotjob.data);
+        setHotJobType(hotjobtype);
+        setIsVisible(true);
+        setHotJobTotal(hotjob.data.length);
+        return;
+      }
+
+      if (hotjob && hotjob.data.length < 20 && hotjobtype !== 3) {
+        setHotJob(hotjob.data);
+        setHotJobType(hotjobtype);
+        setIsVisible(true);
+        setHotJobTotal(hotjob.data.length);
+        setHasMore(false);
+        setPage('0');
+        return;
+      } else if (hotjob && hotjob.data.length !== 0) {
+        setHotJob(hotjob.data);
+        setHotJobType(hotjobtype);
+        setIsVisible(true);
+        setHotJobTotal(hotjob.data.length);
+        return;
+      } else {
+        setHotJob([]);
+        setHasMore(false);
+        setPage('0');
+      }
 
       setTotalPage(Math.round(Number(hotjobtotal) / 20) + 1);
     } catch (error) {
@@ -242,36 +311,37 @@ const HotJobpage: React.FC = () => {
 
   // console.log('getHost', localStorage.getItem('hotjobApi'));
 
-  const getMoreHotJob = async () => {
-    try {
-      const nextPage = pageNumber + 1;
-      if (pageNumber + 1 === totalPage) {
-        setIsVisible(false);
-        setOpenBackdrop(false);
-        setPageNumber(0);
-        messageApi.open({
-          type: 'error',
-          content: language?.out_job,
-        });
-        return;
-      }
-      setOpenBackdrop(true);
-      setPageNumber(nextPage);
-      const url = localStorage.getItem('hotjobApi');
-      const result = await hotJobApi.getHotJobById(
-        url,
-        nextPage,
-        searchParams.get('hotjob-id') === '1' ? 18 : 20,
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setHotJob([...hotjob, ...result.data]);
-        setOpenBackdrop(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getMoreHotJob = async () => {
+  //   try {
+  //     const nextPage = pageNumber + 1;
+  //     if (pageNumber + 1 === totalPage) {
+  //       setIsVisible(false);
+  //       setOpenBackdrop(false);
+  //       setPageNumber(0);
+  //       messageApi.open({
+  //         type: 'error',
+  //         content: language?.out_job,
+  //       });
+  //       return;
+  //     }
+  //     setOpenBackdrop(true);
+  //     setPageNumber(nextPage);
+  //     const url = localStorage.getItem('hotjobApi');
+  //     const result = await hotJobApi.getHotJobById(
+  //       url,
+  //       nextPage,
+  //       searchParams.get('hotjob-id') === '1' ? 18 : 20,
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //       idFilterProvinces,
+  //     );
+  //     if (result) {
+  //       setHotJob([...hotjob, ...result.data]);
+  //       setOpenBackdrop(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   React.useEffect(() => {
     // setPageNumber(0)
@@ -285,7 +355,7 @@ const HotJobpage: React.FC = () => {
       }
     }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, idFilterProvinces]);
 
   // React.useEffect(() => {
   //   getMoreHotJob();
@@ -294,19 +364,103 @@ const HotJobpage: React.FC = () => {
 
   // handle click post details
   // handle change paginaton
+
+  const [provincesData, setProvincesData] = React.useState<
+    [
+      {
+        id: string;
+        name: string;
+        name_en: string;
+        full_name: string;
+        full_name_en: string;
+        code_name: string;
+        administrative_unit_id: number;
+        administrative_region_id: number;
+      },
+    ]
+  >();
+
+  const getProvinces = async () => {
+    try {
+      const result = await locationApi.getAllProvinces(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        setProvincesData(result.data);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
     pageNumber: number,
   ) => {
     // pageNumber === totalPage ?
     //   setPageNumber(pageNumber - 1) :
-    getMoreHotJob();
+    // getMoreHotJob();
     // setPageNumber(pageNumber + 1);
   };
 
   // handle close backdrop
 
   // title
+
+  // for (let i = 10; i < 36; i++) {
+  //   options.push({
+  //     value: i.toString(36) + i,
+  //     label: i.toString(36) + i,
+  //   });
+  // }
+
+  // var options: SelectProps['options'] = [];
+
+  const [optionsProvinces, setOptionsProvinces] = React.useState<
+    SelectProps['options']
+  >([]);
+
+  React.useEffect(() => {
+    if (provincesData) {
+      const newOptionsProvinces = provincesData.map((provinces: any) => ({
+        value: provinces.id,
+        label: provinces.full_name,
+      }));
+      setOptionsProvinces(newOptionsProvinces);
+    }
+  }, [provincesData]);
+
+  const handleClickFilterHotjob = () => {};
+
+  const handleChangeFilterHotjob = (value: string) => {
+    // localStorage.setItem('filterHotjobProvince', value);
+    // setCookie('filterHotjobProvince', value, 365);
+    setIdFilterProvinces(value);
+  };
+
+  const fetchMoreData = async () => {
+    console.log('moreeeee');
+
+    try {
+      const nextPage = parseInt(page) + 1;
+      const url = localStorage.getItem('hotjobApi');
+      const result = await hotJobApi.getHotJobById(
+        url,
+        nextPage,
+        searchParams.get('hotjob-id') === '1' ? 18 : 20,
+        languageRedux === 1 ? 'vi' : 'en',
+        idFilterProvinces,
+      );
+      if (result && result.data.length !== 0) {
+        setHotJob((prev: any) => [...prev, ...result?.data]);
+        setPage(nextPage);
+      } else {
+        setHasMore(false);
+        setPage('0');
+      }
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -334,19 +488,19 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? language?.remote_work
                     : hotJobType === 3
-                      ? 'Influencer'
-                      : hotJobType === 4
-                        ? language?.hot_job_page?.short_time
-                        : hotJobType === 5
-                          ? language?.hot_job_page?.job_today
-                          : hotJobType === 6
-                            ? 'Freelancer'
-                            : hotJobType === 7
-                              ? 'Delivery/Driver'
-                              : 'Loading...'}{' '}
+                    ? 'Influencer'
+                    : hotJobType === 4
+                    ? language?.hot_job_page?.short_time
+                    : hotJobType === 5
+                    ? language?.hot_job_page?.job_today
+                    : hotJobType === 6
+                    ? 'Freelancer'
+                    : hotJobType === 7
+                    ? 'Delivery/Driver'
+                    : 'Loading...'}{' '}
                   {hotjob.length !== 0
                     ? // ? Number(hotJobTotal.toLocaleString())
-                    new Intl.NumberFormat('en-US').format(hotJobTotal)
+                      new Intl.NumberFormat('en-US').format(hotJobTotal)
                     : ''}
                   <span>
                     {' '}
@@ -355,14 +509,37 @@ const HotJobpage: React.FC = () => {
                       languageRedux === 1 && hotjob.length !== 0
                         ? 'kết quả'
                         : hotJobTotal > 1 && hotjob.length !== 0
-                          ? 'results'
-                          : hotJobTotal < 1 && hotjob.length !== 0
-                            ? 'result'
-                            : ''
+                        ? 'results'
+                        : hotJobTotal < 1 && hotjob.length !== 0
+                        ? 'result'
+                        : ''
                     }
                   </span>
                 </h3>
-
+                <div
+                  className="filter-hotjob"
+                  onClick={handleClickFilterHotjob}
+                >
+                  <div className="filter-provinces">
+                    <Space direction="vertical" style={{ width: '100%' }}>
+                      <Select
+                        size={'large'}
+                        // defaultValue={idFilterProvinces}
+                        onChange={handleChangeFilterHotjob}
+                        style={{ width: '220px' }}
+                        options={optionsProvinces}
+                        suffixIcon={
+                          idFilterProvinces ? (
+                            <LightFilterIcon width={20} height={20} />
+                          ) : (
+                            <FilterIcon width={20} height={20} />
+                          )
+                        }
+                        placeholder="Lọc theo khu vực"
+                      />
+                    </Space>
+                  </div>
+                </div>
                 {/* <h4>
                   {hotJobTotal ? hotJobTotal : 0}
                   <span>
@@ -376,49 +553,86 @@ const HotJobpage: React.FC = () => {
             </div>
 
             {hotjob.length > 0 ? (
+              // <>
+              //   <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
+              //     {hotjob.map((item: PostHotJob, index: number) => (
+              //       <Skeleton loading={loading} active>
+              //         <Grid
+              //           item
+              //           xs={12}
+              //           sm={6}
+              //           md={hotJobType === 3 ? 4 : 6}
+              //           lg={4}
+              //           key={index}
+              //         >
+              //           {hotJobType === 3 ? (
+              //             <InfluencerCard item={item} />
+              //           ) : (
+              //             <JobCardHotJob item={item} />
+              //           )}
+              //         </Grid>
+              //       </Skeleton>
+              //     ))}
+              //   </Grid>
+              //   <Stack
+              //     spacing={2}
+              //     sx={{
+              //       display: isVisible ? 'flex' : 'none',
+              //       alignItems: 'center',
+              //       margin: '24px 0',
+              //     }}
+              //   >
+              //     {/* <Pagination count={10} shape="rounded" /> */}
+              //     <Space
+              //       className="div-hover-more"
+              //       onClick={(e) => {
+              //         handleChange(e, pageNumber);
+              //       }}
+              //     >
+              //       <p>{language?.more}</p>
+              //       <MoreICon width={20} height={20} />
+              //     </Space>
+              //   </Stack>
+              // </>
+
               <>
-                <Grid container spacing={2} columns={{ xs: 6, sm: 4, md: 12 }}>
-                  {hotjob.map((item: PostHotJob, index: number) => (
-                    <Skeleton loading={loading} active>
-                      <Grid
-                        item
-                        xs={12}
-                        sm={6}
-                        md={hotJobType === 3 ? 4 : 6}
-                        lg={4}
-                        key={index}
-                      >
-                        {hotJobType === 3 ? (
-                          <InfluencerCard item={item} />
-                        ) : (
-                          <JobCardHotJob item={item} />
-                        )}
-                      </Grid>
-                    </Skeleton>
-                  ))}
-                </Grid>
-                <Stack
-                  spacing={2}
-                  sx={{
-                    display: isVisible ? 'flex' : 'none',
-                    alignItems: 'center',
-                    margin: '24px 0',
-                  }}
+                <InfiniteScroll
+                  dataLength={hotjob?.length}
+                  next={fetchMoreData}
+                  hasMore={hasMore}
+                  loader={
+                    <Spin style={{ width: '100%' }} indicator={antIcon} />
+                  }
+                  style={{ overflow: 'unset' }}
                 >
-                  {/* <Pagination count={10} shape="rounded" /> */}
-                  <Space
-                    className="div-hover-more"
-                    onClick={(e) => {
-                      handleChange(e, pageNumber);
-                    }}
+                  <Grid
+                    container
+                    spacing={2}
+                    columns={{ xs: 6, sm: 4, md: 12 }}
                   >
-                    <p>{language?.more}</p>
-                    <MoreICon width={20} height={20} />
-                  </Space>
-                </Stack>
+                    {hotjob.map((item: PostHotJob, index: number) => (
+                      <Skeleton loading={loading} active>
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          md={hotJobType === 3 ? 4 : 6}
+                          lg={4}
+                          key={index}
+                        >
+                          {hotJobType === 3 ? (
+                            <InfluencerCard item={item} />
+                          ) : (
+                            <JobCardHotJob item={item} />
+                          )}
+                        </Grid>
+                      </Skeleton>
+                    ))}
+                  </Grid>
+                </InfiniteScroll>
               </>
             ) : (
-              <></>
+              <NoDataComponent />
             )}
             <Backdrop
               sx={{
@@ -427,7 +641,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
