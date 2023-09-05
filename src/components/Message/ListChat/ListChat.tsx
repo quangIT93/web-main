@@ -140,9 +140,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       });
 
       // ngắt kết nối websocket
-      socket.current.on('disconnect', (reason: any) => {
-        // setIsConnected(false);
-      });
+      // socket.current.on('disconnect', (reason: any) => {
+      // setIsConnected(false);
+      // });
 
       // gửi in nhắn
       // socket.current.on('client-send-message', (data: Message) => {
@@ -354,7 +354,13 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   <h4>{userInfoChat.post_title}</h4>
                   <h6>{userInfoChat.company_name}</h6>
                   <p>
-                    {userInfoChat.salary_min} - {userInfoChat.salary_max}{' '}
+                    {new Intl.NumberFormat('en-US').format(
+                      userInfoChat.salary_max,
+                    )}{' '}
+                    -
+                    {new Intl.NumberFormat('en-US').format(
+                      userInfoChat.salary_min,
+                    )}{' '}
                     {userInfoChat.money_type_text}/
                     {userInfoChat.salary_type_id === 1
                       ? 'Giờ'

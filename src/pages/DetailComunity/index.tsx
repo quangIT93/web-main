@@ -337,7 +337,7 @@ const Comunity = () => {
                   ? 'Câu chuyện việc làm'
                   : 'Working story'
                 : languageRedux === 1
-                ? 'Tin tức HiJob'
+                ? 'Tin tức'
                 : 'Recruitment news'}
             </h3>
           </div>
