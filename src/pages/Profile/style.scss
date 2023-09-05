@@ -21,8 +21,10 @@
   }
 
   .container {
-    width: 80%;
-    padding: 50px 00px;
+    // width: 80%;
+    max-width: 1080px; 
+    margin: 0 100px auto;
+    padding: 50px 0px;
     margin-top: 100px;
 
     @include breakpoint(mobile) {
@@ -33,6 +35,11 @@
     @include breakpoint(tablet) {
       width: 95%;
       padding: 0px;
+    }
+
+    
+    @media screen and (max-width: 1120px){
+      padding: 50px 24px;
     }
 
     .div-profile-avatar {

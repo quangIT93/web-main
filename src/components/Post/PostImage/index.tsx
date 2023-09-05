@@ -39,7 +39,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
     selectedImages,
     selectedFillImages,
     languageRedux,
-    language
+    language,
   } = props;
 
   const [isDragActive, setIsDragActive] = React.useState(false);
@@ -52,7 +52,8 @@ const PostImage: React.FC<PostImageProps> = (props) => {
 
   // const theme = useTheme();
   // const ixsobile = useMediaQuery(theme.breakpoints.down('xs'));
-  // console.log('file', selectedFiles);
+  console.log('file', selectedFiles);
+  console.log('file', selectedImages);
 
   async function downloadAndConvertImagesToFiles(urls: any) {
     try {
@@ -63,23 +64,28 @@ const PostImage: React.FC<PostImageProps> = (props) => {
         const response = await axios.get(url, {
           responseType: 'blob',
         });
+        console.log('response', response);
 
         const imageExtension = response.config.url?.split('.').pop();
         const file = new File([response.data], getFileNameFromUrl(url), {
           type: `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}`,
         });
+        console.log('imageExtension', imageExtension);
+        console.log('file', file);
 
         convertedFiles.push(file);
+        console.log('convertedFiles', convertedFiles);
       }
       if (convertedFiles.length > 0) {
         const validateImagesReply = validatePostImages(convertedFiles);
+        console.log('validateImagesReply', validateImagesReply);
+
         if (validateImagesReply.isError) {
-          // console.log('::: Invalid images');
-          return toast.warn(
-            language?.err_none_img
-          );
+          console.log('::: Invalid images');
+          return toast.warn(language?.err_none_img);
         } else {
           const compressedImages: any = [];
+          console.log('compressedImages', compressedImages);
 
           await Promise.all(
             convertedFiles.map(async (image: any) => {
@@ -377,17 +383,19 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           >
             <input {...getInputProps()} />
             {/* <p>Drag and drop some files here, or click to select files</p> */}
-            <p>
-              {
-                language?.post_page?.drag_drop_multi
-              }
-            </p>
+            <p>{language?.post_page?.drag_drop_multi}</p>
             {/* <aside className="thumbs-containter">
               {thumbs}
             </aside> */}
           </div>
         </section>
-        <Box sx={{ display: 'flex', minWidth: '150px', marginTop: '50px', flexWrap: 'wrap' }}
+        <Box
+          sx={{
+            display: 'flex',
+            minWidth: '150px',
+            marginTop: '50px',
+            flexWrap: 'wrap',
+          }}
           className="list-img-post"
         >
           {selectedImages.map((image: any, index: number) => (
@@ -406,9 +414,7 @@ const PostImage: React.FC<PostImageProps> = (props) => {
               <img
                 key={index}
                 src={image}
-                alt={
-                  language?.err_none_img
-                }
+                alt={language?.err_none_img}
                 style={{
                   height: '150px',
                   width: '150px',
@@ -449,18 +455,14 @@ const PostImage: React.FC<PostImageProps> = (props) => {
           p="1rem 0"
           sx={{ fontStyle: 'italic' }}
         >
-          {
-            language?.post_page?.verify_upload
-          }
+          {language?.post_page?.verify_upload}
         </Typography>
         <Button
           variant="outlined"
           component="label"
           disabled={selectedImages.length === 5}
         >
-          {
-            language?.post_page?.upload_img
-          }
+          {language?.post_page?.upload_img}
           <input
             type="file"
             name="images"

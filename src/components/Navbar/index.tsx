@@ -131,17 +131,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -921,20 +921,20 @@ const Navbar: React.FC = () => {
     setCookie('languageId', JSON.stringify(value), 365);
     await dispatch<any>(setLanguage(value));
     await dispatch(getLanguages(value.toString()) as any);
-
   };
 
   const buttons = [
-    <div className='language'
+    <div
+      className="language"
       onClick={() => {
-        languageRedux === 1 ?
-          totgleLanguage(2) :
-          totgleLanguage(1)
+        languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
       }}
     >
-      {languageRedux === 1 ?
-        <VNSubLoginIcon width={24} height={24} /> :
-        <ENSubLoginIcon width={24} height={24} />}
+      {languageRedux === 1 ? (
+        <VNSubLoginIcon width={24} height={24} />
+      ) : (
+        <ENSubLoginIcon width={24} height={24} />
+      )}
     </div>,
     <button
       key="1"
@@ -962,8 +962,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="2"
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -993,8 +993,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-              openLogin &&
-              location?.pathname === '/'
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1080,8 +1080,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                            return `${location.district} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1094,8 +1094,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1115,9 +1115,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1179,9 +1179,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                // style={{
-                //   display: openRadioGroup ? 'flex' : 'none',
-                // }}
+                  // style={{
+                  //   display: openRadioGroup ? 'flex' : 'none',
+                  // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1259,16 +1259,17 @@ const Navbar: React.FC = () => {
         <BellIcon />
       </Button>
     </Badge>,
-    <div className='language'
+    <div
+      className="language"
       onClick={() => {
-        languageRedux === 1 ?
-          totgleLanguage(2) :
-          totgleLanguage(1)
+        languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
       }}
     >
-      {languageRedux === 1 ?
-        <VNSubLoginIcon width={24} height={24} /> :
-        <ENSubLoginIcon width={24} height={24} />}
+      {languageRedux === 1 ? (
+        <VNSubLoginIcon width={24} height={24} />
+      ) : (
+        <ENSubLoginIcon width={24} height={24} />
+      )}
     </div>,
     <div
       className="menu"
@@ -1334,8 +1335,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                            return `${location.district} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1348,8 +1349,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1369,9 +1370,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1473,10 +1474,13 @@ const Navbar: React.FC = () => {
     </div>,
   ];
 
+  console.log('location', location);
+
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1498,7 +1502,14 @@ const Navbar: React.FC = () => {
         >
           <CircularProgress color="inherit" />
         </Backdrop> */}
-        <Wrapper>
+        <Wrapper
+          className="wrap-content_nav"
+          style={
+            location.pathname === '/'
+              ? { maxWidth: '1280px' }
+              : { maxWidth: '1080px' }
+          }
+        >
           <Left>
             <Logo />
           </Left>
@@ -1653,7 +1664,12 @@ const Navbar: React.FC = () => {
           onEnter={handleCollapseEntered}
           onExited={handleCollapseExited}
           // sx={collapseCssFilter}
-          sx={{ borderTop: '1px solid #ccc' }}
+          sx={
+            location.pathname === '/'
+              ? { maxWidth: '1280px' }
+              : { maxWidth: '1080px' }
+          }
+          className="nav-collapse"
         >
           <SearchInput
             checkSearch={checkSeacrh}

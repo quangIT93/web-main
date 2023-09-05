@@ -91,7 +91,7 @@ const ComunityNewPost = () => {
       setPage('0');
       message.config({
         top: 750,
-        duration: 20,
+        duration: 2,
         maxCount: 3,
       });
       message.error('Đã hết bài viết');
@@ -205,21 +205,21 @@ const ComunityNewPost = () => {
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
-            <div className='title-comunity-new-content'>
+            <div className="title-comunity-new-content">
               <h3>
-                {
-                  languageRedux === 1
-                    ? `Câu chuyện công việc`
-                    : `Working story`
-                }
+                {languageRedux === 1 ? `Câu chuyện công việc` : `Working story`}
               </h3>
               <p>
                 {
                   loading
                     ? 'Loading...'
                     : languageRedux === 1
-                      ? `${new Intl.NumberFormat('en-US').format(total)} bài viết mới`
-                      : `${new Intl.NumberFormat('en-US').format(total)} new posts`
+                    ? `${new Intl.NumberFormat('en-US').format(
+                        total,
+                      )} bài viết mới`
+                    : `${new Intl.NumberFormat('en-US').format(
+                        total,
+                      )} new posts`
 
                   // language?.community_page?.today_hijob_has +
                   //   ' ' +

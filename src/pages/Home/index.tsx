@@ -132,11 +132,11 @@ const Home: React.FC = () => {
     if (currentHeight >= prevHeight && tabs !== null && breadCrumb !== null) {
       tabs.style.top = '-70px';
       breadCrumb.style.marginTop = '-192px';
-      // setTimeout(() => {
-      //   currentHeight = 0;
-      //   tabs.style.top = '70px';
-      //   breadCrumb.style.marginTop = '192px';
-      // }, 500);
+      setTimeout(() => {
+        currentHeight = 0;
+        tabs.style.top = '70px';
+        breadCrumb.style.marginTop = '192px';
+      }, 500);
     } else {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';

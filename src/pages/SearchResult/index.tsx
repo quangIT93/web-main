@@ -137,11 +137,11 @@ const NewJobs: React.FC = () => {
     // openNotificate,
     search,
   }: // setRefNav,
-    {
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    search: boolean;
+  } = useContext(HomeValueContext);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -291,7 +291,7 @@ const NewJobs: React.FC = () => {
 
   const LIST_DIS_ID =
     userFilteredCookies?.list_dis?.length > 0 ||
-      userFilteredCookies?.list_dis?.length !== undefined
+    userFilteredCookies?.list_dis?.length !== undefined
       ? userFilteredCookies?.list_dis?.map((dis: any) => dis[1])
       : [];
 
@@ -304,7 +304,7 @@ const NewJobs: React.FC = () => {
   //   .map((dis) => dis[1]);
   const LIST_CATEGORIES_ID =
     userFilteredCookies?.list_cate?.length !== 0 ||
-      userFilteredCookies?.list_cate !== undefined
+    userFilteredCookies?.list_cate !== undefined
       ? userFilteredCookies?.list_cate?.map((cate: any) => cate[1])
       : [];
   // searchParams
@@ -712,7 +712,7 @@ const NewJobs: React.FC = () => {
     try {
       if (dataProfile) {
         setOpenBackdrop(true);
-        setLoading(true)
+        setLoading(true);
         // console.log('QUERY', QUERY);
         // console.log('page', page);
         // console.log('MONEY_TYPE', MONEY_TYPE);
@@ -761,7 +761,7 @@ const NewJobs: React.FC = () => {
         // console.log('resut', result);
         if (result) {
           setOpenBackdrop(false);
-          setLoading(false)
+          setLoading(false);
           setSearchData(result.data);
         }
       }
@@ -836,28 +836,22 @@ const NewJobs: React.FC = () => {
         {
           // automatic && (
           <Box sx={{ flexGrow: 1 }} ref={listRef}>
-            <div
-              style={{
-                display: 'flex',
-                // flexDirection: 'column',
-                margin: '20px 0',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                // background: '#aaaaaa',
-                padding: '8px 0',
-              }}
-            >
+            <div className="title-search">
               <div
                 style={{
                   display: loading ? 'none' : 'flex',
                   alignItems: 'center',
+                  fontSize: '24px',
                 }}
+                className="total-search"
               >
-                {language?.search_results_page?.find}{' '}
+                <span>{language?.search_results_page?.find} </span>
                 <h4 style={{ margin: '0 10px' }}>
                   {searchData ? searchData?.total.toLocaleString() : 0}
                 </h4>
-                {language?.search_results_page.suitable_job}
+                <span className="title-last-search">
+                  {language?.search_results_page.suitable_job}
+                </span>
               </div>
               <div
                 style={{
@@ -921,7 +915,7 @@ const NewJobs: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -989,29 +983,29 @@ const NewJobs: React.FC = () => {
               options={
                 dataAllLocation
                   ? dataAllLocation?.map((dataLocation: any) => ({
-                    value: dataLocation.province_id,
-                    label: dataLocation.province_fullName,
-                    children: dataLocation.districts.map(
-                      (child: { district_id: string; district: string }) => {
-                        var dis = false;
-                        // setLocId([]);
-                        if (disableLocation) {
-                          dis = true;
-                          for (const elem of locId) {
-                            if (elem === child.district_id) {
-                              dis = false;
-                              break;
+                      value: dataLocation.province_id,
+                      label: dataLocation.province_fullName,
+                      children: dataLocation.districts.map(
+                        (child: { district_id: string; district: string }) => {
+                          var dis = false;
+                          // setLocId([]);
+                          if (disableLocation) {
+                            dis = true;
+                            for (const elem of locId) {
+                              if (elem === child.district_id) {
+                                dis = false;
+                                break;
+                              }
                             }
                           }
-                        }
-                        return {
-                          value: child.district_id,
-                          label: child.district,
-                          disabled: dis,
-                        };
-                      },
-                    ),
-                  }))
+                          return {
+                            value: child.district_id,
+                            label: child.district,
+                            disabled: dis,
+                          };
+                        },
+                      ),
+                    }))
                   : []
               }
               onChange={onChangeLocation}
@@ -1035,27 +1029,27 @@ const NewJobs: React.FC = () => {
               options={
                 dataCategories
                   ? dataCategories.map((parentCategory: any) => ({
-                    value: parentCategory.parent_category_id,
-                    label: parentCategory.parent_category,
-                    children: parentCategory.childs.map((child: any) => {
-                      var dis = false;
-                      //check id child  when disable = true
-                      if (disableCatelory) {
-                        dis = true;
-                        for (const elem of categoriesId) {
-                          if (elem === child.id) {
-                            dis = false;
-                            break;
+                      value: parentCategory.parent_category_id,
+                      label: parentCategory.parent_category,
+                      children: parentCategory.childs.map((child: any) => {
+                        var dis = false;
+                        //check id child  when disable = true
+                        if (disableCatelory) {
+                          dis = true;
+                          for (const elem of categoriesId) {
+                            if (elem === child.id) {
+                              dis = false;
+                              break;
+                            }
                           }
                         }
-                      }
-                      return {
-                        value: child.id,
-                        label: child.name,
-                        disabled: dis,
-                      };
-                    }),
-                  }))
+                        return {
+                          value: child.id,
+                          label: child.name,
+                          disabled: dis,
+                        };
+                      }),
+                    }))
                   : []
               }
               onChange={onChangeCateLory}

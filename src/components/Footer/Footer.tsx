@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
+
+import { useLocation } from 'react-router-dom';
 // import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import breakpoints from '../../scss/breakpoints';
 
@@ -75,6 +77,8 @@ const Footer: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
+  const location = useLocation();
   const [open, setOpen] = React.useState(false);
 
   const [windowWidth, setWindowWidth] = useState(false);
@@ -113,7 +117,7 @@ const Footer: React.FC = () => {
 
   useEffect(() => {
     updateWindowWidth();
-  }, [windowWidth]);
+  }, []);
 
   window.addEventListener('resize', () => {
     const currentWidth = window.innerWidth;
@@ -123,7 +127,7 @@ const Footer: React.FC = () => {
       setWindowWidth(false);
       setOpen(false);
     }
-    console.log('Current window width:', currentWidth);
+    // console.log('Current window width:', currentWidth);
   });
 
   useEffect(() => {}, [languageRedux]);
@@ -151,12 +155,20 @@ const Footer: React.FC = () => {
   }, []);
 
   return (
-    <WrapFooter ref={footerRef}>
+    <WrapFooter
+      ref={footerRef}
+      className="footer-main"
+      onClick={(e: any) => {
+        e.stopPropagation();
+        return handleClickOpen;
+      }}
+    >
       <Visibility
         style={
           open && !windowWidth
             ? {
                 transform: 'translateY(calc(-100% - 36px))',
+                borderTop: '1px solid #ccc',
               }
             : !open && !windowWidth
             ? {
@@ -166,7 +178,14 @@ const Footer: React.FC = () => {
             : { transform: 'none' }
         }
       >
-        <div className="container-footer">
+        <div
+          className="container-footer"
+          style={
+            location.pathname === '/'
+              ? { maxWidth: '1280px' }
+              : { maxWidth: '1080px' }
+          }
+        >
           <div className="footer-left">
             <div
               style={{
@@ -285,36 +304,49 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </Visibility>
-      <PolicyFooter id="div-policy-footer" onClick={handleClickOpen}>
-        <Link to="/policy" target="_parent">
-          <p>{language?.footer?.usage_policy}</p>
-        </Link>
-        <div id="div-policy-footer-right">
-          <div
-            style={{ flexDirection: 'row', display: 'flex', fontSize: '12px' }}
-          >
-            <p style={{ color: '#575757', fontSize: '12px' }}>
-              {language?.footer?.customer_service_center}
-            </p>
-            <p style={{ color: '#575757', marginLeft: '5px' }}>
-              (028) 35358983
-            </p>
-            {/* <p style={{ color: '#575757', marginLeft: '2px' }}>
+      <div onClick={handleClickOpen} className="wrap-footer-bottom">
+        <PolicyFooter
+          id="div-policy-footer"
+          style={
+            location.pathname === '/'
+              ? { maxWidth: '1280px' }
+              : { maxWidth: '1080px' }
+          }
+        >
+          <Link to="/policy" target="_parent">
+            <p>{language?.footer?.usage_policy}</p>
+          </Link>
+          <div id="div-policy-footer-right">
+            <div
+              style={{
+                flexDirection: 'row',
+                display: 'flex',
+                fontSize: '12px',
+              }}
+            >
+              <p style={{ color: '#575757', fontSize: '12px' }}>
+                {language?.footer?.customer_service_center}
+              </p>
+              <p style={{ color: '#575757', marginLeft: '5px' }}>
+                (028) 35358983
+              </p>
+              {/* <p style={{ color: '#575757', marginLeft: '2px' }}>
               (1.000 đồng/phút)
             </p> */}
+            </div>
           </div>
-        </div>
-        <Link
-          to="mailto:contact.hijob@gmail.com"
-          style={{
-            color: '#0d99ff',
-            textDecoration: 'underline',
-            fontSize: '12px',
-          }}
-        >
-          Email: contact.hijob@gmail.com
-        </Link>
-      </PolicyFooter>
+          <Link
+            to="mailto:contact.hijob@gmail.com"
+            style={{
+              color: '#0d99ff',
+              textDecoration: 'underline',
+              fontSize: '12px',
+            }}
+          >
+            Email: contact.hijob@gmail.com
+          </Link>
+        </PolicyFooter>
+      </div>
     </WrapFooter>
   );
 };
