@@ -140,9 +140,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       });
 
       // ngắt kết nối websocket
-      // socket.current.on('disconnect', (reason: any) => {
-      // setIsConnected(false);
-      // });
+      socket.current.on('disconnect', (reason: any) => {
+        // setIsConnected(false);
+      });
 
       // gửi in nhắn
       // socket.current.on('client-send-message', (data: Message) => {
