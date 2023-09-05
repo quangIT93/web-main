@@ -500,13 +500,13 @@ const HotJobpage: React.FC = () => {
                     : hotJobType === 7
                     ? 'Delivery/Driver'
                     : 'Loading...'}{' '}
-                  {hotjob.length !== 0
+                  {/* {hotjob.length !== 0
                     ? // ? Number(hotJobTotal.toLocaleString())
                       new Intl.NumberFormat('en-US').format(hotJobTotal)
-                    : ''}
+                    : ''} */}
                   <span>
                     {' '}
-                    {
+                    {/* {
                       // language?.hot_job_page?.result
                       languageRedux === 1 && hotjob.length !== 0
                         ? 'kết quả'
@@ -515,7 +515,7 @@ const HotJobpage: React.FC = () => {
                         : hotJobTotal < 1 && hotjob.length !== 0
                         ? 'result'
                         : ''
-                    }
+                    } */}
                   </span>
                 </h3>
                 <div
