@@ -82,6 +82,12 @@ const HotJob: React.FC = () => {
     let url =
       api.replace('/api', '') + '?' + keyOfQuery + '=' + queyObj[keyOfQuery];
 
+    console.log('query', query);
+    console.log('keyOfQuery', keyOfQuery);
+    console.log('api', api);
+    console.log('total', total);
+    console.log('type', type);
+    console.log('id', id);
     setCookie('hotjobTotal', JSON.stringify(total), 365);
     localStorage.setItem('hotjobApi', url);
     window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`, '_self');

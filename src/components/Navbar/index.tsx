@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 // @ts-ignore
 // import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Link, useLocation } from 'react-router-dom';
+
+import io from 'socket.io-client';
 
 import ModalLogin from '../../components/Home/ModalLogin';
 // import ModalLoginNav from '../../components/Navbar/ModalLogin';
@@ -724,15 +726,21 @@ const Navbar: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  let socket = useRef<any>();
+
   // handle logout
   const handleLogout = async () => {
     console.log('logout thành công');
+
     try {
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (refreshToken) {
         const result = await authApi.signOut(refreshToken);
         if (result) {
+          socket.current.on('disconnect', (reason: any) => {
+            // setIsConnected(false);
+          });
           window.location.replace('/');
           // localStorage.clear();
           const exceptionKey = 'persist:root';
@@ -1473,8 +1481,6 @@ const Navbar: React.FC = () => {
       </Spin>
     </div>,
   ];
-
-  console.log('location', location);
 
   return (
     <div

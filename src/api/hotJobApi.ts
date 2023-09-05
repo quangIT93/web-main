@@ -5,8 +5,8 @@ const hotJobApi = {
     const URL = `/v3/topics?lang=${lang}`
     return axiosClient.get(URL)
   },
-  getHotJobById: (url: any, page: number, limit: number, lang: string)=> {
-    const URL = url + `&page=${page}&limit=${limit}&lang=${lang}`
+  getHotJobById: (url: any, page: number, limit: number, lang: string, provinceId: string | null)=> {
+    const URL = url + `&page=${page}&limit=${limit}&lang=${lang}&provinceId=${provinceId}`
     return axiosClient.get(URL)
   }
 }
