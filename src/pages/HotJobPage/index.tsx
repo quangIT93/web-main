@@ -266,12 +266,14 @@ const HotJobpage: React.FC = () => {
 
       // hotjobtotal / 20
 
+      setHotJobTotal(hotjobtotal);
+
       setHasMore(true);
       if (hotjob && hotjob.data.length < 18 && hotjobtype === 3) {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
-        setHotJobTotal(hotjob.data.length);
+        // setHotJobTotal(hotjob.data.length);
         setHasMore(false);
         setPage('0');
         return;
@@ -279,7 +281,7 @@ const HotJobpage: React.FC = () => {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
-        setHotJobTotal(hotjob.data.length);
+        // setHotJobTotal(hotjob.data.length);
         return;
       }
 
@@ -287,7 +289,7 @@ const HotJobpage: React.FC = () => {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
-        setHotJobTotal(hotjob.data.length);
+        // setHotJobTotal(hotjob.data.length);
         setHasMore(false);
         setPage('0');
         return;
@@ -295,7 +297,7 @@ const HotJobpage: React.FC = () => {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
-        setHotJobTotal(hotjob.data.length);
+        // setHotJobTotal(hotjob.data.length);
         return;
       } else {
         setHotJob([]);
