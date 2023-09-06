@@ -66,7 +66,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   };
 
   useEffect(() => {
-    updateWindowWidth();
+    updateWindowWidth();    
   }, [windowWidth]);
 
   const closeListChat = () => {

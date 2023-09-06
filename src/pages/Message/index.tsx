@@ -42,6 +42,8 @@ const Message = () => {
   // const { openCollapseFilter } = useContext(HomeValueContext);
   const [openListChat, setOpenListChat] = useState(false);
   const [language, setLanguage] = useState<any>();
+  const [innerHeight, setInnerHeight] = useState<string>("100vh");
+
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -90,6 +92,17 @@ const Message = () => {
       setWindowWidth(window.innerWidth);
     };
 
+    const actualHeight = window.innerHeight;
+    
+    // const currentHeight = document.documentElement.clientHeight
+
+    setInnerHeight(`${actualHeight}px`);
+
+    console.log("actualHeight", actualHeight);
+
+
+
+
     // Đăng ký sự kiện resize khi component được render
     window.addEventListener('resize', handleResize);
 
@@ -109,7 +122,7 @@ const Message = () => {
   }, []);
 
   return (
-    <div className="message-page">
+    <div className="message-page" style={{"height": `${innerHeight}`}}>
       <Navbar />
 
       {windowWidth >= 555 ? (

@@ -52,7 +52,7 @@ const GoogleLoginButton: React.FC<PropsModalLogin> = (props) => {
         if (localStorage.getItem('accessToken')) {
           const result = await profileApi.getProfile('vi');
 
-          console.log('result: ', result);
+          // console.log('result: ', result);
 
           if (result) {
             setProfileUser(result.data);
@@ -73,12 +73,12 @@ const GoogleLoginButton: React.FC<PropsModalLogin> = (props) => {
 
   const handleGoogleLoginSuccess = async (credential: any) => {
     // Xử lý thành công khi đăng nhập bằng Gmail
-    console.log('Logged in with Google:', credential);
+    // console.log('Logged in with Google:', credential);
 
     const result = await signInEmailApi.signInGoogle(credential.credential);
     try {
       if (result) {
-        console.log('result: ', result.data);
+        // console.log('result: ', result.data);
 
         fetchDataProfile(result.data, true);
       }
