@@ -33,7 +33,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedWard, setSelectedWard] = useState<any>(null);
 
-  console.log("dataProvinces", dataPostById);
+  // console.log("dataProvinces", dataPostById);
 
   useEffect(() => {
     if (dataProvinces && !selectedProvince) {

@@ -66,7 +66,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
       setShouldShowMoreButton(numLines >= 2);
     }
   }, [item?.content]);
-  console.log('showText', showText);
+  // console.log('showText', showText);
 
   const handleAddText = (e: any) => {
     e.stopPropagation();
@@ -97,7 +97,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
       } else {
         message.error('Vui lòng đăng nhập để thực hiện chức năng');
       }
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -133,7 +133,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
   const handleClickSave = async (e: any) => {
     e.stopPropagation();
-    console.log('handleClick save');
+    // console.log('handleClick save');
     if (!localStorage.getItem('accessToken')) {
       setOpenModalLogin(true);
       return;
@@ -169,7 +169,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     }
   };
 
-  console.log('item', item);
+  // console.log('item', item);
 
   return (
     <>

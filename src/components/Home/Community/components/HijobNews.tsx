@@ -55,7 +55,7 @@ const HijobNews = () => {
       if (result) {
         setLike(!like);
       }
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +69,7 @@ const HijobNews = () => {
     window.open(`/detail-comunity?post-community=${id}&type=0`, '_parent');
     localStorage.setItem('community', '.community-container');
   };
-  console.log('new', news);
+  // console.log('new', news);
 
   return (
     <>
