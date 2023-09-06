@@ -34,7 +34,6 @@ const PostButton: React.FC<Iprops> = (props) => {
   //   return () => window.removeEventListener('scroll', listenToScroll);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
-  console.log('voooooo');
 
   return (
     <Button
