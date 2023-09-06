@@ -1,9 +1,9 @@
 import React from 'react';
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
-import CardActions from '@mui/material/CardActions';
-import ImageListItem from '@mui/material/ImageListItem';
-import Typography from '@mui/material/Typography';
+// import CardActions from '@mui/material/CardActions';
+// import ImageListItem from '@mui/material/ImageListItem';
+// import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 // import { url } from 'inspector'
 // import Pagination from '@mui/material/Pagination'
@@ -11,22 +11,22 @@ import Stack from '@mui/material/Stack';
 import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { TopicJobIcon, MoreICon } from '#components/Icons';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { TopicJobIcon, MoreICon, QuestionMarkIcon } from '#components/Icons';
 
 // @ts-ignore
-import moment from 'moment';
+// import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
-import { useNavigate, createSearchParams } from 'react-router-dom';
-import { MouseEvent, MouseEventHandler } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { MouseEvent, MouseEventHandler } from 'react';
 
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom';
 // import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import TurnedInIcon from '@mui/icons-material/TurnedIn';
 
 // import component
 import ListCompanyCarousel from '../ListCompanyCarousel';
@@ -39,24 +39,20 @@ import { RootState } from '../../../store/reducer';
 
 import postApi from 'api/postApi';
 import themeApi from '../../../api/themesApi';
-import bookMarkApi from 'api/bookMarkApi';
+// import bookMarkApi from 'api/bookMarkApi';
 
 import './style.scss';
 
 // import icon
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
-import { Space, Tooltip } from 'antd';
+import { Space } from 'antd';
 // interface item post themes
 
 //import jobcard
 import JobCard from '../JobCard';
 import { Skeleton } from 'antd';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
 
 interface PostTheme {
   id: number;
@@ -80,24 +76,33 @@ interface PostTheme {
   };
   created_at_text: string;
   bookmarked: boolean;
+  money_type_text: string;
 }
 
 const ThemesJob: React.FC = () => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [page, setPage] = React.useState(1);
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
   const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const navigate = useNavigate();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   // state redux
-  const { post } = useSelector((state: RootState) => state);
+  const post = useSelector((state: RootState) => state.post);
+
   const dispatch = useDispatch();
   const { setPostByTheme, setPostThemeMore } = bindActionCreators(
     actionCreators,
     dispatch,
+  );
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
   );
 
   const handleChange = async (
@@ -119,6 +124,7 @@ const ThemesJob: React.FC = () => {
       Number(themeId),
       9,
       threshold,
+      languageRedux === 1 ? 'vi' : 'en',
     );
 
     if (result) {
@@ -129,19 +135,21 @@ const ThemesJob: React.FC = () => {
   };
 
   // handle click post details
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
-  };
+  // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  //   window.open(`/post-detail?post-id=${id}`, '_parent');
+  // };
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   // get post by theme id
   const getPostByThemeId = async () => {
     try {
-      const result = await themeApi.getThemesEnable();
+      const result = await themeApi.getThemesEnable(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       if (result) {
         setListThem(result);
@@ -150,6 +158,7 @@ const ThemesJob: React.FC = () => {
           result.data[0].id,
           19,
           null,
+          languageRedux === 1 ? 'vi' : 'en',
         );
         if (list) {
           setPostByTheme(list);
@@ -176,7 +185,8 @@ const ThemesJob: React.FC = () => {
         setLoading(false);
       }
     }, 1000);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   // React.useEffect(() => {
   //   console.log("vap")
@@ -186,13 +196,50 @@ const ThemesJob: React.FC = () => {
   //   // setSearchParams(searchParams)
 
   // }, [localStorage.getItem("accessToken")])
-
+  const handleClickHelpSearch = () => { };
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }} className="theme-job">
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <TopicJobIcon width={25} height={25} />
-        <h2>Công việc theo chủ đề</h2>
+        <h2>{language?.jobs_by_theme}</h2>
+        <div className="help-search" onClick={handleClickHelpSearch}>
+          <QuestionMarkIcon />
+          <div className={`login__hover__container `}>
+            <div className="login__hover">
+              <div className="login__hover__p">
+                <p>
+                  {languageRedux === 1
+                    ? 'Mục này sẽ gợi ý cho bạn việc làm gần các địa điểm nổi tiếng trong thành phố của bạn.'
+                    : 'This section will suggest you some jobs near hot places in your city.'}
+                </p>
+              </div>
+              {/* <Button
+            type="primary"
+            onClick={() => {
+              setOpenModalLogin(true);
+            }}
+          >
+            <LoginArrowBlackIcon />
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+          </Button> */}
+            </div>
+          </div>
+        </div>
       </div>
+
+      {!localStorage.getItem('accessToken') ? (
+        <div className="title-location-job">
+          {/* <h3>{language?.home_page?.ideal_job_location}</h3> */}
+          {/* <p>{language?.home_page?.search_in_famous_locations_in_your_city}</p> */}
+          <p>
+            {languageRedux === 1
+              ? 'Tìm kiếm việc làm tại các địa điểm nổi tiếng trong thành phố của bạn.'
+              : 'Search for jobs in famous locations in your city.'}
+          </p>
+        </div>
+      ) : (
+        <></>
+      )}
       <Skeleton loading={loading} active>
         <ListCompanyCarousel listTheme={listTheme} />
       </Skeleton>
@@ -232,7 +279,7 @@ const ThemesJob: React.FC = () => {
                     handleChange(e, page);
                   }}
                 >
-                  <p>Xem thêm</p>
+                  <p>{language?.more}</p>
                   <MoreICon width={20} height={20} />
                 </Space>
               </Stack>

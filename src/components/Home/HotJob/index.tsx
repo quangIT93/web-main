@@ -1,13 +1,13 @@
 import React from 'react';
 // import Tabs from '@mui/material/Tabs'
 // import Tab from '@mui/material/Tab'
-import { Radio, Tabs } from 'antd';
+// import { Radio, Tabs } from 'antd';
 import Box from '@mui/material/Box';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import { AxiosResponse } from 'axios';
+// import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
+// import { AxiosResponse } from 'axios';
 // import api
-import postApi from 'api/postApi';
+// import postApi from 'api/postApi';
 import hotJobApi from 'api/hotJobApi';
 
 // Import Swiper
@@ -21,41 +21,53 @@ import 'swiper/css/navigation';
 import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
-import { Space } from 'antd';
+// import { Space } from 'antd';
 
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../store/index';
-import { RootState } from '../../../store/reducer';
+// import { useDispatch } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { actionCreators } from '../../../store/index';
+// import { RootState } from '../../../store/reducer';
 
 import { FireIcon, BagIcon } from '#components/Icons';
 
-import { dataImageHotJob } from './dataImagehotJob';
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
+// import { dataImageHotJob } from './dataImagehotJob';
 
 import './style.scss';
 
-interface ItemTheme {
-  id: number;
-  title: string;
-  img: string;
-  author: string;
-}
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+// import { home } from 'validations/lang/vi/home';
+// import { homeEn } from 'validations/lang/en/home';
+
+import { setCookie } from 'cookies';
+
+// interface ItemTheme {
+//   id: number;
+//   title: string;
+//   img: string;
+//   author: string;
+// }
 
 const HotJob: React.FC = () => {
-  const [value, setValue] = React.useState<Number>(0);
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [index, setIndex] = React.useState(0);
-  const [listTheme, setListTheme] = React.useState<ItemTheme[]>([]);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  // const [openBackdrop, setOpenBackdrop] = React.useState(false);
+
   const [hotjob, setHotJob] = React.useState<any>([]);
 
-  const [addressIdCookie, setAddressIdCookie] = React.useState(0);
+  // const dispatch = useDispatch();
+  // const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatch = useDispatch();
-  const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const handleClickItem = (
     event: any,
@@ -70,20 +82,27 @@ const HotJob: React.FC = () => {
     let url =
       api.replace('/api', '') + '?' + keyOfQuery + '=' + queyObj[keyOfQuery];
 
+    console.log('query', query);
+    console.log('keyOfQuery', keyOfQuery);
+    console.log('api', api);
+    console.log('total', total);
+    console.log('type', type);
+    console.log('id', id);
+    setCookie('hotjobTotal', JSON.stringify(total), 365);
     localStorage.setItem('hotjobApi', url);
-    window.open(
-      `/hotjobs?hotjob-id=${id}&hotjob-type=${type}&hotjob-total=${total}`,
-    );
+    window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`, '_self');
   };
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   const getHotJob = async () => {
     try {
-      const result = await hotJobApi.getHotJobTheme();
+      const result = await hotJobApi.getHotJobTheme(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setHotJob(result.data);
       }
@@ -94,7 +113,8 @@ const HotJob: React.FC = () => {
 
   React.useEffect(() => {
     getHotJob();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   // const getPostNewestByThemeId = async () => {
   //     try {
@@ -133,44 +153,47 @@ const HotJob: React.FC = () => {
         paddingBottom: '28px',
       }}
       className="hot-job-container"
+      id="hot-job-container"
     >
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <FireIcon width={25} height={25} />
-        <h2>Công việc nổi bật</h2>
+        <h2>{language?.hot_jobs}</h2>
       </div>
       <Swiper
         navigation={true}
         // mousewheel={true}
-        breakpoints={{
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 24,
-          },
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          1024: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          1440: {
-            slidesPerView: 3,
-            spaceBetween: 24,
-          },
-          1920: {
-            slidesPerView: 4,
-            spaceBetween: 24,
-          },
-          2560: {
-            slidesPerView: 4,
-            spaceBetween: 24,
-          },
-        }}
+        slidesPerView="auto"
+        spaceBetween={12}
+        // breakpoints={{
+        //   320: {
+        //     slidesPerView: 1,
+        //     spaceBetween: 24,
+        //   },
+        //   640: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 24,
+        //   },
+        //   768: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 24,
+        //   },
+        //   1024: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 24,
+        //   },
+        //   1440: {
+        //     slidesPerView: 3,
+        //     spaceBetween: 24,
+        //   },
+        //   1920: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 24,
+        //   },
+        //   2560: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 24,
+        //   },
+        // }}
         modules={[Mousewheel, Navigation, Pagination]}
         className="mySwiper"
       >
@@ -180,6 +203,17 @@ const HotJob: React.FC = () => {
             <SwiperSlide
               key={index}
               onClick={(event) => {
+                const analytics: any = getAnalytics();
+
+                // logEvent(analytics, 'screen_view' as string, {
+                //   // screen_name: screenName as string,
+                //   page_title: `/web_click_hotJob_${item.title}` as string,
+                // });
+
+                logEvent(analytics, 'event_web_click_HiJob' as string, {
+                  // screen_name: screenName as string,
+                  web_page_home: `/hotJob_${item.title}` as string,
+                });
                 handleClickItem(
                   event,
                   item.id,
@@ -193,7 +227,7 @@ const HotJob: React.FC = () => {
               <div className="slide-item">
                 <img
                   src={item.image}
-                  alt="anh bị lỗi"
+                  alt={language?.err_none_img}
                   style={{
                     width: '160px',
                     height: '160px',
@@ -215,7 +249,7 @@ const HotJob: React.FC = () => {
           );
         })}
       </Swiper>
-      <Backdrop
+      {/* <Backdrop
         sx={{
           color: '#0d99ff ',
           backgroundColor: 'transparent',
@@ -225,7 +259,7 @@ const HotJob: React.FC = () => {
         onClick={handleClose}
       >
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </Backdrop> */}
     </Box>
   );
 };

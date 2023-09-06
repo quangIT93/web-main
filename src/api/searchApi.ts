@@ -1,10 +1,10 @@
-import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers'
+// import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers'
 import axiosClient from './axiosClient'
 // api/productApi.js
 
 const searchApi = {
-  getSearchByFilter: () => {
-    const URL = `/v1/search/filter`
+  getSearchByFilter: (lang: string) => {
+    const URL = `/v1/search/filter?lang=${lang}`
     return axiosClient.get(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -12,14 +12,14 @@ const searchApi = {
     })
   },
 
-  getSuggestKeyWord: (limit: number) => {
-    const URL = `/v1/search/suggest?limit=${limit}`
+  getSuggestKeyWord: (limit: number, lang: string) => {
+    const URL = `/v1/search/suggest?limit=${limit}&lang=${lang}`
 
     return axiosClient.get(URL)
   },
 
-  getHistoryKeyWord: (limit: number) => {
-    const URL = `/v1/search/history?limit=${limit}`
+  getHistoryKeyWord: (limit: number, lang: string) => {
+    const URL = `/v1/search/history?limit=${limit}&lang=${lang}`
     return axiosClient.get(URL)
   },
 
@@ -38,7 +38,8 @@ const searchApi = {
     jobTypeId: number[] | [],
     category_ids: number[] | null,
     district_ids: string[] | null,
-    salary_type: number | null
+    salary_type: number | null,
+    lang: string | null,
   ) => {
     const URL =
       `/v2/search?` +
@@ -59,14 +60,15 @@ const searchApi = {
       `${district_ids != null ? `${district_ids.length > 0 ?
         `&${district_ids?.map((n, index) => `district_ids[${index}]=${n}`).join('&')}` : `&district_ids`}` : ""}` +
       `${category_ids != null ? `${category_ids.length > 0 ?
-        `&${category_ids?.map((n, index) => `category_ids[${index}]=${n}`).join('&')}` : `&category_ids`}` : ""}`
+        `&${category_ids?.map((n, index) => `category_ids[${index}]=${n}`).join('&')}` : `&category_ids`}` : ""}` +
+      `${lang ? `&lang=${lang}` : 'vi'}`
 
     return axiosClient.get(URL)
   },
 
   deleteKeywordSearch: (keyword: string) => {
     const URL = `/v1/search/history`
-    
+
     return axiosClient.delete(URL, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

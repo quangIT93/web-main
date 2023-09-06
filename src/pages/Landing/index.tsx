@@ -8,6 +8,7 @@ import ItemInfoRight from '../Landing/components/item/itemInfoRight';
 // import Popup from './popup/index'
 // import useModal from './popup/useModal'
 import Footer from '../../components/Footer/index';
+import RollTop from '#components/RollTop';
 import './style.scss';
 
 // import firebase
@@ -29,10 +30,12 @@ const Landing: React.FC = () => {
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_landing_page' as string,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -161,6 +164,7 @@ const Landing: React.FC = () => {
       </div>
 
       {/* <Popup isOpen={isOpen} toggle={toggle}></Popup> */}
+      <RollTop />
       <Footer />
     </div>
   );

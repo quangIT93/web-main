@@ -1,9 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import './style.scss'
+import './style.scss';
 
 const Footer: React.FC = () => {
+  // const mail = 'contact.hijob@gmail.com';
   return (
     <div style={{ width: '100%' }}>
       <div className="container-footer">
@@ -16,7 +17,12 @@ const Footer: React.FC = () => {
               marginBottom: 10,
             }}
           >
-            <img src={require('../../img/langdingPage/logoHiJob.png')} />
+            <img
+              width={66}
+              height={80}
+              src={require('../../img/langdingPage/logoHiJob.png')}
+              alt="ảnh bị lỗi"
+            />
           </div>
 
           <h3>Kết nối tài năng</h3>
@@ -37,69 +43,107 @@ const Footer: React.FC = () => {
           <div className="right-top">
             <h4>TẢI ỨNG DỤNG HIJOB</h4>
             <div className="div-img-footer">
-              <img src={require('../../img/langdingPage/QRcode-ggplay.png')} />
               <img
+                width={124}
+                height={124}
+                src={require('../../img/langdingPage/QRcode-ggplay.png')}
+                alt="Ảnh lỗi"
+              />
+              <img
+                width={124}
+                height={124}
                 style={{ marginLeft: 10 }}
                 src={require('../../img/langdingPage/QRcode-appstore.png')}
+                alt="Ảnh lỗi"
               />
             </div>
             <div className="div-link-app">
-              <a
-                href="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+              <Link
+                to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
                 target="_blank"
               >
                 <img
+                  width={117}
+                  height={35}
                   id="img-gallery"
                   src={require('../../img/langdingPage/image 43.png')}
+                  alt="Ảnh lỗi"
                 />
-              </a>
-              <a
-                href="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+              </Link>
+              <Link
+                to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
                 target="_blank"
               >
-                <img src={require('../../img/langdingPage/image 45.png')} />
-              </a>
+                <img
+                  width={117}
+                  height={35}
+                  src={require('../../img/langdingPage/image 45.png')}
+                  alt="Ảnh lỗi"
+                />
+              </Link>
             </div>
           </div>
           <div className="div-socal-link">
             <h4 style={{ color: '#0D99FF' }}>LIÊN KẾT</h4>
             <div id="div-img-socal">
-              <a href="https://www.facebook.com/hijobOfficial/">
-                <img src={require('../../img/langdingPage/imagefb.png')} />
-              </a>
-              <a href="#">
+              <Link to="https://www.facebook.com/hijobOfficial/">
+                <img
+                  src={require('../../img/langdingPage/imagefb.png')}
+                  alt="Ảnh lỗi"
+                />
+              </Link>
+              <Link to="#">
                 <img
                   id="img-gallery"
                   src={require('../../img/langdingPage/imagein.png')}
+                  alt="Ảnh lỗi"
                 />
-              </a>
-              <a href="#">
-                <img src={require('../../img/langdingPage/imageyou.png')} />
-              </a>
+              </Link>
+              <Link to="#">
+                <img
+                  src={require('../../img/langdingPage/imageyou.png')}
+                  alt="Ảnh lỗi"
+                />
+              </Link>
             </div>
           </div>
         </div>
       </div>
       <div id="div-policy-footer">
-        <a href="/policy">
+        <Link to="/policy">
           {' '}
           <p>Chính sách sử dụng</p>{' '}
-        </a>
-        <div id="div-policy-footer-right">
-          <div style={{ flexDirection: 'row', display: 'flex' }}>
-            <p style={{ color: '#575757' }}>Tổng đài CSKH: </p>
-            <p style={{ color: '#AAAAAA', marginLeft: '5px' }}>
-              (028) 35358983
-            </p>
-            {/* <p style={{ color: '#575757', marginLeft: '2px' }}>
+        </Link>
+
+        <div
+          style={{
+            flexDirection: 'row',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <p style={{ color: '#575757', fontSize: '12px' }}>Tổng đài CSKH: </p>
+          <p style={{ color: '#575757', marginLeft: '5px', fontSize: '12px' }}>
+            (028) 35358983
+          </p>
+          {/* <p style={{ color: '#575757', marginLeft: '2px' }}>
               (1.000 đồng/phút)
             </p> */}
-          </div>
-          <p style={{ color: '#575757' }}>Email: neoworks.vn@gmail.com</p>
         </div>
+
+        <Link
+          to={`mailto:contact.hijob@gmail.com`}
+          style={{
+            color: '#0d99ff',
+            textDecoration: 'underline',
+            fontSize: '12px',
+          }}
+        >
+          Email: contact.hijob@gmail.com
+        </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

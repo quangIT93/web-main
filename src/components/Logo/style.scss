@@ -5,6 +5,21 @@
   display: flex;
   align-items: center;
   margin-right: 24px;
+
+  img {
+    width: 50px;
+    height: 50px;
+
+    @include breakpoint(mobile) {
+      min-width: 50px;
+      min-height: 50px;
+    }
+
+    @include breakpoint(tablet) {
+      min-width: 50px;
+      min-height: 50px;
+    }
+  }
 }
 
 // .logo__quote {
@@ -37,29 +52,29 @@
 // }
 
 @include breakpoint(mobile) {
-  .logo {
-    & img {
-      // width: 24px;
-      // height: 30px;
-    }
-  }
+  // .logo {
+  // & img {
+  // width: 24px;
+  // height: 30px;
+  // }
+  // }
 }
 
 @include breakpoint(tablet) {
   .logo {
-    padding-left: 12px;
-    & img {
-      // width: 40px;
-      // height: 40px;
-    }
+    // padding-left: 12px;
+    // & img {
+    // width: 40px;
+    // height: 40px;
+    // }
   }
 }
 
 @include breakpoint(largeTablet) {
-  .logo {
-    & img {
-      // width: 24px;
-      // height: 30px;
-    }
-  }
+  // .logo {
+  // & img {
+  // width: 24px;
+  // height: 30px;
+  // }
+  // }
 }

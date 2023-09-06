@@ -1,12 +1,12 @@
 import axiosClient from './axiosClient'
 // site api
 const siteApi = {
-  getSalaryType: () => {
-    const URL = `/v1/salary-types`
+  getSalaryType: (lang: string) => {
+    const URL = `/v1/salary-types?lang=${lang}`
     return axiosClient.get(URL)
   },
-  getJobType: () => {
-    const URL = `/v1/job-types`
+  getJobType: (lang: string) => {
+    const URL = `/v1/job-types?lang=${lang}`
     return axiosClient.get(URL)
   },
 }

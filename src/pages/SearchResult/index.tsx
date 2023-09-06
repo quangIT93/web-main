@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-
+import queryString from 'query-string';
 import Modal from '@mui/material/Modal';
 
 import Grid from '@mui/material/Grid';
@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { Cascader, Divider, Typography, Input, Space } from 'antd';
+import { Cascader, Divider, Typography, Input, Space, message } from 'antd';
 import { EnvironmentOutlined } from '@ant-design/icons';
 
 import { Box, Button } from '@mui/material';
@@ -28,6 +28,7 @@ import profileApi from 'api/profileApi';
 import locationApi from 'api/locationApi';
 import categoriesApi from 'api/categoriesApi';
 import Footer from '../../components/Footer/Footer';
+import RollTop from '#components/RollTop';
 
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -46,11 +47,6 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
 // import { useHomeState } from '../Home/HomeState'
 
-import {
-  // useNavigate,
-  // createSearchParams,
-  useSearchParams,
-} from 'react-router-dom';
 // import { AxiosResponse } from 'axios'
 // import icon
 
@@ -64,6 +60,12 @@ import { HomeValueContext } from 'context/HomeValueContextProvider';
 import './style.scss';
 // import { stringify } from 'query-string/base';
 import notificationKeywordApi from 'api/notificationKeyword';
+import languageApi from 'api/languageApi';
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+import { searchResultVi } from 'validations/lang/vi/searchResult';
+import { searchResultEn } from 'validations/lang/en/searchResult';
+
 const { SHOW_CHILD } = Cascader;
 
 // const ITEM_HEIGHT = 48;
@@ -100,6 +102,7 @@ interface PostNewest {
   };
   created_at_text: string;
   bookmarked: boolean;
+  money_type_text: string;
 }
 
 const style = {
@@ -139,13 +142,19 @@ const NewJobs: React.FC = () => {
     openNotificate: boolean;
     search: boolean;
   } = useContext(HomeValueContext);
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [page, setPage] = React.useState(2);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [searchData, setSearchData] = React.useState<any>();
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+  // Lấy query params từ URL
+  const queryParams = queryString.parse(window.location.search);
+
+  // Lấy giá trị của tham số cụ thể (ví dụ: post-id)
+
   // const navigate = useNavigate()
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
@@ -158,7 +167,7 @@ const NewJobs: React.FC = () => {
   //   number | null
   // >(null);
 
-  const [open, setOpen] = React.useState<any>([]);
+  // const [open, setOpen] = React.useState<any>([]);
   // const locations: any = [];
 
   // const [location, setLocation] = React.useState<any>(
@@ -175,7 +184,7 @@ const NewJobs: React.FC = () => {
   //   wards: [],
   // });
   const [openModal, setOpenModal] = React.useState(false);
-  const QUERY = decodeURIComponent(`${searchParams.get('q')}`);
+  const QUERY = decodeURIComponent(`${queryParams['q']}`);
   const [valueKeyword, setValueKeyword] = React.useState(QUERY ? QUERY : '');
   // const [districtId, setDistrictId] = React.useState<string>('');
 
@@ -186,16 +195,47 @@ const NewJobs: React.FC = () => {
 
   const [disableLocation, setDisableLocation] = React.useState<Boolean>(false);
   const [disableCatelory, setDisableCatelory] = React.useState<Boolean>(false);
+  const [loading, setLoading] = React.useState<Boolean>(false);
   const [locId, setLocId] = React.useState<string[]>([]);
 
-  const [locationOneItem, setLocationOneItem] = React.useState<string>('');
-  const [cateloryOneItem, setCateloryOneItem] = React.useState<number | null>(
-    null,
-  );
+  const [locationOneItem, setLocationOneItem] = React.useState<string[]>([]);
+  const [cateloryOneItem, setCateloryOneItem] = React.useState<number[]>([]);
 
   const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [categoriesId, setCategoriesId] = React.useState<string[]>([]);
+  const [messageApi, contextHolder] = message.useMessage();
+  const analytics: any = getAnalytics();
+  const [language, setLanguage] = React.useState<any>();
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    // document.title = language?.search_results_page?.title_page;
+    document.title =
+      languageRedux === 1 ? 'HiJob - Tìm kiếm công việc' : 'HiJob - Job Search';
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_search' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux, language]);
 
   // ----------------------------------------------------------------
 
@@ -242,7 +282,7 @@ const NewJobs: React.FC = () => {
   const IS_WORKING_WEEKEND = userFilteredCookies?.is_working_weekend;
   const IS_REMOTELY = userFilteredCookies?.is_remotely;
 
-  console.log('Salary_Max search params search result: ', SALARY_MAX);
+  // console.log('Salary_Max search params search result: ', SALARY_MAX);
 
   const JOB_TYPE =
     userTypejobFilteredCookies?.id && userTypejobFilteredCookies?.id! !== 5
@@ -255,9 +295,9 @@ const NewJobs: React.FC = () => {
       ? userFilteredCookies?.list_dis?.map((dis: any) => dis[1])
       : [];
 
-  console.log('ssssssss', userFilteredCookies?.list_cate);
-  console.log('userFilteredCookies?.list_cate', userFilteredCookies.list_cate);
-  console.log('LIST_DIS_ID', LIST_DIS_ID);
+  // console.log('ssssssss', userFilteredCookies?.list_cate);
+  // console.log('userFilteredCookies?.list_cate', userFilteredCookies.list_cate);
+  // console.log('LIST_DIS_ID', LIST_DIS_ID);
   // searchParams
   //   .getAll('dis-ids')
   //   .map((disId) => disId.split(','))
@@ -273,7 +313,7 @@ const NewJobs: React.FC = () => {
   //   .map((dis) => dis[1])
   //   .map(Number);
 
-  console.log(searchParams.getAll('dis-ids'));
+  // console.log(searchParams.getAll('dis-ids'));
 
   // let userFiltered = JSON.parse(getCookie('userFiltered') || '{}');
 
@@ -281,7 +321,9 @@ const NewJobs: React.FC = () => {
 
   const allLocation = async () => {
     try {
-      const allLocation = await locationApi.getAllLocation();
+      const allLocation = await locationApi.getAllLocation(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       if (allLocation) {
         setDataAllLocation(allLocation.data);
@@ -295,12 +337,15 @@ const NewJobs: React.FC = () => {
     allLocation();
     // getAllLocations()
     // delete param when back to page
-    console.log('search parameters: ', Number(searchParams.get('job-type')));
-  }, []);
+    // console.log('search parameters: ', Number(searchParams.get('job-type')));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise();
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -313,7 +358,8 @@ const NewJobs: React.FC = () => {
     getCategories();
     // getAllLocations()
     // delete param when back to page
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   // handle click post details
   // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -433,7 +479,7 @@ const NewJobs: React.FC = () => {
     //     ? SALARY_TYPE
     //     : null
     // )
-    console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
+    // console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
     const result = await searchApi.getSearchByQueryV2(
       QUERY,
       page,
@@ -449,9 +495,9 @@ const NewJobs: React.FC = () => {
       LIST_CATEGORIES_ID,
       LIST_DIS_ID,
       SALARY_TYPE,
+      languageRedux === 1 ? 'vi' : 'en',
     );
 
-    console.log('checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', result);
     //
     if (result && result?.data?.posts.length !== 0) {
       setSearchData((prev: any) => {
@@ -462,34 +508,36 @@ const NewJobs: React.FC = () => {
       });
       setPage(page + 1);
     } else {
-      console.log('da het data', result);
+      console.log('Đã hết bài viết để hiển thị', result);
     }
   };
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   const onChangeLocation = (value: any) => {
     // Xử lý giá trị thay đổi
 
     setDisableLocation(false);
     const secondValues = value?.map((item: any) => item[1]);
+    // console.log('value', value);
+    // console.log('secondValues', secondValues);
 
     if (
-      secondValues.length <= 1
+      secondValues.length <= 10
       // && listLocation.length <= 3
     ) {
       setLocId(secondValues);
       if (value.length !== 0) {
-        setLocationOneItem(value[0][1]);
+        setLocationOneItem(value.map((v: any) => v[1]));
       } else {
-        setLocationOneItem('');
+        setLocationOneItem([]);
       }
       // setListDis(value);
     }
-    if (value.length > 0) {
+    if (value.length > 9) {
       setDisableLocation(true);
     }
   };
@@ -497,24 +545,34 @@ const NewJobs: React.FC = () => {
   const onChangeCateLory = (value: any) => {
     setDisableCatelory(false);
     const secondValues = value?.map((item: any) => item[1]);
-    if (secondValues.length <= 1) {
+    // console.log('value', value);
+    // console.log('secondValues', secondValues);
+    if (secondValues.length <= 10) {
       setCategoriesId(secondValues);
       if (value.length !== 0) {
-        setCateloryOneItem(value[0][0]);
+        // setCateloryOneItem(value[0][0]);
+        setCateloryOneItem(value.map((cate: any) => cate[1]));
       } else {
-        setCateloryOneItem(null);
+        setCateloryOneItem([]);
       }
     }
-    if (value.length > 0) {
+    if (value.length > 9) {
       setDisableCatelory(true);
     }
   };
 
+  // console.log('loca', locationOneItem);
+  // console.log('cae', cateloryOneItem);
+
   const DropdownRenderLocation = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
-      <Text className="title-filter_location">Chọn địa điểm</Text>
+      <Text className="title-filter_location">
+        {language?.search_results_page?.palce_location}
+      </Text>
       {menus}
-      <Divider style={{ margin: 5 }} />
+      <Divider style={{ margin: 5 }}>
+        {disableLocation ? language?.limit_10_location : ''}
+      </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
           Huỷ
@@ -528,16 +586,22 @@ const NewJobs: React.FC = () => {
 
   const DropdownRenderCategory = (menus: React.ReactNode) => (
     <div style={{ width: '100%' }}>
-      <Text className="title-filter_location">Chọn danh mục nghề nghiệp</Text>
+      <Text className="title-filter_location">
+        {language?.search_results_page?.palce_cate}
+      </Text>
       {menus}
-      <Divider style={{ margin: 5 }} />
+      <Divider style={{ margin: 5 }}>
+        {disableCatelory ? language?.limit_10_cate : ''}
+      </Divider>
     </div>
   );
 
   const fetchDataProfileUser = async () => {
     try {
       await dispatch(getProfile() as any);
-      const result = await profileApi.getProfile();
+      const result = await profileApi.getProfile(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setProfileUser(result.data);
       }
@@ -549,13 +613,14 @@ const NewJobs: React.FC = () => {
 
   useEffect(() => {
     fetchDataProfileUser();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
-  useEffect(() => {
-    if (dataAllLocation && dataAllLocation.length > 0) {
-      setOpen(Array(dataAllLocation.length).fill(false));
-    }
-  }, [dataAllLocation]);
+  // useEffect(() => {
+  //   if (dataAllLocation && dataAllLocation.length > 0) {
+  //     setOpen(Array(dataAllLocation.length).fill(false));
+  //   }
+  // }, [dataAllLocation]);
 
   // const handleClickProvince = (event: any, index: number) => {
   //   event.stopPropagation();
@@ -581,21 +646,54 @@ const NewJobs: React.FC = () => {
     setValueKeyword(e.target.value);
   };
 
+  // const validValue = () => {
+  //   if ('') {
+  //     return {
+  //       message: 'Vui lòng chọn logo công ty',
+  //       checkForm: false,
+  //     };
+  //   }
+
+  //   return {
+  //     message: '',
+  //     checkForm: true,
+  //   };
+  // };
+
   const handleSubmitKeyword = async () => {
+    // const { message, checkForm } = validValue();
     try {
-      const result = await notificationKeywordApi.createKeywordNotification(
+      // const result = await notificationKeywordApi.createKeywordNotification(
+      //   valueKeyword,
+      //   cateloryOneItem,
+      //   locationOneItem,
+      // );
+      // const result = true;
+      const result = await notificationKeywordApi.createKeywordNotificationV3(
         valueKeyword,
         cateloryOneItem,
         locationOneItem,
       );
-      // const result = true;
 
       if (result) {
         setOpenModal(false);
         setOpenModalCreateSuccess(true);
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: language?.search_results_page.alert_create_fail,
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log('error', error);
+      if (
+        error.response.data.message === 'Create keyword notification failed'
+      ) {
+        messageApi.open({
+          type: 'error',
+          content: language?.limit_10_keyword,
+        });
+      }
     }
   };
 
@@ -614,17 +712,18 @@ const NewJobs: React.FC = () => {
     try {
       if (dataProfile) {
         setOpenBackdrop(true);
-        console.log('QUERY', QUERY);
-        console.log('page', page);
-        console.log('MONEY_TYPE', MONEY_TYPE);
-        console.log('IS_WORKING_WEEKEND', IS_WORKING_WEEKEND);
-        console.log('IS_REMOTELY', IS_REMOTELY);
-        console.log('SALARY_MIN', SALARY_MIN);
-        console.log('SALARY_MAX', SALARY_MAX);
-        console.log('JOB_TYPE', JOB_TYPE);
-        console.log('LIST_CATEGORIES_ID', LIST_CATEGORIES_ID);
-        console.log('LIST_DIS_ID', LIST_DIS_ID);
-        console.log('SALARY_TYPE', SALARY_TYPE);
+        setLoading(true);
+        // console.log('QUERY', QUERY);
+        // console.log('page', page);
+        // console.log('MONEY_TYPE', MONEY_TYPE);
+        // console.log('IS_WORKING_WEEKEND', IS_WORKING_WEEKEND);
+        // console.log('IS_REMOTELY', IS_REMOTELY);
+        // console.log('SALARY_MIN', SALARY_MIN);
+        // console.log('SALARY_MAX', SALARY_MAX);
+        // console.log('JOB_TYPE', JOB_TYPE);
+        // console.log('LIST_CATEGORIES_ID', LIST_CATEGORIES_ID);
+        // console.log('LIST_DIS_ID', LIST_DIS_ID);
+        // console.log('SALARY_TYPE', SALARY_TYPE);
         const result = await searchApi.getSearchByQueryV2(
           QUERY,
           null,
@@ -640,6 +739,7 @@ const NewJobs: React.FC = () => {
           LIST_CATEGORIES_ID,
           LIST_DIS_ID,
           SALARY_TYPE,
+          languageRedux === 1 ? 'vi' : 'en',
         );
         // const result = await searchApi.getSearchByQueryV2(
         //   'null',
@@ -658,9 +758,10 @@ const NewJobs: React.FC = () => {
         //   SALARY_TYPE,
         // );
 
-        console.log('resut', result);
+        // console.log('resut', result);
         if (result) {
           setOpenBackdrop(false);
+          setLoading(false);
           setSearchData(result.data);
         }
       }
@@ -672,15 +773,16 @@ const NewJobs: React.FC = () => {
 
   React.useEffect(() => {
     getPostSearch();
-  }, [dataProfile, search]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataProfile, search, languageRedux]);
   // title
 
-  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
+  // const [titleFirebase, setTitleFirebase] = React.useState<string>('');
   // const [site, SetSite] = React.useState<any>(null);
 
   // const getTitle = async () => {
   //   try {
-  //     const result = await siteApi.getSalaryType();
+  //     const result = await siteApi.getSalaryType("vi");
   //     if (result) {
   //       SetSite(result);
   //     }
@@ -693,69 +795,68 @@ const NewJobs: React.FC = () => {
   //   getTitle();
   // }, []);
 
-  React.useEffect(() => {
-    if (dataAllLocation) {
-      setTitleFirebase('HiJob - Trang tìm kiếm');
-    }
-  }, [dataAllLocation]);
+  // React.useEffect(() => {
+  //   document.title = titleFirebase ? titleFirebase : '/web-search';
+  // }, [titleFirebase]);
 
-  React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-search';
-  }, [titleFirebase]);
+  // new Promise((resolve, reject) => {
+  //   document.title = dataAllLocation ? titleFirebase : '/web-search';
+  // });
 
-  new Promise((resolve, reject) => {
-    document.title = dataAllLocation ? titleFirebase : 'web-search';
-  });
-
-  const [disable, setDisable] = React.useState(false);
+  // const [disable, setDisable] = React.useState(false);
 
   useEffect(() => {
     if (!openModal) {
       setLocId([]);
-      setLocationOneItem('');
+      setLocationOneItem([]);
       setDisableLocation(false);
       //
       setCategoriesId([]);
-      setCateloryOneItem(null);
+      setCateloryOneItem([]);
       setDisableCatelory(false);
     }
   }, [openModal]);
 
+  // const onChangeCate = (value: any) => {
+  //   console.log(`selected ${value}`);
+  //   setCateloryOneItem(value.map((val: any) => val));
+  //   console.log('value', value);
+  //   // setLocationOneItem()
+  // };
+
+  // const onSearch = (value: string) => {
+  //   console.log('search:', value);
+  // };
   return (
     <>
       <Navbar />
 
       <div className="search-result">
+        {contextHolder}
         {
           // automatic && (
           <Box sx={{ flexGrow: 1 }} ref={listRef}>
-            <div
-              style={{
-                display: 'flex',
-                // flexDirection: 'column',
-                margin: '20px 0',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                // background: '#aaaaaa',
-                padding: '8px 0',
-              }}
-            >
+            <div className="title-search">
               <div
                 style={{
-                  display: 'flex',
+                  display: loading ? 'none' : 'flex',
                   alignItems: 'center',
+                  fontSize: '24px',
                 }}
+                className="total-search"
               >
-                Tìm thấy{' '}
+                <span>{language?.search_results_page?.find} </span>
                 <h4 style={{ margin: '0 10px' }}>
-                  {searchData ? searchData?.total : 0}
+                  {searchData ? searchData?.total.toLocaleString() : 0}
                 </h4>
-                công việc phù hợp
+                <span className="title-last-search">
+                  {language?.search_results_page.suitable_job}
+                </span>
               </div>
               <div
                 style={{
                   color: '#0d99ff ',
-                  display: 'flex',
+                  display: loading ? 'none' : 'flex',
                   alignItems: 'center',
                   cursor: 'pointer',
                   // textDecoration: 'underline',
@@ -765,8 +866,8 @@ const NewJobs: React.FC = () => {
                 {searchData?.posts.length !== 0 && QUERY ? (
                   <>
                     <CreateKeywordIconSmall />
-                    <span style={{ marginLeft: '4px' }}>
-                      Tạo thông báo từ khóa
+                    <span style={{ marginLeft: '4px', fontSize: '20px' }}>
+                      {language?.search_results_page?.create_key_notices}
                     </span>
                   </>
                 ) : (
@@ -799,7 +900,7 @@ const NewJobs: React.FC = () => {
                       handleChange(e, page);
                     }}
                   >
-                    <p>Xem thêm</p>
+                    <p>{language?.more}</p>
                     <MoreICon width={20} height={20} />
                   </Space>
                 </Stack>
@@ -827,7 +928,7 @@ const NewJobs: React.FC = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
+          <Box sx={style} className="create-key-word">
             <div
               style={{
                 position: 'absolute',
@@ -842,14 +943,19 @@ const NewJobs: React.FC = () => {
             >
               <CloseOutlined style={{ fontSize: '30px' }} />
             </div>
-            <p className="title-modal_createKey">Thông báo từ khóa</p>
+            <p className="title-modal_createKey">
+              {language?.search_results_page?.keyword_announcement}
+            </p>
+            <p className="title-modal_noteKeyword">
+              {language?.search_results_page?.add_keyword_titles}
+            </p>
             <Input
-              placeholder="Từ khóa"
-              allowClear
+              placeholder={language?.keyword2}
+              // allowClear
               size="large"
               // onChange={onChange}
               type=""
-              style={{ marginTop: '12px' }}
+              style={{ marginTop: '12px', fontSize: '12px' }}
               value={valueKeyword}
               // disabled
               // error={companyError} // Đánh dấu lỗi
@@ -860,7 +966,7 @@ const NewJobs: React.FC = () => {
               multiple
               maxTagCount="responsive"
               size="large"
-              placeholder="Chọn địa điểm"
+              placeholder={language?.search_results_page?.palce_location}
               inputIcon={<EnvironmentOutlined />}
               dropdownRender={DropdownRenderLocation}
               // defaultValue={
@@ -911,6 +1017,7 @@ const NewJobs: React.FC = () => {
                 borderRadius: '2px',
                 fontStyle: 'italic',
                 margin: '12px 0',
+                fontSize: '12px',
               }}
             />
             {/* 
@@ -955,9 +1062,40 @@ const NewJobs: React.FC = () => {
                 width: '100%',
                 borderRadius: '2px',
                 fontStyle: 'italic',
+                fontSize: '12px',
               }}
-              placeholder="Chọn danh mục ngành nghề"
+              placeholder={language?.search_results_page?.palce_cate}
             />
+
+            {/* <Select
+              // open
+              placeholder="Select a person"
+              optionFilterProp="children"
+              maxTagCount="responsive"
+              mode="multiple"
+              onChange={onChangeCate}
+              onSearch={onSearch}
+              allowClear
+              // filterOption={(input, option) =>
+              //   (option?.label ?? '')
+              //     .toLowerCase()
+              //     .includes(input.toLowerCase())
+              // }
+              style={{ width: '100%' }}
+              size="large"
+              showSearch={false}
+              options={
+                dataCategories
+                  ? dataCategories.map((val: any, num: number) => {
+                      return {
+                        value: val.parent_category_id,
+                        label: val.parent_category,
+                      };
+                    })
+                  : []
+              }
+              className="ant-selected_cate"
+            /> */}
             <div
               style={{
                 display: 'flex',
@@ -977,7 +1115,7 @@ const NewJobs: React.FC = () => {
                 onClick={handleSubmitKeyword}
                 variant="contained"
               >
-                Áp dụng
+                {language?.search_results_page.apply}
               </Button>
               {/* <Button
                 sx={{
@@ -1023,7 +1161,9 @@ const NewJobs: React.FC = () => {
             >
               <CloseIcon />
             </IconButton>
-            <p className="title-modal_createKeySuccess">Hoàn thành</p>
+            <p className="title-modal_createKeySuccess">
+              {language?.search_results_page?.successful}
+            </p>
             <p
               className="text-modal_createKeySuccess"
               style={{
@@ -1032,11 +1172,10 @@ const NewJobs: React.FC = () => {
                 margin: '12px 0px 4px 0px',
               }}
             >
-              Bạn đã thành công thêm từ khoá, có thể các thông báo sẽ làm phiền,
-              bạn có thể tắt thông báo trong mục Thông báo từ khoá.
+              {language?.search_results_page?.alert_create_success}
             </p>
             <p className="text-modal_createKeySuccess">
-              Bạn có muốn chuyển đến mục thông báo từ khoá không?
+              {language?.search_results_page?.alert_move_to_notification}
             </p>
             <div
               style={{
@@ -1057,7 +1196,7 @@ const NewJobs: React.FC = () => {
                 onClick={handleOpenNotification}
                 variant="contained"
               >
-                Xác nhận
+                {language?.search_results_page?.confirm}
               </Button>
               {/* <Button
                 sx={{
@@ -1087,9 +1226,8 @@ const NewJobs: React.FC = () => {
         </Modal>
       </div>
       <ShowCancleSave />
-
       <ShowNotificativeSave />
-
+      <RollTop />
       <Footer />
     </>
   );

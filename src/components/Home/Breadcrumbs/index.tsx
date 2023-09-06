@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState, useCallback } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 
 import Collapse from '@mui/material/Collapse';
@@ -12,7 +12,7 @@ import { useSearchParams } from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-import { NumberOutlined } from '@ant-design/icons';
+// import { NumberOutlined } from '@ant-design/icons';
 import Skeleton from '@mui/material/Skeleton';
 
 // import component
@@ -22,6 +22,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
+// import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
 // import api
 import categoriesApi from '../../../api/categoriesApi';
 import postApi from 'api/postApi';
@@ -30,15 +31,17 @@ import './style.scss';
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 import { IvalueJobChild } from 'context/HomeValueContextProvider';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
+
+import { setPostNewestApiV3 } from 'store/reducer/postReducerV3/newWestReducer';
 
 const BreadcrumbsCpn: React.FC = () => {
   // Contexts
   const {
     setChildCateloriesArray,
-    childCateloriesArray,
+
     valueJobChild,
-    setValueJobChild,
-    navTouchCatelory,
   }: {
     navTouchCatelory: boolean;
     setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
@@ -47,8 +50,12 @@ const BreadcrumbsCpn: React.FC = () => {
     setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
   } = useContext(HomeValueContext);
 
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [reData, setReData] = React.useState(false);
   // const [checked, setChecked] = React.useState(true)
   const [childCatelories, setChildCatelories] = React.useState<any>(null);
 
@@ -57,8 +64,10 @@ const BreadcrumbsCpn: React.FC = () => {
   const [arrayChild, setArrayChild] = useState<any>([]);
 
   // state redux
-  const { postNewest } = useSelector((state: RootState) => state);
-
+  const postNewest = useSelector((state: RootState) => state.postNewest);
+  const postNewestV3: any = useSelector(
+    (state: RootState) => state.newWestReducerV3,
+  );
   const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useDispatch();
@@ -78,12 +87,19 @@ const BreadcrumbsCpn: React.FC = () => {
   //   setChecked(event.target.checked)
   // }
 
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+
   const getAllChildCategoriesById = async () => {
     try {
+      // setIsLoading(true);
       const result = await categoriesApi.getAllChildCategories(
         valueJobChild?.id,
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
+        // setIsLoading(false);
         setChildCatelories(result.data);
       }
     } catch (error) {
@@ -91,16 +107,18 @@ const BreadcrumbsCpn: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, [])
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 2000);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     getAllChildCategoriesById();
-  }, [valueJobChild?.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [valueJobChild?.id, languageRedux]);
 
   useEffect(() => {
     setCheckedItems(
@@ -114,13 +132,28 @@ const BreadcrumbsCpn: React.FC = () => {
 
   useEffect(() => {
     setArrayChild([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('categories-id')]);
 
   const handleClickChoose = async () => {
     setOpen(false);
 
+    // Lấy chiều cao của màn hình
+    const windowWidth =
+      window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+
+    // console.log('windowWidth=', windowWidth);
+
+    if (windowWidth > 519) {
+      window.scrollTo(0, 530);
+    } else if (windowWidth <= 519) {
+      window.scrollTo(0, 560);
+    }
+
     const array = checkedItems
-      .map((checkedItem: any) => {
+      ?.map((checkedItem: any) => {
         if (checkedItem?.checked === true) {
           return { id: checkedItem?.id, name: checkedItem?.name };
         }
@@ -131,21 +164,44 @@ const BreadcrumbsCpn: React.FC = () => {
     setArrayChild(array);
 
     setChildCateloriesArray(
-      array.map((arr: { id: number; name: string }) => arr.id),
+      array?.map((arr: { id: number; name: string }) => arr.id),
     );
-    const thersholdId =
-      postNewest.data.posts[postNewest.data.posts.length - 1].id;
-
+    // const thersholdId =
+    // postNewest?.data?.posts[postNewest.data.posts.length - 1]?.id;
+    const thersholdId = postNewestV3.data[postNewestV3.data.length - 1]?.id;
     try {
-      const result = await postApi.getPostNewest(
+      // const result = await postApi.getPostNewest(
+      //   Number(valueJobChild?.id),
+      //   array?.map((arr: { id: number; name: string }) => arr.id),
+      //   null,
+      //   9,
+      //   0,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+
+      const result2 = await postApi.getPostNewestV3(
+        array?.map((arr: { id: number; name: string }) => arr.id),
         Number(valueJobChild?.id),
-        array.map((arr: { id: number; name: string }) => arr.id),
         null,
-        9,
+        null,
+        10,
         thersholdId,
+        languageRedux === 1 ? 'vi' : 'en',
       );
-      if (result) {
-        setPostNewest(result);
+
+      // const result = await postApi.getPostNewestV3(
+      //   array.map((arr: { id: number; name: string }) => arr.id),
+      //   Number(valueJobChild?.id),
+      //   null,
+      //   null,
+      //   10,
+      //   null,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+      if (result2) {
+        // setPostNewest(result);
+        // dispatch(setPostNewestApi(result));
+        dispatch(setPostNewestApiV3(result2));
         // setOpenBackdrop(false)
       }
     } catch (error) {
@@ -172,7 +228,7 @@ const BreadcrumbsCpn: React.FC = () => {
   // }, [open])
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked, value } = event.target;
+    const { name, checked } = event.target;
 
     setCheckedItems((prevCheckedItems: any) => {
       const updatedCheckedItems = [...prevCheckedItems];
@@ -198,14 +254,26 @@ const BreadcrumbsCpn: React.FC = () => {
       !event.target.closest('.icon-breadcrumb')
     ) {
       setOpen(false);
+      // handleClickChoose()
+      setReData(true);
     }
   };
+
+  useEffect(() => {
+    // open === false && handleClickChoose();
+
+    if (open === false && reData === true) {
+      handleClickChoose();
+      setReData(false);
+    }
+  }, [open]);
 
   useEffect(() => {
     window.addEventListener('click', handleOutsideClick);
     return () => {
       window.removeEventListener('click', handleOutsideClick);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const breadcrumbs = [
@@ -250,15 +318,17 @@ const BreadcrumbsCpn: React.FC = () => {
             background: '#ffffff',
           }}
         >
-          {arrayChild?.length === 0
-            ? 'Tất cả'
+          {arrayChild?.length === 0 || arrayChild?.length === undefined
+            ? languageRedux === 1
+              ? `Tất cả`
+              : `All`
             : arrayChild?.map(
-              (value: { id: number; name: string }, index: number) => (
-                <div key={index}>
-                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                </div>
-              ),
-            )}
+                (value: { id: number; name: string }, index: number) => (
+                  <div key={index}>
+                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                  </div>
+                ),
+              )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -270,7 +340,6 @@ const BreadcrumbsCpn: React.FC = () => {
   ];
 
   return (
-
     <Stack
       className="bread-crumb-container"
       spacing={2}
@@ -278,24 +347,31 @@ const BreadcrumbsCpn: React.FC = () => {
         marginTop: '192px',
         // marginTop: navTouchCatelory ? '170px' : '24px',
         // position: 'relative',
+        maxWidth: '1280px',
         position: 'fixed',
+        margin: '192px auto 0 auto',
         // sua
         // top: '-60px',
         zIndex: '1',
         background: '#ffffff',
-        padding: '16px 180px ',
+        padding: '16px 0px ',
         left: 0,
         right: 0,
         borderBottom: '1px solid #e5e5e5',
+        '@media (max-width: 767px)': {
+          marginTop: '180px',
+        },
+        boxShadow:
+          '10px 0px 0px rgb(255, 255, 255), -10px 0px 0px rgb(255, 255, 255)',
       }}
     >
-      {isLoading ?
+      {isLoading ? (
         <Skeleton variant="rounded" width="100%" height={34} />
-        :
+      ) : (
         <Breadcrumbs separator="" aria-label="breadcrumb">
           {breadcrumbs}
         </Breadcrumbs>
-      }
+      )}
       <Collapse
         in={open}
         // timeout="auto"
@@ -303,7 +379,9 @@ const BreadcrumbsCpn: React.FC = () => {
         unmountOnExit
         className="collapse-breadcrumbs"
       >
-        <Typography className="header-breabcrumb_text">Danh sách</Typography>
+        <Typography className="header-breabcrumb_text">
+          {language?.home_page?.list}
+        </Typography>
         <Box padding={0} className="box-breadcrumbs">
           <FormGroup>
             {childCatelories?.map((childCatelorie: any, index: number) => (
@@ -326,7 +404,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                        checkItemsCount >= MAX_CHECKED_ITEMS
+                          checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />
@@ -342,7 +420,7 @@ const BreadcrumbsCpn: React.FC = () => {
             className="btn-breadcrumb_nav"
             onClick={handleClickChoose}
           >
-            Chọn
+            {language?.home_page?.select}
           </button>
         </div>
       </Collapse>
@@ -418,9 +496,9 @@ const BreadcrumbsCpn: React.FC = () => {
           </div>
         </Collapse>
       </Stack> */}
-    </Stack >
-  )
-}
+    </Stack>
+  );
+};
 
 export default BreadcrumbsCpn;
 

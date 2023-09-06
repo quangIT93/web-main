@@ -1,22 +1,24 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { Cascader } from 'antd';
+// import Box from '@mui/material/Box';
+import { Cascader, Divider } from 'antd';
 import categoriesApi from '../../../api/categoriesApi';
 import './style.scss';
-interface Option {
-  value: string | number;
-  label: string;
-  children?: Option[];
-  disableCheckbox?: boolean;
-}
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
+// interface Option {
+//   value: string | number;
+//   label: string;
+//   children?: Option[];
+//   disableCheckbox?: boolean;
+// }
 
 const { SHOW_CHILD } = Cascader;
 
-interface IPostCategoryIds {
-  selectedOptions: Option[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<Option[]>>;
-}
+// interface IPostCategoryIds {
+//   selectedOptions: Option[];
+//   setSelectedOptions: React.Dispatch<React.SetStateAction<Option[]>>;
+// }
 
 // const options: Option[] = [
 //   {
@@ -49,10 +51,12 @@ interface IEditPostCategoryId {
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
   editDataPosted: any;
   dataPost: any;
+  language: any;
+  languageRedux: any;
 }
 
 const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
-  const { setEditDataPosted, editDataPosted, dataPost } = props;
+  const { setEditDataPosted, dataPost, language, languageRedux } = props;
 
   const [categoriesId, setCategoriesId] = React.useState<string[]>(
     dataPost?.map((cata: any) => cata.child_category_id),
@@ -61,7 +65,18 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
 
-  const [defaultValue, setDefaultValue] = React.useState<number[]>([]);
+  // const [defaultValue, setDefaultValue] = React.useState<number[]>([]);
+
+  const DropdownRender = (menus: React.ReactNode) => (
+    <div style={{ width: '520px' }} className="filter-loca-cate">
+      {menus}
+      <Divider style={{ margin: '8px 5px' }}>
+        {disable ?
+          language?.limit_2_cate
+          : ''}
+      </Divider>
+    </div>
+  );
 
   const onChange = (value: any) => {
     setDisable(false);
@@ -82,7 +97,9 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise();
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -93,15 +110,16 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
 
   React.useEffect(() => {
     getCategories();
-    const array = dataPost?.map((cata: any) => [
-      cata?.parent_category_id,
-      cata?.child_category_id,
-    ]);
+    // const array = dataPost?.map((cata: any) => [
+    //   cata?.parent_category_id,
+    //   cata?.child_category_id,
+    // ]);
     if (dataPost?.length === 2) {
       setDisable(true);
     }
-    setDefaultValue(array);
-  }, []);
+    // setDefaultValue(array);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   return (
     <div className="edit-cate_post">
@@ -111,7 +129,10 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
         component="label"
         htmlFor="jobTitle"
       >
-        Danh mục nghề <span style={{ color: 'red' }}>*</span>
+        {
+          language?.category
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
         defaultValue={dataPost?.map((cata: any) => [
@@ -144,7 +165,8 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
               }))
             : []
         }
-        dropdownClassName="edit-post-category-drop"
+        dropdownRender={DropdownRender}
+        popupClassName="edit-post-category-drop"
         onChange={onChange}
         multiple
         maxTagCount="responsive"

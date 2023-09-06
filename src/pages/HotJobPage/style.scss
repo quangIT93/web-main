@@ -1,16 +1,21 @@
 .hot-job-page-container {
-    margin: 100px 180px;
+    margin: 100px auto;
+    max-width: 1080px;
 
-    @media screen and (max-width: 1280px) {
-        margin: 100px 24px;
+    .MuiGrid-root {
+        .MuiPaper-root {
+            position: relative;
+        }
     }
+    
 
     .hot-job-title-container {
         display: flex;
-        align-items: flex-start;
-        flex-direction: column;
+        align-items: center;
+        // flex-direction: column;
         gap: 12px;
-
+        justify-content: space-between;
+        width: 100%;
         h3 {
             font-size: 32px;
             font-weight: 700;
@@ -24,5 +29,25 @@
                 font-weight: 400;
             }
         }
+
+        svg {
+            color:#0d99ff;
+        }
+
+        @media screen and (max-width: 520px) {
+            flex-direction: column;
+        }
+
+        .filter-hotjob {
+            .filter-provinces {
+                .ant-space-item {}
+            }
+        }
+    }
+    
+
+
+    @media screen and (min-width: 300px) and (max-width: 1280px) {
+        padding: 0px 24px;
     }
 }

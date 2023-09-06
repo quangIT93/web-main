@@ -1,24 +1,28 @@
-import React, { memo } from 'react'
-import { Box } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
+import React, { memo } from 'react';
+import { Box } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 //@ts-ignore
 import { styleLabel } from '../CssEditPost'
+import { post } from 'validations/lang/vi/post'
+import { postEn } from 'validations/lang/en/post'
 
 interface IEditDescription {
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
   editDataPosted: any
+  language: any;
+  languageRedux: any;
 }
 
 const EditDescription: React.FC<IEditDescription> = (props) => {
-  const { setEditDataPosted, editDataPosted } = props
+  const { setEditDataPosted, editDataPosted, language, languageRedux } = props
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => ({
       ...preValue,
       description: e.target.value,
-    }))
-  }
+    }));
+  };
   return (
     <Box sx={{ marginTop: '24px' }}>
       <Typography
@@ -27,7 +31,10 @@ const EditDescription: React.FC<IEditDescription> = (props) => {
         component="label"
         htmlFor="startTime"
       >
-        Mô tả công việc <span style={{ color: 'red' }}>*</span>
+        {
+          language?.job_description
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </Typography>
       <TextField
         // className={classes.textarea}
@@ -37,13 +44,12 @@ const EditDescription: React.FC<IEditDescription> = (props) => {
         multiline
         rows={6}
         // label="Một số đặc điểm nhận diện công ty"
-        placeholder="Một số đặc điểm nhận diện công ty:
-Tên công ty, địa chỉ, hình thức, mặt hàng kinh doanh
-Vị trí, yêu cầu công việc
-Mô tả yêu cầu kỹ năng, bằng cấp nếu có"
+        placeholder={
+          language?.place_des
+        }
       />
     </Box>
-  )
-}
+  );
+};
 
-export default memo(EditDescription)
+export default memo(EditDescription);

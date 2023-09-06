@@ -12,7 +12,7 @@ const CategoryItem: React.FC<CategoryCarouselItemProps> = ({
   content,
   imageLink,
   imageDescription,
-  isSelected
+  isSelected,
 }) => {
   return (
     <div className="test">

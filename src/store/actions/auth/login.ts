@@ -1,4 +1,7 @@
-import { AuthActionType, LoginPayload } from '../../types'
+import {
+  AuthActionType
+  // , LoginPayload
+} from '../../types'
 import { AxiosResponse } from 'axios'
 
 export const ActionSignInEmail = (data: AxiosResponse) => {

@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
-import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
+import { Box, TextField, Modal, Typography } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from 'moment';
-import Autocomplete from '@mui/material/Autocomplete';
+// import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import { CloseOutlined } from '@ant-design/icons';
 
 // data
 import profileApi from 'api/profileApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
 
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
+import languageApi from 'api/languageApi';
+import { message } from 'antd';
+
+import '../style.scss';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -27,21 +34,35 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
+
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
 };
 
 const styleChildBox = {
   marginBottom: '12px',
 };
 
-interface IEducation {
-  id?: number | null;
-  company_name?: string;
-  major?: string;
-  start_date?: number;
-  end_date?: number;
-  extra_information?: string;
-  title?: string;
-}
+// interface IEducation {
+//   id?: number | null;
+//   company_name?: string;
+//   major?: string;
+//   start_date?: number;
+//   end_date?: number;
+//   extra_information?: string;
+//   title?: string;
+// }
 
 interface IModalProfileEducationUpdate {
   openModalEducationUpdate: boolean;
@@ -66,13 +87,32 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   const {
     openModalEducationUpdate,
     setOpenModalEducationUpdate,
-    typeItem,
     educationId,
     educationValue,
   } = props;
   // console.log('typeItem', typeItem)
   const dispatch = useDispatch();
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const [education, setEducation] = useState<IInfoEducation>({
     educationId: educationId,
@@ -82,6 +122,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
     endDate: educationValue.end_date,
     extraInformation: educationValue.extra_information,
   });
+
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleClose = () => setOpenModalEducationUpdate(false);
 
@@ -94,18 +136,33 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
   // time
   const handleChangeStartTime = (newValue: any, e: any) => {
-    setEducation((preValue) => {
-      return { ...preValue, startDate: new Date(newValue._d).getTime() };
-    });
+    if (newValue) {
+      setEducation((preValue) => {
+        return { ...preValue, startDate: new Date(newValue._d).getTime() };
+      });
+    } else {
+      setEducation((preValue) => {
+        return { ...preValue, startDate: NaN };
+      });
+    }
   };
 
   const handleChangeEndTime = (newValue: any, e: any) => {
-    setEducation((preValue) => {
-      return {
-        ...preValue,
-        endDate: new Date(newValue._d).getTime(),
-      };
-    });
+    if (newValue) {
+      setEducation((preValue) => {
+        return {
+          ...preValue,
+          endDate: new Date(newValue._d).getTime(),
+        };
+      });
+    } else {
+      setEducation((preValue) => {
+        return {
+          ...preValue,
+          endDate: NaN,
+        };
+      });
+    }
   };
 
   // major
@@ -127,23 +184,87 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
   // submit
 
+  const validValue = () => {
+    if (education.major === '') {
+      return {
+        message: language?.profile_page?.err_major,
+        checkForm: false,
+      };
+    }
+
+    if (education.companyName === '') {
+      return {
+        message: language?.profile_page?.err_school,
+        checkForm: false,
+      };
+    }
+
+    if (education.extraInformation === '') {
+      return {
+        message: language?.profile_page?.err_additional_information,
+        checkForm: false,
+      };
+    }
+    // console.log('NaN', education.startDate);
+
+    if (!education.startDate) {
+      return {
+        message: language?.profile_page?.err_start_time,
+        checkForm: false,
+      };
+    }
+
+    if (!education.endDate) {
+      return {
+        message: language?.profile_page?.err_finish_time,
+        checkForm: false,
+      };
+    }
+
+    // if (education.endDate > education.startDate) {
+    //   return {
+    //     message: 'Ngày bắt đầu không thể lớn hơn ngày kết thúc',
+    //     checkForm: false,
+    //   };
+    // }
+
+    return {
+      message: '',
+      checkForm: true,
+    };
+  };
+
   const handleSubmit = async () => {
+    const { message, checkForm } = validValue();
     try {
-      const result = await profileApi.updateProfileEducation(education);
-      if (result) {
-        const profile = await profileApi.getProfile();
-        if (profile) {
-          setProfileUser(profile.data);
+      if (checkForm) {
+        const result = await profileApi.updateProfileEducation(education);
+        if (result) {
+          const profile = await profileApi.getProfile(
+            languageRedux === 1 ? "vi" : "en"
+          );
+          if (profile) {
+            setProfileUser(profile.data);
+          }
+          setOpenModalEducationUpdate(false);
         }
-        setOpenModalEducationUpdate(false);
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: message,
+        });
       }
     } catch (error) {
-      console.log(error);
+      console.log('error', error);
+      messageApi.open({
+        type: 'error',
+        content: language?.profile_page?.check_info_please,
+      });
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter' && event.target.id !== 'extra-info') {
       handleSubmit();
     }
   };
@@ -155,7 +276,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style}>
+      <Box sx={style}
+        className="Modal-personnal-info"
+      >
+        {contextHolder}
         <div
           style={{
             position: 'absolute',
@@ -177,7 +301,9 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Sửa thông tin trình độ học vấn
+          {
+            language?.profile_page?.edit_education
+          }
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -186,7 +312,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Trường/Tổ chức <span className="color-asterisk">*</span>
+            {
+              language?.school_organization
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -196,8 +325,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Nhập tên trường hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.profile_page?.place_school
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -208,7 +339,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chuyên ngành <span className="color-asterisk">*</span>
+            {
+              language?.major
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -218,8 +352,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             onChange={handleChangeMajor}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Ngành"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.major
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -235,10 +371,17 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu <span className="color-asterisk">*</span>
+                  {
+                    language?.start_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
-                  value={moment(education.startDate)}
+                  value={
+                    moment(education.startDate)
+                    // && new Date().getTime()
+                  }
+                  defaultValue={moment(new Date().getTime())}
                   onChange={handleChangeStartTime}
                   views={['year', 'month']}
                   openTo="month"
@@ -252,10 +395,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc <span className="color-asterisk">*</span>
+                  {
+                    language?.finish_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.endDate)}
+                  defaultValue={moment(new Date().getTime())}
                   onChange={handleChangeEndTime}
                   views={['year', 'month']}
                   openTo="month"
@@ -273,7 +420,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung <span className="color-asterisk">*</span>
+            {
+              language?.additional_information
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}
@@ -282,13 +432,18 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
             multiline
             rows={4}
+            id="extra-info"
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder="Để được nhà tuyển dụng quan tâm và tăng cơ hội ứng tuyển vào công ty mong muốn. Hẫy nhập thông tin bổ sung của bạn vào đây!"
+            placeholder={
+              language?.profile_page?.place_additional_information
+            }
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            language?.profile_page?.save_info
+          }
         </Button>
       </Box>
     </Modal>

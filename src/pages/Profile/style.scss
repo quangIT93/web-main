@@ -1,10 +1,18 @@
 @import '../../scss/mixins';
 
+.ant-message {
+  z-index: 9999;
+}
+
 .profile {
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 100%;
+
+  .ant-select-tree-treenode {
+    width: 100%;
+  }
 
   .footer-right {
     @include breakpoint(mobile) {
@@ -13,8 +21,10 @@
   }
 
   .container {
-    width: 80%;
-    padding: 50px 00px;
+    // width: 80%;
+    max-width: 1080px; 
+    margin: 0 100px auto;
+    padding: 24px 0px 50px 0px;
     margin-top: 100px;
 
     @include breakpoint(mobile) {
@@ -27,16 +37,145 @@
       padding: 0px;
     }
 
+    
+    @media screen and (max-width: 1120px){
+      padding: 24px 24px 50px 24px;
+    }
+
+    @media screen and (max-width: 678px){
+      padding: 24px 24px 12px 24px;
+    }
+
     .div-profile-avatar {
       width: 100%;
+
+      .div-avatar {}
     }
 
     .div-avatar {
-      display: flex;
+      // display: flex;
       flex-direction: row;
       align-items: center;
       width: 100%;
       justify-content: space-between;
+
+      .div-avatar_profile {
+        display: flex;
+        // flex-direction: row;
+        align-items: center;
+
+        @include breakpoint(mobile) {
+          // align-items: flex-start;
+        }
+
+        @include breakpoint(tablet) {
+          align-items: flex-start;
+        }
+
+        @media screen and (max-width: 330px) {
+          flex-direction: column;
+
+          .user-company {
+            margin-left: 0px !important;
+            align-items: center;
+          }
+        }
+
+        .user-company {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          width: 100%;
+
+          .wrap-company {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            @include breakpoint(mobile) {
+              flex-direction: column;
+              justify-content: flex-end;
+              align-items: flex-end;
+
+              .wrap-company_info {
+                width: 100%;
+                margin-bottom: 8px;
+                h2 {
+                  font-size: 14px;
+                }
+              }
+
+            }
+
+            @include breakpoint(tablet) {
+              flex-direction: column;
+              justify-content: flex-end;
+              align-items: flex-end;
+
+              .wrap-company_info {
+                width: 100%;
+                margin-bottom: 8px;
+              }
+            }
+
+            .wrap-company_info {
+              display: flex;
+              justify-content: space-between;
+
+              h2:nth-child(2) {
+                margin: 0 24px;
+                background: #252525;
+                // font-weight: 100;
+                width: 4px;
+              }
+
+              h2 {
+                font-family: Roboto;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px;
+              }
+            }
+
+            button {
+              padding: 12px 24px;
+              display: flex;
+              align-items: center;
+              border-radius: 20px;
+              border-radius: 37px;
+              background: #252525;
+              height: 48px;
+              gap: 8px;
+              span {
+                font-size: 14px;
+              }
+            }
+          }
+
+          .company-name {
+            color: rgba(189, 49, 49, 1);
+            font-family: Roboto;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 30px;
+            text-decoration-line: underline;
+            cursor: pointer;
+          }
+
+          .have-company {
+            color: #0D99FF;
+            font-family: Roboto;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 30px;
+            text-decoration-line: underline;
+            cursor: pointer;
+          }
+        }
+      }
     }
 
     .div-profile-info {
@@ -47,8 +186,38 @@
       margin-top: 30px;
       padding: 15px 20px;
 
+      .ant-space-item {
+        p {
+          font-size: 14px;
+        }
+
+        button {
+          span {
+            font-size: 14px;
+          }
+        }
+      }
+
+
+
+
+      @media screen and (max-width: 360px) {
+        .cv-input-container {
+          width: 100%;
+
+          .ant-space-item {
+            width: 100%;
+
+            button {
+              width: 100% !important;
+            }
+          }
+        }
+      }
+
       h3 {
         color: #001424;
+        font-size: 14px;
       }
 
       .info-detail {
@@ -63,8 +232,8 @@
 
         .left {
           p {
-            color: #aaaaaa;
-            font-size: 16px;
+            color: #575757;
+            font-size: 14px;
             margin-top: 7px;
           }
         }
@@ -73,7 +242,7 @@
           margin-left: 15px;
 
           p {
-            font-size: 16px;
+            font-size: 14px;
             margin-top: 7px;
           }
         }
@@ -86,6 +255,86 @@
           border: 0.5px solid #aaaaaa;
           border-radius: 10px;
           height: 42px;
+        }
+      }
+
+      .skill-list,
+      .language-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .donot-show {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .section-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
+
+        svg {
+          color: #0D99FF;
+        }
+      }
+
+      .disable {
+        cursor: no-drop;
+        pointer-events: none;
+
+        h3 {
+
+          color: #AAAAAA !important;
+        }
+
+        svg {
+          color: #AAAAAA;
+        }
+      }
+
+      .profile-info-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+
+        .profile-info-title_actions {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+
+          .edit-icon {
+            cursor: pointer;
+
+            svg {
+              color: #AAAAAA;
+            }
+
+            &:hover {
+              svg {
+                color: #0D99FF;
+              }
+            }
+          }
+
+          .delete-icon {
+            cursor: pointer;
+
+            svg {
+              color: #AAAAAA;
+            }
+
+            &:hover {
+              svg {
+                color: red;
+              }
+            }
+          }
         }
       }
     }

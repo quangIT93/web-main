@@ -13,9 +13,11 @@ import './style.scss';
 interface IPostTypeJob {
   typeJob: number;
   setTypeJob: React.Dispatch<React.SetStateAction<number>>;
+  language: any;
+  languageRedux: any;
 }
 const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
-  const { typeJob, setTypeJob } = props;
+  const { typeJob, setTypeJob, language, languageRedux } = props;
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
@@ -23,7 +25,9 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
   const [jobTypes, setJobTypes] = React.useState<AxiosResponse | null>(null);
 
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType();
+    const result = await siteApi.getJobType(
+      languageRedux === 1 ? "vi" : "en"
+    );
     if (result) {
       setJobTypes(result);
     }
@@ -31,16 +35,22 @@ const PostTypeJob: React.FC<IPostTypeJob> = (props) => {
 
   React.useEffect(() => {
     getTypeJob();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   const handleChaneTypeJob = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTypeJob(Number(e.target.value));
   };
+  // console.log('typeJob', typeJob);
+  // console.log('jobTypes', jobTypes);
 
   return (
     <FormControl sx={{ width: '100%', marginTop: '24px' }}>
       <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>
-        Loại công việc <span style={{ color: 'red' }}>*</span>
+        {
+          language?.job_type1
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row

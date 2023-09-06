@@ -1,13 +1,78 @@
+@import "../../scss/mixins";
+
 .post {
   margin-top: 70px;
 
   .post-main {
-    padding: 50px 180px;
+    padding: 50px 0px;
     margin: 0 auto;
-    transition: all l;
+    max-width: 1080px;
+    // transition: all l;
+    .post-main_fillData {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
 
-    @media screen and (max-width: 1200px) {
-      padding-inline: 10px;
+      
+
+      .post-main_switch {
+        display: flex;
+        align-items: center;
+        h4 {
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .fill-company {
+      margin-bottom: 12px;
+      h3 {
+        color: #0d99ff;
+        // text-decoration:underline;
+        cursor: pointer;
+      }
+    }
+
+    
+    @include breakpoint(mobile){
+      .post-main_fillData {
+        flex-direction: column;
+
+        h1 {
+          margin-bottom: 24px;
+        }
+    
+        .post-main_switch {
+          margin-bottom: 12px;
+          h4 {
+        
+          }
+        }
+      }
+    }
+
+    @include breakpoint(tablet){
+      .post-main_fillData {
+        flex-direction: column;
+
+        h1 {
+          margin-bottom: 24px;
+        }
+    
+        .post-main_switch {
+          margin-bottom: 12px;
+          h4 {
+        
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 1080px) {
+      // padding-inline: 10px;
+
+      padding-inline: 24px;
 
       // @include breakpoint(tablet) {
       //   padding: 0 0px;
@@ -31,7 +96,6 @@
       font-weight: 700;
       font-size: 32px;
       line-height: 24px;
-      margin-bottom: 32px;
     }
 
     form {
@@ -40,11 +104,20 @@
         padding: 24px 0;
         flex-direction: column;
 
+
+        @include breakpoint(mobile){
+          padding: 0;
+        }
+
         .post-address_bottom,
         .post-address_top {
           gap: 32px;
           align-items: flex-end;
           display: flex;
+
+          @include breakpoint(mobile){
+            display: block;
+          }
 
           .post-title {
             flex: 1;
@@ -57,12 +130,19 @@
 
         .post-address_bottom {
           padding-top: 24px;
+          @include breakpoint(mobile){
+            padding-top: 0;
+          }
         }
       }
 
       .post-jobCompany {
         display: flex;
         gap: 32px;
+
+        @include breakpoint(mobile){
+          display: block;
+        }
 
         .post-title {
           flex: 1;
@@ -89,9 +169,9 @@
         cursor: pointer;
       }
 
-      .MuiStack-root {
-        // padding-top: 24px !important;
-      }
+      // .MuiStack-root {
+      //   // padding-top: 24px !important;
+      // }
     }
   }
 }

@@ -24,10 +24,11 @@ form {
       padding: 12px 16px;
       /* x3 */
 
-      color: #aaaaaa;
+      // color: #aaaaaa;
       outline: none;
       border: 1px solid #dcdcdc;
       border-radius: 4px;
+      font-size: 16px;
     }
 
     .alert {
@@ -130,12 +131,22 @@ form {
 
   .textOpt-email {
     font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 24px;
     letter-spacing: 0.5px;
     text-align: center;
 
     color: #000000;
+  }
+
+  .textOpt-notice {
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16px;
+    color: #000000;
+    padding: 12px 0;
   }
 
   .button-login {

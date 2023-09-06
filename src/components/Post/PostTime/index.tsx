@@ -1,14 +1,14 @@
 import React, { memo } from 'react';
-import dayjs from 'dayjs';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+// import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
+// import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
 import { styleLabel } from '../CssPost';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import './style.scss';
-import { SwapRightOutlined } from '@ant-design/icons';
+// import { SwapRightOutlined } from '@ant-design/icons';
 import { Space } from 'antd';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 interface IPostTime {
@@ -16,9 +16,18 @@ interface IPostTime {
   endTime: any;
   setStartTime: any;
   setEndTime: any;
+  language: any;
 }
 const PostTime: React.FC<IPostTime> = (props) => {
-  const { startTime, endTime, setStartTime, setEndTime } = props;
+  const { startTime, endTime, setStartTime, setEndTime, language } = props;
+
+  // const [startTime, setStartTime] = React.useState<any>(
+  //   new Date(1970, 0, 2, 7, 0).getTime(),
+  // );
+
+  // const [endTime, setEndTime] = React.useState<any>(
+  //   new Date(1970, 0, 2, 17, 0).getTime(),
+  // );
   const handleChangeStartTime = (newValue: any, e: any) => {
     setStartTime(new Date(newValue._d).getTime());
   };
@@ -49,7 +58,10 @@ const PostTime: React.FC<IPostTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Giờ làm việc <span style={{ color: 'red' }}>*</span>
+            {
+              language?.working_hour
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Space
             direction="horizontal"

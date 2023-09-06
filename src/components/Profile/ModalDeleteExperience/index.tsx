@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
-import { Box, Modal, Typography, Button } from '@mui/material'
+import React from 'react';
+import { Box, Modal, Typography, Button } from '@mui/material';
 
 // data
-import profileApi from 'api/profileApi'
-import { useDispatch } from 'react-redux'
-import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer'
+import profileApi from 'api/profileApi';
+import { useDispatch } from 'react-redux';
+import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 
-import { bindActionCreators } from 'redux'
-import { actionCreators } from 'store/index'
+import { bindActionCreators } from 'redux';
+import { actionCreators } from 'store/index';
+import languageApi from 'api/languageApi';
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -20,51 +25,82 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
 
-const styleChildBox = {
-  marginBottom: '12px',
-}
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
+};
+
+// const styleChildBox = {
+//   marginBottom: '12px',
+// };
 
 interface IModalProfileDelete {
-  openModalDeleteExperience: boolean
-  setOpenModalDeleteExperience: React.Dispatch<React.SetStateAction<boolean>>
-  experienceId?: number | null
+  openModalDeleteExperience: boolean;
+  setOpenModalDeleteExperience: React.Dispatch<React.SetStateAction<boolean>>;
+  experienceId?: number | null;
 }
 const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
   const {
     openModalDeleteExperience,
     setOpenModalDeleteExperience,
     experienceId,
-  } = props
+  } = props;
 
-  const dispatch = useDispatch()
-  const { setProfileUser } = bindActionCreators(
-    actionCreators,
-    dispatch
-  )
+  const dispatch = useDispatch();
+  const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
 
+  const [language, setLanguage] = React.useState<any>();
 
-  const handleClose = () => setOpenModalDeleteExperience(false)
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
+
+  const handleClose = () => setOpenModalDeleteExperience(false);
 
   const handleSubmitDelete = async () => {
     try {
-      const result = await profileApi.deleteProfileExperience(experienceId)
+      const result = await profileApi.deleteProfileExperience(experienceId);
       if (result) {
-        const profile = await profileApi.getProfile()
+        const profile = await profileApi.getProfile('vi');
         if (profile) {
-          setProfileUser(profile.data)
+          setProfileUser(profile.data);
         }
-        await dispatch(setAlert(true))
-        setOpenModalDeleteExperience(false)
+        await dispatch(setAlert(true));
+        setOpenModalDeleteExperience(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   const handleSubmitRefuse = () => {
-    setOpenModalDeleteExperience(false)
-  }
+    setOpenModalDeleteExperience(false);
+  };
 
   return (
     <Modal
@@ -81,7 +117,9 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Bạn có chắc chắn muốn xoá thông tin này chứ?
+          {
+            language?.profile_page?.alert_delete_info
+          }
         </Typography>
         <Box sx={{ display: 'flex', gap: '100px' }}>
           <Button
@@ -90,16 +128,20 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
             onClick={handleSubmitDelete}
             color="error"
           >
-            Xóa
+            {
+              language?.profile_page?.delete
+            }
           </Button>
 
           <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>
-            Trở về
+            {
+              language?.profile_page?.return
+            }
           </Button>
         </Box>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default React.memo(ModalDelete)
+export default React.memo(ModalDelete);

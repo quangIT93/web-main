@@ -7,15 +7,42 @@
 
     .ant-collapse-header {
       border: unset !important;
-
+      display: flex;
+      align-items: center;
       .ant-collapse-header-text {
         color: black !important;
+        width: 52px;
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @include breakpoint(mobile) {
+          width: 52px;
+          white-space:nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
     }
 
     .ant-collapse-content {
       border-top: 1px solid transparent !important;
       top: 50px;
+      @include breakpoint(mobile) {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        position: relative;
+        top: 0;
+        .ant-collapse-content-box {
+          .title-filterSalary {
+            width: 110px;
+            white-space:nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            margin: 0;
+          }
+
+        }
+      }
     }
   }
 }
@@ -31,11 +58,12 @@
     border-bottom: none !important;
 
     .ant-collapse-header {
-      height: 39.6px !important;
+      height: 38px !important;
       border-radius: 8px !important;
       background-color: white !important;
       border: unset !important;
-
+      display: flex;
+      align-items: center;
       .ant-collapse-expand-icon {
         svg {
           color: rgba(0, 0, 0, 0.25) !important;
@@ -44,6 +72,7 @@
 
       .ant-collapse-header-text {
         color: #00000040;
+ 
       }
     }
 
@@ -53,8 +82,17 @@
       border-top: 1px solid transparent !important;
       top: 50px;
 
+      
+      @include breakpoint(mobile) {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        position: relative;
+        top: 0;
+      }
+
       @include breakpoint(tablet) {
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        position: relative;
+        top: 0;
       }
 
       width: 100%;
@@ -75,6 +113,7 @@
         color: #000000;
         border-bottom: 1px solid #ccc;
         padding-bottom: 12px;
+        
       }
 
       .inputFilter-grouptimeJob_radio {
@@ -91,6 +130,98 @@
       .wrap-button_filter {
         display: flex;
         justify-content: space-evenly;
+      }
+    }
+  }
+
+
+  @include breakpoint(mobile){
+    .ant-collapse-item {
+      .ant-collapse-header {
+        display: flex;
+        align-items: center;
+        .ant-collapse-header-text {
+          width: 52px;
+          white-space:nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .ant-collapse-content  {
+        .ant-collapse-content-box {
+          .title-filter_timeJob {
+            width: 110px;
+            white-space:nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            margin: 0;
+          }
+
+          .MuiBox-root {
+            .MuiFormControlLabel-root {
+              margin: 0;
+              display: flex;
+              flex-direction: column;
+              align-self: flex-start;
+              justify-content: flex-start;
+              width: 100%;
+              span:nth-child(2) {
+                width: 104px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @include breakpoint(tablet){
+    .ant-collapse-item {
+      .ant-collapse-header {
+        display: flex;
+        align-items: center;
+        .ant-collapse-header-text {
+          width: 100%;
+          white-space:nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+        }
+      }
+
+      .ant-collapse-content  {
+        .ant-collapse-content-box {
+          .title-filter_timeJob {
+            width: 100%;
+            white-space:nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+          }
+
+          .MuiBox-root {
+            .MuiFormControlLabel-root {
+              // margin: 0;
+              // display: flex;
+              // flex-direction: column;
+              // align-self: flex-start;
+              // justify-content: flex-start;
+              // width: 100%;
+              span:nth-child(2) {
+                width: 120px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 14px;
+              }
+            }
+          }
+        }
       }
     }
   }

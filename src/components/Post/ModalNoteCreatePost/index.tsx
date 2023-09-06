@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
 import { Button } from 'antd';
+
 import './style.scss';
 
 const style = {
@@ -21,17 +22,30 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
+
+  '@media (min-width: 400px) and (max-width: 640px)': {
+    width: 410,
+  },
 };
 
 interface IPropModalNoteCreatePost {
   openModalNoteCreatePost: boolean;
   setOpenModalNoteCreatePost: React.Dispatch<React.SetStateAction<boolean>>;
+  language: any;
 }
 
 const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
-  const { openModalNoteCreatePost, setOpenModalNoteCreatePost } = props;
+  const { openModalNoteCreatePost, setOpenModalNoteCreatePost, language } = props;
 
-  const handleClose = () => setOpenModalNoteCreatePost(false);
+  const handleClose = () => {
+    setOpenModalNoteCreatePost(false);
+  };
 
   return (
     <div>
@@ -54,7 +68,11 @@ const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
           >
             <CloseIcon />
           </IconButton>
-          <h2 className="title-post_guide">Hướng dẫn tạo bài đăng</h2>
+          <h2 className="title-post_guide">
+            {
+              language?.instructions_for_creating_valid_articles
+            }
+          </h2>
           <div className="wrap-imagePost_guide">
             <img
               src="./images/guide.png"
@@ -64,37 +82,48 @@ const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
           </div>
           <div className="wrap-textPost_guide">
             <p>
-              Bài đăng của bạn sẽ được kiểm duyệt nội dung trước khi công khai.
-              Hãy đảm bảo các thông tin tuyển dụng của bạn là chính xác!
+              {
+                language?.your_post_will_be_moderated
+              }
             </p>
           </div>
           <div className="wrap-list_guide">
             <ul>
               <li>
                 <CheckedBlueIcon />
-                Nhập đúng tên công ty của bạn.
+                {
+                  language?.enter_your_company_name_correctly
+                }
               </li>
               <li>
                 <CheckedBlueIcon />
-                Kiểm tra địa chỉ kỹ càng.
+                {
+                  language?.check_the_address_carefully
+                }
               </li>
               <li>
                 <CheckedBlueIcon />
-                Bổ sung hình ảnh để ứng viên hiểu hơn về công ty.
+                {
+                  language?.add_images_for_candidates
+                }
               </li>
               <li>
                 <CheckedBlueIcon />
-                Phân loại đúng Danh mục ngành nghề để ứng viên dễ dàng tìm thấy
-                bài tuyển dụng.
+                {
+                  language?.properly_categorize
+                }
               </li>
               <li>
                 <CheckedBlueIcon />
-                Để lại số điện thoại liên hệ của bạn để thuận tiện trao đổi với
-                ứng viên.
+                {
+                  language?.leave_your_contact_phone_number
+                }
               </li>
               <li>
                 <CheckedBlueIcon />
-                Bạn có thể đăng tối đa 3 bài viết một ngày.
+                {
+                  language?.you_can_post_up_to_1_articles_a_day
+                }
               </li>
             </ul>
           </div>
@@ -104,7 +133,9 @@ const ModalNoteCreatePost: React.FC<IPropModalNoteCreatePost> = (props) => {
             type="primary"
             onClick={handleClose}
           >
-            Tôi đã hiểu
+            {
+              language?.i_got_it
+            }
           </Button>
         </Box>
       </Modal>

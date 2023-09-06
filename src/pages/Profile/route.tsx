@@ -1,9 +1,9 @@
-import React, { lazy } from 'react'
-import Profile from '.'
-import RouteProps from '../routes'
+// import React, { lazy } from 'react'
+import Profile from '.';
+import RouteProps from '../routes';
 const route: RouteProps = {
-    path: '/profile',
-    component: <Profile />,
-}
+  path: '/profile',
+  component: <Profile />,
+};
 
-export default route
+export default route;

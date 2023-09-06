@@ -1,0 +1,11 @@
+.contentCV-bottom {
+    display: flex;
+
+    .contentCV-bottom-left {
+        flex: 2;
+    }
+
+    .contentCV-bottom-right {
+        flex: 3;
+    }
+}

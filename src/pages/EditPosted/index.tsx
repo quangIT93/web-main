@@ -1,8 +1,10 @@
 import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
-import { useSearchParams } from 'react-router-dom';
+import queryString from 'query-string';
+
+// import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import { Skeleton } from 'antd';
 import { message } from 'antd';
 // import component
@@ -25,13 +27,26 @@ import EditDescription from '#components/EditPosted/EditDescription';
 import EditPostTypeSalary from '#components/EditPosted/EditPostTypeSalary';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 
+import RollTop from '#components/RollTop';
+
 import NotFound from 'pages/NotFound';
+
 import './style.scss';
 
 // inport Api
 import postApi from 'api/postApi';
 import historyRecruiter from 'api/historyRecruiter';
 // import { ConsoleSqlOutlined } from '@ant-design/icons'
+
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
+import languageApi from 'api/languageApi';
+
+import { RootState } from '../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 export interface FormValues {
   id: string;
@@ -68,8 +83,8 @@ export interface FormValues {
 const EditPosted = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const queryParams = queryString.parse(window.location.search);
   const [dataPostById, setDataPostById] = useState<any>(null);
 
   const [editDataPosted, setEditDataPosted] = useState<FormValues | null>({
@@ -103,6 +118,9 @@ const EditPosted = () => {
     email: '',
     deletedImages: [],
   });
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
 
   const [dataPostAccount, SetDataPostAccount] = React.useState<any>([]);
 
@@ -110,7 +128,45 @@ const EditPosted = () => {
 
   const [loadingNotFound, setLoadingNotFound] = React.useState(false);
 
-  const postId = parseInt(searchParams.get('postId') ?? '');
+  const [changePage, setChangePage] = React.useState(false);
+
+  const postId = parseInt((queryParams['postId'] as string) ?? '');
+
+  const analytics: any = getAnalytics();
+
+  const [language, setLanguage] = useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    // document.title = language?.post_detail_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - HiJob - Chi tiết bài tuyển dụng'
+        : 'HiJob - Job Post Details';
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_editPost' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux, language]);
 
   useEffect(() => {
     if (dataPostById) {
@@ -134,7 +190,10 @@ const EditPosted = () => {
         salaryMin: dataPostById.salary_min,
         moneyType: dataPostById.money_type,
         salaryType: dataPostById.salary_type_id,
-        phoneNumber: dataPostById.phone_contact.replace('+84', '0'),
+        phoneNumber:
+          dataPostById?.phone_contact?.length > 0
+            ? dataPostById?.phone_contact?.replace('+84', '0')
+            : '',
         description: dataPostById.description,
         images: [],
         deletedImages: [],
@@ -145,6 +204,7 @@ const EditPosted = () => {
         longitude: dataPostById.longitude,
       }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPostById]);
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -155,16 +215,26 @@ const EditPosted = () => {
 
   const getDataPosted = async () => {
     try {
-      const result = await postApi.getPostbyId(postId);
-      if (result) {
-        dataPostAccount?.map((value: any) => {
-          if (value.post_id === postId) {
-            setDataPostById(result.data);
-          }
-        });
+      const result = await postApi.getPostbyId(
+        postId,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (
+        result &&
+        dataPostAccount.find((item: any) => item.post_id === postId)
+      ) {
+        // dataPostAccount.includes(value.post_id === postId)
+
+        setDataPostById(result.data);
+        setChangePage(false);
+
+        // return [];
+      } else {
+        setChangePage(true);
       }
     } catch (error) {
       console.error(error);
+      window.open('/', 'self');
     }
   };
 
@@ -182,7 +252,8 @@ const EditPosted = () => {
         }, 3000);
       }
     });
-  }, [dataPostAccount]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataPostAccount, languageRedux]);
 
   const getAllPostAccount = async () => {
     try {
@@ -190,6 +261,7 @@ const EditPosted = () => {
         0,
         20,
         '-1',
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -202,7 +274,8 @@ const EditPosted = () => {
 
   React.useEffect(() => {
     getAllPostAccount();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
@@ -216,19 +289,22 @@ const EditPosted = () => {
     formData.append('wardId', String(editDataPosted?.ward_id));
     formData.append('jobTypeId', String(editDataPosted?.jobTypeId));
     formData.append('isDatePeriod', String(editDataPosted?.isDatePeriod));
-    formData.append(
-      'startDate',
-      editDataPosted?.startDate !== null
-        ? String(editDataPosted?.startDate)
-        : String(moment(new Date()).valueOf()),
-    );
 
-    formData.append(
-      'endDate',
-      editDataPosted?.endDate !== null
-        ? String(editDataPosted?.endDate)
-        : String(moment(new Date()).valueOf()),
-    );
+    if (editDataPosted?.isDatePeriod === 1) {
+      formData.append(
+        'startDate',
+        editDataPosted?.startDate !== null
+          ? String(editDataPosted?.startDate)
+          : String(moment(new Date()).valueOf()),
+      );
+
+      formData.append(
+        'endDate',
+        editDataPosted?.endDate !== null
+          ? String(editDataPosted?.endDate)
+          : String(moment(new Date()).valueOf()),
+      );
+    }
     formData.append('startTime', String(editDataPosted?.startTime));
     formData.append('endTime', String(editDataPosted?.endTime));
     formData.append(
@@ -286,34 +362,42 @@ const EditPosted = () => {
   const validValue = () => {
     if (editDataPosted?.title === '') {
       return {
-        message: 'Vui lòng nhập tên công việc',
+        message: language?.post_page?.err_job_title,
         checkForm: false,
       };
     }
     if (editDataPosted?.company_name === '') {
       return {
-        message: 'Vui lòng nhập tên công ty',
+        message: language?.post_page?.err_company_name,
         checkForm: false,
       };
     }
     if (editDataPosted?.title === '') {
       return {
-        message: 'Vui lòng nhập dia chi',
+        message: language?.post_page?.err_address,
         checkForm: false,
       };
     }
     if (editDataPosted?.ward_id === '') {
       return {
-        message: 'Vui lòng chọn tỉnh thành phố',
+        message: language?.post_page?.err_location,
         checkForm: false,
       };
     }
+
+    // if (editDataPosted?.startDateNum.getTime() > editDataPosted?.endDate) {
+    //   return {
+    //     message: 'Bạn đã nhập ngày bắt đầu lớn hơn ngày kết thúc',
+    //     checkForm: false,
+    //   };
+    // }
+
     if (
       editDataPosted?.categoryIds &&
       editDataPosted?.categoryIds?.length <= 0
     ) {
       return {
-        message: 'Vui lòng chọn danh mục nghề nghiệp',
+        message: language?.post_page?.err_cate,
         checkForm: false,
       };
     }
@@ -324,13 +408,13 @@ const EditPosted = () => {
         editDataPosted?.salaryType !== 6)
     ) {
       return {
-        message: 'Vui lòng nhập mức lương',
+        message: language?.post_page?.err_salary,
         checkForm: false,
       };
     }
     if (Number(editDataPosted?.salaryMax) < Number(editDataPosted?.salaryMin)) {
       return {
-        message: 'Lương tối đa phải lớn hơn lương tối thiểu',
+        message: language?.post_page?.err_verify_salary,
         checkForm: false,
       };
     }
@@ -341,13 +425,23 @@ const EditPosted = () => {
       (editDataPosted?.phoneNumber && editDataPosted?.phoneNumber?.length > 11)
     ) {
       return {
-        message: 'Số điện thoại sai định dạng',
+        message: language?.post_page?.err_phone_mess,
         checkForm: false,
       };
     }
     if (editDataPosted?.description === '') {
       return {
-        message: 'Vui lòng nhập mô tả công việc',
+        message: language?.post_page?.err_des_mess,
+        checkForm: false,
+      };
+    }
+    if (
+      editDataPosted?.startDate &&
+      editDataPosted?.endDate &&
+      editDataPosted?.startDate > editDataPosted?.endDate
+    ) {
+      return {
+        message: language?.post_page?.err_date,
         checkForm: false,
       };
     }
@@ -375,50 +469,71 @@ const EditPosted = () => {
           content: message,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('error', error);
+      if (error?.response?.data?.message === 'Invalid date value') {
+        messageApi.open({
+          type: 'error',
+          content: language?.post_page?.err_date,
+        });
+      }
     }
   };
 
-  if (dataPostById) {
+  // console.log('editData', editDataPosted);
+
+  if (!changePage) {
     return (
       <div className="edit-posted">
         {contextHolder}
         <Navbar />
         <div className="edit-posted_main">
-          <h1>Chỉnh sửa bài đăng tuyển dụng</h1>
+          <div className="edit-title_post">
+            <h1>{language?.post_page?.edit_post}</h1>
+          </div>
           <Skeleton loading={loading} active>
             <form action="">
               <EditPostJobCompany
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
               />
 
               <EditPostAddress
                 dataPostById={dataPostById}
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostImage
                 editDataPosted={memoizedEditDataPosted}
                 setEditDataPosted={setEditDataPosted}
                 dataPosted={dataPostById?.images}
+                languageRedux={languageRedux}
+                language={language}
               />
 
               <EditPostTypeJob
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostPeriodDate
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
               {editDataPosted?.isDatePeriod === 1 ? (
                 <EditRecruitmentTime
                   setEditDataPosted={setEditDataPosted}
                   editDataPosted={memoizedEditDataPosted}
+                  language={language}
+                  languageRedux={languageRedux}
                 />
               ) : (
                 <></>
@@ -427,6 +542,7 @@ const EditPosted = () => {
                 <EditStyleWork
                   setEditDataPosted={setEditDataPosted}
                   editDataPosted={memoizedEditDataPosted}
+                  language={language}
                 />
               ) : (
                 <></>
@@ -435,22 +551,28 @@ const EditPosted = () => {
               <EditPostTime
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
               />
               <EditPostCategoryId
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
                 dataPost={dataPostById?.categories}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditSalaryType
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostTypeSalary
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
                 salaryType={editDataPosted?.salaryType}
+                language={language}
               />
 
               <EditPostFilterSalary
@@ -458,16 +580,22 @@ const EditPosted = () => {
                 editDataPosted={memoizedEditDataPosted}
                 salaryType={editDataPosted?.salaryType}
                 dataOld={dataPostById}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditPostNumberPhone
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <EditDescription
                 setEditDataPosted={setEditDataPosted}
                 editDataPosted={memoizedEditDataPosted}
+                language={language}
+                languageRedux={languageRedux}
               />
 
               <button
@@ -475,7 +603,7 @@ const EditPosted = () => {
                 onClick={handleSubmit}
                 className="btn-edit_submitForm"
               >
-                Lưu chỉnh sửa
+                {language?.post_page?.save_edit_post}
               </button>
             </form>
           </Skeleton>
@@ -483,24 +611,28 @@ const EditPosted = () => {
         <ModalEditSuccess
           openModalEditPost={openModalEditPost}
           setOpenModalEditPost={setOpenModalEditPost}
+          languageRedux={languageRedux}
+          language={language}
         />
+        <RollTop />
         <Footer />
       </div>
     );
   } else {
     return (
-      <>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loading} active></Skeleton>
-        <Skeleton loading={loadingNotFound} active>
+      <div className="edit-posted">
+        <Navbar />
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loading}></Skeleton>
+        <Skeleton active loading={loadingNotFound}>
           <NotFound />
         </Skeleton>
-      </>
+      </div>
     );
   }
 };

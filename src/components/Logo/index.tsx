@@ -4,7 +4,7 @@ import './style.scss';
 
 const Logo: React.FC = () => {
   return (
-    <Link to="/" reloadDocument>
+    <Link to="/" reloadDocument target="_parent">
       <div className="logo">
         <img
           src="/OfficialLogo_beta-01.png"

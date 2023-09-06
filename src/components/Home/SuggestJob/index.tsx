@@ -1,61 +1,61 @@
 import React, { useEffect } from 'react';
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
-import CardActions from '@mui/material/CardActions';
-import ImageListItem from '@mui/material/ImageListItem';
-import Typography from '@mui/material/Typography';
+
 import Grid from '@mui/material/Grid';
 // import { url } from 'inspector'
 // import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack';
-import { AxiosResponse } from 'axios';
+// import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { MoreICon, SuggestIcon } from '#components/Icons';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { MoreICon, SuggestIcon, LoginArrowIcon } from '#components/Icons';
 
 // @ts-ignore
-import moment from 'moment';
+// import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
-import { useNavigate, createSearchParams } from 'react-router-dom';
-import { MouseEvent, MouseEventHandler } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { MouseEvent, MouseEventHandler } from 'react';
 
 // @ts-ignore
 import { useSearchParams } from 'react-router-dom';
 // import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined'
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import TurnedInIcon from '@mui/icons-material/TurnedIn';
 
 // import component
-import ListCompanyCarousel from '../ListCompanyCarousel';
+// import ListCompanyCarousel from '../ListCompanyCarousel';
 
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../store/index';
+import {
+  // useDispatch,
+  useSelector,
+} from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
 
-import postApi from 'api/postApi';
+import { Button } from 'antd';
+
+// import postApi from 'api/postApi';
 import nearByApi from 'api/apiNearBy';
-import bookMarkApi from 'api/bookMarkApi';
+// import bookMarkApi from 'api/bookMarkApi';
 
 import './style.scss';
 
 // import icon
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
-import { Space, Tooltip } from 'antd';
+import { Space } from 'antd';
 // interface item post themes
 
 //import jobcard
 import JobCard from '../JobCard';
+import ModalLogin from '../../../components/Home/ModalLogin';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
 
 interface PostTheme {
   id: number;
@@ -79,32 +79,42 @@ interface PostTheme {
   };
   created_at_text: string;
   bookmarked: boolean;
+  money_type_text: string;
+}
+
+interface UserSelected {
+  userSelectedId: any;
 }
 
 const ThemesJob: React.FC = () => {
-  const [page, setPage] = React.useState(1);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  // const [page, setPage] = React.useState(1);
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-  const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
+  // const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const navigate = useNavigate();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [nearJob, setNearJob] = React.useState<any>([]);
 
-  // state redux
-  const { post } = useSelector((state: RootState) => state);
-  const dispatch = useDispatch();
-  const { setPostByTheme, setPostThemeMore } = bindActionCreators(
-    actionCreators,
-    dispatch,
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
   );
 
-  const handleChange = async (
-    event: React.ChangeEvent<unknown>,
-    value: number,
-  ) => {
+  // state redux
+  // const { post } = useSelector((state: RootState) => state);
+  // const dispatch = useDispatch();
+  // const { setPostByTheme, setPostThemeMore } = bindActionCreators(
+  //   actionCreators,
+  //   dispatch,
+  // );
+
+  const handleChange = async () => {
     // setPage(value);
     setOpenBackdrop(!openBackdrop);
     // const test = [1, 2]
@@ -115,11 +125,19 @@ const ThemesJob: React.FC = () => {
     //   ? searchParams.get(`theme-id`)
     //   : listTheme?.data[0].id;
 
-    const threshold = nearJob[nearJob.length - 1].id;
+    const categoryId = searchParams.get(`categories-id`)
+      ? searchParams.get(`categories-id`)
+      : null;
+
+    const threshold = nearJob[nearJob.length - 1]?.id;
+
     const result = await nearByApi.getNearByJob(
-      userProfile?.address?.id,
+      null,
+      Number(searchParams.get('categories-id')),
+      null,
       11,
       threshold,
+      languageRedux === 1 ? 'vi' : 'en',
     );
     // const result = await postApi.getPostByThemeId(
     //   Number(themeId),
@@ -136,24 +154,28 @@ const ThemesJob: React.FC = () => {
   };
 
   // handle click post details
-  const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`);
-  };
+  // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  //   window.open(`/post-detail?post-id=${id}`, '_parent');
+  // };
 
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
 
   const userProfile = useSelector((state: RootState) => state.profile.profile);
 
   // get post by theme id
+
   const getPostByThemeId = async () => {
     try {
       const result = await nearByApi.getNearByJob(
-        userProfile?.address?.id,
+        null,
+        Number(searchParams.get('categories-id')),
+        null,
         11,
         null,
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -180,9 +202,10 @@ const ThemesJob: React.FC = () => {
 
     // delete param when back to page
     searchParams.delete('theme-id');
-    searchParams.delete('categories-id');
-    setSearchParams(searchParams);
-  }, [userProfile]);
+    // searchParams.delete('categories-id');
+    // setSearchParams(searchParams);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userProfile, languageRedux, searchParams.get('categories-id')]);
 
   const listSuggestJob = () => {
     try {
@@ -193,7 +216,9 @@ const ThemesJob: React.FC = () => {
 
   useEffect(() => {
     listSuggestJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   // React.useEffect(() => {
   //   console.log("vap")
   //   getPostByThemeId()
@@ -204,11 +229,41 @@ const ThemesJob: React.FC = () => {
   // }, [localStorage.getItem("accessToken")])
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} className="box-subjectJob" id="box-subjectJob">
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <SuggestIcon width={25} height={25} />
-        <h2>Công việc gợi ý</h2>
+        <h2>{language?.nearby_jobs}</h2>
       </div>
+
+      {!localStorage.getItem('accessToken') ? (
+        <div className="suggest-job-not-loging">
+          <div className="suggest-job-not-loging_left">
+            {/* <h3>
+           {languageRedux === 1
+             ? 'Hijob gợi ý công việc cho bạn'
+             : 'Hijob suggests a job for you'}
+         </h3> */}
+            <p>
+              {languageRedux === 1
+                ? 'Nhanh chóng tìm được việc làm phù hợp với nhu cầu của bạn.'
+                : 'Quickly find a job that fits your needs.'}
+            </p>
+          </div>
+          <div className="suggest-job-not-loging_right">
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpenModalLogin(true);
+              }}
+            >
+              <LoginArrowIcon />
+              {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
 
       <>
         {automatic && (
@@ -231,7 +286,7 @@ const ThemesJob: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 margin: '24px 0',
-                marginBottom: '50px',
+                // marginBottom: '50px',
               }}
             >
               {/* <Pagination count={10} shape="rounded" /> */}
@@ -244,13 +299,37 @@ const ThemesJob: React.FC = () => {
                   onChange={handleChange}
                 /> */}
               <Space
-                className="div-hover-more"
-                onClick={(e) => {
-                  handleChange(e, page);
-                }}
+                className="div-hover-more-suggest-job"
+                style={{ width: '100%' }}
               >
-                <p>Xem thêm</p>
-                <MoreICon width={20} height={20} />
+                {localStorage.getItem('accessToken') ? (
+                  <div className="more-job">
+                    <button onClick={handleChange}>
+                      <p>{language?.more}</p>
+                      <MoreICon width={20} height={20} />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="suggest-job-not-loging">
+                    <div className="suggest-job-not-loging_left">
+                      <h3>{language?.home_page?.hijob_suggest_for_u}</h3>
+                      <p>
+                        {language?.home_page?.quickly_find_job_fits_your_needs}
+                      </p>
+                    </div>
+                    <div className="suggest-job-not-loging_right">
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          setOpenModalLogin(true);
+                        }}
+                      >
+                        <LoginArrowIcon />
+                        {language?.login}
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </Space>
             </Stack>
             <Backdrop
@@ -260,13 +339,17 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //   onClick={handleClose}
+              //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
           </>
         )}
       </>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
     </Box>
   );
 };

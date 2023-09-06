@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import appplicationApi from 'api/appplication'
-import { Box, Typography, Modal } from '@mui/material'
-import { Button } from 'antd'
+import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import appplicationApi from 'api/appplication';
+import { Box, Typography, Modal } from '@mui/material';
+import { Button } from 'antd';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -15,48 +15,49 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
-}
+};
 
 interface IApprovalApplication {
-  setStatusApplication: React.Dispatch<React.SetStateAction<number>>
+  setStatusApplication: React.Dispatch<React.SetStateAction<number>>;
 }
 const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
-  const { setStatusApplication } = props
+  const { setStatusApplication } = props;
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [OpenRecruit, setOpenRecruit] = useState(false)
+  const [OpenRecruit, setOpenRecruit] = useState(false);
 
-  const handleClose = () => setOpenRecruit(false)
+  const handleClose = () => setOpenRecruit(false);
 
-  const handleClickApproveApplication = async () => {
-    const candidateId = parseInt(searchParams.get('application_id') ?? '')
+  // const handleClickApproveApplication = async () => {
+  //   const candidateId = parseInt(searchParams.get('application_id') ?? '')
 
-    try {
-      const result = await appplicationApi.updateApplication(candidateId, 3)
-      if (result) {
-        setStatusApplication(3)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  //   try {
+  //     const result = await appplicationApi.updateApplication(candidateId, 3)
+  //     if (result) {
+  //       setStatusApplication(3)
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const handleClickPassRecruitment = async () => {
-    const candidateId = parseInt(searchParams.get('application_id') ?? '')
+    const candidateId = parseInt(searchParams.get('application_id') ?? '');
 
     try {
-      const result = await appplicationApi.updateApplication(candidateId, 4)
+      const result = await appplicationApi.updateApplication(candidateId, 4);
       if (result) {
-        setStatusApplication(4)
+        setStatusApplication(4);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <>
       <Button
+        name="submitApply"
         type="primary"
         style={{
           backgroundColor: '#0D99FF',
@@ -85,17 +86,26 @@ const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
             Hãy đảm bảo bạn và ứng viên đã liên hệ và sẽ làm việc cùng nhau.
           </Typography>
           <div className="button-modal_reject">
-            <Button type="default" danger onClick={() => setOpenRecruit(false)}>
+            <Button
+              type="default"
+              danger
+              onClick={() => setOpenRecruit(false)}
+              name="cancleApprovedApply"
+            >
               Huỷ
             </Button>
-            <Button type="primary" onClick={handleClickPassRecruitment}>
+            <Button
+              type="primary"
+              onClick={handleClickPassRecruitment}
+              name="submitApprovedApply"
+            >
               Đồng ý
             </Button>
           </div>
         </Box>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default ApprovedApplication
+export default ApprovedApplication;

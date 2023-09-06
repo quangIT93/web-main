@@ -1,11 +1,12 @@
 import React from 'react';
 // import Tabs from '@mui/material/Tabs'
 // import Tab from '@mui/material/Tab'
-import { Radio, Tabs } from 'antd';
+// import { Radio, Tabs } from 'antd';
 import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { AxiosResponse } from 'axios';
+import { Skeleton } from 'antd';
+// import { AxiosResponse } from 'axios';
 // import api
 import applitedPostedApi from 'api/apiAppliedPosted';
 
@@ -18,42 +19,62 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Mousewheel, Pagination } from 'swiper';
-
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
-import { Button, Space } from 'antd';
-import { Skeleton } from 'antd';
+import { Button } from 'antd';
+// import { Skeleton } from 'antd';
+
+import { QuestionMarkIcon } from '#components/Icons';
 
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../../store/index';
-import { RootState } from '../../../store/reducer';
+// import { useDispatch } from 'react-redux';
 
-import { AppliedPostedIcon } from '#components/Icons';
+// import { RootState } from '../../../store/reducer';
+
+import {
+  AppliedPostedIcon,
+  // DoubleArrowIcon,
+  LoginArrowIcon,
+  Advertisement,
+} from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
 
 import './styles.scss';
 
-interface ItemTheme {
-  id: number;
-  title: string;
-  img: string;
-  author: string;
-}
+import ModalLogin from '../../../components/Home/ModalLogin';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
+import { number } from 'yargs';
+
+// interface ItemTheme {
+//   id: number;
+//   title: string;
+//   img: string;
+//   author: string;
+// }
 
 const AppliedPostedJob: React.FC = () => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [loading, setloading] = React.useState(false);
-  const [index, setIndex] = React.useState(0);
+  // const [index, setIndex] = React.useState(0);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatch = useDispatch();
-  const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const dispatch = useDispatch();
+  // const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
 
   const handleClickItem = (
     event: any,
@@ -71,6 +92,7 @@ const AppliedPostedJob: React.FC = () => {
     localStorage.setItem('hotjobApi', url);
     window.open(
       `/hotjobs?appliedPostedJob-id=${id}&appliedPostedJob-type=${type}&appliedPostedJob-total=${total}`,
+      '_parent',
     );
   };
 
@@ -82,7 +104,10 @@ const AppliedPostedJob: React.FC = () => {
   const getAppliedPostedJobs = async () => {
     try {
       setloading(true);
-      const result = await applitedPostedApi.getAllApplitedPostedApi(0);
+      const result = await applitedPostedApi.getAllApplitedPostedApi(
+        0,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
         setTimeout(() => {
@@ -98,7 +123,25 @@ const AppliedPostedJob: React.FC = () => {
   React.useEffect(() => {
     getAppliedPostedJobs();
     localStorage.getItem('accessToken') && setIslogined(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
+
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  const slidesPerView = windowWidth <= 576 ? 1 : 'auto';
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
+
+  // const slidesPerView = windowWidth <= 576 ? 1 : 'auto';
 
   // const getPostNewestByThemeId = async () => {
   //     try {
@@ -126,63 +169,216 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  return (
-    <Box
-      sx={{
-        maxWidth: { xs: 320, sm: 480 },
-        bgcolor: 'background.paper',
-        position: 'relative',
-        paddingBottom: '24px',
-        display: isLogined && appliedPostedJob.length > 0 ? 'flex' : 'none',
-        flexDirection: 'column',
-      }}
-      className="applied-posted-jobs-container"
-    >
-      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-        <AppliedPostedIcon width={30} height={30} />
-        <h2>Công việc đã Ứng tuyển/ Đăng tuyển</h2>
-      </div>
+  const handleClickHelpSearch = () => {};
 
-      <Swiper
-        navigation={true}
-        // mousewheel={true}
-        slidesPerView="auto"
-        spaceBetween={24}
-        modules={[Mousewheel, Navigation, Pagination]}
-        className="applied-posted-jobs_swiper"
+  if (appliedPostedJob.length !== 0 && localStorage.getItem('accessToken')) {
+    return (
+      <Box
+        sx={{
+          maxWidth: { xs: 320, sm: 480 },
+          bgcolor: 'background.paper',
+          position: 'relative',
+          paddingBottom: '24px',
+          flexDirection: 'column',
+        }}
+        className="applied-posted-jobs-container"
       >
-        {appliedPostedJob?.map((item: any, index: number) => (
-          <SwiperSlide
-            key={index}
-            onClick={(event) => {
-              handleClickItem(
-                event,
-                item.id,
-                item.type,
-                item.count,
-                item.api,
-                item.query,
-              );
+        <Skeleton loading={false} active>
+          {localStorage.getItem('accessToken') ? (
+            <div
+              style={{
+                display: 'flex',
+                gap: '0.5rem',
+                alignItems: 'flex-start',
+              }}
+            >
+              <AppliedPostedIcon width={30} height={30} />
+              <h2>{language?.home_page?.applied_posted_job}</h2>
+              <div className="help-search" onClick={handleClickHelpSearch}>
+                <QuestionMarkIcon />
+                <div className="login__hover__container">
+                  <div className="login__hover">
+                    <div className="login__hover__p">
+                      <p>
+                        {languageRedux === 1
+                          ? `Công việc đã ứng tuyển/Đăng tuyển sẽ hiển thị trạng thái
+                        trong vòng 30 ngày, sau 30 ngày bạn có thể kiểm tra các
+                        công việc đã Ứng tuyển/Đăng tuyển trong lịch sử.`
+                          : `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`}
+                      </p>
+                    </div>
+                    {/* <Button
+            type="primary"
+            onClick={() => {
+              setOpenModalLogin(true);
             }}
           >
-            <AppliedPostedJobCard item={item} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            <LoginArrowBlackIcon />
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+          </Button> */}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
 
-      <Backdrop
+          {/* <div
+            className="applied-posted-job-not-loging"
+            style={{ display: !isLogined ? 'flex' : 'none' }}
+          >
+            <div className="applied-posted-job-not-loging_left">
+              <p>
+                {languageRedux === 1
+                  ? 'Đăng nhập để đăng ký việc làm miễn phí.'
+                  : 'Sign in to apply for free jobs.'}
+              </p>
+            </div>
+            <div className="applied-posted-job-not-loging_right">
+              <Button
+                type="primary"
+                onClick={() => {
+                  setOpenModalLogin(true);
+                }}
+              >
+                <LoginArrowIcon />
+                {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+              </Button>
+            </div>
+          </div> */}
+
+          <div
+            className="advertisement-job-not-loging"
+            style={{ display: !isLogined ? 'flex' : 'none' }}
+          >
+            {/* <Advertisement /> */}
+            {/* <img
+              src="../images/absHijob.png"
+              alt="Ảnh lỗi"
+              className="img-advertisement-job-not-loging"
+              // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
+            /> */}
+            <Advertisement />
+            <div className="advertisement-job-not-loging-content">
+              <h3 style={{ marginTop: '12px' }}>
+                {language?.applied_posted_jobs?.are_you_a_recruiter}
+              </h3>
+              <p style={{ marginBottom: '12px' }}>
+                {language?.applied_posted_jobs?.post_now}
+              </p>
+              <h3>{language?.applied_posted_jobs?.are_you_looking_for_job}</h3>
+              <p>{language?.applied_posted_jobs?.all_jobs_in_VN}</p>
+            </div>
+            <Button
+              type="primary"
+              onClick={() => {
+                console.log('click');
+
+                setOpenModalLogin(true);
+              }}
+            >
+              <LoginArrowIcon />
+              {language?.sign_in}
+            </Button>
+          </div>
+
+          <Swiper
+            navigation={true}
+            // mousewheel={true}
+            // slidesPerView={1}
+            slidesPerView={slidesPerView}
+            spaceBetween={24}
+            modules={[Mousewheel, Navigation, Pagination]}
+            className="applied-posted-jobs_swiper"
+            style={{
+              display:
+                isLogined && appliedPostedJob.length > 0 ? 'flex' : 'none',
+            }}
+          >
+            {appliedPostedJob?.map((item: any, index: number) => (
+              <SwiperSlide
+                key={index}
+                onClick={(event) => {
+                  handleClickItem(
+                    event,
+                    item.id,
+                    item.type,
+                    item.count,
+                    item.api,
+                    item.query,
+                  );
+                }}
+              >
+                <AppliedPostedJobCard item={item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Skeleton>
+
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            backgroundColor: 'transparent',
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
+          open={openBackdrop}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <ModalLogin
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        />
+      </Box>
+    );
+  } else {
+    return (
+      <Box
         sx={{
-          color: '#0d99ff ',
-          backgroundColor: 'transparent',
-          zIndex: (theme) => theme.zIndex.drawer + 1,
+          maxWidth: { xs: 320, sm: 480 },
+          bgcolor: 'background.paper',
+          position: 'relative',
+          paddingBottom: '24px',
+          flexDirection: 'column',
         }}
-        open={openBackdrop}
-        onClick={handleClose}
+        className="applied-posted-jobs-container"
       >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    </Box>
-  );
+        <div
+          className="advertisement-job-not-loging"
+          style={{ display: !isLogined ? 'flex' : 'none' }}
+        >
+          {/* <Advertisement /> */}
+          {/* <img
+              src="../images/absHijob.png"
+              alt="Ảnh lỗi"
+              className="img-advertisement-job-not-loging"
+              // style={{ width: '50%', height: '350px', borderRadius: '20px' }}
+            /> */}
+          <Advertisement />
+          <div className="advertisement-job-not-loging-content">
+            <h3 style={{ marginTop: '12px' }}>
+              {language?.applied_posted_jobs?.are_you_a_recruiter}
+            </h3>
+            <p style={{ marginBottom: '12px' }}>
+              {language?.applied_posted_jobs?.post_now}
+            </p>
+            <h3>{language?.applied_posted_jobs?.are_you_looking_for_job}</h3>
+            <p>{language?.applied_posted_jobs?.all_jobs_in_VN}</p>
+          </div>
+          <Button type="primary" onClick={() => setOpenModalLogin(true)}>
+            <LoginArrowIcon />
+            {language?.sign_in}
+          </Button>
+        </div>
+        <ModalLogin
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        />
+      </Box>
+    );
+  }
 };
 
 export default AppliedPostedJob;

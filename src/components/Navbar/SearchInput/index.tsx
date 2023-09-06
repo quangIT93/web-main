@@ -1,23 +1,28 @@
 import React, { useState, useContext } from 'react';
 import { Select, Button } from 'antd';
-import jsonp from 'fetch-jsonp';
-import qs from 'qs';
+// import jsonp from 'fetch-jsonp';
+// import qs from 'qs';
 import type { SelectProps } from 'antd';
 import { useLocation } from 'react-router-dom';
 import searchApi from 'api/searchApi';
+import apiTotalJob from 'api/apiTotalJob';
 import './style.scss';
-import { Spin } from 'antd';
+// import { Spin } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { SearchIcon, FilterIcon, LightFilterIcon } from '../../Icons/index';
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
+import { useSelector } from 'react-redux';
 import {
-  useNavigate,
-  createSearchParams,
+  // useNavigate,
+  // createSearchParams,
   useSearchParams,
 } from 'react-router-dom';
+import { RootState } from '../../../store/reducer';
+import languageApi from 'api/languageApi';
 
-let timeout: ReturnType<typeof setTimeout> | null;
+import ModalLogin from '../../../components/Home/ModalLogin';
+// let timeout: ReturnType<typeof setTimeout> | null;
 // let currentValue: string | undefined;
 
 // fetch data keywords
@@ -113,6 +118,9 @@ const SearchInput: React.FC<SearchProps> = ({
     search: boolean;
   } = useContext(HomeValueContext);
 
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState<SelectProps['options']>([]);
   // const [fetching, setFet] = useState(false)
@@ -120,8 +128,18 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const [dataHistory, setDataHistory] = React.useState<any>([]);
   const [dataSuggest, setDataSuggest] = React.useState<any>([]);
-  const [openDropdown, setOpenDropdown] = React.useState(false);
+  // const [openDropdown, setOpenDropdown] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(false);
+  const [totalJob, setTotalJob] = React.useState<number>(0);
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+
+  // const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  // const inputRef = useRef<InputRef>(null);
+
+  // console.log("dataNotification", dataNotification);
 
   const QUERY = searchParams.get('q');
   const location = useLocation();
@@ -148,6 +166,7 @@ const SearchInput: React.FC<SearchProps> = ({
     setValue(QUERY as any);
     const accessToken = localStorage.getItem('accessToken');
     accessToken && setIsLogin(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getSuggestKeyWord = async () => {
@@ -155,12 +174,12 @@ const SearchInput: React.FC<SearchProps> = ({
       var response = null;
       setLoading(true);
       if (localStorage.getItem('accessToken')) {
-        const result = await searchApi.getHistoryKeyWord(10);
+        const result = await searchApi.getHistoryKeyWord(10, 'vi');
         if (result) {
           response = result.data.listHistorySearch;
         }
       } else {
-        const result = await searchApi.getSuggestKeyWord(10);
+        const result = await searchApi.getSuggestKeyWord(10, 'vi');
         if (result) {
           response = result.data;
         }
@@ -181,14 +200,21 @@ const SearchInput: React.FC<SearchProps> = ({
 
   React.useEffect(() => {
     getSuggestKeyWord();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getDataSearch = async () => {
     try {
-      const resultSuggest = await searchApi.getSuggestKeyWord(10);
+      const resultSuggest = await searchApi.getSuggestKeyWord(
+        10,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       let resultHistory;
       if (isLogin) {
-        resultHistory = await searchApi.getHistoryKeyWord(10);
+        resultHistory = await searchApi.getHistoryKeyWord(
+          10,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
         resultHistory && setDataHistory(resultHistory.data);
       }
       // if (resultHistory || resultSuggest) {
@@ -207,24 +233,25 @@ const SearchInput: React.FC<SearchProps> = ({
 
   React.useEffect(() => {
     getDataSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const handleChange = (newValue: string) => {
     // setOpenDropdown(true);
     // setValue(newValue);
-    console.log('cakakak');
+    // console.log('cakakak');
   };
 
-  const disableScroll = () => {
-    document.body.style.overflow = 'hidden';
-  };
+  // const disableScroll = () => {
+  //   document.body.style.overflow = 'hidden';
+  // };
 
-  const enableScroll = () => {
-    document.body.style.overflow = '';
-  };
+  // const enableScroll = () => {
+  //   document.body.style.overflow = '';
+  // };
 
   const handleOnFocus = () => {
-    console.log('fcccccccccuss');
+    // console.log('fcccccccccuss');
     // setOpenDropdown(true);
     // disableScroll()
     // getSuggestKeyWord();
@@ -237,7 +264,7 @@ const SearchInput: React.FC<SearchProps> = ({
     setValue(value);
     // enableScroll();
   };
-  console.log('value', value);
+  // console.log('value', value);
   // handle press enter
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -245,7 +272,9 @@ const SearchInput: React.FC<SearchProps> = ({
 
       if (location.pathname !== '/search-results') {
         window.open(
-          `/search-results?${value !== 'undefined' ? `q=${value}` : ``}`,
+          `/search-results?${
+            value !== 'undefined' ? `q=${encodeURIComponent(value as any)}` : ``
+          }`,
         );
       } else {
         setSearchParams({
@@ -282,7 +311,7 @@ const SearchInput: React.FC<SearchProps> = ({
     setValue('');
   };
 
-  const handleDeleteKeyword = () => {};
+  // const handleDeleteKeyword = () => {};
 
   const handleDeleteHistoryKeyword = async (e: any, keyword: string) => {
     // e.stoppropagation();
@@ -298,6 +327,20 @@ const SearchInput: React.FC<SearchProps> = ({
     }
   };
 
+  const getTotalUserSearch = async () => {
+    try {
+      const result = await apiTotalJob.getTotalJob('vi');
+      if (result) {
+        setTotalJob(result?.data?.total);
+      }
+    } catch (error) {}
+  };
+
+  React.useEffect(() => {
+    getTotalUserSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const dropdownRender: any = ['1'].map((d: any, index: number) => (
     <div
       key={index}
@@ -310,9 +353,9 @@ const SearchInput: React.FC<SearchProps> = ({
       {/* {d.value} */}
 
       <div className="items-history items-search_keyword">
-        <h4>Từ khóa</h4>
+        <h4>{languageRedux === 1 ? 'Từ khóa phổ biến' : 'Popular keywords'}</h4>
         <div className="wrap-items-history wrap-items-search">
-          {dataSuggest.map((suggest: any, index: number) => (
+          {dataSuggest?.map((suggest: any, index: number) => (
             <div className="item-history item-search" key={index}>
               <span
                 className="item-search_text"
@@ -331,7 +374,7 @@ const SearchInput: React.FC<SearchProps> = ({
           display: isLogin ? 'block' : 'none',
         }}
       >
-        <h4>Tìm kiếm gần đây</h4>
+        <h4>{language?.recently}</h4>
         <div className="wrap-items-history wrap-items-search">
           {dataHistory?.listHistorySearch?.map(
             (history: any, index: number) => (
@@ -360,15 +403,27 @@ const SearchInput: React.FC<SearchProps> = ({
   return (
     <div className="search-input-wrapper">
       <Select
+        labelInValue
         showSearch
         autoClearSearchValue
         optionFilterProp="children"
         size="large"
-        value={value}
+        value={value !== '' ? value : undefined}
         searchValue={value}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
-        placeholder="Tìm kiếm công việc"
+        placeholder={
+          languageRedux === 1
+            ? `Tìm kiếm hơn ${totalJob.toLocaleString(
+                'en-US',
+              )} công việc tại Việt Nam`
+            : `Search over ${totalJob.toLocaleString('en-US')} jobs in Vietnam`
+        }
+        // placeholder={
+        //   language?.search_over +
+        //   ` ${totalJob.toLocaleString('en-US')} ` +
+        //   language?.jobs_in_vietnam
+        // }
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}
@@ -391,19 +446,26 @@ const SearchInput: React.FC<SearchProps> = ({
         dropdownRender={() => dropdownRender}
         onClear={handleClearItem}
         // open={openDropdown}
+        style={
+          location.pathname === '/' ? { width: '500px' } : { width: '400px' }
+        }
       />
 
       <Button
         className="search-input-wrapper-iconSearch"
         shape="circle"
         onClick={(event) => handleSearchIcon(event, value)}
+        name="search-input-wrapper-iconSearch"
       >
         <SearchIcon width={24} height={24} />
       </Button>
       <Button
         className="search-input-wrapper-iconFilter"
         shape="circle"
-        onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
+        onClick={() => {
+          setOpenCollapseFilter(!openCollapseFilter);
+        }}
+        name="search-input-wrapper-iconFilter"
       >
         {checkSearch ? (
           <LightFilterIcon width={20} height={20} />

@@ -10,12 +10,14 @@ import { styleLabel } from '#components/Post/CssPost'
 interface IEditPostPeriodDate {
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
   editDataPosted: any
+  language: any;
+  languageRedux: any;
 }
 
 const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
-  const { setEditDataPosted, editDataPosted } = props
+  const { setEditDataPosted, editDataPosted, language } = props
 
-  const [isDatePeriod, setIsPeriodDate] = useState<number>(1)
+  // const [isDatePeriod, setIsPeriodDate] = useState<number>(1)
 
   const handleChangePeriodDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditDataPosted((preValue: any) => {
@@ -29,7 +31,10 @@ const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
   return editDataPosted ? (
     <FormControl sx={{ marginTop: '24px' }}>
       <FormLabel id="limit-time" component="legend" sx={styleLabel}>
-        Thời gian làm việc <span style={{ color: 'red' }}>*</span>
+        {
+          language?.working_time
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </FormLabel>
       <RadioGroup
         row
@@ -41,13 +46,17 @@ const EditPostPeriodDate: React.FC<IEditPostPeriodDate> = (props) => {
         <FormControlLabel
           value={0}
           control={<Radio id="limited-time-radio1" />}
-          label="Không thời hạn"
+          label={
+            language?.indefinite_term
+          }
           htmlFor="limited-time-radio1"
         />
         <FormControlLabel
           value={1}
           control={<Radio id="limited-time-radio" />}
-          label="Có thời hạn"
+          label={
+            language?.fixed_term
+          }
           htmlFor="limited-time-radio"
         />
       </RadioGroup>

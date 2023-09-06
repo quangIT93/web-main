@@ -1,8 +1,9 @@
 import axiosClient from './axiosClient'
 
 const notificationKeywordApi = {
-  getNotificationKeyword: () => {
-    const URL = `/v1/notification/keyword`
+
+  getNotificationAll: (lang: string) => {
+    const URL = `/v1/notification/keyword?lang=${lang}`
 
     return axiosClient.get(URL, {
       headers: {
@@ -10,6 +11,26 @@ const notificationKeywordApi = {
       },
     })
   },
+
+  getNotificationKeyword: (lang: string) => {
+    const URL = `/v1/notification/keyword?lang=${lang}`
+
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  },
+  getNotificationKeywordV3: (lang: string) => {
+    const URL = `/v3/keyword-notifications?lang=${lang}`
+
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  },
+
   putStatusNotification: (id: number, status: number) => {
     const URL = `/v1/notification/keyword/update-status`
 
@@ -53,6 +74,24 @@ const notificationKeywordApi = {
       category_status: 1,
       district_id: district_id,
       district_status: 1
+    },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+ 
+        },
+      })
+  },
+
+  createKeywordNotificationV3: (keyword: string, category_id: number[],  district_id: string[]) => {
+    const URL = `/v3/keyword-notifications`
+
+    return axiosClient.post(URL, {
+      keyword: keyword,
+      categoriesId: category_id,
+      // category_status: 1,
+      districtsId: district_id,
+      // district_status: 1
     },
       {
         headers: {

@@ -1,20 +1,31 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 
 import Typography from '@mui/material/Typography';
 
 import TextField from '@mui/material/TextField';
 
-import FormValues from '../../../pages/Post/index';
+// import FormValues from '../../../pages/Post/index';
 
 interface PropsPostCompanyJob {
   setTitleJob: React.Dispatch<React.SetStateAction<any>>;
   setCompanyName: React.Dispatch<React.SetStateAction<any>>;
-  titleError: boolean;
-  companyError: boolean;
+  // titleError: boolean;
+  // companyError: boolean;
+  titleJob: string;
+  companyName: string;
+  language: any;
 }
 
 const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
-  const { setTitleJob, setCompanyName, titleError, companyError } = props;
+  const {
+    setTitleJob,
+    setCompanyName,
+    // titleError,
+    // companyError,
+    titleJob,
+    companyName,
+    language
+  } = props;
 
   const handleChangeTitleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleJob(e.target.value);
@@ -37,7 +48,10 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          Tên công việc <span style={{ color: 'red' }}>*</span>
+          {
+            language?.job_title
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -47,8 +61,11 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           onChange={handleChangeTitleForm}
           size="small"
           sx={{ width: '100%', marginTop: '0.5rem' }}
-          placeholder="Tên công việc"
-          error={titleError} // Đánh dấu lỗi
+          placeholder={
+            language?.job_title
+          }
+          // error={titleError} // Đánh dấu lỗi
+          value={titleJob ? titleJob : ''}
         />
       </div>
       <div className="post-titleCompany post-title">
@@ -58,7 +75,10 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           component="label"
           htmlFor="company"
         >
-          Công ty <span style={{ color: 'red' }}>*</span>
+          {
+            language?.company_name
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -68,8 +88,11 @@ const PostJobCompany: React.FC<PropsPostCompanyJob> = (props) => {
           size="small"
           onChange={handleChangeCompanyForm}
           sx={{ width: '100%', marginTop: '0.5rem' }}
-          placeholder="Tên công ty"
-          error={companyError} // Đánh dấu lỗi
+          placeholder={
+            language?.company
+          }
+          // error={companyError} // Đánh dấu lỗi
+          value={companyName}
         />
       </div>
     </div>

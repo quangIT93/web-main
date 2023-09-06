@@ -26,7 +26,7 @@ export const getPostById = createAsyncThunk(
       // Gọi API để lấy thông tin profile với accessToken đã có
 
       if (accessToken) {
-        const response = await postApi.getPostbyId(postId)
+        const response = await postApi.getPostbyId(postId, "vi")
 
         return response.data
       }

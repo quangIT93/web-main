@@ -21,10 +21,11 @@ import HotJob from '#components/Home/HotJob';
 
 import RollTop from '#components/RollTop';
 
+import Box from '@mui/material/Box';
+
 // import ModalLogin from '#components/Home/ModalLogin'
 // import { useHomeState } from './HomeState'
 import './style.scss';
-import Footer from '../../components/Footer/Footer';
 
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
@@ -34,8 +35,17 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 
 // import { IvalueJobChild } from 'context/HomeValueContextProvider'
 
+// component
+import Community from '#components/Home/Community';
+import Footer from '../../components/Footer/Footer';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer';
+
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
 
   useEffect(() => {
     logEvent(analytics, 'screen_view' as string, {
@@ -43,12 +53,88 @@ const Home: React.FC = () => {
       // screen_class: 'HomeScreen',
       page_title: '/web_home',
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Tìm việc làm, tuyển dụng'
+        : 'HiJob - Find a job, recruit';
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_hotJob' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
+  const [reachedEndShowSubjectJob, setReachedEndShowSubjectJob] =
+    React.useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        setReachedEndShowSubjectJob(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const communityDiv = localStorage.getItem('community');
+
+    if (communityDiv) {
+      setReachedEndShowSubjectJob(true);
+      document.querySelector('.community-container')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+    localStorage.removeItem('community');
+
+    window.scrollTo(0, 0);
+  }, []);
+
+  const tabs = document.querySelector('.tabs') as HTMLElement;
+  const breadCrumb = document.querySelector(
+    '.bread-crumb-container',
+  ) as HTMLElement;
+  var prevHeight = window.innerHeight;
+
+  const handleScroll = () => {
+    var currentHeight = window.scrollY;
+
+    if (currentHeight >= prevHeight && tabs !== null && breadCrumb !== null) {
+      tabs.style.top = '-70px';
+      breadCrumb.style.marginTop = '-192px';
+      // setTimeout(() => {
+      //   currentHeight = 0;
+      //   tabs.style.top = '70px';
+      //   breadCrumb.style.marginTop = '192px';
+      // }, 500);
+    } else {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
+    }
+    prevHeight = currentHeight;
+  };
+
+  window.addEventListener('scroll', handleScroll);
 
   return (
     <div className="home">
       <Navbar />
-
+      {/* <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8881781217169539"
+        crossOrigin="anonymous"
+      ></script> */}
       {/* <Carousel /> */}
       <h1 style={{ visibility: 'hidden', display: 'none' }}>
         Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được
@@ -59,10 +145,17 @@ const Home: React.FC = () => {
         <CategoryCarousel />
         <Breadcrumbs />
         <AppliedPostedJob />
-        <NewJobs />
         <HotJob />
-        <ThemesJob />
-        <SuggestJob />
+        <NewJobs />
+        {reachedEndShowSubjectJob ? (
+          <>
+            <SuggestJob />
+            <ThemesJob />
+            <Community />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <RollTop />
       <Footer />

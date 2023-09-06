@@ -1,11 +1,34 @@
-import React from 'react'
-
-import { Button } from 'antd'
-
+import React from 'react';
+import languageApi from 'api/languageApi';
+import { Button } from 'antd';
+import { RootState } from '../../../store/reducer';
+import { useSelector } from 'react-redux';
 const RejectedApplication: React.FC = () => {
+  const [language, setLanguageState] = React.useState<any>();
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
   return (
     <>
       <Button
+        name="RejectedApplication"
         type="primary"
         style={{
           backgroundColor: '#bd3131',
@@ -18,10 +41,10 @@ const RejectedApplication: React.FC = () => {
           cursor: 'default',
         }}
       >
-        Đã từ chối hồ sơ
+        {language?.rejected}
       </Button>
     </>
-  )
-}
+  );
+};
 
-export default RejectedApplication
+export default RejectedApplication;

@@ -1,4 +1,4 @@
-import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers'
+// import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers'
 import axiosClient from './axiosClient'
 // api/productApi.js
 
@@ -35,8 +35,8 @@ interface IInfoEducationUpdate {
 }
 
 const profileApi = {
-  getProfile: () => {
-    const URL = `/v1/profiles/s`
+  getProfile: (lang: string) => {
+    const URL = `/v1/profiles/s?lang=${lang}`
 
     return axiosClient.get(URL, {
       headers: {

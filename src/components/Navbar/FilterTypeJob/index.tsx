@@ -1,12 +1,19 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Select, Space, Radio } from 'antd';
-import { EnvironmentOutlined } from '@ant-design/icons';
+// import { EnvironmentOutlined } from '@ant-design/icons';
 import type { RadioChangeEvent } from 'antd';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 import siteApi from 'api/siteApi';
 
 import { getCookie, setCookie } from 'cookies';
 import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons';
+
+// import redux
+import { RootState } from 'store';
+import { useSelector } from 'react-redux';
+
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
 
 import './style.scss';
 
@@ -24,13 +31,16 @@ const CustomOption = ({
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     const valueRender = data.find((item: any) => item.id === value);
 
-    console.log('valueRender Loai cong viec', valueRender);
-    console.log('valueRender Loai cong viec value', value);
+    // console.log('valueRender Loai cong viec', valueRender);
+    // console.log('valueRender Loai cong viec value', value);
     setValueRender(valueRender);
 
     setValue(value);
     setCookie('userTypejobFiltered', JSON.stringify(valueRender), 365);
   };
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
 
   return (
     <Radio.Group
@@ -56,24 +66,57 @@ const CustomOption = ({
 interface TypeJob {
   setTypeJob: Function;
   valueTypeJob: any;
+  reset: Boolean;
+  setReset: React.Dispatch<React.SetStateAction<Boolean>>;
+  language: any;
 }
 
 const { Option } = Select;
-const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
+const FilterTypeJob: React.FC<TypeJob> = ({
+  setTypeJob,
+  valueTypeJob,
+  reset,
+  setReset,
+  language,
+}) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const [data, setData] = React.useState()
-  const [data, setData] = React.useState<{ id: number; name: string }[]>([]);
+  const [data, setData] = React.useState<{ id: number; value: string }[]>([
+    { id: 0, value: 'Tất cả' },
+  ]);
   const [valueRender, setValueRender] = React.useState<any>();
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const [language, setLanguageState] = React.useState<any>();
+
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
 
   let userFilteredCookies = JSON.parse(
     getCookie('userTypejobFiltered') || '{}',
   );
   const TYPE_JOB = userFilteredCookies?.id;
-  console.log('type', TYPE_JOB);
+  // console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
-    const result = await siteApi.getJobType();
-    const updatedData = [{ id: 5, name: 'Tất cả' }, ...result.data];
-    console.log('updatedData', updatedData);
+    const result = await siteApi.getJobType(languageRedux == 1 ? 'vi' : 'en');
+    const updatedData = [{ id: 5, name: language?.all }, ...result.data];
+    // console.log('updatedData', updatedData);
     if (updatedData) {
       setData(updatedData);
 
@@ -81,15 +124,18 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
         const value = updatedData.find((item: any) => item.id === TYPE_JOB);
         setValueRender(value);
       } else {
-        setValueRender({ id: 5, name: 'Tất cả' });
+        setValueRender({ id: 5, name: language?.all });
       }
     }
   };
   React.useEffect(() => {
     getTypeJob();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [TYPE_JOB, languageRedux, language]);
 
-  const handleChange = (value1: string) => {};
+  const handleChange = (value1: string) => {
+    setReset(false);
+  };
   // console.log(`TYPEJOB`, TYPE_JOB);
   return (
     <div className="filter-input">
@@ -100,10 +146,12 @@ const FilterTypeJob: React.FC<TypeJob> = ({ setTypeJob, valueTypeJob }) => {
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={valueRender ? valueRender.name : undefined}
+        value={
+          reset ? language?.all : valueRender ? valueRender.name : undefined
+        }
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder="Loai cong viec"
+        placeholder={language?.job_type1}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="5" label="">

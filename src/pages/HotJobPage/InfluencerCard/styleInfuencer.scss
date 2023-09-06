@@ -1,37 +1,88 @@
-.influencer-card {
-    padding: 0 !important;
+@import "../../../scss/mixins";
 
-    .div-influencer-card-top {
-        .MuiImageListItem-img {
-            width: 100% !important;
-            height: 300px !important;
-            border-radius: 8px;
+.hot-job-page-container {
+
+    .MuiBox-root {
+        .MuiGrid-container{
+            .MuiGrid-item {
+                height: auto;
+            }
         }
     }
 
-    .div-influencer-card-bottom {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 12px;
-
-        .div-influencer-card-bottom_left {
-            width: 75%;
-
-            // .MuiTypography-h6 {
-            //     white-space: unset !important;
-            //     text-overflow: unset !important;
-            //     overflow: unset !important;
-            //     word-break: break-word;
-            // }
+    .influencer-card {
+        padding: 0 !important;
+        height: auto !important;
+        .div-influencer-card-top {
+            .MuiImageListItem-img {
+                width: 100% !important;
+                height: 300px !important;
+                border-radius: 8px;
+            }
+    
+            @include breakpoint(mobile){
+                .MuiImageListItem-img {
+                    margin-top: 16px;
+                    min-width: 100% !important;
+                    min-height: 240px !important;
+                    border-radius: 8px !important;
+                    object-fit: contain !important;
+                }
+            }
+    
+            @include breakpoint(tablet){
+                .MuiImageListItem-img {
+                    margin-top: 16px;
+                    min-width: 100% !important;
+                    min-height: 240px !important;
+                    border-radius: 8px !important;
+                    object-fit: contain !important;
+                }
+            }
+    
+            @include breakpoint(largeTablet){
+                .MuiImageListItem-img {
+                    margin-top: 16px;
+                    min-width: 100% !important;
+                    min-height: 240px !important;
+                    border-radius: 8px !important;
+                    object-fit: contain !important;
+                    
+                }
+            }
+    
+    
         }
-
-        .div-influencer-card-bottom_right {
-            height: 100%;
+    
+        .div-influencer-card-bottom {
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: space-between;
-            align-items: flex-end;
+            padding: 12px;
+            
+    
+            .div-influencer-card-bottom_left {
+                width: 75%;
+    
+                // .MuiTypography-h6 {
+                //     white-space: unset !important;
+                //     text-overflow: unset !important;
+                //     overflow: unset !important;
+                //     word-break: break-word;
+                // }
+            }
+    
+            .div-influencer-card-bottom_right {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
         }
+    }
+
+    .MuiPaper-root {
+        box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
     }
 }

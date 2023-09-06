@@ -1,73 +1,48 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Cascader } from 'antd';
+import { Cascader, Divider } from 'antd';
 import categoriesApi from '../../../api/categoriesApi';
 import './style.scss';
-
-interface Option {
-  value: string | number;
-  label: string;
-  children?: Option[];
-  disableCheckbox?: boolean;
-}
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 const { SHOW_CHILD } = Cascader;
 
-const options: Option[] = [
-  {
-    label: 'Light',
-    value: 'light',
-    children: new Array(20).fill(null).map((_, index) => ({
-      label: `Number ${index}`,
-      value: index,
-      disableCheckbox: true,
-    })),
-  },
-  {
-    label: 'Bamboo',
-    value: 'bamboo',
-    children: [
-      {
-        label: 'Little',
-        value: 'little',
-        children: [
-          {
-            label: 'Toy Fish',
-            value: 'fish',
-            disableCheckbox: true,
-          },
-          {
-            label: 'Toy Cards',
-            value: 'cards',
-          },
-          {
-            label: 'Toy Bird',
-            value: 'bird',
-          },
-        ],
-      },
-    ],
-  },
-];
-
 interface ICategories {
   setCategoriesId: React.Dispatch<React.SetStateAction<string[]>>;
+  setFillCate: React.Dispatch<React.SetStateAction<string[]>>;
   categoriesId: string[];
+  fillCate: string[];
+  language: any;
+  languageRedux: any;
 }
 
 const CheckboxesTags: React.FC<ICategories> = (props) => {
-  const { setCategoriesId, categoriesId } = props;
+  const { setCategoriesId, categoriesId, fillCate, setFillCate, language, languageRedux } = props;
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
 
-  const dropdownMenuStyle = { maxHeight: '200px', overflowY: 'auto' };
+  // const dropdownMenuStyle = { maxHeight: '200px', overflowY: 'auto' };
+
+  // console.log("fillCate", fillCate);
+
+  const DropdownRender = (menus: React.ReactNode) => (
+    <div style={{ width: '520px' }} className="filter-loca-cate">
+      {menus}
+      <Divider style={{ margin: '8px 5px' }}>
+        {disable ?
+          language?.limit_2_cate
+          : ''}
+      </Divider>
+    </div>
+  );
 
   const onChange = (value: any) => {
     setDisable(false);
+    setFillCate(value);
     const secondValues = value?.map((item: any) => item[1]);
-
     if (secondValues.length <= 2) {
       setCategoriesId(secondValues);
     }
@@ -78,7 +53,9 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise();
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -89,7 +66,16 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
 
   React.useEffect(() => {
     getCategories();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
+
+  React.useEffect(() => {
+    fillCate.length >= 2 ? setDisable(true) : setDisable(false);
+  }, [fillCate]);
+
+  // React.useEffect(() => {
+  //   onChange(categoriesId);
+  // }, [setDataCategories]);
 
   return (
     <Box
@@ -106,9 +92,14 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         component="label"
         htmlFor="jobTitle"
       >
-        Danh mục nghề <span style={{ color: 'red' }}>*</span>
+        {
+          language?.category
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
+        defaultValue={fillCate}
+        value={fillCate}
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
@@ -135,8 +126,9 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
               }))
             : []
         }
+        dropdownRender={DropdownRender}
         // dropdownStyle={dropdownMenuStyle}
-        dropdownClassName="post-category-drop"
+        popupClassName="post-category-drop"
         onChange={onChange}
         multiple
         maxTagCount="responsive"

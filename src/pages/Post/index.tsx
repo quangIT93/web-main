@@ -1,4 +1,6 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, FormEvent } from 'react';
+
+import { Switch } from 'antd';
 
 // @ts-ignore
 import { Navbar } from '#components';
@@ -6,18 +8,23 @@ import { Navbar } from '#components';
 //@ts-ignore
 import ModalNoteCreatePost from '#components/Post/ModalNoteCreatePost';
 
+import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
+
 // import component
 import PostFilterSalary from '../../components/Post/PostFilterSalary';
 import PostJobCompany from '../../components/Post/PostJobCompany';
 import PostAddress from '../../components/Post/PostAddress';
 import PostTypeJob from '../../components/Post/PostTypeJob';
 import ModalPost from '#components/Post/ModalPost';
+import ModalFillDataPost from '../../components/Post/ModalFillDataPost';
 import PostPeriodDate from '#components/Post/PostPeriodDate';
 import RecruitmentTime from '#components/Post/RecruitmentTime';
 import StyleWork from '#components/Post/StyleWork';
 import SalaryType from '#components/Post/SalaryType';
 import Description from '#components/Post/Description';
 import PostImage from '#components/Post/PostImage';
+
+import RollTop from '#components/RollTop';
 // import PostCategoryIds from '#components/Post/PostCategoryIds'
 import PostTime from '#components/Post/PostTime';
 
@@ -29,6 +36,9 @@ import PostSalaryType from '#components/Post/PostSalaryType';
 
 import Footer from '../../components/Footer/Footer';
 
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 // import context
 // import { HomeValueContext } from 'context/HomeValueContextProvider';
 
@@ -36,8 +46,15 @@ import './style.scss';
 
 // import data
 import postApi from 'api/postApi';
-import siteApi from 'api/siteApi';
+import languageApi from 'api/languageApi';
+import apiCompany from 'api/apiCompany';
+
 import { message } from 'antd';
+
+import { RootState } from '../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 // redux
 // import { RootState } from 'store';
@@ -87,8 +104,8 @@ export interface FormValues {
   isDatePeriod: number;
   startDate: number | null;
   endDate: number | null;
-  latitude: number;
-  longitude: number;
+  // latitude: number;
+  // longitude: number;
   startTime: number;
   endTime: number;
   isWorkingWeekend: number;
@@ -149,6 +166,9 @@ const Post: React.FC = () => {
     email: '',
   };
 
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [titleJob, setTitleJob] = useState<string>('');
   const [companyName, setCompanyName] = useState<string>('');
 
@@ -157,9 +177,13 @@ const Post: React.FC = () => {
   const [startTime, setStartTime] = React.useState<any>(
     new Date(1970, 0, 2, 7, 0).getTime(),
   );
+
   const [endTime, setEndTime] = React.useState<any>(
     new Date(1970, 0, 2, 17, 0).getTime(),
   );
+
+  // const [startTime, setStartTime] = React.useState<string>('00:00');
+  // const [endTime, setEndTime] = React.useState<string>('00:00');
   const [startDate, setStartDate] = React.useState<any>(new Date().getTime());
   const [endDate, setEndDate] = React.useState<any>(new Date().getTime());
   const [isWorkingWeekend, setIsWorkingWeekend] = React.useState<number>(0);
@@ -174,35 +198,79 @@ const Post: React.FC = () => {
   const [wardId, setWardId] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
-  const [latitude, SetLatitude] = useState<number>(10.761955);
-  const [longitude, SetLongitude] = useState<number>(106.70183);
+  // const [latitude, SetLatitude] = useState<number>(10.761955);
+  // const [longitude, SetLongitude] = useState<number>(106.70183);
   const [salaryMin, setSalaryMin] = React.useState<number>(0);
   const [salaryMax, setSalaryMax] = React.useState<number>(0);
   // modal
   const [openModalPost, setOpenModalPost] = React.useState(false);
+  const [openModalFillDataPost, setOpenFillDataPost] =
+    React.useState<boolean>(false);
   // check error
-  const [titleError, setTitleError] = useState(false);
-  const [companyError, setCompanyError] = useState(false);
+  // const [titleError, setTitleError] = useState(false);
+  // const [companyError, setCompanyError] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
-
-  const [postData, SetPostData] = React.useState<any>(null);
 
   const [openModalNoteCreatePost, setOpenModalNoteCreatePost] =
     React.useState(true);
+
+  const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
+    React.useState(false);
+
+  // fill data
+  const [fillWardId, setFillWardId] = React.useState<any>({
+    id: '',
+    full_name: '',
+  });
+  const [fillDistrict, setFillDistrict] = React.useState<any>('');
+  const [fillProvince, setFillProvince] = React.useState<any>('');
+  const [fillCate, setFillCate] = useState<any>([]);
+
+  const [selectedImages, setSelectedImages] = React.useState<string[]>([]);
+  const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
+    [],
+  );
+  const [language, setLanguage] = useState<any>();
+
+  const getlanguageApi = async () => {
+    if (!localStorage.getItem('accessToken')) {
+      window.location.replace(`/`);
+      return;
+    }
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
 
   // submit
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
   ) => {
     e.preventDefault();
+    console.log('selected File', selectedFiles);
     const formData = new FormData();
     formData.append('title', titleJob);
     formData.append('companyName', companyName);
     formData.append('wardId', wardId);
     formData.append('jobTypeId', String(typeJob));
     formData.append('isDatePeriod', String(isPeriodDate));
-    formData.append('startDate', startDate);
-    formData.append('endDate', endDate);
+    if (isPeriodDate === 1) {
+      formData.append('startDate', startDate);
+      formData.append('endDate', endDate);
+    }
+
     formData.append('startTime', startTime);
     formData.append('endTime', endTime);
     formData.append('salaryMin', String(salaryMin.toString().replace(',', '')));
@@ -227,11 +295,11 @@ const Post: React.FC = () => {
     formData.append('email', formValues.email);
     // formData.append('companyResourceId', String(formValues.companyResourceId))
     // formData.append('url', Str1q 1q  1q  1q  1qing(formValues.url))
-    formData.append('latitude', String(latitude));
-    formData.append('longitude', String(longitude));
+    formData.append('latitude', String(10.761955));
+    formData.append('longitude', String(106.70183));
 
     // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}, ${pair[1]}`)
+    //   console.log(`${pair[0]}, ${pair[1]}`);
     // }
 
     if (formData) {
@@ -243,31 +311,31 @@ const Post: React.FC = () => {
   const validValue = () => {
     if (titleJob === '') {
       return {
-        message: 'Vui lòng nhập tên công việc',
+        message: language?.post_page?.err_job_title,
         checkForm: false,
       };
     }
     if (companyName === '') {
       return {
-        message: 'Vui lòng nhập tên công ty',
+        message: language?.post_page?.err_company_name,
         checkForm: false,
       };
     }
     if (address === '') {
       return {
-        message: 'Vui lòng nhập dia chi',
+        message: language?.post_page?.err_address,
         checkForm: false,
       };
     }
     if (wardId === '') {
       return {
-        message: 'Vui lòng chọn tỉnh thành phố',
+        message: language?.post_page?.err_location,
         checkForm: false,
       };
     }
     if (categoriesId.length <= 0) {
       return {
-        message: 'Vui lòng chọn danh mục nghề nghiệp',
+        message: language?.post_page?.err_cate,
         checkForm: false,
       };
     }
@@ -276,25 +344,32 @@ const Post: React.FC = () => {
       (Number(salaryMin) === 0 && salaryType !== 6)
     ) {
       return {
-        message: 'Vui lòng nhập mức lương',
+        message: language?.post_page?.err_salary,
         checkForm: false,
       };
     }
     if (Number(salaryMax) < Number(salaryMin)) {
       return {
-        message: 'Lương tối đa phải lớn hơn lương tối thiểu',
+        message: language?.post_page?.err_verify_salary,
         checkForm: false,
       };
     }
     if (phoneNumber === '' || phoneNumber.length < 10) {
       return {
-        message: 'Số điện thoại sai định dạng',
+        message: language?.company_page?.err_phone_mess,
         checkForm: false,
       };
     }
     if (description === '') {
       return {
-        message: 'Vui lòng nhập mô tả công việc',
+        message: language?.company_page?.err_des_mess,
+        checkForm: false,
+      };
+    }
+
+    if (startDate > endDate) {
+      return {
+        message: language?.post_page?.err_date,
         checkForm: false,
       };
     }
@@ -313,6 +388,7 @@ const Post: React.FC = () => {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
           const result = await postApi.createPost(formData);
+          // const result = await postApi.createPostV3(formData);
           if (result) {
             setOpenModalPost(true);
           }
@@ -323,44 +399,75 @@ const Post: React.FC = () => {
           content: message,
         });
       }
-    } catch (error) {
-      console.error('error', error);
-    }
-  };
-  const [titleFirebase, setTitleFirebase] = useState<string>('');
-
-  const getPost = async () => {
-    try {
-      const result = await siteApi.getSalaryType();
-      if (result) {
-        SetPostData(result);
+    } catch (error: any) {
+      console.error('error', error?.response?.data?.message);
+      if (error?.response?.data?.message === 'You only can post 1 job/day') {
+        messageApi.open({
+          type: 'error',
+          content: language?.post_page?.err_1_post_per_day,
+        });
+      } else if (error?.response?.data?.message === 'Invalid date value') {
+        messageApi.open({
+          type: 'error',
+          content: language?.post_page?.err_date,
+        });
       }
-    } catch (error) {
-      console.log('error', error);
     }
   };
 
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      getPost();
-    } else {
-      window.open(`/`, '_parent');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (postData?.data) {
-      setTitleFirebase('HiJob - Đăng bài đăng tuyển dụng');
-    }
-  }, [postData]);
+  const analytics: any = getAnalytics();
 
   React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-create-post';
-  }, [titleFirebase]);
+    // Cập nhật title và screen name trong Firebase Analytics
 
-  new Promise((resolve, reject) => {
-    document.title = postData ? titleFirebase : 'web-create-post';
-  });
+    // document.title = language?.post_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Tạo bài đăng tuyển dụng'
+        : 'HiJob - Create job posting';
+    // document.title = language?.post_page?.title_page;
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_createPost' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux, language]);
+
+  // console.log('phone', phoneNumber);
+
+  const handleFillCompany = async () => {
+    try {
+      const result = await apiCompany.getCampanyByAccountApi('vi');
+
+      if (result.data.companyInfomation) {
+        setCompanyName(result.data.companyInfomation.name);
+        setFillDistrict({
+          id: result.data.companyInfomation.companyLocation.district.id,
+          full_name:
+            result.data.companyInfomation.companyLocation.district.fullName,
+        });
+        setFillProvince({
+          id: result.data.companyInfomation.companyLocation.district.province
+            .id,
+          province_fullName:
+            result.data.companyInfomation.companyLocation.district.province
+              .fullName,
+        });
+
+        // setSelectedProvince(result.data.companyInfomation.company
+
+        setFillWardId({
+          id: result.data.companyInfomation.companyLocation.id,
+          full_name: result.data.companyInfomation.companyLocation.fullName,
+        });
+        setWardId(result.data.companyInfomation.companyLocation.id);
+
+        setAddress(result.data.companyInfomation.address);
+      } else {
+        setOpenModalNoteCreateCompany(true);
+      }
+    } catch (error) {}
+  };
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -369,27 +476,68 @@ const Post: React.FC = () => {
 
         {contextHolder}
         <div className="post-main">
-          <h1>Tạo bài đăng tuyển dụng</h1>
+          <div
+            className="post-main_fillData"
+            // style={{ textAlign: 'center', display: 'block' }}
+          >
+            <h1>{language?.profile_page?.create_post}</h1>
+            <div className="post-main_switch">
+              <h4>{language?.post_page?.auto_fill}</h4>
+              <Switch
+                checked={openModalFillDataPost}
+                checkedChildren=""
+                unCheckedChildren=""
+                onChange={() => setOpenFillDataPost(!openModalFillDataPost)}
+              />
+            </div>
+          </div>
+          <div className="fill-company" onClick={handleFillCompany}>
+            <h3>{language?.post_page?.fill_company}</h3>
+          </div>
           <form onSubmit={handleSubmit}>
             <PostJobCompany
               setTitleJob={setTitleJob}
               setCompanyName={setCompanyName}
-              titleError={titleError}
-              companyError={companyError}
+              // titleError={titleError}
+              // companyError={companyError}
+              titleJob={titleJob}
+              companyName={companyName}
+              language={language}
             />
             <PostAddress
               setWardId={setWardId}
               setAddress={setAddress}
+              fillWardId={fillWardId}
               address={address}
+              wardId={wardId}
+              fillProvince={fillProvince}
+              fillDistrict={fillDistrict}
+              setFillDistrict={setFillDistrict}
+              setFillProvince={setFillProvince}
+              setFillWardId={setFillWardId}
+              language={language}
+              languageRedux={languageRedux}
             />
             <PostImage
               selectedFiles={selectedFiles}
               setSelectedFiles={setSelectedFiles}
+              setSelectedImages={setSelectedImages}
+              selectedImages={selectedImages}
+              selectedFillImages={selectedFillImages}
+              languageRedux={languageRedux}
+              language={language}
             />
-            <PostTypeJob typeJob={typeJob} setTypeJob={setTypeJob} />
+            <PostTypeJob
+              typeJob={typeJob}
+              setTypeJob={setTypeJob}
+              language={language}
+              languageRedux={languageRedux}
+            />
             <PostPeriodDate
               setIsPeriodDate={setIsPeriodDate}
               isPeriodDate={isPeriodDate}
+              language={language}
+              languageRedux={languageRedux}
             />
             {isPeriodDate === 1 ? (
               <RecruitmentTime
@@ -397,6 +545,8 @@ const Post: React.FC = () => {
                 endDate={endDate}
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
+                language={language}
+                languageRedux={languageRedux}
               />
             ) : (
               <></>
@@ -406,25 +556,37 @@ const Post: React.FC = () => {
               isRemotely={isRemotely}
               setIsWorkingWeekend={setIsWorkingWeekend}
               setIsRemotely={setIsRemotely}
+              language={language}
             />
             <PostTime
               startTime={startTime}
               endTime={endTime}
               setStartTime={setStartTime}
               setEndTime={setEndTime}
+              language={language}
             />
 
             <PostCategoryId
               setCategoriesId={setCategoriesId}
               categoriesId={categoriesId}
+              fillCate={fillCate}
+              setFillCate={setFillCate}
+              language={language}
+              languageRedux={languageRedux}
             />
 
-            <SalaryType salaryType={salaryType} setSalaryType={setSalaryType} />
+            <SalaryType
+              salaryType={salaryType}
+              setSalaryType={setSalaryType}
+              language={language}
+              languageRedux={languageRedux}
+            />
 
             <PostSalaryType
               setMoneyType={setMoneyType}
               moneyType={moneyType}
               salaryType={salaryType}
+              language={language}
             />
 
             <PostFilterSalary
@@ -433,24 +595,34 @@ const Post: React.FC = () => {
               salaryMax={salaryMax}
               setSalaryMax={setSalaryMax}
               salaryType={salaryType}
+              language={language}
+              languageRedux={languageRedux}
             />
 
             <PostNumberPhone
               phone={phoneNumber}
               setPhoneNumber={setPhoneNumber}
+              language={language}
+              languageRedux={languageRedux}
             />
-            <Description setDescription={setDescription} />
+            <Description
+              setDescription={setDescription}
+              description={description}
+              language={language}
+              languageRedux={languageRedux}
+            />
             {/* <EditText /> */}
             <button
               type="submit"
               onClick={handleSubmit}
               className="btn-submitForm"
             >
-              Đăng
+              {language?.post1}
             </button>
           </form>
         </div>
         <Footer />
+        <RollTop />
         <ModalPost
           openModalPost={openModalPost}
           setOpenModalPost={setOpenModalPost}
@@ -459,6 +631,44 @@ const Post: React.FC = () => {
         <ModalNoteCreatePost
           setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
           openModalNoteCreatePost={openModalNoteCreatePost}
+          language={language}
+        />
+
+        <ModalNoteCreateCompany
+          openModalNoteCreateCompany={openModalNoteCreateCompany}
+          setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
+        />
+
+        <ModalFillDataPost
+          setOpenFillDataPost={setOpenFillDataPost}
+          openModalFillDataPost={openModalFillDataPost}
+          setTitleJob={setTitleJob}
+          setCompanyName={setCompanyName}
+          setFillWardId={setFillWardId}
+          setAddress={setAddress}
+          setFillDistrict={setFillDistrict}
+          setFillProvince={setFillProvince}
+          setTypeJob={setTypeJob}
+          setIsPeriodDate={setIsPeriodDate}
+          setStartDate={setStartDate}
+          setEndDate={setEndDate}
+          setIsWorkingWeekend={setIsWorkingWeekend}
+          setIsRemotely={setIsRemotely}
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
+          setPhoneNumber={setPhoneNumber}
+          setSalaryMin={setSalaryMin}
+          setSalaryMax={setSalaryMax}
+          setDescription={setDescription}
+          setWardId={setWardId}
+          setCategoriesId={setCategoriesId}
+          setFillCate={setFillCate}
+          setSelectedImages={setSelectedImages}
+          setSalaryType={setSalaryType}
+          setMoneyType={setMoneyType}
+          setSelectedFillImages={setSelectedFillImages}
+          language={language}
+          languageRedux={languageRedux}
         />
       </div>
     );

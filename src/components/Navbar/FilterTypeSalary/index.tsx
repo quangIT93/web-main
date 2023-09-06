@@ -1,13 +1,20 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Select, Space, Radio } from 'antd';
-import { EnvironmentOutlined } from '@ant-design/icons';
+// import { EnvironmentOutlined } from '@ant-design/icons';
 import type { RadioChangeEvent } from 'antd';
 import siteApi from 'api/siteApi';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
 import { getCookie, setCookie } from 'cookies';
 
 import { ClockFilterIcon, ArrowFilterIcon } from '#components/Icons';
+
+// import redux
+import { RootState } from 'store';
+import { useSelector } from 'react-redux';
+
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
 
 import './style.scss';
 
@@ -15,8 +22,8 @@ const CustomOption = ({
   data,
   setValue,
   setValueRender,
-  salaryType,
-  SALARY_TYPE
+  // salaryType,
+  SALARY_TYPE,
 }: {
   data: any;
   setValue: Function;
@@ -26,7 +33,7 @@ const CustomOption = ({
 }) => {
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     setValue(value);
-    const valueRender = data.find((item: any) => item.id == value);
+    const valueRender = data.find((item: any) => item.id === value);
     setValueRender(valueRender);
     setCookie('userTypeSalaryFiltered', JSON.stringify(valueRender), 365);
   };
@@ -37,7 +44,7 @@ const CustomOption = ({
       name="radiogroup"
       onChange={onChange}
       value={SALARY_TYPE}
-    // defaultValue={SALARY_TYPE}
+      // defaultValue={SALARY_TYPE}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
         {data?.map((value: any, index: number) => {
@@ -54,36 +61,63 @@ const CustomOption = ({
 
 interface SalaryFilter {
   setSalaryType: Function;
+  reset: Boolean;
+  setReset: React.Dispatch<React.SetStateAction<Boolean>>;
 }
 
 const { Option } = Select;
-const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [data, setData] = React.useState();
+const FilterTypeSalary: React.FC<SalaryFilter> = ({
+  setSalaryType,
+  reset,
+  setReset,
+}) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const [data, setData] = React.useState<[{ id: number; value: string }]>([
+    { id: 0, value: 'Tất cả' },
+  ]);
   const [valueRender, setValueRender] = React.useState<any>();
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   let userFilteredCookies = JSON.parse(
     getCookie('userTypeSalaryFiltered') || '{}',
-  )
+  );
 
   const SALARY_TYPE = userFilteredCookies.id;
 
   const getTypeSalary = async () => {
-    const result = await siteApi.getSalaryType();
+    const result = await siteApi.getSalaryType(
+      languageRedux === 1 ? 'vi' : 'en',
+    );
+    const updatedData: any = [
+      { id: 0, value: languageRedux === 1 ? 'Tất cả' : 'All' },
+      ...result.data,
+    ];
 
-    if (result) {
-      setData(result.data);
+    if (updatedData) {
+      // setData(updatedData);
+      setData(updatedData);
+
       if (SALARY_TYPE) {
-        const value = result.data.find((item: any) => item.id === SALARY_TYPE);
+        const value = updatedData.find((item: any) => item.id === SALARY_TYPE);
         setValueRender(value);
       }
     }
   };
   React.useEffect(() => {
     getTypeSalary();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [SALARY_TYPE, languageRedux]);
 
-  const handleChange = (value1: string) => { };
+  const handleChange = (value1: string) => {
+    setReset(false);
+  };
+
   return (
     <div className="filter-input">
       <div className="filter-input_icon">
@@ -94,13 +128,23 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({ setSalaryType }) => {
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={valueRender ? valueRender.value : undefined}
+        value={
+          reset
+            ? languageRedux === 1
+              ? 'Tất cả'
+              : 'All'
+            : valueRender
+            ? valueRender.value
+            : languageRedux === 1
+            ? 'Tất cả'
+            : 'All'
+        }
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder="Trả lương theo"
+        placeholder={language?.job_type}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
-        <Option className="type-salary" value="1" label="Trả lương theo">
+        <Option className="type-salary" value="1" label={language?.job_type}>
           <CustomOption
             salaryType={SALARY_TYPE}
             data={data}

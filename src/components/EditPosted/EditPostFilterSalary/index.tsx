@@ -1,10 +1,10 @@
 import React, { useState, useEffect, memo } from 'react'
-import { Box, Slider } from '@mui/material'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import { Box } from '@mui/material'
+// import Radio from '@mui/material/Radio'
+// import RadioGroup from '@mui/material/RadioGroup'
+// import FormControl from '@mui/material/FormControl'
+// import FormLabel from '@mui/material/FormLabel'
+// import FormControlLabel from '@mui/material/FormControlLabel'
 import { Input, Space } from 'antd'
 import Typography from '@mui/material/Typography'
 
@@ -12,16 +12,20 @@ import Typography from '@mui/material/Typography'
 import 'intl'
 import 'intl/locale-data/jsonp/en'
 import { styleLabel } from '../CssEditPost'
+import { post } from 'validations/lang/vi/post'
+import { postEn } from 'validations/lang/en/post'
 
 interface IEditPostFilterSalary {
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>
   editDataPosted: any
   salaryType?: number
   dataOld: any
+  language: any;
+  languageRedux: any;
 }
 
 const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
-  const { setEditDataPosted, editDataPosted, salaryType, dataOld } = props
+  const { setEditDataPosted, editDataPosted, salaryType, dataOld, language, languageRedux } = props
 
   const [valueSalaryMax, setValueSalaryMax] = useState(dataOld?.salary_max)
   const [valueSalaryMin, setValueSalaryMin] = useState(dataOld?.salary_min)
@@ -92,7 +96,10 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Lương tối thiểu <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page.min_salary
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}
@@ -116,7 +123,10 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Lương tối đa <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page?.max_salary
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Input
             style={{ height: 40 }}

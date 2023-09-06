@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 // @ts-ignore
 
-import { Button, Space } from 'antd';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import { Space } from 'antd';
+// import Snackbar from '@mui/material/Snackbar';
+// import MuiAlert, { AlertProps } from '@mui/material/Alert';
+// import Stack from '@mui/material/Stack';
 import './styleItem.scss';
 
-import { PencilIcon } from '#components/Icons';
+import { PencilIcon, DeleteIcon } from '#components/Icons';
 import moment from 'moment';
+import languageApi from 'api/languageApi';
 
 // import component
 import ModalDeleteEducation from '#components/Profile/ModalDeleteEducation';
 import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
 import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate';
 import ModalDeleteExperience from '#components/Profile/ModalDeleteExperience';
+
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
 interface SuggestItemProps {
   typeItem?: string;
   item?: ItemAppy;
@@ -29,14 +35,15 @@ interface ItemAppy {
   title?: String;
 }
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+// const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+//   props,
+//   ref,
+// ) {
+//   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+// });
 
 const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [openModalDeleteEducation, setOpenModalDeleteEducation] =
     useState(false);
   const [openModalEducationUpdate, setOpenModalEducationUpdate] =
@@ -45,6 +52,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
     useState(false);
   const [openModalExperienceUpdate, setOpenModalExperienceUpdate] =
     useState(false);
+  const [language, setLanguage] = useState<any>();
 
   const handleDeleteEducation = (id?: number | null) => {
     setOpenModalDeleteEducation(true);
@@ -61,7 +69,25 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const handleUpdateExperience = (id?: number | null) => {
     setOpenModalExperienceUpdate(true);
   };
-  console.log('item?.start_date', item?.start_date);
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
+
+  // console.log('item?.start_date', item?.start_date);
   return (
     <div className="div-apply-item">
       <div className="div-item-left">
@@ -81,7 +107,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
         <div className="div-info-item">
           <Space size={4} direction="vertical" style={{ marginLeft: 10 }}>
             <h3>{item?.company_name}</h3>
-            <p>{typeItem == 'experiences' ? item?.title : item?.major}</p>
+            <p>{typeItem === 'experiences' ? item?.title : item?.major}</p>
             <p>
               {`${moment(item?.start_date).format('MM/YYYY')}`} - {` `}
               {`${moment(item?.end_date).format('MM/YYYY')}`}
@@ -103,17 +129,6 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
         <Space
           onClick={
             typeItem === 'experiences'
-              ? () => handleDeleteExperience(item?.id)
-              : () => handleDeleteEducation(item?.id)
-          }
-          style={{ cursor: 'pointer', marginRight: '16px' }}
-        >
-          <p style={{ color: 'gray', fontSize: '14px' }}>Xoá</p>
-        </Space>
-
-        <Space
-          onClick={
-            typeItem === 'experiences'
               ? () => handleUpdateExperience(item?.id)
               : () => handleUpdateEducation(item?.id)
           }
@@ -123,7 +138,28 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <PencilIcon width={15} height={15} />
           </div>
 
-          <p style={{ color: '#0D99FF', fontSize: '14px' }}>Sửa</p>
+          <p style={{ color: '#0D99FF', fontSize: '14px' }}>
+            {
+              language?.edit
+            }
+          </p>
+        </Space>
+        <Space
+          onClick={
+            typeItem === 'experiences'
+              ? () => handleDeleteExperience(item?.id)
+              : () => handleDeleteEducation(item?.id)
+          }
+          style={{ cursor: 'pointer', marginRight: '16px' }}
+        >
+          <div className="edit-icon">
+            <DeleteIcon width={15} height={15} />
+          </div>
+          <p style={{ color: '#575757', fontSize: '14px' }}>
+            {
+              language?.profile_page?.delete
+            }
+          </p>
         </Space>
       </div>
       <ModalDeleteEducation

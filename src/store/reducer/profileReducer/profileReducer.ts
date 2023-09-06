@@ -1,10 +1,10 @@
 import { ActionType, ProfileType } from "../../types"
-import { AxiosResponse } from "axios"
+// import { AxiosResponse } from "axios"
 
 const initialState: any = {
     data: {}
 };
-export default (state = initialState, { type, payload }: ProfileType) => {
+const profileReducer = (state = initialState, { type, payload }: ProfileType) => {
     switch (type) {
         case ActionType.GET_PROFILE_USER:
             return payload.profile;
@@ -12,4 +12,6 @@ export default (state = initialState, { type, payload }: ProfileType) => {
         default:
             return state;
     }
-};    
+};   
+
+export default profileReducer

@@ -15,10 +15,11 @@
 }
 
 .home__main {
-  padding: 0 180px;
+  padding: 0 0px;
   margin: 0 auto;
   transition: all l;
   margin-bottom: 36px;
+  max-width: 1280px;
 
   @media screen and (min-width:1025px) and (max-width: 1280px) {
     padding-inline: 24px;

@@ -11,11 +11,13 @@ import { AxiosResponse } from 'axios'
 import siteApi from 'api/siteApi'
 
 interface ISalaryType {
-  salaryType: number
-  setSalaryType: React.Dispatch<React.SetStateAction<number>>
+  salaryType: number;
+  setSalaryType: React.Dispatch<React.SetStateAction<number>>;
+  language: any;
+  languageRedux: any;
 }
 const SalaryType: React.FC<ISalaryType> = (props) => {
-  const { salaryType, setSalaryType } = props
+  const { salaryType, setSalaryType, language, languageRedux } = props
   const handleChangeSalaryType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSalaryType(Number(e.target.value))
   }
@@ -24,7 +26,9 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
 
   // call api get salaryType
   const getSalaryType = async () => {
-    const result = await siteApi.getSalaryType()
+    const result = await siteApi.getSalaryType(
+      languageRedux === 1 ? "vi" : "en",
+    )
     if (result) {
       setSalary(result)
     }
@@ -32,13 +36,16 @@ const SalaryType: React.FC<ISalaryType> = (props) => {
 
   React.useEffect(() => {
     getSalaryType()
-  }, [])
+  }, [languageRedux])
 
   return (
     <Box sx={{ marginTop: '24px' }}>
       <FormControl sx={{ width: '100%' }}>
         <FormLabel id="demo-row-radio-buttons-group-label" sx={styleLabel}>
-          Trả lương theo <span style={{ color: 'red' }}>*</span>
+          {
+            language?.job_type
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row

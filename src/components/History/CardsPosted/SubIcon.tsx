@@ -6,16 +6,20 @@ import {
 } from '@ant-design/icons';
 
 import postApi from 'api/postApi';
+import { postDetail } from 'validations/lang/vi/postDetail';
+import { postDetailEn } from 'validations/lang/en/postDetail';
 
 interface ISubicon {
   postId: number;
   setStatus: React.Dispatch<React.SetStateAction<number>>;
   status: number;
+  language: any;
+  languageRedux: any;
 }
 const SubIcon: React.FC<ISubicon> = (props) => {
-  const { postId, setStatus, status } = props;
-  const [accepted, setAccepted] = React.useState('');
-  const [closed, setClosed] = React.useState('');
+  const { postId, setStatus, status, language, languageRedux } = props;
+  // const [accepted, setAccepted] = React.useState('');
+  // const [closed, setClosed] = React.useState('');
 
   const handleClickClosePost = async () => {
     try {
@@ -30,19 +34,19 @@ const SubIcon: React.FC<ISubicon> = (props) => {
 
   const handleClickEditPost = async () => {
     // const result = await postApi.updateStatusPost(postId, 1);
-    window.open(`/edit-posted/?postId=${postId}`, '_blank');
+    window.open(`/edit-posted?postId=${postId}`, '_parent');
   };
 
-  const handleClickOpenPost = async () => {
-    try {
-      const result = await postApi.updateStatusPost(postId, 1);
-      if (result) {
-        setStatus(1);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleClickOpenPost = async () => {
+  //   try {
+  //     const result = await postApi.updateStatusPost(postId, 1);
+  //     if (result) {
+  //       setStatus(1);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // console.lo
 
@@ -56,7 +60,9 @@ const SubIcon: React.FC<ISubicon> = (props) => {
       // }
       >
         <EditOutlined />
-        Chỉnh sửa bài tuyển dụng
+        {
+          language?.edit
+        }
       </div>
 
       <div
@@ -67,7 +73,7 @@ const SubIcon: React.FC<ISubicon> = (props) => {
         }
       >
         <CloseSquareOutlined />
-        {status === 3 ? '     Đóng bài tuyển dụng' : 'Bài tuyển dụng đã đóng'}
+        {status === 3 ? language?.the_job_posting_has_been_closed : language?.close_post}
       </div>
 
       {/* {status === 3 ? (

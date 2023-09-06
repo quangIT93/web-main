@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
-import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
+import { Box, TextField, Modal, Typography } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from 'moment';
-import Autocomplete from '@mui/material/Autocomplete';
+// import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import { CloseOutlined } from '@ant-design/icons';
 
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
+
 // data
 import profileApi from 'api/profileApi';
-import { useDispatch } from 'react-redux';
-import {
-  getProfile,
-  resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer';
+// import { useDispatch } from 'react-redux';
+// import {
+//   getProfile,
+//   resetProfileState,
+// } from 'store/reducer/profileReducer/getProfileReducer';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -28,6 +34,20 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
+
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
 };
 
 const styleChildBox = {
@@ -61,14 +81,15 @@ interface IInfoExperience {
 const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
   props,
 ) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const {
     openModalExperienceCreate,
     setOpenModalExperienceCreate,
-    typeItem,
-    educations,
+    // typeItem,
+    // educations,
   } = props;
   // console.log('typeItem', typeItem)
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const [companyName, setCompanyName] = useState<string>('')
   // const [startDate, setStartDate] = React.useState<any>(
   //   new Date(2023, 4, 30, 0, 0).getTime()
@@ -85,6 +106,25 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
     endDate: new Date(2023, 4, 30, 0, 0).getTime(),
     extraInformation: '',
   });
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   // console.log('endDate', endDate)
 
@@ -164,7 +204,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style}>
+      <Box sx={style}
+        className="Modal-personnal-info"
+      >
         <div
           style={{
             position: 'absolute',
@@ -186,7 +228,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Thêm thông tin kinh nghiệm làm việc
+          {
+            language?.profile_page?.add_working_experience
+          }
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -195,7 +239,10 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chức danh <span className="color-asterisk">*</span>
+            {
+              language?.professional_titles
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -205,8 +252,10 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             onChange={handleChangeTitle}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Chức danh"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.professional_titles
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -216,7 +265,10 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Công ty/Tổ chức <span className="color-asterisk">*</span>
+            {
+              language?.company_organization
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -226,8 +278,10 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Nhập tên công ty hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.company_organization
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -244,7 +298,10 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu <span className="color-asterisk">*</span>
+                  {
+                    language?.start_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(experience.startDate)}
@@ -261,7 +318,10 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc <span className="color-asterisk">*</span>
+                  {
+                    language?.finish_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(experience.endDate)}
@@ -282,7 +342,10 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung <span className="color-asterisk">*</span>
+            {
+              language?.additional_information
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}
@@ -291,12 +354,16 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             multiline
             rows={4}
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder="Để được nhà tuyển dụng quan tâm và tăng cơ hội ứng tuyển vào công ty mong muốn. Hẫy nhập thông tin bổ sung của bạn vào đây!"
+            placeholder={
+              language?.profile_page?.place_additional_information
+            }
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            language?.profile_page?.save_info
+          }
         </Button>
       </Box>
     </Modal>

@@ -1,10 +1,10 @@
 import React from 'react';
 // import Tabs from '@mui/material/Tabs'
 // import Tab from '@mui/material/Tab'
-import { Radio, Tabs } from 'antd';
+
 import Box from '@mui/material/Box';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+// import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
 import { AxiosResponse } from 'axios';
 // import api
 import postApi from 'api/postApi';
@@ -25,12 +25,18 @@ import { useSearchParams } from 'react-router-dom';
 import { Space } from 'antd';
 
 // import redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
-import { RootState } from '../../../store/reducer';
+// import { RootState } from '../../../store/reducer';
+
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 import './style.scss';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
 
 interface ItemTheme {
   id: number;
@@ -44,43 +50,50 @@ interface PropsThemesType {
   listTheme: AxiosResponse | null;
 }
 const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [value, setValue] = React.useState<Number>(0);
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [index, setIndex] = React.useState(0);
+  // const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  // const [index, setIndex] = React.useState(0);
 
-  const [addressIdCookie, setAddressIdCookie] = React.useState(0);
+  // const [addressIdCookie, setAddressIdCookie] = React.useState(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
   // get post by theme id when click theme item
 
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+
   // Set the cookie
-  function setCookie(name: string, value: string, days: number) {
-    let expires = '';
-    if (days) {
-      let date = new Date();
-      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-      expires = '; expires=' + date.toUTCString();
-    }
-    document.cookie = name + '=' + (value || '') + expires + '; path=/';
-  }
+  // function setCookie(name: string, value: string, days: number) {
+  //   let expires = '';
+  //   if (days) {
+  //     let date = new Date();
+  //     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  //     expires = '; expires=' + date.toUTCString();
+  //   }
+  //   document.cookie = name + '=' + (value || '') + expires + '; path=/';
+  // }
 
   // Get the cookie
-  function getCookie(name: string): string | null {
-    let nameEQ = name + '=';
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1, c.length);
-      }
-      if (c.indexOf(nameEQ) == 0) {
-        return c.substring(nameEQ.length, c.length);
-      }
-    }
-    return null;
-  }
+  // function getCookie(name: string): string | null {
+  //   let nameEQ = name + '=';
+  //   let ca = document.cookie.split(';');
+  //   for (let i = 0; i < ca.length; i++) {
+  //     let c = ca[i];
+  //     while (c.charAt(0) === ' ') {
+  //       c = c.substring(1, c.length);
+  //     }
+  //     if (c.indexOf(nameEQ) === 0) {
+  //       return c.substring(nameEQ.length, c.length);
+  //     }
+  //   }
+  //   return null;
+  // }
 
   const handleChange = async (
     event: React.SyntheticEvent,
@@ -88,32 +101,37 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   ) => {
     try {
       setValue(newValue);
-      setIndex(newValue);
-      setOpenBackdrop(!openBackdrop);
+      // setIndex(newValue);
+      // setOpenBackdrop(!openBackdrop);
       const categoryId = searchParams.get('categories-id');
       if (categoryId) {
         setSearchParams({
           'theme-id': `${newValue}`,
-          'categories-id': `${Number(categoryId) == 1 ? 'all' : categoryId}`,
+          'categories-id': `${Number(categoryId) === 1 ? 'all' : categoryId}`,
         });
       } else {
         setSearchParams({ 'theme-id': `${newValue}` });
       }
 
-      const result = await postApi.getPostByThemeId(newValue, 19, null);
+      const result = await postApi.getPostByThemeId(
+        newValue,
+        19,
+        null,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setPostByTheme(result);
         // set backdrop
-        setOpenBackdrop(false);
+        // setOpenBackdrop(false);
       }
     } catch (error) {
       console.log(error);
     }
   };
   // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
   const getPostNewestByThemeId = async () => {
     try {
       const themeId = searchParams.get(`theme-id`)
@@ -122,25 +140,31 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
 
       var result;
       if (themeId) {
-        setOpenBackdrop(true);
-        result = await postApi.getPostByThemeId(Number(themeId), 19, null);
+        // setOpenBackdrop(true);
+        result = await postApi.getPostByThemeId(
+          Number(themeId),
+          19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
       }
 
       if (result) {
         setPostByTheme(result);
-        setOpenBackdrop(false);
+        // setOpenBackdrop(false);
       }
     } catch (error) {
       console.error(error);
-      setOpenBackdrop(false);
+      // setOpenBackdrop(false);
     }
   };
   React.useEffect(() => {
     getPostNewestByThemeId();
     setValue(Number(searchParams.get('theme-id')));
-  }, [searchParams.get('theme-id')]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, languageRedux]);
 
-  // console.log(index);
+  // console.log('value', value);
 
   return (
     <Box
@@ -153,7 +177,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       className="hot-place-container"
     >
       {/* <Tabs
-        value={value == 0 ? listTheme?.data[0].id : value}
+        value={value === 0 ? listTheme?.data[0].id : value}
         onChange={handleChange}
         variant="scrollable"
         scrollButtons="auto"
@@ -228,21 +252,38 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         className="mySwiper"
       >
         {listTheme?.data.map((item: ItemTheme, index: number) => {
-          // console.log("id: ", item.id);
           return (
             <SwiperSlide
               key={index}
               onClick={(event) => {
+                const analytics: any = getAnalytics();
+
+                // logEvent(analytics, 'screen_view' as string, {
+                //   // screen_name: screenName as string,
+                //   page_title: `/web_click_place_category` as string,
+                // });
+                // console.log('item', item);
+
+                logEvent(analytics, 'event_web_click_HiJob' as string, {
+                  // screen_name: screenName as string,
+                  web_page_home: `/place_category_${item.title}` as string,
+                });
+
                 handleChange(event, item.id);
               }}
               style={{
-                borderBottom: item.id === value ? '2px solid #0d99ff' : 'none',
+                borderBottom:
+                  item.id === value
+                    ? '2px solid #0d99ff'
+                    : index === 0 && value === 0
+                    ? '2px solid #0d99ff'
+                    : '',
               }}
             >
               <div className="slide-item">
                 <img
                   src={item.image}
-                  alt="amhr bị lỗi"
+                  alt={language?.err_none_img}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -253,7 +294,13 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                 <div className="div-info-themes-item">
                   <Space size={3} direction={'vertical'} style={{ width: 150 }}>
                     <h5>{item.title}</h5>
-                    <h6>{`${item.number_of_posts} việc làm`}</h6>
+                    <h6>
+                      {/* {languageRedux === 1
+                        ? `${item.number_of_posts} việc làm`
+                        : `${item.number_of_posts} jobs`} */}
+                      {`${item.number_of_posts} `}
+                      {language?.home_page?.x_jobs}
+                    </h6>
                   </Space>
                 </div>
               </div>
@@ -261,7 +308,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
           );
         })}
       </Swiper>
-      <Backdrop
+      {/* <Backdrop
         sx={{
           color: '#0d99ff ',
           backgroundColor: 'transparent',
@@ -271,7 +318,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         onClick={handleClose}
       >
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </Backdrop> */}
     </Box>
   );
 };

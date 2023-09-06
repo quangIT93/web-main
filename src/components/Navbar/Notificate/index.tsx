@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 // import ReactHtmlParser from 'react-html-parser'
 
-import { Space, Tooltip, Input, Switch } from 'antd';
+import { Tooltip, Switch, Button } from 'antd';
 
 import { DeleteKeywordIcon } from '#components/Icons';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { styled, lighten, darken } from '@mui/system';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import { styled, lighten, darken } from '@mui/system';
 // import {
 //   FormControl,
 //   InputLabel,
@@ -32,39 +34,48 @@ import { styled, lighten, darken } from '@mui/system';
 //   FormControlLabel,
 // } from '@mui/material';
 
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+// import ExpandLess from '@mui/icons-material/ExpandLess';
+// import ExpandMore from '@mui/icons-material/ExpandMore';
 // import Api
 import notificationApi from 'api/notification';
 import notificationKeywordApi from 'api/notificationKeyword';
-import locationApi from '../../../api/locationApi';
+// import locationApi from '../../../api/locationApi';
 
 import {
-  LocationIcon,
+  // LocationIcon,
   CateIcon,
-  CreateKeywordIcon,
+  // CreateKeywordIcon,
   LocationHomeIcon,
 } from '#components/Icons';
 
 import './style.scss';
 // import fake data notificates
-import { notificates } from './data';
+// import { notificates } from './data';
 
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
+import { searchResultVi } from 'validations/lang/vi/searchResult';
+import { searchResultEn } from 'validations/lang/en/searchResult';
+import { postDetail } from 'validations/lang/vi/postDetail';
+import { postDetailEn } from 'validations/lang/en/postDetail';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
 
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
+
+// const MenuProps = {
+//   PaperProps: {
+//     style: {
+//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+//       width: 250,
+//     },
+//   },
+// };
 
 const Notificate = () => {
   const {
@@ -74,6 +85,9 @@ const Notificate = () => {
     setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
     openNotificate: boolean;
   } = React.useContext(HomeValueContext);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [dataNotification, setDataNotification] = useState<any>([]);
   const [dataNotificationKeyword, setDataNotificationkeyword] = useState<any>(
     [],
@@ -94,13 +108,24 @@ const Notificate = () => {
 
   const [idKeyWords, setIdKeywords] = useState<number[]>([]);
 
+  const [openModalDeleteKeyword, setOpenModalDeleteKeyword] =
+    React.useState(false);
+
   const refNotification = React.useRef<HTMLDivElement | null>(null);
 
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   // const inputRef = useRef<InputRef>(null);
+
+  // console.log("dataNotification", dataNotification);
 
   const handleClickActiveSystem = (e: any) => {
     setActiveSystem(true);
-    if (activeKeyword === true) setActiveKeyword(false);
+    if (activeKeyword === true) {
+      setActiveKeyword(false);
+      setOpenModalDeleteKeyword(false);
+    }
   };
 
   const handleClickActiveKeyword = (e: any) => {
@@ -110,7 +135,9 @@ const Notificate = () => {
   const getApiNotificate = async () => {
     try {
       setIsLoading(true);
-      const result = await notificationApi.getNotificationV2();
+      const result = await notificationApi.getNotificationV2(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setIsLoading(false);
         setDataNotification(result.data);
@@ -120,15 +147,16 @@ const Notificate = () => {
 
   useEffect(() => {
     getApiNotificate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log('Data', dataNotification);
-  console.log('Data', dataNotificationKeyword);
-  console.log('Data', typeof dataNotificationKeyword?.status?.emailStatus);
 
   const getApiNotificateKeyword = async () => {
     try {
-      const result = await notificationKeywordApi.getNotificationKeyword();
+      // const result = await notificationKeywordApi.getNotificationKeyword();
+      const result = await notificationKeywordApi.getNotificationKeywordV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      // console.log('keyword v3', result);
       if (result) {
         setDataNotificationkeyword(result.data);
         setValueApp(result.data.status.pushStatus);
@@ -172,25 +200,32 @@ const Notificate = () => {
     return () => {
       document.removeEventListener('click', handleCLoseNotificate);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClickNotiKey = (postId: number) => {
-    window.open(`post-detail?post-id=${postId}`);
+    window.open(`post-detail?post-id=${postId}`, '_blank');
   };
 
   const handleClickNoty = (
     postId: number,
+    commentId: number,
     applicationId: number,
     typeText: string,
   ) => {
     if (typeText === 'recruiter') {
       window.open(
         `candidate-detail?post-id=${postId}&application_id=${applicationId}`,
+        '_parent',
       );
     }
 
     if (typeText === 'applicator') {
-      window.open(`post-detail?post-id=${postId}`);
+      window.open(`post-detail?post-id=${postId}`, '_parent');
+    }
+
+    if (typeText === 'communicationComment') {
+      window.open(`detail-comunity?post-community=${commentId}`, '_parent');
     }
   };
 
@@ -199,7 +234,7 @@ const Notificate = () => {
     try {
       const result = await notificationKeywordApi.putPlatform(
         parseInt(e.target.value) === 1 ? 0 : 1,
-        valueApp,
+        valueApp ? 1 : 0,
       );
       if (result) {
         if (parseInt(e.target.value) === 1) {
@@ -235,7 +270,6 @@ const Notificate = () => {
   };
 
   const handleClickItemKeyword = (idKeyword: number) => {
-    console.log('idKeyword', idKeyword);
     // Kiểm tra nếu idKeyword đã tồn tại trong mảng idKeywords
     if (idKeyWords.includes(idKeyword)) {
       // Xóa idKeyword khỏi mảng bằng cách sử dụng filter
@@ -247,19 +281,33 @@ const Notificate = () => {
     }
   };
 
+  const handleOpenModalDeleteKeyWord = () => {
+    if (true) {
+      setOpenModalDeleteKeyword(!openModalDeleteKeyword);
+    } else {
+      setOpenModalDeleteKeyword(!openModalDeleteKeyword);
+    }
+  };
+
   const handleClickDeleteItemKeyword = async () => {
     try {
       const result = await notificationKeywordApi.deleteKeyword(idKeyWords);
       if (result) {
         getApiNotificateKeyword();
+        setOpenModalDeleteKeyword(false);
       }
     } catch (error) {
       console.log('error', error);
+      setOpenModalDeleteKeyword(false);
     }
   };
 
-  console.log('keuwwork', idKeyWords);
-  console.log('activeSystem', activeSystem);
+  const handleClose = () => {
+    setOpenModalDeleteKeyword(false);
+  };
+
+  console.log('DataNotification', dataNotification);
+  console.log('dataNotificationKeyword', dataNotificationKeyword);
 
   return (
     <div className="notification" ref={refNotification}>
@@ -270,7 +318,7 @@ const Notificate = () => {
           }`}
           onClick={handleClickActiveSystem}
         >
-          Thông báo
+          {language?.notification}
         </div>
         <div
           className={`top-notificate_keyword ${
@@ -278,7 +326,7 @@ const Notificate = () => {
           }`}
           onClick={handleClickActiveKeyword}
         >
-          Từ khoá
+          {language?.keyword2}
         </div>
       </div>
       <div className="bottom-notificate">
@@ -295,7 +343,10 @@ const Notificate = () => {
                     onClick={() => handleClickNotiKey(notificate.data.postId)}
                   >
                     <div className="wrap-img_keyword">
-                      <img src={notificate.data.image} alt="ảnh lỗi" />
+                      <img
+                        src={notificate.data.image}
+                        alt={language?.err_none_img}
+                      />
                     </div>
                     <div className="content-notificate">
                       <div className="wrap-title_contentNotificate">
@@ -305,10 +356,14 @@ const Notificate = () => {
                         >
                           <h3>{notificate.data.postTitle}</h3>
                         </Tooltip>
-                        <img
-                          src={notificate.data.companyResource.logo}
-                          alt=""
-                        />
+                        {notificate.data.companyResource.log ? (
+                          <img
+                            src={notificate.data.companyResource.logo}
+                            alt=""
+                          />
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <Tooltip
                         placement="top"
@@ -353,7 +408,7 @@ const Notificate = () => {
                           <p>
                             {new Date(
                               notificate.data.createdAt,
-                            ).toLocaleDateString()}
+                            ).toLocaleDateString('en-GB')}
                           </p>
                         </div>
                         <p>{notificate.data.jobType.name}</p>
@@ -369,6 +424,7 @@ const Notificate = () => {
                     onClick={() =>
                       handleClickNoty(
                         notificate.data.postId,
+                        notificate.data.communicationId,
                         notificate.data.applicationId,
                         notificate.data.typeText,
                       )
@@ -391,9 +447,9 @@ const Notificate = () => {
                         )}
                       </p>
                       <p>
-                        {new Date(
-                          notificate.data.createdAt,
-                        ).toLocaleDateString()}
+                        {new Date(notificate.data.createdAt).toLocaleDateString(
+                          'en-GB',
+                        )}
                       </p>
                     </div>
                   </div>
@@ -403,10 +459,7 @@ const Notificate = () => {
           )
         ) : (
           <div className="wrap-keyword">
-            <p>
-              Bạn muốn nhận danh sách công việc theo từ khóa tìm kiếm nhanh
-              chóng qua:
-            </p>
+            <p>{language?.get_job_listings_by_keyword_via}</p>
             <div className="wrap-checkbox_keyword">
               <div className="checkbox-keyword">
                 <input
@@ -414,10 +467,14 @@ const Notificate = () => {
                   name="app"
                   id="app"
                   value={valueApp}
+                  disabled
                   onChange={handleChangeApp}
                   checked={valueApp === 1 ? true : false}
+                  style={{ cursor: 'not-allowed' }}
                 />
-                <label htmlFor="app">App</label>
+                <label htmlFor="app" style={{ color: '#ccc' }}>
+                  App
+                </label>
               </div>
               <div className="checkbox-keyword">
                 <input
@@ -433,13 +490,13 @@ const Notificate = () => {
             </div>
             <div className="count-keyword">
               <p>
-                Bạn đã lưu trữ được:
+                {language?.there_are_has_been_saved}
                 <strong>{` ${
-                  dataNotificationKeyword?.keywords?.length > 0
-                    ? dataNotificationKeyword?.keywords?.length
+                  dataNotificationKeyword.keywords.length > 0
+                    ? dataNotificationKeyword.keywords.length
                     : 0
                 }/10 `}</strong>
-                gợi ý công việc
+                {language?.keywords_has_been_saved}
               </p>
             </div>
             {dataNotificationKeyword ? (
@@ -450,23 +507,79 @@ const Notificate = () => {
                       idKeyWords?.includes(dataKeyword?.id) ? 'selected' : ''
                     }`}
                     key={index}
-                    onClick={() => handleClickItemKeyword(dataKeyword?.id)}
                   >
-                    <div className="content_keyword">
-                      <h3>{dataKeyword.keyword}</h3>
+                    <div
+                      className="content_keyword"
+                      onClick={() => handleClickItemKeyword(dataKeyword?.id)}
+                    >
+                      <Tooltip title={dataKeyword.keyword} placement="top">
+                        <h3>{dataKeyword.keyword}</h3>
+                      </Tooltip>
                       <ul>
                         <li>
                           <LocationHomeIcon />
-                          <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p>
+                          {/* <p>{`${dataKeyword.province.name}, ${dataKeyword.district.name}`}</p> */}
+                          <Tooltip
+                            title={dataKeyword.keywordDistricts.map(
+                              (location: any, index: number) => {
+                                return `${location.fullName}${
+                                  index ===
+                                  dataKeyword.keywordDistricts.length - 1
+                                    ? ''
+                                    : ', '
+                                }`;
+                              },
+                            )}
+                            placement="top"
+                          >
+                            <p>
+                              {dataKeyword.keywordDistricts.map(
+                                (location: any, index: number) => {
+                                  return `${location.fullName}${
+                                    index ===
+                                    dataKeyword.keywordDistricts.length - 1
+                                      ? ''
+                                      : ', '
+                                  }`;
+                                },
+                              )}
+                            </p>
+                          </Tooltip>
                         </li>
                         <li>
                           <CateIcon />
-                          <p>{`${dataKeyword.category.name}`}</p>
+                          {/* <p>{`${dataKeyword.category.name}`}</p> */}
+                          <Tooltip
+                            title={dataKeyword.keywordCategories.map(
+                              (cate: any, index: number) => {
+                                return `${cate.fullName}${
+                                  index ===
+                                  dataKeyword.keywordCategories.length - 1
+                                    ? ''
+                                    : ', '
+                                }`;
+                              },
+                            )}
+                            placement="top"
+                          >
+                            <p>
+                              {dataKeyword.keywordCategories.map(
+                                (cate: any, index: number) => {
+                                  return `${cate.fullName}${
+                                    index ===
+                                    dataKeyword.keywordCategories.length - 1
+                                      ? ''
+                                      : ', '
+                                  }`;
+                                },
+                              )}
+                            </p>
+                          </Tooltip>
                         </li>
                       </ul>
                       <div className="wrap-time_keyword">
                         <p>
-                          {new Date(dataKeyword.created_at).toLocaleTimeString(
+                          {new Date(dataKeyword.createdAt).toLocaleTimeString(
                             [],
                             {
                               hour: '2-digit',
@@ -476,9 +589,9 @@ const Notificate = () => {
                         </p>
 
                         <p>
-                          {new Date(
-                            dataKeyword.created_at,
-                          ).toLocaleDateString()}
+                          {new Date(dataKeyword.createdAt).toLocaleDateString(
+                            'en-GB',
+                          )}
                         </p>
                       </div>
                     </div>
@@ -501,6 +614,30 @@ const Notificate = () => {
             )}
           </div>
         )}
+        <div
+          className={`modal-delete_keyword ${
+            openModalDeleteKeyword && !activeSystem
+              ? 'open-modal_deleteKeyword'
+              : ''
+          }`}
+        >
+          <h4>{language?.delete_this_keyword}</h4>
+          <p>{language?.keywords_will_not_be_recoverable_after_deletion}</p>
+          <Button
+            type="primary"
+            className="submit-delete_submitKeyWord"
+            onClick={handleClickDeleteItemKeyword}
+          >
+            {language?.ok1}
+          </Button>
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            className="wrap-icon_deleteKeyword"
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
       </div>
       {/* {activeKeyword ? (
         <div
@@ -516,7 +653,7 @@ const Notificate = () => {
       {idKeyWords.length > 0 && !activeSystem ? (
         <div
           className="icon-delele_keyword"
-          onClick={handleClickDeleteItemKeyword}
+          onClick={handleOpenModalDeleteKeyWord}
         >
           <DeleteKeywordIcon />
         </div>

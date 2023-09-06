@@ -3,7 +3,7 @@ import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 // import { DatePicker } from '@mui/lab'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from 'moment';
@@ -11,18 +11,27 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import { CloseOutlined } from '@ant-design/icons';
 
+import { message } from 'antd';
+
 // data
 import locationApi from '../../../api/locationApi';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store/reducer/index';
+import { useDispatch } from 'react-redux';
+// import { RootState } from '../../../store/reducer/index';
 
 import {
   getProfile,
-  resetProfileState,
+  // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
 
 import './style.scss';
 import profileApi from 'api/profileApi';
+
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
+import { provinces } from 'pages/Post/data/data';
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -34,6 +43,20 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
+
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
 };
 
 const styleChildBox = {
@@ -54,6 +77,9 @@ interface IInfoPersonal {
 }
 
 const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const { openModelPersonalInfo, setOpenModalPersonalInfo, profile } = props;
   const [gender, setGender] = React.useState(
     profile?.gender != null ? (profile.gender === 1 ? 'Nam' : 'Nữ') : null,
@@ -63,13 +89,40 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   ); // Giá trị mặc định là ngày hiện tại
   const [dataProvinces, setDataProvinces] = useState<any>();
   const [selectedProvince, setSelectedProvince] = useState<any>(
-    profile?.address ? profile?.address : null,
+    profile?.address
+      ? {
+          province_id: profile.address.id,
+          province_fullName: profile.address.name,
+        }
+      : null,
   );
   const [name, setName] = useState(profile?.name);
   const [introduction, setIntroduction] = useState(profile?.introduction);
 
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
+
   const dispatch = useDispatch();
-  const dataProfile = useSelector((state: RootState) => state.profile.profile);
+  // const dataProfile = useSelector((state: RootState) => state.profile.profile);
 
   const handleSetFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -77,7 +130,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
 
   const getAllProvinces = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces();
+      const allLocation = await locationApi.getAllLocation(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       if (allLocation) {
         setDataProvinces(allLocation.data);
@@ -91,7 +146,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     getAllProvinces();
     // getAllLocations()
     // delete param when back to page
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   const handleDateChange = (date: any) => {
     setDay(moment(date._d));
@@ -104,37 +160,75 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   };
 
   const handleProvinceChange = (event: any, value: any) => {
-    setSelectedProvince(value);
+    console.log('value', value);
+
+    setSelectedProvince({
+      province_id: value.province_id,
+      province_fullName: value.province_fullName,
+    });
     // console.log("value: ", value)
   };
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIntroduction(e.target.value);
   };
+
+  const validValue = () => {
+    if (name === '') {
+      return {
+        message: language?.profile_page?.err_name,
+        checkForm: false,
+      };
+    }
+
+    if (introduction === '') {
+      return {
+        message: language?.profile_page?.err_intro,
+        checkForm: false,
+      };
+    }
+
+    return {
+      message: '',
+      checkForm: true,
+    };
+  };
   // handle update information user
   const handleSubmit = async () => {
     // const data = new Date(day.toString()).getTime()
-    console.log('ennter');
-    try {
-      const info: IInfoPersonal = {
-        name: name,
-        birthday: new Date(day.toString()).getTime(),
-        gender: gender === 'Nam' ? 1 : 0,
-        address: selectedProvince.id,
-        introduction: introduction,
-      };
+    // console.log('ennter');
+    const { message, checkForm } = validValue();
 
-      const result = await profileApi.putProfilePersonal(info);
-      if (result) {
-        await dispatch(getProfile() as any);
-        setOpenModalPersonalInfo(false);
+    try {
+      if (checkForm) {
+        const info: IInfoPersonal = {
+          name: name,
+          birthday: new Date(day.toString()).getTime(),
+          gender: gender === 'Nam' ? 1 : 0,
+          address: selectedProvince.province_id,
+          introduction: introduction,
+        };
+        const result = await profileApi.putProfilePersonal(info);
+        if (result) {
+          await dispatch(getProfile() as any);
+          setOpenModalPersonalInfo(false);
+        }
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: message,
+        });
       }
     } catch (error) {
       console.log(error);
+      messageApi.open({
+        type: 'error',
+        content: language?.profile_page?.check_info_please,
+      });
     }
   };
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter' && event.target.id !== 'profile-introduction') {
       handleSubmit();
     }
   };
@@ -146,8 +240,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
+      sx={{ minWidth: '300px' }}
     >
-      <Box sx={style}>
+      <Box sx={style} className="Modal-personnal-info">
+        {contextHolder}
         <form action="">
           <div
             style={{
@@ -170,7 +266,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
             align="center"
             sx={{ marginBottom: '12px' }}
           >
-            Thông tin cá nhân
+            {language?.personal_information}
           </Typography>
           <Box sx={styleChildBox}>
             <Typography
@@ -179,7 +275,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="nameProfile"
             >
-              Họ và tên <span className="color-asterisk">*</span>
+              {language?.full_name} <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               type="text"
@@ -200,7 +296,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="sex"
             >
-              Giới tính <span className="color-asterisk">*</span>
+              {language?.sex} <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               select
@@ -209,13 +305,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               // defaultValue={gender}
               onChange={handleChange}
               variant="outlined"
-              placeholder="Giới tính"
+              placeholder={language?.sex}
               size="small"
               sx={{ width: '100%' }}
               error={!gender} // Đánh dấu lỗi
             >
-              <MenuItem value="Nam">Nam</MenuItem>
-              <MenuItem value="Nữ">Nữ</MenuItem>
+              <MenuItem value="Nam">{language?.male}</MenuItem>
+              <MenuItem value="Nữ">{language?.female}</MenuItem>
             </TextField>
           </Box>
           <Box sx={styleChildBox}>
@@ -226,17 +322,19 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   component="label"
                   htmlFor="startTime"
                 >
-                  Ngày sinh <span className="color-asterisk">*</span>
+                  {language?.date_of_birth}{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={day}
                   onChange={handleDateChange}
+                  format="DD/MM/YYYY"
                   slotProps={{
                     textField: {
-                      helperText: 'DD/MM/yyyy',
+                      helperText: 'DD/MM/YYYY',
                     },
                   }}
-                  format="DD/MM/YYYY"
+                  // format="DD/MM/YYYY"
                 />
               </div>
             </LocalizationProvider>
@@ -248,15 +346,16 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="jobTitle"
             >
-              Địa điểm <span className="color-asterisk">*</span>
+              {language?.location} <span className="color-asterisk">*</span>
             </Typography>
             <Autocomplete
               options={dataProvinces ? dataProvinces : []}
-              getOptionLabel={(option: any) => option?.name || ''}
+              getOptionLabel={(option: any) => option?.province_fullName || ''}
               value={
                 selectedProvince
                   ? dataProvinces?.find(
-                      (province: any) => province.id === selectedProvince.id,
+                      (province: any) =>
+                        province.province_id === selectedProvince.province_id,
                     )
                   : null
               }
@@ -265,7 +364,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  placeholder="Tỉnh/TP"
+                  placeholder={language?.profile_page?.place_address}
                   size="small"
                   error={!selectedProvince}
                 />
@@ -279,7 +378,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               component="label"
               htmlFor="startTime"
             >
-              Giới thiệu bản thân <span className="color-asterisk">*</span>
+              {language?.self_describtion}{' '}
+              <span className="color-asterisk">*</span>
             </Typography>
             <TextField
               // className={classes.textarea}
@@ -288,15 +388,21 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               multiline
               rows={4}
               value={introduction}
+              id="profile-introduction"
               // label="Một số đặc điểm nhận diện công ty"
-              placeholder="Giới thiệu bản thân với Nhà Tuyển dụng
-            Nêu sở trường và mong muốn của bạn liên quan đến công việc để gây chú ý với Nhà Tuyển dụng"
+              placeholder={language?.introduce_yourself_to_the_recruiter}
               error={!introduction} // Đánh dấu lỗi
+              // onKeyDown={(event) => {
+              //   // if (event.key === 'Enter') {
+              //   //   event.preventDefault();
+              //   // }
+              //   console.log(event.target);
+              // }}
             />
           </Box>
         </form>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {language?.profile_page?.save_info}
         </Button>
       </Box>
     </Modal>

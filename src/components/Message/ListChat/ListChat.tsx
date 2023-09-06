@@ -2,53 +2,56 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Input } from 'antd';
+import { Button } from 'antd';
 
 import io from 'socket.io-client';
 import CircularProgress from '@mui/material/CircularProgress';
 
 // import api
 import messageApi from 'api/messageApi';
-import profileApi from 'api/profileApi';
+// import profileApi from 'api/profileApi';
+import appplicationApi from 'api/appplication';
 
 // import { Skeleton } from 'antd';
 import Backdrop from '@mui/material/Backdrop';
 // import icon
-import {
-  DotIcon,
-  VideoIcon,
-  CallIcon,
-  LocationIcon,
-  ImageIcon,
-  SendIcon,
-  CloseIcon,
-} from '#components/Icons';
+import { ImageIcon, SendIcon, CloseIcon } from '#components/Icons';
 
 import './style.scss';
 
 import { ChatContext } from 'context/ChatContextProvider';
-interface Message {
-  receiverId: string;
-  message: string;
-  // createdAt: number
-  type: string;
-  postId: number;
-}
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+
+import { messVi } from 'validations/lang/vi/mess';
+import { messEn } from 'validations/lang/en/mess';
+import { postDetail } from 'validations/lang/vi/postDetail';
+import { postDetailEn } from 'validations/lang/en/postDetail';
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
   openListChat: boolean;
+  setApply: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ListChat: React.FC<IOpenListChat> = (props) => {
+  // const { language, languageRedux } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const [windowWidth, setWindowWidth] = useState(false);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const [message, setMessage] = useState('');
 
   const [allListChat, setAllListChat] = useState<any>([]);
-  const [profileUser, setProfileUser] = useState<any>({});
-  const [image, setImage] = useState<File | null>(null);
+  // const [profileUser, setProfileUser] = useState<any>({});
+  // const [image, setImage] = useState<File | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
@@ -63,7 +66,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   };
 
   useEffect(() => {
-    updateWindowWidth();
+    updateWindowWidth();    
   }, [windowWidth]);
 
   const closeListChat = () => {
@@ -83,27 +86,32 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   const imageInputRef = useRef<any>(null);
   const lastChatRef = useRef<any>(null);
 
-  const previousDate = useRef<string | null>(null);
+  // const previousDate = useRef<string | null>(null);
 
-  useEffect(() => {
-    socket.current = io(
-      // 'https://181f-14-161-42-152.ngrok-free.app/',
-      'https://neoworks.vn',
-      {
-        extraHeaders: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      },
-    );
-  }, []);
+  // useEffect(() => {
+  //   socket.current = io(
+  //     // 'https://181f-14-161-42-152.ngrok-free.app/',
+  //     'https://neoworks.vn',
+  //     // 'https://aiworks.vn',
+  //     {
+  //       extraHeaders: {
+  //         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  //       },
+  //     },
+  //   );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const getAllListChat = async () => {
     setOpenBackdrop(true);
     try {
+      console.log('getData');
+
       const result = await messageApi.getChatMessage(
-        userInfoChat.user_id,
+        searchParams.get('user_id'),
         // 36353,
         Number(searchParams.get('post_id')),
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         // setTimeout(() => {
@@ -118,48 +126,138 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
   useEffect(() => {
     getAllListChat();
-  }, [receivedMessages, sendMessages, userInfoChat]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [receivedMessages, sendMessages, userInfoChat, languageRedux]);
 
-  const getProfileUser = async () => {
-    try {
-      const result = await profileApi.getProfile();
-      if (result) {
-        setProfileUser(result.data);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+  // const getProfileUser = async () => {
+  //   try {
+  //     const result = await profileApi.getProfile();
+  //     if (result) {
+  //       setProfileUser(result.data);
+  //     }
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getProfileUser();
+  // }, []);
+
+  console.log('socket connection', socket.current);
+  // useEffect(() => {
+  //   // kết nối web socket
+  //   // socket.current.on('connect', () => {
+  //   // setIsConnected(true);
+  //   // });
+  //   console.log('socket.current vao', socket.current);
+
+  //   if (isConnected === false && !socket.current) {
+  //     socket.current = io('https://neoworks.vn', {
+  //       extraHeaders: {
+  //         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  //       },
+  //     });
+  //     console.log('socket.current trong', socket.current);
+
+  //     socket.current.on('disconnect', (reason: any) => {
+  //       console.log('ket noi that bai');
+
+  //       setIsConnected(true);
+  //     });
+
+  //     socket.current.on('connect', () => {
+  //       // Kết nối thành công
+  //       console.log('ket noi thanh cong');
+
+  //       setIsConnected(true);
+  //     });
+
+  //     socket.current.on('server-send-message-to-receiver', (data: any) => {
+  //       // Xử lý tin nhắn từ máy chủ
+  //       setReceivedMessages((prevReceive) => [...prevReceive, data]);
+  //     });
+
+  //     socket.current.on('server-send-message-was-sent', (data: any) => {
+  //       // console.log('nhận tin nhan ve khi da gui xong', data);
+  //       // nhận tin nhan ve khi da gui xong
+  //       setSendMessages((prevSend: any[]) => [...prevSend, data]);
+  //     });
+  //   }
+
+  //   // ngắt kết nối websocket
+  //   // socket.current.on('disconnect', (reason: any) => {
+  //   // setIsConnected(false);
+  //   // });
+
+  //   // gửi in nhắn
+  //   // socket.current.on('client-send-message', (data: Message) => {
+  //   //   console.log('data', data)
+  //   //   setReceivedMessages((prevMessages: Message[]) => [
+  //   //     ...prevMessages,
+  //   //     data,
+  //   //   ])
+  //   // })
+
+  //   // socket.current.on('server-send-message-to-receiver', (data: any) => {
+  //   // console.log(' gui tin nhan di den nguoi nhan', data);
+  //   // gui tin nhan di den nguoi nhan
+  //   //   setReceivedMessages((prevReceive: any[]) => [...prevReceive, data]);
+  //   // });
+
+  //   // socket.current.on('server-send-message-was-sent', (data: any) => {
+  //   // console.log('nhận tin nhan ve khi da gui xong', data);
+  //   // nhận tin nhan ve khi da gui xong
+  //   //   setSendMessages((prevSend: any[]) => [...prevSend, data]);
+  //   // });
+
+  //   // socket.current.on('server-send-error-message', (data: any) => {
+  //   //   console.log('data', data)
+  //   // })
+
+  //   // return () => {
+  //   //   socket.current.disconnect() // Clean up the socket connection on component unmount
+  //   // }
+  //   // return () => {
+  //   //   socket.current.disconnect();
+  //   // };
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
-    getProfileUser();
-  }, []);
+    if (isConnected === false && !socket.current) {
+      socket.current = io(
+        'https://neoworks.vn',
+        // 'https://aiworks.vn',
+        {
+          extraHeaders: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        },
+      );
 
-  useEffect(() => {
-    try {
-      // kết nối web socket
-      socket.current.on('connect', () => {
+      console.log('socket.current trong', socket.current);
+      console.log('socket.current trong .connected', socket.current.connected);
+
+      socket.current.on('disconnect', (reason: any) => {
+        console.log('ket noi that bai');
         setIsConnected(true);
       });
 
-      // ngắt kết nối websocket
-      socket.current.on('disconnect', (reason: any) => {
-        setIsConnected(false);
+      if (socket.current.connected === false) {
+        setIsConnected(true);
+      }
+
+      socket.current.on('connect', () => {
+        // Kết nối thành công
+        console.log('ket noi thanh cong');
+        setIsConnected(true);
       });
 
-      // gửi in nhắn
-      // socket.current.on('client-send-message', (data: Message) => {
-      //   console.log('data', data)
-      //   setReceivedMessages((prevMessages: Message[]) => [
-      //     ...prevMessages,
-      //     data,
-      //   ])
-      // })
-
       socket.current.on('server-send-message-to-receiver', (data: any) => {
-        // console.log(' gui tin nhan di den nguoi nhan', data);
-        // gui tin nhan di den nguoi nhan
-        setReceivedMessages((prevReceive: any[]) => [...prevReceive, data]);
+        // Xử lý tin nhắn từ máy chủ
+        setReceivedMessages((prevReceive) => [...prevReceive, data]);
       });
 
       socket.current.on('server-send-message-was-sent', (data: any) => {
@@ -167,23 +265,13 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         // nhận tin nhan ve khi da gui xong
         setSendMessages((prevSend: any[]) => [...prevSend, data]);
       });
-
-      // socket.current.on('server-send-error-message', (data: any) => {
-      //   console.log('data', data)
-      // })
-
-      // return () => {
-      //   socket.current.disconnect() // Clean up the socket connection on component unmount
-      // }
-    } catch (error) {
-      console.log('eror', error);
     }
-  }, []);
+  }, []); // Thêm một mảng phụ thuộc trống
 
   // console.log('receive', receivedMessages)
   // console.log('send', sendMessages)
   // console.log('allListChat', allListChat)
-  // console.log('userInfoChat', userInfoChat)
+
   // console.log('searchParams.get("post_id")', searchParams.get('post_id'))
 
   // message function
@@ -191,7 +279,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     // const socket = io('https://aiworks.vn')
     if (message !== '')
       socket.current.emit('client-send-message', {
-        receiverId: userInfoChat.user_id,
+        receiverId: searchParams.get('user_id'),
         message: message,
         createdAt: Date.now(),
         type: 'text',
@@ -231,24 +319,24 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         postId: searchParams.get('post_id'),
       });
     }
-    setImage(selectedImage);
+    // setImage(selectedImage);
     // Thực hiện việc tải lên hình ảnh
     // ...
   };
 
   // Khi dữ liệu allListChat được cập nhật, cuộn xuống cuối cùng
-  React.useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollTop = listRef.current.clientHeight;
-    }
-    if (lastChatRef.current) {
-      // lastChatRef.current.scrollIntoView({
-      //   behavior: 'auto',
-      //   block: 'end',
-      // });
-      // lastChatRef.current.scrollIntoView(false);
-    }
-  }, [allListChat]);
+  // React.useEffect(() => {
+  //   if (listRef.current) {
+  //     listRef.current.scrollTop = listRef.current.clientHeight;
+  //   }
+  //   if (lastChatRef.current) {
+  // lastChatRef.current.scrollIntoView({
+  //   behavior: 'auto',
+  //   block: 'end',
+  // });
+  // lastChatRef.current.scrollIntoView(false);
+  //   }
+  // }, [allListChat]);
 
   useEffect(() => {
     if (listRef.current) {
@@ -263,14 +351,32 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   //   }, 1000);
   // }, []);
 
+  // console.log('info', userInfoChat);
+  // console.log('allListChat', allListChat);
+  // console.log('userInfoChat', userInfoChat);
+
+  const handleClickApplication = async () => {
+    const result = await appplicationApi.applyAplication(
+      Number(searchParams.get('post_id')),
+    );
+
+    if (result) {
+      // console.log('result', result.data);
+      props.setApply(true);
+    }
+  };
+
+  console.log('userInfoChat', userInfoChat);
+
   if (userInfoChat.length !== 0) {
     return (
       <div
         // className="list-chat"
-        className={`list-chat ${props.openListChat === true && windowWidth
-          ? 'show-list-chat-responesive'
-          : ''
-          }`}
+        className={`list-chat ${
+          props.openListChat === true && windowWidth
+            ? 'show-list-chat-responesive'
+            : ''
+        }`}
       >
         <Backdrop
           sx={{
@@ -279,37 +385,120 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             background: 'transparent',
           }}
           open={openBackdrop}
-        // onClick={handleClose}
+          // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
         <div className="header-list_chat">
           <div className="wrap-img_Userchat">
             <div className="wrap_img">
-              <img src={userInfoChat.avatar} alt="" />
+              <img
+                src={
+                  userInfoChat.avatar ? userInfoChat.avatar : userInfoChat.image
+                }
+                alt={userInfoChat.company_name}
+                onError={(e: any) => {
+                  e.target.onerror = null; // Ngăn sự kiện lặp lại
+                  e.target.src =
+                    'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png'; // Đường dẫn của hình ảnh mặc định
+                }}
+              />
               <span
-                className={`user-chat_online ${userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
-                  }`}
+                className={`user-chat_online ${
+                  userInfoChat.is_online ? 'user-chat_onlineTrue' : ''
+                }`}
               ></span>
             </div>
             <div className="wrap-infoUser_chat">
               <h4>{userInfoChat.name}</h4>
-              {userInfoChat.is_online ? (
+              {userInfoChat.isOnline ? (
                 <span>Đang hoạt động</span>
               ) : (
                 <span>offline</span>
               )}
             </div>
           </div>
-          <div className="wrap-icon_chat">
-            {/* <span>
+          {userInfoChat.company_name ? (
+            <div className="wrap-icon_chat">
+              {/* <span>
             <VideoIcon />
           </span>
           <span>
             <CallIcon />
           </span> */}
-            <span>{/* <DotIcon /> */}</span>
-          </div>
+              {/* <span>
+              <DotIcon />
+            </span> */}
+              <div className="wrap-infoCompany_chat">
+                <div className="imgCompany_chat">
+                  <img
+                    src={userInfoChat.image}
+                    alt="Ảnh lỗi"
+                    onError={(e: any) => {
+                      e.target.onerror = null; // Ngăn sự kiện lặp lại
+                      e.target.src =
+                        'https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png'; // Đường dẫn của hình ảnh mặc định
+                    }}
+                  />
+                </div>
+                <div className="infoCompany_chat">
+                  <h4>{userInfoChat.post_title}</h4>
+                  <h6>{userInfoChat.company_name}</h6>
+                  <p>
+                    {new Intl.NumberFormat('en-US').format(
+                      userInfoChat.salary_max,
+                    )}{' '}
+                    -
+                    {new Intl.NumberFormat('en-US').format(
+                      userInfoChat.salary_min,
+                    )}{' '}
+                    {userInfoChat.money_type_text}/
+                    {userInfoChat.salary_type_id === 1
+                      ? 'Giờ'
+                      : userInfoChat.salary_type_id === 2
+                      ? 'Ngày'
+                      : userInfoChat.salary_type_id === 3
+                      ? 'Tháng'
+                      : userInfoChat.salary_type_id === 4
+                      ? 'Tuần'
+                      : userInfoChat.salary_type_id === 5
+                      ? 'Công việc'
+                      : userInfoChat.salary_type_id === 6
+                      ? 'Thương lượng'
+                      : ''}
+                  </p>
+                </div>
+              </div>
+
+              <Button
+                type={userInfoChat.applied ? 'default' : 'primary'}
+                disabled={
+                  userInfoChat.post_status === 3 ||
+                  userInfoChat.post_status === 0
+                }
+                style={
+                  userInfoChat.is_owner === true
+                    ? { display: 'none' }
+                    : { display: '' }
+                }
+                onClick={handleClickApplication}
+              >
+                {userInfoChat.post_status === 3
+                  ? 'Đã đóng'
+                  : userInfoChat.applied === false &&
+                    userInfoChat.post_status === 0
+                  ? 'Chưa duyệt'
+                  : userInfoChat.applied === false &&
+                    userInfoChat.post_status === 1
+                  ? 'Ứng tuyển ngay'
+                  : userInfoChat.applied === true
+                  ? 'Đã ứng tuyển'
+                  : ''}
+              </Button>
+            </div>
+          ) : (
+            <></>
+          )}
           <div className="wrap-icon_close" onClick={() => closeListChat()}>
             <CloseIcon />
           </div>
@@ -323,8 +512,9 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             if (localStorage.getItem('accountId') === chat.sender_id) {
               return (
                 <div
-                  className={`content-chat ${index === allListChat.length - 1 ? 'lastChatRef' : null
-                    }`}
+                  className={`content-chat ${
+                    index === allListChat.length - 1 ? 'lastChatRef' : null
+                  }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -333,6 +523,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   alt=""
                   className="content-chat_img"
                 /> */}
+
                   {showDate && (
                     <div className="wrap-date_chat">
                       <hr className="horizontal-line"></hr>
@@ -346,10 +537,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat">
                     <span
-                      className={`text-chat ${chat.message === null || chat.message === ''
-                        ? 'text-chat_hidden'
-                        : ''
-                        }`}
+                      className={`text-chat ${
+                        chat.message === null || chat.message === ''
+                          ? 'text-chat_hidden'
+                          : ''
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -376,10 +568,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             } else {
               return (
                 <div
-                  className={`content-chat2 ${index === allListChat.length - 1
-                    ? 'dddddddddddddddddddddddd'
-                    : null
-                    }`}
+                  className={`content-chat2 ${
+                    index === allListChat.length - 1
+                      ? 'dddddddddddddddddddddddd'
+                      : null
+                  }`}
                   key={index}
                   ref={index === allListChat.length - 1 ? lastChatRef : null}
                 >
@@ -394,7 +587,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                       <hr className="horizontal-line"></hr>
                       <span className="date-chat">
                         {chatDate === new Date().toLocaleDateString()
-                          ? 'Hôm nay'
+                          ? language?.messages_page?.to_day
                           : chatDate}
                       </span>
                       <hr className="horizontal-line"></hr>
@@ -402,10 +595,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                   )}
                   <div className="wrap-text_chat2">
                     <span
-                      className={`text-chat ${chat.message === '' || chat.message === null
-                        ? 'text-chat_hidden'
-                        : ''
-                        }`}
+                      className={`text-chat ${
+                        chat.message === '' || chat.message === null
+                          ? 'text-chat_hidden'
+                          : ''
+                      }`}
                     >
                       {chat.message !== '' || chat.message !== null
                         ? chat.message
@@ -435,7 +629,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
         <div className="inputs-chat">
           <input
-            placeholder="Nhập đoạn chat của bạn"
+            placeholder={language?.write_a_message}
             value={message}
             onChange={(e) => {
               listRef?.current?.scrollIntoView({
@@ -477,7 +671,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       <div className="list-chat">
         <div className="wrap-img_chat">
           <img src="./images/imageChatBegin.png" alt="" />
-          <div>Chat giúp bạn thêm nhiều thông tin hiệu quả, nhanh chóng</div>
+          <div>{language?.messages_page?.list_chat_none}</div>
         </div>
       </div>
     );

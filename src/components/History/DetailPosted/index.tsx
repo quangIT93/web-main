@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import moment, { Moment } from 'moment';
-import Grid from '@mui/material/Grid';
+import moment from 'moment';
+// import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
-import { Space, Tooltip } from 'antd';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import ImageListItem from '@mui/material/ImageListItem';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { Box, Typography, MenuItem, TextField, Button } from '@mui/material';
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  MoreOutlined,
-} from '@ant-design/icons';
+// import { Space, Tooltip } from 'antd';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import ImageListItem from '@mui/material/ImageListItem';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Box, Typography, Button } from '@mui/material';
 
-import SubIcon from '../CardsPosted/SubIcon';
+// import SubIcon from '../CardsPosted/SubIcon';
 
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -29,77 +24,185 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import './styles.scss';
 
 import JobCardDetailPostedHistory from '../JobCardDetailedHistory';
+import languageApi from 'api/languageApi';
+import postApi from 'api/postApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
 
 interface IDetailPosted {
   detailPosted: any;
 }
 
-const statusCandidates = [
-  {
-    id: 1,
-    statusId: 0,
-    statusName: '',
-    background: '#0d99ff',
-    position: '0%',
-    borderRadius: '50%',
-    width: '16px',
-    height: '16px',
-    padding: '0px',
-  },
-  {
-    id: 2,
-    statusId: 1,
-    statusName: 'Đã xem',
-    background: '#aaaaaa',
-    position: '60%',
-    borderRadius: '15px',
-    width: 'unset',
-    height: 'unset',
-    padding: '4px 16px',
-  },
-  {
-    id: 3,
-    statusId: 2,
-    statusName: 'Đã được duyệt',
-    background: '#5cb265',
-    position: '60%',
-    borderRadius: '15px',
-    width: 'unset',
-    height: 'unset',
-    padding: '4px 16px',
-  },
-  {
-    id: 4,
-    statusId: 3,
-    statusName: 'Đã từ chối',
-    background: '#BD3131',
-    position: '60%',
-    borderRadius: '15px',
-    width: 'unset',
-    height: 'unset',
-    padding: '4px 16px',
-  },
-  {
-    id: 5,
-    statusId: 4,
-    statusName: 'Đã tuyển ứng viên',
-    background: '#0d99ff',
-    position: '60%',
-    borderRadius: '15px',
-    width: 'unset',
-    height: 'unset',
-    padding: '4px 16px',
-  },
-];
+// const statusCandidates = [
+//   {
+//     id: 1,
+//     statusId: 0,
+//     statusName: '',
+//     background: '#0d99ff',
+//     position: '0%',
+//     borderRadius: '50%',
+//     width: '16px',
+//     height: '16px',
+//     padding: '0px',
+//   },
+//   {
+//     id: 2,
+//     statusId: 1,
+//     statusName: 'Đã xem',
+//     background: '#aaaaaa',
+//     position: '60%',
+//     borderRadius: '15px',
+//     width: 'unset',
+//     height: 'unset',
+//     padding: '4px 16px',
+//   },
+//   {
+//     id: 3,
+//     statusId: 2,
+//     statusName: 'Đã được duyệt',
+//     background: '#5cb265',
+//     position: '60%',
+//     borderRadius: '15px',
+//     width: 'unset',
+//     height: 'unset',
+//     padding: '4px 16px',
+//   },
+//   {
+//     id: 4,
+//     statusId: 3,
+//     statusName: 'Đã từ chối',
+//     background: '#BD3131',
+//     position: '60%',
+//     borderRadius: '15px',
+//     width: 'unset',
+//     height: 'unset',
+//     padding: '4px 16px',
+//   },
+//   {
+//     id: 5,
+//     statusId: 4,
+//     statusName: 'Đã tuyển ứng viên',
+//     background: '#0d99ff',
+//     position: '60%',
+//     borderRadius: '15px',
+//     width: 'unset',
+//     height: 'unset',
+//     padding: '4px 16px',
+//   },
+// ];
 
 const DetailPosted: React.FC<IDetailPosted> = (props) => {
   const { detailPosted } = props;
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [dataCandidates, setDadaCandidates] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
   const [status, setStatus] = useState(detailPosted?.status);
+  const [language, setLanguage] = React.useState<any>();
+  const [post, setPost] = React.useState<any>();
+  const [dataProvinces, setDataProvinces] = useState<any>(null);
+
+  // get post by id-post
+  const getPostById = async () => {
+    try {
+      // const result = await postApi.getById(POST_ID);
+      const result = await postApi.getPostV3(
+        detailPosted?.id,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      // console.log('result', result2);
+      if (result) {
+        setPost(result.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getPostById()
+  }, [languageRedux])
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
   useEffect(() => {
     window.scrollTo(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const statusCandidates = [
+    {
+      id: 1,
+      statusId: 0,
+      statusName: '',
+      background: '#0d99ff',
+      position: '0%',
+      borderRadius: '50%',
+      width: '16px',
+      height: '16px',
+      padding: '0px',
+    },
+    {
+      id: 2,
+      statusId: 1,
+      statusName: language?.history_page?.seen,
+      background: '#aaaaaa',
+      position: '60%',
+      borderRadius: '15px',
+      width: 'unset',
+      height: 'unset',
+      padding: '4px 16px',
+    },
+    {
+      id: 3,
+      statusId: 2,
+      statusName: language?.approved,
+      background: '#5cb265',
+      position: '60%',
+      borderRadius: '15px',
+      width: 'unset',
+      height: 'unset',
+      padding: '4px 16px',
+    },
+    {
+      id: 4,
+      statusId: 3,
+      statusName: language?.rejected,
+      background: '#BD3131',
+      position: '60%',
+      borderRadius: '15px',
+      width: 'unset',
+      height: 'unset',
+      padding: '4px 16px',
+    },
+    {
+      id: 5,
+      statusId: 4,
+      statusName: language?.this_candidate_has_been_recruited,
+      background: '#0d99ff',
+      position: '60%',
+      borderRadius: '15px',
+      width: 'unset',
+      height: 'unset',
+      padding: '4px 16px',
+    },
+  ];
 
   const getAllCandidates = async () => {
     try {
@@ -107,6 +210,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
         detailPosted?.post_id,
         5,
         null,
+        languageRedux === 1 ? "vi" : "en",
       );
 
       if (result) {
@@ -118,23 +222,25 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
   };
 
   useEffect(() => {
-    let isMounted = true;
-    setLoading(true);
-    getAllCandidates().then(() => {
-      if (isMounted) {
-        setLoading(false);
-      }
-    });
+    // let isMounted = true;
+    // setLoading(true);
+    getAllCandidates();
+    //   .then(() => {
+    //   if (isMounted) {
+    //     setLoading(false);
+    //   }
+    // });
 
-    return () => {
-      isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
-    };
-  }, []);
+    // return () => {
+    //   isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
+    // };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
-  const handleClickPost = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    detailPosted: any,
-  ) => {};
+  // const handleClickPost = (
+  //   e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  //   detailPosted: any,
+  // ) => {};
 
   const handleClickCandidate = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -147,16 +253,25 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     );
   };
 
+  // console.log("dataCandidates", dataCandidates);
+
+
   return (
     <div className="history-post">
       <JobCardDetailPostedHistory
-        item={detailPosted}
+        item={post}
         status={status}
         setStatus={setStatus}
         dataCandidates={dataCandidates}
+        language={language}
+        languageRedux={languageRedux}
       />
       <Box>
-        <h3 style={{ margin: '12px 0' }}>Danh sách các ứng viên</h3>
+        <h3 style={{ margin: '12px 0' }}>
+          {
+            language?.history_page?.list_of_candidates
+          }
+        </h3>
         {dataCandidates?.applications.map((candidate: any, index: number) => (
           <Card
             key={index}
@@ -172,9 +287,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               boxShadow: 'none',
               borderRadius: '5px',
               margin: '8px 0',
-              background: `${
-                candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
-              }`,
+              background: `${candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
+                }`,
             }}
             onClick={(e) =>
               handleClickCandidate(e, candidate.id, detailPosted?.id)
@@ -237,7 +351,9 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               <div className="item-candidate">
                 <PersonIcon fontSize="small" className="icon-candidate" />
                 <p>
-                  {candidate.gender === 0 ? 'Nam' : 'Nữ'} -{' '}
+                  {candidate.gender === 0 ?
+                    language?.female
+                    : language?.male} -{' '}
                   {moment(candidate.birthday).format('DD/MM/YYYY')}
                 </p>
               </div>
@@ -251,7 +367,9 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                   className="icon-candidate"
                 />
                 <p>
-                  Lĩnh vực quan tâm:
+                  {
+                    language?.career_objective
+                  }{' '}
                   {candidate.categories.map((candid: any, index: number) => (
                     <span key={index}> {candid.child_category}, </span>
                   ))}
@@ -269,7 +387,11 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
           }}
         >
           {dataCandidates?.length > 0 ? (
-            <Button variant="contained">Xem thêm</Button>
+            <Button variant="contained">
+              {
+                language?.more
+              }
+            </Button>
           ) : (
             <></>
           )}

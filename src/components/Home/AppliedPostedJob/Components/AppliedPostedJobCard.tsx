@@ -1,60 +1,35 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 //import scss
 
 //MUI
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 import ImageListItem from '@mui/material/ImageListItem';
 
 import { BackIcon } from '#components/Icons';
 
-//ANT
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
+import { LocationHomeIcon, ClockIcon, BagHomeIcon } from '#components/Icons';
 
-import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
-
-import {
-  LocationHomeIcon,
-  ClockIcon,
-  BagHomeIcon,
-  DolaIcon,
-  SaveIconOutline,
-  SaveIconFill,
-} from '#components/Icons';
-
-import { Space, Button, Tooltip } from 'antd';
+import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
-import bookMarkApi from 'api/bookMarkApi';
-
-import HomeValueContextProvider, {
-  HomeValueContext,
-} from 'context/HomeValueContextProvider';
-
-import ShowNotificativeSave from '../../ShowNotificativeSave';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/reducer';
+import { home } from 'validations/lang/vi/home';
+import { homeEn } from 'validations/lang/en/home';
+// import bookMarkApi from 'api/bookMarkApi';
 
 const AppliedPostedJobCard: React.FC<any> = (props) => {
-  const {
-    setOpenNotificate,
-    openNotificate,
-  }: {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-  } = React.useContext(HomeValueContext);
-  const dispatch = useDispatch();
-  const [checkBookMark, setCheckBookMark] = React.useState(true);
+  // const dispatch = useDispatch();
+  // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
-  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  // const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const handleClickItem = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -63,8 +38,8 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
   ) => {
     // window.open(`/post-detail?post-id=${id}`);
     type === 'application'
-      ? window.open(`/post-detail?post-id=${id}`)
-      : window.open(`/history?post=2`);
+      ? window.open(`/post-detail?post-id=${id}`, '_blank')
+      : window.open(`/history?post=2`, '_parent');
   };
 
   const handleImageError = () => {
@@ -141,7 +116,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     overflow: 'hidden',
                     fontWeight: '700',
                     lineheight: '20px',
-                    color: '#575757',
+                    color: '#000000',
                   }}
                 >
                   {/* {props?.item?.title?.length > 50
@@ -156,7 +131,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   variant="h6"
                   component="div"
                   sx={{
-                    fontSize: '14px',
+                    fontSize: '12px',
                     whiteSpace: 'nowrap',
                     width: '100%',
                     textOverflow: 'ellipsis',
@@ -189,7 +164,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
-                    fontSize: '14px',
+                    fontSize: '12px',
                     fontWeight: '400',
                   }}
                 >
@@ -213,7 +188,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
-                    fontSize: '14px',
+                    fontSize: '12px',
                     fontWeight: '400',
                   }}
                 >
@@ -229,7 +204,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               }}
               direction="vertical"
               align="center"
-              className="div-card-post-right"
+              className="div-cardApplied-post-right"
             >
               <div
                 style={{
@@ -254,7 +229,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   )}
                 </div>
               </div>
-              <p style={{ fontSize: 14, fontWeight: 500, color: '#575757' }}>
+              <p style={{ fontSize: 12, fontWeight: 500, color: '#0d99ff' }}>
                 {props.item.job_type.job_type_name}
               </p>
             </Space>
@@ -265,20 +240,31 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             <span
               style={{
                 display: props.item.type === 'application' ? 'block' : 'none',
+                fontSize: '12px',
               }}
             >
-              Đã nộp vào &nbsp;
+              {language?.history_page?.applied_on}
+              &nbsp;
               {new Date(props.item.created_at).toLocaleDateString('en-GB')}
               ,&nbsp;
               {moment(new Date(props.item.created_at)).format('HH:mm')}
             </span>
             <span
-              style={{ display: props.item.type === 'post' ? 'block' : 'none' }}
+              style={{
+                display: props.item.type === 'post' ? 'block' : 'none',
+                fontSize: '12px',
+              }}
             >
-              <strong style={{ color: '#0d99ff' }}>
+              <strong
+                style={{
+                  color: '#0d99ff',
+                  fontSize: '12px',
+                }}
+              >
                 {props.item.num_of_application}
               </strong>
-              &nbsp; Ứng viên đã nộp hồ sơ
+              &nbsp;
+              {language?.home_page?.x_candidates_have_applied}
             </span>
           </div>
           <div
@@ -294,24 +280,25 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
                   : 'rgba(13, 153, 255, 1)',
               color:
                 props.item.application_status === 1
-                  ? 'rgba(170, 170, 170, 1)'
+                  ? '#575757'
                   : 'rgba(255, 255, 255, 1)',
+              fontSize: '12px',
             }}
             className="button-approved"
           >
             {props.item.application_status === 1
-              ? 'Đã ứng tuyển'
+              ? language?.applied1
               : props.item.application_status === 2
-              ? 'Đã từ chối'
+              ? language?.approved
               : props.item.application_status === 3
-              ? 'Đã được duyệt'
-              : 'Đã tuyển'}
+              ? language?.rejected
+              : language?.hired}
           </div>
           <div
             style={{ display: props.item.type === 'post' ? 'flex' : 'none' }}
             className="button-check"
           >
-            Kiểm tra ngay
+            {language?.check_now}
             <div className="icon">
               <BackIcon fill="white" />
             </div>

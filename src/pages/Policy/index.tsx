@@ -5,8 +5,15 @@ import Footer from '../../components/Footer/Footer';
 import { ScrollContext } from '#utils';
 import './style.scss';
 import Category from './components/Category';
+import RollTop from '#components/RollTop';
 
-import siteApi from 'api/siteApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer/index';
+
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
+// import siteApi from 'api/siteApi';
 
 export interface CurrentCategoryActiveProps {
   isAboutUs: boolean;
@@ -66,37 +73,25 @@ const Policy: React.FC = () => {
     getActiveCategory();
   }, [scrollY]);
 
-  const [titleFirebase, setTitleFirebase] = React.useState<string>('');
-  const [site, SetSite] = React.useState<any>(null);
+  const analytics: any = getAnalytics();
 
-  const getTitle = async () => {
-    try {
-      const result = await siteApi.getSalaryType();
-      if (result) {
-        SetSite(result);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
 
   React.useEffect(() => {
-    getTitle();
+    // Cập nhật title và screen name trong Firebase Analytics
+    // document.title = 'HiJob - Chính sách công ty';
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Chính sách công ty'
+        : 'HiJob - Company policy';
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/web_policy' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  React.useEffect(() => {
-    if (site?.data) {
-      setTitleFirebase('HiJob - Chính sách công ty');
-    }
-  }, [site]);
-
-  React.useEffect(() => {
-    document.title = titleFirebase ? titleFirebase : 'web-policy';
-  }, [titleFirebase]);
-
-  new Promise((resolve, reject) => {
-    document.title = site ? titleFirebase : 'web-policy';
-  });
 
   return (
     <>
@@ -547,6 +542,7 @@ const Policy: React.FC = () => {
           </section>
         </div>
       </div>
+      <RollTop />
       <Footer />
     </>
   );

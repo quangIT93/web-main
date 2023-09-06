@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
-import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
+import { Box, TextField, Modal, Typography } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from 'moment';
-import Autocomplete from '@mui/material/Autocomplete';
+// import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import { CloseOutlined } from '@ant-design/icons';
 
 // data
 import profileApi from 'api/profileApi';
-import { useDispatch } from 'react-redux';
-import {
-  getProfile,
-  resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer';
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
+// import { useDispatch } from 'react-redux';
+// import {
+//   getProfile,
+//   resetProfileState,
+// } from 'store/reducer/profileReducer/getProfileReducer';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -28,6 +33,20 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
+
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
 };
 
 const styleChildBox = {
@@ -61,14 +80,15 @@ interface IInfoEducation {
 const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
   props,
 ) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const {
     openModalEducationCreate,
     setOpenModalEducationCreate,
-    typeItem,
-    educations,
+    // typeItem,
+    // educations,
   } = props;
   // console.log('typeItem', typeItem)
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const [companyName, setCompanyName] = useState<string>('')
   // const [startDate, setStartDate] = React.useState<any>(
   //   new Date(2023, 4, 30, 0, 0).getTime()
@@ -85,6 +105,26 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
     endDate: new Date(2023, 4, 30, 0, 0).getTime(),
     extraInformation: '',
   });
+
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const handleClose = () => setOpenModalEducationCreate(false);
 
@@ -157,7 +197,9 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style}>
+      <Box sx={style}
+        className="Modal-personnal-info"
+      >
         <div
           style={{
             position: 'absolute',
@@ -179,7 +221,9 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          Thêm thông tin trình độ học vấn
+          {
+            language?.profile_page?.add_education
+          }
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -188,7 +232,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Trường/Tổ chức <span className="color-asterisk">*</span>
+            {
+              language?.school_organization
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -198,8 +245,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Nhập tên trường hoặc tổ chức"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.profile_page?.place_school
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -210,7 +259,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            Chuyên ngành <span className="color-asterisk">*</span>
+            {
+              language?.major
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -220,8 +272,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             onChange={handleChangeMajor}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Ngành"
-            // error={titleError} // Đánh dấu lỗi
+            placeholder={
+              language?.major
+            }
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -237,7 +291,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian bắt đầu <span className="color-asterisk">*</span>
+                  {
+                    language?.start_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.startDate)}
@@ -254,7 +311,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  Thời gian kết thúc <span className="color-asterisk">*</span>
+                  {
+                    language?.finish_time
+                  }{' '}
+                  <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
                   value={moment(education.endDate)}
@@ -275,7 +335,10 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="startTime"
           >
-            Thông tin bổ sung <span className="color-asterisk">*</span>
+            {
+              language?.additional_information
+            }{' '}
+            <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             // className={classes.textarea}
@@ -284,12 +347,17 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             multiline
             rows={4}
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder="Để được nhà tuyển dụng quan tâm và tăng cơ hội ứng tuyển vào công ty mong muốn. Hẫy nhập thông tin bổ sung của bạn vào đây!"
+            placeholder={
+              language?.profile_page?.place_additional_information
+            }
+
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            language?.profile_page?.save_info
+          }
         </Button>
       </Box>
     </Modal>

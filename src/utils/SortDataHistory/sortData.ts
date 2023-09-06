@@ -1,7 +1,7 @@
 
 const sortData = {
     sortDataByDate: (value: string, arrayData: any) => {
-        if (value == 'Mới nhất') {
+        if (value === 'Mới nhất') {
             return arrayData.sort((a: any, b: any) => {
                 return (
                     Number(b.created_at) -

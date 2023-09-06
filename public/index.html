@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <!-- <link rel="icon" href="%PUBLIC_URL%/logoHiJobfull.png" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta
       name="description"
       content="Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được cập nhật mỗi ngày - Tìm việc làm nhanh chóng trên toàn quốc, tiện lợi – Đa dạng ngành nghề, mức lương hấp dẫn"
@@ -18,28 +18,43 @@
       rel="stylesheet"
     />
     <link rel="icon" href="./favicon.ico">
-    
     <title>HiJob - Tìm việc làm, tuyển dụng</title>
-  </head>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0&appId=523018296116961&autoLogAppEvents=1" nonce="ue5ivSNf"></script>
+ 
   <body>
-    <meta name="google-site-verification" content="H9Un4KOBDD-pH-DRHZHyV2oBYKvNs57DwQZGIUZY__E" />
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-  </body>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
   
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0&appId=523018296116961&autoLogAppEvents=1" nonce="ue5ivSNf"></script>
-  <?xml version="1.0" encoding="UTF-8"?>
-  <urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-      <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-    <url>
-      <!-- <loc>https://hijob.site/history/</loc>
-      <lastmod>2023-07-14T10:03:04+00:00</lastmod> -->
-    </url>
-  </urlset>
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+  </body>
+
+
+  <script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "102330842835584");
+    chatbox.setAttribute("attribution", "biz_inbox");
+  </script>
+
+  <!-- Your SDK code -->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        xfbml            : true,
+        version          : 'v17.0'
+      });
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
 </html>

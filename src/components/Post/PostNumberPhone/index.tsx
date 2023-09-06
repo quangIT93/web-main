@@ -2,22 +2,28 @@ import React, { memo } from 'react';
 import { Box } from '@mui/material';
 
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import { Input } from 'antd';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
 
 interface IPhoneNumber {
   setPhoneNumber: React.Dispatch<React.SetStateAction<string>>;
   phone: string;
+  language: any;
+  languageRedux: any;
 }
 
 interface NumericInputProps {
   style: React.CSSProperties;
   value: string;
   onChange: (value: string) => void;
+  languageRedux: any;
+  language: any;
 }
 
 const NumericInput = (props: NumericInputProps) => {
-  const { value, onChange } = props;
+  const { value, onChange, languageRedux, language } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
@@ -40,23 +46,23 @@ const NumericInput = (props: NumericInputProps) => {
       {...props}
       onChange={handleChange}
       onBlur={handleBlur}
-      placeholder="Nhập số điện thoại"
-      maxLength={16}
+      placeholder={language?.post_page?.place_phone}
+      maxLength={11}
     />
   );
 };
 const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
-  const { setPhoneNumber, phone } = props;
+  const { setPhoneNumber, phone, language, languageRedux } = props;
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
   };
 
-  const handleChangeNumber = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setPhoneNumber(e.target.value.replace('d', ''));
-  };
+  // const handleChangeNumber = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  // ) => {
+  //   setPhoneNumber(e.target.value.replace('d', ''));
+  // };
 
   return (
     <Box sx={{ marginTop: '24px' }}>
@@ -66,7 +72,10 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         component="label"
         htmlFor="company"
       >
-        Số điện thoại liên hệ <span style={{ color: 'red' }}>*</span>
+        {
+          language?.contact_phone_number
+        }{' '}
+        <span style={{ color: 'red' }}>*</span>
       </Typography>
       <NumericInput
         style={{
@@ -82,6 +91,8 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         }}
         value={phone}
         onChange={setPhoneNumber}
+        languageRedux={languageRedux}
+        language={language}
       />
       {/* <Input
         value={`${phone}d`}

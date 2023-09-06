@@ -1,7 +1,7 @@
-import React from 'react'
-import './style.scss'
+import React from 'react';
+import './style.scss';
 // @ts-ignore
-import { Logo } from '#components'
+import { Logo } from '#components';
 
 const Navbar: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
       <div className="navbar__bar-decoration"></div>
       <span className="navbar__quote">ĐIỀU KHOẢN & DỊCH VỤ</span>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -14,9 +14,11 @@ import { getAnalytics } from 'firebase/analytics';
 import './App.scss';
 import ScrollObserver from './utils/ScrollObserver';
 // import context
-import HomeContextProvider from 'context/HomeContextProvider';
+// import HomeContextProvider from 'context/HomeContextProvider';
 import HomeValueContextProvider from 'context/HomeValueContextProvider';
 import ChatContextProvider from 'context/ChatContextProvider';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 // Initialize Firebase
@@ -30,49 +32,32 @@ interface RouteProps {
 }
 
 const App: React.FC = () => {
-  // const dbRef = ref(getDatabase(app));
-  // get(child(dbRef, `user`))
-  //   .then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //       console.log(snapshot.val());
-  //     } else {
-  //       console.log('No data available');
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
-
-  // set(child(dbRef, 'user/'), {
-  //   username: 'quang',
-  //   email: 'quang@gmail.com',
-  //   profile_picture: 'imageUrl',
-  // });
+  let persistor = persistStore(store);
 
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
       <Provider store={store}>
-        <BrowserRouter>
-          <HomeValueContextProvider>
-            <ChatContextProvider>
-              <ScrollObserver>
-                <Layout>
-                  <Routes>
-                    {/* @ts-ignore */}
-                    {routes.map(
-                      ({ path, component: component }: RouteProps) => {
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <HomeValueContextProvider>
+              <ChatContextProvider>
+                <ScrollObserver>
+                  <Layout>
+                    <Routes>
+                      {/* @ts-ignore */}
+                      {routes.map(({ path, component }: RouteProps) => {
                         return (
                           <Route path={path} element={component} key={path} />
                         );
-                      },
-                    )}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Layout>
-              </ScrollObserver>
-            </ChatContextProvider>
-          </HomeValueContextProvider>
-        </BrowserRouter>
+                      })}
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Layout>
+                </ScrollObserver>
+              </ChatContextProvider>
+            </HomeValueContextProvider>
+          </BrowserRouter>
+        </PersistGate>
       </Provider>
     </React.Suspense>
   );

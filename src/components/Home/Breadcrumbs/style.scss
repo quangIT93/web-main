@@ -2,54 +2,66 @@
 
 .bread-crumb-container {
   top: -45px;
-
+  transition: all 400ms;
+  padding: 16px 0px 8px 0px !important;
   @media screen and (min-width: 2561px) {
     top: -45px;
   }
 
   @media screen and (max-width: 2560px) and (min-width: 2244px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
   }
 
   @media screen and (max-width: 2243px) and (min-width: 2115px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
   }
 
   @media screen and (max-width: 1919px) and (min-width: 1503px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
   }
 
   @media screen and (max-width: 1502px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
   }
 
   @media screen and (max-width: 1499px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
   }
 
   @media screen and (max-width: 1487px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
   }
 
   @media screen and (max-width: 1439px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
   }
 
   @media screen and (max-width: 1356px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
   }
 
   @media screen and (max-width: 1293px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
   }
 
   @media screen and (max-width: 1292px) {
     top: -45px;
+    padding: 16px 0px 8px 0px !important;
+
   }
 
   @media screen and (max-width: 1280px) {
     top: -45px;
-    padding: 16px 24px !important;
+    padding: 16px 24px 8px 24px !important;
   }
 
   @media screen and (max-width: 1255px) {

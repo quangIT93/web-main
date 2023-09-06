@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -7,7 +7,9 @@ import TextField from '@mui/material/TextField';
 import locationApi from '../../../api/locationApi';
 
 import './style.scss';
-import { StringArraySupportOption } from 'prettier';
+import { post } from 'validations/lang/vi/post';
+import { postEn } from 'validations/lang/en/post';
+// import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
   fontWeight: 600,
   color: '#000000',
@@ -17,10 +19,12 @@ interface IEditPostAddress {
   dataPostById: any;
   setEditDataPosted: any;
   editDataPosted: any;
+  language: any;
+  languageRedux: any;
 }
 
 const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
-  const { dataPostById, setEditDataPosted, editDataPosted } = props;
+  const { dataPostById, setEditDataPosted, editDataPosted, language, languageRedux } = props;
 
   const [dataProvinces, setDataProvinces] = useState<any>(null);
   const [dataDistricts, setDataDistrict] = useState<any>(null);
@@ -29,15 +33,18 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedWard, setSelectedWard] = useState<any>(null);
 
+  // console.log("dataProvinces", dataPostById);
+
   useEffect(() => {
     if (dataProvinces && !selectedProvince) {
       setSelectedProvince(
         dataProvinces?.find(
           (dataProvince: any) =>
-            dataProvince?.name === dataPostById?.province_name,
+            dataProvince?.province_fullName === dataPostById?.province,
         ),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataProvinces]);
 
   useEffect(() => {
@@ -49,6 +56,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         ),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataDistricts]);
 
   useEffect(() => {
@@ -59,11 +67,14 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         ),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataWards]);
 
   const getAllProvinces = async () => {
     try {
-      const allLocation = await locationApi.getAllProvinces();
+      const allLocation = await locationApi.getAllLocation(
+        languageRedux === 1 ? "vi" : "en"
+      );
 
       if (allLocation) {
         setDataProvinces(allLocation.data);
@@ -79,6 +90,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
       if (dataPostById && dataDistricts === null) {
         const districts = await locationApi.getDistrictsById(
           dataPostById?.province_id,
+          languageRedux === 1 ? "vi" : "en",
         );
 
         if (districts) {
@@ -87,7 +99,8 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
       } else {
         if (selectedProvince) {
           const districts = await locationApi.getDistrictsById(
-            selectedProvince?.id,
+            selectedProvince?.province_id,
+            languageRedux === 1 ? "vi" : "en",
           );
           if (districts) {
             setDataDistrict(districts.data);
@@ -105,7 +118,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
       if (dataDistricts && dataWards === null) {
         const allward = await locationApi.getWardsId(
           dataPostById.district_id,
-          '',
+          languageRedux === 1 ? "vi" : "en",
         );
         if (allward) {
           setDataWard(allward.data);
@@ -114,7 +127,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedDistrict) {
           const allward = await locationApi.getWardsId(
             selectedDistrict?.id,
-            '',
+            languageRedux === 1 ? "vi" : "en",
           );
           if (allward) {
             setDataWard(allward.data);
@@ -130,17 +143,20 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
     getAllProvinces();
     // getAllLocations()
     // delete param when back to page
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   React.useEffect(() => {
     getDataDistrict();
     // delete param when back to page
-  }, [selectedProvince]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProvince, languageRedux]);
 
   React.useEffect(() => {
     getDataWard();
     // delete param when back to page
-  }, [selectedDistrict]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDistrict, languageRedux]);
 
   const handleProvinceChange = (event: any, value: any) => {
     setSelectedDistrict(null);
@@ -179,24 +195,29 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="addressTitle"
           >
-            Thành Phố <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page.city
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
 
           <Autocomplete
             options={dataProvinces ? dataProvinces : []}
-            getOptionLabel={(option: any) => option?.name || ''}
+            getOptionLabel={(option: any) => option?.province_fullName || ''}
             value={selectedProvince || null}
             onChange={handleProvinceChange}
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder="Tỉnh/TP"
+                placeholder={
+                  language?.post_page.place_city
+                }
                 size="small"
-                value={selectedProvince?.name}
+                value={selectedProvince?.province_fullName}
               />
             )}
             isOptionEqualToValue={(option, value) => {
-              return option.name === value.name;
+              return option.province_fullName === value.province_fullName;
             }}
             style={{ marginTop: '0.5rem' }}
           />
@@ -209,7 +230,10 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Quận <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page.district
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataDistricts ? dataDistricts : []}
@@ -217,7 +241,9 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             value={selectedDistrict || null}
             onChange={handleDistrictChange}
             renderInput={(params: any) => (
-              <TextField {...params} placeholder="Quận/Huyện" size="small" />
+              <TextField {...params} placeholder={
+                language?.post_page.place_district
+              } size="small" />
             )}
             isOptionEqualToValue={(option, value) => {
               return option.full_name === value.full_name;
@@ -234,7 +260,10 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Phường/Xã <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page.ward
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataWards ? dataWards : []}
@@ -242,7 +271,9 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             value={selectedWard || null}
             onChange={handleChangeWardId}
             renderInput={(params) => (
-              <TextField {...params} placeholder="Phường/Xã" size="small" />
+              <TextField {...params} placeholder={
+                language?.post_page.place_ward
+              } size="small" />
             )}
             isOptionEqualToValue={(option, value) => {
               return option.full_name === value.full_name;
@@ -258,7 +289,10 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            Địa chỉ <span style={{ color: 'red' }}>*</span>
+            {
+              language?.post_page.address
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
             type="text"
@@ -268,7 +302,9 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             onChange={handleChangeAddress}
             size="small"
             sx={{ width: '100%', marginTop: '0.5rem' }}
-            placeholder="Tên đường, toà nhà, số nhà"
+            placeholder={
+              language?.post_page.place_address
+            }
           />
         </div>
       </div>

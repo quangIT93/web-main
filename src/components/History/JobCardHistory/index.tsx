@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 //import scss
 import './style.scss';
 
@@ -8,18 +8,7 @@ import './style.scss';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import TurnedInIcon from '@mui/icons-material/TurnedIn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ImageListItem from '@mui/material/ImageListItem';
-
-//ANT
-import {
-  EnvironmentFilled,
-  ClockCircleFilled,
-  EuroCircleFilled,
-  CaretDownFilled,
-} from '@ant-design/icons';
 
 import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
@@ -34,10 +23,12 @@ import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
 import bookMarkApi from 'api/bookMarkApi';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
 
-import HomeValueContextProvider, {
-  HomeValueContext,
-} from 'context/HomeValueContextProvider';
+// import HomeValueContextProvider, {
+//   HomeValueContext,
+// } from 'context/HomeValueContextProvider';
 
 interface IitemNewJob {
   item: {
@@ -64,17 +55,21 @@ interface IitemNewJob {
     created_at: number;
     status: number;
     bookmarked: boolean;
+    money_type_text: string;
   };
+  language: any;
+  languageRedux: any;
 }
 
 const JobCardHistory: React.FC<IitemNewJob> = (props) => {
-  const {
-    setOpenNotificate,
-    openNotificate,
-  }: {
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-  } = React.useContext(HomeValueContext);
+  // const {
+  //   setOpenNotificate,
+  //   openNotificate,
+  // }: {
+  //   setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+  //   openNotificate: boolean;
+  // } = React.useContext(HomeValueContext);
+  const { language, languageRedux } = props;
   const dispatch = useDispatch();
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -108,7 +103,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
           handleClickItem(e, props.item.post_id);
         }}
       >
-        <div className="div-card-post-left">
+        <ul className="div-card-post-left">
           <ImageListItem
             key={props.item.image}
             sx={{ flex: 1, display: 'flex' }}
@@ -191,7 +186,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     overflow: 'hidden',
                     marginLeft: '4px',
                     fontSize: '14px',
-                    fontWeight: '400'
+                    fontWeight: '400',
                   }}
                 >
                   {`${props.item.district}, ${props.item.province}`}
@@ -215,14 +210,16 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     overflow: 'hidden',
                     marginLeft: '4px',
                     fontSize: '14px',
-                    fontWeight: '400'
+                    fontWeight: '400',
                   }}
                 >
                   {new Intl.NumberFormat('en-US').format(props.item.salary_min)}{' '}
-                  -{' '}
+                  {props.item?.money_type_text} -{' '}
                   {new Intl.NumberFormat('en-US').format(
                     props.item.salary_max,
-                  ) + `/${props.item.salary_type}`}
+                  ) +
+                    ` ${props.item?.money_type_text}` +
+                    `/${props.item.salary_type}`}
                 </Typography>
               </div>
               <div
@@ -235,7 +232,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                     color: '#AAAAAA',
                     fontSize: 14,
                     fontStyle: 'italic',
-                    fontWeight: '400'
+                    fontWeight: '400',
                   }}
                 >
                   {props.item.created_at_text}
@@ -255,13 +252,16 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                 color: '#001424',
                 fontSize: 14,
                 fontStyle: 'italic',
-                fontWeight: '400'
+                fontWeight: '400',
               }}
             >
-              Đã đăng vào:{' '}
+              {
+                language?.posted_on
+              }{' '}
               {props.item?.created_at != null
-                ? moment(props.item?.created_at).format('DD/MM/YY')
-                : 'Chưa cập nhật'}
+                ? moment(props.item?.created_at).format('DD/MM/YYYY') + ' ' +
+                moment(new Date(props.item?.created_at)).format('HH:mm')
+                : language?.unupdated}
             </p>
             {props.item?.status === 1 ? (
               <p
@@ -274,7 +274,9 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                   fontStyle: 'italic',
                 }}
               >
-                Đang tuyển
+                {
+                  language?.recruiting
+                }
               </p>
             ) : props.item?.status === 3 ? (
               <p
@@ -287,7 +289,9 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                   fontStyle: 'italic',
                 }}
               >
-                Đã đóng
+                {
+                  language?.closed
+                }
               </p>
             ) : (
               <p
@@ -300,11 +304,13 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
                   fontStyle: 'italic',
                 }}
               >
-                Không chấp nhận
+                {
+                  language?.history_page?.does_not_accept
+                }
               </p>
             )}
           </Box>
-        </div>
+        </ul>
 
         <Space
           style={{ justifyContent: 'space-between' }}
@@ -324,7 +330,7 @@ const JobCardHistory: React.FC<IitemNewJob> = (props) => {
               onClick={async (e) => {
                 try {
                   e.stopPropagation();
-                  console.log("props.item ", props.item);
+                  // console.log('props.item ', props.item);
 
                   if (props.item.bookmarked) {
                     const result = await bookMarkApi.deleteBookMark(

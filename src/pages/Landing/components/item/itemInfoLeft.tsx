@@ -28,7 +28,7 @@ const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({
       style={{ backgroundImage: `url(${imgBackground})` }}
     >
       <div className="div-img">
-        <img src={imageDescription} />
+        <img src={imageDescription} alt={imageDescription} />
       </div>
       <div className="div-content">
         <div id="div-content">
@@ -37,11 +37,11 @@ const ItemInfoLeft: React.FC<CategoryCarouselItemProps> = ({
         <div id="div-describe">
           <p>{describe}</p>
         </div>
-        <a href="https://www.facebook.com/hijobOfficial/" target="_blank">
+        <Link to="https://www.facebook.com/hijobOfficial/" target="_blank">
           <div className="btn-contract">
             <p> {titleButton} </p>
           </div>
-        </a>
+        </Link>
       </div>
       <div className="space"></div>
     </div>

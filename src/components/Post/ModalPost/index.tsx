@@ -8,6 +8,8 @@ import { Button } from 'antd';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
+import './style.scss';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -20,6 +22,17 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
+
+  '@media (min-width: 400px) and (max-width: 640px)': {
+    width: 410,
+  },
 };
 
 interface IModalPost {
@@ -39,38 +52,41 @@ const ModalPost: React.FC<IModalPost> = (props) => {
     <div>
       <Modal
         open={openModalPost}
+        // open={true}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        className="modal-success_post"
       >
         <Box sx={style}>
-          <Typography
-            id="modal-modal-title"
-            variant="h5"
-            component="h2"
-            sx={{ textAlign: 'center', color: '#0d99ff', position: 'relative' }}
+          <h2
+            className="modal-title_successPost"
+            style={{
+              textAlign: 'center',
+              color: '#0d99ff',
+              position: 'relative',
+            }}
           >
             Đã đăng tuyển thành công!
-            <IconButton aria-label="close"
+            <IconButton
+              aria-label="close"
               onClick={handleClose}
               sx={{
                 position: 'absolute',
                 right: '0',
                 top: '50%',
-                transform: 'translateY(-50%)'
+                transform: 'translateY(-50%)',
               }}
             >
               <CloseIcon />
             </IconButton>
-          </Typography>
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h4"
-            sx={{ margin: '24px 0', fontSize: '15px' }}
+          </h2>
+          <h6
+            className="modal-text_modalPost"
+            style={{ margin: '24px 0', fontSize: '15px' }}
           >
             Bạn có thể theo dõi bài đăng tuyển của mình thông qua:
-          </Typography>
+          </h6>
 
           {/* <h4
             style={{ color: '#0d99ff ', textAlign: 'center', margin: '12px' }}
@@ -78,7 +94,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             TẢI ỨNG DỤNG HIJOB
           </h4> */}
           <div
-            className="div-img-footer"
+            className="div-img-modalPost"
             style={{ display: 'flex', justifyContent: 'space-around' }}
           >
             <img
@@ -92,7 +108,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             />
           </div>
           <div
-            className="div-link-app"
+            className="div-link-postModal"
             style={{ justifyContent: 'space-around' }}
           >
             <Link
@@ -117,8 +133,28 @@ const ModalPost: React.FC<IModalPost> = (props) => {
           </div>
           <div
             className="div-img-footer"
-            style={{ display: 'flex', justifyContent: 'space-around' }}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              gap: '8px',
+            }}
           >
+            <Button
+              onClick={() => {
+                window.open(`/history?post=2`, '_parent');
+              }}
+              className="btn-apply"
+              type={'primary'}
+              style={{
+                width: 320,
+                marginTop: 10,
+                height: 40,
+                fontWeight: 'bold',
+                backgroundColor: 'rgb(189, 49, 49)',
+              }}
+            >
+              Đến trang lịch sử
+            </Button>
             <Button
               onClick={onclick}
               className="btn-apply"

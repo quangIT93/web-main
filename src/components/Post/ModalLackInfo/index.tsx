@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const ModalLackInfo = () => {
-  return <div>ModalLackInfo</div>
-}
+  return <div>ModalLackInfo</div>;
+};
 
-export default ModalLackInfo
+export default ModalLackInfo;

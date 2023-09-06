@@ -1,13 +1,12 @@
-import React, { useContext, memo } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import React, { useContext, memo, useEffect } from 'react';
+
 import Box from '@mui/material/Box';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Button from '@mui/material/Button';
+// import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
 
 import './style.scss';
-import { TabScrollButton } from '@mui/material';
+import './components/categoryItem.scss';
+
 // import { categories } from './dataCategory'
 import { AxiosResponse } from 'axios';
 
@@ -22,13 +21,16 @@ import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
-import { RootState } from '../../../store/reducer';
+
+// import { setPostNewestApi } from 'store/reducer/postReducerV3/newWestReducer';
+// import { setPostNewest } from 'store/actions';
+// import { RootState } from '../../../store/reducer';
 
 // import context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 import { IvalueJobChild } from 'context/HomeValueContextProvider';
 
-import CategoryItem from './components/CategoryItem';
+// import CategoryItem from './components/CategoryItem';
 
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -41,6 +43,15 @@ import 'swiper/css/navigation';
 import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 import { Skeleton } from 'antd';
+
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+import { RootState } from '../../../store/reducer';
+// import { homeEn } from 'validations/lang/en/home';
+// import { home } from 'validations/lang/vi/home';
+import languageApi from 'api/languageApi';
+import { setPostNewestApiV3 } from 'store/reducer/postReducerV3/newWestReducer';
+import { getCookie } from 'cookies';
 
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
@@ -60,14 +71,14 @@ const CategoryCarousel: React.FC = () => {
   // Contexts
   const {
     setChildCateloriesArray,
-    childCateloriesArray,
-    valueJobChild,
+    // childCateloriesArray,
+    // valueJobChild,
     setValueJobChild,
-    setRefCatelories,
+    // setRefCatelories,
     setRefCatelory,
     navTouchCatelory,
-    openCollapseFilter,
-  }: {
+  }: // openCollapseFilter,
+  {
     setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
     childCateloriesArray: number[];
     valueJobChild: IvalueJobChild;
@@ -78,6 +89,9 @@ const CategoryCarousel: React.FC = () => {
     openCollapseFilter: boolean;
   } = useContext(HomeValueContext);
 
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [value, setValue] = React.useState(0);
   const [categoryIdCookie, setCategorieIdCookie] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
@@ -93,10 +107,14 @@ const CategoryCarousel: React.FC = () => {
   const { setPostNewest } = bindActionCreators(actionCreators, dispatch);
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
-  const refTab = React.useRef<HTMLUListElement | null>(null);
+  // const refTab = React.useRef<HTMLUListElement | null>(null);
 
   const [categories, setCategories] = React.useState<AxiosResponse | null>(
     null,
+  );
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
   );
 
   // Set the cookie
@@ -107,7 +125,8 @@ const CategoryCarousel: React.FC = () => {
       date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
       expires = '; expires=' + date.toUTCString();
     }
-    document.cookie = name + '=' + (value || '') + expires + '; path=/';
+    document.cookie =
+      name + '=' + (value || '') + expires + '; path=/; SameSite=None; Secure';
   }
 
   // Get the cookie
@@ -116,10 +135,11 @@ const CategoryCarousel: React.FC = () => {
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
-      while (c.charAt(0) == ' ') {
+
+      while (c.charAt(0) === ' ') {
         c = c.substring(1, c.length);
       }
-      if (c.indexOf(nameEQ) == 0) {
+      if (c.indexOf(nameEQ) === 0) {
         return c.substring(nameEQ.length, c.length);
       }
     }
@@ -127,9 +147,42 @@ const CategoryCarousel: React.FC = () => {
   }
 
   const handleChange = async (event: React.SyntheticEvent, newValue: any) => {
+    const windowWidth =
+      window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+    const tabs = document.querySelector('.tabs') as HTMLElement;
+    const breadCrumb = document.querySelector(
+      '.bread-crumb-container',
+    ) as HTMLElement;
+    if (tabs !== null && breadCrumb !== null) {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
+    }
+
+    // const sectionToNavigate = document.getElementById('new-job');
+    if (windowWidth > 519 && localStorage.getItem('accessToken')) {
+      window.scrollTo(0, 530);
+
+      // sectionToNavigate?.scrollIntoView();
+      // window.scrollTo({ top: 0, behavior: 'smooth' });
+      // document.create;
+    } else if (windowWidth <= 519 && localStorage.getItem('accessToken')) {
+      window.scrollTo(0, 560);
+    } else if (windowWidth > 519) {
+      window.scrollTo(0, 530);
+    } else if (windowWidth <= 519) {
+      window.scrollTo(0, 800);
+    }
+
     try {
-      setOpenBackdrop(true); // Mở backdrop
-      window.scrollTo(0, 0);
+      // setOpenBackdrop(true); // Mở backdrop
+
+      // Lấy chiều cao của màn hình
+
+      // const element = document.getElementById('new-job');
+      // element?.scrollIntoView();
+
       // window.scrollTo(0, 300)
 
       if (newValue === undefined || newValue === 1) {
@@ -143,6 +196,7 @@ const CategoryCarousel: React.FC = () => {
       let userSelected: UserSelected = {
         userSelectedId: newValue,
       };
+
       setCookie('userSelected', JSON.stringify(userSelected), 365);
 
       const selectedCategory = categories?.data.find(
@@ -160,34 +214,95 @@ const CategoryCarousel: React.FC = () => {
       if (themeId) {
         setSearchParams({
           'theme-id': `${themeId}`,
-          'categories-id': `${newValue == 1 ? 'all' : newValue}`,
+          'categories-id': `${newValue === 1 ? 'all' : newValue}`,
         });
       } else {
         setSearchParams({
-          'categories-id': `${newValue == 1 ? 'all' : newValue}`,
+          'categories-id': `${newValue === 1 ? 'all' : newValue}`,
         });
       }
-      var result;
-      if (newValue == 1) {
-        result = await postApi.getPostNewest(null, null, null, 19);
+      // var result;
+      var resultV3;
+
+      // console.log('newValue: ' + newValue);
+
+      if (newValue === 1) {
+        // result = await postApi.getPostNewest(
+        //   null,
+        //   null,
+        //   null,
+        //   19,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+
+        resultV3 = await postApi.getPostNewestV3(
+          null,
+          null,
+          null,
+          null,
+          20,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
       } else {
-        result = await postApi.getPostNewest(Number(newValue), null, null, 19);
+        // result = await postApi.getPostNewest(
+        //   Number(newValue),
+        //   null,
+        //   null,
+        //   19,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+
+        resultV3 = await postApi.getPostNewestV3(
+          null,
+          Number(newValue),
+          null,
+          null,
+          20,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
       }
 
-      if (result) {
-        setPostNewest(result);
+      // if (result) {
+      //   setPostNewest(result);
+      //   // dispatch(setPostNewestApi(result));
+      // }
+
+      if (resultV3) {
+        dispatch(setPostNewestApiV3(resultV3));
+        // dispatch(setPostNewestApi(result));
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setOpenBackdrop(false); // Đóng backdrop sau khi API call hoàn thành
+      // setOpenBackdrop(false); // Đóng backdrop sau khi API call hoàn thành
     }
   };
+
+  useEffect(() => {
+    if (JSON.parse(getCookie('userSelected') as any)) {
+      const userSelected = Number(
+        JSON.parse(getCookie('userSelected') || '').userSelectedId,
+      );
+      setCookie(
+        'userSelected',
+        JSON.stringify({ userSelectedId: userSelected }),
+        365,
+      );
+    } else {
+      setCookie('userSelected', JSON.stringify({ userSelectedId: 1 }), 365);
+    }
+  }, []);
 
   const getAllParentCategories = async () => {
     try {
       setLoading(true);
-      const result = await categoriesApi.getAllParentCategories();
+      const result = await categoriesApi.getAllParentCategories(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setTimeout(() => {
           setLoading(false);
@@ -215,41 +330,122 @@ const CategoryCarousel: React.FC = () => {
     }
   };
 
-  const getPostNewestByCategori = async () => {
-    try {
-      setOpenBackdrop(true);
-      const themeId = searchParams.get('categories-id');
-      var result;
-      if (themeId == 'all') {
-        result = await postApi.getPostNewest(null, null, null, 19);
-      } else {
-        result = await postApi.getPostNewest(Number(themeId), null, null, 19);
-      }
-      if (result) {
-        setPostNewest(result);
-        setOpenBackdrop(false);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getPostNewestByCategori = async () => {
+  //   try {
+  //     // setOpenBackdrop(true);
+  //     const themeId = searchParams.get('categories-id');
+  //     var result;
+  //     if (themeId === 'all') {
+  //       result = await postApi.getPostNewest(
+  //         null,
+  //         null,
+  //         null,
+  //         19,
+  //         null,
+  //         languageRedux === 1 ? 'vi' : 'en',
+  //       );
+
+  //       // result = await postApi.getPostNewestV3(
+  //       //   null,
+  //       //   null,
+  //       //   null,
+  //       //   null,
+  //       //   20,
+  //       //   null,
+  //       //   languageRedux === 1 ? 'vi' : 'en',
+  //       // );
+  //     } else {
+  //       result = await postApi.getPostNewest(
+  //         Number(themeId),
+  //         null,
+  //         null,
+  //         19,
+  //         null,
+  //         languageRedux === 1 ? 'vi' : 'en',
+  //       );
+
+  //       // result = await postApi.getPostNewestV3(
+  //       //   null,
+  //       //   Number(themeId),
+  //       //   null,
+  //       //   null,
+  //       //   20,
+  //       //   null,
+  //       //   languageRedux === 1 ? 'vi' : 'en',
+  //       // );
+  //     }
+  //     if (result) {
+  //       // setPostNewest(result);
+  //       // dispatch(setPostNewestApi(result));
+  //       // setOpenBackdrop(false);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const getNewstJobBycookie = async (userSelectedId: any) => {
     try {
-      setOpenBackdrop(true);
+      // setOpenBackdrop(true);
       const themeId = userSelectedId;
       var result;
-      if (themeId == 1) {
-        result = await postApi.getPostNewest(null, null, null, 19);
+      var resultV3;
+      if (themeId === 1) {
+        result = await postApi.getPostNewest(
+          null,
+          null,
+          null,
+          19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+
+        resultV3 = await postApi.getPostNewestV3(
+          null,
+          null,
+          null,
+          null,
+          20,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
       } else {
-        result = await postApi.getPostNewest(Number(themeId), null, null, 19);
+        result = await postApi.getPostNewest(
+          Number(themeId),
+          null,
+          null,
+          19,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+
+        resultV3 = await postApi.getPostNewestV3(
+          null,
+          Number(themeId),
+          null,
+          null,
+          20,
+          null,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+
+        // result = await postApi.getPostNewestV3(
+        //   null,
+        //   Number(themeId),
+        //   null,
+        //   null,
+        //   20,
+        //   null,
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
       }
       if (result) {
-        setPostNewest(result);
-        setOpenBackdrop(false);
+        // setPostNewest(result);
+        // dispatch(setPostNewestApi(result));
+        // setOpenBackdrop(false);
       }
     } catch (error) {
-      console.error(error);
+      console.error('error', error);
     }
   };
 
@@ -272,9 +468,10 @@ const CategoryCarousel: React.FC = () => {
         slide?.classList.add('swiper-slide-clicked');
       }
 
-      getNewstJobBycookie(storedSettings.userSelectedId);
-    }, 5000);
-  }, []);
+      // getNewstJobBycookie(storedSettings.userSelectedId);
+    }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   React.useEffect(() => {
     // Retrieve the user's settings from cookies
@@ -291,35 +488,38 @@ const CategoryCarousel: React.FC = () => {
 
   React.useEffect(() => {
     setRefCatelory(listRef.current ? listRef : null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listRef]);
 
   React.useEffect(() => {
-    getPostNewestByCategori();
+    // getPostNewestByCategori();
     setValue(Number(searchParams.get('categories-id')));
     setChildCateloriesArray([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('categories-id')]);
 
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const handleClose = () => {
-    setOpenBackdrop(false);
-  };
-  const handleOpen = () => {
-    setOpenBackdrop(true);
-  };
+  // const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
+  // const handleOpen = () => {
+  //   setOpenBackdrop(true);
+  // };
 
-  const [startX, setStartX] = React.useState(0);
-  const handleDragStart = (e: any) => {
-    setStartX(e.clientX);
-  };
-  const handleDrop = (e: any) => {
-    const scrollElement = refTab.current;
-    const scrollAmount = e.clientX - startX;
-    if (scrollElement) {
-      scrollElement.scrollLeft += scrollAmount;
-    }
-  };
+  // const [startX, setStartX] = React.useState(0);
+  // const handleDragStart = (e: any) => {
+  //   setStartX(e.clientX);
+  // };
+  // const handleDrop = (e: any) => {
+  //   const scrollElement = refTab.current;
+  //   const scrollAmount = e.clientX - startX;
+  //   if (scrollElement) {
+  //     scrollElement.scrollLeft += scrollAmount;
+  //   }
+  // };
 
   // scroll
+
   return (
     <Box
       ref={listRef}
@@ -405,7 +605,7 @@ const CategoryCarousel: React.FC = () => {
           navigation={true}
           // mousewheel={true}
           slidesPerView="auto"
-          spaceBetween={40}
+          // spaceBetween={25}
           // breakpoints={{
           //   320: {
           //     slidesPerView: 3,
@@ -440,14 +640,20 @@ const CategoryCarousel: React.FC = () => {
           initialSlide={selectedItemIndex - 1}
         >
           {categories?.data.map((item: CategoryItem, index: number) => {
-            // console.log("id: ", item.id);
             return (
               <SwiperSlide
                 key={index}
                 onClick={(event) => {
+                  const analytics: any = getAnalytics();
+                  logEvent(analytics, 'event_web_click_HiJob' as string, {
+                    // screen_name: screenName as string,
+                    web_page_home: `/category_${item.name}` as string,
+                  });
+
                   handleChange(event, item.id);
                 }}
-                style={{ width: 'fit-content' }}
+                // style={{ width: 'fit-content', marginLeft: '25px' }}
+                className="item-swiperSlide"
               >
                 {/* <CategoryItem
                   content={item.name}
@@ -465,13 +671,18 @@ const CategoryCarousel: React.FC = () => {
                     />
                     <span
                       className="category-item-title"
-                      style={{
-                        fontSize: '14px',
-                        fontWeight: '400',
-                        color: '#000000',
-                      }}
+                      style={
+                        item.id === categoryIdCookie
+                          ? { color: 'black' }
+                          : { color: '' }
+                      }
                     >
-                      {isLogin && item.id === 1 ? 'Công việc gợi ý' : item.name}
+                      {isLogin && item.id === 1
+                        ? // ? language?.home_page?.suggested_work
+                          languageRedux === 1
+                          ? 'Công việc gợi ý'
+                          : 'Suggested'
+                        : item.name}
                     </span>
                   </div>
                   <div
@@ -490,7 +701,7 @@ const CategoryCarousel: React.FC = () => {
           })}
         </Swiper>
 
-        <Backdrop
+        {/* <Backdrop
           sx={{
             color: '#0d99ff ',
             backgroundColor: 'transparent',
@@ -500,7 +711,7 @@ const CategoryCarousel: React.FC = () => {
           onClick={handleClose}
         >
           <CircularProgress color="inherit" />
-        </Backdrop>
+        </Backdrop> */}
         {/* <Tabs
         value={value === 0 ? categories?.data[0].id : value}
         onChange={handleChange}

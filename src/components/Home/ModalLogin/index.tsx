@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store/index';
@@ -10,12 +10,12 @@ import {
   verifyOtp,
 } from '../../../store/reducer/authReducer/signGmailReducer';
 
-import signInEmailApi from 'api/authApi';
+// import signInEmailApi from 'api/authApi';
 //@ts-ignore
 import OtpInput from 'react-otp-input';
 //@ts-ignore
 import FacebookLogin from '@greatsumini/react-facebook-login';
-import { FacebookLoginClient } from '@greatsumini/react-facebook-login';
+// import { FacebookLoginClient } from '@greatsumini/react-facebook-login';
 import GoogleLogin from '@leecheuk/react-google-login';
 
 import { gapi } from 'gapi-script';
@@ -25,7 +25,7 @@ import CountdownTimer from './components/CountdownTimer';
 
 // import component Material
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
@@ -43,6 +43,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 // import login from action
 
 import './style.scss';
+import { signin } from 'validations/lang/vi/signin';
+import { signinEn } from 'validations/lang/en/signin';
+
+//
+// import { google } from 'googleapis';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -57,6 +62,18 @@ const style = {
   outline: 'none',
   boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.12)',
   p: 4,
+
+  '@media (max-width: 600px)': {
+    width: '400px',
+  },
+
+  '@media (max-width: 400px)': {
+    width: '360px',
+  },
+
+  '@media (max-width: 280px)': {
+    width: '280px',
+  },
 };
 
 interface LoginData {
@@ -74,6 +91,9 @@ interface AuthReponse {
 }
 
 const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const isEmailValid = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -89,10 +109,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     : '';
 
   const dispatch = useDispatch();
-  const { ActionSignInEmail, setProfileUser } = bindActionCreators(
-    actionCreators,
-    dispatch,
-  );
+  const {
+    // ActionSignInEmail,
+    setProfileUser,
+  } = bindActionCreators(actionCreators, dispatch);
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
   });
@@ -106,10 +126,14 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   const [isInputFilled, setIsInputFilled] = useState(false);
   //
   const [isEmailVerified, setIsEmailVerified] = useState(false);
-  const [showOTPModal, setShowOTPModal] = useState(false);
+  // const [showOTPModal, setShowOTPModal] = useState(false);
   const [otp, setOTP] = useState('');
   const [resendCode, setResendCode] = useState(true);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const handleClose = () => setOpenModalLogin(false);
 
@@ -120,10 +144,15 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     setIsValidEmail(isEmailValid(value));
   };
 
+  // const regexCheckMail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   const authState = useSelector((state: RootState) => state.auth);
+
+  const dataProfile = useSelector((state: RootState) => state.profile.profile);
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
   const handleLogin = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e: any,
   ) => {
     try {
       e.preventDefault();
@@ -161,10 +190,10 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     setResendCode(false);
   };
 
-  const handleBackOtp = () => {
-    setIsEmailVerified(true);
-    // setResendCode(false)
-  };
+  // const handleBackOtp = () => {
+  //   setIsEmailVerified(true);
+  //   // setResendCode(false)
+  // };
 
   const handleCloseBackDrop = () => {
     setOpenBackdrop(false);
@@ -196,9 +225,13 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
         const result = await authApi.signInFacebook(response.accessToken);
         if (result) {
           fetchDataProfile(result.data, true);
+          setOpenBackdrop(false);
+          setOpenModalLogin(false);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      setOpenBackdrop(false);
+    }
 
     // console.log('facebook', response)
   };
@@ -213,15 +246,17 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     try {
       setOpenBackdrop(true);
       if (response.tokenId) {
-        // console.log('response.tokenID', response.tokenId)
+        // console.log('response.tokenID', response.tokenId);
+        // console.log('response', response);
         const result = await authApi.signInGoogle(response.tokenObj.id_token);
-        // console.log(result)
         if (result) {
           fetchDataProfile(result.data, true);
+          setOpenBackdrop(false);
+          setOpenModalLogin(false);
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log('error gg', error);
       setOpenBackdrop(false);
     }
 
@@ -231,7 +266,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
   useEffect(() => {
     if (authState.isLoggedIn) {
-      console.log('Xác thực nhận email thành công', authState);
+      // console.log('Xác thực nhận email thành công', authState);
       // Thực hiện các hành động sau khi xác thực thành công
       setIsEmailVerified(true);
     } else {
@@ -243,7 +278,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // isVerifiedOtp facebook and google =true
   const fetchDataProfile = async (auth: AuthReponse, isVerifyOtp?: boolean) => {
     if (isVerifyOtp) {
-      console.log('Xác thực OTP thành công', authState);
+      // console.log('Xác thực OTP thành công', authState);
       // Thực hiện các hành động sau khi xác thực thành công
       localStorage.setItem(
         'accountId',
@@ -259,9 +294,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       );
 
       await dispatch(getProfile() as any);
-      const result = await profileApi.getProfile();
-      if (result) {
-        setProfileUser(result.data);
+      // const result = await profileApi.getProfile('vi');
+      if (dataProfile) {
+        setProfileUser(dataProfile.data);
       }
       setOpenModalLogin(false);
       setOpenBackdrop(false);
@@ -275,6 +310,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
   useEffect(() => {
     fetchDataProfile(authState, authState.isverifyOtp);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState.isverifyOtp]);
 
   useEffect(() => {
@@ -285,11 +321,45 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       });
     };
     gapi.load('client:auth2', start);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleResendCode = () => {
     setResendCode(true);
   };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleLogin(e);
+    }
+  };
+  // -------------------------------------------------------------------------------------
+
+  // const handleCredentialResponse = async (response: any) => {
+  //   console.log('Encoded JWT ID token: ' + response);
+  //   try {
+  //     const result = await authApi.signInGoogle(response.credential);
+  //     if (result) {
+  //       console.log(result);
+  //       fetchDataProfile(result.data, true);
+  //     }
+  //   } catch (error) {
+  //     console.log('error: ', error);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   /* global google */
+  //   window.google.accounts.id.initialize({
+  //     client_id: googleClient,
+  //     callback: handleCredentialResponse,
+  //   });
+  //   window.google.accounts.id.renderButton(document.getElementById('button'), {
+  //     theme: 'outline',
+  //     size: 'large',
+  //   });
+  //   window.google.accounts.id.prompt();
+  // }, []);
 
   return (
     <Modal
@@ -314,7 +384,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
             position: 'relative',
           }}
         >
-          Đăng nhập
+          {language?.login}
           <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -353,13 +423,11 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   >
                     <img
                       src="loginLogo/facebookOriginal.png"
-                      alt=""
-                      width={30}
+                      alt={language?.err_none_img}
+                      width={29}
                       height={30}
                     />
-                    <p className="text-login ">
-                      Đăng nhập bằng tài khoản Facebook
-                    </p>
+                    <p className="text-login ">{language?.signin_with_fb}</p>
                   </div>
                 )}
               />
@@ -377,9 +445,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                       width={30}
                       height={30}
                     />
-                    <p className="text-login">
-                      Đăng nhập bằng tài khoản Google
-                    </p>
+                    <p className="text-login">{language?.signin_with_google}</p>
                   </div>
                 )}
                 buttonText="Login"
@@ -390,7 +456,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
 
               <div className="line-with-text">
                 <span className="line"></span>
-                <span className="text">Hoặc</span>
+                <span className="text">{language?.or}</span>
                 <span className="line"></span>
               </div>
 
@@ -400,23 +466,24 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
                   type="text"
                   id="username"
                   name="email"
+                  onKeyDown={handleKeyPress}
                   value={loginData.email}
                   onChange={handleInputChange}
-                  placeholder="Nhập email của bạn..."
+                  placeholder={language?.modal_login?.enter_email}
                 />
                 <small className={!invalid ? 'alert' : 'alert error'}>
-                  Email không đúng cú pháp vui lòng nhập lại
+                  {language?.modal_login?.wrong_mail}
                 </small>
               </div>
               <p className="text-sent_otp">
-                Mã xác nhận sẽ được gửi vào email bạn đăng nhập.
+                {language?.code_will_send_to_email}
               </p>
               <button
                 type="button"
                 onClick={handleLogin}
                 className="button-login"
               >
-                Login
+                {language?.login}
               </button>
 
               {/* <div
@@ -451,8 +518,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               }}
               onClick={handleBackLogin}
             />
-            <p className="textOpt">Bạn hãy nhập mã OTP được gửi đến email:</p>
+            <p className="textOpt">{language?.type_otp_email}</p>
             <p className="textOpt-email">{loginData.email}</p>
+            <p className="textOpt-notice">{language?.modal_login?.no_otp}</p>
             <div className="otp-inputs">
               <OtpInput
                 value={otp}
@@ -475,17 +543,17 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
               onClick={handleLoginOtp}
               disabled={!isInputFilled}
             >
-              Xác nhận email
+              {language?.verify_email}
             </button>
             <div className="wrap-countDown">
               <p className="resend-otp" onClick={handleResendCode}>
-                Gửi lại mã{' '}
+                {language?.resend_code}{' '}
               </p>
               {!resendCode ? (
                 <p className="resend-otp_countDown"></p>
               ) : (
                 <CountdownTimer
-                  resendCode={resendCode}
+                  // resendCode={resendCode}
                   setResendCode={setResendCode}
                 />
               )}

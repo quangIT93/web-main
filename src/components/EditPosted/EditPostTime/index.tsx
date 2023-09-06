@@ -1,23 +1,24 @@
 import React, { memo } from 'react';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
+// import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
 import { styleLabel } from '../CssEditPost';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
-import { SwapRightOutlined } from '@ant-design/icons';
+// import { SwapRightOutlined } from '@ant-design/icons';
 import { Space } from 'antd';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import './style.scss';
 interface IEditPostTime {
   editDataPosted: any;
   setEditDataPosted: React.Dispatch<React.SetStateAction<any>>;
+  language: any;
 }
 
 const EditPostTime: React.FC<IEditPostTime> = (props) => {
-  const { editDataPosted, setEditDataPosted } = props;
+  const { editDataPosted, setEditDataPosted, language } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
     setEditDataPosted((preValue: any) => ({
@@ -51,7 +52,10 @@ const EditPostTime: React.FC<IEditPostTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            Giờ làm việc <span style={{ color: 'red' }}>*</span>
+            {
+              language?.working_hour
+            }{' '}
+            <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Space
             direction="horizontal"

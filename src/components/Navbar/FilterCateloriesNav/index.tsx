@@ -10,36 +10,70 @@ import { getCookie } from 'cookies';
 import { RootState } from 'store';
 import { BagFilterIcon, ArrowFilterIcon } from '#components/Icons';
 
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
+
 const { Text } = Typography;
 
 interface DistrictProps {
+  listCateProps: [];
   setListCate: Function;
+  reset: Boolean;
+  setReset: React.Dispatch<React.SetStateAction<Boolean>>;
+  language: any;
 }
 const { SHOW_CHILD } = Cascader;
 
-const DropdownRender = (menus: React.ReactNode) => (
-  <div style={{ width: '100%' }}>
-    <Text className="title-filter_location">Chọn danh mục nghề nghiệp</Text>
-    {menus}
-    <Divider style={{ margin: 4 }} />
-    {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
-      <Button type="default" onClick={() => {}}>
-        Huỷ
-      </Button>
-      <Button type="primary" onClick={() => {}}>
-        Áp dụng
-      </Button>
-    </div> */}
-  </div>
-);
+// const DropdownRender = (menus: React.ReactNode) => (
+//   <div style={{ width: '100%' }}>
+//     <Text className="title-filter_location">Chọn danh mục nghề nghiệp</Text>
+//     {menus}
+//     <Divider style={{ margin: 4 }} />
+//     {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+//       <Button type="default" onClick={() => {}}>
+//         Huỷ
+//       </Button>
+//       <Button type="primary" onClick={() => {}}>
+//         Áp dụng
+//       </Button>
+//     </div> */}
+//   </div>
+// );
 
-const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
+const FilterCateloriesNav: React.FC<DistrictProps> = ({
+  listCateProps,
+  setListCate,
+  reset,
+  setReset,
+  language,
+}) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [categoriesId, setCategoriesId] = useState<string[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
   const userProfile = useSelector((state: RootState) => state.profile.profile);
+
+  const DropdownRender = (menus: React.ReactNode) => (
+    <div className="filter-loca-cate">
+      <Text className="title-filter_location">{language?.select_cate}</Text>
+      {menus}
+      <Divider style={{ margin: 4 }}>
+        {disable ? language?.limit_10_cate : ''}
+      </Divider>
+      {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+        <Button type="default" onClick={() => {}}>
+          Huỷ
+        </Button>
+        <Button type="primary" onClick={() => {}}>
+          Áp dụng
+        </Button>
+      </div> */}
+    </div>
+  );
 
   const listCate: any = useRef<any>(
     JSON.parse(getCookie('userFiltered') || '{}')?.list_cate
@@ -57,7 +91,9 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise();
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -86,22 +122,23 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
     // if (listCate.length > 2) {
     //   setDisable(true)
     // }
-
     onChange(listCate?.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile]);
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
 
   const onChange = (value: any) => {
+    setReset(false);
     setDisable(false);
     const secondValues = value?.map((item: any) => item[1]);
 
-    if (secondValues?.length <= 3) {
+    if (secondValues?.length <= 10) {
       setCategoriesId(secondValues);
       setListCate(value);
     }
-    if (value?.length > 1) {
+    if (value?.length > 9) {
       setDisable(true);
     }
   };
@@ -154,13 +191,14 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({ setListCate }) => {
                   profile?.child_category_id,
                 ])
           }
+          value={reset ? [] : listCateProps}
           multiple
           maxTagCount="responsive"
           size="large"
           className="inputCategories input-filter_nav"
           showCheckedStrategy={SHOW_CHILD}
           style={{ width: '100%', borderRadius: '2px' }}
-          placeholder="Chọn danh mục ngành nghề"
+          placeholder={language?.select_cate}
         />
       </div>
     );

@@ -1,26 +1,27 @@
-import React, { memo } from 'react'
-import { Box, Slider } from '@mui/material'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import { Input, Space } from 'antd'
-import Typography from '@mui/material/Typography'
-import { styleLabel } from '#components/Post/CssPost'
+import React, { memo } from 'react';
+import { Box } from '@mui/material';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+// import { Input, Space } from 'antd'
+// import Typography from '@mui/material/Typography'
+import { styleLabel } from '#components/Post/CssPost';
 
 interface IPostSalaryType {
-  setMoneyType: React.Dispatch<React.SetStateAction<any>>
-  moneyType: number
-  salaryType?: number
+  setMoneyType: React.Dispatch<React.SetStateAction<any>>;
+  moneyType: number;
+  salaryType?: number;
+  language: any;
 }
 
 const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
-  const { moneyType, setMoneyType, salaryType } = props
+  const { moneyType, setMoneyType, salaryType, language } = props;
 
   const handleChangeMoneyType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMoneyType(Number(e.target.value))
-  }
+    setMoneyType(Number(e.target.value));
+  };
 
   return (
     <Box
@@ -40,7 +41,10 @@ const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
             opacity: salaryType === 6 ? 0.5 : 1, // Thiết lập opacity thành 0.5 nếu salaryType === 6
           }}
         >
-          Mức lương <span style={{ color: 'red' }}>*</span>
+          {
+            language?.salary
+          }{' '}
+          <span style={{ color: 'red' }}>*</span>
         </FormLabel>
         <RadioGroup
           row
@@ -76,7 +80,7 @@ const PostSalaryType: React.FC<IPostSalaryType> = (props) => {
         </RadioGroup>
       </FormControl>
     </Box>
-  )
-}
+  );
+};
 
-export default memo(PostSalaryType)
+export default memo(PostSalaryType);

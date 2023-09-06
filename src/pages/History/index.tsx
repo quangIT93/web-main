@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
+import queryString from 'query-string';
 
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
@@ -11,6 +12,9 @@ import Footer from '../../components/Footer/Footer';
 import CardsPosted from '#components/History/CardsPosted';
 import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
+import CardsListBlog from '#components/History/CardsListBlog';
+
+import RollTop from '#components/RollTop';
 
 import ShowCancleSave from '#components/ShowCancleSave';
 
@@ -23,51 +27,69 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
 // import icon
 
-import {
-  // useNavigate,
-  // createSearchParams,
-  useSearchParams,
-} from 'react-router-dom';
-
 import './style.scss';
 // @ts-ignore
 import { Navbar } from '#components';
 // import Item from 'antd/es/list/Item'
+import languageApi from 'api/languageApi';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducer/index';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
+import { setCookie } from 'cookies';
 
 const { Panel } = Collapse;
 
-const dataItem = [
-  {
-    id: 1,
-    title: 'Các công việc đã ứng tuyển',
-    childs: [
-      'Tất cả',
-      // 'Đã được duyệt', 'Đang chờ duyệt'
-    ],
-  },
-  {
-    id: 2,
-    title: 'Các công việc đã lưu',
-    childs: ['Tất cả'],
-  },
-  {
-    id: 3,
-    title: 'Các công việc đã đăng tuyển',
-    childs: ['Tất cả', 'Chưa đóng', 'Đã đóng'],
-  },
-];
+// const dataItem = [
+//   {
+//     id: 1,
+//     title: 'Các công việc đã ứng tuyển',
+//     childs: [
+//       'Tất cả',
+//       // 'Đã được duyệt', 'Đang chờ duyệt'
+//     ],
+//   },
+//   {
+//     id: 2,
+//     title: 'Các công việc đã lưu',
+//     childs: ['Tất cả'],
+//   },
+//   {
+//     id: 3,
+//     title: 'Các công việc đã đăng tuyển',
+//     childs: ['Tất cả', 'Chưa đóng', 'Đã đóng'],
+//   },
+// ];
 const HistoryPost = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const hotjobtype = Number(searchParams.get('post'));
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const queryParams = queryString.parse(window.location.search);
+  // const hotjobtype = Number(searchParams.get('post'));
+  const hotjobtype = Number(queryParams['post']);
+  const community_post = Number(queryParams['community_post']);
   const [activeChild, setActiveChild] = React.useState(
-    hotjobtype === 2 ? '2-0' : '0-0',
+    hotjobtype === 2
+      ? '2-0'
+      : community_post === 31
+      ? '3-1'
+      : community_post === 30
+      ? '3-0'
+      : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
-    hotjobtype === 2 ? 2 : 0,
+    hotjobtype === 2
+      ? 2
+      : community_post === 31
+      ? 3
+      : community_post === 30
+      ? 3
+      : 0,
   );
   const [showDetailPosted, setShowDetailPosted] =
     React.useState<boolean>(false);
-  console.log('searchParams', hotjobtype === 2);
+  // console.log('searchParams', hotjobtype === 2);
 
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     // event.preventDefault()
@@ -75,13 +97,83 @@ const HistoryPost = () => {
 
   const analytics: any = getAnalytics();
 
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
+
+  const dataItem = [
+    {
+      id: 1,
+      // title: language?.history_page?.applied_jobs,
+      // childs: [language?.all],
+      title:
+        languageRedux === 1 ? 'Các công việc đã ứng tuyển' : 'Applied jobs',
+      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+    },
+    {
+      id: 2,
+      // title: language?.history_page?.saved_jobs,
+      // childs: [language?.all],
+      title: languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs',
+      childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
+    },
+    {
+      id: 3,
+      // title: language?.history_page?.posted_jobs,
+      title:
+        languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs',
+      childs: [
+        languageRedux === 1 ? 'Tất cả' : 'All',
+        languageRedux === 1 ? 'Các công việc chưa đóng' : 'Unclosed jobs',
+        languageRedux === 1 ? 'Các công việc đã đóng' : 'Closed jobs',
+
+        // language?.history_page?.unclosed_jobs,
+
+        // language?.history_page?.closed_jobs,
+      ],
+    },
+    {
+      id: 4,
+      // title: language?.history_page?.list_of_articles,
+      title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
+      childs: [
+        languageRedux === 1 ? 'Đã lưu' : 'Saved',
+        languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
+        // language?.history_page?.saved,
+        // language?.history_page?.posts_created,
+      ],
+    },
+  ];
+
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    // document.title = language?.history_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Lịch sử ứng tuyển/đăng tuyển'
+        : 'HiJob - Job application/posting history';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_history' as string,
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux, language]);
 
   const breadcrumbs = [
     <Link
@@ -90,8 +182,9 @@ const HistoryPost = () => {
       color="#0d99ff "
       href="/"
       onClick={handleClick}
+      target="_parent"
     >
-      Trang chủ
+      {language?.history_page?.home}
     </Link>,
     <Link
       underline="hover"
@@ -99,8 +192,9 @@ const HistoryPost = () => {
       color="#0d99ff "
       href="/history"
       onClick={handleClick}
+      target="_parent"
     >
-      Lịch sử
+      {language?.history_page?.history}
     </Link>,
     <Typography key="3" color="text.primary">
       {ItemLeft === dataItem[0].id - 1
@@ -111,21 +205,26 @@ const HistoryPost = () => {
     </Typography>,
     <Typography key="3" color="text.primary">
       {activeChild === '0-0'
-        ? 'Tất cả'
+        ? language?.all
         : // : activeChild === '0-1'
           // ? 'Đã được duyệt'
           // : activeChild === '0-2'
           // ? 'Đang chờ duyệt'
           ''}
 
-      {activeChild === '1-0' ? 'Tất cả' : ''}
+      {activeChild === '1-0' ? language?.all : ''}
 
       {activeChild === '2-0'
-        ? 'Tất cả'
+        ? language?.all
         : activeChild === '2-1'
-        ? 'Chưa đóng'
+        ? language?.history_page?.not_closed_yet
         : activeChild === '2-2'
-        ? 'Đã đóng'
+        ? language?.closed
+        : ''}
+      {activeChild === '3-0'
+        ? language?.history_page?.saved
+        : activeChild === '3-1'
+        ? language?.history_page?.have_been_created
         : ''}
     </Typography>,
   ];
@@ -140,6 +239,7 @@ const HistoryPost = () => {
       );
     }
     return null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ItemLeft, activeChild, showDetailPosted, setShowDetailPosted]);
 
   const CardsApply = useMemo(() => {
@@ -156,25 +256,47 @@ const HistoryPost = () => {
     return null;
   }, [ItemLeft, activeChild]);
 
+  const CardListBlog = useMemo(() => {
+    if (ItemLeft === 3) {
+      return <CardsListBlog activeChild={activeChild} />;
+    }
+    return null;
+  }, [ItemLeft, activeChild]);
+
   const handleChildClick = useCallback((childKey: string) => {
     setActiveChild(childKey);
+    // console.log('childKey', childKey);
 
     if (childKey === '2-0') setShowDetailPosted(false);
     if (childKey === '2-1') setShowDetailPosted(false);
     if (childKey === '2-2') setShowDetailPosted(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClickSubTitle = useCallback((index: number) => {
+    // console.log('title', index);
+
     setItemLeft(index);
     setActiveChild(`${index}-0`);
     setShowDetailPosted(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
+    setCookie('fromHistory', '0', 365);
     if (hotjobtype === 2) {
       setItemLeft(2);
       setActiveChild('2-0');
     }
+    if (community_post === 31) {
+      setItemLeft(3);
+      setActiveChild('3-1');
+    }
+    if (community_post === 30) {
+      setItemLeft(3);
+      setActiveChild('3-0');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -196,43 +318,51 @@ const HistoryPost = () => {
           <Box className="history-post_left">
             <Collapse
               defaultActiveKey={
-                hotjobtype && hotjobtype === 2 ? ['2', '0'] : ['0', '0']
+                hotjobtype && hotjobtype === 2
+                  ? ['2', '0']
+                  : community_post && community_post === 31
+                  ? ['3', '1']
+                  : community_post && community_post === 30
+                  ? ['3', '0']
+                  : ['0', '0']
               }
               accordion
               bordered={false}
               ghost={true}
               className="history-post_left__collapse"
             >
-              {dataItem.map((item: any, index: number) => (
-                <Panel
-                  header={
-                    <div
-                      onClick={() => handleClickSubTitle(index)}
-                      className={`${
-                        ItemLeft === index ? 'activeItem' : ''
-                      } panel-title_text`}
-                    >
-                      {item.title}
-                    </div>
-                  }
-                  key={index}
-                  className={`history-left_item`}
-                >
-                  {item.childs.map((child: string, idx: number) => (
-                    <div
-                      key={idx}
-                      className={
-                        activeChild === `${index}-${idx}`
-                          ? 'active-child child-item'
-                          : 'child-item'
-                      }
-                      onClick={() => handleChildClick(`${index}-${idx}`)}
-                    >
-                      {child}
-                    </div>
-                  ))}
-                </Panel>
-              ))}
+              {dataItem.map((item: any, index: number) => {
+                return (
+                  <Panel
+                    header={
+                      <div
+                        onClick={() => handleClickSubTitle(index)}
+                        className={`${
+                          ItemLeft === index ? 'activeItem' : ''
+                        } panel-title_text`}
+                      >
+                        {item.title}
+                      </div>
+                    }
+                    key={index}
+                    className={`history-left_item`}
+                  >
+                    {item.childs.map((child: string, idx: number) => (
+                      <div
+                        key={idx}
+                        className={
+                          activeChild === `${index}-${idx}`
+                            ? 'active-child child-item'
+                            : 'child-item'
+                        }
+                        onClick={() => handleChildClick(`${index}-${idx}`)}
+                      >
+                        {child}
+                      </div>
+                    ))}
+                  </Panel>
+                );
+              })}
             </Collapse>
           </Box>
 
@@ -240,11 +370,13 @@ const HistoryPost = () => {
             {CardsPost}
             {CardsApply}
             {CardsSave}
+            {CardListBlog}
           </Box>
         </Box>
       </div>
       <ShowCancleSave />
       <ShowNotificativeSave />
+      <RollTop />
       <Footer />
     </div>
   );

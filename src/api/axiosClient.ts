@@ -50,10 +50,15 @@ axiosClient.interceptors.response.use(
     response.headers.Authorization = `Bearer ${accessToken}`
     return response
   },
-  (error) => {
+  async (error) => {
     let originalRequest = error.config
     let refreshToken = localStorage.getItem('refreshToken')
-    console.log("error", error)
+    if (!refreshToken) {
+      localStorage.removeItem('accessToken');
+      return
+    }
+
+
     if (
       (refreshToken && error.response?.status === 403) ||
       (refreshToken && error.response?.status === 401)
@@ -74,15 +79,34 @@ axiosClient.interceptors.response.use(
           }
         })
         .catch((error) => {
-          localStorage.clear()
-          // localStorage.clear();
-          axios.post(`${BASE_URL}/v1/sign-out`)
-          window.location.reload()
+          // resetAccessToken()
+          if (!localStorage.getItem("refreshToken")) {
+            localStorage.removeItem("accessToken")
+            localStorage.removeItem("refreshToken")
+            localStorage.removeItem("accountId")
+            axios.post(`${BASE_URL}/v1/sign-out`)
+            // window.location.reload()
+          } else if ((error.response.status === 401 && localStorage.getItem("refreshToken")) || (error.response.status === 403 && localStorage.getItem("refreshToken")) || (error.response.status === 401 && localStorage.getItem("accessToken")) || (error.response.status === 400 && localStorage.getItem("accessToken"))) {
+            localStorage.removeItem("accessToken")
+            localStorage.removeItem("refreshToken")
+            localStorage.removeItem("accountId")
+            axios.post(`${BASE_URL}/v1/sign-out`)
+            window.location.reload()
+            
+          }else if ((error.response.status === 401 && !localStorage.getItem("refreshToken")) || (error.response.status === 401 && !localStorage.getItem("accessToken")) || (error.response.status === 400 && !localStorage.getItem("accessToken")) || (error.response.status === 403 && !localStorage.getItem("refreshToken"))) {
+            localStorage.removeItem("accessToken")
+            localStorage.removeItem("refreshToken")
+            localStorage.removeItem("accountId")
+            axios.post(`${BASE_URL}/v1/sign-out`)
+            window.location.reload()
+            
+          }
         })
     }
 
     throw error
   }
 )
+
 
 export default axiosClient

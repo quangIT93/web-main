@@ -1,7 +1,7 @@
 @import '../../scss//mixins';
-.home__main {
+// .home__main {
   // padding-inline: 180px;
-}
+// }
 
 .div-info-app {
   flex-direction: column;
@@ -52,12 +52,14 @@
 
 .logo_hi_job {
   height: 200px;
-  width: auto;
+  width: 200px;
   @include breakpoint(mobile) {
     height: 80px;
+    width: 80px;
   }
   @include breakpoint(tablet) {
     height: 100px;
+    width: 100px;
   }
 }
 #p1 {
@@ -80,22 +82,31 @@
 }
 .img-qrcode {
   // height: 150px;
+  width: 124px;
+  height: 124px;
   margin-left: 10px;
   @include breakpoint(mobile) {
-    height: 00px;
+    height: 0px;
+    width: 0px;
   }
   @include breakpoint(tablet) {
-    height: 00px;
+    height: 0px;
+    width: 0px;
   }
 }
 .div-dow > a > img {
   height: 35px;
+  width: 92px;
   @include breakpoint(mobile) {
     height: 25px;
     // margin-left: -20px;
+    width: 92px;
+
   }
   @include breakpoint(tablet) {
     height: 29px;
+    width: 92px;
+
     // margin-left: -20px;
   }
 }
@@ -124,12 +135,15 @@
 }
 .div-dow > a > #img-gallery {
   height: 41.5px;
+  width: 41.5px;
   @include breakpoint(mobile) {
     height: 26px;
+    width: 26px;
     // margin-left: -20px;
   }
   @include breakpoint(tablet) {
     height: 30px;
+    width: 30px;
     // margin-left: -20px;
   }
 }

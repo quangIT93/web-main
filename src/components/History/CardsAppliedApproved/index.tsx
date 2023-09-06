@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import moment, { Moment } from 'moment';
+// import moment, { Moment } from 'moment';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import { Space, Tooltip, message, Button } from 'antd';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import ImageListItem from '@mui/material/ImageListItem';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+// import Card from '@mui/material/Card';
+import { message, Button } from 'antd';
+// import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+// import ImageListItem from '@mui/material/ImageListItem';
+// import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Box, Typography, MenuItem, TextField } from '@mui/material';
-import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons';
+// import { EnvironmentFilled, ClockCircleFilled } from '@ant-design/icons';
 import NoData from 'utils/NoDataPage';
 import sortData from 'utils/SortDataHistory/sortData';
 
@@ -19,22 +19,47 @@ import 'intl/locale-data/jsonp/en';
 import historyApplicator from 'api/historyApplicator';
 
 import JobCardHistory from '../JobCardHistory';
+import languageApi from 'api/languageApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
+import { historyVi } from 'validations/lang/vi/history';
+import { historyEn } from 'validations/lang/en/history';
 
 interface ICardsAppliedApproved {
   activeChild: string;
 }
 
 const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
-  const { activeChild } = props;
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataApplied, setDataApplied] = useState<any>(null);
   const [newOld, setnewOld] = React.useState('Mới nhất');
-  const [count, setCount] = useState(5);
+  // const [count, setCount] = useState(5);
   const [lastPostId, setLastPostId] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
   const [messageApi, contextHolder] = message.useMessage();
+  const [language, setLanguage] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
@@ -42,6 +67,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
       lastPostId,
       11,
       1,
+      'vi',
     );
     if (result.data.length <= 10) {
       setIsVisible(false);
@@ -50,11 +76,17 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
 
   useEffect(() => {
     getAllPostToCheck();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getAllApproved = async () => {
     try {
-      const result = await historyApplicator.getAllSubmitedApplied(null, 10, 1);
+      const result = await historyApplicator.getAllSubmitedApplied(
+        null,
+        10,
+        1,
+        'vi',
+      );
 
       if (result) {
         setDataApplied(result.data);
@@ -77,6 +109,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
     return () => {
       isMounted = false; // Đặt biến cờ thành false khi component unmounts để tránh lỗi
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (event: any) => {
@@ -91,10 +124,11 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
         lastPostId,
         10,
         1,
+        'vi',
       );
       if (result) {
         setUploading(false);
-        if (result.data.length == 0) {
+        if (result.data.length === 0) {
           setIsVisible(false);
           messageApi.open({
             type: 'error',
@@ -108,16 +142,16 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
           return sortData.sortDataByDate(newOld, array);
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // click card
-  const handleClickCard = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    postId: number,
-  ) => {
-    window.open(`/post-detail?post-id=${postId}`);
-  };
+  // const handleClickCard = (
+  //   e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  //   postId: number,
+  // ) => {
+  //   window.open(`/post-detail?post-id=${postId}`, '_parent');
+  // };
 
   return (
     <>
@@ -157,7 +191,7 @@ const CardsAppliedApproved: React.FC<ICardsAppliedApproved> = (props) => {
           <Box>
             <Grid container columns={{ xs: 6, sm: 4, md: 12 }}>
               {dataApplied?.map((posted: any, i: number) => (
-                <JobCardHistory item={posted} />
+                <JobCardHistory item={posted} language={language} languageRedux={languageRedux} />
               ))}
             </Grid>
             <Box

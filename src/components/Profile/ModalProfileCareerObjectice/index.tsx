@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -12,12 +12,19 @@ import { CloseOutlined } from '@ant-design/icons';
 import profileApi from 'api/profileApi';
 import categoriesApi from '../../../api/categoriesApi';
 import { useDispatch } from 'react-redux';
+import { message } from 'antd';
+
+import { RootState } from '../../../store/reducer/index';
+import { useSelector } from 'react-redux';
+import { profileVi } from 'validations/lang/vi/profile';
+import { profileEn } from 'validations/lang/en/profile';
+import languageApi from 'api/languageApi';
 
 import {
   getProfile,
-  resetProfileState,
+  // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
-const { SHOW_CHILD, SHOW_PARENT, SHOW_ALL, TreeNode } = TreeSelect;
+const { SHOW_PARENT } = TreeSelect;
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -30,6 +37,20 @@ const style = {
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+  '@media (max-width: 375px)': {
+    width: 300,
+  },
+
+  '@media (min-width: 400px) and (max-width: 639px)': {
+    width: 410,
+  },
+
+  '@media (min-width: 640px) and (max-width: 839px)': {
+    width: 640,
+  },
 };
 interface ICategories {
   child_category_id: number;
@@ -47,22 +68,47 @@ interface IModalProfileCareerObjectice {
 const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   props,
 ) => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const { openModalCareerObjective, setOpenModalCareerObjective, categories } =
     props;
   const [value, setValue] = useState(
     categories?.map((v, i) => v.child_category_id.toString()),
   );
   const [dataCategories, setDataCategories] = React.useState<any>(null);
-  const [originalValue, setOriginalValue] = useState<string[]>([]);
-  const [checkClick, setCheckList] = React.useState<boolean>(false);
-  const [childValue, setChildValue] = React.useState<string[]>([]);
+  // const [originalValue, setOriginalValue] = useState<string[]>([]);
+  // const [checkClick, setCheckList] = React.useState<boolean>(false);
+  // const [childValue, setChildValue] = React.useState<string[]>([]);
   const [treeData, setTransformedData] = React.useState<any>(null);
   const dispatch = useDispatch();
-  const handleClose = () => setOpenModalCareerObjective(false);
+  const handleClose = () => {
+    handleSubmit()
+    setOpenModalCareerObjective(false);
+  }
+  const [language, setLanguageState] = React.useState<any>();
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? "vi" : "en"
+      );
+      if (result) {
+        setLanguageState(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi()
+  }, [languageRedux])
 
   const getCategories = async () => {
     try {
-      const result = await categoriesApi.getAllCategorise();
+      const result = await categoriesApi.getAllCategorise(
+        languageRedux === 1 ? "vi" : "en"
+      );
       if (result) {
         setDataCategories(result.data);
       }
@@ -73,10 +119,11 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
 
   React.useEffect(() => {
     getCategories();
-  }, []);
-  const onChange = (newValue: string[] | any) => {
-    setValue(newValue);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
+  // const onChange = (newValue: string[] | any) => {
+  //   setValue(newValue);
+  // };
 
   React.useEffect(() => {
     if (dataCategories) {
@@ -101,15 +148,22 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
 
   React.useEffect(() => {
     setValue(categories?.map((v, i) => v.child_category_id.toString()) || []);
-    setOriginalValue(
-      categories?.map((v, i) => v.child_category_id.toString()) || [],
-    );
+    // setOriginalValue(
+    //   categories?.map((v, i) => v.child_category_id.toString()) || [],
+    // );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories]);
 
   const handleSubmit = async () => {
     try {
+      if (value.length > 10) {
+        message.error(
+          language?.limit_10_careers
+        );
+        return;
+      }
       const result = await profileApi.updateProfileCareer(
-        value.map((v) => parseInt(v)),
+        value.map((v: any) => parseInt(v.value)),
       );
       if (result) {
         await dispatch(getProfile() as any);
@@ -133,7 +187,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
         };
       }
 
-      console.log('nodeeeeeeeeeeeeeee', node);
+      // console.log('nodeeeeeeeeeeeeeee', node);
       return node.children;
       // <TreeNode key={node.value} value={node.value} title={node.title} />
     });
@@ -141,6 +195,8 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
 
   const tProps: any = {
     // treeData,
+    // open: true,
+    treeCheckStrictly: true,
     treeData: renderTreeNode(treeData),
     showCheckbox: true, // Ẩn checkbox cho tất cả các nút
     // treeCheckStrictly: true,
@@ -155,7 +211,9 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
-    placeholder: 'Please select',
+    placeholder:
+      language?.career_objective
+    ,
     style: {
       width: '100%',
       zIndex: '1302',
@@ -163,6 +221,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     },
     size: 'Giờ làm việc large',
     treeIcon: false,
+    className: 'tree-modal_category',
     // dropdownRender: CustomRenderCatelory,
   };
 
@@ -201,11 +260,15 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
           component="h2"
           align="center"
         >
-          Lĩnh vực quan tâm
+          {
+            language?.career_objective
+          }
         </Typography>
         <TreeSelect {...tProps} />
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          Lưu thông tin
+          {
+            language?.profile_page?.save_info
+          }
         </Button>
       </Box>
     </Modal>

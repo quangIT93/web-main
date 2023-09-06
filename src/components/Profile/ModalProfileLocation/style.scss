@@ -1,0 +1,22 @@
+.modal-localtion_profile {
+    .ant-select-selector {
+        max-width: 100%;
+    }
+}
+
+
+.ant-select-tree-treenode {
+    // width: 100% !important;
+
+    .ant-select-tree-switcher {
+        position: absolute !important;
+        width: 100% !important;
+        text-align: left !important;
+        left: 5px;
+        z-index: 1;
+    }
+
+    .ant-select-tree-node-content-wrapper {
+        margin-left: 15px !important;
+    }
+}

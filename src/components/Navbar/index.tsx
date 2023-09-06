@@ -1,12 +1,15 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 // @ts-ignore
 // import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Link, useLocation } from 'react-router-dom';
 
+import io from 'socket.io-client';
+
 import ModalLogin from '../../components/Home/ModalLogin';
-import Skeleton from '@mui/material/Skeleton';
+// import ModalLoginNav from '../../components/Navbar/ModalLogin';
+// import Skeleton from '@mui/material/Skeleton';
 
 import { setCookie, getCookie } from 'cookies';
 
@@ -16,12 +19,24 @@ import { Logo } from '#components';
 import { ChatIcon, BellIcon } from '#components';
 
 import {
-  FlagVNIcon,
-  SearchIcon,
+  // FlagVNIcon,
+  // SearchIcon,
   MailInfoIcon,
   MapInfoIcon,
   BagInfoJob,
-  DownloadIcon,
+  // DownloadIcon,
+  // TransalteIcon,
+  // LoginArrowIcon,
+  // LoginArrowBlackIcon,
+  // LoginHomeIcon,
+  CompanySubLoginIcon,
+  UserPersonSubLoginIcon,
+  PaperSubLoginIcon,
+  TranslateSubLoginIcon,
+  LogoutSubLoginIcon,
+  ArrowSubLoginIcon,
+  VNSubLoginIcon,
+  ENSubLoginIcon,
 } from '#components/Icons';
 // @ts-ignore
 // import { ModalFilter } from '#components'
@@ -34,23 +49,23 @@ import './style.scss';
 
 import Box from '@mui/material/Box';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+// import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
 import { BlackSearchIcon } from '#components/Icons';
 // import icon
-import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
+// import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 
 import {
   FormOutlined,
   UserOutlined,
   RightOutlined,
   MenuOutlined,
-  SyncOutlined,
-  ClockCircleOutlined,
-  LogoutOutlined,
-  KeyOutlined,
+  // SyncOutlined,
+  // ClockCircleOutlined,
+  // LogoutOutlined,
+  // KeyOutlined,
   LoadingOutlined,
-  CloseOutlined,
+  // CloseOutlined,
 } from '@ant-design/icons';
 
 // import component
@@ -67,12 +82,13 @@ import FilterTimeJob from './FilterTimeJob';
 import Notificate from './Notificate';
 import PostButton from './PostButton';
 
-import { Avatar, Button, Space, Spin, Badge } from 'antd';
+import { Avatar, Button, Space, Spin, Badge, Radio } from 'antd';
 
 import authApi from 'api/authApi';
 import profileApi from 'api/profileApi';
 import messageApi from 'api/messageApi';
 import applitedPostedApi from 'api/apiAppliedPosted';
+import apiCompany from 'api/apiCompany';
 
 import {
   Container,
@@ -81,20 +97,28 @@ import {
   Left,
   Right,
   Center,
-  collapseCssFilter,
+  // collapseCssFilter,
 } from './Css';
 
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
+import { getLanguages } from 'store/reducer/dataLanguage';
 
 import { RootState } from '../../store/reducer';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../store/index';
+// import { bindActionCreators } from 'redux';
+// import { actionCreators } from '../../store/index';
 
 // import Context
 import { HomeValueContext } from 'context/HomeValueContextProvider';
 import { ChatContext } from 'context/ChatContextProvider';
 import { DivRef1 } from 'context/HomeValueContextProvider';
 import { useSearchParams } from 'react-router-dom';
+import { setLanguage } from 'store/reducer/changeLanguageReducer';
+// import { setLanguageApi } from 'store/reducer/dataLanguage';
+
+import { homeEn } from 'validations/lang/en/home';
+import { home } from 'validations/lang/vi/home';
+import languageApi from 'api/languageApi';
+// import { set } from 'immer/dist/internal';
 
 // import redux
 
@@ -128,15 +152,17 @@ const Navbar: React.FC = () => {
     // setSendMessages,
   } = useContext(ChatContext);
 
-  const [showTap, setShowTap] = React.useState(false);
+  // const [showTap, setShowTap] = React.useState(false);
 
   // const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [openInfoUser, setOpenInfoUser] = React.useState(false);
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  // const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  const [openLogin, setOpenLogin] = React.useState(true);
   const [spinning, setSpinning] = React.useState(false);
+  const [reset, setReset] = React.useState<Boolean>(false);
 
   // value search
   const [salaryType, setSalaryType] = React.useState<any>();
@@ -149,6 +175,7 @@ const Navbar: React.FC = () => {
   const [typeMoney, setTypeMoney] = useState<number | null>(1);
   const [salaryMin, setSalaryMin] = useState<number | null>(null);
   const [salaryMax, setSalaryMax] = useState<number | null>(null);
+  const [companyName, setCompanyName] = useState<string>('');
   // const [timeJob, setTimeJob] = useState()
   // const [dateBegin, setDateBegin] = useState()
   // const [dateEnd, setDateEnd] = useState()
@@ -157,25 +184,50 @@ const Navbar: React.FC = () => {
   const [userFiltered, setUserFiltered] = useState<any>();
 
   const [countChat, setCountChat] = useState<number>(0);
+  const [languageId, setLanguageId] = useState<number>(1);
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [openRadioGroup, setOpenRadioGroup] = useState<boolean>(false);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
-  const [isSearch, setIsSearch] = useState<boolean>(false);
+  // const [isSearch, setIsSearch] = useState<boolean>(false);
+  // const [language, setLanguageState] = useState<any>();
+
+  useEffect(() => {
+    // if(localStorage.getItem('accessToken')){
+    //   set
+    // }
+    setTimeout(() => {
+      setOpenLogin(false);
+    }, 5000);
+  }, []);
+
+  const handleOpenRadioGroup = () => {
+    setOpenRadioGroup(!openRadioGroup);
+  };
 
   useEffect(() => {
     let userFilteredCookies = JSON.parse(getCookie('userFiltered') || '{}');
     setUserFiltered(userFilteredCookies);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log('jobTYpe', jobType);
+
+  useEffect(() => {
+    let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
+    setLanguageId(userLanguageSelected);
+  }, [languageId]);
+
+  // console.log('jobTYpe', jobType);
   // check search
+  // console.log('cccccccccccccccccccccccccccccccccccc');
+
   useEffect(() => {
     if (
       isRemotely !== 0 ||
       isWorkingWeekend !== 0 ||
       listDis?.length > 0 ||
       listCate?.length > 0 ||
-      salaryMin !== 6000000 ||
+      salaryMin !== 0 ||
       salaryMax !== 12000000 ||
       typeMoney === 2 ||
       salaryType ||
@@ -203,8 +255,8 @@ const Navbar: React.FC = () => {
   // value query
 
   const QUERY = searchParams.get('q');
-  const SALARY_TYPE = userFiltered?.salary_type;
-  const JOB_TYPE = userFiltered?.job_type;
+  // const SALARY_TYPE = userFiltered?.salary_type;
+  // const JOB_TYPE = userFiltered?.job_type;
   const DIS_IDS = userFiltered?.list_dis;
   // :
   // searchParams
@@ -226,15 +278,27 @@ const Navbar: React.FC = () => {
   // const [windowWidth, setWindowWidth] = useState(false)
 
   // use redux
+
   const dispatch = useDispatch();
   // const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
   // const dataProfile = useSelector((state: RootState) => state.profileUser);
 
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
+
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+
+  const languageData = useSelector((state: RootState) => {
+    return state.dataLanguage.languages;
+  });
+
+  // console.log('state', languageData);
+
   // handle show tap on screen mobile
-  const handleTap = () => {
-    setShowTap(!showTap);
-  };
+  // const handleTap = () => {
+  //   setShowTap(!showTap);
+  // };
 
   //  MOdalFilter
   // const [openModalFilter, setOpenModalFilter] = React.useState(false)
@@ -243,29 +307,49 @@ const Navbar: React.FC = () => {
   //   setOpenCollapse(!openCollapse)
   // }
 
-  // handle close backdrop
-  const handleClose = () => {
-    setOpenBackdrop(false);
+  const getCompanyInforByAccount = async () => {
+    try {
+      const result = await apiCompany.getCampanyByAccountApi(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result && result?.data?.companyInfomation?.id != null) {
+        setCompanyName(result?.data?.companyInfomation?.name);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  React.useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+  useEffect(() => {
+    getCompanyInforByAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
+
+  // handle close backdrop
+  // const handleClose = () => {
+  //   setOpenBackdrop(false);
+  // };
+
+  // React.useEffect(() => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 1000);
+  // }, []);
 
   // fecth data profile with accesstoken
   const fecthDataProfileUser = async () => {
     try {
       await dispatch(getProfile() as any);
 
-      const result = await profileApi.getProfile();
+      const result = await profileApi.getProfile(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         dispatch(getProfile() as any);
       }
     } catch (error) {
-      setOpenBackdrop(false);
+      // setOpenBackdrop(false);
       // error authentication
       // setOpenBackdrop(true)
       // if (!localStorage.getItem('accessToken')) {
@@ -274,7 +358,6 @@ const Navbar: React.FC = () => {
       // }
       // const result = await profileApi.getProfile()
       // if (result) {
-
       //   setProfileUser(result.data)
       //   setOpenBackdrop(false)
       // }
@@ -285,12 +368,15 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     fecthDataProfileUser();
     // dispatch(getProfile() as any)
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   // get count unread
   const getCountUnread = async () => {
     try {
-      const result = await messageApi.getUnread();
+      const result = await messageApi.getUnread(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setCountChat(result.data.quantity);
       }
@@ -301,6 +387,7 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     getCountUnread();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     receivedMessages,
     sendMessages,
@@ -388,10 +475,10 @@ const Navbar: React.FC = () => {
   //   let ca = document.cookie.split(';');
   //   for (let i = 0; i < ca.length; i++) {
   //     let c = ca[i];
-  //     while (c.charAt(0) == ' ') {
+  //     while (c.charAt(0) === ' ') {
   //       c = c.substring(1, c.length);
   //     }
-  //     if (c.indexOf(nameEQ) == 0) {
+  //     if (c.indexOf(nameEQ) === 0) {
   //       return c.substring(nameEQ.length, c.length);
   //     }
   //   }
@@ -404,9 +491,9 @@ const Navbar: React.FC = () => {
   ) => {
     event.preventDefault();
     var encode: any;
-    var job_type = jobType;
+    // var job_type = jobType;
     var money_type = typeMoney;
-    var salary_type = salaryType;
+    // var salary_type = salaryType;
     var salary_min = salaryMin;
     var salary_max = salaryMax;
     var list_dis = listDis ? listDis : [];
@@ -425,12 +512,12 @@ const Navbar: React.FC = () => {
       is_working_weekend,
       is_remotely,
     };
-    console.log('list_dis', list_dis);
-    console.log('listDis', listDis);
-    console.log('list_cate', list_cate);
-    console.log('listCate', listCate);
-    console.log('salary_max', salary_max);
-    console.log('salary_min', salary_min);
+    // console.log('list_dis', list_dis);
+    // console.log('listDis', listDis);
+    // console.log('list_cate', list_cate);
+    // console.log('listCate', listCate);
+    // console.log('salary_max', salary_max);
+    // console.log('salary_min', salary_min);
     await setCookie('userFiltered', JSON.stringify(filter), 365);
 
     if (list_dis?.length > 0) {
@@ -510,9 +597,9 @@ const Navbar: React.FC = () => {
     } else if (!valueSearchInput && !QUERY) {
       encode = encodeURIComponent(``);
     }
-    if (!jobType && JOB_TYPE) {
-      job_type = JOB_TYPE;
-    }
+    // if (!jobType && JOB_TYPE) {
+    //   job_type = JOB_TYPE;
+    // }
 
     // console.log('vvvvvvv', valueSearchInput)
     // console.log('encode', encode)
@@ -530,14 +617,15 @@ const Navbar: React.FC = () => {
     //   job_type = null
     // }
 
-    if (!salaryType && SALARY_TYPE) {
-      salary_type = SALARY_TYPE;
-    }
+    // if (!salaryType && SALARY_TYPE) {
+    //   salary_type = SALARY_TYPE;
+    // }
 
     setTimeout(() => {
       if (location.pathname !== '/search-results') {
         window.open(
           `/search-results?${encode !== 'undefined' ? `q=${encode}` : ``}`,
+          '_parent',
         );
       } else {
         setSearchParams({
@@ -545,7 +633,7 @@ const Navbar: React.FC = () => {
         });
         setSearch(!search);
         setOpenCollapseFilter(false);
-        // window.open(`/search-results`, "_self")
+        // window.open(`/search-results`, "_sel")
       }
     }, 100);
 
@@ -567,14 +655,16 @@ const Navbar: React.FC = () => {
     //     }` +
     //     `${is_remotely ? `&is_remotely=${is_remotely}` : ''}` +
     //     `${money_type ? `&money_type=${money_type}` : ''}`,
-    //     '_self',
+    //     '_sel',
     //   );
     // }, 100);
   };
 
   // login
   const handleClickLogin = async (e: any) => {
-    // e.stopPropagation();
+    e.stopPropagation();
+    e.preventDefault();
+    // console.log('click');
     try {
       if (openInfoUser) {
         setSpinning(false);
@@ -583,8 +673,12 @@ const Navbar: React.FC = () => {
         setSpinning(true);
       }
       var result = null;
-      if (localStorage.getItem('accessToken')) {
-        result = await profileApi.getProfile();
+      if (localStorage.getItem('refreshToken')) {
+        result = await profileApi.getProfile('vi');
+      } else {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('accountId');
       }
       if (result) {
         dispatch(getProfile() as any);
@@ -595,24 +689,26 @@ const Navbar: React.FC = () => {
         setSpinning(false);
       }
     } catch (error) {
-      console.log(error);
-      // if (!localStorage.getItem("accessToken")) {
-      //   setSpinning(false)
-      //   setOpenInfoUser(false)
-      //   setOpenModalLogin(true)
-      // } else {
-      //   setSpinning(false)
-      //   setOpenInfoUser(!openInfoUser)
-      // }
+      // localStorage.clear();
+      if (!localStorage.getItem('refreshToken')) {
+        setSpinning(false);
+        setOpenInfoUser(false);
+        setOpenModalLogin(true);
+      } else {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        setSpinning(false);
+        setOpenModalLogin(true);
+
+        // setOpenInfoUser(!openInfoUser);
+        setOpenInfoUser(false);
+      }
       setSpinning(false);
     }
   };
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
-      // console.log('e.tảtget', refInfoUser?.current)
-      // console.log('e.tảtget', refInfoUser?.current?.contains(event.target))
-      // console.log('e.tảtget', refLogin?.current?.contains(event.target))
       if (refInfoUser.current && !refInfoUser.current.contains(event.target)) {
         setOpenInfoUser(false);
       }
@@ -627,30 +723,70 @@ const Navbar: React.FC = () => {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  let socket = useRef<any>();
+
+  React.useEffect(() => {
+    if (!socket.current && localStorage.getItem('accessToken')) {
+      socket.current = io('https://neoworks.vn', {
+        extraHeaders: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
+
+      socket.current.on('connect', () => {
+        // setIsConnected(true);
+      });
+    }
   }, []);
 
   // handle logout
   const handleLogout = async () => {
     try {
-      console.log('logout thành công');
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (refreshToken) {
         const result = await authApi.signOut(refreshToken);
-
         if (result) {
-          window.location.replace('/');
-          localStorage.clear();
+          if (socket.current) {
+            console.log('disconnect socket thành công');
+            socket.current.disconnect();
+            // socket.current.close();
+          }
+          window.open('/', '_parent');
+          // localStorage.clear();
+          const exceptionKey = 'persist:root';
+
+          const localStorageKeys = Object.keys(localStorage);
+
+          const keysToRemove = localStorageKeys.filter(
+            (key) => key !== exceptionKey,
+          );
+
+          for (const key of keysToRemove) {
+            localStorage.removeItem(key);
+          }
         }
       }
     } catch (error) {
+      if (socket.current) {
+        console.log('disconnect socket thành công');
+        socket.current.disconnect();
+        // socket.current.close();
+      }
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('accountId');
+      window.open('/', '_parent');
       console.log(error);
     }
   };
 
   const getAppliedPostedJobs = async () => {
     try {
-      const result = await applitedPostedApi.getAllApplitedPostedApi(0);
+      const result = await applitedPostedApi.getAllApplitedPostedApi(0, 'vi');
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
 
@@ -663,6 +799,7 @@ const Navbar: React.FC = () => {
 
   React.useEffect(() => {
     getAppliedPostedJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [approved, setApproved] = useState(0);
@@ -712,14 +849,67 @@ const Navbar: React.FC = () => {
     setJobType(null);
     setListDis([]);
     setListCate([]);
-    setSalaryMax(null);
-    setSalaryMin(null);
+    setSalaryMax(12000000);
+    setSalaryMin(0);
     setTypeMoney(1);
     setSalaryType('');
-
     setIsWorkingWeekend(0);
     setIsRemotely(0);
+    setReset(true);
+
+    let filter = {
+      money_type: 1,
+      salary_min: 0,
+      salary_max: 12000000,
+      list_dis: [],
+      list_cate: [],
+      is_working_weekend: 0,
+      is_remotely: 0,
+    };
+    setCookie('userFiltered', JSON.stringify(filter), 365);
+
+    let typeJobReset = {
+      id: 5,
+      name: 'Tất cả',
+    };
+    setCookie('userTypejobFiltered', JSON.stringify(typeJobReset), 365);
+
+    let typeSalaryReset = {
+      id: 0,
+      value: 'Tất cả',
+    };
+    setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };
+
+  const handleChangeLanguage = async (e: any) => {
+    // console.log('e.target.value = ' + e.target.value);
+
+    setLanguageId(e.target.value);
+    setCookie('languageId', JSON.stringify(e.target.value), 365);
+    await dispatch<any>(setLanguage(e.target.value));
+    await dispatch(getLanguages(e.target.value) as any);
+
+    // try {
+    //   const result = await languageApi.getLanguage(
+    //     languageRedux === 1 ? 'vi' : 'en',
+    //   );
+    //   if (result) {
+    //     setLanguageState(result.data);
+    //     // setUser(result);
+    //   }
+    // } catch (error) {
+    //   // setLoading(false);
+    // }
+  };
+
+  useEffect(() => {
+    let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
+    if (userLanguageSelected) {
+      dispatch(getLanguages(userLanguageSelected) as any);
+    } else {
+      dispatch(getLanguages('1') as any);
+    }
+  }, [languageId]);
 
   React.useEffect(() => {
     const handleCloseFilter = (event: any) => {
@@ -733,36 +923,76 @@ const Navbar: React.FC = () => {
         setOpenCollapseFilter(false);
       }
     };
-
     window.addEventListener('click', handleCloseFilter);
-
     return () => {
       window.removeEventListener('click', handleCloseFilter);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openCollapseFilter]);
 
+  // const [isDownloading, setIsDownloading] = useState(false);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setIsDownloading((prevIsDownloading) => !prevIsDownloading);
+  //   }, 3000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
+  // console.log('click');
+
+  const totgleLanguage = async (value: any) => {
+    // setLanguageId(e.target.value);
+    // let value = 1;
+    // value === 1 ? value = 2 : 1;
+    setCookie('languageId', JSON.stringify(value), 365);
+    await dispatch<any>(setLanguage(value));
+    await dispatch(getLanguages(value.toString()) as any);
+  };
+
   const buttons = [
+    <div
+      className="language"
+      onClick={() => {
+        languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
+      }}
+    >
+      {languageRedux === 1 ? (
+        <VNSubLoginIcon width={24} height={24} />
+      ) : (
+        <ENSubLoginIcon width={24} height={24} />
+      )}
+    </div>,
     <button
       key="1"
       className="btn btn__post"
       onClick={() => {
         if (dataProfile && localStorage.getItem('refreshToken')) {
-          window.open('/post', '_seft');
+          window.open('/post', '_parent');
         } else {
           setOpenModalLogin(true);
         }
       }}
     >
       <FormOutlined style={{ color: 'white' }} />
-      <p style={{ marginLeft: 10, color: 'white' }}>Đăng bài</p>
+      <p style={{ marginLeft: 10, color: 'white' }}>
+        {/* {languageData
+          ? languageData.post
+          : languageRedux === 1
+          ? `Đăng bài`
+          : `Post`} */}
+        {languageData ? languageData.post : ''}
+        {/* {languageRedux === 1 ? `Đăng bài` : `Post`} */}
+      </p>
     </button>,
     <div
       className="actions-login"
-      onClick={handleClickLogin}
       ref={refLogin}
       key="2"
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
-      <button className="btn btn__login">
+      <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
           <div className="login__avatar">
             <Avatar
@@ -775,7 +1005,8 @@ const Navbar: React.FC = () => {
             {localStorage.getItem('accessToken') && dataProfile ? (
               <span>{dataProfile?.name}</span>
             ) : (
-              <span>Đăng nhập</span>
+              // <span>{languageData?.login}</span>
+              <span>{languageRedux === 1 ? `Đăng nhập` : `Sign in`}</span>
             )}
           </div>
         </div>
@@ -783,87 +1014,225 @@ const Navbar: React.FC = () => {
           <RightOutlined />
         </div>
       </button>
+      <div
+        className="login__hover__container"
+        style={{
+          // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
+          display:
+            !localStorage.getItem('accessToken') &&
+            openLogin &&
+            location?.pathname === '/'
+              ? 'block'
+              : 'none',
+        }}
+      >
+        <div className="login__hover">
+          <h3>{languageRedux === 1 ? 'Đăng nhập ở đây' : 'Sign in here'}</h3>
+          <div className="login__hover__p">
+            <p>{languageData?.home_page?.choose_your_location_category}</p>
+            <p>
+              {
+                languageData?.home_page
+                  ?.provide_the_best_recruitment_information
+              }
+            </p>
+          </div>
+          {/* <Button
+            type="primary"
+            onClick={() => {
+              setOpenModalLogin(true);
+            }}
+          >
+            <LoginArrowBlackIcon />
+            {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
+          </Button> */}
+        </div>
+      </div>
       <Spin indicator={antIcon} spinning={spinning}>
         {openInfoUser && (
           <div className="sub-login" ref={refInfoUser}>
-            <Space className="sub-login_info">
-              <Avatar
-                style={{
-                  backgroundColor: '#0D99FF',
-                  minWidth: '100px',
-                  minHeight: '100px',
-                }}
-                icon={<UserOutlined style={{ fontSize: 30 }} />}
-                size={50}
-                src={dataProfile?.avatar ? dataProfile.avatar : null}
-              />
-              <div className="sub-login_detail">
-                <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
-                <span
-                  className="sub-login_text"
-                  onClick={() => window.open(`/profile`, '_seft')}
-                >
-                  <MailInfoIcon />
+            <Space
+              className="sub-login_info"
+              style={{
+                flexDirection: 'column',
+                paddingBottom: '12px',
+                borderBottom: '1px solid rgba(170, 170, 170, 1)',
+              }}
+            >
+              <div className="sub-login_info__top">
+                <Avatar
+                  style={{
+                    backgroundColor: '#0D99FF',
+                    minWidth: '80px',
+                    minHeight: '80px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  icon={<UserOutlined style={{ fontSize: 30 }} />}
+                  size={50}
+                  src={dataProfile?.avatar ? dataProfile.avatar : null}
+                />
+                <div className="sub-login_detail">
+                  <h2>
+                    {dataProfile?.name
+                      ? dataProfile.name
+                      : languageData?.home_page?.un_update_infor}
+                  </h2>
+                  <span className="sub-login_text">
+                    <CompanySubLoginIcon />
+                    {companyName
+                      ? companyName
+                      : languageData?.home_page?.un_update_infor}
+                  </span>
+                  <span className="sub-login_text">
+                    <MailInfoIcon />
+                    {dataProfile?.email
+                      ? dataProfile?.email
+                      : languageData?.home_page?.un_update_infor}
+                  </span>
+                  {/* <span className="sub-login_text">
+                  <LoginHomeIcon />
                   {dataProfile?.email ? dataProfile?.email : ''}
-                </span>
-                <span className="sub-login_text">
-                  <MapInfoIcon />
-                  <p>
-                    {dataProfile?.categories.length > 0
-                      ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
-                      : 'Chưa cập nhật thông tin'}
-                  </p>
-                </span>
-                <span
-                  className="sub-login_text"
-                  onClick={() => window.open(`/profile`, '_seft')}
-                >
-                  <BagInfoJob />
-                  <p>
-                    {dataProfile?.locations.length > 0
-                      ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
-                      : 'Chưa cập nhật thông tin'}
-                  </p>
-                </span>
+                </span> */}
+                </div>
+              </div>
+              <div className="sub-login_info__bottom">
+                <div className="sub-login_detail__bottom">
+                  <span
+                    className="sub-login_text__bottom"
+                    onClick={() => window.open(`/profile`, '_parent')}
+                  >
+                    <MapInfoIcon />
+                    <p>
+                      {dataProfile?.locations.length > 0
+                        ? dataProfile?.locations.map((location: any) => {
+                            return `${location.district} , `;
+                          })
+                        : languageData?.home_page?.un_update_infor}
+                    </p>
+                  </span>
+                  <span
+                    className="sub-login_text__bottom"
+                    onClick={() => window.open(`/profile`, '_parent')}
+                  >
+                    <BagInfoJob />
+
+                    <p>
+                      {dataProfile?.categories.length > 0
+                        ? dataProfile?.categories.map((profile: any) => {
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
+                        : languageData?.home_page?.un_update_infor}
+                    </p>
+                  </span>
+                </div>
               </div>
             </Space>
             <div className="sub-login_items">
               <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
-                  <SyncOutlined />
-                  <span>Cập nhật thông tin</span>
+                  <UserPersonSubLoginIcon />
+                  <span>{languageData?.home_page?.update_infor}</span>
                 </div>
               </Link>
               <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
+                  style={{
+                    borderBottom: 'none',
+                  }}
                   // onClick={() => {
                   //   window.open('/history', "_top")
                   // }}
                 >
-                  <ClockCircleOutlined />
-                  <span>Lịch sử</span>
+                  <PaperSubLoginIcon />
+                  <span>{languageData?.history}</span>
                 </div>
               </Link>
               <div className="sub-history_status">
-                <span>Approved: {`${approved}`}</span>
-                <span>|</span>
-                <span>Pending: {`${pending}`}</span>
-                <span>|</span>
-                <span>Waiting: {`${waiting}`}</span>
+                <span>
+                  {languageData?.approved} {`${approved}`}
+                </span>
+                {/* <span>|</span> */}
+                <span>
+                  {languageData?.home_page?.pending} {`${pending}`}
+                </span>
+                {/* <span>|</span> */}
+                <span>
+                  {languageData?.home_page?.waiting} {`${waiting}`}
+                </span>
               </div>
               {/* <div className="sub-login_item">
                 <KeyOutlined />
                 <span>Đổi mật khẩu</span>
               </div> */}
-              <div className="sub-login_item" onClick={handleLogout}>
-                <LogoutOutlined />
+              {/* <div
+                className="sub-login_item__translate"
+                onClick={handleOpenRadioGroup}
+                style={{
+                  borderBottom: openRadioGroup
+                    ? 'none'
+                    : '1px solid rgba(170, 170, 170, 1)',
+                }}
+              // style={{ display: 'none' }}
+              >
+                <div className="sub-translate_header_left">
+                  <TranslateSubLoginIcon />
+                  <span>{languageRedux === 1 ? 'Ngôn ngữ' : 'Language'}</span>
+                </div>
+                <div
+                  className="sub-translate_header_right"
+                  style={{
+                    transform: openRadioGroup ? 'rotate(-90deg)' : 'unset',
+                  }}
+                >
+                  <ArrowSubLoginIcon />
+                </div>
+              </div> */}
 
-                <span>Đăng xuất</span>
+              <div
+                className="sub-translate_status"
+                style={
+                  {
+                    // height: openRadioGroup ? '100%' : '0',
+                    // display: 'none',
+                  }
+                }
+              >
+                <Radio.Group
+                  name="radiogroup"
+                  value={languageRedux}
+                  defaultValue={languageId}
+                  className="sub-login-radio-group"
+                  onChange={handleChangeLanguage}
+                  // style={{
+                  //   display: openRadioGroup ? 'flex' : 'none',
+                  // }}
+                >
+                  <Radio value={1}>
+                    <VNSubLoginIcon />
+                    <span>Tiếng Việt</span>
+                  </Radio>
+                  <Radio value={2}>
+                    <ENSubLoginIcon />
+                    <span>English</span>
+                  </Radio>
+                  {/* <Radio value={3}>
+                    <ENSubLoginIcon />
+                    <span>{language?.korean}</span>
+                  </Radio> */}
+                </Radio.Group>
+              </div>
+
+              <div
+                className="sub-login_item"
+                onClick={handleLogout}
+                style={{ borderBottom: 'none' }}
+              >
+                <LogoutSubLoginIcon />
+
+                <span>{languageData?.sign_out}</span>
               </div>
 
               {/* <div className="sub-login_item" onClick={handleLogout}>
@@ -890,71 +1259,241 @@ const Navbar: React.FC = () => {
       <Button
         onClick={() => {
           if (dataProfile && localStorage.getItem('refreshToken')) {
-            window.open(`/message`, '_seft');
+            window.open(`/message`, '_parent');
           } else {
             setOpenModalLogin(true);
           }
         }}
+        name="btn-chat"
         type="link"
       >
         <ChatIcon />
       </Button>
     </Badge>,
-    <Badge key="3" count={2} className="box-right-responsive_badge">
+    <Badge key="3" count={countChat} className="box-right-responsive_badge">
       <Button
         key="3"
         className="btn-notice"
-        onClick={() => setOpenNotificate(!openNotificate)}
+        name="btn-notice"
+        onClick={() => {
+          if (dataProfile && localStorage.getItem('accessToken')) {
+            setOpenNotificate(!openNotificate);
+          } else {
+            setOpenModalLogin(true);
+          }
+        }}
       >
         <BellIcon />
       </Button>
     </Badge>,
-
-    <div className="menu" onClick={handleClickLogin} ref={refLogin} key="4">
-      <Button className="menu-button">
+    <div
+      className="language"
+      onClick={() => {
+        languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
+      }}
+    >
+      {languageRedux === 1 ? (
+        <VNSubLoginIcon width={24} height={24} />
+      ) : (
+        <ENSubLoginIcon width={24} height={24} />
+      )}
+    </div>,
+    <div
+      className="menu"
+      // onClick={handleClickLogin}
+      ref={refLogin}
+      key="4"
+    >
+      <Button
+        className="menu-button"
+        name="menu-button"
+        onClick={handleClickLogin}
+      >
         <MenuOutlined style={{ fontSize: '1.5em' }} />
       </Button>
       <Spin indicator={antIcon} spinning={spinning}>
         {openInfoUser && (
           <div className="sub-login" ref={refInfoUser}>
-            <Space className="sub-login_info">
-              <Avatar
-                style={{ backgroundColor: '#0D99FF' }}
-                icon={<UserOutlined style={{ fontSize: 30 }} />}
-                size={50}
-                src={dataProfile?.avatar ? dataProfile.avatar : null}
-              />
-              <div>
-                <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
-                <span>{dataProfile?.email ? dataProfile?.email : ''}</span>
+            <Space
+              className="sub-login_info"
+              style={{
+                flexDirection: 'column',
+                paddingBottom: '12px',
+                borderBottom: '1px solid rgba(170, 170, 170, 1)',
+              }}
+            >
+              <div className="sub-login_info__top">
+                <Avatar
+                  style={{
+                    backgroundColor: '#0D99FF',
+                    minWidth: '80px',
+                    minHeight: '80px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  icon={<UserOutlined style={{ fontSize: 30 }} />}
+                  size={50}
+                  src={dataProfile?.avatar ? dataProfile.avatar : null}
+                />
+                <div className="sub-login_detail">
+                  <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
+                  <span className="sub-login_text">
+                    <CompanySubLoginIcon />
+                    {companyName ? companyName : ''}
+                  </span>
+                  <span className="sub-login_text">
+                    <MailInfoIcon />
+                    {dataProfile?.email ? dataProfile?.email : ''}
+                  </span>
+                  {/* <span className="sub-login_text">
+                <LoginHomeIcon />
+                {dataProfile?.email ? dataProfile?.email : ''}
+              </span> */}
+                </div>
+              </div>
+              <div className="sub-login_info__bottom">
+                <div className="sub-login_detail__bottom">
+                  <span
+                    className="sub-login_text__bottom"
+                    onClick={() => window.open(`/profile`, '_parent')}
+                  >
+                    <MapInfoIcon />
+                    <p>
+                      {dataProfile?.locations.length > 0
+                        ? dataProfile?.locations.map((location: any) => {
+                            return `${location.district} , `;
+                          })
+                        : languageData?.home_page?.un_update_infor}
+                    </p>
+                  </span>
+                  <span
+                    className="sub-login_text__bottom"
+                    onClick={() => window.open(`/profile`, '_parent')}
+                  >
+                    <BagInfoJob />
+
+                    <p>
+                      {dataProfile?.categories.length > 0
+                        ? dataProfile?.categories.map((profile: any) => {
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
+                        : languageData?.home_page?.un_update_infor}
+                    </p>
+                  </span>
+                </div>
               </div>
             </Space>
             <div className="sub-login_items">
-              <Link to="/profile">
+              <Link to="/profile" target="_parent">
                 <div className="sub-login_item">
-                  <SyncOutlined />
-                  <span>Cập nhật thông tin</span>
+                  <UserPersonSubLoginIcon />
+                  <span>{languageData?.home_page?.update_infor}</span>
                 </div>
               </Link>
-              <Link to="/history">
+              <Link to="/history" target="_parent">
                 <div
                   className="sub-login_item"
+                  style={{
+                    borderBottom: 'none',
+                  }}
                   // onClick={() => {
                   //   window.open('/history', "_top")
                   // }}
                 >
-                  <ClockCircleOutlined />
-                  <span>Lịch sử</span>
+                  <PaperSubLoginIcon />
+                  <span>{languageData?.history}</span>
                 </div>
               </Link>
-              {/* <div className="sub-login_item">
-                <KeyOutlined />
-                <span>Đổi mật khẩu</span>
-              </div> */}
-              <div className="sub-login_item" onClick={handleLogout}>
-                <LogoutOutlined />
-                <span>Đăng xuất</span>
+              <div className="sub-history_status">
+                <span>
+                  {languageData?.approved} {`${approved}`}
+                </span>
+                {/* <span>|</span> */}
+                <span>
+                  {languageData?.home_page?.pending} {`${pending}`}
+                </span>
+                {/* <span>|</span> */}
+                <span>
+                  {languageData?.home_page?.waiting} {`${waiting}`}
+                </span>
               </div>
+              {/* <div className="sub-login_item">
+              <KeyOutlined />
+              <span>Đổi mật khẩu</span>
+            </div> */}
+              {/* <div
+                className="sub-login_item__translate"
+                onClick={handleOpenRadioGroup}
+                // style={{
+                //   borderBottom: openRadioGroup
+                //     ? 'none'
+                //     : '1px solid rgba(170, 170, 170, 1)',
+                // }}
+                // style={{ display: 'none' }}
+              >
+                <div className="sub-translate_header_left">
+                  <TranslateSubLoginIcon />
+                  <span>{languageData?.home_page?.languages}</span>
+                </div>
+                <div
+                  className="sub-translate_header_right"
+                  style={{
+                    transform: openRadioGroup ? 'rotate(-90deg)' : 'unset',
+                  }}
+                >
+                  <ArrowSubLoginIcon />
+                </div>
+              </div> */}
+
+              <div
+                className="sub-translate_status"
+                style={{
+                  height: openRadioGroup ? '100%' : '100%',
+                  // display: 'none',
+                }}
+              >
+                <Radio.Group
+                  name="radiogroup"
+                  value={languageRedux}
+                  defaultValue={languageId}
+                  className="sub-login-radio-group"
+                  onChange={handleChangeLanguage}
+                  style={
+                    {
+                      // display: openRadioGroup ? 'flex' : 'flex',
+                    }
+                  }
+                >
+                  <Radio value={1}>
+                    <VNSubLoginIcon />
+                    <span>Tiếng Việt</span>
+                  </Radio>
+                  <Radio value={2}>
+                    <ENSubLoginIcon />
+                    <span>English</span>
+                  </Radio>
+                  {/* <Radio value={3}>
+                  <ENSubLoginIcon />
+                  <span>{language?.korean}</span>
+                </Radio> */}
+                </Radio.Group>
+              </div>
+
+              <div
+                className="sub-login_item"
+                onClick={handleLogout}
+                style={{ borderBottom: 'none' }}
+              >
+                <LogoutSubLoginIcon />
+
+                <span>{languageData?.sign_out}</span>
+              </div>
+
+              {/* <div className="sub-login_item" onClick={handleLogout}>
+              <FlagVNIcon />
+              <span>Đổi ngôn ngữ</span>
+            </div> */}
             </div>
           </div>
         )}
@@ -973,7 +1512,11 @@ const Navbar: React.FC = () => {
           openModalLogin={openModalLogin}
           setOpenModalLogin={setOpenModalLogin}
         />
-        <Backdrop
+        {/* <ModalLoginNav
+          openModalLogin={openModalLogin}
+          setOpenModalLogin={setOpenModalLogin}
+        /> */}
+        {/* <Backdrop
           sx={{
             color: '#0d99ff ',
             backgroundColor: 'transparent',
@@ -983,8 +1526,15 @@ const Navbar: React.FC = () => {
           onClick={handleClose}
         >
           <CircularProgress color="inherit" />
-        </Backdrop>
-        <Wrapper>
+        </Backdrop> */}
+        <Wrapper
+          className="wrap-content_nav"
+          style={
+            location.pathname === '/'
+              ? { maxWidth: '1280px' }
+              : { maxWidth: '1080px' }
+          }
+        >
           <Left>
             <Logo />
           </Left>
@@ -1015,9 +1565,10 @@ const Navbar: React.FC = () => {
             <Badge count={countChat} className="btn-badge">
               <Button
                 className="btn-notice"
+                name="btn-chat"
                 onClick={() => {
                   if (dataProfile && localStorage.getItem('refreshToken')) {
-                    window.open(`/message`, '_seft');
+                    window.open(`/message`, '_parent');
                   } else {
                     setOpenModalLogin(true);
                   }
@@ -1029,28 +1580,47 @@ const Navbar: React.FC = () => {
               </Button>
             </Badge>
 
-            <div className="wrap-btn_notice">
+            <div className="wrap-btn_notice ">
               <Button
                 className="btn-notice"
-                onClick={() => setOpenNotificate(!openNotificate)}
+                name="btn-notice"
+                onClick={() => {
+                  if (dataProfile && localStorage.getItem('accessToken')) {
+                    setOpenNotificate(!openNotificate);
+                  } else {
+                    setOpenModalLogin(true);
+                  }
+                }}
                 ref={bellRef}
               >
                 <BellIcon />
               </Button>
               {openNotificate ? <Notificate /> : <></>}
             </div>
-
-            <div className="wrap-btn_notice">
+            <div
+              className="wrap-btn_notice btn-noti_icon 
+            border-aniation_download
+            "
+            >
               <Button
                 className="btn-notice"
                 // onClick={() => setOpenNotificate(!openNotificate)}
+                name="btn-down"
                 ref={bellRef}
               >
-                <DownloadIcon />
+                <div className="button-download">
+                  {/* <DownloadIcon /> */}
+
+                  <img src="./images/down.gif" alt="" />
+                </div>
+                {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
               </Button>
               <div className="sub-icon_qr">
-                <h2>Tải Ứng dụng Hi Job!</h2>
-                <img src="/QrApp.jpg" alt="" />
+                <h2>{languageData?.download_hijob_app}</h2>
+                <img
+                  src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
+                  alt={languageData?.err_none_img}
+                />
                 <div className="sub-icon_apps">
                   <Link
                     to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
@@ -1059,7 +1629,7 @@ const Navbar: React.FC = () => {
                     <img
                       id="img-gallery"
                       src={require('../../img/langdingPage/image 43.png')}
-                      alt="ảnh bị lỗi"
+                      alt={languageData?.err_none_img}
                     />
                   </Link>
                   <Link
@@ -1068,7 +1638,7 @@ const Navbar: React.FC = () => {
                   >
                     <img
                       src={require('../../img/langdingPage/image 45.png')}
-                      alt="ảnh bị lỗi"
+                      alt={languageData?.err_none_img}
                     />
                   </Link>
                 </div>
@@ -1110,6 +1680,8 @@ const Navbar: React.FC = () => {
             >
               <ButtonGroup sx={{ margin: '0' }}>{buttons}</ButtonGroup>
             </Box>
+
+            {openNotificate ? <Notificate /> : <></>}
           </Right>
         </Wrapper>
         <Collapse
@@ -1117,7 +1689,12 @@ const Navbar: React.FC = () => {
           onEnter={handleCollapseEntered}
           onExited={handleCollapseExited}
           // sx={collapseCssFilter}
-          sx={{ borderTop: '1px solid #ccc' }}
+          sx={
+            location.pathname === '/'
+              ? { maxWidth: '1280px' }
+              : { maxWidth: '1080px' }
+          }
+          className="nav-collapse"
         >
           <SearchInput
             checkSearch={checkSeacrh}
@@ -1129,12 +1706,34 @@ const Navbar: React.FC = () => {
           />
           <div className="filter-wraps">
             <div className="filter-wrap_top">
-              <FilterLocationNav setListDis={setListDis} />
-              <FilterCateloriesNav setListCate={setListCate} />
-              <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
+              <FilterLocationNav
+                listDis={listDis}
+                setListDis={setListDis}
+                reset={reset}
+                setReset={setReset}
+                language={languageData}
+              />
+              <FilterCateloriesNav
+                listCateProps={listCate}
+                setListCate={setListCate}
+                reset={reset}
+                setReset={setReset}
+                language={languageData}
+              />
+              <FilterTypeJob
+                valueTypeJob={jobType}
+                setTypeJob={setJobType}
+                reset={reset}
+                setReset={setReset}
+                language={languageData}
+              />
             </div>
             <div className="filter-wrap_bottom">
-              <FilterTypeSalary setSalaryType={setSalaryType} />
+              <FilterTypeSalary
+                setSalaryType={setSalaryType}
+                reset={reset}
+                setReset={setReset}
+              />
               <FilterSalary
                 salaryType={salaryType}
                 typeMoney={typeMoney}
@@ -1143,21 +1742,47 @@ const Navbar: React.FC = () => {
                 salaryMax={salaryMax}
                 setSalaryMin={setSalaryMin}
                 setSalaryMax={setSalaryMax}
+                reset={reset}
+                setReset={setReset}
               />
               <FilterTimeJob
                 setIsWorkingWeekend={setIsWorkingWeekend}
                 isWorkingWeekend={isWorkingWeekend}
                 isRemotely={isRemotely}
                 setIsRemotely={setIsRemotely}
+                reset={reset}
+                setReset={setReset}
               />
             </div>
           </div>
 
           <div className="filter-wrap_respone">
-            <FilterLocationNav setListDis={setListDis} />
-            <FilterCateloriesNav setListCate={setListCate} />
-            <FilterTypeJob valueTypeJob={jobType} setTypeJob={setJobType} />
-            <FilterTypeSalary setSalaryType={setSalaryType} />
+            <FilterLocationNav
+              listDis={listDis}
+              setListDis={setListDis}
+              reset={reset}
+              setReset={setReset}
+              language={languageData}
+            />
+            <FilterCateloriesNav
+              listCateProps={listCate}
+              setListCate={setListCate}
+              reset={reset}
+              setReset={setReset}
+              language={languageData}
+            />
+            <FilterTypeJob
+              valueTypeJob={jobType}
+              setTypeJob={setJobType}
+              reset={reset}
+              setReset={setReset}
+              language={languageData}
+            />
+            <FilterTypeSalary
+              setSalaryType={setSalaryType}
+              reset={reset}
+              setReset={setReset}
+            />
             <div className="filter-wrap-respone_bottom">
               <FilterSalary
                 salaryType={salaryType}
@@ -1167,25 +1792,31 @@ const Navbar: React.FC = () => {
                 salaryMax={salaryMax}
                 setSalaryMin={setSalaryMin}
                 setSalaryMax={setSalaryMax}
+                reset={reset}
+                setReset={setReset}
               />
               <FilterTimeJob
                 setIsWorkingWeekend={setIsWorkingWeekend}
                 isWorkingWeekend={isWorkingWeekend}
                 isRemotely={isRemotely}
                 setIsRemotely={setIsRemotely}
+                reset={reset}
+                setReset={setReset}
               />
             </div>
           </div>
 
           <div className="btn-filter_nav">
-            {/* <Button type="default" onClick={handleResetValue}>
-              Đặt Lại
-            </Button> */}
+            <Button type="default" onClick={handleResetValue}>
+              {/* {languageData?.reset} */}
+              {languageRedux === 1 ? 'Đặt lại' : 'Reset'}
+            </Button>
             <Button
               type="primary"
               onClick={(e) => handleSearch(e, valueSearchInput)}
             >
-              Áp dụng
+              {/* {languageData?.apply} */}
+              {languageRedux === 1 ? 'Áp dụng' : 'Apply'}
             </Button>
           </div>
         </Collapse>

@@ -42,13 +42,10 @@ import 'swiper/css/thumbs';
 import { FreeMode, Mousewheel, Navigation, Pagination, Thumbs } from 'swiper';
 
 import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { MessageOutlined } from '@ant-design/icons';
 //@ts-ignore
 // import { CopyToClipboard } from 'react-copy-to-clipboard';
 //@ts-ignore
@@ -60,19 +57,16 @@ import { RootState } from '../../store/reducer';
 // import firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
-import {
-  ClockCircleOutlined,
-  DollarOutlined,
-  CalendarOutlined,
-  CreditCardOutlined,
-  DesktopOutlined,
-  SlidersOutlined,
-  FormOutlined,
-  ExclamationCircleFilled,
-} from '@ant-design/icons';
+import ModalLogin from '../../components/Home/ModalLogin';
+
+import { FormOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import { SaveIconOutline, SaveIconFill, ShareIcon } from '#components/Icons';
 import { PostNewest } from '#components/Home/NewJobs';
 
+import { Tabs } from 'antd';
+import type { TabsProps } from 'antd';
+import { Avatar } from 'antd';
+import languageApi from 'api/languageApi';
 import IconButton from '@mui/material/IconButton';
 import { CloseIcon } from '#components/Icons';
 // import icon
@@ -80,11 +74,23 @@ import {
   MailIcon,
   FacebookIcon,
   CopyIcon,
-  MessagerIcon,
+  // MessagerIcon,
   CompanyNameDetailPostIcon,
   AddressDetailPostIcon,
   ClockDetailPostIcon,
   BackIcon,
+  TaxCodeDetailPostIcon,
+  LocationDetailPostIcon,
+  MailDetailPostIcon,
+  PhoneDetailPostIcon,
+  WebDetailPostIcon,
+  JobTypePostIcon,
+  ClockPostIcon,
+  CalendarPostIcon,
+  MonitorPostIcon,
+  DollarPostIcon,
+  WorkPostIcon,
+  BoardiIntroCompanyPostIcon,
 } from '#components/Icons';
 
 import './style.scss';
@@ -92,34 +98,41 @@ import ShowCopy from '#components/ShowCopy';
 
 //@ts-ignore
 import AnotherPost from './components/AnotherPost';
+// import { height, width } from '@mui/system';
+import { postDetail } from 'validations/lang/vi/postDetail';
+import { postDetailEn } from 'validations/lang/en/postDetail';
 
-const itemsShare = [
-  {
-    nameShare: 'Sao chép liên kết',
-    icon: <CopyIcon />,
-    source: '',
-  },
-  {
-    nameShare: 'Mail',
-    icon: <MailIcon />,
-    source: '',
-  },
-  {
-    nameShare: 'Facebook',
-    icon: <FacebookIcon />,
-    source: '',
-  },
-  {
-    nameShare: 'Messenger',
-    icon: <MessagerIcon />,
-    source: '',
-  },
-  // {
-  //   nameShare: 'Zalo',
-  //   icon: <ZaloIcon />,
-  //   source: '',
-  // },
-];
+import RollTop from '#components/RollTop';
+import { setCookie } from 'cookies';
+// import { Language } from '#components/Navbar/Css';
+
+// const itemsShare = [
+//   {
+//     nameShare: 'Sao chép liên kết',
+//     icon: <CopyIcon />,
+//     source: '',
+//   },
+//   {
+//     nameShare: 'Mail',
+//     icon: <MailIcon />,
+//     source: '',
+//   },
+//   {
+//     nameShare: 'Facebook',
+//     icon: <FacebookIcon />,
+//     source: '',
+//   },
+//   // {
+//   //   nameShare: 'Messenger',
+//   //   icon: <MessagerIcon />,
+//   //   source: '',
+//   // },
+//   // {
+//   //   nameShare: 'Zalo',
+//   //   icon: <ZaloIcon />,
+//   //   source: '',
+//   // },
+// ];
 // interface ItemCategories {
 //   child_category_id?: Number;
 //   parent_category?: string;
@@ -152,8 +165,9 @@ const style = {
 //   image?: string;
 // }
 const ACCESS_TOKEN = localStorage.getItem('accessToken');
+
 // page view details post
-const Detail: React.FC = () => {
+const Detail = () => {
   // const { Search } = Input
   // test redux
   // const userProfile = useSelector((state: RootState) => state.profileUser);
@@ -167,7 +181,7 @@ const Detail: React.FC = () => {
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   // const [title, setTitle] = React.useState('');
-  const [tabValue, setTabValue] = React.useState('1');
+  // const [tabValue, setTabValue] = React.useState('1');
 
   const [thumbsSwiper, setThumbsSwiper] = React.useState<any>(null);
 
@@ -179,7 +193,11 @@ const Detail: React.FC = () => {
     null,
   );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-  const [textButton, setTextButton] = React.useState<string>('Ứng Tuyển');
+  const [language, setLanguage] = React.useState<any>();
+  const [textButton, setTextButton] = React.useState<string>(
+    language?.post_detail_page?.apply,
+  );
+  const [key, setKeyTab] = React.useState<string>('1');
   const [backgroundButton, setBackgroundButton] =
     React.useState<string>('#0D99FF');
   const [checkPostUser, setCheckPostUser] = React.useState<Boolean>(false);
@@ -189,9 +207,58 @@ const Detail: React.FC = () => {
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalApply, setOpenModalApply] = React.useState(false);
   const [isApplied, setIsApplied] = React.useState(false);
-
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
   // const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+
+  const getlanguageApi = async () => {
+    try {
+      const result = await languageApi.getLanguage(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        setLanguage(result.data);
+        // setUser(result);
+      }
+    } catch (error) {
+      // setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    getlanguageApi();
+  }, [languageRedux]);
+  const itemsShare = [
+    {
+      nameShare: language?.post_detail_page?.copy_link,
+      icon: <CopyIcon />,
+      source: '',
+    },
+    {
+      nameShare: 'Mail',
+      icon: <MailIcon />,
+      source: '',
+    },
+    {
+      nameShare: 'Facebook',
+      icon: <FacebookIcon />,
+      source: '',
+    },
+    // {
+    //   nameShare: 'Messenger',
+    //   icon: <MessagerIcon />,
+    //   source: '',
+    // },
+    // {
+    //   nameShare: 'Zalo',
+    //   icon: <ZaloIcon />,
+    //   source: '',
+    // },
+  ];
+
   const POST_ID = Number(searchParams.get('post-id'));
   // const openNotification = () => {
   //   api.info({
@@ -223,18 +290,15 @@ const Detail: React.FC = () => {
   //   });
   // };
 
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-    setTabValue(newValue);
-  };
   // message if user login yet
-  const CheckWasLogin = () => {
-    api.info({
-      message: `Không thể thực hiện thao tác`,
-      description: 'Vui lòng đăng nhập để thực hiện thao tác',
-      placement: 'top',
-      icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
-    });
-  };
+  // const CheckWasLogin = () => {
+  //   api.info({
+  //     message: `Không thể thực hiện thao tác`,
+  //     description: 'Vui lòng đăng nhập để thực hiện thao tác',
+  //     placement: 'top',
+  //     icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+  //   });
+  // };
 
   const getDataCompany = () => {
     try {
@@ -243,7 +307,9 @@ const Detail: React.FC = () => {
 
   useEffect(() => {
     getDataCompany();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
+  console.log('backgroundButton', backgroundButton);
 
   // get post by id-post
   const getPostById = async () => {
@@ -251,7 +317,10 @@ const Detail: React.FC = () => {
       // setIsLoading(true);
       const accountId = localStorage.getItem('accountId');
       // const result = await postApi.getById(POST_ID);
-      const result = await postApi.getPostV3(POST_ID);
+      const result = await postApi.getPostV3(
+        POST_ID,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       // console.log('result', result2);
       if (result) {
         // const list = result?.data.categories.map((category: any) =>
@@ -260,19 +329,32 @@ const Detail: React.FC = () => {
         // console.log('postId', result.data);
         // check  application status
         // setIsLoading(false);
+        document.title = result.data.title;
+        logEvent(analytics, 'screen_view' as string, {
+          // screen_name: screenName as string,
+          page_title: '/web_post_detail' as string,
+        });
+
         if (result.data.accountId === accountId) {
-          setTextButton('Chỉnh sửa bài tuyển dụng');
-          setBackgroundButton('black');
+          setTextButton(
+            languageRedux === 1
+              ? 'Chỉnh sửa bài tuyển dụng'
+              : 'Edit job posting',
+          );
+          setBackgroundButton('gray');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
-          setTextButton('Bài đăng đã đóng');
           setBackgroundButton('gray');
+          setTextButton(languageRedux === 1 ? 'Bài đăng đã đóng' : 'Closed');
           // setBackgroundButton('#0D99FF');
           result.data.applied = true;
         } else if (result.data.applied) {
-          setTextButton('Đã ứng tuyển');
-          // setBackgroundButton('gray');
+          setBackgroundButton('gray');
+          setTextButton(languageRedux === 1 ? 'Đã ứng tuyển' : 'Applied');
+        } else {
+          setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
           setBackgroundButton('#0D99FF');
+          // setCheckPostUser(true);
         }
         // else if (result.data.application_status === 2) {
         //   setTextButton('Hồ sơ được phê duyệt');
@@ -292,19 +374,26 @@ const Detail: React.FC = () => {
           setBookmarked(false);
         }
         // get post related by id post
-        const postNewest = await postApi.getPostRelated(POST_ID);
+        const postNewest = await postApi.getPostRelated(
+          POST_ID,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
         //setPost related
         setPostNewest(postNewest);
       }
     } catch (error) {
       console.error(error);
+      window.open('/', '_parent');
     }
   };
 
   const getAnotherPost = async (postID: number, position: number) => {
     try {
       // setIsLoading(true);
-      const result = await postApi.getById(postID);
+      const result = await postApi.getById(
+        postID,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         // setIsLoading(false);
         position === 0 ? setPostPrev(result.data) : setPostNext(result.data);
@@ -334,7 +423,8 @@ const Detail: React.FC = () => {
     getAnotherPost(POST_ID - 1, 0);
     //get post next
     getAnotherPost(POST_ID + 1, 1);
-  }, [bookmarked, POST_ID]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookmarked, POST_ID, languageRedux, language]);
 
   // set size for Breadcrumb
   // React.useEffect(() => {
@@ -350,32 +440,42 @@ const Detail: React.FC = () => {
   //   };
   // }, []);
 
-  console.log(post?.data);
+  // console.log(post?.data);
 
   // handle click button
   const onclick = async () => {
     try {
       if (!ACCESS_TOKEN) {
-        CheckWasLogin();
+        setOpenModalLogin(true);
+        // CheckWasLogin();
         return;
       }
+      // console.log('applied', post?.data.applied);
+      // console.log(
+      //   'post?.data?.companyResourceData?.name',
+      //   post?.data?.companyResourceData?.name,
+      // );
+
+      // Applied and Hijob
       if (
         // (post?.data.application_status === 1 && isHiJob) ||
-        (post?.data.applied &&
-          post?.data?.companyResourceData?.name === 'HIJOB') ||
-        (post?.data.applied &&
+        // (post?.data.applied &&
+        // post?.data?.companyResourceData?.name === 'HIJOB') ||
+        (post?.data?.applied &&
           post?.data?.companyResourceData?.name === 'HIJOB') ||
         (checkApply && post?.data?.companyResourceData?.name === 'HIJOB')
       ) {
         api.info({
-          message: `Bạn đã ứng tuyển công việc này!`,
-          description:
-            'Nhà tuyển dụng sẽ liên hệ bạn sớm nếu hồ sơ đạt yêu cầu.',
+          message: language?.post_detail_page?.applied_alert_mess,
+          description: language?.post_detail_page?.applied_alert_des,
           placement: 'top',
-          icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+          icon: <ExclamationCircleFilled style={{ color: 'blue' }} />,
         });
         return;
       }
+
+      // Applied but !Hijob
+
       if (
         // (post?.data.application_status === 1 && !isHiJob) ||
         (post?.data?.applied &&
@@ -387,7 +487,7 @@ const Detail: React.FC = () => {
       }
       // navigate to edit post
       if (checkPostUser) {
-        window.open(`edit-posted/?postId=${POST_ID}`);
+        window.open(`edit-posted/?postId=${POST_ID}`, 'width=800,height=600');
         return;
       }
       if (
@@ -400,8 +500,8 @@ const Detail: React.FC = () => {
         !userProfile.email
       ) {
         api.info({
-          message: `Cập nhật thông tin`,
-          description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
+          message: language?.post_detail_page?.update_infor_mess,
+          description: language?.post_detail_page?.update_infor_des,
           placement: 'top',
           icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
         });
@@ -457,6 +557,9 @@ const Detail: React.FC = () => {
     // const a = post?.data.bookmarked;
 
     try {
+      if (!localStorage.getItem('accessToken')) {
+        setOpenModalLogin(true);
+      }
       if (post?.data.bookmarked && bookmarked) {
         const result = await bookMarkApi.deleteBookMark(post?.data.id);
         if (result) {
@@ -490,7 +593,8 @@ const Detail: React.FC = () => {
       window.location.href = `mailto:?body=${encodeURIComponent(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
-          : post?.data.companyResourceData.postUrl,
+          : // : post?.data.companyResourceData.postUrl,
+            post?.data.shareLink,
       )}`;
     }
 
@@ -519,11 +623,12 @@ const Detail: React.FC = () => {
           : post?.data.companyResourceData.postUrl,
       )}`;
     }
-    if (nameShare === 'Sao chép liên kết') {
+    if (nameShare === 'Sao chép liên kết' || nameShare === 'Copy link') {
       copy(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
-          : post?.data.companyResourceData.postUrl,
+          : post?.data.shareLink,
+        // : post?.data.companyResourceData.postUrl,
       );
       // setCopied(true);
       dispatch<any>(setShowCopy(true));
@@ -536,20 +641,22 @@ const Detail: React.FC = () => {
   // console.log('copy link', copied);
   // console.log('date', new Date(post?.data.created_at).toLocaleDateString());
 
-  new Promise((resolve, reject) => {
-    if (post) document.title = `${post?.data?.title}`;
-  });
-
   // custom title firebase
   const analytics: any = getAnalytics();
 
   useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
+    // document.title = language?.post_detail_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'HiJob - Chi tiết bài tuyển dụng'
+        : 'HiJob - Job Post Details';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_post_detail' as string,
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux, language]);
 
   // const handleClickSearch = () => {
   //   window.location.href = `/search?q=${post?.data.company_name}`;
@@ -566,8 +673,12 @@ const Detail: React.FC = () => {
       'https://www.google.com/maps/place/' +
         `${post?.data.address}, ${
           post?.data.location ? post?.data.location.fullName : ''
-        }, ${post?.data.district ? post?.data.district?.fullName : ''}, ${
-          post?.data.district?.province
+        }, ${
+          post?.data?.location?.district
+            ? post?.data?.location?.district?.fullName
+            : ''
+        }, ${
+          post?.data?.location?.district?.province
             ? post?.data.district?.province?.fullName
             : ''
         }`,
@@ -580,11 +691,26 @@ const Detail: React.FC = () => {
   };
 
   const handleChangeStatus = async () => {
-    const result = await appplicationApi.applyAplication(POST_ID);
-    console.log('result ung tiyen', result);
-    if (true) {
-      // openNotification();
-      setTextButton('Đã ứng tuyển');
+    try {
+      const result = await appplicationApi.applyAplication(POST_ID);
+      // console.log('result ung tiyen', result);
+      if (result && post?.data?.applied) {
+        // openNotification();
+        setTextButton(language?.post_detail_page?.applied);
+        setBackgroundButton('gray');
+        setCheckApply(true);
+        // window.open(post?.data.resource.url, '_blank');
+        setOpenModalApply(false);
+      } else {
+        // openNotification();
+        setTextButton(language?.post_detail_page?.applied);
+        setBackgroundButton('gray');
+        setCheckApply(true);
+        // window.open(post?.data.resource.url, '_blank');
+        setOpenModalApply(false);
+      }
+    } catch (error) {
+      setTextButton(language?.post_detail_page?.applied);
       // setBackgroundButton('gray');
       setCheckApply(true);
       // window.open(post?.data.resource.url, '_blank');
@@ -603,24 +729,386 @@ const Detail: React.FC = () => {
       !userProfile.email
     ) {
       api.info({
-        message: `Cập nhật thông tin`,
-        description: 'Vui lòng cập nhật thông tin để ứng tuyển công việc',
+        message: language?.post_detail_page?.update_infor_mess,
+        description: language?.post_detail_page?.update_infor_des,
         placement: 'top',
         icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
       });
       return;
     }
-    const result = await appplicationApi.applyAplication(POST_ID);
-    console.log('result ung tiyen', result);
-    if (true) {
-      // openNotification();
-      setTextButton('Đã ứng tuyển');
-      // setBackgroundButton('gray');
-      setCheckApply(true);
-      // window.open(post?.data.resource.url, '_blank');
-      setOpenModalApply(false);
+    try {
+      const result: any = await appplicationApi.applyAplication(POST_ID);
+      // console.log('result ung tiyen', result);
+      // console.log('result ung tiyen', result?.success);
+      // console.log('result ung tiyen', result?.code);
+      if (
+        (result?.success as any) &&
+        (result.code as number) === (201 as any)
+      ) {
+        // openNotification();
+        setTextButton(language?.post_detail_page?.applied);
+        setBackgroundButton('gray');
+        setCheckApply(true);
+        // window.open(post?.data.resource.url, '_blank');
+        setOpenModalApply(false);
+      }
+    } catch (error) {
+      console.log('error', error);
+
+      // if (
+      //   (result?.success as any) &&
+      //   (result.code as number) === (400 as any)
+      // ) {
+      //   // openNotification();
+      //   setTextButton('Đã ứng tuyển');
+      //   // setBackgroundButton('gray');
+      //   setCheckApply(true);
+      //   // window.open(post?.data.resource.url, '_blank');
+      //   setOpenModalApply(false);
+      // }
     }
   };
+
+  const onChangeTab = (key: string) => {
+    setKeyTab(key);
+  };
+
+  const items: TabsProps['items'] = [
+    {
+      key: '1',
+      label: language?.post_detail_page?.job_information,
+      children: (
+        <>
+          <div className="job-title-container">
+            <div className="job-title-details">
+              {/* <div className="div-detail-row">
+                              <EnvironmentOutlined
+                                style={{ color: '#575757' }}
+                              />
+                              <div style={{ marginLeft: '10px' }}>
+                                {' '}
+                                <p>Địa chỉ</p>
+                                <h5>{post?.data.address}</h5>
+                              </div>
+                            </div> */}
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <JobTypePostIcon />
+                  <p>{language?.post_detail_page?.job_type}</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>{post?.data.postJobType.fullName}</h5>
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <ClockPostIcon />
+                  <p>{language?.post_detail_page?.working_hour}</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>
+                    {moment(new Date(post?.data.startTime)).format('HH:mm')} -{' '}
+                    {moment(new Date(post?.data.endTime)).format('HH:mm')}
+                  </h5>
+                </div>
+              </div>
+              <div
+                className="div-detail-row"
+                style={{
+                  display:
+                    post?.data?.startDate != null || post?.data?.endDate != null
+                      ? 'flex'
+                      : 'none',
+                }}
+              >
+                <div className="div-detail-row-titleItem">
+                  <CalendarPostIcon />
+                  <p>{language?.post_detail_page?.working_time}</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>
+                    {new Date(post?.data?.startDate).toLocaleDateString(
+                      'en-GB',
+                    )}
+                    -{' '}
+                    {new Date(post?.data?.endDate).toLocaleDateString('en-GB')}
+                  </h5>
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <CalendarPostIcon />
+                  <p>{language?.post_detail_page?.work_on_weekends}</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>
+                    {post?.data.isWorkingWeekend === 0
+                      ? language?.post_detail_page?.weekend_no
+                      : language?.post_detail_page?.weekend_yes}
+                  </h5>
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <MonitorPostIcon />
+                  <p>{language?.post_detail_page?.work_remotely}</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  <h5>
+                    {post?.data.isRemotely === 0
+                      ? language?.post_detail_page?.remote_no
+                      : language?.post_detail_page?.remote_yes}
+                  </h5>
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <DollarPostIcon />
+                  <p>{language?.post_detail_page?.salary}</p>
+                </div>
+                <div className="div-detail-row-titleItem">
+                  {post?.data.postSalaryType.id === 6 ? (
+                    <h5>{post?.data.postSalaryType.fullName}</h5>
+                  ) : (
+                    <h5>
+                      {new Intl.NumberFormat('en-US').format(
+                        post?.data.salaryMin,
+                      ) + ` ${post?.data.moneyTypeText}`}{' '}
+                      -{' '}
+                      {new Intl.NumberFormat('en-US').format(
+                        post?.data.salaryMax,
+                      ) + ` ${post?.data.moneyTypeText}`}
+                    </h5>
+                  )}
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <WorkPostIcon />
+                  <p>{language?.post_detail_page?.job_category}</p>
+                </div>
+                <div
+                  className="div-detail-row-titleItem"
+                  style={{ flexDirection: 'column', alignItems: 'flex-start' }}
+                >
+                  <h5>
+                    {post?.data.postCategories.map(
+                      (item: any, index: null | number) => `
+                      ${item.parentCategory.fullName}/${item.fullName}/
+                      `,
+                    )}
+                  </h5>
+                </div>
+              </div>
+              <div className="div-detail-row">
+                <div className="div-detail-row-titleItem">
+                  <ClockPostIcon />
+                  <p>{language?.post_detail_page?.expiration_date}</p>
+                </div>
+                <div
+                  className="div-detail-row-titleItem"
+                  style={{ flexDirection: 'column', alignItems: 'flex-start' }}
+                >
+                  <h5>
+                    {post?.data.expiredDate
+                      ? `${new Date(post?.data.expiredDate).toLocaleDateString(
+                          'en-GB',
+                        )}`
+                      : language?.post_detail_page?.indefinite}
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="post-detail-btns">
+            {contextHolder}
+            <Button
+              type="primary"
+              ghost
+              className="btn-mess"
+              icon={<MessageOutlined />}
+              style={{
+                padding: '20px',
+                display:
+                  post?.data?.companyResourceData?.name === 'HIJOB'
+                    ? 'flex'
+                    : 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onClick={() => {
+                if (!localStorage.getItem('accessToken')) {
+                  setOpenModalLogin(true);
+                  return;
+                }
+                window.open(
+                  `/message?post_id=${searchParams.get('post-id')}&user_id=${
+                    post?.data?.accountId
+                  } `,
+                  '_parent',
+                );
+              }}
+              // onClick={() => {
+              //   console.log(post?.data);
+              // }}
+            ></Button>
+            <Button
+              onClick={onclick}
+              className="btn-apply"
+              type={'primary'}
+              // disabled={checkApply}
+              style={{
+                fontSize: 16,
+                backgroundColor: `${backgroundButton}`,
+                color: 'white',
+                fontWeight: 'normal',
+                // position: 'absolute',
+                // bottom: '-212px',
+              }}
+              icon={checkPostUser ? <FormOutlined /> : null}
+            >
+              {textButton}
+            </Button>
+          </div>
+        </>
+      ),
+    },
+    post?.data?.postCompanyInformation && {
+      key: '2',
+      label: language?.post_detail_page?.company_infor,
+      style: {
+        display:
+          post?.data?.postCompanyInformation && key === '2' ? 'flex' : 'none',
+      },
+      children: (
+        <>
+          <div
+            className={`job-title-container`}
+            style={{ overflowY: 'scroll' }}
+          >
+            <div className="job-title-details">
+              <div className="div-intro-Company">
+                <Avatar
+                  shape="square"
+                  size={80}
+                  src={post?.data?.postCompanyInformation?.logoPath}
+                />
+                <div className="div-intro-Company_rows">
+                  <div className="div-intro-Company_row">
+                    <p>{post?.data?.postCompanyInformation?.name}</p>
+                  </div>
+                  <div className="div-intro-Company_row">
+                    <div className="div-intro-Company_row__item">
+                      <BoardiIntroCompanyPostIcon />
+                      <h3>
+                        {
+                          post?.data?.postCompanyInformation
+                            ?.companySizeInfomation?.nameText
+                        }
+                      </h3>
+                    </div>
+                    <div className="div-intro-Company_row__item">
+                      <CalendarPostIcon width={24} height={24} />
+                      <h3>
+                        {
+                          post?.data?.postCompanyInformation?.companyCategory
+                            ?.fullName
+                        }
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="div-detail-rowCompany">
+                <h3 style={{ display: 'block' }}>
+                  {language?.post_detail_page?.company_description}
+                </h3>
+                <div className="div-detail_descCompany">
+                  <p>
+                    {post?.data.postCompanyInformation
+                      ? post?.data.postCompanyInformation?.description
+                      : language?.post_detail_page?.not_update}
+                  </p>
+                </div>
+              </div>
+              <div className="div-detail-rowCompany">
+                <h3>{language?.post_detail_page?.basic_info}</h3>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <TaxCodeDetailPostIcon />
+                    <p>{language?.post_detail_page?.tax_code}</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation.taxCode
+                        ? post?.data?.postCompanyInformation?.taxCode
+                        : language?.post_detail_page?.not_update}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <LocationDetailPostIcon />
+                    <p>{language?.post_detail_page?.address}</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation
+                        ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                        : language?.post_detail_page?.not_update}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <MailDetailPostIcon />
+                    <p>Email</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation
+                        ? post?.data?.postCompanyInformation?.email
+                        : language?.post_detail_page?.not_update}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <PhoneDetailPostIcon />
+                    <p>{language?.post_detail_page?.phone_number}</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation
+                        ? post?.data?.postCompanyInformation?.phone
+                        : language?.post_detail_page?.not_update}
+                    </h5>
+                  </div>
+                </div>
+                <div className="div-detail-items">
+                  <div className="div-detail-titleItem">
+                    <WebDetailPostIcon />
+                    <p>Website</p>
+                  </div>
+                  <div className="div-detail-titleItem">
+                    <h5>
+                      {post?.data?.postCompanyInformation
+                        ? post?.data?.postCompanyInformation?.website
+                        : language?.post_detail_page?.not_update}
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ),
+    },
+  ];
+  // console.log('post?.data?', post?.data);
+  // console.log('dispatch(setPostNewestApi(result));', postNewest);
 
   return (
     <>
@@ -649,38 +1137,39 @@ const Detail: React.FC = () => {
               <div className="title-container">
                 <div className="top-title">
                   <h2>{post?.data.title}</h2>
-                  <img
-                    src={post?.data.companyResourceData.logo}
-                    alt={post?.data.companyResourceData.logo}
-                  />
+                  {post?.data.companyResourceData.logo ? (
+                    <img
+                      src={post?.data.companyResourceData.logo}
+                      alt={post?.data.companyResourceData.logo}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className="mid-title">
                   <div className="mid-title_companyName">
                     <CompanyNameDetailPostIcon width={24} height={24} />
-                    <h3
-                      onClick={handleClickSearch}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      {post?.data.companyName}
-                    </h3>
+                    <h3>{post?.data.companyName}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickSearch}
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      Xem tất cả
+                      {language?.post_detail_page?.see_all}
                     </h3>
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
                     <h3>{`${post?.data.address}, ${
-                      post?.data.location ? post?.data.location.fullName : ''
+                      post?.data?.location ? post?.data?.location?.fullName : ''
                     }, ${
-                      post?.data.district ? post?.data.district?.fullName : ''
+                      post?.data?.location?.district
+                        ? post?.data?.location?.district?.fullName
+                        : ''
                     }, ${
-                      post?.data.district?.province
-                        ? post?.data.district?.province?.fullName
+                      post?.data?.location?.district?.province
+                        ? post?.data?.location?.district?.province?.fullName
                         : ''
                     }`}</h3>
                     <h3>|</h3>
@@ -689,7 +1178,7 @@ const Detail: React.FC = () => {
                       style={{ cursor: 'pointer' }}
                       className="clickShow-detailPost"
                     >
-                      Xem trên bản đồ
+                      {language?.post_detail_page?.see_on_map}
                     </h3>
                   </div>
                 </div>
@@ -724,7 +1213,7 @@ const Detail: React.FC = () => {
                             send
                           </Link>
                         </div> */}
-                      <h3>Chia sẻ</h3>
+                      <h3>{language?.post_detail_page?.share}</h3>
                     </div>
                     <div className="actions-item" onClick={handleClickSave}>
                       {bookmarked ? (
@@ -733,7 +1222,7 @@ const Detail: React.FC = () => {
                       ) : (
                         <SaveIconOutline width={24} height={24} />
                       )}
-                      <h3>Lưu</h3>
+                      <h3>{language?.post_detail_page?.save}</h3>
                     </div>
                   </div>
                 </div>
@@ -796,16 +1285,26 @@ const Detail: React.FC = () => {
                     ]}
                     className="div-job-img-swipper"
                   >
-                    {post?.data.images.map((item: any, index: number) => {
-                      return (
-                        <SwiperSlide
-                          className="div-job-img-swipper_item"
-                          key={index}
-                        >
-                          <img src={item.url} alt="ảnh lỗi" />
-                        </SwiperSlide>
-                      );
-                    })}
+                    {post?.data?.images ? (
+                      post?.data?.images.map((item: any, index: number) => {
+                        return (
+                          <SwiperSlide
+                            className="div-job-img-swipper_item"
+                            key={index}
+                          >
+                            <img src={item.url} alt={language?.err_none_img} />
+                          </SwiperSlide>
+                        );
+                      })
+                    ) : (
+                      <SwiperSlide className="div-job-img-swipper_item">
+                        <img
+                          src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/no-image.png"
+                          alt={language?.err_none_img}
+                          style={{ objectFit: 'cover' }}
+                        />
+                      </SwiperSlide>
+                    )}
                   </Swiper>
                   <Swiper
                     onSwiper={setThumbsSwiper}
@@ -814,207 +1313,56 @@ const Detail: React.FC = () => {
                     slidesPerView={3}
                     freeMode={true}
                     centeredSlides={
-                      post?.data.images.length === 1 ? true : false
+                      post?.data.images && post?.data.images.length === 1
+                        ? true
+                        : false
                     }
                     watchSlidesProgress={true}
                     modules={[Mousewheel, FreeMode, Navigation, Thumbs]}
                     className="div-job-img-swipper_Thumbs"
                   >
-                    {post?.data.images.map((item: any, index: number) => {
-                      return (
-                        <SwiperSlide
-                          className="div-job-img-swipper-thumbs_item"
-                          key={index}
-                        >
-                          <img src={item.url} alt="Ảnh lỗi" />
-                        </SwiperSlide>
-                      );
-                    })}
+                    {post?.data?.images &&
+                      post?.data?.images.map((item: any, index: number) => {
+                        return (
+                          <SwiperSlide
+                            className="div-job-img-swipper-thumbs_item"
+                            key={index}
+                          >
+                            <img src={item.url} alt="Ảnh lỗi" />
+                          </SwiperSlide>
+                        );
+                      })}
                   </Swiper>
                 </div>
                 <div className="div-job-title" ref={componentRefJob}>
                   <Box
-                    sx={{ width: '100%', height: '100%', typography: 'body1' }}
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      typography: 'body1',
+                    }}
                   >
-                    <TabContext value={tabValue}>
-                      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList
-                          onChange={handleChangeTab}
-                          aria-label="lab API tabs example"
-                        >
-                          <Tab label="Thông tin việc làm" value="1" />
-                          <Tab label="Thông tin công ty" value="2" />
-                        </TabList>
-                      </Box>
-                      <TabPanel value="1">
-                        <div className="job-title-container">
-                          <div className="job-title-details">
-                            {/* <div className="div-detail-row">
-                              <EnvironmentOutlined
-                                style={{ color: '#575757' }}
-                              />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Địa chỉ</p>
-                                <h5>{post?.data.address}</h5>
-                              </div>
-                            </div> */}
-                            <div className="div-detail-row">
-                              <SlidersOutlined style={{ color: '#575757' }} />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Loại công viêc</p>
-                                <h5>{post?.data.postJobType.fullName}</h5>
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <ClockCircleOutlined
-                                style={{ color: '#575757' }}
-                              />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Giờ làm việc</p>
-                                <h5>
-                                  {moment(
-                                    new Date(post?.data.startTime),
-                                  ).format('HH:mm')}{' '}
-                                  -{' '}
-                                  {moment(new Date(post?.data.endTime)).format(
-                                    'HH:mm',
-                                  )}
-                                </h5>
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <CalendarOutlined style={{ color: '#575757' }} />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Làm việc cuối tuần</p>
-                                <h5>
-                                  {post?.data.isWorkingWeekend === 0
-                                    ? 'Không làm việc cuối tuần'
-                                    : 'Có làm việc cuối tuần'}
-                                </h5>
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <DollarOutlined style={{ color: '#575757' }} />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Mức lương</p>
-                                {post?.data.postSalaryType.id === 6 ? (
-                                  <h5>{post?.data.postSalaryType.fullName}</h5>
-                                ) : (
-                                  <h5>
-                                    {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salaryMin,
-                                    ) + ` ${post?.data.moneyTypeText}`}{' '}
-                                    -{' '}
-                                    {new Intl.NumberFormat('en-US').format(
-                                      post?.data.salaryMax,
-                                    ) + ` ${post?.data.moneyTypeText}`}
-                                  </h5>
-                                )}
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <CreditCardOutlined
-                                style={{ color: '#575757' }}
-                              />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Danh mục</p>
-                                {post?.data.postCategories.map(
-                                  (item: any, index: null | number) => (
-                                    <h5 key={index}>
-                                      {item.parentCategory.fullName}/
-                                      {item.fullName}
-                                    </h5>
-                                  ),
-                                )}
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <DesktopOutlined style={{ color: '#575757' }} />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Làm việc từ xa</p>
-                                <h5>
-                                  {post?.data.isRemotely === 0
-                                    ? 'Không làm việc từ xa'
-                                    : 'Có làm việc từ xa'}
-                                </h5>
-                              </div>
-                            </div>
-                            <div className="div-detail-row">
-                              <ClockCircleOutlined
-                                style={{ color: '#575757' }}
-                              />
-                              <div style={{ marginLeft: '10px' }}>
-                                {' '}
-                                <p>Thời gian hết hạn</p>
-                                <h5>
-                                  {post?.data?.expiredDate
-                                    ? moment(
-                                        new Date(post?.data?.expiredDate),
-                                      ).format('DD/MM/yyyy')
-                                    : 'Không thời hạn'}
-                                </h5>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <>
-                          {contextHolder}
-                          <Button
-                            onClick={onclick}
-                            className="btn-apply"
-                            type={'primary'}
-                            // disabled={checkApply}
-                            style={{
-                              fontSize: 16,
-                              backgroundColor: `${backgroundButton}`,
-                              color: 'white',
-                              fontWeight: 'normal',
-                            }}
-                            icon={checkPostUser ? <FormOutlined /> : null}
-                          >
-                            {textButton}
-                          </Button>
-                        </>
-                      </TabPanel>
-                      <TabPanel value="2">
-                        <div className="job-title-container">
-                          <div className="job-title-details">
-                            <div className="div-detail-rowCompany">
-                              <h3 style={{ display: 'block' }}>Mô tả</h3>
-                              <div>
-                                <p>Chưa cập nhật</p>
-                              </div>
-                            </div>
-                            <div className="div-detail-rowCompany">
-                              <h3>Thông tin cơ bản</h3>
-                              <div>
-                                <p>Chưa cập nhật</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </TabPanel>
-                    </TabContext>
+                    <Tabs
+                      defaultActiveKey="1"
+                      centered
+                      items={items}
+                      animated={false}
+                      onChange={onChangeTab}
+                    />
                   </Box>
                 </div>
               </div>
               <div className="description-container">
                 <div className="div-description-mo">
                   <div className="description">
-                    <h3>Mô tả công việc</h3>
+                    <h3>{language?.post_detail_page?.job_description}</h3>
                     <div
                       style={{
                         whiteSpace: 'pre-line',
                         fontFamily: 'Roboto',
                         marginTop: '18px',
                         wordBreak: 'break-word',
+                        fontSize: '14px',
                       }}
                     >
                       {post?.data.description}
@@ -1028,7 +1376,7 @@ const Detail: React.FC = () => {
                           <div className="icon">
                             <BackIcon width={17} height={17} />
                           </div>
-                          <span>Previous job</span>
+                          <span>{language?.post_detail_page?.pre_job}</span>
                         </div>
                         <div
                           className="description-button_next"
@@ -1037,7 +1385,7 @@ const Detail: React.FC = () => {
                             color: postNext ? 'black' : '#cccc',
                           }}
                         >
-                          <span>Next job</span>
+                          <span>{language?.post_detail_page?.next_job}</span>
                           <div
                             className="icon"
                             style={
@@ -1080,11 +1428,11 @@ const Detail: React.FC = () => {
                   </Button> */}
                 </div>
                 <div className="div-suggest">
-                  <h3>Việc làm tương tự </h3>
+                  <h3>{language?.post_detail_page?.similar_jobs}</h3>
                   <div className="item">
                     {postNewest?.data?.posts.map(
                       (item: PostNewest, index: null | number) => (
-                        <ItemSuggest item={item} />
+                        <ItemSuggest item={item} key={index} />
                       ),
                     )}
                   </div>
@@ -1109,7 +1457,7 @@ const Detail: React.FC = () => {
                 component="h2"
                 style={{ position: 'relative' }}
               >
-                Chia sẻ công việc này
+                {language?.post_detail_page?.share_this_job}
                 <IconButton
                   aria-label="close"
                   onClick={handleCloseModalShare}
@@ -1137,11 +1485,12 @@ const Detail: React.FC = () => {
                 </div>
               </div>
               <div className="items-share">
-                {itemsShare.map((itemShare) => (
+                {itemsShare.map((itemShare: any, index: number) => (
                   <div
                     // to={`/post-detail?post-id=${post?.data.id}`}
                     className="item-share"
                     onClick={() => handleClickShareSource(itemShare.nameShare)}
+                    key={index}
                   >
                     {itemShare.icon}
                     <span style={{ marginLeft: '4px' }}>
@@ -1166,7 +1515,7 @@ const Detail: React.FC = () => {
                 component="h2"
                 sx={{ textAlign: 'center', color: '#0d99ff' }}
               >
-                Ứng tuyển cho công việc này
+                {language?.post_detail_page?.apply_this_job_mess}
               </Typography>
               <Typography
                 id="modal-modal-title"
@@ -1175,10 +1524,10 @@ const Detail: React.FC = () => {
                 sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
               >
                 {post?.data?.companyResourceData?.name === 'HIJOB'
-                  ? 'Thông tin của bạn sẽ được gửi cho nhà tuyển dụng. Bạn có muốn ứng tuyển công việc này không?'
+                  ? language?.post_detail_page?.apply_this_job_des
                   : isApplied
-                  ? 'Bạn đã ứng tuyển công việc này chưa?'
-                  : 'Bạn có muốn chuyển sang trang của bài đăng này không?'}
+                  ? language?.post_detail_page?.have_applied_yet
+                  : language?.post_detail_page?.forward_des}
               </Typography>
 
               <Box
@@ -1198,7 +1547,9 @@ const Detail: React.FC = () => {
                     width: '300px',
                   }}
                 >
-                  {isApplied ? 'Chưa' : 'Không'}
+                  {isApplied
+                    ? language?.post_detail_page?.not_yet
+                    : language?.no}
                 </Button>
                 <Button
                   type="primary"
@@ -1213,11 +1564,18 @@ const Detail: React.FC = () => {
                     width: '300px',
                   }}
                 >
-                  {isApplied ? 'Rồi' : 'Có'}
+                  {isApplied
+                    ? language?.post_detail_page?.already
+                    : language?.yes}
                 </Button>
               </Box>
             </Box>
           </Modal>
+          <ModalLogin
+            openModalLogin={openModalLogin}
+            setOpenModalLogin={setOpenModalLogin}
+          />
+          <RollTop />
           <Footer />
         </div>
       )}
