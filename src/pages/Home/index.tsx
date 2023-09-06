@@ -40,31 +40,12 @@ import Community from '#components/Home/Community';
 import Footer from '../../components/Footer/Footer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
-import languageApi from 'api/languageApi';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [language, setLanguage] = React.useState<any>();
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
 
   useEffect(() => {
     logEvent(analytics, 'screen_view' as string, {
@@ -132,11 +113,11 @@ const Home: React.FC = () => {
     if (currentHeight >= prevHeight && tabs !== null && breadCrumb !== null) {
       tabs.style.top = '-70px';
       breadCrumb.style.marginTop = '-192px';
-      setTimeout(() => {
-        currentHeight = 0;
-        tabs.style.top = '70px';
-        breadCrumb.style.marginTop = '192px';
-      }, 500);
+      // setTimeout(() => {
+      //   currentHeight = 0;
+      //   tabs.style.top = '70px';
+      //   breadCrumb.style.marginTop = '192px';
+      // }, 500);
     } else {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';

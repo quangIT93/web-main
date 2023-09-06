@@ -16,7 +16,11 @@ const appplicationApi = {
   },
   applyAplication: (postId: Number) => {
     const URL = `/v1/application/create`
-    return axiosClient.post(URL, { postId })
+    return axiosClient.post(URL, { postId }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
   },
 }
 export default appplicationApi
