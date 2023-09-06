@@ -12,12 +12,12 @@
 
   @media screen and (max-width: 555px) {
     display: none;
-    height: 75%;
+    // height: 80%;
   }
 
   @include breakpoint(mobile) {
     display: none;
-    height: 75%;
+    // height: 80%;
   }
 
   .header-list_chat {
@@ -610,13 +610,15 @@
 
 .show-list-chat-responesive {
 
+  display: flex;
+
   @media screen and (max-width: 555px) {
-    display: block;
+    // display: block;
     width: 100%;
   }
 
   @include breakpoint(mobile) {
-    display: block;
+    // display: block;
     width: 100%;
   }
 }

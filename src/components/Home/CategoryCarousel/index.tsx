@@ -130,7 +130,7 @@ const CategoryCarousel: React.FC = () => {
   }
 
   // Get the cookie
-  function ư(name: string): string | null {
+  function getCookie(name: string): string | null {
     let nameEQ = name + '=';
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {

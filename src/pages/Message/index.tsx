@@ -108,9 +108,6 @@ const Message = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log('windowWidth: ', windowWidth);
-
-  console.log('render chat');
   return (
     <div className="message-page">
       <Navbar />
@@ -166,7 +163,7 @@ const Message = () => {
       )}
 
       <RollTop />
-      <Footer />
+      {windowWidth > 784 ? <Footer /> : <></>}
     </div>
   );
 };
