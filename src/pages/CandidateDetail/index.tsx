@@ -519,6 +519,7 @@ const CandidateDetail: React.FC = () => {
                   marginTop: '20px',
                   overflowWrap: 'break-word',
                   color: '#575757',
+                  fontSize: '14px',
                 }}
               >
                 {dataCandidate?.applicationProfile?.introduction

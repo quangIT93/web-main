@@ -17,6 +17,10 @@
 
             .edit-logo-company-content {
 
+                label {
+                    font-size: 14px;
+                }
+
                 .company-logo {
                     margin-top: 8px;
 
@@ -63,6 +67,14 @@
             .edit-name-company,
             .edit-tax-company {
                 flex: 1;
+                label {
+                    font-size: 14px;
+                }
+
+                .MuiInputBase-input {
+                    font-size: 14px;
+                 }
+
             }
 
             @media screen and (max-width: 590px) {
@@ -88,6 +100,19 @@
 
                 .edit-titleAddress {
                     flex: 1;
+                    label {
+                        font-size: 14px;
+                    }
+                    
+                    #jobTitle {
+                        font-size: 14px;
+                    }
+
+                    .MuiInputBase-input {
+                        font-size: 14px;
+                     }
+
+
                 }
             }
         }
@@ -100,6 +125,14 @@
             .edit-phone-company,
             .edit-mail-company {
                 flex: 1;
+                label {
+                    font-size: 14px;
+                }
+
+                .MuiInputBase-input {
+                    font-size: 14px;
+                 }
+
             }
 
             @media screen and (max-width: 590px) {
@@ -108,14 +141,26 @@
             }
         }
 
+        #editJob {
+            font-size: 14px;
+        }
         .edit-role-web-company-container {
             display: flex;
             margin-top: 24px;
             gap: 32px;
 
+
             .edit-role-company,
             .edit-web-company {
                 flex: 1;
+                label {
+                    font-size: 14px;
+                }
+
+             .MuiInputBase-input {
+                font-size: 14px;
+             }
+
             }
 
             @media screen and (max-width: 590px) {
@@ -132,6 +177,14 @@
             .edit-field-company,
             .edit-scale-company {
                 flex: 1;
+                label {
+                    font-size: 14px;
+                }
+
+                .MuiInputBase-input {
+                    font-size: 14px;
+                 }
+
             }
 
             @media screen and (max-width: 590px) {
@@ -142,6 +195,12 @@
 
         .edit-des-company-container {
             margin-top: 24px;
+
+            .edit-des-company{
+                .MuiInputBase-input {
+                    font-size: 14px;
+                }
+            }
         }
 
 

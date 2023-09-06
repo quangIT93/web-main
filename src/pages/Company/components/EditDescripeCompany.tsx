@@ -12,6 +12,7 @@ import languageApi from 'api/languageApi';
 const styleLabel = {
   fontWeight: 700,
   color: '#000000',
+  fontSize: 14,
 };
 
 interface IEditDescripeCompany {
@@ -20,14 +21,16 @@ interface IEditDescripeCompany {
 }
 
 const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const { dataCompany, setDataCompany } = props;
   const [language, setLanguageState] = React.useState<any>();
 
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguageState(result.data);
@@ -39,8 +42,8 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const handleEditCompanyDes = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -61,9 +64,7 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          {
-            language?.company_description
-          }{' '}
+          {language?.company_description}{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
@@ -74,11 +75,9 @@ const EditDescripeCompany: React.FC<IEditDescripeCompany> = (props) => {
           name="title"
           value={dataCompany?.description}
           onChange={handleEditCompanyDes}
-          sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={
-            language?.company_page?.place_des
-          }
-        //   error={titleError} // Đánh dấu lỗi
+          sx={{ width: '100%', marginTop: '8px', fontSize: '14px' }}
+          placeholder={language?.company_page?.place_des}
+          //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>

@@ -354,7 +354,7 @@ const BreadcrumbsCpn: React.FC = () => {
         // top: '-60px',
         zIndex: '1',
         background: '#ffffff',
-        padding: '16px 00px ',
+        padding: '16px 0px ',
         left: 0,
         right: 0,
         borderBottom: '1px solid #e5e5e5',

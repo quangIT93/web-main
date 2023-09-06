@@ -20,6 +20,10 @@ import { ImageIcon, SendIcon, CloseIcon } from '#components/Icons';
 import './style.scss';
 
 import { ChatContext } from 'context/ChatContextProvider';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer';
+
 import { messVi } from 'validations/lang/vi/mess';
 import { messEn } from 'validations/lang/en/mess';
 import { postDetail } from 'validations/lang/vi/postDetail';
@@ -28,21 +32,27 @@ import { postDetailEn } from 'validations/lang/en/postDetail';
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
   openListChat: boolean;
-  language: any;
-  languageRedux: any;
+  setApply: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ListChat: React.FC<IOpenListChat> = (props) => {
-  const { language, languageRedux } = props;
+  // const { language, languageRedux } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const [windowWidth, setWindowWidth] = useState(false);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const [message, setMessage] = useState('');
 
   const [allListChat, setAllListChat] = useState<any>([]);
   // const [profileUser, setProfileUser] = useState<any>({});
   // const [image, setImage] = useState<File | null>(null);
-  // const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [previousDate, setPreviousDate] = useState<string | null>(null)
@@ -78,23 +88,25 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
   // const previousDate = useRef<string | null>(null);
 
-  useEffect(() => {
-    socket.current = io(
-      // 'https://181f-14-161-42-152.ngrok-free.app/',
-      'https://neoworks.vn',
-      // 'https://aiworks.vn',
-      {
-        extraHeaders: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      },
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   socket.current = io(
+  //     // 'https://181f-14-161-42-152.ngrok-free.app/',
+  //     'https://neoworks.vn',
+  //     // 'https://aiworks.vn',
+  //     {
+  //       extraHeaders: {
+  //         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  //       },
+  //     },
+  //   );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const getAllListChat = async () => {
     setOpenBackdrop(true);
     try {
+      console.log('getData');
+
       const result = await messageApi.getChatMessage(
         searchParams.get('user_id'),
         // 36353,
@@ -132,31 +144,120 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   //   getProfileUser();
   // }, []);
 
+  console.log('socket connection', socket.current);
+  // useEffect(() => {
+  //   // kết nối web socket
+  //   // socket.current.on('connect', () => {
+  //   // setIsConnected(true);
+  //   // });
+  //   console.log('socket.current vao', socket.current);
+
+  //   if (isConnected === false && !socket.current) {
+  //     socket.current = io('https://neoworks.vn', {
+  //       extraHeaders: {
+  //         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  //       },
+  //     });
+  //     console.log('socket.current trong', socket.current);
+
+  //     socket.current.on('disconnect', (reason: any) => {
+  //       console.log('ket noi that bai');
+
+  //       setIsConnected(true);
+  //     });
+
+  //     socket.current.on('connect', () => {
+  //       // Kết nối thành công
+  //       console.log('ket noi thanh cong');
+
+  //       setIsConnected(true);
+  //     });
+
+  //     socket.current.on('server-send-message-to-receiver', (data: any) => {
+  //       // Xử lý tin nhắn từ máy chủ
+  //       setReceivedMessages((prevReceive) => [...prevReceive, data]);
+  //     });
+
+  //     socket.current.on('server-send-message-was-sent', (data: any) => {
+  //       // console.log('nhận tin nhan ve khi da gui xong', data);
+  //       // nhận tin nhan ve khi da gui xong
+  //       setSendMessages((prevSend: any[]) => [...prevSend, data]);
+  //     });
+  //   }
+
+  //   // ngắt kết nối websocket
+  //   // socket.current.on('disconnect', (reason: any) => {
+  //   // setIsConnected(false);
+  //   // });
+
+  //   // gửi in nhắn
+  //   // socket.current.on('client-send-message', (data: Message) => {
+  //   //   console.log('data', data)
+  //   //   setReceivedMessages((prevMessages: Message[]) => [
+  //   //     ...prevMessages,
+  //   //     data,
+  //   //   ])
+  //   // })
+
+  //   // socket.current.on('server-send-message-to-receiver', (data: any) => {
+  //   // console.log(' gui tin nhan di den nguoi nhan', data);
+  //   // gui tin nhan di den nguoi nhan
+  //   //   setReceivedMessages((prevReceive: any[]) => [...prevReceive, data]);
+  //   // });
+
+  //   // socket.current.on('server-send-message-was-sent', (data: any) => {
+  //   // console.log('nhận tin nhan ve khi da gui xong', data);
+  //   // nhận tin nhan ve khi da gui xong
+  //   //   setSendMessages((prevSend: any[]) => [...prevSend, data]);
+  //   // });
+
+  //   // socket.current.on('server-send-error-message', (data: any) => {
+  //   //   console.log('data', data)
+  //   // })
+
+  //   // return () => {
+  //   //   socket.current.disconnect() // Clean up the socket connection on component unmount
+  //   // }
+  //   // return () => {
+  //   //   socket.current.disconnect();
+  //   // };
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   useEffect(() => {
-    try {
-      // kết nối web socket
-      socket.current.on('connect', () => {
-        // setIsConnected(true);
+    if (isConnected === false && !socket.current) {
+      socket.current = io(
+        // 'https://neoworks.vn',
+        'https://aiworks.vn',
+        {
+          extraHeaders: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        },
+      );
+
+      console.log('socket.current trong', socket.current);
+      console.log('socket.current trong .connected', socket.current.connected);
+
+      socket.current.on('disconnect', (reason: any) => {
+        console.log('ket noi that bai');
+        setIsConnected(true);
       });
 
-      // ngắt kết nối websocket
-      // socket.current.on('disconnect', (reason: any) => {
-      // setIsConnected(false);
-      // });
+      if (socket.current.connected === false) {
+        setIsConnected(true);
+      }
 
-      // gửi in nhắn
-      // socket.current.on('client-send-message', (data: Message) => {
-      //   console.log('data', data)
-      //   setReceivedMessages((prevMessages: Message[]) => [
-      //     ...prevMessages,
-      //     data,
-      //   ])
-      // })
+      socket.current.on('connect', () => {
+        // Kết nối thành công
+        console.log('ket noi thanh cong');
+        setIsConnected(true);
+      });
 
       socket.current.on('server-send-message-to-receiver', (data: any) => {
-        // console.log(' gui tin nhan di den nguoi nhan', data);
-        // gui tin nhan di den nguoi nhan
-        setReceivedMessages((prevReceive: any[]) => [...prevReceive, data]);
+        // Xử lý tin nhắn từ máy chủ
+        setReceivedMessages((prevReceive) => [...prevReceive, data]);
       });
 
       socket.current.on('server-send-message-was-sent', (data: any) => {
@@ -164,19 +265,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         // nhận tin nhan ve khi da gui xong
         setSendMessages((prevSend: any[]) => [...prevSend, data]);
       });
-
-      // socket.current.on('server-send-error-message', (data: any) => {
-      //   console.log('data', data)
-      // })
-
-      // return () => {
-      //   socket.current.disconnect() // Clean up the socket connection on component unmount
-      // }
-    } catch (error) {
-      console.log('eror', error);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); // Thêm một mảng phụ thuộc trống
 
   // console.log('receive', receivedMessages)
   // console.log('send', sendMessages)
@@ -235,18 +325,18 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   };
 
   // Khi dữ liệu allListChat được cập nhật, cuộn xuống cuối cùng
-  React.useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollTop = listRef.current.clientHeight;
-    }
-    if (lastChatRef.current) {
-      // lastChatRef.current.scrollIntoView({
-      //   behavior: 'auto',
-      //   block: 'end',
-      // });
-      // lastChatRef.current.scrollIntoView(false);
-    }
-  }, [allListChat]);
+  // React.useEffect(() => {
+  //   if (listRef.current) {
+  //     listRef.current.scrollTop = listRef.current.clientHeight;
+  //   }
+  //   if (lastChatRef.current) {
+  // lastChatRef.current.scrollIntoView({
+  //   behavior: 'auto',
+  //   block: 'end',
+  // });
+  // lastChatRef.current.scrollIntoView(false);
+  //   }
+  // }, [allListChat]);
 
   useEffect(() => {
     if (listRef.current) {
@@ -272,6 +362,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
     if (result) {
       // console.log('result', result.data);
+      props.setApply(true);
     }
   };
 
@@ -383,7 +474,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                 type={userInfoChat.applied ? 'default' : 'primary'}
                 disabled={
                   userInfoChat.post_status === 3 ||
-                  userInfoChat.post_status === 1
+                  userInfoChat.post_status === 0
                 }
                 style={
                   userInfoChat.is_owner === true
