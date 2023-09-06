@@ -55,6 +55,10 @@
         height: 100%;
         width: 35%;
 
+        @media screen and (max-width: 555px) {
+          display: none !important;
+        }
+
         @include breakpoint(tablet) {
           width: 50%;
         }
@@ -67,6 +71,10 @@
 
         @include breakpoint(mobile) {
           display: none !important;
+        }
+
+        @media screen and (max-width: 555px) {
+          width: 100%;
         }
       }
     }
