@@ -361,6 +361,8 @@ const BreadcrumbsCpn: React.FC = () => {
         '@media (max-width: 767px)': {
           marginTop: '180px',
         },
+        boxShadow:
+          '10px 0px 0px rgb(255, 255, 255), -10px 0px 0px rgb(255, 255, 255)',
       }}
     >
       {isLoading ? (

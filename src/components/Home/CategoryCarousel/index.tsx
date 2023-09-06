@@ -51,6 +51,7 @@ import { RootState } from '../../../store/reducer';
 // import { home } from 'validations/lang/vi/home';
 import languageApi from 'api/languageApi';
 import { setPostNewestApiV3 } from 'store/reducer/postReducerV3/newWestReducer';
+import { getCookie } from 'cookies';
 
 type DivRef = React.RefObject<HTMLUListElement> | null;
 
@@ -129,7 +130,7 @@ const CategoryCarousel: React.FC = () => {
   }
 
   // Get the cookie
-  function getCookie(name: string): string | null {
+  function ư(name: string): string | null {
     let nameEQ = name + '=';
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
