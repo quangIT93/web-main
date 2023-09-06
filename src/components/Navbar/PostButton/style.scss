@@ -10,17 +10,17 @@
     bottom: 130px;
     // z-index: 2;
     background-color: $primary-color;
-    z-index: 10;
+    z-index: 5;
     @include breakpoint(mobile) {
         display: block;
-        bottom: 130px !important;
+        bottom: 60px !important;
 
     }
 
 
     @media screen and (min-height: 431px) and (max-width: 599px) {
         display: block;
-        bottom: 130px !important;
+        bottom: 60px !important;
 
         
     }

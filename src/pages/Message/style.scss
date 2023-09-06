@@ -1,16 +1,19 @@
 @import '../../scss/mixins';
 @import '../../scss/variable';
 
+
+
 .message-page {
   // margin-top: 70px;
   height: 100vh;
-
+  overflow: hidden;
   .message-page_main {
     // padding: 20px 180px;
     max-width: 1080px;
     margin: 0 auto;
     padding: 70px 24px 24px !important;
     height: 100%;
+    // overflow: hidden;
 
     
     @media screen and (min-width:1025px) and (max-width: 1280px) {
@@ -155,5 +158,5 @@
 ::-webkit-scrollbar-thumb {
   background-color: ccc;
   border-radius: 20px;
-  border: 100px solid #1b87f5;
+  border: 1px solid #1b87f5;
 }

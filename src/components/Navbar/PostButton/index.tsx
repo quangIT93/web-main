@@ -16,24 +16,26 @@ interface Iprops {
 }
 
 const PostButton: React.FC<Iprops> = (props) => {
-  const dataProfile = useSelector((state: RootState) => state.profileUser);
-  const [height, setHeight] = React.useState(0);
+  // const dataProfile = useSelector((state: RootState) => state.profileUser);
+  // const [height, setHeight] = React.useState(0);
   // const currentPath = window.location.pathname;
   // console.log('ccc', currentPath);
 
-  const listenToScroll = () => {
-    const winScroll =
-      document.body.scrollTop || document.documentElement.scrollTop;
-    setHeight(winScroll);
-  };
+  // const listenToScroll = () => {
+  //   const winScroll =
+  //     document.body.scrollTop || document.documentElement.scrollTop;
+  //   setHeight(winScroll);
+  // };
 
-  React.useEffect(() => {
-    // if (currentPath === '/') {
-    // }
-    window.addEventListener('scroll', listenToScroll);
-    return () => window.removeEventListener('scroll', listenToScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // React.useEffect(() => {
+  //   // if (currentPath === '/') {
+  //   // }
+  //   window.addEventListener('scroll', listenToScroll);
+  //   return () => window.removeEventListener('scroll', listenToScroll);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+  console.log('voooooo');
+
   return (
     <Button
       className="post-button-responsive"
@@ -42,7 +44,10 @@ const PostButton: React.FC<Iprops> = (props) => {
       shape="circle"
       icon={<FormOutlined />}
       onClick={() => {
-        if (dataProfile && localStorage.getItem('refreshToken')) {
+        if (
+          localStorage.getItem('accessToken') &&
+          localStorage.getItem('refreshToken')
+        ) {
           window.open('/post', '_seft');
         } else {
           props.setOpenModalLogin(true);
@@ -50,13 +55,9 @@ const PostButton: React.FC<Iprops> = (props) => {
       }}
       style={
         // true
-        height > 200
-          ? {
-              bottom: '140px',
-            }
-          : {
-              bottom: '060px',
-            }
+        {
+          bottom: '140px',
+        }
       }
     />
   );

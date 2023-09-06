@@ -66,7 +66,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   };
 
   useEffect(() => {
-    updateWindowWidth();    
+    updateWindowWidth();
   }, [windowWidth]);
 
   const closeListChat = () => {
@@ -636,6 +636,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                 behavior: 'smooth',
                 block: 'end',
               });
+              window.scrollTo(0, document.body.scrollHeight);
               setMessage(e.target.value);
             }}
             onKeyDown={handleKeyPress}

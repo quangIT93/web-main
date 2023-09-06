@@ -1821,8 +1821,8 @@ const Navbar: React.FC = () => {
           </div>
         </Collapse>
         {/* {openNotificate ? <Notificate /> : <></>} */}
-        <PostButton setOpenModalLogin={setOpenModalLogin} />
       </Container>
+      <PostButton setOpenModalLogin={setOpenModalLogin} />
     </div>
   );
 };
