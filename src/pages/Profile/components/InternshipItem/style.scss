@@ -1,0 +1,38 @@
+.internship-item {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    justify-content: space-between;
+
+    .div-item-left {
+        display: flex;
+        flex-direction: row;
+
+        .div-time-line {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .div-info-item {
+            display: flex;
+            flex-direction: column;
+
+            p {
+                color: #575757;
+                // font-style: italic;
+            }
+        }
+    }
+
+    .div-item-right {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .ant-space-align-center {
+        align-items: flex-start;
+    }
+}

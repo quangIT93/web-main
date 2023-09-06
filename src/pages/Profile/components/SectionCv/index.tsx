@@ -10,6 +10,13 @@ import { Box, Grid } from "@mui/material";
 import { Input } from "antd";
 import ModalReference from "#components/Profile/ModalReference";
 import ReferenceItem from "../ReferenceItem";
+import ModalInternship from "#components/Profile/ModalInternship";
+import InternshipItem from "../InternshipItem";
+import ModalActivity from "#components/Profile/ModalActivity";
+import ModalCourse from "#components/Profile/ModalCourse";
+import CourseItem from "../CourseItem";
+import ModalAward from "#components/Profile/ModalAward";
+import AwardItem from "../AwardItem";
 const { TextArea } = Input;
 
 interface ISectionCv {
@@ -30,6 +37,23 @@ interface IReferences {
     fullName: string;
     company: string;
 }
+interface IInternship {
+    title: string,
+    employer: string,
+    startDate: any,
+    endDate: any,
+    description: string,
+}
+interface ICourse {
+    title: string,
+    startDate: any,
+    endDate: any,
+}
+interface IAward {
+    title: string,
+    company: string,
+    description: string,
+}
 
 const SectionCv: React.FC<ISectionCv> = (props) => {
     const { loading, languageRedux, language } = props;
@@ -37,12 +61,20 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
     const [languageValues, setLanguageValues] = useState<any[]>([]);
     const [hobbieValues, setHobbieValues] = useState<any>('');
     const [referenceValues, setReferenceValues] = useState<any[]>([]);
+    const [internshipValues, setInternshipValues] = useState<any[]>([]);
+    const [activityValues, setActivityValues] = useState<any[]>([]);
+    const [courseValues, setCourseValues] = useState<any[]>([]);
+    const [awardValues, setAwardValues] = useState<any[]>([]);
     const [sections, setSections] = useState<any[]>([]);
     const [showSkill, setShowSkill] = useState<boolean>(false);
     const [showLanguage, setShowLanguage] = useState<boolean>(false);
     const [openModalSkills, setOpenModalSkills] = useState(false);
     const [openModallanguages, setOpenModallanguages] = useState(false);
     const [openModalReference, setOpenModalReference] = useState(false);
+    const [openModalInternship, setOpenModalInternship] = useState(false);
+    const [openModalActivity, setOpenModalActivity] = useState(false);
+    const [openModalCourse, setOpenModalCourse] = useState(false);
+    const [openModalAward, setOpenModalAward] = useState(false);
 
     const onChangeShowSkill = () => {
         setShowSkill(!showSkill);
@@ -125,7 +157,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                         </div>
                     </div>
                     <div className="skill-list">
-                        {skillValues?.length !== 0 ? (
+                        {skillValues && skillValues?.length !== 0 ? (
                             skillValues?.map((item: ISkills, index: number) => (
                                 <div className="skill-item" key={index}>
                                     <SkillItem
@@ -218,7 +250,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                             </div>
                         </div>
                         <div className="language-list">
-                            {languageValues?.length !== 0 ? (
+                            {languageValues && languageValues?.length !== 0 ? (
                                 languageValues?.map((item: Ilanguages, index: number) => (
                                     <div className="skill-item" key={index}>
                                         <LanguageItem
@@ -366,7 +398,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                             </div> */}
                         </div>
                         <div className="skill-list">
-                            {referenceValues?.length !== 0 ? (
+                            {referenceValues && referenceValues?.length !== 0 ? (
                                 referenceValues?.map((item: IReferences, index: number) => (
                                     <div className="skill-item" key={index}>
                                         <ReferenceItem
@@ -441,30 +473,19 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="donot-show"
-                                style={{
-                                    display: skillValues?.length !== 0 ? "flex" : "none"
-                                }}
-                            >
-                                <p>
-                                    {
-                                        languageRedux === 1 ?
-                                            "không hiện kỹ năng" :
-                                            "Don’t show experience level"
-                                    }
-                                </p>
-                                <Switch onChange={onChangeShowSkill} />
-                            </div>
                         </div>
-                        <div className="skill-list">
-                            {skillValues?.length !== 0 ? (
-                                skillValues?.map((item: ISkills, index: number) => (
+                        <div className="internship-list">
+                            {internshipValues && internshipValues?.length !== 0 ? (
+                                internshipValues?.map((item: IInternship, index: number) => (
                                     <div className="skill-item" key={index}>
-                                        <SkillItem
-                                            item={item}
+                                        <InternshipItem
+                                            typeItem={1}
                                             index={index}
-                                            setSkillValues={setSkillValues}
-                                            skillValues={skillValues}
+                                            item={item}
+                                            setInternshipValues={setInternshipValues}
+                                            internshipValues={internshipValues}
+                                            activityValues={activityValues}
+                                            setActivityValues={setActivityValues}
                                         />
                                     </div>
                                 ))
@@ -483,7 +504,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                         >
                             <Space
                                 style={{ alignItems: 'center', cursor: 'pointer' }}
-                                onClick={() => setOpenModalSkills(true)}
+                                onClick={() => setOpenModalInternship(true)}
                             >
                                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
@@ -493,11 +514,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                             </Space>
                         </div>
                     </div>
-                    {/* <ModalSkills
-            openModalSkills={openModalSkills}
-            setOpenModalSkills={setOpenModalSkills}
-            setSkillValues={setSkillValues}
-          /> */}
+                    <ModalInternship
+                        openModalInternship={openModalInternship}
+                        setOpenModalInternship={setOpenModalInternship}
+                        setInternshipValues={setInternshipValues}
+                    />
                 </Skeleton>
 
                 {/* Activities section */}
@@ -532,30 +553,19 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="donot-show"
-                                style={{
-                                    display: skillValues?.length !== 0 ? "flex" : "none"
-                                }}
-                            >
-                                <p>
-                                    {
-                                        languageRedux === 1 ?
-                                            "không hiện kỹ năng" :
-                                            "Don’t show experience level"
-                                    }
-                                </p>
-                                <Switch onChange={onChangeShowSkill} />
-                            </div>
                         </div>
-                        <div className="skill-list">
-                            {skillValues?.length !== 0 ? (
-                                skillValues?.map((item: ISkills, index: number) => (
+                        <div className="internship-list">
+                            {activityValues && activityValues?.length !== 0 ? (
+                                activityValues?.map((item: IInternship, index: number) => (
                                     <div className="skill-item" key={index}>
-                                        <SkillItem
-                                            item={item}
+                                        <InternshipItem
+                                            typeItem={0}
                                             index={index}
-                                            setSkillValues={setSkillValues}
-                                            skillValues={skillValues}
+                                            item={item}
+                                            setInternshipValues={setInternshipValues}
+                                            internshipValues={internshipValues}
+                                            activityValues={activityValues}
+                                            setActivityValues={setActivityValues}
                                         />
                                     </div>
                                 ))
@@ -574,7 +584,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                         >
                             <Space
                                 style={{ alignItems: 'center', cursor: 'pointer' }}
-                                onClick={() => setOpenModalSkills(true)}
+                                onClick={() => setOpenModalActivity(true)}
                             >
                                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
@@ -584,11 +594,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                             </Space>
                         </div>
                     </div>
-                    {/* <ModalSkills
-            openModalSkills={openModalSkills}
-            setOpenModalSkills={setOpenModalSkills}
-            setSkillValues={setSkillValues}
-          /> */}
+                    <ModalActivity
+                        openModalActivity={openModalActivity}
+                        setOpenModalActivity={setOpenModalActivity}
+                        setActivityValues={setActivityValues}
+                    />
                 </Skeleton>
 
                 {/* Courses section */}
@@ -623,30 +633,16 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="donot-show"
-                                style={{
-                                    display: skillValues?.length !== 0 ? "flex" : "none"
-                                }}
-                            >
-                                <p>
-                                    {
-                                        languageRedux === 1 ?
-                                            "không hiện kỹ năng" :
-                                            "Don’t show experience level"
-                                    }
-                                </p>
-                                <Switch onChange={onChangeShowSkill} />
-                            </div>
                         </div>
                         <div className="skill-list">
-                            {skillValues?.length !== 0 ? (
-                                skillValues?.map((item: ISkills, index: number) => (
+                            {courseValues && courseValues?.length !== 0 ? (
+                                courseValues?.map((item: ICourse, index: number) => (
                                     <div className="skill-item" key={index}>
-                                        <SkillItem
+                                        <CourseItem
                                             item={item}
                                             index={index}
-                                            setSkillValues={setSkillValues}
-                                            skillValues={skillValues}
+                                            setCourseValues={setCourseValues}
+                                            courseValues={courseValues}
                                         />
                                     </div>
                                 ))
@@ -665,7 +661,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                         >
                             <Space
                                 style={{ alignItems: 'center', cursor: 'pointer' }}
-                                onClick={() => setOpenModalSkills(true)}
+                                onClick={() => setOpenModalCourse(true)}
                             >
                                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
@@ -675,11 +671,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                             </Space>
                         </div>
                     </div>
-                    {/* <ModalSkills
-            openModalSkills={openModalSkills}
-            setOpenModalSkills={setOpenModalSkills}
-            setSkillValues={setSkillValues}
-          /> */}
+                    <ModalCourse
+                        openModalCourse={openModalCourse}
+                        setOpenModalCourse={setOpenModalCourse}
+                        setCourseValues={setCourseValues}
+                    />
                 </Skeleton>
 
                 {/* Awards section */}
@@ -729,15 +725,15 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                 <Switch onChange={onChangeShowSkill} />
                             </div>
                         </div>
-                        <div className="skill-list">
-                            {skillValues?.length !== 0 ? (
-                                skillValues?.map((item: ISkills, index: number) => (
+                        <div className="internship-list">
+                            {awardValues && awardValues?.length !== 0 ? (
+                                awardValues?.map((item: IAward, index: number) => (
                                     <div className="skill-item" key={index}>
-                                        <SkillItem
+                                        <AwardItem
                                             item={item}
                                             index={index}
-                                            setSkillValues={setSkillValues}
-                                            skillValues={skillValues}
+                                            setAwardValues={setAwardValues}
+                                            awardValues={awardValues}
                                         />
                                     </div>
                                 ))
@@ -756,7 +752,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                         >
                             <Space
                                 style={{ alignItems: 'center', cursor: 'pointer' }}
-                                onClick={() => setOpenModalSkills(true)}
+                                onClick={() => setOpenModalAward(true)}
                             >
                                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
@@ -766,11 +762,11 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                             </Space>
                         </div>
                     </div>
-                    {/* <ModalSkills
-            openModalSkills={openModalSkills}
-            setOpenModalSkills={setOpenModalSkills}
-            setSkillValues={setSkillValues}
-          /> */}
+                    <ModalAward
+                        openModalAward={openModalAward}
+                        setOpenModalAward={setOpenModalAward}
+                        setAwardValues={setAwardValues}
+                    />
                 </Skeleton>
             </div>
             <Skeleton className="skeleton-item" loading={loading} active>

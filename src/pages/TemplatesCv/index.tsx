@@ -11,6 +11,7 @@ import {
   BackIcon,
   LoginArrowIcon,
   ShareCvIcon,
+  TickIcon,
 } from '#components/Icons';
 
 // import Component
@@ -21,7 +22,7 @@ import './style.scss';
 import { Modal, Button, Avatar } from 'antd';
 
 const TemplatesCv: React.FC = () => {
-  const [fontSizeCV, setFontSizeCV] = React.useState(12);
+  const [fontSizeCV, setFontSizeCV] = React.useState(24);
 
   const handleClickMinusCircle = () => {
     if (fontSizeCV > 16) {
@@ -95,7 +96,9 @@ const TemplatesCv: React.FC = () => {
             <h3>|</h3>
 
             <div className="change-styles_color">
-              <div className={`circle-color black`}></div>
+              <div className={`circle-color black`}>
+                <TickIcon />
+              </div>
               <div className={`circle-color blue`}></div>
               <div className={`circle-color yellow`}></div>
               <div className={`circle-color green`}></div>
@@ -105,11 +108,11 @@ const TemplatesCv: React.FC = () => {
           <div className="button-cv">
             <Button
               type="primary"
-              // onClick={() => {
-              //   console.log('click');
+            // onClick={() => {
+            //   console.log('click');
 
-              //   setOpenModalLogin(true);
-              // }}
+            //   setOpenModalLogin(true);
+            // }}
             >
               <LoginArrowIcon />
               Lưu và tải PDF
