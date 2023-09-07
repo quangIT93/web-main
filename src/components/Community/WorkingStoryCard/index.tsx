@@ -120,9 +120,9 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
 
   const handleMoveToDetailPage = (id: any, e: any) => {
     e.stopPropagation();
-    location?.pathname === '/history' ?
-      setCookie('fromHistory', '30', 365) :
-      setCookie('fromHistory', '0', 365)
+    location?.pathname === '/history'
+      ? setCookie('fromHistory', '30', 365)
+      : setCookie('fromHistory', '0', 365);
     localStorage.setItem('reload', 'true');
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
   };
@@ -175,6 +175,7 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
     <>
       <div
         className="comunitypostNew-card-wrap_content"
+        id={item?.id}
         key={index}
         onClick={(e) => handleMoveToDetailPage(item?.id, e)}
       >

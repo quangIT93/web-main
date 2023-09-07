@@ -290,6 +290,8 @@ const BreadcrumbsCpn: React.FC = () => {
         border: '1px solid #0D99FF',
         color: '#0D99FF',
         background: '#ffffff',
+        fontSize: '12px',
+        lineHeight: '2',
       }}
     >
       {valueJobChild?.parentName}
@@ -316,6 +318,8 @@ const BreadcrumbsCpn: React.FC = () => {
             border: '1px solid #0D99FF',
             color: '#0D99FF',
             background: '#ffffff',
+            fontSize: '12px',
+            lineHeight: '2',
           }}
         >
           {arrayChild?.length === 0 || arrayChild?.length === undefined

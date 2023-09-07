@@ -163,7 +163,7 @@ const CategoryCarousel: React.FC = () => {
       setTimeout(() => {
         tabs.style.top = '70px';
         breadCrumb.style.marginTop = '192px';
-      }, 200);
+      }, 0);
     }
 
     // const sectionToNavigate = document.getElementById('new-job');
