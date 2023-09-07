@@ -3,7 +3,8 @@ import { ActionType , PostTypes } from "../../types"
 
 const initialState: any = {
   data: {
-    posts: []
+    posts: [],
+    is_over: false
   }
 }
 const postReducer = (state = initialState, { type, payload }: PostTypes) => {
@@ -13,7 +14,11 @@ const postReducer = (state = initialState, { type, payload }: PostTypes) => {
       case ActionType.SET_POST_THEME:
         return payload.postTheme
       case ActionType.GET_POST_THEME_MORE:
-        state.data.posts.push(...payload.postThemeMore.data.posts)
+        if (!payload.postThemeMore.data.is_over) {
+          state.data.posts.push(...payload.postThemeMore.data.posts)
+        } else {       
+          state.data.is_over = true
+        }
         return state;
       default:
         return state;

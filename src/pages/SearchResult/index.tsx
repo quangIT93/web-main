@@ -9,8 +9,16 @@ import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { Cascader, Divider, Typography, Input, Space, message } from 'antd';
-import { EnvironmentOutlined } from '@ant-design/icons';
+import {
+  Cascader,
+  Divider,
+  Typography,
+  Input,
+  Space,
+  message,
+  Spin,
+} from 'antd';
+import { EnvironmentOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import { Box, Button } from '@mui/material';
 // import redux
@@ -18,6 +26,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from 'store/index';
 import { RootState } from 'store/reducer';
+
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
 // import api
@@ -145,13 +155,15 @@ const NewJobs: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [page, setPage] = React.useState(2);
+  const [page, setPage] = React.useState(0);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [searchData, setSearchData] = React.useState<any>();
 
   const listRef = React.useRef<HTMLUListElement | null>(null);
   // Lấy query params từ URL
   const queryParams = queryString.parse(window.location.search);
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   // Lấy giá trị của tham số cụ thể (ví dụ: post-id)
 
@@ -207,6 +219,8 @@ const NewJobs: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const analytics: any = getAnalytics();
   const [language, setLanguage] = React.useState<any>();
+
+  const [hasMore, setHasMore] = React.useState(true);
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
@@ -759,11 +773,37 @@ const NewJobs: React.FC = () => {
         // );
 
         // console.log('resut', result);
-        if (result) {
+        setHasMore(true);
+        console.log('resut', result);
+        console.log('hasMore', hasMore);
+
+        if (result && result.data.posts.length < 20) {
+          setSearchData(result.data);
+          // setIsVisible(true);
+          // setHotJobTotal(hotjob.data.length);
+          setHasMore(false);
+          setPage(0);
           setOpenBackdrop(false);
           setLoading(false);
+          return;
+        } else if (result && result.data.posts.length !== 0) {
           setSearchData(result.data);
+          // setHotJobType(hotjobtype);
+          // setIsVisible(true);
+          // setHotJobTotal(hotjob.data.length);
+          setOpenBackdrop(false);
+          setLoading(false);
+          return;
+        } else {
+          setSearchData({});
+          setHasMore(false);
+          setPage(0);
         }
+        // if (result) {
+        //   setOpenBackdrop(false);
+        //   setLoading(false);
+        //   setSearchData(result.data);
+        // }
       }
     } catch (error) {
       setOpenBackdrop(false);
@@ -827,6 +867,49 @@ const NewJobs: React.FC = () => {
   // const onSearch = (value: string) => {
   //   console.log('search:', value);
   // };
+
+  const fetchMoreData = async () => {
+    const nextPage = page + 1;
+    const result = await searchApi.getSearchByQueryV2(
+      QUERY,
+      nextPage,
+      MONEY_TYPE,
+      IS_WORKING_WEEKEND,
+      IS_REMOTELY,
+      null,
+      SALARY_MIN,
+      SALARY_MAX,
+      null,
+      null,
+      JOB_TYPE,
+      LIST_CATEGORIES_ID,
+      LIST_DIS_ID,
+      SALARY_TYPE,
+      languageRedux === 1 ? 'vi' : 'en',
+    );
+
+    if (result && result?.data?.length !== 0) {
+      // setStories((prev: any) => [...prev, ...result?.data?.communications]);
+      setSearchData((prev: any) => {
+        return {
+          posts: [...prev.posts, ...result.data.posts],
+          total: result.data.total,
+        };
+      });
+      setPage(nextPage);
+    } else {
+      setHasMore(false);
+      setPage(0);
+      message.config({
+        top: 750,
+        duration: 2,
+        maxCount: 3,
+      });
+      message.error('Đã hết bài viết');
+      // setIsVisible(false);
+      // console.log('Đã hết bài viết để hiển thị', result);
+    }
+  };
   return (
     <>
       <Navbar />
@@ -878,14 +961,30 @@ const NewJobs: React.FC = () => {
 
             {searchData?.posts.length > 0 ? (
               <>
-                <Grid container spacing={3} columns={{ xs: 6, sm: 4, md: 12 }}>
-                  {searchData?.posts.map((item: PostNewest, index: number) => (
-                    <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                      <JobCard item={item} />
-                    </Grid>
-                  ))}
-                </Grid>
-                <Stack
+                <InfiniteScroll
+                  dataLength={searchData.posts?.length}
+                  next={fetchMoreData}
+                  hasMore={hasMore}
+                  loader={
+                    <Spin style={{ width: '100%' }} indicator={antIcon} />
+                  }
+                  style={{ overflow: 'unset' }}
+                >
+                  <Grid
+                    container
+                    spacing={3}
+                    columns={{ xs: 6, sm: 4, md: 12 }}
+                  >
+                    {searchData?.posts.map(
+                      (item: PostNewest, index: number) => (
+                        <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                          <JobCard item={item} />
+                        </Grid>
+                      ),
+                    )}
+                  </Grid>
+                </InfiniteScroll>
+                {/* <Stack
                   spacing={2}
                   sx={{
                     display: searchData?.is_over ? 'none' : 'flex',
@@ -893,7 +992,6 @@ const NewJobs: React.FC = () => {
                     margin: '24px 0',
                   }}
                 >
-                  {/* <Pagination count={10} shape="rounded" /> */}
                   <Space
                     className="div-hover-more"
                     onClick={(e) => {
@@ -903,7 +1001,7 @@ const NewJobs: React.FC = () => {
                     <p>{language?.more}</p>
                     <MoreICon width={20} height={20} />
                   </Space>
-                </Stack>
+                </Stack> */}
               </>
             ) : (
               <></>
@@ -949,6 +1047,7 @@ const NewJobs: React.FC = () => {
             <p className="title-modal_noteKeyword">
               {language?.search_results_page?.add_keyword_titles}
             </p>
+
             <Input
               placeholder={language?.keyword2}
               // allowClear
