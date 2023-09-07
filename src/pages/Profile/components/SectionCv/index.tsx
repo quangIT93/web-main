@@ -213,10 +213,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                 </h3>
                                 <div className="profile-info-title_actions">
                                     <div className="edit-icon">
-                                        <SectionEditIcon />
+                                        <SectionEditIcon width={16} height={16} />
                                     </div>
                                     <div className="delete-icon" onClick={() => handleCloseSection(1)}>
-                                        <SectionDeleteIcon />
+                                        <SectionDeleteIcon width={16} height={16} />
                                     </div>
                                 </div>
                             </div>
@@ -304,10 +304,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                 </h3>
                                 <div className="profile-info-title_actions">
                                     <div className="edit-icon">
-                                        <SectionEditIcon />
+                                        <SectionEditIcon width={16} height={16} />
                                     </div>
                                     <div className="delete-icon" onClick={() => handleCloseSection(2)}>
-                                        <SectionDeleteIcon />
+                                        <SectionDeleteIcon width={16} height={16} />
                                     </div>
                                 </div>
                             </div>
@@ -361,10 +361,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                 </h3>
                                 <div className="profile-info-title_actions">
                                     <div className="edit-icon">
-                                        <SectionEditIcon />
+                                        <SectionEditIcon width={16} height={16} />
                                     </div>
                                     <div className="delete-icon" onClick={() => handleCloseSection(3)}>
-                                        <SectionDeleteIcon />
+                                        <SectionDeleteIcon width={16} height={16} />
                                     </div>
                                 </div>
                             </div>
@@ -438,10 +438,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                 </h3>
                                 <div className="profile-info-title_actions">
                                     <div className="edit-icon">
-                                        <SectionEditIcon />
+                                        <SectionEditIcon width={16} height={16} />
                                     </div>
                                     <div className="delete-icon" onClick={() => handleCloseSection(4)}>
-                                        <SectionDeleteIcon />
+                                        <SectionDeleteIcon width={16} height={16} />
                                     </div>
                                 </div>
                             </div>
@@ -518,10 +518,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                 </h3>
                                 <div className="profile-info-title_actions">
                                     <div className="edit-icon">
-                                        <SectionEditIcon />
+                                        <SectionEditIcon width={16} height={16} />
                                     </div>
                                     <div className="delete-icon" onClick={() => handleCloseSection(5)}>
-                                        <SectionDeleteIcon />
+                                        <SectionDeleteIcon width={16} height={16} />
                                     </div>
                                 </div>
                             </div>
@@ -598,10 +598,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                 </h3>
                                 <div className="profile-info-title_actions">
                                     <div className="edit-icon">
-                                        <SectionEditIcon />
+                                        <SectionEditIcon width={16} height={16} />
                                     </div>
                                     <div className="delete-icon" onClick={() => handleCloseSection(6)}>
-                                        <SectionDeleteIcon />
+                                        <SectionDeleteIcon width={16} height={16} />
                                     </div>
                                 </div>
                             </div>
@@ -675,10 +675,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                 </h3>
                                 <div className="profile-info-title_actions">
                                     <div className="edit-icon">
-                                        <SectionEditIcon />
+                                        <SectionEditIcon width={16} height={16} />
                                     </div>
                                     <div className="delete-icon" onClick={() => handleCloseSection(7)}>
-                                        <SectionDeleteIcon />
+                                        <SectionDeleteIcon width={16} height={16} />
                                     </div>
                                 </div>
                             </div>

@@ -212,7 +212,7 @@
            
 
             h3 {
-              font-size: 16px;
+              font-size: 14px;
 
               font-weight: 400;
             }
@@ -289,7 +289,7 @@
             column-gap: 10px;
 
             h3 {
-              font-size: 16px;
+              font-size: 14px;
               color: #575757;
               font-weight: 400;
             }
@@ -313,6 +313,9 @@
               flex-wrap: nowrap;
               gap: 6px;
               cursor: pointer;
+              h3 {
+                font-size: 14px;
+              }
 
               img {
                 width: 24px;
@@ -726,7 +729,7 @@
                     justify-content: space-around;
 
                     @include breakpoint(tablet) {
-                      height: 95%;
+                      height: 100%;
                       justify-content: space-evenly;
                       max-height: 600px;
                     }
@@ -748,26 +751,26 @@
 
                       p {
                         color: #000000;
-                        font-size: 16px;
+                        font-size: 14px;
                         font-weight: 500;
                       }
 
                       h5 {
                         color: #575757;
-                        font-size: 16px;
+                        font-size: 14px;
                         font-weight: 400;
                         margin-left: 28px;
 
                         @include breakpoint(tablet) {
-                          font-size: 16px;
+                          font-size: 14px;
                         }
 
                         @include breakpoint(largeTablet) {
-                          font-size: 16px;
+                          font-size: 14px;
                         }
 
                         @include breakpoint(destop) {
-                          font-size: 16px;
+                          font-size: 14px;
                         }
                       }
                     }
@@ -825,13 +828,16 @@
                         -webkit-line-clamp: 7;
                         /* Số dòng bạn muốn hạn chế */
                         line-clamp: 7;
+                        p {
+                          font-size: 14px;
+                        }
 
                       }
 
                       h3 {
                         color: #001424;
                         font-family: Roboto;
-                        font-size: 16px;
+                        font-size: 14px;
                         font-style: normal;
                         font-weight: 700;
                         line-height: 20px;
@@ -1080,6 +1086,11 @@
             padding: 20px 0px;
             width: 100%;
             border-radius: 10px;
+
+            h3 {
+              font-size: 24px;
+              font-family: "Roboto", -apple-system, sans-serif;
+            }
 
             .div-description-mo-bottom {
               display: flex;
@@ -1389,6 +1400,11 @@
           padding-top: 10px;
           border-radius: 10px;
           height: auto;
+
+          h3 {
+            font-size: 24px; 
+            font-family: "Roboto", -apple-system, sans-serif;
+          }
 
           @include breakpoint(tablet) {
             width: 100%;

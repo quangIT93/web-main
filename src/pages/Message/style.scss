@@ -1,15 +1,21 @@
 @import '../../scss/mixins';
 @import '../../scss/variable';
 
-.message-page {
-  margin-top: 70px;
 
+
+.message-page {
+  // margin-top: 70px;
+  height: 100vh;
+  overflow: hidden;
   .message-page_main {
     // padding: 20px 180px;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 24px 0;
+    padding: 70px 24px 24px !important;
+    height: 100%;
+    // overflow: hidden;
 
+    
     @media screen and (min-width:1025px) and (max-width: 1280px) {
       padding-inline: 24px 24px;
     }
@@ -21,6 +27,7 @@
 
     @include breakpoint(tablet) {
       padding: 20px 20px;
+      // height: calc(100vh - 70px);
     }
 
     @include breakpoint(mobile) {
@@ -28,9 +35,9 @@
       display: none;
     }
 
-    @media screen and (max-width: 555px) {
-      display: none;
-    }
+    // @media screen and (max-width: 555px) {
+    //   display: none;
+    // }
 
     .header-message {
       display: flex;
@@ -42,12 +49,18 @@
       box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
       border-radius: 8px;
       height: 760px;
-      margin-top: 12px;
-      margin-bottom: 24px;
+      height: calc(95vh - 70px);
+      // margin-top: 12px;
+      // margin-bottom: 24px;
 
       .message-page_left {
-        flex: 2;
+        // flex: 2;
         height: 100%;
+        width: 35%;
+
+        @media screen and (max-width: 555px) {
+          display: none !important;
+        }
 
         @include breakpoint(tablet) {
           width: 50%;
@@ -55,11 +68,16 @@
       }
 
       .message-page_right {
-        flex: 4;
+        // flex: 4;
         height: 100%;
+        width: 65%;
 
         @include breakpoint(mobile) {
           display: none !important;
+        }
+
+        @media screen and (max-width: 555px) {
+          width: 100%;
         }
       }
     }
@@ -69,9 +87,13 @@
     display: none;
     padding: 10px;
     margin: 12px auto;
+    padding-top: 70px !important;
+    height: 100%;
 
     @include breakpoint(mobile) {
       display: block;
+      margin: 0;
+      padding: 0;
 
       .wrap-content-message_responsive {
         display: flex;
@@ -79,6 +101,11 @@
         border-radius: 8px;
         height: 540px;
         margin-top: 12px;
+        @include breakpoint(mobile){
+          // height: calc(100vh - 70px);
+          // margin: 0;
+          
+        }
 
         .message-page-left_responsive {
           height: 100%;
@@ -93,13 +120,19 @@
 
     @media screen and (max-width: 555px) {
       display: block;
+      margin: 0;
+      padding: 0;
 
       .wrap-content-message_responsive {
         display: flex;
+
         box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
         border-radius: 8px;
-        height: 540px;
+        // height: 540px;
         margin-top: 12px;
+        margin: 0;
+        // height: calc(100vh - 70px);
+        height: 100%;
 
         .message-page-left_responsive {
           height: 100%;
@@ -125,5 +158,5 @@
 ::-webkit-scrollbar-thumb {
   background-color: ccc;
   border-radius: 20px;
-  border: 100px solid #1b87f5;
+  border: 1px solid #1b87f5;
 }

@@ -43,6 +43,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
     userInfoChat,
     sendMessages,
     receivedMessages,
+    apply,
   } = useContext(ChatContext);
 
   const getPostById = async () => {
@@ -98,7 +99,7 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
 
   useEffect(() => {
     getPostById();
-  }, []);
+  }, [apply]);
 
   // console.log("post", post);
   // console.log("listUserChat", listUserChat);
@@ -113,7 +114,6 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
       //   Number(searchParams.get('post_id')),
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
-      console.log('result', result);
 
       if (result) {
         // if (post.data !== null) {
@@ -502,6 +502,15 @@ const ListUserChat: React.FC<IOpenListChat> = (props) => {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    );
+  } else if (listUserChat.length === 0) {
+    return (
+      <div className="list_userChat">
+        <div className="wrap-img_chat">
+          <img src="./images/imageListChatBegin.png" alt="" />
+          <div>{language?.you_have_no_conversation}</div>
         </div>
       </div>
     );

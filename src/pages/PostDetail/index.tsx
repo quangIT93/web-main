@@ -309,6 +309,7 @@ const Detail = () => {
     getDataCompany();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
+  console.log('backgroundButton', backgroundButton);
 
   // get post by id-post
   const getPostById = async () => {
@@ -340,17 +341,16 @@ const Detail = () => {
               ? 'Chỉnh sửa bài tuyển dụng'
               : 'Edit job posting',
           );
-          setBackgroundButton('black');
+          setBackgroundButton('gray');
           setCheckPostUser(true);
         } else if (result.data.status === 3) {
-          setTextButton(languageRedux === 1 ? 'Bài đăng đã đóng' : 'Closed');
           setBackgroundButton('gray');
+          setTextButton(languageRedux === 1 ? 'Bài đăng đã đóng' : 'Closed');
           // setBackgroundButton('#0D99FF');
           result.data.applied = true;
         } else if (result.data.applied) {
+          setBackgroundButton('gray');
           setTextButton(languageRedux === 1 ? 'Đã ứng tuyển' : 'Applied');
-          // setBackgroundButton('gray');
-          setBackgroundButton('#0D99FF');
         } else {
           setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
           setBackgroundButton('#0D99FF');
@@ -697,14 +697,14 @@ const Detail = () => {
       if (result && post?.data?.applied) {
         // openNotification();
         setTextButton(language?.post_detail_page?.applied);
-        // setBackgroundButton('gray');
+        setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
       } else {
         // openNotification();
         setTextButton(language?.post_detail_page?.applied);
-        // setBackgroundButton('gray');
+        setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
@@ -747,7 +747,7 @@ const Detail = () => {
       ) {
         // openNotification();
         setTextButton(language?.post_detail_page?.applied);
-        // setBackgroundButton('gray');
+        setBackgroundButton('gray');
         setCheckApply(true);
         // window.open(post?.data.resource.url, '_blank');
         setOpenModalApply(false);
@@ -1362,6 +1362,7 @@ const Detail = () => {
                         fontFamily: 'Roboto',
                         marginTop: '18px',
                         wordBreak: 'break-word',
+                        fontSize: '14px',
                       }}
                     >
                       {post?.data.description}

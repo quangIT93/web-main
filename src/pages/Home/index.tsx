@@ -40,31 +40,12 @@ import Community from '#components/Home/Community';
 import Footer from '../../components/Footer/Footer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
-import languageApi from 'api/languageApi';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [language, setLanguage] = React.useState<any>();
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
 
   useEffect(() => {
     logEvent(analytics, 'screen_view' as string, {
@@ -120,23 +101,35 @@ const Home: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const tabs = document.querySelector('.tabs') as HTMLElement;
-  const breadCrumb = document.querySelector(
-    '.bread-crumb-container',
-  ) as HTMLElement;
-  var prevHeight = window.innerHeight;
+  // Lưu vị trí cuộn trước đó
+  let lastScrollTop = 0;
 
+  var prevHeight = 10;
   const handleScroll = () => {
+    const tabs = document.querySelector('.tabs') as HTMLElement;
+
+    const breadCrumb = document.querySelector(
+      '.bread-crumb-container',
+    ) as HTMLElement;
     var currentHeight = window.scrollY;
 
-    if (currentHeight >= prevHeight && tabs !== null && breadCrumb !== null) {
+    // Lấy vị trí cuộn hiện tại
+
+    if (currentHeight === 0) {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
+    } else if (
+      currentHeight >= prevHeight &&
+      tabs !== null &&
+      breadCrumb !== null
+    ) {
       tabs.style.top = '-70px';
       breadCrumb.style.marginTop = '-192px';
-      setTimeout(() => {
-        currentHeight = 0;
-        tabs.style.top = '70px';
-        breadCrumb.style.marginTop = '192px';
-      }, 500);
+      // setTimeout(() => {
+      //   currentHeight = 0;
+      //   tabs.style.top = '70px';
+      //   breadCrumb.style.marginTop = '192px';
+      // }, 500);
     } else {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';

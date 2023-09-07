@@ -1,6 +1,9 @@
 import React from 'react';
 
 import { useDispatch } from 'react-redux';
+
+import { useLocation } from 'react-router-dom';
+
 //import scss
 import './style.scss';
 
@@ -74,8 +77,14 @@ const JobCard: React.FC<Iprops> = (props) => {
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
+  const location = useLocation();
+
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`, '_blank');
+    if (location.pathname === '/post-detail') {
+      window.open(`/post-detail?post-id=${id}`, '_parent');
+    } else {
+      window.open(`/post-detail?post-id=${id}`, '_blank');
+    }
   };
 
   const handleImageError = () => {
@@ -147,6 +156,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                       fontWeight: '700',
                       lineheight: '20px',
                       color: '#000000',
+                      fontFamily: "'Roboto', -apple-system, sans-serif",
                     }}
                   >
                     {/* {props?.item?.title?.length > 50
@@ -169,6 +179,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                       fontWeight: '400',
                       lineheight: '16px',
                       color: '#575757',
+                      fontFamily: "'Roboto', -apple-system, sans-serif",
                     }}
                   >
                     {/* {props?.item?.company_name?.length > 50
@@ -198,6 +209,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                       fontSize: '12px',
                       fontWeight: '400',
                       color: '#000000',
+                      fontFamily: "'Roboto', -apple-system, sans-serif",
                     }}
                   >
                     {`${props.item.district}, ${props.item.province}`}
@@ -246,6 +258,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                       fontSize: '12px',
                       fontWeight: '400',
                       color: '#000000',
+                      fontFamily: "'Roboto', -apple-system, sans-serif",
                     }}
                   >
                     {new Intl.NumberFormat('en-US').format(
@@ -270,6 +283,7 @@ const JobCard: React.FC<Iprops> = (props) => {
                       fontSize: 12,
                       fontStyle: 'italic',
                       fontWeight: '400',
+                      fontFamily: "'Roboto', -apple-system, sans-serif",
                     }}
                   >
                     {props.item.created_at_text}
@@ -349,7 +363,14 @@ const JobCard: React.FC<Iprops> = (props) => {
                 )}
               </div>
             </div>
-            <p style={{ fontSize: 12, color: '#0d99ff', fontWeight: 500 }}>
+            <p
+              style={{
+                fontSize: 12,
+                color: '#0d99ff',
+                fontWeight: 500,
+                fontFamily: "'Roboto', -apple-system, sans-serif",
+              }}
+            >
               {props.item.job_type.job_type_name}
             </p>
           </Space>

@@ -70,7 +70,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
       } else {
         message.error('Vui lòng đăng nhập để thực hiện chức năng');
       }
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -135,10 +135,10 @@ const HijobNewsCard: React.FC<any> = (props) => {
 
       const numLines = Math.floor(contentHeight / lineHeight);
 
-      console.log('contentHeight', contentHeight);
-      console.log('lineHeight', lineHeight);
-      console.log('numLines', numLines);
-      console.log('numLines', numLines);
+      // console.log('contentHeight', contentHeight);
+      // console.log('lineHeight', lineHeight);
+      // console.log('numLines', numLines);
+      // console.log('numLines', numLines);
 
       setShouldShowMoreButton(numLines >= 2);
     }

@@ -728,20 +728,34 @@ const Navbar: React.FC = () => {
 
   let socket = useRef<any>();
 
+  React.useEffect(() => {
+    if (!socket.current && localStorage.getItem('accessToken')) {
+      socket.current = io('https://neoworks.vn', {
+        extraHeaders: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
+
+      socket.current.on('connect', () => {
+        // setIsConnected(true);
+      });
+    }
+  }, []);
+
   // handle logout
   const handleLogout = async () => {
-    console.log('logout thành công');
-
     try {
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (refreshToken) {
         const result = await authApi.signOut(refreshToken);
         if (result) {
-          socket.current.on('disconnect', (reason: any) => {
-            // setIsConnected(false);
-          });
-          window.location.replace('/');
+          if (socket.current) {
+            console.log('disconnect socket thành công');
+            socket.current.disconnect();
+            // socket.current.close();
+          }
+          window.open('/', '_parent');
           // localStorage.clear();
           const exceptionKey = 'persist:root';
 
@@ -757,10 +771,15 @@ const Navbar: React.FC = () => {
         }
       }
     } catch (error) {
+      if (socket.current) {
+        console.log('disconnect socket thành công');
+        socket.current.disconnect();
+        // socket.current.close();
+      }
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('accountId');
-      window.open('/');
+      window.open('/', '_parent');
       console.log(error);
     }
   };
@@ -1802,8 +1821,8 @@ const Navbar: React.FC = () => {
           </div>
         </Collapse>
         {/* {openNotificate ? <Notificate /> : <></>} */}
-        <PostButton setOpenModalLogin={setOpenModalLogin} />
       </Container>
+      <PostButton setOpenModalLogin={setOpenModalLogin} />
     </div>
   );
 };

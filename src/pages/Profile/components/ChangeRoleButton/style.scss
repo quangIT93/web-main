@@ -1,0 +1,102 @@
+.btn-container {
+
+    label {
+        font-size: 13px;
+        color: #424242;
+        font-weight: 500;
+    }
+
+    .btn-color-mode-switch {
+        display: inline-block;
+        margin: 0px;
+        position: relative;
+
+        &>label.btn-color-mode-switch-inner {
+            margin: 0px;
+            width: 300px;
+            height: 56px;
+            background: #ffffff;
+            border-radius: 38px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #000;
+        }
+
+        &>label.btn-color-mode-switch-inner:before {
+            content: attr(data-on);
+            position: absolute;
+            width: 145px;
+            height: 40px;
+            background-color: transparent;
+            display: grid;
+            text-align: center;
+            place-items: center;
+            transition: all 0.3s ease;
+            transform: translateY(-50%);
+            top: 50%;
+            right: 8px;
+            transform: translateY(-50%);
+
+            font-family: Roboto;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0em;
+        }
+
+        &>label.btn-color-mode-switch-inner:after {
+            content: attr(data-off);
+            width: 145px;
+            height: 40px;
+            background: #000000;
+            border-radius: 20px;
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            text-align: center;
+            transition: all 0.3s ease;
+            transform: translateY(-50%);
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+
+            font-family: Roboto;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0em;
+
+        }
+
+        input[type="checkbox"] {
+            cursor: pointer;
+            width: 50px;
+            height: 25px;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            margin: 0px;
+
+            &:checked+label.btn-color-mode-switch-inner {
+                color: #fff;
+            }
+
+            &:checked+label.btn-color-mode-switch-inner:after {
+                content: attr(data-on);
+                left: 147px;
+            }
+
+            &:checked+label.btn-color-mode-switch-inner:before {
+                content: attr(data-off);
+                right: 147px;
+                // left: 50px;
+                color: #000000;
+            }
+
+        }
+    }
+
+}

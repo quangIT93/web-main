@@ -81,9 +81,9 @@ const CardListBlogSave = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClickItemMenu = () => {
-    console.log('hello');
-  };
+  // const handleClickItemMenu = () => {
+  //   console.log('hello');
+  // };
 
   // commun
   const handleGetAllWorkingStory = async () => {
@@ -100,7 +100,7 @@ const CardListBlogSave = () => {
     }
   };
 
-  console.log('stories: ', stories);
+  // console.log('stories: ', stories);
 
   React.useEffect(() => {
     handleGetAllWorkingStory();

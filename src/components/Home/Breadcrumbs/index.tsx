@@ -144,7 +144,7 @@ const BreadcrumbsCpn: React.FC = () => {
       document.documentElement.clientWidth ||
       document.body.clientWidth;
 
-    console.log('windowWidth=', windowWidth);
+    // console.log('windowWidth=', windowWidth);
 
     if (windowWidth > 519) {
       window.scrollTo(0, 530);
@@ -354,7 +354,7 @@ const BreadcrumbsCpn: React.FC = () => {
         // top: '-60px',
         zIndex: '1',
         background: '#ffffff',
-        padding: '16px 00px ',
+        padding: '16px 0px ',
         left: 0,
         right: 0,
         borderBottom: '1px solid #e5e5e5',

@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 // import component
 import ListChat from '#components/Message/ListChat/ListChat';
 import ListUserChat from '#components/Message/ListUser/ListUser';
+
+import { useSearchParams } from 'react-router-dom';
 
 // @ts-ignore
 import Navbar from '#components/Navbar';
@@ -29,13 +31,20 @@ import { messEn } from 'validations/lang/en/mess';
 
 // const { Text } = Typography;
 
+import { ChatContext } from 'context/ChatContextProvider';
+
 const Message = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
+  const { setApply } = useContext(ChatContext);
   // const { openCollapseFilter } = useContext(HomeValueContext);
   const [openListChat, setOpenListChat] = useState(false);
   const [language, setLanguage] = useState<any>();
+  const [innerHeight, setInnerHeight] = useState<string>('100vh');
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // const [titleFirebase, setTitleFirebase] = React.useState<string>('');
 
@@ -74,61 +83,94 @@ const Message = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, language]);
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    const actualHeight = window.innerHeight;
+
+    // const currentHeight = document.documentElement.clientHeight
+
+    setInnerHeight(`${actualHeight}px`);
+
+    // Đăng ký sự kiện resize khi component được render
+    window.addEventListener('resize', handleResize);
+
+    // Loại bỏ sự kiện resize khi component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (searchParams.get('post_id') && windowWidth < 555) {
+      setOpenListChat(true);
+    } else {
+      setOpenListChat(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <div className="message-page">
+    <div className="message-page" style={{ height: `${innerHeight}` }}>
       <Navbar />
 
-      <div className="message-page_main">
-        {/* <div className="header-message">
+      {windowWidth >= 555 ? (
+        <div className="message-page_main">
+          {/* <div className="header-message">
           <HeaderMessage />
         </div> */}
-        <div className="wrap-content_message">
-          <div className="message-page_left">
+          <div className="wrap-content_message">
+            <div className="message-page_left">
+              <ListUserChat
+                setOpenListChat={setOpenListChat}
+                openListChat={openListChat}
+                language={language}
+                languageRedux={languageRedux}
+              />
+            </div>
+
+            <div className="message-page_right">
+              <ListChat
+                setOpenListChat={setOpenListChat}
+                openListChat={openListChat}
+                setApply={setApply}
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="message-page-main_responsive">
+          {/* <div className="header-message">
+          <HeaderMessage />
+        </div> */}
+          <div className="wrap-content-message_responsive">
+            {/* <div className="message-page-left_responsive"> */}
             <ListUserChat
               setOpenListChat={setOpenListChat}
               openListChat={openListChat}
               language={language}
               languageRedux={languageRedux}
             />
-          </div>
+            {/* </div> */}
 
-          <div className="message-page_right">
+            {/* <div className="message-page-right_responsive"> */}
             <ListChat
               setOpenListChat={setOpenListChat}
               openListChat={openListChat}
-              language={language}
-              languageRedux={languageRedux}
+              setApply={setApply}
             />
+            {/* </div> */}
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="message-page-main_responsive">
-        {/* <div className="header-message">
-          <HeaderMessage />
-        </div> */}
-        <div className="wrap-content-message_responsive">
-          {/* <div className="message-page-left_responsive"> */}
-          <ListUserChat
-            setOpenListChat={setOpenListChat}
-            openListChat={openListChat}
-            language={language}
-            languageRedux={languageRedux}
-          />
-          {/* </div> */}
-
-          {/* <div className="message-page-right_responsive"> */}
-          <ListChat
-            setOpenListChat={setOpenListChat}
-            openListChat={openListChat}
-            language={language}
-            languageRedux={languageRedux}
-          />
-          {/* </div> */}
-        </div>
-      </div>
       <RollTop />
-      <Footer />
+      {windowWidth > 784 ? <Footer /> : <></>}
     </div>
   );
 };

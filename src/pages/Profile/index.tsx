@@ -17,6 +17,8 @@ import {
   SectionAwardsIcon,
   SectionDeleteIcon,
   SectionEditIcon,
+  DownloadCVIcon,
+  TickIcon,
 } from '#components/Icons';
 
 import './style.scss';
@@ -90,6 +92,7 @@ import { profileEn } from 'validations/lang/en/profile';
 import { profileVi } from 'validations/lang/vi/profile';
 import SectionCv from './components/SectionCv';
 import CreateCv from '#components/Profile/CreateCv';
+import ChangeRoleButton from './components/ChangeRoleButton';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -149,10 +152,43 @@ const Profile: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [language, setLanguage] = useState<any>();
   const [cvHijob, setCvHijob] = useState<any[]>([1, 2]);
+  const [listCv, setListCv] = useState<any[]>([
+    {
+      id: 4,
+      name: 'cv4',
+    },
+    {
+      id: 3,
+      name: 'cv3',
+    },
+    {
+      id: 2,
+      name: 'cv2',
+    },
+    {
+      id: 1,
+      name: 'cv1',
+    },
+  ]);
+  const [cvId, setCvId] = useState<any>();
 
   // const [user, setUser] = useState<any>(null);
 
   const analytics: any = getAnalytics();
+
+  const handleChooseCv = (item: any, e: any) => {
+    e.stopPropagation();
+    setListCv((prev: any) => [
+      prev.at(prev.indexOf(item)),
+      ...prev.filter((value: any, index: any) => {
+        return index !== prev.indexOf(item)
+      }).sort((a: any, b: any) => b.id - a.id)
+    ])
+    setCvId(item.id)
+  }
+
+  console.log(listCv);
+
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
@@ -833,71 +869,82 @@ const Profile: React.FC = () => {
                 </p>
               </Space>
             </div>
-            <Space
-              wrap
-              size={20}
-              direction="vertical"
-              style={{ marginTop: 20 }}
-              className="cv-input-container"
-            >
-              <div
-                // align="center"
-                style={{
-                  marginLeft: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              // direction="vertical"
-              >
-                {cvHijob?.length !== 0 ? (
-                  <div className="list-cv-container">
-                    <p>
-                      {
-                        languageRedux === 1 ?
-                          "Chọn HiJob CV/Resume của bạn để Nhà tuyển dụng xem, đánh giá và lựa chọn!" :
-                          "Choose your HiJob CV/Resume for Employers to view, evaluate and select!"
-                      }
-                    </p>
-                    <Swiper
-                      navigation={true}
-                      slidesPerView="auto"
-                      spaceBetween={17}
-                      modules={[Mousewheel, Navigation, Pagination]}
-                      className="list-cv-swiper"
-                    >
-                      {
-                        Array.from(new Array(10).keys()).map((item: any, index: number) => {
-                          return (
-                            <SwiperSlide
-                              key={index}
-                              onClick={(event) => {
-                                // handleClickItem();
-                              }}
-                            >
-                              <div className="slide-item" key={item}>
-                                {/* <Avatar shape="square" icon={<UserOutlined />} /> */}
-                                <img />
+            <div className="list-cv-container" >
+              {cvHijob?.length !== 0 ? (
+                <div className="list-cv-conttent">
+                  <p>
+                    {
+                      languageRedux === 1 ?
+                        "Chọn HiJob CV/Resume của bạn để Nhà tuyển dụng xem, đánh giá và lựa chọn!" :
+                        "Choose your HiJob CV/Resume for Employers to view, evaluate and select!"
+                    }
+                  </p>
+                  <Swiper
+                    navigation={true}
+                    slidesPerView="auto"
+                    spaceBetween={17}
+                    modules={[Mousewheel, Navigation, Pagination]}
+                    className="list-cv-swiper"
+                  >
+                    {
+                      listCv.map((item: any, index: number) => {
+                        return (
+                          <SwiperSlide
+                            key={index}
+                            onClick={(event) => {
+                              // handleClickItem();
+                            }}
+                          >
+                            <div className="slide-item" key={item}>
+                              <Avatar variant="rounded">
+                                {
+                                  `CV ${item.id}`
+                                }
+                                <div className="choose-cv-container"
+                                  onClick={(e) => handleChooseCv(item, e)}
+                                >
+                                  <div className={
+                                    cvId === item.id ?
+                                      "choose-cv-content checked" :
+                                      "choose-cv-content"
+                                  }
+                                  >
+                                    <TickIcon />
+                                  </div>
+                                </div>
+                              </Avatar>
+                              <div className="slide-item-bottom">
+                                <h3>
+                                  {
+                                    languageRedux === 1 ?
+                                      `Hồ sơ số ${item.id}` :
+                                      `Resume No.${item.id}`
+                                  }
+                                </h3>
+                                <div className="download-cv-icon">
+                                  <DownloadCVIcon width={14} height={14} />
+                                </div>
                               </div>
-                            </SwiperSlide>
-                          );
-                        })
-                      }
-                    </Swiper>
-                  </div>
-                ) : (
-                  <Space direction="vertical" align="start">
-                    <p>
-                      {
-                        languageRedux === 1 ?
-                          "Bạn chưa có HiJob CV/Resume để Nhà tuyển dụng xem, đánh giá và lựa chọn!" :
-                          "You don't have a HiJob CV/Resume for recruitment to view, evaluate and choose!"
-                      }
-                    </p>
-                    <img style={{ width: 200 }} src="/cv3 1.png" alt="CV" />
-                  </Space>
-                )}
-              </div>
-            </Space>
+                            </div>
+                          </SwiperSlide>
+                        );
+                      })
+                    }
+                  </Swiper>
+                </div>
+              ) : (
+                <Space direction="vertical" align="start">
+                  <p>
+                    {
+                      languageRedux === 1 ?
+                        "Bạn chưa có HiJob CV/Resume để Nhà tuyển dụng xem, đánh giá và lựa chọn!" :
+                        "You don't have a HiJob CV/Resume for recruitment to view, evaluate and choose!"
+                    }
+                  </p>
+                  <img style={{ width: 200 }} src="/cv3 1.png" alt="CV" />
+                </Space>
+              )}
+            </div>
           </div>
         </Skeleton>
 
@@ -1089,6 +1136,7 @@ const Profile: React.FC = () => {
             <></>
         }
 
+        <ChangeRoleButton />
         <Stack spacing={2} sx={{ width: '100%' }}>
           <Snackbar open={alert} autoHideDuration={3000} onClose={handleClose}>
             <Alert

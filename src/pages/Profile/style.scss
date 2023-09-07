@@ -24,7 +24,7 @@
     // width: 80%;
     max-width: 1080px;
     margin: 0 100px auto;
-    padding: 50px 0px;
+    padding: 24px 0px 50px 0px;
     margin-top: 100px;
 
     @include breakpoint(mobile) {
@@ -37,6 +37,14 @@
       padding: 0px;
     }
 
+
+    // @media screen and (max-width: 1120px) {
+    //   padding: 24px 24px 50px 24px;
+    // }
+
+    // @media screen and (max-width: 678px) {
+    //   padding: 24px 24px 12px 24px;
+    // }
 
     @media screen and (max-width: 1120px) {
       padding: 50px 24px;
@@ -96,6 +104,10 @@
               .wrap-company_info {
                 width: 100%;
                 margin-bottom: 8px;
+
+                h2 {
+                  font-size: 14px;
+                }
               }
 
             }
@@ -140,6 +152,10 @@
               background: #252525;
               height: 48px;
               gap: 8px;
+
+              span {
+                font-size: 14px;
+              }
             }
           }
 
@@ -176,6 +192,198 @@
       margin-top: 30px;
       padding: 15px 20px;
 
+      .ant-space-item {
+        p {
+          font-size: 14px;
+        }
+
+        button {
+          span {
+            font-size: 14px;
+          }
+        }
+      }
+
+      .list-cv-container {
+        margin-top: 16px;
+        width: 100%;
+
+        .list-cv-conttent {
+          width: 100%;
+
+          .list-cv-swiper {
+            margin-top: 12px;
+
+            .swiper-wrapper {
+
+              .swiper-slide {
+                cursor: pointer;
+                width: 186px !important;
+                height: 300px !important;
+
+                .slide-item {
+                  position: relative;
+                  height: 300px !important;
+
+                  .MuiAvatar-root {
+                    width: 186px !important;
+                    height: 263px !important;
+                    border: 1px solid #000;
+                    position: relative;
+
+                    .choose-cv-container {
+                      width: 40px;
+                      height: 40px;
+                      position: absolute;
+                      top: 0;
+                      right: 0;
+                      border-top-right-radius: 4px;
+                      background-color: #FFFFFF;
+                      display: grid;
+                      place-items: center;
+
+                      .choose-cv-content {
+                        width: 24px;
+                        height: 24px;
+                        display: grid;
+                        place-items: center;
+                        border-radius: 50%;
+                        border: 1px solid #000000;
+                        background-color: #FFFFFF;
+                      }
+
+                      .checked {
+                        background-color: #0D99FF;
+                        border: none;
+                      }
+                    }
+
+                    img {
+                      width: 186px !important;
+                      height: 263px !important;
+                    }
+                  }
+
+                  .slide-item-bottom {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    justify-content: center;
+                    gap: 19px;
+                    margin-top: 12px;
+
+                    h3 {
+                      font-family: Roboto;
+                      font-size: 14px;
+                      font-weight: 500;
+                      letter-spacing: 0em;
+
+                    }
+
+                    .download-cv-icon {
+                      width: 24px;
+                      height: 24px;
+                      cursor: pointer;
+                      background-color: #AAAAAA;
+                      color: #000;
+                      border-radius: 50%;
+                      display: grid;
+                      place-items: center;
+                      transition: background-color 200ms linear 100ms,
+                        color 200ms linear 100ms;
+
+                      &:hover {
+                        background-color: #0D99FF;
+                        color: #FFFFFF
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            .swiper-button-prev,
+            .swiper-button-next {
+              width: 40px !important;
+              height: 100% !important;
+              top: 0 !important;
+              margin-top: 0 !important;
+              background-color: transparent;
+
+              &:hover {
+
+                &:after {
+                  transform: scale(1.1);
+                }
+
+                &:active {
+                  &:after {
+                    transform: scale(0.8);
+                  }
+                }
+              }
+
+              &:after {
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+                color: #000;
+                font-size: 18px;
+                height: 30px;
+                width: 10px;
+                line-height: 30px;
+                padding: 0px 10px;
+                transition: 0.3s linear all;
+              }
+
+              @include breakpoint(mobile) {
+                &:after {
+                  background-color: #fff;
+                  border: 1px solid #ccc;
+                  border-radius: 50%;
+                  color: #000;
+                  font-size: 10px;
+                  height: 24px;
+                  width: 4px;
+                  line-height: 24px;
+                  padding: 0px 10px;
+                  transition: 0.3s linear all;
+                }
+              }
+            }
+
+            .swiper-button-prev {
+              left: 0;
+              background: linear-gradient(90deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
+
+              @include breakpoint(mobile) {
+                background: none;
+              }
+
+              @include breakpoint(tablet) {
+                background: none;
+              }
+            }
+
+            .swiper-button-next {
+              background: linear-gradient(270deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
+              right: 0;
+
+              @include breakpoint(mobile) {
+                background: none;
+              }
+
+              @include breakpoint(tablet) {
+                background: none;
+              }
+            }
+
+            .swiper-button-disabled {
+              display: none !important;
+            }
+          }
+        }
+      }
 
       @media screen and (max-width: 360px) {
         .cv-input-container {
@@ -204,6 +412,11 @@
 
       h3 {
         color: #001424;
+        font-size: 14px;
+      }
+
+      p {
+        font-size: 14px;
       }
 
       .info-detail {
@@ -219,7 +432,7 @@
         .left {
           p {
             color: #575757;
-            font-size: 16px;
+            font-size: 14px;
             margin-top: 7px;
           }
         }
@@ -228,7 +441,7 @@
           margin-left: 15px;
 
           p {
-            font-size: 16px;
+            font-size: 14px;
             margin-top: 7px;
             word-break: break-all;
           }
@@ -250,17 +463,23 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
+        font-size: 14px;
       }
 
       .internship-list {
         display: flex;
         flex-direction: column;
+        font-size: 14px;
       }
 
       .hobbie-input {
         display: flex;
         flex-direction: column;
         gap: 16px;
+
+        p {
+          font-size: 14px;
+        }
       }
 
       .donot-show {
@@ -268,6 +487,7 @@
         gap: 24px;
         align-items: center;
         justify-content: space-between;
+        font-size: 14px;
       }
 
       .section-item {
