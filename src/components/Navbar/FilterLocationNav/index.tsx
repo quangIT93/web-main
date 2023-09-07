@@ -125,8 +125,8 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
       ) {
         setListDis(
           userProfile?.locations?.map((profile: any) => [
-            profile.province_id,
-            profile.district_id,
+            profile?.province_id,
+            profile?.district_id,
           ]),
         );
       } else {

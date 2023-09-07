@@ -10,7 +10,7 @@
     bottom: 130px;
     // z-index: 2;
     background-color: $primary-color;
-    z-index: 10;
+    z-index: 5;
     @include breakpoint(mobile) {
         display: block;
         bottom: 130px !important;

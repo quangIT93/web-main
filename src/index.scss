@@ -24,6 +24,7 @@ $text-color: #000000;
 html {
   scroll-behavior: auto;
   scroll-padding: calc($navbar-height + 10px);
+  // overflow: hidden;
 }
 
 body {

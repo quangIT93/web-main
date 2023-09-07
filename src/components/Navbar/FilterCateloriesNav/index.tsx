@@ -104,9 +104,9 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
         listCate?.current?.length === 0
       ) {
         setListCate(
-          userProfile.categories.map((profile: any) => [
-            profile.parent_category_id,
-            profile.child_category_id,
+          userProfile?.categories.map((profile: any) => [
+            profile?.parent_category_id,
+            profile?.child_category_id,
           ]),
         );
       } else {

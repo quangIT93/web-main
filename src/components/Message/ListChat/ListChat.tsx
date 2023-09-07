@@ -66,7 +66,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   };
 
   useEffect(() => {
-    updateWindowWidth();    
+    updateWindowWidth();
   }, [windowWidth]);
 
   const closeListChat = () => {
@@ -105,8 +105,6 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   const getAllListChat = async () => {
     setOpenBackdrop(true);
     try {
-      console.log('getData');
-
       const result = await messageApi.getChatMessage(
         searchParams.get('user_id'),
         // 36353,
@@ -144,7 +142,6 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   //   getProfileUser();
   // }, []);
 
-  console.log('socket connection', socket.current);
   // useEffect(() => {
   //   // kết nối web socket
   //   // socket.current.on('connect', () => {
@@ -237,11 +234,11 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
         },
       );
 
-      console.log('socket.current trong', socket.current);
-      console.log('socket.current trong .connected', socket.current.connected);
+      // console.log('socket.current trong', socket.current);
+      // console.log('socket.current trong .connected', socket.current.connected);
 
       socket.current.on('disconnect', (reason: any) => {
-        console.log('ket noi that bai');
+        // console.log('ket noi that bai');
         setIsConnected(true);
       });
 
@@ -251,7 +248,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
       socket.current.on('connect', () => {
         // Kết nối thành công
-        console.log('ket noi thanh cong');
+        // console.log('ket noi thanh cong');
         setIsConnected(true);
       });
 
@@ -366,7 +363,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     }
   };
 
-  console.log('userInfoChat', userInfoChat);
+  // console.log('userInfoChat', userInfoChat);
 
   if (userInfoChat.length !== 0) {
     return (
@@ -636,6 +633,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
                 behavior: 'smooth',
                 block: 'end',
               });
+              window.scrollTo(0, document.body.scrollHeight);
               setMessage(e.target.value);
             }}
             onKeyDown={handleKeyPress}

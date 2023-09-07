@@ -101,16 +101,33 @@ const Home: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const tabs = document.querySelector('.tabs') as HTMLElement;
-  const breadCrumb = document.querySelector(
-    '.bread-crumb-container',
-  ) as HTMLElement;
-  var prevHeight = window.innerHeight;
+  // Lưu vị trí cuộn trước đó
+  let lastScrollTop = 0;
 
+  var prevHeight = 10;
   const handleScroll = () => {
+    const tabs = document.querySelector('.tabs') as HTMLElement;
+
+    const breadCrumb = document.querySelector(
+      '.bread-crumb-container',
+    ) as HTMLElement;
     var currentHeight = window.scrollY;
 
-    if (currentHeight >= prevHeight && tabs !== null && breadCrumb !== null) {
+    // Lấy vị trí cuộn hiện tại
+
+    console.log('prevHeight=', prevHeight);
+    console.log('currentHeight', currentHeight);
+    console.log('tabs', tabs);
+    console.log('breadCrumb', breadCrumb);
+
+    if (currentHeight === 0) {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
+    } else if (
+      currentHeight >= prevHeight &&
+      tabs !== null &&
+      breadCrumb !== null
+    ) {
       tabs.style.top = '-70px';
       breadCrumb.style.marginTop = '-192px';
       // setTimeout(() => {
