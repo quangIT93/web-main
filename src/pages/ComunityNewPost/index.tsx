@@ -102,7 +102,7 @@ const ComunityNewPost = () => {
   };
 
   const handleGetAllWorkingStory = async () => {
-    let workingId = JSON.parse(getCookie('workingId') || '');
+    // let workingId = JSON.parse(getCookie('workingId') || '');
     try {
       // localStorage.removeItem('reload');
       setLoading(true);
@@ -113,42 +113,52 @@ const ComunityNewPost = () => {
         1,
         languageRedux === 1 ? 'vi' : 'en',
       );
+      // if (result) {
+      //   setStories(result?.data?.communications);
+      //   setTotal(result?.data?.total);
+      //   setLoading(false);
+      // console.log('workingId', workingId);
+
+      // if (workingId) {
+      // setTimeout(() => {
+      //   // window.scrollTo(0, 1000);
+      //   console.log(result.data.id === workingId);
+      //   console.log(result.data);
+      //   console.log(
+      //     result.data.communications
+      //       .map((item: any) => item.id)
+      //       .includes(workingId),
+      //   );
+
+      //   if (
+      //     result.data.communications
+      //       .map((item: any) => item.id)
+      //       .includes(workingId)
+      //   ) {
+      //     document.getElementById(workingId)?.scrollIntoView({
+      //       // behavior: 'smooth',
+      //       block: 'start',
+      //       inline: 'nearest',
+      //     });
+      //   } else {
+      //     setHasMore(true);
+
+      //     window.scrollTo(0, document.body.scrollHeight);
+      //   }
+      // }, 10);
+
+      //   setHasMore(true);
+      // }
+      //   if (result?.data?.communications.length === 0) {
+      //     setIsVisible(false);
+      //     setHasMore(false);
+      //   }
+      // }
+
       if (result) {
         setStories(result?.data?.communications);
         setTotal(result?.data?.total);
         setLoading(false);
-        // console.log('workingId', workingId);
-
-        // if (workingId) {
-        // setTimeout(() => {
-        //   // window.scrollTo(0, 1000);
-        //   console.log(result.data.id === workingId);
-        //   console.log(result.data);
-        //   console.log(
-        //     result.data.communications
-        //       .map((item: any) => item.id)
-        //       .includes(workingId),
-        //   );
-
-        //   if (
-        //     result.data.communications
-        //       .map((item: any) => item.id)
-        //       .includes(workingId)
-        //   ) {
-        //     document.getElementById(workingId)?.scrollIntoView({
-        //       // behavior: 'smooth',
-        //       block: 'start',
-        //       inline: 'nearest',
-        //     });
-        //   } else {
-        //     setHasMore(true);
-
-        //     window.scrollTo(0, document.body.scrollHeight);
-        //   }
-        // }, 10);
-
-        //   setHasMore(true);
-        // }
         if (result?.data?.communications.length === 0) {
           setIsVisible(false);
           setHasMore(false);
