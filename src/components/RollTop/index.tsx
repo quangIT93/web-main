@@ -25,7 +25,7 @@ const RollTop: React.FC = () => {
   }, []);
 
   return (
-    <div className="roll-top-container" style={{ display: 'none' }}>
+    <div className="roll-top-container">
       <Button
         type="primary"
         className="roll-top-btn"
