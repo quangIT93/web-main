@@ -97,8 +97,6 @@ const Message = () => {
 
     setInnerHeight(`${actualHeight}px`);
 
-    console.log('actualHeight', actualHeight);
-
     // Đăng ký sự kiện resize khi component được render
     window.addEventListener('resize', handleResize);
 

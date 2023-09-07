@@ -158,9 +158,13 @@ const HotJobpage: React.FC = () => {
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
 
   const [pageNumber, setPageNumber] = React.useState(0);
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
   const [totalPage, setTotalPage] = React.useState<number>(
     Math.round(Number(searchParams.get('hotjob-total')) / 20) + 1,
+  );
+
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
   );
 
   const [idFilterProvinces, setIdFilterProvinces] = React.useState('');
@@ -169,24 +173,6 @@ const HotJobpage: React.FC = () => {
   const [page, setPage] = React.useState<any>('0');
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
 
   // modal keyword
 
@@ -238,7 +224,7 @@ const HotJobpage: React.FC = () => {
 
     setTotalPage(Math.round(hotJobTotal / 20) + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [language]);
+  }, [languageRedux]);
   // state redux
   // const { postNewest } = useSelector((state: RootState) => state)
 
@@ -425,13 +411,22 @@ const HotJobpage: React.FC = () => {
 
   React.useEffect(() => {
     if (provincesData) {
-      const newOptionsProvinces = provincesData.map((provinces: any) => ({
-        value: provinces.id,
-        label: provinces.full_name,
-      }));
+      const newOptionsProvinces = provincesData.map((provinces: any) => {
+        if (languageRedux === 1) {
+          return {
+            value: provinces.id,
+            label: provinces.full_name,
+          };
+        } else {
+          return {
+            value: provinces.id,
+            label: provinces.full_name_en,
+          };
+        }
+      });
       setOptionsProvinces(newOptionsProvinces);
     }
-  }, [provincesData]);
+  }, [provincesData, languageRedux]);
 
   const handleClickFilterHotjob = () => {};
 
@@ -442,8 +437,6 @@ const HotJobpage: React.FC = () => {
   };
 
   const fetchMoreData = async () => {
-    console.log('moreeeee');
-
     try {
       const nextPage = parseInt(page) + 1;
       const url = localStorage.getItem('hotjobApi');
