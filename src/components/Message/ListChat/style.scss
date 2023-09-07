@@ -355,13 +355,22 @@
     // margin: 24px 0;
     // padding: 24px 0px;
     padding: 24px 21px 24px 0;
-    margin: 0 0px 0 0px;
+    margin: 0px 0px 0 0px;
     overflow-y: scroll;
     // height: 450px;
     /* Sét cứng cuộn đến phần cuối */
     // scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
     scroll-behavior: auto;
+
+    @media screen and (min-width: 746px) and (max-width: 846px) {
+      margin: 90px 0px 0 0px;
+    }
+
+    
+    @media screen and (max-width: 745px) {
+      margin: 120px 0px 0 0px;
+    }
 
     .img {
       width: 30px;

@@ -68,28 +68,28 @@ const Home: React.FC = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
-  const [reachedEndShowSubjectJob, setReachedEndShowSubjectJob] =
-    React.useState(false);
+  // const [reachedEndShowSubjectJob, setReachedEndShowSubjectJob] =
+  //   React.useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        setReachedEndShowSubjectJob(true);
-      }
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+  //       setReachedEndShowSubjectJob(true);
+  //     }
+  //   };
 
-    window.addEventListener('scroll', handleScroll);
+  //   window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const communityDiv = localStorage.getItem('community');
 
     if (communityDiv) {
-      setReachedEndShowSubjectJob(true);
+      // setReachedEndShowSubjectJob(true);
       document.querySelector('.community-container')?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -104,7 +104,7 @@ const Home: React.FC = () => {
   // Lưu vị trí cuộn trước đó
   let lastScrollTop = 0;
 
-  var prevHeight = 10;
+  var prevHeight = 300;
   const handleScroll = () => {
     const tabs = document.querySelector('.tabs') as HTMLElement;
 
@@ -112,14 +112,14 @@ const Home: React.FC = () => {
       '.bread-crumb-container',
     ) as HTMLElement;
     var currentHeight = window.scrollY;
+    // console.log('prevHeight=', prevHeight);
+    // console.log('currentHeight=', currentHeight);
 
     // Lấy vị trí cuộn hiện tại
 
-    if (currentHeight === 0) {
-      tabs.style.top = '70px';
-      breadCrumb.style.marginTop = '192px';
-    } else if (
+    if (
       currentHeight >= prevHeight &&
+      currentHeight > 100 &&
       tabs !== null &&
       breadCrumb !== null
     ) {
@@ -159,15 +159,15 @@ const Home: React.FC = () => {
         <AppliedPostedJob />
         <HotJob />
         <NewJobs />
-        {reachedEndShowSubjectJob ? (
+        <SuggestJob />
+        <ThemesJob />
+        <Community />
+        {/* {reachedEndShowSubjectJob ? (
           <>
-            <SuggestJob />
-            <ThemesJob />
-            <Community />
           </>
         ) : (
           <></>
-        )}
+        )} */}
       </div>
       <RollTop />
       <Footer />
