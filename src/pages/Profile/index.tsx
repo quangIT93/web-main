@@ -171,6 +171,7 @@ const Profile: React.FC = () => {
     },
   ]);
   const [cvId, setCvId] = useState<any>();
+  const [role, setRole] = useState(1)
 
   // const [user, setUser] = useState<any>(null);
 
@@ -1136,7 +1137,7 @@ const Profile: React.FC = () => {
             <></>
         }
 
-        <ChangeRoleButton />
+        <ChangeRoleButton role={role} setRole={setRole} />
         <Stack spacing={2} sx={{ width: '100%' }}>
           <Snackbar open={alert} autoHideDuration={3000} onClose={handleClose}>
             <Alert
