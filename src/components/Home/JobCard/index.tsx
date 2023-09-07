@@ -1,6 +1,9 @@
 import React from 'react';
 
 import { useDispatch } from 'react-redux';
+
+import { useLocation } from 'react-router-dom';
+
 //import scss
 import './style.scss';
 
@@ -74,8 +77,14 @@ const JobCard: React.FC<Iprops> = (props) => {
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
+  const location = useLocation();
+
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
-    window.open(`/post-detail?post-id=${id}`, '_blank');
+    if (location.pathname === '/post-detail') {
+      window.open(`/post-detail?post-id=${id}`, '_parent');
+    } else {
+      window.open(`/post-detail?post-id=${id}`, '_blank');
+    }
   };
 
   const handleImageError = () => {

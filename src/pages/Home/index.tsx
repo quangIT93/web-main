@@ -115,11 +115,6 @@ const Home: React.FC = () => {
 
     // Lấy vị trí cuộn hiện tại
 
-    console.log('prevHeight=', prevHeight);
-    console.log('currentHeight', currentHeight);
-    console.log('tabs', tabs);
-    console.log('breadCrumb', breadCrumb);
-
     if (currentHeight === 0) {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';
