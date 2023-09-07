@@ -306,9 +306,6 @@ const Notificate = () => {
     setOpenModalDeleteKeyword(false);
   };
 
-  console.log('DataNotification', dataNotification);
-  console.log('dataNotificationKeyword', dataNotificationKeyword);
-
   return (
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">

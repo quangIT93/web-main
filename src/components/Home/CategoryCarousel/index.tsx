@@ -155,9 +155,15 @@ const CategoryCarousel: React.FC = () => {
     const breadCrumb = document.querySelector(
       '.bread-crumb-container',
     ) as HTMLElement;
-    if (tabs !== null && breadCrumb !== null) {
-      tabs.style.top = '70px';
-      breadCrumb.style.marginTop = '192px';
+
+    console.log('tavbs', tabs);
+    console.log('breadCrumb', breadCrumb);
+
+    if (tabs && breadCrumb) {
+      setTimeout(() => {
+        tabs.style.top = '70px';
+        breadCrumb.style.marginTop = '192px';
+      }, 200);
     }
 
     // const sectionToNavigate = document.getElementById('new-job');

@@ -64,8 +64,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
   // const [error, setError] = React.useState(false);
   const { language, languageRedux } = props;
 
-  console.log("props");
-
+  console.log('props', props);
 
   return (
     <>
@@ -130,7 +129,10 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                     {props?.item?.title}
                   </Typography>
                 </Tooltip>
-                <Tooltip placement="top" title={props.item?.postCompanyInformation?.name}>
+                <Tooltip
+                  placement="top"
+                  title={props.item?.postCompanyInformation?.name}
+                >
                   <Typography
                     gutterBottom
                     variant="h6"
@@ -149,7 +151,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                     {/* {props?.item?.company_name?.length > 50
                     ? `${props.item.company_name.substring(0, 50)} ...`
                     : props.item.company_name} */}
-                    {props?.item?.postCompanyInformation?.name}
+                    {props?.item?.companyName}
                   </Typography>
                 </Tooltip>
                 <div
@@ -251,16 +253,13 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               fontWeight: '400',
             }}
           >
-            {
-              language?.posted_on
-            }
-            {' '}
-            {
-              props.item?.createdAt != null ?
-                moment(props.item?.createdAt).format('DD/MM/YYYY') + ' ' +
-                moment(new Date(props.item?.createdAt)).format('HH:mm')
-                : language?.unupdated
-            }
+            {language?.posted_on}{' '}
+            {props.item?.createdAt != null
+              ? `${
+                  moment(props.item?.createdAt).format('DD/MM/YYYY') +
+                  moment(new Date(props.item?.createdAt)).format('HH:mm')
+                }`
+              : language?.unupdated}
           </p>
           <p
             style={{
@@ -271,11 +270,8 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               color: '#ffffff',
             }}
           >
-            {props.dataCandidates?.applications.length}
-            {' '}
-            {
-              language?.history_page?.application_form
-            }
+            {`${props.dataCandidates?.applications.length}
+            ${language?.history_page?.application_form}`}
           </p>
 
           {props.status === 1 ? (
@@ -287,9 +283,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 color: '#ffffff',
               }}
             >
-              {
-                language?.recruiting
-              }
+              {language?.recruiting}
             </p>
           ) : props.status === 3 ? (
             <p
@@ -300,9 +294,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 color: '#ffffff',
               }}
             >
-              {
-                language?.post_detail_page?.closed
-              }
+              {language?.post_detail_page?.closed}
             </p>
           ) : (
             <p
@@ -313,9 +305,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 color: '#ffffff',
               }}
             >
-              {
-                language?.candidate_detail_page?.does_not_accept
-              }
+              {language?.candidate_detail_page?.does_not_accept}
             </p>
           )}
         </Box>
