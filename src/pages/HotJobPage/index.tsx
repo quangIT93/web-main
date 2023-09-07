@@ -537,7 +537,11 @@ const HotJobpage: React.FC = () => {
                             <FilterIcon width={20} height={20} />
                           )
                         }
-                        placeholder="Lọc theo khu vực"
+                        placeholder={
+                          languageRedux === 1
+                            ? 'Lọc theo khu vực'
+                            : 'Filter by Location'
+                        }
                       />
                     </Space>
                   </div>

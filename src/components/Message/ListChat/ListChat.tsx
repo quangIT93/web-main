@@ -2,10 +2,12 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 
 import io from 'socket.io-client';
 import CircularProgress from '@mui/material/CircularProgress';
+
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 // import api
 import messageApi from 'api/messageApi';
@@ -47,6 +49,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
     (state: RootState) => state.dataLanguage.languages,
   );
 
+  const userProfile = useSelector((state: RootState) => state.profile.profile);
+
   const [message, setMessage] = useState('');
 
   const [allListChat, setAllListChat] = useState<any>([]);
@@ -56,6 +60,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [previousDate, setPreviousDate] = useState<string | null>(null)
+
+  const [api, contextHolder] = notification.useNotification();
 
   const updateWindowWidth = () => {
     if (window.innerWidth <= 555) {
@@ -353,14 +359,34 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   // console.log('userInfoChat', userInfoChat);
 
   const handleClickApplication = async () => {
-    const result = await appplicationApi.applyAplication(
-      Number(searchParams.get('post_id')),
-    );
-
-    if (result) {
-      // console.log('result', result.data);
-      props.setApply(true);
+    if (
+      !userProfile.name ||
+      !userProfile.address ||
+      !userProfile.birthday ||
+      userProfile.gender === null ||
+      userProfile.gender === undefined ||
+      !userProfile.phone ||
+      !userProfile.email
+    ) {
+      api.info({
+        message: language?.post_detail_page?.update_infor_mess,
+        description: language?.post_detail_page?.update_infor_des,
+        placement: 'top',
+        icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+      });
+      return;
     }
+
+    try {
+      const result = await appplicationApi.applyAplication(
+        Number(searchParams.get('post_id')),
+      );
+
+      if (result) {
+        // console.log('result', result.data);
+        props.setApply(true);
+      }
+    } catch (error) {}
   };
 
   // console.log('userInfoChat', userInfoChat);
@@ -375,6 +401,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             : ''
         }`}
       >
+        {contextHolder}
         <Backdrop
           sx={{
             color: '#fff',
