@@ -126,14 +126,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         <>
             <Skeleton className="skeleton-item" loading={loading} active>
                 <div className="div-profile-info">
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginBottom: '16px'
-                        }}
-                    >
+                    <div className="section-title" >
                         <h3>
                             {
                                 languageRedux === 1 ?
@@ -149,7 +142,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                             <p>
                                 {
                                     languageRedux === 1 ?
-                                        "không hiện kỹ năng" :
+                                        "Không hiện kỹ năng" :
                                         "Don’t show experience skills"
                                 }
                             </p>
@@ -209,14 +202,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                             display: sections.includes(1) ? "block" : "none"
                         }}
                     >
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                marginBottom: '16px'
-                            }}
-                        >
+                        <div className="section-title" >
                             <div className="profile-info-title">
                                 <h3>
                                     {
@@ -242,7 +228,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                 <p>
                                     {
                                         languageRedux === 1 ?
-                                            "không hiện ngoại ngữ" :
+                                            "Không hiện ngoại ngữ" :
                                             "Don’t show experience languages"
                                     }
                                 </p>
@@ -382,20 +368,6 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="donot-show"
-                                style={{
-                                    display: referenceValues?.length !== 0 ? "flex" : "none"
-                                }}
-                            >
-                                <p>
-                                    {
-                                        languageRedux === 1 ?
-                                            "không hiện kỹ năng" :
-                                            "Don’t show experience level"
-                                    }
-                                </p>
-                                <Switch onChange={onChangeShowSkill} />
-                            </div> */}
                         </div>
                         <div className="skill-list">
                             {referenceValues && referenceValues?.length !== 0 ? (
@@ -709,20 +681,6 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                                         <SectionDeleteIcon />
                                     </div>
                                 </div>
-                            </div>
-                            <div className="donot-show"
-                                style={{
-                                    display: skillValues?.length !== 0 ? "flex" : "none"
-                                }}
-                            >
-                                <p>
-                                    {
-                                        languageRedux === 1 ?
-                                            "không hiện kỹ năng" :
-                                            "Don’t show experience level"
-                                    }
-                                </p>
-                                <Switch onChange={onChangeShowSkill} />
                             </div>
                         </div>
                         <div className="internship-list">

@@ -6,6 +6,7 @@ import { Button } from 'antd';
 import { CreateCvIcon } from '#components/Icons';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import { Box } from '@mui/material';
 
 const CreateCv: React.FC = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
@@ -17,7 +18,7 @@ const CreateCv: React.FC = () => {
 
     return (
         <div className="create-cv-container">
-            <Button
+            {/* <Button
                 type="primary"
                 className="create-cv-btn"
                 shape="circle"
@@ -31,7 +32,26 @@ const CreateCv: React.FC = () => {
                             "Preview Your Resume"
                     }
                 </h3>
-            </Button>
+            </Button> */}
+            <Box
+                className="iconDiv"
+                sx={{
+                    '&:after': {
+                        content: languageRedux === 1 ?
+                            '"Xem CV của bạn"' :
+                            '"Preview Your Resume"'
+                    },
+                    '&:hover': {
+                        width: languageRedux === 1 ?
+                            '194px' : '233px'
+                    }
+                }}
+                onClick={handleMoveToCreateCv}
+            >
+                <div className="iconSVG">
+                    <CreateCvIcon width={32} height={32} />
+                </div>
+            </Box>
         </div>
     );
 };

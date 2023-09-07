@@ -10,6 +10,16 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { ResumeIcon } from '#components/Icons';
+// Import Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/scrollbar';
+import 'swiper/css/navigation';
+// import required modules
+import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 const styleChildBox = {
   marginBottom: '12px',
@@ -17,7 +27,9 @@ const styleChildBox = {
 
 const ContentListCv = () => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const language = useSelector((state: RootState) => state.dataLanguage.languages)
   const [dataCategories, setDataCategories] = React.useState<any>(null);
+  const [cvId, setCvId] = React.useState<any>(1);
   const getDataParentCategory = async () => {
     try {
       const result = await categoriesApi.getAllParentCategories(
@@ -34,7 +46,11 @@ const ContentListCv = () => {
 
   React.useEffect(() => {
     getDataParentCategory();
+    const cv_id = localStorage.getItem('cv-id');
+    //convert string to number
+    cv_id && setCvId(+cv_id);
   }, [languageRedux]);
+
 
   console.log('dataCategories', dataCategories);
 
@@ -78,9 +94,59 @@ const ContentListCv = () => {
             ))
           }
         </div>
+        <Swiper
+          navigation={true}
+          slidesPerView="auto"
+          spaceBetween={17}
+          modules={[Mousewheel, Navigation, Pagination]}
+          className="list-template-swiper"
+        >
+          {
+            Array.from(new Array(10).keys()).map((item: any, index: number) => {
+              return (
+                <SwiperSlide
+                  key={index}
+                  onClick={(event) => {
+                    // handleClickItem();
+                  }}
+                >
+                  <div className="slide-item" key={item}>
+                    <Avatar shape="square" icon={<UserOutlined />} />
+                  </div>
+                </SwiperSlide>
+              );
+            })
+          }
+        </Swiper>
       </div>
-
-      <div className="contentCV-bottom-right"></div>
+      <div className="contentCV-line"></div>
+      <div className="contentCV-bottom-right">
+        <div className="contentCv-bottom-right_title">
+          <div className="title_left">
+            <ResumeIcon />
+            <h3>
+              {
+                languageRedux === 1 ?
+                  `Hồ sơ số ${cvId}` :
+                  `Resume No.${cvId}`
+              }
+            </h3>
+          </div>
+          <div className="title_right">
+            <p
+              onClick={() => {
+                window.open('/profile-cv', '_parent');
+              }}
+            >
+              {language?.home_page?.view_all}
+            </p>
+          </div>
+        </div>
+        <div className="contentCv-bottom-right_cv">
+          <Avatar shape="square" icon={<UserOutlined />} />
+          <Avatar shape="square" icon={<UserOutlined />} />
+        </div>
+      </div>
     </div>
   );
 };

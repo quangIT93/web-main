@@ -1,0 +1,19 @@
+.share-buttons-cv-modal {
+    margin-top: 16px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    button {
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        height: 48px;
+        width: 310px;
+        gap: 12px;
+    }
+}

@@ -1,16 +1,25 @@
+@import '../../scss/mixins';
+
 .cv-container {
     // margin-top: 70px;
     margin: 70px auto;
-    max-width: 1080px;
 
     .cv-content {
         padding: 50px 0 30px;
         margin: 12px auto;
+        max-width: 1080px;
+
+        @media screen and (max-width: 1130px) {
+            margin: 12px 24px;
+        }
 
         .contentCV-top {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             margin-bottom: 39px;
+            align-items: center;
+            gap: 10px;
 
             .backToEditor {
                 display: flex;
@@ -36,24 +45,61 @@
                     line-height: 30px;
                     letter-spacing: 0em;
                     text-align: left;
+                    position: relative;
+
+                    &:hover:after {
+                        display: block;
+                    }
+
+                    &:after {
+                        display: none;
+                        content: "";
+                        position: absolute;
+                        width: 100%;
+                        height: 2px;
+                        background: #000000;
+                        bottom: -4px;
+                        left: 0;
+                        transition: all 0.6s;
+                    }
 
                 }
             }
 
             .change-styles {
                 display: flex;
+                flex-wrap: wrap;
                 align-items: center;
+                height: fit-content;
+                gap: 24px;
+
+                @include breakpoint(mobile) {
+                    gap: 10px;
+                }
 
                 .change-styles_font {
                     display: flex;
                     align-items: center;
                     height: 100%;
+                    position: relative;
+
+                    // &:after {
+                    //     content: "";
+                    //     position: absolute;
+                    //     width: 2px;
+                    //     height: 24px;
+                    //     background: #000000;
+                    //     right: -24px;
+                    //     top: 50%;
+                    //     transform: translateY(-50%);
+                    // }
 
                     .plusCircle,
                     .minusCircle {
                         height: 100%;
                         display: flex;
                         align-items: center;
+                        cursor: pointer;
                     }
 
                     p {
@@ -70,42 +116,69 @@
                     margin: 12px;
                 }
 
-                .change-styles_color {
-                    height: 100%;
+                .line {
+                    width: 2px;
+                    height: 24px;
+                    background: #000000;
+
+                    @include breakpoint(mobile) {
+                        display: none
+                    }
+                }
+
+                .color-group {
                     display: flex;
                     align-items: center;
+                    gap: 10px;
 
-                    .circle-color {
-                        // padding: 12px;
-                        border-radius: 50%;
-                        margin: 0 10px;
-                        // background-color: red;
-                        width: 32px;
-                        height: 32px;
-                        cursor: pointer;
+                    p {
+                        font-family: Roboto;
+                        font-size: 16px;
+                        font-weight: 700;
+                        line-height: 24px;
+                        letter-spacing: 0em;
+                        text-align: left;
+
+                    }
+
+                    .change-styles_color {
+                        height: 100%;
                         display: flex;
-                        justify-content: center;
                         align-items: center;
-                    }
+                        gap: 10px;
 
-                    .circle-color.black {
-                        background-color: #252525;
-                    }
+                        .circle-color {
+                            // padding: 12px;
+                            border-radius: 50%;
+                            // margin: 0 10px;
+                            // background-color: red;
+                            width: 32px;
+                            height: 32px;
+                            cursor: pointer;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
 
-                    .circle-color.blue {
-                        background-color: #0D99FF;
-                    }
+                        .circle-color.black {
+                            background-color: #252525;
+                        }
 
-                    .circle-color.yellow {
-                        background-color: #FBBC04;
-                    }
+                        .circle-color.blue {
+                            background-color: #0D99FF;
+                        }
 
-                    .circle-color.green {
-                        background-color: #5CB265;
-                    }
+                        .circle-color.yellow {
+                            background-color: #FBBC04;
+                        }
 
-                    .circle-color.red {
-                        background-color: #D80000;
+                        .circle-color.green {
+                            background-color: #5CB265;
+                        }
+
+                        .circle-color.red {
+                            background-color: #D80000;
+                        }
                     }
                 }
             }
@@ -121,7 +194,7 @@
                     display: flex;
                     justify-content: center;
                     // align-items: center;
-                    height: 48px;
+                    height: 52px;
                     flex-shrink: 0;
                     border-radius: 37px;
                     background: rgba(37, 37, 37, 1);
@@ -139,6 +212,27 @@
 
                     &:active {
                         transform: scale(0.9);
+                    }
+
+                    &:last-child {
+                        width: 52px;
+                        height: 52px;
+                        display: grid;
+                        place-items: center;
+                        background-color: #FFFFFF;
+                        border-radius: 50%;
+                        border: 1px solid rgba(37, 37, 37, 1);
+                        color: #000;
+
+                        &:hover {
+                            transform: none;
+                            color: #0D99FF;
+                            border-color: #0D99FF;
+                        }
+
+                        &:active {
+                            transform: none;
+                        }
                     }
                 }
             }

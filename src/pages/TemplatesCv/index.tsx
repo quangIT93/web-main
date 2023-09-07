@@ -20,9 +20,20 @@ import ContentListCv from '#components/TemplatesCv/ContentListCv';
 import './style.scss';
 
 import { Modal, Button, Avatar } from 'antd';
+import ModalShare from '#components/CV/ModalShare';
+import ModalChooseCv from '#components/CV/ModalChooseCv';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
+import { setCookie } from 'cookies';
+import RollTop from '#components/RollTop';
 
 const TemplatesCv: React.FC = () => {
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
   const [fontSizeCV, setFontSizeCV] = React.useState(24);
+  //1: black, 2: blue, 3: yellow, 4:green, 5:red
+  const [colorCV, setColorCV] = React.useState(1)
+  const [openModalShare, setOpenModalShare] = React.useState(false);
+  const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
 
   const handleClickMinusCircle = () => {
     if (fontSizeCV > 16) {
@@ -35,6 +46,15 @@ const TemplatesCv: React.FC = () => {
       setFontSizeCV(fontSizeCV + 2);
     }
   };
+
+  const handlePickColor = (color: number) => {
+    setColorCV(color)
+  }
+
+  const handleSaveCv = () => {
+    setCookie("firstCv", "1", 365)
+    setOpenModalChooseCv(true);
+  }
 
   return (
     <div className="cv-container">
@@ -76,11 +96,19 @@ const TemplatesCv: React.FC = () => {
                 </Button> */}
 
         <div className="contentCV-top">
-          <div className="backToEditor">
+          <div className="backToEditor"
+            onClick={() => window.open(`/profile`, '_parent')}
+          >
             <div className="icon-back">
               <BackIcon width={15} height={15} fill="white" />
             </div>
-            <p>Back to Editor</p>
+            <p>
+              {
+                languageRedux === 1 ?
+                  "Về trang chỉnh sửa" :
+                  "Back to Editor"
+              }
+            </p>
           </div>
           <div className="change-styles">
             <div className="change-styles_font">
@@ -93,46 +121,88 @@ const TemplatesCv: React.FC = () => {
               </div>
             </div>
 
-            <h3>|</h3>
+            {/* <h3>|</h3> */}
+            <div className="line"></div>
 
-            <div className="change-styles_color">
-              <div className={`circle-color black`}>
-                <TickIcon />
+            <div className="color-group">
+              <p>
+                {
+                  languageRedux === 1 ? "Màu sắc" : "Color"
+                }
+              </p>
+              <div className="change-styles_color">
+                <div className={`circle-color black`} onClick={() => handlePickColor(1)}>
+                  <div className="circle-ticked" style={{
+                    display: colorCV === 1 ? 'block' : 'none'
+                  }}>
+                    <TickIcon />
+                  </div>
+                </div>
+                <div className={`circle-color blue`} onClick={() => handlePickColor(2)}>
+                  <div className="circle-ticked" style={{
+                    display: colorCV === 2 ? 'block' : 'none'
+                  }}>
+                    <TickIcon />
+                  </div>
+                </div>
+                <div className={`circle-color yellow`} onClick={() => handlePickColor(3)}>
+                  <div className="circle-ticked" style={{
+                    display: colorCV === 3 ? 'block' : 'none'
+                  }}>
+                    <TickIcon />
+                  </div>
+                </div>
+                <div className={`circle-color green`} onClick={() => handlePickColor(4)}>
+                  <div className="circle-ticked" style={{
+                    display: colorCV === 4 ? 'block' : 'none'
+                  }}>
+                    <TickIcon />
+                  </div>
+                </div>
+                <div className={`circle-color red`} onClick={() => handlePickColor(5)}>
+                  <div className="circle-ticked" style={{
+                    display: colorCV === 5 ? 'block' : 'none'
+                  }}>
+                    <TickIcon />
+                  </div>
+                </div>
               </div>
-              <div className={`circle-color blue`}></div>
-              <div className={`circle-color yellow`}></div>
-              <div className={`circle-color green`}></div>
-              <div className={`circle-color red`}></div>
             </div>
           </div>
           <div className="button-cv">
             <Button
               type="primary"
-            // onClick={() => {
-            //   console.log('click');
-
-            //   setOpenModalLogin(true);
-            // }}
+              onClick={handleSaveCv}
             >
-              <LoginArrowIcon />
-              Lưu và tải PDF
+              {
+                languageRedux === 1 ?
+                  "Lưu và tải PDF" :
+                  "Save & Download PDF"
+              }
             </Button>
-
-            <ShareCvIcon />
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpenModalShare(true);
+              }}
+            >
+              <ShareCvIcon />
+            </Button>
           </div>
         </div>
 
         <ContentListCv />
+        <ModalShare
+          openModalShare={openModalShare}
+          setOpenModalShare={setOpenModalShare}
+        />
+        <ModalChooseCv
+          openModalChooseCv={openModalChooseCv}
+          setOpenModalChooseCv={setOpenModalChooseCv}
+        />
       </div>
+      <RollTop />
       <Footer />
-      {/* <Modal
-                title="Basic Modal"
-                open={open}
-                //   onOk={this.handleOk}
-                onCancel={handleOpenModel}
-            >
-                <Avatar size={200} src={blobCv} />
-            </Modal> */}
     </div>
   );
 };

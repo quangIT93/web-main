@@ -49,6 +49,15 @@ import Footer from '../../components/Footer/Footer';
 import ItemApply from './components/Item';
 
 import apiCompany from 'api/apiCompany';
+// Import Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/scrollbar';
+import 'swiper/css/navigation';
+// import required modules
+import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson';
 import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice';
@@ -139,6 +148,7 @@ const Profile: React.FC = () => {
   // const [checkRemove, setCheckRemove] = useState(2);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [language, setLanguage] = useState<any>();
+  const [cvHijob, setCvHijob] = useState<any[]>([1, 2]);
 
   // const [user, setUser] = useState<any>(null);
 
@@ -628,7 +638,7 @@ const Profile: React.FC = () => {
           </div>
         </Skeleton>
 
-        <Skeleton className="skeleton-item" loading={loading} active>
+        {/* <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
               style={{
@@ -718,7 +728,7 @@ const Profile: React.FC = () => {
               </div>
             </Space>
           </div>
-        </Skeleton>
+        </Skeleton> */}
 
         <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
@@ -790,6 +800,107 @@ const Profile: React.FC = () => {
             </Space>
           </div>
         </Skeleton>
+
+        <Skeleton className="skeleton-item" loading={loading} active>
+          <div className="div-profile-info">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h3>
+                {
+                  languageRedux === 1 ?
+                    "HiJob CV/Hồ sơ để ứng tuyển" :
+                    "HiJob CV/Resume to apply"
+                }
+              </h3>
+              <Space
+                style={{
+                  cursor: 'pointer',
+                  display: cvHijob.length === 0 ? 'none' : 'flex'
+                }}
+              // onClick={() => setOpenModalLocation(true)}
+              >
+                <div className="edit-icon">
+                  <PencilIcon width={15} height={15} />
+                </div>
+
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
+                  {language?.edit}
+                </p>
+              </Space>
+            </div>
+            <Space
+              wrap
+              size={20}
+              direction="vertical"
+              style={{ marginTop: 20 }}
+              className="cv-input-container"
+            >
+              <div
+                // align="center"
+                style={{
+                  marginLeft: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              // direction="vertical"
+              >
+                {cvHijob?.length !== 0 ? (
+                  <div className="list-cv-container">
+                    <p>
+                      {
+                        languageRedux === 1 ?
+                          "Chọn HiJob CV/Resume của bạn để Nhà tuyển dụng xem, đánh giá và lựa chọn!" :
+                          "Choose your HiJob CV/Resume for Employers to view, evaluate and select!"
+                      }
+                    </p>
+                    <Swiper
+                      navigation={true}
+                      slidesPerView="auto"
+                      spaceBetween={17}
+                      modules={[Mousewheel, Navigation, Pagination]}
+                      className="list-cv-swiper"
+                    >
+                      {
+                        Array.from(new Array(10).keys()).map((item: any, index: number) => {
+                          return (
+                            <SwiperSlide
+                              key={index}
+                              onClick={(event) => {
+                                // handleClickItem();
+                              }}
+                            >
+                              <div className="slide-item" key={item}>
+                                {/* <Avatar shape="square" icon={<UserOutlined />} /> */}
+                                <img />
+                              </div>
+                            </SwiperSlide>
+                          );
+                        })
+                      }
+                    </Swiper>
+                  </div>
+                ) : (
+                  <Space direction="vertical" align="start">
+                    <p>
+                      {
+                        languageRedux === 1 ?
+                          "Bạn chưa có HiJob CV/Resume để Nhà tuyển dụng xem, đánh giá và lựa chọn!" :
+                          "You don't have a HiJob CV/Resume for recruitment to view, evaluate and choose!"
+                      }
+                    </p>
+                    <img style={{ width: 200 }} src="/cv3 1.png" alt="CV" />
+                  </Space>
+                )}
+              </div>
+            </Space>
+          </div>
+        </Skeleton>
+
         <Skeleton className="skeleton-item" loading={loading} active>
           <div className="div-profile-info">
             <div
@@ -909,6 +1020,75 @@ const Profile: React.FC = () => {
           languageRedux={languageRedux}
           language={language}
         />
+        {
+          profile.cv_url ?
+            <Skeleton className="skeleton-item" loading={loading} active>
+              <div className="div-profile-info">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '16px',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <h3>
+                    {
+                      languageRedux === 1 ?
+                        "Cv/Hồ sơ của bạn" :
+                        "Your CV/ Resume"
+                    }
+                  </h3>
+
+                  <p>
+                    {
+                      languageRedux === 1 ?
+                        "CV/Resume của bạn để ứng tuyển cùng HiJob!" :
+                        "Your CV/Resume to apply with HiJob!"
+                    }
+                  </p>
+                </div>
+                <Space
+                  wrap
+                  size={20}
+                  direction="vertical"
+                  style={{ marginTop: 20 }}
+                  className="cv-input-container"
+                >
+                  <div
+                    // align="center"
+                    style={{
+                      marginLeft: 0,
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  // direction="vertical"
+                  >
+                    <Popconfirm
+                      title={language?.profile_page?.delete_cv}
+                      description={language?.profile_page?.alert_delete_cv}
+                      open={open}
+                      onConfirm={confirm}
+                      onCancel={cancel}
+                      okText={language?.yes}
+                      cancelText={language?.no}
+                    >
+                      <CVItem
+                        url={profile.cv_url}
+                        open={open}
+                        setOpen={setOpen}
+                        isProfile={true}
+                        language={language}
+                      />
+                    </Popconfirm>
+                  </div>
+                </Space>
+              </div>
+            </Skeleton>
+            :
+            <></>
+        }
+
         <Stack spacing={2} sx={{ width: '100%' }}>
           <Snackbar open={alert} autoHideDuration={3000} onClose={handleClose}>
             <Alert
