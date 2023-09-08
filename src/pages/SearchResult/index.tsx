@@ -610,6 +610,9 @@ const NewJobs: React.FC = () => {
     </div>
   );
 
+  console.log('localOneItem', locationOneItem);
+  console.log('category', cateloryOneItem);
+
   const fetchDataProfileUser = async () => {
     try {
       await dispatch(getProfile() as any);
@@ -774,8 +777,6 @@ const NewJobs: React.FC = () => {
 
         // console.log('resut', result);
         setHasMore(true);
-        console.log('resut', result);
-        console.log('hasMore', hasMore);
 
         if (result && result.data.posts.length < 20) {
           setSearchData(result.data);
@@ -928,13 +929,22 @@ const NewJobs: React.FC = () => {
                 }}
                 className="total-search"
               >
-                <span>{language?.search_results_page?.find} </span>
-                <h4 style={{ margin: '0 10px' }}>
-                  {searchData ? searchData?.total.toLocaleString() : 0}
-                </h4>
-                <span className="title-last-search">
-                  {language?.search_results_page.suitable_job}
-                </span>
+                {searchData ? (
+                  <>
+                    <span>{language?.search_results_page?.find} </span>
+                    <h4 style={{ margin: '0 10px' }}>
+                      {searchData ? searchData?.total.toLocaleString() : 0}
+                    </h4>
+                    <span className="title-last-search">
+                      {/* {language?.search_results_page.suitable_job} */}
+                      {languageRedux === 1
+                        ? 'công việc phù hợp'
+                        : 'suitable jobs'}
+                    </span>
+                  </>
+                ) : (
+                  <span>Loadding</span>
+                )}
               </div>
               <div
                 style={{
@@ -1044,9 +1054,22 @@ const NewJobs: React.FC = () => {
             <p className="title-modal_createKey">
               {language?.search_results_page?.keyword_announcement}
             </p>
-            <p className="title-modal_noteKeyword">
-              {language?.search_results_page?.add_keyword_titles}
-            </p>
+
+            {locationOneItem.length !== 0 && cateloryOneItem.length !== 0 ? (
+              <p className="title-modal_noteKeyword">
+                {language?.search_results_page?.add_keyword_titles}
+              </p>
+            ) : (
+              <p className="title-modal_noteKeyword">
+                {languageRedux === 1
+                  ? 'Vui lòng nhập vị trí và danh mục'
+                  : 'Please enter Location and Category'}
+              </p>
+            )}
+
+            {/* {
+              valueKeyword
+            } */}
 
             <Input
               placeholder={language?.keyword2}

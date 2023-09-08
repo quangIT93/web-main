@@ -245,7 +245,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
       socket.current.on('disconnect', (reason: any) => {
         // console.log('ket noi that bai');
-        setIsConnected(true);
+        setIsConnected(false);
       });
 
       if (socket.current.connected === false) {

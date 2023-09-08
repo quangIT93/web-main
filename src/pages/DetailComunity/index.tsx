@@ -118,7 +118,11 @@ const Comunity = () => {
           setDetail(result?.data);
           setBookmark(result?.data?.bookmarked);
           console.log('result: ', result);
-          setCookie('workingId', result.data.id, 365);
+          if (result.data.type === 0) {
+            setCookie('hijobId', result.data.id, 365);
+          } else {
+            setCookie('workingId', result.data.id, 365);
+          }
         } else {
           POST_COMMUNITY_ID === '1'
             ? window.open('/new-comunity', '_parent')

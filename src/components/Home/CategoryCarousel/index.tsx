@@ -151,15 +151,18 @@ const CategoryCarousel: React.FC = () => {
       window.innerWidth ||
       document.documentElement.clientWidth ||
       document.body.clientWidth;
-    const tabs = document.querySelector('.tabs') as HTMLElement;
-    const breadCrumb = document.querySelector(
+    let tabs = document.querySelector('.tabs') as HTMLElement;
+    let breadCrumb = document.querySelector(
       '.bread-crumb-container',
     ) as HTMLElement;
 
     console.log('tavbs', tabs);
     console.log('breadCrumb', breadCrumb);
-
+    // tabs.style.top = '70px';
+    // breadCrumb.style.marginTop = '192px';
     if (tabs && breadCrumb) {
+      // tabs.style.top = '70px';
+      // breadCrumb.style.marginTop = '192px';
       setTimeout(() => {
         tabs.style.top = '70px';
         breadCrumb.style.marginTop = '192px';

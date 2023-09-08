@@ -40,6 +40,7 @@ import Community from '#components/Home/Community';
 import Footer from '../../components/Footer/Footer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
+import { setCookie } from 'cookies';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -97,12 +98,15 @@ const Home: React.FC = () => {
       });
     }
     localStorage.removeItem('community');
-
+    setCookie('workingId', '0', 1);
+    setCookie('hijobId', '0', 1);
+    // document.cookie = `hijobId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    // document.cookie = `workingId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     window.scrollTo(0, 0);
   }, []);
 
   // Lưu vị trí cuộn trước đó
-  let lastScrollTop = 0;
+  // let lastScrollTop = 0;
 
   var prevHeight = 300;
   const handleScroll = () => {
@@ -130,6 +134,9 @@ const Home: React.FC = () => {
       //   tabs.style.top = '70px';
       //   breadCrumb.style.marginTop = '192px';
       // }, 500);
+    } else if (currentHeight === 0) {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
     } else {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';

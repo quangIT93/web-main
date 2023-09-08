@@ -159,6 +159,7 @@ const HijobNewsCard: React.FC<any> = (props) => {
     <>
       <div
         className="comunitypostNews-card-wrap_content"
+        id={item.id}
         key={index}
         onClick={(e) => handleMoveToDetailPage(item?.id, e)}
       >
