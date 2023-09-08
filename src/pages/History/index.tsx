@@ -183,6 +183,7 @@ const HistoryPost = () => {
       href="/"
       onClick={handleClick}
       target="_parent"
+      style={{ fontSize: '12px' }}
     >
       {language?.history_page?.home}
     </Link>,
@@ -193,17 +194,18 @@ const HistoryPost = () => {
       href="/history"
       onClick={handleClick}
       target="_parent"
+      style={{ fontSize: '12px' }}
     >
       {language?.history_page?.history}
     </Link>,
-    <Typography key="3" color="text.primary">
+    <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {ItemLeft === dataItem[0].id - 1
         ? dataItem[0].title
         : ItemLeft === dataItem[1].id - 1
         ? dataItem[1].title
         : dataItem[2].title}
     </Typography>,
-    <Typography key="3" color="text.primary">
+    <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {activeChild === '0-0'
         ? language?.all
         : // : activeChild === '0-1'

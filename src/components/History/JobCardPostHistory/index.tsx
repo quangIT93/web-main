@@ -137,7 +137,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   variant="h6"
                   component="div"
                   sx={{
-                    fontSize: '14px',
+                    fontSize: '12px',
                     whiteSpace: 'nowrap',
                     width: '100%',
                     textOverflow: 'ellipsis',
@@ -170,7 +170,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
-                    fontSize: '14px',
+                    fontSize: '12px',
                     fontWeight: '400',
                   }}
                 >
@@ -194,7 +194,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
-                    fontSize: '14px',
+                    fontSize: '12px',
                     fontWeight: '400',
                   }}
                 >
@@ -215,7 +215,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 <p
                   style={{
                     color: '#aaaaaa',
-                    fontSize: 14,
+                    fontSize: 12,
                     fontStyle: 'italic',
                     fontWeight: '400',
                   }}
@@ -235,17 +235,16 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
             <p
               style={{
                 color: '#001424',
-                fontSize: 14,
+                fontSize: 12,
                 fontStyle: 'italic',
                 fontWeight: '400',
               }}
             >
-              {
-                language?.posted_on
-              }{' '}
+              {language?.posted_on}{' '}
               {props.item?.created_at != null
-                ? moment(props.item?.created_at).format('DD/MM/YYYY') + ' ' +
-                moment(new Date(props.item?.created_at)).format('HH:mm')
+                ? moment(props.item?.created_at).format('DD/MM/YYYY') +
+                  ' ' +
+                  moment(new Date(props.item?.created_at)).format('HH:mm')
                 : language?.unupdated}
             </p>
 
@@ -257,15 +256,13 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                 color: '#ffffff',
                 marginLeft: '30px',
                 display: props.isHide ? 'none' : 'block',
+                fontSize: '12px',
               }}
             >
-              {props.item.num_of_application}
-              {' '}
-              {
-                props.item.num_of_application <= 1 ?
-                  language?.history_page?.application :
-                  language?.history_page?.applications
-              }
+              {props.item.num_of_application}{' '}
+              {props.item.num_of_application <= 1
+                ? language?.history_page?.application
+                : language?.history_page?.applications}
             </p>
             {props.item.status === 1 ? (
               <p
@@ -276,11 +273,10 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   color: '#ffffff',
                   marginLeft: '30px',
                   fontStyle: 'italic',
+                  fontSize: '12px',
                 }}
               >
-                {
-                  language?.recruiting
-                }
+                {language?.recruiting}
               </p>
             ) : props.item.status === 3 ? (
               <p
@@ -291,11 +287,10 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   color: '#ffffff',
                   marginLeft: '30px',
                   fontStyle: 'italic',
+                  fontSize: '12px',
                 }}
               >
-                {
-                  language?.post_detail_page?.closed
-                }
+                {language?.post_detail_page?.closed}
               </p>
             ) : (
               <p
@@ -305,11 +300,10 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                   borderRadius: '15px',
                   color: '#ffffff',
                   marginLeft: '30px',
+                  fontSize: '12px',
                 }}
               >
-                {
-                  language?.history_page?.does_not_accept
-                }
+                {language?.history_page?.does_not_accept}
               </p>
             )}
           </Box>
@@ -382,7 +376,7 @@ const JobCardPostHistory: React.FC<IitemNewJob> = (props) => {
                             )}
                         </div>
                     </div> */}
-          <p style={{ fontSize: 14, color: '#0d99ff', fontWeight: 500 }}>
+          <p style={{ fontSize: 12, color: '#0d99ff', fontWeight: 500 }}>
             {props.item.job_type.job_type_name}
           </p>
         </Space>

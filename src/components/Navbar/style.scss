@@ -29,7 +29,7 @@
     display: none;
   }
 
-  @media screen and (min-width: 421px) and (max-width: 600px) {
+  @media screen and (min-width: 421px) and (max-width: 640px) {
     display: none;
   }
 }
@@ -110,6 +110,8 @@
       }
 
       .actions-login {
+
+
 
         // display: none;
 
@@ -756,7 +758,7 @@
     }
   }
 
-  ;
+  
 
   // start filter
 
@@ -878,6 +880,7 @@
     // }
 
     @include breakpoint(largeTablet) {
+      
       flex: none;
     }
 
@@ -886,6 +889,7 @@
     }
 
     @include breakpoint(mobile) {
+
       flex: none;
     }
   }
@@ -948,7 +952,10 @@
       }
     }
 
-    @include breakpoint(tablet) {
+    // @include breakpoint(tablet) {
+      @media screen and (max-width: 480px){
+        
+      // }
       display: flex;
       // flex: none;
       margin-right: 0px;
@@ -963,7 +970,12 @@
       }
     }
 
-    @include breakpoint(largeTablet) {
+
+    
+    // @include breakpoint(largeTablet) {
+    @media screen and (min-width: 481px) and (max-width:1024px){
+      
+    // }
       display: flex;
       // flex: none;
       margin-right: 10px;
@@ -1004,6 +1016,10 @@
       display: flex;
       align-items: center;
       margin: 0 10px;
+
+      @media screen and (max-width: 450px) and (min-width: 427px){
+        margin: 0 10px 0 10px;
+      }
 
       svg {
         cursor: pointer
@@ -1069,12 +1085,23 @@
             width: 220px;
             margin-top: 8px;
             gap: 4px;
+            p {
+            width: 200px;
+            text-overflow: ellipsis !important; 
+            white-space: nowrap;
+            overflow: hidden !important;
+            display: block !important;
+
+            @media screen and (max-width:420px ) {
+              width: 160px;
+            }
+            }
 
             p {
               overflow: hidden;
               text-overflow: ellipsis;
               // white-space: ;
-              display: -webkit-box;
+              // display: -webkit-box;
               /* Dùng -webkit-box để sử dụng thuộc tính clamp */
               -webkit-line-clamp: 2;
               /* Giới hạn văn bản xuống 2 dòng */
@@ -1319,6 +1346,7 @@
       position: relative;
       // pointer-events: none;
 
+
       &:after {
         content: "";
         position: absolute;
@@ -1368,7 +1396,7 @@
       .login__hover__container {
         position: absolute;
         top: 60px;
-        right: 0;
+        right: 0px;
         z-index: 10;
         // display: none;
         // visibility: hidden;

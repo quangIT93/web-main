@@ -20,14 +20,16 @@ interface IEditNameFaxCompany {
 }
 
 const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const { dataCompany, setDataCompany } = props;
   const [language, setLanguageState] = React.useState<any>();
 
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguageState(result.data);
@@ -39,8 +41,8 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const handleEditCompanyFax = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -71,10 +73,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editCompany"
         >
-          {
-            language?.company_name
-          }{' '}
-          <span style={{ color: 'red' }}>*</span>
+          {language?.company_name} <span style={{ color: 'red' }}>*</span>
         </Typography>
         <TextField
           type="text"
@@ -84,10 +83,8 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           onChange={handleEditCompanyName}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={
-            language?.company_page?.place_name
-          }
-        //   error={titleError} // Đánh dấu lỗi
+          placeholder={language?.company_page?.place_name}
+          //   error={titleError} // Đánh dấu lỗi
         />
       </div>
       <div className="edit-tax-company">
@@ -97,9 +94,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          {
-            language?.tax_code
-          }
+          {language?.tax_code}
         </Typography>
         <TextField
           type="text"
@@ -109,10 +104,8 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           onChange={handleEditCompanyFax}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={
-            language?.company_page?.place_tax
-          }
-        //   error={titleError} // Đánh dấu lỗi
+          placeholder={language?.company_page?.place_tax}
+          //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>
