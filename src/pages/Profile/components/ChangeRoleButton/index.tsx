@@ -18,9 +18,6 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
       setRole(0)
   }
 
-  console.log(role);
-
-
   return (
     <div className="btn-container">
       <label className="switch btn-color-mode-switch">
@@ -33,7 +30,7 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
         <label htmlFor="color_mode"
           data-on={
             languageRedux === 1 ?
-              "Nhà tuyển dụng" : "Employer"
+              "Nhà tuyển dụng" : "Recruiter"
           }
           data-off={
             languageRedux === 1 ?
