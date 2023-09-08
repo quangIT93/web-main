@@ -237,7 +237,7 @@ const HotJobpage: React.FC = () => {
       // const provinceId = localStorage.getItem('filterHotjobProvince');
 
       const url = localStorage.getItem('hotjobApi');
-      let hotjob = await hotJobApi.getHotJobById(
+      let hotjob: any = await hotJobApi.getHotJobById(
         url,
         pageNumber,
         searchParams.get('hotjob-id') === '1' ? 18 : 20,
@@ -245,14 +245,16 @@ const HotJobpage: React.FC = () => {
         // idFilterProvinces && provinceId,
         idFilterProvinces,
       );
+      console.log('hotjob.', hotjob);
 
+      console.log('hotjob.data.total', hotjob['total'] as any);
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       // const hotjobtotal = Number(searchParams.get('hotjob-total'));
       const hotjobtotal = getCookie('hotjobTotal');
 
       // hotjobtotal / 20
 
-      setHotJobTotal(hotjobtotal);
+      setHotJobTotal(hotjob.total);
 
       setHasMore(true);
       if (hotjob && hotjob.data.length < 18 && hotjobtype === 3) {
@@ -447,6 +449,9 @@ const HotJobpage: React.FC = () => {
         languageRedux === 1 ? 'vi' : 'en',
         idFilterProvinces,
       );
+
+      console.log('result', result);
+
       if (result && result.data.length !== 0) {
         setHotJob((prev: any) => [...prev, ...result?.data]);
         setPage(nextPage);
@@ -456,6 +461,7 @@ const HotJobpage: React.FC = () => {
       }
     } catch (error) {}
   };
+  // console.log('hothob', hotjob);
 
   return (
     <>
@@ -493,13 +499,16 @@ const HotJobpage: React.FC = () => {
                     : hotJobType === 7
                     ? 'Delivery/Driver'
                     : 'Loading...'}{' '}
-                  {/* {hotjob.length !== 0
+                  {languageRedux === 1 ? 'có' : 'has'}{' '}
+                  {hotjob.length !== 0
                     ? // ? Number(hotJobTotal.toLocaleString())
                       new Intl.NumberFormat('en-US').format(hotJobTotal)
-                    : ''} */}
+                    : languageRedux === 1
+                    ? '0 kết quả'
+                    : '0 result'}
                   <span>
                     {' '}
-                    {/* {
+                    {
                       // language?.hot_job_page?.result
                       languageRedux === 1 && hotjob.length !== 0
                         ? 'kết quả'
@@ -508,7 +517,7 @@ const HotJobpage: React.FC = () => {
                         : hotJobTotal < 1 && hotjob.length !== 0
                         ? 'result'
                         : ''
-                    } */}
+                    }
                   </span>
                 </h3>
                 <div
