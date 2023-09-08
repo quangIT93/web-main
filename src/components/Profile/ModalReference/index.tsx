@@ -67,6 +67,11 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             },
             ...prev
         ])
+        setFullName('');
+        setCompany('');
+        setPhone('');
+        setMail('');
+        setOpenModalReference(false);
     }
 
     const handleClose = () => {

@@ -73,7 +73,17 @@
         }
 
         @include breakpoint(tablet) {
-          align-items: flex-start;
+          // align-items: flex-start;
+        }
+
+        @media screen and (max-width:575px) {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 8px;
+
+          .user-company {
+            margin-left: 0px !important;
+          }
         }
 
         @media screen and (max-width: 330px) {
@@ -87,9 +97,16 @@
 
         .user-company {
           display: flex;
-          flex-direction: column;
+          // flex-direction: column;
           gap: 8px;
           width: 100%;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+
+          @include breakpoint(mobile) {
+            justify-content: center;
+          }
 
           .wrap-company {
             display: flex;
@@ -529,6 +546,8 @@
 
           .edit-icon {
             cursor: pointer;
+            display: grid;
+            place-items: center;
 
             svg {
               color: #AAAAAA;
@@ -543,6 +562,8 @@
 
           .delete-icon {
             cursor: pointer;
+            display: grid;
+            place-items: center;
 
             svg {
               color: #AAAAAA;

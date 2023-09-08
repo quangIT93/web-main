@@ -61,6 +61,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
         ])
         setLanguage('')
         setLevel(1)
+        setOpenModallanguages(false)
     }
 
     const handleClose = () => {

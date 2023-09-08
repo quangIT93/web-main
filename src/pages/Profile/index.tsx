@@ -93,6 +93,7 @@ import { profileVi } from 'validations/lang/vi/profile';
 import SectionCv from './components/SectionCv';
 import CreateCv from '#components/Profile/CreateCv';
 import ChangeRoleButton from './components/ChangeRoleButton';
+import CandidateProfile from './components/CandidateProfile';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -171,7 +172,7 @@ const Profile: React.FC = () => {
     },
   ]);
   const [cvId, setCvId] = useState<any>();
-  const [role, setRole] = useState(1)
+  const [role, setRole] = useState(0)
 
   // const [user, setUser] = useState<any>(null);
 
@@ -499,7 +500,8 @@ const Profile: React.FC = () => {
                 </Badge>
                 <div className="user-company" style={{ marginLeft: '10px' }}>
                   <h2>{profile?.name ? profile?.name : language?.unupdated}</h2>
-                  <div className="wrap-company">
+                  <ChangeRoleButton role={role} setRole={setRole} />
+                  {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2
                         className={
@@ -535,7 +537,7 @@ const Profile: React.FC = () => {
                         ? language?.profile_page?.create_post
                         : language?.profile_page?.register_now}
                     </Button>
-                  </div>
+                  </div> */}
                   {/* <div
                     style={{
                       display: 'flex',
@@ -625,6 +627,11 @@ const Profile: React.FC = () => {
               </div>
             </div>
           </div>
+          <ModalProfileInfoPerson
+            openModelPersonalInfo={openModelPersonalInfo}
+            setOpenModalPersonalInfo={setOpenModalPersonalInfo}
+            profile={profile}
+          />
         </Skeleton>
 
         <Skeleton className="skeleton-item" loading={loading} active>
@@ -673,477 +680,41 @@ const Profile: React.FC = () => {
               </div>
             </div>
           </div>
-        </Skeleton>
-
-        {/* <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                // flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>CV/ Resume</h3>
-            </div>
-            <Space
-              wrap
-              size={20}
-              direction="vertical"
-              style={{ marginTop: 20 }}
-              className="cv-input-container"
-            >
-              <Upload {...props}>
-                <Button
-                  style={{
-                    backgroundColor: '#0D99FF',
-                    color: 'white',
-                    height: 40,
-                    marginBottom: 20,
-                  }}
-                  icon={<UploadOutlined style={{ fontSize: 18 }} />}
-                >
-                  {profile.cv_url
-                    ? language?.profile_page?.update_cv
-                    : language?.upload_cv}{' '}
-                </Button>
-              </Upload>
-
-              <div
-                // align="center"
-                style={{
-                  marginLeft: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              // direction="vertical"
-              >
-                {profile.cv_url && fileList?.length === 0 ? (
-                  <Popconfirm
-                    title={language?.profile_page?.delete_cv}
-                    description={language?.profile_page?.alert_delete_cv}
-                    open={open}
-                    onConfirm={confirm}
-                    onCancel={cancel}
-                    okText={language?.yes}
-                    cancelText={language?.no}
-                  >
-                    <CVItem
-                      url={profile.cv_url}
-                      open={open}
-                      setOpen={setOpen}
-                      isProfile={true}
-                      language={language}
-                    />
-                  </Popconfirm>
-                ) : (
-                  fileList?.length <= 0 && (
-                    <Space direction="vertical" align="center">
-                      <p>{language?.profile_page?.cv_title}</p>
-                      <img style={{ width: 200 }} src="/cv3 1.png" alt="ảnh" />
-                    </Space>
-                  )
-                )}
-                <Button
-                  type="primary"
-                  onClick={handleUpload}
-                  disabled={fileList?.length === 0}
-                  loading={uploading}
-                  style={{
-                    marginTop: 16,
-                    width: 300,
-                    height: 40,
-                    backgroundColor: `${fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                      }`,
-                    alignItems: 'flex-start',
-                  }}
-                >
-                  {uploading
-                    ? language?.profile_page?.saving
-                    : language?.profile_page?.save_cv}
-                </Button>
-              </div>
-            </Space>
-          </div>
-        </Skeleton> */}
-
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>{language?.career_objective}</h3>
-              <Space
-                style={{ cursor: 'pointer' }}
-                onClick={() => setOpenModalCareerObjective(true)}
-              >
-                <div className="edit-icon">
-                  <PencilIcon width={15} height={15} />
-                </div>
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.edit}
-                </p>
-              </Space>
-            </div>
-            <Space wrap className="item-info-work">
-              {profile?.categories?.length !== 0
-                ? profile?.categories?.map(
-                  (item: ICategories, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.child_category}
-                    </Button>
-                  ),
-                )
-                : language?.unupdated}
-            </Space>
-          </div>
-        </Skeleton>
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>{language?.working_location}</h3>
-              <Space
-                style={{ cursor: 'pointer' }}
-                onClick={() => setOpenModalLocation(true)}
-              >
-                <div className="edit-icon">
-                  <PencilIcon width={15} height={15} />
-                </div>
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.edit}
-                </p>
-              </Space>
-            </div>
-            <Space wrap className="item-info-work">
-              {profile?.locations?.length !== 0
-                ? profile?.locations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.district}
-                  </Button>
-                ))
-                : language?.unupdated}
-            </Space>
-          </div>
-        </Skeleton>
-
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>
-                {
-                  languageRedux === 1 ?
-                    "HiJob CV/Hồ sơ để ứng tuyển" :
-                    "HiJob CV/Resume to apply"
-                }
-              </h3>
-              <Space
-                style={{
-                  cursor: 'pointer',
-                  display: cvHijob.length === 0 ? 'none' : 'flex'
-                }}
-              // onClick={() => setOpenModalLocation(true)}
-              >
-                <div className="edit-icon">
-                  <PencilIcon width={15} height={15} />
-                </div>
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.edit}
-                </p>
-              </Space>
-            </div>
-            <div className="list-cv-container" >
-              {cvHijob?.length !== 0 ? (
-                <div className="list-cv-conttent">
-                  <p>
-                    {
-                      languageRedux === 1 ?
-                        "Chọn HiJob CV/Resume của bạn để Nhà tuyển dụng xem, đánh giá và lựa chọn!" :
-                        "Choose your HiJob CV/Resume for Employers to view, evaluate and select!"
-                    }
-                  </p>
-                  <Swiper
-                    navigation={true}
-                    slidesPerView="auto"
-                    spaceBetween={17}
-                    modules={[Mousewheel, Navigation, Pagination]}
-                    className="list-cv-swiper"
-                  >
-                    {
-                      listCv.map((item: any, index: number) => {
-                        return (
-                          <SwiperSlide
-                            key={index}
-                            onClick={(event) => {
-                              // handleClickItem();
-                            }}
-                          >
-                            <div className="slide-item" key={item}>
-                              <Avatar variant="rounded">
-                                {
-                                  `CV ${item.id}`
-                                }
-                                <div className="choose-cv-container"
-                                  onClick={(e) => handleChooseCv(item, e)}
-                                >
-                                  <div className={
-                                    cvId === item.id ?
-                                      "choose-cv-content checked" :
-                                      "choose-cv-content"
-                                  }
-                                  >
-                                    <TickIcon />
-                                  </div>
-                                </div>
-                              </Avatar>
-                              <div className="slide-item-bottom">
-                                <h3>
-                                  {
-                                    languageRedux === 1 ?
-                                      `Hồ sơ số ${item.id}` :
-                                      `Resume No.${item.id}`
-                                  }
-                                </h3>
-                                <div className="download-cv-icon">
-                                  <DownloadCVIcon width={14} height={14} />
-                                </div>
-                              </div>
-                            </div>
-                          </SwiperSlide>
-                        );
-                      })
-                    }
-                  </Swiper>
-                </div>
-              ) : (
-                <Space direction="vertical" align="start">
-                  <p>
-                    {
-                      languageRedux === 1 ?
-                        "Bạn chưa có HiJob CV/Resume để Nhà tuyển dụng xem, đánh giá và lựa chọn!" :
-                        "You don't have a HiJob CV/Resume for recruitment to view, evaluate and choose!"
-                    }
-                  </p>
-                  <img style={{ width: 200 }} src="/cv3 1.png" alt="CV" />
-                </Space>
-              )}
-            </div>
-          </div>
-        </Skeleton>
-
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>{language?.education}</h3>
-            </div>
-            {profile?.educations?.length !== 0 ? (
-              profile?.educations?.map((education: ItemAppy, index: number) => (
-                <ItemApply item={education} key={index} />
-              ))
-            ) : (
-              <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
-            )}
-
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'center',
-              }}
-            >
-              <Space
-                style={{ alignItems: 'center', cursor: 'pointer' }}
-                onClick={() => setOpenModalEducationCreate(true)}
-              >
-                <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
-                </p>
-              </Space>
-            </div>
-          </div>
-        </Skeleton>
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>{language?.working_experience}</h3>
-            </div>
-            {profile?.experiences?.length !== 0 ? (
-              profile?.experiences?.map((item: any, index: number) => (
-                <ItemApply typeItem="experiences" key={index} item={item} />
-              ))
-            ) : (
-              <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
-            )}
-
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'center',
-              }}
-            >
-              <Space
-                style={{ alignItems: 'center', cursor: 'pointer' }}
-                onClick={() => setOpenModalExperienceCreate(true)}
-              >
-                <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
-                </p>
-              </Space>
-            </div>
-          </div>
-
-          <ModalProfileInfoPerson
-            openModelPersonalInfo={openModelPersonalInfo}
-            setOpenModalPersonalInfo={setOpenModalPersonalInfo}
-            profile={profile}
-          />
-
           <ModalProfileContact
             openModalContact={openModalContact}
             setOpenModalContact={setOpenModalContact}
             profile={profile}
           />
-          <ModalProfileCareerObjectice
-            openModalCareerObjective={openModalCareerObjective}
-            setOpenModalCareerObjective={setOpenModalCareerObjective}
-            categories={profile?.categories}
-          />
-
-          <ModalProfileEducationCreate
-            openModalEducationCreate={openModalEducationCreate}
-            setOpenModalEducationCreate={setOpenModalEducationCreate}
-            typeItem="createEducation"
-            educations={profile?.educations}
-          />
-          <ModalProfileLocation
-            openModalLocation={openModalLocation}
-            setOpenModalLocation={setOpenModalLocation}
-            locations={profile?.locations}
-          />
-
-          <ModalProfileExperienceCreate
-            openModalExperienceCreate={openModalExperienceCreate}
-            setOpenModalExperienceCreate={setOpenModalExperienceCreate}
-            typeItem="createExperience"
-            educations={profile?.educations}
-          />
         </Skeleton>
-        <SectionCv
+
+        <CandidateProfile
+          display={role === 0 ? "block" : "none"}
+          profile={profile}
           loading={loading}
-          languageRedux={languageRedux}
           language={language}
+          languageRedux={languageRedux}
+          openModalCareerObjective={openModalCareerObjective}
+          openModalLocation={openModalLocation}
+          openModalEducationCreate={openModalEducationCreate}
+          openModalExperienceCreate={openModalExperienceCreate}
+          setOpenModalCareerObjective={setOpenModalCareerObjective}
+          setOpenModalLocation={setOpenModalLocation}
+          setOpenModalEducationCreate={setOpenModalEducationCreate}
+          setOpenModalExperienceCreate={setOpenModalExperienceCreate}
         />
-        {
-          profile.cv_url ?
-            <Skeleton className="skeleton-item" loading={loading} active>
-              <div className="div-profile-info">
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '16px',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <h3>
-                    {
-                      languageRedux === 1 ?
-                        "Cv/Hồ sơ của bạn" :
-                        "Your CV/ Resume"
-                    }
-                  </h3>
 
-                  <p>
-                    {
-                      languageRedux === 1 ?
-                        "CV/Resume của bạn để ứng tuyển cùng HiJob!" :
-                        "Your CV/Resume to apply with HiJob!"
-                    }
-                  </p>
-                </div>
-                <Space
-                  wrap
-                  size={20}
-                  direction="vertical"
-                  style={{ marginTop: 20 }}
-                  className="cv-input-container"
-                >
-                  <div
-                    // align="center"
-                    style={{
-                      marginLeft: 0,
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  // direction="vertical"
-                  >
-                    <Popconfirm
-                      title={language?.profile_page?.delete_cv}
-                      description={language?.profile_page?.alert_delete_cv}
-                      open={open}
-                      onConfirm={confirm}
-                      onCancel={cancel}
-                      okText={language?.yes}
-                      cancelText={language?.no}
-                    >
-                      <CVItem
-                        url={profile.cv_url}
-                        open={open}
-                        setOpen={setOpen}
-                        isProfile={true}
-                        language={language}
-                      />
-                    </Popconfirm>
-                  </div>
-                </Space>
-              </div>
-            </Skeleton>
-            :
-            <></>
-        }
 
-        <ChangeRoleButton role={role} setRole={setRole} />
         <Stack spacing={2} sx={{ width: '100%' }}>
-          <Snackbar open={alert} autoHideDuration={3000} onClose={handleClose}>
+          <Snackbar
+            open={alert}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
             <Alert
               onClose={handleClose}
               severity="success"
-              sx={{ width: '100%' }}
+              sx={{ width: '100%', backgroundColor: '#000000' }}
             >
               {language?.profile_page?.alert_delete_success}
             </Alert>

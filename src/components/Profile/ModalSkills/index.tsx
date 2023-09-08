@@ -59,6 +59,9 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
             },
             ...prev
         ])
+        setSkill('')
+        setLevel(1)
+        setOpenModalSkills(false)
     }
 
     const handleClose = () => {
