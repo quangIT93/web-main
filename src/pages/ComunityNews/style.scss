@@ -2,7 +2,8 @@
     margin-top: 70px;
 
     .comunity-news-content {
-        padding: 50px 180px;
+        padding: 50px 0px;
+        max-width: 1080px;
         margin: 0 auto;
         transition: all l;
         margin-bottom: 36px;
@@ -38,7 +39,7 @@
         // }
 
         .comunityPostNews {
-            width: 70%;
+            // width: 70%;
 
             @media screen and (max-width: 1024px) {
                 width: 100%;

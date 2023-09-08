@@ -2,9 +2,10 @@
     margin-top: 70px;
 
     .comunity-content {
-        padding: 50px 180px;
+        padding: 50px 0px;
+        max-width: 1080px;
         margin: 0 auto;
-        transition: all l;
+        transition: all linear 0.2s;
         margin-bottom: 36px;
         // 
         display: flex;
@@ -32,11 +33,11 @@
         }
 
         @media screen and (min-width: 1024px) and (max-width: 1280px) {
-            padding: 50px 24px !important;
+            padding: 50px 0px !important;
         }
 
         @media screen and (min-width: 1280px) and (max-width: 1600px) {
-            padding: 50px 24px !important;
+            padding: 50px 0px !important;
         }
 
 
@@ -47,6 +48,7 @@
             
             @media screen and (min-width: 1024px) and (max-width: 1280px) {
                 padding: 0px 24px !important;
+                // width: 100% !important;
             }
             // padding: 0 24px;
             // @media screen and (min-width: 350px) and (max-width: 1023px) {
