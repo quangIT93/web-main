@@ -138,7 +138,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                     variant="h6"
                     component="div"
                     sx={{
-                      fontSize: '14px',
+                      fontSize: '12px',
                       whiteSpace: 'nowrap',
                       width: '100%',
                       textOverflow: 'ellipsis',
@@ -171,7 +171,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                       textOverflow: 'ellipsis',
                       overflow: 'hidden',
                       marginLeft: '4px',
-                      fontSize: '14px',
+                      fontSize: '12px',
                       fontWeight: '400',
                     }}
                   >
@@ -196,7 +196,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                       textOverflow: 'ellipsis',
                       overflow: 'hidden',
                       marginLeft: '4px',
-                      fontSize: '14px',
+                      fontSize: '12px',
                       fontWeight: '400',
                     }}
                   >
@@ -217,7 +217,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                   <p
                     style={{
                       color: '#AAAAAA',
-                      fontSize: 14,
+                      fontSize: '12px',
                       fontStyle: 'italic',
                       fontWeight: '400',
                     }}
@@ -248,7 +248,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
           <p
             style={{
               color: '#001424',
-              fontSize: 14,
+              fontSize: '12px',
               fontStyle: 'italic',
               fontWeight: '400',
             }}
@@ -268,6 +268,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               padding: '4px 12px',
               borderRadius: '15px',
               color: '#ffffff',
+              fontSize: '12px',
             }}
           >
             {`${props.dataCandidates?.applications.length}
@@ -281,6 +282,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 padding: '4px 16px',
                 borderRadius: '15px',
                 color: '#ffffff',
+                fontSize: '12px',
               }}
             >
               {language?.recruiting}
@@ -292,6 +294,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 padding: '4px 16px',
                 borderRadius: '15px',
                 color: '#ffffff',
+                fontSize: '12px',
               }}
             >
               {language?.post_detail_page?.closed}
@@ -303,6 +306,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 padding: '4px 16px',
                 borderRadius: '15px',
                 color: '#ffffff',
+                fontSize: '12px',
               }}
             >
               {language?.candidate_detail_page?.does_not_accept}

@@ -217,7 +217,7 @@ const Company = () => {
         checkForm: false,
       };
     }
-    if (dataCompany?.name === '') {
+    if (dataCompany?.name.trim() === '') {
       return {
         message: language?.company_page?.err_name_mess,
         checkForm: false,
@@ -371,7 +371,7 @@ const Company = () => {
 
     const formData = new FormData();
     // formData.append('id', String(dataCompany?.id));
-    formData.append('name', String(dataCompany?.name));
+    formData.append('name', String(dataCompany?.name.trim()));
     formData.append('address', String(dataCompany?.address));
     formData.append('wardId', String(dataCompany?.companyLocation?.id));
     formData.append('taxCode', String(dataCompany?.taxCode));

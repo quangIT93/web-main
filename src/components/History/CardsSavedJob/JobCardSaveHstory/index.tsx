@@ -148,7 +148,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                   variant="h6"
                   component="div"
                   sx={{
-                    fontSize: '14px',
+                    fontSize: '12px',
                     whiteSpace: 'nowrap',
                     width: '100%',
                     textOverflow: 'ellipsis',
@@ -181,7 +181,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
-                    fontSize: '14px',
+                    fontSize: '12px',
                     fontWeight: '400',
                   }}
                 >
@@ -205,7 +205,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     marginLeft: '4px',
-                    fontSize: '14px',
+                    fontSize: '12px',
                     fontWeight: '400',
                   }}
                 >
@@ -226,7 +226,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                 <p
                   style={{
                     color: '#AAAAAA',
-                    fontSize: 14,
+                    fontSize: 12,
                     fontStyle: 'italic',
                     fontWeight: '400',
                   }}
@@ -246,16 +246,15 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
             <p
               style={{
                 color: '#001424',
-                fontSize: 13,
+                fontSize: 12,
                 fontStyle: 'italic',
               }}
             >
-              {
-                language?.posted_on
-              }{' '}
+              {language?.posted_on}{' '}
               {props.item?.created_at != null
-                ? moment(props.item?.created_at).format('DD/MM/YYYY') + ' ' +
-                moment(new Date(props.item?.created_at)).format('HH:mm')
+                ? moment(props.item?.created_at).format('DD/MM/YYYY') +
+                  ' ' +
+                  moment(new Date(props.item?.created_at)).format('HH:mm')
                 : language?.unupdated}
             </p>
             {props.item?.status === 1 ? (
@@ -267,11 +266,10 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                   color: '#ffffff',
                   marginLeft: '100px',
                   fontStyle: 'italic',
+                  fontSize: '12px',
                 }}
               >
-                {
-                  language?.recruiting
-                }
+                {language?.recruiting}
               </p>
             ) : props.item?.status === 3 ? (
               <p
@@ -282,11 +280,10 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                   color: '#ffffff',
                   marginLeft: '100px',
                   fontStyle: 'italic',
+                  fontSize: '12px',
                 }}
               >
-                {
-                  language?.closed
-                }
+                {language?.closed}
               </p>
             ) : (
               <p
@@ -297,11 +294,10 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
                   color: '#ffffff',
                   marginLeft: '100px',
                   fontStyle: 'italic',
+                  fontSize: '12px',
                 }}
               >
-                {
-                  language?.history_page?.does_not_accept
-                }
+                {language?.history_page?.does_not_accept}
               </p>
             )}
           </Box>
@@ -344,7 +340,7 @@ const JobCardSaveHistory: React.FC<IitemNewJob> = (props) => {
               )}
             </div>
           </div>
-          <p style={{ fontSize: 14, color: '#0d99ff', fontWeight: 500 }}>
+          <p style={{ fontSize: 12, color: '#0d99ff', fontWeight: 500 }}>
             {props.item.job_type.job_type_name}
           </p>
         </Space>

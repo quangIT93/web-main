@@ -1081,15 +1081,19 @@ const Navbar: React.FC = () => {
                   </h2>
                   <span className="sub-login_text">
                     <CompanySubLoginIcon />
-                    {companyName
-                      ? companyName
-                      : languageData?.home_page?.un_update_infor}
+                    <p>
+                      {companyName
+                        ? companyName
+                        : languageData?.home_page?.un_update_infor}
+                    </p>
                   </span>
                   <span className="sub-login_text">
                     <MailInfoIcon />
-                    {dataProfile?.email
-                      ? dataProfile?.email
-                      : languageData?.home_page?.un_update_infor}
+                    <p>
+                      {dataProfile?.email
+                        ? dataProfile?.email
+                        : languageData?.home_page?.un_update_infor}
+                    </p>
                   </span>
                   {/* <span className="sub-login_text">
                   <LoginHomeIcon />
@@ -1340,11 +1344,12 @@ const Navbar: React.FC = () => {
                   <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
                   <span className="sub-login_text">
                     <CompanySubLoginIcon />
-                    {companyName ? companyName : ''}
+                    <p>{companyName ? companyName : ''}</p>
                   </span>
                   <span className="sub-login_text">
                     <MailInfoIcon />
-                    {dataProfile?.email ? dataProfile?.email : ''}
+
+                    <p>{dataProfile?.email ? dataProfile?.email : ''}</p>
                   </span>
                   {/* <span className="sub-login_text">
                 <LoginHomeIcon />
