@@ -18,6 +18,7 @@ const postReducer = (state = initialState, { type, payload }: PostTypes) => {
           state.data.posts.push(...payload.postThemeMore.data.posts)
         } else {       
           state.data.is_over = true
+          state.data.posts.push(...payload.postThemeMore.data.posts)
         }
         return state;
       default:
