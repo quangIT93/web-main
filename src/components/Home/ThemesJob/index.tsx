@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 // import CardActions from '@mui/material/CardActions';
@@ -92,6 +92,8 @@ const ThemesJob: React.FC = () => {
   // const navigate = useNavigate();
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
+
+  const [endData, setEndData] = React.useState(0);
   // state redux
   const post = useSelector((state: RootState) => state.post);
 
@@ -128,6 +130,9 @@ const ThemesJob: React.FC = () => {
     );
 
     if (result) {
+      if (result.data.posts.length === 0) {
+        setEndData(result.data.posts.length);
+      }
       setPostThemeMore(result);
 
       setOpenBackdrop(false);
@@ -196,7 +201,11 @@ const ThemesJob: React.FC = () => {
   //   // setSearchParams(searchParams)
 
   // }, [localStorage.getItem("accessToken")])
-  const handleClickHelpSearch = () => { };
+
+  console.log('post', post);
+  console.log('post', post.data.is_over);
+
+  const handleClickHelpSearch = () => {};
   return (
     <Box sx={{ flexGrow: 1, paddingBottom: '24px' }} className="theme-job">
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
@@ -255,34 +264,38 @@ const ThemesJob: React.FC = () => {
                   </Grid>
                 ))}
               </Grid>
-              <Stack
-                spacing={2}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  margin: '24px 0',
-                  marginBottom: '24px',
-                }}
-              >
-                {/* <Pagination count={10} shape="rounded" /> */}
-                {/* Test page: {page} */}
-                {/* <Pagination
+              {!post.data.is_over ? (
+                <Stack
+                  spacing={2}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    margin: '24px 0',
+                    marginBottom: '24px',
+                  }}
+                >
+                  {/* <Pagination count={10} shape="rounded" /> */}
+                  {/* Test page: {page} */}
+                  {/* <Pagination
                   count={10}
                   variant="outlined"
                   shape="rounded"
                   page={page}
                   onChange={handleChange}
                 /> */}
-                <Space
-                  className="div-hover-more"
-                  onClick={(e) => {
-                    handleChange(e, page);
-                  }}
-                >
-                  <p>{language?.more}</p>
-                  <MoreICon width={20} height={20} />
-                </Space>
-              </Stack>
+                  <Space
+                    className="div-hover-more"
+                    onClick={(e) => {
+                      handleChange(e, page);
+                    }}
+                  >
+                    <p>{languageRedux === 1 ? 'Xem thêm' : 'More'}</p>
+                    <MoreICon width={20} height={20} />
+                  </Space>
+                </Stack>
+              ) : (
+                <></>
+              )}
               <Backdrop
                 sx={{
                   color: '#0d99ff ',
@@ -290,7 +303,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-              //   onClick={handleClose}
+                //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

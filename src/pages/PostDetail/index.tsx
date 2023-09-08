@@ -590,12 +590,26 @@ const Detail = () => {
     // window.location.href = `mailto:${email}`;
     if (nameShare === 'Mail') {
       // window.location.href = `mailto:quangbk54@gmail.com`;
-      window.location.href = `mailto:?body=${encodeURIComponent(
-        post?.data?.companyResourceData?.name === 'HIJOB'
-          ? post?.data.shareLink
-          : // : post?.data.companyResourceData.postUrl,
-            post?.data.shareLink,
-      )}`;
+      const subject = 'HiJob đề xuất công việc dành cho bạn';
+      const title = 'Nội dung khi share qua mail nè';
+
+      const content = `
+        HiJob mong muốn sẽ giúp bạn tìm được công việc mơ ước của mình. Chúng tôi đã tìm được những công việc mới nhất có thể phù hợp với bạn bạn.
+        Hãy nhấn vào link đính kèm để xem thêm thông tin chi tiết về công việc.
+        `;
+      const emailBody = encodeURIComponent(
+        `${title} ${content} ${post?.data.shareLink}`,
+      );
+
+      // window.location.href = `mailto:?body=${encodeURIComponent(
+      //   post?.data?.companyResourceData?.name === 'HIJOB'
+      //     ? post?.data.shareLink
+      //     : // : post?.data.companyResourceData.postUrl,
+      //       post?.data.shareLink,
+      // )}`;
+      window.location.href = `mailto:?subject=${encodeURIComponent(
+        subject,
+      )}&body=${emailBody}`;
     }
 
     // if (nameShare === 'Messenger') {
@@ -612,7 +626,7 @@ const Detail = () => {
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
-          : post?.data.companyResourceData.postUrl,
+          : post?.data.shareLink,
       )}`;
       window.open(url, '_blank');
     }
@@ -620,7 +634,7 @@ const Detail = () => {
       window.location.href = `zalo://app?link=${encodeURIComponent(
         post?.data?.companyResourceData?.name === 'HIJOB'
           ? post?.data.shareLink
-          : post?.data.companyResourceData.postUrl,
+          : post?.data.shareLink,
       )}`;
     }
     if (nameShare === 'Sao chép liên kết' || nameShare === 'Copy link') {

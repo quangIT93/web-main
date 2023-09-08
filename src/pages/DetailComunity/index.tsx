@@ -117,6 +117,8 @@ const Comunity = () => {
           setLike(result?.data?.liked);
           setDetail(result?.data);
           setBookmark(result?.data?.bookmarked);
+          console.log('result: ', result);
+          setCookie('workingId', result.data.id, 365);
         } else {
           POST_COMMUNITY_ID === '1'
             ? window.open('/new-comunity', '_parent')
