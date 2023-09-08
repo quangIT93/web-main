@@ -3,7 +3,7 @@ import React, { useEffect, FormEvent, useState } from 'react';
 // import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 // import moment, { Moment } from 'moment';
-import { Skeleton } from 'antd';
+import { Skeleton, Space } from 'antd';
 import { message } from 'antd';
 // import component
 // @ts-ignore
@@ -40,6 +40,8 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import apiCompany from 'api/apiCompany';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
+import EditImageCompany from './components/EditImageCompany';
+import { PencilIcon } from '#components/Icons';
 
 export interface FormValues {
   id: string;
@@ -93,7 +95,13 @@ export interface FormCompanyValues {
   logo: string;
 }
 
-const Company = () => {
+interface ICompany {
+  display: string;
+  is_profile: boolean;
+}
+
+const Company: React.FC<ICompany> = (props) => {
+  const { display, is_profile } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -194,11 +202,11 @@ const Company = () => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -404,48 +412,103 @@ const Company = () => {
 
   // if (dataPostById) {
   return (
-    <div className="company-container">
+    <div className="company-container" style={{
+      display: display,
+      marginTop: is_profile ? '30px' : '70px',
+      width: is_profile ? '100%' : 'unset',
+    }}>
       {contextHolder}
-      <Navbar />
-      <div className="company-content">
-        <h1>{language?.company_info}</h1>
+      <div style={{ display: is_profile ? 'none' : 'block' }}>
+        <Navbar />
+      </div>
+      <div className="company-content"
+        style={{
+          padding: is_profile ? '0px' : '50px 0px',
+        }}
+      >
+        <div className="company-title"
+          style={{
+            marginBottom: is_profile ? '24px' : '32px',
+          }}
+        >
+          <div className="company-title_top">
+            <h1>{language?.company_info}</h1>
+            <Space
+              style={{
+                cursor: 'pointer',
+                display: is_profile ? 'flex' : 'none'
+              }}
+              onClick={() => window.open(`/company-infor/`, '_parent')}
+            >
+              <div className="edit-icon">
+                <PencilIcon width={15} height={15} />
+              </div>
+
+              <p style={{ color: '#0D99FF', fontSize: '14px' }}>
+                {language?.edit}
+              </p>
+            </Space>
+          </div>
+          <div className="company-title_bottom" style={{ display: is_profile ? 'block' : 'none' }}>
+            <p>
+              {
+                languageRedux === 1 ?
+                  "Bạn cần điền thông tin công ty của mình để đăng tin tuyển dụng, tìm kiếm ứng viên." :
+                  "You need to fill in your company information to post job vacancies, search for candidates."
+              }
+            </p>
+          </div>
+        </div>
         <Skeleton loading={loading} active>
           <form action="">
             <EditLogoCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               language={language}
+              is_profile={is_profile}
             />
             <EditNameTaxCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
             <EditAddressCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
             <EditPhoneMailCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
             <EditRoleWebCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
 
             <EditFieldScaleCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
+            />
+            <EditImageCompany
+              dataCompany={dataCompany}
+              setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
             <EditDescripeCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
 
             <button
               type="submit"
               onClick={handleSubmit}
               className="btn-edit_submitForm"
+              style={{ display: is_profile ? 'none' : 'block' }}
             >
               {language?.company_page?.finish}
             </button>
@@ -458,8 +521,10 @@ const Company = () => {
         languageRedux={languageRedux}
         language={language}
       />
-      <RollTop />
-      <Footer />
+      <div style={{ display: is_profile ? 'none' : 'block' }}>
+        <RollTop />
+        <Footer />
+      </div>
     </div>
   );
   // } else {

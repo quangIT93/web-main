@@ -3,7 +3,7 @@ import Company from '.';
 import RouteProps from '../routes';
 const route: RouteProps = {
   path: '/company-infor',
-  component: <Company />,
+  component: <Company display={'block'} is_profile={false} />,
 };
 
 export default route;

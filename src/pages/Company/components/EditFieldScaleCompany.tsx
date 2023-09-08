@@ -22,11 +22,12 @@ const styleLabel = {
 interface IEditPostAddress {
   setDataCompany: any;
   dataCompany: any;
+  is_profile: boolean;
 }
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const { setDataCompany, dataCompany } = props;
+  const { setDataCompany, dataCompany, is_profile } = props;
 
   const [dataSizes, setDataSizes] = useState<any>(null);
   const [selectedSize, setSelectedSize] = useState<any>(null);
@@ -147,6 +148,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
         </Typography>
 
         <Autocomplete
+          disabled={is_profile ? true : false}
           options={dataCategories ? dataCategories : []}
           getOptionLabel={(option: any) => option?.parent_category || ''}
           value={selectedCategory || null}
@@ -181,6 +183,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           <span style={{ color: 'red' }}>*</span>
         </Typography>
         <Autocomplete
+          disabled={is_profile ? true : false}
           options={dataSizes ? dataSizes : []}
           getOptionLabel={(option: any) => option?.nameText || ''}
           value={selectedSize || null}

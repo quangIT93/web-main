@@ -8,7 +8,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Box } from '@mui/material';
 
-const CreateCv: React.FC = () => {
+interface ICreateCv {
+    role: any;
+}
+
+const CreateCv: React.FC<ICreateCv> = (props) => {
+    const { role } = props;
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
     const [height, setHeight] = React.useState(0);
 
@@ -17,7 +22,11 @@ const CreateCv: React.FC = () => {
     };
 
     return (
-        <div className="create-cv-container">
+        <div className="create-cv-container"
+            style={{
+                display: role === 0 ? 'block' : 'none'
+            }}
+        >
             {/* <Button
                 type="primary"
                 className="create-cv-btn"

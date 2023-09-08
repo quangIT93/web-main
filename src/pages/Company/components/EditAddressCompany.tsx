@@ -20,11 +20,12 @@ const styleLabel = {
 interface IEditPostAddress {
   setDataCompany: any;
   dataCompany: any;
+  is_profile: boolean;
 }
 
 const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const { setDataCompany, dataCompany } = props;
+  const { setDataCompany, dataCompany, is_profile } = props;
 
   const [dataProvinces, setDataProvinces] = useState<any>(null);
   const [dataDistricts, setDataDistrict] = useState<any>(null);
@@ -238,6 +239,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
           </Typography>
 
           <Autocomplete
+            disabled={is_profile ? true : false}
             options={dataProvinces ? dataProvinces : []}
             getOptionLabel={(option: any) => option?.province_fullName || ''}
             value={selectedProvince || null}
@@ -275,6 +277,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
+            disabled={is_profile ? true : false}
             options={dataDistricts ? dataDistricts : []}
             getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedDistrict || null}
@@ -305,6 +308,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
+            disabled={is_profile ? true : false}
             options={dataWards ? dataWards : []}
             getOptionLabel={(option: any) => option?.full_name || ''}
             value={selectedWard || null}
@@ -344,6 +348,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             placeholder={
               language?.post_page.place_address
             }
+            disabled={is_profile ? true : false}
           />
         </div>
       </div>

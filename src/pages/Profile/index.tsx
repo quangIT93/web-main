@@ -94,6 +94,7 @@ import SectionCv from './components/SectionCv';
 import CreateCv from '#components/Profile/CreateCv';
 import ChangeRoleButton from './components/ChangeRoleButton';
 import CandidateProfile from './components/CandidateProfile';
+import Company from 'pages/Company';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -703,6 +704,11 @@ const Profile: React.FC = () => {
           setOpenModalExperienceCreate={setOpenModalExperienceCreate}
         />
 
+        <Company
+          display={role === 0 ? "none" : "block"}
+          is_profile={true}
+        />
+
 
         <Stack spacing={2} sx={{ width: '100%' }}>
           <Snackbar
@@ -722,7 +728,7 @@ const Profile: React.FC = () => {
         </Stack>
       </div>
       <RollTop />
-      <CreateCv />
+      <CreateCv role={role} />
       <Footer />
     </div>
   );
