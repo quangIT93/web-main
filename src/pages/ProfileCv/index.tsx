@@ -28,11 +28,13 @@ import moment from 'moment';
 import { Box, Grid } from '@mui/material';
 import ModalShare from '#components/CV/ModalShare';
 import RollTop from '#components/RollTop';
+import ModalDeleteCv from '#components/CV/ModalDeleteCv';
 
 const ProfileCv: React.FC = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const [selectedId, setSelectedId] = React.useState<any>(0)
-    const [openModalShare, setSpenModalShare] = React.useState<any>(false)
+    const [openModalShare, setOpenModalShare] = React.useState<any>(false)
+    const [openModalDeleteCv, setOpenModalDeleteCv] = React.useState<any>(false)
 
     const handleSelecCv = (id: number) => {
         setSelectedId(id)
@@ -145,7 +147,7 @@ const ProfileCv: React.FC = () => {
                                                     </p>
                                                 </div>
                                                 <div className="action-item"
-                                                    onClick={() => setSpenModalShare(true)}
+                                                    onClick={() => setOpenModalShare(true)}
                                                 >
                                                     <div className="action-icon">
                                                         <ShareCvIcon width={24} height={24} />
@@ -170,7 +172,9 @@ const ProfileCv: React.FC = () => {
                                                         }
                                                     </p>
                                                 </div>
-                                                <div className="action-item">
+                                                <div className="action-item"
+                                                    onClick={() => setOpenModalDeleteCv(true)}
+                                                >
                                                     <div className="action-icon">
                                                         <SectionDeleteIcon width={24} height={24} />
                                                     </div>
@@ -192,7 +196,11 @@ const ProfileCv: React.FC = () => {
                 </Box>
                 <ModalShare
                     openModalShare={openModalShare}
-                    setOpenModalShare={setSpenModalShare}
+                    setOpenModalShare={setOpenModalShare}
+                />
+                <ModalDeleteCv
+                    openModalDeleteCv={openModalDeleteCv}
+                    setOpenModalDeleteCv={setOpenModalDeleteCv}
                 />
             </div>
             <RollTop />

@@ -8,24 +8,16 @@ import './style.scss';
 import { getCookie } from 'cookies';
 
 interface IModalShare {
-    openModalChooseCv: boolean;
-    setOpenModalChooseCv: React.Dispatch<React.SetStateAction<boolean>>;
+    openModalDeleteCv: boolean;
+    setOpenModalDeleteCv: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalChooseCv: React.FC<IModalShare> = (props) => {
+const ModalDeleteCv: React.FC<IModalShare> = (props) => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-    const { openModalChooseCv, setOpenModalChooseCv } = props;
-    const [firstCv, setFirstCv] = useState<any>(false)
-
-    useEffect(() => {
-        const firt_cv = getCookie("firstCv");
-        if (firt_cv && firt_cv === "1") {
-            setFirstCv(true);
-        }
-    }, [])
+    const { openModalDeleteCv, setOpenModalDeleteCv } = props;
 
     const handleCancel = () => {
-        setOpenModalChooseCv(false);
+        setOpenModalDeleteCv(false);
     };
 
     return (
@@ -45,13 +37,13 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
                     }}>
                     {
                         languageRedux === 1 ?
-                            "Chọn CV/Hồ sơ  để xin việc" :
-                            "Choose CV/Resume to apply for a job"
+                            "Xóa CV/Hồ sơ" :
+                            "Delete CV/Resume"
                     }
                 </h3>
             }
             footer={null}
-            open={openModalChooseCv}
+            open={openModalDeleteCv}
             // onOk={handleOk}
             onCancel={handleCancel}
         >
@@ -66,22 +58,21 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
                 }}
             >
                 {
-                    firstCv ?
-                        languageRedux === 1 ?
-                            "Bạn có muốn chọn CV / Resume đã hoàn thành của mình để xin việc, Tuyển dụng có thể tìm thấy bạn dễ dàng hơn?" :
-                            "Do you want to choose your completed CV/Resume to apply for a job, Recruitments can find you more easily?"
-                        :
-                        languageRedux === 1 ?
-                            "CV / Resume bạn vừa hoàn thành sẽ được chọn cho các đơn xin việc và Nhà tuyển dụng có thể tìm thấy bạn dễ dàng hơn!" :
-                            "The CV/Resume you just completed will be selected for job applications and Employers can find you more easily!"
+                    languageRedux === 1 ?
+                        "Xóa CV/Hồ sơ của bạn, bạn sẽ không thể ứng tuyển công việc bằng cách sử dụng nó nữa.\nBạn có muốn xóa CV/Hồ sơ này không?" :
+                        "Delete your CV/Resume, you will no longer be able to apply for jobs using it.\nDo you want to delete this CV/Resume?"
                 }
             </p>
             <div className="share-buttons-choose-cv-modal">
-                <Button type="primary" shape="round">Yes</Button>
+                <Button type="primary" shape="round"
+                    onClick={handleCancel}
+                >
+                    {
+                        languageRedux === 1 ?
+                            "Đồng ý" : "Yes"
+                    }
+                </Button>
                 <Button type="text" shape="round"
-                    style={{
-                        display: firstCv ? "block" : "none"
-                    }}
                     onClick={handleCancel}
                 >
                     {
@@ -94,4 +85,4 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
     );
 };
 
-export default ModalChooseCv;
+export default ModalDeleteCv;

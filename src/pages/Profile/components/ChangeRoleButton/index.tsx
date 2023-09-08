@@ -13,9 +13,14 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
   const { role, setRole } = props;
 
   const handleOnchange = (e: any) => {
-    e.target.checked ?
-      setRole(1) :
+    if (e.target.checked) {
+      setRole(1)
+      localStorage.setItem('role', '1')
+    } else {
       setRole(0)
+      localStorage.setItem('role', '0')
+
+    }
   }
 
   return (

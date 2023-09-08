@@ -48,7 +48,7 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
                     }}>
                     {
                         languageRedux === 1 ?
-                            "Chọn CV/Resume để xin việc" :
+                            "Chọn CV/Hồ sơ  để xin việc" :
                             "Choose CV/Resume to apply for a job"
                     }
                 </h3>

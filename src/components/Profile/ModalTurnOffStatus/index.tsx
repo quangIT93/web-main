@@ -8,24 +8,23 @@ import './style.scss';
 import { getCookie } from 'cookies';
 
 interface IModalShare {
-    openModalChooseCv: boolean;
-    setOpenModalChooseCv: React.Dispatch<React.SetStateAction<boolean>>;
+    openModalTurnOffStatus: boolean;
+    setOpenModalTurnOffStatus: React.Dispatch<React.SetStateAction<boolean>>;
+    setSearchJob: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalChooseCv: React.FC<IModalShare> = (props) => {
+const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-    const { openModalChooseCv, setOpenModalChooseCv } = props;
-    const [firstCv, setFirstCv] = useState<any>(false)
+    const { openModalTurnOffStatus, setOpenModalTurnOffStatus, setSearchJob } = props;
 
-    useEffect(() => {
-        const firt_cv = getCookie("firstCv");
-        if (firt_cv && firt_cv === "1") {
-            setFirstCv(true);
-        }
-    }, [])
+    const handleTurnOff = () => {
+        setSearchJob(false);
+        setOpenModalTurnOffStatus(false);
+    }
 
     const handleCancel = () => {
-        setOpenModalChooseCv(false);
+        setOpenModalTurnOffStatus(false);
+        setSearchJob(true);
     };
 
     return (
@@ -45,13 +44,13 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
                     }}>
                     {
                         languageRedux === 1 ?
-                            "Chọn CV/Hồ sơ  để xin việc" :
-                            "Choose CV/Resume to apply for a job"
+                            "Tắt trạng thái tìm việc" :
+                            "Turn off job search status"
                     }
                 </h3>
             }
             footer={null}
-            open={openModalChooseCv}
+            open={openModalTurnOffStatus}
             // onOk={handleOk}
             onCancel={handleCancel}
         >
@@ -66,22 +65,21 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
                 }}
             >
                 {
-                    firstCv ?
-                        languageRedux === 1 ?
-                            "Bạn có muốn chọn CV / Resume đã hoàn thành của mình để xin việc, Tuyển dụng có thể tìm thấy bạn dễ dàng hơn?" :
-                            "Do you want to choose your completed CV/Resume to apply for a job, Recruitments can find you more easily?"
-                        :
-                        languageRedux === 1 ?
-                            "CV / Resume bạn vừa hoàn thành sẽ được chọn cho các đơn xin việc và Nhà tuyển dụng có thể tìm thấy bạn dễ dàng hơn!" :
-                            "The CV/Resume you just completed will be selected for job applications and Employers can find you more easily!"
+                    languageRedux === 1 ?
+                        "Sau khi tắt tìm kiếm việc làm, Nhà tuyển dụng có thể không tìm thấy bạn và cơ hội tìm được công việc phù hợp với bạn sẽ giảm đi." :
+                        "After turning off job search, Recruiters may not be able to find you, and your chances of getting the right job for you are reduced."
                 }
             </p>
             <div className="share-buttons-choose-cv-modal">
-                <Button type="primary" shape="round">Yes</Button>
+                <Button type="primary" shape="round"
+                    onClick={handleTurnOff}
+                >
+                    {
+                        languageRedux === 1 ?
+                            "Tắt" : "Turn off"
+                    }
+                </Button>
                 <Button type="text" shape="round"
-                    style={{
-                        display: firstCv ? "block" : "none"
-                    }}
                     onClick={handleCancel}
                 >
                     {
@@ -94,4 +92,4 @@ const ModalChooseCv: React.FC<IModalShare> = (props) => {
     );
 };
 
-export default ModalChooseCv;
+export default ModalTurnOffStatus;
