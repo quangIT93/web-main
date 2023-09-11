@@ -361,7 +361,7 @@ const NewJobs: React.FC = () => {
               <MoreICon width={20} height={20} />
             </Space>
           </Stack>
-          <Backdrop
+          {/* <Backdrop
             sx={{
               color: '#0d99ff ',
               backgroundColor: 'transparent',
@@ -372,7 +372,7 @@ const NewJobs: React.FC = () => {
           //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
-          </Backdrop>
+          </Backdrop> */}
           <ShowNotificativeSave
           // setShowNofySave={setShowNofySave}
           // showNofySave={showNofySave}

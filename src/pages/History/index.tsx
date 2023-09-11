@@ -65,6 +65,7 @@ const HistoryPost = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const queryParams = queryString.parse(window.location.search);
   // const hotjobtype = Number(searchParams.get('post'));
   const hotjobtype = Number(queryParams['post']);
@@ -73,19 +74,19 @@ const HistoryPost = () => {
     hotjobtype === 2
       ? '2-0'
       : community_post === 31
-      ? '3-1'
-      : community_post === 30
-      ? '3-0'
-      : '0-0',
+        ? '3-1'
+        : community_post === 30
+          ? '3-0'
+          : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
     hotjobtype === 2
       ? 2
       : community_post === 31
-      ? 3
-      : community_post === 30
-      ? 3
-      : 0,
+        ? 3
+        : community_post === 30
+          ? 3
+          : 0,
   );
   const [showDetailPosted, setShowDetailPosted] =
     React.useState<boolean>(false);
@@ -200,32 +201,32 @@ const HistoryPost = () => {
       {ItemLeft === dataItem[0].id - 1
         ? dataItem[0].title
         : ItemLeft === dataItem[1].id - 1
-        ? dataItem[1].title
-        : dataItem[2].title}
+          ? dataItem[1].title
+          : dataItem[2].title}
     </Typography>,
     <Typography key="3" color="text.primary">
       {activeChild === '0-0'
         ? language?.all
         : // : activeChild === '0-1'
-          // ? 'Đã được duyệt'
-          // : activeChild === '0-2'
-          // ? 'Đang chờ duyệt'
-          ''}
+        // ? 'Đã được duyệt'
+        // : activeChild === '0-2'
+        // ? 'Đang chờ duyệt'
+        ''}
 
       {activeChild === '1-0' ? language?.all : ''}
 
       {activeChild === '2-0'
         ? language?.all
         : activeChild === '2-1'
-        ? language?.history_page?.not_closed_yet
-        : activeChild === '2-2'
-        ? language?.closed
-        : ''}
+          ? language?.history_page?.not_closed_yet
+          : activeChild === '2-2'
+            ? language?.closed
+            : ''}
       {activeChild === '3-0'
         ? language?.history_page?.saved
         : activeChild === '3-1'
-        ? language?.history_page?.have_been_created
-        : ''}
+          ? language?.history_page?.have_been_created
+          : ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {
@@ -296,6 +297,13 @@ const HistoryPost = () => {
       setItemLeft(3);
       setActiveChild('3-0');
     }
+    if (roleRedux === 0) {
+      setItemLeft(0);
+      setActiveChild('0-0');
+    } else {
+      setItemLeft(2);
+      setActiveChild('2-0');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -321,10 +329,12 @@ const HistoryPost = () => {
                 hotjobtype && hotjobtype === 2
                   ? ['2', '0']
                   : community_post && community_post === 31
-                  ? ['3', '1']
-                  : community_post && community_post === 30
-                  ? ['3', '0']
-                  : ['0', '0']
+                    ? ['3', '1']
+                    : community_post && community_post === 30
+                      ? ['3', '0']
+                      : roleRedux === 0
+                        ? ['0', '0']
+                        : ['2', '0']
               }
               accordion
               bordered={false}
@@ -337,15 +347,20 @@ const HistoryPost = () => {
                     header={
                       <div
                         onClick={() => handleClickSubTitle(index)}
-                        className={`${
-                          ItemLeft === index ? 'activeItem' : ''
-                        } panel-title_text`}
+                        className={`${ItemLeft === index ? 'activeItem' : ''
+                          } panel-title_text`}
                       >
                         {item.title}
                       </div>
                     }
                     key={index}
                     className={`history-left_item`}
+                    style={{
+                      display:
+                        roleRedux === 0 ?
+                          item?.id === 3 ? "none" : "block" :
+                          item?.id === 1 ? "none" : "block"
+                    }}
                   >
                     {item.childs.map((child: string, idx: number) => (
                       <div

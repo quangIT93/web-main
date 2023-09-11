@@ -61,6 +61,7 @@ const AppliedPostedJob: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [loading, setloading] = React.useState(false);
@@ -114,12 +115,20 @@ const AppliedPostedJob: React.FC = () => {
         setTimeout(() => {
           setloading(false);
         }, 1000);
-        setAppliedPostedJob(result.data);
+        roleRedux === 0 ?
+          setAppliedPostedJob(result.data.filter((job: any) => {
+            return job.type === 'application'
+          })) :
+          setAppliedPostedJob(result.data.filter((job: any) => {
+            return job.type === 'post'
+          }))
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log("applied", appliedPostedJob);
 
   React.useEffect(() => {
     getAppliedPostedJobs();
@@ -188,8 +197,8 @@ const AppliedPostedJob: React.FC = () => {
           <div
             className="advertisement-job-not-loging"
             style={{
-              display: cvHijob.length !== 0 ? 'flex' : 'none',
-              marginBottom: appliedPostedJob.length !== 0 ? '24px' : '0'
+              display: roleRedux === 0 && cvHijob.length !== 0 ? 'flex' : 'none',
+              marginBottom: roleRedux === 0 && appliedPostedJob.length !== 0 ? '24px' : '0'
             }}
           >
             <AdsCVIcon />
@@ -255,7 +264,17 @@ const AppliedPostedJob: React.FC = () => {
                   }}
                 >
                   <AppliedPostedIcon width={30} height={30} />
-                  <h2>{language?.home_page?.applied_posted_job}</h2>
+                  <h2>
+                    {
+                      roleRedux === 0 ?
+                        languageRedux === 1 ?
+                          "Công việc đã ứng tuyển" :
+                          "Applied Job" :
+                        languageRedux === 1 ?
+                          "Công việc đã đã tuyển" :
+                          "Posted Job"
+                    }
+                  </h2>
                   <div className="help-search" onClick={handleClickHelpSearch}>
                     <QuestionMarkIcon />
                     <div className="login__hover__container">

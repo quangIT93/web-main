@@ -29,11 +29,18 @@ import RollTop from '#components/RollTop';
 
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [fontSizeCV, setFontSizeCV] = React.useState(24);
   //1: black, 2: blue, 3: yellow, 4:green, 5:red
   const [colorCV, setColorCV] = React.useState(1)
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
+
+  React.useEffect(() => {
+    roleRedux === 1 &&
+      window.open(`/`, '_parent')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClickMinusCircle = () => {
     if (fontSizeCV > 16) {

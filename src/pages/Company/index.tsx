@@ -105,6 +105,7 @@ const Company: React.FC<ICompany> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [loading, setLoading] = useState<boolean>(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [haveCompany, setHaveCompany] = useState(false);
@@ -196,6 +197,12 @@ const Company: React.FC<ICompany> = (props) => {
     getCompanyInforByAccount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
+
+  useEffect(() => {
+    roleRedux === 0 && !is_profile &&
+      window.open(`/`, '_parent')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // console.log("dataCompany api: ", dataCompany);
 

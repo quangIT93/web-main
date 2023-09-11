@@ -194,7 +194,7 @@ const Navbar: React.FC = () => {
   // const [isSearch, setIsSearch] = useState<boolean>(false);
   // const [language, setLanguageState] = useState<any>();
 
-  const [searchJob, setSearchJob] = useState<boolean>(false);
+  const [searchJob, setSearchJob] = useState<boolean>(true);
   const [openModalTurnOffStatus, setOpenModalTurnOffStatus] = useState<boolean>(false);
   const [loadingSwitch, setLoadingSwitch] = useState(false);
   const handleOnchangeSearchJob = (checked: any) => {
@@ -1197,7 +1197,7 @@ const Navbar: React.FC = () => {
                 <div
                   className="sub-login_item"
                   style={{
-                    borderBottom: 'none',
+                    borderBottom: roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
                   }}
                 // onClick={() => {
                 //   window.open('/history', "_top")
@@ -1207,7 +1207,11 @@ const Navbar: React.FC = () => {
                   <span>{languageData?.history}</span>
                 </div>
               </Link>
-              <div className="sub-history_status">
+              <div className="sub-history_status"
+                style={{
+                  display: roleRedux === 0 ? 'flex' : 'none',
+                }}
+              >
                 <span>
                   {languageData?.approved} {`${approved}`}
                 </span>
@@ -1515,7 +1519,7 @@ const Navbar: React.FC = () => {
                 <div
                   className="sub-login_item"
                   style={{
-                    borderBottom: 'none',
+                    borderBottom: roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
                   }}
                 // onClick={() => {
                 //   window.open('/history', "_top")
@@ -1525,7 +1529,11 @@ const Navbar: React.FC = () => {
                   <span>{languageData?.history}</span>
                 </div>
               </Link>
-              <div className="sub-history_status">
+              <div className="sub-history_status"
+                style={{
+                  display: roleRedux === 0 ? 'flex' : 'none',
+                }}
+              >
                 <span>
                   {languageData?.approved} {`${approved}`}
                 </span>
