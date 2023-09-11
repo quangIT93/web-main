@@ -78,16 +78,16 @@ const CategoryCarousel: React.FC = () => {
     setRefCatelory,
     navTouchCatelory,
   }: // openCollapseFilter,
-  {
-    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
-    childCateloriesArray: number[];
-    valueJobChild: IvalueJobChild;
-    setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
-    setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
-    setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
-    navTouchCatelory: boolean;
-    openCollapseFilter: boolean;
-  } = useContext(HomeValueContext);
+    {
+      setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
+      childCateloriesArray: number[];
+      valueJobChild: IvalueJobChild;
+      setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
+      setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
+      setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
+      navTouchCatelory: boolean;
+      openCollapseFilter: boolean;
+    } = useContext(HomeValueContext);
 
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -688,7 +688,7 @@ const CategoryCarousel: React.FC = () => {
                     >
                       {isLogin && item.id === 1
                         ? // ? language?.home_page?.suggested_work
-                          languageRedux === 1
+                        languageRedux === 1
                           ? 'Công việc gợi ý'
                           : 'Suggested'
                         : item.name}

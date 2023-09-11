@@ -5,7 +5,8 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Collapse } from 'antd';
-import { Box, Typography } from '@mui/material';
+import { Box, iconClasses, Typography } from '@mui/material';
+import { RightOutlined } from '@ant-design/icons';
 
 // import component
 import Footer from '../../components/Footer/Footer';
@@ -319,6 +320,9 @@ const HistoryPost = () => {
         >
           <Box className="history-post_left">
             <Collapse
+              // expandIcon={(e: any) => {
+              //   return <RightOutlined onClick={(e) => e.stopPropagation()} />;
+              // }}
               defaultActiveKey={
                 hotjobtype && hotjobtype === 2
                   ? ['2', '0']
@@ -343,7 +347,8 @@ const HistoryPost = () => {
                           ItemLeft === index ? 'activeItem' : ''
                         } panel-title_text`}
                       >
-                        {item.title}
+                        <RightOutlined style={{ fontSize: '12px' }} />
+                        <span style={{ marginLeft: '8px' }}>{item.title}</span>
                       </div>
                     }
                     key={index}
@@ -357,7 +362,9 @@ const HistoryPost = () => {
                             ? 'active-child child-item'
                             : 'child-item'
                         }
-                        onClick={() => handleChildClick(`${index}-${idx}`)}
+                        onClick={() => {
+                          handleChildClick(`${index}-${idx}`);
+                        }}
                       >
                         {child}
                       </div>

@@ -59,6 +59,9 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
             },
             ...prev
         ])
+        setSkill('')
+        setLevel(1)
+        setOpenModalSkills(false)
     }
 
     const handleClose = () => {
@@ -156,7 +159,7 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
                                 "Month/ Year"
                         }
                         size="small"
-                        sx={{ width: '100%' }}
+                        sx={{ width: '100%', marginTop: '4px' }}
                         error={!level} // Đánh dấu lỗi
                     >
                         <MenuItem value={1}>

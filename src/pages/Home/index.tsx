@@ -41,6 +41,8 @@ import Footer from '../../components/Footer/Footer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 import { setCookie } from 'cookies';
+import ModalSelectRole from '#components/Home/ModalSelectRole';
+import ModalUpdateInfo from '#components/Home/ModalUpdateInfo';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -48,6 +50,9 @@ const Home: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
+  const [openModalSelectRole, setOpenModalSelectRole] = React.useState(true);
+  const [openModalUpdateInfo, setOpenModalUpdateInfo] = React.useState(false);
+  const [role, setRole] = React.useState<any>();
   useEffect(() => {
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: 'HiJob - Tìm việc làm, tuyển dụng',
@@ -176,6 +181,17 @@ const Home: React.FC = () => {
           <></>
         )} */}
       </div>
+      <ModalSelectRole
+        openModalSelectRole={openModalSelectRole}
+        setOpenModalSelectRole={setOpenModalSelectRole}
+        setOpenModalUpdateInfo={setOpenModalUpdateInfo}
+        setRole={setRole}
+      />
+      <ModalUpdateInfo
+        openModalUpdateInfo={openModalUpdateInfo}
+        setOpenModalUpdateInfo={setOpenModalUpdateInfo}
+        role={role}
+      />
       <RollTop />
       <Footer />
     </div>

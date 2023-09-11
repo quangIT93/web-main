@@ -23,11 +23,12 @@ const styleLabel = {
 interface IEditPostAddress {
   setDataCompany: any;
   dataCompany: any;
+  is_profile: boolean;
 }
 
 const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const { setDataCompany, dataCompany } = props;
+  const { setDataCompany, dataCompany, is_profile } = props;
 
   const [dataRoles, setDataRoles] = useState<any>(null);
   const [selectedRole, setSelectedRole] = useState<any>(null);
@@ -119,6 +120,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
         </Typography>
 
         <Autocomplete
+          disabled={is_profile ? true : false}
           options={dataRoles ? dataRoles : []}
           getOptionLabel={(option: any) => option?.nameText || ''}
           value={selectedRole || null}
@@ -160,6 +162,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           placeholder={
             language?.company_page?.place_web
           }
+          disabled={is_profile ? true : false}
         //   error={titleError} // Đánh dấu lỗi
         />
       </div>

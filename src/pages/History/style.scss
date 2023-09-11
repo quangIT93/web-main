@@ -73,6 +73,14 @@
 
 
         &__collapse {
+          .history-left_item {
+            .ant-collapse-header {
+              .ant-collapse-expand-icon {
+                display: none;
+              }
+            }
+          }
+
           @media screen and (max-width: 1024px) and (min-width: 630px) {
             // display: flex;
             // justify-content: space-between;
@@ -80,6 +88,7 @@
             .history-left_item {
               .ant-collapse-header {
                 // border-bottom: none;
+             
               }
             }
 
@@ -249,6 +258,8 @@
     .panel-title_text {
       // padding: 16px 12px;
       line-height: 3;
+      display: flex;
+      align-items: center;
     }
   }
 
@@ -279,6 +290,8 @@
 .ant-collapse .ant-collapse-item-active .ant-collapse-expand-icon svg,
 .ant-collapse .ant-collapse-item-active .activeItem {
   color: #000000;
+  display: flex;
+  align-items: center;
 }
 
 .ant-collapse-content {

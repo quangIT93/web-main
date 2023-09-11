@@ -10,6 +10,7 @@ import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
+import { SectionDeleteIcon, UploadCVIcon } from '#components/Icons';
 interface Url_CV {
   url: string;
   open?: boolean;
@@ -31,7 +32,7 @@ const ItemInfoLeft: React.FC<Url_CV> = ({
   return (
     <Space className="cv-item-container">
       <div
-        className="cv-item-container"
+        className="cv-item"
         style={{
           backgroundColor: '#F1F0F0',
           padding: 10,
@@ -46,8 +47,10 @@ const ItemInfoLeft: React.FC<Url_CV> = ({
           <p style={{ color: '#575757', wordBreak: 'break-all' }}>
             {url.substring(url.lastIndexOf('/') + 1, url.length)}
           </p>
-
-          <FilePdfOutlined style={{ fontSize: 20, color: '#575757' }} />
+          {/* <FilePdfOutlined style={{ fontSize: 20, color: '#575757' }} /> */}
+          <div className="upload-cv-icon" style={{ color: "#575757" }}>
+            <UploadCVIcon />
+          </div>
         </Space>
       </div>
       {isProfile && (
@@ -56,12 +59,20 @@ const ItemInfoLeft: React.FC<Url_CV> = ({
           title={language?.profile_page?.delete_cv}
           style={{ fontSize: 5 }}
         >
-          <DeleteOutlined
+          {/* <DeleteOutlined
             onClick={() => {
               setOpen(true);
             }}
             className="icon-remove"
-          />
+          /> */}
+          <div className="icon-remove"
+
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <SectionDeleteIcon />
+          </div>
         </Tooltip>
       )}
     </Space>

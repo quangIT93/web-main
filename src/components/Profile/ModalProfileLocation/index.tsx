@@ -241,6 +241,8 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     try {
       if (value.length > 10) {
         message.error(language?.limit_10_location);
+
+        setValue(locations?.map((v: any, i) => v.district_id))
         return;
       }
       const result = await profileApi.updateProfileLocation(

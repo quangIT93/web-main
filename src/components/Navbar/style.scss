@@ -14,25 +14,136 @@
   cursor: pointer;
 }
 
-.btn__post {
-  width: 136px;
-  font-weight: bold;
-  background-color: $primary-color;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  padding-block: 14px;
-  padding-left: 20px;
-  padding-right: 26px;
+.switch-container {
+  display: grid;
+  place-items: center;
 
-  @include breakpoint(mobile) {
-    display: none;
+  .search-job-switch {
+    align-items: center;
+    gap: 4px;
+    position: relative;
+
+    .ant-switch-checked {
+      background: rgba(52, 168, 83, 1) !important;
+
+    }
+
+    .button {
+      @include breakpoint(mobile) {
+        padding: 0px;
+        display: block;
+        align-items: unset;
+        border-radius: unset;
+        margin-left: 12px;
+        border: none;
+      }
+    }
+
+    &:hover>.switch__hover__container {
+      display: block;
+      animation-name: animate-pop-out;
+    }
+
+    &:not(:hover)>.switch__hover__container {
+      // display: block;
+      animation-name: animate-pop-in;
+    }
+
+    @keyframes animate-pop-out {
+      0% {
+        opacity: 0;
+        transform: scale(0.5, 0.5);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1, 1);
+      }
+    }
+
+    @keyframes animate-pop-in {
+      0% {
+        opacity: 1;
+        transform: scale(1, 1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0.5, 0.5);
+        display: none;
+      }
+    }
+
+    .switch__hover__container {
+      position: absolute;
+      top: 50px;
+      right: -30px;
+      z-index: 10;
+      display: none;
+      animation-duration: 0.55s;
+      animation-delay: 0.3s;
+      animation-name: animate-pop-in;
+      animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
+      animation-fill-mode: backwards;
+
+      .switch__hover {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 311px;
+        gap: 8px;
+        border-radius: 50px;
+        background: rgb(37, 37, 37);
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: -11px;
+          right: 45px;
+          width: 0;
+          height: 0;
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          border-bottom: 13px solid rgb(37, 37, 37);
+        }
+
+        .switch__hover__p {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          color: #ffffff;
+        }
+      }
+    }
   }
 
-  @media screen and (min-width: 421px) and (max-width: 640px) {
-    display: none;
-  }
+  // @media screen and (min-width: 421px) and (max-width: 640px) {
+  //   display: none;
+    .btn__post {
+      width: 136px;
+      font-weight: bold;
+      background-color: $primary-color;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      padding-block: 14px;
+      padding-left: 20px;
+      padding-right: 26px;
+
+      @include breakpoint(mobile) {
+        display: none;
+      }
+
+      @media screen and (min-width: 421px) and (max-width: 600px) {
+        display: none;
+      }
+    }
 }
+
 
 .btn__login {
   border: 0.5px solid $gray-border-btn;
@@ -426,6 +537,7 @@
 
 .nav {
   border-bottom: 1px solid #ccc;
+
   .wrap-content_nav {
     margin: 0 auto;
   }
@@ -438,7 +550,7 @@
     box-shadow: none;
     padding: 0 !important;
 
- 
+
 
     @media screen and (min-width:300px) and (max-width: 1028px) {
       &.css-1lmzauf {
@@ -1310,6 +1422,115 @@
     .box-right-responsive {
       margin: 0;
 
+      .switch-container-responsive {
+        display: grid;
+        place-items: center;
+
+        .search-job-switch-responsive {
+          position: relative;
+          align-items: center;
+          gap: 4px;
+
+          &:hover>.switch__hover__container {
+            display: block;
+            animation-name: animate-pop-out;
+          }
+
+          &:not(:hover)>.switch__hover__container {
+            // display: block;
+            animation-name: animate-pop-in;
+          }
+
+          @keyframes animate-pop-out {
+            0% {
+              opacity: 0;
+              transform: scale(0.5, 0.5);
+            }
+
+            100% {
+              opacity: 1;
+              transform: scale(1, 1);
+            }
+          }
+
+          @keyframes animate-pop-in {
+            0% {
+              opacity: 1;
+              transform: scale(1, 1);
+            }
+
+            100% {
+              opacity: 0;
+              transform: scale(0.5, 0.5);
+              display: none;
+            }
+          }
+
+          .switch__hover__container {
+            position: absolute;
+            top: 50px;
+            right: -5px;
+            z-index: 10;
+            display: none;
+            animation-duration: 0.55s;
+            animation-delay: 0.3s;
+            animation-name: animate-pop-in;
+            animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
+            animation-fill-mode: backwards;
+
+            .switch__hover {
+              padding: 24px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              align-items: center;
+              width: 311px;
+              gap: 8px;
+              border-radius: 50px;
+              background: rgb(37, 37, 37);
+
+              &::after {
+                content: "";
+                position: absolute;
+                top: -11px;
+                right: 35px;
+                width: 0;
+                height: 0;
+                border-left: 7px solid transparent;
+                border-right: 7px solid transparent;
+                border-bottom: 13px solid rgb(37, 37, 37);
+              }
+
+              .switch__hover__p {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                color: #ffffff;
+              }
+            }
+          }
+
+          .ant-switch-checked {
+            background: rgba(52, 168, 83, 1) !important;
+
+          }
+
+          .ant-switch {
+            padding: 0px !important;
+            display: block !important;
+            align-items: unset !important;
+            border-radius: 100px !important;
+            margin-left: 0px !important;
+            border: none;
+          }
+        }
+
+
+
+      }
+
       .ant-btn {
         margin-left: 4px;
       }
@@ -1326,6 +1547,9 @@
       .box-right-responsive_badge {
         box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
       }
+
+
+
 
       .menu {
         position: relative;

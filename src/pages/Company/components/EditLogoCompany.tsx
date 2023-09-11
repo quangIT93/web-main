@@ -20,11 +20,12 @@ interface IEditLogoCompany {
   dataCompany: any;
   setDataCompany: any;
   language: any;
+  is_profile: boolean;
 }
 
 const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const { dataCompany, setDataCompany, language } = props;
+  const { dataCompany, setDataCompany, language, is_profile } = props;
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [previewImage, setPreviewImage] = useState('');
@@ -84,6 +85,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
     maxCount: 1,
     listType: 'picture-card',
     fileList,
+    disabled: is_profile ? true : false,
   };
 
   const handleCancel = () => setPreviewOpen(false);
@@ -132,7 +134,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
             )}
           </Upload>
         </div>
-        <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+        <Modal centered open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
           <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
       </div>
