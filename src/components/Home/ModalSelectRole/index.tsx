@@ -2,21 +2,23 @@ import React from 'react';
 
 import './style.scss';
 import { Button, Modal, Radio, Space } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { CandidateIcon, RecruiterIcon } from '#components/Icons';
+import { setRole } from 'store/reducer/roleReducer';
 
 interface IModalSelectRole {
     openModalSelectRole: boolean;
     setOpenModalSelectRole: React.Dispatch<React.SetStateAction<boolean>>;
     setOpenModalUpdateInfo: React.Dispatch<React.SetStateAction<boolean>>;
-    setRole: React.Dispatch<React.SetStateAction<any>>;
+    // setRole: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
-    const { openModalSelectRole, setOpenModalSelectRole, setOpenModalUpdateInfo, setRole } = props
+    const { openModalSelectRole, setOpenModalSelectRole, setOpenModalUpdateInfo } = props
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const [role, setRoleId] = React.useState(0);
+    const dispatch = useDispatch()
 
     const onChangeRole = (e: any) => {
         setRoleId(e.target.value);
@@ -26,7 +28,8 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
     };
 
     const handleSubmit = () => {
-        setRole(role)
+        // setRole(role)
+        dispatch<any>(setRole(role))
         setOpenModalUpdateInfo(true)
         handleCancel()
     }

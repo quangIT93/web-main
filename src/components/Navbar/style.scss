@@ -1179,6 +1179,11 @@
             width: 220px;
             margin-top: 8px;
             gap: 4px;
+            word-break: break-word;
+
+            @include breakpoint(mobile) {
+              width: 100%;
+            }
 
             p {
               overflow: hidden;

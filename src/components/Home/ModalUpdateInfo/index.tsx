@@ -9,19 +9,20 @@ import { CandidateIcon, RecruiterIcon } from '#components/Icons';
 interface IModalSelectRole {
     openModalUpdateInfo: boolean;
     setOpenModalUpdateInfo: React.Dispatch<React.SetStateAction<boolean>>;
-    role: any
+    // role: any
 }
 
 const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
-    const { openModalUpdateInfo, setOpenModalUpdateInfo, role } = props
+    const { openModalUpdateInfo, setOpenModalUpdateInfo } = props
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+    const roleRedux = useSelector((state: RootState) => state.changeRole.role);
     const handleCancel = () => {
         setOpenModalUpdateInfo(false);
     };
 
     const handleConfirm = () => {
         window.open(
-            role === 0 ?
+            roleRedux === 0 ?
                 `/profile/` :
                 '/company-infor/'
             , '_parent'
@@ -45,7 +46,7 @@ const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
 
                     }}>
                     {
-                        role === 0 ?
+                        roleRedux === 0 ?
                             languageRedux === 1 ?
                                 "Vui lòng cập nhật hồ sơ của bạn!" :
                                 "Please update your profile!"
@@ -62,7 +63,7 @@ const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
             className="modal-update-info-container"
         >
             {
-                role === 0 ?
+                roleRedux === 0 ?
                     <CandidateIcon /> :
                     <RecruiterIcon />
             }
@@ -76,7 +77,7 @@ const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
                 }}
             >
                 {
-                    role === 0 ?
+                    roleRedux === 0 ?
                         languageRedux === 1 ?
                             "Cập nhật thông tin cá nhân, địa điểm làm việc, ngành nghề,… sẽ giúp nhà tuyển dụng tìm thấy bạn dễ dàng hơn và HiJob sẽ giới thiệu thêm những công việc phù hợp hơn!" :
                             "Updating your personal information, work location, industry,... will help employers find you more easily and HiJob will introduce more suitable jobs!"
