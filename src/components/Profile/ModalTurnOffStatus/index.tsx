@@ -11,20 +11,23 @@ interface IModalShare {
     openModalTurnOffStatus: boolean;
     setOpenModalTurnOffStatus: React.Dispatch<React.SetStateAction<boolean>>;
     setSearchJob: React.Dispatch<React.SetStateAction<boolean>>;
+    setLoadingSwitch: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalTurnOffStatus: React.FC<IModalShare> = (props) => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-    const { openModalTurnOffStatus, setOpenModalTurnOffStatus, setSearchJob } = props;
+    const { openModalTurnOffStatus, setOpenModalTurnOffStatus, setSearchJob, setLoadingSwitch } = props;
 
     const handleTurnOff = () => {
         setSearchJob(false);
         setOpenModalTurnOffStatus(false);
+        setLoadingSwitch(false);
     }
 
     const handleCancel = () => {
         setOpenModalTurnOffStatus(false);
         setSearchJob(true);
+        setLoadingSwitch(false);
     };
 
     return (

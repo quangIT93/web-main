@@ -293,7 +293,7 @@ const NewJobs: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
 
   return (
     <>
@@ -369,7 +369,7 @@ const NewJobs: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-            //  onClick={handleClose}
+          //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
