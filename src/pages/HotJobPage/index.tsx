@@ -245,9 +245,8 @@ const HotJobpage: React.FC = () => {
         // idFilterProvinces && provinceId,
         idFilterProvinces,
       );
-      console.log('hotjob.', hotjob);
 
-      console.log('hotjob.data.total', hotjob['total'] as any);
+      // console.log('hotjob.data.total', hotjob['total'] as any);
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       // const hotjobtotal = Number(searchParams.get('hotjob-total'));
       const hotjobtotal = getCookie('hotjobTotal');
