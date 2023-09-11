@@ -910,11 +910,19 @@ const Profile: React.FC = () => {
           language={language}
         /> */}
         <Stack spacing={2} sx={{ width: '100%' }}>
-          <Snackbar open={alert} autoHideDuration={3000} onClose={handleClose}>
+          <Snackbar
+            open={alert}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+          >
             <Alert
               onClose={handleClose}
               severity="success"
-              sx={{ width: '100%' }}
+              sx={{ width: '100%', backgroundColor: '#000000' }}
             >
               {language?.profile_page?.alert_delete_success}
             </Alert>
