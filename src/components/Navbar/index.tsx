@@ -196,17 +196,22 @@ const Navbar: React.FC = () => {
 
   const [searchJob, setSearchJob] = useState<boolean>(false);
   const [openModalTurnOffStatus, setOpenModalTurnOffStatus] = useState<boolean>(false);
-
-  const handleOnchangeSearchJob = (checked: boolean, e: any) => {
-    if (checked) {
+  const [loadingSwitch, setLoadingSwitch] = useState(false);
+  const handleOnchangeSearchJob = (checked: any) => {
+    if (checked === true) {
       // e.preventDefault();
-      setSearchJob(checked)
-    } else {
+      console.log("checked", checked);
+      setSearchJob(true)
+
+    }
+    else {
+      setLoadingSwitch(true)
       setOpenModalTurnOffStatus(true)
+      setSearchJob(false)
     }
   }
 
-  console.log(searchJob);
+  console.log("loading", loadingSwitch);
 
 
   useEffect(() => {
@@ -305,6 +310,8 @@ const Navbar: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
+
   const languageData = useSelector((state: RootState) => {
     return state.dataLanguage.languages;
   });
@@ -323,7 +330,7 @@ const Navbar: React.FC = () => {
   //   setOpenCollapse(!openCollapse)
   // }
 
-  const [role, setRole] = React.useState<any>(0);
+  // const [role, setRole] = React.useState<any>(roleRedux);
 
 
   const getCompanyInforByAccount = async () => {
@@ -389,18 +396,6 @@ const Navbar: React.FC = () => {
     // dispatch(getProfile() as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
-  useEffect(() => {
-    if (localStorage.getItem('role')) {
-
-      setRole(localStorage.getItem('role'));
-    } else {
-      setRole(0)
-    }
-    // dispatch(getProfile() as any)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem('role')]);
-
-  console.log(role);
 
 
   // get count unread
@@ -997,7 +992,7 @@ const Navbar: React.FC = () => {
       )}
     </div>,
     <div className="switch-container">
-      <div className="search-job-switch" style={{ display: role === 0 ? 'flex' : 'none' }}>
+      <div className="search-job-switch" style={{ display: roleRedux === 0 ? 'flex' : 'none' }}>
         {/* <p>
           {
             searchJob ?
@@ -1009,7 +1004,7 @@ const Navbar: React.FC = () => {
                 `Job search status is: off`
           }
         </p> */}
-        <Switch onChange={(checked, e) => handleOnchangeSearchJob(checked, e)} />
+        <Switch checked={searchJob} loading={loadingSwitch} onChange={handleOnchangeSearchJob} />
         <div className="switch__hover__container">
           <div className="switch__hover">
             <div className="switch__hover__p">
@@ -1023,7 +1018,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
       <button
-        style={{ display: role === 0 ? 'none' : 'flex' }}
+        style={{ display: roleRedux === 0 ? 'none' : 'flex' }}
         key="1"
         className="btn btn__post"
         onClick={() => {
@@ -1047,7 +1042,7 @@ const Navbar: React.FC = () => {
       </button>
     </div>,
     <div
-      className="actions-switch"
+      className="actions-login"
       ref={refLogin}
       key="2"
     // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
@@ -1118,6 +1113,7 @@ const Navbar: React.FC = () => {
                 flexDirection: 'column',
                 paddingBottom: '12px',
                 borderBottom: '1px solid rgba(170, 170, 170, 1)',
+                width: '100%',
               }}
             >
               <div className="sub-login_info__top">
@@ -1351,21 +1347,28 @@ const Navbar: React.FC = () => {
         <BellIcon />
       </Button>
     </Badge>,
-    <div
-      className="language"
-      onClick={() => {
-        languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
-      }}
-    >
-      {languageRedux === 1 ? (
-        <VNSubLoginIcon width={24} height={24} />
-      ) : (
-        <ENSubLoginIcon width={24} height={24} />
-      )}
-    </div>,
-    <div className="switch-container-responsive">
-      <div className="search-job-switch-responsive " style={{ display: role === 0 ? 'flex' : 'none' }}>
-        {/* <p>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      gap: "4px",
+      alignItems: "center",
+      marginLeft: "4px"
+    }}>
+      <div
+        className="language"
+        onClick={() => {
+          languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
+        }}
+      >
+        {languageRedux === 1 ? (
+          <VNSubLoginIcon width={24} height={24} />
+        ) : (
+          <ENSubLoginIcon width={24} height={24} />
+        )}
+      </div>
+      <div className="switch-container-responsive">
+        <div className="search-job-switch-responsive " style={{ display: roleRedux === 0 ? 'flex' : 'none' }}>
+          {/* <p>
         {
           searchJob ?
             languageRedux === 1 ?
@@ -1376,20 +1379,48 @@ const Navbar: React.FC = () => {
               `Job search status is: off`
         }
       </p> */}
-        <Switch onChange={handleOnchangeSearchJob} />
-        <div className="switch__hover__container">
-          <div className="switch__hover">
-            <div className="switch__hover__p">
-              <p>
-                {languageRedux === 1
-                  ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
-                  : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
-              </p>
+          <Switch checked={searchJob} loading={loadingSwitch} onChange={handleOnchangeSearchJob} />
+          <div className="switch__hover__container">
+            <div className="switch__hover">
+              <div className="switch__hover__p">
+                <p>
+                  {languageRedux === 1
+                    ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
+                    : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>,
+    // <div className="switch-container-responsive">
+    //   <div className="search-job-switch-responsive " style={{ display: role === 0 ? 'flex' : 'none' }}>
+    //     {/* <p>
+    //     {
+    //       searchJob ?
+    //         languageRedux === 1 ?
+    //           `Trạng thái tìm việc: bật` :
+    //           `Job search status is: on` :
+    //         languageRedux === 1 ?
+    //           `Trạng thái tìm việc: tắt` :
+    //           `Job search status is: off`
+    //     }
+    //   </p> */}
+    //     <Switch onChange={handleOnchangeSearchJob} />
+    //     <div className="switch__hover__container">
+    //       <div className="switch__hover">
+    //         <div className="switch__hover__p">
+    //           <p>
+    //             {languageRedux === 1
+    //               ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
+    //               : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
+    //           </p>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>,
     <div
       className="menu"
       // onClick={handleClickLogin}
@@ -1412,6 +1443,7 @@ const Navbar: React.FC = () => {
                 flexDirection: 'column',
                 paddingBottom: '12px',
                 borderBottom: '1px solid rgba(170, 170, 170, 1)',
+                width: '100%',
               }}
             >
               <div className="sub-login_info__top">
@@ -1609,6 +1641,7 @@ const Navbar: React.FC = () => {
           openModalTurnOffStatus={openModalTurnOffStatus}
           setOpenModalTurnOffStatus={setOpenModalTurnOffStatus}
           setSearchJob={setSearchJob}
+          setLoadingSwitch={setLoadingSwitch}
         />
         {/* <ModalLoginNav
           openModalLogin={openModalLogin}

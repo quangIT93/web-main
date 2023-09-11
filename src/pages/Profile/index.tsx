@@ -172,8 +172,9 @@ const Profile: React.FC = () => {
       name: 'cv1',
     },
   ]);
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
   const [cvId, setCvId] = useState<any>();
-  const [role, setRole] = useState(0)
+  // const [role, setRole] = useState(roleRedux)
 
   // const [user, setUser] = useState<any>(null);
 
@@ -501,7 +502,7 @@ const Profile: React.FC = () => {
                 </Badge>
                 <div className="user-company" style={{ marginLeft: '10px' }}>
                   <h2>{profile?.name ? profile?.name : language?.unupdated}</h2>
-                  <ChangeRoleButton role={role} setRole={setRole} />
+                  <ChangeRoleButton />
                   {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2
@@ -689,7 +690,7 @@ const Profile: React.FC = () => {
         </Skeleton>
 
         <CandidateProfile
-          display={role === 0 ? "block" : "none"}
+          display={roleRedux === 0 ? "block" : "none"}
           profile={profile}
           loading={loading}
           language={language}
@@ -705,7 +706,7 @@ const Profile: React.FC = () => {
         />
 
         <Company
-          display={role === 0 ? "none" : "block"}
+          display={roleRedux === 0 ? "none" : "block"}
           is_profile={true}
         />
 
@@ -728,7 +729,7 @@ const Profile: React.FC = () => {
         </Stack>
       </div>
       <RollTop />
-      <CreateCv role={role} />
+      <CreateCv role={roleRedux} />
       <Footer />
     </div>
   );

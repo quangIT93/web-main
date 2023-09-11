@@ -1197,16 +1197,10 @@
             width: 220px;
             margin-top: 8px;
             gap: 4px;
-            p {
-            width: 200px;
-            text-overflow: ellipsis !important; 
-            white-space: nowrap;
-            overflow: hidden !important;
-            display: block !important;
+            word-break: break-word;
 
-            @media screen and (max-width:420px ) {
-              width: 160px;
-            }
+            @include breakpoint(mobile) {
+              width: 100%;
             }
 
             p {
@@ -1469,7 +1463,7 @@
           .switch__hover__container {
             position: absolute;
             top: 50px;
-            right: -5px;
+            right: -66px;
             z-index: 10;
             display: none;
             animation-duration: 0.55s;
@@ -1493,7 +1487,7 @@
                 content: "";
                 position: absolute;
                 top: -11px;
-                right: 35px;
+                right: 80px;
                 width: 0;
                 height: 0;
                 border-left: 7px solid transparent;

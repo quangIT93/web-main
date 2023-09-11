@@ -52,7 +52,7 @@ const Home: React.FC = () => {
 
   const [openModalSelectRole, setOpenModalSelectRole] = React.useState(true);
   const [openModalUpdateInfo, setOpenModalUpdateInfo] = React.useState(false);
-  const [role, setRole] = React.useState<any>();
+  // const [role, setRole] = React.useState<any>()
   useEffect(() => {
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: 'HiJob - Tìm việc làm, tuyển dụng',
@@ -185,12 +185,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        setRole={setRole}
+        // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        role={role}
+        // role={role}
       />
       <RollTop />
       <Footer />
