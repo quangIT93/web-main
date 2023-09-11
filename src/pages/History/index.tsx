@@ -7,6 +7,9 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Collapse } from 'antd';
 import { Box, Typography } from '@mui/material';
 
+import { RightOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
+
 // import component
 import Footer from '../../components/Footer/Footer';
 import CardsPosted from '#components/History/CardsPosted';
@@ -343,7 +346,8 @@ const HistoryPost = () => {
                           ItemLeft === index ? 'activeItem' : ''
                         } panel-title_text`}
                       >
-                        {item.title}
+                        <RightOutlined style={{ fontSize: '12px' }} />
+                        <span style={{ marginLeft: '8px' }}>{item.title}</span>
                       </div>
                     }
                     key={index}
