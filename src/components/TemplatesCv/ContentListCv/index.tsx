@@ -1,4 +1,15 @@
 import React from 'react';
+import {
+  PDFViewer,
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+} from '@react-pdf/renderer';
+
+import { spacing } from '../Styles';
 
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -114,6 +125,43 @@ const ContentListCv = () => {
     doc.save('my_cv.pdf');
   };
 
+  const styles = StyleSheet.create({
+    page: {
+      flexDirection: 'row',
+      backgroundColor: '#ffffff',
+      padding: 20,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 20,
+    },
+    headerLeft: {
+      width: '30%',
+    },
+    headerRight: {
+      width: '70%',
+    },
+    headerImage: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+    },
+    content: {
+      flexDirection: 'row',
+    },
+    contentLeft: {
+      width: '30%',
+    },
+    contentRight: {
+      width: '70%',
+    },
+    section: {
+      marginBottom: 10,
+    },
+  });
+
   return (
     <div className="contentCV-bottom">
       <div className="contentCV-bottom-left">
@@ -191,69 +239,52 @@ const ContentListCv = () => {
           </div>
         </div>
         <div className="contentCv-bottom-right_cv">
-          <div id="pdf-container">
-            {/* <h2>CV Preview</h2> */}
-            {/* {imageURL && <img src={imageURL} alt="Profile" width="50" height="50" />} */}
-            <div className="header-cv">
-              <div className="header-cv_left">
-                <h2>Tên ứng viên</h2>
-                <p>Ngành nghề</p>
-              </div>
-              <div className="header-cv_right">
-                <img src="./images/project-manager.png" alt="" />
-              </div>
-            </div>
-            <div className="content-cv">
-              <div className="content-cv_left">
-                <div className="itemCV">
-                  <div className="wrap-titleCv">
-                    <h3>PROFILE</h3>
-                  </div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Natus voluptatibus ex libero sit voluptatum consequatur sed
-                    ullam mollitia minima vel obcaecati dicta quae, asperiores
-                    laborum blanditiis illo quasi rem eligendi.
-                  </p>
-                </div>
-                <div className="itemCV">
-                  <div className="wrap-titleCv">
-                    <h3>PROFILE</h3>
-                  </div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Natus voluptatibus ex libero sit voluptatum consequatur sed
-                    ullam mollitia minima vel obcaecati dicta quae, asperiores
-                    laborum blanditiis illo quasi rem eligendi.
-                  </p>
-                </div>
-                <div className="itemCV">
-                  <div className="wrap-titleCv">
-                    <h3>PROFILE</h3>
-                  </div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Natus voluptatibus ex libero sit voluptatum consequatur sed
-                    ullam mollitia minima vel obcaecati dicta quae, asperiores
-                    laborum blanditiis illo quasi rem eligendi.
-                  </p>
-                </div>
-              </div>
-
-              <div className="content-cv_right">
-                <div className="wrap-titleCv">
-                  <h3>PROFILE</h3>
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-                  voluptatibus ex libero sit voluptatum consequatur sed ullam
-                  mollitia minima vel obcaecati dicta quae, asperiores laborum
-                  blanditiis illo quasi rem eligendi.
-                </p>
-              </div>
-            </div>
-            {/* {/* <p>Name: {name}</p> */}
-          </div>
+          {/* <PDFViewer width="100%" height={600}> */}
+          <Document
+            title={`${name} Resume`}
+            author={name}
+            style={{
+              width: 'auto',
+              height: 'auto',
+            }}
+          >
+            <Page size="A4">
+              <View style={styles.page}>
+                <View style={styles.header}>
+                  <View style={styles.headerLeft}>
+                    {/* Phần trái của header */}
+                    <Text>Tên</Text>
+                    <Text>Nghề nghiệp</Text>
+                  </View>
+                  <View style={styles.headerRight}>
+                    {/* Phần phải của header */}
+                    <Image
+                      src="./path/to/hinh.jpg"
+                      style={styles.headerImage}
+                    />
+                  </View>
+                </View>
+                <View style={styles.content}>
+                  <View style={styles.contentLeft}>
+                    {/* Phần trái của content */}
+                    <View style={styles.section}>
+                      <Text>Profile</Text>
+                    </View>
+                    <View style={styles.section}>
+                      <Text>Thông tin liên hệ</Text>
+                    </View>
+                  </View>
+                  <View style={styles.contentRight}>
+                    {/* Phần phải của content */}
+                    <View style={styles.section}>
+                      <Text>Thông tin chi tiết</Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </Page>
+          </Document>
+          {/* </PDFViewer> */}
         </div>
         {/* <Avatar shape="square" icon={<UserOutlined />} />
           <Avatar shape="square" icon={<UserOutlined />} /> */}
