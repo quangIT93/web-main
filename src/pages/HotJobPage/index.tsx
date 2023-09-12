@@ -245,9 +245,8 @@ const HotJobpage: React.FC = () => {
         // idFilterProvinces && provinceId,
         idFilterProvinces,
       );
-      console.log('hotjob.', hotjob);
 
-      console.log('hotjob.data.total', hotjob['total'] as any);
+      // console.log('hotjob.data.total', hotjob['total'] as any);
       const hotjobtype = Number(searchParams.get('hotjob-type'));
       // const hotjobtotal = Number(searchParams.get('hotjob-total'));
       const hotjobtotal = getCookie('hotjobTotal');
@@ -512,9 +511,9 @@ const HotJobpage: React.FC = () => {
                       // language?.hot_job_page?.result
                       languageRedux === 1 && hotjob.length !== 0
                         ? 'kết quả'
-                        : hotJobTotal > 1 && hotjob.length !== 0
+                        : hotJobTotal >= 2 && hotjob.length !== 0
                         ? 'results'
-                        : hotJobTotal < 1 && hotjob.length !== 0
+                        : hotJobTotal < 2 && hotjob.length !== 0
                         ? 'result'
                         : ''
                     }

@@ -923,7 +923,7 @@ const NewJobs: React.FC = () => {
             <div className="title-search">
               <div
                 style={{
-                  display: loading ? 'none' : 'flex',
+                  display: 'flex',
                   alignItems: 'center',
                   fontSize: '24px',
                 }}
@@ -949,7 +949,7 @@ const NewJobs: React.FC = () => {
               <div
                 style={{
                   color: '#0d99ff ',
-                  display: loading ? 'none' : 'flex',
+                  display: 'flex',
                   alignItems: 'center',
                   cursor: 'pointer',
                   // textDecoration: 'underline',

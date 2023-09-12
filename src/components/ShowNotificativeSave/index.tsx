@@ -71,15 +71,13 @@ const ShowNotificativeSave: React.FC = () => {
             sx={{
               width: '100%',
               backgroundColor: '#000000',
-              boxShadow: 'none'
+              boxShadow: 'none',
             }}
           >
             {/* {language?.job_has_been_saved} */}
-            {
-              languageRedux === 1 ?
-                "Bạn đã lưu thành công" :
-                "Saved successfully"
-            }
+            {languageRedux === 1
+              ? 'Bạn đã lưu thành công'
+              : 'Saved successfully'}
           </Alert>
         </Snackbar>
       </Stack>

@@ -73,6 +73,15 @@
 
 
         &__collapse {
+          .history-left_item {
+            .ant-collapse-header {
+              .ant-collapse-expand-icon {
+                display: none;
+              }
+            }
+          }
+
+
           @media screen and (max-width: 1024px) and (min-width: 630px) {
             // display: flex;
             // justify-content: space-between;
