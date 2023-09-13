@@ -211,7 +211,7 @@ const Navbar: React.FC = () => {
     }
   }
 
-  console.log("loading", loadingSwitch);
+  // console.log("loading", loadingSwitch);
 
 
   useEffect(() => {

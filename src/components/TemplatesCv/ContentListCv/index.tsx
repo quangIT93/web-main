@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect } from 'react';
 
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -8,8 +8,8 @@ import categoriesApi from 'api/categoriesApi';
 import './style.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Spin } from 'antd';
+import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
 import { ResumeIcon } from '#components/Icons';
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -20,16 +20,39 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Mousewheel, Pagination } from 'swiper';
+import CvTemplate1 from '../CvTemplate/CvTemplate1';
+import { BlobProvider, PDFViewer, usePDF } from '@react-pdf/renderer';
+import { Document, Page, pdfjs } from "react-pdf";
 
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/legacy/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
 const styleChildBox = {
   marginBottom: '12px',
 };
 
-const ContentListCv = () => {
+interface IContentListCv {
+  colorCV: any;
+  fontSizeCV: any
+}
+
+const ContentListCv: React.FC<IContentListCv> = (props) => {
+  const { colorCV, fontSizeCV } = props;
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
   const language = useSelector((state: RootState) => state.dataLanguage.languages)
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [cvId, setCvId] = React.useState<any>(1);
+  const [instance, updateInstance] = usePDF({
+    document: <CvTemplate1
+      color={colorCV}
+      fontSize={fontSizeCV}
+    />
+  });
+  const [pageNumber, setPageNumber] = React.useState<number>(1);
+  const [numPages, setNumPages] = React.useState<number>();
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
   const getDataParentCategory = async () => {
     try {
       const result = await categoriesApi.getAllParentCategories(
@@ -44,6 +67,21 @@ const ContentListCv = () => {
     }
   };
 
+
+  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
+    setNumPages(numPages);
+  }
+
+  React.useEffect(() => {
+    updateInstance(
+      <CvTemplate1
+        color={colorCV}
+        fontSize={fontSizeCV}
+      />
+    )
+
+  }, [colorCV])
+
   React.useEffect(() => {
     getDataParentCategory();
     const cv_id = localStorage.getItem('cv-id');
@@ -52,7 +90,7 @@ const ContentListCv = () => {
   }, [languageRedux]);
 
 
-  console.log('dataCategories', dataCategories);
+  // console.log('dataCategories', dataCategories);
 
   const handleChangeCategory = async () => { };
 
@@ -143,12 +181,65 @@ const ContentListCv = () => {
           </div>
         </div>
         <div className="contentCv-bottom-right_cv">
-          <Avatar shape="square" icon={<UserOutlined />} />
-          <Avatar shape="square" icon={<UserOutlined />} />
+          {/* <Avatar shape="square" icon={<UserOutlined />} />
+          <Avatar shape="square" icon={<UserOutlined />} /> */}
+          {/* <PDFViewer showToolbar={false}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <CvTemplate1
+              color={colorCV}
+              fontSize={fontSizeCV}
+            />
+          </PDFViewer> */}
+          {/* <BlobProvider document={
+            <CvTemplate1
+              color={colorCV}
+              fontSize={fontSizeCV}
+            />
+          }>
+            {({ blob, url, loading, error }) => {
+              // Do whatever you need with blob here
+              console.log(url);
+              return (
+                url &&
+                <img src={url} alt="" />
+              )
+            }}
+          </BlobProvider> */}
+          <Document
+            loading={<Spin indicator={antIcon} />}
+            noData={<Spin indicator={antIcon} />}
+            file={instance.url}
+            onLoadSuccess={onDocumentLoadSuccess}
+          >
+            {
+              Array.apply(null, Array(numPages))
+                .map((x, i) => i + 1)
+                .map(page =>
+                  <Page
+                    loading={
+                      page === 1 ?
+                        <Spin indicator={antIcon} /> :
+                        <></>
+                    }
+                    noData={
+                      page === 1 ?
+                        <Spin indicator={antIcon} /> :
+                        <></>}
+                    pageNumber={page}
+                    renderAnnotationLayer={false}
+                    renderTextLayer={false}
+                  />
+                )
+            }
+          </Document>
         </div>
       </div>
     </div>
   );
 };
 
-export default ContentListCv;
+export default memo(ContentListCv);

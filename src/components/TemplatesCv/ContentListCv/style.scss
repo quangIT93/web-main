@@ -191,7 +191,7 @@
 
     .contentCV-line {
         width: 1px;
-        height: 900px;
+        height: 948px;
         background-color: #000000;
 
 
@@ -255,17 +255,20 @@
             gap: 17px;
             align-items: center;
             justify-content: flex-start;
+            width: 596px;
+            height: 842px;
+            // overflow-x: scroll;
 
-            span {
-                width: 595px;
-                height: 842px;
-                display: grid;
-                place-items: center;
+            // span {
+            //     width: 595px;
+            //     height: 842px;
+            //     display: none;
+            //     place-items: center;
 
-                @media screen and (max-width: 710px) {
-                    width: 100%;
-                }
-            }
+            //     @media screen and (max-width: 710px) {
+            //         width: 100%;
+            //     }
+            // }
         }
     }
 }

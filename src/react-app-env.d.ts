@@ -73,3 +73,8 @@ declare module '*.module.sass' {
 declare module 'react/jsx-runtime' {
   export default any
 }
+
+declare module '*.woff';
+declare module '*.woff2';
+
+declare module "*.ttf"
