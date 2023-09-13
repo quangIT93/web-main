@@ -55,6 +55,11 @@ const Home: React.FC = () => {
     roleRedux >= 0 ? false : true,
   );
   const [openModalUpdateInfo, setOpenModalUpdateInfo] = React.useState(false);
+
+  const newUser = useSelector((state: RootState) => state.isNew.newUser);
+
+  console.log('newUser', newUser);
+
   // const [role, setRole] = React.useState<any>()
   useEffect(() => {
     logEvent(analytics, 'screen_view' as string, {

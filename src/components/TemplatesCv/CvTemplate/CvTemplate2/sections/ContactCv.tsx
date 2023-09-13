@@ -37,16 +37,22 @@ const ContactCvEntry = ({
 }) => (
   <View style={{ marginTop: '0.626cm' }}>
     <View>
-      <Text style={{ fontSize: '8.79pt' }}>Address</Text>
+      <Text style={{ fontSize: '8.79pt', fontFamily: 'Montserrat Bold' }}>
+        Address
+      </Text>
       <Text style={styles.introduce}>{address}</Text>
     </View>
     <View>
-      <Text style={{ fontSize: '8.79pt' }}>Number Phone</Text>
+      <Text style={{ fontSize: '8.79pt', fontFamily: 'Montserrat Bold' }}>
+        Number Phone
+      </Text>
       <Text style={styles.introduce}>{mobile}</Text>
     </View>
 
     <View>
-      <Text style={{ fontSize: '8.79pt' }}>Mail</Text>
+      <Text style={{ fontSize: '8.79pt', fontFamily: 'Montserrat Bold' }}>
+        Mail
+      </Text>
       <Text style={styles.introduce}>{mail}</Text>
     </View>
   </View>
@@ -68,6 +74,7 @@ const ContactCv: React.FC<IPropContactCv> = (props) => {
           style={{
             marginLeft: '0.4cm',
             fontSize: '13.67pt',
+            fontFamily: 'Montserrat Bold',
           }}
         >
           Contact
@@ -76,6 +83,7 @@ const ContactCv: React.FC<IPropContactCv> = (props) => {
       <View
         style={{
           border: '0.5pt solid black',
+          fontFamily: 'Montserrat Regular',
         }}
       ></View>
       <ContactCvEntry

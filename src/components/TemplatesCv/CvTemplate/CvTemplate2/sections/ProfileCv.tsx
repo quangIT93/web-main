@@ -49,6 +49,7 @@ const ProfileCv = () => {
           style={{
             marginLeft: '0.4cm',
             fontSize: '13.67pt',
+            fontFamily: 'Montserrat Bold',
           }}
         >
           Profile
@@ -59,7 +60,7 @@ const ProfileCv = () => {
           border: '0.5pt solid black',
         }}
       ></View>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', fontFamily: 'Montserrat Regular' }}>
         <ProfileEntry introduce="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio provident officia debitis. Ad saepe nam culpa ipsum rem earum enim adipisci minima alias illo blanditiis minus ut, quaerat, recusandae pariatur." />
       </View>
     </View>

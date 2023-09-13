@@ -33,6 +33,7 @@ import 'swiper/css/navigation';
 import { Navigation, Mousewheel, Pagination } from 'swiper';
 import { Link } from 'react-router-dom';
 import CvTemplate1 from '../CvTemplate/CvTemplate1';
+import CvTemplate2 from '../CvTemplate/CvTemplate2';
 import {
   Text,
   View,
@@ -68,7 +69,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [cvId, setCvId] = React.useState<any>(1);
   const [instance, updateInstance] = usePDF({
-    document: <CvTemplate1 color={colorCV} fontSize={fontSizeCV} />,
+    document: <CvTemplate2 color={colorCV} fontSize={fontSizeCV} />,
   });
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [numPages, setNumPages] = React.useState<number>();
@@ -93,7 +94,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   }
 
   React.useEffect(() => {
-    updateInstance(<CvTemplate1 color={colorCV} fontSize={fontSizeCV} />);
+    updateInstance(<CvTemplate2 color={colorCV} fontSize={fontSizeCV} />);
   }, [colorCV]);
 
   React.useEffect(() => {
@@ -106,11 +107,6 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   // console.log('dataCategories', dataCategories);
 
   const handleChangeCategory = async () => {};
-
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [experience, setExperience] = React.useState('');
-  const [education, setEducation] = React.useState('');
 
   const styles = StyleSheet.create({
     page: {

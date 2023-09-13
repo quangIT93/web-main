@@ -633,9 +633,7 @@ const Detail = () => {
 
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         post?.data.shareLink,
-      )}&quote=${encodeURIComponent(titleShare)}&hashtag=${encodeURIComponent(
-        post?.data.shareLink,
-      )}&display=iframe`;
+      )}&quote=${encodeURIComponent(titleShare)}}&display=iframe`;
       window.open(url);
     }
     if (nameShare === 'Zalo') {

@@ -1,7 +1,11 @@
+import { setRole } from 'store/reducer/roleReducer';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import signInEmailApi from '../../../api/authApi'
 import { AxiosError } from 'axios'
-
+import { useSelector, useDispatch } from 'react-redux';
+//@ts-ignore
+import { RootState } from '..';
+import { setIsNew } from '../isNewReducer';
 interface AuthState {
   isLoggedIn: boolean
   isverifyOtp: boolean
@@ -24,7 +28,12 @@ export const signInEmail = createAsyncThunk(
   async (email: string, { rejectWithValue }) => {
     try {
       const response = await signInEmailApi.signInEmail(email)
+      // const newUser = useSelector((state: RootState) => state.isNew);
+      const dispatch = useDispatch();
+      if (response) {
+        dispatch<any>(setIsNew(response.data.isNew));
 
+      }
       return response.data
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -44,7 +53,9 @@ export const verifyOtp = createAsyncThunk(
   ) => {
     try {
       const response = await signInEmailApi.verifyOtp(email, otp)
-
+      if (response) {
+        // dispatch<any>(setIsNew(response.data.isNew))
+      }
       return response.data
     } catch (error) {
       console.log(error)

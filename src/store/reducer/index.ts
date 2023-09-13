@@ -22,6 +22,8 @@ import dataLanguage from './dataLanguage'
 
 import roleReducer from './roleReducer'
 
+import isNewReducer from './isNewReducer'
+
 const reducers = combineReducers({
   post: postReducer,
   postNewest: postNewestReducer,
@@ -33,6 +35,7 @@ const reducers = combineReducers({
   alertProfile: alertProfileReducer,
   changeLaguage: changeLanguageReducer,
   changeRole: roleReducer,
+  isNew: isNewReducer,
   showAlert: alertReducer,
 
   //quản lý state navbar
