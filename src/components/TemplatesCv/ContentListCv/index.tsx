@@ -36,6 +36,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // import component
 //@ts-ignore
 import ItemCV from '../ItemCV';
+//@ts-ignore
 import Theme1 from '../Themes/Theme1';
 
 // Import Swiper styles
