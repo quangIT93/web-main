@@ -32,9 +32,16 @@ import ModalDeleteCv from '#components/CV/ModalDeleteCv';
 
 const ProfileCv: React.FC = () => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+    const roleRedux = useSelector((state: RootState) => state.changeRole.role);
     const [selectedId, setSelectedId] = React.useState<any>(0)
     const [openModalShare, setOpenModalShare] = React.useState<any>(false)
     const [openModalDeleteCv, setOpenModalDeleteCv] = React.useState<any>(false)
+
+    React.useEffect(() => {
+        roleRedux === 1 &&
+            window.open(`/`, '_parent')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleSelecCv = (id: number) => {
         setSelectedId(id)

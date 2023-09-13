@@ -50,7 +50,10 @@ const Home: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const [openModalSelectRole, setOpenModalSelectRole] = React.useState(true);
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  const [openModalSelectRole, setOpenModalSelectRole] = React.useState(
+    roleRedux >= 0 ? false : true,
+  );
   const [openModalUpdateInfo, setOpenModalUpdateInfo] = React.useState(false);
   // const [role, setRole] = React.useState<any>()
   useEffect(() => {

@@ -26,14 +26,22 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { setCookie } from 'cookies';
 import RollTop from '#components/RollTop';
-
+import CvTemplate1 from '#components/TemplatesCv/CvTemplate/CvTemplate1';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [fontSizeCV, setFontSizeCV] = React.useState(24);
   //1: black, 2: blue, 3: yellow, 4:green, 5:red
   const [colorCV, setColorCV] = React.useState(1)
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
+
+  React.useEffect(() => {
+    roleRedux === 1 &&
+      window.open(`/`, '_parent')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClickMinusCircle = () => {
     if (fontSizeCV > 16) {
@@ -170,7 +178,23 @@ const TemplatesCv: React.FC = () => {
             </div>
           </div>
           <div className="button-cv">
-            <Button
+            <PDFDownloadLink
+              className="download-cv-btn"
+              document={
+                <CvTemplate1
+                  color={colorCV}
+                  fontSize={fontSizeCV}
+                />
+              }
+              fileName="Test_Cv1"
+            >
+              {
+                languageRedux === 1 ?
+                  "Lưu và tải PDF" :
+                  "Save & Download PDF"
+              }
+            </PDFDownloadLink>
+            {/* <Button
               type="primary"
               onClick={handleSaveCv}
             >
@@ -179,7 +203,7 @@ const TemplatesCv: React.FC = () => {
                   "Lưu và tải PDF" :
                   "Save & Download PDF"
               }
-            </Button>
+            </Button> */}
             <Button
               type="primary"
               onClick={() => {
@@ -191,7 +215,10 @@ const TemplatesCv: React.FC = () => {
           </div>
         </div>
 
-        <ContentListCv />
+        <ContentListCv
+          colorCV={colorCV}
+          fontSizeCV={fontSizeCV}
+        />
         <ModalShare
           openModalShare={openModalShare}
           setOpenModalShare={setOpenModalShare}

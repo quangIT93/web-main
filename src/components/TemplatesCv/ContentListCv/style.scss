@@ -192,7 +192,7 @@
 
     .contentCV-line {
         width: 1px;
-        height: 900px;
+        height: 948px;
         background-color: #000000;
 
 
@@ -258,101 +258,20 @@
             gap: 17px;
             align-items: center;
             justify-content: flex-start;
-            height: 900px;
-            span {
-                width: 595px;
-                height: 842px;
-                display: grid;
-                place-items: center;
+            width: 596px;
+            height: 842px;
+            // overflow-x: scroll;
 
-                @media screen and (max-width: 710px) {
-                    width: 100%;
-                }
-            }
+            // span {
+            //     width: 595px;
+            //     height: 842px;
+            //     display: none;
+            //     place-items: center;
 
-            #pdf-container {
-                .header-cv {
-                    display: flex;
-                    .header-cv_left {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: flex-start;
-                        justify-content: center;
-                        position: relative;
-                        width: 100%;
-                        h2 {
-                            width: 100%;
-                            font-size: 3rem;
-                            font-family: 'Montserrat', sans-serif !important;
-                            position: relative;
-                            margin-bottom: 0.6px;
-                            &:after {
-                                content: '';
-                                position: absolute;
-                                bottom: 0%; // Điểm bắt đầu ở phía dưới của phần tử cha
-                                left: 0;
-                                width: 100%;
-                                height: 1px;
-                                background-color: #f00;
-                                // content: 'This is after';
-                              }
-                        }
-
-                    
-                        p {
-                            font-family: 'Montserrat', sans-serif !important;
-                            position: relative;
-                            &:after {
-                                content: '';
-                                position: absolute;
-                                bottom: 0%; // Điểm bắt đầu ở phía dưới của phần tử cha
-                                left: 0;
-                                width: 100%;
-                                height: 1px;
-                                background-color: #f00;
-                                // content: 'This is after';
-                              }
-                        }
-                        
-                    }
-
-                    .header-cv_right {
-                      
-                        min-width: 160px;
-                        height: 160px;
-                        img {
-                            width: 160px;
-                            height: 160px;
-                        }
-                        
-                    }
-                }
-
-                .content-cv {
-                    display: flex;
-                    .content-cv_left {
-                        .itemCV {
-                            .wrap-titleCv {
-
-                                border-bottom: 1px solid #ccc;
-                                h3 {
-                                    font-size: 20px;
-                                    margin-bottom: 0.625px;
-                                }
-                            }
-
-                            p {
-                                font-size: 14px;
-                            }
-                        }
-                    }
-
-                    .content-cv_right {
-
-                    }
-                }
-             }
-
+            //     @media screen and (max-width: 710px) {
+            //         width: 100%;
+            //     }
+            // }
         }
     }
 }

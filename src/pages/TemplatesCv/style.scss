@@ -188,7 +188,8 @@
                 align-items: center;
                 gap: 24px;
 
-                .ant-btn {
+                .ant-btn,
+                .download-cv-btn {
                     padding: 12px 24px;
                     // gap: 12px;
                     display: flex;
@@ -204,7 +205,12 @@
                     // position: relative;
                     // top: -60px;
                     // right: 10px;
+                    color: #FFFFFF;
+                    align-items: center;
 
+                    a:active {
+                        color: #FFFFFF;
+                    }
 
                     &:hover {
                         transform: scale(1.1);
