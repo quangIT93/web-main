@@ -623,12 +623,12 @@ const Detail = () => {
     //   window.location.href = messengerLink;
     // }
     if (nameShare === 'Facebook') {
+      const titleShare = 'hijob chia sẻ công việc cho bạn';
+
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        post?.data?.companyResourceData?.name === 'HIJOB'
-          ? post?.data.shareLink
-          : post?.data.shareLink,
-      )}`;
-      window.open(url, '_blank');
+        post?.data.shareLink,
+      )}&quote=${encodeURIComponent(titleShare)}}&display=iframe`;
+      window.open(url);
     }
     if (nameShare === 'Zalo') {
       window.location.href = `zalo://app?link=${encodeURIComponent(
@@ -786,6 +786,8 @@ const Detail = () => {
   const onChangeTab = (key: string) => {
     setKeyTab(key);
   };
+
+  console.log('postDate', post?.data);
 
   const items: TabsProps['items'] = [
     {
@@ -1492,9 +1494,71 @@ const Detail = () => {
                   </div>
                   <div>
                     <Typography sx={{ ml: 2 }}>
-                      {post?.data.company_name}
+                      {post?.data.companyName}
                     </Typography>
-                    <Typography sx={{ ml: 2 }}>{post?.data.title}</Typography>
+                    <Typography
+                      sx={{ ml: 2, display: 'flex', alignItems: 'center' }}
+                    >
+                      <CompanyNameDetailPostIcon width={16} height={16} />{' '}
+                      <span style={{ marginLeft: '8px' }}>
+                        {post?.data.title}
+                      </span>
+                    </Typography>
+                    <Typography sx={{ ml: 2 }}>
+                      <AddressDetailPostIcon width={16} height={16} />
+                      <span style={{ marginLeft: '8px' }}>
+                        {`${post?.data.address}, ${
+                          post?.data?.location
+                            ? post?.data?.location?.fullName
+                            : ''
+                        }, ${
+                          post?.data?.location?.district
+                            ? post?.data?.location?.district?.fullName
+                            : ''
+                        }, ${
+                          post?.data?.location?.district?.province
+                            ? post?.data?.location?.district?.province?.fullName
+                            : ''
+                        }`}
+                      </span>
+                    </Typography>
+                    {/* <div className="mid-title_companyName">
+                      <CompanyNameDetailPostIcon width={24} height={24} />
+                      <h3>{post?.data.companyName}</h3>
+                      <h3>|</h3>
+                      <h3
+                        onClick={handleClickSearch}
+                        style={{ cursor: 'pointer' }}
+                        className="clickShow-detailPost"
+                      >
+                        {language?.post_detail_page?.see_all}
+                      </h3>
+                    </div>
+
+                    <div className="mid-title_companyAddress">
+                      <AddressDetailPostIcon width={24} height={24} />
+                      <h3>{`${post?.data.address}, ${
+                        post?.data?.location
+                          ? post?.data?.location?.fullName
+                          : ''
+                      }, ${
+                        post?.data?.location?.district
+                          ? post?.data?.location?.district?.fullName
+                          : ''
+                      }, ${
+                        post?.data?.location?.district?.province
+                          ? post?.data?.location?.district?.province?.fullName
+                          : ''
+                      }`}</h3>
+                      <h3>|</h3>
+                      <h3
+                        onClick={handleClickShowMap}
+                        style={{ cursor: 'pointer' }}
+                        className="clickShow-detailPost"
+                      >
+                        {language?.post_detail_page?.see_on_map}
+                      </h3>
+                    </div> */}
                   </div>
                 </div>
               </div>
