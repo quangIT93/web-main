@@ -1,71 +1,126 @@
 import React from 'react';
+import {
+  PDFViewer,
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+} from '@react-pdf/renderer';
 
-const theme1 = () => {
+import ProfileCv from './ProfileCv';
+import SkillsCv from './SkillsCv';
+
+//@ts-ignore
+import { spacing } from '../Styles';
+
+import { Settings, ShowForm } from '../Setting/settingsSlice';
+import ContactCv from './ContactCv';
+
+const styles = StyleSheet.create({
+  page: {
+    padding: '3cm 1cm',
+  },
+  container: {
+    // flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    // flexDirection: 'row',
+
+    '@media max-width: 400': {
+      flexDirection: 'column',
+    },
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    // backgroundColor: 'blue',
+    width: '100%',
+    flexDirection: 'row',
+    height: 'auto',
+  },
+  content: {
+    display: 'flex',
+    // backgroundColor: 'green',
+    flexDirection: 'row',
+    // height: '100%',
+  },
+});
+
+const Theme1 = () => {
   return (
-    <div id="pdf-container">
-      {/* <h2>CV Preview</h2> */}
-      {/* {imageURL && <img src={imageURL} alt="Profile" width="50" height="50" />} */}
-      <div className="header-cv">
-        <div className="header-cv_left">
-          <h2>Tên ứng viên</h2>
-          <p>Ngành nghề</p>
-        </div>
-        <div className="header-cv_right">
-          <img src="./images/project-manager.png" alt="" />
-        </div>
-      </div>
-      <div className="content-cv">
-        <div className="content-cv_left">
-          <div className="itemCV">
-            <div className="wrap-titleCv">
-              <h3>PROFILE</h3>
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-              voluptatibus ex libero sit voluptatum consequatur sed ullam
-              mollitia minima vel obcaecati dicta quae, asperiores laborum
-              blanditiis illo quasi rem eligendi.
-            </p>
-          </div>
-          <div className="itemCV">
-            <div className="wrap-titleCv">
-              <h3>PROFILE</h3>
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-              voluptatibus ex libero sit voluptatum consequatur sed ullam
-              mollitia minima vel obcaecati dicta quae, asperiores laborum
-              blanditiis illo quasi rem eligendi.
-            </p>
-          </div>
-          <div className="itemCV">
-            <div className="wrap-titleCv">
-              <h3>PROFILE</h3>
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-              voluptatibus ex libero sit voluptatum consequatur sed ullam
-              mollitia minima vel obcaecati dicta quae, asperiores laborum
-              blanditiis illo quasi rem eligendi.
-            </p>
-          </div>
-        </div>
+    <Document
+      author="Luke Skywalker"
+      keywords="awesome, resume, start wars"
+      subject="The resume of Luke Skywalker"
+      title="Resume"
+    >
+      <Page style={styles.page}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <View
+              style={{
+                display: 'flex',
+                height: '4.5cm',
+                // backgroundColor: 'red',
+                width: '70%',
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: '37pt',
+                  width: '6cm',
+                  marginBottom: '0.6cm',
+                }}
+              >
+                Thái Minh Quang
+              </Text>
 
-        <div className="content-cv_right">
-          <div className="wrap-titleCv">
-            <h3>PROFILE</h3>
-          </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-            voluptatibus ex libero sit voluptatum consequatur sed ullam mollitia
-            minima vel obcaecati dicta quae, asperiores laborum blanditiis illo
-            quasi rem eligendi.
-          </p>
-        </div>
-      </div>
-      {/* {/* <p>Name: {name}</p> */}
-    </div>
+              <View
+                style={{
+                  border: '1px solid #ccc',
+                  width: '100%',
+                  marginBottom: '0.6cm',
+                }}
+              ></View>
+
+              <Text style={{ fontSize: '9pt' }}>Công nghệ thông tin</Text>
+
+              <View
+                style={{
+                  border: '1px solid #ccc',
+                  width: '100%',
+                  marginTop: '0.6cm',
+                }}
+              ></View>
+            </View>
+
+            <Image
+              src="./images/image 51.png"
+              style={{ width: '5cm', height: '4.5cm' }}
+            />
+            {/* <View style={{ width: '5cm', height: '4.5cm' }}>
+            </View> */}
+          </View>
+          <View style={styles.content}>
+            <View style={{ width: '5.053cm', marginRight: '2.053cm' }}>
+              <ProfileCv />
+              <ContactCv address="tphcm" mobile="0911893144" mail="khong co" />
+              <SkillsCv />
+              {/* </> */}
+            </View>
+            <View style={{ width: 'auto' }}>
+              <SkillsCv />
+            </View>
+          </View>
+        </View>
+      </Page>
+    </Document>
   );
 };
 
-export default theme1;
+export default Theme1;

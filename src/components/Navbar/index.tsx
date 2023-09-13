@@ -134,17 +134,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -195,24 +195,20 @@ const Navbar: React.FC = () => {
   // const [language, setLanguageState] = useState<any>();
 
   const [searchJob, setSearchJob] = useState<boolean>(false);
-  const [openModalTurnOffStatus, setOpenModalTurnOffStatus] = useState<boolean>(false);
+  const [openModalTurnOffStatus, setOpenModalTurnOffStatus] =
+    useState<boolean>(false);
   const [loadingSwitch, setLoadingSwitch] = useState(false);
   const handleOnchangeSearchJob = (checked: any) => {
     if (checked === true) {
       // e.preventDefault();
-      console.log("checked", checked);
-      setSearchJob(true)
-
+      console.log('checked', checked);
+      setSearchJob(true);
+    } else {
+      setLoadingSwitch(true);
+      setOpenModalTurnOffStatus(true);
+      setSearchJob(false);
     }
-    else {
-      setLoadingSwitch(true)
-      setOpenModalTurnOffStatus(true)
-      setSearchJob(false)
-    }
-  }
-
-  console.log("loading", loadingSwitch);
-
+  };
 
   useEffect(() => {
     // if(localStorage.getItem('accessToken')){
@@ -310,7 +306,7 @@ const Navbar: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
 
   const languageData = useSelector((state: RootState) => {
     return state.dataLanguage.languages;
@@ -331,7 +327,6 @@ const Navbar: React.FC = () => {
   // }
 
   // const [role, setRole] = React.useState<any>(roleRedux);
-
 
   const getCompanyInforByAccount = async () => {
     try {
@@ -397,7 +392,6 @@ const Navbar: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-
   // get count unread
   const getCountUnread = async () => {
     try {
@@ -428,7 +422,6 @@ const Navbar: React.FC = () => {
   const refLogin = React.useRef<HTMLDivElement | null>(null);
   const refInfoUser = React.useRef<HTMLDivElement | null>(null);
   const bellRef = React.useRef<HTMLDivElement | null>(null);
-
 
   const handleCollapseEntered = () => {
     if (ref.current) {
@@ -992,7 +985,10 @@ const Navbar: React.FC = () => {
       )}
     </div>,
     <div className="switch-container">
-      <div className="search-job-switch" style={{ display: roleRedux === 0 ? 'flex' : 'none' }}>
+      <div
+        className="search-job-switch"
+        style={{ display: roleRedux === 0 ? 'flex' : 'none' }}
+      >
         {/* <p>
           {
             searchJob ?
@@ -1004,7 +1000,11 @@ const Navbar: React.FC = () => {
                 `Job search status is: off`
           }
         </p> */}
-        <Switch checked={searchJob} loading={loadingSwitch} onChange={handleOnchangeSearchJob} />
+        <Switch
+          checked={searchJob}
+          loading={loadingSwitch}
+          onChange={handleOnchangeSearchJob}
+        />
         <div className="switch__hover__container">
           <div className="switch__hover">
             <div className="switch__hover__p">
@@ -1045,8 +1045,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="2"
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -1076,8 +1076,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-              openLogin &&
-              location?.pathname === '/'
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1168,8 +1168,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                            return `${location.district} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1182,8 +1182,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1203,9 +1203,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1267,9 +1267,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                // style={{
-                //   display: openRadioGroup ? 'flex' : 'none',
-                // }}
+                  // style={{
+                  //   display: openRadioGroup ? 'flex' : 'none',
+                  // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1347,13 +1347,15 @@ const Navbar: React.FC = () => {
         <BellIcon />
       </Button>
     </Badge>,
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      gap: "4px",
-      alignItems: "center",
-      marginLeft: "4px"
-    }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+        alignItems: 'center',
+        marginLeft: '4px',
+      }}
+    >
       <div
         className="language"
         onClick={() => {
@@ -1367,7 +1369,10 @@ const Navbar: React.FC = () => {
         )}
       </div>
       <div className="switch-container-responsive">
-        <div className="search-job-switch-responsive " style={{ display: roleRedux === 0 ? 'flex' : 'none' }}>
+        <div
+          className="search-job-switch-responsive "
+          style={{ display: roleRedux === 0 ? 'flex' : 'none' }}
+        >
           {/* <p>
         {
           searchJob ?
@@ -1379,7 +1384,11 @@ const Navbar: React.FC = () => {
               `Job search status is: off`
         }
       </p> */}
-          <Switch checked={searchJob} loading={loadingSwitch} onChange={handleOnchangeSearchJob} />
+          <Switch
+            checked={searchJob}
+            loading={loadingSwitch}
+            onChange={handleOnchangeSearchJob}
+          />
           <div className="switch__hover__container">
             <div className="switch__hover">
               <div className="switch__hover__p">
@@ -1487,8 +1496,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.locations.length > 0
                         ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                            return `${location.district} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1501,8 +1510,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {dataProfile?.categories.length > 0
                         ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                            return `${profile.parent_category} / ${profile.child_category}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1522,9 +1531,9 @@ const Navbar: React.FC = () => {
                   style={{
                     borderBottom: 'none',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1628,8 +1637,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
