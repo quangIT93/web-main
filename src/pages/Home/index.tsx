@@ -1,4 +1,7 @@
 import React, { memo, useEffect } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
+
 // @ts-ignore
 import { Navbar } from '#components';
 
@@ -38,11 +41,12 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // component
 import Community from '#components/Home/Community';
 import Footer from '../../components/Footer/Footer';
-import { useSelector } from 'react-redux';
+
 import { RootState } from '../../store/reducer';
 import { setCookie } from 'cookies';
 import ModalSelectRole from '#components/Home/ModalSelectRole';
 import ModalUpdateInfo from '#components/Home/ModalUpdateInfo';
+import { setIsNew } from 'store/reducer/isNewReducer';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -52,13 +56,33 @@ const Home: React.FC = () => {
 
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [openModalSelectRole, setOpenModalSelectRole] = React.useState(
-    roleRedux >= 0 ? false : true,
+    // roleRedux >= 0 ? false : true,
+    false,
   );
   const [openModalUpdateInfo, setOpenModalUpdateInfo] = React.useState(false);
 
-  const newUser = useSelector((state: RootState) => state.isNew.newUser);
+  const dispatch = useDispatch();
 
-  console.log('newUser', newUser);
+  React.useEffect(() => {
+    if (localStorage.getItem('isNew') === 'true') {
+      // dispatch<any>(setIsNew(false));
+      setOpenModalSelectRole(true);
+      localStorage.setItem('isNew', 'false');
+    }
+    // else if (!newUser && roleRedux === 0) {
+    //   setOpenModalSelectRole(false);
+    //   dispatch<any>(setIsNew(false));
+    // } else if (!newUser && roleRedux === 1) {
+    //   setOpenModalSelectRole(false);
+    //   dispatch<any>(setIsNew(false));
+    // }
+    // else {
+    //   dispatch<any>(setIsNew(false));
+    //   setOpenModalSelectRole(false);
+    // }
+  }, []);
+
+  // console.log('openModalSelectRole', openModalSelectRole);
 
   // const [role, setRole] = React.useState<any>()
   useEffect(() => {

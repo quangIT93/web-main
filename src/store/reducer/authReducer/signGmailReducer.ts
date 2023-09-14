@@ -12,6 +12,7 @@ interface AuthState {
   accountId: string | null
   accessToken: string | null
   refreshToken: string | null
+  isNew: boolean
   error: string | null
 }
 
@@ -21,6 +22,7 @@ const initialState: AuthState = {
   accountId: null,
   accessToken: null,
   refreshToken: null,
+  isNew: false,
   error: null,
 }
 export const signInEmail = createAsyncThunk(
@@ -29,11 +31,7 @@ export const signInEmail = createAsyncThunk(
     try {
       const response = await signInEmailApi.signInEmail(email)
       // const newUser = useSelector((state: RootState) => state.isNew);
-      const dispatch = useDispatch();
-      if (response) {
-        dispatch<any>(setIsNew(response.data.isNew));
-
-      }
+      
       return response.data
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -43,22 +41,22 @@ export const signInEmail = createAsyncThunk(
       }
     }
   }
-)
+  )
+  
+  export const verifyOtp = createAsyncThunk(
+    'sign-in/email/verify',
+    async (
+      { email, otp }: { email: string; otp: string },
+      { rejectWithValue }
+      ) => {
+        try {
 
-export const verifyOtp = createAsyncThunk(
-  'sign-in/email/verify',
-  async (
-    { email, otp }: { email: string; otp: string },
-    { rejectWithValue }
-  ) => {
-    try {
-      const response = await signInEmailApi.verifyOtp(email, otp)
-      if (response) {
-        // dispatch<any>(setIsNew(response.data.isNew))
-      }
-      return response.data
-    } catch (error) {
-      console.log(error)
+          const response = await signInEmailApi.verifyOtp(email, otp)
+          console.log("response: ", response.data);
+          
+          return response.data
+        } catch (error) {
+          console.log(error)
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data?.message)
       } else {
@@ -78,6 +76,7 @@ const authSlice = createSlice({
       state.accountId = null
       state.accessToken = null
       state.refreshToken = null
+      state.isNew = false
       state.error = null
     },
   },
@@ -104,6 +103,8 @@ const authSlice = createSlice({
         state.accountId = action.payload.accountId
         state.accessToken = action.payload.accessToken
         state.refreshToken = action.payload.refreshToken
+        // state.isNew = action.payload.isNew
+        state.isNew = true
         state.error = null
       }
     )
@@ -113,6 +114,7 @@ const authSlice = createSlice({
         state.accountId = null
         state.accessToken = null
         state.refreshToken = null
+        state.isNew = false
         state.error = action.payload as string // Chuyển kiểu dữ liệu của action.payload thành string
       }
     )

@@ -115,6 +115,8 @@ const AppliedPostedJob: React.FC = () => {
         setTimeout(() => {
           setloading(false);
         }, 1000);
+        console.log('result: ', result);
+
         roleRedux === 0
           ? setAppliedPostedJob(
               result.data.filter((job: any) => {
@@ -138,7 +140,7 @@ const AppliedPostedJob: React.FC = () => {
     getAppliedPostedJobs();
     localStorage.getItem('accessToken') && setIslogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, roleRedux]);
 
   const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
   const slidesPerView = windowWidth <= 576 ? 1 : 'auto';
@@ -195,6 +197,8 @@ const AppliedPostedJob: React.FC = () => {
             position: 'relative',
             paddingBottom: '24px',
             flexDirection: 'column',
+            padding:
+              roleRedux === 0 && appliedPostedJob.length !== 0 ? '0px' : '0',
           }}
           className="applied-posted-jobs-container"
         >

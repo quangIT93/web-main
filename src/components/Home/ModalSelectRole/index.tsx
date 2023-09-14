@@ -7,6 +7,7 @@ import { RootState } from 'store';
 import { CandidateIcon, RecruiterIcon } from '#components/Icons';
 import { setRole } from 'store/reducer/roleReducer';
 
+import typeUser from 'api/apiTypeUser';
 interface IModalSelectRole {
   openModalSelectRole: boolean;
   setOpenModalSelectRole: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,6 +27,8 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
   const [role, setRoleId] = React.useState(0);
   const dispatch = useDispatch();
 
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3);
+
   const onChangeRole = (e: any) => {
     setRoleId(e.target.value);
   };
@@ -33,11 +36,19 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
     setOpenModalSelectRole(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // setRole(role)
-    dispatch<any>(setRole(role));
-    setOpenModalUpdateInfo(true);
-    handleCancel();
+    try {
+      const result = await typeUser.putTypeUser(role);
+      if (result) {
+        dispatch<any>(setRole(role));
+        setOpenModalUpdateInfo(true);
+        setOpenModalSelectRole(false);
+        handleCancel();
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   return (
@@ -61,15 +72,14 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
         </h3>
       }
       footer={null}
-      //   open={openModalSelectRole}
-      open={true}
+      open={openModalSelectRole}
       // onCancel={handleCancel}
       closable={false}
       className="modal-select-role-container"
     >
       <p
         style={{
-          fontFamily: 'Roboto',
+          // fontFamily: 'Roboto',
           fontSize: '16px',
           fontWeight: '400',
           letterSpacing: '0.5px',
@@ -85,6 +95,7 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
           <Radio.Group
             onChange={onChangeRole}
             value={role}
+            defaultValue={1}
             style={{ width: '100%' }}
           >
             <Space

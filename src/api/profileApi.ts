@@ -45,6 +45,16 @@ const profileApi = {
     }) // Truyền email vào body của request
   },
 
+  getProfileV3: (lang: string) => {
+    const URL = `/v3/profiles/me?lang=${lang}`
+
+    return axiosClient.get(URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    }) // Truyền email vào body của request
+  },
+
   postAvatar: (images: any) => {
     const URL = `/v1/profiles/avt`
     return axiosClient.put(URL, images, {
