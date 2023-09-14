@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 
 import React from 'react';
-import { Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Text, View, StyleSheet, Line, Circle, Svg } from '@react-pdf/renderer';
 
 import Title from './Title';
 import List, { Item } from './List';
@@ -14,72 +14,76 @@ const Experience: React.FC<ICvExperience> = (props) => {
     const { color } = props;
     const styles = StyleSheet.create({
         container: {
-            flex: 1,
-            paddingTop: 30,
-            paddingLeft: 15,
-            '@media max-width: 400': {
-                paddingTop: 10,
-                paddingLeft: 0,
-            },
-        },
-        entryContainer: {
             marginBottom: 10,
+            marginLeft: '0.9cm',
         },
-        date: {
-            fontSize: 11,
-            fontFamily: 'Lato Italic',
-        },
-        detailContainer: {
+        experience: {
+            display: 'flex',
             flexDirection: 'row',
+            // border: '1px solid red'
         },
-        detailLeftColumn: {
+        not: {
+            display: 'flex',
             flexDirection: 'column',
-            marginLeft: 10,
-            marginRight: 10,
-        },
-        detailRightColumn: {
-            flexDirection: 'column',
-            flexGrow: 9,
-        },
-        bulletPoint: {
-            fontSize: 10,
-        },
-        details: {
-            fontSize: 10,
-            fontFamily: 'Lato',
-        },
-        headerContainer: {
-            flexDirection: 'row',
-            marginBottom: 10,
-        },
-        leftColumn: {
-            flexDirection: 'column',
-            flexGrow: 9,
-        },
-        rightColumn: {
-            flexDirection: 'column',
-            flexGrow: 1,
             alignItems: 'flex-end',
-            justifySelf: 'flex-end',
+            // border: '1px solid red',
+            width: 10,
+            // fontSize: 20,
+            gap: '0.516cm'
+        },
+        line: {
+            width: '1px',
+            height: '100%',
+            // backgroundColor: '#000000',
+            "&:last-child": {
+                backgroundColor: '#FFFFFF',
+            }
+        },
+        left: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            // border: '1px solid red'
+        },
+        right: {
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            marginLeft: '0.671cm',
+
+            // border: '1px solid red',
+        },
+        time: {
+            fontFamily: "Montserrat Regular",
+            fontSize: 11,
+            letterSpacing: '2px',
+            marginBottom: '2px',
+        },
+        school: {
+            fontFamily: "Montserrat Bold",
+            fontSize: 10,
+        },
+        detail: {
+            fontFamily: "Montserrat Regular",
+            fontSize: 9,
+            wordBreak: "break-word",
+            width: '100%',
+            // border: '1px solid red'
+        },
+        achievements: {
+            fontFamily: "Montserrat Regular",
+            fontSize: 9,
+            // marginTop: '16.92pt',
+            width: '100%',
+            // border: '1px solid red'
         },
         title: {
-            fontFamily: 'Lato Bold',
-            fontSize: 14,
-            marginBottom: 10,
+            fontFamily: "Montserrat Bold",
+            fontSize: 12,
+            letterSpacing: '2px',
+            marginBottom: '0.658cm',
             textTransform: 'uppercase',
-            color: color === 1 ?
-                "#252525" :
-                color === 2 ?
-                    "#0D99FF" :
-                    color === 3 ?
-                        "#FBBC04" :
-                        color === 4 ?
-                            "#5CB265" : "#D80000"
-        },
-        subTitle: {
-            fontSize: 11,
-            textDecoration: 'none',
-            fontFamily: 'Lato Bold',
             color: color === 1 ?
                 "#252525" :
                 color === 2 ?
@@ -91,83 +95,84 @@ const Experience: React.FC<ICvExperience> = (props) => {
         },
     });
 
-    const ExperienceEntry: React.FC<any> = ({ company, details, position, date }) => {
-        const subTitle = `${company} | ${position}`;
-        return (
-            <View style={styles.entryContainer}>
-                <View style={styles.headerContainer}>
-                    <View style={styles.leftColumn}>
-                        <Text style={styles.subTitle}>{subTitle}</Text>
-                    </View>
-                    <View style={styles.rightColumn}>
-                        <Text style={styles.date}>{date}</Text>
+
+
+    const experiences = [
+        {
+            "name": "Greenwich University",
+            "time": "2017-2020",
+            "detail": [
+                'Completed Jedi Master training and built a lightsaber from scratch in order to do battle against the Empire',
+                'Defeated the Rancor and rescued Princess Leia from Jabba the Hutt',
+                'Competent fighter pilot as well as an excelent shot with nearly any weapon',
+            ],
+            "achievements": [
+                'Completed Jedi Master training and built a lightsaber from scratch in order to do battle against the Empire'
+            ],
+        },
+        {
+            "name": "Greenwich University",
+            "time": "2017-2020",
+            "detail": [
+                'Completed Jedi Master training and built a lightsaber from scratch in order to do battle against the Empire',
+                'Defeated the Rancor and rescued Princess Leia from Jabba the Hutt',
+                'Competent fighter pilot as well as an excelent shot with nearly any weapon',
+            ],
+            "achievements": [
+                'Completed Jedi Master training and built a lightsaber from scratch in order to do battle against the Empire'
+            ],
+        },
+    ]
+
+    const ExperienceEntry: React.FC<any> = ({ experiences }) => (
+        experiences.map((experience: any, i: any) => (
+            <View style={styles.experience} key={i}>
+                <View style={styles.left}>
+                    {/* <Text style={styles.not}>•</Text> */}
+                    {/* <View style={styles.line}></View> */}
+                    <Svg viewBox="0 0 2 2" style={{ width: 10 }}>
+                        <Circle
+                            cx="1"
+                            cy="1"
+                            r="0.5"
+                            fill="#000000"
+                            stroke="none"
+                        />
+                    </Svg>
+                    <Svg height={i + 1 === experiences.length ? "0" : "160"} width="5" >
+                        <Line
+                            x1="5"
+                            y1="-2"
+                            x2="5"
+                            y2={i + 1 === experiences.length ? "0" : "160"}
+                            strokeWidth={0.5}
+                            stroke="#282828"
+                        />
+                    </Svg>
+                </View>
+                <View style={styles.right}>
+                    <Text style={styles.time}>{experience.time}</Text>
+                    <Text style={styles.school}>{experience.name}</Text>
+                    <Text style={styles.detail}>{experience.detail}</Text>
+                    <View style={styles.achievements}>
+                        <Text style={styles.detail}>
+                            {`(*)Achievements: `}
+                        </Text>
+                        <List>
+                            {experience.achievements.map((iem: any, i: any) => (
+                                <Item key={i}>{iem}</Item>
+                            ))}
+                        </List>
                     </View>
                 </View>
-                <List>
-                    {details.map((detail: any, i: any) => (
-                        <Item key={i} style={styles.detailContainer}>
-                            {detail}
-                        </Item>
-                    ))}
-                </List>
             </View>
-        );
-    };
+        ))
+    );
 
-    const experienceData = [
-        {
-            company: 'Jedi Temple, Coruseant',
-            date: 'A long time ago...',
-            details: [
-                'Started a new Jedi Temple in order to train the next generation of Jedi Masters',
-                'Discovered and trained a new generation of Jedi Knights, which he recruited from within the New Republic',
-                'Communicates with decesased Jedi Masters such as Anakin Skywalker, Yoda, Obi-Wan Kenobi in order to learn the secrets of the Jedi Order',
-            ],
-            position: 'Head Jedi Master',
-        },
-        {
-            company: 'Rebel Alliance',
-            date: 'A long time ago...',
-            details: [
-                'Lead legions of troops into battle while demonstrating bravery, competence and honor',
-                'Created complicated battle plans in conjunction with other Rebel leaders in order to ensure the greatest chance of success',
-                'Defeated Darth Vader in single-combat, and convinced him to betray his mentor, the Emperor',
-            ],
-            position: 'General',
-        },
-        {
-            company: 'Rebel Alliance',
-            date: 'A long time ago...',
-            details: [
-                'Destroyed the Death Star by using the force to find its only weakness and delivering a torpedo into the center of the ship',
-                'Commanded of squadron of X-Wings into battle',
-                'Defeated an enemy AT-AT single handedly after his ship was destroyed',
-                'Awarded a medal for valor and bravery in battle for his successful destruction of the Death Star',
-            ],
-            position: 'Lieutenant Commander',
-        },
-        {
-            company: 'Tatooine Moisture Refinery',
-            date: 'A long time ago...',
-            details: [
-                'Replaced damaged power converters',
-                'Performed menial labor thoughout the farm in order to ensure its continued operation',
-            ],
-            position: 'Moisture Farmer',
-        },
-    ];
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Experience</Text>
-            {experienceData.map(({ company, date, details, position }) => (
-                <ExperienceEntry
-                    company={company}
-                    date={date}
-                    details={details}
-                    key={company + position}
-                    position={position}
-                />
-            ))}
+            <ExperienceEntry experiences={experiences} />
         </View>
     )
 };

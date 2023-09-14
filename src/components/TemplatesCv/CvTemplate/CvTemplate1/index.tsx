@@ -20,6 +20,7 @@ import Experience from "./sections/Experience";
 import AbhayaLibreExtraBold from '../Fonts/AbhayaLibreExtraBold.ttf';
 import MontserratRegular from '../Fonts/MontserratRegular.ttf';
 import MontserratBold from '../Fonts/MontserratBold.ttf';
+import Social from "./sections/Social";
 
 interface CvTemplate {
     color: any;
@@ -39,13 +40,14 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
             '@media max-width: 400': {
                 flexDirection: 'column',
             },
+
         },
         image: {
             marginBottom: 10,
         },
         leftColumn: {
             flexDirection: 'column',
-            width: "40%",
+            width: "49%",
             paddingTop: '1.094cm',
             marginTop: '1cm',
             paddingRight: '0.905cm',
@@ -56,13 +58,20 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
             // '@media orientation: landscape': {
             //     width: 200,
             // },
-            marginLeft: '1.583cm',
-            borderRight: '1px solid #000000'
+            // marginLeft: '1.583cm',
+            borderRight: '0.5px solid #282828',
+        },
+        rightColumn: {
+            flexDirection: 'column',
+            width: "49%",
+            paddingTop: '1.094cm',
+            marginTop: '1cm',
+            paddingRight: '0.905cm',
         },
         pageNumber: {
             position: 'absolute',
             fontSize: 12,
-            bottom: 30,
+            bottom: 10,
             left: 0,
             right: 0,
             textAlign: 'center',
@@ -118,8 +127,11 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
                     /> */}
                     <Education color={color} />
                     <Skills color={color} />
+                    <Social color={color} />
                 </View>
-                <Experience color={color} />
+                <View style={styles.rightColumn}>
+                    <Experience color={color} />
+                </View>
             </View>
             <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
                 `${pageNumber} / ${totalPages}`

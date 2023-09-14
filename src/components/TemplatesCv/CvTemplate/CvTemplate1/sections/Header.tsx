@@ -81,9 +81,9 @@ const Header: React.FC<ICvHeader> = (props) => {
             gap: '0.418cm',
         },
         line: {
-            width: '1px',
+            width: '0.5px',
             height: '60px',
-            backgroundColor: '#1B1212',
+            backgroundColor: '#282828',
         },
         contact: {
             display: 'flex',

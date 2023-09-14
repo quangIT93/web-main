@@ -266,11 +266,13 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
             noData={<Spin indicator={antIcon} />}
             file={instance.url}
             onLoadSuccess={onDocumentLoadSuccess}
+            className="page-cv-wrapper"
           >
             {Array.apply(null, Array(numPages))
               .map((x, i) => i + 1)
               .map((page) => (
                 <Page
+                  className="page-cv"
                   loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
                   noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
                   pageNumber={page}

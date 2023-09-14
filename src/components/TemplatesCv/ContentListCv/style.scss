@@ -272,6 +272,15 @@
             //         width: 100%;
             //     }
             // }
+            .page-cv-wrapper {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                .page-cv {
+                    border: 1px solid #000000;
+                }
+            }
         }
     }
 }

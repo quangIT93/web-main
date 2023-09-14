@@ -6,8 +6,8 @@ import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 const styles = StyleSheet.create({
   title: {
     // fontFamily: 'Lato Bold',
-    fontSize: 11,
-    marginBottom: 10,
+    fontSize: '13.67pt',
+    marginBottom: '1.530cm',
   },
   introduce: {
     // fontFamily: 'Lato',
@@ -45,15 +45,7 @@ const ProfileCv = () => {
         }}
       >
         <Image src="./images/image 51.png" style={styles.image} />
-        <Text
-          style={{
-            marginLeft: '0.4cm',
-            fontSize: '13.67pt',
-            fontFamily: 'Montserrat Bold',
-          }}
-        >
-          Profile
-        </Text>
+        <Text style={styles.title}>Profile</Text>
       </View>
       <View
         style={{

@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
     },
     itemContent: {
         flex: 1,
-        fontSize: 10,
-        fontFamily: 'Lato',
+        fontFamily: "Montserrat Regular",
+        fontSize: 9,
     },
 });
 

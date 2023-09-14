@@ -14,6 +14,7 @@ import {
 import ContactCv from './sections/ContactCv';
 import ProfileCv from './sections/ProfileCv';
 import SkillsCv from './sections/SkillsCv';
+import HeaderCv from '../CvTemplate2/sections/HeaderCv';
 
 import AbhayaLibreExtraBold from '../Fonts/AbhayaLibreExtraBold.ttf';
 import MontserratRegular from '../Fonts/MontserratRegular.ttf';
@@ -61,62 +62,15 @@ Font.register({
 });
 
 const Resume = (props: any) => (
-  <Page {...props}>
+  <Page {...props} style={styles.page}>
     <View>
       <View>
         {/* <Image
                     src="https://react-pdf.org/images/logo.png"
                     style={styles.image}
                 /> */}
-
         <View style={styles.container}>
-          <View style={styles.header}>
-            <View
-              style={{
-                display: 'flex',
-                height: '4.5cm',
-                // backgroundColor: 'red',
-                width: '70%',
-                alignItems: 'flex-start',
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: '37pt',
-                  width: '6cm',
-                  marginBottom: '0.6cm',
-                }}
-              >
-                Thái Minh Quang
-              </Text>
-
-              <View
-                style={{
-                  border: '1px solid #ccc',
-                  width: '100%',
-                  marginBottom: '0.6cm',
-                }}
-              ></View>
-
-              <Text style={{ fontSize: '9pt' }}>Công nghệ thông tin</Text>
-
-              <View
-                style={{
-                  border: '1px solid #ccc',
-                  width: '100%',
-                  marginTop: '0.6cm',
-                }}
-              ></View>
-            </View>
-
-            <Image
-              src="./images/image 51.png"
-              style={{ width: '5cm', height: '4.5cm' }}
-            />
-            {/* <View style={{ width: '5cm', height: '4.5cm' }}>
-            </View> */}
-          </View>
+          <HeaderCv />
           <View style={styles.content}>
             <View style={{ width: '30%', marginRight: '2.053cm' }}>
               <ProfileCv />
