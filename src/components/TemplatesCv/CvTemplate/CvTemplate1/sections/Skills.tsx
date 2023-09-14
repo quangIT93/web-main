@@ -14,10 +14,16 @@ interface ICvSkills {
 const Skills: React.FC<ICvSkills> = (props) => {
     const { color } = props;
     const styles = StyleSheet.create({
+        container: {
+            marginBottom: '1.852cm',
+            marginLeft: '1.583cm',
+            // border: '1px solid red'
+        },
         title: {
-            fontFamily: 'Lato Bold',
-            fontSize: 14,
-            marginBottom: 10,
+            fontFamily: "Montserrat Bold",
+            fontSize: 12,
+            letterSpacing: '2px',
+            marginBottom: '0.476cm',
             textTransform: 'uppercase',
             color: color === 1 ?
                 "#252525" :
@@ -28,47 +34,21 @@ const Skills: React.FC<ICvSkills> = (props) => {
                         color === 4 ?
                             "#5CB265" : "#D80000"
         },
-        subTitle: {
-            fontFamily: 'Lato Bold',
-            fontSize: 11,
-            marginBottom: 10,
-            color: color === 1 ?
-                "#252525" :
-                color === 2 ?
-                    "#0D99FF" :
-                    color === 3 ?
-                        "#FBBC04" :
-                        color === 4 ?
-                            "#5CB265" : "#D80000"
-        },
-        skills: {
-            fontFamily: 'Lato',
-            fontSize: 10,
-            marginBottom: 10,
+        profile: {
+            fontFamily: "Montserrat Regular",
+            fontSize: 9,
+            wordBreak: "break-word",
+            width: '100%',
         },
     });
-
-    const SkillEntry: React.FC<any> = ({ name, skills }) => (
-        <View>
-            <Text style={styles.subTitle}>{name}</Text>
-            <List>
-                {skills.map((skill: any, i: any) => (
-                    <Item key={i}>{skill}</Item>
-                ))}
-            </List>
-        </View>
-    );
     return (
-        <View>
-            <Text style={styles.title}>Skills</Text>
-            <SkillEntry
-                name="Combat Abilities"
-                skills={[
-                    'Completed Jedi Master training and built a lightsaber from scratch in order to do battle against the Empire',
-                    'Defeated the Rancor and rescued Princess Leia from Jabba the Hutt',
-                    'Competent fighter pilot as well as an excelent shot with nearly any weapon',
-                ]}
-            />
+        <View style={styles.container}>
+            <Text style={styles.title}>PROFILE</Text>
+            <Text style={styles.profile}>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam, labore repudiandae commodi error distinctio laborum ex, quas placeat iste facilis nam. Numquam quo nihil quia velit! Repellendus recusandae cupiditate saepe?
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est saepe minima ab ipsum repellat porro inventore velit necessitatibus quibusdam. Error magnam sequi consectetur amet beatae a illo accusamus id iste.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae eaque laboriosam molestiae numquam animi voluptatibus sit quisquam sapiente? Quas non ducimus quis ex amet, fugit molestiae nesciunt minima aliquam earum?
+            </Text>
         </View>
     )
 };
