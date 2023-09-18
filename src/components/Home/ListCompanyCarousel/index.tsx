@@ -165,6 +165,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   }, [searchParams, languageRedux]);
 
   // console.log('value', value);
+  // console.log('listTheme', listTheme);
 
   return (
     <Box

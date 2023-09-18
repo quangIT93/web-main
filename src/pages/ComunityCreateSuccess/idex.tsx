@@ -13,6 +13,7 @@ import { Button } from 'antd';
 import RollTop from '#components/RollTop';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import { setCookie } from 'cookies';
 
 const ComunityCreateSuccess = () => {
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
@@ -22,6 +23,8 @@ const ComunityCreateSuccess = () => {
   useEffect(() => {
     const community_success = localStorage.getItem('community_success');
     const accountId = localStorage.getItem('accountId');
+    setCookie('workingId', '0', 365);
+    setCookie('hijobId', '0', 365);
     if (
       (dataProfile && dataProfile.accountId != accountId) ||
       !community_success

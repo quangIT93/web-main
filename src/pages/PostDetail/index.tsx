@@ -8,7 +8,7 @@ import NavBar from '../../components/Navbar/index';
 import { AxiosResponse } from 'axios';
 import Footer from '../../components/Footer/Footer';
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 // import api
 import postApi from '../../api/postApi';
@@ -623,12 +623,18 @@ const Detail = () => {
     //   window.location.href = messengerLink;
     // }
     if (nameShare === 'Facebook') {
+      // const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      //   post?.data?.companyResourceData?.name === 'HIJOB'
+      //     ? post?.data.shareLink
+      //     : post?.data.shareLink,
+      // )}`;
+
+      const titleShare = 'hijob chia sẻ công việc cho bạn';
+
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        post?.data?.companyResourceData?.name === 'HIJOB'
-          ? post?.data.shareLink
-          : post?.data.shareLink,
-      )}`;
-      window.open(url, '_blank');
+        post?.data.shareLink,
+      )}&quote=${encodeURIComponent(titleShare)}}&display=iframe`;
+      window.open(url);
     }
     if (nameShare === 'Zalo') {
       window.location.href = `zalo://app?link=${encodeURIComponent(
@@ -1215,6 +1221,7 @@ const Detail = () => {
                       />
                       <h3>{post?.data.resource.company_resource_name}</h3>
                     </div> */}
+
                     <div className="actions-item" onClick={handleClickShare}>
                       <ShareIcon width={24} height={24} />
                       {/* <div className="items-share">

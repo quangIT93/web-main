@@ -202,9 +202,6 @@ const ThemesJob: React.FC = () => {
 
   // }, [localStorage.getItem("accessToken")])
 
-  console.log('post', post);
-  console.log('post', post.data.is_over);
-
   const handleClickHelpSearch = () => {};
   return (
     <Box sx={{ flexGrow: 1, paddingBottom: '24px' }} className="theme-job">

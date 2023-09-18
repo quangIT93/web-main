@@ -1,4 +1,7 @@
 import React, { memo, useEffect } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
+
 // @ts-ignore
 import { Navbar } from '#components';
 
@@ -38,10 +41,12 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // component
 import Community from '#components/Home/Community';
 import Footer from '../../components/Footer/Footer';
-import { useSelector } from 'react-redux';
+
 import { RootState } from '../../store/reducer';
+import { setCookie } from 'cookies';
 import ModalSelectRole from '#components/Home/ModalSelectRole';
 import ModalUpdateInfo from '#components/Home/ModalUpdateInfo';
+import { setIsNew } from 'store/reducer/isNewReducer';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -49,11 +54,38 @@ const Home: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [openModalSelectRole, setOpenModalSelectRole] = React.useState(
-    roleRedux >= 0 ? false : true
-  )
-  const [openModalUpdateInfo, setOpenModalUpdateInfo] = React.useState(false)
+    // roleRedux >= 0 ? false : true,
+    false,
+  );
+  const [openModalUpdateInfo, setOpenModalUpdateInfo] = React.useState(false);
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (profileV3 && profileV3.typeRoleData === null) {
+      // dispatch<any>(setIsNew(false));
+      setOpenModalSelectRole(true);
+      // localStorage.setItem('isNew', 'false');
+    }
+    // else if (!newUser && roleRedux === 0) {
+    //   setOpenModalSelectRole(false);
+    //   dispatch<any>(setIsNew(false));
+    // } else if (!newUser && roleRedux === 1) {
+    //   setOpenModalSelectRole(false);
+    //   dispatch<any>(setIsNew(false));
+    // }
+    // else {
+    //   dispatch<any>(setIsNew(false));
+    //   setOpenModalSelectRole(false);
+    // }
+  }, [profileV3]);
+
+  // console.log('openModalSelectRole', openModalSelectRole);
+
   // const [role, setRole] = React.useState<any>()
   useEffect(() => {
     logEvent(analytics, 'screen_view' as string, {
@@ -105,12 +137,15 @@ const Home: React.FC = () => {
       });
     }
     localStorage.removeItem('community');
-
+    setCookie('workingId', '0', 1);
+    setCookie('hijobId', '0', 1);
+    // document.cookie = `hijobId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    // document.cookie = `workingId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     window.scrollTo(0, 0);
   }, []);
 
   // Lưu vị trí cuộn trước đó
-  let lastScrollTop = 0;
+  // let lastScrollTop = 0;
 
   var prevHeight = 300;
   const handleScroll = () => {
@@ -138,6 +173,9 @@ const Home: React.FC = () => {
       //   tabs.style.top = '70px';
       //   breadCrumb.style.marginTop = '192px';
       // }, 500);
+    } else if (currentHeight === 0) {
+      tabs.style.top = '70px';
+      breadCrumb.style.marginTop = '192px';
     } else {
       tabs.style.top = '70px';
       breadCrumb.style.marginTop = '192px';
@@ -181,12 +219,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // setRole={setRole}
+        // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // role={role}
+        // role={role}
       />
       <RollTop />
       <Footer />

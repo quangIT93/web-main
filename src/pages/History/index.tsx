@@ -5,7 +5,8 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Collapse } from 'antd';
-import { Box, Typography } from '@mui/material';
+import { Box, iconClasses, Typography } from '@mui/material';
+import { RightOutlined } from '@ant-design/icons';
 
 // import component
 import Footer from '../../components/Footer/Footer';
@@ -184,6 +185,7 @@ const HistoryPost = () => {
       href="/"
       onClick={handleClick}
       target="_parent"
+      style={{ fontSize: '12px' }}
     >
       {language?.history_page?.home}
     </Link>,
@@ -194,17 +196,18 @@ const HistoryPost = () => {
       href="/history"
       onClick={handleClick}
       target="_parent"
+      style={{ fontSize: '12px' }}
     >
       {language?.history_page?.history}
     </Link>,
-    <Typography key="3" color="text.primary">
+    <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {ItemLeft === dataItem[0].id - 1
         ? dataItem[0].title
         : ItemLeft === dataItem[1].id - 1
           ? dataItem[1].title
           : dataItem[2].title}
     </Typography>,
-    <Typography key="3" color="text.primary">
+    <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {activeChild === '0-0'
         ? language?.all
         : // : activeChild === '0-1'
@@ -325,6 +328,9 @@ const HistoryPost = () => {
         >
           <Box className="history-post_left">
             <Collapse
+              // expandIcon={(e: any) => {
+              //   return <RightOutlined onClick={(e) => e.stopPropagation()} />;
+              // }}
               defaultActiveKey={
                 hotjobtype && hotjobtype === 2
                   ? ['2', '0']
@@ -350,7 +356,8 @@ const HistoryPost = () => {
                         className={`${ItemLeft === index ? 'activeItem' : ''
                           } panel-title_text`}
                       >
-                        {item.title}
+                        <RightOutlined style={{ fontSize: '12px' }} />
+                        <span style={{ marginLeft: '8px' }}>{item.title}</span>
                       </div>
                     }
                     key={index}
@@ -370,7 +377,9 @@ const HistoryPost = () => {
                             ? 'active-child child-item'
                             : 'child-item'
                         }
-                        onClick={() => handleChildClick(`${index}-${idx}`)}
+                        onClick={() => {
+                          handleChildClick(`${index}-${idx}`);
+                        }}
                       >
                         {child}
                       </div>

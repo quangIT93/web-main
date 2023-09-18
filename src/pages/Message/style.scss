@@ -11,17 +11,38 @@
     // padding: 20px 180px;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 70px 24px 24px !important;
+    padding: 70px 24px 0 24px !important;
     height: 100%;
     // overflow: hidden;
 
+    @media screen and (min-width:1281px) and (max-width: 3600px) {
+      margin-top: 24px;
+      padding: 70px 0px 0 0px !important;
+    }
+
     
-    @media screen and (min-width:1025px) and (max-width: 1280px) {
-      padding-inline: 24px 24px;
+    @media screen and (min-width:1120px) and (max-width: 1280px) {
+      // padding-inline: 24px 24px;
+      padding: 70px 0px 0 0px !important;
+
+      margin-top: 24px;
+      
+    }
+
+
+     
+    @media screen and (min-width:1025px) and (max-width: 1119px) {
+      // padding-inline: 24px 24px;
+      padding: 70px 24px 0 24px !important;
+
+      margin-top: 24px;
+      
     }
 
     @include breakpoint(largeTablet) {
       padding: 24px 24px;
+      margin-top: 24px;
+
     }
 
 
@@ -49,7 +70,7 @@
       box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
       border-radius: 8px;
       height: 760px;
-      height: calc(95vh - 70px);
+      height: calc(90vh - 70px);
       // margin-top: 12px;
       // margin-bottom: 24px;
 
@@ -133,6 +154,7 @@
         margin: 0;
         // height: calc(100vh - 70px);
         height: 100%;
+        padding: 0 24px;
 
         .message-page-left_responsive {
           height: 100%;

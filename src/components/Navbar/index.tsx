@@ -101,6 +101,8 @@ import {
 } from './Css';
 
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
+
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { getLanguages } from 'store/reducer/dataLanguage';
 
 import { RootState } from '../../store/reducer';
@@ -119,6 +121,7 @@ import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
 import languageApi from 'api/languageApi';
 import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
+import { setRole } from 'store/reducer/roleReducer';
 // import { set } from 'immer/dist/internal';
 
 // import redux
@@ -134,17 +137,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -195,24 +198,20 @@ const Navbar: React.FC = () => {
   // const [language, setLanguageState] = useState<any>();
 
   const [searchJob, setSearchJob] = useState<boolean>(true);
-  const [openModalTurnOffStatus, setOpenModalTurnOffStatus] = useState<boolean>(false);
+  const [openModalTurnOffStatus, setOpenModalTurnOffStatus] =
+    useState<boolean>(false);
   const [loadingSwitch, setLoadingSwitch] = useState(false);
   const handleOnchangeSearchJob = (checked: any) => {
     if (checked === true) {
       // e.preventDefault();
-      console.log("checked", checked);
-      setSearchJob(true)
-
+      console.log('checked', checked);
+      setSearchJob(true);
+    } else {
+      setLoadingSwitch(true);
+      setOpenModalTurnOffStatus(true);
+      setSearchJob(false);
     }
-    else {
-      setLoadingSwitch(true)
-      setOpenModalTurnOffStatus(true)
-      setSearchJob(false)
-    }
-  }
-
-  // console.log("loading", loadingSwitch);
-
+  };
 
   useEffect(() => {
     // if(localStorage.getItem('accessToken')){
@@ -305,12 +304,14 @@ const Navbar: React.FC = () => {
   // const dataProfile = useSelector((state: RootState) => state.profileUser);
 
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // console.log('profileV3', profileV3);
 
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
 
   const languageData = useSelector((state: RootState) => {
     return state.dataLanguage.languages;
@@ -331,7 +332,6 @@ const Navbar: React.FC = () => {
   // }
 
   // const [role, setRole] = React.useState<any>(roleRedux);
-
 
   const getCompanyInforByAccount = async () => {
     try {
@@ -391,12 +391,25 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const getDataProfileV3 = async () => {
+    try {
+      const result = await profileApi.getProfileV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result) {
+        dispatch(setProfileV3(result));
+        setRole(result.data.typeRoleData);
+      }
+    } catch (error) {}
+  };
+
   useEffect(() => {
     fecthDataProfileUser();
+    getDataProfileV3();
     // dispatch(getProfile() as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
-
 
   // get count unread
   const getCountUnread = async () => {
@@ -428,7 +441,6 @@ const Navbar: React.FC = () => {
   const refLogin = React.useRef<HTMLDivElement | null>(null);
   const refInfoUser = React.useRef<HTMLDivElement | null>(null);
   const bellRef = React.useRef<HTMLDivElement | null>(null);
-
 
   const handleCollapseEntered = () => {
     if (ref.current) {
@@ -557,7 +569,7 @@ const Navbar: React.FC = () => {
         params.append(`dis-ids`, `${item}`);
       });
     } else if (
-      dataProfile?.id &&
+      profileV3?.accountId &&
       DIS_IDS?.length === 0 &&
       list_dis?.length !== 0 &&
       location?.pathname !== '/search-results'
@@ -569,7 +581,7 @@ const Navbar: React.FC = () => {
         params.append(`dis-ids`, `${item}`);
       });
     } else if (
-      dataProfile?.id &&
+      profileV3?.accountId &&
       DIS_IDS?.length === 0 &&
       list_dis?.length === 0 &&
       location?.pathname !== '/search-results'
@@ -589,7 +601,7 @@ const Navbar: React.FC = () => {
         paramsCate?.append(`categories-ids`, `${item}`);
       });
     } else if (
-      dataProfile?.id &&
+      profileV3?.accountId &&
       CATE_IDS?.length === 0 &&
       list_cate?.length !== 0 &&
       location?.pathname !== '/search-results'
@@ -604,7 +616,7 @@ const Navbar: React.FC = () => {
         paramsCate?.append(`categories-ids`, `${item}`);
       });
     } else if (
-      dataProfile?.id &&
+      profileV3?.accountId &&
       CATE_IDS?.length === 0 &&
       list_cate?.length === 0 &&
       location?.pathname !== '/search-results'
@@ -991,9 +1003,14 @@ const Navbar: React.FC = () => {
         <ENSubLoginIcon width={24} height={24} />
       )}
     </div>,
-    <div className="switch-container">
-      <div className="search-job-switch" style={{ display: roleRedux === 0 ? 'flex' : 'none' }}>
-        {/* <p>
+    <>
+      {localStorage.getItem('accessToken') ? (
+        <div className="switch-container">
+          <div
+            className="search-job-switch"
+            style={{ display: roleRedux === 0 ? 'flex' : 'none' }}
+          >
+            {/* <p>
           {
             searchJob ?
               languageRedux === 1 ?
@@ -1004,49 +1021,57 @@ const Navbar: React.FC = () => {
                 `Job search status is: off`
           }
         </p> */}
-        <Switch checked={searchJob} loading={loadingSwitch} onChange={handleOnchangeSearchJob} />
-        <div className="switch__hover__container">
-          <div className="switch__hover">
-            <div className="switch__hover__p">
-              <p>
-                {languageRedux === 1
-                  ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
-                  : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
-              </p>
+            <Switch
+              checked={searchJob}
+              loading={loadingSwitch}
+              onChange={handleOnchangeSearchJob}
+            />
+            <div className="switch__hover__container">
+              <div className="switch__hover">
+                <div className="switch__hover__p">
+                  <p>
+                    {languageRedux === 1
+                      ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
+                      : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <button
-        style={{ display: roleRedux === 0 ? 'none' : 'flex' }}
-        key="1"
-        className="btn btn__post"
-        onClick={() => {
-          if (dataProfile && localStorage.getItem('refreshToken')) {
-            window.open('/post', '_parent');
-          } else {
-            setOpenModalLogin(true);
-          }
-        }}
-      >
-        <FormOutlined style={{ color: 'white' }} />
-        <p style={{ marginLeft: 10, color: 'white' }}>
-          {/* {languageData
+          <button
+            style={{ display: roleRedux === 0 ? 'none' : 'flex' }}
+            key="1"
+            className="btn btn__post"
+            onClick={() => {
+              if (profileV3 && localStorage.getItem('refreshToken')) {
+                window.open('/post', '_parent');
+              } else {
+                setOpenModalLogin(true);
+              }
+            }}
+          >
+            <FormOutlined style={{ color: 'white' }} />
+            <p style={{ marginLeft: 10, color: 'white' }}>
+              {/* {languageData
           ? languageData.post
           : languageRedux === 1
           ? `Đăng bài`
           : `Post`} */}
-          {languageData ? languageData.post : ''}
-          {/* {languageRedux === 1 ? `Đăng bài` : `Post`} */}
-        </p>
-      </button>
-    </div>,
+              {languageData ? languageData.post : ''}
+              {/* {languageRedux === 1 ? `Đăng bài` : `Post`} */}
+            </p>
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
+    </>,
     <div
       className="actions-login"
       ref={refLogin}
       key="2"
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -1054,12 +1079,12 @@ const Navbar: React.FC = () => {
             <Avatar
               style={{ backgroundColor: '#0D99FF' }}
               icon={<UserOutlined />}
-              src={dataProfile?.avatar ? dataProfile.avatar : ''}
+              src={profileV3?.avatarPath ? profileV3.avatarPath : ''}
             />
           </div>
           <div className="login__center">
-            {localStorage.getItem('accessToken') && dataProfile ? (
-              <span>{dataProfile?.name}</span>
+            {localStorage.getItem('accessToken') && profileV3 ? (
+              <span>{profileV3?.name}</span>
             ) : (
               // <span>{languageData?.login}</span>
               <span>{languageRedux === 1 ? `Đăng nhập` : `Sign in`}</span>
@@ -1076,8 +1101,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-              openLogin &&
-              location?.pathname === '/'
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1128,25 +1153,29 @@ const Navbar: React.FC = () => {
                   }}
                   icon={<UserOutlined style={{ fontSize: 30 }} />}
                   size={50}
-                  src={dataProfile?.avatar ? dataProfile.avatar : null}
+                  src={profileV3?.avatarPath ? profileV3.avatarPath : null}
                 />
                 <div className="sub-login_detail">
                   <h2>
-                    {dataProfile?.name
-                      ? dataProfile.name
+                    {profileV3?.name
+                      ? profileV3.name
                       : languageData?.home_page?.un_update_infor}
                   </h2>
                   <span className="sub-login_text">
                     <CompanySubLoginIcon />
-                    {companyName
-                      ? companyName
-                      : languageData?.home_page?.un_update_infor}
+                    <p>
+                      {companyName
+                        ? companyName
+                        : languageData?.home_page?.un_update_infor}
+                    </p>
                   </span>
                   <span className="sub-login_text">
                     <MailInfoIcon />
-                    {dataProfile?.email
-                      ? dataProfile?.email
-                      : languageData?.home_page?.un_update_infor}
+                    <p>
+                      {profileV3?.email
+                        ? profileV3?.email
+                        : languageData?.home_page?.un_update_infor}
+                    </p>
                   </span>
                   {/* <span className="sub-login_text">
                   <LoginHomeIcon />
@@ -1162,10 +1191,10 @@ const Navbar: React.FC = () => {
                   >
                     <MapInfoIcon />
                     <p>
-                      {dataProfile?.locations.length > 0
-                        ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                      {profileV3?.profileLocations.length > 0
+                        ? profileV3?.profileLocations.map((location: any) => {
+                            return `${location.fullName} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1176,10 +1205,10 @@ const Navbar: React.FC = () => {
                     <BagInfoJob />
 
                     <p>
-                      {dataProfile?.categories.length > 0
-                        ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                      {profileV3?.profileCategories.length > 0
+                        ? profileV3?.profileCategories.map((profile: any) => {
+                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1197,17 +1226,19 @@ const Navbar: React.FC = () => {
                 <div
                   className="sub-login_item"
                   style={{
-                    borderBottom: roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
+                    borderBottom:
+                      roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
                 </div>
               </Link>
-              <div className="sub-history_status"
+              <div
+                className="sub-history_status"
                 style={{
                   display: roleRedux === 0 ? 'flex' : 'none',
                 }}
@@ -1267,9 +1298,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                // style={{
-                //   display: openRadioGroup ? 'flex' : 'none',
-                // }}
+                  // style={{
+                  //   display: openRadioGroup ? 'flex' : 'none',
+                  // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1319,7 +1350,7 @@ const Navbar: React.FC = () => {
     <Badge key="2" count={countChat} className="box-right-responsive_badge">
       <Button
         onClick={() => {
-          if (dataProfile && localStorage.getItem('refreshToken')) {
+          if (profileV3 && localStorage.getItem('refreshToken')) {
             window.open(`/message`, '_parent');
           } else {
             setOpenModalLogin(true);
@@ -1337,7 +1368,7 @@ const Navbar: React.FC = () => {
         className="btn-notice"
         name="btn-notice"
         onClick={() => {
-          if (dataProfile && localStorage.getItem('accessToken')) {
+          if (profileV3 && localStorage.getItem('accessToken')) {
             setOpenNotificate(!openNotificate);
           } else {
             setOpenModalLogin(true);
@@ -1347,13 +1378,15 @@ const Navbar: React.FC = () => {
         <BellIcon />
       </Button>
     </Badge>,
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      gap: "4px",
-      alignItems: "center",
-      marginLeft: "4px"
-    }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+        alignItems: 'center',
+        marginLeft: '4px',
+      }}
+    >
       <div
         className="language"
         onClick={() => {
@@ -1367,7 +1400,10 @@ const Navbar: React.FC = () => {
         )}
       </div>
       <div className="switch-container-responsive">
-        <div className="search-job-switch-responsive " style={{ display: roleRedux === 0 ? 'flex' : 'none' }}>
+        <div
+          className="search-job-switch-responsive "
+          style={{ display: roleRedux === 0 ? 'flex' : 'none' }}
+        >
           {/* <p>
         {
           searchJob ?
@@ -1379,7 +1415,11 @@ const Navbar: React.FC = () => {
               `Job search status is: off`
         }
       </p> */}
-          <Switch checked={searchJob} loading={loadingSwitch} onChange={handleOnchangeSearchJob} />
+          <Switch
+            checked={searchJob}
+            loading={loadingSwitch}
+            onChange={handleOnchangeSearchJob}
+          />
           <div className="switch__hover__container">
             <div className="switch__hover">
               <div className="switch__hover__p">
@@ -1458,17 +1498,18 @@ const Navbar: React.FC = () => {
                   }}
                   icon={<UserOutlined style={{ fontSize: 30 }} />}
                   size={50}
-                  src={dataProfile?.avatar ? dataProfile.avatar : null}
+                  src={profileV3?.avatarPath ? profileV3.avatarPath : null}
                 />
                 <div className="sub-login_detail">
-                  <h2>{dataProfile?.name ? dataProfile.name : ''}</h2>
+                  <h2>{profileV3?.name ? profileV3.name : ''}</h2>
                   <span className="sub-login_text">
                     <CompanySubLoginIcon />
-                    {companyName ? companyName : ''}
+                    <p>{companyName ? companyName : ''}</p>
                   </span>
                   <span className="sub-login_text">
                     <MailInfoIcon />
-                    {dataProfile?.email ? dataProfile?.email : ''}
+
+                    <p>{profileV3?.email ? profileV3?.email : ''}</p>
                   </span>
                   {/* <span className="sub-login_text">
                 <LoginHomeIcon />
@@ -1484,10 +1525,10 @@ const Navbar: React.FC = () => {
                   >
                     <MapInfoIcon />
                     <p>
-                      {dataProfile?.locations.length > 0
-                        ? dataProfile?.locations.map((location: any) => {
-                          return `${location.district} , `;
-                        })
+                      {profileV3?.profileLocations.length > 0
+                        ? profileV3?.profileLocations.map((location: any) => {
+                            return `${location.fullName} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1498,10 +1539,10 @@ const Navbar: React.FC = () => {
                     <BagInfoJob />
 
                     <p>
-                      {dataProfile?.categories.length > 0
-                        ? dataProfile?.categories.map((profile: any) => {
-                          return `${profile.parent_category} / ${profile.child_category}, `;
-                        })
+                      {profileV3?.profileCategories.length > 0
+                        ? profileV3?.profileCategories.map((profile: any) => {
+                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1519,17 +1560,19 @@ const Navbar: React.FC = () => {
                 <div
                   className="sub-login_item"
                   style={{
-                    borderBottom: roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
+                    borderBottom:
+                      roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
                 </div>
               </Link>
-              <div className="sub-history_status"
+              <div
+                className="sub-history_status"
                 style={{
                   display: roleRedux === 0 ? 'flex' : 'none',
                 }}
@@ -1631,8 +1674,9 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1669,116 +1713,118 @@ const Navbar: React.FC = () => {
               : { maxWidth: '1080px' }
           }
         >
-          <Left>
-            <Logo />
-          </Left>
-          <Center className="div-nav-center">
-            {/* <div>assssssssssssssssssssssssssssssss</div> */}
-            <SearchInput
-              checkSearch={checkSeacrh}
-              value={valueSearchInput}
-              setValue={setValueSearchInput}
-              setOpenCollapseFilter={setOpenCollapseFilter}
-              openCollapseFilter={openCollapseFilter}
-              handleSearchIcon={handleSearch}
-            />
-            <Button
-              className="btn-search"
-              onClick={(event) => handleSearch(event, valueSearchInput)}
-            >
-              Tìm Kiếm
-            </Button>
-
-            <Button
-              className="btn-filter"
-              onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
-            >
-              <BlackSearchIcon width={20} height={20} />
-            </Button>
-
-            <Badge count={countChat} className="btn-badge">
+          <div style={{ display: 'flex' }} className="wrap-left_nav">
+            <Left>
+              <Logo />
+            </Left>
+            <Center className="div-nav-center">
+              {/* <div>assssssssssssssssssssssssssssssss</div> */}
+              <SearchInput
+                checkSearch={checkSeacrh}
+                value={valueSearchInput}
+                setValue={setValueSearchInput}
+                setOpenCollapseFilter={setOpenCollapseFilter}
+                openCollapseFilter={openCollapseFilter}
+                handleSearchIcon={handleSearch}
+              />
               <Button
-                className="btn-notice"
-                name="btn-chat"
-                onClick={() => {
-                  if (dataProfile && localStorage.getItem('refreshToken')) {
-                    window.open(`/message`, '_parent');
-                  } else {
-                    setOpenModalLogin(true);
-                  }
-                }}
-                type="link"
-                style={{ border: '1px solid #d9d9d9' }}
+                className="btn-search"
+                onClick={(event) => handleSearch(event, valueSearchInput)}
               >
-                <ChatIcon />
+                Tìm Kiếm
               </Button>
-            </Badge>
 
-            <div className="wrap-btn_notice ">
               <Button
-                className="btn-notice"
-                name="btn-notice"
-                onClick={() => {
-                  if (dataProfile && localStorage.getItem('accessToken')) {
-                    setOpenNotificate(!openNotificate);
-                  } else {
-                    setOpenModalLogin(true);
-                  }
-                }}
-                ref={bellRef}
+                className="btn-filter"
+                onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
               >
-                <BellIcon />
+                <BlackSearchIcon width={20} height={20} />
               </Button>
-              {openNotificate ? <Notificate /> : <></>}
-            </div>
-            <div
-              className="wrap-btn_notice btn-noti_icon 
+
+              <Badge count={countChat} className="btn-badge">
+                <Button
+                  className="btn-notice"
+                  name="btn-chat"
+                  onClick={() => {
+                    if (profileV3 && localStorage.getItem('refreshToken')) {
+                      window.open(`/message`, '_parent');
+                    } else {
+                      setOpenModalLogin(true);
+                    }
+                  }}
+                  type="link"
+                  style={{ border: '1px solid #d9d9d9' }}
+                >
+                  <ChatIcon />
+                </Button>
+              </Badge>
+
+              <div className="wrap-btn_notice ">
+                <Button
+                  className="btn-notice"
+                  name="btn-notice"
+                  onClick={() => {
+                    if (profileV3 && localStorage.getItem('accessToken')) {
+                      setOpenNotificate(!openNotificate);
+                    } else {
+                      setOpenModalLogin(true);
+                    }
+                  }}
+                  ref={bellRef}
+                >
+                  <BellIcon />
+                </Button>
+                {openNotificate ? <Notificate /> : <></>}
+              </div>
+              <div
+                className="wrap-btn_notice btn-noti_icon 
             border-aniation_download
             "
-            >
-              <Button
-                className="btn-notice"
-                // onClick={() => setOpenNotificate(!openNotificate)}
-                name="btn-down"
-                ref={bellRef}
               >
-                <div className="button-download">
-                  {/* <DownloadIcon /> */}
+                <Button
+                  className="btn-notice"
+                  // onClick={() => setOpenNotificate(!openNotificate)}
+                  name="btn-down"
+                  ref={bellRef}
+                >
+                  <div className="button-download">
+                    {/* <DownloadIcon /> */}
 
-                  <img src="./images/down.gif" alt="" />
-                </div>
-                {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
-              </Button>
-              <div className="sub-icon_qr">
-                <h2>{languageData?.download_hijob_app}</h2>
-                <img
-                  src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
-                  alt={languageData?.err_none_img}
-                />
-                <div className="sub-icon_apps">
-                  <Link
-                    to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
-                    target="_seft"
-                  >
-                    <img
-                      id="img-gallery"
-                      src={require('../../img/langdingPage/image 43.png')}
-                      alt={languageData?.err_none_img}
-                    />
-                  </Link>
-                  <Link
-                    to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
-                    target="_seft"
-                  >
-                    <img
-                      src={require('../../img/langdingPage/image 45.png')}
-                      alt={languageData?.err_none_img}
-                    />
-                  </Link>
+                    <img src="./images/down.gif" alt="" />
+                  </div>
+                  {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
+                </Button>
+                <div className="sub-icon_qr">
+                  <h2>{languageData?.download_hijob_app}</h2>
+                  <img
+                    src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
+                    alt={languageData?.err_none_img}
+                  />
+                  <div className="sub-icon_apps">
+                    <Link
+                      to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+                      target="_seft"
+                    >
+                      <img
+                        id="img-gallery"
+                        src={require('../../img/langdingPage/image 43.png')}
+                        alt={languageData?.err_none_img}
+                      />
+                    </Link>
+                    <Link
+                      to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+                      target="_seft"
+                    >
+                      <img
+                        src={require('../../img/langdingPage/image 45.png')}
+                        alt={languageData?.err_none_img}
+                      />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Center>
+            </Center>
+          </div>
           <Right className="div-nav-right">
             <Box
               className="box-right-responsive"
@@ -1956,7 +2002,7 @@ const Navbar: React.FC = () => {
         </Collapse>
         {/* {openNotificate ? <Notificate /> : <></>} */}
       </Container>
-      <PostButton setOpenModalLogin={setOpenModalLogin} />
+      <PostButton setOpenModalLogin={setOpenModalLogin} role={roleRedux} />
     </div>
   );
 };

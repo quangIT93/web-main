@@ -51,6 +51,7 @@ import Footer from '../../components/Footer/Footer';
 import ItemApply from './components/Item';
 
 import apiCompany from 'api/apiCompany';
+
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -82,6 +83,7 @@ import {
   // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
 import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../store/index';
@@ -133,6 +135,7 @@ const Profile: React.FC = () => {
 
   const profile = useSelector((state: RootState) => state.profileUser);
   const profileUser = useSelector((state: RootState) => state.profile.profile);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3);
 
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false);
   const [openModalContact, setOpenModalContact] = useState(false);
@@ -172,7 +175,7 @@ const Profile: React.FC = () => {
       name: 'cv1',
     },
   ]);
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [cvId, setCvId] = useState<any>();
   // const [role, setRole] = useState(roleRedux)
 
@@ -180,19 +183,36 @@ const Profile: React.FC = () => {
 
   const analytics: any = getAnalytics();
 
+  // const handleGetProfileV3 = async () => {
+  //   try {
+  //     const result = await profileApi.getProfileV3('vi');
+
+  //     if (result) {
+  //       dispatch(setProfileV3(result));
+  //     }
+  //   } catch (error) {}
+  // };
+
+  // React.useEffect(() => {
+  //   handleGetProfileV3();
+  // }, []);
+
+  // console.log('profileV3', profileV3);
+
   const handleChooseCv = (item: any, e: any) => {
     e.stopPropagation();
     setListCv((prev: any) => [
       prev.at(prev.indexOf(item)),
-      ...prev.filter((value: any, index: any) => {
-        return index !== prev.indexOf(item)
-      }).sort((a: any, b: any) => b.id - a.id)
-    ])
-    setCvId(item.id)
-  }
+      ...prev
+        .filter((value: any, index: any) => {
+          return index !== prev.indexOf(item);
+        })
+        .sort((a: any, b: any) => b.id - a.id),
+    ]);
+    setCvId(item.id);
+  };
 
-  console.log(listCv);
-
+  // console.log(listCv);
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
@@ -357,7 +377,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
@@ -690,7 +710,7 @@ const Profile: React.FC = () => {
         </Skeleton>
 
         <CandidateProfile
-          display={roleRedux === 0 ? "block" : "none"}
+          display={roleRedux === 0 ? 'block' : 'none'}
           profile={profile}
           loading={loading}
           language={language}
@@ -706,10 +726,9 @@ const Profile: React.FC = () => {
         />
 
         <Company
-          display={roleRedux === 0 ? "none" : "block"}
+          display={roleRedux === 0 ? 'none' : 'block'}
           is_profile={true}
         />
-
 
         <Stack spacing={2} sx={{ width: '100%' }}>
           <Snackbar

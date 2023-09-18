@@ -9,6 +9,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
+import { Box, Typography, Modal } from '@mui/material';
+
 // import api
 import messageApi from 'api/messageApi';
 // import profileApi from 'api/profileApi';
@@ -30,6 +32,24 @@ import { messVi } from 'validations/lang/vi/mess';
 import { messEn } from 'validations/lang/en/mess';
 import { postDetail } from 'validations/lang/vi/postDetail';
 import { postDetailEn } from 'validations/lang/en/postDetail';
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'background.paper',
+  border: 'none',
+  outline: 'none',
+  borderRadius: '10px',
+  p: 4,
+  '@media (max-width: 399px)': {
+    width: 360,
+  },
+  '@media (max-width: 600px)': {
+    width: 400,
+  },
+};
 
 interface IOpenListChat {
   setOpenListChat: (params: any) => any;
@@ -60,6 +80,8 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [previousDate, setPreviousDate] = useState<string | null>(null)
+
+  const [openModalApply, setOpenModalApply] = React.useState(false);
 
   const [api, contextHolder] = notification.useNotification();
 
@@ -245,7 +267,7 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
 
       socket.current.on('disconnect', (reason: any) => {
         // console.log('ket noi that bai');
-        setIsConnected(true);
+        setIsConnected(false);
       });
 
       if (socket.current.connected === false) {
@@ -358,7 +380,18 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
   // console.log('allListChat', allListChat);
   // console.log('userInfoChat', userInfoChat);
 
-  const handleClickApplication = async () => {
+  const handleClickApplication = () => {
+    setOpenModalApply(true);
+  };
+
+  // console.log('userInfoChat', userInfoChat);
+
+  const handleCloseModalApply = () => {
+    setOpenModalApply(false);
+    // setIsApplied(false);
+  };
+
+  const handleApply = async () => {
     if (
       !userProfile.name ||
       !userProfile.address ||
@@ -385,11 +418,17 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
       if (result) {
         // console.log('result', result.data);
         props.setApply(true);
+        setOpenModalApply(false);
       }
-    } catch (error) {}
+    } catch (error) {
+      api.info({
+        message: languageRedux === 1 ? 'Đăng nhập thất bại' : 'Login Failded',
+        description: languageRedux === 1 ? '' : '',
+        placement: 'top',
+        icon: <ExclamationCircleFilled style={{ color: 'red' }} />,
+      });
+    }
   };
-
-  // console.log('userInfoChat', userInfoChat);
 
   if (userInfoChat.length !== 0) {
     return (
@@ -689,6 +728,62 @@ const ListChat: React.FC<IOpenListChat> = (props) => {
             <SendIcon />
           </span>
         </div>
+
+        <Modal
+          open={openModalApply}
+          onClose={handleCloseModalApply}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography
+              id="modal-modal-title"
+              variant="h5"
+              component="h2"
+              sx={{ textAlign: 'center', color: '#0d99ff' }}
+            >
+              {language?.post_detail_page?.apply_this_job_mess}
+            </Typography>
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
+            >
+              {language?.post_detail_page?.apply_this_job_des}
+            </Typography>
+
+            <Box
+              sx={{
+                margin: '12px auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '12px',
+              }}
+            >
+              <Button
+                type="primary"
+                danger
+                onClick={handleCloseModalApply}
+                style={{
+                  width: '300px',
+                }}
+              >
+                {languageRedux === 1 ? 'Không' : 'No'}
+              </Button>
+              <Button
+                type="primary"
+                onClick={handleApply}
+                style={{
+                  width: '300px',
+                }}
+              >
+                {languageRedux === 1 ? 'Có' : 'Yes'}
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
       </div>
     );
   } else {

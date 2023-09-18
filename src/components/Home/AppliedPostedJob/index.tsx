@@ -61,7 +61,7 @@ const AppliedPostedJob: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [loading, setloading] = React.useState(false);
@@ -115,26 +115,32 @@ const AppliedPostedJob: React.FC = () => {
         setTimeout(() => {
           setloading(false);
         }, 1000);
-        roleRedux === 0 ?
-          setAppliedPostedJob(result.data.filter((job: any) => {
-            return job.type === 'application'
-          })) :
-          setAppliedPostedJob(result.data.filter((job: any) => {
-            return job.type === 'post'
-          }))
+        console.log('result: ', result);
+
+        roleRedux === 0
+          ? setAppliedPostedJob(
+              result.data.filter((job: any) => {
+                return job.type === 'application';
+              }),
+            )
+          : setAppliedPostedJob(
+              result.data.filter((job: any) => {
+                return job.type === 'post';
+              }),
+            );
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log("applied", appliedPostedJob);
+  console.log('applied', appliedPostedJob);
 
   React.useEffect(() => {
     getAppliedPostedJobs();
     localStorage.getItem('accessToken') && setIslogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, roleRedux]);
 
   const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
   const slidesPerView = windowWidth <= 576 ? 1 : 'auto';
@@ -179,7 +185,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -191,104 +197,93 @@ const AppliedPostedJob: React.FC = () => {
             position: 'relative',
             paddingBottom: '24px',
             flexDirection: 'column',
+            padding:
+              roleRedux === 0 && appliedPostedJob.length !== 0 ? '0px' : '0',
           }}
           className="applied-posted-jobs-container"
         >
           <div
             className="advertisement-job-not-loging"
             style={{
-              display: roleRedux === 0 && cvHijob.length !== 0 ? 'flex' : 'none',
-              marginBottom: roleRedux === 0 && appliedPostedJob.length !== 0 ? '24px' : '0'
+              display:
+                roleRedux === 0 && cvHijob.length !== 0 ? 'flex' : 'none',
+              marginBottom:
+                roleRedux === 0 && appliedPostedJob.length !== 0 ? '24px' : '0',
             }}
           >
             <AdsCVIcon />
             <div className="advertisement-job-not-loging-content">
               <h3 style={{ marginTop: '12px' }}>
-                {
-                  languageRedux === 1 ?
-                    "Dễ dàng tạo cv của riêng bạn" :
-                    "Easily create your own resume"
-                }
+                {languageRedux === 1
+                  ? 'Dễ dàng tạo cv của riêng bạn'
+                  : 'Easily create your own resume'}
               </h3>
               <div className="advertisement-job-content-bottom">
-                <p >
-                  {
-                    languageRedux === 1 ?
-                      "Chúng tôi cung cấp cho bạn các mẫu sơ yếu lý lịch được cá nhân hóa:" :
-                      "We offer you personalized resume templates:"
-                  }
+                <p>
+                  {languageRedux === 1
+                    ? 'Chúng tôi cung cấp cho bạn các mẫu sơ yếu lý lịch được cá nhân hóa:'
+                    : 'We offer you personalized resume templates:'}
                 </p>
                 <ul>
                   <li>
-                    {
-                      languageRedux === 1 ?
-                        "Đa dạng theo chủng loại" :
-                        "Diverse by category"
-                    }
+                    {languageRedux === 1
+                      ? 'Đa dạng theo chủng loại'
+                      : 'Diverse by category'}
                   </li>
                   <li>
-                    {
-                      languageRedux === 1 ?
-                        "Chỉnh sửa thông tin dễ dàng" :
-                        "Edit information easily"
-                    }
+                    {languageRedux === 1
+                      ? 'Chỉnh sửa thông tin dễ dàng'
+                      : 'Edit information easily'}
                   </li>
                   <li>
-                    {
-                      languageRedux === 1 ?
-                        "Chia sẻ nhanh chóng trên nền tảng xã hội" :
-                        "Share quickly on social platforms"
-                    }
+                    {languageRedux === 1
+                      ? 'Chia sẻ nhanh chóng trên nền tảng xã hội'
+                      : 'Share quickly on social platforms'}
                   </li>
                 </ul>
               </div>
             </div>
-            <Button type="primary" onClick={() =>
-              window.open(`/profile/`, '_parent')
-            }>
-              {
-                languageRedux === 1 ?
-                  "Tạo cv của bạn" :
-                  "Create Your Resume"
-              }
+            <Button
+              type="primary"
+              onClick={() => window.open(`/profile/`, '_parent')}
+            >
+              {languageRedux === 1 ? 'Tạo cv của bạn' : 'Create Your Resume'}
             </Button>
           </div>
           <Skeleton loading={false} active>
-            {
-              (appliedPostedJob.length !== 0 && localStorage.getItem('accessToken')) ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: '0.5rem',
-                    alignItems: 'flex-start',
-                  }}
-                >
-                  <AppliedPostedIcon width={30} height={30} />
-                  <h2>
-                    {
-                      roleRedux === 0 ?
-                        languageRedux === 1 ?
-                          "Công việc đã ứng tuyển" :
-                          "Applied Job" :
-                        languageRedux === 1 ?
-                          "Công việc đã đã tuyển" :
-                          "Posted Job"
-                    }
-                  </h2>
-                  <div className="help-search" onClick={handleClickHelpSearch}>
-                    <QuestionMarkIcon />
-                    <div className="login__hover__container">
-                      <div className="login__hover">
-                        <div className="login__hover__p">
-                          <p>
-                            {languageRedux === 1
-                              ? `Công việc đã ứng tuyển/Đăng tuyển sẽ hiển thị trạng thái
+            {appliedPostedJob.length !== 0 &&
+            localStorage.getItem('accessToken') ? (
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '0.5rem',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <AppliedPostedIcon width={30} height={30} />
+                <h2>
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Công việc đã ứng tuyển'
+                      : 'Applied Job'
+                    : languageRedux === 1
+                    ? 'Công việc đã đã tuyển'
+                    : 'Posted Job'}
+                </h2>
+                <div className="help-search" onClick={handleClickHelpSearch}>
+                  <QuestionMarkIcon />
+                  <div className="login__hover__container">
+                    <div className="login__hover">
+                      <div className="login__hover__p">
+                        <p>
+                          {languageRedux === 1
+                            ? `Công việc đã ứng tuyển/Đăng tuyển sẽ hiển thị trạng thái
                         trong vòng 30 ngày, sau 30 ngày bạn có thể kiểm tra các
                         công việc đã Ứng tuyển/Đăng tuyển trong lịch sử.`
-                              : `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`}
-                          </p>
-                        </div>
-                        {/* <Button
+                            : `Applied/Posted Jobs will show the status within 30 days, after 30 days you can check the applied/Posted jobs status in History.`}
+                        </p>
+                      </div>
+                      {/* <Button
             type="primary"
             onClick={() => {
               setOpenModalLogin(true);
@@ -297,13 +292,13 @@ const AppliedPostedJob: React.FC = () => {
             <LoginArrowBlackIcon />
             {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
           </Button> */}
-                      </div>
                     </div>
                   </div>
                 </div>
-              ) : (
-                <></>
-              )}
+              </div>
+            ) : (
+              <></>
+            )}
 
             {/* <div
             className="applied-posted-job-not-loging"
@@ -348,7 +343,9 @@ const AppliedPostedJob: React.FC = () => {
                 <p style={{ marginBottom: '12px' }}>
                   {language?.applied_posted_jobs?.post_now}
                 </p>
-                <h3>{language?.applied_posted_jobs?.are_you_looking_for_job}</h3>
+                <h3>
+                  {language?.applied_posted_jobs?.are_you_looking_for_job}
+                </h3>
                 <p>{language?.applied_posted_jobs?.all_jobs_in_VN}</p>
               </div>
               <Button

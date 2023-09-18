@@ -13,9 +13,12 @@ import { FormOutlined } from '@ant-design/icons';
 
 interface Iprops {
   setOpenModalLogin: (params: any) => any;
+  role: number;
 }
 
 const PostButton: React.FC<Iprops> = (props) => {
+  // console.log('props', props);
+
   // const dataProfile = useSelector((state: RootState) => state.profileUser);
   // const [height, setHeight] = React.useState(0);
   // const currentPath = window.location.pathname;
@@ -34,6 +37,7 @@ const PostButton: React.FC<Iprops> = (props) => {
   //   return () => window.removeEventListener('scroll', listenToScroll);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   return (
     <Button
@@ -56,6 +60,7 @@ const PostButton: React.FC<Iprops> = (props) => {
         // true
         {
           bottom: '140px',
+          display: props.role === 1 ? 'block' : 'none',
         }
       }
     />

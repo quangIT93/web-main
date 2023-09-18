@@ -3,6 +3,9 @@ import React, { memo, useEffect } from 'react';
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 // import api
+import jsPDF from 'jspdf';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+
 import categoriesApi from 'api/categoriesApi';
 
 import './style.scss';
@@ -13,6 +16,14 @@ import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
 import { ResumeIcon } from '#components/Icons';
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { spacing } from '../Styles';
+import { initialSettings } from '../Setting/settingsSlice';
+// import component
+//@ts-ignore
+import ItemCV from '../ItemCV';
+//@ts-ignore
+import Theme1 from '../Themes/Theme1';
+
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -20,9 +31,11 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Mousewheel, Pagination } from 'swiper';
+import { Link } from 'react-router-dom';
 import CvTemplate1 from '../CvTemplate/CvTemplate1';
-import { BlobProvider, PDFViewer, usePDF } from '@react-pdf/renderer';
-import { Document, Page, pdfjs } from "react-pdf";
+import CvTemplate2 from '../CvTemplate/CvTemplate2';
+import { usePDF, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, pdfjs } from 'react-pdf';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/legacy/build/pdf.worker.min.js',
@@ -34,20 +47,21 @@ const styleChildBox = {
 
 interface IContentListCv {
   colorCV: any;
-  fontSizeCV: any
+  fontSizeCV: any;
 }
 
 const ContentListCv: React.FC<IContentListCv> = (props) => {
   const { colorCV, fontSizeCV } = props;
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
-  const language = useSelector((state: RootState) => state.dataLanguage.languages)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [cvId, setCvId] = React.useState<any>(1);
   const [instance, updateInstance] = usePDF({
-    document: <CvTemplate1
-      color={colorCV}
-      fontSize={fontSizeCV}
-    />
+    document: <CvTemplate2 color={colorCV} fontSize={fontSizeCV} />,
   });
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [numPages, setNumPages] = React.useState<number>();
@@ -56,7 +70,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const getDataParentCategory = async () => {
     try {
       const result = await categoriesApi.getAllParentCategories(
-        languageRedux === 1 ? 'vi' : 'en'
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -67,20 +81,13 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     }
   };
 
-
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
   }
 
   React.useEffect(() => {
-    updateInstance(
-      <CvTemplate1
-        color={colorCV}
-        fontSize={fontSizeCV}
-      />
-    )
-
-  }, [colorCV])
+    updateInstance(<CvTemplate2 color={colorCV} fontSize={fontSizeCV} />);
+  }, [colorCV]);
 
   React.useEffect(() => {
     getDataParentCategory();
@@ -89,10 +96,50 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     cv_id && setCvId(+cv_id);
   }, [languageRedux]);
 
-
   // console.log('dataCategories', dataCategories);
 
-  const handleChangeCategory = async () => { };
+  const handleChangeCategory = async () => {};
+
+  const styles = StyleSheet.create({
+    page: {
+      flexDirection: 'column',
+      backgroundColor: '#ffffff',
+      padding: 20,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 20,
+    },
+    headerLeft: {
+      width: '30%',
+    },
+    headerRight: {
+      width: '70%',
+    },
+    headerImage: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+    },
+    content: {
+      flexDirection: 'row',
+    },
+    contentLeft: {
+      width: '30%',
+    },
+    contentRight: {
+      width: '70%',
+    },
+    section: {
+      marginBottom: 10,
+    },
+    flexCol: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+  });
 
   return (
     <div className="contentCV-bottom">
@@ -112,25 +159,21 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
               <TextField
                 {...params}
                 placeholder={
-                  languageRedux === 1 ?
-                    "Chọn mẫu CV" :
-                    "Choose resume template"
+                  languageRedux === 1 ? 'Chọn mẫu CV' : 'Choose resume template'
                 }
                 size="small"
-              // error={!selectedProvince}
+                // error={!selectedProvince}
               />
             )}
           />
         </Box>
 
         <div className="list-template">
-          {
-            Array.from(new Array(10).keys()).map((item) => (
-              <div className="template-item" key={item}>
-                <Avatar shape="square" icon={<UserOutlined />} />
-              </div>
-            ))
-          }
+          {Array.from(new Array(10).keys()).map((item) => (
+            <div className="template-item" key={item}>
+              <Avatar shape="square" icon={<UserOutlined />} />
+            </div>
+          ))}
         </div>
         <Swiper
           navigation={true}
@@ -139,22 +182,20 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           modules={[Mousewheel, Navigation, Pagination]}
           className="list-template-swiper"
         >
-          {
-            Array.from(new Array(10).keys()).map((item: any, index: number) => {
-              return (
-                <SwiperSlide
-                  key={index}
-                  onClick={(event) => {
-                    // handleClickItem();
-                  }}
-                >
-                  <div className="slide-item" key={item}>
-                    <Avatar shape="square" icon={<UserOutlined />} />
-                  </div>
-                </SwiperSlide>
-              );
-            })
-          }
+          {Array.from(new Array(10).keys()).map((item: any, index: number) => {
+            return (
+              <SwiperSlide
+                key={index}
+                onClick={(event) => {
+                  // handleClickItem();
+                }}
+              >
+                <div className="slide-item" key={item}>
+                  <Avatar shape="square" icon={<UserOutlined />} />
+                </div>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
       <div className="contentCV-line"></div>
@@ -163,13 +204,16 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           <div className="title_left">
             <ResumeIcon />
             <h3>
-              {
-                languageRedux === 1 ?
-                  `Hồ sơ số ${cvId}` :
-                  `Resume No.${cvId}`
-              }
+              {languageRedux === 1 ? `Hồ sơ số ${cvId}` : `Resume No.${cvId}`}
             </h3>
           </div>
+          {/* Tải xuống PDF */}
+          {/* <PDFDownloadLink document={<Theme1 />} fileName="111.pdf">
+            {({ loading }) =>
+              loading ? 'Loading document...' : 'Download now!'
+            }
+          </PDFDownloadLink> */}
+
           <div className="title_right">
             <p
               onClick={() => {
@@ -216,29 +260,22 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
             onLoadSuccess={onDocumentLoadSuccess}
             className="page-cv-wrapper"
           >
-            {
-              Array.apply(null, Array(numPages))
-                .map((x, i) => i + 1)
-                .map(page =>
-                  <Page
-                    className="page-cv"
-                    loading={
-                      page === 1 ?
-                        <Spin indicator={antIcon} /> :
-                        <></>
-                    }
-                    noData={
-                      page === 1 ?
-                        <Spin indicator={antIcon} /> :
-                        <></>}
-                    pageNumber={page}
-                    renderAnnotationLayer={false}
-                    renderTextLayer={false}
-                  />
-                )
-            }
+            {Array.apply(null, Array(numPages))
+              .map((x, i) => i + 1)
+              .map((page) => (
+                <Page
+                  className="page-cv"
+                  loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                  noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                  pageNumber={page}
+                  renderAnnotationLayer={false}
+                  renderTextLayer={false}
+                />
+              ))}
           </Document>
         </div>
+        {/* <Avatar shape="square" icon={<UserOutlined />} />
+          <Avatar shape="square" icon={<UserOutlined />} /> */}
       </div>
     </div>
   );

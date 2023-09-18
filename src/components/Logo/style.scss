@@ -4,7 +4,7 @@
 .logo {
   display: flex;
   align-items: center;
-  margin-right: 24px;
+  // margin-right: 24px;
 
   @include breakpoint(mobile) {
     margin-right: 0px;

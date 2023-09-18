@@ -10,6 +10,8 @@ import {
   verifyOtp,
 } from '../../../store/reducer/authReducer/signGmailReducer';
 
+import signInEmailApi from '../../../api/authApi';
+
 // import signInEmailApi from 'api/authApi';
 //@ts-ignore
 import OtpInput from 'react-otp-input';
@@ -39,6 +41,9 @@ import authApi from '../../../api/authApi';
 import profileApi from '../../../api/profileApi';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+
+// redux
+import { setIsNew } from 'store/reducer/isNewReducer';
 
 // import login from action
 
@@ -135,6 +140,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
     (state: RootState) => state.dataLanguage.languages,
   );
 
+  const newUser = useSelector((state: RootState) => state.isNew);
+
   const handleClose = () => setOpenModalLogin(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -208,8 +215,15 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
       if (isInputFilled) {
         // Thực hiện hành động khi button được click
         //  console.log('isInputFilled', isInputFilled)
-        await dispatch(verifyOtp({ email: loginData.email, otp }) as any);
-        setOpenModalLogin(false);
+        // await dispatch(verifyOtp({ email: loginData.email, otp }) as any);
+
+        const result = await signInEmailApi.verifyOtp(loginData.email, otp);
+        if (result) {
+          fetchDataProfile(result.data, true);
+          // dispatch(setIsNew(true));
+          localStorage.setItem('isNew', 'true');
+          setOpenModalLogin(false);
+        }
       } else {
       }
     } catch (error) {
@@ -226,7 +240,9 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
         if (result) {
           fetchDataProfile(result.data, true);
           setOpenBackdrop(false);
+          // dispatch(setIsNew(true));
           setOpenModalLogin(false);
+          localStorage.setItem('isNew', 'true');
         }
       }
     } catch (error) {
@@ -253,6 +269,8 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
           fetchDataProfile(result.data, true);
           setOpenBackdrop(false);
           setOpenModalLogin(false);
+          // dispatch(setIsNew(true));
+          localStorage.setItem('isNew', 'true');
         }
       }
     } catch (error) {
@@ -310,6 +328,7 @@ const ModalVerifyLogin: React.FC<PropsModalLogin> = (props) => {
   // Sử dụng useEffect để theo dõi sự thay đổi của authState.isLoggedIn
   useEffect(() => {
     fetchDataProfile(authState, authState.isverifyOtp);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState.isverifyOtp]);
 

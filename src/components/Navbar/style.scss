@@ -18,6 +18,10 @@
   display: grid;
   place-items: center;
 
+  @media screen and (max-width: 600px) {
+    margin-right: 4px;
+  }
+
   .search-job-switch {
     align-items: center;
     gap: 4px;
@@ -121,25 +125,27 @@
     }
   }
 
-  .btn__post {
-    width: 136px;
-    font-weight: bold;
-    background-color: $primary-color;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    padding-block: 14px;
-    padding-left: 20px;
-    padding-right: 26px;
+  // @media screen and (min-width: 421px) and (max-width: 640px) {
+  //   display: none;
+    .btn__post {
+      width: 136px;
+      font-weight: bold;
+      background-color: $primary-color;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      padding-block: 14px;
+      padding-left: 20px;
+      padding-right: 26px;
 
-    @include breakpoint(mobile) {
-      display: none;
-    }
+      @include breakpoint(mobile) {
+        display: none !important;
+      }
 
-    @media screen and (min-width: 421px) and (max-width: 600px) {
-      display: none;
+      @media screen and (min-width: 421px) and (max-width: 640px) {
+        display: none !important;
+      }
     }
-  }
 }
 
 
@@ -219,6 +225,8 @@
       }
 
       .actions-login {
+
+
 
         // display: none;
 
@@ -536,6 +544,17 @@
 
   .wrap-content_nav {
     margin: 0 auto;
+    .wrap-left_nav {
+      display: flex;
+      
+      @media screen and (max-width: 1024px) and (min-width: 630px) {
+        width: 50%;
+      }
+      @media screen and (max-width: 629px) {
+        width: 60%;
+      }
+
+    }
   }
 
   &.css-1lmzauf {
@@ -866,7 +885,7 @@
     }
   }
 
-  ;
+  
 
   // start filter
 
@@ -988,6 +1007,7 @@
     // }
 
     @include breakpoint(largeTablet) {
+      
       flex: none;
     }
 
@@ -996,12 +1016,13 @@
     }
 
     @include breakpoint(mobile) {
+
       flex: none;
     }
   }
 
   .div-nav-center {
-
+    padding-left: 20px;
     .btn-badge {
 
       &:hover {
@@ -1058,7 +1079,10 @@
       }
     }
 
-    @include breakpoint(tablet) {
+    // @include breakpoint(tablet) {
+      @media screen and (max-width: 480px){
+        
+      // }
       display: flex;
       // flex: none;
       margin-right: 0px;
@@ -1073,7 +1097,12 @@
       }
     }
 
-    @include breakpoint(largeTablet) {
+
+    
+    // @include breakpoint(largeTablet) {
+    @media screen and (min-width: 481px) and (max-width:1024px){
+      
+    // }
       display: flex;
       // flex: none;
       margin-right: 10px;
@@ -1114,6 +1143,10 @@
       display: flex;
       align-items: center;
       margin: 0 10px;
+
+      @media screen and (max-width: 450px) and (min-width: 427px){
+        margin: 0 10px 0 10px;
+      }
 
       svg {
         cursor: pointer
@@ -1189,7 +1222,7 @@
               overflow: hidden;
               text-overflow: ellipsis;
               // white-space: ;
-              display: -webkit-box;
+              // display: -webkit-box;
               /* Dùng -webkit-box để sử dụng thuộc tính clamp */
               -webkit-line-clamp: 2;
               /* Giới hạn văn bản xuống 2 dòng */
@@ -1546,6 +1579,7 @@
       position: relative;
       // pointer-events: none;
 
+
       &:after {
         content: "";
         position: absolute;
@@ -1595,7 +1629,7 @@
       .login__hover__container {
         position: absolute;
         top: 60px;
-        right: 0;
+        right: 0px;
         z-index: 10;
         // display: none;
         // visibility: hidden;
@@ -1928,6 +1962,7 @@
 }
 
 .div-nav-center {
+  padding-left: 20px;
 
   .btn-noti_icon {
     @include breakpoint(mobile) {

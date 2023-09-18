@@ -27,6 +27,7 @@ import './style.scss';
 import communityApi from 'api/apiCommunity';
 
 import HijobNewsCard from '#components/Community/HijobNewsCard';
+import { getCookie } from 'cookies';
 
 const ComunityNews = () => {
   const languageRedux = useSelector(
@@ -81,7 +82,7 @@ const ComunityNews = () => {
         duration: 2,
         maxCount: 3,
       });
-      message.error('Đã hết bài viết');
+      // message.error('Đã hết bài viết');
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
     }
@@ -123,6 +124,22 @@ const ComunityNews = () => {
       console.log(error);
     }
   };
+
+  React.useEffect(() => {
+    let workingId = JSON.parse(getCookie('hijobId') || '');
+    if (workingId) {
+      if (hijobNews.map((item: any) => item.id).includes(workingId)) {
+        document.getElementById(workingId)?.scrollIntoView({
+          // behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest',
+        });
+      } else {
+        fetchMoreData();
+        window.scrollTo({ top: window.screen.height });
+      }
+    }
+  }, [hijobNews]);
 
   React.useEffect(() => {
     handleGetAllHijobNews();

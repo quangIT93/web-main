@@ -1,5 +1,5 @@
 @import '../../../scss/mixins';
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500;1,600&display=swap');
 .contentCV-bottom {
     display: flex;
     border-radius: 20px;
@@ -10,7 +10,8 @@
     }
 
     .contentCV-bottom-left {
-        flex: 2;
+        // flex: 2;
+        width: 35%;
         margin: 24px 4px 24px 24px;
         padding-right: 24px;
         // border-right: 1px solid #000000;
@@ -202,6 +203,8 @@
 
     .contentCV-bottom-right {
         // flex: 3;
+        width: 65%;
+
         height: 900px;
         overflow-y: scroll;
         margin: 24px 4px 24px 24px;

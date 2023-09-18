@@ -146,7 +146,7 @@ const Company: React.FC<ICompany> = (props) => {
   React.useEffect(() => {
     getlanguageApi();
   }, [languageRedux]);
-  console.log('dataCompany', dataCompany);
+  // console.log('dataCompany', dataCompany);
   const [openModalEditCompany, setOpenModalEditCompanySuccess] =
     React.useState(false);
 
@@ -199,8 +199,7 @@ const Company: React.FC<ICompany> = (props) => {
   }, [languageRedux]);
 
   useEffect(() => {
-    roleRedux === 0 && !is_profile &&
-      window.open(`/`, '_parent')
+    roleRedux === 0 && !is_profile && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -209,11 +208,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -232,7 +231,7 @@ const Company: React.FC<ICompany> = (props) => {
         checkForm: false,
       };
     }
-    if (dataCompany?.name === '') {
+    if (dataCompany?.name.trim() === '') {
       return {
         message: language?.company_page?.err_name_mess,
         checkForm: false,
@@ -386,7 +385,7 @@ const Company: React.FC<ICompany> = (props) => {
 
     const formData = new FormData();
     // formData.append('id', String(dataCompany?.id));
-    formData.append('name', String(dataCompany?.name));
+    formData.append('name', String(dataCompany?.name.trim()));
     formData.append('address', String(dataCompany?.address));
     formData.append('wardId', String(dataCompany?.companyLocation?.id));
     formData.append('taxCode', String(dataCompany?.taxCode));
@@ -419,21 +418,26 @@ const Company: React.FC<ICompany> = (props) => {
 
   // if (dataPostById) {
   return (
-    <div className="company-container" style={{
-      display: display,
-      marginTop: is_profile ? '30px' : '70px',
-      width: is_profile ? '100%' : 'unset',
-    }}>
+    <div
+      className="company-container"
+      style={{
+        display: display,
+        marginTop: is_profile ? '30px' : '70px',
+        width: is_profile ? '100%' : 'unset',
+      }}
+    >
       {contextHolder}
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         <Navbar />
       </div>
-      <div className="company-content"
+      <div
+        className="company-content"
         style={{
           padding: is_profile ? '0px' : '50px 0px',
         }}
       >
-        <div className="company-title"
+        <div
+          className="company-title"
           style={{
             marginBottom: is_profile ? '24px' : '32px',
           }}
@@ -443,7 +447,7 @@ const Company: React.FC<ICompany> = (props) => {
             <Space
               style={{
                 cursor: 'pointer',
-                display: is_profile ? 'flex' : 'none'
+                display: is_profile ? 'flex' : 'none',
               }}
               onClick={() => window.open(`/company-infor/`, '_parent')}
             >
@@ -456,13 +460,14 @@ const Company: React.FC<ICompany> = (props) => {
               </p>
             </Space>
           </div>
-          <div className="company-title_bottom" style={{ display: is_profile ? 'block' : 'none' }}>
+          <div
+            className="company-title_bottom"
+            style={{ display: is_profile ? 'block' : 'none' }}
+          >
             <p>
-              {
-                languageRedux === 1 ?
-                  "Bạn cần điền thông tin công ty của mình để đăng tin tuyển dụng, tìm kiếm ứng viên." :
-                  "You need to fill in your company information to post job vacancies, search for candidates."
-              }
+              {languageRedux === 1
+                ? 'Bạn cần điền thông tin công ty của mình để đăng tin tuyển dụng, tìm kiếm ứng viên.'
+                : 'You need to fill in your company information to post job vacancies, search for candidates.'}
             </p>
           </div>
         </div>
