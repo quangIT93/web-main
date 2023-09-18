@@ -27,19 +27,21 @@ import { RootState } from 'store';
 import { setCookie } from 'cookies';
 import RollTop from '#components/RollTop';
 import CvTemplate1 from '#components/TemplatesCv/CvTemplate/CvTemplate1';
+import CvTemplate2 from '#components/TemplatesCv/CvTemplate/CvTemplate2';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 const TemplatesCv: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [fontSizeCV, setFontSizeCV] = React.useState(24);
   //1: black, 2: blue, 3: yellow, 4:green, 5:red
-  const [colorCV, setColorCV] = React.useState(1)
+  const [colorCV, setColorCV] = React.useState(1);
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
 
   React.useEffect(() => {
-    roleRedux === 1 &&
-      window.open(`/`, '_parent')
+    roleRedux === 1 && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -56,13 +58,13 @@ const TemplatesCv: React.FC = () => {
   };
 
   const handlePickColor = (color: number) => {
-    setColorCV(color)
-  }
+    setColorCV(color);
+  };
 
   const handleSaveCv = () => {
-    setCookie("firstCv", "1", 365)
+    setCookie('firstCv', '1', 365);
     setOpenModalChooseCv(true);
-  }
+  };
 
   return (
     <div className="cv-container">
@@ -104,18 +106,15 @@ const TemplatesCv: React.FC = () => {
                 </Button> */}
 
         <div className="contentCV-top">
-          <div className="backToEditor"
+          <div
+            className="backToEditor"
             onClick={() => window.open(`/profile`, '_parent')}
           >
             <div className="icon-back">
               <BackIcon width={15} height={15} fill="white" />
             </div>
             <p>
-              {
-                languageRedux === 1 ?
-                  "Về trang chỉnh sửa" :
-                  "Back to Editor"
-              }
+              {languageRedux === 1 ? 'Về trang chỉnh sửa' : 'Back to Editor'}
             </p>
           </div>
           <div className="change-styles">
@@ -133,44 +132,70 @@ const TemplatesCv: React.FC = () => {
             <div className="line"></div>
 
             <div className="color-group">
-              <p>
-                {
-                  languageRedux === 1 ? "Màu sắc" : "Color"
-                }
-              </p>
+              <p>{languageRedux === 1 ? 'Màu sắc' : 'Color'}</p>
               <div className="change-styles_color">
-                <div className={`circle-color black`} onClick={() => handlePickColor(1)}>
-                  <div className="circle-ticked" style={{
-                    display: colorCV === 1 ? 'block' : 'none'
-                  }}>
+                <div
+                  className={`circle-color black`}
+                  onClick={() => handlePickColor(1)}
+                >
+                  <div
+                    className="circle-ticked"
+                    style={{
+                      display: colorCV === 1 ? 'block' : 'none',
+                    }}
+                  >
                     <TickIcon />
                   </div>
                 </div>
-                <div className={`circle-color blue`} onClick={() => handlePickColor(2)}>
-                  <div className="circle-ticked" style={{
-                    display: colorCV === 2 ? 'block' : 'none'
-                  }}>
+                <div
+                  className={`circle-color blue`}
+                  onClick={() => handlePickColor(2)}
+                >
+                  <div
+                    className="circle-ticked"
+                    style={{
+                      display: colorCV === 2 ? 'block' : 'none',
+                    }}
+                  >
                     <TickIcon />
                   </div>
                 </div>
-                <div className={`circle-color yellow`} onClick={() => handlePickColor(3)}>
-                  <div className="circle-ticked" style={{
-                    display: colorCV === 3 ? 'block' : 'none'
-                  }}>
+                <div
+                  className={`circle-color yellow`}
+                  onClick={() => handlePickColor(3)}
+                >
+                  <div
+                    className="circle-ticked"
+                    style={{
+                      display: colorCV === 3 ? 'block' : 'none',
+                    }}
+                  >
                     <TickIcon />
                   </div>
                 </div>
-                <div className={`circle-color green`} onClick={() => handlePickColor(4)}>
-                  <div className="circle-ticked" style={{
-                    display: colorCV === 4 ? 'block' : 'none'
-                  }}>
+                <div
+                  className={`circle-color green`}
+                  onClick={() => handlePickColor(4)}
+                >
+                  <div
+                    className="circle-ticked"
+                    style={{
+                      display: colorCV === 4 ? 'block' : 'none',
+                    }}
+                  >
                     <TickIcon />
                   </div>
                 </div>
-                <div className={`circle-color red`} onClick={() => handlePickColor(5)}>
-                  <div className="circle-ticked" style={{
-                    display: colorCV === 5 ? 'block' : 'none'
-                  }}>
+                <div
+                  className={`circle-color red`}
+                  onClick={() => handlePickColor(5)}
+                >
+                  <div
+                    className="circle-ticked"
+                    style={{
+                      display: colorCV === 5 ? 'block' : 'none',
+                    }}
+                  >
                     <TickIcon />
                   </div>
                 </div>
@@ -180,19 +205,10 @@ const TemplatesCv: React.FC = () => {
           <div className="button-cv">
             <PDFDownloadLink
               className="download-cv-btn"
-              document={
-                <CvTemplate1
-                  color={colorCV}
-                  fontSize={fontSizeCV}
-                />
-              }
+              document={<CvTemplate2 color={colorCV} fontSize={fontSizeCV} />}
               fileName="Test_Cv1"
             >
-              {
-                languageRedux === 1 ?
-                  "Lưu và tải PDF" :
-                  "Save & Download PDF"
-              }
+              {languageRedux === 1 ? 'Lưu và tải PDF' : 'Save & Download PDF'}
             </PDFDownloadLink>
             {/* <Button
               type="primary"
@@ -215,10 +231,7 @@ const TemplatesCv: React.FC = () => {
           </div>
         </div>
 
-        <ContentListCv
-          colorCV={colorCV}
-          fontSizeCV={fontSizeCV}
-        />
+        <ContentListCv colorCV={colorCV} fontSizeCV={fontSizeCV} />
         <ModalShare
           openModalShare={openModalShare}
           setOpenModalShare={setOpenModalShare}

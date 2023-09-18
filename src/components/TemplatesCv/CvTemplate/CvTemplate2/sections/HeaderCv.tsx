@@ -1,8 +1,14 @@
 import React from 'react';
 
-import { Image, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Image, Text, View, StyleSheet, Svg, Line } from '@react-pdf/renderer';
 
-const HeaderCv = () => {
+interface IHeaderCv {
+  fontSize: number;
+  color: number;
+}
+
+const HeaderCv: React.FC<IHeaderCv> = (props) => {
+  const { fontSize, color } = props;
   const styles = StyleSheet.create({
     header: {
       display: 'flex',
@@ -12,6 +18,27 @@ const HeaderCv = () => {
       width: '100%',
       flexDirection: 'row',
       height: 'auto',
+    },
+    name: {
+      fontSize: '37pt',
+      marginBottom: '0.6cm',
+      fontFamily: 'Montserrat Regular',
+      textTransform: 'uppercase',
+      color:
+        color === 1
+          ? '#252525'
+          : color === 2
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
+    },
+    nameJob: {
+      fontFamily: 'Montserrat Regular',
+      fontSize: '9pt',
+      margin: '0.6cm 0',
     },
   });
 
@@ -27,33 +54,52 @@ const HeaderCv = () => {
           justifyContent: 'center',
         }}
       >
-        <Text
-          style={{
-            fontSize: '37pt',
-            width: '6cm',
-            marginBottom: '0.6cm',
-          }}
-        >
-          Thái Minh Quang
-        </Text>
+        <Text style={styles.name}>Nguyễn</Text>
+        <Text style={styles.name}>Minh Quang</Text>
 
-        <View
-          style={{
-            border: '1px solid #ccc',
-            width: '100%',
-            marginBottom: '0.6cm',
-          }}
-        ></View>
+        <Svg height="1cm" width="100%">
+          <Line
+            x1="0"
+            y1="0.5cm" // Đặt tọa độ y1 giữa trang
+            x2="1000" // Chiều rộng của trang A4
+            y2="0.5cm" // Đặt tọa độ y2 giữa trang
+            strokeWidth={2}
+            stroke={
+              color === 1
+                ? '#252525'
+                : color === 2
+                ? '#0D99FF'
+                : color === 3
+                ? '#FBBC04'
+                : color === 4
+                ? '#5CB265'
+                : '#D80000'
+            }
+          />
+        </Svg>
 
-        <Text style={{ fontSize: '9pt' }}>Công nghệ thông tin</Text>
+        <Text style={styles.nameJob}>Công nghệ thông tin</Text>
 
-        <View
-          style={{
-            border: '1px solid #ccc',
-            width: '100%',
-            marginTop: '0.6cm',
-          }}
-        ></View>
+        <Svg height="1cm" width="100%">
+          <Line
+            x1="0"
+            y1="0.5cm" // Đặt tọa độ y1 giữa trang
+            x2="1000" // Chiều rộng của trang A4
+            y2="0.5cm" // Đặt tọa độ y2 giữa trang
+            strokeWidth={2}
+            stroke={
+              color === 1
+                ? '#252525'
+                : color === 2
+                ? '#0D99FF'
+                : color === 3
+                ? '#FBBC04'
+                : color === 4
+                ? '#5CB265'
+                : '#D80000'
+            }
+          />
+        </Svg>
       </View>
 
       <Image

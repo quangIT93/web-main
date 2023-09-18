@@ -17,7 +17,7 @@ interface Iprops {
 }
 
 const PostButton: React.FC<Iprops> = (props) => {
-  console.log('props', props);
+  // console.log('props', props);
 
   // const dataProfile = useSelector((state: RootState) => state.profileUser);
   // const [height, setHeight] = React.useState(0);

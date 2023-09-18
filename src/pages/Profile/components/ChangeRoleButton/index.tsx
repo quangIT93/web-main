@@ -14,7 +14,7 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
     (state: RootState) => state.changeLaguage.language,
   );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3);
   //0: candidate, 1: employer
   // const { role, setRole } = props;
 

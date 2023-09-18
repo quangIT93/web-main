@@ -34,15 +34,7 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 import { Link } from 'react-router-dom';
 import CvTemplate1 from '../CvTemplate/CvTemplate1';
 import CvTemplate2 from '../CvTemplate/CvTemplate2';
-import {
-  Text,
-  View,
-  Image,
-  BlobProvider,
-  PDFViewer,
-  usePDF,
-  StyleSheet,
-} from '@react-pdf/renderer';
+import { usePDF, StyleSheet } from '@react-pdf/renderer';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(

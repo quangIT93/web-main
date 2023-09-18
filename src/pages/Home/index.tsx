@@ -54,6 +54,8 @@ const Home: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [openModalSelectRole, setOpenModalSelectRole] = React.useState(
     // roleRedux >= 0 ? false : true,
@@ -64,10 +66,10 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (localStorage.getItem('isNew') === 'true') {
+    if (profileV3 && profileV3.typeRoleData === null) {
       // dispatch<any>(setIsNew(false));
       setOpenModalSelectRole(true);
-      localStorage.setItem('isNew', 'false');
+      // localStorage.setItem('isNew', 'false');
     }
     // else if (!newUser && roleRedux === 0) {
     //   setOpenModalSelectRole(false);
@@ -80,7 +82,7 @@ const Home: React.FC = () => {
     //   dispatch<any>(setIsNew(false));
     //   setOpenModalSelectRole(false);
     // }
-  }, []);
+  }, [profileV3]);
 
   // console.log('openModalSelectRole', openModalSelectRole);
 

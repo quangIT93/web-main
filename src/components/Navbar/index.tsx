@@ -305,7 +305,7 @@ const Navbar: React.FC = () => {
 
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
-  console.log('profileV3', profileV3);
+  // console.log('profileV3', profileV3);
 
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -1713,116 +1713,118 @@ const Navbar: React.FC = () => {
               : { maxWidth: '1080px' }
           }
         >
-          <Left>
-            <Logo />
-          </Left>
-          <Center className="div-nav-center">
-            {/* <div>assssssssssssssssssssssssssssssss</div> */}
-            <SearchInput
-              checkSearch={checkSeacrh}
-              value={valueSearchInput}
-              setValue={setValueSearchInput}
-              setOpenCollapseFilter={setOpenCollapseFilter}
-              openCollapseFilter={openCollapseFilter}
-              handleSearchIcon={handleSearch}
-            />
-            <Button
-              className="btn-search"
-              onClick={(event) => handleSearch(event, valueSearchInput)}
-            >
-              Tìm Kiếm
-            </Button>
-
-            <Button
-              className="btn-filter"
-              onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
-            >
-              <BlackSearchIcon width={20} height={20} />
-            </Button>
-
-            <Badge count={countChat} className="btn-badge">
+          <div style={{ display: 'flex' }} className="wrap-left_nav">
+            <Left>
+              <Logo />
+            </Left>
+            <Center className="div-nav-center">
+              {/* <div>assssssssssssssssssssssssssssssss</div> */}
+              <SearchInput
+                checkSearch={checkSeacrh}
+                value={valueSearchInput}
+                setValue={setValueSearchInput}
+                setOpenCollapseFilter={setOpenCollapseFilter}
+                openCollapseFilter={openCollapseFilter}
+                handleSearchIcon={handleSearch}
+              />
               <Button
-                className="btn-notice"
-                name="btn-chat"
-                onClick={() => {
-                  if (profileV3 && localStorage.getItem('refreshToken')) {
-                    window.open(`/message`, '_parent');
-                  } else {
-                    setOpenModalLogin(true);
-                  }
-                }}
-                type="link"
-                style={{ border: '1px solid #d9d9d9' }}
+                className="btn-search"
+                onClick={(event) => handleSearch(event, valueSearchInput)}
               >
-                <ChatIcon />
+                Tìm Kiếm
               </Button>
-            </Badge>
 
-            <div className="wrap-btn_notice ">
               <Button
-                className="btn-notice"
-                name="btn-notice"
-                onClick={() => {
-                  if (profileV3 && localStorage.getItem('accessToken')) {
-                    setOpenNotificate(!openNotificate);
-                  } else {
-                    setOpenModalLogin(true);
-                  }
-                }}
-                ref={bellRef}
+                className="btn-filter"
+                onClick={() => setOpenCollapseFilter(!openCollapseFilter)}
               >
-                <BellIcon />
+                <BlackSearchIcon width={20} height={20} />
               </Button>
-              {openNotificate ? <Notificate /> : <></>}
-            </div>
-            <div
-              className="wrap-btn_notice btn-noti_icon 
+
+              <Badge count={countChat} className="btn-badge">
+                <Button
+                  className="btn-notice"
+                  name="btn-chat"
+                  onClick={() => {
+                    if (profileV3 && localStorage.getItem('refreshToken')) {
+                      window.open(`/message`, '_parent');
+                    } else {
+                      setOpenModalLogin(true);
+                    }
+                  }}
+                  type="link"
+                  style={{ border: '1px solid #d9d9d9' }}
+                >
+                  <ChatIcon />
+                </Button>
+              </Badge>
+
+              <div className="wrap-btn_notice ">
+                <Button
+                  className="btn-notice"
+                  name="btn-notice"
+                  onClick={() => {
+                    if (profileV3 && localStorage.getItem('accessToken')) {
+                      setOpenNotificate(!openNotificate);
+                    } else {
+                      setOpenModalLogin(true);
+                    }
+                  }}
+                  ref={bellRef}
+                >
+                  <BellIcon />
+                </Button>
+                {openNotificate ? <Notificate /> : <></>}
+              </div>
+              <div
+                className="wrap-btn_notice btn-noti_icon 
             border-aniation_download
             "
-            >
-              <Button
-                className="btn-notice"
-                // onClick={() => setOpenNotificate(!openNotificate)}
-                name="btn-down"
-                ref={bellRef}
               >
-                <div className="button-download">
-                  {/* <DownloadIcon /> */}
+                <Button
+                  className="btn-notice"
+                  // onClick={() => setOpenNotificate(!openNotificate)}
+                  name="btn-down"
+                  ref={bellRef}
+                >
+                  <div className="button-download">
+                    {/* <DownloadIcon /> */}
 
-                  <img src="./images/down.gif" alt="" />
-                </div>
-                {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
-              </Button>
-              <div className="sub-icon_qr">
-                <h2>{languageData?.download_hijob_app}</h2>
-                <img
-                  src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
-                  alt={languageData?.err_none_img}
-                />
-                <div className="sub-icon_apps">
-                  <Link
-                    to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
-                    target="_seft"
-                  >
-                    <img
-                      id="img-gallery"
-                      src={require('../../img/langdingPage/image 43.png')}
-                      alt={languageData?.err_none_img}
-                    />
-                  </Link>
-                  <Link
-                    to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
-                    target="_seft"
-                  >
-                    <img
-                      src={require('../../img/langdingPage/image 45.png')}
-                      alt={languageData?.err_none_img}
-                    />
-                  </Link>
+                    <img src="./images/down.gif" alt="" />
+                  </div>
+                  {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
+                </Button>
+                <div className="sub-icon_qr">
+                  <h2>{languageData?.download_hijob_app}</h2>
+                  <img
+                    src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
+                    alt={languageData?.err_none_img}
+                  />
+                  <div className="sub-icon_apps">
+                    <Link
+                      to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+                      target="_seft"
+                    >
+                      <img
+                        id="img-gallery"
+                        src={require('../../img/langdingPage/image 43.png')}
+                        alt={languageData?.err_none_img}
+                      />
+                    </Link>
+                    <Link
+                      to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+                      target="_seft"
+                    >
+                      <img
+                        src={require('../../img/langdingPage/image 45.png')}
+                        alt={languageData?.err_none_img}
+                      />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Center>
+            </Center>
+          </div>
           <Right className="div-nav-right">
             <Box
               className="box-right-responsive"
