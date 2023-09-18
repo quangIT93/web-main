@@ -20,21 +20,6 @@ const apiCv = {
             }
         )
     },
-    putProfileLanguage: (ids: number[] ) => {
-        const URL = `/v3/companies`
-        return axiosClient.put(
-            URL,
-            {
-                ids
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                    'Content-Type': 'multipart/form-data',
-                },
-            }
-        )
-    },
     getProfileLanguage: () => {
         const URL = `/v3/language-types`
         return axiosClient.get(
@@ -57,6 +42,22 @@ const apiCv = {
                 },
                 data: { ids },
             
+            }
+        )
+    },
+    putProfileLanguage: (languageLevelId: number,languageName: string, id:  number| null  ) => {
+        const URL = `/v3/profile-languages/${id}`
+        return axiosClient.put(
+            URL,
+            {
+                languageLevelId,
+                languageName
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    // 'Content-Type': 'multipart/form-data',
+                },
             }
         )
     },
@@ -91,23 +92,41 @@ const apiCv = {
             }
         )
     },
-    putProifileLanguage: (languageLevelId: number,languageName: string, id:  number  ) => {
-        const URL = `/v3/profile-languages/${id}`
+    putProfileSkill: (skillLevelId: number,skillName: string, id:  number| null  ) => {
+        const URL = `/v3/profiles-skills/${id}`
         return axiosClient.put(
             URL,
             {
-                languageLevelId,
-                languageName
+                skillLevelId,
+                skillName
             },
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                    'Content-Type': 'multipart/form-data',
+                    // 'Content-Type': 'multipart/form-data',
                 },
             }
         )
     },
 
+    // ---------------------------------------------------------------- hobbies
+    postProfileHobbies: (description: string) => {
+        const URL = `/v3/profiles-hobbies`
+        return axiosClient.post(
+            URL,
+            {
+                description
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    // 'Content-Type': 'multipart/form-data',
+                },
+            }
+        )
+    },
+
+    
 }
 
 export default apiCv

@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+
 import SkillItem from '../SkillItem/SkillItem';
 import { Skeleton, Space, Switch } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import ModalSkills from '#components/Profile/ModalSkills';
-import { useSelector } from 'react-redux';
+import ModalEditSkills from '#components/Profile/ModalEditSkills';
+
+import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../../../../store/reducer';
+
+// api
+import apiCv from 'api/apiCv';
+import profileApi from 'api/profileApi';
 
 import {
   SectionActivitiesIcon,
@@ -20,6 +27,7 @@ import {
 } from '#components/Icons';
 import LanguageItem from '../LanguageItem';
 import ModalLanguages from '#components/Profile/ModalLanguages';
+import ModalEditLanguages from '#components/Profile/ModalEditLanguages';
 import { Box, Grid } from '@mui/material';
 import { Input } from 'antd';
 import ModalReference from '#components/Profile/ModalReference';
@@ -31,6 +39,7 @@ import ModalCourse from '#components/Profile/ModalCourse';
 import CourseItem from '../CourseItem';
 import ModalAward from '#components/Profile/ModalAward';
 import AwardItem from '../AwardItem';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 const { TextArea } = Input;
 
 interface ISectionCv {
@@ -91,14 +100,39 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
   const [showSkill, setShowSkill] = useState<boolean>(false);
   const [showLanguage, setShowLanguage] = useState<boolean>(false);
   const [openModalSkills, setOpenModalSkills] = useState(false);
+  const [openModalEditSkills, setOpenModalEditSkills] = useState<{
+    open: boolean;
+    id: null | number;
+    name: string;
+    idLevel: number | null;
+  }>({
+    open: false,
+    id: null,
+    name: '',
+    idLevel: null,
+  });
   const [openModallanguages, setOpenModallanguages] = useState(false);
+  const [openModalEditlanguages, setOpenModalEditlanguages] = useState<{
+    open: boolean;
+    id: null | number;
+    name: string;
+    idLevel: number | null;
+  }>({
+    open: false,
+    id: null,
+    name: '',
+    idLevel: null,
+  });
   const [openModalReference, setOpenModalReference] = useState(false);
   const [openModalInternship, setOpenModalInternship] = useState(false);
   const [openModalActivity, setOpenModalActivity] = useState(false);
   const [openModalCourse, setOpenModalCourse] = useState(false);
   const [openModalAward, setOpenModalAward] = useState(false);
 
+  const dispatch = useDispatch();
+
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   console.log('profileV3', profileV3);
 
   const onChangeShowSkill = () => {
@@ -123,13 +157,54 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
     // }
   };
 
-  const handleCloseSection = (section: number) => {
+  const handleCloseSection = async (section: number) => {
     if (sections.includes(section)) {
       setSections(
         sections.filter((item: any) => {
           return item !== section;
         }),
       );
+
+      if (section === 1) {
+        const item =
+          profileV3 && profileV3.profilesLanguages.map((item: any) => item.id);
+
+        const result = await apiCv.deleteProfileLanguage(item);
+        if (result) {
+          const resultProfile = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (resultProfile) {
+            dispatch(setProfileV3(resultProfile));
+          }
+        }
+
+        // profileV3.profilesLanguages.map(
+        //   (item: {
+        //     id: number;
+        //     languageName: string;
+        //     dataLevel: {
+        //       id: number;
+        //       data: string;
+        //     };
+        //   }) => {
+        //   },
+        // );
+      }
+    }
+    if (section === 0) {
+      const item =
+        profileV3 && profileV3.profilesSkills.map((item: any) => item.id);
+
+      const result = await apiCv.deleteProfileSkill(item);
+      if (result) {
+        const resultProfile = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (resultProfile) {
+          dispatch(setProfileV3(resultProfile));
+        }
+      }
     }
   };
 
@@ -150,7 +225,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
       <Skeleton className="skeleton-item" loading={loading} active>
         <div className="div-profile-info">
           <div className="section-title">
-            <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+            {/* <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3> */}
             <div
               className="donot-show"
               style={{
@@ -164,6 +239,17 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               </p>
               <Switch onChange={onChangeShowSkill} />
             </div>
+            <div className="profile-info-title">
+              <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+              <div className="profile-info-title_actions">
+                <div
+                  className="delete-icon"
+                  onClick={() => handleCloseSection(0)}
+                >
+                  <SectionDeleteIcon width={16} height={16} />
+                </div>
+              </div>
+            </div>
           </div>
           <div className="skill-list">
             {profileV3 && profileV3?.profilesSkills?.length !== 0 ? (
@@ -174,6 +260,8 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                     index={index}
                     setSkillValues={setSkillValues}
                     skillValues={skillValues}
+                    openModalEditSkills={openModalEditSkills}
+                    setOpenModalEditSkills={setOpenModalEditSkills}
                   />
                 </div>
               ))
@@ -205,6 +293,12 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
           setOpenModalSkills={setOpenModalSkills}
           setSkillValues={setSkillValues}
         />
+
+        <ModalEditSkills
+          openModalEditSkills={openModalEditSkills}
+          setOpenModalEditSkills={setOpenModalEditSkills}
+          setSkillValues={setSkillValues}
+        />
       </Skeleton>
 
       <div id="sections" style={{ width: '100%' }}>
@@ -221,9 +315,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <div className="profile-info-title">
                 <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
                 <div className="profile-info-title_actions">
-                  <div className="edit-icon">
+                  {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
-                  </div>
+                  </div> */}
                   <div
                     className="delete-icon"
                     onClick={() => handleCloseSection(1)}
@@ -256,6 +350,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                         index={index}
                         setLanguageValues={setLanguageValues}
                         languageValues={languageValues}
+                        setOpenModallanguages={setOpenModallanguages}
+                        openModallanguages={openModallanguages}
+                        setOpenModalEditlanguages={setOpenModalEditlanguages}
+                        openModalEditlanguages={openModalEditlanguages}
                       />
                     </div>
                   ),
@@ -273,7 +371,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             >
               <Space
                 style={{ alignItems: 'center', cursor: 'pointer' }}
-                onClick={() => setOpenModallanguages(true)}
+                onClick={() => {
+                  setOpenModallanguages(true);
+                }}
               >
                 <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
 
@@ -288,6 +388,13 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             setOpenModallanguages={setOpenModallanguages}
             setLanguageValues={setLanguageValues}
             type="create"
+          />
+
+          <ModalEditLanguages
+            openModalEditlanguages={openModalEditlanguages}
+            setOpenModalEditlanguages={setOpenModalEditlanguages}
+            setLanguageValues={setLanguageValues}
+            type="edit"
           />
         </Skeleton>
 
@@ -311,9 +418,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <div className="profile-info-title">
                 <h3>{languageRedux === 1 ? 'Sở thích' : 'Hobbies'}</h3>
                 <div className="profile-info-title_actions">
-                  <div className="edit-icon">
+                  {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
-                  </div>
+                  </div> */}
                   <div
                     className="delete-icon"
                     onClick={() => handleCloseSection(2)}
@@ -367,9 +474,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   {languageRedux === 1 ? 'Người giới thiệu' : 'References'}
                 </h3>
                 <div className="profile-info-title_actions">
-                  <div className="edit-icon">
+                  {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
-                  </div>
+                  </div> */}
                   <div
                     className="delete-icon"
                     onClick={() => handleCloseSection(3)}
@@ -441,9 +548,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <div className="profile-info-title">
                 <h3>{languageRedux === 1 ? 'Thực tập' : 'Internships'}</h3>
                 <div className="profile-info-title_actions">
-                  <div className="edit-icon">
+                  {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
-                  </div>
+                  </div> */}
                   <div
                     className="delete-icon"
                     onClick={() => handleCloseSection(4)}
@@ -518,9 +625,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <div className="profile-info-title">
                 <h3>{languageRedux === 1 ? 'Các hoạt động' : 'Activities'}</h3>
                 <div className="profile-info-title_actions">
-                  <div className="edit-icon">
+                  {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
-                  </div>
+                  </div> */}
                   <div
                     className="delete-icon"
                     onClick={() => handleCloseSection(5)}
@@ -595,9 +702,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <div className="profile-info-title">
                 <h3>{languageRedux === 1 ? 'Các khóa học' : 'Courses'}</h3>
                 <div className="profile-info-title_actions">
-                  <div className="edit-icon">
+                  {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
-                  </div>
+                  </div> */}
                   <div
                     className="delete-icon"
                     onClick={() => handleCloseSection(6)}
@@ -669,9 +776,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <div className="profile-info-title">
                 <h3>{languageRedux === 1 ? 'Các giải thưởng' : 'Awards'}</h3>
                 <div className="profile-info-title_actions">
-                  <div className="edit-icon">
+                  {/* <div className="edit-icon">
                     <SectionEditIcon width={16} height={16} />
-                  </div>
+                  </div> */}
                   <div
                     className="delete-icon"
                     onClick={() => handleCloseSection(7)}

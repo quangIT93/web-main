@@ -1,7 +1,4 @@
 import React from 'react';
-
-import { useSearchParams } from 'react-router-dom';
-
 import {
   Box,
   TextField,
@@ -13,15 +10,27 @@ import {
 import { CloseOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
-import apiCv from 'api/apiCv';
 
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
+import apiCv from 'api/apiCv';
+
 interface IModalSkills {
-  openModallanguages: boolean;
-  setOpenModallanguages: React.Dispatch<React.SetStateAction<boolean>>;
-  setLanguageValues: React.Dispatch<React.SetStateAction<any>>;
-  type: string;
+  openModalEditSkills: {
+    open: boolean;
+    id: null | number;
+    name: string;
+    idLevel: number | null;
+  };
+  setOpenModalEditSkills: React.Dispatch<
+    React.SetStateAction<{
+      open: boolean;
+      id: null | number;
+      name: string;
+      idLevel: number | null;
+    }>
+  >;
+  setSkillValues: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const style = {
@@ -51,60 +60,65 @@ const style = {
   },
 };
 
-const ModalLanguages: React.FC<IModalSkills> = (props) => {
-  const { openModallanguages, setOpenModallanguages, setLanguageValues, type } =
-    props;
+const ModalEditSkills: React.FC<IModalSkills> = (props) => {
+  const { openModalEditSkills, setOpenModalEditSkills, setSkillValues } = props;
+  const dispatch = useDispatch();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const languageData = useSelector(
+  const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const [language, setLanguage] = React.useState<any>();
+  const [skill, setSkill] = React.useState<any>();
   const [level, setLevel] = React.useState<any>(1);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const dispatch = useDispatch();
-
   const handleOnchangeSkill = (e: any) => {
-    setLanguage(e.target.value);
+    setSkill(e.target.value);
   };
   const handleOnchangeLevel = (e: any) => {
     setLevel(e.target.value);
   };
 
+  React.useEffect(() => {
+    setSkill(openModalEditSkills.name);
+    setLevel(openModalEditSkills.idLevel);
+  }, [openModalEditSkills]);
+
   const handleSubmit = async () => {
     try {
-      const result = await apiCv.postProfileLanguage(level, language);
+      const result = await apiCv.putProfileSkill(
+        level,
+        skill,
+        openModalEditSkills.id,
+      );
       if (result) {
         const resultProfile = await profileApi.getProfileV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (resultProfile) {
-          //   setLanguageValues((prev: any) => [
-          //     {
-          //       language: language,
-          //       level: level,
-          //     },
-          //     ...prev,
-          //   ]);
-          dispatch(setProfileV3(resultProfile));
-          setLanguage('');
+          setOpenModalEditSkills({
+            open: false,
+            id: openModalEditSkills.id,
+            idLevel: level,
+            name: skill,
+          });
+          setSkill('');
           setLevel(1);
-          setOpenModallanguages(false);
+          dispatch(setProfileV3(resultProfile));
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   const handleClose = () => {
-    setOpenModallanguages(false);
+    setOpenModalEditSkills({ open: false, id: null, idLevel: null, name: '' });
   };
 
   return (
     <Modal
-      open={openModallanguages}
+      open={openModalEditSkills.open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -131,11 +145,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {languageRedux === 1
-            ? 'Thêm ngoại ngữ'
-            : languageRedux === 0 && searchParams.get('type') === 'create'
-            ? 'Add Languages'
-            : ''}
+          {languageRedux === 1 ? 'Sửa kỹ năng' : 'Edit Skills'}
         </Typography>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -144,18 +154,18 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            {languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}{' '}
+            {languageRedux === 1 ? 'Kỹ năng' : 'Skill'}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
             id="skill"
             name="skill"
-            value={language}
+            value={skill}
             onChange={handleOnchangeSkill}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
+            placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
             // error={titleError} // Đánh dấu lỗi
           />
         </Box>
@@ -178,29 +188,32 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             variant="outlined"
             placeholder={languageRedux === 1 ? 'Tháng/ Năm' : 'Month/ Year'}
             size="small"
-            sx={{ width: '100%' }}
+            sx={{ width: '100%', marginTop: '4px' }}
             error={!level} // Đánh dấu lỗi
           >
             <MenuItem value={1}>
-              {languageRedux === 1 ? 'Sơ cấp' : 'Primary'}
+              {languageRedux === 1 ? 'Người mới' : 'Novice'}
             </MenuItem>
             <MenuItem value={2}>
-              {languageRedux === 1 ? 'Trung cấp' : 'Intermediate'}
+              {languageRedux === 1 ? 'Người bắt đầu' : 'Beginner'}
             </MenuItem>
             <MenuItem value={3}>
-              {languageRedux === 1 ? 'Trình độ cao' : 'High - level'}
+              {languageRedux === 1 ? 'Khéo léo' : 'Skillful'}
             </MenuItem>
             <MenuItem value={4}>
-              {languageRedux === 1 ? 'Thành thạo' : 'Native'}
+              {languageRedux === 1 ? 'Có kinh nghiệm' : 'Experienced'}
+            </MenuItem>
+            <MenuItem value={5}>
+              {languageRedux === 1 ? 'Chuyên gia' : 'Expert'}
             </MenuItem>
           </TextField>
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {languageData?.profile_page?.save_info}
+          {language?.profile_page?.save_info}
         </Button>
       </Box>
     </Modal>
   );
 };
 
-export default ModalLanguages;
+export default ModalEditSkills;
