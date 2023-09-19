@@ -43,6 +43,8 @@ const TemplatesCv: React.FC = () => {
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
 
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   React.useEffect(() => {
     roleRedux === 1 && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps

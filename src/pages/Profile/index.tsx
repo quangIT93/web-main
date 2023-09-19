@@ -89,6 +89,11 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../store/index';
 
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+import {
+  setAlertSuccess,
+  setAlertLackInfo,
+  setAlertEditInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
 import languageApi from 'api/languageApi';
 import { profileEn } from 'validations/lang/en/profile';
 import { profileVi } from 'validations/lang/vi/profile';
@@ -458,8 +463,21 @@ const Profile: React.FC = () => {
   };
 
   const alert = useSelector((state: any) => state.alertProfile.alert);
+  const alertSuccess = useSelector(
+    (state: any) => state.alertProfile.alertSuccess,
+  );
+  const alertLackInfo = useSelector(
+    (state: any) => state.alertProfile.alertLackInfo,
+  );
+
+  const alertEditInfo = useSelector(
+    (state: any) => state.alertProfile.alertEditInfo,
+  );
 
   const handleClose = () => dispatch<any>(setAlert(false));
+  const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
+  const handleCloseLackInfo = () => dispatch<any>(setAlertLackInfo(false));
+  const handleCloseEditInfo = () => dispatch<any>(setAlertEditInfo(false));
 
   return (
     <div className="profile">
@@ -743,6 +761,63 @@ const Profile: React.FC = () => {
               sx={{ width: '100%', backgroundColor: '#000000' }}
             >
               {language?.profile_page?.alert_delete_success}
+            </Alert>
+          </Snackbar>
+        </Stack>
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alertSuccess}
+            autoHideDuration={3000}
+            onClose={handleCloseAlertCv}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseAlertCv}
+              severity="success"
+              sx={{ width: '100%', backgroundColor: 'green' }}
+            >
+              {languageRedux === 1
+                ? 'Bạn đã thêm thông tin thành công'
+                : 'You have saved the information successfully'}
+            </Alert>
+          </Snackbar>
+        </Stack>
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alertLackInfo}
+            autoHideDuration={3000}
+            onClose={handleCloseLackInfo}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseLackInfo}
+              severity="error"
+              sx={{ width: '100%', backgroundColor: 'red' }}
+            >
+              {languageRedux === 1
+                ? 'Vui lòng nhập đầy đủ thông tin'
+                : 'Please enter complete information'}
+            </Alert>
+          </Snackbar>
+        </Stack>
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alertEditInfo}
+            autoHideDuration={3000}
+            onClose={handleCloseEditInfo}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseEditInfo}
+              severity="error"
+              sx={{ width: '100%', backgroundColor: 'green' }}
+            >
+              {languageRedux === 1
+                ? 'Bạn đã sửa thông tin thành công'
+                : 'You have successfully edited the information'}
             </Alert>
           </Snackbar>
         </Stack>

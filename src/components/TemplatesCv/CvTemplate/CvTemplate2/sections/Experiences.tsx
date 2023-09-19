@@ -4,17 +4,18 @@ import { Text, View, StyleSheet, Image, Svg, Line } from '@react-pdf/renderer';
 // import List, { Item } from './List';
 
 import experiences from '../../images/template2/experiences.png';
-
+import moment from 'moment';
 const lineHeightInCm = 1; // Chiều cao của đường ngang (1cm)
 const lineHeightInPoints = lineHeightInCm * 28.3465; // 1cm ≈ 28.3465 points
 
 interface IEducation {
   color: number;
   fontSize: any;
+  profile: any;
 }
 
 const Experiences: React.FC<IEducation> = (props) => {
-  const { color, fontSize } = props;
+  const { color, fontSize, profile } = props;
   const styles = StyleSheet.create({
     title: {
       fontFamily: 'Montserrat Medium',
@@ -36,32 +37,22 @@ const Experiences: React.FC<IEducation> = (props) => {
     textTitleLeft: {
       fontSize: '7.81pt',
       marginBottom: '0.37cm',
+      fontFamily: 'Montserrat Medium',
+      color: '#252525',
+      width: '80%',
+    },
+    textTitleLeftTime: {
+      fontSize: '7.81pt',
+      marginBottom: '0.37cm',
       fontFamily: 'Montserrat Regular',
-      color:
-        color === 1
-          ? '#252525'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+      color: '#252525',
     },
     textTitleRight: {
       fontSize: '10pt',
       marginBottom: '0.18cm',
-      fontFamily: 'Montserrat Regular',
-      color:
-        color === 1
-          ? '#252525'
-          : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+      fontFamily: 'Montserrat Medium',
+      color: '#252525',
+      fontWeight: 'bold',
     },
     textRight: {
       fontSize: '7.81pt',
@@ -75,7 +66,12 @@ const Experiences: React.FC<IEducation> = (props) => {
     itemsText: {
       // display: 'flex',
     },
-
+    paragraph: {
+      // textIndent: 20,
+      fontSize: '7.81pt', // Độ lệch của gạch đầu dòng
+      whiteSpace: 'nowrap',
+      fontFamily: 'Montserrat Regular',
+    },
     itemText: {
       display: 'flex',
       flexDirection: 'row',
@@ -117,55 +113,45 @@ const Experiences: React.FC<IEducation> = (props) => {
   });
 
   const ExperienceCvEntry = () => (
-    <View
-      style={{ marginTop: '0.626cm', display: 'flex', flexDirection: 'row' }}
-    >
-      <View style={styles.columnLeft}>
-        <Text style={styles.textTitleLeft}>NeoWorks</Text>
-        <Text style={styles.textTitleLeft}>2017 - 2023</Text>
-      </View>
-      <View style={styles.columnRight}>
-        <View style={styles.itemRight}>
-          <Text style={styles.textTitleRight}>Operation manager</Text>
-          <View style={styles.itemsText}>
-            <View style={styles.itemText}>
-              <Text style={styles.textRight}>
-                <Text style={{ fontSize: '10pt' }}>+</Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-                fugit debitis, dignissimos delectus blanditiis aliquid doloribus
-                aut quas ipsa pariatur rem perspiciatis voluptate laboriosam
-                doloremque obcaecati dicta dolores repellat possimus.
-              </Text>
+    <View style={{ marginTop: '0.626cm' }}>
+      {profile &&
+        profile?.profilesEducations?.map((edu: any) => {
+          return (
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                // border: '1px solid #ccc',
+                // paddingBottom: '10mm',
+              }}
+            >
+              <View style={styles.columnLeft}>
+                <Text style={styles.textTitleLeft}>{edu?.companyName}</Text>
+                <Text style={styles.textTitleLeftTime}>
+                  {`${moment(edu?.startDate).format('YYYY')} - ${moment(
+                    edu?.endDate,
+                  ).format('YYYY')}`}
+                </Text>
+              </View>
+              <View style={styles.columnRight}>
+                <View style={styles.itemRight}>
+                  <Text style={styles.textTitleRight}>{edu?.major}</Text>
+                  <View style={styles.itemsText}>
+                    <View style={styles.itemText}>
+                      <Text style={styles.textRight}>
+                        <Text>+</Text>{' '}
+                        <Text style={styles.paragraph}>
+                          {edu?.extraInformation}
+                        </Text>
+                      </Text>
+                    </View>
+                    ;
+                  </View>
+                </View>
+              </View>
             </View>
-            <View style={styles.itemText}>
-              <Text style={styles.textRight}>
-                <Text style={{ fontSize: '10pt' }}>+</Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-                fugit debitis, dignissimos delectus blanditiis aliquid doloribus
-                aut quas ipsa pariatur rem perspiciatis
-              </Text>
-            </View>
-            <View style={styles.itemText}>
-              <Text style={styles.textRight}>
-                <Text style={{ fontSize: '10pt' }}>+</Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-                fugit debitis, dignissimos delectus blanditiis aliquid doloribus
-                aut quas ipsa pariatur rem perspiciatis voluptate laboriosam
-                doloremque obcaecati dicta dolores repellat possimus.
-              </Text>
-            </View>
-            <View style={styles.itemText}>
-              <Text style={styles.textRight}>
-                <Text style={{ fontSize: '10pt' }}>+</Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-                fugit debitis, dignissimos delectus blanditiis aliquid doloribus
-                aut quas ipsa pariatur rem perspiciatis voluptate laboriosam
-                doloremque obcaecati dicta dolores repellat possimus.
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
+          );
+        })}
     </View>
   );
   return (
@@ -205,7 +191,6 @@ const Experiences: React.FC<IEducation> = (props) => {
           }
         />
       </Svg>
-      <ExperienceCvEntry />
       <ExperienceCvEntry />
     </View>
   );

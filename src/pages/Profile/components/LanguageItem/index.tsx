@@ -5,6 +5,13 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Space } from 'antd';
 
+import {
+  setAlertSuccess,
+  setAlert,
+  setAlertLackInfo,
+  setAlertEditInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
+
 import './style.scss';
 import { DeleteIcon, SectionEditIcon } from '#components/Icons';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,6 +32,22 @@ interface ISkillItem {
   index: number;
   setLanguageValues: React.Dispatch<React.SetStateAction<any>>;
   languageValues: any;
+  setOpenModallanguages: React.Dispatch<React.SetStateAction<boolean>>;
+  openModallanguages: boolean;
+  setOpenModalEditlanguages: React.Dispatch<
+    React.SetStateAction<{
+      open: boolean;
+      id: null | number;
+      name: string;
+      idLevel: number | null;
+    }>
+  >;
+  openModalEditlanguages: {
+    open: boolean;
+    id: null | number;
+    name: string;
+    idLevel: number | null;
+  };
 }
 
 const LanguageItem: React.FC<ISkillItem> = (props) => {
@@ -34,7 +57,16 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { item, index, setLanguageValues, languageValues } = props;
+  const {
+    item,
+    index,
+    setLanguageValues,
+    languageValues,
+    openModallanguages,
+    setOpenModallanguages,
+    setOpenModalEditlanguages,
+    openModalEditlanguages,
+  } = props;
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -47,7 +79,10 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
         const resultProfile = await profileApi.getProfileV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
-        dispatch(setProfileV3(resultProfile));
+        if (resultProfile) {
+          dispatch(setProfileV3(resultProfile));
+          dispatch(setAlert(true));
+        }
       }
     } catch (error) {}
     // setLanguageValues(
@@ -57,9 +92,15 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
     // );
   };
 
-  const handleEditLanguage = (id: number) => {
-    setSearchParams({ idLanguage: id.toString() });
+  const handleEditLanguage = (
+    id: number,
+    idLevel: number | null,
+    name: string,
+  ) => {
+    setOpenModalEditlanguages({ open: true, id, idLevel, name });
   };
+
+  console.log('item', item);
 
   return (
     <div className="language-item-container">
@@ -99,19 +140,24 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
       </div>
       <div className="div-item-right">
         <Space
-          onClick={() => handleEditLanguage(item.id)}
+          onClick={() =>
+            handleEditLanguage(item.id, item.dataLevel.id, item.languageName)
+          }
           style={{ cursor: 'pointer', marginRight: '16px' }}
         >
           <div className="edit-icon">
             <SectionEditIcon width={16} height={16} />
           </div>
-          <p style={{ color: '#575757', fontSize: '14px' }}>
+          <p style={{ color: 'rgb(13, 153, 255)', fontSize: '14px' }}>
             {languageRedux === 1 ? 'Sửa' : 'Edit'}
           </p>
         </Space>
         <Space
           onClick={() => handleDeleteLanguage(item.id)}
-          style={{ cursor: 'pointer', marginRight: '16px' }}
+          style={{
+            cursor: 'pointer',
+            marginRight: '16px',
+          }}
         >
           <div className="edit-icon">
             <DeleteIcon width={15} height={15} />

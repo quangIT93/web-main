@@ -74,6 +74,7 @@ declare module 'react/jsx-runtime' {
   export default any
 }
 
+
 declare module '*.woff';
 declare module '*.woff2';
 

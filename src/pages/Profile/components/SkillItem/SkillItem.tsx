@@ -4,12 +4,19 @@ import React, { useState } from 'react';
 import { Space } from 'antd';
 
 import './styleSkillItem.scss';
-import { DeleteIcon } from '#components/Icons';
+import { DeleteIcon, SectionEditIcon } from '#components/Icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
 import apiCv from 'api/apiCv';
+
+import {
+  setAlertSuccess,
+  setAlert,
+  setAlertLackInfo,
+  setAlertEditInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
 interface ISkillItem {
   item: {
     dataLevel: {
@@ -22,6 +29,20 @@ interface ISkillItem {
   index: number;
   setSkillValues: React.Dispatch<React.SetStateAction<any>>;
   skillValues: any;
+  openModalEditSkills: {
+    open: boolean;
+    id: null | number;
+    name: string;
+    idLevel: number | null;
+  };
+  setOpenModalEditSkills: React.Dispatch<
+    React.SetStateAction<{
+      open: boolean;
+      id: null | number;
+      name: string;
+      idLevel: number | null;
+    }>
+  >;
 }
 
 const SkillItem: React.FC<ISkillItem> = (props) => {
@@ -31,7 +52,14 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { item, index, setSkillValues, skillValues } = props;
+  const {
+    item,
+    index,
+    setSkillValues,
+    skillValues,
+    setOpenModalEditSkills,
+    openModalEditSkills,
+  } = props;
   const dispatch = useDispatch();
   const handleDeleteSkill = async (id: number) => {
     const result = await apiCv.deleteProfileSkill([id]);
@@ -40,15 +68,25 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
         languageRedux === 1 ? 'vi' : 'en',
       );
       dispatch(setProfileV3(resultProfile));
+      dispatch(setAlert(true));
     }
     // setSkillValues(
     //   skillValues.filter((value: any, index: any) => {
     //     return index !== id;
     //   }),
     // );
-    console.log(id);
+    // console.log(id);
   };
-  console.log('itemSkillName', item.skillName);
+  // console.log('itemSkillName', item.skillName);
+  const handleEditSkills = (
+    id: number,
+    idLevel: number | null,
+    name: string,
+  ) => {
+    setOpenModalEditSkills({ open: true, id, idLevel, name });
+  };
+
+  console.log('item', item);
 
   return (
     <div className="skill-item-container">
@@ -91,6 +129,19 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
         </div>
       </div>
       <div className="div-item-right">
+        <Space
+          onClick={() =>
+            handleEditSkills(item.id, item.dataLevel.id, item.skillName)
+          }
+          style={{ cursor: 'pointer', marginRight: '16px' }}
+        >
+          <div className="edit-icon">
+            <SectionEditIcon width={16} height={16} />
+          </div>
+          <p style={{ color: 'rgb(13, 153, 255)', fontSize: '14px' }}>
+            {languageRedux === 1 ? 'Sửa' : 'Edit'}
+          </p>
+        </Space>
         <Space
           onClick={() => handleDeleteSkill(item.id)}
           style={{ cursor: 'pointer', marginRight: '16px' }}

@@ -17,6 +17,12 @@ import apiCv from 'api/apiCv';
 
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
+
+import {
+  setAlertSuccess,
+  setAlert,
+  setAlertLackInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
 interface IModalSkills {
   openModallanguages: boolean;
   setOpenModallanguages: React.Dispatch<React.SetStateAction<boolean>>;
@@ -51,8 +57,6 @@ const style = {
   },
 };
 
-console.log();
-
 const ModalLanguages: React.FC<IModalSkills> = (props) => {
   const { openModallanguages, setOpenModallanguages, setLanguageValues, type } =
     props;
@@ -78,50 +82,24 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
 
   const handleSubmit = async () => {
     try {
-      if (type === 'create') {
-        const result = await apiCv.postProfileLanguage(level, language);
-        if (result) {
-          const resultProfile = await profileApi.getProfileV3(
-            languageRedux === 1 ? 'vi' : 'en',
-          );
-          if (resultProfile) {
-            //   setLanguageValues((prev: any) => [
-            //     {
-            //       language: language,
-            //       level: level,
-            //     },
-            //     ...prev,
-            //   ]);
-            dispatch(setProfileV3(resultProfile));
-            setLanguage('');
-            setLevel(1);
-            setOpenModallanguages(false);
-          }
-        }
-      } else {
-        const idLanguageParam = searchParams.get('idLanguage');
-        const result = await apiCv.putProifileLanguage(
-          level,
-          language,
-          idLanguageParam ? parseInt(idLanguageParam) : 2,
+      const result = await apiCv.postProfileLanguage(level, language);
+      if (result) {
+        const resultProfile = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
         );
-        if (result) {
-          const resultProfile = await profileApi.getProfileV3(
-            languageRedux === 1 ? 'vi' : 'en',
-          );
-          if (resultProfile) {
-            //   setLanguageValues((prev: any) => [
-            //     {
-            //       language: language,
-            //       level: level,
-            //     },
-            //     ...prev,
-            //   ]);
-            dispatch(setProfileV3(resultProfile));
-            setLanguage('');
-            setLevel(1);
-            setOpenModallanguages(false);
-          }
+        if (resultProfile) {
+          //   setLanguageValues((prev: any) => [
+          //     {
+          //       language: language,
+          //       level: level,
+          //     },
+          //     ...prev,
+          //   ]);
+          dispatch(setProfileV3(resultProfile));
+          setLanguage('');
+          setLevel(1);
+          setOpenModallanguages(false);
+          dispatch(setAlertSuccess(true));
         }
       }
     } catch (error) {}
@@ -160,7 +138,11 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {languageRedux === 1 ? 'Thêm ngoại ngữ' : 'Add languages'}
+          {languageRedux === 1
+            ? 'Thêm ngoại ngữ'
+            : languageRedux === 0 && searchParams.get('type') === 'create'
+            ? 'Add Languages'
+            : ''}
         </Typography>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography

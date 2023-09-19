@@ -23,8 +23,20 @@ import {
 } from 'store/reducer/profileReducer/alertProfileReducer';
 
 interface IModalSkills {
-  openModalSkills: boolean;
-  setOpenModalSkills: React.Dispatch<React.SetStateAction<boolean>>;
+  openModalEditSkills: {
+    open: boolean;
+    id: null | number;
+    name: string;
+    idLevel: number | null;
+  };
+  setOpenModalEditSkills: React.Dispatch<
+    React.SetStateAction<{
+      open: boolean;
+      id: null | number;
+      name: string;
+      idLevel: number | null;
+    }>
+  >;
   setSkillValues: React.Dispatch<React.SetStateAction<any>>;
 }
 
@@ -55,8 +67,8 @@ const style = {
   },
 };
 
-const ModalSkills: React.FC<IModalSkills> = (props) => {
-  const { openModalSkills, setOpenModalSkills, setSkillValues } = props;
+const ModalEditSkills: React.FC<IModalSkills> = (props) => {
+  const { openModalEditSkills, setOpenModalEditSkills, setSkillValues } = props;
   const dispatch = useDispatch();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -74,19 +86,33 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
     setLevel(e.target.value);
   };
 
+  React.useEffect(() => {
+    setSkill(openModalEditSkills.name);
+    setLevel(openModalEditSkills.idLevel);
+  }, [openModalEditSkills]);
+
   const handleSubmit = async () => {
     try {
-      const result = await apiCv.postProfileSkill(level, skill);
+      const result = await apiCv.putProfileSkill(
+        level,
+        skill,
+        openModalEditSkills.id,
+      );
       if (result) {
         const resultProfile = await profileApi.getProfileV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (resultProfile) {
-          setOpenModalSkills(false);
+          setOpenModalEditSkills({
+            open: false,
+            id: openModalEditSkills.id,
+            idLevel: level,
+            name: skill,
+          });
           setSkill('');
           setLevel(1);
           dispatch(setProfileV3(resultProfile));
-          dispatch(setAlertSuccess(true));
+          dispatch(setAlertEditInfo(true));
         }
       }
     } catch (error) {
@@ -95,12 +121,12 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
   };
 
   const handleClose = () => {
-    setOpenModalSkills(false);
+    setOpenModalEditSkills({ open: false, id: null, idLevel: null, name: '' });
   };
 
   return (
     <Modal
-      open={openModalSkills}
+      open={openModalEditSkills.open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -127,7 +153,7 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {languageRedux === 1 ? 'Thêm kỹ năng' : 'Add Skills'}
+          {languageRedux === 1 ? 'Sửa kỹ năng' : 'Edit Skills'}
         </Typography>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -198,4 +224,4 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
   );
 };
 
-export default ModalSkills;
+export default ModalEditSkills;

@@ -8,7 +8,6 @@ import { message } from 'antd';
 // import component
 // @ts-ignore
 import { Navbar } from '#components';
-
 import EditLogoCompany from './components/EditLogoCompany';
 import EditNameTaxCompany from './components/EditNameTaxCompany';
 import EditAddressCompany from './components/EditAddressCompany';
@@ -208,11 +207,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -444,6 +443,7 @@ const Company: React.FC<ICompany> = (props) => {
         >
           <div className="company-title_top">
             <h1>{language?.company_info}</h1>
+
             <Space
               style={{
                 cursor: 'pointer',

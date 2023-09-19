@@ -52,6 +52,9 @@ interface IContentListCv {
 
 const ContentListCv: React.FC<IContentListCv> = (props) => {
   const { colorCV, fontSizeCV } = props;
+
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -69,7 +72,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     {
       document: TemplateId === 0 ?
         <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} />
+        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
     }
   );
   const [pageNumber, setPageNumber] = React.useState<number>(1);
@@ -97,7 +100,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   React.useEffect(() => {
     updateInstance(TemplateId === 0 ?
       <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-      <CvTemplate2 color={colorCV} fontSize={fontSizeCV} />);
+      <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />);
   }, [colorCV, TemplateId, profile]);
 
   React.useEffect(() => {
@@ -256,54 +259,29 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           </div>
         </div>
         <div className="contentCv-bottom-right_cv">
-          {/* <Avatar shape="square" icon={<UserOutlined />} />
-          <Avatar shape="square" icon={<UserOutlined />} /> */}
-          {/* <PDFViewer showToolbar={false}
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            <CvTemplate1
-              color={colorCV}
-              fontSize={fontSizeCV}
-            />
-          </PDFViewer> */}
-          {/* <BlobProvider document={
-            <CvTemplate1
-              color={colorCV}
-              fontSize={fontSizeCV}
-            />
-          }>
-            {({ blob, url, loading, error }) => {
-              // Do whatever you need with blob here
-              console.log(url);
-              return (
-                url &&
-                <img src={url} alt="" />
-              )
-            }}
-          </BlobProvider> */}
-          <Document
-            loading={<Spin indicator={antIcon} />}
-            noData={<Spin indicator={antIcon} />}
-            file={instance.url}
-            onLoadSuccess={onDocumentLoadSuccess}
-            className="page-cv-wrapper"
-          >
-            {Array.apply(null, Array(numPages))
-              .map((x, i) => i + 1)
-              .map((page) => (
-                <Page
-                  className="page-cv"
-                  loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
-                  noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
-                  pageNumber={page}
-                  renderAnnotationLayer={false}
-                  renderTextLayer={false}
-                />
-              ))}
-          </Document>
+          {profileV3 && (
+            <Document
+              loading={<Spin indicator={antIcon} />}
+              noData={<Spin indicator={antIcon} />}
+              file={instance.url}
+              onLoadSuccess={onDocumentLoadSuccess}
+              className="page-cv-wrapper"
+            >
+              {Array.apply(null, Array(numPages))
+                .map((x, i) => i + 1)
+                .map((page) => (
+                  <Page
+                    className="page-cv"
+                    loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                    noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                    pageNumber={page}
+                    renderAnnotationLayer={false}
+                    renderTextLayer={false}
+                  />
+                ))}
+            </Document>
+          )}
+          {/* <CvTemplate3 /> */}
         </div>
         {/* <Avatar shape="square" icon={<UserOutlined />} />
           <Avatar shape="square" icon={<UserOutlined />} /> */}
