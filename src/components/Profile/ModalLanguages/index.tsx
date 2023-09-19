@@ -17,6 +17,12 @@ import apiCv from 'api/apiCv';
 
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
+
+import {
+  setAlertSuccess,
+  setAlert,
+  setAlertLackInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
 interface IModalSkills {
   openModallanguages: boolean;
   setOpenModallanguages: React.Dispatch<React.SetStateAction<boolean>>;
@@ -93,6 +99,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
           setLanguage('');
           setLevel(1);
           setOpenModallanguages(false);
+          dispatch(setAlertSuccess(true));
         }
       }
     } catch (error) {}

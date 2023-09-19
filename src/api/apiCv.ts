@@ -126,6 +126,68 @@ const apiCv = {
         )
     },
 
+    deleteProfileHobbies: () => {
+        const URL = `/v3/profiles-hobbies`
+        return axiosClient.delete(
+            URL,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    // 'Content-Type': 'multipart/form-data',
+                },
+            }
+        )
+    },
+
+    // reference
+    postProfileReference: (fullName: string, phone: string, email: string) => {
+        const URL = `/v3/profiles-references`
+        return axiosClient.post(
+            URL,
+            {
+                fullName,
+                phone,
+                email
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    // 'Content-Type': 'multipart/form-data',
+                },
+            }
+        )
+    },
+    deleteProfileReference: (ids: number[]) => {
+        const URL = `/v3/profiles-references`
+        return axiosClient.delete(
+            URL,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+                data: { ids },
+            
+            }
+        )
+    },
+    putProfileReference: (fullName: string,phone: string, email:  string, id: number | null  ) => {
+        const URL = `/v3/profiles-references/${id}`
+        return axiosClient.put(
+            URL,
+            {
+                fullName,
+                phone,
+                email
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    // 'Content-Type': 'multipart/form-data',
+                },
+            }
+        )
+    },
+
     
 }
 

@@ -27,10 +27,11 @@ import SocialCv from './sections/SocialCv';
 interface CvTemplate {
   color: any;
   fontSize: number;
+  profile: any;
 }
 
 const index: React.FC<CvTemplate> = (props) => {
-  const { color, fontSize } = props;
+  const { color, fontSize, profile } = props;
 
   const styles = StyleSheet.create({
     page: {
@@ -61,6 +62,24 @@ const index: React.FC<CvTemplate> = (props) => {
       flexDirection: 'row',
       // height: '100%',
     },
+    pageNumber: {
+      position: 'absolute',
+      fontSize: 12,
+      bottom: 10,
+      left: 0,
+      right: 0,
+      textAlign: 'center',
+      color: 'grey',
+    },
+    hijob: {
+      position: 'absolute',
+      fontSize: 12,
+      bottom: 10,
+      // left: 0,
+      right: 10,
+      textAlign: 'center',
+      color: '#0D99FF',
+    },
   });
 
   Font.register({
@@ -87,29 +106,51 @@ const index: React.FC<CvTemplate> = (props) => {
                     style={styles.image}
                 /> */}
           <View style={styles.container}>
-            <HeaderCv color={color} fontSize={fontSize} />
+            <HeaderCv color={color} fontSize={fontSize} profile={profile} />
             <View style={styles.content}>
               <View style={{ width: '30%', marginRight: '2.053cm' }}>
-                <ProfileCv color={color} fontSize={fontSize} />
-                <ContactCv
-                  address="tphcm"
-                  mobile="0911893144"
-                  mail="khong co"
+                <ProfileCv
                   color={color}
                   fontSize={fontSize}
+                  profile={profile}
                 />
-                <SkillsCv color={color} fontSize={fontSize} />
+                <ContactCv
+                  color={color}
+                  fontSize={fontSize}
+                  profile={profile}
+                />
+                <SkillsCv color={color} fontSize={fontSize} profile={profile} />
                 <SocialCv color={color} fontSize={fontSize} />
                 {/* </> */}
               </View>
               <View style={{ width: '70%' }}>
-                <Experiences color={color} fontSize={fontSize} />
-                <Education color={color} fontSize={fontSize} />
+                <Experiences
+                  color={color}
+                  fontSize={fontSize}
+                  profile={profile}
+                />
+                <Education
+                  color={color}
+                  fontSize={fontSize}
+                  profile={profile}
+                />
               </View>
             </View>
           </View>
         </View>
       </View>
+      <Text
+        style={styles.pageNumber}
+        render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+        fixed
+      />
+
+      {/* <Text style={styles.hijob}>hijob.site</Text> */}
+      <Text
+        style={styles.hijob}
+        render={({ pageNumber, totalPages }) => `hijob.site`}
+        fixed
+      />
     </Page>
   );
 

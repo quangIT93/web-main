@@ -3,15 +3,16 @@ import { Text, View, StyleSheet, Image, Svg, Line } from '@react-pdf/renderer';
 
 // import List, { Item } from './List';
 
-import profile from '../../images/template2/profile.png';
+import profileImage from '../../images/template2/profile.png';
 
 interface IProfileCv {
   color: number;
   fontSize: number;
+  profile: any;
 }
 
 const ProfileCv: React.FC<IProfileCv> = (props) => {
-  const { color, fontSize } = props;
+  const { color, fontSize, profile } = props;
   console.log('color: ', color);
 
   const styles = StyleSheet.create({
@@ -76,7 +77,7 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
         textAlign: 'justify', // Căn đều văn bản
       }}
     >
-      <Text style={styles.text}>{introduce}</Text>
+      <Text style={styles.text}>{profile.introduction}</Text>
     </View>
   );
 
@@ -92,7 +93,7 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
         }}
       >
         {/* <Image src="./images/image 51.png" style={styles.image} /> */}
-        <Image style={styles.image} src={profile} />
+        <Image style={styles.image} src={profileImage} />
         <Text
           // style={{
           //   marginLeft: '0.4cm',

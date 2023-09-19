@@ -8,7 +8,7 @@ import { message } from 'antd';
 // import component
 // @ts-ignore
 import { Navbar } from '#components';
-
+import { useReactToPrint } from 'react-to-print';
 import EditLogoCompany from './components/EditLogoCompany';
 import EditNameTaxCompany from './components/EditNameTaxCompany';
 import EditAddressCompany from './components/EditAddressCompany';
@@ -444,6 +444,7 @@ const Company: React.FC<ICompany> = (props) => {
         >
           <div className="company-title_top">
             <h1>{language?.company_info}</h1>
+
             <Space
               style={{
                 cursor: 'pointer',

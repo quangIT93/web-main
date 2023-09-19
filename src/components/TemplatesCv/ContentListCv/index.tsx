@@ -36,6 +36,7 @@ import CvTemplate1 from '../CvTemplate/CvTemplate1';
 import CvTemplate2 from '../CvTemplate/CvTemplate2';
 import { usePDF, StyleSheet } from '@react-pdf/renderer';
 import { Document, Page, pdfjs } from 'react-pdf';
+import CvTemplate3 from '../CvTemplate/CvTemplate3';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/legacy/build/pdf.worker.min.js',
@@ -52,6 +53,9 @@ interface IContentListCv {
 
 const ContentListCv: React.FC<IContentListCv> = (props) => {
   const { colorCV, fontSizeCV } = props;
+
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -61,7 +65,9 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [cvId, setCvId] = React.useState<any>(1);
   const [instance, updateInstance] = usePDF({
-    document: <CvTemplate2 color={colorCV} fontSize={fontSizeCV} />,
+    document: (
+      <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profileV3} />
+    ),
   });
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [numPages, setNumPages] = React.useState<number>();
@@ -86,8 +92,10 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   }
 
   React.useEffect(() => {
-    updateInstance(<CvTemplate2 color={colorCV} fontSize={fontSizeCV} />);
-  }, [colorCV]);
+    updateInstance(
+      <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profileV3} />,
+    );
+  }, [colorCV, profileV3]);
 
   React.useEffect(() => {
     getDataParentCategory();
@@ -225,54 +233,29 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           </div>
         </div>
         <div className="contentCv-bottom-right_cv">
-          {/* <Avatar shape="square" icon={<UserOutlined />} />
-          <Avatar shape="square" icon={<UserOutlined />} /> */}
-          {/* <PDFViewer showToolbar={false}
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            <CvTemplate1
-              color={colorCV}
-              fontSize={fontSizeCV}
-            />
-          </PDFViewer> */}
-          {/* <BlobProvider document={
-            <CvTemplate1
-              color={colorCV}
-              fontSize={fontSizeCV}
-            />
-          }>
-            {({ blob, url, loading, error }) => {
-              // Do whatever you need with blob here
-              console.log(url);
-              return (
-                url &&
-                <img src={url} alt="" />
-              )
-            }}
-          </BlobProvider> */}
-          <Document
-            loading={<Spin indicator={antIcon} />}
-            noData={<Spin indicator={antIcon} />}
-            file={instance.url}
-            onLoadSuccess={onDocumentLoadSuccess}
-            className="page-cv-wrapper"
-          >
-            {Array.apply(null, Array(numPages))
-              .map((x, i) => i + 1)
-              .map((page) => (
-                <Page
-                  className="page-cv"
-                  loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
-                  noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
-                  pageNumber={page}
-                  renderAnnotationLayer={false}
-                  renderTextLayer={false}
-                />
-              ))}
-          </Document>
+          {profileV3 && (
+            <Document
+              loading={<Spin indicator={antIcon} />}
+              noData={<Spin indicator={antIcon} />}
+              file={instance.url}
+              onLoadSuccess={onDocumentLoadSuccess}
+              className="page-cv-wrapper"
+            >
+              {Array.apply(null, Array(numPages))
+                .map((x, i) => i + 1)
+                .map((page) => (
+                  <Page
+                    className="page-cv"
+                    loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                    noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                    pageNumber={page}
+                    renderAnnotationLayer={false}
+                    renderTextLayer={false}
+                  />
+                ))}
+            </Document>
+          )}
+          {/* <CvTemplate3 /> */}
         </div>
         {/* <Avatar shape="square" icon={<UserOutlined />} />
           <Avatar shape="square" icon={<UserOutlined />} /> */}

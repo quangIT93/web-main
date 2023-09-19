@@ -5,10 +5,11 @@ import { Image, Text, View, StyleSheet, Svg, Line } from '@react-pdf/renderer';
 interface IHeaderCv {
   fontSize: number;
   color: number;
+  profile: any;
 }
 
 const HeaderCv: React.FC<IHeaderCv> = (props) => {
-  const { fontSize, color } = props;
+  const { fontSize, color, profile } = props;
   const styles = StyleSheet.create({
     header: {
       display: 'flex',
@@ -54,8 +55,10 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
           justifyContent: 'center',
         }}
       >
-        <Text style={styles.name}>Nguyễn</Text>
-        <Text style={styles.name}>Minh Quang</Text>
+        <Text style={styles.name}>{profile?.name?.split(' ').slice(0, 1)}</Text>
+        <Text style={styles.name}>
+          {profile?.name?.split(' ').slice(1, 3).join(' ')}
+        </Text>
 
         <Svg height="1cm" width="100%">
           <Line
@@ -103,7 +106,7 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
       </View>
 
       <Image
-        src="./images/image 51.png"
+        src={profile.avatarPath}
         style={{ width: '5cm', height: '4.5cm' }}
       />
       {/* <View style={{ width: '5cm', height: '4.5cm' }}>

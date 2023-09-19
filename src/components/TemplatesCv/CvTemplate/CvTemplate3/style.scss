@@ -1,0 +1,40 @@
+.container-cv {
+    // width: 210mm;
+    // min-height: 297mm;
+    // padding: 10mm;
+    // margin: 10mm auto;
+
+    width: 100%; /* Chắc chắn rằng nội dung của CV chiếm hết chiều rộng của phần cha */
+  height: 100%; /* Chắc chắn rằng nội dung của CV chiếm hết chiều cao của phần cha */
+//   transform-origin: top left; /* Đặt điểm gốc của việc thu/phóng ở góc trái trên */
+//   transform: scale(0.5); /* Điều chỉnh tỉ lệ thu/phóng theo nhu cầu (0.8 là ví dụ) */
+    
+    .header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .header-left {
+            width: 100%;
+            .header-left_name {
+                font-size: 24px;
+                border-bottom: 1px solid #ccc;
+            }
+        }
+
+        .header-right {
+
+        }
+    }
+
+    .content {
+        display: flex;
+        .content-left {
+            width: 30%;
+        }
+
+        .content-right {
+            width: 65%;
+        }
+    }
+}

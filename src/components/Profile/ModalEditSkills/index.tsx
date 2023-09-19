@@ -15,6 +15,13 @@ import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
 import apiCv from 'api/apiCv';
 
+import {
+  setAlertSuccess,
+  setAlert,
+  setAlertLackInfo,
+  setAlertEditInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
+
 interface IModalSkills {
   openModalEditSkills: {
     open: boolean;
@@ -105,6 +112,7 @@ const ModalEditSkills: React.FC<IModalSkills> = (props) => {
           setSkill('');
           setLevel(1);
           dispatch(setProfileV3(resultProfile));
+          dispatch(setAlertEditInfo(true));
         }
       }
     } catch (error) {

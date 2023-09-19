@@ -5,6 +5,13 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Space } from 'antd';
 
+import {
+  setAlertSuccess,
+  setAlert,
+  setAlertLackInfo,
+  setAlertEditInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
+
 import './style.scss';
 import { DeleteIcon, SectionEditIcon } from '#components/Icons';
 import { useSelector, useDispatch } from 'react-redux';
@@ -72,7 +79,10 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
         const resultProfile = await profileApi.getProfileV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
-        dispatch(setProfileV3(resultProfile));
+        if (resultProfile) {
+          dispatch(setProfileV3(resultProfile));
+          dispatch(setAlert(true));
+        }
       }
     } catch (error) {}
     // setLanguageValues(

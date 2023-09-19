@@ -6,11 +6,9 @@ import { ContactCvIcon } from '#components/Icons/iconCv';
 
 import contact from '../../images/template2/contact.png';
 interface ISkills {
-  address: string;
-  mobile: string;
-  mail: string;
   fontSize: any;
   color: number;
+  profile: any;
 }
 
 const svgToImageObject = (
@@ -39,7 +37,7 @@ const svgToImageObject = (
 );
 
 const ContactCv: React.FC<ISkills> = (props) => {
-  const { color, fontSize } = props;
+  const { color, fontSize, profile } = props;
 
   const styles = StyleSheet.create({
     title: {
@@ -112,28 +110,20 @@ const ContactCv: React.FC<ISkills> = (props) => {
     },
   });
 
-  const ContactCvEntry = ({
-    address,
-    mobile,
-    mail,
-  }: {
-    address: string;
-    mobile: string;
-    mail: string;
-  }) => (
+  const ContactCvEntry = () => (
     <View style={{ marginTop: '0.626cm' }}>
-      <View>
+      <View style={{ marginBottom: '2mm' }}>
         <Text style={styles.titleItem}>Address:</Text>
-        <Text style={styles.text}>{address}</Text>
+        <Text style={styles.text}>{profile?.addressText?.fullName}</Text>
       </View>
-      <View>
+      <View style={{ marginBottom: '2mm' }}>
         <Text style={styles.titleItem}>Number Phone:</Text>
-        <Text style={styles.text}>{mobile}</Text>
+        <Text style={styles.text}>{profile?.phone}</Text>
       </View>
 
-      <View>
+      <View style={{ marginBottom: '2mm' }}>
         <Text style={styles.titleItem}>Mail:</Text>
-        <Text style={styles.text}>{mail}</Text>
+        <Text style={styles.text}>{profile?.email}</Text>
       </View>
     </View>
   );
@@ -185,11 +175,7 @@ const ContactCv: React.FC<ISkills> = (props) => {
           }
         />
       </Svg>
-      <ContactCvEntry
-        address={props.address}
-        mobile={props.mobile}
-        mail={props.mail}
-      />
+      <ContactCvEntry />
     </View>
   );
 };

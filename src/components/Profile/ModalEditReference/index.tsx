@@ -15,12 +15,25 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import apiCv from 'api/apiCv';
 import profileApi from 'api/profileApi';
-
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 interface IModalReference {
-  openModalReference: boolean;
-  setOpenModalReference: React.Dispatch<React.SetStateAction<boolean>>;
+  openModalEditReference: {
+    open: boolean;
+    name: string;
+    email: string;
+    phone: string;
+    id: null | number;
+  };
+  setOpenModalEditReference: React.Dispatch<
+    React.SetStateAction<{
+      open: boolean;
+      name: string;
+      email: string;
+      phone: string;
+      id: null | number;
+    }>
+  >;
   setReferenceValues: React.Dispatch<React.SetStateAction<any>>;
 }
 
@@ -41,7 +54,6 @@ const style = {
   '@media (max-width: 375px)': {
     width: 300,
   },
-
   '@media (min-width: 400px) and (max-width: 639px)': {
     width: 410,
   },
@@ -51,20 +63,31 @@ const style = {
   },
 };
 
-const ModalReference: React.FC<IModalReference> = (props) => {
-  const { openModalReference, setOpenModalReference, setReferenceValues } =
-    props;
+const ModalEditReference: React.FC<IModalReference> = (props) => {
+  const {
+    openModalEditReference,
+    setOpenModalEditReference,
+    setReferenceValues,
+  } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   const [fullName, setFullName] = React.useState<any>();
   const [company, setCompany] = React.useState<any>();
   const [phone, setPhone] = React.useState<any>();
   const [mail, setMail] = React.useState<any>();
+
+  React.useEffect(() => {
+    setPhone(openModalEditReference.phone);
+    setFullName(openModalEditReference.name);
+    setMail(openModalEditReference.email);
+  }, [profileV3]);
 
   const dispatch = useDispatch();
 
@@ -82,39 +105,56 @@ const ModalReference: React.FC<IModalReference> = (props) => {
   };
 
   const handleSubmit = async () => {
-    // setReferenceValues((prev: any) => [
-    //     {
-    //         fullName: fullName,
-    //         company: company,
-    //     },
-    //     ...prev
-    // ])
-
     try {
-      const result = await apiCv.postProfileReference(fullName, phone, mail);
+      const result = await apiCv.putProfileReference(
+        fullName,
+        phone,
+        mail,
+        openModalEditReference.id,
+      );
       if (result) {
         const resultProfile = await profileApi.getProfileV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (resultProfile) {
           dispatch(setProfileV3(resultProfile));
-          setFullName('');
-          setCompany('');
-          setPhone('');
-          setMail('');
-          setOpenModalReference(false);
         }
       }
     } catch (error) {}
+
+    // setReferenceValues((prev: any) => [
+    //   {
+    //     fullName: fullName,
+    //     company: company,
+    //   },
+    //   ...prev,
+    // ]);
+    setFullName('');
+    setCompany('');
+    setPhone('');
+    setMail('');
+    setOpenModalEditReference({
+      open: false,
+      name: '',
+      email: '',
+      phone: '',
+      id: null,
+    });
   };
 
   const handleClose = () => {
-    setOpenModalReference(false);
+    setOpenModalEditReference({
+      open: false,
+      name: '',
+      email: '',
+      phone: '',
+      id: null,
+    });
   };
 
   return (
     <Modal
-      open={openModalReference}
+      open={openModalEditReference.open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -174,28 +214,6 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            {languageRedux === 1 ? 'Công ty' : 'Company'}{' '}
-            <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            type="text"
-            id="skill"
-            name="skill"
-            value={company}
-            onChange={handleOnchangeCompany}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={languageRedux === 1 ? 'Tên công ty' : "Company's name"}
-            // error={titleError} // Đánh dấu lỗi
-          />
-        </Box>
-        <Box sx={{ marginBottom: '12px' }}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
-          >
             {languageRedux === 1 ? 'Số điện thoại' : 'Phone number'}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
@@ -241,4 +259,4 @@ const ModalReference: React.FC<IModalReference> = (props) => {
   );
 };
 
-export default ModalReference;
+export default ModalEditReference;

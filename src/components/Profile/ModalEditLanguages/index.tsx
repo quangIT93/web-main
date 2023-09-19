@@ -15,6 +15,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
 import apiCv from 'api/apiCv';
 
+import {
+  setAlertSuccess,
+  setAlert,
+  setAlertLackInfo,
+  setAlertEditInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
+
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
 interface IModalSkills {
@@ -119,6 +126,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
           dispatch(setProfileV3(resultProfile));
           setLanguage('');
           setLevel(1);
+          dispatch(setAlertEditInfo(true));
         }
       }
     } catch (error) {}

@@ -16,10 +16,11 @@ import skill from '../../images/template2/skill.png';
 interface ISkill {
   color: number;
   fontSize: any;
+  profile: any;
 }
 
 const SkillsCv: React.FC<ISkill> = (props) => {
-  const { color, fontSize } = props;
+  const { color, fontSize, profile } = props;
 
   const styles = StyleSheet.create({
     title: {
@@ -82,14 +83,15 @@ const SkillsCv: React.FC<ISkill> = (props) => {
     },
   });
 
-  const SkillsCvEntry = ({ skills }: { skills: string[] }) => (
+  const SkillsCvEntry = () => (
     <View style={{ marginTop: '0.626cm' }}>
-      {skills.map((sk) => (
+      {profile?.profilesSkills?.map((sk: any) => (
         <View
           style={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'flex-start',
+            marginBottom: '2mm',
           }}
         >
           <Svg viewBox="0 0 2 2" style={{ width: 10 }}>
@@ -112,7 +114,7 @@ const SkillsCv: React.FC<ISkill> = (props) => {
             />
           </Svg>
           <Text style={styles.textSkill} wrap={true}>
-            {sk}
+            {sk.skillName}
           </Text>
         </View>
       ))}
@@ -155,14 +157,7 @@ const SkillsCv: React.FC<ISkill> = (props) => {
           }
         />
       </Svg>
-      <SkillsCvEntry
-        skills={[
-          'Học tập tốt',
-          'Lao động tốt',
-          'ssssssss s s ssssssss ssssssss ssssssss sssssss ssssssss sssssssss ssssssss ssssss sssssssss',
-          'kiêm tốn thật thà dũng cảm',
-        ]}
-      />
+      <SkillsCvEntry />
     </View>
   );
 };

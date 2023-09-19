@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../../../../store/reducer';
 
+import { IconSaveProfile } from '#components/Icons';
+
 // api
 import apiCv from 'api/apiCv';
 import profileApi from 'api/profileApi';
@@ -31,6 +33,7 @@ import ModalEditLanguages from '#components/Profile/ModalEditLanguages';
 import { Box, Grid } from '@mui/material';
 import { Input } from 'antd';
 import ModalReference from '#components/Profile/ModalReference';
+import ModalEditReference from '#components/Profile/ModalEditReference';
 import ReferenceItem from '../ReferenceItem';
 import ModalInternship from '#components/Profile/ModalInternship';
 import InternshipItem from '../InternshipItem';
@@ -40,6 +43,15 @@ import CourseItem from '../CourseItem';
 import ModalAward from '#components/Profile/ModalAward';
 import AwardItem from '../AwardItem';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+
+import {
+  setAlertSuccess,
+  setAlert,
+  setAlertLackInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
+
+import { async } from 'q';
+
 const { TextArea } = Input;
 
 interface ISectionCv {
@@ -66,7 +78,9 @@ interface Ilanguages {
 }
 interface IReferences {
   fullName: string;
-  company: string;
+  phone: string;
+  id: number;
+  email: string;
 }
 interface IInternship {
   title: string;
@@ -90,7 +104,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
   const { loading, languageRedux, language } = props;
   const [skillValues, setSkillValues] = useState<any[]>([]);
   const [languageValues, setLanguageValues] = useState<any[]>([]);
-  const [hobbieValues, setHobbieValues] = useState<any>('');
+  const [hobbieValues, setHobbieValues] = useState<any>();
   const [referenceValues, setReferenceValues] = useState<any[]>([]);
   const [internshipValues, setInternshipValues] = useState<any[]>([]);
   const [activityValues, setActivityValues] = useState<any[]>([]);
@@ -124,6 +138,19 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
     idLevel: null,
   });
   const [openModalReference, setOpenModalReference] = useState(false);
+  const [openModalEditReference, setOpenModalEditReference] = useState<{
+    open: boolean;
+    name: string;
+    email: string;
+    phone: string;
+    id: number | null;
+  }>({
+    open: false,
+    name: '',
+    email: '',
+    phone: '',
+    id: null,
+  });
   const [openModalInternship, setOpenModalInternship] = useState(false);
   const [openModalActivity, setOpenModalActivity] = useState(false);
   const [openModalCourse, setOpenModalCourse] = useState(false);
@@ -175,7 +202,34 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (resultProfile) {
+            dispatch(setAlert(true));
             dispatch(setProfileV3(resultProfile));
+          }
+        }
+
+        // profileV3.profilesLanguages.map(
+        //   (item: {
+        //     id: number;
+        //     languageName: string;
+        //     dataLevel: {
+        //       id: number;
+        //       data: string;
+        //     };
+        //   }) => {
+        //   },
+        // );
+      }
+
+      if (section === 2) {
+        const result = await apiCv.deleteProfileHobbies();
+        if (result) {
+          const resultProfile = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (resultProfile) {
+            dispatch(setProfileV3(resultProfile));
+            dispatch(setAlert(true));
+            setHobbieValues('');
           }
         }
 
@@ -203,6 +257,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         );
         if (resultProfile) {
           dispatch(setProfileV3(resultProfile));
+          dispatch(setAlert(true));
         }
       }
     }
@@ -220,6 +275,28 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
       sections?.appendChild(section_div);
     }
   };
+
+  const handleSaveHobbies = async () => {
+    try {
+      if (hobbieValues === '' || hobbieValues === undefined) {
+        dispatch(setAlertLackInfo(true));
+        return;
+      }
+      const result = await apiCv.postProfileHobbies(hobbieValues);
+      if (result) {
+        const resultProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (resultProfileV3) {
+          // dispatch(setProfileV3(resultProfileV3));
+          dispatch(setAlertSuccess(true));
+        }
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
   return (
     <>
       <Skeleton className="skeleton-item" loading={loading} active>
@@ -429,6 +506,20 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   </div>
                 </div>
               </div>
+              <div
+                className="profile-save"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  color: 'rgb(13, 153, 255)',
+                  cursor: 'pointer',
+                }}
+                onClick={handleSaveHobbies}
+              >
+                Save
+                <IconSaveProfile />
+              </div>
             </div>
             <div className="hobbie-input">
               <p>
@@ -439,6 +530,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <TextArea
                 value={hobbieValues}
                 onKeyDown={(e: any) => handleKeyPress(e)}
+                defaultValue={
+                  profileV3 && profileV3?.profileHobbies?.description
+                }
                 // onPressEnter={(e: any) => handleKeyPress(e)}
                 onChange={handleOnChangeHobbie}
                 placeholder={
@@ -447,6 +541,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                     : 'Ex: Music, Painting, Dancing'
                 }
                 autoSize={{ minRows: 6, maxRows: 9 }}
+                onError={() => {
+                  dispatch(setAlertLackInfo(true));
+                }}
               />
             </div>
           </div>
@@ -487,17 +584,23 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               </div>
             </div>
             <div className="skill-list">
-              {referenceValues && referenceValues?.length !== 0 ? (
-                referenceValues?.map((item: IReferences, index: number) => (
-                  <div className="skill-item" key={index}>
-                    <ReferenceItem
-                      item={item}
-                      index={index}
-                      setReferenceValues={setReferenceValues}
-                      referenceValues={referenceValues}
-                    />
-                  </div>
-                ))
+              {profileV3 && profileV3?.profilesReferences?.length !== 0 ? (
+                profileV3?.profilesReferences?.map(
+                  (item: IReferences, index: number) => (
+                    <div className="skill-item" key={index}>
+                      <ReferenceItem
+                        item={item}
+                        index={index}
+                        setReferenceValues={setReferenceValues}
+                        referenceValues={referenceValues}
+                        openModalReference={openModalReference}
+                        setOpenModalReference={setOpenModalReference}
+                        openModalEditReference={openModalEditReference}
+                        setOpenModalEditReference={setOpenModalEditReference}
+                      />
+                    </div>
+                  ),
+                )
               ) : (
                 <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
               )}
@@ -524,6 +627,12 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
           <ModalReference
             openModalReference={openModalReference}
             setOpenModalReference={setOpenModalReference}
+            setReferenceValues={setReferenceValues}
+          />
+
+          <ModalEditReference
+            openModalEditReference={openModalEditReference}
+            setOpenModalEditReference={setOpenModalEditReference}
             setReferenceValues={setReferenceValues}
           />
         </Skeleton>

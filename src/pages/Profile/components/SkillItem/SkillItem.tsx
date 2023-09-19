@@ -10,6 +10,13 @@ import { RootState } from 'store';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
 import apiCv from 'api/apiCv';
+
+import {
+  setAlertSuccess,
+  setAlert,
+  setAlertLackInfo,
+  setAlertEditInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
 interface ISkillItem {
   item: {
     dataLevel: {
@@ -61,6 +68,7 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
         languageRedux === 1 ? 'vi' : 'en',
       );
       dispatch(setProfileV3(resultProfile));
+      dispatch(setAlert(true));
     }
     // setSkillValues(
     //   skillValues.filter((value: any, index: any) => {

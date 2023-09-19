@@ -40,6 +40,8 @@ const TemplatesCv: React.FC = () => {
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
 
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   React.useEffect(() => {
     roleRedux === 1 && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -205,7 +207,13 @@ const TemplatesCv: React.FC = () => {
           <div className="button-cv">
             <PDFDownloadLink
               className="download-cv-btn"
-              document={<CvTemplate2 color={colorCV} fontSize={fontSizeCV} />}
+              document={
+                <CvTemplate2
+                  color={colorCV}
+                  fontSize={fontSizeCV}
+                  profile={profileV3}
+                />
+              }
               fileName="Test_Cv1"
             >
               {languageRedux === 1 ? 'Lưu và tải PDF' : 'Save & Download PDF'}
