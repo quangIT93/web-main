@@ -12,14 +12,14 @@ interface ICvExperience {
     profile: any;
 }
 
-const Experience: React.FC<ICvExperience> = (props) => {
+const References: React.FC<ICvExperience> = (props) => {
     const { color, profile } = props;
     const styles = StyleSheet.create({
         container: {
             marginBottom: 10,
             marginLeft: '0.9cm',
         },
-        experience: {
+        reference: {
             display: 'flex',
             flexDirection: 'row',
             // border: '1px solid red'
@@ -49,12 +49,6 @@ const Experience: React.FC<ICvExperience> = (props) => {
                         "#FBBC04" :
                         color === 4 ?
                             "#5CB265" : "#D80000",
-            // "&:last-child": {
-            // backgroundColor: '#FFFFFF',
-            // },
-            // flexGrow: 1,
-            // borderRightWidth: 1,
-            // borderRightColor: 'black',
             marginRight: '0.671cm',
         },
         lineWhite: {
@@ -130,32 +124,11 @@ const Experience: React.FC<ICvExperience> = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Experience</Text>
+            <Text style={styles.title}>References</Text>
             {
-                profile?.profilesExperiences && profile?.profilesExperiences.map((experience: any, i: any) => {
+                profile?.profilesReferences && profile?.profilesReferences.map((reference: any, i: any) => {
                     return (
-                        <View style={styles.experience} key={i}>
-                            {/* <View style={styles.left}>
-                                <Svg viewBox="0 0 2 2" style={{ width: 10 }}>
-                                    <Circle
-                                        cx="1"
-                                        cy="1"
-                                        r="0.5"
-                                        fill="#000000"
-                                        stroke="none"
-                                    />
-                                </Svg>
-                                <Svg height={i + 1 === profile?.profilesExperiences.length ? "0" : "100%"} width="5" >
-                                    <Line
-                                        x1="5"
-                                        y1="-2"
-                                        x2="5"
-                                        y2={i + 1 === profile?.profilesExperiences.length ? "0" : "100%"}
-                                        strokeWidth={0.5}
-                                        stroke="#282828"
-                                    />
-                                </Svg>
-                            </View> */}
+                        <View style={styles.reference} key={i}>
                             <View style={styles.right}>
                                 <Svg viewBox="0 0 2 2" style={styles.not}>
                                     <Circle
@@ -176,24 +149,21 @@ const Experience: React.FC<ICvExperience> = (props) => {
                                     />
                                 </Svg>
                                 <View style={
-                                    i + 1 === profile?.profilesExperiences.length ?
+                                    i + 1 === profile?.profilesReferences.length ?
                                         styles.lineWhite :
                                         styles.line
                                 } >
                                 </View>
                                 <View>
-                                    <Text style={styles.time}>
-                                        {moment(experience?.startDate).format('YYYY')}{" - "}
-                                        {moment(experience?.endDate).format('YYYY')}
-                                    </Text>
-                                    <Text style={styles.school}>{experience?.title}</Text>
-                                    <Text style={styles.detail}>{experience?.extraInformation}</Text>
+                                    <Text style={styles.school}>{reference?.fullName}</Text>
+                                    <Text style={styles.detail}>{reference?.phone}</Text>
+                                    <Text style={styles.detail}>{reference?.email}</Text>
                                     {/* <View style={styles.achievements}>
                                 <Text style={styles.detail}>
                                     {`(*)Achievements: `}
                                 </Text>
                                 <List>
-                                    {experience.achievements.map((iem: any, i: any) => (
+                                    {reference.achievements.map((iem: any, i: any) => (
                                         <Item key={i}>{iem}</Item>
                                     ))}
                                 </List>
@@ -208,4 +178,4 @@ const Experience: React.FC<ICvExperience> = (props) => {
     )
 };
 
-export default Experience;
+export default References;

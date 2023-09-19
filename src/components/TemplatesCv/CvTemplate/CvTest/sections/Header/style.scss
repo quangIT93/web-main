@@ -1,0 +1,51 @@
+.header-container {
+    width: 100%;
+    height: 9.521cm;
+    margin-top: 2cm;
+    margin-left: 2cm;
+
+    .header-content {
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        .header-left-div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 7.521cm;
+            height: 7.521cm;
+            background-color: #D0E3FF;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding-left: 1.136cm;
+            padding-right: 1.136cm;
+            gap: 0.5cm;
+
+            .top-left-div {}
+
+            .bottom-left-div {}
+        }
+
+        .header-avatar-div {
+            img {}
+        }
+
+        .header-language-div {
+            h3 {}
+
+            .bot-language-div {}
+        }
+
+        .header-right-div {
+            position: absolute;
+            top: 0;
+            right: 2cm;
+            width: 3.123cm;
+            height: 1.66cm;
+            background-color: #D0E3FF;
+        }
+    }
+}

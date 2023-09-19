@@ -8,6 +8,10 @@ import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { CloseOutlined } from '@ant-design/icons';
+import apiCv from 'api/apiCv';
+import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { message } from 'antd';
 
 // import { Input } from 'antd';
 
@@ -51,19 +55,20 @@ interface IModalActivity {
     setOpenModalEditAward: React.Dispatch<React.SetStateAction<boolean>>;
     setAwardValues: React.Dispatch<React.SetStateAction<any>>;
     awardId: any;
-    awardValues: any;
+    awardValue: any;
 }
 const ModalEditAward: React.FC<IModalActivity> = (props) => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const language = useSelector((state: RootState) => state.dataLanguage.languages);
-    const { openModalEditAward, setOpenModalEditAward, setAwardValues, awardId, awardValues } =
+    const { openModalEditAward, setOpenModalEditAward, setAwardValues, awardId, awardValue } =
         props;
     const [award, setAward] = React.useState({
-        title: '',
-        company: '',
-        description: '',
+        id: awardValue?.id,
+        title: awardValue?.title,
+        // company: '',
+        description: awardValue?.description,
     })
-
+    const dispatch = useDispatch()
     const handleClose = () => setOpenModalEditAward(false);
 
     const handleOnchangeTitle = (e: any) => {
@@ -82,29 +87,73 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
             }
         })
     }
-    const handleOnchangeCompany = (e: any) => {
-        setAward((prev: any) => {
-            return {
-                ...prev,
-                company: e.target.value
-            }
-        })
-    }
+    // const handleOnchangeCompany = (e: any) => {
+    //     setAward((prev: any) => {
+    //         return {
+    //             ...prev,
+    //             company: e.target.value
+    //         }
+    //     })
+    // }
 
-    const handleGetAward = async () => {
-        if (awardId !== null && awardValues.length > 0) {
-            setAward(awardValues.at(awardId))
+    const validValue = () => {
+
+        if (award.title.trim().length > 250 || award.title.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 250" :
+                    "Title length must be greater than 0 and less than 250",
+                checkForm: false
+            }
+        }
+
+        if (award.description.trim().length > 1000 || award.description.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000" :
+                    "Description length must be greater than 0 and less than 1000",
+                checkForm: false
+            }
+        }
+
+        return {
+            messageError: '',
+            checkForm: true
         }
     }
 
-    React.useEffect(() => {
-        handleGetAward()
-    }, [])
+    const handleSubmit = async () => {
+        try {
+            const { messageError, checkForm } = validValue()
+            if (checkForm) {
+                const result = await apiCv.putProifileAwards(
+                    award.title.trim(),
+                    award.description.trim(),
+                    award.id
+                )
+                if (result) {
+                    const resultProfile = await profileApi.getProfileV3(
+                        languageRedux === 1 ? 'vi' : 'en',
+                    );
 
-    const handleSubmit = () => {
-        awardValues.splice(awardId, 1, award)
-        setAwardValues(awardValues)
-        setOpenModalEditAward(false)
+                    resultProfile &&
+                        dispatch(setProfileV3(resultProfile));
+                    message.success(
+                        languageRedux === 1 ?
+                            "Cập nhật thông tin thành công !" :
+                            "Update information successfully !"
+                    )
+                    setOpenModalEditAward(false)
+                }
+            } else {
+                message.error(messageError)
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+        // awardValue.splice(awardId, 1, award)
+        // setAwardValues(awardValue)
     }
 
     return (
@@ -172,7 +221,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                     // error={titleError} // Đánh dấu lỗi
                     />
                 </Box>
-                <Box sx={{ marginBottom: '12px' }}>
+                {/* <Box sx={{ marginBottom: '12px' }}>
                     <Typography
                         // sx={styleLabel}
                         variant="body1"
@@ -199,7 +248,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                         }
                     // error={titleError} // Đánh dấu lỗi
                     />
-                </Box>
+                </Box> */}
                 <Box sx={{ marginBottom: '12px' }}>
                     <Typography
                         // sx={styleLabel}

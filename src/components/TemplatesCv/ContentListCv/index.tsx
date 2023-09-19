@@ -31,7 +31,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Mousewheel, Pagination } from 'swiper';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import CvTemplate1 from '../CvTemplate/CvTemplate1';
 import CvTemplate2 from '../CvTemplate/CvTemplate2';
 import { usePDF, StyleSheet } from '@react-pdf/renderer';
@@ -58,15 +58,24 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+  const profile = useSelector(
+    (state: RootState) => state.dataProfileV3.data,
+  );
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [cvId, setCvId] = React.useState<any>(1);
-  const [instance, updateInstance] = usePDF({
-    document: <CvTemplate2 color={colorCV} fontSize={fontSizeCV} />,
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
+  const TemplateId = Number(searchParams.get('template-id'));
+  const [instance, updateInstance] = usePDF(
+    {
+      document: TemplateId === 0 ?
+        <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} />
+    }
+  );
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [numPages, setNumPages] = React.useState<number>();
+  const [selected, setSelected] = React.useState<number>();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
   const getDataParentCategory = async () => {
     try {
       const result = await categoriesApi.getAllParentCategories(
@@ -86,8 +95,10 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   }
 
   React.useEffect(() => {
-    updateInstance(<CvTemplate2 color={colorCV} fontSize={fontSizeCV} />);
-  }, [colorCV]);
+    updateInstance(TemplateId === 0 ?
+      <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+      <CvTemplate2 color={colorCV} fontSize={fontSizeCV} />);
+  }, [colorCV, TemplateId, profile]);
 
   React.useEffect(() => {
     getDataParentCategory();
@@ -98,7 +109,13 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   // console.log('dataCategories', dataCategories);
 
-  const handleChangeCategory = async () => {};
+  const handleChangeCategory = async () => { };
+
+  const handleSelectTemplate = (id: any) => {
+    setSearchParams({
+      'template-id': id,
+    });
+  }
 
   const styles = StyleSheet.create({
     page: {
@@ -162,15 +179,22 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                   languageRedux === 1 ? 'Chọn mẫu CV' : 'Choose resume template'
                 }
                 size="small"
-                // error={!selectedProvince}
+              // error={!selectedProvince}
               />
             )}
           />
         </Box>
 
         <div className="list-template">
-          {Array.from(new Array(10).keys()).map((item) => (
-            <div className="template-item" key={item}>
+          {Array.from(new Array(10).keys()).map((item: any, index: any) => (
+            <div
+              className={
+                TemplateId === index ?
+                  "template-item active" : "template-item"
+              }
+              key={index}
+              onClick={() => handleSelectTemplate(index)}
+            >
               <Avatar shape="square" icon={<UserOutlined />} />
             </div>
           ))}
@@ -190,7 +214,14 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                   // handleClickItem();
                 }}
               >
-                <div className="slide-item" key={item}>
+                <div className={
+                  TemplateId === index ?
+                    "slide-item active" :
+                    "slide-item"
+                }
+                  key={item}
+                  onClick={() => handleSelectTemplate(index)}
+                >
                   <Avatar shape="square" icon={<UserOutlined />} />
                 </div>
               </SwiperSlide>

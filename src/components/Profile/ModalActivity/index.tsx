@@ -17,6 +17,10 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import { Input } from 'antd';
 
 import './style.scss';
+import apiCv from 'api/apiCv';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import profileApi from 'api/profileApi';
+import { message } from 'antd';
 
 // const { TextArea } = Input;
 
@@ -69,6 +73,8 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
         description: '',
     })
 
+    const dispatch = useDispatch()
+
     const handleClose = () => setOpenModalActivity(false);
 
     const handleOnchangeTitle = (e: any) => {
@@ -112,19 +118,80 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
         })
     }
 
-    const handleSubmit = () => {
-        setActivityValues((prev: any) => [
-            activity,
-            ...prev
-        ])
-        setActivity({
-            title: '',
-            employer: '',
-            startDate: new Date().getTime(),
-            endDate: new Date().getTime(),
-            description: '',
-        })
-        setOpenModalActivity(false)
+    const validValue = () => {
+
+        if (activity.title.trim().length > 250 || activity.title.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 250" :
+                    "Title length must be greater than 0 and less than 250",
+                checkForm: false
+            }
+        }
+
+        if (activity.employer.trim().length > 250 || activity.employer.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài nhà tuyển dụng phải lớn hơn 0 và nhỏ hơn 250" :
+                    "Employer length must be greater than 0 and less than 250",
+                checkForm: false
+            }
+        }
+
+        if (activity.description.trim().length > 1000 || activity.description.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000" :
+                    "Description length must be greater than 0 and less than 1000",
+                checkForm: false
+            }
+        }
+
+        return {
+            messageError: '',
+            checkForm: true
+        }
+    }
+
+    const handleSubmit = async () => {
+        try {
+            const { messageError, checkForm } = validValue()
+            if (checkForm) {
+                const result = await apiCv.postProfileActivities(
+                    activity.title.trim(),
+                    activity.employer.trim(),
+                    activity.description.trim(),
+                    activity.startDate,
+                    activity.endDate
+                )
+
+                if (result) {
+                    // console.log(result);
+                    const resultProfile = await profileApi.getProfileV3(
+                        languageRedux === 1 ? 'vi' : 'en',
+                    );
+
+                    resultProfile &&
+                        dispatch(setProfileV3(resultProfile));
+                    message.success(languageRedux === 1 ?
+                        `Thêm mới hoạt động "${activity.title}" thành công` :
+                        `Added activity "${activity.title}" successfully`)
+                    setActivity({
+                        title: '',
+                        employer: '',
+                        startDate: new Date().getTime(),
+                        endDate: new Date().getTime(),
+                        description: '',
+                    })
+                    setOpenModalActivity(false)
+                }
+            } else {
+                message.error(messageError)
+            }
+        } catch (errors) {
+            console.log(errors);
+
+        }
     }
 
     return (
@@ -289,7 +356,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
                     >
                         {
                             languageRedux === 1 ?
-                                "Miêu tả" : "Description"
+                                "Mô tả" : "Description"
                         }{' '}
                         <span className="color-asterisk">*</span>
                     </Typography>

@@ -17,6 +17,10 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import { Input } from 'antd';
 
 import './style.scss';
+import apiCv from 'api/apiCv';
+import { message } from 'antd';
+import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 // const { TextArea } = Input;
 
@@ -53,35 +57,28 @@ const style = {
 
 interface IModalInternship {
     openModalEditActivity: boolean;
-    setOpenModalActivity: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpenModalEditActiviy: React.Dispatch<React.SetStateAction<boolean>>;
     setActivityValues: React.Dispatch<React.SetStateAction<any>>;
     activityId: any;
-    activityValues: any;
+    activityValue: any;
 }
 const ModalEditActivity: React.FC<IModalInternship> = (props) => {
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const language = useSelector((state: RootState) => state.dataLanguage.languages);
-    const { openModalEditActivity, setOpenModalActivity, setActivityValues, activityId, activityValues } =
+    const { openModalEditActivity, setOpenModalEditActiviy, setActivityValues, activityId, activityValue } =
         props;
     const [activity, setActivity] = React.useState({
-        title: '',
-        employer: '',
-        startDate: new Date().getTime(),
-        endDate: new Date().getTime(),
-        description: '',
+        id: activityValue?.id,
+        title: activityValue?.title,
+        organization: activityValue?.organization,
+        startDate: activityValue?.startDate,
+        endDate: activityValue?.endDate,
+        description: activityValue?.description,
     })
 
-    const handleGetInternship = async () => {
-        if (activityId !== null && activityValues.length > 0) {
-            setActivity(activityValues.at(activityId))
-        }
-    }
+    const dispatch = useDispatch()
 
-    useEffect(() => {
-        handleGetInternship()
-    }, [])
-
-    const handleClose = () => setOpenModalActivity(false);
+    const handleClose = () => setOpenModalEditActiviy(false);
 
     const handleOnchangeTitle = (e: any) => {
         setActivity((prev: any) => {
@@ -103,7 +100,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         setActivity((prev: any) => {
             return {
                 ...prev,
-                employer: e.target.value
+                organization: e.target.value
             }
         })
     }
@@ -124,10 +121,75 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
         })
     }
 
-    const handleSubmit = () => {
-        activityValues.splice(activityId, 1, activity)
-        setActivityValues(activityValues)
-        setOpenModalActivity(false)
+    const validValue = () => {
+
+        if (activity.title.trim().length > 250 || activity.title.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 250" :
+                    "Title length must be greater than 0 and less than 250",
+                checkForm: false
+            }
+        }
+
+        if (activity.organization.trim().length > 250 || activity.organization.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài nhà tuyển dụng phải lớn hơn 0 và nhỏ hơn 250" :
+                    "Employer length must be greater than 0 and less than 250",
+                checkForm: false
+            }
+        }
+
+        if (activity.description.trim().length > 1000 || activity.description.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000" :
+                    "Description length must be greater than 0 and less than 1000",
+                checkForm: false
+            }
+        }
+
+        return {
+            messageError: '',
+            checkForm: true
+        }
+    }
+
+    const handleSubmit = async () => {
+        try {
+            const { messageError, checkForm } = validValue()
+            if (checkForm) {
+                const result = await apiCv.putProifileActivities(
+                    activity.title.trim(),
+                    activity.organization.trim(),
+                    activity.description.trim(),
+                    activity.startDate,
+                    activity.endDate,
+                    activity.id
+                )
+                if (result) {
+                    const resultProfile = await profileApi.getProfileV3(
+                        languageRedux === 1 ? 'vi' : 'en',
+                    );
+
+                    resultProfile &&
+                        dispatch(setProfileV3(resultProfile));
+                    message.success(
+                        languageRedux === 1 ?
+                            "Cập nhật thông tin thành công !" :
+                            "Update information successfully !"
+                    )
+                    // activityValue.splice(activityId, 1, activity)
+                    // setActivityValues(activityValue)
+                    setOpenModalEditActiviy(false)
+                }
+            } else {
+                message.error(messageError)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -163,8 +225,8 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                 >
                     {
                         languageRedux === 1 ?
-                            "Sửa thông tin thực tập" :
-                            "Edit Internship"
+                            "Sửa thông tin hoạt động" :
+                            "Edit Activity"
                     }
                 </Typography>
                 <Box sx={{ marginBottom: '12px' }}>
@@ -176,7 +238,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                     >
                         {
                             languageRedux === 1 ?
-                                "Tiêu đề công việc" : "Job Title"
+                                "Tiêu đề hoạt động" : "Function Title"
                         }{' '}
                         <span className="color-asterisk">*</span>
                     </Typography>
@@ -190,7 +252,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                         sx={{ width: '100%', marginTop: '4px' }}
                         placeholder={
                             languageRedux === 1 ?
-                                "Tiêu đề công việc" : "Job Title"
+                                "Tiêu đề hoạt động" : "Function Title"
                         }
                     // error={titleError} // Đánh dấu lỗi
                     />
@@ -212,7 +274,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                         type="text"
                         id="skill"
                         name="skill"
-                        value={activity.employer}
+                        value={activity.organization}
                         onChange={handleOnchangeEmployer}
                         size="small"
                         sx={{ width: '100%', marginTop: '4px' }}
@@ -292,7 +354,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                     >
                         {
                             languageRedux === 1 ?
-                                "Miêu tả" : "Description"
+                                "Mô tả" : "Description"
                         }{' '}
                         <span className="color-asterisk">*</span>
                     </Typography>

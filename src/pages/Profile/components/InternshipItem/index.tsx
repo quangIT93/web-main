@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // @ts-ignore
 
-import { Space } from 'antd';
+import { Space, message } from 'antd';
 // import Snackbar from '@mui/material/Snackbar';
 // import MuiAlert, { AlertProps } from '@mui/material/Alert';
 // import Stack from '@mui/material/Stack';
@@ -13,23 +13,28 @@ import languageApi from 'api/languageApi';
 
 
 import { RootState } from '../../../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ModalInternship from '#components/Profile/ModalInternship';
 import ModalEditInternship from '#components/Profile/ModalEditInternship';
 import ModalEditActivity from '#components/Profile/ModalEditAcivity';
+import apiCv from 'api/apiCv';
+import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import ModalDeleteActivities from '#components/Profile/ModalDeleteActivities';
 interface IInternshipProps {
     typeItem?: any;
     index: number;
     item?: {
+        id: any;
         title: String,
-        employer: String,
+        organization: String,
         startDate: any,
         endDate: any,
         description: String,
     };
     internshipValues: any;
     setInternshipValues: React.Dispatch<React.SetStateAction<any>>;
-    activityValues: any;
+    activityValue: any;
     setActivityValues: React.Dispatch<React.SetStateAction<any>>;
 }
 
@@ -47,7 +52,7 @@ const InternshipItem: React.FC<IInternshipProps> = (props) => {
         item,
         internshipValues,
         setInternshipValues,
-        activityValues,
+        activityValue,
         setActivityValues
     } = props;
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
@@ -56,30 +61,24 @@ const InternshipItem: React.FC<IInternshipProps> = (props) => {
     const [activityId, setActivityId] = useState<any>();
     const [openModalEditInternship, setOpenModalEditInternship] = useState(false);
     const [openModalEditActiviy, setOpenModalEditActiviy] = useState(false);
-    console.log("index", index);
-
+    const [openModalDeleteActivities, setOpenModalDeleteActivities] = useState(false);
+    // console.log("index", index);
+    const dispatch = useDispatch();
 
     const handlleUpdateInternship = (id?: number | null) => {
 
         if (typeItem === 1) {
             setOpenModalEditInternship(true)
-            setInternshipId(index)
+            setInternshipId(item?.id)
         } else {
             setOpenModalEditActiviy(true)
-            setActivityId(index)
+            setActivityId(item?.id)
         }
     };
 
-    console.log("active", activityValues);
-    const handleDeleteInternship = (id: number) => {
-        typeItem === 1 ?
-            setInternshipValues(internshipValues.filter((value: any, index: any) => {
-                return index !== id
-            })) :
-            setActivityValues(activityValues.filter((value: any, index: any) => {
-                return index !== id
-            }))
-        console.log(internshipValues);
+    // console.log("active", activityValue);
+    const handleDeleteInternship = async () => {
+        setOpenModalDeleteActivities(true)
     }
 
     // console.log('item?.start_date', item?.start_date);
@@ -102,7 +101,7 @@ const InternshipItem: React.FC<IInternshipProps> = (props) => {
                 <div className="div-info-item">
                     <Space size={4} direction="vertical" style={{ marginLeft: 10 }}>
                         <h3>{item?.title}</h3>
-                        <p>{item?.employer}</p>
+                        <p>{item?.organization}</p>
                         <p>
                             {`${moment(item?.startDate).format('MM/YYYY')}`} - {` `}
                             {`${moment(item?.endDate).format('MM/YYYY')}`}
@@ -126,7 +125,7 @@ const InternshipItem: React.FC<IInternshipProps> = (props) => {
                         // typeItem === 'experiences'
                         //   ? () => handleUpdateExperience(item?.id)
                         //   : () => handleUpdateEducation(item?.id)
-                        () => handlleUpdateInternship(index)
+                        () => handlleUpdateInternship()
                     }
                     style={{ cursor: 'pointer' }}
                 >
@@ -145,7 +144,7 @@ const InternshipItem: React.FC<IInternshipProps> = (props) => {
                         // typeItem === 'experiences'
                         //   ? () => handleDeleteExperience(item?.id)
                         //   : () => handleDeleteEducation(item?.id)
-                        () => handleDeleteInternship(index)
+                        () => handleDeleteInternship()
                     }
                     style={{ cursor: 'pointer', marginRight: '16px' }}
                 >
@@ -168,10 +167,16 @@ const InternshipItem: React.FC<IInternshipProps> = (props) => {
             />
             <ModalEditActivity
                 openModalEditActivity={openModalEditActiviy}
-                setOpenModalActivity={setOpenModalEditActiviy}
+                setOpenModalEditActiviy={setOpenModalEditActiviy}
                 setActivityValues={setActivityValues}
                 activityId={activityId}
-                activityValues={activityValues}
+                activityValue={activityValue}
+            />
+            <ModalDeleteActivities
+                openModalDeleteActivities={openModalDeleteActivities}
+                setOpenModalDeleteActivities={setOpenModalDeleteActivities}
+                activitiesId={activityValue?.id}
+                activityValue={activityValue}
             />
         </div>
     );

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { Image, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
+import profileApi from 'api/profileApi';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 interface ICvHeader {
     color: any;
+    profile: any;
 }
 
 const Header: React.FC<ICvHeader> = (props) => {
-    const { color } = props
+    const { color, profile } = props
     const styles = StyleSheet.create({
         container: {
             width: '100%',
@@ -34,18 +38,18 @@ const Header: React.FC<ICvHeader> = (props) => {
             justifyContent: 'center',
             // border: '1px solid red',
             width: '100%',
-            gap: '-0.5cm'
+            // gap: '-0.5cm'
         },
         lastName: {
             fontSize: 33,
-            fontFamily: 'Abhaya Libre ExtraBold',
+            fontFamily: 'Archivo SemiExpanded Regular',
             width: '100%',
             background: 'red',
             // border: '1px solid black',
         },
         firstName: {
             fontSize: 33,
-            fontFamily: 'Abhaya Libre ExtraBold',
+            fontFamily: 'Archivo SemiExpanded Regular',
             width: '100%',
             // marginBottom: '0.5cm',
             background: 'red',
@@ -56,6 +60,7 @@ const Header: React.FC<ICvHeader> = (props) => {
             justifySelf: 'flex-end',
             fontFamily: 'Montserrat Regular',
             color: '#1B1212',
+            textDecoration: 'none'
         },
         bigTitle: {
             fontFamily: 'Montserrat Regular',
@@ -82,7 +87,8 @@ const Header: React.FC<ICvHeader> = (props) => {
         },
         line: {
             width: '0.5px',
-            height: '60px',
+            minHeight: '60px',
+            height: '100%',
             backgroundColor: '#282828',
         },
         contact: {
@@ -122,7 +128,7 @@ const Header: React.FC<ICvHeader> = (props) => {
             right: '4.023cm',
             width: '5.802cm',
             height: '5.802cm',
-            backgroundColor: '#FFFFFF',
+            // backgroundColor: '#FFFFFF',
             border: '1px solid #AAAAAA',
             display: 'flex',
             alignItems: 'center',
@@ -131,7 +137,7 @@ const Header: React.FC<ICvHeader> = (props) => {
         image: {
             width: '100%',
             height: '100%',
-            objectFit: 'contained'
+            objectFit: 'cover'
         },
         language: {
             position: 'absolute',
@@ -155,6 +161,7 @@ const Header: React.FC<ICvHeader> = (props) => {
         languageDetailLeft: {
             fontFamily: "Montserrat Regular",
             fontSize: 9,
+            textTransform: 'uppercase'
         },
         languageDetailRight: {
             fontFamily: "Montserrat Regular",
@@ -168,6 +175,7 @@ const Header: React.FC<ICvHeader> = (props) => {
             marginTop: '0.12cm'
         }
     });
+
     return (
         <View style={styles.container}>
             <View style={styles.content}>
@@ -175,36 +183,89 @@ const Header: React.FC<ICvHeader> = (props) => {
                     <View style={styles.topLeftDiv}>
                         <Text style={styles.bigTitle}>HELLO! I'M</Text>
                         <View style={styles.name}>
-                            <Text style={styles.lastName}>Dang</Text>
-                            <Text style={styles.firstName}>Van Abc</Text>
+                            <Text style={styles.lastName} >
+                                {
+                                    profile?.name?.split(' ').length > 2 ?
+                                        profile?.name?.split(' ').slice(0, -2).join(' ') :
+                                        profile?.name?.split(' ').slice(0, -1).join(' ')
+                                }
+                            </Text>
+                            <Text style={styles.firstName}>
+                                {
+                                    profile?.name?.split(' ').length > 2 ?
+                                        profile?.name?.split(' ').slice(-2).join(' ') :
+                                        profile?.name?.split(' ').slice(-1).join(' ')
+                                }
+                            </Text>
                         </View>
                         <Text style={styles.bigTitle}>SOFTWARE ENGINEER</Text>
                     </View>
                     <View style={styles.botLeftDiv}>
                         <View style={styles.line}></View>
                         <View style={styles.contact}>
-                            <Text style={styles.subtitle}>+84 123 456 789</Text>
-                            <Text style={styles.subtitle}>tranvanb@gmail.com</Text>
-                            <Text style={styles.subtitle}>Ho Chi Minh City</Text>
+                            <Text style={styles.subtitle}>
+                                {profile?.phone}
+                            </Text>
+                            <Text style={styles.subtitle}>
+                                {profile?.email}
+                            </Text>
+                            <Text style={styles.subtitle}>
+                                {profile?.addressText?.fullName}
+                            </Text>
+                            {
+                                profile?.linkedin ?
+
+                                    <Link
+                                        style={styles.subtitle}
+                                        src={profile?.linkedin}
+                                    >
+                                        Linkedin
+                                    </Link> :
+                                    <></>
+                            }
+                            {
+                                profile?.facebook ?
+                                    <Link
+                                        style={styles.subtitle}
+                                        src={profile?.facebook}
+                                    >
+                                        Facebook
+                                    </Link> :
+                                    <></>
+                            }
                         </View>
                     </View>
                 </View>
                 <View style={styles.avatarDiv}>
                     <Image
-                        src="https://react-pdf.org/images/logo.png"
+                        src={profile?.avatarPath}
                         style={styles.image}
                     />
                 </View>
-                <View style={styles.language}>
+                {/* <View style={styles.language}>
                     <View>
                         <Text style={styles.languageTitle}>LANGUAGE</Text>
                     </View>
-                    <View style={styles.languageDetail}>
-                        <Text style={styles.languageDetailLeft}>ENGLISH</Text>
-                        <Text style={styles.languageDetailRight}>Ielts overal score: 7.0</Text>
-                    </View>
+                    {
+                        profile?.profilesLanguages && profile?.profilesLanguages?.map((item: any, i: any) => {
+                            return (
+                                <View style={styles.languageDetail} key={i}>
+                                    <Text style={styles.languageDetailLeft}>
+                                        {
+                                            item?.languageName
+                                        }
+                                    </Text>
+                                    <Text style={styles.languageDetailRight}>
+                                        {
+                                            item?.dataLevel?.data
+                                        }
+                                    </Text>
+                                </View>
+                            )
+                        })
+                    }
                     <View style={styles.borderBot}></View>
-                </View>
+                </View> */}
                 <View style={styles.rightDiv}>
                 </View>
             </View>

@@ -33,6 +33,9 @@ const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const profile = useSelector(
+    (state: RootState) => state.dataProfileV3.data,
+  );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [fontSizeCV, setFontSizeCV] = React.useState(24);
   //1: black, 2: blue, 3: yellow, 4:green, 5:red
@@ -205,7 +208,7 @@ const TemplatesCv: React.FC = () => {
           <div className="button-cv">
             <PDFDownloadLink
               className="download-cv-btn"
-              document={<CvTemplate2 color={colorCV} fontSize={fontSizeCV} />}
+              document={<CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />}
               fileName="Test_Cv1"
             >
               {languageRedux === 1 ? 'Lưu và tải PDF' : 'Save & Download PDF'}

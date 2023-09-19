@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import { Text, View, StyleSheet, Image, Link } from '@react-pdf/renderer';
 
 import List, { Item } from './List';
 
@@ -10,13 +10,14 @@ import twit from '../../images/twitter.png';
 
 interface ICvEducation {
   color: any;
+  profile: any;
 }
 
 const Social: React.FC<ICvEducation> = (props) => {
-  const { color } = props;
+  const { color, profile } = props;
   const styles = StyleSheet.create({
     container: {
-      marginBottom: 10,
+      // marginBottom: 10,
     },
     content: {
       width: '8.78cm',
@@ -35,7 +36,8 @@ const Social: React.FC<ICvEducation> = (props) => {
       width: '100%',
       // border: '1px solid pink',
       gap: '0.985cm',
-      height: '50%',
+      // height: '50%',
+      height: '100%',
     },
     item1: {
       display: 'flex',
@@ -73,6 +75,8 @@ const Social: React.FC<ICvEducation> = (props) => {
     text: {
       fontFamily: 'Montserrat Regular',
       fontSize: 8,
+      color: '#000000',
+      textDecoration: 'none'
       // letterSpacing: '2px',
     },
     title: {
@@ -85,12 +89,12 @@ const Social: React.FC<ICvEducation> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
   });
 
@@ -99,7 +103,7 @@ const Social: React.FC<ICvEducation> = (props) => {
       <Text style={styles.title}>Social</Text>
 
       <View style={styles.content}>
-        <View style={styles.line}>
+        {/* <View style={styles.line}>
           <View style={styles.item1}>
             <Image style={styles.icon1} src={twit} />
             <Text style={styles.text}>dangvanabc</Text>
@@ -108,15 +112,25 @@ const Social: React.FC<ICvEducation> = (props) => {
             <Image style={styles.icon2} src={ins} />
             <Text style={styles.text}>dangvanabc</Text>
           </View>
-        </View>
+        </View> */}
         <View style={styles.line}>
           <View style={styles.item2}>
             <Image style={styles.icon3} src={linked} />
-            <Text style={styles.text}>dangvanabc</Text>
+            <Link
+              style={styles.text}
+              src={profile?.linkedin}
+            >
+              www.linkedin.com
+            </Link>
           </View>
           <View style={styles.item2}>
             <Image style={styles.icon4} src={fb} />
-            <Text style={styles.text}>dangvanabc</Text>
+            <Link
+              style={styles.text}
+              src={profile?.facebook}
+            >
+              www.facebook.com
+            </Link>
           </View>
         </View>
       </View>

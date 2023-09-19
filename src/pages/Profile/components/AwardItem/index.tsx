@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // @ts-ignore
 
-import { Space } from 'antd';
+import { Space, message } from 'antd';
 // import Snackbar from '@mui/material/Snackbar';
 // import MuiAlert, { AlertProps } from '@mui/material/Alert';
 // import Stack from '@mui/material/Stack';
@@ -13,19 +13,25 @@ import languageApi from 'api/languageApi';
 
 
 import { RootState } from '../../../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ModalInternship from '#components/Profile/ModalInternship';
 import ModalEditInternship from '#components/Profile/ModalEditInternship';
 import ModalEditActivity from '#components/Profile/ModalEditAcivity';
 import ModalEditAward from '#components/Profile/ModalEditAward';
+import apiCv from 'api/apiCv';
+import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import ModalDeleteActivities from '#components/Profile/ModalDeleteActivities';
+import ModalDeleteAwards from '#components/Profile/ModalDeleteAwards';
 interface IInternshipProps {
     index: number;
     item?: {
+        id: any,
         title: String,
         company: String,
         description: String,
     };
-    awardValues: any;
+    awardValue: any;
     setAwardValues: React.Dispatch<React.SetStateAction<any>>;
 }
 
@@ -40,7 +46,7 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
     const {
         index,
         item,
-        awardValues,
+        awardValue,
         setAwardValues,
     } = props;
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
@@ -48,18 +54,17 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
     const [internshipId, setInternshipId] = useState<any>();
     const [activityId, setActivityId] = useState<any>();
     const [openModalEditAward, setOpenModalEditAward] = useState(false);
+    const [openModalDeleteAwards, setOpenModalDeleteAwards] = useState(false);
     console.log("index", index);
 
-
-    const handleUpdateAward = (id?: number | null) => {
+    const dispatch = useDispatch();
+    const handleUpdateAward = () => {
         setOpenModalEditAward(true)
-        setActivityId(index)
+        // setActivityId(index)
     }
 
-    const handleDeleteAward = (id: number) => {
-        setAwardValues(awardValues.filter((value: any, index: any) => {
-            return index !== id
-        }))
+    const handleDeleteAward = async () => {
+        setOpenModalDeleteAwards(true)
     }
 
     // console.log('item?.start_date', item?.start_date);
@@ -82,7 +87,7 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
                 <div className="div-info-item">
                     <Space size={4} direction="vertical" style={{ marginLeft: 10 }}>
                         <h3>{item?.title}</h3>
-                        <p>{item?.company}</p>
+                        {/* <p>{item?.company}</p> */}
 
                         <div
                             style={{
@@ -102,7 +107,7 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
                         // typeItem === 'experiences'
                         //   ? () => handleUpdateExperience(item?.id)
                         //   : () => handleUpdateEducation(item?.id)
-                        () => handleUpdateAward(index)
+                        () => handleUpdateAward()
                     }
                     style={{ cursor: 'pointer' }}
                 >
@@ -121,7 +126,7 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
                         // typeItem === 'experiences'
                         //   ? () => handleDeleteExperience(item?.id)
                         //   : () => handleDeleteEducation(item?.id)
-                        () => handleDeleteAward(index)
+                        () => handleDeleteAward()
                     }
                     style={{ cursor: 'pointer', marginRight: '16px' }}
                 >
@@ -140,7 +145,13 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
                 setOpenModalEditAward={setOpenModalEditAward}
                 setAwardValues={setAwardValues}
                 awardId={internshipId}
-                awardValues={awardValues}
+                awardValue={awardValue}
+            />
+            <ModalDeleteAwards
+                openModalDeleteAwards={openModalDeleteAwards}
+                setOpenModalDeleteAwards={setOpenModalDeleteAwards}
+                awardsId={awardValue?.id}
+                awardValue={awardValue}
             />
         </div>
     );

@@ -8,14 +8,14 @@ interface ICvEducation {
     profile: any
 }
 
-const Skills: React.FC<ICvEducation> = (props) => {
+const Languages: React.FC<ICvEducation> = (props) => {
     const { color, profile } = props;
     const styles = StyleSheet.create({
         container: {
             marginBottom: 10,
             marginLeft: '1.583cm',
         },
-        education: {
+        language: {
             display: 'flex',
             flexDirection: 'row',
             marginBottom: 5,
@@ -87,11 +87,11 @@ const Skills: React.FC<ICvEducation> = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Skills</Text>
+            <Text style={styles.title}>Languages</Text>
             {
-                profile?.profilesSkills && profile?.profilesSkills.map((education: any, i: any) => {
+                profile?.profilesLanguages && profile?.profilesLanguages?.map((item: any, i: any) => {
                     return (
-                        <View style={styles.education} key={i}>
+                        <View style={styles.language} key={i}>
                             <View style={styles.left}>
                                 {/* <Text style={styles.not}>•</Text> */}
                                 <Svg viewBox="0 0 2 2" style={{ width: 10 }}>
@@ -114,8 +114,9 @@ const Skills: React.FC<ICvEducation> = (props) => {
                                 </Svg>
                             </View>
                             <View style={styles.right}>
-                                <Text style={styles.school}>{education?.skillName}</Text>
-                                <Text style={styles.detail}>{education?.dataLevel?.data}</Text>
+
+                                <Text style={styles.school}>{item?.languageName}</Text>
+                                <Text style={styles.detail}>{item?.dataLevel?.data}</Text>
                             </View>
                         </View>
                     )
@@ -125,4 +126,4 @@ const Skills: React.FC<ICvEducation> = (props) => {
     )
 };
 
-export default Skills
+export default Languages

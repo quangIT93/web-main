@@ -8,7 +8,7 @@ interface ICvEducation {
     profile: any
 }
 
-const Education: React.FC<ICvEducation> = (props) => {
+const Awards: React.FC<ICvEducation> = (props) => {
     const { color, profile } = props;
     const styles = StyleSheet.create({
         container: {
@@ -22,38 +22,12 @@ const Education: React.FC<ICvEducation> = (props) => {
             // border: '1px solid red'
         },
         not: {
-            // display: 'flex',
-            // flexDirection: 'column',
-            // alignItems: 'flex-end',
-            // border: '1px solid red'
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
             // border: '1px solid red',
-            width: 10,
+            // width: 10,
             // fontSize: 20,
-            // gap: '0.516cm'
-            position: 'absolute',
-            left: '-4.25px',
-            top: 0,
-            zIndex: 2
-        },
-        line: {
-            width: 1,
-            height: '90%',
-            backgroundColor: color === 1 ?
-                "#252525" :
-                color === 2 ?
-                    "#0D99FF" :
-                    color === 3 ?
-                        "#FBBC04" :
-                        color === 4 ?
-                            "#5CB265" : "#D80000",
-            marginRight: '0.671cm',
-        },
-        lineWhite: {
-            width: 1,
-            height: '70%',
-            backgroundColor: '#FFFFFF',
-            marginRight: '0.671cm',
-            zIndex: 1
         },
         left: {
             display: 'flex',
@@ -64,12 +38,9 @@ const Education: React.FC<ICvEducation> = (props) => {
         },
         right: {
             display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'flex-end',
+            flexDirection: 'column',
             width: '100%',
-            // marginLeft: '0.658cm'
-            marginBottom: 5,
-            position: 'relative',
+            marginLeft: '0.658cm'
         },
         time: {
             fontFamily: "Montserrat Regular",
@@ -80,14 +51,14 @@ const Education: React.FC<ICvEducation> = (props) => {
         school: {
             fontFamily: "Montserrat Bold",
             fontSize: 10,
-            textAlign: 'justify',
+            textAlign: 'justify'
         },
         detail: {
             fontFamily: "Montserrat Regular",
             fontSize: 9,
             wordBreak: "break-word",
             width: '100%',
-            textAlign: 'justify',
+            textAlign: 'justify'
             // border: '1px solid red'
         },
         achievements: {
@@ -116,12 +87,13 @@ const Education: React.FC<ICvEducation> = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Education</Text>
+            <Text style={styles.title}>Awards</Text>
             {
-                profile?.profilesEducations && profile?.profilesEducations.map((education: any, i: any) => {
+                profile?.profileAwards && profile?.profileAwards.map((education: any, i: any) => {
                     return (
                         <View style={styles.education} key={i}>
-                            {/* <View style={styles.left}>
+                            <View style={styles.left}>
+                                {/* <Text style={styles.not}>•</Text> */}
                                 <Svg viewBox="0 0 2 2" style={{ width: 10 }}>
                                     <Circle
                                         cx="1"
@@ -140,40 +112,24 @@ const Education: React.FC<ICvEducation> = (props) => {
                                         stroke="none"
                                     />
                                 </Svg>
-                            </View> */}
+                            </View>
                             <View style={styles.right}>
-                                <Svg viewBox="0 0 2 2" style={styles.not}>
-                                    <Circle
-                                        cx="1"
-                                        cy="1"
-                                        r="0.5"
-                                        fill={
-                                            color === 1 ?
-                                                "#252525" :
-                                                color === 2 ?
-                                                    "#0D99FF" :
-                                                    color === 3 ?
-                                                        "#FBBC04" :
-                                                        color === 4 ?
-                                                            "#5CB265" : "#D80000"
-                                        }
-                                        stroke="none"
-                                    />
-                                </Svg>
-                                <View style={
-                                    i + 1 === profile?.profileActivities.length ?
-                                        styles.lineWhite :
-                                        styles.line
-                                } >
-                                </View>
-                                <View>
-                                    <Text style={styles.time}>
-                                        {moment(education?.startDate).format('YYYY')}{" - "}
-                                        {moment(education?.endDate).format('YYYY')}
-                                    </Text>
-                                    <Text style={styles.school}>{education?.companyName}</Text>
-                                    <Text style={styles.detail}>{education?.extraInformation}</Text>
-                                </View>
+                                {/* <Text style={styles.time}>
+                                    {moment(education?.startDate).format('YYYY')}{" - "}
+                                    {moment(education?.endDate).format('YYYY')}
+                                </Text> */}
+                                <Text style={styles.school}>{education?.title}</Text>
+                                <Text style={styles.detail}>{education?.description}</Text>
+                                {/* <View style={styles.achievements}>
+                                <Text style={styles.detail}>
+                                    {`(*)Achievements: `}
+                                </Text>
+                                <List>
+                                    {education.achievements.map((iem: any, i: any) => (
+                                        <Item key={i}>{iem}</Item>
+                                    ))}
+                                </List>
+                            </View> */}
                             </View>
                         </View>
                     )
@@ -183,4 +139,4 @@ const Education: React.FC<ICvEducation> = (props) => {
     )
 };
 
-export default Education
+export default Awards

@@ -8,6 +8,10 @@ import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { CloseOutlined } from '@ant-design/icons';
+import apiCv from 'api/apiCv';
+import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { message } from 'antd';
 
 // import { Input } from 'antd';
 
@@ -61,7 +65,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
         company: '',
         description: '',
     })
-
+    const dispatch = useDispatch()
     const handleClose = () => setOpenModalAward(false);
 
     const handleOnchangeTitle = (e: any) => {
@@ -89,17 +93,63 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
         })
     }
 
-    const handleSubmit = () => {
-        setAwardValues((prev: any) => [
-            award,
-            ...prev
-        ])
-        setAward({
-            title: '',
-            company: '',
-            description: '',
-        })
-        setOpenModalAward(false)
+    const validValue = () => {
+
+        if (award.title.trim().length > 250 || award.title.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 250" :
+                    "Title length must be greater than 0 and less than 250",
+                checkForm: false
+            }
+        }
+
+        if (award.description.trim().length > 1000 || award.description.trim().length === 0) {
+            return {
+                messageError: languageRedux === 1 ?
+                    "Độ dài mô tả phải lớn hơn 0 và nhỏ hơn 1000" :
+                    "Description length must be greater than 0 and less than 1000",
+                checkForm: false
+            }
+        }
+
+        return {
+            messageError: '',
+            checkForm: true
+        }
+    }
+
+    const handleSubmit = async () => {
+        try {
+            const { messageError, checkForm } = validValue()
+            if (checkForm) {
+                const result = await apiCv.postProfileAwards(
+                    award.title.trim(), award.description.trim()
+                )
+                if (result) {
+                    const resultProfile = await profileApi.getProfileV3(
+                        languageRedux === 1 ? 'vi' : 'en',
+                    );
+
+                    resultProfile &&
+                        dispatch(setProfileV3(resultProfile));
+                    message.success(languageRedux === 1 ?
+                        `Thêm mới giải thưởng "${award.title}" thành công` :
+                        `Added award "${award.title}" successfully`)
+                    setAward({
+                        title: '',
+                        company: '',
+                        description: '',
+                    })
+                    setOpenModalAward(false)
+                }
+            } else {
+                message.error(messageError)
+            }
+        } catch (errors) {
+            console.log(errors);
+
+        }
     }
 
     return (
@@ -167,7 +217,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
                     // error={titleError} // Đánh dấu lỗi
                     />
                 </Box>
-                <Box sx={{ marginBottom: '12px' }}>
+                {/* <Box sx={{ marginBottom: '12px' }}>
                     <Typography
                         // sx={styleLabel}
                         variant="body1"
@@ -194,7 +244,7 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
                         }
                     // error={titleError} // Đánh dấu lỗi
                     />
-                </Box>
+                </Box> */}
                 <Box sx={{ marginBottom: '12px' }}>
                     <Typography
                         // sx={styleLabel}

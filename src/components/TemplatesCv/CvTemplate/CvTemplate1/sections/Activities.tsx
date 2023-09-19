@@ -12,7 +12,7 @@ interface ICvExperience {
     profile: any;
 }
 
-const Experience: React.FC<ICvExperience> = (props) => {
+const Activities: React.FC<ICvExperience> = (props) => {
     const { color, profile } = props;
     const styles = StyleSheet.create({
         container: {
@@ -40,7 +40,7 @@ const Experience: React.FC<ICvExperience> = (props) => {
         },
         line: {
             width: 1,
-            height: '90%',
+            height: '95%',
             backgroundColor: color === 1 ?
                 "#252525" :
                 color === 2 ?
@@ -49,12 +49,6 @@ const Experience: React.FC<ICvExperience> = (props) => {
                         "#FBBC04" :
                         color === 4 ?
                             "#5CB265" : "#D80000",
-            // "&:last-child": {
-            // backgroundColor: '#FFFFFF',
-            // },
-            // flexGrow: 1,
-            // borderRightWidth: 1,
-            // borderRightColor: 'black',
             marginRight: '0.671cm',
         },
         lineWhite: {
@@ -130,9 +124,9 @@ const Experience: React.FC<ICvExperience> = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Experience</Text>
+            <Text style={styles.title}>Activities</Text>
             {
-                profile?.profilesExperiences && profile?.profilesExperiences.map((experience: any, i: any) => {
+                profile?.profileActivities && profile?.profileActivities.map((experience: any, i: any) => {
                     return (
                         <View style={styles.experience} key={i}>
                             {/* <View style={styles.left}>
@@ -176,7 +170,7 @@ const Experience: React.FC<ICvExperience> = (props) => {
                                     />
                                 </Svg>
                                 <View style={
-                                    i + 1 === profile?.profilesExperiences.length ?
+                                    i + 1 === profile?.profileActivities.length ?
                                         styles.lineWhite :
                                         styles.line
                                 } >
@@ -187,7 +181,7 @@ const Experience: React.FC<ICvExperience> = (props) => {
                                         {moment(experience?.endDate).format('YYYY')}
                                     </Text>
                                     <Text style={styles.school}>{experience?.title}</Text>
-                                    <Text style={styles.detail}>{experience?.extraInformation}</Text>
+                                    <Text style={styles.detail}>{experience?.description}</Text>
                                     {/* <View style={styles.achievements}>
                                 <Text style={styles.detail}>
                                     {`(*)Achievements: `}
@@ -208,4 +202,4 @@ const Experience: React.FC<ICvExperience> = (props) => {
     )
 };
 
-export default Experience;
+export default Activities;
