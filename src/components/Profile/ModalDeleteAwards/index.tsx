@@ -140,7 +140,7 @@ const ModalDeleteAwards: React.FC<IModalProfileDelete> = (props) => {
                         language?.profile_page?.alert_delete_info
                     }
                 </Typography>
-                <Box sx={{ display: awardsId?.length > 1 ? 'block' : 'none' }}>
+                <Box sx={{ display: awardsId?.length >= 1 ? 'block' : 'none' }}>
                     <Typography
                         id="modal-modal-title"
                         variant="h6"
