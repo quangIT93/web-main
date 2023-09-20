@@ -175,8 +175,9 @@ const InternshipItem: React.FC<IInternshipProps> = (props) => {
             <ModalDeleteActivities
                 openModalDeleteActivities={openModalDeleteActivities}
                 setOpenModalDeleteActivities={setOpenModalDeleteActivities}
-                activitiesId={activityValue?.id}
+                activitiesId={[activityValue?.id]}
                 activityValue={activityValue}
+                deleteAll={false}
             />
         </div>
     );

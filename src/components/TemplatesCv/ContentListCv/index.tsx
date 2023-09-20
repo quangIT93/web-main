@@ -34,9 +34,12 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 import { Link, useSearchParams } from 'react-router-dom';
 import CvTemplate1 from '../CvTemplate/CvTemplate1';
 import CvTemplate2 from '../CvTemplate/CvTemplate2';
+
 import { usePDF, StyleSheet } from '@react-pdf/renderer';
 import { Document, Page, pdfjs } from 'react-pdf';
 import apiCv from 'api/apiCv';
+import CvTemplate3 from '../CvTemplate/CvTemplate3';
+import CvTemplate4 from '../CvTemplate/CvTemplate4';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/legacy/build/pdf.worker.min.js',
@@ -70,14 +73,42 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const TemplateId = Number(searchParams.get('template-id'));
-
-  const [instance, updateInstance] = usePDF({
-    document:
-      TemplateId === 0 ? (
+  const templatesCv = [
+    {
+      id: 0,
+      component: (
         <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ) : (
+      ),
+    },
+    {
+      id: 1,
+      component: (
         <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       ),
+    },
+    {
+      id: 2,
+      component: (
+        <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
+    },
+    {
+      id: 3,
+      component: (
+        <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
+    },
+  ];
+
+  const [instance, updateInstance] = usePDF({
+    // document: TemplateId === 0 ?
+    //   <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+    //   TemplateId === 1 ?
+    //     <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+    //     <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+    document: templatesCv.filter((item: any) => {
+      return item.id === TemplateId;
+    })[0].component,
   });
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [numPages, setNumPages] = React.useState<number>();
@@ -103,11 +134,14 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   React.useEffect(() => {
     updateInstance(
-      TemplateId === 0 ? (
-        <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ) : (
-        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
+      // TemplateId === 0 ?
+      // <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+      // TemplateId === 1 ?
+      //   <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+      //   <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      templatesCv.filter((item: any) => {
+        return item.id === TemplateId;
+      })[0].component,
     );
   }, [colorCV, TemplateId, profile]);
 

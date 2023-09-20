@@ -104,10 +104,13 @@ interface IAward {
 }
 
 const SectionCv: React.FC<ISectionCv> = (props) => {
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const { loading, languageRedux, language } = props;
   const [skillValues, setSkillValues] = useState<any[]>([]);
   const [languageValues, setLanguageValues] = useState<any[]>([]);
-  const [hobbieValues, setHobbieValues] = useState<any>();
+  const [hobbieValues, setHobbieValues] = useState<any>(
+    profileV3?.profileHobbies?.description,
+  );
   const [referenceValues, setReferenceValues] = useState<any[]>([]);
   const [internshipValues, setInternshipValues] = useState<any[]>([]);
   const [activityValues, setActivityValues] = useState<any[]>([]);
@@ -164,8 +167,6 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
   const [openModalDeleteActivities, setOpenModalDeleteActivities] =
     useState(false);
   const [openModalDeleteAwards, setOpenModalDeleteAwards] = useState(false);
-
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   console.log('profileV3', profileV3);
   const dispatch = useDispatch();
@@ -266,11 +267,19 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
         break;
 
       case 5:
-        setOpenModalDeleteActivities(true);
+        if (profileV3?.profileActivities?.length > 0) {
+          setOpenModalDeleteActivities(true);
+        } else {
+          setOpenModalDeleteActivities(false);
+        }
 
         break;
       case 7:
-        setOpenModalDeleteAwards(true);
+        if (profileV3?.profileAwards?.length > 0) {
+          setOpenModalDeleteAwards(true);
+        } else {
+          setOpenModalDeleteAwards(false);
+        }
 
         break;
 
@@ -840,6 +849,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               },
             )}
             activityValue={null}
+            deleteAll={true}
           />
         </Skeleton>
 
@@ -1001,6 +1011,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               },
             )}
             awardValue={null}
+            deleteAll={true}
           />
         </Skeleton>
       </div>

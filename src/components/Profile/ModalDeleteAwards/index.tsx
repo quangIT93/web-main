@@ -53,6 +53,7 @@ interface IModalProfileDelete {
   setOpenModalDeleteAwards: React.Dispatch<React.SetStateAction<boolean>>;
   awardsId?: any;
   awardValue: any | null;
+  deleteAll: boolean;
 }
 const ModalDeleteAwards: React.FC<IModalProfileDelete> = (props) => {
   const {
@@ -60,6 +61,7 @@ const ModalDeleteAwards: React.FC<IModalProfileDelete> = (props) => {
     setOpenModalDeleteAwards,
     awardsId,
     awardValue,
+    deleteAll,
   } = props;
 
   const dispatch = useDispatch();
@@ -92,7 +94,10 @@ const ModalDeleteAwards: React.FC<IModalProfileDelete> = (props) => {
   const handleSubmitDelete = async () => {
     try {
       const result = await apiCv.deleteProfileAwards(
-        awardsId?.length > 1 ? awardsId : [awardsId],
+        // awardsId?.length > 1 ?
+        //     awardsId :
+        //     [awardsId]
+        awardsId,
       );
       if (result) {
         const resultProfile = await profileApi.getProfileV3(
@@ -100,15 +105,15 @@ const ModalDeleteAwards: React.FC<IModalProfileDelete> = (props) => {
         );
 
         resultProfile && dispatch(setProfileV3(resultProfile));
-        // message.success(
-        //   awardsId?.length > 1
-        //     ? languageRedux === 1
-        //       ? 'Đã xóa tất cả các giải thưởng'
-        //       : 'Deleted all awards'
-        //     : languageRedux === 1
-        //     ? `Bạn đã xóa giải thưởng "${awardValue?.title}" thành công`
-        //     : `You deleted the award "${awardValue?.title}" successfully !`,
-        // );
+        message.success(
+          deleteAll
+            ? languageRedux === 1
+              ? 'Đã xóa tất cả các giải thưởng'
+              : 'Deleted all awards'
+            : languageRedux === 1
+            ? `Bạn đã xóa giải thưởng "${awardValue?.title}" thành công`
+            : `You deleted the award "${awardValue?.title}" successfully !`,
+        );
 
         setOpenModalDeleteAwards(false);
         dispatch(setAlert(true));
@@ -138,7 +143,7 @@ const ModalDeleteAwards: React.FC<IModalProfileDelete> = (props) => {
         >
           {language?.profile_page?.alert_delete_info}
         </Typography>
-        <Box sx={{ display: awardsId?.length >= 1 ? 'block' : 'none' }}>
+        <Box sx={{ display: deleteAll ? 'block' : 'none' }}>
           <Typography
             id="modal-modal-title"
             variant="h6"

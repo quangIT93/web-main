@@ -142,8 +142,9 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
       <ModalDeleteAwards
         openModalDeleteAwards={openModalDeleteAwards}
         setOpenModalDeleteAwards={setOpenModalDeleteAwards}
-        awardsId={awardValue?.id}
+        awardsId={[awardValue?.id]}
         awardValue={awardValue}
+        deleteAll={false}
       />
     </div>
   );
