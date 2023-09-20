@@ -53,13 +53,15 @@ interface IModalProfileDelete {
     setOpenModalDeleteActivities: React.Dispatch<React.SetStateAction<boolean>>;
     activitiesId: any;
     activityValue: any | null;
+    deleteAll: boolean;
 }
 const ModalDeleteActivities: React.FC<IModalProfileDelete> = (props) => {
     const {
         openModalDeleteActivities,
         setOpenModalDeleteActivities,
         activitiesId,
-        activityValue
+        activityValue,
+        deleteAll
     } = props;
 
     const dispatch = useDispatch();
@@ -90,9 +92,10 @@ const ModalDeleteActivities: React.FC<IModalProfileDelete> = (props) => {
     const handleSubmitDelete = async () => {
         try {
             const result = await apiCv.deleteProfileActivities(
-                activitiesId?.length > 1 ?
-                    activitiesId :
-                    [activitiesId]
+                // activitiesId?.length > 1 ?
+                //     activitiesId :
+                //     [activitiesId]
+                activitiesId
             )
             if (result) {
                 const resultProfile = await profileApi.getProfileV3(
@@ -102,7 +105,7 @@ const ModalDeleteActivities: React.FC<IModalProfileDelete> = (props) => {
                 resultProfile &&
                     dispatch(setProfileV3(resultProfile));
                 message.success(
-                    activitiesId?.length > 1 ?
+                    deleteAll ?
                         languageRedux === 1 ?
                             "Đã xóa tất cả các hoạt động" :
                             "Deleted all activities" :
@@ -140,7 +143,7 @@ const ModalDeleteActivities: React.FC<IModalProfileDelete> = (props) => {
                         language?.profile_page?.alert_delete_info
                     }
                 </Typography>
-                <Box sx={{ display: activitiesId?.length >= 1 ? 'block' : 'none' }}>
+                <Box sx={{ display: deleteAll ? 'block' : 'none' }}>
                     <Typography
                         id="modal-modal-title"
                         variant="h6"

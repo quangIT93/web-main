@@ -34,8 +34,10 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 import { Link, useSearchParams } from 'react-router-dom';
 import CvTemplate1 from '../CvTemplate/CvTemplate1';
 import CvTemplate2 from '../CvTemplate/CvTemplate2';
+
 import { usePDF, StyleSheet } from '@react-pdf/renderer';
 import { Document, Page, pdfjs } from 'react-pdf';
+import CvTemplate3 from '../CvTemplate/CvTemplate3';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/legacy/build/pdf.worker.min.js',
@@ -72,7 +74,9 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     {
       document: TemplateId === 0 ?
         <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+        TemplateId === 1 ?
+          <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+          <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
     }
   );
   const [pageNumber, setPageNumber] = React.useState<number>(1);
@@ -100,7 +104,10 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   React.useEffect(() => {
     updateInstance(TemplateId === 0 ?
       <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-      <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />);
+      TemplateId === 1 ?
+        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+        <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+    );
   }, [colorCV, TemplateId, profile]);
 
   React.useEffect(() => {

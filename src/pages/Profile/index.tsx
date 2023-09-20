@@ -382,7 +382,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -775,7 +775,7 @@ const Profile: React.FC = () => {
             <Alert
               onClose={handleCloseAlertCv}
               severity="success"
-              sx={{ width: '100%', backgroundColor: 'green' }}
+              sx={{ width: '100%', backgroundColor: '#000000' }}
             >
               {languageRedux === 1
                 ? 'Bạn đã thêm thông tin thành công'

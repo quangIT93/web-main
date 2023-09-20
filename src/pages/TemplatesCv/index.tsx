@@ -29,6 +29,8 @@ import RollTop from '#components/RollTop';
 import CvTemplate1 from '#components/TemplatesCv/CvTemplate/CvTemplate1';
 import CvTemplate2 from '#components/TemplatesCv/CvTemplate/CvTemplate2';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import { useSearchParams } from 'react-router-dom';
+import CvTemplate3 from '#components/TemplatesCv/CvTemplate/CvTemplate3';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -42,7 +44,8 @@ const TemplatesCv: React.FC = () => {
   const [colorCV, setColorCV] = React.useState(1);
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const TemplateId = Number(searchParams.get('template-id'));
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   React.useEffect(() => {
@@ -70,6 +73,34 @@ const TemplatesCv: React.FC = () => {
     setCookie('firstCv', '1', 365);
     setOpenModalChooseCv(true);
   };
+
+  const removeVietnameseTones = (str: string) => {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a')
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e')
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i')
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o')
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u')
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y')
+    str = str.replace(/đ/g, 'd')
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, 'A')
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, 'E')
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, 'I')
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, 'O')
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, 'U')
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, 'Y')
+    str = str.replace(/Đ/g, 'D')
+    return str
+  }
+
+  const createFileName = (str: string) => {
+    str = removeVietnameseTones(str)
+    str = str.split(" ").join('')
+    str.trim()
+    str = str.concat('_CV')
+    return str
+  }
+
+  const fileNameCv = createFileName(profile?.name ? profile?.name : "Your")
 
   return (
     <div className="cv-container">
@@ -210,8 +241,14 @@ const TemplatesCv: React.FC = () => {
           <div className="button-cv">
             <PDFDownloadLink
               className="download-cv-btn"
-              document={<CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />}
-              fileName="Test_Cv1"
+              document={
+                TemplateId === 0 ?
+                  <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+                  TemplateId === 1 ?
+                    <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+                    <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+              }
+              fileName={fileNameCv}
             >
               {languageRedux === 1 ? 'Lưu và tải PDF' : 'Save & Download PDF'}
             </PDFDownloadLink>
