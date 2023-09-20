@@ -13,7 +13,6 @@ interface IProfileCv {
 
 const ProfileCv: React.FC<IProfileCv> = (props) => {
   const { color, fontSize, profile } = props;
-  console.log('color: ', color);
 
   const styles = StyleSheet.create({
     title: {
@@ -69,7 +68,7 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
     },
   });
 
-  const ProfileEntry = ({ introduce }: { introduce: string }) => (
+  const ProfileEntry = () => (
     <View
       style={{
         marginTop: '0.626cm',
@@ -77,7 +76,7 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
         textAlign: 'justify', // Căn đều văn bản
       }}
     >
-      <Text style={styles.text}>{profile.introduction}</Text>
+      <Text style={styles.text}>{profile?.introduction}</Text>
     </View>
   );
 
@@ -127,18 +126,7 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
         />
       </Svg>
       <View style={{ flexDirection: 'row', fontFamily: 'Montserrat Regular' }}>
-        <ProfileEntry
-          introduce="
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio provident officia debitis. Ad saepe nam culpa ipsum rem earum enim adipisci minima alias illo blanditiis minus ut, quaerat, recusandae pariatur.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio provident officia debitis. Ad saepe nam culpa ipsum rem earum enim adipisci minima alias illo blanditiis minus ut, quaerat, recusandae pariatur.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio provident officia debitis. Ad saepe nam culpa ipsum rem earum enim adipisci minima alias illo blanditiis minus ut, quaerat, recusandae pariatur.
-        Lorem ipsum dolor, sit amet consectetur adipisici
-        Lorem ipsum dolor, sit amet consectetur adipisici
-        Lorem ipsum dolor, sit amet consectetur adipisici
-        Lorem ipsum dolor, sit amet consectetur adipisici
-        Lorem ipsum dolor, sit amet consectetur adipisici
-        "
-        />
+        <ProfileEntry />
       </View>
     </View>
   );

@@ -59,7 +59,6 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
         <Text style={styles.name}>
           {profile?.name?.split(' ').slice(1, 3).join(' ')}
         </Text>
-
         <Svg height="1cm" width="100%">
           <Line
             x1="0"
@@ -81,7 +80,7 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
           />
         </Svg>
 
-        <Text style={styles.nameJob}>Công nghệ thông tin</Text>
+        <Text style={styles.nameJob}>{profile?.jobTypeName}</Text>
 
         <Svg height="1cm" width="100%">
           <Line

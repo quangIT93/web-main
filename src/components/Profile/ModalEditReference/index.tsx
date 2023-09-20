@@ -16,6 +16,7 @@ import { RootState } from 'store';
 import apiCv from 'api/apiCv';
 import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
 
 interface IModalReference {
   openModalEditReference: {
@@ -24,6 +25,7 @@ interface IModalReference {
     email: string;
     phone: string;
     id: null | number;
+    description: string;
   };
   setOpenModalEditReference: React.Dispatch<
     React.SetStateAction<{
@@ -32,6 +34,7 @@ interface IModalReference {
       email: string;
       phone: string;
       id: null | number;
+      description: string;
     }>
   >;
   setReferenceValues: React.Dispatch<React.SetStateAction<any>>;
@@ -79,7 +82,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   const [fullName, setFullName] = React.useState<any>();
-  const [company, setCompany] = React.useState<any>();
+  const [description, setDescription] = React.useState<any>();
   const [phone, setPhone] = React.useState<any>();
   const [mail, setMail] = React.useState<any>();
 
@@ -87,15 +90,16 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
     setPhone(openModalEditReference.phone);
     setFullName(openModalEditReference.name);
     setMail(openModalEditReference.email);
-  }, [profileV3]);
+    setDescription(openModalEditReference.description);
+  }, [openModalEditReference]);
 
   const dispatch = useDispatch();
 
   const handleOnchangeFullName = (e: any) => {
     setFullName(e.target.value);
   };
-  const handleOnchangeCompany = (e: any) => {
-    setCompany(e.target.value);
+  const handleOnchangeDescription = (e: any) => {
+    setDescription(e.target.value);
   };
   const handleOnchangePhone = (e: any) => {
     setPhone(e.target.value);
@@ -110,6 +114,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         fullName,
         phone,
         mail,
+        description,
         openModalEditReference.id,
       );
       if (result) {
@@ -118,6 +123,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
         );
         if (resultProfile) {
           dispatch(setProfileV3(resultProfile));
+          dispatch(setAlertEditInfo(true));
         }
       }
     } catch (error) {}
@@ -130,7 +136,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
     //   ...prev,
     // ]);
     setFullName('');
-    setCompany('');
+    setDescription('');
     setPhone('');
     setMail('');
     setOpenModalEditReference({
@@ -139,6 +145,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
       email: '',
       phone: '',
       id: null,
+      description: '',
     });
   };
 
@@ -149,6 +156,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
       email: '',
       phone: '',
       id: null,
+      description: '',
     });
   };
 
@@ -249,6 +257,28 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Email' : 'Email'}
             // error={titleError} // Đánh dấu lỗi
+          />
+        </Box>
+        <Box sx={{ marginBottom: '12px' }}>
+          <Typography
+            // sx={styleLabel}
+            variant="body1"
+            component="label"
+            htmlFor="startTime"
+          >
+            {language?.additional_information}{' '}
+            <span className="color-asterisk">*</span>
+          </Typography>
+          <TextField
+            // className={classes.textarea}
+            value={description}
+            onChange={handleOnchangeDescription}
+            sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
+            multiline
+            rows={4}
+            id="extraExp_info"
+            // label="Một số đặc điểm nhận diện công ty"
+            // placeholder={language?.profile_page?.place_additional_information}
           />
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>

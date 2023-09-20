@@ -77,6 +77,8 @@ const Experiences: React.FC<IEducation> = (props) => {
       flexDirection: 'row',
     },
     image: {
+      display: 'flex',
+      alignItems: 'center',
       width: '1cm',
       height: '1cm',
       padding: 6,
@@ -115,7 +117,7 @@ const Experiences: React.FC<IEducation> = (props) => {
   const ExperienceCvEntry = () => (
     <View style={{ marginTop: '0.626cm' }}>
       {profile &&
-        profile?.profilesEducations?.map((edu: any) => {
+        profile?.profilesExperiences?.map((exp: any) => {
           return (
             <View
               style={{
@@ -126,22 +128,22 @@ const Experiences: React.FC<IEducation> = (props) => {
               }}
             >
               <View style={styles.columnLeft}>
-                <Text style={styles.textTitleLeft}>{edu?.companyName}</Text>
+                <Text style={styles.textTitleLeft}>{exp?.companyName}</Text>
                 <Text style={styles.textTitleLeftTime}>
-                  {`${moment(edu?.startDate).format('YYYY')} - ${moment(
-                    edu?.endDate,
+                  {`${moment(exp?.startDate).format('YYYY')} - ${moment(
+                    exp?.endDate,
                   ).format('YYYY')}`}
                 </Text>
               </View>
               <View style={styles.columnRight}>
                 <View style={styles.itemRight}>
-                  <Text style={styles.textTitleRight}>{edu?.major}</Text>
+                  <Text style={styles.textTitleRight}>{exp?.title}</Text>
                   <View style={styles.itemsText}>
                     <View style={styles.itemText}>
                       <Text style={styles.textRight}>
                         <Text>+</Text>{' '}
                         <Text style={styles.paragraph}>
-                          {edu?.extraInformation}
+                          {exp?.extraInformation}
                         </Text>
                       </Text>
                     </View>

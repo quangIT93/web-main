@@ -165,7 +165,10 @@
             display: grid;
             grid-template-columns: repeat(2, auto);
             gap: 17px;
+            span {
+                border-color: #ccc;
 
+            }
             .active {
                 span {
 

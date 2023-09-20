@@ -28,14 +28,14 @@ import { setCookie } from 'cookies';
 import RollTop from '#components/RollTop';
 import CvTemplate1 from '#components/TemplatesCv/CvTemplate/CvTemplate1';
 import CvTemplate2 from '#components/TemplatesCv/CvTemplate/CvTemplate2';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink, pdf, renderToFile } from '@react-pdf/renderer';
+import ReactPDF from '@react-pdf/renderer';
+import apiCv from 'api/apiCv';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const profile = useSelector(
-    (state: RootState) => state.dataProfileV3.data,
-  );
+  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [fontSizeCV, setFontSizeCV] = React.useState(24);
   //1: black, 2: blue, 3: yellow, 4:green, 5:red
@@ -69,6 +69,38 @@ const TemplatesCv: React.FC = () => {
   const handleSaveCv = () => {
     setCookie('firstCv', '1', 365);
     setOpenModalChooseCv(true);
+  };
+
+  const handleClickSaveAndDownLoadCv = async () => {
+    try {
+      const pdfBlob = await pdf(
+        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />,
+      ).toBlob();
+
+      // Tạo một đối tượng Blob URL từ pdfBlob
+      const blobUrl = URL.createObjectURL(pdfBlob);
+
+      ReactPDF.render(
+        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />,
+        `example.pdf`,
+      );
+
+      // const formData = new FormData();
+      // formData.append('pdf', pdfBlob, 'my-pdf-file.pdf');
+      // formData.append('name', 'quang');
+      // formData.append('status', '1');
+
+      // if (pdfBlob) {
+      //   const result = await apiCv.postCv(formData);
+      //   if (result) {
+      //     console.log('lưu cv thành công');
+      //   }
+      // }
+
+      console.log('blobUrl', blobUrl);
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   return (
@@ -207,10 +239,16 @@ const TemplatesCv: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="button-cv">
+          <div className="button-cv" onClick={handleClickSaveAndDownLoadCv}>
             <PDFDownloadLink
               className="download-cv-btn"
-              document={<CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />}
+              document={
+                <CvTemplate2
+                  color={colorCV}
+                  fontSize={fontSizeCV}
+                  profile={profile}
+                />
+              }
               fileName="Test_Cv1"
             >
               {languageRedux === 1 ? 'Lưu và tải PDF' : 'Save & Download PDF'}

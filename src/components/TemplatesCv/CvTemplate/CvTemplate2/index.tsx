@@ -98,7 +98,7 @@ const index: React.FC<CvTemplate> = (props) => {
   });
 
   const Resume = (props: any) => (
-    <Page {...props} style={styles.page}>
+    <Page {...props} style={styles.page} scale={1000}>
       <View>
         <View>
           {/* <Image
