@@ -31,6 +31,7 @@ import CvTemplate2 from '#components/TemplatesCv/CvTemplate/CvTemplate2';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useSearchParams } from 'react-router-dom';
 import CvTemplate3 from '#components/TemplatesCv/CvTemplate/CvTemplate3';
+import CvTemplate4 from '#components/TemplatesCv/CvTemplate/CvTemplate4';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -47,7 +48,24 @@ const TemplatesCv: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const TemplateId = Number(searchParams.get('template-id'));
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
-
+  const templatesCv = [
+    {
+      id: 0,
+      component: <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+    },
+    {
+      id: 1,
+      component: <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+    },
+    {
+      id: 2,
+      component: <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+    },
+    {
+      id: 3,
+      component: <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+    },
+  ]
   React.useEffect(() => {
     roleRedux === 1 && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -94,8 +112,8 @@ const TemplatesCv: React.FC = () => {
 
   const createFileName = (str: string) => {
     str = removeVietnameseTones(str)
-    str = str.split(" ").join('')
     str.trim()
+    str = str.split(" ").join('_')
     str = str.concat('_CV')
     return str
   }
@@ -242,11 +260,14 @@ const TemplatesCv: React.FC = () => {
             <PDFDownloadLink
               className="download-cv-btn"
               document={
-                TemplateId === 0 ?
-                  <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-                  TemplateId === 1 ?
-                    <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-                    <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+                // TemplateId === 0 ?
+                //   <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+                //   TemplateId === 1 ?
+                //     <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+                //     <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+                templatesCv.filter((item: any) => {
+                  return item.id === TemplateId
+                })[0].component
               }
               fileName={fileNameCv}
             >
