@@ -16,6 +16,10 @@ import ProfileCv from './sections/ProfileCv';
 import SkillsCv from './sections/SkillsCv';
 import HeaderCv from '../CvTemplate2/sections/HeaderCv';
 import Education from './sections/EducationCv';
+import Activity from './sections/Activity';
+import LanguageCv from './sections/LanguageCv';
+import HobbieCv from './sections/HobbieCv';
+import ReferenceCv from './sections/ReferenceCv';
 
 import AbhayaLibreExtraBold from '../Fonts/AbhayaLibreExtraBold.ttf';
 import MontserratRegular from '../Fonts/MontserratRegular.ttf';
@@ -120,16 +124,28 @@ const index: React.FC<CvTemplate> = (props) => {
                   profile={profile}
                 />
                 <SkillsCv color={color} fontSize={fontSize} profile={profile} />
-                <SocialCv color={color} fontSize={fontSize} />
+                <LanguageCv
+                  color={color}
+                  fontSize={fontSize}
+                  profile={profile}
+                />
+                <HobbieCv color={color} fontSize={fontSize} profile={profile} />
+                {/* <SocialCv color={color} fontSize={fontSize} /> */}
                 {/* </> */}
               </View>
               <View style={{ width: '70%' }}>
+                <Activity color={color} fontSize={fontSize} profile={profile} />
                 <Experiences
                   color={color}
                   fontSize={fontSize}
                   profile={profile}
                 />
                 <Education
+                  color={color}
+                  fontSize={fontSize}
+                  profile={profile}
+                />
+                <ReferenceCv
                   color={color}
                   fontSize={fontSize}
                   profile={profile}

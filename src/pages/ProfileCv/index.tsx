@@ -19,16 +19,24 @@ import {
 
 import './style.scss';
 
-import { Modal, Button, Avatar } from 'antd';
-import { useSelector } from 'react-redux';
+import { Modal, Button, Avatar, Spin } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
 import { setCookie } from 'cookies';
-import { UserOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  CloseOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 import moment from 'moment';
 import { Box, Grid } from '@mui/material';
 import ModalShare from '#components/CV/ModalShare';
 import RollTop from '#components/RollTop';
 import ModalDeleteCv from '#components/CV/ModalDeleteCv';
+import apiCv from 'api/apiCv';
+import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { Document, Page } from 'react-pdf';
 
 const ProfileCv: React.FC = () => {
   const languageRedux = useSelector(
@@ -38,16 +46,50 @@ const ProfileCv: React.FC = () => {
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [selectedId, setSelectedId] = React.useState<any>(0);
+
+  const [linkPdfUrl, setLinkPdfUrl] = React.useState('');
+
   const [openModalShare, setOpenModalShare] = React.useState<any>(false);
-  const [openModalDeleteCv, setOpenModalDeleteCv] = React.useState<any>(false);
+  const [openModalDeleteCv, setOpenModalDeleteCv] = React.useState<{
+    open: boolean;
+    item: {
+      id: null | number;
+      imageURL: string;
+      name: string;
+      pdfURL: string;
+      status: number | null;
+    };
+  }>({
+    open: false,
+    item: {
+      id: null,
+      imageURL: '',
+      name: '',
+      pdfURL: '',
+      status: null,
+    },
+  });
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     roleRedux === 1 && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSelecCv = (id: number) => {
-    setSelectedId(id);
+  const handleSelecCv = async (item: any) => {
+    try {
+      const result = await apiCv.putThemeCv(item?.id, 1);
+      if (result) {
+        const resultProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        dispatch(setProfileV3(resultProfileV3));
+      }
+    } catch (error) {}
+
+    // setSelectedId(id);
   };
 
   const handleEditCv = (id: any) => {
@@ -77,6 +119,10 @@ const ProfileCv: React.FC = () => {
       console.log('error', error);
     }
   };
+  const [pageNumber, setNumPages] = React.useState(1);
+  function onDocumentLoadSuccess({ numPages }: any) {
+    setNumPages(numPages);
+  }
 
   return (
     <div className="profile-cv-container">
@@ -89,7 +135,11 @@ const ProfileCv: React.FC = () => {
                 ? 'Số cv của bạn:'
                 : 'Number of your resume:'}
             </p>
-            <h3>04</h3>
+            {profileV3.profilesCvs ? (
+              <h3>{profileV3.profilesCvs.length}</h3>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="profile-cv-title_right">
             <Button
@@ -114,7 +164,10 @@ const ProfileCv: React.FC = () => {
             {profileV3?.profilesCvs?.map((item: any, index: number) => (
               <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                 <div className="cv-item">
-                  <div className="cv-item_left">
+                  <div
+                    className="cv-item_left"
+                    onClick={() => setLinkPdfUrl(item.pdfURL)}
+                  >
                     <Avatar
                       shape="square"
                       icon={<UserOutlined />}
@@ -124,9 +177,10 @@ const ProfileCv: React.FC = () => {
                   <div className="cv-item_right">
                     <div className="cv-item_right__title">
                       <h3>
-                        {languageRedux === 1
+                        {/* {languageRedux === 1
                           ? `Hồ sơ số ${index + 1}`
-                          : `Resume No.${index + 1}`}
+                          : `Resume No.${index + 1}`} */}
+                        {item?.name}
                       </h3>
                       <p>
                         {languageRedux === 1
@@ -143,7 +197,7 @@ const ProfileCv: React.FC = () => {
                     <div className="cv-item_right__actions">
                       <div
                         className="action-item"
-                        onClick={() => handleSelecCv(index)}
+                        onClick={() => handleSelecCv(item)}
                       >
                         <div
                           className={
@@ -161,16 +215,16 @@ const ProfileCv: React.FC = () => {
                         </p>
                         {/* <QuestionMarkIcon width={16} height={16} /> */}
                       </div>
-                      <div
+                      {/* <div
                         className="action-item"
-                        onClick={() => handleEditCv(index + 1)}
+                        onClick={() => handleEditCv(item.id)}
                       >
                         <div className="action-icon">
                           <SectionEditIcon width={24} height={24} />
                         </div>
                         <p>{languageRedux === 1 ? 'Chỉnh sửa' : 'Editor'}</p>
-                      </div>
-                      <div
+                      </div> */}
+                      {/* <div
                         className="action-item"
                         onClick={() => setOpenModalShare(true)}
                       >
@@ -178,7 +232,7 @@ const ProfileCv: React.FC = () => {
                           <ShareCvIcon width={24} height={24} />
                         </div>
                         <p>{languageRedux === 1 ? 'Chia sẻ' : 'Share'}</p>
-                      </div>
+                      </div> */}
                       <div
                         className="action-item"
                         onClick={() =>
@@ -192,7 +246,9 @@ const ProfileCv: React.FC = () => {
                       </div>
                       <div
                         className="action-item"
-                        onClick={() => setOpenModalDeleteCv(true)}
+                        onClick={() =>
+                          setOpenModalDeleteCv({ open: true, item })
+                        }
                       >
                         <div className="action-icon">
                           <SectionDeleteIcon width={24} height={24} />
@@ -206,6 +262,43 @@ const ProfileCv: React.FC = () => {
             ))}
           </Grid>
         </Box>
+
+        {linkPdfUrl ? (
+          <div className="show-cv">
+            {/* <Document
+              file={linkPdfUrl} // Thay đổi đường dẫn tới file PDF của bạn
+              // onLoadSuccess={onDocumentLoadSuccess}
+            >
+              <Page pageNumber={1} />
+            </Document> */}
+            <div onClick={() => setLinkPdfUrl('')} className="close-show_cv">
+              <CloseOutlined style={{ fontSize: '16px', color: '#999999' }} />
+            </div>
+            <Document
+              file={linkPdfUrl} // Thay đổi đường dẫn tới file PDF của bạn
+              loading={<Spin indicator={antIcon} />}
+              noData={<Spin indicator={antIcon} />}
+              onLoadSuccess={onDocumentLoadSuccess}
+              className="page-cv-wrapper"
+            >
+              {Array.apply(null, Array(pageNumber))
+                .map((x, i) => i + 1)
+                .map((page) => (
+                  <Page
+                    className="page-cv"
+                    loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                    noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                    pageNumber={page}
+                    renderAnnotationLayer={false}
+                    renderTextLayer={false}
+                  />
+                ))}
+            </Document>
+          </div>
+        ) : (
+          <></>
+        )}
+
         <ModalShare
           openModalShare={openModalShare}
           setOpenModalShare={setOpenModalShare}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import { jsPDF } from 'jspdf';
+// import pdfjsLib from 'jspdf';
+import * as pdfjsLib from 'pdfjs-dist';
 import CVItem from '#components/Profile/CV';
 import { Button, Popconfirm, Skeleton, Space, message } from 'antd';
 import { DownloadCVIcon, PencilIcon, TickIcon } from '#components/Icons';
@@ -18,7 +19,12 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 import { Avatar } from 'antd';
 
 import ItemApply from '../../components/Item';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import {
+  PlusCircleOutlined,
+  StarFilled,
+  EyeOutlined,
+  EyeFilled,
+} from '@ant-design/icons';
 import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson';
 import ModalProfileContact from '#components/Profile/ModalProfileContact';
 import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice';
@@ -35,6 +41,9 @@ import { actionCreators } from 'store';
 import { RootState } from '../../../../store/reducer';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import axios from 'axios';
+import apiCv from 'api/apiCv';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import ModalShowCv from '#components/Profile/ModalShowCv';
 interface ItemAppy {
   id?: number | null;
   company_name?: string;
@@ -116,10 +125,19 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
     },
   ]);
 
+  const [modalShowCvPDF, setModalShowCvPdf] = React.useState<{
+    open: boolean;
+    urlPdf: string;
+  }>({
+    open: false,
+    urlPdf: '',
+  });
+
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
-  const handleChooseCv = (item: any, e: any) => {
+  const handleChooseCv = async (item: any, e: any) => {
     e.stopPropagation();
+
     setListCv((prev: any) => [
       prev.at(prev.indexOf(item)),
       ...prev
@@ -128,6 +146,15 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         })
         .sort((a: any, b: any) => b.id - a.id),
     ]);
+    try {
+      const result = await apiCv.putThemeCv(item?.id, 1);
+      if (result) {
+        const resultProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        dispatch(setProfileV3(resultProfileV3));
+      }
+    } catch (error) {}
   };
 
   // confirm delete cv
@@ -186,6 +213,38 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
     } catch (error) {
       console.log('error', error);
     }
+  };
+
+  const handleClickItemCv = async (urlPdf: string) => {
+    setModalShowCvPdf({ open: true, urlPdf });
+  };
+
+  const handleShow = () => {
+    var pdfViewer = document.getElementById('pdfViewer');
+    // Sử dụng PDF.js để hiển thị PDF từ URL
+    pdfjsLib.getDocument('pdfUrl').promise.then(function (pdfDoc: any) {
+      var numPages = pdfDoc.numPages;
+      var currentPage = 1; // Trang mặc định là trang đầu tiên
+
+      // Hiển thị trang đầu tiên
+      pdfDoc.getPage(currentPage).then(function (page: any) {
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        var viewport = page.getViewport({ scale: 1.0 }); // Điều chỉnh scale nếu cần
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        if (pdfViewer) {
+          pdfViewer.innerHTML = ''; // Xóa nội dung cũ trước khi thêm mới
+          pdfViewer.appendChild(canvas);
+          page.render({
+            canvasContext: context,
+            viewport: viewport,
+          });
+        }
+
+        // Vẽ nội dung PDF lên canvas
+      });
+    });
   };
 
   return (
@@ -351,16 +410,28 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   modules={[Mousewheel, Navigation, Pagination]}
                   className="list-cv-swiper"
                 >
-                  {profileV3?.profilesCvs?.map((item: any, index: number) => {
-                    return (
-                      <SwiperSlide
-                        key={index}
-                        onClick={(event) => {
-                          // handleClickItem();
-                        }}
-                      >
-                        <div className="slide-item" key={item}>
-                          {/* <Avatar src={item?.imageURL}>
+                  {profileV3?.profilesCvs
+                    ?.slice() // Tạo một bản sao của mảng để không ảnh hưởng đến mảng gốc
+                    .sort((a: any, b: any) => {
+                      // Sắp xếp mục có status === 1 lên đầu
+                      if (a.status === 1 && b.status !== 1) {
+                        return -1;
+                      }
+                      if (a.status !== 1 && b.status === 1) {
+                        return 1;
+                      }
+                      return 0; // Giữ nguyên thứ tự ban đầu cho các mục khác
+                    })
+                    ?.map((item: any, index: number) => {
+                      return (
+                        <SwiperSlide
+                          key={index}
+                          onClick={(event) => {
+                            handleClickItemCv(item.pdfURL);
+                          }}
+                        >
+                          <div className="slide-item" key={item}>
+                            {/* <Avatar src={item?.imageURL}>
                             {`CV ${item.id}`}
                             <div
                               className="choose-cv-container"
@@ -378,46 +449,87 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                             </div>
                           </Avatar> */}
 
-                          <div className="wrap-img_cv">
-                            <img src={item?.imageURL} alt={item.name} />
-                            <div
-                              className="choose-cv-container"
-                              onClick={(e) => handleChooseCv(item, e)}
-                            >
-                              <div
-                                className={
-                                  item.status === 1
-                                    ? 'choose-cv-content checked'
-                                    : 'choose-cv-content'
-                                }
-                              >
-                                <TickIcon />
+                            <div className="wrap-img_cv check-hover-cv">
+                              <div className="warp-img"></div>
+                              <img src={item?.imageURL} alt={item.name} />
+
+                              <div className="choose-cv-container">
+                                {/* <div
+                                  className={
+                                    item.status === 1
+                                      ? 'choose-cv-content checked'
+                                      : 'choose-cv-content'
+                                  }
+                                >
+                                  <TickIcon />
+                                </div> */}
+
+                                {item?.status === 0 ? (
+                                  <div
+                                    className="select-cv-defauld"
+                                    onClick={(e) => handleChooseCv(item, e)}
+                                  >
+                                    <span className="text-cv-default">
+                                      Đặt làm CV chính
+                                    </span>
+
+                                    <span
+                                      style={{ marginLeft: '4px' }}
+                                      className="text-cv-icon-star"
+                                    >
+                                      <StarFilled
+                                        style={{ fontSize: '16px' }}
+                                      />
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <div
+                                    className="select-cv-defauld cv-default"
+                                    onClick={(e) => handleChooseCv(item, e)}
+                                  >
+                                    <span
+                                      style={{ color: '#ffffff' }}
+                                      className="text-cv-default"
+                                    >
+                                      CV chính
+                                    </span>
+
+                                    <span style={{ marginLeft: '4px' }}>
+                                      <StarFilled
+                                        style={{
+                                          fontSize: '16px',
+                                          color: '#ff0',
+                                        }}
+                                      />
+                                    </span>
+                                  </div>
+                                )}
                               </div>
                             </div>
-                          </div>
 
-                          <div className="slide-item-bottom">
-                            <h3>
-                              {languageRedux === 1
-                                ? `Hồ sơ số ${item.id}`
-                                : `Resume No.${item.id}`}
-                            </h3>
-                            <div
-                              // to=""
-                              // download={item?.pdfURL}
-                              className="download-cv-icon"
-                              onClick={() =>
-                                handleDownloadCV(item?.pdfURL, item?.name)
-                              }
-                              // onClick={handleClickDownloadCv}
-                            >
-                              <DownloadCVIcon width={14} height={14} />
+                            <div className="slide-item-bottom">
+                              <h3>
+                                {languageRedux === 1
+                                  ? `Hồ sơ số ${item.id}`
+                                  : `Resume No.${item.id}`}
+                              </h3>
+                              <div
+                                // to=""
+                                // download={item?.pdfURL}
+                                className="download-cv-icon"
+                                onClick={() =>
+                                  handleDownloadCV(item?.pdfURL, item?.name)
+                                }
+                                // onClick={handleClickDownloadCv}
+                              >
+                                <DownloadCVIcon width={14} height={14} />
+                              </div>
+                              {/* <div onClick={handleShow}>Show</div> */}
                             </div>
                           </div>
-                        </div>
-                      </SwiperSlide>
-                    );
-                  })}
+                        </SwiperSlide>
+                      );
+                    })}
                 </Swiper>
               </div>
             ) : (
@@ -433,6 +545,8 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           </div>
         </div>
       </Skeleton>
+
+      <div id="pdfViewer"></div>
 
       <Skeleton className="skeleton-item" loading={loading} active>
         <div className="div-profile-info">
@@ -541,6 +655,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           setOpenModalExperienceCreate={setOpenModalExperienceCreate}
           typeItem="createExperience"
           educations={profile?.educations}
+        />
+
+        <ModalShowCv
+          modalShowCvPDF={modalShowCvPDF}
+          setModalShowCvPdf={setModalShowCvPdf}
         />
       </Skeleton>
       <SectionCv

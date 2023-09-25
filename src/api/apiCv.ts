@@ -274,7 +274,7 @@ const apiCv = {
             }
         )
     },
-    deleteProfileAwards: (ids: number[]) => {
+    deleteProfileAwards: (ids: number[] | null) => {
         const URL = `/v3/profiles-awards/remove`
         return axiosClient.delete(
             URL,
@@ -336,6 +336,35 @@ const apiCv = {
             }
         )
 
+    },
+    putThemeCv: (id: number, status: number) => {
+        const URL = `/v3/profiles-cvs/${id}`;
+        return axiosClient.put(
+            URL
+            ,
+            {}
+            ,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        
+                },
+            }
+        )
+
+    },
+    deleteCvById: (ids: number[] | null) => {
+        const URL = `/v3/profiles-cvs`
+        return axiosClient.delete(
+            URL,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+                data: { ids },
+
+            }
+        )
     }
 
 }

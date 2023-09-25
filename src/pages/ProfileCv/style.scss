@@ -8,7 +8,7 @@
         padding: 50px 0 30px;
         margin: 12px auto;
         max-width: 1080px;
-
+        position: relative;
         @media screen and (max-width: 1130px) {
             margin: 12px 24px;
         }
@@ -90,6 +90,7 @@
 
                 .cv-item_left {
                     height: 100%;
+                    cursor: pointer;
 
                     @include breakpoint(mobile) {
                         flex: 1;
@@ -202,6 +203,63 @@
                         }
                     }
                 }
+            }
+        }
+
+        .show-cv {
+            position: fixed;
+            left: 50%;
+            top: 10%;
+            transform: translate(-50%, 0%);
+            width: 674px;
+            height: 400px;
+
+        
+
+            border-radius: 2px;
+            .react-pdf__Document {
+                // margin-bottom: 30px;
+                background-color: #ffffff;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                max-height: 710px;
+                border-radius: 2px;
+                // margin-bottom: 48px;
+                padding: 40px;
+                border: 1px solid #000000;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                .react-pdf__Page {
+                    border-radius: 2px;
+                    .react-pdf__Page__canvas {
+                        border: 1px solid #000000;
+                        // margin-bottom: 30px;
+                        border-radius: 2px;
+                        width: 590px !important;
+    
+                    }
+
+                    &:last-child{
+                        // margin-bottom: 48px;
+                    }
+                }
+
+            }
+
+            .close-show_cv {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 10;
+                cursor: pointer;
+                box-shadow: 1px 2px 5px #ccc;
+                /* border: 1px solid; */
+                border-radius: 50%;
+                padding: 4px;
+                display: flex;
+                align-items: center;
+                background: #eeeeee;
             }
         }
     }

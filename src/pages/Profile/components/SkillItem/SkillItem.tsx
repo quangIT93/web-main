@@ -86,8 +86,6 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
     setOpenModalEditSkills({ open: true, id, idLevel, name });
   };
 
-  console.log('item', item);
-
   return (
     <div className="skill-item-container">
       <div className="div-item-left">

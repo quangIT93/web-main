@@ -22,13 +22,14 @@ import './style.scss';
 import { Modal, Button, Avatar } from 'antd';
 import ModalShare from '#components/CV/ModalShare';
 import ModalChooseCv from '#components/CV/ModalChooseCv';
+import ModalSuccessSaveCv from '#components/CV/ModalSuccessSaveCv';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { setCookie } from 'cookies';
 import RollTop from '#components/RollTop';
 import CvTemplate1 from '#components/TemplatesCv/CvTemplate/CvTemplate1';
 import CvTemplate2 from '#components/TemplatesCv/CvTemplate/CvTemplate2';
-import { PDFDownloadLink, pdf, renderToFile } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
 import ReactPDF from '@react-pdf/renderer';
 import apiCv from 'api/apiCv';
 
@@ -46,20 +47,16 @@ const TemplatesCv: React.FC = () => {
   const [colorCV, setColorCV] = React.useState(1);
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
+  const [openModalSuccessDownCv, setOpenModalSuccessDownCv] =
+    React.useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const TemplateId = Number(searchParams.get('template-id'));
+  const TemplateId = Number(localStorage.getItem('cv-id'));
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const templatesCv = [
     {
-      id: 0,
-      component: (
-        <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
       id: 1,
       component: (
-        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+        <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       ),
     },
     {
@@ -72,6 +69,12 @@ const TemplatesCv: React.FC = () => {
       id: 3,
       component: (
         <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
+    },
+    {
+      id: 4,
+      component: (
+        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       ),
     },
   ];
@@ -101,33 +104,35 @@ const TemplatesCv: React.FC = () => {
     setOpenModalChooseCv(true);
   };
 
-  const handleClickSaveAndDownLoadCv = async () => {
+  const handleClickSaveCv = async () => {
     try {
       const pdfBlob = await pdf(
-        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />,
+        templatesCv.filter((item: any) => {
+          return item.id === Number(localStorage.getItem('cv-id'));
+        })[0].component,
       ).toBlob();
 
-      // Tạo một đối tượng Blob URL từ pdfBlob
-      const blobUrl = URL.createObjectURL(pdfBlob);
+      // Tạo tệp PDF và lấy Blob
+      // const pdfBlob = await MyPdfDocument.toBlob();
 
-      ReactPDF.render(
-        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />,
-        `example.pdf`,
-      );
+      // Chuyển đổi Blob thành mảng dữ liệu (array buffer)
+      // const arrayBuffer = await pdfBlob.arrayBuffer();
 
-      // const formData = new FormData();
-      // formData.append('pdf', pdfBlob, 'my-pdf-file.pdf');
-      // formData.append('name', 'quang');
-      // formData.append('status', '1');
+      // Lưu trữ array buffer trong một biến
+      // const pdfData = new Uint8Array(arrayBuffer);
 
-      // if (pdfBlob) {
-      //   const result = await apiCv.postCv(formData);
-      //   if (result) {
-      //     console.log('lưu cv thành công');
-      //   }
-      // }
+      if (pdfBlob) {
+        const formData = new FormData();
+        formData.append('file', pdfBlob);
+        formData.append('name', localStorage.getItem('nameCv')!);
+        // formData.append('status', '1');
 
-      console.log('blobUrl', blobUrl);
+        const result = await apiCv.postCv(formData);
+        if (result) {
+          setOpenModalSuccessDownCv(true);
+          // console.log('lưu cv thành công');
+        }
+      }
     } catch (error) {
       console.log('error', error);
     }
@@ -296,15 +301,10 @@ const TemplatesCv: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="button-cv" onClick={handleClickSaveAndDownLoadCv}>
-            <PDFDownloadLink
+          <div className="button-cv" onClick={handleClickSaveCv}>
+            {/* <PDFDownloadLink
               className="download-cv-btn"
               document={
-                // TemplateId === 0 ?
-                //   <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-                //   TemplateId === 1 ?
-                //     <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-                //     <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
                 templatesCv.filter((item: any) => {
                   return item.id === TemplateId;
                 })[0].component
@@ -312,7 +312,10 @@ const TemplatesCv: React.FC = () => {
               fileName={fileNameCv}
             >
               {languageRedux === 1 ? 'Lưu và tải PDF' : 'Save & Download PDF'}
-            </PDFDownloadLink>
+            </PDFDownloadLink> */}
+            <p className="download-cv-btn">
+              {languageRedux === 1 ? 'Lưu PDF' : 'Save PDF'}
+            </p>
             {/* <Button
               type="primary"
               onClick={handleSaveCv}
@@ -323,14 +326,14 @@ const TemplatesCv: React.FC = () => {
                   "Save & Download PDF"
               }
             </Button> */}
-            <Button
+            {/* <Button
               type="primary"
               onClick={() => {
                 setOpenModalShare(true);
               }}
             >
               <ShareCvIcon />
-            </Button>
+            </Button> */}
           </div>
         </div>
 
@@ -342,6 +345,11 @@ const TemplatesCv: React.FC = () => {
         <ModalChooseCv
           openModalChooseCv={openModalChooseCv}
           setOpenModalChooseCv={setOpenModalChooseCv}
+        />
+
+        <ModalSuccessSaveCv
+          openModalSuccessDownCv={openModalSuccessDownCv}
+          setOpenModalSuccessDownCv={setOpenModalSuccessDownCv}
         />
       </div>
       <RollTop />
