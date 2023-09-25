@@ -39,6 +39,7 @@ import { usePDF, StyleSheet } from '@react-pdf/renderer';
 import { Document, Page, pdfjs } from 'react-pdf';
 import CvTemplate3 from '../CvTemplate/CvTemplate3';
 import CvTemplate4 from '../CvTemplate/CvTemplate4';
+import CvTemplate5 from '../CvTemplate/CvTemplate5';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/legacy/build/pdf.worker.min.js',
@@ -87,6 +88,10 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     {
       id: 3,
       component: <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+    },
+    {
+      id: 4,
+      component: <CvTemplate5 color={colorCV} fontSize={fontSizeCV} profile={profile} />
     },
   ]
 
