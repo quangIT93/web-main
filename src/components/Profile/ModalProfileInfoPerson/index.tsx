@@ -32,6 +32,7 @@ import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 import { provinces } from 'pages/Post/data/data';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -74,6 +75,7 @@ interface IInfoPersonal {
   gender: number;
   address: number;
   introduction: string;
+  jobTypeName: string;
 }
 
 const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
@@ -91,12 +93,16 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.address
       ? {
-          province_id: profile.address.id,
-          province_fullName: profile.address.name,
-        }
+        province_id: profile.address.id,
+        province_fullName: profile.address.name,
+      }
       : null,
   );
+
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   const [name, setName] = useState(profile?.name);
+  const [jobTypeName, setJobTypeName] = useState(profileV3?.jobTypeName);
   const [introduction, setIntroduction] = useState(profile?.introduction);
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -126,6 +132,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
 
   const handleSetFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
+  };
+
+  const handleJobTypeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setJobTypeName(e.target.value);
   };
 
   const getAllProvinces = async () => {
@@ -207,10 +217,18 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
           gender: gender === 'Nam' ? 1 : 0,
           address: selectedProvince.province_id,
           introduction: introduction,
+          jobTypeName: jobTypeName,
         };
         const result = await profileApi.putProfilePersonal(info);
         if (result) {
           await dispatch(getProfile() as any);
+          const profileV3Api = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+
+          if (profileV3Api) {
+            await dispatch(setProfileV3(profileV3Api) as any);
+          }
           setOpenModalPersonalInfo(false);
         }
       } else {
@@ -286,7 +304,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -334,7 +352,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       helperText: 'DD/MM/YYYY',
                     },
                   }}
-                  // format="DD/MM/YYYY"
+                // format="DD/MM/YYYY"
                 />
               </div>
             </LocalizationProvider>
@@ -354,9 +372,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={
                 selectedProvince
                   ? dataProvinces?.find(
-                      (province: any) =>
-                        province.province_id === selectedProvince.province_id,
-                    )
+                    (province: any) =>
+                      province.province_id === selectedProvince.province_id,
+                  )
                   : null
               }
               defaultValue={dataProvinces}
@@ -369,6 +387,28 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   error={!selectedProvince}
                 />
               )}
+            />
+          </Box>
+          <Box sx={styleChildBox}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
+            >
+              {languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="text"
+              id="nameProfile"
+              name="title"
+              value={jobTypeName}
+              onChange={handleJobTypeName}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder={languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}
+            // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -392,12 +432,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.introduce_yourself_to_the_recruiter}
               error={!introduction} // Đánh dấu lỗi
-              // onKeyDown={(event) => {
-              //   // if (event.key === 'Enter') {
-              //   //   event.preventDefault();
-              //   // }
-              //   console.log(event.target);
-              // }}
+            // onKeyDown={(event) => {
+            //   // if (event.key === 'Enter') {
+            //   //   event.preventDefault();
+            //   // }
+            //   console.log(event.target);
+            // }}
             />
           </Box>
         </form>

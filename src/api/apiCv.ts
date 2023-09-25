@@ -140,14 +140,15 @@ const apiCv = {
     },
 
     // reference
-    postProfileReference: (fullName: string, phone: string, email: string) => {
+    postProfileReference: (fullName: string, phone: string, email: string, description: string) => {
         const URL = `/v3/profiles-references`
         return axiosClient.post(
             URL,
             {
                 fullName,
                 phone,
-                email
+                email,
+                description
             },
             {
                 headers: {
@@ -158,7 +159,7 @@ const apiCv = {
         )
     },
     deleteProfileReference: (ids: number[]) => {
-        const URL = `/v3/profiles-references`
+        const URL = `/v3/profiles-references/remove`
         return axiosClient.delete(
             URL,
             {
@@ -170,14 +171,15 @@ const apiCv = {
             }
         )
     },
-    putProfileReference: (fullName: string, phone: string, email: string, id: number | null) => {
+    putProfileReference: (fullName: string, phone: string, email: string, description: string,id: number | null) => {
         const URL = `/v3/profiles-references/${id}`
         return axiosClient.put(
             URL,
             {
                 fullName,
                 phone,
-                email
+                email,
+                description
             },
             {
                 headers: {
@@ -272,7 +274,7 @@ const apiCv = {
             }
         )
     },
-    deleteProfileAwards: (ids: number[]) => {
+    deleteProfileAwards: (ids: number[] | null) => {
         const URL = `/v3/profiles-awards/remove`
         return axiosClient.delete(
             URL,
@@ -304,6 +306,66 @@ const apiCv = {
             }
         )
     },
+
+    postCv: (formData: any) => {
+        const URL = `/v3/profiles-cvs`
+      return axiosClient.post(
+            URL,
+                formData
+            ,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            }
+        )
+    },
+
+    // ----------------------------------------------------
+    // get theme
+    getThemeCv: () => {
+        const URL = `/v3/cv-template`;
+        return axiosClient.get(
+            URL,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        
+                },
+            }
+        )
+
+    },
+    putThemeCv: (id: number, status: number) => {
+        const URL = `/v3/profiles-cvs/${id}`;
+        return axiosClient.put(
+            URL
+            ,
+            {}
+            ,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        
+                },
+            }
+        )
+
+    },
+    deleteCvById: (ids: number[] | null) => {
+        const URL = `/v3/profiles-cvs`
+        return axiosClient.delete(
+            URL,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+                data: { ids },
+
+            }
+        )
+    }
 
 }
 

@@ -1,20 +1,16 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image, Svg, Line } from '@react-pdf/renderer';
 
-// import List, { Item } from './List';
+import education from '../../images/template2/education.png';
 
-import experiences from '../../images/template2/experiences.png';
 import moment from 'moment';
-const lineHeightInCm = 1; // Chiều cao của đường ngang (1cm)
-const lineHeightInPoints = lineHeightInCm * 28.3465; // 1cm ≈ 28.3465 points
-
-interface IEducation {
-  color: number;
+// import List, { Item } from './List';
+interface IActivity {
+  color: any;
   fontSize: any;
   profile: any;
 }
-
-const Experiences: React.FC<IEducation> = (props) => {
+const Activity: React.FC<IActivity> = (props) => {
   const { color, fontSize, profile } = props;
   const styles = StyleSheet.create({
     title: {
@@ -77,8 +73,6 @@ const Experiences: React.FC<IEducation> = (props) => {
       flexDirection: 'row',
     },
     image: {
-      display: 'flex',
-      alignItems: 'center',
       width: '1cm',
       height: '1cm',
       padding: 6,
@@ -114,10 +108,10 @@ const Experiences: React.FC<IEducation> = (props) => {
     },
   });
 
-  const ExperienceCvEntry = () => (
+  const EducationCvEntry = () => (
     <View style={{ marginTop: '0.626cm' }}>
       {profile &&
-        profile?.profilesExperiences?.map((exp: any) => {
+        profile?.profileActivities?.map((act: any) => {
           return (
             <View
               style={{
@@ -128,23 +122,21 @@ const Experiences: React.FC<IEducation> = (props) => {
               }}
             >
               <View style={styles.columnLeft}>
-                <Text style={styles.textTitleLeft}>{exp?.companyName}</Text>
+                <Text style={styles.textTitleLeft}>{act?.organization}</Text>
                 <Text style={styles.textTitleLeftTime}>
-                  {`${moment(exp?.startDate).format('YYYY')} - ${moment(
-                    exp?.endDate,
+                  {`${moment(act?.startDate).format('YYYY')} - ${moment(
+                    act?.endDate,
                   ).format('YYYY')}`}
                 </Text>
               </View>
               <View style={styles.columnRight}>
                 <View style={styles.itemRight}>
-                  <Text style={styles.textTitleRight}>{exp?.title}</Text>
+                  <Text style={styles.textTitleRight}>{act?.title}</Text>
                   <View style={styles.itemsText}>
                     <View style={styles.itemText}>
                       <Text style={styles.textRight}>
                         <Text>+</Text>{' '}
-                        <Text style={styles.paragraph}>
-                          {exp?.extraInformation}
-                        </Text>
+                        <Text style={styles.paragraph}>{act?.description}</Text>
                       </Text>
                     </View>
                     ;
@@ -168,11 +160,10 @@ const Experiences: React.FC<IEducation> = (props) => {
           overflow: 'hidden',
         }}
       >
-        <Image style={styles.image} src={experiences} />
+        <Image style={styles.image} src={education} />
 
-        <Text style={styles.title}>Experiences</Text>
+        <Text style={styles.title}>Activities</Text>
       </View>
-
       <Svg height="1cm" width="100%">
         <Line
           x1="0"
@@ -193,9 +184,9 @@ const Experiences: React.FC<IEducation> = (props) => {
           }
         />
       </Svg>
-      <ExperienceCvEntry />
+      <EducationCvEntry />
     </View>
   );
 };
 
-export default Experiences;
+export default Activity;

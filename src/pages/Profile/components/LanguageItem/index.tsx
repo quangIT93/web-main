@@ -100,8 +100,6 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
     setOpenModalEditlanguages({ open: true, id, idLevel, name });
   };
 
-  console.log('item', item);
-
   return (
     <div className="language-item-container">
       <div className="div-item-left">

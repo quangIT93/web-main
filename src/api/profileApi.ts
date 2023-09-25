@@ -54,6 +54,17 @@ const profileApi = {
       },
     }) // Truyền email vào body của request
   },
+  
+  putProfileJobV3: (jobTypeId: number| null) => {
+    const URL = `/v3/profiles/job`
+    return axiosClient.put(URL, {
+      jobTypeId
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    }) // Truyền email vào body của request
+  },
 
   postAvatar: (images: any) => {
     const URL = `/v1/profiles/avt`

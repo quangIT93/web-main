@@ -18,6 +18,7 @@ interface ISkillItem {
     phone: string;
     id: number;
     email: string;
+    description: string;
   };
   index: number;
   setReferenceValues: React.Dispatch<React.SetStateAction<any>>;
@@ -30,6 +31,7 @@ interface ISkillItem {
     email: string;
     phone: string;
     id: number | null;
+    description: string;
   };
   setOpenModalEditReference: React.Dispatch<
     React.SetStateAction<{
@@ -38,6 +40,7 @@ interface ISkillItem {
       email: string;
       phone: string;
       id: number | null;
+      description: string;
     }>
   >;
 }
@@ -60,13 +63,28 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
 
   const dispatch = useDispatch();
 
-  const handleDeleteLanguage = (id: number) => {
-    setReferenceValues(
-      referenceValues.filter((value: any, index: any) => {
-        return index !== id;
-      }),
-    );
+  const handleDeleteReference = async (id: number) => {
+    // setReferenceValues(
+    //   referenceValues.filter((value: any, index: any) => {
+    //     return index !== id;
+    //   }),
+    // );
     // console.log(id);
+
+    try {
+      const result = await apiCv.deleteProfileReference([id]);
+      if (result) {
+        const resultProfile = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (resultProfile) {
+          dispatch(setProfileV3(resultProfile));
+          dispatch(setAlert(true));
+        }
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   const handleEditReference = async (
@@ -74,8 +92,16 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
     name: string,
     phone: string,
     email: string,
+    description: string,
   ) => {
-    setOpenModalEditReference({ open: true, name, email, phone, id });
+    setOpenModalEditReference({
+      open: true,
+      name,
+      email,
+      phone,
+      id,
+      description,
+    });
     //   const result = await apiCv.putProfileReference(name, phone, email, id);
     //   if (result) {
     //     const resultProfile = await profileApi.getProfileV3(
@@ -99,30 +125,33 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
               padding: '8px 12px',
               border: '0.5px solid #aaaaaa',
               borderRadius: '10px',
+              margin: '0 12px 12px 0',
             }}
           >
             <h3
               style={{
-                textAlign: 'center',
                 color: '#000000',
                 fontWeight: '500',
               }}
             >
               {item?.fullName}
             </h3>
-            <p style={{ textAlign: 'center', color: '#AAAAAA' }}>
-              {item?.phone}
-            </p>
-            <p style={{ textAlign: 'center', color: '#AAAAAA' }}>
-              {item?.email}
-            </p>
+            <p style={{ color: '#AAAAAA' }}>{item?.phone}</p>
+            <p style={{ color: '#AAAAAA' }}>{item?.email}</p>
+            <p style={{ color: '#AAAAAA' }}>{item?.description}</p>
           </Space>
         </div>
       </div>
       <div className="div-item-right">
         <Space
           onClick={() =>
-            handleEditReference(item.id, item.fullName, item.phone, item.email)
+            handleEditReference(
+              item.id,
+              item.fullName,
+              item.phone,
+              item.email,
+              item.description,
+            )
           }
           style={{ cursor: 'pointer', marginRight: '16px' }}
         >
@@ -134,7 +163,7 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
           </p>
         </Space>
         <Space
-          onClick={() => handleDeleteLanguage(index)}
+          onClick={() => handleDeleteReference(item.id)}
           style={{ cursor: 'pointer', marginRight: '16px' }}
         >
           <div className="edit-icon">

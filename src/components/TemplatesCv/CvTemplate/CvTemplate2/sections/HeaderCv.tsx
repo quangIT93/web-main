@@ -55,11 +55,16 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
           justifyContent: 'center',
         }}
       >
-        <Text style={styles.name}>{profile?.name?.split(' ').slice(0, 1)}</Text>
         <Text style={styles.name}>
-          {profile?.name?.split(' ').slice(1, 3).join(' ')}
+          {profile?.name?.split(' ').length > 2
+            ? profile?.name?.split(' ').slice(0, -2).join(' ')
+            : profile?.name?.split(' ').slice(0, -1).join(' ')}
         </Text>
-
+        <Text style={styles.name}>
+          {profile?.name?.split(' ').length > 2
+            ? profile?.name?.split(' ').slice(-2).join(' ')
+            : profile?.name?.split(' ').slice(-1).join(' ')}
+        </Text>
         <Svg height="1cm" width="100%">
           <Line
             x1="0"
@@ -81,7 +86,7 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
           />
         </Svg>
 
-        <Text style={styles.nameJob}>Công nghệ thông tin</Text>
+        <Text style={styles.nameJob}>{profile?.jobTypeName}</Text>
 
         <Svg height="1cm" width="100%">
           <Line
@@ -107,7 +112,7 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
 
       <Image
         src={profile.avatarPath}
-        style={{ width: '5cm', height: '4.5cm' }}
+        style={{ width: '5cm', height: '4.5cm', objectFit: 'cover' }}
       />
       {/* <View style={{ width: '5cm', height: '4.5cm' }}>
     </View> */}

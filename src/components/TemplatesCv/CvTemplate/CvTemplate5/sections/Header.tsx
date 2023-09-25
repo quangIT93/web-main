@@ -318,7 +318,7 @@ const Header: React.FC<ICvHeader> = (props) => {
                                 </Text>
                             </View>
                             <View style={styles.borderBot}></View>
-                            <Text style={styles.bigTitle}>SOFTWARE ENGINEER</Text>
+                            <Text style={styles.bigTitle}>{profile?.jobTypeName}</Text>
                         </View>
                     </View>
                     <View style={styles.botLeftDiv}>

@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -13,7 +13,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Avatar, Spin } from 'antd';
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
-import { ResumeIcon } from '#components/Icons';
+import { ResumeIcon, PencilIcon } from '#components/Icons';
+
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { spacing } from '../Styles';
@@ -37,6 +38,7 @@ import CvTemplate2 from '../CvTemplate/CvTemplate2';
 
 import { usePDF, StyleSheet } from '@react-pdf/renderer';
 import { Document, Page, pdfjs } from 'react-pdf';
+import apiCv from 'api/apiCv';
 import CvTemplate3 from '../CvTemplate/CvTemplate3';
 import CvTemplate4 from '../CvTemplate/CvTemplate4';
 import CvTemplate5 from '../CvTemplate/CvTemplate5';
@@ -65,51 +67,61 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const profile = useSelector(
-    (state: RootState) => state.dataProfileV3.data,
-  );
+  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const [dataCategories, setDataCategories] = React.useState<any>(null);
+  const [valueNameCv, setValueNameCv] = React.useState<any>('');
   const [cvId, setCvId] = React.useState<any>(1);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const TemplateId = Number(searchParams.get('template-id'));
+
+  const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
+
+  const TemplateId = Number(localStorage.getItem('cv-id'));
   const templatesCv = [
     {
-      id: 0,
-      component: <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-    },
-    {
       id: 1,
-      component: <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      component: (
+        <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
     },
     {
       id: 2,
-      component: <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      component: (
+        <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
     },
     {
       id: 3,
-      component: <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      component: (
+        <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
     },
     {
       id: 4,
-      component: <CvTemplate5 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      component: (
+        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
     },
-  ]
-
-  const [instance, updateInstance] = usePDF(
     {
-      // document: TemplateId === 0 ?
-      //   <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-      //   TemplateId === 1 ?
-      //     <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-      //     <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      document: templatesCv.filter((item: any) => {
-        return item.id === TemplateId
-      })[0].component
-    }
-  );
+      id: 5,
+      component: (
+        <CvTemplate5 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
+    },
+  ];
+
+  const [instance, updateInstance] = usePDF({
+    // document: TemplateId === 0 ?
+    //   <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+    //   TemplateId === 1 ?
+    //     <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+    //     <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+    document: templatesCv.filter((item: any) => {
+      return item.id === TemplateId;
+    })[0].component,
+  });
+
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [numPages, setNumPages] = React.useState<number>();
-  const [selected, setSelected] = React.useState<number>();
+  const [selectedThemeId, setSelectedThemeId] = React.useState<number>(1);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const getDataParentCategory = async () => {
     try {
@@ -137,14 +149,18 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       //   <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
       //   <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       templatesCv.filter((item: any) => {
-        return item.id === TemplateId
-      })[0].component
+        return item.id === TemplateId;
+      })[0].component,
     );
   }, [colorCV, TemplateId, profile]);
 
   React.useEffect(() => {
     getDataParentCategory();
+    getTheme();
     const cv_id = localStorage.getItem('cv-id');
+    if (valueNameCv === '') {
+      setValueNameCv(localStorage.getItem('nameCv'));
+    }
     //convert string to number
     cv_id && setCvId(+cv_id);
   }, [languageRedux]);
@@ -153,11 +169,20 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   const handleChangeCategory = async () => { };
 
-  const handleSelectTemplate = (id: any) => {
-    setSearchParams({
-      'template-id': id,
-    });
-  }
+  const handleSelectTemplate = (id: any, name: string) => {
+    setSelectedThemeId(id);
+    setValueNameCv(name);
+    localStorage.setItem('cv-id', id);
+  };
+
+  const getTheme = async () => {
+    try {
+      const result = await apiCv.getThemeCv();
+      if (result) {
+        setGetThemeCv(result.data);
+      }
+    } catch (error) { }
+  };
 
   const styles = StyleSheet.create({
     page: {
@@ -200,10 +225,12 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     },
   });
 
+  // console.log('aaa');
+
   return (
     <div className="contentCV-bottom">
       <div className="contentCV-bottom-left">
-        <Box sx={styleChildBox}>
+        {/* <Box sx={styleChildBox}>
           <Autocomplete
             autoHighlight
             className="contentCV-bottom-select"
@@ -221,23 +248,31 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                   languageRedux === 1 ? 'Chọn mẫu CV' : 'Choose resume template'
                 }
                 size="small"
-              // error={!selectedProvince}
+                // error={!selectedProvince}
               />
             )}
           />
-        </Box>
+        </Box> */}
 
         <div className="list-template">
-          {Array.from(new Array(10).keys()).map((item: any, index: any) => (
+          {getThemeCv.map((item: any, index: any) => (
             <div
               className={
-                TemplateId === index ?
-                  "template-item active" : "template-item"
+                item?.id === Number(localStorage.getItem('cv-id'))
+                  ? 'template-item active'
+                  : 'template-item'
               }
               key={index}
-              onClick={() => handleSelectTemplate(index)}
+              onClick={() => {
+                localStorage.setItem('nameCv', item?.name);
+                handleSelectTemplate(item?.id, item?.name);
+              }}
             >
-              <Avatar shape="square" icon={<UserOutlined />} />
+              <Avatar
+                shape="square"
+                icon={<UserOutlined />}
+                src={item?.image}
+              />
             </div>
           ))}
         </div>
@@ -248,7 +283,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           modules={[Mousewheel, Navigation, Pagination]}
           className="list-template-swiper"
         >
-          {Array.from(new Array(10).keys()).map((item: any, index: number) => {
+          {getThemeCv.map((item: any, index: number) => {
             return (
               <SwiperSlide
                 key={index}
@@ -256,15 +291,23 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                   // handleClickItem();
                 }}
               >
-                <div className={
-                  TemplateId === index ?
-                    "slide-item active" :
-                    "slide-item"
-                }
+                <div
+                  className={
+                    item?.id === selectedThemeId
+                      ? 'slide-item active'
+                      : 'slide-item'
+                  }
                   key={item}
-                  onClick={() => handleSelectTemplate(index)}
+                  onClick={() => {
+                    localStorage.setItem('nameCv', item?.name);
+                    handleSelectTemplate(item?.id, item?.name);
+                  }}
                 >
-                  <Avatar shape="square" icon={<UserOutlined />} />
+                  <Avatar
+                    shape="square"
+                    icon={<UserOutlined />}
+                    src={item?.image}
+                  />
                 </div>
               </SwiperSlide>
             );
@@ -277,8 +320,34 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           <div className="title_left">
             <ResumeIcon />
             <h3>
-              {languageRedux === 1 ? `Hồ sơ số ${cvId}` : `Resume No.${cvId}`}
+              {/* {languageRedux === 1
+                ? `Hồ sơ số ${selectedThemeId}`
+                : `Resume ${selectedThemeId}`} */}
+
+              {/* {getThemeCv.map((item: any) => {
+                if (item.id === selectedThemeId) {
+                  return <h3>{item.name}</h3>;
+                } else {
+                  return '';
+                }
+              })} */}
             </h3>
+            <div className="title_left-nameCv">
+              <input
+                type="text"
+                name=""
+                id=""
+                value={valueNameCv}
+                onChange={(e: any) => {
+                  setValueNameCv(e.target.value);
+                  localStorage.setItem('nameCv', e.target.value);
+                }}
+              />
+              {/* <div className="nameCvIcon" onClick={handleChangeNameCv}> */}
+              {/* <PencilIcon width={15} height={15} /> */}
+              {/* Save
+              </div> */}
+            </div>
           </div>
           {/* Tải xuống PDF */}
           {/* <PDFDownloadLink document={<Theme1 />} fileName="111.pdf">
@@ -320,7 +389,6 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                 ))}
             </Document>
           )}
-          {/* <CvTemplate3 /> */}
         </div>
         {/* <Avatar shape="square" icon={<UserOutlined />} />
           <Avatar shape="square" icon={<UserOutlined />} /> */}

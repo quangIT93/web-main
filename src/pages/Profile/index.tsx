@@ -140,7 +140,7 @@ const Profile: React.FC = () => {
 
   const profile = useSelector((state: RootState) => state.profileUser);
   const profileUser = useSelector((state: RootState) => state.profile.profile);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false);
   const [openModalContact, setOpenModalContact] = useState(false);
@@ -152,6 +152,9 @@ const Profile: React.FC = () => {
 
   const [openModalExperienceCreate, setOpenModalExperienceCreate] =
     useState(false);
+
+  const [openModalTypeofWork, setOpenModalTypeofWork] = React.useState(false);
+
   // const [imageInfo, setImageInfo] = useState<string>('');
   // const [avatarUrl, setAvatarUrl] = useState<string>('');
   const [companyName, setCompanyName] = useState<string>('');
@@ -645,6 +648,7 @@ const Profile: React.FC = () => {
                 <p>{language?.date_of_birth}</p>
                 <p>{language?.sex}</p>
                 <p>{language?.location}</p>
+                <p>{languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}</p>
               </div>
               <div className="div-detail-row right">
                 <p>
@@ -662,6 +666,11 @@ const Profile: React.FC = () => {
                 <p>
                   {profile?.address?.name
                     ? profile?.address?.name
+                    : language?.unupdated}
+                </p>
+                <p>
+                  {profileV3?.jobTypeName
+                    ? profileV3?.jobTypeName
                     : language?.unupdated}
                 </p>
               </div>
@@ -741,6 +750,8 @@ const Profile: React.FC = () => {
           setOpenModalLocation={setOpenModalLocation}
           setOpenModalEducationCreate={setOpenModalEducationCreate}
           setOpenModalExperienceCreate={setOpenModalExperienceCreate}
+          setOpenModalTypeofWork={setOpenModalTypeofWork}
+          openModalTypeofWork={openModalTypeofWork}
         />
 
         <Company
@@ -778,8 +789,8 @@ const Profile: React.FC = () => {
               sx={{ width: '100%', backgroundColor: '#000000' }}
             >
               {languageRedux === 1
-                ? 'Bạn đã thêm thông tin thành công'
-                : 'You have saved the information successfully'}
+                ? 'Bạn đã thêm thông tin thành công !'
+                : 'You have saved the information successfully !'}
             </Alert>
           </Snackbar>
         </Stack>
@@ -794,11 +805,11 @@ const Profile: React.FC = () => {
             <Alert
               onClose={handleCloseLackInfo}
               severity="error"
-              sx={{ width: '100%', backgroundColor: 'red' }}
+              sx={{ width: '100%', backgroundColor: '#000000' }}
             >
               {languageRedux === 1
-                ? 'Vui lòng nhập đầy đủ thông tin'
-                : 'Please enter complete information'}
+                ? 'Vui lòng nhập đầy đủ thông tin !'
+                : 'Please enter complete information !'}
             </Alert>
           </Snackbar>
         </Stack>
@@ -813,11 +824,11 @@ const Profile: React.FC = () => {
             <Alert
               onClose={handleCloseEditInfo}
               severity="error"
-              sx={{ width: '100%', backgroundColor: 'green' }}
+              sx={{ width: '100%', backgroundColor: '#000000' }}
             >
               {languageRedux === 1
-                ? 'Bạn đã sửa thông tin thành công'
-                : 'You have successfully edited the information'}
+                ? 'Cập nhật thông tin thành công !'
+                : 'Update information successfully !'}
             </Alert>
           </Snackbar>
         </Stack>

@@ -5,13 +5,13 @@ import { Text, View, StyleSheet, Image, Svg, Line } from '@react-pdf/renderer';
 
 import profileImage from '../../images/template2/profile.png';
 
-interface IProfileCv {
+interface IHobbieCv {
   color: number;
   fontSize: number;
   profile: any;
 }
 
-const ProfileCv: React.FC<IProfileCv> = (props) => {
+const HobbieCv: React.FC<IHobbieCv> = (props) => {
   const { color, fontSize, profile } = props;
 
   const styles = StyleSheet.create({
@@ -35,9 +35,20 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
       // fontFamily: "Mon"
       // marginBottom: 10,
     },
+    wrapText: {
+      marginTop: '0.626cm',
+      flexGrow: 1,
+      textAlign: 'justify',
+      wordWrap: 'break-word',
+      width: '100%',
+      overflow: 'hidden',
+      // Cho phép xuống dòng// Ẩn nội dung vượt quá chiều rộng
+    },
     text: {
       fontSize: '7.81pt',
       // marginBottom: 10,
+      wordWrap: 'break-word',
+      width: '100%',
     },
     image: {
       width: '1cm',
@@ -69,14 +80,8 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
   });
 
   const ProfileEntry = () => (
-    <View
-      style={{
-        marginTop: '0.626cm',
-        flexGrow: 1,
-        textAlign: 'justify', // Căn đều văn bản
-      }}
-    >
-      <Text style={styles.text}>{profile?.introduction}</Text>
+    <View style={styles.wrapText}>
+      <Text style={styles.text}>{profile?.profileHobbies?.description}</Text>
     </View>
   );
 
@@ -102,7 +107,7 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
 
           style={styles.title}
         >
-          Profile
+          Hobbies
         </Text>
       </View>
       <Svg height="1cm" width="100%">
@@ -132,4 +137,4 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
   );
 };
 
-export default ProfileCv;
+export default HobbieCv;

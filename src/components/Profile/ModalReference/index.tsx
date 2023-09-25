@@ -17,6 +17,7 @@ import apiCv from 'api/apiCv';
 import profileApi from 'api/profileApi';
 
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { setAlertSuccess } from 'store/reducer/profileReducer/alertProfileReducer';
 
 interface IModalReference {
   openModalReference: boolean;
@@ -62,7 +63,8 @@ const ModalReference: React.FC<IModalReference> = (props) => {
     (state: RootState) => state.dataLanguage.languages,
   );
   const [fullName, setFullName] = React.useState<any>();
-  const [company, setCompany] = React.useState<any>();
+
+  const [description, setDescription] = React.useState<any>();
   const [phone, setPhone] = React.useState<any>();
   const [mail, setMail] = React.useState<any>();
 
@@ -71,8 +73,8 @@ const ModalReference: React.FC<IModalReference> = (props) => {
   const handleOnchangeFullName = (e: any) => {
     setFullName(e.target.value);
   };
-  const handleOnchangeCompany = (e: any) => {
-    setCompany(e.target.value);
+  const handleOnchangeDescription = (e: any) => {
+    setDescription(e.target.value);
   };
   const handleOnchangePhone = (e: any) => {
     setPhone(e.target.value);
@@ -91,7 +93,12 @@ const ModalReference: React.FC<IModalReference> = (props) => {
     // ])
 
     try {
-      const result = await apiCv.postProfileReference(fullName, phone, mail);
+      const result = await apiCv.postProfileReference(
+        fullName,
+        phone,
+        mail,
+        description,
+      );
       if (result) {
         const resultProfile = await profileApi.getProfileV3(
           languageRedux === 1 ? 'vi' : 'en',
@@ -99,10 +106,11 @@ const ModalReference: React.FC<IModalReference> = (props) => {
         if (resultProfile) {
           dispatch(setProfileV3(resultProfile));
           setFullName('');
-          setCompany('');
+          setDescription('');
           setPhone('');
           setMail('');
           setOpenModalReference(false);
+          dispatch(setAlertSuccess(true));
         }
       }
     } catch (error) {}
@@ -174,28 +182,6 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            {languageRedux === 1 ? 'Công ty' : 'Company'}{' '}
-            <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            type="text"
-            id="skill"
-            name="skill"
-            value={company}
-            onChange={handleOnchangeCompany}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={languageRedux === 1 ? 'Tên công ty' : "Company's name"}
-            // error={titleError} // Đánh dấu lỗi
-          />
-        </Box>
-        <Box sx={{ marginBottom: '12px' }}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
-          >
             {languageRedux === 1 ? 'Số điện thoại' : 'Phone number'}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
@@ -231,6 +217,28 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Email' : 'Email'}
             // error={titleError} // Đánh dấu lỗi
+          />
+        </Box>
+        <Box sx={{ marginBottom: '12px' }}>
+          <Typography
+            // sx={styleLabel}
+            variant="body1"
+            component="label"
+            htmlFor="startTime"
+          >
+            {language?.additional_information}{' '}
+            <span className="color-asterisk">*</span>
+          </Typography>
+          <TextField
+            // className={classes.textarea}
+            value={description}
+            onChange={handleOnchangeDescription}
+            sx={{ width: '100%', marginTop: '4px', textAlign: 'start' }}
+            multiline
+            rows={4}
+            id="extraExp_info"
+            // label="Một số đặc điểm nhận diện công ty"
+            // placeholder={language?.profile_page?.place_additional_information}
           />
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
