@@ -38,6 +38,8 @@ import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { Document, Page } from 'react-pdf';
 
+import ModalShowCv from '#components/Profile/ModalShowCv';
+
 const ProfileCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -50,6 +52,12 @@ const ProfileCv: React.FC = () => {
   const [linkPdfUrl, setLinkPdfUrl] = React.useState('');
 
   const [openModalShare, setOpenModalShare] = React.useState<any>(false);
+
+  const [modalShowPdf, setModalShowCvPdf] = React.useState({
+    open: false,
+    urlPdf: '',
+  });
+
   const [openModalDeleteCv, setOpenModalDeleteCv] = React.useState<{
     open: boolean;
     item: {
@@ -166,7 +174,10 @@ const ProfileCv: React.FC = () => {
                 <div className="cv-item">
                   <div
                     className="cv-item_left"
-                    onClick={() => setLinkPdfUrl(item.pdfURL)}
+                    onClick={() => {
+                      setModalShowCvPdf({ open: true, urlPdf: item.pdfURL });
+                      setLinkPdfUrl(item.pdfURL);
+                    }}
                   >
                     <Avatar
                       shape="square"
@@ -263,14 +274,8 @@ const ProfileCv: React.FC = () => {
           </Grid>
         </Box>
 
-        {linkPdfUrl ? (
+        {/* {linkPdfUrl ? (
           <div className="show-cv">
-            {/* <Document
-              file={linkPdfUrl} // Thay đổi đường dẫn tới file PDF của bạn
-              // onLoadSuccess={onDocumentLoadSuccess}
-            >
-              <Page pageNumber={1} />
-            </Document> */}
             <div onClick={() => setLinkPdfUrl('')} className="close-show_cv">
               <CloseOutlined style={{ fontSize: '16px', color: '#999999' }} />
             </div>
@@ -297,7 +302,12 @@ const ProfileCv: React.FC = () => {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
+
+        <ModalShowCv
+          setModalShowCvPdf={setModalShowCvPdf}
+          modalShowCvPDF={modalShowPdf}
+        />
 
         <ModalShare
           openModalShare={openModalShare}

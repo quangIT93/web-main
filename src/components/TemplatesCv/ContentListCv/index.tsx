@@ -42,6 +42,9 @@ import apiCv from 'api/apiCv';
 import CvTemplate3 from '../CvTemplate/CvTemplate3';
 import CvTemplate4 from '../CvTemplate/CvTemplate4';
 
+import templatesCv from '../CvTemplate/ListTheme';
+import { template } from '@babel/core';
+
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/legacy/build/pdf.worker.min.js',
   import.meta.url,
@@ -73,46 +76,67 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
-  const TemplateId = Number(localStorage.getItem('cv-id'));
-  const templatesCv = [
-    {
-      id: 1,
-      component: (
-        <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
-      id: 2,
-      component: (
-        <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
-      id: 3,
-      component: (
-        <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
-      id: 4,
-      component: (
-        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-  ];
+  const TemplateId = Number(localStorage.getItem('cv-id')) || 1;
+  // const templatesCv = [
+  //   {
+  //     id: 1,
+  //     component: (
+  //       <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+  //     ),
+  //   },
+  //   {
+  //     id: 2,
+  //     component: (
+  //       <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+  //     ),
+  //   },
+  //   {
+  //     id: 3,
+  //     component: (
+  //       <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+  //     ),
+  //   },
+  //   {
+  //     id: 4,
+  //     component: (
+  //       <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+  //     ),
+  //   },
+  // ];
+
+  const [selectedDocument, setSelectedDocument] = useState<any>(null);
+
+  useEffect(() => {
+    const selectedTemplate = templatesCv.find(
+      (template) => template.id === TemplateId,
+    );
+    if (selectedTemplate) {
+      const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
+
+      // Tạo một biến để lưu trữ mẫu CV được chọn
+
+      setSelectedDocument(
+        <CvComponent
+          color={colorCV}
+          fontSize={fontSizeCV}
+          profile={profileV3}
+        />,
+      );
+    }
+  }, [TemplateId, colorCV, fontSizeCV, profileV3]);
 
   const [instance, updateInstance] = usePDF({
-    // document: TemplateId === 0 ?
-    //   <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-    //   TemplateId === 1 ?
-    //     <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-    //     <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-    document: templatesCv.filter((item: any) => {
-      return item.id === TemplateId;
-    })[0].component,
+    document: selectedDocument, // Truyền mẫu CV được chọn vào document
   });
 
-  const [pageNumber, setPageNumber] = React.useState<number>(1);
+  useEffect(() => {
+    updateInstance(selectedDocument);
+  }, [selectedDocument]);
+  // Tìm mẫu CV với ID tương ứng trong danh sách templatesCv
+
+  // const [instance, updateInstance] = usePDF({ document: <></> });
+
+  // const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [numPages, setNumPages] = React.useState<number>();
   const [selectedThemeId, setSelectedThemeId] = React.useState<number>(1);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -134,23 +158,28 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     setNumPages(numPages);
   }
 
-  React.useEffect(() => {
-    updateInstance(
-      // TemplateId === 0 ?
-      // <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-      // TemplateId === 1 ?
-      //   <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
-      //   <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      templatesCv.filter((item: any) => {
-        return item.id === TemplateId;
-      })[0].component,
-    );
-  }, [colorCV, TemplateId, profile]);
+  // React.useEffect(() => {
+  //   if (templatesCv.length > 0) {
+  //     updateInstance(
+  //       // TemplateId === 0 ?
+  //       // <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+  //       // TemplateId === 1 ?
+  //       //   <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} /> :
+  //       //   <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+  //       templatesCv.filter((item: any) => {
+  //         return item.id === TemplateId;
+  //       })[0].component,
+  //     );
+  //   }
+  // }, [colorCV, TemplateId, profile]);
 
   React.useEffect(() => {
     getDataParentCategory();
     getTheme();
-    const cv_id = localStorage.getItem('cv-id');
+    const cv_id =
+      Number(localStorage.getItem('cv-id')) === 0
+        ? 1
+        : localStorage.getItem('cv-id');
     if (valueNameCv === '') {
       setValueNameCv(localStorage.getItem('nameCv'));
     }
