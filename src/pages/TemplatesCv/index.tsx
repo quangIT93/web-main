@@ -38,6 +38,7 @@ import CvTemplate3 from '#components/TemplatesCv/CvTemplate/CvTemplate3';
 import CvTemplate4 from '#components/TemplatesCv/CvTemplate/CvTemplate4';
 import CvTemplate5 from '#components/TemplatesCv/CvTemplate/CvTemplate5';
 import CvTemplate6 from '#components/TemplatesCv/CvTemplate/CvTemplate6';
+import CvTemplate7 from '#components/TemplatesCv/CvTemplate/CvTemplate7';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -89,6 +90,12 @@ const TemplatesCv: React.FC = () => {
       id: 6,
       component: (
         <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
+    },
+    {
+      id: 7,
+      component: (
+        <CvTemplate7 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       ),
     },
   ];

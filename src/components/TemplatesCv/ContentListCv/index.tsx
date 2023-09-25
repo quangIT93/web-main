@@ -43,6 +43,7 @@ import CvTemplate3 from '../CvTemplate/CvTemplate3';
 import CvTemplate4 from '../CvTemplate/CvTemplate4';
 import CvTemplate5 from '../CvTemplate/CvTemplate5';
 import CvTemplate6 from '../CvTemplate/CvTemplate6';
+import CvTemplate7 from '../CvTemplate/CvTemplate7';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/legacy/build/pdf.worker.min.js',
@@ -112,6 +113,12 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       id: 6,
       component: (
         <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
+    },
+    {
+      id: 7,
+      component: (
+        <CvTemplate7 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       ),
     },
   ];

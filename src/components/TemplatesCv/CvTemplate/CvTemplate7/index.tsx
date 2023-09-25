@@ -20,10 +20,6 @@ import AbhayaLibreExtraBold from '../Fonts/AbhayaLibreExtraBold.ttf';
 import MontserratRegular from '../Fonts/MontserratRegular.ttf';
 import MontserratBold from '../Fonts/MontserratBold.ttf';
 import Archivo from '../Fonts/Archivo_Condensed-Regular.ttf';
-import OpenSansBold from '../Fonts/OpenSans-Bold.ttf';
-import OpenSansRegular from '../Fonts/OpenSans-Regular.ttf';
-import OpenSansSemiBold from '../Fonts/OpenSans-SemiBold.ttf';
-
 import Social from "./sections/Social";
 import { Provider, useSelector } from "react-redux";
 import { RootState, store } from "store";
@@ -34,7 +30,6 @@ import Profile from "./sections/Profile";
 import Hobbies from "./sections/Hobbies";
 import References from "./sections/References";
 import Languages from "./sections/Language";
-import Contact from "./sections/Contact";
 
 interface CvTemplate {
     color: any;
@@ -42,13 +37,12 @@ interface CvTemplate {
     profile: any;
 }
 
-const CvTemplate6: React.FC<CvTemplate> = (props) => {
+const CvTemplate7: React.FC<CvTemplate> = (props) => {
 
     const { color, fontSize, profile } = props;
     const styles = StyleSheet.create({
         page: {
-            padding: 30,
-            paddingBottom: '70pt',
+            paddingTop: 30,
             position: 'relative'
         },
         rightDiv: {
@@ -73,34 +67,11 @@ const CvTemplate6: React.FC<CvTemplate> = (props) => {
             position: 'absolute',
             bottom: 0,
             left: 30,
-            right: 30,
-            height: '38.287pt',
-            backgroundColor: color === 1
-                ? '#213555'
-                : color === 2
-                    ? '#0D99FF'
-                    : color === 3
-                        ? '#FBBC04'
-                        : color === 4
-                            ? '#5CB265'
-                            : '#D80000',
-            zIndex: 1,
-        },
-        lineFooter: {
-            position: 'absolute',
-            bottom: '42.627',
-            left: 30,
-            right: 30,
-            height: '2px',
-            backgroundColor: color === 1
-                ? '#213555'
-                : color === 2
-                    ? '#0D99FF'
-                    : color === 3
-                        ? '#FBBC04'
-                        : color === 4
-                            ? '#5CB265'
-                            : '#D80000',
+            width: '237.179pt',
+            height: '221.179pt',
+            backgroundColor: '#F4FCD9',
+            borderTopRightRadius: '20px',
+            borderTopLeftRadius: '20px',
             zIndex: 1,
         },
         line: {
@@ -130,36 +101,36 @@ const CvTemplate6: React.FC<CvTemplate> = (props) => {
         container: {
             flex: 1,
             flexDirection: 'row',
-            marginTop: '14.547pt',
+            '@media max-width: 400': {
+                flexDirection: 'column',
+            },
+            borderTopWidth: '0.5px',
+            borderTopColor: '#282828',
+            marginTop: '1cm',
+            marginLeft: '30pt',
+            marginRight: '30pt',
         },
         image: {
             marginBottom: 10,
         },
         leftColumn: {
             flexDirection: 'column',
-            width: "40%",
-            paddingRight: '55.021pt',
-            borderRightWidth: '1px',
-            borderRightColor: color === 1 ?
-                "#213555" :
-                color === 2 ?
-                    "#0D99FF" :
-                    color === 3 ?
-                        "#FBBC04" :
-                        color === 4 ?
-                            "#5CB265" : "#D80000"
+            width: "70%",
+            // paddingRight: '0.905cm',
+            borderRight: '0.5px solid #282828',
         },
         leftColumnContent: {
             width: '100%',
-            // marginTop: '24.532pt'
+            marginTop: '24.532pt'
         },
         rightColumnContent: {
             width: '100%',
-            // marginTop: '24.532pt'
+            marginTop: '24.532pt'
         },
         rightColumn: {
             flexDirection: 'column',
-            width: "60%",
+            width: "30%",
+            backgroundColor: '#E6E7E8'
             // paddingTop: '1.094cm',
             // marginTop: '1cm',
             // paddingRight: '0.905cm',
@@ -171,9 +142,30 @@ const CvTemplate6: React.FC<CvTemplate> = (props) => {
             left: 0,
             right: 0,
             textAlign: 'center',
-            color: '#ffffff',
+            color: 'grey',
         },
     });
+
+    Font.register({
+        family: 'Open Sans',
+        src: `https://fonts.gstatic.com/s/opensans/v17/mem8YaGs126MiZpBA-UFVZ0e.ttf`,
+    });
+
+    Font.register({
+        family: 'Lato',
+        src: `https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wWw.ttf`,
+    });
+
+    Font.register({
+        family: 'Lato Italic',
+        src: `https://fonts.gstatic.com/s/lato/v16/S6u8w4BMUTPHjxsAXC-v.ttf`,
+    });
+
+    Font.register({
+        family: 'Lato Bold',
+        src: `https://fonts.gstatic.com/s/lato/v16/S6u9w4BMUTPHh6UVSwiPHA.ttf`,
+    });
+
     Font.register({
         family: 'Abhaya Libre ExtraBold',
         src: AbhayaLibreExtraBold,
@@ -193,58 +185,26 @@ const CvTemplate6: React.FC<CvTemplate> = (props) => {
         family: 'Archivo SemiExpanded Regular',
         src: Archivo,
     });
-    Font.register({
-        family: 'OpenSans-Bold',
-        src: OpenSansBold,
-    });
-    Font.register({
-        family: 'OpenSans-Regular',
-        src: OpenSansRegular,
-    });
-    Font.register({
-        family: 'OpenSans-Semi-Bold',
-        src: OpenSansSemiBold,
-    });
+
+    console.log(profile);
 
 
     const Resume = (props: any) => (
         <Page {...props} style={styles.page}>
-            <Header color={color} profile={profile} />
             <View style={styles.container}>
                 <View style={styles.leftColumn}>
                     <View style={styles.leftColumnContent}>
-                        <Contact color={color} profile={profile} />
-                        <Profile color={color} profile={profile} />
-                        {
-                            profile?.profilesLanguages && profile?.profilesLanguages?.length > 0 ?
-                                <Languages color={color} profile={profile} /> :
-                                <></>
-                        }
-                        {
-                            profile?.profilesSkills && profile?.profilesSkills?.length > 0 ?
-                                <>
-                                    <Skills color={color} profile={profile} />
-                                </> :
-                                <></>
-                        }
-                        {
-                            profile?.profileAwards && profile?.profileAwards?.length > 0 ?
-                                <>
-                                    <Awards color={color} profile={profile} />
-                                </> :
-                                <></>
-                        }
-                        {/* <Social color={color} profile={profile} /> */}
-                    </View>
-                </View>
-                <View style={styles.rightColumn}>
-                    <View style={styles.rightColumnContent}>
+                        <Header color={color} profile={profile} />
+                        <View style={styles.rightDiv} fixed>
+                            <View style={styles.topLine} fixed></View>
+                        </View>
                         <Experience color={color} profile={profile} />
-                        <Education color={color} profile={profile} />
+                        <View style={styles.borderBot}></View>
                         {
                             profile?.profileActivities && profile?.profileActivities?.length > 0 ?
                                 <>
                                     <Activities color={color} profile={profile} />
+                                    <View style={styles.borderBot}></View>
                                 </>
                                 :
                                 <></>
@@ -253,6 +213,7 @@ const CvTemplate6: React.FC<CvTemplate> = (props) => {
                             profile?.profileHobbies ?
                                 <>
                                     <Hobbies color={color} profile={profile} />
+                                    <View style={styles.borderBot}></View>
                                 </> :
                                 <></>
                         }
@@ -260,6 +221,37 @@ const CvTemplate6: React.FC<CvTemplate> = (props) => {
                             profile?.profilesReferences && profile?.profilesReferences?.length > 0 ?
                                 <>
                                     <References color={color} profile={profile} />
+                                    <View style={styles.borderBot}></View>
+                                </> :
+                                <></>
+                        }
+                        {/* <Social color={color} profile={profile} /> */}
+                    </View>
+                </View>
+                <View style={styles.rightColumn}>
+                    <View style={styles.rightColumnContent}>
+                        <Profile color={color} profile={profile} />
+                        {
+                            profile?.profilesLanguages && profile?.profilesLanguages?.length > 0 ?
+                                <Languages color={color} profile={profile} /> :
+                                <></>
+                        }
+                        <View style={styles.borderBot}></View>
+                        <Education color={color} profile={profile} />
+                        <View style={styles.borderBot}></View>
+                        {
+                            profile?.profilesSkills && profile?.profilesSkills?.length > 0 ?
+                                <>
+                                    <Skills color={color} profile={profile} />
+                                    <View style={styles.borderBot}></View>
+                                </> :
+                                <></>
+                        }
+                        {
+                            profile?.profileAwards && profile?.profileAwards?.length > 0 ?
+                                <>
+                                    <Awards color={color} profile={profile} />
+                                    <View style={styles.borderBot}></View>
                                 </> :
                                 <></>
                         }
@@ -269,8 +261,8 @@ const CvTemplate6: React.FC<CvTemplate> = (props) => {
             <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
                 `${pageNumber} / ${totalPages}`
             )} fixed />
-            <View style={styles.lineFooter} fixed></View>
             <View style={styles.footer} fixed></View>
+            <View style={styles.line} fixed></View>
         </Page>
     );
     return (
@@ -295,4 +287,4 @@ const CvTemplate6: React.FC<CvTemplate> = (props) => {
 }
 
 
-export default memo(CvTemplate6);
+export default memo(CvTemplate7);
