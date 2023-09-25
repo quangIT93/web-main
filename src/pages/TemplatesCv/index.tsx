@@ -37,6 +37,7 @@ import { useSearchParams } from 'react-router-dom';
 import CvTemplate3 from '#components/TemplatesCv/CvTemplate/CvTemplate3';
 import CvTemplate4 from '#components/TemplatesCv/CvTemplate/CvTemplate4';
 import CvTemplate5 from '#components/TemplatesCv/CvTemplate/CvTemplate5';
+import CvTemplate6 from '#components/TemplatesCv/CvTemplate/CvTemplate6';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -51,7 +52,7 @@ const TemplatesCv: React.FC = () => {
   const [openModalSuccessDownCv, setOpenModalSuccessDownCv] =
     React.useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const TemplateId = Number(localStorage.getItem('cv-id'));
+  const TemplateId = Number(localStorage.getItem('cv-id')) && 1;
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const templatesCv = [
     {
@@ -69,7 +70,7 @@ const TemplatesCv: React.FC = () => {
     {
       id: 3,
       component: (
-        <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+        <CvTemplate6 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       ),
     },
     {
@@ -82,6 +83,12 @@ const TemplatesCv: React.FC = () => {
       id: 5,
       component: (
         <CvTemplate5 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
+    },
+    {
+      id: 6,
+      component: (
+        <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       ),
     },
   ];

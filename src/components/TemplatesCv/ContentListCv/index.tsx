@@ -42,6 +42,7 @@ import apiCv from 'api/apiCv';
 import CvTemplate3 from '../CvTemplate/CvTemplate3';
 import CvTemplate4 from '../CvTemplate/CvTemplate4';
 import CvTemplate5 from '../CvTemplate/CvTemplate5';
+import CvTemplate6 from '../CvTemplate/CvTemplate6';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/legacy/build/pdf.worker.min.js',
@@ -74,7 +75,8 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
-  const TemplateId = Number(localStorage.getItem('cv-id'));
+  const TemplateId = Number(localStorage.getItem('cv-id')) !== 0 ?
+    Number(localStorage.getItem('cv-id')) : 1;
   const templatesCv = [
     {
       id: 1,
@@ -91,7 +93,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     {
       id: 3,
       component: (
-        <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+        <CvTemplate6 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       ),
     },
     {
@@ -104,6 +106,12 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       id: 5,
       component: (
         <CvTemplate5 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+      ),
+    },
+    {
+      id: 6,
+      component: (
+        <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
       ),
     },
   ];

@@ -154,7 +154,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         );
         dispatch(setProfileV3(resultProfileV3));
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // confirm delete cv
@@ -172,7 +172,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -275,10 +275,10 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           <Space wrap className="item-info-work">
             {profile?.categories?.length !== 0
               ? profile?.categories?.map((item: ICategories, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.child_category}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item.child_category}
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -309,10 +309,10 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           <Space wrap className="item-info-work">
             {profile?.locations?.length !== 0
               ? profile?.locations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.district}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item?.district}
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -350,12 +350,12 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
               {profileV3.jobTypeId === 1
                 ? 'Toàn thời gian'
                 : profileV3.jobTypeId === 2
-                ? 'Bán thời gian'
-                : profileV3.jobTypeId === 4
-                ? 'Nghề tự do'
-                : profileV3.jobTypeId === 7
-                ? 'Thực tập'
-                : language?.unupdated}
+                  ? 'Bán thời gian'
+                  : profileV3.jobTypeId === 4
+                    ? 'Nghề tự do'
+                    : profileV3.jobTypeId === 7
+                      ? 'Thực tập'
+                      : language?.unupdated}
             </Button>
           </Space>
         </div>
@@ -380,7 +380,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 cursor: 'pointer',
                 display: cvHijob.length === 0 ? 'none' : 'flex',
               }}
-              // onClick={() => setOpenModalLocation(true)}
+            // onClick={() => setOpenModalLocation(true)}
             >
               {/* <div className="edit-icon">
                 <PencilIcon width={15} height={15} />
@@ -470,7 +470,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                     onClick={(e) => handleChooseCv(item, e)}
                                   >
                                     <span className="text-cv-default">
-                                      Đặt làm CV chính
+                                      {
+                                        languageRedux === 1 ?
+                                          "Đặt làm CV chính" :
+                                          "Set as main CV"
+                                      }
                                     </span>
 
                                     <span
@@ -491,7 +495,11 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                       style={{ color: '#ffffff' }}
                                       className="text-cv-default"
                                     >
-                                      CV chính
+                                      {
+                                        languageRedux === 1 ?
+                                          "CV chính" :
+                                          "Main CV"
+                                      }
                                     </span>
 
                                     <span style={{ marginLeft: '4px' }}>
@@ -520,7 +528,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                 onClick={() =>
                                   handleDownloadCV(item?.pdfURL, item?.name)
                                 }
-                                // onClick={handleClickDownloadCv}
+                              // onClick={handleClickDownloadCv}
                               >
                                 <DownloadCVIcon width={14} height={14} />
                               </div>
@@ -702,7 +710,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-                // direction="vertical"
+              // direction="vertical"
               >
                 <Popconfirm
                   title={language?.profile_page?.delete_cv}

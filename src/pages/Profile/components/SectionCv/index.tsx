@@ -416,7 +416,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileV3?.profilesLanguages?.length !== 0 ||
-                sections.includes(1)
+                  sections.includes(1)
                   ? 'block'
                   : 'none',
             }}
@@ -597,7 +597,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileV3?.profilesReferences?.length !== 0 ||
-                sections.includes(3)
+                  sections.includes(3)
                   ? 'block'
                   : 'none',
             }}
@@ -767,7 +767,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileV3?.profileActivities?.length !== 0 ||
-                sections.includes(5)
+                  sections.includes(5)
                   ? 'block'
                   : 'none',
             }}
@@ -1043,7 +1043,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileV3?.profilesLanguages?.length !== 0 ||
-                    sections.includes(1)
+                      sections.includes(1)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1070,7 +1070,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileV3?.profilesReferences?.length !== 0 ||
-                    sections.includes(3)
+                      sections.includes(3)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1099,7 +1099,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileV3?.profileActivities?.length !== 0 ||
-                    sections.includes(5)
+                      sections.includes(5)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1128,7 +1128,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileV3?.profileAwards?.length !== 0 ||
-                    sections.includes(7)
+                      sections.includes(7)
                       ? 'section-item disable'
                       : 'section-item'
                   }
