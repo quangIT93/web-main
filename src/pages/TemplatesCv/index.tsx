@@ -16,6 +16,7 @@ import {
 
 // import Component
 import ContentListCv from '#components/TemplatesCv/ContentListCv';
+import templatesCv from '#components/TemplatesCv/CvTemplate/ListTheme';
 
 import './style.scss';
 
@@ -55,50 +56,33 @@ const TemplatesCv: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const TemplateId = Number(localStorage.getItem('cv-id')) && 1;
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
-  const templatesCv = [
-    {
-      id: 1,
-      component: (
-        <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
-      id: 2,
-      component: (
-        <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
-      id: 3,
-      component: (
-        <CvTemplate6 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
-      id: 4,
-      component: (
-        <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
-      id: 5,
-      component: (
-        <CvTemplate5 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
-      id: 6,
-      component: (
-        <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-    {
-      id: 7,
-      component: (
-        <CvTemplate7 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-      ),
-    },
-  ];
+
+  // const templatesCv = [
+  //   {
+  //     id: 1,
+  //     component: (
+  //       <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+  //     ),
+  //   },
+  //   {
+  //     id: 2,
+  //     component: (
+  //       <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+  //     ),
+  //   },
+  //   {
+  //     id: 3,
+  //     component: (
+  //       <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+  //     ),
+  //   },
+  //   {
+  //     id: 4,
+  //     component: (
+  //       <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
+  //     ),
+  //   },
+  // ];
   React.useEffect(() => {
     roleRedux === 1 && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -126,12 +110,35 @@ const TemplatesCv: React.FC = () => {
   };
 
   const handleClickSaveCv = async () => {
+    const selectedTemplate = templatesCv.find(
+      (template) => template.id === TemplateId,
+    );
     try {
-      const pdfBlob = await pdf(
-        templatesCv.filter((item: any) => {
-          return item.id === Number(localStorage.getItem('cv-id'));
-        })[0].component,
-      ).toBlob();
+      if (selectedTemplate) {
+        const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
+
+        // Tạo một biến để lưu trữ mẫu CV được chọn
+
+        const pdfBlob = await pdf(
+          <CvComponent
+            color={colorCV}
+            fontSize={fontSizeCV}
+            profile={profileV3}
+          />,
+        ).toBlob();
+        if (pdfBlob) {
+          const formData = new FormData();
+          formData.append('file', pdfBlob);
+          formData.append('name', localStorage.getItem('nameCv')!);
+          // formData.append('status', '1');
+
+          const result = await apiCv.postCv(formData);
+          if (result) {
+            setOpenModalSuccessDownCv(true);
+            // console.log('lưu cv thành công');
+          }
+        }
+      }
 
       // Tạo tệp PDF và lấy Blob
       // const pdfBlob = await MyPdfDocument.toBlob();
@@ -141,19 +148,6 @@ const TemplatesCv: React.FC = () => {
 
       // Lưu trữ array buffer trong một biến
       // const pdfData = new Uint8Array(arrayBuffer);
-
-      if (pdfBlob) {
-        const formData = new FormData();
-        formData.append('file', pdfBlob);
-        formData.append('name', localStorage.getItem('nameCv')!);
-        // formData.append('status', '1');
-
-        const result = await apiCv.postCv(formData);
-        if (result) {
-          setOpenModalSuccessDownCv(true);
-          // console.log('lưu cv thành công');
-        }
-      }
     } catch (error) {
       console.log('error', error);
     }

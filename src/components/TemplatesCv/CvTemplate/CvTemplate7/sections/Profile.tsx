@@ -17,14 +17,15 @@ const Profile: React.FC<ICvSkills> = (props) => {
     container: {
       marginBottom: '24.69pt',
       // marginLeft: '1.583cm',
-      // border: '1px solid red'
-      paddingRight: '0.905cm'
+      // border: '1px solid red',
+      width: '100%',
     },
     title: {
       fontFamily: 'Montserrat Bold',
       fontSize: 12,
+      width: '100%',
       letterSpacing: '2px',
-      marginBottom: '0.476cm',
+      marginBottom: '13.925',
       textTransform: 'uppercase',
       color:
         color === 1
@@ -40,7 +41,6 @@ const Profile: React.FC<ICvSkills> = (props) => {
     profile: {
       fontFamily: 'Montserrat Regular',
       fontSize: 9,
-      wordBreak: 'break-word',
       width: '100%',
       textAlign: 'justify'
     },

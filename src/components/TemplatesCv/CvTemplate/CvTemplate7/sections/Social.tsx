@@ -18,43 +18,63 @@ const Social: React.FC<ICvEducation> = (props) => {
   const styles = StyleSheet.create({
     container: {
       // marginBottom: 10,
+      width: '100%',
+      height: '91.083pt',
+      borderWidth: '1px',
+      borderColor: color === 1 ?
+        "#252525" :
+        color === 2 ?
+          "#0D99FF" :
+          color === 3 ?
+            "#FBBC04" :
+            color === 4 ?
+              "#5CB265" : "#D80000",
+      padding: ' 0.291cm 0.607cm',
+      marginBottom: '24.69pt',
     },
     content: {
-      width: '8.78cm',
-      height: '2.241cm',
-      padding: ' 0.291cm 0.607cm',
-      backgroundColor: '#D0E3FF',
-      // border: '1px solid red',
+      width: '100%',
+      height: '100%',
+      // border: '1px solid #282828',
       display: 'flex',
       flexDirection: 'column',
     },
     line: {
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'space-between',
       width: '100%',
       // border: '1px solid pink',
-      gap: '0.985cm',
+      // gap: '0.985cm',
       // height: '50%',
-      height: '100%',
+      // height: '100%',
     },
     item1: {
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
       gap: '0.345cm',
-      width: '50%',
-      height: ' 100%',
-      borderBottom: '1px solid #282828',
+      width: '100%',
+      height: ' 50%',
+      borderBottomWidth: '1px',
+      borderBottomColor: color === 1 ?
+        "#252525" :
+        color === 2 ?
+          "#0D99FF" :
+          color === 3 ?
+            "#FBBC04" :
+            color === 4 ?
+              "#5CB265" : "#D80000",
     },
     item2: {
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
       gap: '0.345cm',
-      width: '50%',
-      height: ' 100%',
+      width: '100%',
+      height: '50%',
+      // height: ' 100%',
     },
     icon1: {
       height: '0.333cm',
@@ -100,21 +120,9 @@ const Social: React.FC<ICvEducation> = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Social</Text>
-
       <View style={styles.content}>
-        {/* <View style={styles.line}>
-          <View style={styles.item1}>
-            <Image style={styles.icon1} src={twit} />
-            <Text style={styles.text}>dangvanabc</Text>
-          </View>
-          <View style={styles.item1}>
-            <Image style={styles.icon2} src={ins} />
-            <Text style={styles.text}>dangvanabc</Text>
-          </View>
-        </View> */}
         <View style={styles.line}>
-          <View style={styles.item2}>
+          <View style={styles.item1}>
             <Image style={styles.icon3} src={linked} />
             <Link
               style={styles.text}

@@ -16,9 +16,8 @@ const Experience: React.FC<ICvExperience> = (props) => {
     const { color, profile } = props;
     const styles = StyleSheet.create({
         container: {
-            marginBottom: '24.69pt',
-            marginLeft: '0.9cm',
-            // border: '1px solid red',
+            width: '100%',
+            marginBottom: '15.468pt'
         },
         experience: {
             display: 'flex',
@@ -55,11 +54,8 @@ const Experience: React.FC<ICvExperience> = (props) => {
         school: {
             fontFamily: "Montserrat Bold",
             fontSize: 10,
-            // flexGrow: 1,
             textAlign: 'justify',
-            // wordBreak: "break-all",
             width: '100%',
-            marginBottom: '15.263pt',
         },
         companyName: {
             fontFamily: "Montserrat Bold",
@@ -118,10 +114,12 @@ const Experience: React.FC<ICvExperience> = (props) => {
                     return (
                         <View style={styles.experience} key={i}>
                             <View style={styles.left}>
-                                <Text style={styles.companyName}>{experience?.companyName}</Text>
-                                <Text style={styles.time}>
+                                <Text style={styles.companyName}>
                                     {moment(experience?.startDate).format('YYYY')}{"-"}
                                     {moment(experience?.endDate).format('YYYY')}
+                                </Text>
+                                <Text style={styles.time}>
+                                    {experience?.companyName}
                                 </Text>
                             </View>
                             <View style={styles.right}>

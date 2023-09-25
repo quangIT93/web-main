@@ -12,20 +12,18 @@ const style = {
   top: '0',
   left: '50%',
   transform: 'translate(-50%, 70px)',
-  // width: 840,
+  width: 660,
   bgcolor: 'background.paper',
   border: 'none',
   outline: 'none',
   borderRadius: '10px',
   p: 4,
+
   '@media (max-width: 399px)': {
-    width: 360,
-  },
-  '@media (max-width: 375px)': {
     width: 300,
   },
 
-  '@media (min-width: 400px) and (max-width: 639px)': {
+  '@media (min-width: 410px) and (max-width: 639px)': {
     width: 410,
   },
 
@@ -96,8 +94,8 @@ const ModalShowCv: React.FC<IModalShowCv> = (props) => {
                 pageNumber={page}
                 renderAnnotationLayer={false}
                 renderTextLayer={false}
-                width={400}
-                height={600}
+                // width={400}
+                // height={600}
               />
             ))}
         </Document>

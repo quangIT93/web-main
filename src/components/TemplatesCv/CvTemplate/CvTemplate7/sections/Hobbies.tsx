@@ -15,8 +15,8 @@ const Hobbies: React.FC<ICvSkills> = (props) => {
     const { color, profile } = props;
     const styles = StyleSheet.create({
         container: {
-            marginBottom: '24.69pt',
-            marginLeft: '0.9cm',
+            width: '100%',
+            marginBottom: '15.468pt'
             // border: '1px solid red'
         },
         title: {

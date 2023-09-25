@@ -20,7 +20,7 @@ const Languages: React.FC<ICvEducation> = (props) => {
             display: 'flex',
             flexDirection: 'column',
             // gap: '2px',
-            marginBottom: 5,
+            marginBottom: 8,
             // border: '1px solid red'
         },
         top: {
@@ -33,15 +33,15 @@ const Languages: React.FC<ICvEducation> = (props) => {
         },
         bot: {
             display: 'flex',
-            flexDirection: 'row',
+            flexDirection: 'column',
             justifyContent: 'flex-start',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             width: '100%',
             gap: '4px'
             // marginLeft: '0.658cm'
         },
         line: {
-            width: '126.84pt',
+            width: '116.84pt',
             height: '2px',
             backgroundColor: color === 1 ?
                 "#252525" :

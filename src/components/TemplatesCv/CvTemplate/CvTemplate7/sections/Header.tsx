@@ -14,57 +14,38 @@ const Header: React.FC<ICvHeader> = (props) => {
   const styles = StyleSheet.create({
     container: {
       width: '100%',
-      height: '190.699pt',
-      // marginTop: '32.041pt',
-      // paddingLeft: '35.745pt',
-      // border: '1px solid red'
+      marginBottom: '15.468pt'
     },
     content: {
       width: '100%',
-      height: '100%',
-      position: 'relative',
+      // height: '100%',
+      // position: 'relative',
 
       // paddingTop: '47,291pt',
       // paddingLeft: '103.428pt',
       // border: '1px solid green'
-    },
-    info: {
-      marginLeft: '49.353pt',
-      // border: '1px solid red'
     },
     name: {
       color:
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
-      // marginTop: '12.404px',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      justifyContent: 'center',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       // border: '1px solid red',
       width: '100%',
-      gap: '9.447px',
+      marginTop: '7.383pt',
+      marginBottom: '9.638pt',
     },
     lastName: {
       fontSize: 33,
       fontFamily: 'Montserrat Regular',
       width: '100%',
       letterSpacing: '2px',
-      // background: 'red',
-      // border: '1px solid black',
-    },
-    firstName: {
-      fontSize: 33,
-      fontFamily: 'Montserrat Regular',
-      width: '100%',
-      letterSpacing: '2px',
-      // marginBottom: '0.5cm',
       // background: 'red',
       // border: '1px solid black',
     },
@@ -76,40 +57,22 @@ const Header: React.FC<ICvHeader> = (props) => {
       textDecoration: 'none',
     },
     bigTitle: {
-      fontFamily: 'Montserrat Bold',
+      fontFamily: 'Montserrat Regular',
       fontSize: 10,
-      letterSpacing: '8px',
+      letterSpacing: '4px',
       color: '#1B1212',
       marginTop: '12.34px',
+      textTransform: 'uppercase',
     },
     topLeftDiv: {
       // marginTop: '2.066cm',
       display: 'flex',
-      alignItems: 'center',
-      flexDirection: 'row',
+      alignItems: 'flex-start',
+      flexDirection: 'column',
       // gap: '0.25cm',
       // border: '1px solid green',
       width: '100%',
-    },
-    botLeftDiv: {
-      // marginTop: '0.553cm',
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      // marginBottom: '46.086px',
-      gap: '0.418cm',
-    },
-    line: {
-      position: 'absolute',
-      top: '-0.5cm',
-      right: '26.006pt',
-      width: '3.351pt',
-      height: '112pt',
-      backgroundColor: 'transparent',
-      borderLeftWidth: '1px',
-      borderLeftColor: '#282828',
-      borderRightWidth: '1px',
-      borderRightColor: '#282828',
+      color: "#282828"
     },
     contact: {
       display: 'flex',
@@ -120,22 +83,11 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontFamily: 'Montserrat Regular',
     },
     leftDiv: {
-      position: 'absolute',
-      top: '0',
-      left: '0',
-      // transform: 'translate(-50%, -50%)',
       width: '100%',
-      height: '100%',
       backgroundColor: 'transparent',
       display: 'flex',
       flexDirection: 'column',
-      // alignItems: 'flex-start',
-      // justifyContent: 'center',
-      paddingLeft: '55pt',
-      paddingTop: 0,
-      // paddingRight: '1.136cm',
       gap: '20.229pt',
-      // border: '1px solid black',
       zIndex: 1,
     },
     rightDiv: {
@@ -144,7 +96,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       right: 0,
       width: '237.179pt',
       height: '221.179pt',
-      backgroundColor: '#F4FCD9',
+      backgroundColor: '#282828',
       borderBottomRightRadius: '20px',
       borderBottomLeftRadius: '20px',
       zIndex: 2,
@@ -153,15 +105,16 @@ const Header: React.FC<ICvHeader> = (props) => {
       // position: 'absolute',
       // top: '1.66cm',
       // right: '4.023cm',
-      width: '110.947pt',
-      height: '110.947pt',
+      width: '101.260pt',
+      height: '101.260pt',
       // backgroundColor: '#FFFFFF',
       // border: '1px solid #AAAAAA',
       borderRadius: '50%',
-      backgroundColor: '#F4FCD9',
+      backgroundColor: '#E6E7E8',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      marginTop: '14.596pt'
     },
     image: {
       width: '100%',
@@ -211,60 +164,18 @@ const Header: React.FC<ICvHeader> = (props) => {
       <View style={styles.content}>
         <View style={styles.leftDiv}>
           <View style={styles.topLeftDiv}>
+            <Text style={styles.bigTitle}>HELLO! I'M</Text>
+            <View style={styles.name}>
+              <Text style={styles.lastName}>
+                {profile?.name}
+              </Text>
+            </View>
+            <Text style={styles.bigTitle}>{profile?.jobTypeName}</Text>
             <View style={styles.avatarDiv}>
               <Image src={profile?.avatarPath} style={styles.image} />
             </View>
-            <View style={styles.info}>
-              <View style={styles.name}>
-                <Text style={styles.lastName}>
-                  {profile?.name?.split(' ').length > 2
-                    ? profile?.name?.split(' ').slice(0, -2).join(' ')
-                    : profile?.name?.split(' ').slice(0, -1).join(' ')}
-                </Text>
-                <Text style={styles.firstName}>
-                  {profile?.name?.split(' ').length > 2
-                    ? profile?.name?.split(' ').slice(-2).join(' ')
-                    : profile?.name?.split(' ').slice(-1).join(' ')}
-                </Text>
-              </View>
-              <Text style={styles.bigTitle}>{profile?.jobTypeName}</Text>
-            </View>
-          </View>
-          <View style={styles.botLeftDiv}>
-            <View style={styles.contact}>
-              <Text style={styles.subtitle}>{profile?.phone}</Text>
-              <Text style={styles.subtitle}>|</Text>
-              <Text style={styles.subtitle}>{profile?.email}</Text>
-              <Text style={styles.subtitle}>|</Text>
-              <Text style={styles.subtitle}>
-                {profile?.addressText?.fullName}
-              </Text>
-              {profile?.linkedin ? (
-                <>
-                  <Text style={styles.subtitle}>|</Text>
-                  <Link style={styles.subtitle} src={profile?.linkedin}>
-                    Linkedin
-                  </Link>
-                </>
-              ) : (
-                <></>
-              )}
-              {profile?.facebook ? (
-                <>
-                  <Text style={styles.subtitle}>|</Text>
-                  <Link style={styles.subtitle} src={profile?.facebook}>
-                    Facebook
-                  </Link>
-                </>
-              ) : (
-                <></>
-              )}
-            </View>
           </View>
         </View>
-        {/* <View style={styles.rightDiv}>
-                </View> */}
-        {/* <View style={styles.line}></View> */}
       </View>
     </View>
   );

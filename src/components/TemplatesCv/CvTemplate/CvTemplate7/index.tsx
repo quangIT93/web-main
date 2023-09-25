@@ -30,6 +30,7 @@ import Profile from "./sections/Profile";
 import Hobbies from "./sections/Hobbies";
 import References from "./sections/References";
 import Languages from "./sections/Language";
+import Contact from "./sections/Contact";
 
 interface CvTemplate {
     color: any;
@@ -42,7 +43,7 @@ const CvTemplate7: React.FC<CvTemplate> = (props) => {
     const { color, fontSize, profile } = props;
     const styles = StyleSheet.create({
         page: {
-            paddingTop: 30,
+            padding: 30,
             position: 'relative'
         },
         rightDiv: {
@@ -101,36 +102,36 @@ const CvTemplate7: React.FC<CvTemplate> = (props) => {
         container: {
             flex: 1,
             flexDirection: 'row',
-            '@media max-width: 400': {
-                flexDirection: 'column',
-            },
-            borderTopWidth: '0.5px',
-            borderTopColor: '#282828',
-            marginTop: '1cm',
-            marginLeft: '30pt',
-            marginRight: '30pt',
+            // marginTop: '1cm',
+            // marginLeft: '30pt',
+            // marginRight: '30pt',
         },
         image: {
             marginBottom: 10,
         },
         leftColumn: {
             flexDirection: 'column',
-            width: "70%",
+            width: "65%",
             // paddingRight: '0.905cm',
-            borderRight: '0.5px solid #282828',
+            // borderRight: '0.5px solid #282828',
+            // border: '1px solid red',
         },
         leftColumnContent: {
             width: '100%',
-            marginTop: '24.532pt'
+            paddingRight: '16.133pt'
+            // marginTop: '24.532pt'
         },
         rightColumnContent: {
             width: '100%',
-            marginTop: '24.532pt'
+            marginTop: '68.783pt',
+            paddingLeft: '18.639pt',
+            paddingRight: '18.639pt'
+
         },
         rightColumn: {
             flexDirection: 'column',
-            width: "30%",
-            backgroundColor: '#E6E7E8'
+            width: "35%",
+            backgroundColor: '#E6E7E8',
             // paddingTop: '1.094cm',
             // marginTop: '1cm',
             // paddingRight: '0.905cm',
@@ -144,26 +145,6 @@ const CvTemplate7: React.FC<CvTemplate> = (props) => {
             textAlign: 'center',
             color: 'grey',
         },
-    });
-
-    Font.register({
-        family: 'Open Sans',
-        src: `https://fonts.gstatic.com/s/opensans/v17/mem8YaGs126MiZpBA-UFVZ0e.ttf`,
-    });
-
-    Font.register({
-        family: 'Lato',
-        src: `https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wWw.ttf`,
-    });
-
-    Font.register({
-        family: 'Lato Italic',
-        src: `https://fonts.gstatic.com/s/lato/v16/S6u8w4BMUTPHjxsAXC-v.ttf`,
-    });
-
-    Font.register({
-        family: 'Lato Bold',
-        src: `https://fonts.gstatic.com/s/lato/v16/S6u9w4BMUTPHh6UVSwiPHA.ttf`,
     });
 
     Font.register({
@@ -195,9 +176,9 @@ const CvTemplate7: React.FC<CvTemplate> = (props) => {
                 <View style={styles.leftColumn}>
                     <View style={styles.leftColumnContent}>
                         <Header color={color} profile={profile} />
-                        <View style={styles.rightDiv} fixed>
-                            <View style={styles.topLine} fixed></View>
-                        </View>
+                        <View style={styles.borderBot}></View>
+                        <Education color={color} profile={profile} />
+                        <View style={styles.borderBot}></View>
                         <Experience color={color} profile={profile} />
                         <View style={styles.borderBot}></View>
                         {
@@ -231,14 +212,18 @@ const CvTemplate7: React.FC<CvTemplate> = (props) => {
                 <View style={styles.rightColumn}>
                     <View style={styles.rightColumnContent}>
                         <Profile color={color} profile={profile} />
+                        <View style={styles.borderBot}></View>
                         {
                             profile?.profilesLanguages && profile?.profilesLanguages?.length > 0 ?
                                 <Languages color={color} profile={profile} /> :
                                 <></>
                         }
-                        <View style={styles.borderBot}></View>
-                        <Education color={color} profile={profile} />
-                        <View style={styles.borderBot}></View>
+                        {
+                            profile?.linkedin || profile?.facebook ?
+                                <Social color={color} profile={profile} /> :
+                                <></>
+                        }
+                        <Contact color={color} profile={profile} />
                         {
                             profile?.profilesSkills && profile?.profilesSkills?.length > 0 ?
                                 <>
@@ -261,8 +246,6 @@ const CvTemplate7: React.FC<CvTemplate> = (props) => {
             <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
                 `${pageNumber} / ${totalPages}`
             )} fixed />
-            <View style={styles.footer} fixed></View>
-            <View style={styles.line} fixed></View>
         </Page>
     );
     return (

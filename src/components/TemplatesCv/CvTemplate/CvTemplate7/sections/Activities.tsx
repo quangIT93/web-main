@@ -16,8 +16,8 @@ const Activities: React.FC<ICvExperience> = (props) => {
     const { color, profile } = props;
     const styles = StyleSheet.create({
         container: {
-            marginBottom: '24.69pt',
-            marginLeft: '0.9cm',
+            width: '100%',
+            marginBottom: '15.468pt'
             // border: '1px solid red'
         },
         experience: {
@@ -66,17 +66,19 @@ const Activities: React.FC<ICvExperience> = (props) => {
             flexDirection: 'column',
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
+            width: '40%'
             // border: '1px solid red'
         },
         right: {
             display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            width: '100%',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            width: '90%',
             // marginLeft: '0.671cm',
             // marginBottom: 5,
+            marginLeft: '34.638pt',
             // border: '1px solid red',
-            // position: 'relative',
+            position: 'relative',
         },
         info: {
             // border: '1px solid red',
@@ -129,6 +131,22 @@ const Activities: React.FC<ICvExperience> = (props) => {
                         color === 4 ?
                             "#5CB265" : "#D80000"
         },
+        companyName: {
+            fontFamily: "Montserrat Bold",
+            fontSize: 10,
+            textAlign: 'justify',
+            // wordBreak: "break-all",
+            width: '100%',
+            marginBottom: '7.761pt',
+            color: color === 1 ?
+                "#252525" :
+                color === 2 ?
+                    "#0D99FF" :
+                    color === 3 ?
+                        "#FBBC04" :
+                        color === 4 ?
+                            "#5CB265" : "#D80000"
+        },
     });
 
     return (
@@ -138,49 +156,15 @@ const Activities: React.FC<ICvExperience> = (props) => {
                 profile?.profileActivities && profile?.profileActivities.map((experience: any, i: any) => {
                     return (
                         <View style={styles.experience} key={i}>
-                            <View style={styles.right}>
-                                <Svg viewBox="0 0 2 2" style={styles.not}>
-                                    <Circle
-                                        cx="1"
-                                        cy="1"
-                                        r="0.5"
-                                        fill={
-                                            color === 1 ?
-                                                "#252525" :
-                                                color === 2 ?
-                                                    "#0D99FF" :
-                                                    color === 3 ?
-                                                        "#FBBC04" :
-                                                        color === 4 ?
-                                                            "#5CB265" : "#D80000"
-                                        }
-                                        stroke="none"
-                                    />
-                                </Svg>
-                                <View style={
-                                    i + 1 === profile?.profileActivities.length ?
-                                        styles.lineWhite :
-                                        styles.line
-                                } >
-                                </View>
-                                <View style={styles.info}>
-                                    <Text style={styles.time}>
-                                        {moment(experience?.startDate).format('YYYY')}{" - "}
-                                        {moment(experience?.endDate).format('YYYY')}
-                                    </Text>
-                                    <Text style={styles.school}>{experience?.title}</Text>
-                                    <Text style={styles.detail}>{experience?.description}</Text>
-                                    {/* <View style={styles.achievements}>
-                                <Text style={styles.detail}>
-                                    {`(*)Achievements: `}
+                            <View style={styles.left}>
+                                <Text style={styles.companyName}>
+                                    {moment(experience?.startDate).format('YYYY')}{"-"}
+                                    {moment(experience?.endDate).format('YYYY')}
                                 </Text>
-                                <List>
-                                    {experience.achievements.map((iem: any, i: any) => (
-                                        <Item key={i}>{iem}</Item>
-                                    ))}
-                                </List>
-                            </View> */}
-                                </View>
+                            </View>
+                            <View style={styles.right}>
+                                <Text style={styles.school}>{experience?.title}</Text>
+                                <Text style={styles.detail}>{experience?.description}</Text>
                             </View>
                         </View>
                     )
