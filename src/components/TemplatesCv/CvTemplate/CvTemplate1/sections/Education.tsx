@@ -161,7 +161,7 @@ const Education: React.FC<ICvEducation> = (props) => {
                                     />
                                 </Svg>
                                 <View style={
-                                    i + 1 === profile?.profileActivities.length ?
+                                    i + 1 === profile?.profilesEducations.length ?
                                         styles.lineWhite :
                                         styles.line
                                 } >
