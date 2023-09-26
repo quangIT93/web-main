@@ -111,7 +111,7 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
       </View>
 
       <Image
-        src={profile.avatarPath}
+        src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
         style={{ width: '5cm', height: '4.5cm', objectFit: 'cover' }}
       />
       {/* <View style={{ width: '5cm', height: '4.5cm' }}>

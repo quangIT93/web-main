@@ -97,6 +97,7 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
               padding: '8px 12px',
               border: '0.5px solid #aaaaaa',
               borderRadius: '10px',
+              wordBreak: 'break-all',
             }}
           >
             <h3>{item?.skillName}</h3>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 // import pdfjsLib from 'jspdf';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -106,6 +106,8 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
+  const [scrollHead, setScrollHead] = useState(-1);
+
   const [listCv, setListCv] = useState<any[]>([
     {
       id: 4,
@@ -134,10 +136,14 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
   });
 
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
-
+  const swiperRef = useRef<any>(null);
   const handleChooseCv = async (item: any, e: any) => {
     e.stopPropagation();
 
+    setScrollHead(-1);
+    if (swiperRef.current && swiperRef.current.slideTo) {
+      swiperRef.current.slideTo(1);
+    }
     setListCv((prev: any) => [
       prev.at(prev.indexOf(item)),
       ...prev
@@ -404,11 +410,16 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                     : 'Choose your HiJob CV/Resume for Employers to view, evaluate and select!'}
                 </p>
                 <Swiper
-                  navigation={true}
+                  // navigation={true}
                   slidesPerView="auto"
                   spaceBetween={17}
                   modules={[Mousewheel, Navigation, Pagination]}
                   className="list-cv-swiper"
+                  ref={swiperRef}
+                  navigation={{
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                  }}
                 >
                   {profileV3?.profilesCvs
                     ?.slice() // Tạo một bản sao của mảng để không ảnh hưởng đến mảng gốc

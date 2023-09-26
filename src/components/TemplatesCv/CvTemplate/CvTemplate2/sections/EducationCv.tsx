@@ -49,6 +49,11 @@ const Education: React.FC<IEducation> = (props) => {
       fontFamily: 'Montserrat Medium',
       color: '#252525',
       fontWeight: 'bold',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      width: '8.3cm',
+      whiteSpace: 'wrap',
+      wordWrap: 'break-word',
     },
     textRight: {
       fontSize: '7.81pt',
@@ -65,12 +70,21 @@ const Education: React.FC<IEducation> = (props) => {
     paragraph: {
       // textIndent: 20,
       fontSize: '7.81pt', // Độ lệch của gạch đầu dòng
-      whiteSpace: 'nowrap',
       fontFamily: 'Montserrat Regular',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      width: '8.3cm',
+      whiteSpace: 'wrap',
+      wordWrap: 'break-word',
     },
     itemText: {
       display: 'flex',
       flexDirection: 'row',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      width: '8.3cm',
+      whiteSpace: 'wrap',
+      wordWrap: 'break-word',
     },
     image: {
       width: '1cm',

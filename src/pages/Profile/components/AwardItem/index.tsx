@@ -83,7 +83,14 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
           ></div>
         </div>
         <div className="div-info-item">
-          <Space size={4} direction="vertical" style={{ marginLeft: 10 }}>
+          <Space
+            size={4}
+            direction="vertical"
+            style={{
+              marginLeft: 10,
+              wordBreak: 'break-all',
+            }}
+          >
             <h3>{item?.title}</h3>
             {/* <p>{item?.company}</p> */}
 
@@ -92,6 +99,7 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
                 whiteSpace: 'pre-wrap',
                 marginTop: '15px',
                 color: '#575757',
+                wordBreak: 'break-all',
               }}
             >
               {item?.description}

@@ -126,6 +126,7 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
               border: '0.5px solid #aaaaaa',
               borderRadius: '10px',
               margin: '0 12px 12px 0',
+              wordBreak: 'break-all',
             }}
           >
             <h3
@@ -136,9 +137,9 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
             >
               {item?.fullName}
             </h3>
-            <p style={{ color: '#AAAAAA' }}>{item?.phone}</p>
-            <p style={{ color: '#AAAAAA' }}>{item?.email}</p>
-            <p style={{ color: '#AAAAAA' }}>{item?.description}</p>
+            <p style={{ color: 'rgb(87,87,87)' }}>{item?.phone}</p>
+            <p style={{ color: 'rgb(87,87,87)' }}>{item?.email}</p>
+            <p style={{ color: 'rgb(87,87,87)' }}>{item?.description}</p>
           </Space>
         </div>
       </div>
