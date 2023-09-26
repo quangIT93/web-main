@@ -22,15 +22,14 @@ const Header: React.FC<ICvHeader> = (props) => {
       // border: '1px solid red',
     },
     content: {
-      // width: '100%',
+      width: '100%',
       // height: '100%',
 
-      marginTop: '87,319pt',
       // paddingLeft: '103.428pt',
-      border: '1px solid green'
+      // border: '1px solid green'
     },
     info: {
-      border: '1px solid red',
+      // border: '1px solid red',
       display: 'flex',
       flexDirection: 'column',
       // gap: '38.471pt',
@@ -43,13 +42,22 @@ const Header: React.FC<ICvHeader> = (props) => {
       width: '100%',
       display: 'flex',
       flexDirection: 'row',
+      marginLeft: '20pt',
     },
     lastName: {
       fontSize: 31,
       fontFamily: 'OpenSans-Semi-Bold',
       width: '100%',
       textTransform: 'uppercase',
-      color: '#152D35',
+      color: color === 1
+        ? '#152D35'
+        : color === 2
+          ? '#0D99FF'
+          : color === 3
+            ? '#FBBC04'
+            : color === 4
+              ? '#5CB265'
+              : '#D80000',
       // background: 'red',
       // border: '1px solid black',
     },
@@ -72,9 +80,12 @@ const Header: React.FC<ICvHeader> = (props) => {
     bigTitle: {
       fontFamily: 'OpenSans-Regular',
       fontSize: 17,
+      letterSpacing: 4,
       color: '#152D35',
       marginTop: '18.468pt',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      marginLeft: '40pt',
+      // border: '1px solid black',
     },
     topLeftDiv: {
       // marginTop: '2.066cm',
@@ -124,6 +135,8 @@ const Header: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
+
+      marginTop: '87,319pt',
       // justifyContent: 'center',
       // paddingLeft: '55pt',
       // paddingRight: '1.136cm',
@@ -142,7 +155,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: '50%',
-      border: '1px solid #aaaaaa',
+      border: '1.5px solid #aaaaaa',
     },
     rightDiv: {
       maxWidth: '70%',
@@ -150,8 +163,8 @@ const Header: React.FC<ICvHeader> = (props) => {
       // backgroundColor: '#404BA0',
       display: 'flex',
       flexDirection: 'column',
-      gap: '18.468pt',
-      border: '1px solid red',
+      // gap: '18.468pt',
+      // border: '1px solid red',
     },
     lineHead: {
       width: '100%',
@@ -228,7 +241,7 @@ const Header: React.FC<ICvHeader> = (props) => {
         </View>
       </View>
       <View style={styles.avatarDiv}>
-        <Image src={profile.avatarPath} style={styles.image} />
+        <Image src={profile.avatarPath !== null ? profile.avatarPath : 'a'} style={styles.image} />
       </View>
     </View>
   );

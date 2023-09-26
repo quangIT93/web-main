@@ -251,6 +251,16 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   });
 
   // console.log('aaa');
+  // const element = document.querySelector('.scalable-element') as any;
+  // const currentWidth = element?.offsetWidth; // Lấy chiều rộng hiện tại
+
+  // useEffect(() => {
+  //   const targetWidth = 200; // Chiều rộng mục tiêu (thay đổi theo nhu cầu)
+
+  //   const scale = targetWidth / currentWidth; // Tính tỷ lệ (scale)
+
+  //   element.style.transform = `scale(${scale})`; // Áp dụng tỷ lệ (scale) cho phần tử
+  // }, [currentWidth]);
 
   return (
     <div className="contentCV-bottom">

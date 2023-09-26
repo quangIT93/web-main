@@ -296,7 +296,7 @@ const Header: React.FC<ICvHeader> = (props) => {
                     <View style={styles.topLeftDiv}>
                         <View style={styles.avatarDiv}>
                             <Image
-                                src={profile?.avatarPath}
+                                src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
                                 style={styles.image}
                             />
                         </View>

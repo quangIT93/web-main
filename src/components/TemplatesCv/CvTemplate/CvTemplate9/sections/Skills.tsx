@@ -11,6 +11,7 @@ const Skills: React.FC<ICvEducation> = (props) => {
     const styles = StyleSheet.create({
         container: {
             width: '100%',
+            marginBottom: '24.235pt',
         },
         content: {
             width: '100%',
@@ -37,10 +38,10 @@ const Skills: React.FC<ICvEducation> = (props) => {
             // marginLeft: '0.658cm'
         },
         line: {
-            width: '56.84pt',
+            width: '79.107pt',
             height: '4px',
             backgroundColor: color === 1
-                ? '#404BA0'
+                ? '#D4ECDD'
                 : color === 2
                     ? '#0D99FF'
                     : color === 3
@@ -51,33 +52,41 @@ const Skills: React.FC<ICvEducation> = (props) => {
             borderRadius: '2px',
         },
         name: {
-            fontFamily: "Montserrat Regular",
-            fontSize: 9,
+            fontFamily: "OpenSans-Semi-Bold",
+            fontSize: 11,
+            // letterSpacing: '2px',
+            // marginBottom: '2px',
             textAlign: 'justify',
-            color: '#777878',
+            color: '#152D35',
         },
         detail: {
-            fontFamily: "Montserrat Regular",
+            fontFamily: "OpenSans-Regular",
             fontSize: 9,
+            width: '100%',
             textAlign: 'justify',
-            width: "100%",
-            color: '#777878',
+            color: '#3B3A3C',
             // border: '1px solid red'
         },
         title: {
-            fontFamily: 'Montserrat Bold',
-            fontSize: 14,
-            marginBottom: '14.469pt',
-            width: '100%',
+            fontFamily: 'OpenSans-Semi-Bold',
+            fontSize: 15,
+            width: '40%',
+            marginBottom: '23.191pt',
             textTransform: 'uppercase',
-            color: color === 1 ?
-                "#505050" :
-                color === 2 ?
-                    "#0D99FF" :
-                    color === 3 ?
-                        "#FBBC04" :
-                        color === 4 ?
-                            "#5CB265" : "#D80000",
+            color: color === 1
+                ? '#152D35'
+                : color === 2
+                    ? '#0D99FF'
+                    : color === 3
+                        ? '#FBBC04'
+                        : color === 4
+                            ? '#5CB265'
+                            : '#D80000',
+            paddingTop: '7.211pt',
+            paddingBottom: '7.211pt',
+            paddingLeft: '5.954pt',
+            paddingRight: '5.954pt',
+            backgroundColor: '#D4ECDD'
         },
         languageTop: {
             display: 'flex',

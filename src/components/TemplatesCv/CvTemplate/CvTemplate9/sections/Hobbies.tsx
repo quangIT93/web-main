@@ -13,7 +13,7 @@ const Hobbies: React.FC<ICvSkills> = (props) => {
     const styles = StyleSheet.create({
         container: {
             width: '100%',
-            marginBottom: '22.426pt',
+            marginBottom: '24.235pt',
             // border: '1px solid red'
         },
         content: {
@@ -23,26 +23,32 @@ const Hobbies: React.FC<ICvSkills> = (props) => {
             // gap: '20.398pt',
         },
         title: {
-            fontFamily: 'Montserrat Bold',
-            fontSize: 14,
-            marginBottom: '14.469pt',
-            width: '100%',
+            fontFamily: 'OpenSans-Semi-Bold',
+            fontSize: 15,
+            width: '50%',
+            marginBottom: '23.191pt',
             textTransform: 'uppercase',
-            color: color === 1 ?
-                "#505050" :
-                color === 2 ?
-                    "#0D99FF" :
-                    color === 3 ?
-                        "#FBBC04" :
-                        color === 4 ?
-                            "#5CB265" : "#D80000",
+            color: color === 1
+                ? '#152D35'
+                : color === 2
+                    ? '#0D99FF'
+                    : color === 3
+                        ? '#FBBC04'
+                        : color === 4
+                            ? '#5CB265'
+                            : '#D80000',
+            paddingTop: '7.211pt',
+            paddingBottom: '7.211pt',
+            paddingLeft: '5.954pt',
+            paddingRight: '5.954pt',
+            backgroundColor: '#D4ECDD'
         },
         profile: {
-            fontFamily: "Montserrat Regular",
+            fontFamily: "OpenSans-Regular",
             fontSize: 9,
             width: '100%',
             textAlign: 'justify',
-            color: '#777878',
+            color: '#3B3A3C',
         },
     });
     return (

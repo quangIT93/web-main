@@ -49,12 +49,22 @@ const Activity: React.FC<IActivity> = (props) => {
       fontFamily: 'Montserrat Medium',
       color: '#252525',
       fontWeight: 'bold',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      width: '8.3cm',
+      whiteSpace: 'wrap',
+      wordWrap: 'break-word',
     },
     textRight: {
       fontSize: '7.81pt',
       fontFamily: 'Montserrat Regular',
       flexGrow: 1,
       textAlign: 'justify',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      width: '8.3cm',
+      whiteSpace: 'wrap',
+      wordWrap: 'break-word',
     },
     itemRight: {
       // display: 'flex',
@@ -65,8 +75,12 @@ const Activity: React.FC<IActivity> = (props) => {
     paragraph: {
       // textIndent: 20,
       fontSize: '7.81pt', // Độ lệch của gạch đầu dòng
-      whiteSpace: 'nowrap',
       fontFamily: 'Montserrat Regular',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      width: '8.3cm',
+      whiteSpace: 'wrap',
+      wordWrap: 'break-word',
     },
     itemText: {
       display: 'flex',

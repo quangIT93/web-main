@@ -93,7 +93,11 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
             flex: 1,
             flexDirection: 'row',
             backgroundColor: '#FFFFFF',
-            zIndex: 2
+            zIndex: 2,
+            paddingLeft: '14.279pt',
+            paddingRight: '14.279pt',
+            paddingTop: '68.34pt',
+            gap: '48.781pt',
             // marginTop: '14.547pt',
         },
         image: {
@@ -101,17 +105,8 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         },
         leftColumn: {
             flexDirection: 'column',
-            width: "35%",
-            paddingRight: 10,
-            borderRightWidth: '2px',
-            borderRightColor: color === 1 ?
-                "#404BA0" :
-                color === 2 ?
-                    "#0D99FF" :
-                    color === 3 ?
-                        "#FBBC04" :
-                        color === 4 ?
-                            "#5CB265" : "#D80000"
+            width: "65%",
+            // paddingRight: 10,
         },
         leftColumnContent: {
             width: '100%',
@@ -123,10 +118,10 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
         },
         rightColumn: {
             flexDirection: 'column',
-            width: "65%",
+            width: "35%",
             // paddingTop: '1.094cm',
             // marginTop: '1cm',
-            paddingLeft: '24.809pt',
+            // paddingLeft: '24.809pt',
         },
         pageNumber: {
             position: 'absolute',
@@ -135,7 +130,7 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
             left: 0,
             right: 0,
             textAlign: 'center',
-            color: '#ffffff',
+            color: '#252525',
         },
     });
     Font.register({
@@ -186,31 +181,20 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
             <View style={styles.container}>
                 <View style={styles.leftColumn}>
                     <View style={styles.leftColumnContent}>
-                        <Contact color={color} profile={profile} />
-                        <View style={styles.line}></View>
                         <Education color={color} profile={profile} />
-                        <View style={styles.line}></View>
+                        <Experience color={color} profile={profile} />
                         {
-                            profile?.profilesLanguages && profile?.profilesLanguages?.length > 0 ?
+                            profile?.profileActivities && profile?.profileActivities?.length > 0 ?
                                 <>
-                                    <Languages color={color} profile={profile} />
-                                    <View style={styles.line}></View>
-                                </> :
-                                <></>
-                        }
-                        {
-                            profile?.profilesSkills && profile?.profilesSkills?.length > 0 ?
-                                <>
-                                    <Skills color={color} profile={profile} />
-                                    <View style={styles.line}></View>
-                                </> :
+                                    <Activities color={color} profile={profile} />
+                                </>
+                                :
                                 <></>
                         }
                         {
                             profile?.profileAwards && profile?.profileAwards?.length > 0 ?
                                 <>
                                     <Awards color={color} profile={profile} />
-                                    <View style={styles.line}></View>
                                 </> :
                                 <></>
                         }
@@ -220,23 +204,25 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
                 <View style={styles.rightColumn}>
                     <View style={styles.rightColumnContent}>
                         <Profile color={color} profile={profile} />
-                        <View style={styles.line}></View>
-                        <Experience color={color} profile={profile} />
-                        <View style={styles.line}></View>
                         {
-                            profile?.profileActivities && profile?.profileActivities?.length > 0 ?
+                            profile?.profilesLanguages && profile?.profilesLanguages?.length > 0 ?
                                 <>
-                                    <Activities color={color} profile={profile} />
-                                    <View style={styles.line}></View>
-                                </>
-                                :
+                                    <Languages color={color} profile={profile} />
+                                </> :
+                                <></>
+                        }
+                        <Contact color={color} profile={profile} />
+                        {
+                            profile?.profilesSkills && profile?.profilesSkills?.length > 0 ?
+                                <>
+                                    <Skills color={color} profile={profile} />
+                                </> :
                                 <></>
                         }
                         {
                             profile?.profileHobbies ?
                                 <>
                                     <Hobbies color={color} profile={profile} />
-                                    <View style={styles.line}></View>
                                 </> :
                                 <></>
                         }
@@ -244,7 +230,6 @@ const CvTemplate9: React.FC<CvTemplate> = (props) => {
                             profile?.profilesReferences && profile?.profilesReferences?.length > 0 ?
                                 <>
                                     <References color={color} profile={profile} />
-                                    <View style={styles.line}></View>
                                 </> :
                                 <></>
                         }

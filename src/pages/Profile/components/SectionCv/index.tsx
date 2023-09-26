@@ -799,17 +799,17 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               {profileV3 && profileV3?.profileActivities?.length !== 0 ? (
                 profileV3?.profileActivities?.map(
                   (item: IInternship, index: number) => (
-                    <div className="skill-item" key={index}>
-                      <InternshipItem
-                        typeItem={0}
-                        index={index}
-                        item={item}
-                        setInternshipValues={setInternshipValues}
-                        internshipValues={internshipValues}
-                        activityValue={item}
-                        setActivityValues={setActivityValues}
-                      />
-                    </div>
+                    <InternshipItem
+                      typeItem={0}
+                      index={index}
+                      item={item}
+                      setInternshipValues={setInternshipValues}
+                      internshipValues={internshipValues}
+                      activityValue={item}
+                      setActivityValues={setActivityValues}
+                    />
+                    // <div className="skill-item" key={index}>
+                    // </div>
                   ),
                 )
               ) : (

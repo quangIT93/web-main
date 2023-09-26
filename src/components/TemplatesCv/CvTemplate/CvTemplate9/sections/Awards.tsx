@@ -15,7 +15,7 @@ const Awards: React.FC<ICvExperience> = (props) => {
     const styles = StyleSheet.create({
         container: {
             width: '100%',
-            marginBottom: '19.661pt',
+            marginBottom: '24.235pt',
             // paddingLeft: '0.9cm',
             // border: '1px solid red',
         },
@@ -55,22 +55,20 @@ const Awards: React.FC<ICvExperience> = (props) => {
             color: '#777878',
         },
         school: {
-            fontFamily: "Montserrat Bold",
-            fontSize: 10,
-            marginLeft: '4.213pt',
-            textTransform: 'uppercase',
+            fontFamily: "OpenSans-Semi-Bold",
+            fontSize: 11,
             textAlign: 'justify',
+            color: '#152D35',
             width: '100%',
-            color: '#505050'
             // border: '1px solid red',
 
         },
         detail: {
-            fontFamily: "Montserrat Regular",
+            fontFamily: "OpenSans-Regular",
             fontSize: 9,
             width: '100%',
             textAlign: 'justify',
-            color: '#777878',
+            color: '#3B3A3C',
             // border: '1px solid red'
         },
         achievements: {
@@ -81,18 +79,25 @@ const Awards: React.FC<ICvExperience> = (props) => {
             // border: '1px solid red'
         },
         title: {
-            fontFamily: 'Montserrat Bold',
-            fontSize: 14,
+            fontFamily: 'OpenSans-Semi-Bold',
+            fontSize: 15,
+            width: '25%',
             marginBottom: '23.191pt',
             textTransform: 'uppercase',
-            color: color === 1 ?
-                "#505050" :
-                color === 2 ?
-                    "#0D99FF" :
-                    color === 3 ?
-                        "#FBBC04" :
-                        color === 4 ?
-                            "#5CB265" : "#D80000"
+            color: color === 1
+                ? '#152D35'
+                : color === 2
+                    ? '#0D99FF'
+                    : color === 3
+                        ? '#FBBC04'
+                        : color === 4
+                            ? '#5CB265'
+                            : '#D80000',
+            paddingTop: '7.211pt',
+            paddingBottom: '7.211pt',
+            paddingLeft: '5.954pt',
+            paddingRight: '5.954pt',
+            backgroundColor: '#D4ECDD'
         },
         botInfo: {
             display: 'flex',
@@ -135,25 +140,6 @@ const Awards: React.FC<ICvExperience> = (props) => {
                         <View style={styles.award} key={i}>
                             <View style={styles.right}>
                                 <View style={styles.topInfo}>
-                                    {/* <View style={styles.arrow}>
-                                    </View> */}
-                                    <Svg height="6" width="5">
-                                        <Polygon
-                                            points="0,0 5,3 0,6"
-                                            fill={
-                                                color === 1 ?
-                                                    "#404BA0" :
-                                                    color === 2 ?
-                                                        "#0D99FF" :
-                                                        color === 3 ?
-                                                            "#FBBC04" :
-                                                            color === 4 ?
-                                                                "#5CB265" : "#D80000"
-                                            }
-                                            stroke="none"
-                                            strokeWidth={1}
-                                        />
-                                    </Svg>
                                     <Text style={styles.school}>{item?.title}</Text>
                                 </View>
                                 <View style={styles.botInfo}>

@@ -43,7 +43,9 @@ interface ItemAppy {
 // });
 
 const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [openModalDeleteEducation, setOpenModalDeleteEducation] =
     useState(false);
   const [openModalEducationUpdate, setOpenModalEducationUpdate] =
@@ -72,7 +74,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -84,8 +86,8 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // console.log('item?.start_date', item?.start_date);
   return (
@@ -105,7 +107,14 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           ></div>
         </div>
         <div className="div-info-item">
-          <Space size={4} direction="vertical" style={{ marginLeft: 10 }}>
+          <Space
+            size={4}
+            direction="vertical"
+            style={{
+              marginLeft: 10,
+              wordBreak: 'break-all',
+            }}
+          >
             <h3>{item?.company_name}</h3>
             <p>{typeItem === 'experiences' ? item?.title : item?.major}</p>
             <p>
@@ -118,6 +127,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
                 whiteSpace: 'pre-wrap',
                 marginTop: '15px',
                 color: '#575757',
+                wordBreak: 'break-all',
               }}
             >
               {item?.extra_information}
@@ -138,11 +148,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <PencilIcon width={15} height={15} />
           </div>
 
-          <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-            {
-              language?.edit
-            }
-          </p>
+          <p style={{ color: '#0D99FF', fontSize: '14px' }}>{language?.edit}</p>
         </Space>
         <Space
           onClick={
@@ -156,9 +162,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <DeleteIcon width={15} height={15} />
           </div>
           <p style={{ color: '#575757', fontSize: '14px' }}>
-            {
-              language?.profile_page?.delete
-            }
+            {language?.profile_page?.delete}
           </p>
         </Space>
       </div>

@@ -14,83 +14,85 @@ const Experience: React.FC<ICvExperience> = (props) => {
     const { color, profile } = props;
     const styles = StyleSheet.create({
         container: {
-            marginBottom: '22.426pt',
+            marginBottom: '24.235pt',
             // paddingLeft: '0.9cm',
             // border: '1px solid red',
         },
         experience: {
             display: 'flex',
             flexDirection: 'row',
-            marginBottom: '15.263pt'
+            marginBottom: '15.263pt',
+            marginLeft: '5.954pt'
             // border: '1px solid red'
         },
         left: {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            justifyContent: 'flex-start',
-            // border: '1px solid red',
-            transform: 'translateX(-8%)',
-        },
-        right: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            width: '100%',
+            width: '35%',
             // marginLeft: '0.671cm',
             // marginBottom: 5,
             // marginLeft: '34.638pt',
             // border: '1px solid red',
             position: 'relative',
         },
+        right: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            width: '65%',
+            marginLeft: '0.671cm',
+            // marginBottom: 5,
+            // marginLeft: '34.638pt',
+            // border: '1px solid red',
+            position: 'relative',
+        },
         time: {
-            fontFamily: "Montserrat Semi Bold",
-            fontSize: 9,
+            fontFamily: "OpenSans-Semi-Bold",
+            fontSize: 11,
             // letterSpacing: '2px',
             // marginBottom: '2px',
             textAlign: 'justify',
-            color: '#777878',
+            color: '#152D35',
         },
         school: {
-            fontFamily: "Montserrat Bold",
-            fontSize: 10,
-            marginLeft: '4.213pt',
+            fontFamily: "OpenSans-Regular",
+            fontSize: 11,
             textTransform: 'uppercase',
             textAlign: 'justify',
             width: '100%',
-            color: '#505050'
+            color: '#3B3A3C'
             // border: '1px solid red',
 
         },
         detail: {
-            fontFamily: "Montserrat Regular",
+            fontFamily: "OpenSans-Regular",
             fontSize: 9,
             width: '100%',
             textAlign: 'justify',
-            color: '#777878',
-            // border: '1px solid red'
-        },
-        achievements: {
-            fontFamily: "OpenSans-Semi-Bold",
-            fontSize: 9,
-            // marginTop: '16.92pt',
-            width: '100%',
+            color: '#3B3A3C',
             // border: '1px solid red'
         },
         title: {
-            fontFamily: 'Montserrat Bold',
-            fontSize: 14,
-            marginBottom: '15.447pt',
-            width: '100%',
+            fontFamily: 'OpenSans-Semi-Bold',
+            fontSize: 15,
+            width: '35%',
+            marginBottom: '23.191pt',
             textTransform: 'uppercase',
-            color: color === 1 ?
-                "#505050" :
-                color === 2 ?
-                    "#0D99FF" :
-                    color === 3 ?
-                        "#FBBC04" :
-                        color === 4 ?
-                            "#5CB265" : "#D80000",
+            color: color === 1
+                ? '#152D35'
+                : color === 2
+                    ? '#0D99FF'
+                    : color === 3
+                        ? '#FBBC04'
+                        : color === 4
+                            ? '#5CB265'
+                            : '#D80000',
+            paddingTop: '7.211pt',
+            paddingBottom: '7.211pt',
+            paddingLeft: '5.954pt',
+            paddingRight: '5.954pt',
+            backgroundColor: '#D4ECDD'
         },
         botInfo: {
             display: 'flex',
@@ -120,7 +122,7 @@ const Experience: React.FC<ICvExperience> = (props) => {
         line: {
             width: '4px',
             height: '1x',
-            backgroundColor: '#777878'
+            backgroundColor: '#505050'
         },
         timeCompany: {
             display: 'flex',
@@ -132,63 +134,42 @@ const Experience: React.FC<ICvExperience> = (props) => {
             gap: '128pt',
         },
         company: {
-            fontFamily: "OpenSans-Semi-Bold-Italic",
-            fontSize: 9,
-            maxWidth: '40%',
+            fontFamily: "OpenSans-Semi-Bold",
+            fontSize: 11,
             // letterSpacing: '2px',
             // marginBottom: '2px',
             textAlign: 'justify',
-            color: '#777878',
-            // border: '1px solid red',
-            // fontStyle: 'italic'
+            color: '#152D35',
+            width: '100%',
         },
     });
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Work Experience</Text>
+            <Text style={styles.title}>Experience</Text>
             {
                 profile?.profilesExperiences && profile?.profilesExperiences.map((experience: any, i: any) => {
                     return (
                         <View style={styles.experience} key={i}>
+                            <View style={styles.left}>
+                                <View style={styles.timeContainer}>
+                                    <Text style={styles.time}>
+                                        {moment(experience?.startDate).format('YYYY')}
+                                    </Text>
+                                    <View style={styles.line}></View>
+                                    <Text style={styles.time}>
+                                        {moment(experience?.endDate).format('YYYY')}
+                                    </Text>
+                                </View>
+                                <View style={styles.timeCompany}>
+                                    <Text style={styles.company}>{experience?.companyName}</Text>
+                                </View>
+                            </View>
                             <View style={styles.right}>
                                 <View style={styles.topInfo}>
-                                    <Svg height="6" width="5">
-                                        <Polygon
-                                            points="0,0 5,3 0,6"
-                                            fill={
-                                                color === 1 ?
-                                                    "#404BA0" :
-                                                    color === 2 ?
-                                                        "#0D99FF" :
-                                                        color === 3 ?
-                                                            "#FBBC04" :
-                                                            color === 4 ?
-                                                                "#5CB265" : "#D80000"
-                                            }
-                                            stroke="none"
-                                            strokeWidth={1}
-                                        />
-                                    </Svg>
                                     <Text style={styles.school}>{experience?.title}</Text>
                                 </View>
                                 <View style={styles.botInfo}>
-                                    <View style={styles.timeCompany}>
-                                        <Text style={styles.company}>{experience?.companyName}</Text>
-                                        <View style={styles.timeContainer}>
-                                            <Text style={styles.time}>
-                                                {moment(experience?.startDate).format('MMMM')}
-                                                {" '"}
-                                                {moment(experience?.startDate).format('YY')}
-                                            </Text>
-                                            <View style={styles.line}></View>
-                                            <Text style={styles.time}>
-                                                {moment(experience?.endDate).format('MMMM')}
-                                                {" '"}
-                                                {moment(experience?.endDate).format('YY')}
-                                            </Text>
-                                        </View>
-                                    </View>
                                     <Text style={styles.detail}>{experience?.extraInformation}</Text>
                                 </View>
                             </View>

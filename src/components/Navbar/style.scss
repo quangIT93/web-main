@@ -1022,7 +1022,10 @@
   }
 
   .div-nav-center {
-    padding-left: 20px;
+    padding-left: 10px;
+    @media screen and (min-width: 920px) {
+      padding-left: 100px;
+    }    
     .btn-badge {
 
       &:hover {
@@ -1967,6 +1970,14 @@
   .btn-noti_icon {
     @include breakpoint(mobile) {
       display: none;
+      padding-left: 0px;
+
+    }
+
+    @include breakpoint(tablet) {
+      display: none;
+      padding-left: 0px;
+
     }
 
     button {

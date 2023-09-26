@@ -240,7 +240,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       <View style={styles.content}>
         <View style={styles.topHead}>
           <View style={styles.avatarDiv}>
-            <Image src={profile?.avatarPath} style={styles.image} />
+            <Image src={profile.avatarPath !== null ? profile.avatarPath : 'a'} style={styles.image} />
           </View>
           <View style={styles.leftDiv}>
             <View style={styles.lineHead}></View>
