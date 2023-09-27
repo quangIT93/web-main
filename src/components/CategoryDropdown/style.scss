@@ -114,6 +114,10 @@
             align-items: flex-start;
             width: fit-content;
 
+            @media screen and (max-width: 425px) {
+                width: 100%;
+            }
+
             .top-item {
                 display: flex;
                 align-items: center;
@@ -121,6 +125,11 @@
 
                 @media screen and (max-width: 560px) {
                     cursor: pointer;
+                }
+
+                @media screen and (max-width: 425px) {
+                    width: 100%;
+                    justify-content: space-between;
                 }
 
                 h3 {

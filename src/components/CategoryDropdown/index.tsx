@@ -52,11 +52,12 @@ const CategoryDropdown: React.FC = () => {
     const [windowWidth, setWindowWidth] = useState(false);
 
     const updateWindowWidth = () => {
-        if (window.innerWidth <= 560) {
+        if (window.innerWidth > 560) {
             setWindowWidth(true);
             setExpand([1, 2, 3, 4])
         } else {
             setWindowWidth(false);
+            setExpand([])
         }
     };
 
@@ -66,12 +67,13 @@ const CategoryDropdown: React.FC = () => {
 
     window.addEventListener('resize', () => {
         const currentWidth = window.innerWidth;
-        if (currentWidth <= 560) {
+        if (currentWidth > 560) {
             setWindowWidth(true);
+            setExpand([1, 2, 3, 4])
         } else {
             setWindowWidth(false);
             setOpen(true);
-            setExpand([1, 2, 3, 4])
+            setExpand([])
         }
         // console.log('Current window width:', currentWidth);
     });
