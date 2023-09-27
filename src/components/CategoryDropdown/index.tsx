@@ -47,13 +47,14 @@ const CategoryDropdown: React.FC = () => {
 
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const location = useLocation();
-    const [expand, setExpand] = useState();
+    const [expand, setExpand] = useState<any>([]);
     const [open, setOpen] = useState(false);
     const [windowWidth, setWindowWidth] = useState(false);
 
     const updateWindowWidth = () => {
         if (window.innerWidth <= 560) {
             setWindowWidth(true);
+            setExpand([1, 2, 3, 4])
         } else {
             setWindowWidth(false);
         }
@@ -70,12 +71,21 @@ const CategoryDropdown: React.FC = () => {
         } else {
             setWindowWidth(false);
             setOpen(true);
+            setExpand([1, 2, 3, 4])
         }
         // console.log('Current window width:', currentWidth);
     });
 
     const handleExpand = (id: any) => {
-        setExpand(id)
+        if (expand.includes(id)) {
+            setExpand(
+                expand.filter((item: any) => {
+                    return item !== id;
+                }),
+            );
+            return
+        }
+        setExpand((prev: any) => [...prev, id]);
         setOpen(!open);
     }
 
@@ -471,9 +481,9 @@ const CategoryDropdown: React.FC = () => {
                             </div>
                             <div className='bot-item'
                                 style={{
-                                    height: open && expand === 1 ? 'unset' : 0,
-                                    overflow: open && expand === 1 ? 'unset' : 'hidden',
-                                    marginTop: open && expand === 1 ? '16px' : '0px'
+                                    height: expand.includes(1) ? 'unset' : 0,
+                                    overflow: expand.includes(1) ? 'unset' : 'hidden',
+                                    marginTop: expand.includes(1) ? '16px' : '0px'
                                 }}
                             >
                                 <h3>
@@ -531,9 +541,9 @@ const CategoryDropdown: React.FC = () => {
                             </div>
                             <div className='bot-item'
                                 style={{
-                                    height: open && expand === 2 ? 'unset' : 0,
-                                    overflow: open && expand === 2 ? 'unset' : 'hidden',
-                                    marginTop: open && expand === 2 ? '16px' : '0px'
+                                    height: expand.includes(2) ? 'unset' : 0,
+                                    overflow: expand.includes(2) ? 'unset' : 'hidden',
+                                    marginTop: expand.includes(2) ? '16px' : '0px'
                                 }}
                             >
                                 <h3>
@@ -570,9 +580,9 @@ const CategoryDropdown: React.FC = () => {
                             </div>
                             <div className='bot-item'
                                 style={{
-                                    height: open && expand === 3 ? 'unset' : 0,
-                                    overflow: open && expand === 3 ? 'unset' : 'hidden',
-                                    marginTop: open && expand === 3 ? '16px' : '0px'
+                                    height: expand.includes(3) ? 'unset' : 0,
+                                    overflow: expand.includes(3) ? 'unset' : 'hidden',
+                                    marginTop: expand.includes(3) ? '16px' : '0px'
                                 }}
                             >
                                 <h3>
@@ -616,9 +626,9 @@ const CategoryDropdown: React.FC = () => {
                             </div>
                             <div className='bot-item'
                                 style={{
-                                    height: open && expand === 4 ? 'unset' : 0,
-                                    overflow: open && expand === 4 ? 'unset' : 'hidden',
-                                    marginTop: open && expand === 4 ? '16px' : '0px'
+                                    height: expand.includes(4) ? 'unset' : 0,
+                                    overflow: expand.includes(4) ? 'unset' : 'hidden',
+                                    marginTop: expand.includes(4) ? '16px' : '0px'
                                 }}
                             >
                                 <h3>
