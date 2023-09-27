@@ -25,7 +25,9 @@ const PageCv = () => {
           <img src="./images/pageCv/CV 1.png" alt="" />
         </div>
         <div className="item-imageCv_bannerShow item-page_Cv">
-          <img src="./images/pageCv/web 2 1.png" alt="" />
+          <div className="wrap-img_bannerShow">
+            <img src="./images/pageCv/web 2 1.png" alt="" />
+          </div>
           <div className="banner-show_title">
             <h3>Tạo và tải CV online nhanh chóng</h3>
             <p>
@@ -52,11 +54,15 @@ const PageCv = () => {
               </p>
             </div>
           </div>
-          <img src="./images/pageCv/cv trang 3 1.png" alt="" />
+          <div className="wrap-img_loggin1">
+            <img src="./images/pageCv/cv trang 3 1.png" alt="" />
+          </div>
         </div>
 
         <div className="item-imageCv_loggin2 item-page_Cv">
-          <img src="./images/pageCv/web 4 1.png" alt="" />
+          <div className="wrap-img_loggin2">
+            <img src="./images/pageCv/web 4 1.png" alt="" />
+          </div>
           <div className="banner-show_title">
             <h3>Tạo và tải CV online nhanh chóng</h3>
             <p>
@@ -84,7 +90,9 @@ const PageCv = () => {
               <li>Cách gửi CV qua email</li>
             </ul>
           </div>
-          <img src="./images/pageCv/web 5 1.png" alt="" />
+          <div className="wrap-img_index">
+            <img src="./images/pageCv/web 5 1.png" alt="" />
+          </div>
         </div>
       </div>
     </div>
