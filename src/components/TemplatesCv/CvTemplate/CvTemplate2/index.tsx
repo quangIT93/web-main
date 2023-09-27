@@ -39,7 +39,7 @@ const index: React.FC<CvTemplate> = (props) => {
 
   const styles = StyleSheet.create({
     page: {
-      padding: '1cm',
+      padding: '2.5cm 1cm',
     },
     container: {
       // flex: 1,
@@ -80,9 +80,9 @@ const index: React.FC<CvTemplate> = (props) => {
       fontSize: 12,
       bottom: 10,
       // left: 0,
-      right: 10,
+      right: 25,
       textAlign: 'center',
-      color: '#0D99FF',
+      color: '#000000',
     },
   });
 

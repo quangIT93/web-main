@@ -94,7 +94,7 @@ const Header: React.FC<ICvHeader> = (props) => {
     botLeftDiv: {
       // marginTop: '0.553cm',
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: 'column',
       alignItems: 'flex-end',
       // marginBottom: '46.086px',
       gap: '0.418cm',
@@ -238,7 +238,8 @@ const Header: React.FC<ICvHeader> = (props) => {
               <Text style={styles.subtitle}>{profile?.phone}</Text>
               <Text style={styles.subtitle}>|</Text>
               <Text style={styles.subtitle}>{profile?.email}</Text>
-              <Text style={styles.subtitle}>|</Text>
+            </View>
+            <View style={styles.contact}>
               <Text style={styles.subtitle}>
                 {profile?.addressText?.fullName}
               </Text>

@@ -1,0 +1,176 @@
+.wrap-page_Cv {
+    margin-top: 70px;
+
+    .wrap-item_pageCv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 80px;
+        .item-update_profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+    
+            h3 {
+                text-align: center;
+                font-family: Roboto;
+                font-size: 42px;
+                font-style: normal;
+                font-weight: 900;
+                line-height: 60px; 
+                color: #0D99FF;
+            }
+            
+            h5 {
+                font-family: Roboto;
+                font-size: 42px;
+                font-style: normal;
+                font-weight: 900;
+                line-height: 60px;
+            }
+    
+            p {
+                text-align: center;
+                font-family: Roboto;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 36px; /* 150% */
+            }
+    
+            .button-update_profile {
+                display: flex;
+                padding: 16px 32px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 45px;
+                background: var(--bl1, #0D99FF);
+                color: #ffffff;
+            }
+        }
+    
+        .item-imageCv_banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+                width: 1114px;
+                height: 724px;
+            }
+        }
+        .item-page_Cv {
+            display: flex;
+            max-width: 1114px;
+            gap: 40px;
+            .banner-show_title {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 12px;
+                h3 {
+                    font-family: Roboto;
+                    font-size: 42px;
+                    font-style: normal;
+                    font-weight: 900;
+                    line-height: 60px; /* 142.857% */
+                    letter-spacing: 0.21px;
+                }
+        
+                p {
+                    font-family: Roboto;
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 36px; /* 150% */
+                }
+            }
+    
+        }
+    
+        .item-imageCv_bannerShow,
+        .item-imageCv_index,
+        .item-imageCv_loggin {
+           
+        }
+    
+        .item-imageCv_bannerShow {
+            img {
+                width: 660px;
+                height: 526px;
+            }
+
+            .wrap-bnt_bannerShow {
+                display: flex;
+                justify-content: center;
+                .btn-bannerShow {
+                    padding: 16px 32px;
+                    border-radius: 45px;
+                    background-color: #0D99FF;
+                    color: #ffffff;
+                }
+            }
+        }
+        .item-imageCv_loggin2,
+        .item-imageCv_loggin1 {
+
+            .wrap-cvchange_login {
+                .cv-change_login {
+                    display: flex;
+                    align-items: center;
+                    span {
+                        font-family: Roboto;
+                        font-size: 24px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 32px;
+                        color: #0D99FF;
+                        margin-right: 12px;
+                    }
+
+                }
+            }
+        }
+
+        .item-imageCv_loggin2 {
+            position: relative;
+            width: 100%;
+            .banner-show_title {
+                position: absolute;
+                display: flex;
+                width: 395px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 32px;
+                right: 0;
+                h3 {
+                    color: #252525;
+                    font-family: Roboto;
+                    font-size: 42px;
+                    font-style: normal;
+                    font-weight: 900;
+                    line-height: 60px; /* 142.857% */
+                    letter-spacing: 0.21px;
+                }
+
+                p {
+                    color: #575757;
+                    font-family: Roboto;
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 36px; /* 150% */
+                }
+            }
+        }
+
+        .item-imageCv_index {
+            width: 100%;
+        }
+
+   
+
+
+    }
+
+}
