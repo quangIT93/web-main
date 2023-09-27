@@ -2749,7 +2749,7 @@ export const ArrowIcon = ({ width = 24, height = 24, fill = 'none' }) => {
     >
       <path
         d="M16.7508 12C16.7518 12.1991 16.6725 12.3901 16.5308 12.53L8.53082 20.53C8.23531 20.8054 7.77481 20.7972 7.4892 20.5116C7.20359 20.226 7.19546 19.7655 7.47082 19.47L14.9408 12L7.47082 4.53C7.19546 4.23449 7.20359 3.77399 7.4892 3.48838C7.77481 3.20277 8.23531 3.19464 8.53082 3.47L16.5308 11.47C16.6725 11.6099 16.7518 11.8009 16.7508 12Z"
-        fill="white"
+        fill={fill}
       />
     </svg>
   );
@@ -3130,7 +3130,7 @@ export const LikeIcon = ({ width = 16, height = 17 }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="currentColor"
-        // fill="#0d99ff"
+      // fill="#0d99ff"
       />
     </svg>
   );
@@ -5730,5 +5730,39 @@ export const IconSaveProfile = () => {
         />
       </g>
     </svg>
+  );
+};
+
+export const IconBriefCase = ({ width = 20, height = 20 }) => {
+  return (
+    <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_12239_327686)">
+        <path d="M8.75 8.75H11.25"
+          stroke="currentStroke" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M16.875 5H3.125C2.77982 5 2.5 5.27982 2.5 5.625V15.625C2.5 15.9702 2.77982 16.25 3.125 16.25H16.875C17.2202 16.25 17.5 15.9702 17.5 15.625V5.625C17.5 5.27982 17.2202 5 16.875 5Z"
+          stroke="currentStroke" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M13.125 5V3.75C13.125 3.41848 12.9933 3.10054 12.7589 2.86612C12.5245 2.6317 12.2065 2.5 11.875 2.5H8.125C7.79348 2.5 7.47554 2.6317 7.24112 2.86612C7.0067 3.10054 6.875 3.41848 6.875 3.75V5"
+          stroke="currentStroke" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M17.5 9.24316C15.2208 10.5619 12.6333 11.2543 10 11.2502C7.36684 11.2544 4.77939 10.5623 2.5 9.24395"
+          stroke="currentStroke" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+      <defs>
+        <clipPath id="clip0_12239_327686">
+          <rect width={width} height={height} fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+
+  );
+};
+
+export const IconMenu = ({ width = 20, height = 20 }) => {
+  return (
+    <svg width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 12H21" stroke="currentStroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M3 6H21" stroke="currentStroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M3 18H21" stroke="currentStroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+
   );
 };

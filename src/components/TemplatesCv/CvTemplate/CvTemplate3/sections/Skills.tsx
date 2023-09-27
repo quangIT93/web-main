@@ -41,7 +41,7 @@ const Skills: React.FC<ICvEducation> = (props) => {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
-            marginLeft: '0.658cm'
+            // marginLeft: '0.658cm'
         },
         time: {
             fontFamily: "Montserrat Regular",
@@ -93,8 +93,7 @@ const Skills: React.FC<ICvEducation> = (props) => {
                 profile?.profilesSkills && profile?.profilesSkills.map((education: any, i: any) => {
                     return (
                         <View style={styles.education} key={i}>
-                            <View style={styles.left}>
-                                {/* <Text style={styles.not}>•</Text> */}
+                            {/* <View style={styles.left}>
                                 <Svg viewBox="0 0 2 2" style={{ width: 10 }}>
                                     <Circle
                                         cx="1"
@@ -113,7 +112,7 @@ const Skills: React.FC<ICvEducation> = (props) => {
                                         stroke="none"
                                     />
                                 </Svg>
-                            </View>
+                            </View> */}
                             <View style={styles.right}>
                                 <Text style={styles.school}>{education?.skillName}</Text>
                                 <Text style={styles.detail}>{education?.dataLevel?.data}</Text>
