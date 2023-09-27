@@ -47,6 +47,7 @@ import { setCookie } from 'cookies';
 import ModalSelectRole from '#components/Home/ModalSelectRole';
 import ModalUpdateInfo from '#components/Home/ModalUpdateInfo';
 import { setIsNew } from 'store/reducer/isNewReducer';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -127,7 +128,22 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const communityDiv = localStorage.getItem('community');
+    const newJob = localStorage.getItem('home');
 
+    if (newJob === 'new') {
+      // setReachedEndShowSubjectJob(true);
+      document.querySelector('.new-job')?.scrollIntoView({
+        // block: 'start',
+        // inline: 'nearest',
+      });
+    }
+    if (newJob === 'hot') {
+      // setReachedEndShowSubjectJob(true);
+      document.querySelector('.hot-job-container')?.scrollIntoView({
+        // block: 'start',
+        // inline: 'nearest',
+      });
+    }
     if (communityDiv) {
       // setReachedEndShowSubjectJob(true);
       document.querySelector('.community-container')?.scrollIntoView({
@@ -137,11 +153,12 @@ const Home: React.FC = () => {
       });
     }
     localStorage.removeItem('community');
+    localStorage.removeItem('home');
     setCookie('workingId', '0', 1);
     setCookie('hijobId', '0', 1);
     // document.cookie = `hijobId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     // document.cookie = `workingId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
 
   // Lưu vị trí cuộn trước đó
@@ -188,6 +205,7 @@ const Home: React.FC = () => {
   return (
     <div className="home">
       <Navbar />
+      <CategoryDropdown />
       {/* <script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8881781217169539"
@@ -200,8 +218,8 @@ const Home: React.FC = () => {
         Đa dạng ngành nghề, mức lương hấp dẫn
       </h1>
       <div className="home__main">
-        <CategoryCarousel />
-        <Breadcrumbs />
+        {/* <CategoryCarousel />
+        <Breadcrumbs /> */}
         <AppliedPostedJob />
         <HotJob />
         <NewJobs />
@@ -219,12 +237,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // setRole={setRole}
+      // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // role={role}
+      // role={role}
       />
       <RollTop />
       <Footer />

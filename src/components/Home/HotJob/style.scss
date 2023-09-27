@@ -4,28 +4,112 @@
     // margin: 32px 0;
     margin-bottom: 24px !important;
     padding: 0 !important;
-    
+
     @include breakpoint(mobile) {
         margin-bottom: 24px !important;
-   
-       }
-   
-       @include breakpoint(tablet) {
-           margin-bottom: 24px !important;
-      
-       }
-   
-       @include breakpoint(largeTablet) {
-       margin-bottom: 24px !important;
-   
-       }
 
-       @include breakpoint(destop) {
-        margin-bottom: 24px !important;
-    
     }
 
-    .mySwiper {
+    @include breakpoint(tablet) {
+        margin-bottom: 24px !important;
+
+    }
+
+    @include breakpoint(largeTablet) {
+        margin-bottom: 24px !important;
+
+    }
+
+    @include breakpoint(destop) {
+        margin-bottom: 24px !important;
+
+    }
+
+    .hotjob-content {
+        display: grid;
+        grid-template-columns: repeat(5, 236px);
+        // grid-template-columns: auto auto auto auto auto;
+        column-gap: 24px;
+        row-gap: 16px;
+        z-index: 0;
+        margin-top: 16px;
+
+        @media screen and (max-width: 1300px) {
+            grid-template-columns: auto auto auto auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            grid-template-columns: auto auto auto;
+        }
+
+        @media screen and (max-width: 500px) {
+            grid-template-columns: auto auto;
+        }
+
+        .slide-hotjob-item {
+            // position: relative;
+            height: 158px !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(170, 170, 170, 1);
+            border-radius: 16px;
+            padding: 16px 24px;
+
+            .div-img-themes-item {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+
+                img {
+                    width: 60px !important;
+                    height: 60px !important;
+                }
+            }
+
+            .div-info-themes-item {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: column;
+                gap: 8px;
+                // padding: 0 24px;
+                // top: 16px;
+
+                .div-info-themes-item_top {
+                    h5 {
+                        font-weight: 500;
+                        font-size: 20px;
+                        text-align: center;
+                    }
+                }
+
+                .div-info-themes-item_bot {
+                    display: flex;
+                    gap: 4px;
+                    align-items: center;
+                    justify-content: center;
+
+                    svg {
+                        stroke: #0D99FF;
+                    }
+
+                    h6 {
+                        font-weight: 400;
+                        font-size: 14px;
+                        color: #0D99FF;
+                    }
+                }
+            }
+        }
+    }
+
+
+    .hotjob-content-responsive {
         z-index: 0;
         margin-top: 16px;
 
@@ -35,9 +119,9 @@
                 // padding: 12px 16px;
                 // height: 230px !important;
                 cursor: pointer;
-                width: 300px !important;
-                height: 212px !important;
-
+                // width: 300px !important;
+                // height: 212px !important;
+                width: 237px !important;
                 // &:active {
                 //     border-bottom: 2px solid #0d99ff;
                 // }
@@ -46,48 +130,61 @@
                 //     background-color: rgba(0, 0, 0, 0.1);
                 // }
 
-                .slide-item {
-                    position: relative;
-                    height: 212px !important;
+                // .slide-hotjob-item {
+                //     // position: relative;
+                //     height: 198px !important;
+                //     display: flex;
+                //     flex-direction: column;
+                //     align-items: center;
+                //     justify-content: space-between;
 
-                    img {
-                        // width: 100% !important;
-                        // height: 230px !important;
-                        // width: 326px !important;
-                        // height: 230px !important;
-                        width: 300px !important;
-                        height: 212px !important;
-                    }
+                //     .div-img-themes-item {
+                //         width: 100%;
+                //         display: flex;
+                //         justify-content: space-between;
+                //         align-items: center;
 
-                    .div-info-themes-item {
-                        width: 100%;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 0 24px;
-                        top: 16px;
-                        position: absolute;
-                        color: white;
+                //         img {
+                //             width: 60px !important;
+                //             height: 60px !important;
+                //         }
+                //     }
 
-                        .div-info-themes-item_left {
-                            h5 {
-                                font-weight: 700;
-                                font-size: 24px;
-                            }
-                        }
+                //     .div-info-themes-item {
+                //         width: 100%;
+                //         display: flex;
+                //         justify-content: space-between;
+                //         align-items: center;
+                //         flex-direction: column;
+                //         // padding: 0 24px;
+                //         // top: 16px;
 
-                        .div-info-themes-item_right {
-                            display: flex;
-                            gap: 4px;
-                            align-items: center;
+                //         .div-info-themes-item_top {
+                //             h5 {
+                //                 font-weight: 500;
+                //                 font-size: 20px;
+                //                 text-align: center;
+                //             }
+                //         }
 
-                            h6 {
-                                font-weight: 400;
-                                font-size: 16px;
-                            }
-                        }
-                    }
-                }
+                //         .div-info-themes-item_bot {
+                //             display: flex;
+                //             gap: 4px;
+                //             align-items: center;
+                //             justify-content: center;
+
+                //             svg {
+                //                 stroke: #0D99FF;
+                //             }
+
+                //             h6 {
+                //                 font-weight: 400;
+                //                 font-size: 14px;
+                //                 color: #0D99FF;
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
 
@@ -109,7 +206,7 @@
                     &:after {
                         transform: scale(0.8);
                     }
-                } 
+                }
             }
 
             &:after {
@@ -144,6 +241,7 @@
         .swiper-button-prev {
             left: 0;
             background: linear-gradient(90deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
+
             @include breakpoint(mobile) {
                 background: none;
             }
@@ -156,6 +254,7 @@
         .swiper-button-next {
             background: linear-gradient(270deg, #FFFFFF 41.41%, rgba(255, 255, 255, 0.68) 94.4%);
             right: 0;
+
             @include breakpoint(mobile) {
                 background: none;
             }

@@ -37,6 +37,9 @@ import apiCv from 'api/apiCv';
 import { useSearchParams } from 'react-router-dom';
 import CvTemplate3 from '#components/TemplatesCv/CvTemplate/CvTemplate3';
 import CvTemplate4 from '#components/TemplatesCv/CvTemplate/CvTemplate4';
+import CvTemplate5 from '#components/TemplatesCv/CvTemplate/CvTemplate5';
+import CvTemplate6 from '#components/TemplatesCv/CvTemplate/CvTemplate6';
+import CvTemplate7 from '#components/TemplatesCv/CvTemplate/CvTemplate7';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -51,7 +54,7 @@ const TemplatesCv: React.FC = () => {
   const [openModalSuccessDownCv, setOpenModalSuccessDownCv] =
     React.useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const TemplateId = Number(localStorage.getItem('cv-id'));
+  const TemplateId = Number(localStorage.getItem('cv-id')) && 1;
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   // const templatesCv = [

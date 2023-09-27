@@ -39,6 +39,7 @@ import { RootState } from '../../store/reducer/index';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
 import { setCookie } from 'cookies';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const { Panel } = Collapse;
 
@@ -71,6 +72,7 @@ const HistoryPost = () => {
   // const hotjobtype = Number(searchParams.get('post'));
   const hotjobtype = Number(queryParams['post']);
   const community_post = Number(queryParams['community_post']);
+  const saved_jobs = Number(queryParams['saved_jobs']);
   const [activeChild, setActiveChild] = React.useState(
     hotjobtype === 2
       ? '2-0'
@@ -78,7 +80,9 @@ const HistoryPost = () => {
         ? '3-1'
         : community_post === 30
           ? '3-0'
-          : '0-0',
+          : saved_jobs === 1
+            ? '1-0'
+            : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
     hotjobtype === 2
@@ -87,7 +91,9 @@ const HistoryPost = () => {
         ? 3
         : community_post === 30
           ? 3
-          : 0,
+          : saved_jobs === 1
+            ? 1
+            : 0,
   );
   const [showDetailPosted, setShowDetailPosted] =
     React.useState<boolean>(false);
@@ -121,7 +127,7 @@ const HistoryPost = () => {
 
   const dataItem = [
     {
-      id: 1,
+      id: 0,
       // title: language?.history_page?.applied_jobs,
       // childs: [language?.all],
       title:
@@ -129,14 +135,14 @@ const HistoryPost = () => {
       childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
     },
     {
-      id: 2,
+      id: 1,
       // title: language?.history_page?.saved_jobs,
       // childs: [language?.all],
       title: languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs',
       childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
     },
     {
-      id: 3,
+      id: 2,
       // title: language?.history_page?.posted_jobs,
       title:
         languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs',
@@ -151,7 +157,7 @@ const HistoryPost = () => {
       ],
     },
     {
-      id: 4,
+      id: 3,
       // title: language?.history_page?.list_of_articles,
       title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
       childs: [
@@ -300,19 +306,24 @@ const HistoryPost = () => {
       setItemLeft(3);
       setActiveChild('3-0');
     }
-    if (roleRedux === 0) {
-      setItemLeft(0);
-      setActiveChild('0-0');
-    } else {
-      setItemLeft(2);
-      setActiveChild('2-0');
+    if (saved_jobs === 1) {
+      setItemLeft(1);
+      setActiveChild('1-0');
     }
+    // if (roleRedux === 0) {
+    //   setItemLeft(0);
+    //   setActiveChild('0-0');
+    // } else {
+    //   setItemLeft(2);
+    //   setActiveChild('2-0');
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="post-history">
       <Navbar />
+      <CategoryDropdown />
       <div className="post-history_main">
         <Box>
           <Breadcrumbs
@@ -338,9 +349,11 @@ const HistoryPost = () => {
                     ? ['3', '1']
                     : community_post && community_post === 30
                       ? ['3', '0']
-                      : roleRedux === 0
-                        ? ['0', '0']
-                        : ['2', '0']
+                      : saved_jobs === 1
+                        ? ['1', '0']
+                        : roleRedux === 0
+                          ? ['0', '0']
+                          : ['2', '0']
               }
               accordion
               bordered={false}
@@ -365,8 +378,8 @@ const HistoryPost = () => {
                     style={{
                       display:
                         roleRedux === 0 ?
-                          item?.id === 3 ? "none" : "block" :
-                          item?.id === 1 ? "none" : "block"
+                          item?.id === 2 ? "none" : "block" :
+                          item?.id === 0 ? "none" : "block"
                     }}
                   >
                     {item.childs.map((child: string, idx: number) => (

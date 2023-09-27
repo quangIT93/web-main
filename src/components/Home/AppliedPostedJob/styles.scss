@@ -1,8 +1,9 @@
 @import '/src/scss/mixins';
 
 .applied-posted-jobs-container {
-    margin-top: 15rem !important;
-
+    // margin-top: 15rem !important;
+    margin-top: 11rem !important;
+    margin-bottom: 24px !important;
 
     .help-search {
         position: relative;
@@ -786,6 +787,8 @@
     }
 
     @include breakpoint(mobile) {
+        margin-bottom: 24px !important;
+
         .applied-posted-job-not-loging {
             flex-direction: column;
             align-items: flex-start;
@@ -797,6 +800,7 @@
     }
 
     @include breakpoint(tablet) {
+        margin-bottom: 24px !important;
 
         // display: none;
         .applied-posted-job-not-loging {

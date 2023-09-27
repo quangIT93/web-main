@@ -93,9 +93,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.address
       ? {
-          province_id: profile.address.id,
-          province_fullName: profile.address.name,
-        }
+        province_id: profile.address.id,
+        province_fullName: profile.address.name,
+      }
       : null,
   );
 
@@ -304,7 +304,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -352,7 +352,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       helperText: 'DD/MM/YYYY',
                     },
                   }}
-                  // format="DD/MM/YYYY"
+                // format="DD/MM/YYYY"
                 />
               </div>
             </LocalizationProvider>
@@ -372,9 +372,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={
                 selectedProvince
                   ? dataProvinces?.find(
-                      (province: any) =>
-                        province.province_id === selectedProvince.province_id,
-                    )
+                    (province: any) =>
+                      province.province_id === selectedProvince.province_id,
+                  )
                   : null
               }
               defaultValue={dataProvinces}
@@ -407,8 +407,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               onChange={handleJobTypeName}
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
-              placeholder="Vị trí ứng tuyển"
-              // error={titleError} // Đánh dấu lỗi
+              placeholder={languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}
+            // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -432,12 +432,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.introduce_yourself_to_the_recruiter}
               error={!introduction} // Đánh dấu lỗi
-              // onKeyDown={(event) => {
-              //   // if (event.key === 'Enter') {
-              //   //   event.preventDefault();
-              //   // }
-              //   console.log(event.target);
-              // }}
+            // onKeyDown={(event) => {
+            //   // if (event.key === 'Enter') {
+            //   //   event.preventDefault();
+            //   // }
+            //   console.log(event.target);
+            // }}
             />
           </Box>
         </form>

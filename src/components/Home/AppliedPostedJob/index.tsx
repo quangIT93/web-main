@@ -49,6 +49,8 @@ import { RootState } from '../../../store/reducer';
 import { homeEn } from 'validations/lang/en/home';
 import { home } from 'validations/lang/vi/home';
 import { number } from 'yargs';
+import historyApplicator from 'api/historyApplicator';
+import historyRecruiter from 'api/historyRecruiter';
 
 // interface ItemTheme {
 //   id: number;
@@ -106,28 +108,42 @@ const AppliedPostedJob: React.FC = () => {
   const getAppliedPostedJobs = async () => {
     try {
       setloading(true);
-      const result = await applitedPostedApi.getAllApplitedPostedApi(
-        0,
-        languageRedux === 1 ? 'vi' : 'en',
-      );
+      const result =
+        roleRedux === 0 ?
+          await historyApplicator.getAllSubmitedApplied(
+            null,
+            10,
+            1,
+            languageRedux === 1 ? 'vi' : 'en',
+          ) :
+          await historyRecruiter.GetInformationAndCandidatesCount(
+            0,
+            10,
+            '1',
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+      // const result = await applitedPostedApi.getAllApplitedPostedApi(
+      //   0,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
         setTimeout(() => {
           setloading(false);
         }, 1000);
         console.log('result: ', result);
-
-        roleRedux === 0
-          ? setAppliedPostedJob(
-              result.data.filter((job: any) => {
-                return job.type === 'application';
-              }),
-            )
-          : setAppliedPostedJob(
-              result.data.filter((job: any) => {
-                return job.type === 'post';
-              }),
-            );
+        setAppliedPostedJob(result.data)
+        // roleRedux === 0
+        //   ? setAppliedPostedJob(
+        //     result.data.filter((job: any) => {
+        //       return job.type === 'application';
+        //     }),
+        //   )
+        //   : setAppliedPostedJob(
+        //     result.data.filter((job: any) => {
+        //       return job.type === 'post';
+        //     }),
+        //   );
       }
     } catch (error) {
       console.log(error);
@@ -185,7 +201,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -252,7 +268,7 @@ const AppliedPostedJob: React.FC = () => {
           </div>
           <Skeleton loading={false} active>
             {appliedPostedJob.length !== 0 &&
-            localStorage.getItem('accessToken') ? (
+              localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -267,8 +283,8 @@ const AppliedPostedJob: React.FC = () => {
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                    ? 'Công việc đã đã tuyển'
-                    : 'Posted Job'}
+                      ? 'Công việc đã đã tuyển'
+                      : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -388,7 +404,8 @@ const AppliedPostedJob: React.FC = () => {
                     );
                   }}
                 >
-                  <AppliedPostedJobCard item={item} />
+                  <AppliedPostedJobCard item={item}
+                    type={roleRedux === 0 ? 'application' : 'post'} />
                 </SwiperSlide>
               ))}
             </Swiper>

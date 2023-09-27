@@ -41,6 +41,9 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import apiCv from 'api/apiCv';
 import CvTemplate3 from '../CvTemplate/CvTemplate3';
 import CvTemplate4 from '../CvTemplate/CvTemplate4';
+import CvTemplate5 from '../CvTemplate/CvTemplate5';
+import CvTemplate6 from '../CvTemplate/CvTemplate6';
+import CvTemplate7 from '../CvTemplate/CvTemplate7';
 
 import templatesCv from '../CvTemplate/ListTheme';
 import { template } from '@babel/core';
@@ -189,7 +192,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   // console.log('dataCategories', dataCategories);
 
-  const handleChangeCategory = async () => {};
+  const handleChangeCategory = async () => { };
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
@@ -203,7 +206,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const styles = StyleSheet.create({

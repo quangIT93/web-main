@@ -130,7 +130,7 @@ const References: React.FC<ICvExperience> = (props) => {
                     return (
                         <View style={styles.reference} key={i}>
                             <View style={styles.right}>
-                                <Svg viewBox="0 0 2 2" style={styles.not}>
+                                {/* <Svg viewBox="0 0 2 2" style={styles.not}>
                                     <Circle
                                         cx="1"
                                         cy="1"
@@ -153,7 +153,7 @@ const References: React.FC<ICvExperience> = (props) => {
                                         styles.lineWhite :
                                         styles.line
                                 } >
-                                </View>
+                                </View> */}
                                 <View>
                                     <Text style={styles.school}>{reference?.fullName}</Text>
                                     <Text style={styles.detail}>{reference?.phone}</Text>
