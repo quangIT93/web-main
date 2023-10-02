@@ -97,7 +97,7 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
                 src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
                 srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={props.item?.title}
-                loading="lazy"
+                //loading="lazy"
                 style={{
                   width: '120px',
                   height: '120px',
@@ -255,10 +255,9 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
           >
             {language?.posted_on}{' '}
             {props.item?.createdAt != null
-              ? `${
-                  moment(props.item?.createdAt).format('DD/MM/YYYY') +
-                  moment(new Date(props.item?.createdAt)).format('HH:mm')
-                }`
+              ? `${moment(props.item?.createdAt).format('DD/MM/YYYY') +
+              moment(new Date(props.item?.createdAt)).format('HH:mm')
+              }`
               : language?.unupdated}
           </p>
           <p

@@ -229,7 +229,7 @@ const ThemesJob: React.FC = () => {
   // }, [localStorage.getItem("accessToken")])
 
   return (
-    <Box sx={{ flexGrow: 1 }} className="box-subjectJob" id="box-subjectJob">
+    <Box sx={{ flexGrow: 1 }} className="box-suggestedJob" id="box-suggestedJob">
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <SuggestIcon width={25} height={25} />
         <h2>{language?.nearby_jobs}</h2>
@@ -339,7 +339,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //   onClick={handleClose}
+            //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

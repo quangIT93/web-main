@@ -126,24 +126,44 @@ const Home: React.FC = () => {
   //   };
   // }, []);
 
+  const handleScrollIntoViewDiv = (id: string) => {
+    setTimeout(() => {
+      const div = document.getElementById(id);
+      let newJobOffsetTop = 0;
+      if (div) {
+        newJobOffsetTop = document.getElementById(id) ?
+          div.offsetTop : 0;
+        window.scrollTo(
+          0,
+          newJobOffsetTop - 170
+        )
+      }
+    },
+      id === 'hot-job-container' ? 0 : 1600);
+  }
+
   useEffect(() => {
     const communityDiv = localStorage.getItem('community');
     const newJob = localStorage.getItem('home');
 
-    if (newJob === 'new') {
-      // setReachedEndShowSubjectJob(true);
-      document.querySelector('.new-job')?.scrollIntoView({
-        // block: 'start',
-        // inline: 'nearest',
-      });
+    switch (newJob) {
+      case 'new':
+        handleScrollIntoViewDiv('new-job');
+        break;
+      case 'hot':
+        handleScrollIntoViewDiv('hot-job-container');
+        break;
+      case 'place':
+        handleScrollIntoViewDiv('job-by-hot-place');
+        break;
+      case 'suggested':
+        handleScrollIntoViewDiv('box-suggestedJob');
+        break;
+
+      default:
+        break;
     }
-    if (newJob === 'hot') {
-      // setReachedEndShowSubjectJob(true);
-      document.querySelector('.hot-job-container')?.scrollIntoView({
-        // block: 'start',
-        // inline: 'nearest',
-      });
-    }
+
     if (communityDiv) {
       // setReachedEndShowSubjectJob(true);
       document.querySelector('.community-container')?.scrollIntoView({

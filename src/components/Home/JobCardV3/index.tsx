@@ -134,7 +134,7 @@ const JobCardV3: React.FC<IpropsV3> = (props) => {
                 src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
                 srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={props.item.title}
-                loading="lazy"
+                // //loading="lazy"
                 style={{
                   width: '120px',
                   height: '120px',

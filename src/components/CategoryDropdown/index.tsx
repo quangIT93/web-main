@@ -12,6 +12,7 @@ import { ArrowIcon, IconMenu } from '#components/Icons';
 import DropdownRender from './DropdownRender';
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { DivRef1 } from 'context/HomeValueContextProvider';
 const titleContainer: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
@@ -35,7 +36,7 @@ const label: React.CSSProperties = {
 };
 
 const CategoryDropdown: React.FC = () => {
-    const dropdownRef = React.useRef<HTMLUListElement | null>(null);
+    const dropdownRef = React.useRef<HTMLDivElement | null>(null);
     const {
         openCategoryDropdown,
         setOpenCategoryDropdown,
@@ -44,13 +45,12 @@ const CategoryDropdown: React.FC = () => {
             openCategoryDropdown: boolean;
             setOpenCategoryDropdown: React.Dispatch<React.SetStateAction<boolean>>;
         } = useContext(HomeValueContext);
-
+    const roleRedux = useSelector((state: RootState) => state.changeRole.role);
     const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
     const location = useLocation();
     const [expand, setExpand] = useState<any>([]);
     const [open, setOpen] = useState(false);
     const [windowWidth, setWindowWidth] = useState(false);
-
     const updateWindowWidth = () => {
         if (window.innerWidth > 560) {
             setWindowWidth(true);
@@ -91,46 +91,141 @@ const CategoryDropdown: React.FC = () => {
         setOpen(!open);
     }
 
+    const moveToAppliedJob = () => {
+        window.open('/history', '_parent')
+    }
+
     const moveToSaveJob = () => {
         window.open('/history?saved_jobs=1', '_parent')
     }
 
+    const handleScrollIntoViewDiv = (id: string) => {
+        const div = document.getElementById(id);
+        let newJobOffsetTop = 0;
+        if (div) {
+            newJobOffsetTop = document.getElementById(id) ?
+                div.offsetTop : 0;
+            window.scrollTo(
+                0,
+                newJobOffsetTop - 170
+            )
+        }
+    }
+
     const moveToNewestJob = () => {
         if (location?.pathname === '/') {
-            const newestJob = document.querySelector('.new-job');
-
-            if (newestJob) {
-                // setReachedEndShowSubjectJob(true);
-                document.querySelector('.new-job')?.scrollIntoView({
-                    // behavior: 'smooth',
-                    block: 'start',
-                    inline: 'nearest',
-                });
-            }
+            setOpenCategoryDropdown(false);
+            handleScrollIntoViewDiv('new-job');
         } else {
             localStorage.setItem('home', 'new');
             window.open('/', '_parent')
         }
 
     }
+
     const moveToHotJob = () => {
         if (location?.pathname === '/') {
-            const hotJob = document.querySelector('.hot-job-container');
-
-            if (hotJob) {
-                // setReachedEndShowSubjectJob(true);
-                document.querySelector('.hot-job-container')?.scrollIntoView({
-                    // behavior: 'smooth',
-                    block: 'start',
-                    inline: 'nearest',
-                });
-            }
+            setOpenCategoryDropdown(false);
+            handleScrollIntoViewDiv('hot-job-container');
         } else {
             localStorage.setItem('home', 'hot');
             window.open('/', '_parent')
         }
-
     };
+
+    const moveToJobByHotPlace = () => {
+        if (location?.pathname === '/') {
+            setOpenCategoryDropdown(false);
+            handleScrollIntoViewDiv('job-by-hot-place');
+        } else {
+            localStorage.setItem('home', 'place');
+            window.open('/', '_parent')
+        }
+    };
+
+    const moveToSuggestedJob = () => {
+        if (location?.pathname === '/') {
+            setOpenCategoryDropdown(false);
+            handleScrollIntoViewDiv('box-suggestedJob');
+        } else {
+            localStorage.setItem('home', 'suggested');
+            window.open('/', '_parent')
+        }
+    };
+
+    const moveToCreateCv = () => {
+        if (location?.pathname !== '/templates-cv') {
+            window.open('/templates-cv', '_parent')
+        } else {
+            setOpenCategoryDropdown(false);
+            window.scrollTo(0, 0);
+        }
+    }
+
+    const moveToCvManage = () => {
+        if (location?.pathname !== '/profile-cv') {
+            window.open('/profile-cv', '_parent')
+        } else {
+            setOpenCategoryDropdown(false);
+            window.scrollTo(0, 0);
+        }
+    }
+
+    const moveToIntroductionCv = () => {
+        if (location?.pathname !== '/profile-cv') {
+            window.open('/profile-cv', '_parent')
+        } else {
+            setOpenCategoryDropdown(false);
+            window.scrollTo(0, 0);
+        }
+    }
+
+    const moveToWorkingStory = () => {
+        if (location?.pathname !== '/new-comunity') {
+            window.open('/new-comunity', '_parent')
+        } else {
+            setOpenCategoryDropdown(false);
+            window.scrollTo(0, 0);
+        }
+    }
+
+    const moveToHijobNews = () => {
+        if (location?.pathname !== '/news-comunity') {
+            window.open('/news-comunity', '_parent')
+        } else {
+            setOpenCategoryDropdown(false);
+            window.scrollTo(0, 0);
+        }
+    }
+
+    const moveToPostArticle = () => {
+        if (location?.pathname !== '/comunity_create_post') {
+            window.open('/comunity_create_post', '_parent')
+        } else {
+            setOpenCategoryDropdown(false);
+            window.scrollTo(0, 0);
+        }
+    }
+
+    const moveToSavedArticle = () => {
+        window.open('/history?community_post=30', '_parent')
+        setOpenCategoryDropdown(false);
+    }
+
+    const moveToPolicy = () => {
+        window.open('/policy', '_parent')
+        setOpenCategoryDropdown(false);
+    }
+
+    const moveToSupportTerms = () => {
+        window.open('/policy#terms-of-use', '_parent')
+        setOpenCategoryDropdown(false);
+    }
+
+    const moveToMemberGuide = () => {
+        window.open('/policy#privacy-policy', '_parent')
+        setOpenCategoryDropdown(false);
+    }
 
     const items: MenuProps['items'] = [
         {
@@ -378,12 +473,14 @@ const CategoryDropdown: React.FC = () => {
         <div className={`${openCategoryDropdown ? 'show-dropdown' : ''
             }`}>
             <Box
+                // ref={dropdownRef}
+
                 ref={dropdownRef}
                 sx={{
                     // maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
                     padding: '0 24px',
                     boxShadow: '0px 1px 3px #aaa',
-                    zIndex: '10',
+                    zIndex: '9',
                     position: 'fixed',
                     width: '100%',
                     left: '0',
@@ -488,42 +585,42 @@ const CategoryDropdown: React.FC = () => {
                                     marginTop: expand.includes(1) ? '16px' : '0px'
                                 }}
                             >
-                                <h3>
+                                <h3 style={{ display: roleRedux === 0 ? 'block' : 'none' }} onClick={moveToAppliedJob}>
                                     {
                                         languageRedux === 1 ?
                                             "Việc làm đã ứng tuyển" :
                                             "Apllied Jobs"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToSaveJob}>
                                     {
                                         languageRedux === 1 ?
                                             "Việc làm đã lưu" :
                                             "Saved jobs"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToNewestJob}>
                                     {
                                         languageRedux === 1 ?
                                             "Công việc mới nhất" :
                                             "Newest jobs"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToHotJob}>
                                     {
                                         languageRedux === 1 ?
                                             "Công việc nổi bật" :
                                             "Hot jobs"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToJobByHotPlace}>
                                     {
                                         languageRedux === 1 ?
                                             "Công việc theo chủ đề" :
                                             "Job by hot places"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToSuggestedJob}>
                                     {
                                         languageRedux === 1 ?
                                             "Công việc gợi ý" :
@@ -532,7 +629,10 @@ const CategoryDropdown: React.FC = () => {
                                 </h3>
                             </div>
                         </div>
-                        <div className='category-dropdown-item'>
+                        <div
+                            className='category-dropdown-item'
+                            style={{ display: roleRedux === 0 ? 'block' : 'none' }}
+                        >
                             <div className='top-item' onClick={() => handleExpand(2)}>
                                 <h3 >
                                     {languageRedux === 1 ?
@@ -548,21 +648,21 @@ const CategoryDropdown: React.FC = () => {
                                     marginTop: expand.includes(2) ? '16px' : '0px'
                                 }}
                             >
-                                <h3>
+                                <h3 onClick={moveToCreateCv}>
                                     {
                                         languageRedux === 1 ?
                                             "Tạo mới CV" :
                                             "Create a new CV"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToCvManage}>
                                     {
                                         languageRedux === 1 ?
                                             "Quản lý CV" :
                                             "CV management"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToIntroductionCv}>
                                     {
                                         languageRedux === 1 ?
                                             "Hướng dẫn tạo CV" :
@@ -587,28 +687,28 @@ const CategoryDropdown: React.FC = () => {
                                     marginTop: expand.includes(3) ? '16px' : '0px'
                                 }}
                             >
-                                <h3>
+                                <h3 onClick={moveToWorkingStory}>
                                     {
                                         languageRedux === 1 ?
                                             "Câu chuyện làm việc HiJob" :
                                             "HiJob Working story"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToHijobNews}>
                                     {
                                         languageRedux === 1 ?
                                             "Tin tức HiJob" :
                                             "HiJob News"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToPostArticle}>
                                     {
                                         languageRedux === 1 ?
                                             "Đăng bài viết mới" :
                                             "Post new articles"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToSavedArticle}>
                                     {
                                         languageRedux === 1 ?
                                             "Bài viết đã lưu" :
@@ -633,21 +733,21 @@ const CategoryDropdown: React.FC = () => {
                                     marginTop: expand.includes(4) ? '16px' : '0px'
                                 }}
                             >
-                                <h3>
+                                <h3 onClick={moveToPolicy}>
                                     {
                                         languageRedux === 1 ?
                                             "Chính sách bảo mật" :
                                             "Privacy Policy"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToSupportTerms}>
                                     {
                                         languageRedux === 1 ?
                                             "Điều khoản hỗ trợ" :
                                             "Support terms"
                                     }
                                 </h3>
-                                <h3>
+                                <h3 onClick={moveToMemberGuide}>
                                     {
                                         languageRedux === 1 ?
                                             "Hướng dẫn thành viên" :

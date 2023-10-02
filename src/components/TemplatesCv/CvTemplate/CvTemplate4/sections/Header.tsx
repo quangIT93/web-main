@@ -242,7 +242,9 @@ const Header: React.FC<ICvHeader> = (props) => {
               <Text style={styles.subtitle}>{profile?.phone}</Text>
               <Text style={styles.subtitle}>|</Text>
               <Text style={styles.subtitle}>{profile?.email}</Text>
-              <Text style={styles.subtitle}>|</Text>
+            </View>
+
+            <View style={styles.contact}>
               <Text style={styles.subtitle}>
                 {profile?.addressText?.fullName}
               </Text>

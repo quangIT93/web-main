@@ -40,6 +40,7 @@ import CvTemplate4 from '#components/TemplatesCv/CvTemplate/CvTemplate4';
 import CvTemplate5 from '#components/TemplatesCv/CvTemplate/CvTemplate5';
 import CvTemplate6 from '#components/TemplatesCv/CvTemplate/CvTemplate6';
 import CvTemplate7 from '#components/TemplatesCv/CvTemplate/CvTemplate7';
+import CategoryDropdown from '#components/CategoryDropdown';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -183,6 +184,7 @@ const TemplatesCv: React.FC = () => {
   return (
     <div className="cv-container">
       <Navbar />
+      <CategoryDropdown />
       <div className="cv-content">
         {/* <div className="cv-content-page">
                     <div className="page" id="divToPrint1">

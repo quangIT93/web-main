@@ -1191,8 +1191,8 @@ const Navbar: React.FC = () => {
                   >
                     <MapInfoIcon />
                     <p>
-                      {profileV3?.profileLocations.length > 0
-                        ? profileV3?.profileLocations.map((location: any) => {
+                      {profileV3?.profileLocations?.length > 0
+                        ? profileV3?.profileLocations?.map((location: any) => {
                           return `${location.fullName} , `;
                         })
                         : languageData?.home_page?.un_update_infor}

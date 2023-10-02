@@ -25,7 +25,8 @@
     max-width: 1080px;
     margin: 0 100px auto;
     padding: 24px 0px 50px 0px;
-    margin-top: 100px;
+    // margin-top: 100px;
+    margin-top: 176px;
 
     @include breakpoint(mobile) {
       width: 95%;
@@ -225,6 +226,7 @@
         margin-top: 16px;
         width: 100%;
         padding-left: 1px;
+
         .list-cv-conttent {
           width: 100%;
 
@@ -233,6 +235,7 @@
 
             .swiper-wrapper {
               margin-bottom: 12px;
+
               .swiper-slide {
                 box-shadow: 1px 1px 5px #bbb;
                 cursor: pointer;
@@ -242,7 +245,7 @@
                 .slide-item {
                   position: relative;
                   height: 300px !important;
-                  
+
 
                   .MuiAvatar-root {
                     width: 186px !important;
@@ -250,7 +253,7 @@
                     border: 1px solid #000;
                     position: relative;
 
-                  
+
 
                     img {
                       width: 186px !important;
@@ -295,22 +298,26 @@
 
                   .wrap-img_cv {
                     position: relative;
+
                     &:hover {
                       .choose-cv-container {
                         visibility: visible !important;
                       }
+
                       .warp-img {
-                        
+
                         &::before {
                           content: "";
                           color: #fff;
-                          
+
                         }
+
                         transition: 0.1s linear all;
                         // background-color: rgba(0, 0, 0, 0.3);
                         background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(138, 138, 138, 0.5) 50%);
                       }
                     }
+
                     .warp-img {
                       position: absolute;
                       top: 0;
@@ -321,13 +328,14 @@
                       display: flex;
                       align-items: center;
                       justify-content: center;
-                     
+
                     }
+
                     .choose-cv-container {
                       // width: 40px;
                       // height: 40px;
                       width: 100%;
-                      
+
                       position: absolute;
                       top: 10px;
                       right: 0;
@@ -351,7 +359,7 @@
                         background-color: #0D99FF;
                         border: none;
                       }
-                      
+
                       .select-cv-defauld {
 
                         display: flex;
@@ -360,23 +368,26 @@
                         border-radius: 12px;
                         padding: 4px 8px;
                         align-items: center;
+
                         .text-cv-default {
                           font-size: 12px;
                           color: #212f3f;
-                        
+
                         }
+
                         &:hover {
                           background-color: #212f3f;
 
                           .text-cv-default {
                             font-size: 12px;
                             color: #ffffff;
-                          
+
                           }
+
                           .text-cv-icon-star {
                             font-size: 12px;
                             color: #ff0;
-                          
+
                           }
                         }
                       }

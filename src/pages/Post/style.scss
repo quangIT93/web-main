@@ -1,12 +1,14 @@
 @import "../../scss/mixins";
 
 .post {
-  margin-top: 70px;
+  // margin-top: 70px;
+  margin-top: 146px;
 
   .post-main {
     padding: 50px 0px;
     margin: 0 auto;
     max-width: 1080px;
+
     // transition: all l;
     .post-main_fillData {
       display: flex;
@@ -14,11 +16,12 @@
       justify-content: space-between;
       margin-bottom: 24px;
 
-      
+
 
       .post-main_switch {
         display: flex;
         align-items: center;
+
         h4 {
           margin-right: 8px;
         }
@@ -27,6 +30,7 @@
 
     .fill-company {
       margin-bottom: 12px;
+
       h3 {
         color: #0d99ff;
         // text-decoration:underline;
@@ -34,37 +38,35 @@
       }
     }
 
-    
-    @include breakpoint(mobile){
+
+    @include breakpoint(mobile) {
       .post-main_fillData {
         flex-direction: column;
 
         h1 {
           margin-bottom: 24px;
         }
-    
+
         .post-main_switch {
           margin-bottom: 12px;
-          h4 {
-        
-          }
+
+          h4 {}
         }
       }
     }
 
-    @include breakpoint(tablet){
+    @include breakpoint(tablet) {
       .post-main_fillData {
         flex-direction: column;
 
         h1 {
           margin-bottom: 24px;
         }
-    
+
         .post-main_switch {
           margin-bottom: 12px;
-          h4 {
-        
-          }
+
+          h4 {}
         }
       }
     }
@@ -105,7 +107,7 @@
         flex-direction: column;
 
 
-        @include breakpoint(mobile){
+        @include breakpoint(mobile) {
           padding: 0;
         }
 
@@ -115,7 +117,7 @@
           align-items: flex-end;
           display: flex;
 
-          @include breakpoint(mobile){
+          @include breakpoint(mobile) {
             display: block;
           }
 
@@ -130,7 +132,8 @@
 
         .post-address_bottom {
           padding-top: 24px;
-          @include breakpoint(mobile){
+
+          @include breakpoint(mobile) {
             padding-top: 0;
           }
         }
@@ -140,7 +143,7 @@
         display: flex;
         gap: 32px;
 
-        @include breakpoint(mobile){
+        @include breakpoint(mobile) {
           display: block;
         }
 
