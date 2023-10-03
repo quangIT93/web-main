@@ -495,7 +495,11 @@ const CategoryDropdown: React.FC = () => {
                         maxWidth: location?.pathname === '/' ? '1280px' : '1080px',
                     }}
                 >
-                    <div className="category-dropdown-left" onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}>
+                    <div className="category-dropdown-left"
+                        onMouseEnter={() => setOpenCategoryDropdown(true)}
+                        // onMouseLeave={() => setOpenCategoryDropdown(false)}
+                        onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
+                    >
                         <IconMenu />
                         {/* <Dropdown
                         menu={{
@@ -561,6 +565,7 @@ const CategoryDropdown: React.FC = () => {
                 <Collapse
                     in={openCategoryDropdown}
                     // sx={collapseCssFilter}
+                    onMouseLeave={() => setOpenCategoryDropdown(false)}
                     sx={
                         location.pathname === '/'
                             ? { maxWidth: '1280px' }

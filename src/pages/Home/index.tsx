@@ -138,8 +138,7 @@ const Home: React.FC = () => {
           newJobOffsetTop - 170
         )
       }
-    },
-      id === 'hot-job-container' ? 0 : 1600);
+    }, 1800);
   }
 
   useEffect(() => {

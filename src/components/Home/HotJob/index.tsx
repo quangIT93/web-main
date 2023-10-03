@@ -84,12 +84,12 @@ const HotJob: React.FC = () => {
     let url =
       api.replace('/api', '') + '?' + keyOfQuery + '=' + queyObj[keyOfQuery];
 
-    console.log('query', query);
-    console.log('keyOfQuery', keyOfQuery);
-    console.log('api', api);
-    console.log('total', total);
-    console.log('type', type);
-    console.log('id', id);
+    // console.log('query', query);
+    // console.log('keyOfQuery', keyOfQuery);
+    // console.log('api', api);
+    // console.log('total', total);
+    // console.log('type', type);
+    // console.log('id', id);
     setCookie('hotjobTotal', JSON.stringify(total), 365);
     localStorage.setItem('hotjobApi', url);
     window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`, '_self');
@@ -144,7 +144,30 @@ const HotJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  // console.log(index);
+  console.log(hotjob);
+
+  const handleMoveToHotJobPage = (item: any, event: any) => {
+    const analytics: any = getAnalytics();
+
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: `/web_click_hotJob_${item.title}` as string,
+    });
+
+    logEvent(analytics, 'event_web_click_HiJob' as string, {
+      // screen_name: screenName as string,
+      web_page_home: `/hotJob_${item?.title}` as string,
+    });
+
+    handleClickItem(
+      event,
+      item.id,
+      item.type,
+      item.count,
+      item.api,
+      item.query,
+    );
+  }
 
   return (
     <Box
@@ -163,22 +186,44 @@ const HotJob: React.FC = () => {
       </div>
       <div className='hotjob-content'>
         {
-          new Array(10).fill(undefined).map((item: any, index: number) => {
+          hotjob && hotjob.map((item: any, index: number) => {
             return (
-              <div className="slide-hotjob-item">
+              <div className="slide-hotjob-item" key={index}
+                onClick={(event) => {
+                  const analytics: any = getAnalytics();
+
+                  logEvent(analytics, 'screen_view' as string, {
+                    // screen_name: screenName as string,
+                    page_title: `/web_click_hotJob_${item.title}` as string,
+                  });
+
+                  logEvent(analytics, 'event_web_click_HiJob' as string, {
+                    // screen_name: screenName as string,
+                    web_page_home: `/hotJob_${item?.title}` as string,
+                  });
+                  handleClickItem(
+                    event,
+                    item.id,
+                    item.type,
+                    item.count,
+                    item.api,
+                    item.query,
+                  );
+                }}
+              >
                 <div className="div-img-themes-item">
                   <img
-                  // src={item?.image}
-                  // alt={language?.err_none_img}
+                    src={item?.image}
+                    alt={language?.err_none_img}
                   />
                 </div>
                 <div className="div-info-themes-item">
                   <div className="div-info-themes-item_top">
-                    <h5>Remote</h5>
+                    <h5>{item?.title}</h5>
                   </div>
                   <div className="div-info-themes-item_bot">
                     <IconBriefCase />
-                    <h6>{`${index}`}</h6>
+                    <h6>{item?.count}</h6>
                   </div>
                 </div>
               </div>

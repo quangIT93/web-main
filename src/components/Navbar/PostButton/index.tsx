@@ -38,6 +38,7 @@ const PostButton: React.FC<Iprops> = (props) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
 
   return (
     <Button
@@ -60,7 +61,7 @@ const PostButton: React.FC<Iprops> = (props) => {
         // true
         {
           bottom: '140px',
-          display: props.role === 1 ? 'block' : 'none',
+          display: roleRedux === 1 ? 'block' : 'none',
         }
       }
     />

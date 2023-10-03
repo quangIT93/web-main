@@ -91,7 +91,9 @@
 
 
 
-#box-suggestedJob {
+.box-suggestedJob {
+  margin-bottom: 24px;
+
   .suggest-job-not-loging {
     display: flex;
     align-items: center;
@@ -155,6 +157,37 @@
     }
 
 
+  }
+
+  .title-container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 16px;
+
+    .title {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .view-all {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      gap: 16px;
+
+      p {
+        color: #0D99FF;
+      }
+
+      svg {
+        color: #0D99FF;
+      }
+    }
   }
 
   @include breakpoint(mobile) {
