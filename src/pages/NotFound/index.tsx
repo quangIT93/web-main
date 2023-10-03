@@ -3,6 +3,7 @@ import React from 'react';
 import { Navbar } from '#components';
 import Footer from '#components/Footer/Footer';
 import './style.scss';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const NotFound: React.FC = () => {
   window.open(`/`, '_parent');
@@ -10,6 +11,7 @@ const NotFound: React.FC = () => {
   return (
     <div className="not-found">
       <Navbar />
+      <CategoryDropdown />
       <div className="notFound-page">
         {/* <strong>NotFound</strong> */}
       </div>

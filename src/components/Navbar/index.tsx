@@ -1205,7 +1205,7 @@ const Navbar: React.FC = () => {
                     <BagInfoJob />
 
                     <p>
-                      {profileV3 && profileV3?.profileCategories.length > 0
+                      {profileV3 && profileV3?.profileCategories?.length > 0
                         ? profileV3?.profileCategories.map((profile: any) => {
                             return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
                           })
@@ -1539,7 +1539,7 @@ const Navbar: React.FC = () => {
                     <BagInfoJob />
 
                     <p>
-                      {profileV3 && profileV3?.profileCategories.length > 0
+                      {profileV3 && profileV3?.profileCategories?.length > 0
                         ? profileV3?.profileCategories.map((profile: any) => {
                             return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
                           })

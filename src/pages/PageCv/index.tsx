@@ -27,7 +27,12 @@ const PageCv = () => {
             ứng tuyển công việc phù hợp hoặc chia sẻ CV của bạn với các Nhà
             tuyển dụng!
           </p>
-          <div className="button-update_profile">Cập nhật hồ sơ</div>
+          <div
+            className="button-update_profile"
+            onClick={() => window.open('/profile', '_parent')}
+          >
+            Cập nhật hồ sơ
+          </div>
         </div>
         {/* <div className="item-imageCv_banner item-page_Cv">
           <img src="./images/pageCv/CV 1.png" alt="" />

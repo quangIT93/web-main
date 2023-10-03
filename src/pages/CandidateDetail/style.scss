@@ -4,7 +4,9 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 100%;
+  // width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
 
   .footer-right {
     @include breakpoint(mobile) {
@@ -13,18 +15,22 @@
   }
 
   .containerCandidate {
-    width: 80%;
-    margin-top: 100px;
+    // width: 80%;
+    width: 100%;
+    margin-top: 176px;
     margin-bottom: 100px;
+    padding: 0px;
 
     @include breakpoint(mobile) {
-      width: 95%;
-      padding: 0px;
+      // width: 95%;
+      width: 100%;
+      padding: 0px 24px;
     }
 
     @include breakpoint(tablet) {
-      width: 95%;
-      padding: 0px;
+      // width: 95%;
+      padding: 0px 24px;
+      width: 100%;
     }
 
     .div-profile-avatar {
@@ -41,6 +47,8 @@
       align-items: center;
       width: 100%;
       justify-content: space-between;
+      flex-wrap: wrap;
+      row-gap: 10px;
     }
 
     .div-profile-info {
@@ -74,6 +82,7 @@
           p {
             font-size: 14px;
             margin-top: 7px;
+            word-break: break-all;
           }
         }
       }

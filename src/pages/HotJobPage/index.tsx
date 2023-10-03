@@ -96,6 +96,7 @@ import { hotjobPageEn } from 'validations/lang/en/hotjobPage';
 import { getCookie } from 'cookies';
 import NoDataComponent from 'utils/NoDataPage';
 import HotJob from '#components/Home/HotJob';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
@@ -429,7 +430,7 @@ const HotJobpage: React.FC = () => {
     }
   }, [provincesData, languageRedux]);
 
-  const handleClickFilterHotjob = () => {};
+  const handleClickFilterHotjob = () => { };
 
   const handleChangeFilterHotjob = (value: string) => {
     // localStorage.setItem('filterHotjobProvince', value);
@@ -458,7 +459,7 @@ const HotJobpage: React.FC = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   // console.log('hothob', hotjob);
 
@@ -466,6 +467,7 @@ const HotJobpage: React.FC = () => {
     <>
       {contextHolder}
       <Navbar />
+      <CategoryDropdown />
 
       <div className="hot-job-page-container">
         {
@@ -488,23 +490,23 @@ const HotJobpage: React.FC = () => {
                   {hotJobType === 1
                     ? language?.remote_work
                     : hotJobType === 3
-                    ? 'Influencer'
-                    : hotJobType === 4
-                    ? language?.hot_job_page?.short_time
-                    : hotJobType === 5
-                    ? language?.hot_job_page?.job_today
-                    : hotJobType === 6
-                    ? 'Freelancer'
-                    : hotJobType === 7
-                    ? 'Delivery/Driver'
-                    : 'Loading...'}{' '}
+                      ? 'Influencer'
+                      : hotJobType === 4
+                        ? language?.hot_job_page?.short_time
+                        : hotJobType === 5
+                          ? language?.hot_job_page?.job_today
+                          : hotJobType === 6
+                            ? 'Freelancer'
+                            : hotJobType === 7
+                              ? 'Delivery/Driver'
+                              : 'Loading...'}{' '}
                   {languageRedux === 1 ? 'có' : 'has'}{' '}
                   {hotjob.length !== 0
                     ? // ? Number(hotJobTotal.toLocaleString())
-                      new Intl.NumberFormat('en-US').format(hotJobTotal)
+                    new Intl.NumberFormat('en-US').format(hotJobTotal)
                     : languageRedux === 1
-                    ? '0 kết quả'
-                    : '0 result'}
+                      ? '0 kết quả'
+                      : '0 result'}
                   <span>
                     {' '}
                     {
@@ -512,10 +514,10 @@ const HotJobpage: React.FC = () => {
                       languageRedux === 1 && hotjob.length !== 0
                         ? 'kết quả'
                         : hotJobTotal > 2 && hotjob.length !== 0
-                        ? 'results'
-                        : hotJobTotal < 2 && hotjob.length !== 0
-                        ? 'result'
-                        : ''
+                          ? 'results'
+                          : hotJobTotal < 2 && hotjob.length !== 0
+                            ? 'result'
+                            : ''
                     }
                   </span>
                 </h3>
@@ -648,7 +650,7 @@ const HotJobpage: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

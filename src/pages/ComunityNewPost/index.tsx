@@ -41,6 +41,7 @@ import WorkingStoryCard from '#components/Community/WorkingStoryCard';
 import { setAlertSave } from 'store/reducer/alertReducer';
 import HijobNewsCard from '#components/Community/HijobNewsCard';
 import { getCookie } from 'cookies';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 // const { Panel } = Collapse;
 
@@ -221,6 +222,7 @@ const ComunityNewPost = () => {
   return (
     <div className="comunity-container">
       <Navbar />
+      <CategoryDropdown />
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
@@ -233,10 +235,10 @@ const ComunityNewPost = () => {
                   loading
                     ? 'Loading...'
                     : languageRedux === 1
-                    ? `${new Intl.NumberFormat('en-US').format(
+                      ? `${new Intl.NumberFormat('en-US').format(
                         total,
                       )} bài viết mới`
-                    : `${new Intl.NumberFormat('en-US').format(
+                      : `${new Intl.NumberFormat('en-US').format(
                         total,
                       )} new posts`
 

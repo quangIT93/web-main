@@ -423,8 +423,8 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           // dangerouslySetInnerHTML={{ __html: htmlCv }}
         >
           <>
-            <PreviewTheme1 />
-            {profileV3 && false && (
+            {/* <PreviewTheme1 /> */}
+            {profileV3 && (
               <Document
                 loading={<Spin indicator={antIcon} />}
                 noData={<Spin indicator={antIcon} />}

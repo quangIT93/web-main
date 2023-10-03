@@ -102,6 +102,7 @@ import CreateCv from '#components/Profile/CreateCv';
 import ChangeRoleButton from './components/ChangeRoleButton';
 import CandidateProfile from './components/CandidateProfile';
 import Company from 'pages/Company';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -485,7 +486,7 @@ const Profile: React.FC = () => {
   return (
     <div className="profile">
       <Navbar />
-
+      <CategoryDropdown />
       <div className="container">
         <Skeleton className="skeleton-item" avatar loading={loading} active>
           <div className="div-profile-avatar">

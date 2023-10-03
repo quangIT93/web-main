@@ -297,26 +297,32 @@ const HistoryPost = () => {
     if (hotjobtype === 2) {
       setItemLeft(2);
       setActiveChild('2-0');
+      return;
     }
     if (community_post === 31) {
       setItemLeft(3);
       setActiveChild('3-1');
+      return;
     }
     if (community_post === 30) {
       setItemLeft(3);
       setActiveChild('3-0');
+      return;
     }
     if (saved_jobs === 1) {
       setItemLeft(1);
       setActiveChild('1-0');
+      return;
     }
-    // if (roleRedux === 0) {
-    //   setItemLeft(0);
-    //   setActiveChild('0-0');
-    // } else {
-    //   setItemLeft(2);
-    //   setActiveChild('2-0');
-    // }
+    if (roleRedux === 0) {
+      setItemLeft(0);
+      setActiveChild('0-0');
+      return;
+    } else {
+      setItemLeft(2);
+      setActiveChild('2-0');
+      return;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

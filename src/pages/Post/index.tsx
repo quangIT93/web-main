@@ -55,6 +55,7 @@ import { RootState } from '../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 // redux
 // import { RootState } from 'store';
@@ -466,19 +467,19 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   if (localStorage.getItem('accessToken')) {
     return (
       <div className="post">
         <Navbar />
-
+        <CategoryDropdown />
         {contextHolder}
         <div className="post-main">
           <div
             className="post-main_fillData"
-            // style={{ textAlign: 'center', display: 'block' }}
+          // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">

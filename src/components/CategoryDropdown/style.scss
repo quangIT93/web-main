@@ -9,7 +9,7 @@
     left: 0;
     background-color: rgba(1, 1, 1, 0.5);
 
-    z-index: 10;
+    z-index: 9;
 }
 
 .category-dropdown-container {
@@ -122,14 +122,17 @@
                 display: flex;
                 align-items: center;
                 gap: 8px;
+                pointer-events: none;
 
                 @media screen and (max-width: 560px) {
                     cursor: pointer;
+                    pointer-events: unset;
                 }
 
                 @media screen and (max-width: 425px) {
                     width: 100%;
                     justify-content: space-between;
+                    pointer-events: unset;
                 }
 
                 h3 {

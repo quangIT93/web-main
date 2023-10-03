@@ -39,6 +39,7 @@ import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { Document, Page } from 'react-pdf';
 
 import ModalShowCv from '#components/Profile/ModalShowCv';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const ProfileCv: React.FC = () => {
   const languageRedux = useSelector(
@@ -95,7 +96,7 @@ const ProfileCv: React.FC = () => {
         );
         dispatch(setProfileV3(resultProfileV3));
       }
-    } catch (error) {}
+    } catch (error) { }
 
     // setSelectedId(id);
   };
@@ -135,6 +136,7 @@ const ProfileCv: React.FC = () => {
   return (
     <div className="profile-cv-container">
       <Navbar />
+      <CategoryDropdown />
       <div className="profile-cv-content">
         <div className="profile-cv-title">
           <div className="profile-cv-title_left">
@@ -196,13 +198,13 @@ const ProfileCv: React.FC = () => {
                       <p>
                         {languageRedux === 1
                           ? 'Cập nhật cuối: ' +
-                            moment(new Date()).format('HH:mm') +
-                            ', ' +
-                            moment(new Date()).format('DD/MM/YYYY')
+                          moment(new Date()).format('HH:mm') +
+                          ', ' +
+                          moment(new Date()).format('DD/MM/YYYY')
                           : 'Last update: ' +
-                            moment(new Date()).format('HH:mm') +
-                            ', ' +
-                            moment(new Date()).format('DD/MM/YYYY')}
+                          moment(new Date()).format('HH:mm') +
+                          ', ' +
+                          moment(new Date()).format('DD/MM/YYYY')}
                       </p>
                     </div>
                     <div className="cv-item_right__actions">

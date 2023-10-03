@@ -41,6 +41,7 @@ import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
 import EditImageCompany from './components/EditImageCompany';
 import { PencilIcon } from '#components/Icons';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 export interface FormValues {
   id: string;
@@ -421,13 +422,15 @@ const Company: React.FC<ICompany> = (props) => {
       className="company-container"
       style={{
         display: display,
-        marginTop: is_profile ? '30px' : '70px',
+        // marginTop: is_profile ? '30px' : '70px',
+        marginTop: is_profile ? '30px' : '146px',
         width: is_profile ? '100%' : 'unset',
       }}
     >
       {contextHolder}
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         <Navbar />
+        <CategoryDropdown />
       </div>
       <div
         className="company-content"

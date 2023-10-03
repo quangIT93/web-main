@@ -202,9 +202,9 @@ const ThemesJob: React.FC = () => {
 
   // }, [localStorage.getItem("accessToken")])
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
   return (
-    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }} className="theme-job">
+    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }} className="theme-job" id="job-by-hot-place">
       <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
         <TopicJobIcon width={25} height={25} />
         <h2>{language?.jobs_by_theme}</h2>
@@ -300,7 +300,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
