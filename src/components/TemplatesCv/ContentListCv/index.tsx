@@ -4,7 +4,7 @@ import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 // import api
 import jsPDF from 'jspdf';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink, BlobProvider } from '@react-pdf/renderer';
 
 import categoriesApi from 'api/categoriesApi';
 
@@ -24,6 +24,8 @@ import { initialSettings } from '../Setting/settingsSlice';
 import ItemCV from '../ItemCV';
 //@ts-ignore
 import Theme1 from '../Themes/Theme1';
+import { htmlCv } from './../CvTemplate/themeHtml/index';
+import PreviewTheme1 from '../PreviewTheme/PreviewTheme1';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -33,6 +35,7 @@ import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Mousewheel, Pagination } from 'swiper';
 import { Link, useSearchParams } from 'react-router-dom';
+import PdfDocument from './PDFDocument';
 import CvTemplate1 from '../CvTemplate/CvTemplate1';
 import CvTemplate2 from '../CvTemplate/CvTemplate2';
 
@@ -192,7 +195,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   // console.log('dataCategories', dataCategories);
 
-  const handleChangeCategory = async () => { };
+  const handleChangeCategory = async () => {};
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
@@ -206,7 +209,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const styles = StyleSheet.create({
@@ -261,6 +264,19 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   //   element.style.transform = `scale(${scale})`; // Áp dụng tỷ lệ (scale) cho phần tử
   // }, [currentWidth]);
+
+  window.onload = function () {
+    const elements = document.querySelectorAll('.page-break');
+
+    elements.forEach((element) => {
+      const rect = element.getBoundingClientRect();
+
+      if (rect.height > 297) {
+        // Kiểm tra kích thước A4
+        element.classList.add('page-break');
+      }
+    });
+  };
 
   return (
     <div className="contentCV-bottom">
@@ -401,29 +417,38 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
             </p>
           </div>
         </div>
-        <div className="contentCv-bottom-right_cv">
-          {profileV3 && (
-            <Document
-              loading={<Spin indicator={antIcon} />}
-              noData={<Spin indicator={antIcon} />}
-              file={instance.url}
-              onLoadSuccess={onDocumentLoadSuccess}
-              className="page-cv-wrapper"
-            >
-              {Array.apply(null, Array(numPages))
-                .map((x, i) => i + 1)
-                .map((page) => (
-                  <Page
-                    className="page-cv"
-                    loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
-                    noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
-                    pageNumber={page}
-                    renderAnnotationLayer={false}
-                    renderTextLayer={false}
-                  />
-                ))}
-            </Document>
-          )}
+        <div
+          className="contentCv-bottom-right_cv"
+          id="page"
+          // dangerouslySetInnerHTML={{ __html: htmlCv }}
+        >
+          <>
+            <PreviewTheme1 />
+            {profileV3 && false && (
+              <Document
+                loading={<Spin indicator={antIcon} />}
+                noData={<Spin indicator={antIcon} />}
+                file={instance.url}
+                onLoadSuccess={onDocumentLoadSuccess}
+                className="page-cv-wrapper"
+              >
+                {Array.apply(null, Array(numPages))
+                  .map((x, i) => i + 1)
+                  .map((page) => (
+                    <Page
+                      className="page-cv"
+                      loading={
+                        page === 1 ? <Spin indicator={antIcon} /> : <></>
+                      }
+                      noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                      pageNumber={page}
+                      renderAnnotationLayer={false}
+                      renderTextLayer={false}
+                    />
+                  ))}
+              </Document>
+            )}
+          </>
         </div>
         {/* <Avatar shape="square" icon={<UserOutlined />} />
           <Avatar shape="square" icon={<UserOutlined />} /> */}

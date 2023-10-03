@@ -54,35 +54,8 @@ const TemplatesCv: React.FC = () => {
   const [openModalSuccessDownCv, setOpenModalSuccessDownCv] =
     React.useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const TemplateId = Number(localStorage.getItem('cv-id')) && 1;
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
-  // const templatesCv = [
-  //   {
-  //     id: 1,
-  //     component: (
-  //       <CvTemplate1 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-  //     ),
-  //   },
-  //   {
-  //     id: 2,
-  //     component: (
-  //       <CvTemplate3 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-  //     ),
-  //   },
-  //   {
-  //     id: 3,
-  //     component: (
-  //       <CvTemplate4 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-  //     ),
-  //   },
-  //   {
-  //     id: 4,
-  //     component: (
-  //       <CvTemplate2 color={colorCV} fontSize={fontSizeCV} profile={profile} />
-  //     ),
-  //   },
-  // ];
   React.useEffect(() => {
     roleRedux === 1 && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,9 +84,11 @@ const TemplatesCv: React.FC = () => {
 
   const handleClickSaveCv = async () => {
     const selectedTemplate = templatesCv.find(
-      (template) => template.id === TemplateId,
+      (template) => template.id === Number(localStorage.getItem('cv-id')) && 1,
     );
     try {
+      console.log('selectedTemplate', selectedTemplate);
+
       if (selectedTemplate) {
         const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
 

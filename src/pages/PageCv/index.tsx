@@ -3,8 +3,16 @@ import React from 'react';
 import { Navbar } from '#components';
 
 import { IconArrowLeft } from '#components/Icons';
-
+// @ts-ignore
+// import Carousel, { CarouselItem } from '#components/PageCv/Carousel';
+import PageCv2 from './../PageCv2';
 import './style.scss';
+
+// const Slide = ({ number }: any) => (
+//   <div>
+//     <img src="./images/pageCv/CV 1.png" alt={number} />
+//   </div>
+// );
 
 const PageCv = () => {
   return (
@@ -21,9 +29,35 @@ const PageCv = () => {
           </p>
           <div className="button-update_profile">Cập nhật hồ sơ</div>
         </div>
-        <div className="item-imageCv_banner item-page_Cv">
+        {/* <div className="item-imageCv_banner item-page_Cv">
           <img src="./images/pageCv/CV 1.png" alt="" />
-        </div>
+        </div> */}
+        {/* carousel */}
+        {/* <Carousel>
+          <CarouselItem>
+            <Slide number={1} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={2} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={3} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={4} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={5} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={6} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={7} />
+          </CarouselItem>
+        </Carousel> */}
+        <PageCv2 />
+
         <div className="item-imageCv_bannerShow item-page_Cv">
           <div className="wrap-img_bannerShow">
             <img src="./images/pageCv/web 2 1.png" alt="" />

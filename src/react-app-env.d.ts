@@ -74,6 +74,10 @@ declare module 'react/jsx-runtime' {
   export default any
 }
 
+declare module 'html2pdf.js' {
+  export default any
+} 
+
 
 
 

@@ -5,7 +5,7 @@ export const dataInstruction = [
         itemsParent: [
             {
                 id: 1,
-                title: "CV là gì",
+                title: "1.1. CV là gì?",
                 content: `CV  là viết tắt của "Curriculum Vitae" được hiểu nghĩa là sơ yếu lý lịch. Về bản chất,  CV xin việc  không phải là tờ khai lý lịch tự thuật mà là bản tóm tắt những thông tin cơ bản nhất về ứng viên, cũng như trình độ học vấn, kinh nghiệm làm việc, các kỹ năng liên quan tới công việc mà ứng viên muốn ứng tuyển. CV xin việc  được coi là sự kết nối gián tiếp giữa ứng viên và nhà tuyển dụng, thông qua đó giúp cho nhà tuyển dụng chọn lọc ra những ứng viên phù hợp với tính chất công việc và môi trường làm việc tại công ty. Vì vậy CV thường được chăm chút kỹ càng từ nội dung tới hình thức.`,
                 itemsChild: [
                     {
@@ -17,7 +17,7 @@ export const dataInstruction = [
             },
             {
                 id: 2,
-                title: "CV và sơ yếu lý lịch khác nhau chỗ nào?",
+                title: "1.2. CV và sơ yếu lý lịch khác nhau chỗ nào?",
                 content: `CV tập trung vào những thông tin liên quan tới việc làm và học vấn. Những thông tin cá nhân nêu ra trong CV đều rất cơ bản, đủ để nhà tuyển dụng biết ứng viên là ai, đã được đào tạo qua những trường lớp nào, đã làm việc tại những cơ quan, doanh nghiệp nào.
                 Mặt khác, sơ yếu lý lịch lại có tính tổng quát, đi sâu vào thông tin về bản thân ứng viên và từng thành viên trong gia đình ứng viên thông tin đầy đủ hơn so với CV. Sơ yếu lý lịch thường được yêu cầu lấy dấu công chứng tại địa phương để xác thực thông tin.`,
                 itemsChild: [
@@ -30,7 +30,7 @@ export const dataInstruction = [
             },
             {
                 id: 3,
-                title: "CV có những dạng nào?",
+                title: "1.3. CV có những dạng nào?",
                 content: `Khi nộp  CV xin việc  cho nhà tuyển dụng ứng viên luôn có hai sự lựa chọn, hoặc CV bản cứng hoặc CV bản mềm. Vậy sự khác nhau giữa hai dạng CV này là gì? Khi nào cần sử dụng CV bản cứng và khi nào cần sử dụng CV bản mềm?`,
                 itemsChild: [
                     {
@@ -51,7 +51,7 @@ export const dataInstruction = [
             },
             {
                 id: 4,
-                title: "CV gồm những gì?",
+                title: "1.4. CV gồm những gì?",
                 itemsChild: [
                     {
                         id: 1,

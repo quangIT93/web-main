@@ -12,8 +12,6 @@ const InstructionsCv = () => {
     setItemParent(id);
   };
 
-  console.log('id', itemParent);
-
   return (
     <div className="instructionsCv">
       <Navbar />
@@ -74,7 +72,18 @@ const InstructionsCv = () => {
                             <ul className="bottom-content_item">
                               <h4>{insChild.title}</h4>
                               <ul>
-                                <li>{insChild.content}</li>
+                                <li>
+                                  {insChild.content
+                                    ? insChild.content
+                                        .split('\n')
+                                        .map((line: any, index: number) => (
+                                          <React.Fragment key={index}>
+                                            {line}
+                                            <br />
+                                          </React.Fragment>
+                                        ))
+                                    : ''}
+                                </li>
                               </ul>
                             </ul>
                           ))}
