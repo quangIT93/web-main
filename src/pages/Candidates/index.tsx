@@ -2,6 +2,21 @@ import React from 'react';
 // @ts-ignore
 import { Navbar } from '#components';
 import Footer from '../../components/Footer/Footer';
+
+// import ant
+import { Button, Cascader, Divider, Typography } from 'antd';
+
+// import component
+// @ts-ignore
+import SeachLocation from '#components/Candidates/SeachLocation';
+import ItemCadidate from '#components/Candidates/ItemCadidate';
+// import css
+import './style.scss';
+import SearchCate from '#components/Candidates/SearchCate';
+import SeachEducation from '#components/Candidates/SeachEducation';
+import SeachGender from '#components/Candidates/SeachGender';
+import SeachAge from '#components/Candidates/SearchAge';
+
 const index = () => {
   const listData: any = {
     status: 200,
@@ -172,46 +187,40 @@ const index = () => {
     <div className="container-candidate">
       <Navbar />
       <div className="candidate">
-        <div className="header-candidate"></div>
-        <div className="search-candidate"></div>
+        <div className="header-candidate">
+          <h3>Looking for candidates</h3>
+          <Button
+            type="primary"
+            onClick={() => window.open(`/profile/`, '_parent')}
+          >
+            Saved candidate list
+          </Button>
+        </div>
+        <div className="search-candidate">
+          <p>Find the right candidate for your company!</p>
+          <div className="list-search">
+            <div className="list-search_top">
+              <SeachLocation />
+              <SearchCate />
+              <SeachEducation />
+            </div>
+            <div className="list-search_bottom">
+              <SeachGender />
+              <SeachAge />
+              <SeachLocation />
+            </div>
+          </div>
+        </div>
         <div className="list-candidates">
           <div className="list-candidates_title">
-            <h3>alfhlahflkanlka</h3>
+            <h3>
+              Found results:
+              <span>500 candidates</span>
+            </h3>
           </div>
           <div className="list-candidate">
             {listData?.data?.cvFilters?.map((item: any) => {
-              return (
-                <div className="item-candidate">
-                  <div>
-                    <img src="" alt="" />
-                  </div>
-                  <div className="info-candidate">
-                    <h3>Nguyen minh quang</h3>
-                    <ul>
-                      <li>
-                        <span>icon</span>
-                        <span>19xx</span>
-                      </li>
-                      <li>
-                        <span>icon</span>
-                        <span>Dai hoc</span>
-                      </li>
-                      <li>
-                        <span>icon</span>
-                        <span>Quan 1</span>
-                      </li>
-                      <li>
-                        <span>icon</span>
-                        <span>Design</span>
-                      </li>
-                      <li>
-                        <span>icon</span>
-                        <span>Update</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              );
+              return <ItemCadidate item={item} />;
             })}
           </div>
         </div>

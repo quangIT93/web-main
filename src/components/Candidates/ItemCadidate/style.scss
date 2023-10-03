@@ -1,0 +1,63 @@
+.item-candidate {
+    padding: 12px 16px;
+    display: flex;
+    gap: 16px;
+    border-radius: 12px;
+    box-shadow: 1px 1px 5px #e7e7ed ;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #e7e7ed;
+    }
+
+    .wrap-img_candidate {
+        height: 100%;
+        flex: 2;
+        border-radius: 12px;
+        .img-candidate {
+            width: 180px;
+            min-height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+    }
+    .info-candidate {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        h3 {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 16px;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            li {
+                list-style: none;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: nowrap;
+                word-break: break-all;
+         
+                .item-infoUser {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    span {
+
+                    }
+                }
+            }
+        }
+    }   
+}
