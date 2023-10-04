@@ -156,6 +156,12 @@ const TemplatesCv: React.FC = () => {
 
   const fileNameCv = createFileName(profile?.name ? profile?.name : 'Your');
 
+  React.useEffect(() => {
+    if (!localStorage.getItem('accessToken') || roleRedux === 1)
+      window.open(`/`, '_parent');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="cv-container">
       <Navbar />

@@ -130,17 +130,14 @@ const Home: React.FC = () => {
   // }, []);
 
   const handleScrollIntoViewDiv = (id: string) => {
-    setTimeout(
-      () => {
-        const div = document.getElementById(id);
-        let newJobOffsetTop = 0;
-        if (div) {
-          newJobOffsetTop = document.getElementById(id) ? div.offsetTop : 0;
-          window.scrollTo(0, newJobOffsetTop - 170);
-        }
-      },
-      id === 'hot-job-container' ? 0 : 1600,
-    );
+    setTimeout(() => {
+      const div = document.getElementById(id);
+      let newJobOffsetTop = 0;
+      if (div) {
+        newJobOffsetTop = document.getElementById(id) ? div.offsetTop : 0;
+        window.scrollTo(0, newJobOffsetTop - 170);
+      }
+    }, 1800);
   };
 
   useEffect(() => {

@@ -105,15 +105,15 @@ const ModalDeleteActivities: React.FC<IModalProfileDelete> = (props) => {
         );
 
         resultProfile && dispatch(setProfileV3(resultProfile));
-        message.success(
-          deleteAll
-            ? languageRedux === 1
-              ? 'Đã xóa tất cả các hoạt động'
-              : 'Deleted all activities'
-            : languageRedux === 1
-            ? `Bạn đã xóa hoạt động "${activityValue?.title}" thành công`
-            : `You deleted the activity "${activityValue?.title}" successfully !`,
-        );
+        // message.success(
+        //   deleteAll
+        //     ? languageRedux === 1
+        //       ? 'Đã xóa tất cả các hoạt động'
+        //       : 'Deleted all activities'
+        //     : languageRedux === 1
+        //     ? `Bạn đã xóa hoạt động "${activityValue?.title}" thành công`
+        //     : `You deleted the activity "${activityValue?.title}" successfully !`,
+        // );
 
         setOpenModalDeleteActivities(false);
         dispatch(setAlert(true));

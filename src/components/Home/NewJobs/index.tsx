@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { NewJobIcon, MoreICon } from '#components/Icons';
+import { NewJobIcon, MoreICon, ArrowrightIcon } from '#components/Icons';
 
 // import redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -247,8 +247,10 @@ const NewJobs: React.FC = () => {
       // console.log('storeduserSelectedSettings', userSelected.userSelectedId);
 
       const result2 = await postApi.getPostNewestV3(
-        childCateloriesArray,
-        userSelected.userSelectedId,
+        // childCateloriesArray,
+        // userSelected.userSelectedId,
+        null,
+        null,
         null,
         null,
         20,
@@ -272,9 +274,14 @@ const NewJobs: React.FC = () => {
     } catch (error) {
       setOpenBackdrop(false);
       console.log(error);
-      console.log('loiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', error);
+      // console.log('loiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', error);
     }
   };
+
+  const handleMoveToMoreJob = () => {
+    localStorage.setItem('job-type', 'new');
+    window.open('/more-jobs', '_parent');
+  }
 
   React.useEffect(() => {
     localStorage.getItem('accessToken') && setIslogined(true);
@@ -309,21 +316,22 @@ const NewJobs: React.FC = () => {
           ref={listRef}
           id="new-job"
         >
-          <div style={{ display: 'flex', gap: '0.5rem', margin: '0 0 16px 0' }}>
-            <NewJobIcon width={25} height={25} />
-            <h2>{language?.newest_jobs}</h2>
-            <div className="help-search" onClick={handleClickHelpSearch}>
-              <QuestionMarkIcon />
-              <div className={`login__hover__container `}>
-                <div className="login__hover">
-                  <div className="login__hover__p">
-                    <p>
-                      {languageRedux === 1
-                        ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
-                        : 'Newest Jobs will show jobs rely on your Career Objective in Profile.'}
-                    </p>
-                  </div>
-                  {/* <Button
+          <div className='title-container'>
+            <div className='title'>
+              <NewJobIcon width={25} height={25} />
+              <h2>{language?.newest_jobs}</h2>
+              <div className="help-search" onClick={handleClickHelpSearch}>
+                <QuestionMarkIcon />
+                <div className={`login__hover__container `}>
+                  <div className="login__hover">
+                    <div className="login__hover__p">
+                      <p>
+                        {languageRedux === 1
+                          ? 'Công việc mới nhất sẽ xuất hiện dựa theo Lĩnh vực quan tâm của bạn trong phần thông tin cá nhân.'
+                          : 'Newest Jobs will show jobs rely on your Career Objective in Profile.'}
+                      </p>
+                    </div>
+                    {/* <Button
             type="primary"
             onClick={() => {
               setOpenModalLogin(true);
@@ -332,8 +340,15 @@ const NewJobs: React.FC = () => {
             <LoginArrowBlackIcon />
             {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
           </Button> */}
+                  </div>
                 </div>
               </div>
+            </div>
+            <div className='view-all' onClick={handleMoveToMoreJob}>
+              <p>
+                {language?.home_page?.view_all}
+              </p>
+              <ArrowrightIcon width={20} height={20} />
             </div>
           </div>
 
@@ -346,11 +361,10 @@ const NewJobs: React.FC = () => {
               </Grid>
             ))}
           </Grid>
-          <Stack
+          {/* <Stack
             spacing={2}
             sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}
           >
-            {/* <Pagination count={10} shape="rounded" /> */}
             <Space
               className="div-hover-more"
               onClick={(e) => {
@@ -360,7 +374,7 @@ const NewJobs: React.FC = () => {
               <p>{language?.more}</p>
               <MoreICon width={20} height={20} />
             </Space>
-          </Stack>
+          </Stack> */}
           {/* <Backdrop
             sx={{
               color: '#0d99ff ',

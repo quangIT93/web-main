@@ -2,7 +2,7 @@
 @import "../../../scss/variable";
 
 .post-button-responsive {
-    display: none !important;
+    display: none;
     width: 60px !important;
     height: 60px !important;
     position: fixed;
@@ -11,18 +11,19 @@
     // z-index: 2;
     background-color: $primary-color;
     z-index: 5;
+
     @include breakpoint(mobile) {
-        display: block !important;
+        display: block;
         bottom: 140px !important;
 
     }
 
 
     @media screen and (min-height: 431px) and (max-width: 640px) {
-        display: block !important;
+        display: block;
         bottom: 140px !important;
 
-        
+
     }
 
     .anticon {

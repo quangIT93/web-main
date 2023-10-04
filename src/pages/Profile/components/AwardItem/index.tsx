@@ -88,7 +88,7 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
             direction="vertical"
             style={{
               marginLeft: 10,
-              wordBreak: 'break-all',
+              wordBreak: 'break-word',
             }}
           >
             <h3>{item?.title}</h3>

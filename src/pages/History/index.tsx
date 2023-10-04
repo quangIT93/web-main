@@ -73,6 +73,7 @@ const HistoryPost = () => {
   const hotjobtype = Number(queryParams['post']);
   const community_post = Number(queryParams['community_post']);
   const saved_jobs = Number(queryParams['saved_jobs']);
+  const recruitment_post = queryParams['recruitment_post'];
   const [activeChild, setActiveChild] = React.useState(
     hotjobtype === 2
       ? '2-0'
@@ -82,7 +83,11 @@ const HistoryPost = () => {
           ? '3-0'
           : saved_jobs === 1
             ? '1-0'
-            : '0-0',
+            : recruitment_post === 'opening'
+              ? '2-1'
+              : recruitment_post === 'closed'
+                ? '2-2'
+                : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
     hotjobtype === 2
@@ -314,6 +319,16 @@ const HistoryPost = () => {
       setActiveChild('1-0');
       return;
     }
+    if (recruitment_post === 'opening') {
+      setItemLeft(2);
+      setActiveChild('2-1');
+      return;
+    }
+    if (recruitment_post === 'closed') {
+      setItemLeft(2);
+      setActiveChild('2-2');
+      return;
+    }
     if (roleRedux === 0) {
       setItemLeft(0);
       setActiveChild('0-0');
@@ -323,6 +338,12 @@ const HistoryPost = () => {
       setActiveChild('2-0');
       return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (!localStorage.getItem('accessToken'))
+      window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

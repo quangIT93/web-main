@@ -191,6 +191,16 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
         checkForm: false,
       };
     }
+    if (
+      education.major?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên ngành không được vượt quá 50 ký tự" :
+          "Major cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
 
     if (education.companyName === '') {
       return {
@@ -199,9 +209,31 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
 
+    if (
+      education.companyName?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Trường học/Tổ chức không được vượt quá 50 ký tự" :
+          "School/Organization cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
+
     if (education.extraInformation === '') {
       return {
         message: language?.profile_page?.err_additional_information,
+        checkForm: false,
+      };
+    }
+
+    if (
+      education.extraInformation?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Thông tin thêm không được vượt quá 50 ký tự" :
+          "Additional information cannot exceed 50 characters",
         checkForm: false,
       };
     }

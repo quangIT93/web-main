@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Modal, Typography, Button, TextField } from '@mui/material';
+import { Box, Modal, Typography, Button, TextField, Alert, Snackbar, Stack } from '@mui/material';
 
 // data
 import { useDispatch } from 'react-redux';
@@ -22,6 +22,8 @@ import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 import {
   setAlert,
+  setAlertEditInfo,
+  setAlertLackInfo,
   setAlertSuccess,
 } from 'store/reducer/profileReducer/alertProfileReducer';
 
@@ -73,6 +75,17 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+  const alert = useSelector((state: any) => state.alertProfile.alert);
+  const alertSuccess = useSelector(
+    (state: any) => state.alertProfile.alertSuccess,
+  );
+  const alertLackInfo = useSelector(
+    (state: any) => state.alertProfile.alertLackInfo,
+  );
+
+  const alertEditInfo = useSelector(
+    (state: any) => state.alertProfile.alertEditInfo,
+  );
   const { openModalActivity, setOpenModalActivity, setActivityValues } = props;
   const [activity, setActivity] = React.useState({
     title: '',
@@ -82,6 +95,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
     description: '',
   });
 
+  const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
   const dispatch = useDispatch();
 
   const handleClose = () => setOpenModalActivity(false);
@@ -129,27 +143,27 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
 
   const validValue = () => {
     if (
-      activity.title.trim().length > 250 ||
+      activity.title.trim().length > 255 ||
       activity.title.trim().length === 0
     ) {
       return {
         messageError:
           languageRedux === 1
-            ? 'Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 250'
-            : 'Title length must be greater than 0 and less than 250',
+            ? 'Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 255'
+            : 'Title length must be greater than 0 and less than 255',
         checkForm: false,
       };
     }
 
     if (
-      activity.employer.trim().length > 250 ||
+      activity.employer.trim().length > 255 ||
       activity.employer.trim().length === 0
     ) {
       return {
         messageError:
           languageRedux === 1
-            ? 'Độ dài nhà tuyển dụng phải lớn hơn 0 và nhỏ hơn 250'
-            : 'Employer length must be greater than 0 and less than 250',
+            ? 'Độ dài nhà tuyển dụng phải lớn hơn 0 và nhỏ hơn 255'
+            : 'Employer length must be greater than 0 and less than 255',
         checkForm: false,
       };
     }
@@ -268,7 +282,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
             placeholder={
               languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'
             }
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
@@ -290,14 +304,14 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+            //   sx={{ display: 'flex' }}
             >
               <div className="activity-time-wraper">
                 <Typography
@@ -324,7 +338,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+            //   sx={{ display: 'flex' }}
             >
               <div className="activity-time-wraper">
                 <Typography
@@ -374,7 +388,7 @@ const ModalActivity: React.FC<IModalActivity> = (props) => {
                 ? 'Mô tả quá trình thực tập của bạn'
                 : 'Description your activity'
             }
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>

@@ -105,15 +105,15 @@ const ModalDeleteAwards: React.FC<IModalProfileDelete> = (props) => {
         );
 
         resultProfile && dispatch(setProfileV3(resultProfile));
-        message.success(
-          deleteAll
-            ? languageRedux === 1
-              ? 'Đã xóa tất cả các giải thưởng'
-              : 'Deleted all awards'
-            : languageRedux === 1
-            ? `Bạn đã xóa giải thưởng "${awardValue?.title}" thành công`
-            : `You deleted the award "${awardValue?.title}" successfully !`,
-        );
+        // message.success(
+        //   deleteAll
+        //     ? languageRedux === 1
+        //       ? 'Đã xóa tất cả các giải thưởng'
+        //       : 'Deleted all awards'
+        //     : languageRedux === 1
+        //     ? `Bạn đã xóa giải thưởng "${awardValue?.title}" thành công`
+        //     : `You deleted the award "${awardValue?.title}" successfully !`,
+        // );
 
         setOpenModalDeleteAwards(false);
         dispatch(setAlert(true));

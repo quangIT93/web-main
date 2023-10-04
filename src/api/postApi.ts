@@ -85,7 +85,7 @@ const postApi = {
   getPostNewestV3: (
     childrenCategoryId: number[] | null,
     parentCategoryId: number | null,
-    districtIds: [] | null,
+    districtIds: any[] | null,
     provinceId: number | null,
     limit: number | null,
     threshold: number | null,
@@ -100,7 +100,7 @@ const postApi = {
       }` +
       `${parentCategoryId && parentCategoryId !== 1 ? `&parentCategoryId=${parentCategoryId}&` : ``}` +
       `${districtIds
-        ? `${districtIds?.map((n, index) => `districtIds[${index}]=${n}`).join('&')}`
+        ? `${districtIds?.map((n: any, index) => `districtIds=${n}`).join('&')}&`
         : ``
       }` +
       `${provinceId ? `provinceId=${provinceId}&` : ``}` +

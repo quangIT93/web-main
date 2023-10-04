@@ -83,7 +83,7 @@ const ComunityNews = () => {
         duration: 2,
         maxCount: 3,
       });
-      // message.error('Đã hết bài viết');
+      message.error(languageRedux === 1 ? 'Không còn bài viết để hiển thị' : 'No more posts to show');
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
     }

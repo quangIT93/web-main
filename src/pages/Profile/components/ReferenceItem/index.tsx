@@ -11,6 +11,7 @@ import apiCv from 'api/apiCv';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
 import profileApi from 'api/profileApi';
+import ModalDeleteReferences from '#components/Profile/ModalDeleteReferences';
 
 interface ISkillItem {
   item: {
@@ -62,7 +63,7 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
   } = props;
 
   const dispatch = useDispatch();
-
+  const [openModalDeleteReferences, setOpenModalDeleteReferences] = useState(false);
   const handleDeleteReference = async (id: number) => {
     // setReferenceValues(
     //   referenceValues.filter((value: any, index: any) => {
@@ -71,20 +72,21 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
     // );
     // console.log(id);
 
-    try {
-      const result = await apiCv.deleteProfileReference([id]);
-      if (result) {
-        const resultProfile = await profileApi.getProfileV3(
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-        if (resultProfile) {
-          dispatch(setProfileV3(resultProfile));
-          dispatch(setAlert(true));
-        }
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
+    // try {
+    //   const result = await apiCv.deleteProfileReference([id]);
+    //   if (result) {
+    //     const resultProfile = await profileApi.getProfileV3(
+    //       languageRedux === 1 ? 'vi' : 'en',
+    //     );
+    //     if (resultProfile) {
+    //       dispatch(setProfileV3(resultProfile));
+    //       dispatch(setAlert(true));
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.log('error', error);
+    // }
+    setOpenModalDeleteReferences(true)
   };
 
   const handleEditReference = async (
@@ -126,7 +128,7 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
               border: '0.5px solid #aaaaaa',
               borderRadius: '10px',
               margin: '0 12px 12px 0',
-              wordBreak: 'break-all',
+              wordBreak: 'break-word',
             }}
           >
             <h3
@@ -175,6 +177,12 @@ const ReferenceItem: React.FC<ISkillItem> = (props) => {
           </p>
         </Space>
       </div>
+      <ModalDeleteReferences
+        openModalDeleteReferences={openModalDeleteReferences}
+        setOpenModalDeleteReferences={setOpenModalDeleteReferences}
+        referenceId={[item?.id]}
+        deleteAll={false}
+      />
     </div>
   );
 };

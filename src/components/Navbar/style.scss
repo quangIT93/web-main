@@ -127,25 +127,25 @@
 
   // @media screen and (min-width: 421px) and (max-width: 640px) {
   //   display: none;
-    .btn__post {
-      width: 136px;
-      font-weight: bold;
-      background-color: $primary-color;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      padding-block: 14px;
-      padding-left: 20px;
-      padding-right: 26px;
+  .btn__post {
+    width: 136px;
+    font-weight: bold;
+    background-color: $primary-color;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding-block: 14px;
+    padding-left: 20px;
+    padding-right: 26px;
 
-      @include breakpoint(mobile) {
-        display: none !important;
-      }
-
-      @media screen and (min-width: 421px) and (max-width: 640px) {
-        display: none !important;
-      }
+    @include breakpoint(mobile) {
+      display: none !important;
     }
+
+    @media screen and (min-width: 421px) and (max-width: 640px) {
+      display: none !important;
+    }
+  }
 }
 
 
@@ -544,12 +544,14 @@
 
   .wrap-content_nav {
     margin: 0 auto;
+
     .wrap-left_nav {
       display: flex;
-      
+
       @media screen and (max-width: 1024px) and (min-width: 630px) {
         width: 50%;
       }
+
       @media screen and (max-width: 629px) {
         width: 60%;
       }
@@ -885,7 +887,7 @@
     }
   }
 
-  
+
 
   // start filter
 
@@ -1007,7 +1009,7 @@
     // }
 
     @include breakpoint(largeTablet) {
-      
+
       flex: none;
     }
 
@@ -1023,9 +1025,12 @@
 
   .div-nav-center {
     padding-left: 10px;
+
     @media screen and (min-width: 920px) {
-      padding-left: 100px;
-    }    
+      // padding-left: 100px;
+      padding-left: 60px;
+    }
+
     .btn-badge {
 
       &:hover {
@@ -1083,8 +1088,8 @@
     }
 
     // @include breakpoint(tablet) {
-      @media screen and (max-width: 480px){
-        
+    @media screen and (max-width: 480px) {
+
       // }
       display: flex;
       // flex: none;
@@ -1101,11 +1106,11 @@
     }
 
 
-    
+
     // @include breakpoint(largeTablet) {
-    @media screen and (min-width: 481px) and (max-width:1024px){
-      
-    // }
+    @media screen and (min-width: 481px) and (max-width:1024px) {
+
+      // }
       display: flex;
       // flex: none;
       margin-right: 10px;
@@ -1147,7 +1152,7 @@
       align-items: center;
       margin: 0 10px;
 
-      @media screen and (max-width: 450px) and (min-width: 427px){
+      @media screen and (max-width: 450px) and (min-width: 427px) {
         margin: 0 10px 0 10px;
       }
 

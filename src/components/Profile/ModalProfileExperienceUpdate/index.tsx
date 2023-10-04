@@ -184,6 +184,16 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
         checkForm: false,
       };
     }
+    if (
+      experience.title?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tiêu đề không được vượt quá 50 ký tự" :
+          "Professional title cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
 
     if (experience.companyName === '') {
       return {
@@ -191,10 +201,30 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
         checkForm: false,
       };
     }
+    if (
+      experience.companyName?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên công ty không được vượt quá 50 ký tự" :
+          "Company names cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
 
     if (experience.extraInformation === '') {
       return {
         message: language?.profile_page?.err_additional_information,
+        checkForm: false,
+      };
+    }
+    if (
+      experience.extraInformation?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Thông tin thêm không được vượt quá 50 ký tự" :
+          "Additional information cannot exceed 50 characters",
         checkForm: false,
       };
     }
