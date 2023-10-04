@@ -160,6 +160,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         content: languageRedux === 1 ?
           "Đang xử lý ..." :
           "Action in progress..",
+        duration: 0
       });
       const result = await apiCv.putThemeCv(item?.id, 1);
       if (result) {
