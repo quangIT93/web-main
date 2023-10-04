@@ -20,6 +20,9 @@ import { CategoryCarousel } from '#components';
 // @ts-ignore
 import { SuggestJob } from '#components';
 
+// @ts-ignore
+import { NewestGigWorker } from '#components';
+
 import HotJob from '#components/Home/HotJob';
 
 import RollTop from '#components/RollTop';
@@ -127,20 +130,18 @@ const Home: React.FC = () => {
   // }, []);
 
   const handleScrollIntoViewDiv = (id: string) => {
-    setTimeout(() => {
-      const div = document.getElementById(id);
-      let newJobOffsetTop = 0;
-      if (div) {
-        newJobOffsetTop = document.getElementById(id) ?
-          div.offsetTop : 0;
-        window.scrollTo(
-          0,
-          newJobOffsetTop - 170
-        )
-      }
-    },
-      id === 'hot-job-container' ? 0 : 1600);
-  }
+    setTimeout(
+      () => {
+        const div = document.getElementById(id);
+        let newJobOffsetTop = 0;
+        if (div) {
+          newJobOffsetTop = document.getElementById(id) ? div.offsetTop : 0;
+          window.scrollTo(0, newJobOffsetTop - 170);
+        }
+      },
+      id === 'hot-job-container' ? 0 : 1600,
+    );
+  };
 
   useEffect(() => {
     const communityDiv = localStorage.getItem('community');
@@ -243,6 +244,7 @@ const Home: React.FC = () => {
         <AppliedPostedJob />
         <HotJob />
         <NewJobs />
+        <NewestGigWorker />
         <SuggestJob />
         <ThemesJob />
         <Community />
@@ -257,12 +259,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // setRole={setRole}
+        // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // role={role}
+        // role={role}
       />
       <RollTop />
       <Footer />

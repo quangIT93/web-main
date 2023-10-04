@@ -20,12 +20,12 @@ interface ICadidate {
 
 const ItemCadidate: React.FC<ICadidate> = (props) => {
   const { item } = props;
-  console.log('props', props);
+  console.log('item', item);
 
   return (
     <div className="item-candidate">
       <div className="wrap-img_candidate">
-        <img src="./images/image 50.png" alt="" className="img-candidate" />
+        <img src={item?.imageData?.avatar} alt="" className="img-candidate" />
       </div>
       <div className="info-candidate">
         <h3>{item.name}</h3>
@@ -36,7 +36,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 <PersonIcon />
               </span>
               <span>
-                {moment(new Date(item?.updatedAt))
+                {moment(new Date(item?.birthdayData))
                   .format('yyyy')
                   .replace(/\d{2}$/, 'xx')}
               </span>
@@ -61,21 +61,12 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
             <Tooltip
               placement="top"
               title={item.profilesLocationsData.map((loc: any) => {
-                return `${loc.full_name}, `;
+                return `${loc.fullName}, `;
               })}
             >
-              <span
-                style={{
-                  display: 'inline-block',
-                  whiteSpace: 'nowrap',
-                  width: '160px',
-                  wordBreak: 'break-all',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                }}
-              >
+              <span className="location-item">
                 {item.profilesLocationsData.map((loc: any) => {
-                  return `${loc.full_name}, `;
+                  return `${loc.fullName}, `;
                 })}
               </span>
             </Tooltip>

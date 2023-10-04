@@ -32,16 +32,21 @@ const CustomOption = ({
   setTypeAcademic,
   typeAcademic,
   setValueRender,
+  setGender,
+  reset,
 }: {
   academicType: any;
   typeAcademic: number;
   setTypeAcademic: any;
   setValueRender: Function;
+  setGender: Function;
+  reset: boolean;
 }) => {
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     // console.log('valueRender Loai cong viec', valueRender);
     // console.log('valueRender Loai cong viec value', value);
     const valueRender = academicType.find((item: any) => item.id === value);
+    setGender(value);
     if (valueRender) {
       setValueRender(valueRender);
     }
@@ -55,15 +60,44 @@ const CustomOption = ({
   return (
     <div className="wrap-radio_candidate">
       <div className="title-candidate">
-        <h3> Trình độ học vấn</h3>
+        <h3>Giới tính</h3>
       </div>
+      <Radio.Group
+        style={{ width: '100%' }}
+        name="radiogroup"
+        onChange={onChange}
+        value={
+          reset && typeAcademic === 0
+            ? undefined
+            : typeAcademic === 0
+            ? typeAcademic
+            : 1
+        }
+        // defaultValue={jobType ? jobType : 5}
+      >
+        <Space direction="vertical" style={{ width: '100%' }}>
+          {academicType?.map((value: any, index: number) => {
+            return (
+              <Radio key={index} style={{ width: '100%' }} value={value.id}>
+                {value.data}
+              </Radio>
+            );
+          })}
+        </Space>
+      </Radio.Group>
     </div>
   );
 };
 
-const SeachGender = () => {
+interface ISeachGender {
+  setGender: any;
+  setReset: Function;
+  reset: boolean;
+}
+
+const SeachGender: React.FC<ISeachGender> = (props) => {
+  const { setGender, setReset, reset } = props;
   const [academicType, setAcademicType] = React.useState([]);
-  const [reset, setReset] = React.useState(false);
 
   const { Option } = Select;
 
@@ -107,6 +141,12 @@ const SeachGender = () => {
   const handleChange = (value1: string) => {
     setReset(false);
   };
+
+  React.useEffect(() => {
+    if (reset) {
+      setValueRender(null);
+    }
+  }, [reset]);
   return (
     <div className="filter-candidate">
       <div className="filter-input_candidate">
@@ -116,7 +156,7 @@ const SeachGender = () => {
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={valueRender ? valueRender.data : undefined}
+        value={valueRender && reset ? undefined : valueRender?.data}
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder="Giới tính"
@@ -128,6 +168,8 @@ const SeachGender = () => {
             setTypeAcademic={setTypeAcademic}
             typeAcademic={typeAcademic}
             setValueRender={setValueRender}
+            setGender={setGender}
+            reset={reset}
           />
         </Option>
       </Select>

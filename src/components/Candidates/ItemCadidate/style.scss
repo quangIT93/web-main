@@ -4,6 +4,7 @@
     gap: 16px;
     border-radius: 12px;
     box-shadow: 1px 1px 5px #e7e7ed ;
+    height: 200px;
     cursor: pointer;
 
     &:hover {
@@ -12,8 +13,9 @@
 
     .wrap-img_candidate {
         height: 100%;
-        flex: 2;
+        // flex: 2;
         border-radius: 12px;
+        min-width: 120px;
         .img-candidate {
             width: 180px;
             min-height: 100%;
@@ -22,10 +24,11 @@
         }
     }
     .info-candidate {
-        flex: 3;
+        // flex: 3;
         display: flex;
         flex-direction: column;
         gap: 16px;
+        width: 100%;
         h3 {
             font-size: 16px;
             font-style: normal;
@@ -55,6 +58,26 @@
                     gap: 8px;
                     span {
 
+                    }
+                }
+
+                .location-item {
+                    display: inline-block;
+                    white-space: nowrap;
+                    width: 160px;
+                    word-break: break-all;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    @media screen and (max-width: 400px) {
+                        width: 130px;
+                    }
+
+                    @media screen and (max-width: 370px) {
+                        width: 100px;
+                    }
+
+                    @media screen and (max-width: 320px) {
+                        width: 80px;
                     }
                 }
             }

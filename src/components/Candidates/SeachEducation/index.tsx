@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -30,18 +30,24 @@ import './style.scss';
 const CustomOption = ({
   academicType,
   setTypeAcademic,
+  setEducations,
   typeAcademic,
   setValueRender,
+  reset,
 }: {
   academicType: any;
-  typeAcademic: number;
+  typeAcademic: number | null;
+  setEducations: Function;
   setTypeAcademic: any;
   setValueRender: Function;
+  reset: boolean;
 }) => {
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     // console.log('valueRender Loai cong viec', valueRender);
     // console.log('valueRender Loai cong viec value', value);
     const valueRender = academicType.find((item: any) => item.id === value);
+    console.log('valueRender Loai cong viec value', valueRender);
+    setEducations(value);
     if (valueRender) {
       setValueRender(valueRender);
     }
@@ -61,11 +67,13 @@ const CustomOption = ({
         style={{ width: '100%' }}
         name="radiogroup"
         onChange={onChange}
-        value={typeAcademic ? typeAcademic : 8}
+        value={typeAcademic && reset ? undefined : typeAcademic}
         // defaultValue={jobType ? jobType : 5}
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           {academicType?.map((value: any, index: number) => {
+            console.log(value.id);
+
             return (
               <Radio key={index} style={{ width: '100%' }} value={value.id}>
                 {value.data}
@@ -78,13 +86,19 @@ const CustomOption = ({
   );
 };
 
-const SeachEducation = () => {
+interface ISeachEducation {
+  setEducations: any;
+  setReset: Function;
+  reset: boolean;
+}
+
+const SeachEducation: React.FC<ISeachEducation> = (props) => {
+  const { setEducations, setReset, reset } = props;
   const [academicType, setAcademicType] = React.useState([]);
-  const [reset, setReset] = React.useState(false);
 
   const { Option } = Select;
 
-  const [typeAcademic, setTypeAcademic] = React.useState(1);
+  const [typeAcademic, setTypeAcademic] = React.useState(null);
   const [valueRender, setValueRender] = React.useState<any>();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -102,8 +116,6 @@ const SeachEducation = () => {
     }
   };
 
-  console.log('academic', academicType);
-
   React.useEffect(() => {
     academicTypesFnc();
   }, []);
@@ -111,9 +123,19 @@ const SeachEducation = () => {
   const onChange = (value: string[][]) => {
     console.log(value);
   };
-  const handleChange = (value1: string) => {
+  const handleChange = (value1: number) => {
     setReset(false);
   };
+
+  useEffect(() => {
+    if (reset) {
+      setValueRender(null);
+    }
+  }, [reset]);
+
+  console.log('reset', reset);
+  console.log('valueRnder', valueRender);
+
   return (
     <div className="filter-candidate">
       <div className="filter-input_candidate">
@@ -123,18 +145,20 @@ const SeachEducation = () => {
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={valueRender ? valueRender.data : undefined}
+        value={reset && valueRender ? undefined : valueRender?.data}
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder="Trình độ học vấn"
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
-        <Option className="type-salary" value="5" label="">
+        <Option className="type-salary" value={valueRender?.id} label="">
           <CustomOption
             academicType={academicType}
             setTypeAcademic={setTypeAcademic}
+            setEducations={setEducations}
             typeAcademic={typeAcademic}
             setValueRender={setValueRender}
+            reset={reset}
           />
         </Option>
       </Select>

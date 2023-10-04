@@ -53,7 +53,16 @@ import { Button, Cascader, Divider, Typography } from 'antd';
 //   },
 // ];
 
-const SearchCate = () => {
+interface ISearchCate {
+  setCategories: any;
+  setReset: Function;
+  reset: boolean;
+  categories: any;
+}
+
+const SearchCate: React.FC<ISearchCate> = (props) => {
+  const { setCategories, reset, setReset, categories } = props;
+
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
 
@@ -106,8 +115,27 @@ const SearchCate = () => {
   //   );
 
   const onChange = (value: string[][]) => {
-    console.log(value);
+    setReset(false);
+    setCategories(value);
   };
+
+  const DropdownRender = (menus: React.ReactNode) => (
+    <div className="filter-loca-cate">
+      <Text className="title-filter_location">Ngành nghề</Text>
+      {menus}
+      <Divider style={{ margin: '8px 5px' }}>
+        {disable ? 'Vui lòng chọn ngành nghề bạn muốn tìm kiếm.' : ''}
+      </Divider>
+      {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+                <Button type="default" onClick={() => {}}>
+                  Huỷ
+                </Button>
+                <Button type="primary" onClick={() => {}}>
+                  Áp dụng
+                </Button>
+              </div> */}
+    </div>
+  );
 
   return (
     <>
@@ -119,6 +147,9 @@ const SearchCate = () => {
         showCheckedStrategy={SHOW_CHILD}
         inputIcon={<EnvironmentOutlined />}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
+        size="large"
+        dropdownRender={DropdownRender}
+        value={reset ? [] : categories}
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
