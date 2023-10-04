@@ -20,10 +20,14 @@ interface ICadidate {
 
 const ItemCadidate: React.FC<ICadidate> = (props) => {
   const { item } = props;
+  const handleClickItemCandidate = (accountId: any) => {};
   console.log('item', item);
 
   return (
-    <div className="item-candidate">
+    <div
+      className="item-candidate"
+      onClick={() => handleClickItemCandidate(item.accountId)}
+    >
       <div className="wrap-img_candidate">
         <img src={item?.imageData?.avatar} alt="" className="img-candidate" />
       </div>

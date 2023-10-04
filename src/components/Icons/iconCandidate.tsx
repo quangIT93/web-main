@@ -185,3 +185,30 @@ export const NoteCadidateHijobIcon = () => {
     </svg>
   );
 };
+
+export const StarIconBookmark = () => {
+  return (
+    <svg
+      width="40"
+      height="41"
+      viewBox="0 0 40 41"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M21.0462 10.0646C20.7169 9.05111 19.2831 9.05111 18.9538 10.0646L16.8699 16.4782H10.1262C9.06057 16.4782 8.61752 17.8418 9.4796 18.4682L14.9354 22.432L12.8515 28.8457C12.5222 29.8591 13.6821 30.7019 14.5442 30.0755L20 26.1117L25.4558 30.0755C26.3179 30.7019 27.4778 29.8591 27.1485 28.8457L25.0646 22.432L30.5204 18.4682C31.3825 17.8418 30.9394 16.4782 29.8738 16.4782H23.1301L21.0462 10.0646Z"
+        stroke="currentStroke"
+        fill="currentColor"
+        stroke-width="1.2"
+      />
+      <rect
+        x="0.5"
+        y="1.28644"
+        width="39"
+        height="39"
+        rx="19.5"
+        stroke="currentStroke"
+      />
+    </svg>
+  );
+};

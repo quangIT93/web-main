@@ -88,8 +88,6 @@ const TemplatesCv: React.FC = () => {
       (template) => template.id === Number(localStorage.getItem('cv-id')) && 1,
     );
     try {
-      console.log('selectedTemplate', selectedTemplate);
-
       if (selectedTemplate) {
         const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
 

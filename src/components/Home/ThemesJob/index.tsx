@@ -12,7 +12,12 @@ import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { TopicJobIcon, MoreICon, QuestionMarkIcon, ArrowrightIcon } from '#components/Icons';
+import {
+  TopicJobIcon,
+  MoreICon,
+  QuestionMarkIcon,
+  ArrowrightIcon,
+} from '#components/Icons';
 
 // @ts-ignore
 // import moment from 'moment';
@@ -109,7 +114,7 @@ const ThemesJob: React.FC = () => {
 
   const themeId = searchParams.get(`theme-id`)
     ? searchParams.get(`theme-id`)
-    : listTheme?.data[0].id;
+    : listTheme?.data[0]?.id;
 
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
@@ -209,13 +214,17 @@ const ThemesJob: React.FC = () => {
   const handleMoveToMoreJob = () => {
     localStorage.setItem('job-type', `place-${themeId}`);
     window.open('/more-jobs', '_parent');
-  }
+  };
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
   return (
-    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }} className="theme-job" id="job-by-hot-place">
-      <div className='title-container'>
-        <div className='title'>
+    <Box
+      sx={{ flexGrow: 1, paddingBottom: '24px' }}
+      className="theme-job"
+      id="job-by-hot-place"
+    >
+      <div className="title-container">
+        <div className="title">
           <TopicJobIcon width={25} height={25} />
           <h2>{language?.jobs_by_theme}</h2>
           <div className="help-search" onClick={handleClickHelpSearch}>
@@ -242,10 +251,8 @@ const ThemesJob: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className='view-all' onClick={handleMoveToMoreJob}>
-          <p>
-            {language?.home_page?.view_all}
-          </p>
+        <div className="view-all" onClick={handleMoveToMoreJob}>
+          <p>{language?.home_page?.view_all}</p>
           <ArrowrightIcon width={20} height={20} />
         </div>
       </div>
@@ -308,7 +315,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-              //   onClick={handleClose}
+                //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
