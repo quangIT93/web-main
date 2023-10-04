@@ -9,11 +9,14 @@ import './style.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { ArrowIcon, IconMenu } from '#components/Icons';
-import DropdownRender from './DropdownRender';
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { DivRef1 } from 'context/HomeValueContextProvider';
 import ModalLogin from '#components/Home/ModalLogin';
+import JobInfoDropDown from './JobInforDropDown';
+import CvDropDown from './CvDropDown';
+import ComunityDropDown from './ComunityDropDown';
+import CustomerDropDown from './CustomerDropDown';
 const titleContainer: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
@@ -54,6 +57,7 @@ const CategoryDropdown: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
+
   const updateWindowWidth = () => {
     if (window.innerWidth > 560) {
       setWindowWidth(true);
@@ -75,7 +79,7 @@ const CategoryDropdown: React.FC = () => {
       setExpand([1, 2, 3, 4]);
     } else {
       setWindowWidth(false);
-      setOpen(true);
+      // setOpen(true);
       setExpand([]);
     }
     // console.log('Current window width:', currentWidth);
@@ -91,7 +95,7 @@ const CategoryDropdown: React.FC = () => {
       return;
     }
     setExpand((prev: any) => [...prev, id]);
-    setOpen(!open);
+    // setOpen(!open);
   };
 
   const moveToAppliedJob = () => {
@@ -317,264 +321,6 @@ const CategoryDropdown: React.FC = () => {
     setOpenCategoryDropdown(false);
   };
 
-  const items: MenuProps['items'] = [
-    {
-      key: '1',
-      type: 'group',
-      label: (
-        <div style={titleContainer}>
-          <h3 style={title}>
-            {languageRedux === 1 ? 'Thông tin việc làm' : 'Job information'}
-          </h3>
-          <ArrowIcon fill="black" />
-        </div>
-      ),
-      children: [
-        {
-          key: '1-1',
-          label: (
-            <a
-              style={label}
-              target="_parent"
-              rel="noopener noreferrer"
-              href="/history"
-            >
-              {languageRedux === 1 ? 'Việc làm đã ứng tuyển' : 'Apllied Jobs'}
-            </a>
-          ),
-        },
-        {
-          key: '1-2',
-          label: (
-            <a style={label} onClick={moveToSaveJob}>
-              {languageRedux === 1 ? 'Việc làm đã lưu' : 'Saved jobs'}
-            </a>
-          ),
-        },
-        {
-          key: '1-3',
-          label: (
-            <a style={label} onClick={moveToNewestJob}>
-              {languageRedux === 1 ? 'Công việc mới nhất' : 'Newest jobs'}
-            </a>
-          ),
-        },
-        {
-          key: '1-4',
-          label: (
-            <a style={label} onClick={moveToHotJob}>
-              {languageRedux === 1 ? 'Công việc nổi bật' : 'Hot jobs'}
-            </a>
-          ),
-        },
-        {
-          key: '1-5',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              {languageRedux === 1
-                ? 'Công việc theo chủ đề'
-                : 'Job by hot places'}
-            </a>
-          ),
-        },
-        {
-          key: '1-6',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              {languageRedux === 1 ? 'Công việc gợi ý' : 'Suggested jobs'}
-            </a>
-          ),
-        },
-      ],
-    },
-    {
-      key: '2',
-      type: 'group',
-      label: (
-        <div style={titleContainer}>
-          <h3 style={title}>
-            {languageRedux === 1 ? 'Hồ sơ & CV' : 'Resume & CV'}
-          </h3>
-          <ArrowIcon fill="black" />
-        </div>
-      ),
-      children: [
-        {
-          key: '2-1',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="/history"
-            >
-              {languageRedux === 1 ? 'Tạo mới CV' : 'Create a new CV'}
-            </a>
-          ),
-        },
-        {
-          key: '2-2',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              {languageRedux === 1 ? 'Quản lý CV' : 'CV management'}
-            </a>
-          ),
-        },
-        {
-          key: '2-3',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              {languageRedux === 1
-                ? 'Hướng dẫn tạo CV'
-                : 'Instructions for creating a CV'}
-            </a>
-          ),
-        },
-      ],
-    },
-    {
-      key: '3',
-      type: 'group',
-      label: (
-        <div style={titleContainer}>
-          <h3 style={title}>
-            {languageRedux === 1 ? 'Cộng đồng HiJob' : 'HiJob Community'}
-          </h3>
-          <ArrowIcon fill="black" />
-        </div>
-      ),
-      children: [
-        {
-          key: '3-1',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="/history"
-            >
-              {languageRedux === 1
-                ? 'Câu chuyện làm việc HiJob'
-                : 'HiJob Working story'}
-            </a>
-          ),
-        },
-        {
-          key: '3-2',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              {languageRedux === 1 ? 'Tin tức HiJob' : 'HiJob News'}
-            </a>
-          ),
-        },
-        {
-          key: '3-3',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              {languageRedux === 1 ? 'Đăng bài viết mới' : 'Post new articles'}
-            </a>
-          ),
-        },
-        {
-          key: '3-4',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              {languageRedux === 1 ? 'Bài viết đã lưu' : 'Saved post'}
-            </a>
-          ),
-        },
-      ],
-    },
-    {
-      key: '4',
-      type: 'group',
-      label: (
-        <div style={titleContainer}>
-          <h3 style={title}>
-            {languageRedux === 1 ? 'Hỗ trợ khách hàng' : 'Customer support'}
-          </h3>
-          <ArrowIcon fill="black" />
-        </div>
-      ),
-      children: [
-        {
-          key: '4-1',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="/history"
-            >
-              {languageRedux === 1 ? 'Chính sách bảo mật' : 'Privacy Policy'}
-            </a>
-          ),
-        },
-        {
-          key: '4-2',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              {languageRedux === 1 ? 'Điều khoản hỗ trợ' : 'Support terms'}
-            </a>
-          ),
-        },
-        {
-          key: '4-3',
-          label: (
-            <a
-              style={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              {languageRedux === 1 ? 'Hướng dẫn thành viên' : 'Member Guide'}
-            </a>
-          ),
-        },
-      ],
-    },
-  ];
-
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -621,73 +367,50 @@ const CategoryDropdown: React.FC = () => {
             onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
           >
             <IconMenu />
-            {/* <Dropdown
-                        menu={{
-                            items,
-                            selectable: true,
-                        }}
-                        trigger={['click']}
-                        arrow={false}
-                        dropdownRender={(menu) => {
-                            return (
-                                <DropdownRender menu={menu} />
-                            )
-                        }}
-                    >
-                        <h3 onClick={(e) => e.preventDefault()}>
-                            {
-                                languageRedux === 1 ?
-                                    "Danh mục HiJob" :
-                                    "HiJob Category"
-                            }
-                        </h3>
-                    </Dropdown> */}
             <h3>
               {
                 languageRedux === 1 ?
-                  "Danh mục HiJob" :
-                  "HiJob Category"
+                  "Danh mục" :
+                  "Category"
               }
             </h3>
           </div>
           <div className="category-dropdown-line"></div>
           <div className="category-dropdown-right">
-            <h3>
-              {
-                roleRedux === 0 ?
-                  languageRedux === 1 ?
-                    "Thông tin việc làm" :
-                    "Job information" :
-                  languageRedux === 1 ?
-                    "Thông tin tuyển dụng" :
-                    "Employment information"
-              }
-            </h3>
-            <h3>
-              {
-                roleRedux === 0 ?
-                  languageRedux === 1 ?
-                    "Hồ sơ & CV" :
-                    "Resume & CV" :
-                  languageRedux === 1 ?
-                    "Thông tin nhân tài" :
-                    "Talent information"
-              }
-            </h3>
-            <h3>
-              {
-                languageRedux === 1 ?
-                  "Cộng đồng HiJob" :
-                  "HiJob Community"
-              }
-            </h3>
-            <h3>
-              {
-                languageRedux === 1 ?
-                  "Hỗ trợ khách hàng" :
-                  "Customer support"
-              }
-            </h3>
+            <JobInfoDropDown
+              moveToAppliedJob={moveToAppliedJob}
+              moveToSaveJob={moveToSaveJob}
+              moveToRecruimentPost={moveToRecruimentPost}
+              moveToNewestJob={moveToNewestJob}
+              moveToOpeningPost={moveToOpeningPost}
+              moveToHotJob={moveToHotJob}
+              moveToClosedPost={moveToClosedPost}
+              moveToJobByHotPlace={moveToJobByHotPlace}
+              moveToPostjob={moveToPostjob}
+              moveToSuggestedJob={moveToSuggestedJob}
+              moveToCompanyInfor={moveToCompanyInfor}
+            />
+            <CvDropDown
+              moveToCreateCv={moveToCreateCv}
+              moveToCadidateList={moveToCadidateList}
+              moveToCvManage={moveToCvManage}
+              moveToSearchCandidate={moveToSearchCandidate}
+              moveToIntroductionCv={moveToIntroductionCv}
+              moveToSavedCandidateList={moveToSavedCandidateList}
+            />
+
+            <ComunityDropDown
+              moveToWorkingStory={moveToWorkingStory}
+              moveToHijobNews={moveToHijobNews}
+              moveToPostArticle={moveToPostArticle}
+              moveToSavedArticle={moveToSavedArticle}
+            />
+
+            <CustomerDropDown
+              moveToPolicy={moveToPolicy}
+              moveToSupportTerms={moveToSupportTerms}
+              moveToMemberGuide={moveToMemberGuide}
+            />
           </div>
         </div>
         <Collapse
@@ -884,8 +607,8 @@ const CategoryDropdown: React.FC = () => {
               <div className='top-item' onClick={() => handleExpand(3)}>
                 <h3 >
                   {languageRedux === 1 ?
-                    "Cộng đồng HiJob" :
-                    "HiJob Community"}
+                    "Cộng đồng" :
+                    "Community"}
                 </h3>
                 <ArrowIcon fill='black' />
               </div>
@@ -899,15 +622,15 @@ const CategoryDropdown: React.FC = () => {
                 <h3 onClick={moveToWorkingStory}>
                   {
                     languageRedux === 1 ?
-                      "Câu chuyện làm việc HiJob" :
-                      "HiJob Working story"
+                      "Câu chuyện làm việc" :
+                      "Working story"
                   }
                 </h3>
                 <h3 onClick={moveToHijobNews}>
                   {
                     languageRedux === 1 ?
-                      "Tin tức HiJob" :
-                      "HiJob News"
+                      "Tin tức" :
+                      "News"
                   }
                 </h3>
                 <h3 onClick={moveToPostArticle}>
@@ -967,6 +690,7 @@ const CategoryDropdown: React.FC = () => {
             </div>
           </div>
         </Collapse>
+
       </Box>
       <ModalLogin
         openModalLogin={openModalLogin}
