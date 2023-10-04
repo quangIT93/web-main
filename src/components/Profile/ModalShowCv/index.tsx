@@ -94,8 +94,8 @@ const ModalShowCv: React.FC<IModalShowCv> = (props) => {
                 pageNumber={page}
                 renderAnnotationLayer={false}
                 renderTextLayer={false}
-                // width={400}
-                // height={600}
+              // width={400}
+              // height={600}
               />
             ))}
         </Document>

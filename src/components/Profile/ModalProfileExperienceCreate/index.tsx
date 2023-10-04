@@ -17,6 +17,7 @@ import languageApi from 'api/languageApi';
 
 // data
 import profileApi from 'api/profileApi';
+import { message } from 'antd';
 // import { useDispatch } from 'react-redux';
 // import {
 //   getProfile,
@@ -179,12 +180,84 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
   };
 
   // submit
+  const validValue = () => {
+    if (
+      experience.title?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tiêu đề không được bỏ trống" :
+          "Professional title cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      experience.title?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tiêu đề không được vượt quá 50 ký tự" :
+          "Professional title cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
+    if (
+      experience.companyName?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên công ty không được bỏ trống" :
+          "Company names cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      experience.companyName?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên công ty không được vượt quá 50 ký tự" :
+          "Company names cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
+    if (
+      experience.extraInformation?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Thông tin thêm không được bỏ trống" :
+          "Additional information cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      experience.extraInformation?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Thông tin thêm không được vượt quá 50 ký tự" :
+          "Additional information cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
+
+    return {
+      messageError: '',
+      checkForm: true,
+    };
+  };
 
   const handleSubmit = async () => {
+    const { messageError, checkForm } = validValue();
     try {
-      const result = await profileApi.createProfileExperience(experience);
-      if (result) {
-        setOpenModalExperienceCreate(false);
+      if (checkForm) {
+        const result = await profileApi.createProfileExperience(experience);
+        if (result) {
+          setOpenModalExperienceCreate(false);
+        }
+      } else {
+        message.error(messageError);
       }
     } catch (error) {
       console.log(error);

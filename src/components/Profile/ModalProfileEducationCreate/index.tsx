@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
+import { message } from 'antd';
 // import { useDispatch } from 'react-redux';
 // import {
 //   getProfile,
@@ -172,12 +173,78 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
   };
 
   // submit
+  const validValue = () => {
+    if (
+      education.companyName?.trim() === ''
+    ) {
+      return {
+        messageError: language?.profile_page?.err_school,
+        checkForm: false,
+      };
+    }
+    if (
+      education.companyName?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Trường học/Tổ chức không được vượt quá 50 ký tự" :
+          "School/Organization cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
+    if (
+      education.major?.trim() === ''
+    ) {
+      return {
+        messageError: language?.profile_page?.err_major,
+        checkForm: false,
+      };
+    }
+    if (
+      education.major?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên ngành không được vượt quá 50 ký tự" :
+          "Major cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
+    if (
+      education.extraInformation?.trim() === ''
+    ) {
+      return {
+        messageError: language?.profile_page?.err_additional_information,
+        checkForm: false,
+      };
+    }
+    if (
+      education.extraInformation?.trim().length > 50
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Thông tin thêm không được vượt quá 50 ký tự" :
+          "Additional information cannot exceed 50 characters",
+        checkForm: false,
+      };
+    }
+
+    return {
+      messageError: '',
+      checkForm: true,
+    };
+  };
 
   const handleSubmit = async () => {
+    const { messageError, checkForm } = validValue();
     try {
-      const result = await profileApi.createProfileEducation(education);
-      if (result) {
-        setOpenModalEducationCreate(false);
+      if (checkForm) {
+        const result = await profileApi.createProfileEducation(education);
+        if (result) {
+          setOpenModalEducationCreate(false);
+        }
+      } else {
+        message.error(messageError)
       }
     } catch (error) {
       console.log(error);

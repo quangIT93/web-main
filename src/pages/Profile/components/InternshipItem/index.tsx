@@ -105,7 +105,7 @@ const InternshipItem: React.FC<IInternshipProps> = (props) => {
           <Space
             size={4}
             direction="vertical"
-            style={{ marginLeft: 10, wordBreak: 'break-all' }}
+            style={{ marginLeft: 10, wordBreak: 'break-word' }}
           >
             <h3>{item?.title}</h3>
             <p>{item?.organization}</p>

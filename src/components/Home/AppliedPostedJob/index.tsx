@@ -229,7 +229,11 @@ const AppliedPostedJob: React.FC = () => {
             }}
           >
             {/* <AdsCVIcon /> */}
-            <div className="advertisement-job-not-loging-content">
+            <div className="advertisement-job-not-loging-content"
+              onClick={() => {
+                window.open('/page-cv', '_parent')
+              }}
+            >
               {/* <h3 style={{ marginTop: '12px' }}>
                 {languageRedux === 1
                   ? 'Dễ dàng tạo cv của riêng bạn'

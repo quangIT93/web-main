@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // @ts-ignore
 import { Navbar } from '#components';
 
 import { IconArrowLeft } from '#components/Icons';
-
+// @ts-ignore
+// import Carousel, { CarouselItem } from '#components/PageCv/Carousel';
+import PageCv2 from './../PageCv2';
 import './style.scss';
+import Footer from '#components/Footer/Footer';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
+import ModalLogin from '#components/Home/ModalLogin';
+
+// const Slide = ({ number }: any) => (
+//   <div>
+//     <img src="./images/pageCv/CV 1.png" alt={number} />
+//   </div>
+// );
 
 const PageCv = () => {
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
+  const [isLogin, setIsLogin] = useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem('accessToken')) {
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
+  }, [])
+
   return (
     <div className="wrap-page_Cv">
       <Navbar />
@@ -19,20 +43,55 @@ const PageCv = () => {
             ứng tuyển công việc phù hợp hoặc chia sẻ CV của bạn với các Nhà
             tuyển dụng!
           </p>
-          <div className="button-update_profile">Cập nhật hồ sơ</div>
+          <div
+            className="button-update_profile"
+            onClick={() => window.open('/profile', '_parent')}
+          >
+            Cập nhật hồ sơ
+          </div>
         </div>
-        <div className="item-imageCv_banner item-page_Cv">
+        {/* <div className="item-imageCv_banner item-page_Cv">
           <img src="./images/pageCv/CV 1.png" alt="" />
-        </div>
+        </div> */}
+        {/* carousel */}
+        {/* <Carousel>
+          <CarouselItem>
+            <Slide number={1} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={2} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={3} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={4} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={5} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={6} />
+          </CarouselItem>
+          <CarouselItem>
+            <Slide number={7} />
+          </CarouselItem>
+        </Carousel> */}
+        <PageCv2 />
+
         <div className="item-imageCv_bannerShow item-page_Cv">
-          <img src="./images/pageCv/web 2 1.png" alt="" />
+          <div className="wrap-img_bannerShow">
+            <img src="./images/pageCv/web 2 1.png" alt="" />
+          </div>
           <div className="banner-show_title">
             <h3>Tạo và tải CV online nhanh chóng</h3>
             <p>
               Chỉ với vài thao tác đơn giản, bạn đã có thể tạo ngay cho mình một
               bản CV chuyên nghiệp để tạo ấn tượng tốt với Nhà tuyển dụng.
             </p>
-            <div className="wrap-bnt_bannerShow">
+            <div className="wrap-bnt_bannerShow"
+              onClick={() => window.open('/profile-cv', '_parent')}
+            >
               <span className="btn-bannerShow">Xem các mẫu CV</span>
             </div>
           </div>
@@ -45,18 +104,25 @@ const PageCv = () => {
               Tổng hợp danh sách mẫu CV xin việc làm online phù hợp với nhiều vị
               trí ngành nghề hiện nay.
             </p>
-            <div className="wrap-cvchange_login">
+            <div className="wrap-cvchange_login"
+              style={{ display: isLogin ? 'none' : 'block' }}
+              onClick={() => setOpenModalLogin(true)}
+            >
               <p className="cv-change_login">
                 <span>Đăng nhập ngay</span>
                 <IconArrowLeft />
               </p>
             </div>
           </div>
-          <img src="./images/pageCv/cv trang 3 1.png" alt="" />
+          <div className="wrap-img_loggin1">
+            <img src="./images/pageCv/cv trang 3 1.png" alt="" />
+          </div>
         </div>
 
         <div className="item-imageCv_loggin2 item-page_Cv">
-          <img src="./images/pageCv/web 4 1.png" alt="" />
+          <div className="wrap-img_loggin2">
+            <img src="./images/pageCv/web 4 1.png" alt="" />
+          </div>
           <div className="banner-show_title">
             <h3>Tạo và tải CV online nhanh chóng</h3>
             <p>
@@ -64,7 +130,10 @@ const PageCv = () => {
               tự động từ hồ sơ có sẵn của bạn trên HiJob và sử dụng để tìm việc
               ngay.
             </p>
-            <div className="wrap-cvchange_login">
+            <div className="wrap-cvchange_login"
+              style={{ display: isLogin ? 'none' : 'block' }}
+              onClick={() => setOpenModalLogin(true)}
+            >
               <p className="cv-change_login">
                 <span>Đăng nhập ngay</span>
                 <IconArrowLeft />
@@ -84,9 +153,16 @@ const PageCv = () => {
               <li>Cách gửi CV qua email</li>
             </ul>
           </div>
-          <img src="./images/pageCv/web 5 1.png" alt="" />
+          <div className="wrap-img_index">
+            <img src="./images/pageCv/web 5 1.png" alt="" />
+          </div>
         </div>
       </div>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
+      <Footer />
     </div>
   );
 };

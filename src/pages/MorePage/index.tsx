@@ -106,7 +106,7 @@ const MoreJobsPage: React.FC = () => {
     const [loading, setLoading] = React.useState(false);
     const [typeJob, setTypeJob] = React.useState<any>(localStorage.getItem('job-type'));
     const [templateId, setTemplateId] = React.useState<any>(localStorage.getItem('job-type'));
-
+    const [openBackdrop, setOpenBackdrop] = React.useState<any>(false);
     const language = useSelector((state: RootState) => state.dataLanguage.languages,);
 
     const [idFilterProvinces, setIdFilterProvinces] = React.useState('');
@@ -151,6 +151,7 @@ const MoreJobsPage: React.FC = () => {
 
     const getMoreJob = async () => {
         try {
+            setOpenBackdrop(true);
             const result =
                 typeJob === "new" ?
                     await postApi.getPostNewestV3(
@@ -194,6 +195,7 @@ const MoreJobsPage: React.FC = () => {
                         result.data.posts
                 );
                 setHasMore(false);
+                setOpenBackdrop(false)
                 return;
             } else if (result.data && (result.data.length !== 0 || result.data.posts.length !== 0)) {
                 setMoreJob(
@@ -201,10 +203,12 @@ const MoreJobsPage: React.FC = () => {
                         result.data :
                         result.data.posts
                 );
+                setOpenBackdrop(false)
                 return;
             } else {
                 setMoreJob([]);
                 setHasMore(false);
+                setOpenBackdrop(false)
             }
 
         } catch (error) {

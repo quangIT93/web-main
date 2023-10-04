@@ -21,6 +21,7 @@ import {
   setAlertLackInfo,
   setAlertEditInfo,
 } from 'store/reducer/profileReducer/alertProfileReducer';
+import { message } from 'antd';
 
 interface IModalSkills {
   openModalSkills: boolean;
@@ -64,8 +65,36 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const [skill, setSkill] = React.useState<any>();
+  const [skill, setSkill] = React.useState<any>('');
   const [level, setLevel] = React.useState<any>(1);
+  const [messageApi, contextHolder] = message.useMessage();
+  const validValue = () => {
+    if (
+      skill?.trim() === ''
+    ) {
+      return {
+        message: languageRedux === 1 ?
+          "Tên kỹ năng không được bỏ trống" :
+          "Skill names cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      skill?.trim().length > 255
+    ) {
+      return {
+        message: languageRedux === 1 ?
+          "Tên kỹ năng không được vượt quá 255 ký tự" :
+          "Skill names cannot exceed 255 characters",
+        checkForm: false,
+      };
+    }
+
+    return {
+      message: '',
+      checkForm: true,
+    };
+  };
 
   const handleOnchangeSkill = (e: any) => {
     setSkill(e.target.value);
@@ -75,22 +104,38 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
   };
 
   const handleSubmit = async () => {
+    const { message, checkForm } = validValue();
     try {
-      const result = await apiCv.postProfileSkill(level, skill);
-      if (result) {
-        const resultProfile = await profileApi.getProfileV3(
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-        if (resultProfile) {
-          setOpenModalSkills(false);
-          setSkill('');
-          setLevel(1);
-          dispatch(setProfileV3(resultProfile));
-          dispatch(setAlertSuccess(true));
+      if (checkForm) {
+        const result = await apiCv.postProfileSkill(level, skill);
+        if (result) {
+          const resultProfile = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (resultProfile) {
+            setOpenModalSkills(false);
+            setSkill('');
+            setLevel(1);
+            dispatch(setProfileV3(resultProfile));
+            dispatch(setAlertSuccess(true));
+          }
         }
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: message,
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log('error', error);
+      if (error?.response?.data?.message === "Skill Role already exists") {
+        messageApi.open({
+          type: 'error',
+          content: languageRedux === 1 ?
+            "Kỹ năng này đã tồn tại" :
+            "This skill is already exists",
+        });
+      }
     }
   };
 
@@ -106,6 +151,7 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style} className="Modal-personnal-info">
+        {contextHolder}
         <div
           style={{
             position: 'absolute',
@@ -148,7 +194,7 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>

@@ -112,7 +112,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             direction="vertical"
             style={{
               marginLeft: 10,
-              wordBreak: 'break-all',
+              wordBreak: 'break-word',
             }}
           >
             <h3>{item?.company_name}</h3>

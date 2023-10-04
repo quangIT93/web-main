@@ -29,7 +29,7 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons';
 import moment from 'moment';
-import { Box, Grid } from '@mui/material';
+import { Backdrop, Box, CircularProgress, Grid } from '@mui/material';
 import ModalShare from '#components/CV/ModalShare';
 import RollTop from '#components/RollTop';
 import ModalDeleteCv from '#components/CV/ModalDeleteCv';
@@ -53,6 +53,7 @@ const ProfileCv: React.FC = () => {
   const [linkPdfUrl, setLinkPdfUrl] = React.useState('');
 
   const [openModalShare, setOpenModalShare] = React.useState<any>(false);
+  const [openBackdrop, setOpenBackdrop] = React.useState<any>(false);
 
   const [modalShowPdf, setModalShowCvPdf] = React.useState({
     open: false,
@@ -101,6 +102,12 @@ const ProfileCv: React.FC = () => {
     // setSelectedId(id);
   };
 
+  React.useEffect(() => {
+    if (!localStorage.getItem('accessToken') || roleRedux === 1)
+      window.open(`/`, '_parent');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleEditCv = (id: any) => {
     localStorage.setItem('cv-id', id);
     window.open(`/templates-cv/`, '_parent');
@@ -132,6 +139,22 @@ const ProfileCv: React.FC = () => {
   function onDocumentLoadSuccess({ numPages }: any) {
     setNumPages(numPages);
   }
+
+  React.useEffect(() => {
+    setOpenBackdrop(true);
+    if (profileV3?.profilesCvs?.length > 0) {
+      setOpenBackdrop(false);
+    }
+    if (profileV3?.profilesCvs?.length === 0) {
+      setTimeout(() => {
+        setOpenBackdrop(false);
+      }, 1000);
+    }
+
+  }, [profileV3])
+
+  console.log(profileV3);
+
 
   return (
     <div className="profile-cv-container">
@@ -274,6 +297,17 @@ const ProfileCv: React.FC = () => {
               </Grid>
             ))}
           </Grid>
+          <Backdrop
+            sx={{
+              color: '#0d99ff ',
+              backgroundColor: 'transparent',
+              zIndex: (theme: any) => theme.zIndex.drawer + 1,
+            }}
+            open={openBackdrop}
+          //  onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </Box>
 
         {/* {linkPdfUrl ? (

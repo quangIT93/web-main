@@ -48,7 +48,7 @@ const CourseItem: React.FC<ICourseItem> = (props) => {
               padding: '8px 12px',
               border: '0.5px solid #aaaaaa',
               borderRadius: '10px',
-              wordBreak: 'break-all',
+              wordBreak: 'break-word',
             }}
           >
             <h3>{item?.title}</h3>

@@ -19,6 +19,7 @@ import { RootState } from 'store';
 import apiCv from 'api/apiCv';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
+import ModalDeleteLanguage from '#components/Profile/ModalDeleteLanguage';
 
 interface ISkillItem {
   item: {
@@ -69,27 +70,28 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
   } = props;
 
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [openModalDeleteLanguage, setOpenModalDeleteLanguage] = useState(false);
   const dispatch = useDispatch();
 
   const handleDeleteLanguage = async (id: number) => {
-    try {
-      const result = await apiCv.deleteProfileLanguage([id]);
-      if (result) {
-        const resultProfile = await profileApi.getProfileV3(
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-        if (resultProfile) {
-          dispatch(setProfileV3(resultProfile));
-          dispatch(setAlert(true));
-        }
-      }
-    } catch (error) {}
+    // try {
+    //   const result = await apiCv.deleteProfileLanguage([id]);
+    //   if (result) {
+    //     const resultProfile = await profileApi.getProfileV3(
+    //       languageRedux === 1 ? 'vi' : 'en',
+    //     );
+    //     if (resultProfile) {
+    //       dispatch(setProfileV3(resultProfile));
+    //       dispatch(setAlert(true));
+    //     }
+    //   }
+    // } catch (error) { }
     // setLanguageValues(
     //   languageValues.filter((value: any, index: any) => {
     //     return index !== id;
     //   }),
     // );
+    setOpenModalDeleteLanguage(true);
   };
 
   const handleEditLanguage = (
@@ -111,7 +113,7 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
               padding: '8px 12px',
               border: '0.5px solid #aaaaaa',
               borderRadius: '10px',
-              wordBreak: 'break-all',
+              wordBreak: 'break-word',
             }}
           >
             <h3>{item?.languageName}</h3>
@@ -121,18 +123,18 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
                   ? 'Sơ cấp'
                   : 'Primary'
                 : item?.dataLevel.id === 2
-                ? languageRedux === 1
-                  ? 'Trung cấp'
-                  : 'Intermediate'
-                : item?.dataLevel.id === 3
-                ? languageRedux === 1
-                  ? 'Trình độ cao'
-                  : 'High - level'
-                : item?.dataLevel.id === 4
-                ? languageRedux === 1
-                  ? 'Thành thạo'
-                  : 'Native'
-                : ''}
+                  ? languageRedux === 1
+                    ? 'Trung cấp'
+                    : 'Intermediate'
+                  : item?.dataLevel.id === 3
+                    ? languageRedux === 1
+                      ? 'Trình độ cao'
+                      : 'High - level'
+                    : item?.dataLevel.id === 4
+                      ? languageRedux === 1
+                        ? 'Thành thạo'
+                        : 'Native'
+                      : ''}
             </p>
           </Space>
         </div>
@@ -166,6 +168,13 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
           </p>
         </Space>
       </div>
+      <ModalDeleteLanguage
+        openModalDeleteLanguage={openModalDeleteLanguage}
+        setOpenModalDeleteLanguage={setOpenModalDeleteLanguage}
+        languageId={[item?.id]}
+        languageValue={item?.languageName}
+        deleteAll={false}
+      />
     </div>
   );
 };

@@ -99,7 +99,8 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
   } = props;
   const dispatch = useDispatch();
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
-
+  const [messageApi, contextHolder] = message.useMessage();
+  const key = 'updatable';
   const [open, setOpen] = useState(false);
 
   const [cvHijob, setCvHijob] = useState<any[]>([1, 2]);
@@ -153,12 +154,28 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         .sort((a: any, b: any) => b.id - a.id),
     ]);
     try {
+      messageApi.open({
+        key,
+        type: 'loading',
+        content: languageRedux === 1 ?
+          "Đang xử lý ..." :
+          "Action in progress..",
+      });
       const result = await apiCv.putThemeCv(item?.id, 1);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileV3(
           languageRedux === 1 ? 'vi' : 'en',
         );
         dispatch(setProfileV3(resultProfileV3));
+        if (resultProfileV3 && resultProfileV3?.data?.profilesCvs?.length > 0) {
+          messageApi.open({
+            key,
+            type: 'success',
+            content: languageRedux === 1 ?
+              "Đổi CV thành công" :
+              "Successfully changed CV",
+          });
+        }
       }
     } catch (error) { }
   };
@@ -203,7 +220,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         responseType: 'blob', // Để nhận dạng kiểu dữ liệu là blob (binary data)
       });
 
-      console.log('response', response);
+      // console.log('response', response);
       // Tạo URL tạm thời cho tệp PDF
       const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
       const url = URL.createObjectURL(pdfBlob);
@@ -255,6 +272,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
 
   return (
     <div style={{ display: display, width: '100%' }}>
+      {contextHolder}
       <Skeleton className="skeleton-item" loading={loading} active>
         <div className="div-profile-info">
           <div
@@ -481,11 +499,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                     onClick={(e) => handleChooseCv(item, e)}
                                   >
                                     <span className="text-cv-default">
-                                      {
-                                        languageRedux === 1 ?
-                                          "Đặt làm CV chính" :
-                                          "Set as main CV"
-                                      }
+                                      {languageRedux === 1
+                                        ? 'Đặt làm CV chính'
+                                        : 'Set as main CV'}
                                     </span>
 
                                     <span
@@ -506,11 +522,9 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                       style={{ color: '#ffffff' }}
                                       className="text-cv-default"
                                     >
-                                      {
-                                        languageRedux === 1 ?
-                                          "CV chính" :
-                                          "Main CV"
-                                      }
+                                      {languageRedux === 1
+                                        ? 'CV chính'
+                                        : 'Main CV'}
                                     </span>
 
                                     <span style={{ marginLeft: '4px' }}>
