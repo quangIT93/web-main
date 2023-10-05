@@ -40,7 +40,7 @@ import {
 } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
-
+import banner from '../../../img/Banner/banner_for_candidates_1.png';
 import './styles.scss';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
@@ -51,6 +51,7 @@ import { home } from 'validations/lang/vi/home';
 import { number } from 'yargs';
 import historyApplicator from 'api/historyApplicator';
 import historyRecruiter from 'api/historyRecruiter';
+import { Avatar } from '@mui/material';
 
 // interface ItemTheme {
 //   id: number;
@@ -109,19 +110,19 @@ const AppliedPostedJob: React.FC = () => {
     try {
       setloading(true);
       const result =
-        roleRedux === 0 ?
-          await historyApplicator.getAllSubmitedApplied(
-            null,
-            10,
-            1,
-            languageRedux === 1 ? 'vi' : 'en',
-          ) :
-          await historyRecruiter.GetInformationAndCandidatesCount(
-            0,
-            10,
-            '1',
-            languageRedux === 1 ? 'vi' : 'en',
-          );
+        roleRedux === 0
+          ? await historyApplicator.getAllSubmitedApplied(
+              null,
+              10,
+              1,
+              languageRedux === 1 ? 'vi' : 'en',
+            )
+          : await historyRecruiter.GetInformationAndCandidatesCount(
+              0,
+              10,
+              '1',
+              languageRedux === 1 ? 'vi' : 'en',
+            );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
       //   languageRedux === 1 ? 'vi' : 'en',
@@ -132,7 +133,7 @@ const AppliedPostedJob: React.FC = () => {
           setloading(false);
         }, 1000);
         console.log('result: ', result);
-        setAppliedPostedJob(result.data)
+        setAppliedPostedJob(result.data);
         // roleRedux === 0
         //   ? setAppliedPostedJob(
         //     result.data.filter((job: any) => {
@@ -149,8 +150,6 @@ const AppliedPostedJob: React.FC = () => {
       console.log(error);
     }
   };
-
-  console.log('applied', appliedPostedJob);
 
   React.useEffect(() => {
     getAppliedPostedJobs();
@@ -201,7 +200,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -227,9 +226,14 @@ const AppliedPostedJob: React.FC = () => {
                 roleRedux === 0 && appliedPostedJob.length !== 0 ? '24px' : '0',
             }}
           >
-            <AdsCVIcon />
-            <div className="advertisement-job-not-loging-content">
-              <h3 style={{ marginTop: '12px' }}>
+            {/* <AdsCVIcon /> */}
+            <div
+              className="advertisement-job-not-loging-content"
+              onClick={() => {
+                window.open('/page-cv', '_parent');
+              }}
+            >
+              {/* <h3 style={{ marginTop: '12px' }}>
                 {languageRedux === 1
                   ? 'Dễ dàng tạo cv của riêng bạn'
                   : 'Easily create your own resume'}
@@ -257,18 +261,29 @@ const AppliedPostedJob: React.FC = () => {
                       : 'Share quickly on social platforms'}
                   </li>
                 </ul>
-              </div>
+              </div> */}
+              <Avatar
+                sx={{
+                  width: '100%',
+                  maxHeight: '301px',
+                  height: 'auto',
+                }}
+                variant="square"
+                src={banner}
+              >
+                Banner
+              </Avatar>
             </div>
-            <Button
+            {/* <Button
               type="primary"
               onClick={() => window.open(`/profile/`, '_parent')}
             >
               {languageRedux === 1 ? 'Tạo cv của bạn' : 'Create Your Resume'}
-            </Button>
+            </Button> */}
           </div>
           <Skeleton loading={false} active>
             {appliedPostedJob.length !== 0 &&
-              localStorage.getItem('accessToken') ? (
+            localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -283,8 +298,8 @@ const AppliedPostedJob: React.FC = () => {
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                      ? 'Công việc đã đã tuyển'
-                      : 'Posted Job'}
+                    ? 'Công việc đã đã tuyển'
+                    : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -404,8 +419,10 @@ const AppliedPostedJob: React.FC = () => {
                     );
                   }}
                 >
-                  <AppliedPostedJobCard item={item}
-                    type={roleRedux === 0 ? 'application' : 'post'} />
+                  <AppliedPostedJobCard
+                    item={item}
+                    type={roleRedux === 0 ? 'application' : 'post'}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

@@ -54,7 +54,14 @@ const profileApi = {
       },
     }) // Truyền email vào body của request
   },
-  
+  getProfileByAccountId: (lang: string, accountId: string, unclock: boolean) => {
+    const URL = `/v3/profiles/${accountId}?unlock=${unclock}&lang=${lang}`
+    return axiosClient.get(URL, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+    })
+  },
   putProfileJobV3: (jobTypeId: number| null) => {
     const URL = `/v3/profiles/job`
     return axiosClient.put(URL, {

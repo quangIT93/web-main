@@ -51,6 +51,10 @@ import {
   setAlert,
   setAlertLackInfo,
 } from 'store/reducer/profileReducer/alertProfileReducer';
+import ModalDeleteSkill from '#components/Profile/ModalDeleteSkill';
+import ModalDeleteLanguage from '#components/Profile/ModalDeleteLanguage';
+import ModalDeleteHobbies from '#components/Profile/ModalDeleteHobbies';
+import ModalDeleteReferences from '#components/Profile/ModalDeleteReferences';
 
 const { TextArea } = Input;
 
@@ -167,6 +171,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
   const [openModalDeleteActivities, setOpenModalDeleteActivities] =
     useState(false);
   const [openModalDeleteAwards, setOpenModalDeleteAwards] = useState(false);
+  const [openModalDeleteSkill, setOpenModalDeleteSkill] = useState(false);
+  const [openModalDeleteLanguage, setOpenModalDeleteLanguage] = useState(false);
+  const [openModalDeleteHobbies, setOpenModalDeleteHobbies] = useState(false);
+  const [openModalDeleteReferences, setOpenModalDeleteReferences] = useState(false);
 
   console.log('profileV3', profileV3);
   const dispatch = useDispatch();
@@ -192,6 +200,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
     // }
   };
 
+  React.useEffect(() => {
+    setHobbieValues(profileV3?.profileHobbies?.description)
+  }, [profileV3])
+
   const handleCloseSection = async (section: number) => {
     if (sections.includes(section)) {
       setSections(
@@ -203,71 +215,53 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
 
     switch (section) {
       case 0:
-        const item0 =
-          profileV3 && profileV3.profilesSkills.map((item: any) => item.id);
-
-        const result0 = await apiCv.deleteProfileSkill(item0);
-        if (result0) {
-          const resultProfile = await profileApi.getProfileV3(
-            languageRedux === 1 ? 'vi' : 'en',
-          );
-          if (resultProfile) {
-            dispatch(setProfileV3(resultProfile));
-            dispatch(setAlert(true));
-          }
+        if (profileV3 && profileV3?.profilesSkills?.length > 0) {
+          setOpenModalDeleteSkill(true);
+        } else {
+          setOpenModalDeleteSkill(false);
         }
 
         break;
       case 1:
-        const item =
-          profileV3 &&
-          profileV3?.profilesLanguages?.map((item: any) => item.id);
-
-        const result = await apiCv.deleteProfileLanguage(item);
-        if (result) {
-          const resultProfile = await profileApi.getProfileV3(
-            languageRedux === 1 ? 'vi' : 'en',
-          );
-          if (resultProfile) {
-            dispatch(setAlert(true));
-            dispatch(setProfileV3(resultProfile));
-          }
+        if (profileV3 && profileV3?.profilesLanguages?.length > 0) {
+          setOpenModalDeleteLanguage(true);
+        } else {
+          setOpenModalDeleteLanguage(false);
         }
         break;
 
       case 2:
-        const result2 = await apiCv.deleteProfileHobbies();
-        if (result2) {
-          const resultProfile = await profileApi.getProfileV3(
-            languageRedux === 1 ? 'vi' : 'en',
-          );
-          if (resultProfile) {
-            dispatch(setProfileV3(resultProfile));
-            dispatch(setAlert(true));
-            setHobbieValues('');
-          }
+        if (profileV3 && profileV3?.profileHobbies !== null) {
+          setOpenModalDeleteHobbies(true);
+        } else {
+          setOpenModalDeleteHobbies(false);
         }
         break;
 
       case 3:
-        const item3 =
-          profileV3 &&
-          profileV3?.profilesReferences?.map((item: any) => item.id);
-
-        const result3 = await apiCv.deleteProfileReference(item3);
-        if (result3) {
-          const resultProfile = await profileApi.getProfileV3(
-            languageRedux === 1 ? 'vi' : 'en',
-          );
-          if (resultProfile) {
-            dispatch(setProfileV3(resultProfile));
-            dispatch(setAlert(true));
-          }
+        if (profileV3 && profileV3?.profilesReferences?.length > 0) {
+          setOpenModalDeleteReferences(true);
+        } else {
+          setOpenModalDeleteReferences(false);
         }
+        // const item3 =
+        //   profileV3 &&
+        //   profileV3?.profilesReferences?.map((item: any) => item.id);
+
+        // const result3 = await apiCv.deleteProfileReference(item3);
+        // if (result3) {
+        //   const resultProfile = await profileApi.getProfileV3(
+        //     languageRedux === 1 ? 'vi' : 'en',
+        //   );
+        //   if (resultProfile) {
+        //     dispatch(setProfileV3(resultProfile));
+        //     dispatch(setAlert(true));
+        //   }
+        // }
         break;
 
       case 5:
-        if (profileV3?.profileActivities?.length > 0) {
+        if (profileV3 && profileV3?.profileActivities?.length > 0) {
           setOpenModalDeleteActivities(true);
         } else {
           setOpenModalDeleteActivities(false);
@@ -275,7 +269,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
 
         break;
       case 7:
-        if (profileV3?.profileAwards?.length > 0) {
+        if (profileV3 && profileV3?.profileAwards?.length > 0) {
           setOpenModalDeleteAwards(true);
         } else {
           setOpenModalDeleteAwards(false);
@@ -303,8 +297,22 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
 
   const handleSaveHobbies = async () => {
     try {
-      if (hobbieValues === '' || hobbieValues === undefined) {
-        dispatch(setAlertLackInfo(true));
+      if (hobbieValues?.trim() === '' || hobbieValues?.trim() === undefined) {
+        // dispatch(setAlertLackInfo(true));
+        message.error(
+          languageRedux === 1 ?
+            "Sở thích không được bỏ trống" :
+            "Hobbies cannot be empty",
+        )
+        return;
+      }
+      if (hobbieValues?.trim().length > 1000) {
+        // dispatch(setAlertLackInfo(true));
+        message.error(
+          languageRedux === 1 ?
+            "Sở thích không được vượt quá 1000 ký tự" :
+            "Hobbies cannot exceed 1000 characters",
+        )
         return;
       }
       const result = await apiCv.postProfileHobbies(hobbieValues);
@@ -313,7 +321,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (resultProfileV3) {
-          // dispatch(setProfileV3(resultProfileV3));
+          dispatch(setProfileV3(resultProfileV3));
           dispatch(setAlertSuccess(true));
         }
       }
@@ -404,6 +412,18 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
           openModalEditSkills={openModalEditSkills}
           setOpenModalEditSkills={setOpenModalEditSkills}
           setSkillValues={setSkillValues}
+        />
+
+        <ModalDeleteSkill
+          openModalDeleteSkill={openModalDeleteSkill}
+          setOpenModalDeleteSkill={setOpenModalDeleteSkill}
+          skillId={profileV3?.profilesSkills?.map(
+            (item: any, index: number) => {
+              return item?.id;
+            },
+          )}
+          skillValue={null}
+          deleteAll={true}
         />
       </Skeleton>
 
@@ -506,6 +526,18 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             setLanguageValues={setLanguageValues}
             type="edit"
           />
+
+          <ModalDeleteLanguage
+            openModalDeleteLanguage={openModalDeleteLanguage}
+            setOpenModalDeleteLanguage={setOpenModalDeleteLanguage}
+            languageId={profileV3?.profilesLanguages?.map(
+              (item: any, index: number) => {
+                return item?.id;
+              },
+            )}
+            languageValue={null}
+            deleteAll={true}
+          />
         </Skeleton>
 
         {/* Hobbies section */}
@@ -556,7 +588,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 }}
                 onClick={handleSaveHobbies}
               >
-                Save
+                {
+                  languageRedux === 1 ?
+                    "Lưu" : "Save"
+                }
                 <IconSaveProfile />
               </div>
             </div>
@@ -569,10 +604,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               <TextArea
                 value={hobbieValues}
                 onKeyDown={(e: any) => handleKeyPress(e)}
-                defaultValue={
-                  profileV3?.profileHobbies &&
-                  profileV3?.profileHobbies?.description
-                }
+                // defaultValue={
+                //   profileV3?.profileHobbies &&
+                //   profileV3?.profileHobbies?.description
+                // }
                 // onPressEnter={(e: any) => handleKeyPress(e)}
                 onChange={handleOnChangeHobbie}
                 placeholder={
@@ -587,6 +622,10 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
               />
             </div>
           </div>
+          <ModalDeleteHobbies
+            openModalDeleteHobbies={openModalDeleteHobbies}
+            setOpenModalDeleteHobbies={setOpenModalDeleteHobbies}
+          />
         </Skeleton>
 
         {/* References section */}
@@ -679,6 +718,17 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             openModalEditReference={openModalEditReference}
             setOpenModalEditReference={setOpenModalEditReference}
             setReferenceValues={setReferenceValues}
+          />
+
+          <ModalDeleteReferences
+            openModalDeleteReferences={openModalDeleteReferences}
+            setOpenModalDeleteReferences={setOpenModalDeleteReferences}
+            referenceId={profileV3?.profilesReferences?.map(
+              (item: any, index: number) => {
+                return item?.id;
+              },
+            )}
+            deleteAll={true}
           />
         </Skeleton>
 

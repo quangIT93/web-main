@@ -24,6 +24,7 @@ import {
 
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import profileApi from 'api/profileApi';
+import { message } from 'antd';
 interface IModalSkills {
   openModalEditlanguages: {
     open: boolean;
@@ -104,32 +105,65 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
     setLevel(openModalEditlanguages.idLevel);
   }, [openModalEditlanguages]);
 
-  const handleSubmit = async () => {
-    try {
-      const result = await apiCv.putProfileLanguage(
-        level,
-        language,
-        openModalEditlanguages.id,
-      );
-      if (result) {
-        const resultProfile = await profileApi.getProfileV3(
-          languageRedux === 1 ? 'vi' : 'en',
-        );
+  const validValue = () => {
+    if (
+      language?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên ngôn ngữ không được bỏ trống" :
+          "Language names cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      language?.trim().length > 255
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên ngôn ngữ không được vượt quá 255 ký tự" :
+          "Language names cannot exceed 255 characters",
+        checkForm: false,
+      };
+    }
 
-        if (resultProfile) {
-          setOpenModalEditlanguages({
-            open: false,
-            id: null,
-            idLevel: null,
-            name: '',
-          });
-          dispatch(setProfileV3(resultProfile));
-          setLanguage('');
-          setLevel(1);
-          dispatch(setAlertEditInfo(true));
+    return {
+      messageError: '',
+      checkForm: true,
+    };
+  };
+
+  const handleSubmit = async () => {
+    const { messageError, checkForm } = validValue()
+    try {
+      if (checkForm) {
+        const result = await apiCv.putProfileLanguage(
+          level,
+          language,
+          openModalEditlanguages.id,
+        );
+        if (result) {
+          const resultProfile = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+
+          if (resultProfile) {
+            setOpenModalEditlanguages({
+              open: false,
+              id: null,
+              idLevel: null,
+              name: '',
+            });
+            dispatch(setProfileV3(resultProfile));
+            setLanguage('');
+            setLevel(1);
+            dispatch(setAlertEditInfo(true));
+          }
         }
+      } else {
+        message.error(messageError)
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleClose = () => {
@@ -173,8 +207,8 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
           {languageRedux === 1
             ? 'Sửa ngoại ngữ'
             : languageRedux === 0
-            ? 'Edit Languages'
-            : ''}
+              ? 'Edit Languages'
+              : ''}
         </Typography>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -196,7 +230,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>

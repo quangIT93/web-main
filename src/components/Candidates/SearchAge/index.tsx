@@ -22,6 +22,7 @@ import {
   Select,
   Space,
   Radio,
+  Input,
 } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 
@@ -38,6 +39,9 @@ const CustomOption = ({
   setTypeAcademic: any;
   setValueRender: Function;
 }) => {
+  const [valueMinAge, setValueMinAge] = React.useState(0);
+  const [valueMaxAge, setValueMaxAge] = React.useState(0);
+
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     // console.log('valueRender Loai cong viec', valueRender);
     // console.log('valueRender Loai cong viec value', value);
@@ -54,33 +58,39 @@ const CustomOption = ({
 
   return (
     <div className="wrap-radio_candidate">
+      <Input placeholder="Please enter item" />
       <div className="title-candidate">
-        <h3> Trình độ học vấn</h3>
+        <h3>Độ tuổi</h3>
       </div>
-      <Radio.Group
-        style={{ width: '100%' }}
-        name="radiogroup"
-        onChange={onChange}
-        value={typeAcademic === 0 ? typeAcademic : 1}
-        // defaultValue={jobType ? jobType : 5}
-      >
-        <Space direction="vertical" style={{ width: '100%' }}>
-          {academicType?.map((value: any, index: number) => {
-            return (
-              <Radio key={index} style={{ width: '100%' }} value={value.id}>
-                {value.data}
-              </Radio>
-            );
-          })}
-        </Space>
-      </Radio.Group>
+      <div className="input-age">
+        <div className="block-input_age"></div>
+
+        <div className="block-input_age">
+          <input
+            type="number"
+            name=""
+            id=""
+            className="input-item_age"
+            value={valueMaxAge}
+          />
+        </div>
+      </div>
     </div>
   );
 };
 
-const SeachAge = () => {
+interface ISeachAge {
+  setAgeMin: any;
+  setAgeMax: any;
+  ageMax: number | null;
+  ageMin: number | null;
+  setReset: Function;
+  reset: boolean;
+}
+
+const SeachAge: React.FC<ISeachAge> = (props) => {
+  const { setAgeMin, setAgeMax, ageMax, ageMin, reset, setReset } = props;
   const [academicType, setAcademicType] = React.useState([]);
-  const [reset, setReset] = React.useState(false);
 
   const { Option } = Select;
 
@@ -124,29 +134,131 @@ const SeachAge = () => {
   const handleChange = (value1: string) => {
     setReset(false);
   };
+  const [isSelectOpen, setIsSelectOpen] = React.useState(false);
+  const [valueMinAge, setValueMinAge] = React.useState(0);
+  const [valueMaxAge, setValueMaxAge] = React.useState(0);
+  const selectRef = React.useRef<any>(null);
+  React.useEffect(() => {
+    const handleOutsideClick = (event: any) => {
+      const element = document.querySelector('.wrap-radio_candidateAge');
+      if (
+        (selectRef.current && !selectRef.current?.contains(event.target)) ||
+        (element && !element.contains(event.target))
+      ) {
+        setIsSelectOpen(false); // Đóng Select khi click bên ngoài
+      }
+      const element1 = document.querySelector('.wrap-radio_candidateAge');
+
+      console.log(element1?.contains(event.target));
+
+      if (
+        (selectRef.current && selectRef.current?.contains(event.target)) ||
+        (element && element.contains(event.target))
+      ) {
+        // Đóng Select khi click bên ngoài
+        setIsSelectOpen(true);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [isSelectOpen]);
+  console.log('age', ageMax);
+
   return (
-    <div className="filter-candidate">
+    <div className="filter-candidate" ref={selectRef}>
       <div className="filter-input_candidate">
         <PaperFilterIcon width={20} height={20} />
       </div>
       <Select
+        // ref={selectRef}
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={valueRender ? valueRender.data : undefined}
-        className="inputTypeSalary input-filter_nav"
+        value={
+          reset && !ageMax && !ageMin ? undefined : `${ageMin} - ${ageMax}`
+        }
+        className=""
         size="large"
         placeholder="Độ tuổi"
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
+        open={isSelectOpen}
+        dropdownRender={(menu) => (
+          <div className="wrap-radio_candidateAge">
+            {/* {menu} */}
+            <div className="title-search_age">
+              <h3>Độ tuổi</h3>
+            </div>
+
+            <Divider style={{ margin: '8px 0' }} />
+            <div
+              style={{
+                display: 'flex',
+                gap: '12px',
+                padding: '12px 0',
+                justifyContent: 'center',
+              }}
+            >
+              <Space style={{ padding: '0 8px 4px' }}>
+                <Input
+                  placeholder="Please enter item"
+                  type="number"
+                  style={{
+                    WebkitAppearance: 'none',
+                    MozAppearance: 'textfield',
+                  }}
+                  maxLength={1}
+                  // ref={inputRef}
+                  value={ageMin ? ageMin : undefined}
+                  max={100}
+                  onChange={(e: any) => {
+                    setReset(false);
+                    if (e.target.value < 120) {
+                      setAgeMin(e.target.value);
+                    }
+                  }}
+                />
+                {/* <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
+                Add item
+              </Button> */}
+              </Space>
+              <Space style={{ padding: '0 8px 4px' }}>
+                <Input
+                  placeholder="Please enter item"
+                  type="number"
+                  style={{
+                    WebkitAppearance: 'none',
+                    MozAppearance: 'textfield',
+                  }}
+                  // ref={inputRef}
+                  value={ageMax ? ageMax : undefined}
+                  max={100}
+                  onChange={(e: any) => {
+                    if (e.target.value < 1000) {
+                      setAgeMax(e.target.value);
+                    }
+                    setReset(false);
+                  }}
+                />
+                {/* <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
+                Add item
+              </Button> */}
+              </Space>
+            </div>
+          </div>
+        )}
       >
-        <Option className="type-salary" value="5" label="">
+        {/* <Option className="type-salary" value="5" label="">
           <CustomOption
             academicType={gender}
             setTypeAcademic={setTypeAcademic}
             typeAcademic={typeAcademic}
             setValueRender={setValueRender}
           />
-        </Option>
+        </Option> */}
       </Select>
     </div>
   );

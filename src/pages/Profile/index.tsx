@@ -103,6 +103,7 @@ import ChangeRoleButton from './components/ChangeRoleButton';
 import CandidateProfile from './components/CandidateProfile';
 import Company from 'pages/Company';
 import CategoryDropdown from '#components/CategoryDropdown';
+import ModalIntroduceCv from '#components/Profile/ModalIntroduceCv';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -833,6 +834,8 @@ const Profile: React.FC = () => {
             </Alert>
           </Snackbar>
         </Stack>
+
+        <ModalIntroduceCv />
       </div>
       <RollTop />
       <CreateCv role={roleRedux} />

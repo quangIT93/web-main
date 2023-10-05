@@ -17,6 +17,7 @@ import apiCv from 'api/apiCv';
 import profileApi from 'api/profileApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { setAlertEditInfo } from 'store/reducer/profileReducer/alertProfileReducer';
+import { message } from 'antd';
 
 interface IModalReference {
   openModalEditReference: {
@@ -81,10 +82,10 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
 
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
-  const [fullName, setFullName] = React.useState<any>();
-  const [description, setDescription] = React.useState<any>();
-  const [phone, setPhone] = React.useState<any>();
-  const [mail, setMail] = React.useState<any>();
+  const [fullName, setFullName] = React.useState<any>('');
+  const [description, setDescription] = React.useState<any>('');
+  const [phone, setPhone] = React.useState<any>('');
+  const [mail, setMail] = React.useState<any>('');
 
   React.useEffect(() => {
     setPhone(openModalEditReference.phone);
@@ -108,25 +109,120 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
     setMail(e.target.value);
   };
 
+  const regexCheckPhone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+  const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const validValue = () => {
+    if (
+      fullName?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên không được bỏ trống" :
+          "Full name cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      fullName?.trim().length > 255
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên không được vượt quá 255 ký tự" :
+          "Full name cannot exceed 255 characters",
+        checkForm: false,
+      };
+    }
+    if (
+      phone?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Số điện thoại không được bỏ trống" :
+          "Phone cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      regexCheckPhone.test(phone) === false
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Số điện thoại không đúng định dạng" :
+          "The phone number is not in the correct format",
+        checkForm: false,
+      };
+    }
+    if (
+      mail?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Email không được bỏ trống" :
+          "Email cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      regexCheckEmail.test(mail) === false
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Email không đúng định dạng" :
+          "The Email is not in the correct format",
+        checkForm: false,
+      };
+    }
+    if (
+      description?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Thông tin thêm không được bỏ trống" :
+          "Additional information cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      description?.trim().length > 1000
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Thông tin thêm không được vượt quá 1000 ký tự" :
+          "Additional information cannot exceed 1000 characters",
+        checkForm: false,
+      };
+    }
+
+    return {
+      messageError: '',
+      checkForm: true,
+    };
+  };
+
   const handleSubmit = async () => {
+    const { messageError, checkForm } = validValue()
     try {
-      const result = await apiCv.putProfileReference(
-        fullName,
-        phone,
-        mail,
-        description,
-        openModalEditReference.id,
-      );
-      if (result) {
-        const resultProfile = await profileApi.getProfileV3(
-          languageRedux === 1 ? 'vi' : 'en',
+      if (checkForm) {
+        const result = await apiCv.putProfileReference(
+          fullName,
+          phone,
+          mail,
+          description,
+          openModalEditReference.id,
         );
-        if (resultProfile) {
-          dispatch(setProfileV3(resultProfile));
-          dispatch(setAlertEditInfo(true));
+        if (result) {
+          const resultProfile = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (resultProfile) {
+            dispatch(setProfileV3(resultProfile));
+            dispatch(setAlertEditInfo(true));
+          }
         }
+      } else {
+        message.error(messageError)
       }
-    } catch (error) {}
+    } catch (error) { }
 
     // setReferenceValues((prev: any) => [
     //   {
@@ -212,7 +308,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Họ và tên' : 'Full name'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
@@ -234,7 +330,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Số điện thoại' : 'Phone number'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
@@ -256,7 +352,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Email' : 'Email'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
@@ -277,8 +373,8 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             multiline
             rows={4}
             id="extraExp_info"
-            // label="Một số đặc điểm nhận diện công ty"
-            // placeholder={language?.profile_page?.place_additional_information}
+          // label="Một số đặc điểm nhận diện công ty"
+          // placeholder={language?.profile_page?.place_additional_information}
           />
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>

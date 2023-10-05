@@ -1,0 +1,73 @@
+.introduce-cv-container {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10%;
+
+    .introduce-cv-content {
+        // width: 546px;
+        border-radius: 10px;
+        border: 1px solid rgba(212, 237, 255, 1);
+        padding: 16px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+
+        @media screen and (max-width: 425px) {
+            max-height: 180px;
+            overflow-y: scroll;
+        }
+
+        .introduce-cv_item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            .introduce-cv_icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #0D99FF;
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border-radius: 50%;
+
+                svg {
+                    color: #FFFFFF;
+                    stroke: #FFFFFF;
+                }
+            }
+
+            p {
+                font-family: Roboto;
+                font-size: 14px;
+                font-weight: 400;
+                letter-spacing: 0em;
+                text-align: left;
+            }
+        }
+    }
+}
+
+.create-buttons-cv-modal {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        width: 375px;
+        height: 56px;
+        border-radius: 10px !important;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0em;
+        text-align: center;
+        font-family: Roboto;
+        color: #FFFFFF;
+    }
+}

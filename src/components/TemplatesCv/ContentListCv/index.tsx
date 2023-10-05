@@ -195,7 +195,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   // console.log('dataCategories', dataCategories);
 
-  const handleChangeCategory = async () => {};
+  const handleChangeCategory = async () => { };
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
@@ -209,7 +209,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const styles = StyleSheet.create({
@@ -420,7 +420,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
         <div
           className="contentCv-bottom-right_cv"
           id="page"
-          // dangerouslySetInnerHTML={{ __html: htmlCv }}
+        // dangerouslySetInnerHTML={{ __html: htmlCv }}
         >
           <>
             {/* <PreviewTheme1 /> */}

@@ -53,7 +53,15 @@ import { Button, Cascader, Divider, Typography } from 'antd';
 //   },
 // ];
 
-const SeachLocation = () => {
+interface ISearchLocation {
+  setAddresses: any;
+  setReset: Function;
+  reset: boolean;
+  addresses: any;
+}
+
+const SeachLocation: React.FC<ISearchLocation> = (props) => {
+  const { setAddresses, reset, setReset, addresses } = props;
   const [dataLocations, setDataLocations] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
 
@@ -104,8 +112,27 @@ const SeachLocation = () => {
   //   );
 
   const onChange = (value: string[][]) => {
-    console.log(value);
+    setReset(false);
+    setAddresses(value);
   };
+
+  const DropdownRender = (menus: React.ReactNode) => (
+    <div className="filter-loca-cate">
+      <Text className="title-filter_location">Địa điểm</Text>
+      {menus}
+      <Divider style={{ margin: '8px 5px' }}>
+        {disable ? 'Vui lòng chọn địa điểm bạn muốn tìm kiếm.' : ''}
+      </Divider>
+      {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
+            <Button type="default" onClick={() => {}}>
+              Huỷ
+            </Button>
+            <Button type="primary" onClick={() => {}}>
+              Áp dụng
+            </Button>
+          </div> */}
+    </div>
+  );
 
   return (
     <>
@@ -117,6 +144,9 @@ const SeachLocation = () => {
         showCheckedStrategy={SHOW_CHILD}
         inputIcon={<EnvironmentOutlined />}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
+        size="large"
+        dropdownRender={DropdownRender}
+        value={reset ? [] : addresses}
         options={
           dataLocations
             ? dataLocations?.map((dataLocation: any) => ({

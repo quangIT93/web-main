@@ -76,29 +76,32 @@ const ModalShowCv: React.FC<IModalShowCv> = (props) => {
           <CloseOutlined style={{ fontSize: '30px' }} />
         </div>
         <h3>Show Cv</h3>
-
-        <Document
-          file={modalShowCvPDF.urlPdf} // Thay đổi đường dẫn tới file PDF của bạn
-          loading={<Spin indicator={antIcon} />}
-          noData={<Spin indicator={antIcon} />}
-          onLoadSuccess={onDocumentLoadSuccess}
-          className="page-cv-wrapper"
-        >
-          {Array.apply(null, Array(pageNumber))
-            .map((x, i) => i + 1)
-            .map((page) => (
-              <Page
-                className="page-cv"
-                loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
-                noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
-                pageNumber={page}
-                renderAnnotationLayer={false}
-                renderTextLayer={false}
-                // width={400}
-                // height={600}
-              />
-            ))}
-        </Document>
+        {modalShowCvPDF.urlPdf ? (
+          <Document
+            file={modalShowCvPDF.urlPdf} // Thay đổi đường dẫn tới file PDF của bạn
+            loading={<Spin indicator={antIcon} />}
+            noData={<Spin indicator={antIcon} />}
+            onLoadSuccess={onDocumentLoadSuccess}
+            className="page-cv-wrapper"
+          >
+            {Array.apply(null, Array(pageNumber))
+              .map((x, i) => i + 1)
+              .map((page) => (
+                <Page
+                  className="page-cv"
+                  loading={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                  noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                  pageNumber={page}
+                  renderAnnotationLayer={false}
+                  renderTextLayer={false}
+                  // width={400}
+                  // height={600}
+                />
+              ))}
+          </Document>
+        ) : (
+          'Không có pdf để hiển thị'
+        )}
       </Box>
     </Modal>
   );

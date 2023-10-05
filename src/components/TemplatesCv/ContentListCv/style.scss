@@ -166,10 +166,12 @@
             display: grid;
             grid-template-columns: repeat(2, auto);
             gap: 17px;
+
             span {
                 border-color: #ccc;
 
             }
+
             .active {
                 span {
 
@@ -224,14 +226,14 @@
         // width: 65%;
         height: 900px;
         // overflow-y:auto;
-        
+
         margin: 24px 4px 24px 24px;
         padding-right: 24px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
+
         @media screen and (max-width: 680px) {
             // overflow-x: hidden;
             margin: 24px 0;
@@ -243,15 +245,17 @@
                 height: 100% !important;
                 overflow-y: hidden !important;
             }
-            
+
         }
+
         @media screen and (max-width: 640px) {
             overflow-y: hidden;
             overflow-x: hidden;
             height: 100% !important;
+
             .contentCv-bottom-right_cv {
-             overflow-y: hidden;
-             height: 100% !important;
+                overflow-y: hidden;
+                height: 100% !important;
             }
         }
 
@@ -274,12 +278,13 @@
             height: 40px;
             margin-bottom: 12px;
             width: 100%;
+
             @media screen and (max-width: 680px) {
                 // overflow-x: hidden;
                 padding: 0 12px;
                 margin-left: 24px;
                 margin-right: 24px;
-                
+
             }
 
             .title_left {
@@ -300,6 +305,7 @@
                     position: relative;
                     display: flex;
                     align-items: center;
+
                     .nameCvIcon {
                         position: absolute;
                         display: flex;
@@ -314,6 +320,7 @@
                         border-bottom-right-radius: 12px;
                         cursor: pointer;
                     }
+
                     input {
                         font-family: Roboto;
                         font-size: 20px;
@@ -326,13 +333,16 @@
                         border-radius: 12px;
                         border-top-left-radius: 12px;
                         border-bottom-left-radius: 12px;
-                        min-width: 50px; /* Chiều rộng tối thiểu của input */
-                        width: auto; /* Để cho phép input mở rộng theo nội dung */
+                        min-width: 50px;
+                        /* Chiều rộng tối thiểu của input */
+                        width: auto;
+
+                        /* Để cho phép input mở rộng theo nội dung */
                         &:hover {
                             border: 1px solid #0d99ff;
-                    
+
                         }
-    
+
                         &:focus {
                             border: 1px solid #0d99ff;
                             outline: 1px solid #0d99ff;
@@ -340,12 +350,12 @@
 
                         @media screen and (max-width: 445px) {
                             width: 180px;
-                            
+
                         }
 
                         @media screen and (max-width: 380px) {
                             width: 120px;
-                            
+
                         }
                     }
 
@@ -400,46 +410,47 @@
             // @media screen and (max-width: 680px) {
             //     width: 400px;
             // }
-            
 
-      
-                .react-pdf__Document {
-                    .react-pdf__Page {
 
-                        .react-pdf__Page__canvas {
-                            @media screen and (max-width: 680px) {
-                                width: 520px !important;
-                                height: 735px !important;
-                                
-                            }
-                            
-                            @media screen and (max-width: 640px) {
-                                width: 400px !important;
-                                height: 565px !important;
-                                
-                            }
 
-                            @media screen and (max-width: 460px) {
-                                width: 300px !important;
-                                height: 424px !important;
-                                
-                            }
+            .react-pdf__Document {
+                .react-pdf__Page {
 
-                            @media screen and (max-width: 350px) {
-                                width: 280px !important;
-                                height: 396px !important;
-                                
-                            }
-                        
+                    .react-pdf__Page__canvas {
+                        @media screen and (max-width: 680px) {
+                            width: 520px !important;
+                            height: 735px !important;
+
                         }
+
+                        @media screen and (max-width: 640px) {
+                            width: 400px !important;
+                            height: 565px !important;
+
+                        }
+
+                        @media screen and (max-width: 460px) {
+                            width: 300px !important;
+                            height: 424px !important;
+
+                        }
+
+                        @media screen and (max-width: 350px) {
+                            width: 280px !important;
+                            height: 396px !important;
+
+                        }
+
                     }
                 }
-            
+            }
+
 
             .page-cv-wrapper {
                 display: flex;
                 flex-direction: column;
                 gap: 5px;
+                align-items: center;
 
 
                 .page-cv {

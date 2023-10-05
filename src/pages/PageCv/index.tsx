@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // @ts-ignore
 import { Navbar } from '#components';
 
@@ -7,6 +7,10 @@ import { IconArrowLeft } from '#components/Icons';
 // import Carousel, { CarouselItem } from '#components/PageCv/Carousel';
 import PageCv2 from './../PageCv2';
 import './style.scss';
+import Footer from '#components/Footer/Footer';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
+import ModalLogin from '#components/Home/ModalLogin';
 
 // const Slide = ({ number }: any) => (
 //   <div>
@@ -15,6 +19,18 @@ import './style.scss';
 // );
 
 const PageCv = () => {
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
+  const [isLogin, setIsLogin] = useState(false);
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem('accessToken')) {
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
+  }, [])
+
   return (
     <div className="wrap-page_Cv">
       <Navbar />
@@ -73,7 +89,9 @@ const PageCv = () => {
               Chỉ với vài thao tác đơn giản, bạn đã có thể tạo ngay cho mình một
               bản CV chuyên nghiệp để tạo ấn tượng tốt với Nhà tuyển dụng.
             </p>
-            <div className="wrap-bnt_bannerShow">
+            <div className="wrap-bnt_bannerShow"
+              onClick={() => window.open('/profile-cv', '_parent')}
+            >
               <span className="btn-bannerShow">Xem các mẫu CV</span>
             </div>
           </div>
@@ -86,7 +104,10 @@ const PageCv = () => {
               Tổng hợp danh sách mẫu CV xin việc làm online phù hợp với nhiều vị
               trí ngành nghề hiện nay.
             </p>
-            <div className="wrap-cvchange_login">
+            <div className="wrap-cvchange_login"
+              style={{ display: isLogin ? 'none' : 'block' }}
+              onClick={() => setOpenModalLogin(true)}
+            >
               <p className="cv-change_login">
                 <span>Đăng nhập ngay</span>
                 <IconArrowLeft />
@@ -109,7 +130,10 @@ const PageCv = () => {
               tự động từ hồ sơ có sẵn của bạn trên HiJob và sử dụng để tìm việc
               ngay.
             </p>
-            <div className="wrap-cvchange_login">
+            <div className="wrap-cvchange_login"
+              style={{ display: isLogin ? 'none' : 'block' }}
+              onClick={() => setOpenModalLogin(true)}
+            >
               <p className="cv-change_login">
                 <span>Đăng nhập ngay</span>
                 <IconArrowLeft />
@@ -134,6 +158,11 @@ const PageCv = () => {
           </div>
         </div>
       </div>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
+      <Footer />
     </div>
   );
 };

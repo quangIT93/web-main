@@ -20,12 +20,18 @@ interface ICadidate {
 
 const ItemCadidate: React.FC<ICadidate> = (props) => {
   const { item } = props;
-  console.log('props', props);
+  const handleClickItemCandidate = (accountId: any) => {
+    localStorage.setItem('candidateId', accountId);
+    window.open('/candidate-new-detail', '_parent');
+  };
 
   return (
-    <div className="item-candidate">
+    <div
+      className="item-candidate"
+      onClick={() => handleClickItemCandidate(item.accountId)}
+    >
       <div className="wrap-img_candidate">
-        <img src="./images/image 50.png" alt="" className="img-candidate" />
+        <img src={item?.imageData?.avatar} alt="" className="img-candidate" />
       </div>
       <div className="info-candidate">
         <h3>{item.name}</h3>
@@ -36,7 +42,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 <PersonIcon />
               </span>
               <span>
-                {moment(new Date(item?.updatedAt))
+                {moment(new Date(item?.birthdayData))
                   .format('yyyy')
                   .replace(/\d{2}$/, 'xx')}
               </span>
@@ -52,7 +58,11 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
             <span>
               <SchoolIcon />
             </span>
-            <span>Dai hoc</span>
+            {item.profilesEducationsData.length !== 0
+              ? item.profilesEducationsData.map((value: any) => {
+                  return <span>{value.data}</span>;
+                })
+              : 'Chưa cập nhật'}
           </li>
           <li>
             <span>
@@ -61,22 +71,15 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
             <Tooltip
               placement="top"
               title={item.profilesLocationsData.map((loc: any) => {
-                return `${loc.full_name}, `;
+                return `${loc.fullName}, `;
               })}
             >
-              <span
-                style={{
-                  display: 'inline-block',
-                  whiteSpace: 'nowrap',
-                  width: '160px',
-                  wordBreak: 'break-all',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                }}
-              >
-                {item.profilesLocationsData.map((loc: any) => {
-                  return `${loc.full_name}, `;
-                })}
+              <span className="text-info-candidate">
+                {item.profilesLocationsData.length !== 0
+                  ? item.profilesLocationsData.map((loc: any) => {
+                      return `${loc.fullName}, `;
+                    })
+                  : 'Chưa cập nhật'}
               </span>
             </Tooltip>
           </li>
@@ -84,7 +87,13 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
             <span>
               <CateIcon />
             </span>
-            <span>Design</span>
+            <span className="text-info-candidate">
+              {item.categoriesData.length !== 0
+                ? item.categoriesData.map((value: any) => {
+                    return `${value.fullName}, `;
+                  })
+                : 'Chưa cập nhật'}
+            </span>
           </li>
           <li>
             <span>

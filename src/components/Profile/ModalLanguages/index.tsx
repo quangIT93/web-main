@@ -23,6 +23,7 @@ import {
   setAlert,
   setAlertLackInfo,
 } from 'store/reducer/profileReducer/alertProfileReducer';
+import { message } from 'antd';
 interface IModalSkills {
   openModallanguages: boolean;
   setOpenModallanguages: React.Dispatch<React.SetStateAction<boolean>>;
@@ -66,7 +67,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
   const languageData = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const [language, setLanguage] = React.useState<any>();
+  const [language, setLanguage] = React.useState<any>('');
   const [level, setLevel] = React.useState<any>(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -80,29 +81,71 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
     setLevel(e.target.value);
   };
 
+  const validValue = () => {
+    if (
+      language?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên ngôn ngữ không được bỏ trống" :
+          "Language names cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      language?.trim().length > 255
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Tên ngôn ngữ không được vượt quá 255 ký tự" :
+          "Language names cannot exceed 255 characters",
+        checkForm: false,
+      };
+    }
+
+    return {
+      messageError: '',
+      checkForm: true,
+    };
+  };
+
   const handleSubmit = async () => {
+    const { messageError, checkForm } = validValue()
     try {
-      const result = await apiCv.postProfileLanguage(level, language);
-      if (result) {
-        const resultProfile = await profileApi.getProfileV3(
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-        if (resultProfile) {
-          //   setLanguageValues((prev: any) => [
-          //     {
-          //       language: language,
-          //       level: level,
-          //     },
-          //     ...prev,
-          //   ]);
-          dispatch(setProfileV3(resultProfile));
-          setLanguage('');
-          setLevel(1);
-          setOpenModallanguages(false);
-          dispatch(setAlertSuccess(true));
+      if (checkForm) {
+        const result = await apiCv.postProfileLanguage(level, language);
+        if (result) {
+          const resultProfile = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (resultProfile) {
+            //   setLanguageValues((prev: any) => [
+            //     {
+            //       language: language,
+            //       level: level,
+            //     },
+            //     ...prev,
+            //   ]);
+            dispatch(setProfileV3(resultProfile));
+            setLanguage('');
+            setLevel(1);
+            setOpenModallanguages(false);
+            dispatch(setAlertSuccess(true));
+          }
         }
+      } else {
+        message.error(messageError)
       }
-    } catch (error) {}
+    } catch (error: any) {
+      console.log('error', error);
+      if (error?.response?.data?.message === "Languege already exists") {
+        message.error(
+          languageRedux === 1 ?
+            "Ngôn ngữ này đã tồn tại" :
+            "This language is already exists",
+        );
+      }
+    }
   };
 
   const handleClose = () => {
@@ -141,8 +184,8 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
           {languageRedux === 1
             ? 'Thêm ngoại ngữ'
             : languageRedux === 0 && searchParams.get('type') === 'create'
-            ? 'Add Languages'
-            : ''}
+              ? 'Add Languages'
+              : ''}
         </Typography>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -163,7 +206,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>

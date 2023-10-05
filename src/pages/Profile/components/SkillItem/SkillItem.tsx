@@ -17,6 +17,7 @@ import {
   setAlertLackInfo,
   setAlertEditInfo,
 } from 'store/reducer/profileReducer/alertProfileReducer';
+import ModalDeleteSkill from '#components/Profile/ModalDeleteSkill';
 interface ISkillItem {
   item: {
     dataLevel: {
@@ -61,21 +62,23 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
     openModalEditSkills,
   } = props;
   const dispatch = useDispatch();
+  const [openModalDeleteSkill, setOpenModalDeleteSkill] = useState(false);
   const handleDeleteSkill = async (id: number) => {
-    const result = await apiCv.deleteProfileSkill([id]);
-    if (result) {
-      const resultProfile = await profileApi.getProfileV3(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      dispatch(setProfileV3(resultProfile));
-      dispatch(setAlert(true));
-    }
+    // const result = await apiCv.deleteProfileSkill([id]);
+    // if (result) {
+    //   const resultProfile = await profileApi.getProfileV3(
+    //     languageRedux === 1 ? 'vi' : 'en',
+    //   );
+    //   dispatch(setProfileV3(resultProfile));
+    //   dispatch(setAlert(true));
+    // }
     // setSkillValues(
     //   skillValues.filter((value: any, index: any) => {
     //     return index !== id;
     //   }),
     // );
     // console.log(id);
+    setOpenModalDeleteSkill(true);
   };
   // console.log('itemSkillName', item.skillName);
   const handleEditSkills = (
@@ -97,7 +100,7 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
               padding: '8px 12px',
               border: '0.5px solid #aaaaaa',
               borderRadius: '10px',
-              wordBreak: 'break-all',
+              wordBreak: 'break-word',
             }}
           >
             <h3>{item?.skillName}</h3>
@@ -107,22 +110,22 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
                   ? 'Người mới'
                   : 'Novice'
                 : item?.dataLevel.id === 2
-                ? languageRedux === 1
-                  ? 'Người bắt đầu'
-                  : 'Beginner'
-                : item?.dataLevel.id === 3
-                ? languageRedux === 1
-                  ? 'Khéo léo'
-                  : 'Skillful'
-                : item?.dataLevel.id === 4
-                ? languageRedux === 1
-                  ? 'Có kinh nghiệm'
-                  : 'Experienced'
-                : item?.dataLevel.id === 5
-                ? languageRedux === 1
-                  ? 'Chuyên gia'
-                  : 'Expert'
-                : ''}
+                  ? languageRedux === 1
+                    ? 'Người bắt đầu'
+                    : 'Beginner'
+                  : item?.dataLevel.id === 3
+                    ? languageRedux === 1
+                      ? 'Khéo léo'
+                      : 'Skillful'
+                    : item?.dataLevel.id === 4
+                      ? languageRedux === 1
+                        ? 'Có kinh nghiệm'
+                        : 'Experienced'
+                      : item?.dataLevel.id === 5
+                        ? languageRedux === 1
+                          ? 'Chuyên gia'
+                          : 'Expert'
+                        : ''}
             </p>
           </Space>
         </div>
@@ -153,6 +156,13 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
           </p>
         </Space>
       </div>
+      <ModalDeleteSkill
+        openModalDeleteSkill={openModalDeleteSkill}
+        setOpenModalDeleteSkill={setOpenModalDeleteSkill}
+        skillId={[item?.id]}
+        skillValue={item?.skillName}
+        deleteAll={false}
+      />
     </div>
   );
 };
