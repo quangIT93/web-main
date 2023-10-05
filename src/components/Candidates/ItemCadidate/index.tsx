@@ -20,8 +20,10 @@ interface ICadidate {
 
 const ItemCadidate: React.FC<ICadidate> = (props) => {
   const { item } = props;
-  const handleClickItemCandidate = (accountId: any) => {};
-  console.log('item', item);
+  const handleClickItemCandidate = (accountId: any) => {
+    localStorage.setItem('candidateId', accountId);
+    window.open('/candidate-new-detail', '_parent');
+  };
 
   return (
     <div
@@ -56,7 +58,11 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
             <span>
               <SchoolIcon />
             </span>
-            <span>Dai hoc</span>
+            {item.profilesEducationsData.length !== 0
+              ? item.profilesEducationsData.map((value: any) => {
+                  return <span>{value.data}</span>;
+                })
+              : 'Chưa cập nhật'}
           </li>
           <li>
             <span>
@@ -68,10 +74,12 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 return `${loc.fullName}, `;
               })}
             >
-              <span className="location-item">
-                {item.profilesLocationsData.map((loc: any) => {
-                  return `${loc.fullName}, `;
-                })}
+              <span className="text-info-candidate">
+                {item.profilesLocationsData.length !== 0
+                  ? item.profilesLocationsData.map((loc: any) => {
+                      return `${loc.fullName}, `;
+                    })
+                  : 'Chưa cập nhật'}
               </span>
             </Tooltip>
           </li>
@@ -79,7 +87,13 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
             <span>
               <CateIcon />
             </span>
-            <span>Design</span>
+            <span className="text-info-candidate">
+              {item.categoriesData.length !== 0
+                ? item.categoriesData.map((value: any) => {
+                    return `${value.fullName}, `;
+                  })
+                : 'Chưa cập nhật'}
+            </span>
           </li>
           <li>
             <span>

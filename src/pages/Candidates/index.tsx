@@ -195,8 +195,8 @@ const Candidates = () => {
   const [categories, setCategories] = useState([]);
   const [educations, setEducations] = useState<number | undefined>();
   const [gender, setGender] = useState(1);
-  const [ageMin, setAgeMin] = useState(1);
-  const [ageMax, setAgeMax] = useState(60);
+  const [ageMin, setAgeMin] = useState<number | null>(1);
+  const [ageMax, setAgeMax] = useState<number | null>(60);
   const [page, setPage] = React.useState<any>('0');
   const [reset, setReset] = useState(false);
   const [total, setTotal] = useState(0);
@@ -254,6 +254,8 @@ const Candidates = () => {
         'vi',
       );
       setPage('0');
+      if (ageMin! > ageMax!) {
+      }
       if (result) {
         setTotal(result.data.total);
         setListData(result.data.cvFilters);
@@ -277,8 +279,8 @@ const Candidates = () => {
     setCategories([]);
     setEducations(undefined);
     setGender(1);
-    setAgeMin(1);
-    setAgeMax(60);
+    setAgeMin(null);
+    setAgeMax(null);
     setReset(true);
   };
 
@@ -322,7 +324,7 @@ const Candidates = () => {
           <h3>Looking for candidates</h3>
           <Button
             type="primary"
-            onClick={() => window.open(`/profile/`, '_parent')}
+            onClick={() => window.open(`/history`, '_parent')}
           >
             Saved candidate list
           </Button>

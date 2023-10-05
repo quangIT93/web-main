@@ -40,7 +40,7 @@ import {
 } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
-import banner from '../../../img/Banner/banner_for_candidates_1.png'
+import banner from '../../../img/Banner/banner_for_candidates_1.png';
 import './styles.scss';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
@@ -110,19 +110,19 @@ const AppliedPostedJob: React.FC = () => {
     try {
       setloading(true);
       const result =
-        roleRedux === 0 ?
-          await historyApplicator.getAllSubmitedApplied(
-            null,
-            10,
-            1,
-            languageRedux === 1 ? 'vi' : 'en',
-          ) :
-          await historyRecruiter.GetInformationAndCandidatesCount(
-            0,
-            10,
-            '1',
-            languageRedux === 1 ? 'vi' : 'en',
-          );
+        roleRedux === 0
+          ? await historyApplicator.getAllSubmitedApplied(
+              null,
+              10,
+              1,
+              languageRedux === 1 ? 'vi' : 'en',
+            )
+          : await historyRecruiter.GetInformationAndCandidatesCount(
+              0,
+              10,
+              '1',
+              languageRedux === 1 ? 'vi' : 'en',
+            );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
       //   languageRedux === 1 ? 'vi' : 'en',
@@ -133,7 +133,7 @@ const AppliedPostedJob: React.FC = () => {
           setloading(false);
         }, 1000);
         console.log('result: ', result);
-        setAppliedPostedJob(result.data)
+        setAppliedPostedJob(result.data);
         // roleRedux === 0
         //   ? setAppliedPostedJob(
         //     result.data.filter((job: any) => {
@@ -150,8 +150,6 @@ const AppliedPostedJob: React.FC = () => {
       console.log(error);
     }
   };
-
-  console.log('applied', appliedPostedJob);
 
   React.useEffect(() => {
     getAppliedPostedJobs();
@@ -202,7 +200,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -229,9 +227,10 @@ const AppliedPostedJob: React.FC = () => {
             }}
           >
             {/* <AdsCVIcon /> */}
-            <div className="advertisement-job-not-loging-content"
+            <div
+              className="advertisement-job-not-loging-content"
               onClick={() => {
-                window.open('/page-cv', '_parent')
+                window.open('/page-cv', '_parent');
               }}
             >
               {/* <h3 style={{ marginTop: '12px' }}>
@@ -263,12 +262,15 @@ const AppliedPostedJob: React.FC = () => {
                   </li>
                 </ul>
               </div> */}
-              <Avatar sx={{
-                width: '100%',
-                maxHeight: '301px',
-                height: 'auto',
-
-              }} variant="square" src={banner}>
+              <Avatar
+                sx={{
+                  width: '100%',
+                  maxHeight: '301px',
+                  height: 'auto',
+                }}
+                variant="square"
+                src={banner}
+              >
                 Banner
               </Avatar>
             </div>
@@ -281,7 +283,7 @@ const AppliedPostedJob: React.FC = () => {
           </div>
           <Skeleton loading={false} active>
             {appliedPostedJob.length !== 0 &&
-              localStorage.getItem('accessToken') ? (
+            localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -296,8 +298,8 @@ const AppliedPostedJob: React.FC = () => {
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                      ? 'Công việc đã đã tuyển'
-                      : 'Posted Job'}
+                    ? 'Công việc đã đã tuyển'
+                    : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -417,8 +419,10 @@ const AppliedPostedJob: React.FC = () => {
                     );
                   }}
                 >
-                  <AppliedPostedJobCard item={item}
-                    type={roleRedux === 0 ? 'application' : 'post'} />
+                  <AppliedPostedJobCard
+                    item={item}
+                    type={roleRedux === 0 ? 'application' : 'post'}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

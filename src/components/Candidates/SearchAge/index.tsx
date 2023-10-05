@@ -82,8 +82,8 @@ const CustomOption = ({
 interface ISeachAge {
   setAgeMin: any;
   setAgeMax: any;
-  ageMax: number;
-  ageMin: number;
+  ageMax: number | null;
+  ageMin: number | null;
   setReset: Function;
   reset: boolean;
 }
@@ -166,6 +166,7 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [isSelectOpen]);
+  console.log('age', ageMax);
 
   return (
     <div className="filter-candidate" ref={selectRef}>
@@ -177,7 +178,9 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={reset && ageMax && ageMin ? undefined : `${ageMin} - ${ageMax}`}
+        value={
+          reset && !ageMax && !ageMin ? undefined : `${ageMin} - ${ageMax}`
+        }
         className=""
         size="large"
         placeholder="Độ tuổi"
@@ -203,17 +206,19 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
                 <Input
                   placeholder="Please enter item"
                   type="number"
-                  defaultValue="0"
                   style={{
                     WebkitAppearance: 'none',
                     MozAppearance: 'textfield',
                   }}
+                  maxLength={1}
                   // ref={inputRef}
-                  value={ageMin}
+                  value={ageMin ? ageMin : undefined}
                   max={100}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     setReset(false);
-                    setAgeMin(e.target.value);
+                    if (e.target.value < 120) {
+                      setAgeMin(e.target.value);
+                    }
                   }}
                 />
                 {/* <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
@@ -228,12 +233,13 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
                     WebkitAppearance: 'none',
                     MozAppearance: 'textfield',
                   }}
-                  defaultValue={60}
                   // ref={inputRef}
-                  value={ageMax}
+                  value={ageMax ? ageMax : undefined}
                   max={100}
-                  onChange={(e) => {
-                    setAgeMax(e.target.value);
+                  onChange={(e: any) => {
+                    if (e.target.value < 1000) {
+                      setAgeMax(e.target.value);
+                    }
                     setReset(false);
                   }}
                 />

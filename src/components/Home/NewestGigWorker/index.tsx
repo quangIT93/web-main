@@ -3,8 +3,11 @@ import Box from '@mui/material/Box';
 
 import ItemCadidate from '#components/Candidates/ItemCadidate';
 
-import { FireIcon } from '#components/Icons';
+import { FireIcon, ArrowrightIcon } from '#components/Icons';
 import candidateSearch from 'api/apiCandidates';
+
+import './style.scss';
+
 const NewestGigWorker = () => {
   const [listData, setListData] = React.useState<any>([]);
   const [addresses, setAddresses] = React.useState([]);
@@ -47,8 +50,7 @@ const NewestGigWorker = () => {
         position: 'relative',
         paddingBottom: '28px',
       }}
-      className="hot-job-container"
-      id="hot-job-container"
+      className="list-candidate-container"
     >
       <div
         style={{
@@ -56,29 +58,34 @@ const NewestGigWorker = () => {
           gap: '0.5rem',
           alignItems: 'center',
           justifyContent: 'space-between',
+          margin: '0 0 16px',
         }}
       >
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <FireIcon width={25} height={25} />
           <h2>West Gig Worker</h2>
         </div>
-        <div>
-          <span
-            onClick={() => window.open('/candidatesAll')}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '16px',
+            cursor: 'pointer',
+            color: '#0d99ff',
+          }}
+        >
+          <p
+            onClick={() => window.open('/candidatesAll', '_parent')}
             style={{ cursor: 'pointer' }}
           >
             Xem tất cả
-          </span>
+          </p>
+          <ArrowrightIcon width={20} height={20} />
         </div>
       </div>
 
-      <div
-        className="list-candidate"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-        }}
-      >
+      <div className="list-candidate-home">
         {listData?.map((item: any) => {
           return <ItemCadidate item={item} />;
         })}

@@ -356,24 +356,20 @@ const CategoryDropdown: React.FC = () => {
         }}
         className="category-dropdown-container"
       >
-        <div className="category-dropdown-content"
+        <div
+          className="category-dropdown-content"
           style={{
             maxWidth: location?.pathname === '/' ? '1280px' : '1080px',
           }}
         >
-          <div className="category-dropdown-left"
+          <div
+            className="category-dropdown-left"
             onMouseEnter={() => setOpenCategoryDropdown(true)}
             // onMouseLeave={() => setOpenCategoryDropdown(false)}
             onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
           >
             <IconMenu />
-            <h3>
-              {
-                languageRedux === 1 ?
-                  "Danh mục" :
-                  "Category"
-              }
-            </h3>
+            <h3>{languageRedux === 1 ? 'Danh mục' : 'Category'}</h3>
           </div>
           <div className="category-dropdown-line"></div>
           <div className="category-dropdown-right">
@@ -425,279 +421,237 @@ const CategoryDropdown: React.FC = () => {
           className="category-dropdown-collapse"
         >
           <div className="category-dropdown-wraps">
-            <div className='category-dropdown-item'>
-              <div className='top-item' onClick={() => handleExpand(1)}>
-                <h3 >
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Thông tin việc làm" :
-                        "Job information" :
-                      languageRedux === 1 ?
-                        "Thông tin tuyển dụng" :
-                        "Employment information"
-                  }
+            <div className="category-dropdown-item">
+              <div className="top-item" onClick={() => handleExpand(1)}>
+                <h3>
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Thông tin việc làm'
+                      : 'Job information'
+                    : languageRedux === 1
+                    ? 'Thông tin tuyển dụng'
+                    : 'Employment information'}
                 </h3>
-                <ArrowIcon fill='black' />
+                <ArrowIcon fill="black" />
               </div>
-              <div className='bot-item'
+              <div
+                className="bot-item"
                 style={{
                   height: expand.includes(1) ? 'unset' : 0,
                   overflow: expand.includes(1) ? 'unset' : 'hidden',
-                  marginTop: expand.includes(1) ? '16px' : '0px'
+                  marginTop: expand.includes(1) ? '16px' : '0px',
                 }}
               >
-                <h3 style={{ display: roleRedux === 0 ? 'block' : 'none' }} onClick={moveToAppliedJob}>
-                  {
-                    languageRedux === 1 ?
-                      "Việc làm đã ứng tuyển" :
-                      "Apllied Jobs"
-                  }
+                <h3
+                  style={{ display: roleRedux === 0 ? 'block' : 'none' }}
+                  onClick={moveToAppliedJob}
+                >
+                  {languageRedux === 1
+                    ? 'Việc làm đã ứng tuyển'
+                    : 'Apllied Jobs'}
                 </h3>
-                <h3 onClick={
-                  roleRedux === 0 ?
-                    moveToSaveJob :
-                    moveToRecruimentPost
-                }>
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Việc làm đã lưu" :
-                        "Saved jobs" :
-                      languageRedux === 1 ?
-                        "Việc làm tuyển dụng đã đăng" :
-                        "Recruitment posted"
+                <h3
+                  onClick={
+                    roleRedux === 0 ? moveToSaveJob : moveToRecruimentPost
                   }
+                >
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Việc làm đã lưu'
+                      : 'Saved jobs'
+                    : languageRedux === 1
+                    ? 'Việc làm tuyển dụng đã đăng'
+                    : 'Recruitment posted'}
                 </h3>
-                <h3 onClick={
-                  roleRedux === 0 ?
-                    moveToNewestJob :
-                    moveToOpeningPost
-                }>
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Công việc mới nhất" :
-                        "Newest jobs" :
-                      languageRedux === 1 ?
-                        "Bài tuyển dụng đang mở" :
-                        "Job posting is opening"
+                <h3
+                  onClick={
+                    roleRedux === 0 ? moveToNewestJob : moveToOpeningPost
                   }
+                >
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Công việc mới nhất'
+                      : 'Newest jobs'
+                    : languageRedux === 1
+                    ? 'Bài tuyển dụng đang mở'
+                    : 'Job posting is opening'}
                 </h3>
-                <h3 onClick={
-                  roleRedux === 0 ?
-                    moveToHotJob :
-                    moveToClosedPost
-                }>
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Công việc nổi bật" :
-                        "Hot jobs" :
-                      languageRedux === 1 ?
-                        "Bài tuyển dụng đã đóng" :
-                        "Job posting is closed"
-                  }
+                <h3 onClick={roleRedux === 0 ? moveToHotJob : moveToClosedPost}>
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Công việc nổi bật'
+                      : 'Hot jobs'
+                    : languageRedux === 1
+                    ? 'Bài tuyển dụng đã đóng'
+                    : 'Job posting is closed'}
                 </h3>
-                <h3 onClick={
-                  roleRedux === 0 ?
-                    moveToJobByHotPlace :
-                    moveToPostjob
-                }>
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Công việc theo chủ đề" :
-                        "Job by hot places" :
-                      languageRedux === 1 ?
-                        "Đăng bài tuyển dụng" :
-                        "Post recruitment posts"
+                <h3
+                  onClick={
+                    roleRedux === 0 ? moveToJobByHotPlace : moveToPostjob
                   }
+                >
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Công việc theo chủ đề'
+                      : 'Job by hot places'
+                    : languageRedux === 1
+                    ? 'Đăng bài tuyển dụng'
+                    : 'Post recruitment posts'}
                 </h3>
-                <h3 onClick={
-                  roleRedux === 0 ?
-                    moveToSuggestedJob :
-                    moveToCompanyInfor
-                }>
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Công việc gợi ý" :
-                        "Suggested jobs" :
-                      languageRedux === 1 ?
-                        "Thông tin công ty" :
-                        "Company information"
+                <h3
+                  onClick={
+                    roleRedux === 0 ? moveToSuggestedJob : moveToCompanyInfor
                   }
+                >
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Công việc gợi ý'
+                      : 'Suggested jobs'
+                    : languageRedux === 1
+                    ? 'Thông tin công ty'
+                    : 'Company information'}
                 </h3>
               </div>
             </div>
             <div
-              className='category-dropdown-item'
-            // style={{ display: roleRedux === 0 ? 'block' : 'none' }}
+              className="category-dropdown-item"
+              // style={{ display: roleRedux === 0 ? 'block' : 'none' }}
             >
-              <div className='top-item' onClick={() => handleExpand(2)}>
-                <h3 >
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Hồ sơ & CV" :
-                        "Resume & CV" :
-                      languageRedux === 1 ?
-                        "Thông tin nhân tài" :
-                        "Talent information"
-                  }
+              <div className="top-item" onClick={() => handleExpand(2)}>
+                <h3>
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Hồ sơ & CV'
+                      : 'Resume & CV'
+                    : languageRedux === 1
+                    ? 'Thông tin nhân tài'
+                    : 'Talent information'}
                 </h3>
-                <ArrowIcon fill='black' />
+                <ArrowIcon fill="black" />
               </div>
-              <div className='bot-item'
+              <div
+                className="bot-item"
                 style={{
                   height: expand.includes(2) ? 'unset' : 0,
                   overflow: expand.includes(2) ? 'unset' : 'hidden',
-                  marginTop: expand.includes(2) ? '16px' : '0px'
+                  marginTop: expand.includes(2) ? '16px' : '0px',
                 }}
               >
-                <h3 onClick={
-                  roleRedux === 0 ?
-                    moveToCreateCv :
-                    moveToCadidateList
-                }>
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Tạo mới CV" :
-                        "Create a new CV" :
-                      languageRedux === 1 ?
-                        "Danh sách nhân tài mới nhất" :
-                        "Newest talent list"
+                <h3
+                  onClick={
+                    roleRedux === 0 ? moveToCreateCv : moveToCadidateList
                   }
+                >
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Tạo mới CV'
+                      : 'Create a new CV'
+                    : languageRedux === 1
+                    ? 'Danh sách nhân tài mới nhất'
+                    : 'Newest talent list'}
                 </h3>
-                <h3 onClick={
-                  roleRedux === 0 ?
-                    moveToCvManage :
-                    moveToSearchCandidate
-                }>
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Quản lý CV" :
-                        "CV management" :
-                      languageRedux === 1 ?
-                        "Tìm kiếm nhân tài" :
-                        "Search for talent"
+                <h3
+                  onClick={
+                    roleRedux === 0 ? moveToCvManage : moveToSearchCandidate
                   }
+                >
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Quản lý CV'
+                      : 'CV management'
+                    : languageRedux === 1
+                    ? 'Tìm kiếm nhân tài'
+                    : 'Search for talent'}
                 </h3>
-                <h3 onClick={
-                  roleRedux === 0 ?
-                    moveToIntroductionCv :
-                    moveToSavedCandidateList
-                }>
-                  {
-                    roleRedux === 0 ?
-                      languageRedux === 1 ?
-                        "Hướng dẫn tạo CV" :
-                        "Instructions for creating a CV" :
-                      languageRedux === 1 ?
-                        "Danh sách nhân tài đã lưu" :
-                        "Saved talent list"
+                <h3
+                  onClick={
+                    roleRedux === 0
+                      ? moveToIntroductionCv
+                      : moveToSavedCandidateList
                   }
+                >
+                  {roleRedux === 0
+                    ? languageRedux === 1
+                      ? 'Hướng dẫn tạo CV'
+                      : 'Instructions for creating a CV'
+                    : languageRedux === 1
+                    ? 'Danh sách nhân tài đã lưu'
+                    : 'Saved talent list'}
                 </h3>
               </div>
             </div>
-            <div className='category-dropdown-item'>
-              <div className='top-item' onClick={() => handleExpand(3)}>
-                <h3 >
-                  {languageRedux === 1 ?
-                    "Cộng đồng" :
-                    "Community"}
-                </h3>
-                <ArrowIcon fill='black' />
+            <div className="category-dropdown-item">
+              <div className="top-item" onClick={() => handleExpand(3)}>
+                <h3>{languageRedux === 1 ? 'Cộng đồng' : 'Community'}</h3>
+                <ArrowIcon fill="black" />
               </div>
-              <div className='bot-item'
+              <div
+                className="bot-item"
                 style={{
                   height: expand.includes(3) ? 'unset' : 0,
                   overflow: expand.includes(3) ? 'unset' : 'hidden',
-                  marginTop: expand.includes(3) ? '16px' : '0px'
+                  marginTop: expand.includes(3) ? '16px' : '0px',
                 }}
               >
                 <h3 onClick={moveToWorkingStory}>
-                  {
-                    languageRedux === 1 ?
-                      "Câu chuyện làm việc" :
-                      "Working story"
-                  }
+                  {languageRedux === 1
+                    ? 'Câu chuyện làm việc'
+                    : 'Working story'}
                 </h3>
                 <h3 onClick={moveToHijobNews}>
-                  {
-                    languageRedux === 1 ?
-                      "Tin tức" :
-                      "News"
-                  }
+                  {languageRedux === 1 ? 'Tin tức' : 'News'}
                 </h3>
                 <h3 onClick={moveToPostArticle}>
-                  {
-                    languageRedux === 1 ?
-                      "Đăng bài viết mới" :
-                      "Post new articles"
-                  }
+                  {languageRedux === 1
+                    ? 'Đăng bài viết mới'
+                    : 'Post new articles'}
                 </h3>
                 <h3 onClick={moveToSavedArticle}>
-                  {
-                    languageRedux === 1 ?
-                      "Bài viết đã lưu" :
-                      "Saved post"
-                  }
+                  {languageRedux === 1 ? 'Bài viết đã lưu' : 'Saved post'}
                 </h3>
               </div>
             </div>
-            <div className='category-dropdown-item'>
-              <div className='top-item' onClick={() => handleExpand(4)}>
-                <h3 >
-                  {languageRedux === 1 ?
-                    "Hỗ trợ khách hàng" :
-                    "Customer support"}
+            <div className="category-dropdown-item">
+              <div className="top-item" onClick={() => handleExpand(4)}>
+                <h3>
+                  {languageRedux === 1
+                    ? 'Hỗ trợ khách hàng'
+                    : 'Customer support'}
                 </h3>
-                <ArrowIcon fill='black' />
+                <ArrowIcon fill="black" />
               </div>
-              <div className='bot-item'
+              <div
+                className="bot-item"
                 style={{
                   height: expand.includes(4) ? 'unset' : 0,
                   overflow: expand.includes(4) ? 'unset' : 'hidden',
-                  marginTop: expand.includes(4) ? '16px' : '0px'
+                  marginTop: expand.includes(4) ? '16px' : '0px',
                 }}
               >
                 <h3 onClick={moveToPolicy}>
-                  {
-                    languageRedux === 1 ?
-                      "Chính sách bảo mật" :
-                      "Privacy Policy"
-                  }
+                  {languageRedux === 1
+                    ? 'Chính sách bảo mật'
+                    : 'Privacy Policy'}
                 </h3>
                 <h3 onClick={moveToSupportTerms}>
-                  {
-                    languageRedux === 1 ?
-                      "Điều khoản hỗ trợ" :
-                      "Support terms"
-                  }
+                  {languageRedux === 1 ? 'Điều khoản hỗ trợ' : 'Support terms'}
                 </h3>
                 <h3 onClick={moveToMemberGuide}>
-                  {
-                    languageRedux === 1 ?
-                      "Hướng dẫn thành viên" :
-                      "Member Guide"
-                  }
+                  {languageRedux === 1
+                    ? 'Hướng dẫn thành viên'
+                    : 'Member Guide'}
                 </h3>
               </div>
             </div>
           </div>
         </Collapse>
-
       </Box>
       <ModalLogin
         openModalLogin={openModalLogin}
         setOpenModalLogin={setOpenModalLogin}
       />
     </div>
-  )
+  );
 };
 
 export default CategoryDropdown;

@@ -182,43 +182,45 @@ const Home: React.FC = () => {
   // Lưu vị trí cuộn trước đó
   // let lastScrollTop = 0;
 
-  var prevHeight = 300;
-  const handleScroll = () => {
-    const tabs = document.querySelector('.tabs') as HTMLElement;
+  // var prevHeight = 300;
+  // const handleScroll = () => {
+  //   const tabs = document.querySelector('.tabs') as HTMLElement;
 
-    const breadCrumb = document.querySelector(
-      '.bread-crumb-container',
-    ) as HTMLElement;
-    var currentHeight = window.scrollY;
-    // console.log('prevHeight=', prevHeight);
-    // console.log('currentHeight=', currentHeight);
+  //   const breadCrumb = document.querySelector(
+  //     '.bread-crumb-container',
+  //   ) as HTMLElement;
+  //   var currentHeight = window.scrollY;
+  //   // console.log('prevHeight=', prevHeight);
+  //   // console.log('currentHeight=', currentHeight);
 
-    // Lấy vị trí cuộn hiện tại
+  //   // Lấy vị trí cuộn hiện tại
 
-    if (
-      currentHeight >= prevHeight &&
-      currentHeight > 100 &&
-      tabs !== null &&
-      breadCrumb !== null
-    ) {
-      tabs.style.top = '-70px';
-      breadCrumb.style.marginTop = '-192px';
-      // setTimeout(() => {
-      //   currentHeight = 0;
-      //   tabs.style.top = '70px';
-      //   breadCrumb.style.marginTop = '192px';
-      // }, 500);
-    } else if (currentHeight === 0) {
-      tabs.style.top = '70px';
-      breadCrumb.style.marginTop = '192px';
-    } else {
-      tabs.style.top = '70px';
-      breadCrumb.style.marginTop = '192px';
-    }
-    prevHeight = currentHeight;
-  };
+  //   if (
+  //     currentHeight >= prevHeight &&
+  //     currentHeight > 100 &&
+  //     tabs !== null &&
+  //     breadCrumb !== null
+  //   ) {
+  //     tabs.style.top = '-70px';
+  //     breadCrumb.style.marginTop = '-192px';
+  //     // setTimeout(() => {
+  //     //   currentHeight = 0;
+  //     //   tabs.style.top = '70px';
+  //     //   breadCrumb.style.marginTop = '192px';
+  //     // }, 500);
+  //   } else if (currentHeight === 0) {
+  //     tabs.style.top = '70px';
+  //     breadCrumb.style.marginTop = '192px';
+  //   } else {
+  //     if (tabs !== null && breadCrumb !== null) {
+  //       tabs.style.top = '70px';
+  //       breadCrumb.style.marginTop = '192px';
+  //     }
+  //   }
+  //   prevHeight = currentHeight;
+  // };
 
-  window.addEventListener('scroll', handleScroll);
+  // window.addEventListener('scroll', handleScroll);
 
   return (
     <div className="home">

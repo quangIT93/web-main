@@ -12,32 +12,93 @@ import Avatar from '@mui/material/Avatar';
 import { Navbar } from '#components';
 import Footer from '../../components/Footer/Footer';
 import profileApi from 'api/profileApi';
+import candidateSearch from 'api/apiCandidates';
+
 import ItemApply from '../../pages/Profile/components/Item';
 
-import { StarIconBookmark } from '#components/Icons/iconCandidate';
+import {
+  StarIconBookmark,
+  StarIconBookmarked,
+} from '#components/Icons/iconCandidate';
 
 import './style.scss';
+import ModalShowCv from '#components/Profile/ModalShowCv';
 
 const CandidateNewDetail = () => {
   const [candidate, setCandidate] = useState<any>(null);
-  const dataCandidates = async () => {
-    const id = 'f429b393-8367-4a5d-8b74-48cc3f29c4d8';
+  const [bookmarkCandidate, setBookmarkCandidate] = useState<any>(0);
+  const [unlock, setUnlock] = useState<boolean>(false);
+  const [modalShowCvPDF, setModalShowCvPdf] = React.useState<{
+    open: boolean;
+    urlPdf: string;
+  }>({
+    open: false,
+    urlPdf: '',
+  });
+  const dataCandidates = async (unclock: boolean) => {
+    const id = localStorage.getItem('candidateId');
     try {
-      const result = await profileApi.getProfileByAccountId('vi', id);
+      if (id) {
+        const result = await profileApi.getProfileByAccountId(
+          'vi',
+          id,
+          unclock,
+        );
 
-      if (result) {
-        setCandidate(result.data);
+        if (result) {
+          setCandidate(result.data);
+        }
+      } else {
+        setCandidate([]);
       }
     } catch (error) {
       console.log('error', error);
+      window.open('/', 'parent');
     }
   };
 
-  console.log('candidate', candidate);
+  useEffect(() => {
+    dataCandidates(unlock);
+  }, [unlock]);
+
+  console.log(candidate);
+
+  const handleUnLockCandidate = async (accountId: string) => {
+    if (unlock) {
+      setUnlock(false);
+    } else {
+      setUnlock(true);
+    }
+    try {
+    } catch (error) {}
+  };
+
+  const handleClickBookmarkCandidate = async (accountId: string) => {
+    try {
+      const result = await candidateSearch.postBookmarkCandidate(accountId);
+      if (result) {
+        dataCandidates(unlock);
+      }
+    } catch (error) {}
+  };
+
+  const getBookMark = async () => {
+    try {
+      const resultBookmark = await candidateSearch.getBookmarkCandidate('vi');
+
+      if (resultBookmark) setBookmarkCandidate(resultBookmark.data.total);
+    } catch (error) {}
+  };
 
   useEffect(() => {
-    dataCandidates();
+    getBookMark();
   }, []);
+
+  const handleClickItemCv = async (urlPdf: string) => {
+    console.log('urlPdf', urlPdf);
+
+    setModalShowCvPdf({ open: true, urlPdf });
+  };
 
   return (
     <div className="candidate-new-detail">
@@ -58,7 +119,7 @@ const CandidateNewDetail = () => {
               >
                 <Avatar
                   style={{ height: '70px', width: '70px' }}
-                  alt="U"
+                  alt={candidate?.avatarPath}
                   src={candidate?.avatarPath ? candidate?.avatarPath : ''}
                 />
               </Badge>
@@ -69,20 +130,31 @@ const CandidateNewDetail = () => {
             <div className="buttons-candidate">
               <Button
                 type="primary"
-                onClick={() => window.open(`/profile/`, '_parent')}
+                onClick={() => handleUnLockCandidate(candidate?.accountId)}
               >
                 Unlock Candidates
               </Button>
 
               <Button
                 type="primary"
-                onClick={() => window.open(`/profile/`, '_parent')}
+                onClick={(event) => {
+                  handleClickItemCv(candidate?.profilesCvs[0]?.pdfURL);
+                }}
               >
                 View Resume
               </Button>
 
-              <div className="bookmarkIconStart">
-                <StarIconBookmark />
+              <div
+                className="bookmarkIconStart"
+                onClick={() =>
+                  handleClickBookmarkCandidate(candidate?.accountId)
+                }
+              >
+                {candidate?.isBookmarked ? (
+                  <StarIconBookmarked />
+                ) : (
+                  <StarIconBookmark />
+                )}
               </div>
             </div>
           </div>
@@ -118,18 +190,18 @@ const CandidateNewDetail = () => {
             </div>
             <div className="div-detail-row right">
               <p>
-                {candidate?.birthdayData
+                {candidate?.birthdayData && !unlock
                   ? moment(candidate?.birthdayData)
                       .format('DD/MM/YYYY')
                       .replace(/\d{2}$/, 'xx')
+                  : candidate?.birthdayData && unlock
+                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
                   : 'Chưa cập nhật'}
               </p>
               <p>
                 {candidate?.genderText
-                  ? candidate?.genderText === 1
-                    ? 'Name'
-                    : 'Nữ'
-                  : 'Name'}
+                  ? candidate?.genderText
+                  : 'Chưa cập nhật'}
               </p>
               <p>
                 {candidate?.addressText
@@ -407,6 +479,10 @@ const CandidateNewDetail = () => {
         </div>
       </Box>
       <Footer />
+      <ModalShowCv
+        modalShowCvPDF={modalShowCvPDF}
+        setModalShowCvPdf={setModalShowCvPdf}
+      />
     </div>
   );
 };
