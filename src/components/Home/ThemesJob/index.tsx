@@ -164,12 +164,12 @@ const ThemesJob: React.FC = () => {
       const result = await themeApi.getThemesEnable(
         languageRedux === 1 ? 'vi' : 'en',
       );
+      console.log(result);
 
       if (result) {
         setListThem(result);
-
-        const list = await postApi.getPostByThemeId(
-          result.data[0].id,
+        const list = await postApi?.getPostByThemeId(
+          result?.data[0]?.id,
           19,
           null,
           languageRedux === 1 ? 'vi' : 'en',

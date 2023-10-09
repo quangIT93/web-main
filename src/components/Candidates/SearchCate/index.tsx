@@ -8,9 +8,8 @@ import categoriesApi from 'api/categoriesApi';
 // import redux
 import { RootState } from 'store';
 
-import { EnvironmentOutlined } from '@ant-design/icons';
-import { AddressFilterIcon, ArrowFilterIcon } from '#components/Icons';
-
+import { ArrowFilterIcon } from '#components/Icons';
+import { CateIcon } from '#components/Icons/iconCandidate';
 // import ant
 import { Button, Cascader, Divider, Typography } from 'antd';
 
@@ -121,7 +120,9 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
 
   const DropdownRender = (menus: React.ReactNode) => (
     <div className="filter-loca-cate">
-      <Text className="title-filter_location">Ngành nghề</Text>
+      <Text className="title-filter_location">
+        {languageRedux === 1 ? 'Ngành nghề' : 'Career'}
+      </Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
         {disable ? 'Vui lòng chọn ngành nghề bạn muốn tìm kiếm.' : ''}
@@ -138,14 +139,19 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
   );
 
   return (
-    <>
+    <div className="wrap-search_candidate">
+      <div
+        style={{ position: 'absolute', zIndex: '8', top: '10px', left: '10px' }}
+      >
+        <CateIcon />
+      </div>
       <Cascader
         style={{ width: '100%' }}
         onChange={onChange as any}
         multiple
         maxTagCount="responsive"
         showCheckedStrategy={SHOW_CHILD}
-        inputIcon={<EnvironmentOutlined />}
+        inputIcon={<CateIcon />}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
         size="large"
         dropdownRender={DropdownRender}
@@ -168,9 +174,9 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
               }))
             : []
         }
-        placeholder="Ngành nghể"
+        placeholder={languageRedux === 1 ? 'Ngành nghề' : 'Career'}
       />
-    </>
+    </div>
   );
 };
 

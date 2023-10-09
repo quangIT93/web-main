@@ -1,9 +1,9 @@
 // import React, { lazy } from 'react'
-import Candidates from '.';
+import CandidatesAll from '.';
 import RouteProps from '../routes';
 const route: RouteProps = {
   path: '/candidatesAll',
-  component: <Candidates />,
+  component: <CandidatesAll />,
 };
 
 export default route;

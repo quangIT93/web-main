@@ -49,24 +49,26 @@ const Header: React.FC<ICvHeader> = (props) => {
       justifyContent: 'center',
       // border: '1px solid red',
       width: '100%',
-      gap: '9.447px',
+      gap: '8.447px',
     },
     lastName: {
       fontSize: 33,
       fontFamily: 'Montserrat Regular',
-      width: '100%',
+      // width: '100%',
       letterSpacing: '2px',
       // background: 'red',
       // border: '1px solid black',
+      width: '100mm',
     },
     firstName: {
       fontSize: 33,
       fontFamily: 'Montserrat Regular',
-      width: '100%',
+      // width: '100%',
       letterSpacing: '2px',
       // marginBottom: '0.5cm',
       // background: 'red',
       // border: '1px solid black',
+      width: '100mm',
     },
     subtitle: {
       fontSize: 9,
@@ -81,6 +83,9 @@ const Header: React.FC<ICvHeader> = (props) => {
       letterSpacing: '8px',
       color: '#1B1212',
       marginTop: '12.34px',
+      wordBreak: 'break-word',
+      whiteSpace: 'wrap',
+      width: '100mm',
     },
     topLeftDiv: {
       // marginTop: '2.066cm',
@@ -212,10 +217,7 @@ const Header: React.FC<ICvHeader> = (props) => {
         <View style={styles.leftDiv}>
           <View style={styles.topLeftDiv}>
             <View style={styles.avatarDiv}>
-              <Image
-                src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
-                style={styles.image}
-              />
+              <Image src={profile.avatarPath ? profile.avatarPath : 'a'} />
             </View>
             <View style={styles.info}>
               <View style={styles.name}>

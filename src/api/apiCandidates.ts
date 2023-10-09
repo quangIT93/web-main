@@ -8,8 +8,8 @@ const candidateSearch = {
   },
 
 
-  getCandidates: (addresses: any, categories: any, educations: number | undefined, gender: number, ageMin: number| null, ageMax: number| null, limit: number | null, page: number | null, lang: string) => {
-    console.log(educations);
+  getCandidates: (addresses: any, categories: any, educations: number | undefined, gender: number| undefined, ageMin: number| null, ageMax: number| null, limit: number | null, page: number | null, lang: string) => {
+  
     
     const URL = `/v3/cv-filter/search?` +
       `${addresses.length !== 0
@@ -25,7 +25,7 @@ const candidateSearch = {
       //   : ``
       // }`
       `${educations ? `&educations=${educations}`: ``}` +
-      `&${gender === 0? `gender=${0}` : gender !== 0 ? `gender=${1}`: ``}` +
+      `&${gender === 0? `gender=${0}` : gender === 1 ? `gender=${1}`: ""}` +
       `&${ageMin ? `ageMin=${ageMin}` : ``}` +
       `&${ageMax ? `ageMax=${ageMax}` : ``}` +
       `&${limit ? `limit=${limit}` : ``}` +
@@ -46,6 +46,7 @@ const candidateSearch = {
       }
     )
   },
+
   getBookmarkCandidate: (lang: string) => {
     const URL = `/v3/candidate-bookmarks?lang=${lang}`
     return axiosClient.get(URL, {
@@ -53,7 +54,20 @@ const candidateSearch = {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
     })
-},
+  },
+  
+  postCountShowCandidate: (accountId: string) => {
+    const URL = `/v3/view-profiles`
+    return axiosClient.post(
+      URL,
+      { profileId: accountId },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    )
+  },
 
 }
 

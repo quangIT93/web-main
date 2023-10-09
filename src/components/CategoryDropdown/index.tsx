@@ -225,7 +225,7 @@ const CategoryDropdown: React.FC = () => {
       setOpenModalLogin(true);
       return;
     }
-    window.open('/candidateAlls', '_parent');
+    window.open('/candidatesAll', '_parent');
   };
 
   const moveToCvManage = () => {
@@ -246,7 +246,7 @@ const CategoryDropdown: React.FC = () => {
       setOpenModalLogin(true);
       return;
     }
-    window.open('/candidateAlls', '_parent');
+    window.open('/candidatesAll', '_parent');
   };
 
   const moveToIntroductionCv = () => {
@@ -365,7 +365,7 @@ const CategoryDropdown: React.FC = () => {
           <div
             className="category-dropdown-left"
             onMouseEnter={() => setOpenCategoryDropdown(true)}
-            // onMouseLeave={() => setOpenCategoryDropdown(false)}
+            onMouseLeave={() => setOpenCategoryDropdown(false)}
             onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
           >
             <IconMenu />
@@ -413,6 +413,7 @@ const CategoryDropdown: React.FC = () => {
           in={openCategoryDropdown}
           // sx={collapseCssFilter}
           onMouseLeave={() => setOpenCategoryDropdown(false)}
+          onMouseEnter={() => setOpenCategoryDropdown(true)}
           sx={
             location.pathname === '/'
               ? { maxWidth: '1280px' }
@@ -420,6 +421,15 @@ const CategoryDropdown: React.FC = () => {
           }
           className="category-dropdown-collapse"
         >
+          <div
+            style={{
+              background: 'transparent',
+              position: 'absolute',
+              width: '100%',
+              height: '30px',
+              top: '-30px',
+            }}
+          ></div>
           <div className="category-dropdown-wraps">
             <div className="category-dropdown-item">
               <div className="top-item" onClick={() => handleExpand(1)}>

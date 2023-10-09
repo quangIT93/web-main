@@ -18,9 +18,11 @@ import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperi
 import ModalDeleteExperience from '#components/Profile/ModalDeleteExperience';
 
 import { RootState } from '../../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import profileApi from 'api/profileApi';
 interface SuggestItemProps {
   typeItem?: string;
   item?: ItemAppy;
@@ -46,6 +48,8 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
+  const dispatch = useDispatch();
   const [openModalDeleteEducation, setOpenModalDeleteEducation] =
     useState(false);
   const [openModalEducationUpdate, setOpenModalEducationUpdate] =
@@ -56,7 +60,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
     useState(false);
   const [language, setLanguage] = useState<any>();
 
-  const handleDeleteEducation = (id?: number | null) => {
+  const handleDeleteEducation = async (id?: number | null) => {
     setOpenModalDeleteEducation(true);
   };
 
@@ -64,7 +68,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
     setOpenModalEducationUpdate(true);
   };
 
-  const handleDeleteExperience = (id?: number | null) => {
+  const handleDeleteExperience = async (id?: number | null) => {
     setOpenModalDeleteExperience(true);
   };
 

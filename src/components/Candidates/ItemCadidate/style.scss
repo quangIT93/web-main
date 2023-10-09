@@ -25,6 +25,7 @@
             height: 100%;
             object-fit: cover;
             border-radius: 12px;
+            filter: blur(3px);
         }
     }
     .info-candidate {
@@ -33,7 +34,34 @@
         flex-direction: column;
         gap: 16px;
         width: 100%;
-   
+        .info-candidate_item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            p {
+                word-break: break-all;
+                white-space: nowrap;
+                width: 112px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                @media screen and (max-width: 1080px) and (min-width: 780px){
+                    width: 100px;
+                }
+
+                @media screen and (max-width: 779px) and (min-width: 600px){
+                    width: 300px;
+                }
+
+                @media screen and (max-width: 400px) and (min-width: 599px){
+                    width: 110px;
+                }
+
+                @media screen and (max-width: 399px){
+                    width: 100px;
+                }
+            }
+        }
         h3 {
             font-size: 16px;
             font-style: normal;
@@ -71,20 +99,28 @@
                 .text-info-candidate {
                     display: inline-block;
                     white-space: nowrap;
-                    width: 160px;
+                    width: 100px;
                     word-break: break-all;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    
+                    @media screen and (max-width: 780px) and (min-width: 600px) {
+                        width: 280px;
+                    }
+                    @media screen and (max-width: 1079px) and (min-width: 781px) {
+                        width: 100px;
+                    }
+
                     @media screen and (max-width: 400px) {
                         width: 130px;
                     }
 
                     @media screen and (max-width: 370px) {
-                        width: 100px;
+                        width: 42px;
                     }
 
                     @media screen and (max-width: 320px) {
-                        width: 80px;
+                        width: 42px;
                     }
                 }
             }

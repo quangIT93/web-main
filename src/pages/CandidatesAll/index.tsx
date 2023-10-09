@@ -5,7 +5,7 @@ import Footer from '../../components/Footer/Footer';
 
 // import ant
 import { Button, Cascader, Divider, Typography, Spin } from 'antd';
-
+import { RootState } from '../../store/reducer/index';
 // import component
 // @ts-ignore
 import SeachLocation from '#components/Candidates/SeachLocation';
@@ -20,11 +20,13 @@ import candidateSearch from 'api/apiCandidates';
 
 // import antIcon
 import { LoadingOutlined } from '@ant-design/icons';
-
+import { message } from 'antd';
 // scroll data
 import InfiniteScroll from 'react-infinite-scroll-component';
+import CategoryDropdown from '#components/CategoryDropdown';
+import { useSelector } from 'react-redux';
 
-const Candidates = () => {
+const CandidatesAll = () => {
   // const listData: any = {
   //   status: 200,
   //   data: {
@@ -194,16 +196,22 @@ const Candidates = () => {
   const [addresses, setAddresses] = useState([]);
   const [categories, setCategories] = useState([]);
   const [educations, setEducations] = useState<number | undefined>();
-  const [gender, setGender] = useState(1);
-  const [ageMin, setAgeMin] = useState<number | null>(1);
+  const [gender, setGender] = useState<undefined | number>(1);
+  const [ageMin, setAgeMin] = useState<number | null>(18);
   const [ageMax, setAgeMax] = useState<number | null>(60);
   const [page, setPage] = React.useState<any>('0');
   const [reset, setReset] = useState(false);
   const [total, setTotal] = useState(0);
 
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+
   const [hasMore, setHasMore] = React.useState(true);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   const getAllCandidates = async () => {
     try {
@@ -217,9 +225,8 @@ const Candidates = () => {
         ageMax,
         18,
         page,
-        'vi',
+        languageRedux === 1 ? 'vi' : 'en',
       );
-      console.log(result);
       if (result) {
         setTotal(result.data.total);
         setListData(result.data.cvFilters);
@@ -235,13 +242,23 @@ const Candidates = () => {
       }
     } catch (error) {}
   };
-
   React.useEffect(() => {
     getAllCandidates();
-  }, []);
+  }, [languageRedux]);
 
+  React.useEffect(() => {
+    if (profileV3.length !== 0 && profileV3.typeRoleData !== 1) {
+      window.open('/', '_parent');
+    }
+  }, [profileV3]);
+
+  const [messageApi, contextHolder] = message.useMessage();
   const handleSubmitSearchCandidate = async () => {
     try {
+      if (ageMin && ageMax && ageMin > ageMax) {
+        message.error('Độ tuổi không hợp lệ!');
+        return;
+      }
       const result = await candidateSearch.getCandidates(
         addresses,
         categories,
@@ -254,8 +271,6 @@ const Candidates = () => {
         'vi',
       );
       setPage('0');
-      if (ageMin! > ageMax!) {
-      }
       if (result) {
         setTotal(result.data.total);
         setListData(result.data.cvFilters);
@@ -271,6 +286,8 @@ const Candidates = () => {
       }
     } catch (error) {
       console.log('error', error);
+      message.error('Lỗi server!');
+      return;
     }
   };
 
@@ -278,9 +295,9 @@ const Candidates = () => {
     setAddresses([]);
     setCategories([]);
     setEducations(undefined);
-    setGender(1);
-    setAgeMin(null);
-    setAgeMax(null);
+    setGender(undefined);
+    setAgeMin(18);
+    setAgeMax(60);
     setReset(true);
   };
 
@@ -319,6 +336,8 @@ const Candidates = () => {
   return (
     <div className="container-candidate">
       <Navbar />
+      <CategoryDropdown />
+      {contextHolder}
       <div className="candidate">
         <div className="header-candidate">
           <h3>Looking for candidates</h3>
@@ -326,7 +345,9 @@ const Candidates = () => {
             type="primary"
             onClick={() => window.open(`/history`, '_parent')}
           >
-            Saved candidate list
+            {languageRedux === 1
+              ? 'Danh sách ứng viên đã lưu'
+              : 'Saved candidate list'}
           </Button>
         </div>
         <div className="search-candidate">
@@ -356,6 +377,7 @@ const Candidates = () => {
               setGender={setGender}
               setReset={setReset}
               reset={reset}
+              genderValue={gender}
             />
             <SeachAge
               setAgeMin={setAgeMin}
@@ -370,14 +392,14 @@ const Candidates = () => {
                 className="submit-seach_button seach-button_Confirm"
                 onClick={handleSubmitSearchCandidate}
               >
-                Confirm
+                {languageRedux === 1 ? 'Xác nhận' : 'Confirm'}
               </div>
 
               <div
                 className="submit-seach_button seach-button_Reset"
                 onClick={handleResetSearchCandidate}
               >
-                Reset
+                {languageRedux === 1 ? 'Đặt lại' : 'Reset'}
               </div>
             </div>
             {/* <div className="list-search_bottom"></div> */}
@@ -411,4 +433,4 @@ const Candidates = () => {
   );
 };
 
-export default Candidates;
+export default CandidatesAll;

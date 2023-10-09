@@ -5,6 +5,7 @@ import { Navbar } from '#components';
 import Footer from '../../components/Footer/Footer';
 import axios from 'axios';
 // import icon
+import Nodata from 'utils/NoDataPage';
 import {
   ShareCvIcon,
   TickIcon,
@@ -97,7 +98,7 @@ const ProfileCv: React.FC = () => {
         );
         dispatch(setProfileV3(resultProfileV3));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     // setSelectedId(id);
   };
@@ -150,11 +151,9 @@ const ProfileCv: React.FC = () => {
         setOpenBackdrop(false);
       }, 1000);
     }
-
-  }, [profileV3])
+  }, [profileV3]);
 
   console.log(profileV3);
-
 
   return (
     <div className="profile-cv-container">
@@ -188,70 +187,71 @@ const ProfileCv: React.FC = () => {
             </Button>
           </div>
         </div>
-        <Box
-          sx={{ flexGrow: 1 }}
-          className="profile-cv-list"
-          id="profile-cv-list"
-        >
-          <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-            {profileV3?.profilesCvs?.map((item: any, index: number) => (
-              <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                <div className="cv-item">
-                  <div
-                    className="cv-item_left"
-                    onClick={() => {
-                      setModalShowCvPdf({ open: true, urlPdf: item.pdfURL });
-                      setLinkPdfUrl(item.pdfURL);
-                    }}
-                  >
-                    <Avatar
-                      shape="square"
-                      icon={<UserOutlined />}
-                      src={item?.imageURL}
-                    />
-                  </div>
-                  <div className="cv-item_right">
-                    <div className="cv-item_right__title">
-                      <h3>
-                        {/* {languageRedux === 1
+        {profileV3?.profilesCvs?.length !== 0 ? (
+          <Box
+            sx={{ flexGrow: 1 }}
+            className="profile-cv-list"
+            id="profile-cv-list"
+          >
+            <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
+              {profileV3?.profilesCvs?.map((item: any, index: number) => (
+                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                  <div className="cv-item">
+                    <div
+                      className="cv-item_left"
+                      onClick={() => {
+                        setModalShowCvPdf({ open: true, urlPdf: item.pdfURL });
+                        setLinkPdfUrl(item.pdfURL);
+                      }}
+                    >
+                      <Avatar
+                        shape="square"
+                        icon={<UserOutlined />}
+                        src={item?.imageURL}
+                      />
+                    </div>
+                    <div className="cv-item_right">
+                      <div className="cv-item_right__title">
+                        <h3>
+                          {/* {languageRedux === 1
                           ? `Hồ sơ số ${index + 1}`
                           : `Resume No.${index + 1}`} */}
-                        {item?.name}
-                      </h3>
-                      <p>
-                        {languageRedux === 1
-                          ? 'Cập nhật cuối: ' +
-                          moment(new Date()).format('HH:mm') +
-                          ', ' +
-                          moment(new Date()).format('DD/MM/YYYY')
-                          : 'Last update: ' +
-                          moment(new Date()).format('HH:mm') +
-                          ', ' +
-                          moment(new Date()).format('DD/MM/YYYY')}
-                      </p>
-                    </div>
-                    <div className="cv-item_right__actions">
-                      <div
-                        className="action-item"
-                        onClick={() => handleSelecCv(item)}
-                      >
-                        <div
-                          className={
-                            item?.status === 1
-                              ? 'action-icon selected'
-                              : 'action-icon'
-                          }
-                        >
-                          <TickIcon></TickIcon>
-                        </div>
+                          {item?.name}
+                        </h3>
                         <p>
                           {languageRedux === 1
-                            ? 'Chọn CV để ứng tuyển'
-                            : 'Select CV to apply'}
+                            ? 'Cập nhật cuối: ' +
+                              moment(new Date()).format('HH:mm') +
+                              ', ' +
+                              moment(new Date()).format('DD/MM/YYYY')
+                            : 'Last update: ' +
+                              moment(new Date()).format('HH:mm') +
+                              ', ' +
+                              moment(new Date()).format('DD/MM/YYYY')}
                         </p>
-                        {/* <QuestionMarkIcon width={16} height={16} /> */}
                       </div>
-                      {/* <div
+                      <div className="cv-item_right__actions">
+                        <div
+                          className="action-item"
+                          onClick={() => handleSelecCv(item)}
+                        >
+                          <div
+                            className={
+                              item?.status === 1
+                                ? 'action-icon selected'
+                                : 'action-icon'
+                            }
+                          >
+                            <TickIcon></TickIcon>
+                          </div>
+                          <p>
+                            {languageRedux === 1
+                              ? 'Chọn CV để ứng tuyển'
+                              : 'Select CV to apply'}
+                          </p>
+                          {/* <QuestionMarkIcon width={16} height={16} /> */}
+                        </div>
+                        {/* <div
                         className="action-item"
                         onClick={() => handleEditCv(item.id)}
                       >
@@ -260,7 +260,7 @@ const ProfileCv: React.FC = () => {
                         </div>
                         <p>{languageRedux === 1 ? 'Chỉnh sửa' : 'Editor'}</p>
                       </div> */}
-                      {/* <div
+                        {/* <div
                         className="action-item"
                         onClick={() => setOpenModalShare(true)}
                       >
@@ -269,46 +269,49 @@ const ProfileCv: React.FC = () => {
                         </div>
                         <p>{languageRedux === 1 ? 'Chia sẻ' : 'Share'}</p>
                       </div> */}
-                      <div
-                        className="action-item"
-                        onClick={() =>
-                          handleDownloadCV(item?.pdfURL, item?.name)
-                        }
-                      >
-                        <div className="action-icon">
-                          <DownloadCVIcon width={24} height={24} />
+                        <div
+                          className="action-item"
+                          onClick={() =>
+                            handleDownloadCV(item?.pdfURL, item?.name)
+                          }
+                        >
+                          <div className="action-icon">
+                            <DownloadCVIcon width={24} height={24} />
+                          </div>
+                          <p>{languageRedux === 1 ? 'Tải CV' : 'Download'}</p>
                         </div>
-                        <p>{languageRedux === 1 ? 'Tải CV' : 'Download'}</p>
-                      </div>
-                      <div
-                        className="action-item"
-                        onClick={() =>
-                          setOpenModalDeleteCv({ open: true, item })
-                        }
-                      >
-                        <div className="action-icon">
-                          <SectionDeleteIcon width={24} height={24} />
+                        <div
+                          className="action-item"
+                          onClick={() =>
+                            setOpenModalDeleteCv({ open: true, item })
+                          }
+                        >
+                          <div className="action-icon">
+                            <SectionDeleteIcon width={24} height={24} />
+                          </div>
+                          <p>{languageRedux === 1 ? 'Xóa CV' : 'Delete'}</p>
                         </div>
-                        <p>{languageRedux === 1 ? 'Xóa CV' : 'Delete'}</p>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Grid>
-            ))}
-          </Grid>
-          <Backdrop
-            sx={{
-              color: '#0d99ff ',
-              backgroundColor: 'transparent',
-              zIndex: (theme: any) => theme.zIndex.drawer + 1,
-            }}
-            open={openBackdrop}
-          //  onClick={handleClose}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
-        </Box>
+                </Grid>
+              ))}
+            </Grid>
+            <Backdrop
+              sx={{
+                color: '#0d99ff ',
+                backgroundColor: 'transparent',
+                zIndex: (theme: any) => theme.zIndex.drawer + 1,
+              }}
+              open={openBackdrop}
+              //  onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          </Box>
+        ) : (
+          <Nodata />
+        )}
 
         {/* {linkPdfUrl ? (
           <div className="show-cv">

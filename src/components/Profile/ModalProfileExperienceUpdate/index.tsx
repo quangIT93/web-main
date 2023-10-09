@@ -83,7 +83,9 @@ interface IInfoExperience {
 const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   props,
 ) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const {
     openModalExperienceUpdate,
     setOpenModalExperienceUpdate,
@@ -99,11 +101,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
 
   const [experience, setExperience] = useState<IInfoExperience>({
     experienceId,
-    companyName: experienceValue.company_name,
+    companyName: experienceValue.companyName,
     title: experienceValue.title,
-    startDate: experienceValue.start_date,
-    endDate: experienceValue.end_date,
-    extraInformation: experienceValue.extra_information,
+    startDate: experienceValue.startDate,
+    endDate: experienceValue.endDate,
+    extraInformation: experienceValue.extraInformation,
   });
 
   const [language, setLanguageState] = React.useState<any>();
@@ -111,7 +113,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguageState(result.data);
@@ -123,8 +125,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const handleClose = () => setOpenModalExperienceUpdate(false);
 
@@ -184,13 +186,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
         checkForm: false,
       };
     }
-    if (
-      experience.title?.trim().length > 50
-    ) {
+    if (experience.title?.trim().length > 50) {
       return {
-        messageError: languageRedux === 1 ?
-          "Tiêu đề không được vượt quá 50 ký tự" :
-          "Professional title cannot exceed 50 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Tiêu đề không được vượt quá 50 ký tự'
+            : 'Professional title cannot exceed 50 characters',
         checkForm: false,
       };
     }
@@ -201,13 +202,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
         checkForm: false,
       };
     }
-    if (
-      experience.companyName?.trim().length > 50
-    ) {
+    if (experience.companyName?.trim().length > 50) {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên công ty không được vượt quá 50 ký tự" :
-          "Company names cannot exceed 50 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Tên công ty không được vượt quá 50 ký tự'
+            : 'Company names cannot exceed 50 characters',
         checkForm: false,
       };
     }
@@ -218,13 +218,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
         checkForm: false,
       };
     }
-    if (
-      experience.extraInformation?.trim().length > 50
-    ) {
+    if (experience.extraInformation?.trim().length > 500) {
       return {
-        messageError: languageRedux === 1 ?
-          "Thông tin thêm không được vượt quá 50 ký tự" :
-          "Additional information cannot exceed 50 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Thông tin thêm không được vượt quá 500 ký tự'
+            : 'Additional information cannot exceed 500 characters',
         checkForm: false,
       };
     }
@@ -264,7 +263,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
         const result = await profileApi.updateProfileExperience(experience);
         if (result) {
           const profile = await profileApi.getProfile(
-            languageRedux === 1 ? "vi" : "en"
+            languageRedux === 1 ? 'vi' : 'en',
           );
           if (profile) {
             setProfileUser(profile.data);
@@ -300,9 +299,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style}
-        className="Modal-personnal-info"
-      >
+      <Box sx={style} className="Modal-personnal-info">
         {contextHolder}
         <div
           style={{
@@ -325,9 +322,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {
-            language?.profile_page?.edit_working_experience
-          }
+          {language?.profile_page?.edit_working_experience}
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -336,9 +331,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            {
-              language?.professional_titles
-            }{' '}
+            {language?.professional_titles}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
@@ -349,10 +342,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             onChange={handleChangeTitle}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={
-              language?.professional_titles
-            }
-          // error={titleError} // Đánh dấu lỗi
+            placeholder={language?.professional_titles}
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -362,9 +353,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            {
-              language?.company_organization
-            }{' '}
+            {language?.company_organization}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
@@ -375,10 +364,8 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={
-              language?.company_organization
-            }
-          // error={titleError} // Đánh dấu lỗi
+            placeholder={language?.company_organization}
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -395,9 +382,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  {
-                    language?.start_time
-                  }{' '}
+                  {language?.start_time}{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
@@ -415,9 +400,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  {
-                    language?.finish_time
-                  }{' '}
+                  {language?.finish_time}{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
@@ -439,9 +422,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             component="label"
             htmlFor="startTime"
           >
-            {
-              language?.additional_information
-            }{' '}
+            {language?.additional_information}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
@@ -453,16 +434,12 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             rows={4}
             id="extraExp_info"
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder={
-              language?.profile_page?.place_additional_information
-            }
+            placeholder={language?.profile_page?.place_additional_information}
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {
-            language?.profile_page?.save_info
-          }
+          {language?.profile_page?.save_info}
         </Button>
       </Box>
     </Modal>

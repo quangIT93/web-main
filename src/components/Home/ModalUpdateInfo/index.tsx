@@ -23,7 +23,7 @@ const ModalUpdateInfo: React.FC<IModalSelectRole> = (props) => {
   };
 
   const handleConfirm = () => {
-    window.open(roleRedux === 0 ? `/profile/` : '/company-infor/', '_parent');
+    window.open(roleRedux === 0 ? `/profile/` : '/company-infor', '_parent');
     handleCancel();
   };
 

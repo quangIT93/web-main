@@ -9,6 +9,8 @@ import { actionCreators } from '../../store/index';
 
 import { getProfile } from 'store/reducer/profileReducer/getProfileReducer';
 
+import { RootState } from '../../store/index';
+
 interface AuthReponse {
   accountId: string | null;
   accessToken: string | null;
@@ -28,6 +30,9 @@ const GoogleLoginButton: React.FC<PropsModalLogin> = (props) => {
     // ActionSignInEmail,
     setProfileUser,
   } = bindActionCreators(actionCreators, dispatch);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
 
   const fetchDataProfile = async (auth: AuthReponse, isVerifyOtp?: boolean) => {
     if (isVerifyOtp) {
@@ -50,7 +55,9 @@ const GoogleLoginButton: React.FC<PropsModalLogin> = (props) => {
 
       try {
         if (localStorage.getItem('accessToken')) {
-          const result = await profileApi.getProfile('vi');
+          const result = await profileApi.getProfile(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
 
           // console.log('result: ', result);
 

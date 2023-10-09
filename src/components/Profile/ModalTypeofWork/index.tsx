@@ -71,7 +71,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
 
   const handleSubmit = async () => {
     try {
-      const result = await profileApi.putProfileJobV3(valueType);
+      const result = await profileApi.putProfileJobV3(valueType, null);
       if (result) {
         const resultProfileV3 = await profileApi.getProfileV3(
           languageRedux === 1 ? 'vi' : 'en',

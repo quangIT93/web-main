@@ -9,8 +9,8 @@ import { RootState } from 'store';
 
 import { EnvironmentOutlined } from '@ant-design/icons';
 
-import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons';
-
+import { ArrowFilterIcon } from '#components/Icons';
+import { GenderIcon } from '#components/Icons/iconCandidate';
 import candidateSearch from 'api/apiCandidates';
 
 // import ant
@@ -66,13 +66,7 @@ const CustomOption = ({
         style={{ width: '100%' }}
         name="radiogroup"
         onChange={onChange}
-        value={
-          reset && typeAcademic === 0
-            ? undefined
-            : typeAcademic === 0
-            ? typeAcademic
-            : 1
-        }
+        value={reset ? undefined : typeAcademic === 0 ? typeAcademic : 1}
         // defaultValue={jobType ? jobType : 5}
       >
         <Space direction="vertical" style={{ width: '100%' }}>
@@ -93,10 +87,11 @@ interface ISeachGender {
   setGender: any;
   setReset: Function;
   reset: boolean;
+  genderValue: number | undefined;
 }
 
 const SeachGender: React.FC<ISeachGender> = (props) => {
-  const { setGender, setReset, reset } = props;
+  const { setGender, setReset, reset, genderValue } = props;
   const [academicType, setAcademicType] = React.useState([]);
 
   const { Option } = Select;
@@ -107,22 +102,24 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
-  const gender = [
+  var gender = [
     {
       id: 1,
-      data: 'male',
+      data: languageRedux === 1 ? 'Nam' : 'Male',
     },
     {
       id: 0,
-      data: 'female',
+      data: languageRedux === 1 ? 'Nữ' : 'Female',
     },
   ];
 
   const academicTypesFnc = async () => {
     try {
-      const result = await candidateSearch.getAcademicTypes('vi');
+      const result = await candidateSearch.getAcademicTypes(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setAcademicType(result.data);
       }
@@ -135,9 +132,7 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
     academicTypesFnc();
   }, []);
 
-  const onChange = (value: string[][]) => {
-    console.log(value);
-  };
+  const onChange = (value: string[][]) => {};
   const handleChange = (value1: string) => {
     setReset(false);
   };
@@ -150,7 +145,7 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
   return (
     <div className="filter-candidate">
       <div className="filter-input_candidate">
-        <PaperFilterIcon width={20} height={20} />
+        <GenderIcon />
       </div>
       <Select
         style={{ width: 120 }}
@@ -159,7 +154,7 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
         value={valueRender && reset ? undefined : valueRender?.data}
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder="Giới tính"
+        placeholder={languageRedux === 1 ? 'Giới tính' : 'Sex'}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="5" label="">

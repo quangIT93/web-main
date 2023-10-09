@@ -201,16 +201,26 @@ const Navbar: React.FC = () => {
   const [openModalTurnOffStatus, setOpenModalTurnOffStatus] =
     useState<boolean>(false);
   const [loadingSwitch, setLoadingSwitch] = useState(false);
-  const handleOnchangeSearchJob = (checked: any) => {
-    if (checked === true) {
-      // e.preventDefault();
-      console.log('checked', checked);
-      setSearchJob(true);
-    } else {
-      setLoadingSwitch(true);
-      setOpenModalTurnOffStatus(true);
-      setSearchJob(false);
-    }
+  const handleOnchangeSearchJob = async (checked: any) => {
+    try {
+      if (checked === true) {
+        // e.preventDefault();
+        const result = await profileApi.putProfileJobV3(null, 1);
+        if (result) {
+          setSearchJob(true);
+          const resultProfileV3 = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (resultProfileV3) {
+            dispatch(setProfileV3(resultProfileV3));
+          }
+        }
+      } else {
+        setLoadingSwitch(true);
+        setOpenModalTurnOffStatus(true);
+        setSearchJob(false);
+      }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -403,6 +413,12 @@ const Navbar: React.FC = () => {
       }
     } catch (error) {}
   };
+
+  useEffect(() => {
+    getDataProfileV3();
+    // dispatch(getProfile() as any)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     fecthDataProfileUser();
@@ -714,7 +730,7 @@ const Navbar: React.FC = () => {
       }
       var result = null;
       if (localStorage.getItem('refreshToken')) {
-        result = await profileApi.getProfile('vi');
+        result = await profileApi.getProfile(languageRedux === 1 ? 'vi' : 'en');
       } else {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
@@ -836,6 +852,21 @@ const Navbar: React.FC = () => {
       console.log(error);
     }
   };
+
+  const getPropfileV3New = async () => {
+    try {
+      const result = await profileApi.getProfileV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        dispatch(setProfileV3(result));
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getPropfileV3New();
+  }, []);
 
   React.useEffect(() => {
     getAppliedPostedJobs();
@@ -992,6 +1023,7 @@ const Navbar: React.FC = () => {
 
   const buttons = [
     <div
+      key="1"
       className="language"
       onClick={() => {
         languageRedux === 1 ? totgleLanguage(2) : totgleLanguage(1);
@@ -1003,12 +1035,19 @@ const Navbar: React.FC = () => {
         <ENSubLoginIcon width={24} height={24} />
       )}
     </div>,
-    <>
+    <React.Fragment key="2">
       {localStorage.getItem('accessToken') ? (
         <div className="switch-container">
           <div
             className="search-job-switch"
-            style={{ display: roleRedux === 0 ? 'flex' : 'none' }}
+            style={{
+              display:
+                profileV3.length !== 0
+                  ? roleRedux === 0
+                    ? 'flex'
+                    : 'none'
+                  : 'none',
+            }}
           >
             {/* <p>
           {
@@ -1022,7 +1061,7 @@ const Navbar: React.FC = () => {
           }
         </p> */}
             <Switch
-              checked={searchJob}
+              checked={profileV3.isSearch === 1}
               loading={loadingSwitch}
               onChange={handleOnchangeSearchJob}
             />
@@ -1039,7 +1078,14 @@ const Navbar: React.FC = () => {
             </div>
           </div>
           <button
-            style={{ display: roleRedux === 0 ? 'none' : 'flex' }}
+            style={{
+              display:
+                profileV3.length !== 0
+                  ? roleRedux === 0
+                    ? 'none'
+                    : 'flex'
+                  : 'none',
+            }}
             key="1"
             className="btn btn__post"
             onClick={() => {
@@ -1065,11 +1111,11 @@ const Navbar: React.FC = () => {
       ) : (
         <></>
       )}
-    </>,
+    </React.Fragment>,
     <div
       className="actions-login"
       ref={refLogin}
-      key="2"
+      key="3"
       // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
       // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
@@ -1386,6 +1432,7 @@ const Navbar: React.FC = () => {
         alignItems: 'center',
         marginLeft: '4px',
       }}
+      key="4"
     >
       <div
         className="language"
@@ -1465,7 +1512,7 @@ const Navbar: React.FC = () => {
       className="menu"
       // onClick={handleClickLogin}
       ref={refLogin}
-      key="4"
+      key="5"
     >
       <Button
         className="menu-button"

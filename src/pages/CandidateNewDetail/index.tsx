@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import moment from 'moment';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store/reducer/index';
+import {
+  setAlertSuccess,
+  setAlert,
+} from 'store/reducer/profileReducer/alertProfileReducer';
 // materi
 import { Box, Typography } from '@mui/material';
 import { Space, Tooltip } from 'antd';
@@ -23,6 +30,15 @@ import {
 
 import './style.scss';
 import ModalShowCv from '#components/Profile/ModalShowCv';
+import CategoryDropdown from '#components/CategoryDropdown';
+import MuiAlert from '@mui/material/Alert';
+import { Stack, AlertProps, Snackbar } from '@mui/material';
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const CandidateNewDetail = () => {
   const [candidate, setCandidate] = useState<any>(null);
@@ -35,6 +51,17 @@ const CandidateNewDetail = () => {
     open: false,
     urlPdf: '',
   });
+  const alertSuccess = useSelector(
+    (state: any) => state.alertProfile.alertSuccess,
+  );
+
+  const alert = useSelector((state: any) => state.alertProfile.alert);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const dispatch = useDispatch();
+
   const dataCandidates = async (unclock: boolean) => {
     const id = localStorage.getItem('candidateId');
     try {
@@ -59,9 +86,11 @@ const CandidateNewDetail = () => {
 
   useEffect(() => {
     dataCandidates(unlock);
-  }, [unlock]);
 
-  console.log(candidate);
+    // if (profileV3.typeRoleData !== 1) {
+    //   window.open('/', '_parent');
+    // }
+  }, [unlock]);
 
   const handleUnLockCandidate = async (accountId: string) => {
     if (unlock) {
@@ -78,15 +107,24 @@ const CandidateNewDetail = () => {
       const result = await candidateSearch.postBookmarkCandidate(accountId);
       if (result) {
         dataCandidates(unlock);
+        if (result.status === 200) {
+          dispatch<any>(setAlert(true));
+        } else {
+          dispatch<any>(setAlertSuccess(true));
+        }
       }
     } catch (error) {}
   };
 
   const getBookMark = async () => {
     try {
-      const resultBookmark = await candidateSearch.getBookmarkCandidate('vi');
+      const resultBookmark = await candidateSearch.getBookmarkCandidate(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
-      if (resultBookmark) setBookmarkCandidate(resultBookmark.data.total);
+      if (resultBookmark) {
+        setBookmarkCandidate(resultBookmark.data.total);
+      }
     } catch (error) {}
   };
 
@@ -100,11 +138,15 @@ const CandidateNewDetail = () => {
     setModalShowCvPdf({ open: true, urlPdf });
   };
 
+  const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
+  const handleCancleSave = () => dispatch<any>(setAlert(false));
+
   return (
     <div className="candidate-new-detail">
       <Navbar />
-      <Box sx={{ marginTop: '10px' }} className="containerNewCandidate">
-        <div className="candidate-profile-avatar">
+      <CategoryDropdown />
+      <Box className="containerNewCandidate">
+        <div className="candidates-profile-avatar">
           <div className="candidate-profile-avatar">
             <div
               style={{
@@ -483,6 +525,43 @@ const CandidateNewDetail = () => {
         modalShowCvPDF={modalShowCvPDF}
         setModalShowCvPdf={setModalShowCvPdf}
       />
+      <Stack spacing={2} sx={{ width: '100%' }}>
+        <Snackbar
+          open={alertSuccess}
+          autoHideDuration={3000}
+          onClose={handleCloseAlertCv}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert
+            onClose={handleCloseAlertCv}
+            severity="success"
+            sx={{ width: '100%', backgroundColor: '#000000' }}
+          >
+            {languageRedux === 1
+              ? 'Bạn đã lưu ứng viên thành công !'
+              : 'You have successfully saved the candidate!'}
+          </Alert>
+        </Snackbar>
+      </Stack>
+
+      <Stack spacing={2} sx={{ width: '100%' }}>
+        <Snackbar
+          open={alert}
+          autoHideDuration={3000}
+          onClose={handleCancleSave}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert
+            onClose={handleCancleSave}
+            severity="success"
+            sx={{ width: '100%', backgroundColor: '#000000' }}
+          >
+            {languageRedux === 1
+              ? 'Bạn đã hủy lưu ứng viên thành công!'
+              : 'You have successfully unsaved the candidate!'}
+          </Alert>
+        </Snackbar>
+      </Stack>
     </div>
   );
 };

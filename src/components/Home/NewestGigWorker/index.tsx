@@ -6,6 +6,8 @@ import ItemCadidate from '#components/Candidates/ItemCadidate';
 import { FireIcon, ArrowrightIcon } from '#components/Icons';
 import candidateSearch from 'api/apiCandidates';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
 import './style.scss';
 
 const NewestGigWorker = () => {
@@ -16,9 +18,12 @@ const NewestGigWorker = () => {
     undefined,
   );
   const [gender, setGender] = React.useState(1);
-  const [ageMin, setAgeMin] = React.useState(1);
+  const [ageMin, setAgeMin] = React.useState(18);
   const [ageMax, setAgeMax] = React.useState(60);
   const [page, setPage] = React.useState<any>('0');
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const getAllCandidates = async () => {
     try {
       const result = await candidateSearch.getCandidates(
@@ -32,7 +37,7 @@ const NewestGigWorker = () => {
         page,
         'vi',
       );
-      console.log(result);
+
       if (result) {
         setListData(result.data.cvFilters);
       }
@@ -42,6 +47,7 @@ const NewestGigWorker = () => {
   React.useEffect(() => {
     getAllCandidates();
   }, []);
+
   return (
     <Box
       sx={{
@@ -63,7 +69,9 @@ const NewestGigWorker = () => {
       >
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <FireIcon width={25} height={25} />
-          <h2>West Gig Worker</h2>
+          <h2>
+            {languageRedux === 1 ? 'Newest gig worker' : 'Ứng viên mới mới'}
+          </h2>
         </div>
         <div
           style={{
@@ -86,8 +94,8 @@ const NewestGigWorker = () => {
       </div>
 
       <div className="list-candidate-home">
-        {listData?.map((item: any) => {
-          return <ItemCadidate item={item} />;
+        {listData?.map((item: any, index: number) => {
+          return <ItemCadidate item={item} key={index} />;
         })}
       </div>
     </Box>

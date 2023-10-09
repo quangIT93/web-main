@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { setRole } from 'store/reducer/roleReducer';
 import typeUser from 'api/apiTypeUser';
+import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 interface IChangeRole {
   // role: any;
   // setRole: React.Dispatch<React.SetStateAction<any>>;
@@ -24,6 +26,12 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
         const result = await typeUser.putTypeUser(1);
         if (result) {
           dispatch<any>(setRole(1));
+          const getProfileV3Data = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (getProfileV3Data) {
+            dispatch<any>(setProfileV3);
+          }
         }
         // setRole(1)
         // localStorage.setItem('role', '1')

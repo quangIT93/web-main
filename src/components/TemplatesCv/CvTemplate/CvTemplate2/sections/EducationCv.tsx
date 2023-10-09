@@ -149,7 +149,6 @@ const Education: React.FC<IEducation> = (props) => {
                   <View style={styles.itemsText}>
                     <View style={styles.itemText}>
                       <Text style={styles.textRight}>
-                        <Text>+</Text>{' '}
                         <Text style={styles.paragraph}>
                           {edu?.extraInformation}
                         </Text>

@@ -104,7 +104,7 @@ const Comunity = () => {
       if (result.status === 200) {
         setDeleteCmt(!deleteCmt);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleGetDetailCommunityById = async () => {
@@ -118,7 +118,7 @@ const Comunity = () => {
           setLike(result?.data?.liked);
           setDetail(result?.data);
           setBookmark(result?.data?.bookmarked);
-          console.log('result: ', result);
+
           if (result.data.type === 0) {
             setCookie('hijobId', result.data.id, 365);
           } else {
@@ -155,8 +155,9 @@ const Comunity = () => {
     console.log('image', image);
     return {
       src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${size * rows
-        }&fit=crop&auto=format&dpr=2 2x`,
+      srcSet: `${image}?w=${size * cols}&h=${
+        size * rows
+      }&fit=crop&auto=format&dpr=2 2x`,
     };
   };
 
@@ -195,7 +196,6 @@ const Comunity = () => {
       if (result) {
         result.status === 201 ? setLike(true) : setLike(false);
       }
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -236,7 +236,6 @@ const Comunity = () => {
           setBookmark(false);
         }
       }
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -268,7 +267,6 @@ const Comunity = () => {
         setCmt(!cmt);
         setCmtContent('');
       }
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -313,8 +311,8 @@ const Comunity = () => {
     fromHistory === '31'
       ? window.open('/history?community_post=31', '_parent')
       : fromHistory === '30'
-        ? window.open('/history?community_post=30', '_parent')
-        : window.open(
+      ? window.open('/history?community_post=30', '_parent')
+      : window.open(
           detail?.type === 1 ? '/new-comunity' : '/news-comunity',
           '_parent',
         );
@@ -340,12 +338,12 @@ const Comunity = () => {
               {fromHistory === '31' || fromHistory === '30'
                 ? language?.history
                 : detail?.type === 1
-                  ? languageRedux === 1
-                    ? 'Câu chuyện việc làm'
-                    : 'Working story'
-                  : languageRedux === 1
-                    ? 'Tin tức'
-                    : 'Recruitment news'}
+                ? languageRedux === 1
+                  ? 'Câu chuyện việc làm'
+                  : 'Working story'
+                : languageRedux === 1
+                ? 'Tin tức'
+                : 'Recruitment news'}
             </h3>
           </div>
           <div className="title-comunity">
@@ -400,7 +398,7 @@ const Comunity = () => {
               <TextArea
                 value={detail?.content}
                 autoSize
-              // showCount
+                // showCount
               />
             </div>
           </div>
@@ -500,7 +498,7 @@ const Comunity = () => {
                 // )}
                 src={item.image}
                 alt={item.image}
-              //loading="lazy"
+                //loading="lazy"
               />
             ))}
           </div>
@@ -573,7 +571,7 @@ const Comunity = () => {
                       : 'Enter your comment ...'
                   }
                   autoSize
-                // showCount
+                  // showCount
                 />
                 <div className="comment-interaction">
                   <div
@@ -625,7 +623,7 @@ const Comunity = () => {
                                 display:
                                   detail?.profileData?.id ===
                                     localStorage.getItem('accountId') ||
-                                    cmtData?.profile?.id ===
+                                  cmtData?.profile?.id ===
                                     localStorage.getItem('accountId')
                                     ? 'block'
                                     : 'none',
@@ -641,7 +639,7 @@ const Comunity = () => {
                             <TextArea
                               value={cmtData?.content}
                               autoSize
-                            // showCount
+                              // showCount
                             />
                             {/* <p>{cmtData?.content}</p> */}
                           </div>

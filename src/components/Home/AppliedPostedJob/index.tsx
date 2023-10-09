@@ -132,7 +132,7 @@ const AppliedPostedJob: React.FC = () => {
         setTimeout(() => {
           setloading(false);
         }, 1000);
-        console.log('result: ', result);
+
         setAppliedPostedJob(result.data);
         // roleRedux === 0
         //   ? setAppliedPostedJob(
@@ -298,7 +298,7 @@ const AppliedPostedJob: React.FC = () => {
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                    ? 'Công việc đã đã tuyển'
+                    ? 'Công việc đã tuyển'
                     : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>

@@ -450,8 +450,6 @@ const HotJobpage: React.FC = () => {
         idFilterProvinces,
       );
 
-      console.log('result', result);
-
       if (result && result.data.length !== 0) {
         setHotJob((prev: any) => [...prev, ...result?.data]);
         setPage(nextPage);

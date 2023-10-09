@@ -104,6 +104,7 @@ import CandidateProfile from './components/CandidateProfile';
 import Company from 'pages/Company';
 import CategoryDropdown from '#components/CategoryDropdown';
 import ModalIntroduceCv from '#components/Profile/ModalIntroduceCv';
+import { prototype } from 'module';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -140,7 +141,7 @@ const Profile: React.FC = () => {
   //   (state: RootState) => state.profile
   // )
 
-  const profile = useSelector((state: RootState) => state.profileUser);
+  // const profile = useSelector((state: RootState) => state.profileUser);
   const profileUser = useSelector((state: RootState) => state.profile.profile);
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
@@ -405,7 +406,7 @@ const Profile: React.FC = () => {
     var mess = '';
     var result;
     try {
-      if (profile.cv_url) {
+      if (profileV3.cvUrlPath !== null) {
         result = await profileApi.updateCV(formData);
         mess = language?.profile_page?.alert_update_cv_success;
       } else {
@@ -435,7 +436,10 @@ const Profile: React.FC = () => {
     if (files) {
       const imageUrl = await uploadImage(e, files);
       if (imageUrl) {
-        // dispatch(getProfile() as any);
+        const getProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        dispatch(setProfileV3(getProfileV3) as any);
       }
       // window.location.reload();
       // if (imageUrl)
@@ -457,7 +461,7 @@ const Profile: React.FC = () => {
       const response = await profileApi.postAvatar(formData);
       if (response) {
         dispatch(getProfile() as any);
-        return profile.avatar;
+        return profileV3.avatarPath;
       } else {
         throw new Error('Failed to upload image');
       }
@@ -540,11 +544,13 @@ const Profile: React.FC = () => {
                   <Avatar
                     style={{ height: '70px', width: '70px' }}
                     alt="Ảnh lỗi"
-                    src={profileUser?.avatar ? profileUser?.avatar : ''}
+                    src={profileV3?.avatarPath ? profileV3?.avatarPath : ''}
                   />
                 </Badge>
                 <div className="user-company" style={{ marginLeft: '10px' }}>
-                  <h2>{profile?.name ? profile?.name : language?.unupdated}</h2>
+                  <h2>
+                    {profileV3?.name ? profileV3?.name : language?.unupdated}
+                  </h2>
                   <ChangeRoleButton />
                   {/* <div className="wrap-company">
                     <div className="wrap-company_info">
@@ -611,8 +617,8 @@ const Profile: React.FC = () => {
                 color: '#575757',
               }}
             >
-              {profile?.introduction
-                ? profile?.introduction
+              {profileV3?.introduction
+                ? profileV3?.introduction
                 : language?.unupdated}
             </div>
           </div>
@@ -654,20 +660,18 @@ const Profile: React.FC = () => {
               </div>
               <div className="div-detail-row right">
                 <p>
-                  {profile?.birthday
-                    ? moment(new Date(profile?.birthday)).format('DD/MM/yyyy')
+                  {profileV3?.birthday
+                    ? moment(new Date(profileV3?.birthday)).format('DD/MM/yyyy')
                     : language?.unupdated}
                 </p>
                 <p>
-                  {profile
-                    ? profile?.gender === 1
-                      ? language?.male
-                      : language?.female
-                    : language?.male}
+                  {profileV3?.genderText
+                    ? profileV3?.genderText
+                    : language?.unupdated}
                 </p>
                 <p>
-                  {profile?.address?.name
-                    ? profile?.address?.name
+                  {profileV3?.addressText?.fullName
+                    ? profileV3?.addressText?.fullName
                     : language?.unupdated}
                 </p>
                 <p>
@@ -681,7 +685,7 @@ const Profile: React.FC = () => {
           <ModalProfileInfoPerson
             openModelPersonalInfo={openModelPersonalInfo}
             setOpenModalPersonalInfo={setOpenModalPersonalInfo}
-            profile={profile}
+            profile={profileV3}
           />
         </Skeleton>
 
@@ -718,15 +722,23 @@ const Profile: React.FC = () => {
                 <p>LinkedIn</p>
               </div>
               <div className="div-detail-row right">
-                <p>{profile?.phone ? profile?.phone : language?.unupdated}</p>
-                <p>{profile?.email ? profile?.email : language?.unupdated}</p>
-
                 <p>
-                  {profile?.facebook ? profile?.facebook : language?.unupdated}
+                  {profileV3?.phone ? profileV3?.phone : language?.unupdated}
+                </p>
+                <p>
+                  {profileV3?.email ? profileV3?.email : language?.unupdated}
                 </p>
 
                 <p>
-                  {profile?.linkedin ? profile?.linkedin : language?.unupdated}
+                  {profileV3?.facebook
+                    ? profileV3?.facebook
+                    : language?.unupdated}
+                </p>
+
+                <p>
+                  {profileV3?.linkedin
+                    ? profileV3?.linkedin
+                    : language?.unupdated}
                 </p>
               </div>
             </div>
@@ -734,13 +746,13 @@ const Profile: React.FC = () => {
           <ModalProfileContact
             openModalContact={openModalContact}
             setOpenModalContact={setOpenModalContact}
-            profile={profile}
+            profile={profileV3}
           />
         </Skeleton>
 
         <CandidateProfile
           display={roleRedux === 0 ? 'block' : 'none'}
-          profile={profile}
+          profile={profileV3}
           loading={loading}
           language={language}
           languageRedux={languageRedux}
@@ -834,8 +846,11 @@ const Profile: React.FC = () => {
             </Alert>
           </Snackbar>
         </Stack>
-
-        <ModalIntroduceCv />
+        {profileV3.typeRoleData === 0 && profileV3?.profilesCvs.length === 0 ? (
+          <ModalIntroduceCv />
+        ) : (
+          <></>
+        )}
       </div>
       <RollTop />
       <CreateCv role={roleRedux} />

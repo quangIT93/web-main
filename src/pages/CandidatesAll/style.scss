@@ -1,10 +1,10 @@
 .container-candidate {
     .candidate {
         max-width: 1080px;
-        padding: 110px 0;
-        margin: 0 auto;
+        padding: 0px 0;
+        margin: 176px auto;
         @media screen and (max-width: 1080px) {
-            padding: 110px 24px;
+            padding: 0px 24px;
         }
         .header-candidate {
             display: flex;
@@ -121,6 +121,10 @@
                         box-shadow: 1px 1px 5px #ccc;
                         border-radius: 10px;
                         cursor: pointer;
+                        @media  screen and (max-width: 600PX){
+                            height: 40px;
+                            
+                        }
                     }
 
                     .seach-button_Confirm {
@@ -162,3 +166,30 @@
     }
 
 }
+
+.ant-select-dropdown-placement-bottomLeft {
+    z-index: 8 !important;
+}
+
+.rc-virtual-list {
+    .rc-virtual-list-holder {
+        max-height: 100% !important;
+    }
+
+    .rc-virtual-list-scrollbar {
+        display: none !important;
+    }
+}
+::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #ccc;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: ccc;
+    border-radius: 20px;
+    border: 100px solid #1b87f5;
+  }

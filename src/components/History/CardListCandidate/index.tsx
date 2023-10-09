@@ -37,11 +37,14 @@ interface ICardsApplied {
 
 const CardListCandidate: React.FC = () => {
   const [candidateData, setCandidateData] = useState<any>();
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const dataCandidates = async () => {
-    const id = 'f429b393-8367-4a5d-8b74-48cc3f29c4d8';
     try {
-      const result = await candidateSearch.getBookmarkCandidate('vi');
+      const result = await candidateSearch.getBookmarkCandidate(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       if (result) {
         setCandidateData(result.data);
@@ -55,7 +58,16 @@ const CardListCandidate: React.FC = () => {
     dataCandidates();
   }, []);
 
-  console.log(candidateData);
+  const hanhleClicKCandleSaveCandidate = async (e: any, accountId: string) => {
+    try {
+      const result = await candidateSearch.postBookmarkCandidate(accountId);
+      if (result) {
+        dataCandidates();
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   return (
     <>
@@ -101,6 +113,9 @@ const CardListCandidate: React.FC = () => {
                   key={i}
                   language={[]}
                   languageRedux={1}
+                  hanhleClicKCandleSaveCandidate={
+                    hanhleClicKCandleSaveCandidate
+                  }
                 />
                 //</Skeleton>
               ),

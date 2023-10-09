@@ -95,40 +95,51 @@ const LanguageCv: React.FC<ISkill> = (props) => {
         <View
           style={{
             display: 'flex',
-            flexDirection: 'row',
+            flexDirection: 'column',
             alignItems: 'flex-start',
             marginBottom: '2mm',
           }}
         >
-          <Svg viewBox="0 0 2 2" style={{ width: 10 }}>
-            <Circle
-              cx="1"
-              cy="1"
-              r="0.5"
-              fill={
-                color === 1
-                  ? '#252525'
-                  : color === 2
-                  ? '#0D99FF'
-                  : color === 3
-                  ? '#FBBC04'
-                  : color === 4
-                  ? '#5CB265'
-                  : '#D80000'
-              }
-              stroke="none"
-            />
-          </Svg>
-          <Text style={styles.textSkillName} wrap={true}>
-            {lang.languageName}
-          </Text>
-          <Text style={styles.textSkill} wrap={true}>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: '1mm',
+            }}
+          >
+            <Svg viewBox="0 0 2 2" style={{ width: 10 }}>
+              <Circle
+                cx="1"
+                cy="1"
+                r="0.5"
+                fill={
+                  color === 1
+                    ? '#252525'
+                    : color === 2
+                    ? '#0D99FF'
+                    : color === 3
+                    ? '#FBBC04'
+                    : color === 4
+                    ? '#5CB265'
+                    : '#D80000'
+                }
+                stroke="none"
+              />
+            </Svg>
+            <Text style={styles.textSkillName} wrap={true}>
+              {lang.languageName}
+            </Text>
+          </View>
+          {/* <Text style={styles.textSkill} wrap={true}>
             {' '}
             -{' '}
-          </Text>
-          <Text style={styles.textSkill} wrap={true}>
-            {lang.dataLevel.data}
-          </Text>
+          </Text> */}
+          <View style={{ marginLeft: '3mm' }}>
+            <Text style={styles.textSkill} wrap={true}>
+              {lang.dataLevel.data}
+            </Text>
+          </View>
         </View>
       ))}
     </View>

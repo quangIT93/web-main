@@ -15,6 +15,8 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 import { LocationHomeIcon, DolaIcon, SaveIconFill } from '#components/Icons';
 
+import { CandidateHijob } from '#components/Icons/iconCandidate';
+
 import { Space, Tooltip } from 'antd';
 
 import moment from 'moment';
@@ -39,6 +41,7 @@ interface IitemNewJob {
   index: number;
   language: any;
   languageRedux: any;
+  hanhleClicKCandleSaveCandidate: Function;
 }
 
 const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
@@ -51,7 +54,13 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
   // } = React.useContext(HomeValueContext);
   // const dispatch = useDispatch();
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
-  const { language, languageRedux, item, index } = props;
+  const {
+    language,
+    languageRedux,
+    item,
+    index,
+    hanhleClicKCandleSaveCandidate,
+  } = props;
   const [error, setError] = React.useState(false);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
@@ -62,7 +71,6 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
   const handleImageError = () => {
     setError(true);
   };
-  console.log('item', item);
 
   return (
     <>
@@ -80,14 +88,16 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
           boxShadow: 'none',
           borderRadius: '5px',
           justifyContent: 'space-between',
-        }}
-        onClick={(e) => {
-          handleClickItem(e, props.item?.profileData?.accountId);
+          position: 'relative',
         }}
       >
         <div
           className="item-candidate-history"
           //   onClick={() => handleClickItemCandidate(item.accountId)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClickItem(e, props.item?.profileData?.accountId);
+          }}
         >
           <div className="wrap-img_candidate">
             <img
@@ -180,6 +190,22 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
               </li>
             </ul>
           </div>
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            zIndex: 2,
+            right: '32px',
+            top: '20px',
+          }}
+          onClick={(e) =>
+            hanhleClicKCandleSaveCandidate(
+              e,
+              props?.item?.profileData?.accountId,
+            )
+          }
+        >
+          <SaveIconFill width={24} height={24} />
         </div>
       </Card>
     </>

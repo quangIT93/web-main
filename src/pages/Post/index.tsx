@@ -438,7 +438,9 @@ const Post: React.FC = () => {
 
   const handleFillCompany = async () => {
     try {
-      const result = await apiCompany.getCampanyByAccountApi('vi');
+      const result = await apiCompany.getCampanyByAccountApi(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       if (result.data.companyInfomation) {
         setCompanyName(result.data.companyInfomation.name);
@@ -467,7 +469,7 @@ const Post: React.FC = () => {
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   if (localStorage.getItem('accessToken')) {
@@ -479,7 +481,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-          // style={{ textAlign: 'center', display: 'block' }}
+            // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">

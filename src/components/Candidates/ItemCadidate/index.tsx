@@ -10,19 +10,37 @@ import {
   CateIcon,
   CalendarIcon,
   GenderIcon,
+  CandidateHijob,
 } from '#components/Icons/iconCandidate';
 import { Tooltip } from 'antd';
 import './style.scss';
-
+import candidateSearch from 'api/apiCandidates';
+import { useSelector } from 'react-redux';
+// import redux
+import { RootState } from 'store';
 interface ICadidate {
   item: any;
 }
 
 const ItemCadidate: React.FC<ICadidate> = (props) => {
   const { item } = props;
-  const handleClickItemCandidate = (accountId: any) => {
-    localStorage.setItem('candidateId', accountId);
-    window.open('/candidate-new-detail', '_parent');
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
+  const handleClickItemCandidate = async (accountId: any) => {
+    try {
+      const result = await candidateSearch.postCountShowCandidate(
+        item.accountId,
+      );
+
+      if (result) {
+        localStorage.setItem('candidateId', accountId);
+        window.open('/candidate-new-detail');
+      }
+    } catch (error) {
+      if (profileV3.typeRoleData === 0) {
+        window.open('/', '_parent');
+      }
+    }
   };
 
   return (
@@ -34,7 +52,10 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
         <img src={item?.imageData?.avatar} alt="" className="img-candidate" />
       </div>
       <div className="info-candidate">
-        <h3>{item.name}</h3>
+        <div className="info-candidate_item">
+          <p>{item.name}</p>
+          {/* <CandidateHijob /> */}
+        </div>
         <ul>
           <li style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div className="item-birthday item-infoUser">
@@ -59,8 +80,8 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
               <SchoolIcon />
             </span>
             {item.profilesEducationsData.length !== 0
-              ? item.profilesEducationsData.map((value: any) => {
-                  return <span>{value.data}</span>;
+              ? item.profilesEducationsData.map((value: any, index: number) => {
+                  return <span key={index}>{value.data}</span>;
                 })
               : 'Chưa cập nhật'}
           </li>

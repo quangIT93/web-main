@@ -186,16 +186,23 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       Number(localStorage.getItem('cv-id')) === 0
         ? 1
         : localStorage.getItem('cv-id');
-    if (valueNameCv === '') {
-      setValueNameCv(localStorage.getItem('nameCv'));
-    }
+
     //convert string to number
     cv_id && setCvId(+cv_id);
   }, [languageRedux]);
 
-  // console.log('dataCategories', dataCategories);
+  React.useEffect(() => {
+    if (!valueNameCv) {
+      // setValueNameCv(localStorage.getItem('nameCv'));
+      getThemeCv.map((value: any) => {
+        if (Number(localStorage.getItem('cv-id')) === value.id) {
+          setValueNameCv(value.name);
+        }
+      });
+    }
+  }, [getThemeCv]);
 
-  const handleChangeCategory = async () => { };
+  const handleChangeCategory = async () => {};
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
@@ -209,7 +216,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const styles = StyleSheet.create({
@@ -315,7 +322,8 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
               }
               key={index}
               onClick={() => {
-                localStorage.setItem('nameCv', item?.name);
+                // localStorage.setItem('nameCv', item?.name);
+                setValueNameCv(item?.name);
                 handleSelectTemplate(item?.id, item?.name);
               }}
             >
@@ -350,7 +358,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                   }
                   key={item}
                   onClick={() => {
-                    localStorage.setItem('nameCv', item?.name);
+                    // localStorage.setItem('nameCv', item?.name);
                     handleSelectTemplate(item?.id, item?.name);
                   }}
                 >
@@ -420,7 +428,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
         <div
           className="contentCv-bottom-right_cv"
           id="page"
-        // dangerouslySetInnerHTML={{ __html: htmlCv }}
+          // dangerouslySetInnerHTML={{ __html: htmlCv }}
         >
           <>
             {/* <PreviewTheme1 /> */}

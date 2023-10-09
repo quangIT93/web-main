@@ -265,16 +265,20 @@
                     display: flex;
                     align-items: center;
                     width: 100%;
-                    justify-content: center;
+                    justify-content: space-between;
                     gap: 19px;
-                    margin-top: 8px;
+                    padding: 0 10px;
 
                     h3 {
                       font-family: Roboto;
                       font-size: 14px;
                       font-weight: 500;
                       letter-spacing: 0em;
-
+                      word-break: break-all;
+                      width: 120px;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
                     }
 
                     .download-cv-icon {
@@ -298,7 +302,7 @@
 
                   .wrap-img_cv {
                     position: relative;
-
+                    margin-bottom: 4px;
                     &:hover {
                       .choose-cv-container {
                         visibility: visible !important;
@@ -566,12 +570,14 @@
         flex-direction: column;
         gap: 16px;
         font-size: 14px;
+        margin-bottom: 24px;
       }
 
       .internship-list {
         display: flex;
         flex-direction: column-reverse;
         font-size: 14px;
+        margin-bottom: 24px;
         // .internship-item {
         //   .div-item-left  {
         //     .div-info-item {

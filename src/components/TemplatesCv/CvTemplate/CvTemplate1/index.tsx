@@ -137,8 +137,6 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
     src: Archivo,
   });
 
-  console.log(profile);
-
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
       <Header color={color} profile={profile} />

@@ -5,6 +5,9 @@ import Footer from '../../components/Footer/Footer';
 // import moment, { Moment } from 'moment';
 import { Skeleton, Space } from 'antd';
 import { message } from 'antd';
+
+import { useLocation } from 'react-router-dom';
+
 // import component
 // @ts-ignore
 import { Navbar } from '#components';
@@ -128,7 +131,7 @@ const Company: React.FC<ICompany> = (props) => {
     logoPath: '',
   });
   const [language, setLanguageState] = React.useState<any>();
-
+  const location = useLocation();
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
@@ -208,11 +211,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -430,7 +433,7 @@ const Company: React.FC<ICompany> = (props) => {
       {contextHolder}
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         <Navbar />
-        <CategoryDropdown />
+        {location?.pathname === '/company-infor' ? <CategoryDropdown /> : <></>}
       </div>
       <div
         className="company-content"
@@ -452,7 +455,7 @@ const Company: React.FC<ICompany> = (props) => {
                 cursor: 'pointer',
                 display: is_profile ? 'flex' : 'none',
               }}
-              onClick={() => window.open(`/company-infor/`, '_parent')}
+              onClick={() => window.open(`/company-infor`, '_parent')}
             >
               <div className="edit-icon">
                 <PencilIcon width={15} height={15} />

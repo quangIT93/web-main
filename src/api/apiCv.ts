@@ -354,19 +354,20 @@ const apiCv = {
 
     },
     deleteCvById: (ids: number[] | null) => {
+    
+        
         const URL = `/v3/profiles-cvs`
         return axiosClient.delete(
             URL,
             {
+                data: { ids },
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-                data: { ids },
+                }
 
             }
         )
-    }
-
+    },
 }
 
 export default apiCv

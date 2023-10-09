@@ -144,8 +144,6 @@ const HotJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  console.log(hotjob);
-
   const handleMoveToHotJobPage = (item: any, event: any) => {
     const analytics: any = getAnalytics();
 
@@ -167,7 +165,7 @@ const HotJob: React.FC = () => {
       item.api,
       item.query,
     );
-  }
+  };
 
   return (
     <Box
@@ -184,11 +182,13 @@ const HotJob: React.FC = () => {
         <FireIcon width={25} height={25} />
         <h2>{language?.hot_jobs}</h2>
       </div>
-      <div className='hotjob-content'>
-        {
-          hotjob && hotjob.map((item: any, index: number) => {
+      <div className="hotjob-content">
+        {hotjob &&
+          hotjob.map((item: any, index: number) => {
             return (
-              <div className="slide-hotjob-item" key={index}
+              <div
+                className="slide-hotjob-item"
+                key={index}
                 onClick={(event) => {
                   const analytics: any = getAnalytics();
 
@@ -212,10 +212,7 @@ const HotJob: React.FC = () => {
                 }}
               >
                 <div className="div-img-themes-item">
-                  <img
-                    src={item?.image}
-                    alt={language?.err_none_img}
-                  />
+                  <img src={item?.image} alt={language?.err_none_img} />
                 </div>
                 <div className="div-info-themes-item">
                   <div className="div-info-themes-item_top">
@@ -227,9 +224,8 @@ const HotJob: React.FC = () => {
                   </div>
                 </div>
               </div>
-            )
-          })
-        }
+            );
+          })}
       </div>
       {/* <Swiper
         navigation={true}

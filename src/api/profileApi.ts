@@ -5,7 +5,7 @@ import axiosClient from './axiosClient'
 interface IInfoPersonal {
   name: string
   birthday: number
-  gender: number
+  gender: number | null
   address: number
   introduction: string
 }
@@ -62,10 +62,11 @@ const profileApi = {
         },
     })
   },
-  putProfileJobV3: (jobTypeId: number| null) => {
+  putProfileJobV3: (jobTypeId: number| null, isSearch: number | null) => {
     const URL = `/v3/profiles/job`
     return axiosClient.put(URL, {
-      jobTypeId
+      jobTypeId,
+      isSearch
     }, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

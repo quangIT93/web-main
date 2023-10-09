@@ -82,7 +82,7 @@
                 display: flex;
                 align-items: center;
                 gap: 24px;
-                justify-content: space-between;
+                // justify-content: space-between;
 
                 @include breakpoint(mobile) {
                     width: 100%;
@@ -138,7 +138,7 @@
 
                         p {
                             font-family: Roboto;
-                            font-size: 14px;
+                            font-size: 12px;
                             font-weight: 400;
                             letter-spacing: 0em;
                             text-align: left;
@@ -168,7 +168,7 @@
 
                             p {
                                 font-family: Roboto;
-                                font-size: 14px;
+                                font-size: 12px;
                                 font-weight: 400;
                                 line-height: 24px;
                                 letter-spacing: 0em;

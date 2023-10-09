@@ -329,7 +329,9 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getTotalUserSearch = async () => {
     try {
-      const result = await apiTotalJob.getTotalJob('vi');
+      const result = await apiTotalJob.getTotalJob(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setTotalJob(result?.data?.total);
       }
