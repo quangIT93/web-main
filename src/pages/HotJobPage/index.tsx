@@ -96,6 +96,7 @@ import { hotjobPageEn } from 'validations/lang/en/hotjobPage';
 import { getCookie } from 'cookies';
 import NoDataComponent from 'utils/NoDataPage';
 import HotJob from '#components/Home/HotJob';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
@@ -449,8 +450,6 @@ const HotJobpage: React.FC = () => {
         idFilterProvinces,
       );
 
-      console.log('result', result);
-
       if (result && result.data.length !== 0) {
         setHotJob((prev: any) => [...prev, ...result?.data]);
         setPage(nextPage);
@@ -466,6 +465,7 @@ const HotJobpage: React.FC = () => {
     <>
       {contextHolder}
       <Navbar />
+      <CategoryDropdown />
 
       <div className="hot-job-page-container">
         {

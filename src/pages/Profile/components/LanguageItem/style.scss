@@ -2,6 +2,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .div-item-right {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: "0 12px 12px 0"
+    }
 
+    .div-item-left {
+        width: 90%;
+        margin-right: 12px;
+    }
 
 }

@@ -12,7 +12,12 @@ import { AxiosResponse } from 'axios';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { TopicJobIcon, MoreICon, QuestionMarkIcon } from '#components/Icons';
+import {
+  TopicJobIcon,
+  MoreICon,
+  QuestionMarkIcon,
+  ArrowrightIcon,
+} from '#components/Icons';
 
 // @ts-ignore
 // import moment from 'moment';
@@ -107,6 +112,10 @@ const ThemesJob: React.FC = () => {
     (state: RootState) => state.dataLanguage.languages,
   );
 
+  const themeId = searchParams.get(`theme-id`)
+    ? searchParams.get(`theme-id`)
+    : listTheme?.data[0]?.id;
+
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
     value: number,
@@ -155,12 +164,12 @@ const ThemesJob: React.FC = () => {
       const result = await themeApi.getThemesEnable(
         languageRedux === 1 ? 'vi' : 'en',
       );
+      console.log(result);
 
       if (result) {
         setListThem(result);
-
-        const list = await postApi.getPostByThemeId(
-          result.data[0].id,
+        const list = await postApi?.getPostByThemeId(
+          result?.data[0]?.id,
           19,
           null,
           languageRedux === 1 ? 'vi' : 'en',
@@ -202,24 +211,34 @@ const ThemesJob: React.FC = () => {
 
   // }, [localStorage.getItem("accessToken")])
 
+  const handleMoveToMoreJob = () => {
+    localStorage.setItem('job-type', `place-${themeId}`);
+    window.open('/more-jobs', '_parent');
+  };
+
   const handleClickHelpSearch = () => {};
   return (
-    <Box sx={{ flexGrow: 1, paddingBottom: '24px' }} className="theme-job">
-      <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
-        <TopicJobIcon width={25} height={25} />
-        <h2>{language?.jobs_by_theme}</h2>
-        <div className="help-search" onClick={handleClickHelpSearch}>
-          <QuestionMarkIcon />
-          <div className={`login__hover__container `}>
-            <div className="login__hover">
-              <div className="login__hover__p">
-                <p>
-                  {languageRedux === 1
-                    ? 'Mục này sẽ gợi ý cho bạn việc làm gần các địa điểm nổi tiếng trong thành phố của bạn.'
-                    : 'This section will suggest you some jobs near hot places in your city.'}
-                </p>
-              </div>
-              {/* <Button
+    <Box
+      sx={{ flexGrow: 1, paddingBottom: '24px' }}
+      className="theme-job"
+      id="job-by-hot-place"
+    >
+      <div className="title-container">
+        <div className="title">
+          <TopicJobIcon width={25} height={25} />
+          <h2>{language?.jobs_by_theme}</h2>
+          <div className="help-search" onClick={handleClickHelpSearch}>
+            <QuestionMarkIcon />
+            <div className={`login__hover__container `}>
+              <div className="login__hover">
+                <div className="login__hover__p">
+                  <p>
+                    {languageRedux === 1
+                      ? 'Mục này sẽ gợi ý cho bạn việc làm gần các địa điểm nổi tiếng trong thành phố của bạn.'
+                      : 'This section will suggest you some jobs near hot places in your city.'}
+                  </p>
+                </div>
+                {/* <Button
             type="primary"
             onClick={() => {
               setOpenModalLogin(true);
@@ -228,8 +247,13 @@ const ThemesJob: React.FC = () => {
             <LoginArrowBlackIcon />
             {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
           </Button> */}
+              </div>
             </div>
           </div>
+        </div>
+        <div className="view-all" onClick={handleMoveToMoreJob}>
+          <p>{language?.home_page?.view_all}</p>
+          <ArrowrightIcon width={20} height={20} />
         </div>
       </div>
 
@@ -261,7 +285,7 @@ const ThemesJob: React.FC = () => {
                   </Grid>
                 ))}
               </Grid>
-              {!post.data.is_over ? (
+              {/* {!post.data.is_over ? (
                 <Stack
                   spacing={2}
                   sx={{
@@ -271,15 +295,6 @@ const ThemesJob: React.FC = () => {
                     marginBottom: '24px',
                   }}
                 >
-                  {/* <Pagination count={10} shape="rounded" /> */}
-                  {/* Test page: {page} */}
-                  {/* <Pagination
-                  count={10}
-                  variant="outlined"
-                  shape="rounded"
-                  page={page}
-                  onChange={handleChange}
-                /> */}
                   <Space
                     className="div-hover-more"
                     onClick={(e) => {
@@ -292,7 +307,7 @@ const ThemesJob: React.FC = () => {
                 </Stack>
               ) : (
                 <></>
-              )}
+              )} */}
               <Backdrop
                 sx={{
                   color: '#0d99ff ',

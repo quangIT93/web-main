@@ -18,9 +18,11 @@ import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperi
 import ModalDeleteExperience from '#components/Profile/ModalDeleteExperience';
 
 import { RootState } from '../../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import profileApi from 'api/profileApi';
 interface SuggestItemProps {
   typeItem?: string;
   item?: ItemAppy;
@@ -43,7 +45,11 @@ interface ItemAppy {
 // });
 
 const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+
+  const dispatch = useDispatch();
   const [openModalDeleteEducation, setOpenModalDeleteEducation] =
     useState(false);
   const [openModalEducationUpdate, setOpenModalEducationUpdate] =
@@ -54,7 +60,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
     useState(false);
   const [language, setLanguage] = useState<any>();
 
-  const handleDeleteEducation = (id?: number | null) => {
+  const handleDeleteEducation = async (id?: number | null) => {
     setOpenModalDeleteEducation(true);
   };
 
@@ -62,7 +68,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
     setOpenModalEducationUpdate(true);
   };
 
-  const handleDeleteExperience = (id?: number | null) => {
+  const handleDeleteExperience = async (id?: number | null) => {
     setOpenModalDeleteExperience(true);
   };
 
@@ -72,7 +78,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -84,8 +90,8 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   // console.log('item?.start_date', item?.start_date);
   return (
@@ -105,7 +111,14 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
           ></div>
         </div>
         <div className="div-info-item">
-          <Space size={4} direction="vertical" style={{ marginLeft: 10 }}>
+          <Space
+            size={4}
+            direction="vertical"
+            style={{
+              marginLeft: 10,
+              wordBreak: 'break-word',
+            }}
+          >
             <h3>{item?.company_name}</h3>
             <p>{typeItem === 'experiences' ? item?.title : item?.major}</p>
             <p>
@@ -118,6 +131,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
                 whiteSpace: 'pre-wrap',
                 marginTop: '15px',
                 color: '#575757',
+                wordBreak: 'break-all',
               }}
             >
               {item?.extra_information}
@@ -138,11 +152,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <PencilIcon width={15} height={15} />
           </div>
 
-          <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-            {
-              language?.edit
-            }
-          </p>
+          <p style={{ color: '#0D99FF', fontSize: '14px' }}>{language?.edit}</p>
         </Space>
         <Space
           onClick={
@@ -156,9 +166,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
             <DeleteIcon width={15} height={15} />
           </div>
           <p style={{ color: '#575757', fontSize: '14px' }}>
-            {
-              language?.profile_page?.delete
-            }
+            {language?.profile_page?.delete}
           </p>
         </Space>
       </div>

@@ -156,8 +156,6 @@ const CategoryCarousel: React.FC = () => {
       '.bread-crumb-container',
     ) as HTMLElement;
 
-    console.log('tavbs', tabs);
-    console.log('breadCrumb', breadCrumb);
     // tabs.style.top = '70px';
     // breadCrumb.style.marginTop = '192px';
     if (tabs && breadCrumb) {

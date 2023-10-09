@@ -55,6 +55,7 @@ import { RootState } from '../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 // redux
 // import { RootState } from 'store';
@@ -437,7 +438,9 @@ const Post: React.FC = () => {
 
   const handleFillCompany = async () => {
     try {
-      const result = await apiCompany.getCampanyByAccountApi('vi');
+      const result = await apiCompany.getCampanyByAccountApi(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       if (result.data.companyInfomation) {
         setCompanyName(result.data.companyInfomation.name);
@@ -473,7 +476,7 @@ const Post: React.FC = () => {
     return (
       <div className="post">
         <Navbar />
-
+        <CategoryDropdown />
         {contextHolder}
         <div className="post-main">
           <div

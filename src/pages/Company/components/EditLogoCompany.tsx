@@ -20,11 +20,14 @@ interface IEditLogoCompany {
   dataCompany: any;
   setDataCompany: any;
   language: any;
+  is_profile: boolean;
 }
 
 const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const { dataCompany, setDataCompany, language } = props;
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const { dataCompany, setDataCompany, language, is_profile } = props;
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [previewImage, setPreviewImage] = useState('');
@@ -32,14 +35,14 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
   const [fileList, setFileList] = useState<UploadFile[]>(
     dataCompany?.logoPath && dataCompany?.logopath !== ''
       ? [
-        {
-          uid: '-1',
-          name: 'logo.png',
-          status: 'done',
-          url: dataCompany?.logoPath,
-          thumbUrl: dataCompany?.logoPath,
-        },
-      ]
+          {
+            uid: '-1',
+            name: 'logo.png',
+            status: 'done',
+            url: dataCompany?.logoPath,
+            thumbUrl: dataCompany?.logoPath,
+          },
+        ]
       : [],
   );
 
@@ -69,9 +72,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
       // } else
       if (file.size > 1024 * 1024 * 5) {
         checFileSize = false;
-        message.error(
-          language?.company_page?.err_file
-        );
+        message.error(language?.company_page?.err_file);
       } else {
         setFileList([file]);
         return false;
@@ -79,11 +80,12 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
       return Upload.LIST_IGNORE || checFileSize;
     },
     onPreview: async (file: UploadFile) => {
-      handlePreview(file)
+      handlePreview(file);
     },
     maxCount: 1,
     listType: 'picture-card',
     fileList,
+    disabled: is_profile ? true : false,
   };
 
   const handleCancel = () => setPreviewOpen(false);
@@ -103,7 +105,9 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
 
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+    setPreviewTitle(
+      file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1),
+    );
   };
 
   return (
@@ -118,9 +122,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
           component="label"
           htmlFor="editJob"
         >
-          {
-            language?.company_page?.company_logo
-          }{' '}
+          {languageRedux === 1 ? 'Logo công ty' : "Company's logo"}{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
         <div className="company-logo">
@@ -132,7 +134,13 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
             )}
           </Upload>
         </div>
-        <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+        <Modal
+          centered
+          open={previewOpen}
+          title={previewTitle}
+          footer={null}
+          onCancel={handleCancel}
+        >
           <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
       </div>

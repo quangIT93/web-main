@@ -24,6 +24,7 @@ import {
   getProfile,
   // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 const { SHOW_PARENT } = TreeSelect;
 
 const style = {
@@ -68,7 +69,9 @@ interface IModalProfileCareerObjectice {
 const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   props,
 ) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const { openModalCareerObjective, setOpenModalCareerObjective, categories } =
     props;
   const [value, setValue] = useState(
@@ -81,15 +84,15 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const [treeData, setTransformedData] = React.useState<any>(null);
   const dispatch = useDispatch();
   const handleClose = () => {
-    handleSubmit()
+    handleSubmit();
     setOpenModalCareerObjective(false);
-  }
+  };
   const [language, setLanguageState] = React.useState<any>();
 
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguageState(result.data);
@@ -101,13 +104,13 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
 
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataCategories(result.data);
@@ -157,17 +160,21 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const handleSubmit = async () => {
     try {
       if (value.length > 10) {
-        message.error(
-          language?.limit_10_careers
-        );
+        message.error(language?.limit_10_careers);
         return;
       }
       const result = await profileApi.updateProfileCareer(
         value.map((v: any) => parseInt(v.value)),
       );
       if (result) {
-        await dispatch(getProfile() as any);
-        setOpenModalCareerObjective(false);
+        const getProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+
+        if (getProfileV3) {
+          await dispatch(setProfileV3(getProfileV3) as any);
+          setOpenModalCareerObjective(false);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -211,12 +218,10 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     // Disable the "All" checkbox at the root level
     showCheckedStrategy: SHOW_PARENT,
     // treeDefaultExpandAll,
-    placeholder:
-      language?.career_objective
-    ,
+    placeholder: language?.career_objective,
     style: {
       width: '100%',
-      zIndex: '1302',
+      zIndex: '1302 !important',
       margin: '12px auto',
     },
     size: 'Giờ làm việc large',
@@ -260,15 +265,12 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
           component="h2"
           align="center"
         >
-          {
-            language?.career_objective
-          }
+          {language?.career_objective}
         </Typography>
+
         <TreeSelect {...tProps} />
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {
-            language?.profile_page?.save_info
-          }
+          {language?.profile_page?.save_info}
         </Button>
       </Box>
     </Modal>

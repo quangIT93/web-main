@@ -61,7 +61,6 @@ const WorkingStory = () => {
       if (result) {
         setLike(!like);
       }
-      console.log(result);
     } catch (error) {
       console.log(error);
     }

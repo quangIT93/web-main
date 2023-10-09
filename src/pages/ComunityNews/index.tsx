@@ -28,6 +28,7 @@ import communityApi from 'api/apiCommunity';
 
 import HijobNewsCard from '#components/Community/HijobNewsCard';
 import { getCookie } from 'cookies';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const ComunityNews = () => {
   const languageRedux = useSelector(
@@ -82,7 +83,7 @@ const ComunityNews = () => {
         duration: 2,
         maxCount: 3,
       });
-      // message.error('Đã hết bài viết');
+      message.error(languageRedux === 1 ? 'Không còn bài viết để hiển thị' : 'No more posts to show');
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
     }
@@ -210,6 +211,7 @@ const ComunityNews = () => {
   return (
     <div className="comunity-news-container">
       <Navbar />
+      <CategoryDropdown />
       <div className="comunity-news-content">
         <div className="comunityPostNews">
           <div className="title-comunity-news">
@@ -220,10 +222,10 @@ const ComunityNews = () => {
                   loading
                     ? 'Loading...'
                     : languageRedux === 1
-                    ? `${new Intl.NumberFormat('en-US').format(
+                      ? `${new Intl.NumberFormat('en-US').format(
                         total,
                       )} bài viết mới`
-                    : `${new Intl.NumberFormat('en-US').format(
+                      : `${new Intl.NumberFormat('en-US').format(
                         total,
                       )} new posts`
                   // : language?.community_page?.today_hijob_has +

@@ -47,6 +47,7 @@ import { RootState } from '../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 export interface FormValues {
   id: string;
@@ -487,6 +488,7 @@ const EditPosted = () => {
       <div className="edit-posted">
         {contextHolder}
         <Navbar />
+        <CategoryDropdown />
         <div className="edit-posted_main">
           <div className="edit-title_post">
             <h1>{language?.post_page?.edit_post}</h1>

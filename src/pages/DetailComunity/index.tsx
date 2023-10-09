@@ -55,6 +55,7 @@ import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
 import ModalLogin from '../../components/Home/ModalLogin';
 import { getCookie, setCookie } from 'cookies';
+import CategoryDropdown from '#components/CategoryDropdown';
 const { TextArea } = Input;
 interface FormPostCommunityComment {
   communicationId: number;
@@ -117,7 +118,7 @@ const Comunity = () => {
           setLike(result?.data?.liked);
           setDetail(result?.data);
           setBookmark(result?.data?.bookmarked);
-          console.log('result: ', result);
+
           if (result.data.type === 0) {
             setCookie('hijobId', result.data.id, 365);
           } else {
@@ -195,7 +196,6 @@ const Comunity = () => {
       if (result) {
         result.status === 201 ? setLike(true) : setLike(false);
       }
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -236,7 +236,6 @@ const Comunity = () => {
           setBookmark(false);
         }
       }
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -268,7 +267,6 @@ const Comunity = () => {
         setCmt(!cmt);
         setCmtContent('');
       }
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -329,6 +327,7 @@ const Comunity = () => {
   return (
     <div className="comunity-container">
       <Navbar />
+      <CategoryDropdown />
       <div className="comunity-content">
         <div className="comunity-detail_post">
           <div className="back" onClick={handleMoveToList}>
@@ -442,7 +441,7 @@ const Comunity = () => {
                       : 1,
                   )}
                   alt={item.image}
-                  loading="lazy"
+                  //loading="lazy"
                 />
               </ImageListItem>
             ))}
@@ -480,7 +479,7 @@ const Comunity = () => {
                     detail?.image?.length >= 4 && index === 0 ? 2 : 1,
                   )}
                   alt={item.image}
-                  loading="lazy"
+                  //loading="lazy"
                 />
               </SwiperSlide>
             ))}
@@ -499,7 +498,7 @@ const Comunity = () => {
                 // )}
                 src={item.image}
                 alt={item.image}
-                loading="lazy"
+                //loading="lazy"
               />
             ))}
           </div>

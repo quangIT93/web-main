@@ -17,8 +17,10 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
+import 'swiper/css/grid';
+import 'swiper/css/pagination';
 // import required modules
-import { Navigation, Mousewheel, Pagination } from 'swiper';
+import { Navigation, Mousewheel, Grid, Pagination } from 'swiper';
 
 // @ts-ignore
 // import { useSearchParams } from 'react-router-dom';
@@ -31,7 +33,7 @@ import { Navigation, Mousewheel, Pagination } from 'swiper';
 // import { actionCreators } from '../../../store/index';
 // import { RootState } from '../../../store/reducer';
 
-import { FireIcon, BagIcon } from '#components/Icons';
+import { FireIcon, BagIcon, IconBriefCase } from '#components/Icons';
 
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
@@ -82,12 +84,12 @@ const HotJob: React.FC = () => {
     let url =
       api.replace('/api', '') + '?' + keyOfQuery + '=' + queyObj[keyOfQuery];
 
-    console.log('query', query);
-    console.log('keyOfQuery', keyOfQuery);
-    console.log('api', api);
-    console.log('total', total);
-    console.log('type', type);
-    console.log('id', id);
+    // console.log('query', query);
+    // console.log('keyOfQuery', keyOfQuery);
+    // console.log('api', api);
+    // console.log('total', total);
+    // console.log('type', type);
+    // console.log('id', id);
     setCookie('hotjobTotal', JSON.stringify(total), 365);
     localStorage.setItem('hotjobApi', url);
     window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`, '_self');
@@ -142,7 +144,28 @@ const HotJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  // console.log(index);
+  const handleMoveToHotJobPage = (item: any, event: any) => {
+    const analytics: any = getAnalytics();
+
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: `/web_click_hotJob_${item.title}` as string,
+    });
+
+    logEvent(analytics, 'event_web_click_HiJob' as string, {
+      // screen_name: screenName as string,
+      web_page_home: `/hotJob_${item?.title}` as string,
+    });
+
+    handleClickItem(
+      event,
+      item.id,
+      item.type,
+      item.count,
+      item.api,
+      item.query,
+    );
+  };
 
   return (
     <Box
@@ -159,45 +182,63 @@ const HotJob: React.FC = () => {
         <FireIcon width={25} height={25} />
         <h2>{language?.hot_jobs}</h2>
       </div>
-      <Swiper
+      <div className="hotjob-content">
+        {hotjob &&
+          hotjob.map((item: any, index: number) => {
+            return (
+              <div
+                className="slide-hotjob-item"
+                key={index}
+                onClick={(event) => {
+                  const analytics: any = getAnalytics();
+
+                  logEvent(analytics, 'screen_view' as string, {
+                    // screen_name: screenName as string,
+                    page_title: `/web_click_hotJob_${item.title}` as string,
+                  });
+
+                  logEvent(analytics, 'event_web_click_HiJob' as string, {
+                    // screen_name: screenName as string,
+                    web_page_home: `/hotJob_${item?.title}` as string,
+                  });
+                  handleClickItem(
+                    event,
+                    item.id,
+                    item.type,
+                    item.count,
+                    item.api,
+                    item.query,
+                  );
+                }}
+              >
+                <div className="div-img-themes-item">
+                  <img src={item?.image} alt={language?.err_none_img} />
+                </div>
+                <div className="div-info-themes-item">
+                  <div className="div-info-themes-item_top">
+                    <h5>{item?.title}</h5>
+                  </div>
+                  <div className="div-info-themes-item_bot">
+                    <IconBriefCase />
+                    <h6>{item?.count}</h6>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+      {/* <Swiper
         navigation={true}
         // mousewheel={true}
-        slidesPerView="auto"
-        spaceBetween={12}
-        // breakpoints={{
-        //   320: {
-        //     slidesPerView: 1,
-        //     spaceBetween: 24,
-        //   },
-        //   640: {
-        //     slidesPerView: 2,
-        //     spaceBetween: 24,
-        //   },
-        //   768: {
-        //     slidesPerView: 2,
-        //     spaceBetween: 24,
-        //   },
-        //   1024: {
-        //     slidesPerView: 2,
-        //     spaceBetween: 24,
-        //   },
-        //   1440: {
-        //     slidesPerView: 3,
-        //     spaceBetween: 24,
-        //   },
-        //   1920: {
-        //     slidesPerView: 4,
-        //     spaceBetween: 24,
-        //   },
-        //   2560: {
-        //     slidesPerView: 4,
-        //     spaceBetween: 24,
-        //   },
-        // }}
-        modules={[Mousewheel, Navigation, Pagination]}
-        className="mySwiper"
+        slidesPerView={5}
+        spaceBetween={24}
+        grid={{
+          rows: 2,
+        }}
+        modules={[Mousewheel, Grid, Navigation, Pagination]}
+        className="hotjob-content-responsive"
       >
-        {hotjob?.map((item: any, index: number) => {
+        {new Array(10).fill(undefined).map((item: any, index: number) => {
           // console.log("id: ", item.id);
           return (
             <SwiperSlide
@@ -212,43 +253,43 @@ const HotJob: React.FC = () => {
 
                 logEvent(analytics, 'event_web_click_HiJob' as string, {
                   // screen_name: screenName as string,
-                  web_page_home: `/hotJob_${item.title}` as string,
+                  web_page_home: `/hotJob_${item?.title}` as string,
                 });
-                handleClickItem(
-                  event,
-                  item.id,
-                  item.type,
-                  item.count,
-                  item.api,
-                  item.query,
-                );
+                // handleClickItem(
+                //   event,
+                //   item.id,
+                //   item.type,
+                //   item.count,
+                //   item.api,
+                //   item.query,
+                // );
               }}
             >
               <div className="slide-item">
                 <img
-                  src={item.image}
+                  src={item?.image}
                   alt={language?.err_none_img}
                   style={{
-                    width: '160px',
-                    height: '160px',
-                    borderRadius: '10px',
+                    // width: '160px',
+                    // height: '160px',
+                    borderRadius: '16px',
                     objectFit: 'cover',
                   }}
                 />
                 <div className="div-info-themes-item">
                   <div className="div-info-themes-item_left">
-                    <h5>{item.title}</h5>
+                    <h5>{item?.title}</h5>
                   </div>
                   <div className="div-info-themes-item_right">
                     <BagIcon />
-                    <h6>{`${item.count}`}</h6>
+                    <h6>{`${index}`}</h6>
                   </div>
                 </div>
               </div>
             </SwiperSlide>
           );
         })}
-      </Swiper>
+      </Swiper> */}
       {/* <Backdrop
         sx={{
           color: '#0d99ff ',

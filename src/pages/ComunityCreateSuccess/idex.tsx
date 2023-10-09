@@ -14,6 +14,7 @@ import RollTop from '#components/RollTop';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { setCookie } from 'cookies';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const ComunityCreateSuccess = () => {
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
@@ -45,6 +46,7 @@ const ComunityCreateSuccess = () => {
   return (
     <div className="comunity-create-success-container">
       <Navbar />
+      <CategoryDropdown />
       <div className="comunity-create-success-content">
         <div className="create-success-message">
           <div className="create-success-message_header">

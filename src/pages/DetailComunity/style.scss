@@ -1,7 +1,8 @@
 @import '../../scss/mixins';
 
 .comunity-container {
-    margin-top: 70px;
+    // margin-top: 70px;
+    margin-top: 146px;
 
     .comunity-content {
         padding: 50px 0px;
@@ -99,7 +100,7 @@
                 h3 {
                     color: #000;
                     font-family: Roboto;
-                    font-size: 16px;
+                    font-size: 20px;
                     font-style: normal;
                     font-weight: 700;
                     line-height: 30px;
@@ -140,7 +141,7 @@
                 // border: 1px solid #ccc;
                 // padding: 12px 24px;
                 border-radius: 12px;
-                margin: 12px 0 0 0;
+                margin: 12px 0 12px 0;
 
                 .comunityDetail-content {
 

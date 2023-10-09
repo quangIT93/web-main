@@ -8,7 +8,7 @@ import NavBar from '../../components/Navbar/index';
 import { AxiosResponse } from 'axios';
 import Footer from '../../components/Footer/Footer';
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 // import api
 import postApi from '../../api/postApi';
@@ -104,6 +104,7 @@ import { postDetailEn } from 'validations/lang/en/postDetail';
 
 import RollTop from '#components/RollTop';
 import { setCookie } from 'cookies';
+import CategoryDropdown from '#components/CategoryDropdown';
 // import { Language } from '#components/Navbar/Css';
 
 // const itemsShare = [
@@ -623,6 +624,12 @@ const Detail = () => {
     //   window.location.href = messengerLink;
     // }
     if (nameShare === 'Facebook') {
+      // const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      //   post?.data?.companyResourceData?.name === 'HIJOB'
+      //     ? post?.data.shareLink
+      //     : post?.data.shareLink,
+      // )}`;
+
       const titleShare = 'hijob chia sẻ công việc cho bạn';
 
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
@@ -1131,6 +1138,7 @@ const Detail = () => {
       {automatic && (
         <div className="detail">
           <NavBar />
+          <CategoryDropdown />
           {/* <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
@@ -1217,6 +1225,7 @@ const Detail = () => {
                       />
                       <h3>{post?.data.resource.company_resource_name}</h3>
                     </div> */}
+
                     <div className="actions-item" onClick={handleClickShare}>
                       <ShareIcon width={24} height={24} />
                       {/* <div className="items-share">

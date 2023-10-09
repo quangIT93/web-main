@@ -5,13 +5,15 @@ import { useSelector } from 'react-redux';
 // import nodata from '../../../public/images/history/nodata.png'
 import { RootState } from '../../store/reducer/index';
 const NoDataComponent: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const [language, setLanguage] = React.useState<any>();
 
   const getlanguageApi = async () => {
     try {
       const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setLanguage(result.data);
@@ -23,8 +25,8 @@ const NoDataComponent: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    getlanguageApi();
+  }, [languageRedux]);
   return (
     <div
       style={{
@@ -44,9 +46,9 @@ const NoDataComponent: React.FC = () => {
         height="245px"
       />
       <p style={{ fontSize: 20, color: 'gray', marginBottom: 20 }}>
-        {
-          language?.history_page?.no_job_page
-        }
+        {languageRedux === 1
+          ? 'Không có thông tin hiển thị'
+          : 'No display information'}
       </p>
     </div>
   );

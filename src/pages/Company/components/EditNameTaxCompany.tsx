@@ -17,13 +17,14 @@ const styleLabel = {
 interface IEditNameFaxCompany {
   setDataCompany: any;
   dataCompany: any;
+  is_profile: boolean;
 }
 
 const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { dataCompany, setDataCompany } = props;
+  const { dataCompany, setDataCompany, is_profile } = props;
   const [language, setLanguageState] = React.useState<any>();
 
   const getlanguageApi = async () => {
@@ -84,6 +85,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_name}
+          disabled={is_profile ? true : false}
           //   error={titleError} // Đánh dấu lỗi
         />
       </div>
@@ -105,6 +107,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_tax}
+          disabled={is_profile ? true : false}
           //   error={titleError} // Đánh dấu lỗi
         />
       </div>

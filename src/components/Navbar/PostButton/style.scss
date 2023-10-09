@@ -11,18 +11,19 @@
     // z-index: 2;
     background-color: $primary-color;
     z-index: 5;
+
     @include breakpoint(mobile) {
         display: block;
-        bottom: 130px !important;
+        bottom: 140px !important;
 
     }
 
 
     @media screen and (min-height: 431px) and (max-width: 640px) {
         display: block;
-        bottom: 130px !important;
+        bottom: 140px !important;
 
-        
+
     }
 
     .anticon {

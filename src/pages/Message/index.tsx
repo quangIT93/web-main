@@ -32,6 +32,7 @@ import { messEn } from 'validations/lang/en/mess';
 // const { Text } = Typography;
 
 import { ChatContext } from 'context/ChatContextProvider';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const Message = () => {
   const languageRedux = useSelector(
@@ -118,7 +119,7 @@ const Message = () => {
   return (
     <div className="message-page" style={{ height: `${innerHeight}` }}>
       <Navbar />
-
+      <CategoryDropdown />
       {windowWidth >= 555 ? (
         <div className="message-page_main">
           {/* <div className="header-message">

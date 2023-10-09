@@ -7,36 +7,41 @@
   // margin-top: 70px;
   height: 100vh;
   overflow: hidden;
+
   .message-page_main {
     // padding: 20px 180px;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 70px 24px 0 24px !important;
+    // padding: 70px 24px 0 24px !important;
+    padding: 146px 24px 0 24px !important;
     height: 100%;
     // overflow: hidden;
 
     @media screen and (min-width:1281px) and (max-width: 3600px) {
       margin-top: 24px;
-      padding: 70px 0px 0 0px !important;
+      // padding: 70px 0px 0 0px !important;
+      padding: 146px 0px 0 0px !important;
     }
 
-    
+
     @media screen and (min-width:1120px) and (max-width: 1280px) {
       // padding-inline: 24px 24px;
-      padding: 70px 0px 0 0px !important;
+      // padding: 70px 0px 0 0px !important;
+      padding: 146px 0px 0 0px !important;
 
       margin-top: 24px;
-      
+
     }
 
 
-     
+
     @media screen and (min-width:1025px) and (max-width: 1119px) {
       // padding-inline: 24px 24px;
-      padding: 70px 24px 0 24px !important;
+      // padding: 70px 24px 0 24px !important;
+      padding: 146px 24px 0 24px !important;
 
       margin-top: 24px;
-      
+
     }
 
     @include breakpoint(largeTablet) {
@@ -108,7 +113,8 @@
     display: none;
     padding: 10px;
     margin: 12px auto;
-    padding-top: 70px !important;
+    // padding-top: 70px !important;
+    padding-top: 170px !important;
     height: 100%;
 
     @include breakpoint(mobile) {
@@ -122,10 +128,11 @@
         border-radius: 8px;
         height: 540px;
         margin-top: 12px;
-        @include breakpoint(mobile){
+
+        @include breakpoint(mobile) {
           // height: calc(100vh - 70px);
           // margin: 0;
-          
+
         }
 
         .message-page-left_responsive {

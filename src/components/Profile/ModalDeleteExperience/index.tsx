@@ -13,6 +13,7 @@ import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -89,12 +90,20 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
     try {
       const result = await profileApi.deleteProfileExperience(experienceId);
       if (result) {
-        const profile = await profileApi.getProfile('vi');
-        if (profile) {
-          setProfileUser(profile.data);
+        // const profile = await profileApi.getProfile(
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+        // if (profile) {
+        //   setProfileUser(profile.data);
+        // }
+        const getProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (getProfileV3) {
+          await dispatch(setProfileV3(getProfileV3) as any);
+          await dispatch(setAlert(true));
+          setOpenModalDeleteExperience(false);
         }
-        await dispatch(setAlert(true));
-        setOpenModalDeleteExperience(false);
       }
     } catch (error) {
       console.log(error);

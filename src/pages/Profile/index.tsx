@@ -17,6 +17,8 @@ import {
   SectionAwardsIcon,
   SectionDeleteIcon,
   SectionEditIcon,
+  DownloadCVIcon,
+  TickIcon,
 } from '#components/Icons';
 
 import './style.scss';
@@ -50,6 +52,16 @@ import ItemApply from './components/Item';
 
 import apiCompany from 'api/apiCompany';
 
+// Import Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/scrollbar';
+import 'swiper/css/navigation';
+// import required modules
+import { Navigation, Mousewheel, Pagination } from 'swiper';
+
 import ModalProfileInfoPerson from '#components/Profile/ModalProfileInfoPerson';
 import ModalProfileCareerObjectice from '#components/Profile/ModalProfileCareerObjectice';
 import ModalProfileContact from '#components/Profile/ModalProfileContact';
@@ -71,15 +83,28 @@ import {
   // resetProfileState,
 } from 'store/reducer/profileReducer/getProfileReducer';
 import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../store/index';
 
 import { setAlert } from 'store/reducer/profileReducer/alertProfileReducer';
+import {
+  setAlertSuccess,
+  setAlertLackInfo,
+  setAlertEditInfo,
+} from 'store/reducer/profileReducer/alertProfileReducer';
 import languageApi from 'api/languageApi';
 import { profileEn } from 'validations/lang/en/profile';
 import { profileVi } from 'validations/lang/vi/profile';
 import SectionCv from './components/SectionCv';
+import CreateCv from '#components/Profile/CreateCv';
+import ChangeRoleButton from './components/ChangeRoleButton';
+import CandidateProfile from './components/CandidateProfile';
+import Company from 'pages/Company';
+import CategoryDropdown from '#components/CategoryDropdown';
+import ModalIntroduceCv from '#components/Profile/ModalIntroduceCv';
+import { prototype } from 'module';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -116,8 +141,9 @@ const Profile: React.FC = () => {
   //   (state: RootState) => state.profile
   // )
 
-  const profile = useSelector((state: RootState) => state.profileUser);
+  // const profile = useSelector((state: RootState) => state.profileUser);
   const profileUser = useSelector((state: RootState) => state.profile.profile);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false);
   const [openModalContact, setOpenModalContact] = useState(false);
@@ -129,6 +155,9 @@ const Profile: React.FC = () => {
 
   const [openModalExperienceCreate, setOpenModalExperienceCreate] =
     useState(false);
+
+  const [openModalTypeofWork, setOpenModalTypeofWork] = React.useState(false);
+
   // const [imageInfo, setImageInfo] = useState<string>('');
   // const [avatarUrl, setAvatarUrl] = useState<string>('');
   const [companyName, setCompanyName] = useState<string>('');
@@ -138,10 +167,63 @@ const Profile: React.FC = () => {
   // const [checkRemove, setCheckRemove] = useState(2);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [language, setLanguage] = useState<any>();
+  const [cvHijob, setCvHijob] = useState<any[]>([1, 2]);
+  const [listCv, setListCv] = useState<any[]>([
+    {
+      id: 4,
+      name: 'cv4',
+    },
+    {
+      id: 3,
+      name: 'cv3',
+    },
+    {
+      id: 2,
+      name: 'cv2',
+    },
+    {
+      id: 1,
+      name: 'cv1',
+    },
+  ]);
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  const [cvId, setCvId] = useState<any>();
+  // const [role, setRole] = useState(roleRedux)
 
   // const [user, setUser] = useState<any>(null);
 
   const analytics: any = getAnalytics();
+
+  // const handleGetProfileV3 = async () => {
+  //   try {
+  //     const result = await profileApi.getProfileV3('vi');
+
+  //     if (result) {
+  //       dispatch(setProfileV3(result));
+  //     }
+  //   } catch (error) {}
+  // };
+
+  // React.useEffect(() => {
+  //   handleGetProfileV3();
+  // }, []);
+
+  // console.log('profileV3', profileV3);
+
+  const handleChooseCv = (item: any, e: any) => {
+    e.stopPropagation();
+    setListCv((prev: any) => [
+      prev.at(prev.indexOf(item)),
+      ...prev
+        .filter((value: any, index: any) => {
+          return index !== prev.indexOf(item);
+        })
+        .sort((a: any, b: any) => b.id - a.id),
+    ]);
+    setCvId(item.id);
+  };
+
+  // console.log(listCv);
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
@@ -324,7 +406,7 @@ const Profile: React.FC = () => {
     var mess = '';
     var result;
     try {
-      if (profile.cv_url) {
+      if (profileV3.cvUrlPath !== null) {
         result = await profileApi.updateCV(formData);
         mess = language?.profile_page?.alert_update_cv_success;
       } else {
@@ -354,7 +436,10 @@ const Profile: React.FC = () => {
     if (files) {
       const imageUrl = await uploadImage(e, files);
       if (imageUrl) {
-        // dispatch(getProfile() as any);
+        const getProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        dispatch(setProfileV3(getProfileV3) as any);
       }
       // window.location.reload();
       // if (imageUrl)
@@ -376,7 +461,7 @@ const Profile: React.FC = () => {
       const response = await profileApi.postAvatar(formData);
       if (response) {
         dispatch(getProfile() as any);
-        return profile.avatar;
+        return profileV3.avatarPath;
       } else {
         throw new Error('Failed to upload image');
       }
@@ -387,13 +472,26 @@ const Profile: React.FC = () => {
   };
 
   const alert = useSelector((state: any) => state.alertProfile.alert);
+  const alertSuccess = useSelector(
+    (state: any) => state.alertProfile.alertSuccess,
+  );
+  const alertLackInfo = useSelector(
+    (state: any) => state.alertProfile.alertLackInfo,
+  );
+
+  const alertEditInfo = useSelector(
+    (state: any) => state.alertProfile.alertEditInfo,
+  );
 
   const handleClose = () => dispatch<any>(setAlert(false));
+  const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
+  const handleCloseLackInfo = () => dispatch<any>(setAlertLackInfo(false));
+  const handleCloseEditInfo = () => dispatch<any>(setAlertEditInfo(false));
 
   return (
     <div className="profile">
       <Navbar />
-
+      <CategoryDropdown />
       <div className="container">
         <Skeleton className="skeleton-item" avatar loading={loading} active>
           <div className="div-profile-avatar">
@@ -446,12 +544,15 @@ const Profile: React.FC = () => {
                   <Avatar
                     style={{ height: '70px', width: '70px' }}
                     alt="Ảnh lỗi"
-                    src={profileUser?.avatar ? profileUser?.avatar : ''}
+                    src={profileV3?.avatarPath ? profileV3?.avatarPath : ''}
                   />
                 </Badge>
                 <div className="user-company" style={{ marginLeft: '10px' }}>
-                  <h2>{profile?.name ? profile?.name : language?.unupdated}</h2>
-                  <div className="wrap-company">
+                  <h2>
+                    {profileV3?.name ? profileV3?.name : language?.unupdated}
+                  </h2>
+                  <ChangeRoleButton />
+                  {/* <div className="wrap-company">
                     <div className="wrap-company_info">
                       <h2
                         className={
@@ -487,7 +588,7 @@ const Profile: React.FC = () => {
                         ? language?.profile_page?.create_post
                         : language?.profile_page?.register_now}
                     </Button>
-                  </div>
+                  </div> */}
                   {/* <div
                     style={{
                       display: 'flex',
@@ -516,8 +617,8 @@ const Profile: React.FC = () => {
                 color: '#575757',
               }}
             >
-              {profile?.introduction
-                ? profile?.introduction
+              {profileV3?.introduction
+                ? profileV3?.introduction
                 : language?.unupdated}
             </div>
           </div>
@@ -555,28 +656,37 @@ const Profile: React.FC = () => {
                 <p>{language?.date_of_birth}</p>
                 <p>{language?.sex}</p>
                 <p>{language?.location}</p>
+                <p>{languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}</p>
               </div>
               <div className="div-detail-row right">
                 <p>
-                  {profile?.birthday
-                    ? moment(new Date(profile?.birthday)).format('DD/MM/yyyy')
+                  {profileV3?.birthday
+                    ? moment(new Date(profileV3?.birthday)).format('DD/MM/yyyy')
                     : language?.unupdated}
                 </p>
                 <p>
-                  {profile
-                    ? profile?.gender === 1
-                      ? language?.male
-                      : language?.female
-                    : language?.male}
+                  {profileV3?.genderText
+                    ? profileV3?.genderText
+                    : language?.unupdated}
                 </p>
                 <p>
-                  {profile?.address?.name
-                    ? profile?.address?.name
+                  {profileV3?.addressText?.fullName
+                    ? profileV3?.addressText?.fullName
+                    : language?.unupdated}
+                </p>
+                <p>
+                  {profileV3?.jobTypeName
+                    ? profileV3?.jobTypeName
                     : language?.unupdated}
                 </p>
               </div>
             </div>
           </div>
+          <ModalProfileInfoPerson
+            openModelPersonalInfo={openModelPersonalInfo}
+            setOpenModalPersonalInfo={setOpenModalPersonalInfo}
+            profile={profileV3}
+          />
         </Skeleton>
 
         <Skeleton className="skeleton-item" loading={loading} active>
@@ -612,312 +722,63 @@ const Profile: React.FC = () => {
                 <p>LinkedIn</p>
               </div>
               <div className="div-detail-row right">
-                <p>{profile?.phone ? profile?.phone : language?.unupdated}</p>
-                <p>{profile?.email ? profile?.email : language?.unupdated}</p>
-
                 <p>
-                  {profile?.facebook ? profile?.facebook : language?.unupdated}
+                  {profileV3?.phone ? profileV3?.phone : language?.unupdated}
+                </p>
+                <p>
+                  {profileV3?.email ? profileV3?.email : language?.unupdated}
                 </p>
 
                 <p>
-                  {profile?.linkedin ? profile?.linkedin : language?.unupdated}
+                  {profileV3?.facebook
+                    ? profileV3?.facebook
+                    : language?.unupdated}
+                </p>
+
+                <p>
+                  {profileV3?.linkedin
+                    ? profileV3?.linkedin
+                    : language?.unupdated}
                 </p>
               </div>
             </div>
           </div>
-        </Skeleton>
-
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                // flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>CV/ Resume</h3>
-            </div>
-            <Space
-              wrap
-              size={20}
-              direction="vertical"
-              style={{ marginTop: 20 }}
-              className="cv-input-container"
-            >
-              <Upload {...props}>
-                <Button
-                  style={{
-                    backgroundColor: '#0D99FF',
-                    color: 'white',
-                    height: 40,
-                    marginBottom: 20,
-                  }}
-                  icon={<UploadOutlined style={{ fontSize: 18 }} />}
-                >
-                  {profile.cv_url
-                    ? language?.profile_page?.update_cv
-                    : language?.upload_cv}{' '}
-                </Button>
-              </Upload>
-
-              <div
-                // align="center"
-                style={{
-                  marginLeft: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-                // direction="vertical"
-              >
-                {profile.cv_url && fileList?.length === 0 ? (
-                  <Popconfirm
-                    title={language?.profile_page?.delete_cv}
-                    description={language?.profile_page?.alert_delete_cv}
-                    open={open}
-                    onConfirm={confirm}
-                    onCancel={cancel}
-                    okText={language?.yes}
-                    cancelText={language?.no}
-                  >
-                    <CVItem
-                      url={profile.cv_url}
-                      open={open}
-                      setOpen={setOpen}
-                      isProfile={true}
-                      language={language}
-                    />
-                  </Popconfirm>
-                ) : (
-                  fileList?.length <= 0 && (
-                    <Space direction="vertical" align="center">
-                      <p>{language?.profile_page?.cv_title}</p>
-                      <img style={{ width: 200 }} src="/cv3 1.png" alt="ảnh" />
-                    </Space>
-                  )
-                )}
-                <Button
-                  type="primary"
-                  onClick={handleUpload}
-                  disabled={fileList?.length === 0}
-                  loading={uploading}
-                  style={{
-                    marginTop: 16,
-                    width: 300,
-                    height: 40,
-                    backgroundColor: `${
-                      fileList?.length !== 0 ? `#0D99FF` : '#f1f0f0'
-                    }`,
-                    alignItems: 'flex-start',
-                  }}
-                >
-                  {uploading
-                    ? language?.profile_page?.saving
-                    : language?.profile_page?.save_cv}
-                </Button>
-              </div>
-            </Space>
-          </div>
-        </Skeleton>
-
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>{language?.career_objective}</h3>
-              <Space
-                style={{ cursor: 'pointer' }}
-                onClick={() => setOpenModalCareerObjective(true)}
-              >
-                <div className="edit-icon">
-                  <PencilIcon width={15} height={15} />
-                </div>
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.edit}
-                </p>
-              </Space>
-            </div>
-            <Space wrap className="item-info-work">
-              {profile?.categories?.length !== 0
-                ? profile?.categories?.map(
-                    (item: ICategories, index: number) => (
-                      <Button key={index} className="btn" type="text">
-                        {item.child_category}
-                      </Button>
-                    ),
-                  )
-                : language?.unupdated}
-            </Space>
-          </div>
-        </Skeleton>
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>{language?.working_location}</h3>
-              <Space
-                style={{ cursor: 'pointer' }}
-                onClick={() => setOpenModalLocation(true)}
-              >
-                <div className="edit-icon">
-                  <PencilIcon width={15} height={15} />
-                </div>
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.edit}
-                </p>
-              </Space>
-            </div>
-            <Space wrap className="item-info-work">
-              {profile?.locations?.length !== 0
-                ? profile?.locations?.map((item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item?.district}
-                    </Button>
-                  ))
-                : language?.unupdated}
-            </Space>
-          </div>
-        </Skeleton>
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>{language?.education}</h3>
-            </div>
-            {profile?.educations?.length !== 0 ? (
-              profile?.educations?.map((education: ItemAppy, index: number) => (
-                <ItemApply item={education} key={index} />
-              ))
-            ) : (
-              <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
-            )}
-
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'center',
-              }}
-            >
-              <Space
-                style={{ alignItems: 'center', cursor: 'pointer' }}
-                onClick={() => setOpenModalEducationCreate(true)}
-              >
-                <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
-                </p>
-              </Space>
-            </div>
-          </div>
-        </Skeleton>
-        <Skeleton className="skeleton-item" loading={loading} active>
-          <div className="div-profile-info">
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <h3>{language?.working_experience}</h3>
-            </div>
-            {profile?.experiences?.length !== 0 ? (
-              profile?.experiences?.map((item: any, index: number) => (
-                <ItemApply typeItem="experiences" key={index} item={item} />
-              ))
-            ) : (
-              <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
-            )}
-
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'center',
-              }}
-            >
-              <Space
-                style={{ alignItems: 'center', cursor: 'pointer' }}
-                onClick={() => setOpenModalExperienceCreate(true)}
-              >
-                <PlusCircleOutlined size={10} style={{ color: '#0D99FF' }} />
-
-                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
-                  {language?.add}
-                </p>
-              </Space>
-            </div>
-          </div>
-
-          <ModalProfileInfoPerson
-            openModelPersonalInfo={openModelPersonalInfo}
-            setOpenModalPersonalInfo={setOpenModalPersonalInfo}
-            profile={profile}
-          />
-
           <ModalProfileContact
             openModalContact={openModalContact}
             setOpenModalContact={setOpenModalContact}
-            profile={profile}
-          />
-          <ModalProfileCareerObjectice
-            openModalCareerObjective={openModalCareerObjective}
-            setOpenModalCareerObjective={setOpenModalCareerObjective}
-            categories={profile?.categories}
-          />
-
-          <ModalProfileEducationCreate
-            openModalEducationCreate={openModalEducationCreate}
-            setOpenModalEducationCreate={setOpenModalEducationCreate}
-            typeItem="createEducation"
-            educations={profile?.educations}
-          />
-          <ModalProfileLocation
-            openModalLocation={openModalLocation}
-            setOpenModalLocation={setOpenModalLocation}
-            locations={profile?.locations}
-          />
-
-          <ModalProfileExperienceCreate
-            openModalExperienceCreate={openModalExperienceCreate}
-            setOpenModalExperienceCreate={setOpenModalExperienceCreate}
-            typeItem="createExperience"
-            educations={profile?.educations}
+            profile={profileV3}
           />
         </Skeleton>
-        {/* <SectionCv
+
+        <CandidateProfile
+          display={roleRedux === 0 ? 'block' : 'none'}
+          profile={profileV3}
           loading={loading}
-          languageRedux={languageRedux}
           language={language}
-        /> */}
+          languageRedux={languageRedux}
+          openModalCareerObjective={openModalCareerObjective}
+          openModalLocation={openModalLocation}
+          openModalEducationCreate={openModalEducationCreate}
+          openModalExperienceCreate={openModalExperienceCreate}
+          setOpenModalCareerObjective={setOpenModalCareerObjective}
+          setOpenModalLocation={setOpenModalLocation}
+          setOpenModalEducationCreate={setOpenModalEducationCreate}
+          setOpenModalExperienceCreate={setOpenModalExperienceCreate}
+          setOpenModalTypeofWork={setOpenModalTypeofWork}
+          openModalTypeofWork={openModalTypeofWork}
+        />
+
+        <Company
+          display={roleRedux === 0 ? 'none' : 'block'}
+          is_profile={true}
+        />
+
         <Stack spacing={2} sx={{ width: '100%' }}>
           <Snackbar
             open={alert}
             autoHideDuration={3000}
             onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           >
             <Alert
               onClose={handleClose}
@@ -928,8 +789,71 @@ const Profile: React.FC = () => {
             </Alert>
           </Snackbar>
         </Stack>
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alertSuccess}
+            autoHideDuration={3000}
+            onClose={handleCloseAlertCv}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseAlertCv}
+              severity="success"
+              sx={{ width: '100%', backgroundColor: '#000000' }}
+            >
+              {languageRedux === 1
+                ? 'Bạn đã thêm thông tin thành công !'
+                : 'You have saved the information successfully !'}
+            </Alert>
+          </Snackbar>
+        </Stack>
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alertLackInfo}
+            autoHideDuration={3000}
+            onClose={handleCloseLackInfo}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseLackInfo}
+              severity="error"
+              sx={{ width: '100%', backgroundColor: '#000000' }}
+            >
+              {languageRedux === 1
+                ? 'Vui lòng nhập đầy đủ thông tin !'
+                : 'Please enter complete information !'}
+            </Alert>
+          </Snackbar>
+        </Stack>
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alertEditInfo}
+            autoHideDuration={3000}
+            onClose={handleCloseEditInfo}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseEditInfo}
+              severity="error"
+              sx={{ width: '100%', backgroundColor: '#000000' }}
+            >
+              {languageRedux === 1
+                ? 'Cập nhật thông tin thành công !'
+                : 'Update information successfully !'}
+            </Alert>
+          </Snackbar>
+        </Stack>
+        {profileV3.typeRoleData === 0 && profileV3?.profilesCvs.length === 0 ? (
+          <ModalIntroduceCv />
+        ) : (
+          <></>
+        )}
       </div>
       <RollTop />
+      <CreateCv role={roleRedux} />
       <Footer />
     </div>
   );

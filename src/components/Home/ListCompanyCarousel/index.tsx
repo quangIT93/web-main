@@ -136,7 +136,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     try {
       const themeId = searchParams.get(`theme-id`)
         ? searchParams.get(`theme-id`)
-        : listTheme?.data[0].id;
+        : listTheme?.data[0]?.id;
 
       var result;
       if (themeId) {
@@ -165,6 +165,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   }, [searchParams, languageRedux]);
 
   // console.log('value', value);
+  // console.log('listTheme', listTheme);
 
   return (
     <Box
