@@ -29,12 +29,12 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
     },
     nameJob: {
       fontFamily: 'Montserrat Regular',
@@ -76,12 +76,12 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
               color === 1
                 ? '#252525'
                 : color === 2
-                ? '#0D99FF'
-                : color === 3
-                ? '#FBBC04'
-                : color === 4
-                ? '#5CB265'
-                : '#D80000'
+                  ? '#0D99FF'
+                  : color === 3
+                    ? '#FBBC04'
+                    : color === 4
+                      ? '#5CB265'
+                      : '#D80000'
             }
           />
         </Svg>
@@ -99,20 +99,23 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
               color === 1
                 ? '#252525'
                 : color === 2
-                ? '#0D99FF'
-                : color === 3
-                ? '#FBBC04'
-                : color === 4
-                ? '#5CB265'
-                : '#D80000'
+                  ? '#0D99FF'
+                  : color === 3
+                    ? '#FBBC04'
+                    : color === 4
+                      ? '#5CB265'
+                      : '#D80000'
             }
           />
         </Svg>
       </View>
 
       <Image
-        src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+        // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
         style={{ width: '5cm', height: '4.5cm', objectFit: 'cover' }}
+        source={
+          profile.avatarPath ? profile.avatarPath :
+            'https://react-pdf.org/images/logo.png'}
       />
       {/* <View style={{ width: '5cm', height: '4.5cm' }}>
     </View> */}

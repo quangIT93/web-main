@@ -273,6 +273,19 @@
                 object-fit: fill
             }
 
+            .banner-rescruit-swiper {
+                .swiper-wrapper {
+                    .swiper-slide {
+                        display: grid;
+                        place-items: center;
+
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
 
             //  position: relative;
             //  top: 0;
@@ -341,6 +354,7 @@
             position: relative;
             top: -60px;
             right: 10px;
+
             &:hover {
                 transform: scale(1.1);
             }

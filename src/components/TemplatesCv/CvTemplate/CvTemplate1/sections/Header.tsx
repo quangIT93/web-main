@@ -28,12 +28,12 @@ const Header: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-          ? '#0D99FF'
-          : color === 3
-          ? '#FBBC04'
-          : color === 4
-          ? '#5CB265'
-          : '#D80000',
+            ? '#0D99FF'
+            : color === 3
+              ? '#FBBC04'
+              : color === 4
+                ? '#5CB265'
+                : '#D80000',
       // marginTop: '12.404px',
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -225,8 +225,11 @@ const Header: React.FC<ICvHeader> = (props) => {
         </View>
         <View style={styles.avatarDiv}>
           <Image
-            src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+            // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
             style={styles.image}
+            source={
+              profile.avatarPath ? profile.avatarPath :
+                'https://react-pdf.org/images/logo.png'}
           />
         </View>
         {/* <View style={styles.language}>
