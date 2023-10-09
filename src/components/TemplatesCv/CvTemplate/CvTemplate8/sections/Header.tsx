@@ -70,17 +70,18 @@ const Header: React.FC<ICvHeader> = (props) => {
     bigTitle: {
       fontFamily: 'Montserrat Bold',
       fontSize: 15,
-      color: color === 1
-        ? '#404BA0'
-        : color === 2
+      color:
+        color === 1
+          ? '#404BA0'
+          : color === 2
           ? '#0D99FF'
           : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       marginTop: '7.191pt',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
     },
     topLeftDiv: {
       // marginTop: '2.066cm',
@@ -102,15 +103,16 @@ const Header: React.FC<ICvHeader> = (props) => {
     line: {
       width: '100%',
       height: '1px',
-      backgroundColor: color === 1
-        ? '#404BA0'
-        : color === 2
+      backgroundColor:
+        color === 1
+          ? '#404BA0'
+          : color === 2
           ? '#0D99FF'
           : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       marginTop: '14.411pt',
     },
     contact: {
@@ -146,15 +148,16 @@ const Header: React.FC<ICvHeader> = (props) => {
       justifyContent: 'center',
       borderRadius: '50%',
       borderWidth: '2px',
-      borderColor: color === 1
-        ? '#404BA0'
-        : color === 2
+      borderColor:
+        color === 1
+          ? '#404BA0'
+          : color === 2
           ? '#0D99FF'
           : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     rightDiv: {
       flex: 2.5,
@@ -168,21 +171,22 @@ const Header: React.FC<ICvHeader> = (props) => {
     lineHead: {
       width: '100%',
       height: '2px',
-      backgroundColor: color === 1
-        ? '#404BA0'
-        : color === 2
+      backgroundColor:
+        color === 1
+          ? '#404BA0'
+          : color === 2
           ? '#0D99FF'
           : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     image: {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
-      borderRadius: '50%'
+      borderRadius: '50%',
     },
     language: {
       position: 'absolute',
@@ -235,7 +239,7 @@ const Header: React.FC<ICvHeader> = (props) => {
                     ? profile?.name?.split(' ').slice(0, -2).join(' ')
                     : profile?.name?.split(' ').slice(0, -1).join(' ')}
                 </Text>
-                <Text>{" "}</Text>
+                <Text> </Text>
                 <Text style={styles.firstName}>
                   {profile?.name?.split(' ').length > 2
                     ? profile?.name?.split(' ').slice(-2).join(' ')
@@ -247,7 +251,10 @@ const Header: React.FC<ICvHeader> = (props) => {
             <View style={styles.lineHead}></View>
           </View>
           <View style={styles.avatarDiv}>
-            <Image src={profile.avatarPath !== null ? profile.avatarPath : 'a'} style={styles.image} />
+            <Image
+              source={profile.avatarPath ? profile.avatarPath : 'a'}
+              style={styles.image}
+            />
           </View>
         </View>
       </View>

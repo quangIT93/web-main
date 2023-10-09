@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 
 import ItemCadidate from '#components/Candidates/ItemCadidate';
+import ModalNoteWorker from './ModalNoteWorker';
 
 import { FireIcon, ArrowrightIcon } from '#components/Icons';
 import candidateSearch from 'api/apiCandidates';
@@ -24,6 +25,10 @@ const NewestGigWorker = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
+  const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
+
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const getAllCandidates = async () => {
     try {
       const result = await candidateSearch.getCandidates(
@@ -48,6 +53,15 @@ const NewestGigWorker = () => {
     getAllCandidates();
   }, []);
 
+  const handleChangeRouteNewestWorker = () => {
+    if (profileV3?.typeRoleData === 1) {
+      window.open('/candidatesAll', '_parent');
+    } else {
+      console.log(profileV3);
+      setOpenModalNoteWorker(true);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -70,7 +84,7 @@ const NewestGigWorker = () => {
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <FireIcon width={25} height={25} />
           <h2>
-            {languageRedux === 1 ? 'Newest gig worker' : 'Ứng viên mới mới'}
+            {languageRedux === 0 ? 'Newest gig worker' : 'Ứng viên mới mới'}
           </h2>
         </div>
         <div
@@ -84,7 +98,7 @@ const NewestGigWorker = () => {
           }}
         >
           <p
-            onClick={() => window.open('/candidatesAll', '_parent')}
+            onClick={handleChangeRouteNewestWorker}
             style={{ cursor: 'pointer' }}
           >
             Xem tất cả
@@ -98,6 +112,10 @@ const NewestGigWorker = () => {
           return <ItemCadidate item={item} key={index} />;
         })}
       </div>
+      <ModalNoteWorker
+        openModalNoteWorker={openModalNoteWorker}
+        setOpenModalNoteWorker={setOpenModalNoteWorker}
+      />
     </Box>
   );
 };

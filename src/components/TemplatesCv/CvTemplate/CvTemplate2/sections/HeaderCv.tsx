@@ -109,11 +109,16 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
           />
         </Svg>
       </View>
-
       <Image
-        src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+        source={
+          profile.avatarPath
+            ? profile.avatarPath
+            : // : './images/image 50.png'
+              'https://www.google.com/url?sa=i&url=https%3A%2F%2Fvi.alongwalker.co%2Fda-co-cach-chup-mat-dep-than-thanh-cho-buc-hinh-long-lanh-chang-kem-idol-s146496.html&psig=AOvVaw150dMJBBupQ3IgBEJoBlHI&ust=1696907177877000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKD61_3954EDFQAAAAAdAAAAABAE'
+        }
         style={{ width: '5cm', height: '4.5cm', objectFit: 'cover' }}
       />
+      ;
       {/* <View style={{ width: '5cm', height: '4.5cm' }}>
     </View> */}
     </View>

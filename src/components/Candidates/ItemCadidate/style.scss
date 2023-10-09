@@ -26,6 +26,9 @@
             object-fit: cover;
             border-radius: 12px;
             filter: blur(3px);
+            @media screen and (max-width: 350px) {
+                width: 118px;
+            }
         }
     }
     .info-candidate {
@@ -112,7 +115,7 @@
                     }
 
                     @media screen and (max-width: 400px) {
-                        width: 130px;
+                        width: 100px;
                     }
 
                     @media screen and (max-width: 370px) {

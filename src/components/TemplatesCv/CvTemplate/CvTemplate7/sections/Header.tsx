@@ -14,7 +14,7 @@ const Header: React.FC<ICvHeader> = (props) => {
   const styles = StyleSheet.create({
     container: {
       width: '100%',
-      marginBottom: '15.468pt'
+      marginBottom: '15.468pt',
     },
     content: {
       width: '100%',
@@ -30,12 +30,12 @@ const Header: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#252525'
           : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000',
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       // border: '1px solid red',
       width: '100%',
       marginTop: '7.383pt',
@@ -72,7 +72,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       // gap: '0.25cm',
       // border: '1px solid green',
       width: '100%',
-      color: "#282828"
+      color: '#282828',
     },
     contact: {
       display: 'flex',
@@ -114,7 +114,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: '14.596pt'
+      marginTop: '14.596pt',
     },
     image: {
       width: '100%',
@@ -166,13 +166,14 @@ const Header: React.FC<ICvHeader> = (props) => {
           <View style={styles.topLeftDiv}>
             <Text style={styles.bigTitle}>HELLO! I'M</Text>
             <View style={styles.name}>
-              <Text style={styles.lastName}>
-                {profile?.name}
-              </Text>
+              <Text style={styles.lastName}>{profile?.name}</Text>
             </View>
             <Text style={styles.bigTitle}>{profile?.jobTypeName}</Text>
             <View style={styles.avatarDiv}>
-              <Image src={profile.avatarPath !== null ? profile.avatarPath : 'a'} style={styles.image} />
+              <Image
+                source={profile.avatarPath ? profile.avatarPath : 'a'}
+                style={styles.image}
+              />
             </View>
           </View>
         </View>
