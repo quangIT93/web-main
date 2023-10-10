@@ -20,10 +20,6 @@ import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 
-import {
-  getProfile,
-  // resetProfileState,
-} from 'store/reducer/profileReducer/getProfileReducer';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 const { SHOW_PARENT } = TreeSelect;
 
@@ -120,6 +116,8 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     }
   };
 
+  console.log('edit');
+
   React.useEffect(() => {
     getCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -199,6 +197,8 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
       // <TreeNode key={node.value} value={node.value} title={node.title} />
     });
   };
+
+  console.log('click');
 
   const tProps: any = {
     // treeData,

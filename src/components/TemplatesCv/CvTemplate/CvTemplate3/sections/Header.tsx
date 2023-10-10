@@ -4,6 +4,7 @@ import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
 import profileApi from 'api/profileApi';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import null_avatar from '../../images/null_avatar.png';
 interface ICvHeader {
   color: any;
   profile: any;
@@ -217,7 +218,11 @@ const Header: React.FC<ICvHeader> = (props) => {
         <View style={styles.leftDiv}>
           <View style={styles.topLeftDiv}>
             <View style={styles.avatarDiv}>
-              <Image source={profile.avatarPath ? profile.avatarPath : 'a'} />
+              <Image
+                style={styles.image}
+                // src={profile.avatarPath ? profile.avatarPath : 'a'}
+                source={profile.avatarPath ? profile.avatarPath : null_avatar}
+              />
             </View>
             <View style={styles.info}>
               <View style={styles.name}>

@@ -18,7 +18,7 @@ const NewestGigWorker = () => {
   const [educations, setEducations] = React.useState<number | undefined>(
     undefined,
   );
-  const [gender, setGender] = React.useState(1);
+  const [gender, setGender] = React.useState(undefined);
   const [ageMin, setAgeMin] = React.useState(18);
   const [ageMax, setAgeMax] = React.useState(60);
   const [page, setPage] = React.useState<any>('0');

@@ -215,8 +215,6 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
 
   // const
 
-  console.log(profile);
-
   const handleDownloadCV = async (pdfUrl: any, name: string) => {
     try {
       const response = await axios.get(pdfUrl, {

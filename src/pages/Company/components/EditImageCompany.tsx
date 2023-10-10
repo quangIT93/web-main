@@ -248,7 +248,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       <div className="edit-image-company-content">
         <h3>
           <span>
-            {languageRedux === 1 ? 'Logo công ty' : "Company's logo"}{' '}
+            {languageRedux === 1 ? 'Hình ảnh công ty' : "Company's image"}{' '}
             <span style={{ color: 'red' }}>*</span>
           </span>
           <p

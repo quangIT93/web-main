@@ -231,6 +231,7 @@ const Post: React.FC = () => {
   const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
     [],
   );
+  const [notiCreateCompany, setNotiCreateCompany] = useState(false);
   const [language, setLanguage] = useState<any>();
 
   const getlanguageApi = async () => {
@@ -260,7 +261,10 @@ const Post: React.FC = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
   ) => {
     e.preventDefault();
-    console.log('selected File', selectedFiles);
+    // if () {
+    //   setNotiCreateCompany(true)
+    //   return;
+    // }
     const formData = new FormData();
     formData.append('title', titleJob);
     formData.append('companyName', companyName);
@@ -620,28 +624,26 @@ const Post: React.FC = () => {
               onClick={handleSubmit}
               className="btn-submitForm"
             >
-              {language?.post1}
+              {language?.save}
             </button>
           </form>
         </div>
         <Footer />
+        1``
         <RollTop />
         <ModalPost
           openModalPost={openModalPost}
           setOpenModalPost={setOpenModalPost}
         />
-
         <ModalNoteCreatePost
           setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
           openModalNoteCreatePost={openModalNoteCreatePost}
           language={language}
         />
-
         <ModalNoteCreateCompany
           openModalNoteCreateCompany={openModalNoteCreateCompany}
           setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
         />
-
         <ModalFillDataPost
           setOpenFillDataPost={setOpenFillDataPost}
           openModalFillDataPost={openModalFillDataPost}

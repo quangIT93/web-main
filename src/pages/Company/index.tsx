@@ -528,7 +528,7 @@ const Company: React.FC<ICompany> = (props) => {
               className="btn-edit_submitForm"
               style={{ display: is_profile ? 'none' : 'block' }}
             >
-              {language?.company_page?.finish}
+              {language?.save}
             </button>
           </form>
         </Skeleton>

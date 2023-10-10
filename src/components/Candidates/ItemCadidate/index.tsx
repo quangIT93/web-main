@@ -18,6 +18,7 @@ import candidateSearch from 'api/apiCandidates';
 import { useSelector } from 'react-redux';
 // import redux
 import { RootState } from 'store';
+import { Link } from 'react-router-dom';
 interface ICadidate {
   item: any;
 }
@@ -45,6 +46,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
 
   return (
     <div
+      // to="/sdasdasdasdasd"
       className="item-candidate"
       onClick={() => handleClickItemCandidate(item.accountId)}
     >

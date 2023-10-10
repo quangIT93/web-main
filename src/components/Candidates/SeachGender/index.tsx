@@ -14,28 +14,20 @@ import { GenderIcon } from '#components/Icons/iconCandidate';
 import candidateSearch from 'api/apiCandidates';
 
 // import ant
-import {
-  Button,
-  Cascader,
-  Divider,
-  Typography,
-  Select,
-  Space,
-  Radio,
-} from 'antd';
+import { Select, Space, Radio } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 
 import './style.scss';
 
 const CustomOption = ({
-  academicType,
+  genderType,
   setTypeAcademic,
   typeAcademic,
   setValueRender,
   setGender,
   reset,
 }: {
-  academicType: any;
+  genderType: any;
   typeAcademic: number;
   setTypeAcademic: any;
   setValueRender: Function;
@@ -45,7 +37,7 @@ const CustomOption = ({
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     // console.log('valueRender Loai cong viec', valueRender);
     // console.log('valueRender Loai cong viec value', value);
-    const valueRender = academicType.find((item: any) => item.id === value);
+    const valueRender = genderType.find((item: any) => item.id === value);
     setGender(value);
     if (valueRender) {
       setValueRender(valueRender);
@@ -57,6 +49,8 @@ const CustomOption = ({
     (state: RootState) => state.changeLaguage.language,
   );
 
+  console.log(typeAcademic);
+
   return (
     <div className="wrap-radio_candidate">
       <div className="title-candidate">
@@ -66,11 +60,13 @@ const CustomOption = ({
         style={{ width: '100%' }}
         name="radiogroup"
         onChange={onChange}
-        value={reset ? undefined : typeAcademic === 0 ? typeAcademic : 1}
+        value={
+          reset ? -1 : typeAcademic === -1 ? -1 : typeAcademic === 0 ? 0 : 1
+        }
         // defaultValue={jobType ? jobType : 5}
       >
         <Space direction="vertical" style={{ width: '100%' }}>
-          {academicType?.map((value: any, index: number) => {
+          {genderType?.map((value: any, index: number) => {
             return (
               <Radio key={index} style={{ width: '100%' }} value={value.id}>
                 {value.data}
@@ -92,19 +88,26 @@ interface ISeachGender {
 
 const SeachGender: React.FC<ISeachGender> = (props) => {
   const { setGender, setReset, reset, genderValue } = props;
-  const [academicType, setAcademicType] = React.useState([]);
 
-  const { Option } = Select;
-
-  const [typeAcademic, setTypeAcademic] = React.useState(1);
-
-  const [valueRender, setValueRender] = React.useState<any>();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
+  const { Option } = Select;
+
+  const [typeAcademic, setTypeAcademic] = React.useState(-1);
+
+  const [valueRender, setValueRender] = React.useState<any>({
+    id: -1,
+    data: languageRedux === 1 ? 'Tất cả' : 'All',
+  });
   // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   var gender = [
+    {
+      id: -1,
+      data: languageRedux === 1 ? 'Tất cả' : 'All',
+    },
     {
       id: 1,
       data: languageRedux === 1 ? 'Nam' : 'Male',
@@ -115,23 +118,6 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
     },
   ];
 
-  const academicTypesFnc = async () => {
-    try {
-      const result = await candidateSearch.getAcademicTypes(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setAcademicType(result.data);
-      }
-    } catch (error) {
-      console.log('error: ' + error);
-    }
-  };
-
-  React.useEffect(() => {
-    academicTypesFnc();
-  }, []);
-
   const onChange = (value: string[][]) => {};
   const handleChange = (value1: string) => {
     setReset(false);
@@ -139,9 +125,12 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
 
   React.useEffect(() => {
     if (reset) {
-      setValueRender(null);
+      setValueRender({ id: -1, data: languageRedux === 1 ? 'Tất cả' : 'All' });
     }
   }, [reset]);
+
+  console.log('valueRender', valueRender);
+
   return (
     <div className="filter-candidate">
       <div className="filter-input_candidate">
@@ -151,7 +140,13 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
-        value={valueRender && reset ? undefined : valueRender?.data}
+        value={
+          valueRender && reset
+            ? languageRedux === 1
+              ? 'Tất cả'
+              : 'All'
+            : valueRender?.data
+        }
         className="inputTypeSalary input-filter_nav"
         size="large"
         placeholder={languageRedux === 1 ? 'Giới tính' : 'Sex'}
@@ -159,7 +154,7 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
       >
         <Option className="type-salary" value="5" label="">
           <CustomOption
-            academicType={gender}
+            genderType={gender}
             setTypeAcademic={setTypeAcademic}
             typeAcademic={typeAcademic}
             setValueRender={setValueRender}

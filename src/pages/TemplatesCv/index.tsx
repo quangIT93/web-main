@@ -52,8 +52,13 @@ const TemplatesCv: React.FC = () => {
   const [colorCV, setColorCV] = React.useState(1);
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
-  const [openModalSuccessDownCv, setOpenModalSuccessDownCv] =
-    React.useState(false);
+  const [openModalSuccessDownCv, setOpenModalSuccessDownCv] = React.useState<{
+    open: boolean;
+    id: number | null;
+  }>({
+    open: false,
+    id: null,
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
@@ -108,7 +113,8 @@ const TemplatesCv: React.FC = () => {
 
           const result = await apiCv.postCv(formData);
           if (result) {
-            setOpenModalSuccessDownCv(true);
+            setOpenModalSuccessDownCv({ open: true, id: result.data.id });
+            // setOpenModalChooseCv(true);
             // console.log('lưu cv thành công');
           }
         }
@@ -159,6 +165,12 @@ const TemplatesCv: React.FC = () => {
       window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    if (profileV3.typeRoleData === 1) {
+      window.open('/', '_parent');
+    }
+  }, [profileV3]);
 
   return (
     <div className="cv-container">

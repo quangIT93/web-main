@@ -43,6 +43,7 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
   const { openModalDeleteCv, setOpenModalDeleteCv } = props;
 
   const dispatch = useDispatch();
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   const handleCancel = () => {
     setOpenModalDeleteCv({
@@ -63,15 +64,15 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
         openModalDeleteCv?.item?.id as number,
       ]);
       if (result) {
-        const resultProfileV3 = await profileApi.getProfileV3(
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-
-        if (resultProfileV3) {
-          // const chooseCv = await apiCv.putThemeCv(
-          //   resultProfileV3?.data?.profilesCvs[0]?.id,
-          //   1,
-          // );
+        if (profileV3) {
+          if (profileV3?.data?.profilesCvs.length > 1) {
+            await apiCv.putThemeCv(
+              profileV3?.data?.profilesCvs[
+                profileV3?.data?.profilesCvs.length - 2
+              ]?.id,
+              1,
+            );
+          }
 
           const resultProfileV3L2 = await profileApi.getProfileV3(
             languageRedux === 1 ? 'vi' : 'en',

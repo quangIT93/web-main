@@ -119,6 +119,8 @@ const CandidateNewDetail = () => {
   const getBookMark = async () => {
     try {
       const resultBookmark = await candidateSearch.getBookmarkCandidate(
+        0,
+        1,
         languageRedux === 1 ? 'vi' : 'en',
       );
 
@@ -140,6 +142,7 @@ const CandidateNewDetail = () => {
 
   const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
   const handleCancleSave = () => dispatch<any>(setAlert(false));
+  console.log('profileV3', profileV3);
 
   return (
     <div className="candidate-new-detail">
@@ -172,6 +175,7 @@ const CandidateNewDetail = () => {
             <div className="buttons-candidate">
               <Button
                 type="primary"
+                // disabled
                 onClick={() => handleUnLockCandidate(candidate?.accountId)}
               >
                 Unlock Candidates

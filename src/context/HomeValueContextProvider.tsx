@@ -33,29 +33,29 @@ export const HomeValueContext = React.createContext<{
   openCategoryDropdown: boolean;
 }>({
   childCateloriesArray: [],
-  setChildCateloriesArray: () => { },
+  setChildCateloriesArray: () => {},
   openCollapseFilter: false,
-  setOpenCollapseFilter: () => { },
+  setOpenCollapseFilter: () => {},
   // heightNavbar: 0,
   // setHeightNavbar: () => {},
   openModalLoginNavbar: false,
-  setOpenModalLoginNavbar: () => { },
+  setOpenModalLoginNavbar: () => {},
   valueJobChild: {
     id: 1,
     parentName: 'Tất cả',
   },
-  setValueJobChild: () => { },
+  setValueJobChild: () => {},
   refCatelories: 0,
-  setRefCatelories: () => { },
-  setRefCatelory: () => { },
-  SetRefNav: () => { },
-  setNavTouchCatelory: () => { },
+  setRefCatelories: () => {},
+  setRefCatelory: () => {},
+  SetRefNav: () => {},
+  setNavTouchCatelory: () => {},
   navTouchCatelory: false,
-  setOpenNotificate: () => { },
+  setOpenNotificate: () => {},
   openNotificate: false,
-  setSearch: () => { },
+  setSearch: () => {},
   search: false,
-  setOpenCategoryDropdown: () => { },
+  setOpenCategoryDropdown: () => {},
   openCategoryDropdown: false,
 });
 
@@ -95,7 +95,8 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
   );
 
   const [navTouchCatelory, setNavTouchCatelory] = useState<boolean>(false);
-  const [openCategoryDropdown, setOpenCategoryDropdown] = useState<boolean>(false);
+  const [openCategoryDropdown, setOpenCategoryDropdown] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -148,7 +149,7 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
     setSearch,
     search,
     setOpenCategoryDropdown,
-    openCategoryDropdown
+    openCategoryDropdown,
   };
 
   return (

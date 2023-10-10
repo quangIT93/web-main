@@ -145,7 +145,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     // }
     onChange(listLocation.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProfile]);
+  }, []);
 
   const onChange = (value: any) => {
     // Xử lý giá trị thay đổi

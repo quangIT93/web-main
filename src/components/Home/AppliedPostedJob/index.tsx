@@ -18,7 +18,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
-import { Navigation, Mousewheel, Pagination } from 'swiper';
+import { Navigation, Mousewheel, Pagination, Autoplay } from 'swiper';
 // @ts-ignore
 // import { useSearchParams } from 'react-router-dom';
 
@@ -41,6 +41,8 @@ import {
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
 import banner from '../../../img/Banner/banner_for_candidates_1.png';
+import banner_recruit_1 from '../../../img/Banner/banner-for-rescruit-1.png';
+import banner_recruit_2 from '../../../img/Banner/banner-for-rescruit-2.png';
 import './styles.scss';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
@@ -213,26 +215,21 @@ const AppliedPostedJob: React.FC = () => {
             paddingBottom: '24px',
             flexDirection: 'column',
             padding:
-              roleRedux === 0 && appliedPostedJob.length !== 0 ? '0px' : '0',
+              roleRedux === 0 && appliedPostedJob.length !== 0
+                ? '52px 0 0 0'
+                : '52px 0 0 0',
           }}
           className="applied-posted-jobs-container"
         >
           <div
             className="advertisement-job-not-loging"
             style={{
-              display:
-                roleRedux === 0 && cvHijob.length !== 0 ? 'flex' : 'none',
-              marginBottom:
-                roleRedux === 0 && appliedPostedJob.length !== 0 ? '24px' : '0',
+              display: cvHijob.length !== 0 ? 'flex' : 'none',
+              marginBottom: appliedPostedJob.length !== 0 ? '24px' : '0',
             }}
           >
             {/* <AdsCVIcon /> */}
-            <div
-              className="advertisement-job-not-loging-content"
-              onClick={() => {
-                window.open('/page-cv', '_parent');
-              }}
-            >
+            <div className="advertisement-job-not-loging-content">
               {/* <h3 style={{ marginTop: '12px' }}>
                 {languageRedux === 1
                   ? 'Dễ dàng tạo cv của riêng bạn'
@@ -262,17 +259,54 @@ const AppliedPostedJob: React.FC = () => {
                   </li>
                 </ul>
               </div> */}
-              <Avatar
-                sx={{
-                  width: '100%',
-                  maxHeight: '301px',
-                  height: 'auto',
-                }}
-                variant="square"
-                src={banner}
-              >
-                Banner
-              </Avatar>
+              {roleRedux === 0 ? (
+                <Avatar
+                  sx={{
+                    width: '100%',
+                    maxHeight: '301px',
+                    height: 'auto',
+                  }}
+                  variant="square"
+                  src={banner}
+                  onClick={() => {
+                    window.open('/page-cv', '_parent');
+                  }}
+                >
+                  Banner
+                </Avatar>
+              ) : (
+                <Swiper
+                  spaceBetween={30}
+                  centeredSlides={true}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  // navigation={true}
+                  modules={[Autoplay, Navigation]}
+                  className="banner-rescruit-swiper"
+                  loop={true}
+                >
+                  <SwiperSlide>
+                    <img
+                      onClick={() => {
+                        window.open('/post', '_parent');
+                      }}
+                      src={banner_recruit_1}
+                      alt=""
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <img
+                      onClick={() => {
+                        window.open('/candidatesAll', '_parent');
+                      }}
+                      src={banner_recruit_2}
+                      alt=""
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              )}
             </div>
             {/* <Button
               type="primary"

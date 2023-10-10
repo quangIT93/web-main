@@ -2,9 +2,9 @@
 
 .applied-posted-jobs-container {
     // margin-top: 15rem !important;
-    margin-top: 11rem !important;
+    margin-top: 116px !important;
     margin-bottom: 24px !important;
-
+    
     .help-search {
         position: relative;
         cursor: pointer;
@@ -273,6 +273,19 @@
                 object-fit: fill
             }
 
+            .banner-rescruit-swiper {
+                .swiper-wrapper {
+                    .swiper-slide {
+                        display: grid;
+                        place-items: center;
+
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
 
             //  position: relative;
             //  top: 0;
@@ -341,6 +354,7 @@
             position: relative;
             top: -60px;
             right: 10px;
+
             &:hover {
                 transform: scale(1.1);
             }

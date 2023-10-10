@@ -337,7 +337,7 @@ const apiCv = {
         )
 
     },
-    putThemeCv: (id: number, status: number) => {
+    putThemeCv: (id: number | null, status: number ) => {
         const URL = `/v3/profiles-cvs/${id}`;
         return axiosClient.put(
             URL

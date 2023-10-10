@@ -306,7 +306,7 @@ const Profile: React.FC = () => {
       window.open('/');
       return;
     }
-    fecthDataProfile();
+    // fecthDataProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     openModelPersonalInfo,

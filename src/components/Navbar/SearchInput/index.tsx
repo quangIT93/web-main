@@ -230,6 +230,7 @@ const SearchInput: React.FC<SearchProps> = ({
   };
 
   // console.log('resultSuggest', dataSuggest.data);
+  console.log('value', value);
 
   React.useEffect(() => {
     getDataSearch();

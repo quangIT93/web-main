@@ -5777,7 +5777,7 @@ export const IconBriefCase = ({ width = 20, height = 20 }) => {
   );
 };
 
-export const IconMenu = ({ width = 20, height = 20 }) => {
+export const IconMenu = ({ width = 28, height = 28 }) => {
   return (
     <svg
       width={width}

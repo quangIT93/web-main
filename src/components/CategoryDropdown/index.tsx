@@ -263,7 +263,7 @@ const CategoryDropdown: React.FC = () => {
       setOpenModalLogin(true);
       return;
     }
-    window.open('/history', '_parent');
+    window.open('/history?candidate=4', '_parent');
   };
 
   const moveToWorkingStory = () => {
@@ -345,7 +345,7 @@ const CategoryDropdown: React.FC = () => {
         sx={{
           // maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
           padding: '0 24px',
-          boxShadow: '0px 1px 3px #aaa',
+          // boxShadow: '0px 1px 3px #aaa',
           zIndex: '9',
           position: 'fixed',
           width: '100%',
@@ -369,9 +369,9 @@ const CategoryDropdown: React.FC = () => {
             onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
           >
             <IconMenu />
-            <h3>{languageRedux === 1 ? 'Danh mục' : 'Category'}</h3>
+            <h3>{languageRedux === 1 ? 'Danh mục' : 'Menu'}</h3>
           </div>
-          <div className="category-dropdown-line"></div>
+          {/* <div className="category-dropdown-line"></div>
           <div className="category-dropdown-right">
             <JobInfoDropDown
               moveToAppliedJob={moveToAppliedJob}
@@ -407,7 +407,7 @@ const CategoryDropdown: React.FC = () => {
               moveToSupportTerms={moveToSupportTerms}
               moveToMemberGuide={moveToMemberGuide}
             />
-          </div>
+          </div> */}
         </div>
         <Collapse
           in={openCategoryDropdown}

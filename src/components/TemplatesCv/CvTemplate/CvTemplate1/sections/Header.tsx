@@ -225,8 +225,13 @@ const Header: React.FC<ICvHeader> = (props) => {
         </View>
         <View style={styles.avatarDiv}>
           <Image
-            source={profile.avatarPath ? profile.avatarPath : 'a'}
+            // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
             style={styles.image}
+            source={
+              profile.avatarPath
+                ? profile.avatarPath
+                : 'https://react-pdf.org/images/logo.png'
+            }
           />
         </View>
         {/* <View style={styles.language}>

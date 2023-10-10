@@ -196,9 +196,9 @@ const CandidatesAll = () => {
   const [addresses, setAddresses] = useState([]);
   const [categories, setCategories] = useState([]);
   const [educations, setEducations] = useState<number | undefined>();
-  const [gender, setGender] = useState<undefined | number>(1);
+  const [gender, setGender] = useState<undefined | number>(-1);
   const [ageMin, setAgeMin] = useState<number | null>(18);
-  const [ageMax, setAgeMax] = useState<number | null>(60);
+  const [ageMax, setAgeMax] = useState<number | null>(35);
   const [page, setPage] = React.useState<any>('0');
   const [reset, setReset] = useState(false);
   const [total, setTotal] = useState(0);
@@ -259,6 +259,22 @@ const CandidatesAll = () => {
         message.error('Độ tuổi không hợp lệ!');
         return;
       }
+
+      if (
+        (ageMin && ageMax && ageMin < 18) ||
+        (ageMin && ageMax && ageMax < 18)
+      ) {
+        message.error('Độ tuổi không hợp lệ!');
+        return;
+      }
+
+      if (
+        (ageMin && ageMax && ageMin > 60) ||
+        (ageMin && ageMax && ageMax > 60)
+      ) {
+        message.error('Độ tuổi không hợp lệ!');
+        return;
+      }
       const result = await candidateSearch.getCandidates(
         addresses,
         categories,
@@ -295,9 +311,9 @@ const CandidatesAll = () => {
     setAddresses([]);
     setCategories([]);
     setEducations(undefined);
-    setGender(undefined);
+    setGender(-1);
     setAgeMin(18);
-    setAgeMax(60);
+    setAgeMax(35);
     setReset(true);
   };
 

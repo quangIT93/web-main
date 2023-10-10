@@ -122,6 +122,7 @@ import { home } from 'validations/lang/vi/home';
 import languageApi from 'api/languageApi';
 import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
 import { setRole } from 'store/reducer/roleReducer';
+import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
 // import { set } from 'immer/dist/internal';
 
 // import redux
@@ -194,6 +195,8 @@ const Navbar: React.FC = () => {
   const [openRadioGroup, setOpenRadioGroup] = useState<boolean>(false);
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
+  const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
+    React.useState<any>(false);
   // const [isSearch, setIsSearch] = useState<boolean>(false);
   // const [language, setLanguageState] = useState<any>();
 
@@ -730,14 +733,15 @@ const Navbar: React.FC = () => {
       }
       var result = null;
       if (localStorage.getItem('refreshToken')) {
-        result = await profileApi.getProfile(languageRedux === 1 ? 'vi' : 'en');
+        // result = await profileApi.getProfile(languageRedux === 1 ? 'vi' : 'en');
+        const ResuultGetProfileV3 = await profileApi.getProfileV3;
       } else {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('accountId');
       }
-      if (result) {
-        dispatch(getProfile() as any);
+      if (true) {
+        // dispatch(getProfile() as any);
         setSpinning(false);
         setOpenInfoUser(!openInfoUser);
       } else {
@@ -1090,7 +1094,11 @@ const Navbar: React.FC = () => {
             className="btn btn__post"
             onClick={() => {
               if (profileV3 && localStorage.getItem('refreshToken')) {
-                window.open('/post', '_parent');
+                if (profileV3.companyInfomation === null) {
+                  setOpenModalNoteCreateCompany(true);
+                } else {
+                  window.open('/post', '_parent');
+                }
               } else {
                 setOpenModalLogin(true);
               }
@@ -1731,6 +1739,11 @@ const Navbar: React.FC = () => {
           setOpenModalLogin={setOpenModalLogin}
         />
 
+        <ModalNoteCreateCompany
+          openModalNoteCreateCompany={openModalNoteCreateCompany}
+          setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
+        />
+
         <ModalTurnOffStatus
           openModalTurnOffStatus={openModalTurnOffStatus}
           setOpenModalTurnOffStatus={setOpenModalTurnOffStatus}
@@ -1766,14 +1779,18 @@ const Navbar: React.FC = () => {
             </Left>
             <Center className="div-nav-center">
               {/* <div>assssssssssssssssssssssssssssssss</div> */}
-              <SearchInput
-                checkSearch={checkSeacrh}
-                value={valueSearchInput}
-                setValue={setValueSearchInput}
-                setOpenCollapseFilter={setOpenCollapseFilter}
-                openCollapseFilter={openCollapseFilter}
-                handleSearchIcon={handleSearch}
-              />
+              {window.innerWidth > 768 ? (
+                <SearchInput
+                  checkSearch={checkSeacrh}
+                  value={valueSearchInput}
+                  setValue={setValueSearchInput}
+                  setOpenCollapseFilter={setOpenCollapseFilter}
+                  openCollapseFilter={openCollapseFilter}
+                  handleSearchIcon={handleSearch}
+                />
+              ) : (
+                <></>
+              )}
               <Button
                 className="btn-search"
                 onClick={(event) => handleSearch(event, valueSearchInput)}
@@ -1923,14 +1940,18 @@ const Navbar: React.FC = () => {
           }
           className="nav-collapse"
         >
-          <SearchInput
-            checkSearch={checkSeacrh}
-            value={valueSearchInput}
-            setValue={setValueSearchInput}
-            setOpenCollapseFilter={setOpenCollapseFilter}
-            openCollapseFilter={openCollapseFilter}
-            handleSearchIcon={handleSearch}
-          />
+          {window.innerWidth <= 768 ? (
+            <SearchInput
+              checkSearch={checkSeacrh}
+              value={valueSearchInput}
+              setValue={setValueSearchInput}
+              setOpenCollapseFilter={setOpenCollapseFilter}
+              openCollapseFilter={openCollapseFilter}
+              handleSearchIcon={handleSearch}
+            />
+          ) : (
+            <></>
+          )}
           <div className="filter-wraps">
             <div className="filter-wrap_top">
               <FilterLocationNav

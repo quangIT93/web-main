@@ -433,7 +433,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           <>
             {/* <PreviewTheme1 /> */}
 
-            {profileV3 && (
+            {profileV3.length !== 0 && (
               <Document
                 loading={<Spin indicator={antIcon} />}
                 noData={<Spin indicator={antIcon} />}
