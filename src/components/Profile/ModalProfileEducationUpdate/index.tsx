@@ -97,25 +97,28 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
   const [typeAcademic, setTypeAcademic] = React.useState([]);
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
   React.useEffect(() => {
-    getlanguageApi();
+    // getlanguageApi();
     getTypeAcademic();
   }, [languageRedux]);
 
@@ -373,7 +376,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.profile_page?.place_school}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -395,7 +398,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.major}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -469,7 +472,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             placeholder={'Loại công việc'}
             size="small"
             sx={{ width: '100%' }}
-            // error={!gender} // Đánh dấu lỗi
+          // error={!gender} // Đánh dấu lỗi
           >
             {typeAcademic?.map((value: any, index: number) => {
               return <MenuItem value={index + 1}>{value.data}</MenuItem>;

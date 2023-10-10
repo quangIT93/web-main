@@ -24,8 +24,12 @@ const NewestGigWorker = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const roleRedux = useSelector(
+    (state: RootState) => state.changeRole.role,
+  );
   const getAllCandidates = async () => {
     try {
+      const logout = localStorage.getItem('accessToken');
       const result = await candidateSearch.getCandidates(
         addresses,
         categories,
@@ -33,20 +37,24 @@ const NewestGigWorker = () => {
         gender,
         ageMin,
         ageMax,
-        18,
+        !logout ? 6 :
+          roleRedux === 0 ? 6 : 18,
         page,
-        'vi',
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
         setListData(result.data.cvFilters);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
     getAllCandidates();
   }, []);
+
+  console.log("listData", listData);
+
 
   return (
     <Box
@@ -70,7 +78,7 @@ const NewestGigWorker = () => {
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <FireIcon width={25} height={25} />
           <h2>
-            {languageRedux === 1 ? 'Newest gig worker' : 'Ứng viên mới mới'}
+            {languageRedux === 1 ? 'Ứng viên mới' : 'Newest gig worker'}
           </h2>
         </div>
         <div
@@ -87,7 +95,7 @@ const NewestGigWorker = () => {
             onClick={() => window.open('/candidatesAll', '_parent')}
             style={{ cursor: 'pointer' }}
           >
-            Xem tất cả
+            {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
           </p>
           <ArrowrightIcon width={20} height={20} />
         </div>

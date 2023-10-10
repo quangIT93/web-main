@@ -139,18 +139,18 @@ const BreadcrumbsCpn: React.FC = () => {
     setOpen(false);
 
     // Lấy chiều cao của màn hình
-    const windowWidth =
-      window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth;
+    // const windowWidth =
+    //   window.innerWidth ||
+    //   document.documentElement.clientWidth ||
+    //   document.body.clientWidth;
 
-    // console.log('windowWidth=', windowWidth);
+    // // console.log('windowWidth=', windowWidth);
 
-    if (windowWidth > 519) {
-      window.scrollTo(0, 530);
-    } else if (windowWidth <= 519) {
-      window.scrollTo(0, 560);
-    }
+    // if (windowWidth > 519) {
+    //   window.scrollTo(0, 530);
+    // } else if (windowWidth <= 519) {
+    //   window.scrollTo(0, 560);
+    // }
 
     const array = checkedItems
       ?.map((checkedItem: any) => {
@@ -169,44 +169,44 @@ const BreadcrumbsCpn: React.FC = () => {
     // const thersholdId =
     // postNewest?.data?.posts[postNewest.data.posts.length - 1]?.id;
     const thersholdId = postNewestV3.data[postNewestV3.data.length - 1]?.id;
-    try {
-      // const result = await postApi.getPostNewest(
-      //   Number(valueJobChild?.id),
-      //   array?.map((arr: { id: number; name: string }) => arr.id),
-      //   null,
-      //   9,
-      //   0,
-      //   languageRedux === 1 ? 'vi' : 'en',
-      // );
+    // try {
+    //   // const result = await postApi.getPostNewest(
+    //   //   Number(valueJobChild?.id),
+    //   //   array?.map((arr: { id: number; name: string }) => arr.id),
+    //   //   null,
+    //   //   9,
+    //   //   0,
+    //   //   languageRedux === 1 ? 'vi' : 'en',
+    //   // );
 
-      const result2 = await postApi.getPostNewestV3(
-        array?.map((arr: { id: number; name: string }) => arr.id),
-        Number(valueJobChild?.id),
-        null,
-        null,
-        10,
-        thersholdId,
-        languageRedux === 1 ? 'vi' : 'en',
-      );
+    //   const result2 = await postApi.getPostNewestV3(
+    //     array?.map((arr: { id: number; name: string }) => arr.id),
+    //     Number(valueJobChild?.id),
+    //     null,
+    //     null,
+    //     10,
+    //     thersholdId,
+    //     languageRedux === 1 ? 'vi' : 'en',
+    //   );
 
-      // const result = await postApi.getPostNewestV3(
-      //   array.map((arr: { id: number; name: string }) => arr.id),
-      //   Number(valueJobChild?.id),
-      //   null,
-      //   null,
-      //   10,
-      //   null,
-      //   languageRedux === 1 ? 'vi' : 'en',
-      // );
-      if (result2) {
-        // setPostNewest(result);
-        // dispatch(setPostNewestApi(result));
-        dispatch(setPostNewestApiV3(result2));
-        // setOpenBackdrop(false)
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
+    //   // const result = await postApi.getPostNewestV3(
+    //   //   array.map((arr: { id: number; name: string }) => arr.id),
+    //   //   Number(valueJobChild?.id),
+    //   //   null,
+    //   //   null,
+    //   //   10,
+    //   //   null,
+    //   //   languageRedux === 1 ? 'vi' : 'en',
+    //   // );
+    //   if (result2) {
+    //     // setPostNewest(result);
+    //     // dispatch(setPostNewestApi(result));
+    //     // dispatch(setPostNewestApiV3(result2));
+    //     // setOpenBackdrop(false)
+    //   }
+    // } catch (error) {
+    //   console.log('error', error);
+    // }
   };
 
   // handle limit checkbox
@@ -327,12 +327,12 @@ const BreadcrumbsCpn: React.FC = () => {
               ? `Tất cả`
               : `All`
             : arrayChild?.map(
-                (value: { id: number; name: string }, index: number) => (
-                  <div key={index}>
-                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                  </div>
-                ),
-              )}
+              (value: { id: number; name: string }, index: number) => (
+                <div key={index}>
+                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                </div>
+              ),
+            )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -348,12 +348,13 @@ const BreadcrumbsCpn: React.FC = () => {
       className="bread-crumb-container"
       spacing={2}
       sx={{
-        marginTop: '192px',
+        // marginTop: '192px',
         // marginTop: navTouchCatelory ? '170px' : '24px',
         // position: 'relative',
-        maxWidth: '1280px',
+        maxWidth: '1080px',
         position: 'fixed',
-        margin: '192px auto 0 auto',
+        // position: 'relative',
+        // margin: '192px auto 0 auto',
         // sua
         // top: '-60px',
         zIndex: '1',
@@ -363,7 +364,7 @@ const BreadcrumbsCpn: React.FC = () => {
         right: 0,
         borderBottom: '1px solid #e5e5e5',
         '@media (max-width: 767px)': {
-          marginTop: '180px',
+          // marginTop: '180px',
         },
         boxShadow:
           '10px 0px 0px rgb(255, 255, 255), -10px 0px 0px rgb(255, 255, 255)',
@@ -408,7 +409,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                          checkItemsCount >= MAX_CHECKED_ITEMS
+                        checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />

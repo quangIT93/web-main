@@ -4,10 +4,10 @@
   display: flex;
   align-items: center;
   transition: all 400ms;
-  max-width: 1280px !important;
+  max-width: 1080px !important;
   margin: 0 auto;
   padding: 0 !important;
-  box-shadow: 10px 0px 0px rgb(255, 255, 255), -10px -10px 0px rgb(255, 255, 255);
+  box-shadow: 10px 0px 0px rgb(255, 255, 255), -10px 14px 0px rgb(255, 255, 255);
 
   // box-shadow: 0px -5px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1);
   @media screen and (max-width: 1280px) and (min-width: 1221px) {
@@ -19,7 +19,7 @@
   }
 
   @media screen and (max-width: 1200px) {
-    padding: 0 20px !important;
+    padding: 0 24px !important;
   }
 
   .mySwiper {

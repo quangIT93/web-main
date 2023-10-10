@@ -69,6 +69,9 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const { openModalContact, setOpenModalContact, profile } = props;
   const [phone, setPhone] = useState(profile?.phone ? profile?.phone : '');
   const [email, setEmail] = useState(profile?.email ? profile?.email : '');
@@ -76,26 +79,26 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   const [linkIn, setLinkIn] = useState(
     profile?.linkedin ? profile?.linkedin : '',
   );
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
 
   const dispatch = useDispatch();
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   const handleClose = () => setOpenModalContact(false);
   // const dispatch = useDispatch();
@@ -204,7 +207,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.phone_number}
             inputMode="numeric"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -226,7 +229,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Email"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -248,7 +251,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Facebook"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -270,7 +273,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder="Linkedin"
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 

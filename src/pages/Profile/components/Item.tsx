@@ -48,7 +48,9 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const dispatch = useDispatch();
   const [openModalDeleteEducation, setOpenModalDeleteEducation] =
     useState(false);
@@ -58,7 +60,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
     useState(false);
   const [openModalExperienceUpdate, setOpenModalExperienceUpdate] =
     useState(false);
-  const [language, setLanguage] = useState<any>();
+  // const [language, setLanguage] = useState<any>();
 
   const handleDeleteEducation = async (id?: number | null) => {
     setOpenModalDeleteEducation(true);
@@ -75,23 +77,23 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const handleUpdateExperience = (id?: number | null) => {
     setOpenModalExperienceUpdate(true);
   };
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   // console.log('item?.start_date', item?.start_date);
   return (

@@ -98,7 +98,7 @@ const ProfileCv: React.FC = () => {
         );
         dispatch(setProfileV3(resultProfileV3));
       }
-    } catch (error) {}
+    } catch (error) { }
 
     // setSelectedId(id);
   };
@@ -221,13 +221,13 @@ const ProfileCv: React.FC = () => {
                         <p>
                           {languageRedux === 1
                             ? 'Cập nhật cuối: ' +
-                              moment(new Date()).format('HH:mm') +
-                              ', ' +
-                              moment(new Date()).format('DD/MM/YYYY')
+                            moment(new Date()).format('HH:mm') +
+                            ', ' +
+                            moment(new Date()).format('DD/MM/YYYY')
                             : 'Last update: ' +
-                              moment(new Date()).format('HH:mm') +
-                              ', ' +
-                              moment(new Date()).format('DD/MM/YYYY')}
+                            moment(new Date()).format('HH:mm') +
+                            ', ' +
+                            moment(new Date()).format('DD/MM/YYYY')}
                         </p>
                       </div>
                       <div className="cv-item_right__actions">
@@ -304,7 +304,7 @@ const ProfileCv: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

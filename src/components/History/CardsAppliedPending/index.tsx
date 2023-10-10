@@ -32,6 +32,7 @@ interface ICardsAppliedPending {
 
 const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const language = useSelector((state: RootState) => state.dataLanguage.languages);
   // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataApplied, setDataApplied] = useState<any>(null);
@@ -41,25 +42,25 @@ const CardsAppliedPending: React.FC<ICardsAppliedPending> = (props) => {
   const [uploading, setUploading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
 
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {

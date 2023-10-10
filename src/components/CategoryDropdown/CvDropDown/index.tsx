@@ -36,8 +36,8 @@ const CvDropDown: React.FC<ICvDropDown> = (props) => {
               ? 'Tạo mới CV'
               : 'Create a new CV'
             : languageRedux === 1
-            ? 'Danh sách nhân tài mới nhất'
-            : 'Newest talent list'}
+              ? 'Danh sách nhân tài mới nhất'
+              : 'Newest candidate list'}
         </a>
       ),
     },
@@ -50,8 +50,8 @@ const CvDropDown: React.FC<ICvDropDown> = (props) => {
               ? 'Quản lý CV'
               : 'CV management'
             : languageRedux === 1
-            ? 'Tìm kiếm nhân tài'
-            : 'Search for talent'}
+              ? 'Tìm kiếm nhân tài'
+              : 'Search for candidate'}
         </a>
       ),
     },
@@ -68,8 +68,8 @@ const CvDropDown: React.FC<ICvDropDown> = (props) => {
               ? 'Hướng dẫn tạo CV'
               : 'Instructions for creating a CV'
             : languageRedux === 1
-            ? 'Danh sách nhân tài đã lưu'
-            : 'Saved talent list'}
+              ? 'Danh sách nhân tài đã lưu'
+              : 'Saved candidate list'}
         </a>
       ),
     },
@@ -83,8 +83,8 @@ const CvDropDown: React.FC<ICvDropDown> = (props) => {
             ? 'Hồ sơ & CV'
             : 'Resume & CV'
           : languageRedux === 1
-          ? 'Thông tin nhân tài'
-          : 'Talent information'}
+            ? 'Thông tin nhân tài'
+            : 'Candidate information'}
       </h3>
     </Dropdown>
   );

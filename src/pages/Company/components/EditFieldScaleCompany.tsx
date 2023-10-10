@@ -27,31 +27,32 @@ interface IEditPostAddress {
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const language = useSelector((state: RootState) => state.dataLanguage.languages);
   const { setDataCompany, dataCompany, is_profile } = props;
 
   const [dataSizes, setDataSizes] = useState<any>(null);
   const [selectedSize, setSelectedSize] = useState<any>(null);
   const [dataCategories, setDataCategories] = useState<any>(null);
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
   useEffect(() => {
     if (dataSizes && !selectedSize) {
       setSelectedSize(
