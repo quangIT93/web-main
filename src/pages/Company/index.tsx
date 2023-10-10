@@ -117,7 +117,7 @@ const Company: React.FC<ICompany> = (props) => {
   const [haveCompany, setHaveCompany] = useState(false);
 
   const [companyId, setCompanyId] = useState<any>();
-
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const [dataCompany, setDataCompany] = useState<any | null>({
     // id: '',
     name: '',
@@ -178,16 +178,16 @@ const Company: React.FC<ICompany> = (props) => {
   const getCompanyInforByAccount = async () => {
     try {
       setLoading(true);
-      const result = await apiCompany.getCampanyByAccountApi(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result && result?.data?.companyInfomation?.id != null) {
+      // const result = await apiCompany.getCampanyByAccountApi(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+      if (profileV3?.companyInfomation?.id != null) {
         setTimeout(() => {
           setLoading(false);
         }, 1000);
         setHaveCompany(true);
-        setCompanyId(result?.data?.companyInfomation?.id);
-        setDataCompany(result?.data?.companyInfomation);
+        setCompanyId(profileV3?.companyInfomation?.id);
+        setDataCompany(profileV3?.companyInfomation);
       } else {
         setTimeout(() => {
           setLoading(false);
@@ -214,11 +214,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);

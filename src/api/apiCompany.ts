@@ -31,14 +31,14 @@ const apiCompany = {
             }
         )
     },
-    getCampanyByAccountApi: (lang: string) => {
-        const URL = `/v3/profiles/me?lang=${lang}`
-        return axiosClient.get(URL, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            },
-        })
-    },
+    // getCampanyByAccountApi: (lang: string) => {
+    //     const URL = `/v3/profiles/me?lang=${lang}`
+    //     return axiosClient.get(URL, {
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    //         },
+    //     })
+    // },
     getAllRolesCompany: (lang: string) => {
         const URL = `/v3/company-roles?lang=${lang}`
         return axiosClient.get(URL)
