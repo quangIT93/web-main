@@ -217,7 +217,9 @@ const Post: React.FC = () => {
 
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
     React.useState(false);
-
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   // fill data
   const [fillWardId, setFillWardId] = React.useState<any>({
     id: '',
@@ -231,30 +233,29 @@ const Post: React.FC = () => {
   const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
     [],
   );
-  const [notiCreateCompany, setNotiCreateCompany] = useState(false);
-  const [language, setLanguage] = useState<any>();
+  // const [language, setLanguage] = useState<any>();
 
-  const getlanguageApi = async () => {
-    if (!localStorage.getItem('accessToken')) {
-      window.location.replace(`/`);
-      return;
-    }
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   if (!localStorage.getItem('accessToken')) {
+  //     window.location.replace(`/`);
+  //     return;
+  //   }
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   // submit
   const handleSubmit = (

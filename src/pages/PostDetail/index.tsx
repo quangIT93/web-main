@@ -178,6 +178,9 @@ const Detail = () => {
   //   actionCreators,
   //   dispatch
   // )
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -194,7 +197,7 @@ const Detail = () => {
     null,
   );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
   const [textButton, setTextButton] = React.useState<string>(
     language?.post_detail_page?.apply,
   );
@@ -215,23 +218,23 @@ const Detail = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
   const itemsShare = [
     {
       nameShare: language?.post_detail_page?.copy_link,

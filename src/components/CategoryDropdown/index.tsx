@@ -535,7 +535,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'Resume & CV'
                     : languageRedux === 1
                     ? 'Thông tin nhân tài'
-                    : 'Talent information'}
+                    : 'Candidates information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -558,7 +558,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'Create a new CV'
                     : languageRedux === 1
                     ? 'Danh sách nhân tài mới nhất'
-                    : 'Newest talent list'}
+                    : 'Newest candidate list'}
                 </h3>
                 <h3
                   onClick={
@@ -571,7 +571,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'CV management'
                     : languageRedux === 1
                     ? 'Tìm kiếm nhân tài'
-                    : 'Search for talent'}
+                    : 'Search for candidate'}
                 </h3>
                 <h3
                   onClick={
@@ -586,7 +586,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'Instructions for creating a CV'
                     : languageRedux === 1
                     ? 'Danh sách nhân tài đã lưu'
-                    : 'Saved talent list'}
+                    : 'Saved candidate list'}
                 </h3>
               </div>
             </div>

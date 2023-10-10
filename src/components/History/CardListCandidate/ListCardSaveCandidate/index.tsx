@@ -18,7 +18,7 @@ import { LocationHomeIcon, DolaIcon, SaveIconFill } from '#components/Icons';
 import { CandidateHijob } from '#components/Icons/iconCandidate';
 
 import { Space, Tooltip } from 'antd';
-
+import male_null_avatar from '../../../../img/male_null_avatar.png';
 import moment from 'moment';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
@@ -101,15 +101,40 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
         >
           <div className="wrap-img_candidate">
             <img
-              src={item?.profileData?.imageData}
+              src={
+                item?.imageData?.avatar ?
+                  item?.imageData?.avatar :
+                  male_null_avatar
+              }
+              style={{
+                filter: item?.imageData?.avatar ? 'blur(3px)' : 'none'
+              }}
               alt=""
               className="img-candidate"
             />
+            <div className='wrap-name-age'>
+              <div className="wrap-name-age_item">
+                <span className="icon-age_item-candidate">
+                  <PersonIcon />
+                </span>
+                <span>
+                  {moment(new Date(item?.profileData?.birthdayData))
+                    .format('yyyy')
+                    .replace(/\d{2}$/, 'xx')}
+                </span>
+              </div>
+              <div className="wrap-name-age_item">
+                <span className="icon-age_item-candidate">
+                  <GenderIcon />
+                </span>
+                <span>{item?.profileData?.genderData}</span>
+              </div>
+            </div>
           </div>
           <div className="info-candidate">
             <h3>{item?.profileData?.name}</h3>
             <ul>
-              <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+              {/* <li style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div className="item-birthday item-infoUser">
                   <span>
                     <PersonIcon />
@@ -126,21 +151,27 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   </span>
                   <span>{item?.profileData?.genderData}</span>
                 </div>
-              </li>
+              </li> */}
               <li>
-                <span>
+                <span className="icon-info-candidate">
                   <SchoolIcon />
                 </span>
                 {item?.profileData?.profilesEducationsData?.length !== 0
                   ? item?.profileData?.profilesEducationsData?.map(
-                      (value: any) => {
-                        return <span>{value.data}</span>;
-                      },
-                    )
-                  : 'Chưa cập nhật'}
+                    (value: any) => {
+                      return <span className="text-info-candidate">{value.data}</span>;
+                    },
+                  )
+                  : <span className="text-info-candidate">
+                    {
+                      languageRedux === 1 ?
+                        "Thông tin chưa cập nhật" :
+                        "Not updated information"
+                    }
+                  </span>}
               </li>
               <li>
-                <span>
+                <span className="icon-info-candidate">
                   <LocationIcon />
                 </span>
                 <Tooltip
@@ -148,38 +179,50 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   title={
                     item?.profileData?.profilesLocationsData?.length !== 0
                       ? item.profilesLocationsData?.map((loc: any) => {
-                          return `${loc.full_name}, `;
-                        })
+                        return `${loc.full_name}, `;
+                      })
                       : ''
                   }
                 >
                   <span className="text-info-candidate">
                     {item?.profileData?.profilesLocationsData?.length !== 0
                       ? item?.profileData?.profilesLocationsData?.map(
-                          (loc: any) => {
-                            return `${loc.full_name}, `;
-                          },
-                        )
-                      : 'Chưa cập nhật'}
+                        (loc: any) => {
+                          return `${loc.full_name}, `;
+                        },
+                      )
+                      : <span className="text-info-candidate">
+                        {
+                          languageRedux === 1 ?
+                            "Thông tin chưa cập nhật" :
+                            "Not updated information"
+                        }
+                      </span>}
                   </span>
                 </Tooltip>
               </li>
               <li>
-                <span>
+                <span className="icon-info-candidate">
                   <CateIcon />
                 </span>
                 <span className="text-info-candidate">
                   {item?.profileData?.childCategoriesData?.length !== 0
                     ? item?.profileData?.childCategoriesData?.map(
-                        (value: any) => {
-                          return `${value.fullName}, `;
-                        },
-                      )
-                    : 'Chưa cập nhật'}
+                      (value: any) => {
+                        return `${value.fullName}, `;
+                      },
+                    )
+                    : <span className="text-info-candidate">
+                      {
+                        languageRedux === 1 ?
+                          "Thông tin chưa cập nhật" :
+                          "Not updated information"
+                      }
+                    </span>}
                 </span>
               </li>
               <li>
-                <span>
+                <span className="icon-info-candidate">
                   <CalendarIcon />
                 </span>
                 <span>

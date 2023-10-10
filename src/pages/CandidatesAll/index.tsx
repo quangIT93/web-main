@@ -240,14 +240,14 @@ const CandidatesAll = () => {
           setHasMore(true);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   React.useEffect(() => {
     getAllCandidates();
   }, [languageRedux]);
 
   React.useEffect(() => {
-    if (profileV3.length !== 0 && profileV3.typeRoleData !== 1) {
+    if (profileV3.length === 0 && profileV3.typeRoleData !== 1) {
       window.open('/', '_parent');
     }
   }, [profileV3]);
@@ -347,7 +347,7 @@ const CandidatesAll = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   return (
     <div className="container-candidate">
@@ -359,7 +359,7 @@ const CandidatesAll = () => {
           <h3>Looking for candidates</h3>
           <Button
             type="primary"
-            onClick={() => window.open(`/history`, '_parent')}
+            onClick={() => window.open(`/history?candidate=4`, '_parent')}
           >
             {languageRedux === 1
               ? 'Danh sách ứng viên đã lưu'

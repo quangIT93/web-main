@@ -128,7 +128,7 @@ const CardListCandidate: React.FC = () => {
           {
             languageRedux === 1
               ? 'Danh sách ứng viên đã lưu'
-              : 'Saved talent list'
+              : 'Saved candidate list'
           }
         </Typography>
       </Box>

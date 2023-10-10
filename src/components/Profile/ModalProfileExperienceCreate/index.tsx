@@ -86,6 +86,9 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const {
     openModalExperienceCreate,
     setOpenModalExperienceCreate,
@@ -110,25 +113,25 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
     endDate: new Date(2023, 4, 30, 0, 0).getTime(),
     extraInformation: '',
   });
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
   const dispatch = useDispatch();
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   // console.log('endDate', endDate)
 
@@ -323,7 +326,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.professional_titles}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -345,7 +348,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.company_organization}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 

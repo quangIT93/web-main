@@ -19,6 +19,9 @@ import { useSelector } from 'react-redux';
 // import redux
 import { RootState } from 'store';
 import { Link } from 'react-router-dom';
+
+import male_null_avatar from '../../../img/male_null_avatar.png';
+import ModalLogin from '#components/Home/ModalLogin';
 interface ICadidate {
   item: any;
 }
@@ -26,8 +29,16 @@ interface ICadidate {
 const ItemCadidate: React.FC<ICadidate> = (props) => {
   const { item } = props;
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const [openModalLogin, setOpenModalLogin] = React.useState(false);
 
   const handleClickItemCandidate = async (accountId: any) => {
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
+      return;
+    }
     try {
       const result = await candidateSearch.postCountShowCandidate(
         item.accountId,
@@ -45,21 +56,50 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
   };
 
   return (
-    <div
-      // to="/sdasdasdasdasd"
-      className="item-candidate"
-      onClick={() => handleClickItemCandidate(item.accountId)}
-    >
-      <div className="wrap-img_candidate">
-        <img src={item?.imageData?.avatar} alt="" className="img-candidate" />
-      </div>
-      <div className="info-candidate">
-        <div className="info-candidate_item">
-          <p>{item.name}</p>
-          {/* <CandidateHijob /> */}
+    <>
+      <div
+        className="item-candidate"
+        onClick={() => handleClickItemCandidate(item.accountId)}
+      >
+        <div className="wrap-img_candidate">
+          <img
+            src={
+              item?.imageData?.avatar
+                ? item?.imageData?.avatar
+                : male_null_avatar
+            }
+            style={{
+              filter: item?.imageData?.avatar ? 'blur(3px)' : 'none',
+            }}
+            alt=""
+            className="img-candidate"
+          />
+          <div className="wrap-name-age">
+            <div className="wrap-name-age_item">
+              <span className="icon-age_item-candidate">
+                <PersonIcon />
+              </span>
+              <span>
+                {moment(new Date(item?.birthdayData))
+                  .format('yyyy')
+                  .replace(/\d{2}$/, 'xx')}
+              </span>
+            </div>
+            <div className="wrap-name-age_item">
+              <span className="icon-age_item-candidate">
+                <GenderIcon />
+              </span>
+              <span>{item.genderData}</span>
+            </div>
+          </div>
         </div>
-        <ul>
-          <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className="info-candidate">
+          <div className="info-candidate_item">
+            <p>{item.name}</p>
+            {/* <CandidateHijob /> */}
+          </div>
+          <ul>
+            {/* <li style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div className="item-birthday item-infoUser">
               <span>
                 <PersonIcon />
@@ -76,59 +116,86 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
               </span>
               <span>{item.genderData}</span>
             </div>
-          </li>
-          <li>
-            <span>
-              <SchoolIcon />
-            </span>
-            {item.profilesEducationsData.length !== 0
-              ? item.profilesEducationsData.map((value: any, index: number) => {
-                  return <span key={index}>{value.data}</span>;
+          </li> */}
+            <li>
+              <span className="icon-info-candidate">
+                <SchoolIcon />
+              </span>
+              {item.profilesEducationsData.length !== 0 ? (
+                item.profilesEducationsData.map((value: any, index: number) => {
+                  return (
+                    <span className="text-info-candidate" key={index}>
+                      {value.data}
+                    </span>
+                  );
                 })
-              : 'Chưa cập nhật'}
-          </li>
-          <li>
-            <span>
-              <LocationIcon />
-            </span>
-            <Tooltip
-              placement="top"
-              title={item.profilesLocationsData.map((loc: any) => {
-                return `${loc.fullName}, `;
-              })}
-            >
-              <span className="text-info-candidate">
-                {item.profilesLocationsData.length !== 0
-                  ? item.profilesLocationsData.map((loc: any) => {
+              ) : (
+                <span className="text-info-candidate">
+                  {languageRedux === 1
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'}
+                </span>
+              )}
+            </li>
+            <li>
+              <span className="icon-info-candidate">
+                <LocationIcon />
+              </span>
+              <Tooltip
+                placement="top"
+                title={item.profilesLocationsData.map((loc: any) => {
+                  return `${loc.fullName}, `;
+                })}
+              >
+                <span className="text-info-candidate">
+                  {item.profilesLocationsData.length !== 0 ? (
+                    item.profilesLocationsData.map((loc: any) => {
                       return `${loc.fullName}, `;
                     })
-                  : 'Chưa cập nhật'}
+                  ) : (
+                    <span className="text-info-candidate">
+                      {languageRedux === 1
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
+                    </span>
+                  )}
+                </span>
+              </Tooltip>
+            </li>
+            <li>
+              <span className="icon-info-candidate">
+                <CateIcon />
               </span>
-            </Tooltip>
-          </li>
-          <li>
-            <span>
-              <CateIcon />
-            </span>
-            <span className="text-info-candidate">
-              {item.categoriesData.length !== 0
-                ? item.categoriesData.map((value: any) => {
+              <span className="text-info-candidate">
+                {item.categoriesData.length !== 0 ? (
+                  item.categoriesData.map((value: any) => {
                     return `${value.fullName}, `;
                   })
-                : 'Chưa cập nhật'}
-            </span>
-          </li>
-          <li>
-            <span>
-              <CalendarIcon />
-            </span>
-            <span>
-              {moment(new Date(item?.updatedAt)).format('DD/MM/yyyy')}
-            </span>
-          </li>
-        </ul>
+                ) : (
+                  <span className="text-info-candidate">
+                    {languageRedux === 1
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'}
+                  </span>
+                )}
+              </span>
+            </li>
+            <li>
+              <span className="icon-info-candidate">
+                <CalendarIcon />
+              </span>
+              <span className="text-info-candidate">
+                {moment(new Date(item?.updatedAt)).format('DD/MM/yyyy')}
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+      <ModalLogin
+        openModalLogin={openModalLogin}
+        setOpenModalLogin={setOpenModalLogin}
+      />
+    </>
   );
 };
 

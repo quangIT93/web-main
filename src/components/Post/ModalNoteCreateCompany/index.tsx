@@ -45,25 +45,28 @@ const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [language, setLanguage] = React.useState<any>();
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
 
   const handleCreateCompany = () => {
     setOpenModalNoteCreateCompany(false);

@@ -75,6 +75,11 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
   const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const [infor, setInfor] = React.useState<any>();
+
+  React.useEffect(() => {
+    setInfor(props.item)
+  }, [props.item])
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
@@ -83,6 +88,9 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
   const handleImageError = () => {
     setError(true);
   };
+
+  console.log(infor);
+
 
   return (
     <>
@@ -102,18 +110,18 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
           overflow: 'unset',
         }}
         onClick={(e) => {
-          handleClickItem(e, props.item?.id);
+          handleClickItem(e, infor?.id);
         }}
       >
         <ul className="div-card-post-left">
           <ImageListItem
-            key={props.item?.image}
+            key={infor?.image}
             sx={{ flex: 1, display: 'flex', justifyContent: 'space-between' }}
           >
             <img
-              src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={props.item?.title}
+              src={`${infor?.image}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${infor?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt={infor?.title}
               //loading="lazy"
               style={{
                 width: '120px',
@@ -124,7 +132,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
             <div className="div-card-post-left_info">
               {/* {' '} */}
               <div className="div-card-post-left_info__title">
-                <Tooltip placement="top" title={props.item?.title}>
+                <Tooltip placement="top" title={infor?.title}>
                   <Typography
                     gutterBottom
                     variant="h6"
@@ -141,7 +149,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                       color: '#575757',
                     }}
                   >
-                    {props?.item?.title}
+                    {infor?.title}
                   </Typography>
                 </Tooltip>
                 <div
@@ -152,20 +160,20 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                         setOpenModalLogin(true);
                         return;
                       }
-                      if (props.item?.bookmarked) {
+                      if (infor?.bookmarked) {
                         const result = await bookMarkApi.deleteBookMark(
-                          props.item?.id,
+                          infor?.id,
                         );
-                        props.item.bookmarked = false;
+                        infor.bookmarked = false;
                         if (result) {
                           setCheckBookMark(!checkBookMark);
                           dispatch<any>(setAlertCancleSave(true));
                         }
                       } else {
                         const result = await bookMarkApi.createBookMark(
-                          props.item?.id,
+                          infor?.id,
                         );
-                        props.item.bookmarked = true;
+                        infor.bookmarked = true;
                         if (result) {
                           dispatch<any>(setAlertSave(true));
                           setCheckBookMark(!checkBookMark);
@@ -176,7 +184,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                     }
                   }}
                 >
-                  {props.item?.bookmarked ? (
+                  {infor?.bookmarked ? (
                     <SaveIconFill width={24} height={24} />
                   ) : (
                     <SaveIconOutline width={24} height={24} />
@@ -184,7 +192,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                 </div>
               </div>
               <div className="div-card-post-left_info__name">
-                <Tooltip placement="top" title={props.item?.companyName}>
+                <Tooltip placement="top" title={infor?.companyName}>
                   <Typography
                     gutterBottom
                     variant="h6"
@@ -200,7 +208,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                       color: '#575757',
                     }}
                   >
-                    {props?.item?.companyName}
+                    {infor?.companyName}
                   </Typography>
                 </Tooltip>
                 <div>
@@ -208,8 +216,8 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                     <img
                       className="img-resource-company"
                       src={
-                        props.item?.companyResourceData?.logo
-                          ? props.item?.companyResourceData?.logo
+                        infor?.companyResourceData?.logo
+                          ? infor?.companyResourceData?.logo
                           : ''
                       }
                       alt="ảnh"
@@ -238,8 +246,8 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                     marginLeft: '4px',
                   }}
                 >
-                  {`${props.item?.location?.district?.fullName}, 
-                                    ${props.item?.location?.province?.fullName}`}
+                  {`${infor?.location?.district?.fullName}, 
+                                    ${infor?.location?.province?.fullName}`}
                 </Typography>
               </div>
               <div
@@ -262,13 +270,13 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                     marginLeft: '4px',
                   }}
                 >
-                  {new Intl.NumberFormat('en-US').format(props.item?.salaryMin)}{' '}
-                  {props?.item?.moneyType} -{' '}
+                  {new Intl.NumberFormat('en-US').format(infor?.salaryMin)}{' '}
+                  {infor?.moneyType} -{' '}
                   {new Intl.NumberFormat('en-US').format(
-                    props.item?.salaryMax,
+                    infor?.salaryMax,
                   ) +
-                    ` ${props?.item?.moneyType}` +
-                    `/${props.item?.salaryType?.name}`}
+                    ` ${infor?.moneyType}` +
+                    `/${infor?.salaryType?.name}`}
                 </Typography>
               </div>
               <div className="div-card-post-left_info__jobtype"
@@ -284,10 +292,10 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                     fontWeight: '400',
                   }}
                 >
-                  {props.item?.createdAtText}
+                  {infor?.createdAtText}
                 </p>
                 <p style={{ fontSize: 13, color: '#0d99ff' }}>
-                  {props.item?.jobType?.name}
+                  {infor?.jobType?.name}
                 </p>
               </div>
             </div>
@@ -312,20 +320,20 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
               onClick={async (e) => {
                 try {
                   e.stopPropagation();
-                  if (props.item?.bookmarked) {
+                  if (infor?.bookmarked) {
                     const result = await bookMarkApi.deleteBookMark(
-                      props.item?.id,
+                      infor?.id,
                     );
-                    props.item.bookmarked = false;
+                    infor.bookmarked = false;
                     if (result) {
                       setCheckBookMark(!checkBookMark);
                       dispatch<any>(setAlertCancleSave(true));
                     }
                   } else {
                     const result = await bookMarkApi.createBookMark(
-                      props.item?.id,
+                      infor?.id,
                     );
-                    props.item.bookmarked = true;
+                    infor.bookmarked = true;
                     if (result) {
                       dispatch<any>(setAlertSave(true));
                       setCheckBookMark(!checkBookMark);
@@ -336,7 +344,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                 }
               }}
             >
-              {props.item?.bookmarked ? (
+              {infor?.bookmarked ? (
                 <SaveIconFill width={24} height={24} />
               ) : (
                 <SaveIconOutline width={24} height={24} />
@@ -347,8 +355,8 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                 <img
                   className="img-resource-company"
                   src={
-                    props.item?.companyResourceData?.logo
-                      ? props.item?.companyResourceData?.logo
+                    infor?.companyResourceData?.logo
+                      ? infor?.companyResourceData?.logo
                       : ''
                   }
                   alt="ảnh"
@@ -358,7 +366,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
             </div>
           </div>
           <p style={{ fontSize: 13, color: '#0d99ff' }}>
-            {props.item?.jobType?.name}
+            {infor?.jobType?.name}
           </p>
         </Space> */}
       </Card>

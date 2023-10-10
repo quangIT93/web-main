@@ -156,6 +156,9 @@ const NewJobs: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [page, setPage] = React.useState(0);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [searchData, setSearchData] = React.useState<any>();
@@ -219,26 +222,26 @@ const NewJobs: React.FC = () => {
   const [categoriesId, setCategoriesId] = React.useState<string[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
   const analytics: any = getAnalytics();
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
 
   const [hasMore, setHasMore] = React.useState(true);
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics

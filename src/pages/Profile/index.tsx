@@ -144,7 +144,9 @@ const Profile: React.FC = () => {
   // const profile = useSelector((state: RootState) => state.profileUser);
   const profileUser = useSelector((state: RootState) => state.profile.profile);
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
-
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [openModelPersonalInfo, setOpenModalPersonalInfo] = useState(false);
   const [openModalContact, setOpenModalContact] = useState(false);
   const [openModalCareerObjective, setOpenModalCareerObjective] =
@@ -166,7 +168,7 @@ const Profile: React.FC = () => {
   const [open, setOpen] = useState(false);
   // const [checkRemove, setCheckRemove] = useState(2);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [language, setLanguage] = useState<any>();
+  // const [language, setLanguage] = useState<any>();
   const [cvHijob, setCvHijob] = useState<any[]>([1, 2]);
   const [listCv, setListCv] = useState<any[]>([
     {
@@ -248,23 +250,23 @@ const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   // console.log("language", language);
 
@@ -388,7 +390,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv

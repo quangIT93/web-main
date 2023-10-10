@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 // import Card from '@mui/material/Card';
 
 // import Modal from '@mui/material/Modal';
@@ -96,6 +96,13 @@ import postApi from 'api/postApi';
 import JobCardMoreNewJob from './JobCardMoreNewJob';
 import nearByApi from 'api/apiNearBy';
 import JobCardMoreJob from './JobCardMoreJob';
+import { CategoryCarousel } from '#components/index';
+import { Breadcrumbs } from '#components/index';
+import { HomeValueContext } from 'context/HomeValueContextProvider';
+
+interface UserSelected {
+  userSelectedId: any;
+}
 
 const MoreJobsPage: React.FC = () => {
   const languageRedux = useSelector(
@@ -103,7 +110,13 @@ const MoreJobsPage: React.FC = () => {
   );
   const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const [moreJob, setMoreJob] = React.useState<any>([]);
-
+  const {
+    // setChildCateloriesArray,
+    childCateloriesArray,
+  }: {
+    // setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
+    childCateloriesArray: number[];
+  } = useContext(HomeValueContext);
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [typeJob, setTypeJob] = React.useState<any>(
@@ -120,6 +133,7 @@ const MoreJobsPage: React.FC = () => {
   const [idFilterProvinces, setIdFilterProvinces] = React.useState('');
 
   const [hasMore, setHasMore] = React.useState(true);
+  const [userSelectedId, setUserSelectedId] = React.useState<any>();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -157,14 +171,64 @@ const MoreJobsPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
+  // Lưu vị trí cuộn trước đó
+  let lastScrollTop = 0;
+
+  var prevHeight = 300;
+  const handleScroll = () => {
+    const tabs = document.querySelector('.tabs') as HTMLElement;
+
+    const breadCrumb = document.querySelector(
+      '.bread-crumb-container',
+    ) as HTMLElement;
+    var currentHeight = window.scrollY;
+    // console.log('prevHeight=', prevHeight);
+    // console.log('currentHeight=', currentHeight);
+
+    // Lấy vị trí cuộn hiện tại
+
+    if (
+      currentHeight >= prevHeight &&
+      currentHeight > 100 &&
+      tabs !== null &&
+      breadCrumb !== null
+    ) {
+      tabs.style.top = '-115px';
+      breadCrumb.style.marginTop = '-203px';
+      // setTimeout(() => {
+      //   currentHeight = 0;
+      //   tabs.style.top = '70px';
+      //   breadCrumb.style.marginTop = '192px';
+      // }, 500);
+    } else if (currentHeight === 0) {
+      tabs.style.top = '115px';
+      breadCrumb.style.marginTop = '0';
+    } else {
+      if (tabs !== null && breadCrumb !== null) {
+        tabs.style.top = '115px';
+        breadCrumb.style.marginTop = '0';
+      }
+    }
+    prevHeight = currentHeight;
+  };
+
+  window.addEventListener('scroll', handleScroll);
+
   const getMoreJob = async () => {
     try {
+      setLoading(true);
+      let userSelected = JSON.parse(
+        getCookie('userSelected') || '{}',
+      ) as UserSelected;
       setOpenBackdrop(true);
       const result =
         typeJob === 'new'
           ? await postApi.getPostNewestV3(
-              null,
-              null,
+              childCateloriesArray,
+              // userSelectedId,
+              userSelected.userSelectedId,
+              // null,
+              // null,
               // profile && profile?.profileLocations?.length > 0 &&
               // profile?.profileLocations?.map((item: any) => {
               //     return item.id
@@ -196,23 +260,25 @@ const MoreJobsPage: React.FC = () => {
             );
 
       setHasMore(true);
-
-      if (result && result.data.length < 20) {
-        setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
-        setHasMore(false);
-        setOpenBackdrop(false);
-        return;
-      } else if (
-        result.data &&
-        (result.data.length !== 0 || result.data.posts.length !== 0)
-      ) {
-        setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
-        setOpenBackdrop(false);
-        return;
-      } else {
-        setMoreJob([]);
-        setHasMore(false);
-        setOpenBackdrop(false);
+      if (result.status === 200) {
+        setLoading(false);
+        if (result.data.length < 20) {
+          setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
+          setHasMore(false);
+          setOpenBackdrop(false);
+          return;
+        } else if (
+          result.data &&
+          (result.data.length !== 0 || result.data.posts.length !== 0)
+        ) {
+          setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
+          setOpenBackdrop(false);
+          return;
+        } else {
+          setMoreJob([]);
+          setHasMore(false);
+          setOpenBackdrop(false);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -225,12 +291,18 @@ const MoreJobsPage: React.FC = () => {
 
   const fetchMoreData = async () => {
     try {
+      let userSelected = JSON.parse(
+        getCookie('userSelected') || '{}',
+      ) as UserSelected;
+
       const thersholdId = moreJob[moreJob.length - 1]?.id;
       const result =
         typeJob === 'new'
           ? await postApi.getPostNewestV3(
-              null,
-              null,
+              childCateloriesArray,
+              userSelected.userSelectedId,
+              // null,
+              // null,
               // profile && profile?.profileLocations?.length > 0 &&
               // profile?.profileLocations?.map((item: any) => {
               //     return item.id
@@ -285,17 +357,30 @@ const MoreJobsPage: React.FC = () => {
   };
 
   React.useEffect(() => {
+    let userSelected = JSON.parse(
+      getCookie('userSelected') || '{}',
+    ) as UserSelected;
+    setUserSelectedId(userSelected.userSelectedId);
     getMoreJob();
-    setLoading(true);
-    setTimeout(() => {
-      if (moreJob.length !== 0) {
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    }, 1000);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   if (moreJob.length !== 0) {
+    //     setLoading(false);
+    //   } else {
+    //     setLoading(false);
+    //   }
+    // }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, idFilterProvinces, profile, typeJob]);
+  }, [
+    languageRedux,
+    idFilterProvinces,
+    profile,
+    typeJob,
+    childCateloriesArray,
+    // JSON.parse(
+    //   getCookie('userSelected') || '{}',
+    // )?.userSelectedId
+  ]);
 
   const [provincesData, setProvincesData] = React.useState<
     [
@@ -360,7 +445,11 @@ const MoreJobsPage: React.FC = () => {
       <Navbar />
       <CategoryDropdown />
 
-      <div className="hot-job-page-container">
+      <div className="more-job-page-container">
+        <div style={{ display: typeJob === 'new' ? 'block' : 'none' }}>
+          <CategoryCarousel />
+          <Breadcrumbs />
+        </div>
         {
           // automatic && (
           <Box sx={{ flexGrow: 1 }} ref={listRef}>
@@ -375,7 +464,10 @@ const MoreJobsPage: React.FC = () => {
                 padding: '8px 0',
               }}
             >
-              <div className="hot-job-title-container">
+              <div
+                className="more-job-title-container"
+                id="more-job-title-container"
+              >
                 <h3>
                   {typeJob === 'new'
                     ? language?.newest_jobs
@@ -445,7 +537,7 @@ const MoreJobsPage: React.FC = () => {
                 </InfiniteScroll>
               </>
             ) : (
-              <NoDataComponent />
+              <NoDataComponent loading={openBackdrop} />
             )}
             {/* <Backdrop
                             sx={{

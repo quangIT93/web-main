@@ -4,27 +4,30 @@ import { Button } from 'antd';
 import { RootState } from '../../../store/reducer';
 import { useSelector } from 'react-redux';
 const RejectedApplication: React.FC = () => {
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
   return (
     <>
       <Button

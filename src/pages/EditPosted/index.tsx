@@ -122,7 +122,9 @@ const EditPosted = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [dataPostAccount, SetDataPostAccount] = React.useState<any>([]);
 
   const [openModalEditPost, setOpenModalEditPost] = React.useState(false);
@@ -135,25 +137,25 @@ const EditPosted = () => {
 
   const analytics: any = getAnalytics();
 
-  const [language, setLanguage] = useState<any>();
+  // const [language, setLanguage] = useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics

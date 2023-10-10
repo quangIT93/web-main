@@ -84,11 +84,14 @@ const TemplatesCv: React.FC = () => {
   };
 
   const handleSaveCv = () => {
-    setCookie('firstCv', '1', 365);
+    // setCookie('firstCv', '1', 365);
+    localStorage.setItem('firstCv', '1');
     setOpenModalChooseCv(true);
   };
 
   const handleClickSaveCv = async () => {
+    console.log('1111111111111111');
+
     const selectedTemplate = templatesCv.find(
       (template) => template.id === Number(localStorage.getItem('cv-id')) && 1,
     );
@@ -116,6 +119,7 @@ const TemplatesCv: React.FC = () => {
             setOpenModalSuccessDownCv({ open: true, id: result.data.id });
             // setOpenModalChooseCv(true);
             // console.log('lưu cv thành công');
+            handleSaveCv();
           }
         }
       }

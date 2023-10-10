@@ -91,13 +91,14 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.addressText
       ? {
-          province_id: Number(profile?.addressText?.id),
-          province_fullName: profile?.addressText.fullName,
-        }
+        province_id: Number(profile?.addressText?.id),
+        province_fullName: profile?.addressText.fullName,
+      }
       : null,
   );
 
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const language = useSelector((state: RootState) => state.dataLanguage.languages);
 
   const [name, setName] = useState(profile?.name);
   const [jobTypeName, setJobTypeName] = useState(profileV3?.jobTypeName);
@@ -105,25 +106,25 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   const dispatch = useDispatch();
   // const dataProfile = useSelector((state: RootState) => state.profile.profile);
@@ -299,7 +300,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -347,7 +348,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       helperText: 'DD/MM/YYYY',
                     },
                   }}
-                  // format="DD/MM/YYYY"
+                // format="DD/MM/YYYY"
                 />
               </div>
             </LocalizationProvider>
@@ -367,9 +368,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={
                 selectedProvince && dataProvinces?.length > 0
                   ? dataProvinces?.find(
-                      (province: any) =>
-                        province.province_id === selectedProvince.province_id,
-                    )
+                    (province: any) =>
+                      province.province_id === selectedProvince.province_id,
+                  )
                   : null
               }
               defaultValue={selectedProvince}
@@ -405,7 +406,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               placeholder={
                 languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -429,12 +430,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.introduce_yourself_to_the_recruiter}
               error={!introduction} // Đánh dấu lỗi
-              // onKeyDown={(event) => {
-              //   // if (event.key === 'Enter') {
-              //   //   event.preventDefault();
-              //   // }
-              //   console.log(event.target);
-              // }}
+            // onKeyDown={(event) => {
+            //   // if (event.key === 'Enter') {
+            //   //   event.preventDefault();
+            //   // }
+            //   console.log(event.target);
+            // }}
             />
           </Box>
         </form>

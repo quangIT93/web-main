@@ -38,6 +38,9 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   // const { activeChild } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [dataBookmarks, setDataBookmarks] = useState<any>(null);
@@ -50,25 +53,25 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [isVisible, setIsVisible] = useState(true);
   // const [clicked, setClicked] = useState(false);
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
   //get post to check if length <= 10
   const getAllPostToCheck = async () => {
     const result = await historyBookmark.getAllBookmark(
@@ -234,7 +237,7 @@ const CardsSavedJob: React.FC<ICardsApplied> = (props) => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={loading}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
