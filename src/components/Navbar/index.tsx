@@ -349,11 +349,11 @@ const Navbar: React.FC = () => {
 
   const getCompanyInforByAccount = async () => {
     try {
-      const result = await apiCompany.getCampanyByAccountApi(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result && result?.data?.companyInfomation?.id != null) {
-        setCompanyName(result?.data?.companyInfomation?.name);
+      // const result = await apiCompany.getCampanyByAccountApi(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+      if (profileV3?.companyInfomation?.id != null) {
+        setCompanyName(profileV3?.companyInfomation?.name);
       }
     } catch (error) {
       console.log(error);
@@ -378,32 +378,35 @@ const Navbar: React.FC = () => {
   // }, []);
 
   // fecth data profile with accesstoken
-  const fecthDataProfileUser = async () => {
-    try {
-      await dispatch(getProfile() as any);
 
-      const result = await profileApi.getProfile(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        dispatch(getProfile() as any);
-      }
-    } catch (error) {
-      // setOpenBackdrop(false);
-      // error authentication
-      // setOpenBackdrop(true)
-      // if (!localStorage.getItem('accessToken')) {
-      //   setOpenBackdrop(false)
-      //   return
-      // }
-      // const result = await profileApi.getProfile()
-      // if (result) {
-      //   setProfileUser(result.data)
-      //   setOpenBackdrop(false)
-      // }
-      // await dispatch(getProfile() as any)
-    }
-  };
+  // log
+
+  // const fecthDataProfileUser = async () => {
+  //   try {
+  //     await dispatch(getProfile() as any);
+
+  //     const result = await profileApi.getProfile(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       dispatch(getProfile() as any);
+  //     }
+  //   } catch (error) {
+  //     // setOpenBackdrop(false);
+  //     // error authentication
+  //     // setOpenBackdrop(true)
+  //     // if (!localStorage.getItem('accessToken')) {
+  //     //   setOpenBackdrop(false)
+  //     //   return
+  //     // }
+  //     // const result = await profileApi.getProfile()
+  //     // if (result) {
+  //     //   setProfileUser(result.data)
+  //     //   setOpenBackdrop(false)
+  //     // }
+  //     // await dispatch(getProfile() as any)
+  //   }
+  // };
 
   const getDataProfileV3 = async () => {
     try {
@@ -419,13 +422,7 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    getDataProfileV3();
-    // dispatch(getProfile() as any)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    fecthDataProfileUser();
+    // fecthDataProfileUser();
     getDataProfileV3();
     // dispatch(getProfile() as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -732,16 +729,16 @@ const Navbar: React.FC = () => {
       } else {
         setSpinning(true);
       }
-      var result = null;
+      var ResuiltGetProfileV3 = null;
       if (localStorage.getItem('refreshToken')) {
         // result = await profileApi.getProfile(languageRedux === 1 ? 'vi' : 'en');
-        const ResuultGetProfileV3 = await profileApi.getProfileV3;
+        ResuiltGetProfileV3 = await profileApi.getProfileV3;
       } else {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('accountId');
       }
-      if (true) {
+      if (ResuiltGetProfileV3) {
         // dispatch(getProfile() as any);
         setSpinning(false);
         setOpenInfoUser(!openInfoUser);

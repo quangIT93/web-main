@@ -357,13 +357,16 @@ const Profile: React.FC = () => {
     fileList,
   };
 
+  console.log('profileV3', profileV3);
+
   const getCompanyInforByAccount = async () => {
     try {
-      const result = await apiCompany.getCampanyByAccountApi(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result && result?.data?.companyInfomation?.id != null) {
-        setCompanyName(result?.data?.companyInfomation?.name);
+      // const result = await apiCompany.getCampanyByAccountApi(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+
+      if (profileV3?.companyInfomation?.id !== null) {
+        setCompanyName(profileV3?.companyInfomation?.name);
       }
     } catch (error) {
       console.log(error);
@@ -390,7 +393,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // cancel delete cv
