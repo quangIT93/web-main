@@ -156,19 +156,21 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                 <span className="icon-info-candidate">
                   <SchoolIcon />
                 </span>
-                {item?.profileData?.profilesEducationsData?.length !== 0
-                  ? item?.profileData?.profilesEducationsData?.map(
-                    (value: any) => {
-                      return <span className="text-info-candidate">{value.data}</span>;
-                    },
-                  )
-                  : <span className="text-info-candidate">
-                    {
-                      languageRedux === 1 ?
-                        "Thông tin chưa cập nhật" :
-                        "Not updated information"
-                    }
-                  </span>}
+                <span className="text-info-candidate">
+                  {item?.profileData?.profilesEducationsData?.length !== 0
+                    ? item?.profileData?.profilesEducationsData?.map(
+                      (value: any) => {
+                        return `${value.data}, `
+                      },
+                    )
+                    :
+
+                    languageRedux === 1 ?
+                      "Thông tin chưa cập nhật" :
+                      "Not updated information"
+
+                  }
+                </span>
               </li>
               <li>
                 <span className="icon-info-candidate">
@@ -191,13 +193,11 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                           return `${loc.full_name}, `;
                         },
                       )
-                      : <span className="text-info-candidate">
-                        {
-                          languageRedux === 1 ?
-                            "Thông tin chưa cập nhật" :
-                            "Not updated information"
-                        }
-                      </span>}
+                      :
+                      languageRedux === 1 ?
+                        "Thông tin chưa cập nhật" :
+                        "Not updated information"
+                    }
                   </span>
                 </Tooltip>
               </li>
@@ -212,20 +212,18 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                         return `${value.fullName}, `;
                       },
                     )
-                    : <span className="text-info-candidate">
-                      {
-                        languageRedux === 1 ?
-                          "Thông tin chưa cập nhật" :
-                          "Not updated information"
-                      }
-                    </span>}
+                    :
+                    languageRedux === 1 ?
+                      "Thông tin chưa cập nhật" :
+                      "Not updated information"
+                  }
                 </span>
               </li>
               <li>
                 <span className="icon-info-candidate">
                   <CalendarIcon />
                 </span>
-                <span>
+                <span className="text-info-candidate">
                   {moment(new Date(item?.profileData?.updatedAt)).format(
                     'DD/MM/yyyy',
                   )}

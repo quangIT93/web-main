@@ -121,21 +121,20 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
               <span className="icon-info-candidate">
                 <SchoolIcon />
               </span>
-              {item.profilesEducationsData.length !== 0 ? (
-                item.profilesEducationsData.map((value: any, index: number) => {
-                  return (
-                    <span className="text-info-candidate" key={index}>
-                      {value.data}
-                    </span>
-                  );
-                })
-              ) : (
-                <span className="text-info-candidate">
-                  {languageRedux === 1
+              <span className="text-info-candidate">
+                {item.profilesEducationsData.length !== 0 ? (
+                  item.profilesEducationsData.map((value: any, index: number) => {
+                    return (
+                      `${value.data}, `
+                    );
+                  })
+
+                ) : (
+                  languageRedux === 1
                     ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'}
-                </span>
-              )}
+                    : 'Not updated information'
+                )}
+              </span>
             </li>
             <li>
               <span className="icon-info-candidate">
@@ -153,11 +152,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                       return `${loc.fullName}, `;
                     })
                   ) : (
-                    <span className="text-info-candidate">
-                      {languageRedux === 1
-                        ? 'Thông tin chưa cập nhật'
-                        : 'Not updated information'}
-                    </span>
+                    languageRedux === 1
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'
                   )}
                 </span>
               </Tooltip>
@@ -172,11 +169,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                     return `${value.fullName}, `;
                   })
                 ) : (
-                  <span className="text-info-candidate">
-                    {languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'}
-                  </span>
+                  languageRedux === 1
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'
                 )}
               </span>
             </li>

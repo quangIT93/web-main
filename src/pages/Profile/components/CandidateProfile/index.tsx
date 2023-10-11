@@ -178,7 +178,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           });
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // confirm delete cv
@@ -196,7 +196,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -300,10 +300,10 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           <Space wrap className="item-info-work">
             {profile?.profileCategories?.length !== 0
               ? profile?.profileCategories?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.fullName}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item.fullName}
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -334,10 +334,10 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           <Space wrap className="item-info-work">
             {profile?.profileLocations?.length !== 0
               ? profile?.profileLocations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.fullName}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item?.fullName}
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -373,14 +373,14 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
           <Space wrap className="item-info-work">
             <Button className="btn" type="text">
               {profileV3.jobTypeId === 1
-                ? 'Toàn thời gian'
+                ? languageRedux === 1 ? 'Toàn thời gian' : 'Fulltime'
                 : profileV3.jobTypeId === 2
-                ? 'Bán thời gian'
-                : profileV3.jobTypeId === 4
-                ? 'Nghề tự do'
-                : profileV3.jobTypeId === 7
-                ? 'Thực tập'
-                : language?.unupdated}
+                  ? languageRedux === 1 ? 'Bán thời gian' : 'Parttime'
+                  : profileV3.jobTypeId === 4
+                    ? languageRedux === 1 ? 'Làm việc tự do' : 'Freelancer'
+                    : profileV3.jobTypeId === 7
+                      ? languageRedux === 1 ? 'Thực tập' : 'Intern'
+                      : language?.unupdated}
             </Button>
           </Space>
         </div>
@@ -405,7 +405,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 cursor: 'pointer',
                 display: profileV3?.profilesCvs?.length === 0 ? 'none' : 'flex',
               }}
-              // onClick={() => setOpenModalLocation(true)}
+            // onClick={() => setOpenModalLocation(true)}
             >
               {/* <div className="edit-icon">
                 <PencilIcon width={15} height={15} />
@@ -555,7 +555,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                                 onClick={() =>
                                   handleDownloadCV(item?.pdfURL, item?.name)
                                 }
-                                // onClick={handleClickDownloadCv}
+                              // onClick={handleClickDownloadCv}
                               >
                                 <DownloadCVIcon width={14} height={14} />
                               </div>
@@ -739,7 +739,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                   display: 'flex',
                   flexDirection: 'column',
                 }}
-                // direction="vertical"
+              // direction="vertical"
               >
                 <Popconfirm
                   title={language?.profile_page?.delete_cv}

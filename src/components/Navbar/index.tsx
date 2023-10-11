@@ -343,6 +343,9 @@ const Navbar: React.FC = () => {
   //   setOpenCollapse(!openCollapse)
   // }
 
+  // const [role, setRole] = React.useState<any>(roleRedux);
+  // console.log('profileV3', profileV3);
+
   const getCompanyInforByAccount = async () => {
     try {
       // const result = await apiCompany.getCampanyByAccountApi(
