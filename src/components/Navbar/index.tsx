@@ -138,17 +138,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean;
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-    search: boolean;
-  } = useContext(HomeValueContext);
+    {
+      openCollapseFilter: boolean;
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+      search: boolean;
+    } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -158,7 +158,9 @@ const Navbar: React.FC = () => {
   } = useContext(ChatContext);
 
   // const [showTap, setShowTap] = React.useState(false);
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -189,7 +191,9 @@ const Navbar: React.FC = () => {
   const [userFiltered, setUserFiltered] = useState<any>();
 
   const [countChat, setCountChat] = useState<number>(0);
-  const [languageId, setLanguageId] = useState<number>(1);
+  const [languageId, setLanguageId] = useState<number>(
+    languageRedux
+  );
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
   const [openRadioGroup, setOpenRadioGroup] = useState<boolean>(false);
@@ -223,7 +227,7 @@ const Navbar: React.FC = () => {
         setOpenModalTurnOffStatus(true);
         setSearchJob(false);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -248,6 +252,8 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
     setLanguageId(userLanguageSelected);
+    console.log(languageId);
+
   }, [languageId]);
 
   // console.log('jobTYpe', jobType);
@@ -320,9 +326,7 @@ const Navbar: React.FC = () => {
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   // console.log('profileV3', profileV3);
 
-  const languageRedux = useSelector(
-    (state: RootState) => state.changeLaguage.language,
-  );
+
 
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
 
@@ -418,7 +422,7 @@ const Navbar: React.FC = () => {
         dispatch(setProfileV3(result));
         setRole(result.data.typeRoleData);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -863,7 +867,7 @@ const Navbar: React.FC = () => {
       if (result) {
         dispatch(setProfileV3(result));
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -960,7 +964,7 @@ const Navbar: React.FC = () => {
     setLanguageId(e.target.value);
     setCookie('languageId', JSON.stringify(e.target.value), 365);
     await dispatch<any>(setLanguage(e.target.value));
-    await dispatch(getLanguages(e.target.value) as any);
+    // await dispatch(getLanguages(e.target.value) as any);
 
     // try {
     //   const result = await languageApi.getLanguage(
@@ -978,8 +982,12 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
     if (userLanguageSelected) {
+      setLanguageId(userLanguageSelected);
+      console.log('2222222');
       dispatch(getLanguages(userLanguageSelected) as any);
     } else {
+      console.log('33333333');
+      setLanguageId(1);
       dispatch(getLanguages('1') as any);
     }
   }, [languageId]);
@@ -1122,8 +1130,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="3"
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -1153,8 +1161,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-            openLogin &&
-            location?.pathname === '/'
+              openLogin &&
+              location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1245,8 +1253,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3?.profileLocations?.length > 0
                         ? profileV3?.profileLocations?.map((location: any) => {
-                            return `${location.fullName} , `;
-                          })
+                          return `${location.fullName} , `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1259,8 +1267,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3 && profileV3?.profileCategories?.length > 0
                         ? profileV3?.profileCategories.map((profile: any) => {
-                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                          })
+                          return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1281,9 +1289,9 @@ const Navbar: React.FC = () => {
                     borderBottom:
                       roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1350,9 +1358,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                  // style={{
-                  //   display: openRadioGroup ? 'flex' : 'none',
-                  // }}
+                // style={{
+                //   display: openRadioGroup ? 'flex' : 'none',
+                // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1580,8 +1588,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3?.profileLocations?.length > 0
                         ? profileV3?.profileLocations?.map((location: any) => {
-                            return `${location.fullName} , `;
-                          })
+                          return `${location.fullName} , `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1594,8 +1602,8 @@ const Navbar: React.FC = () => {
                     <p>
                       {profileV3 && profileV3?.profileCategories?.length > 0
                         ? profileV3?.profileCategories.map((profile: any) => {
-                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                          })
+                          return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1616,9 +1624,9 @@ const Navbar: React.FC = () => {
                     borderBottom:
                       roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1727,9 +1735,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
