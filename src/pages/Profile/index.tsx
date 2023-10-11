@@ -105,6 +105,7 @@ import Company from 'pages/Company';
 import CategoryDropdown from '#components/CategoryDropdown';
 import ModalIntroduceCv from '#components/Profile/ModalIntroduceCv';
 import { prototype } from 'module';
+import CompanyRole from './components/CompanyRole';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -163,7 +164,7 @@ const Profile: React.FC = () => {
   // const [imageInfo, setImageInfo] = useState<string>('');
   // const [avatarUrl, setAvatarUrl] = useState<string>('');
   const [companyName, setCompanyName] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [uploading, setUploading] = useState(false);
   const [open, setOpen] = useState(false);
   // const [checkRemove, setCheckRemove] = useState(2);
@@ -227,14 +228,14 @@ const Profile: React.FC = () => {
 
   // console.log(listCv);
 
-  React.useEffect(() => {
-    // Cập nhật title và screen name trong Firebase Analytics
-    logEvent(analytics, 'screen_view' as string, {
-      // screen_name: screenName as string,
-      page_title: '/web_profile' as string,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // React.useEffect(() => {
+  //   // Cập nhật title và screen name trong Firebase Analytics
+  //   logEvent(analytics, 'screen_view' as string, {
+  //     // screen_name: screenName as string,
+  //     page_title: '/web_profile' as string,
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
@@ -292,7 +293,7 @@ const Profile: React.FC = () => {
       window.location.replace(`/`);
       return;
     }
-    setLoading(true);
+    // setLoading(true);
     // dispatch<any>(getProfile());
     //   .unwrap()
     //   .catch((err: any) => {
@@ -302,23 +303,23 @@ const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    // Gọi action để lấy thông tin profile
-    if (!localStorage.getItem('accessToken')) {
-      window.open('/');
-      return;
-    }
-    // fecthDataProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    openModelPersonalInfo,
-    openModalContact,
-    openModalCareerObjective,
-    openModalLocation,
-    openModalEducationCreate,
-    openModalExperienceCreate,
-    languageRedux,
-  ]);
+  // useEffect(() => {
+  //   // Gọi action để lấy thông tin profile
+  //   if (!localStorage.getItem('accessToken')) {
+  //     window.open('/');
+  //     return;
+  //   }
+  //   // fecthDataProfile();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [
+  //   // openModelPersonalInfo,
+  //   // openModalContact,
+  //   // openModalCareerObjective,
+  //   // openModalLocation,
+  //   // openModalEducationCreate,
+  //   // openModalExperienceCreate,
+  //   // languageRedux,
+  // ]);
 
   const handleAvatarClick = () => {
     // Khi click vào SmallAvatar, thực hiện hành động tương ứng
@@ -393,7 +394,7 @@ const Profile: React.FC = () => {
         setFileList([]);
         message.success(language?.profile_page?.alert_delete_cv_success);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // cancel delete cv
@@ -445,6 +446,7 @@ const Profile: React.FC = () => {
           languageRedux === 1 ? 'vi' : 'en',
         );
         dispatch(setProfileV3(getProfileV3) as any);
+
       }
       // window.location.reload();
       // if (imageUrl)
@@ -773,10 +775,14 @@ const Profile: React.FC = () => {
           openModalTypeofWork={openModalTypeofWork}
         />
 
-        <Company
+        {/* <Company
           display={roleRedux === 0 ? 'none' : 'block'}
           is_profile={true}
-        />
+        /> */}
+
+        <CompanyRole
+          display={roleRedux === 0 ? 'none' : 'block'}
+          companyData={profileV3.companyInfomation} />
 
         <Stack spacing={2} sx={{ width: '100%' }}>
           <Snackbar

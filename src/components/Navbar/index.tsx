@@ -349,7 +349,7 @@ const Navbar: React.FC = () => {
   // }
 
   // const [role, setRole] = React.useState<any>(roleRedux);
-  console.log('profileV3', profileV3);
+  // console.log('profileV3', profileV3);
 
   const getCompanyInforByAccount = async () => {
     try {
