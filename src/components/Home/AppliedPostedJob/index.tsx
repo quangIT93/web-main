@@ -114,17 +114,17 @@ const AppliedPostedJob: React.FC = () => {
       const result =
         roleRedux === 0
           ? await historyApplicator.getAllSubmitedApplied(
-              null,
-              10,
-              1,
-              languageRedux === 1 ? 'vi' : 'en',
-            )
+            null,
+            10,
+            1,
+            languageRedux === 1 ? 'vi' : 'en',
+          )
           : await historyRecruiter.GetInformationAndCandidatesCount(
-              0,
-              10,
-              '1',
-              languageRedux === 1 ? 'vi' : 'en',
-            );
+            0,
+            10,
+            '1',
+            languageRedux === 1 ? 'vi' : 'en',
+          );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
       //   languageRedux === 1 ? 'vi' : 'en',
@@ -202,7 +202,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -216,8 +216,8 @@ const AppliedPostedJob: React.FC = () => {
             flexDirection: 'column',
             padding:
               roleRedux === 0 && appliedPostedJob.length !== 0
-                ? '52px 0 0 0'
-                : '52px 0 0 0',
+                ? '1px 0 0 0'
+                : '1px 0 0 0',
           }}
           className="applied-posted-jobs-container"
         >
@@ -317,7 +317,7 @@ const AppliedPostedJob: React.FC = () => {
           </div>
           <Skeleton loading={false} active>
             {appliedPostedJob.length !== 0 &&
-            localStorage.getItem('accessToken') ? (
+              localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -332,8 +332,8 @@ const AppliedPostedJob: React.FC = () => {
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                    ? 'Công việc đã tuyển'
-                    : 'Posted Job'}
+                      ? 'Công việc đã tuyển'
+                      : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />

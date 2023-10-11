@@ -156,21 +156,34 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                 <span className="icon-info-candidate">
                   <SchoolIcon />
                 </span>
-                <span className="text-info-candidate">
-                  {item?.profileData?.profilesEducationsData?.length !== 0
-                    ? item?.profileData?.profilesEducationsData?.map(
-                      (value: any) => {
-                        return `${value.data}, `
-                      },
-                    )
-                    :
-
-                    languageRedux === 1 ?
-                      "Thông tin chưa cập nhật" :
-                      "Not updated information"
-
+                <Tooltip
+                  placement="top"
+                  title={
+                    item?.profileData?.profilesEducationsData?.length !== 0
+                      ? item?.profileData?.profilesEducationsData?.map((value: any) => {
+                        return `${value.data}, `;
+                      })
+                      : languageRedux === 1 ?
+                        "Thông tin chưa cập nhật" :
+                        "Not updated information"
                   }
-                </span>
+                >
+                  <span className="text-info-candidate">
+                    {item?.profileData?.profilesEducationsData?.length !== 0
+                      ? item?.profileData?.profilesEducationsData?.map(
+                        (value: any) => {
+                          return `${value.data}, `
+                        },
+                      )
+                      :
+
+                      languageRedux === 1 ?
+                        "Thông tin chưa cập nhật" :
+                        "Not updated information"
+
+                    }
+                  </span>
+                </Tooltip>
               </li>
               <li>
                 <span className="icon-info-candidate">
@@ -180,10 +193,12 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   placement="top"
                   title={
                     item?.profileData?.profilesLocationsData?.length !== 0
-                      ? item.profilesLocationsData?.map((loc: any) => {
+                      ? item?.profileData?.profilesLocationsData?.map((loc: any) => {
                         return `${loc.full_name}, `;
                       })
-                      : ''
+                      : languageRedux === 1 ?
+                        "Thông tin chưa cập nhật" :
+                        "Not updated information"
                   }
                 >
                   <span className="text-info-candidate">
@@ -205,19 +220,32 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                 <span className="icon-info-candidate">
                   <CateIcon />
                 </span>
-                <span className="text-info-candidate">
-                  {item?.profileData?.childCategoriesData?.length !== 0
-                    ? item?.profileData?.childCategoriesData?.map(
-                      (value: any) => {
+                <Tooltip
+                  placement="top"
+                  title={
+                    item?.profileData?.childCategoriesData?.length !== 0
+                      ? item?.profileData?.childCategoriesData?.map((value: any) => {
                         return `${value.fullName}, `;
-                      },
-                    )
-                    :
-                    languageRedux === 1 ?
-                      "Thông tin chưa cập nhật" :
-                      "Not updated information"
+                      })
+                      : languageRedux === 1 ?
+                        "Thông tin chưa cập nhật" :
+                        "Not updated information"
                   }
-                </span>
+                >
+                  <span className="text-info-candidate">
+                    {item?.profileData?.childCategoriesData?.length !== 0
+                      ? item?.profileData?.childCategoriesData?.map(
+                        (value: any) => {
+                          return `${value.fullName}, `;
+                        },
+                      )
+                      :
+                      languageRedux === 1 ?
+                        "Thông tin chưa cập nhật" :
+                        "Not updated information"
+                    }
+                  </span>
+                </Tooltip>
               </li>
               <li>
                 <span className="icon-info-candidate">

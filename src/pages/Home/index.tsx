@@ -135,7 +135,7 @@ const Home: React.FC = () => {
       let newJobOffsetTop = 0;
       if (div) {
         newJobOffsetTop = document.getElementById(id) ? div.offsetTop : 0;
-        window.scrollTo(0, newJobOffsetTop - 170);
+        window.scrollTo(0, newJobOffsetTop - 140);
       }
     }, 1800);
   };
@@ -258,12 +258,12 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // setRole={setRole}
+      // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-        // role={role}
+      // role={role}
       />
       <RollTop />
       <Footer />

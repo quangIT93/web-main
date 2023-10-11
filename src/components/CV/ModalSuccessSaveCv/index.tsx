@@ -22,9 +22,13 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
+    if (checkedDefault && openModalSuccessDownCv.open) {
+      await apiCv.putThemeCv(openModalSuccessDownCv?.id, 1);
+    }
     setOpenModalSuccessDownCv({ open: false, id: null });
   };
+
   return (
     <Modal
       width={400}

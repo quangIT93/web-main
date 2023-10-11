@@ -445,7 +445,8 @@ const HistoryPost = () => {
                     style={{
                       display:
                         roleRedux === 0
-                          ? item?.id === 2
+
+                          ? item?.id === 2 || item.id === 4
                             ? 'none'
                             : 'block'
                           : item?.id === 0

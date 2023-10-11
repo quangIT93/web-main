@@ -66,10 +66,18 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
       if (result) {
         if (profileV3) {
           if (profileV3?.profilesCvs.length > 1) {
-            await apiCv.putThemeCv(
-              profileV3?.profilesCvs[profileV3?.profilesCvs.length - 1]?.id,
-              1,
-            );
+            if (openModalDeleteCv?.item?.id !== profileV3?.profilesCvs[profileV3?.profilesCvs.length - 1]?.id) {
+
+              await apiCv.putThemeCv(
+                profileV3?.profilesCvs[profileV3?.profilesCvs.length - 1]?.id,
+                1,
+              );
+            } else {
+              await apiCv.putThemeCv(
+                profileV3?.profilesCvs[profileV3?.profilesCvs.length - 2]?.id,
+                1,
+              );
+            }
             const resultProfileV3L2 = await profileApi.getProfileV3(
               languageRedux === 1 ? 'vi' : 'en',
             );
@@ -110,7 +118,7 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
     }
 
     try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
