@@ -427,6 +427,7 @@ const Navbar: React.FC = () => {
     // dispatch(getProfile() as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
+  console.log('profile');
 
   // get count unread
   const getCountUnread = async () => {
@@ -855,20 +856,20 @@ const Navbar: React.FC = () => {
     }
   };
 
-  const getPropfileV3New = async () => {
-    try {
-      const result = await profileApi.getProfileV3(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        dispatch(setProfileV3(result));
-      }
-    } catch (error) {}
-  };
+  // const getPropfileV3New = async () => {
+  //   try {
+  //     const result = await profileApi.getProfileV3(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       dispatch(setProfileV3(result));
+  //     }
+  //   } catch (error) {}
+  // };
 
-  useEffect(() => {
-    getPropfileV3New();
-  }, []);
+  // useEffect(() => {
+  //   getPropfileV3New();
+  // }, []);
 
   React.useEffect(() => {
     getAppliedPostedJobs();
