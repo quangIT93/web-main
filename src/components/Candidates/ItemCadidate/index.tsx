@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 
 import male_null_avatar from '../../../img/male_null_avatar.png';
 import ModalLogin from '#components/Home/ModalLogin';
+import ModalNoteWorker from '#components/Home/NewestGigWorker/ModalNoteWorker';
 interface ICadidate {
   item: any;
 }
@@ -33,7 +34,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
     (state: RootState) => state.changeLaguage.language,
   );
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
   const handleClickItemCandidate = async (accountId: any) => {
     if (!localStorage.getItem('accessToken')) {
       setOpenModalLogin(true);
@@ -46,8 +47,16 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
 
       // if (result) {
       // }
-      localStorage.setItem('candidateId', accountId);
-      window.open('/candidate-new-detail');
+      if (profileV3?.typeRoleData === 1) {
+        localStorage.setItem('candidateId', accountId);
+        window.open('/candidate-new-detail');
+
+      } else {
+        console.log(profileV3);
+        setOpenModalNoteWorker(true);
+        return
+
+      }
     } catch (error) {
       if (profileV3.typeRoleData === 0) {
         window.open('/', '_parent');
@@ -121,20 +130,33 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
               <span className="icon-info-candidate">
                 <SchoolIcon />
               </span>
-              <span className="text-info-candidate">
-                {item.profilesEducationsData.length !== 0 ? (
-                  item.profilesEducationsData.map((value: any, index: number) => {
-                    return (
-                      `${value.data}, `
-                    );
-                  })
+              <Tooltip
+                placement="top"
+                title={
+                  item?.profilesEducationsData?.length !== 0
+                    ? item.profilesEducationsData?.map((value: any) => {
+                      return `${value.data}, `;
+                    })
+                    : languageRedux === 1 ?
+                      "Thông tin chưa cập nhật" :
+                      "Not updated information"
+                }
+              >
+                <span className="text-info-candidate">
+                  {item.profilesEducationsData.length !== 0 ? (
+                    item.profilesEducationsData.map((value: any, index: number) => {
+                      return (
+                        `${value.data}, `
+                      );
+                    })
 
-                ) : (
-                  languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'
-                )}
-              </span>
+                  ) : (
+                    languageRedux === 1
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'
+                  )}
+                </span>
+              </Tooltip>
             </li>
             <li>
               <span className="icon-info-candidate">
@@ -142,9 +164,15 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
               </span>
               <Tooltip
                 placement="top"
-                title={item.profilesLocationsData.map((loc: any) => {
-                  return `${loc.fullName}, `;
-                })}
+                title={
+                  item?.profilesLocationsData?.length !== 0
+                    ? item.profilesLocationsData?.map((value: any) => {
+                      return `${value.fullName}, `;
+                    })
+                    : languageRedux === 1 ?
+                      "Thông tin chưa cập nhật" :
+                      "Not updated information"
+                }
               >
                 <span className="text-info-candidate">
                   {item.profilesLocationsData.length !== 0 ? (
@@ -163,17 +191,30 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
               <span className="icon-info-candidate">
                 <CateIcon />
               </span>
-              <span className="text-info-candidate">
-                {item.categoriesData.length !== 0 ? (
-                  item.categoriesData.map((value: any) => {
-                    return `${value.fullName}, `;
-                  })
-                ) : (
-                  languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'
-                )}
-              </span>
+              <Tooltip
+                placement="top"
+                title={
+                  item?.categoriesData?.length !== 0
+                    ? item.categoriesData?.map((value: any) => {
+                      return `${value.fullName}, `;
+                    })
+                    : languageRedux === 1 ?
+                      "Thông tin chưa cập nhật" :
+                      "Not updated information"
+                }
+              >
+                <span className="text-info-candidate">
+                  {item.categoriesData.length !== 0 ? (
+                    item.categoriesData.map((value: any) => {
+                      return `${value.fullName}, `;
+                    })
+                  ) : (
+                    languageRedux === 1
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'
+                  )}
+                </span>
+              </Tooltip>
             </li>
             <li>
               <span className="icon-info-candidate">
@@ -189,6 +230,10 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
       <ModalLogin
         openModalLogin={openModalLogin}
         setOpenModalLogin={setOpenModalLogin}
+      />
+      <ModalNoteWorker
+        openModalNoteWorker={openModalNoteWorker}
+        setOpenModalNoteWorker={setOpenModalNoteWorker}
       />
     </>
   );

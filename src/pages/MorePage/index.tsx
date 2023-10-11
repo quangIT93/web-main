@@ -260,7 +260,7 @@ const MoreJobsPage: React.FC = () => {
             );
 
       setHasMore(true);
-      if (result.status === 200) {
+      if (result) {
         setLoading(false);
         if (result.data.length < 20) {
           setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
@@ -374,7 +374,7 @@ const MoreJobsPage: React.FC = () => {
   }, [
     languageRedux,
     idFilterProvinces,
-    profile,
+    // profile,
     typeJob,
     childCateloriesArray,
     // JSON.parse(
@@ -445,7 +445,11 @@ const MoreJobsPage: React.FC = () => {
       <Navbar />
       <CategoryDropdown />
 
-      <div className="more-job-page-container">
+      <div className="more-job-page-container"
+        style={{
+          margin: typeJob === 'new' ? '280px auto 100px' : '140px auto 100px'
+        }}
+      >
         <div style={{ display: typeJob === 'new' ? 'block' : 'none' }}>
           <CategoryCarousel />
           <Breadcrumbs />

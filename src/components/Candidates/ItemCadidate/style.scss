@@ -8,6 +8,7 @@
     cursor: pointer;
     filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.15));
     background: #ffffff;
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 
     &:hover {
         background-color: #e7e7ed;
