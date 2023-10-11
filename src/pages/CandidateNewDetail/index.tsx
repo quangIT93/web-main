@@ -33,6 +33,8 @@ import ModalShowCv from '#components/Profile/ModalShowCv';
 import CategoryDropdown from '#components/CategoryDropdown';
 import MuiAlert from '@mui/material/Alert';
 import { Stack, AlertProps, Snackbar } from '@mui/material';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import ModalUnlockCandidate from './ModalUnlockCandidate';
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
@@ -41,9 +43,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const CandidateNewDetail = () => {
-  const [candidate, setCandidate] = useState<any>(null);
+  const [candidate, setCandidate] = useState<any>([]);
   const [bookmarkCandidate, setBookmarkCandidate] = useState<any>(0);
-  const [unlock, setUnlock] = useState<boolean>(false);
+  const [total, setTotal] = useState<any>(0);
+
   const [modalShowCvPDF, setModalShowCvPdf] = React.useState<{
     open: boolean;
     urlPdf: string;
@@ -62,15 +65,11 @@ const CandidateNewDetail = () => {
   );
   const dispatch = useDispatch();
 
-  const dataCandidates = async (unclock: boolean) => {
+  const dataCandidates = async () => {
     const id = localStorage.getItem('candidateId');
     try {
       if (id) {
-        const result = await profileApi.getProfileByAccountId(
-          'vi',
-          id,
-          unclock,
-        );
+        const result = await profileApi.getProfileByAccountId('vi', id);
 
         if (result) {
           setCandidate(result.data);
@@ -80,23 +79,28 @@ const CandidateNewDetail = () => {
       }
     } catch (error) {
       console.log('error', error);
-      window.open('/', 'parent');
     }
   };
 
   useEffect(() => {
-    dataCandidates(unlock);
+    dataCandidates();
 
     // if (profileV3.typeRoleData !== 1) {
     //   window.open('/', '_parent');
     // }
-  }, [unlock]);
+  }, []);
 
   const handleUnLockCandidate = async (accountId: string) => {
-    if (unlock) {
-      setUnlock(false);
-    } else {
-      setUnlock(true);
+    const id = localStorage.getItem('candidateId');
+    if (id) {
+      const viewProfile: any = await candidateSearch.postCountShowCandidate(id);
+      if (viewProfile.status === 200) {
+        setTotal(viewProfile.total);
+        const result = await profileApi.getProfileByAccountId('vi', id);
+        if (result) {
+          setCandidate(result.data);
+        }
+      }
     }
     try {
     } catch (error) {}
@@ -106,7 +110,7 @@ const CandidateNewDetail = () => {
     try {
       const result = await candidateSearch.postBookmarkCandidate(accountId);
       if (result) {
-        dataCandidates(unlock);
+        dataCandidates();
         if (result.status === 200) {
           dispatch<any>(setAlert(true));
         } else {
@@ -140,14 +144,16 @@ const CandidateNewDetail = () => {
     getBookMark();
   }, []);
 
-  const handleClickItemCv = async (urlPdf: string) => {
-    console.log('urlPdf', urlPdf);
-
-    setModalShowCvPdf({ open: true, urlPdf });
+  const handleClickItemCv = async (urlPdf: string, id: string) => {
+    if (total > 0) {
+      setModalShowCvPdf({ open: true, urlPdf });
+    }
   };
 
   const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
   const handleCancleSave = () => dispatch<any>(setAlert(false));
+
+  console.log('profileV3', profileV3);
 
   return (
     <div className="candidate-new-detail">
@@ -178,18 +184,32 @@ const CandidateNewDetail = () => {
               </div>
             </div>
             <div className="buttons-candidate">
-              <Button
-                type="primary"
-                // disabled
-                onClick={() => handleUnLockCandidate(candidate?.accountId)}
-              >
-                Unlock Candidates
-              </Button>
+              {candidate?.isUnlocked === true ? (
+                <Button
+                  type="primary"
+                  disabled={candidate && candidate?.isUnlocked}
+                  // onClick={() => handleUnLockCandidate(candidate?.accountId)}
+                  style={{ backgroundColor: 'transparent', color: 'black' }}
+                >
+                  Unlock Candidates
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  disabled={candidate && candidate?.isUnlocked}
+                  onClick={() => handleUnLockCandidate(candidate?.accountId)}
+                >
+                  Unlock Candidates
+                </Button>
+              )}
 
               <Button
                 type="primary"
                 onClick={(event) => {
-                  handleClickItemCv(candidate?.profilesCvs[0]?.pdfURL);
+                  handleClickItemCv(
+                    candidate?.profilesCvs[0]?.pdfURL,
+                    candidate?.accountId,
+                  );
                 }}
               >
                 View Resume
@@ -241,11 +261,11 @@ const CandidateNewDetail = () => {
             </div>
             <div className="div-detail-row right">
               <p>
-                {candidate?.birthdayData && !unlock
+                {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
                       .format('DD/MM/YYYY')
                       .replace(/\d{2}$/, 'xx')
-                  : candidate?.birthdayData && unlock
+                  : candidate?.isUnlocked
                   ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
                   : 'Chưa cập nhật'}
               </p>
@@ -571,6 +591,8 @@ const CandidateNewDetail = () => {
           </Alert>
         </Snackbar>
       </Stack>
+
+      {/* <ModalUnlockCandidate /> */}
     </div>
   );
 };
