@@ -108,8 +108,8 @@ const ModalIntroduceCv: React.FC<any> = () => {
             </div>
             <p>
               {languageRedux === 1
-                ? 'Sau khi hoàn thành, hãy lưu ngay trong hồ sơ tìm việc của bạn trên HiJob, hoặc tải xuống miễn phí dưới dạng PDF.'
-                : 'Once completed, save it right away in your job search profile on HiJob, or download it for free as a PDF.'}
+                ? 'Sau khi hoàn thành, hãy lưu ngay trong hồ sơ tìm việc của bạn trên HiJob (tối đa 10 mẫu CV), hoặc tải xuống miễn phí dưới dạng PDF.'
+                : 'Once completed, immediately save your job search resume on HiJob (up to 10 CV templates), or download it for free as PDF.'}
             </p>
           </div>
         </div>

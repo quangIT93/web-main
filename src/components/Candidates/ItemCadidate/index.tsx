@@ -19,7 +19,8 @@ import { useSelector } from 'react-redux';
 // import redux
 import { RootState } from 'store';
 import { Link } from 'react-router-dom';
-
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
 import male_null_avatar from '../../../img/male_null_avatar.png';
 import ModalLogin from '#components/Home/ModalLogin';
 import ModalNoteWorker from '#components/Home/NewestGigWorker/ModalNoteWorker';
@@ -50,12 +51,10 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
       if (profileV3?.typeRoleData === 1) {
         localStorage.setItem('candidateId', accountId);
         window.open('/candidate-new-detail');
-
       } else {
         console.log(profileV3);
         setOpenModalNoteWorker(true);
-        return
-
+        return;
       }
     } catch (error) {
       if (profileV3.typeRoleData === 0) {
@@ -63,12 +62,29 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
       }
     }
   };
+  const analytics: any = getAnalytics();
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    // document.title =
+    //   language?.company_page?.title_page;
+    document.title =
+      languageRedux === 1
+        ? 'Hijob - Tìm kiếm nhân tài'
+        : 'Hijob - Search for talent';
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: '/list-candidate' as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux]);
 
   return (
     <>
       <div
         className="item-candidate"
-        onClick={() => handleClickItemCandidate(item.accountId)}
+        onClick={() => {
+          handleClickItemCandidate(item.accountId);
+        }}
       >
         <div className="wrap-img_candidate">
           <img
@@ -135,26 +151,23 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 title={
                   item?.profilesEducationsData?.length !== 0
                     ? item.profilesEducationsData?.map((value: any) => {
-                      return `${value.data}, `;
-                    })
-                    : languageRedux === 1 ?
-                      "Thông tin chưa cập nhật" :
-                      "Not updated information"
+                        return `${value.data}, `;
+                      })
+                    : languageRedux === 1
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'
                 }
               >
                 <span className="text-info-candidate">
-                  {item.profilesEducationsData.length !== 0 ? (
-                    item.profilesEducationsData.map((value: any, index: number) => {
-                      return (
-                        `${value.data}, `
-                      );
-                    })
-
-                  ) : (
-                    languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'
-                  )}
+                  {item.profilesEducationsData.length !== 0
+                    ? item.profilesEducationsData.map(
+                        (value: any, index: number) => {
+                          return `${value.data}, `;
+                        },
+                      )
+                    : languageRedux === 1
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'}
                 </span>
               </Tooltip>
             </li>
@@ -167,23 +180,21 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 title={
                   item?.profilesLocationsData?.length !== 0
                     ? item.profilesLocationsData?.map((value: any) => {
-                      return `${value.fullName}, `;
-                    })
-                    : languageRedux === 1 ?
-                      "Thông tin chưa cập nhật" :
-                      "Not updated information"
+                        return `${value.fullName}, `;
+                      })
+                    : languageRedux === 1
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'
                 }
               >
                 <span className="text-info-candidate">
-                  {item.profilesLocationsData.length !== 0 ? (
-                    item.profilesLocationsData.map((loc: any) => {
-                      return `${loc.fullName}, `;
-                    })
-                  ) : (
-                    languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'
-                  )}
+                  {item.profilesLocationsData.length !== 0
+                    ? item.profilesLocationsData.map((loc: any) => {
+                        return `${loc.fullName}, `;
+                      })
+                    : languageRedux === 1
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'}
                 </span>
               </Tooltip>
             </li>
@@ -196,23 +207,21 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 title={
                   item?.categoriesData?.length !== 0
                     ? item.categoriesData?.map((value: any) => {
-                      return `${value.fullName}, `;
-                    })
-                    : languageRedux === 1 ?
-                      "Thông tin chưa cập nhật" :
-                      "Not updated information"
+                        return `${value.fullName}, `;
+                      })
+                    : languageRedux === 1
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'
                 }
               >
                 <span className="text-info-candidate">
-                  {item.categoriesData.length !== 0 ? (
-                    item.categoriesData.map((value: any) => {
-                      return `${value.fullName}, `;
-                    })
-                  ) : (
-                    languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'
-                  )}
+                  {item.categoriesData.length !== 0
+                    ? item.categoriesData.map((value: any) => {
+                        return `${value.fullName}, `;
+                      })
+                    : languageRedux === 1
+                    ? 'Thông tin chưa cập nhật'
+                    : 'Not updated information'}
                 </span>
               </Tooltip>
             </li>

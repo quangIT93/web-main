@@ -4,7 +4,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Link, useLocation } from 'react-router-dom';
-
+import { PhoneOutlined } from '@ant-design/icons';
 import io from 'socket.io-client';
 
 import ModalLogin from '../../components/Home/ModalLogin';
@@ -345,6 +345,7 @@ const Navbar: React.FC = () => {
 
   // const [role, setRole] = React.useState<any>(roleRedux);
   // console.log('profileV3', profileV3);
+  // console.log('profileV3', profileV3);
 
   const getCompanyInforByAccount = async () => {
     try {
@@ -362,7 +363,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     getCompanyInforByAccount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, profileV3]);
 
   // handle close backdrop
   // const handleClose = () => {
@@ -1200,8 +1201,8 @@ const Navbar: React.FC = () => {
                 <Avatar
                   style={{
                     backgroundColor: '#0D99FF',
-                    minWidth: '80px',
-                    minHeight: '80px',
+                    minWidth: profileV3?.typeRoleData === 1 ? '110px' : '80px',
+                    minHeight: profileV3?.typeRoleData === 1 ? '110px' : '80px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -1226,12 +1227,29 @@ const Navbar: React.FC = () => {
                   </span>
                   <span className="sub-login_text">
                     <MailInfoIcon />
+                    {/* <PhoneOutlined /> */}
                     <p>
-                      {profileV3?.email
+                      {profileV3?.typeRoleData === 1
+                        ? profileV3?.companyInfomation?.email
+                          ? profileV3?.companyInfomation?.email
+                          : languageData?.home_page?.un_update_infor
+                        : profileV3?.email
                         ? profileV3?.email
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
+                  {profileV3?.typeRoleData === 1 ? (
+                    <span className="sub-login_text">
+                      <PhoneOutlined />
+                      <p>
+                        {profileV3?.phone
+                          ? profileV3?.phone
+                          : languageData?.home_page?.un_update_infor}
+                      </p>
+                    </span>
+                  ) : (
+                    <></>
+                  )}
                   {/* <span className="sub-login_text">
                   <LoginHomeIcon />
                   {dataProfile?.email ? dataProfile?.email : ''}

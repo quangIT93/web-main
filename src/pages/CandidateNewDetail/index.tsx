@@ -35,6 +35,10 @@ import MuiAlert from '@mui/material/Alert';
 import { Stack, AlertProps, Snackbar } from '@mui/material';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import ModalUnlockCandidate from './ModalUnlockCandidate';
+
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
@@ -153,7 +157,24 @@ const CandidateNewDetail = () => {
   const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
   const handleCancleSave = () => dispatch<any>(setAlert(false));
 
-  console.log('profileV3', profileV3);
+  const analytics: any = getAnalytics();
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    // document.title =
+    //   language?.company_page?.title_page;
+    if (candidate.length !== 0) {
+      document.title =
+        languageRedux === 1
+          ? `HiJob - ${candidate && candidate?.name}`
+          : `HiJob - ${candidate && candidate?.name}`;
+      logEvent(analytics, 'screen_view' as string, {
+        // screen_name: screenName as string,
+        page_title: '/candidate-new-detail' as string,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux, candidate]);
 
   return (
     <div className="candidate-new-detail">

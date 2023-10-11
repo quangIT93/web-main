@@ -173,7 +173,7 @@ const Company: React.FC<ICompany> = (props) => {
       page_title: '/web_company' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, language]);
+  }, [languageRedux]);
 
   const getCompanyInforByAccount = async () => {
     try {
@@ -181,7 +181,7 @@ const Company: React.FC<ICompany> = (props) => {
       // const result = await apiCompany.getCampanyByAccountApi(
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
-      if (profileV3?.companyInfomation?.id != null) {
+      if (profileV3?.companyInfomation !== null) {
         setTimeout(() => {
           setLoading(false);
         }, 1000);
@@ -200,9 +200,11 @@ const Company: React.FC<ICompany> = (props) => {
   };
 
   useEffect(() => {
-    getCompanyInforByAccount();
+    if (profileV3.length !== 0) {
+      getCompanyInforByAccount();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, profileV3]);
 
   useEffect(() => {
     roleRedux === 0 && !is_profile && window.open(`/`, '_parent');
@@ -214,11 +216,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
