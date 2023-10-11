@@ -74,8 +74,11 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   const { openModalCareerObjective, setOpenModalCareerObjective, categories } =
     props;
   const [value, setValue] = useState(
-    categories?.map((v, i) => v.child_category_id.toString()),
+    categories && categories?.map((v: any, i) => v.id.toString()),
   );
+
+  console.log('value', value);
+
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   // const [originalValue, setOriginalValue] = useState<string[]>([]);
   // const [checkClick, setCheckList] = React.useState<boolean>(false);
@@ -151,7 +154,7 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
   }, [dataCategories]);
 
   React.useEffect(() => {
-    setValue(categories?.map((v, i) => v.child_category_id.toString()) || []);
+    setValue(categories?.map((v: any, i) => v.id.toString()) || []);
     // setOriginalValue(
     //   categories?.map((v, i) => v.child_category_id.toString()) || [],
     // );

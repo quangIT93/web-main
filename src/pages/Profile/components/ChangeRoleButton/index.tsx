@@ -30,7 +30,9 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (getProfileV3Data) {
-            dispatch<any>(setProfileV3);
+            console.log('profile updated', getProfileV3Data);
+
+            dispatch<any>(setProfileV3(getProfileV3Data));
           }
         }
         // setRole(1)
@@ -39,6 +41,14 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
         const result = await typeUser.putTypeUser(0);
         if (result) {
           dispatch<any>(setRole(0));
+
+          const getProfileV3Data = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (getProfileV3Data) {
+            console.log('profile updated', getProfileV3Data);
+            dispatch<any>(setProfileV3(getProfileV3Data));
+          }
         }
       }
     } catch (error) {

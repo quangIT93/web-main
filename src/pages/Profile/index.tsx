@@ -292,7 +292,7 @@ const Profile: React.FC = () => {
       window.location.replace(`/`);
       return;
     }
-    setLoading(true);
+
     // dispatch<any>(getProfile());
     //   .unwrap()
     //   .catch((err: any) => {
@@ -300,7 +300,15 @@ const Profile: React.FC = () => {
     //   })
     // fecthDataProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [profileV3]);
+
+  React.useEffect(() => {
+    if (profileV3.length !== 0) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [profileV3]);
 
   useEffect(() => {
     // Gọi action để lấy thông tin profile
@@ -356,8 +364,6 @@ const Profile: React.FC = () => {
     listType: 'picture',
     fileList,
   };
-
-  console.log('profileV3', profileV3);
 
   const getCompanyInforByAccount = async () => {
     try {
@@ -496,11 +502,375 @@ const Profile: React.FC = () => {
   return (
     <div className="profile">
       <Navbar />
-      {/* <CategoryDropdown /> */}
+      <CategoryDropdown />
+      <div className="container">
+        <Skeleton className="skeleton-item" avatar loading={loading} active>
+          <div className="div-profile-avatar">
+            <div className="div-avatar">
+              <div className="div-avatar_profile">
+                <Badge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  badgeContent={
+                    <div style={{ position: 'relative' }}>
+                      {/* <SmallAvatar
+                        alt="Remy Sharp"
+                        src="/logoH2.png"
+                        sizes="10"
+                        onClick={handleAvatarClick} // Xử lý click vào SmallAvatar
+                        sx={{ cursor: 'pointer' }}
+                      /> */}
+                      {/* <InstagramFilled
+                        onClick={handleAvatarClick}
+                        style={{ fontSize: 25, color: 'gray' }}
+                      /> */}
+                      <div
+                        onClick={handleAvatarClick}
+                        style={{
+                          // fontSize: 25,
+                          color: 'gray',
+                          cursor: 'pointer',
+                          background: '#ffffff',
+                          // border: '1px solid #0d99ff ',
 
-      {/* <RollTop /> */}
-      {/* <CreateCv role={roleRedux} /> */}
-      {/* <Footer /> */}
+                          borderRadius: '20px',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <CameraIcon />
+                      </div>
+
+                      <input
+                        id="avatar-input"
+                        type="file"
+                        name="images"
+                        hidden
+                        accept="image/*"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                  }
+                >
+                  <Avatar
+                    style={{ height: '70px', width: '70px' }}
+                    alt="Ảnh lỗi"
+                    src={profileV3?.avatarPath ? profileV3?.avatarPath : ''}
+                  />
+                </Badge>
+                <div className="user-company" style={{ marginLeft: '10px' }}>
+                  <h2>
+                    {profileV3?.name ? profileV3?.name : language?.unupdated}
+                  </h2>
+                  <ChangeRoleButton />
+                  {/* <div className="wrap-company">
+                    <div className="wrap-company_info">
+                      <h2
+                        className={
+                          companyName ? 'have-company' : 'company-name'
+                        }
+                        onClick={() => {
+                          window.open('/company-infor', '_self');
+                        }}
+                      >
+                        {companyName ? companyName : language?.company_info}
+                      </h2>
+
+                      <h2>|</h2>
+
+                      <h2>
+                        {companyName
+                          ? language?.profile_page?.can_post_now
+                          : language?.profile_page?.should_register}
+                      </h2>
+                    </div>
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        if (companyName) {
+                          window.open('/post', '_self');
+                        } else {
+                          window.open('/company-infor', '_self');
+                        }
+                      }}
+                    >
+                      <LoginArrowIcon />
+                      {companyName
+                        ? language?.profile_page?.create_post
+                        : language?.profile_page?.register_now}
+                    </Button>
+                  </div> */}
+                  {/* <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      marginTop: '5px',
+                    }}
+                  >
+                    <img src="/images/profile/HiCoin.png" alt="ảnh" />
+                    <p style={{ marginLeft: '5px' }}>0</p>
+                  </div> */}
+                </div>
+              </div>
+              {/* <Button
+                type="primary"
+                icon={<PlusCircleOutlined />}
+                style={{ backgroundColor: '#FBBC04' }}
+              >
+                HiCoin
+              </Button> */}
+            </div>
+            <div
+              style={{
+                whiteSpace: 'pre-wrap',
+                marginTop: '20px',
+                overflowWrap: 'break-word',
+                color: '#575757',
+              }}
+            >
+              {profileV3?.introduction
+                ? profileV3?.introduction
+                : language?.unupdated}
+            </div>
+          </div>
+        </Skeleton>
+
+        <Skeleton className="skeleton-item" loading={loading} active>
+          <div className="div-profile-info">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h3>{language?.personal_information}</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalPersonalInfo(true)}
+              >
+                <div className="edit-icon">
+                  <PencilIcon width={15} height={15} />
+                </div>
+                <p
+                  style={{
+                    color: '#0D99FF',
+                    fontSize: '14px',
+                  }}
+                >
+                  {language?.edit}
+                </p>
+              </Space>
+            </div>
+            <div className="info-detail">
+              <div className="div-detail-row left">
+                <p>{language?.date_of_birth}</p>
+                <p>{language?.sex}</p>
+                <p>{language?.location}</p>
+                <p>{languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}</p>
+              </div>
+              <div className="div-detail-row right">
+                <p>
+                  {profileV3?.birthday
+                    ? moment(new Date(profileV3?.birthday)).format('DD/MM/yyyy')
+                    : language?.unupdated}
+                </p>
+                <p>
+                  {profileV3?.genderText
+                    ? profileV3?.genderText
+                    : language?.unupdated}
+                </p>
+                <p>
+                  {profileV3?.addressText?.fullName
+                    ? profileV3?.addressText?.fullName
+                    : language?.unupdated}
+                </p>
+                <p>
+                  {profileV3?.jobTypeName
+                    ? profileV3?.jobTypeName
+                    : language?.unupdated}
+                </p>
+              </div>
+            </div>
+          </div>
+          {openModelPersonalInfo ? (
+            <ModalProfileInfoPerson
+              openModelPersonalInfo={openModelPersonalInfo}
+              setOpenModalPersonalInfo={setOpenModalPersonalInfo}
+              profile={profileV3}
+            />
+          ) : (
+            <></>
+          )}
+        </Skeleton>
+
+        <Skeleton className="skeleton-item" loading={loading} active>
+          <div className="div-profile-info">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h3>{language?.contact_information}</h3>
+              <Space
+                style={{ cursor: 'pointer' }}
+                onClick={() => setOpenModalContact(true)}
+              >
+                <div className="edit-icon">
+                  <PencilIcon width={15} height={15} />
+                </div>
+
+                <p style={{ color: '#0D99FF', fontSize: '14px' }}>
+                  {language?.edit}
+                </p>
+              </Space>
+            </div>
+            <div className="info-detail">
+              <div className="div-detail-row left">
+                <p>{language?.phone_number}</p>
+                <p>Email</p>
+
+                <p>Facebook</p>
+
+                <p>LinkedIn</p>
+              </div>
+              <div className="div-detail-row right">
+                <p>
+                  {profileV3?.phone ? profileV3?.phone : language?.unupdated}
+                </p>
+                <p>
+                  {profileV3?.email ? profileV3?.email : language?.unupdated}
+                </p>
+
+                <p>
+                  {profileV3?.facebook
+                    ? profileV3?.facebook
+                    : language?.unupdated}
+                </p>
+
+                <p>
+                  {profileV3?.linkedin
+                    ? profileV3?.linkedin
+                    : language?.unupdated}
+                </p>
+              </div>
+            </div>
+          </div>
+          <ModalProfileContact
+            openModalContact={openModalContact}
+            setOpenModalContact={setOpenModalContact}
+            profile={profileV3}
+          />
+        </Skeleton>
+
+        <CandidateProfile
+          display={roleRedux === 0 ? 'block' : 'none'}
+          profile={profileV3}
+          loading={loading}
+          language={language}
+          languageRedux={languageRedux}
+          openModalCareerObjective={openModalCareerObjective}
+          openModalLocation={openModalLocation}
+          openModalEducationCreate={openModalEducationCreate}
+          openModalExperienceCreate={openModalExperienceCreate}
+          setOpenModalCareerObjective={setOpenModalCareerObjective}
+          setOpenModalLocation={setOpenModalLocation}
+          setOpenModalEducationCreate={setOpenModalEducationCreate}
+          setOpenModalExperienceCreate={setOpenModalExperienceCreate}
+          setOpenModalTypeofWork={setOpenModalTypeofWork}
+          openModalTypeofWork={openModalTypeofWork}
+        />
+
+        <Company
+          display={roleRedux === 0 ? 'none' : 'block'}
+          is_profile={true}
+        />
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alert}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              sx={{ width: '100%', backgroundColor: '#000000' }}
+            >
+              {language?.profile_page?.alert_delete_success}
+            </Alert>
+          </Snackbar>
+        </Stack>
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alertSuccess}
+            autoHideDuration={3000}
+            onClose={handleCloseAlertCv}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseAlertCv}
+              severity="success"
+              sx={{ width: '100%', backgroundColor: '#000000' }}
+            >
+              {languageRedux === 1
+                ? 'Bạn đã thêm thông tin thành công !'
+                : 'You have saved the information successfully !'}
+            </Alert>
+          </Snackbar>
+        </Stack>
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alertLackInfo}
+            autoHideDuration={3000}
+            onClose={handleCloseLackInfo}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseLackInfo}
+              severity="error"
+              sx={{ width: '100%', backgroundColor: '#000000' }}
+            >
+              {languageRedux === 1
+                ? 'Vui lòng nhập đầy đủ thông tin !'
+                : 'Please enter complete information !'}
+            </Alert>
+          </Snackbar>
+        </Stack>
+
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={alertEditInfo}
+            autoHideDuration={3000}
+            onClose={handleCloseEditInfo}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleCloseEditInfo}
+              severity="error"
+              sx={{ width: '100%', backgroundColor: '#000000' }}
+            >
+              {languageRedux === 1
+                ? 'Cập nhật thông tin thành công !'
+                : 'Update information successfully !'}
+            </Alert>
+          </Snackbar>
+        </Stack>
+        {profileV3.typeRoleData === 0 && profileV3?.profilesCvs.length === 0 ? (
+          <ModalIntroduceCv />
+        ) : (
+          <></>
+        )}
+      </div>
+
+      <RollTop />
+      <CreateCv role={roleRedux} />
+      <Footer />
     </div>
   );
 };

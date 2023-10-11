@@ -666,7 +666,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         <ModalProfileCareerObjectice
           openModalCareerObjective={openModalCareerObjective}
           setOpenModalCareerObjective={setOpenModalCareerObjective}
-          categories={profile?.categories}
+          categories={profile?.profileCategories}
         />
 
         <ModalProfileEducationCreate
@@ -678,7 +678,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
         <ModalProfileLocation
           openModalLocation={openModalLocation}
           setOpenModalLocation={setOpenModalLocation}
-          locations={profile?.locations}
+          locations={profile?.profileLocations}
         />
 
         <ModalProifileTypeofWork

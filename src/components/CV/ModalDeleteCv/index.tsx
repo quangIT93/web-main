@@ -65,32 +65,46 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
       ]);
       if (result) {
         if (profileV3) {
-          if (profileV3?.data?.profilesCvs.length > 1) {
+          if (profileV3?.profilesCvs.length > 1) {
             await apiCv.putThemeCv(
-              profileV3?.data?.profilesCvs[
-                profileV3?.data?.profilesCvs.length - 2
-              ]?.id,
+              profileV3?.profilesCvs[profileV3?.profilesCvs.length - 1]?.id,
               1,
             );
-          }
+            const resultProfileV3L2 = await profileApi.getProfileV3(
+              languageRedux === 1 ? 'vi' : 'en',
+            );
+            if (resultProfileV3L2) {
+              dispatch(setProfileV3(resultProfileV3L2));
+            }
 
-          const resultProfileV3L2 = await profileApi.getProfileV3(
-            languageRedux === 1 ? 'vi' : 'en',
-          );
-          if (resultProfileV3L2) {
-            dispatch(setProfileV3(resultProfileV3L2));
+            setOpenModalDeleteCv({
+              open: false,
+              item: {
+                id: null,
+                imageURL: '',
+                name: '',
+                pdfURL: '',
+                status: null,
+              },
+            });
+          } else {
+            const resultProfileV3L2 = await profileApi.getProfileV3(
+              languageRedux === 1 ? 'vi' : 'en',
+            );
+            if (resultProfileV3L2) {
+              dispatch(setProfileV3(resultProfileV3L2));
+              setOpenModalDeleteCv({
+                open: false,
+                item: {
+                  id: null,
+                  imageURL: '',
+                  name: '',
+                  pdfURL: '',
+                  status: null,
+                },
+              });
+            }
           }
-
-          setOpenModalDeleteCv({
-            open: false,
-            item: {
-              id: null,
-              imageURL: '',
-              name: '',
-              pdfURL: '',
-              status: null,
-            },
-          });
         }
       }
     }

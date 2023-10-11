@@ -27,7 +27,9 @@ interface IEditPostAddress {
 }
 
 const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   const { setDataCompany, dataCompany, is_profile } = props;
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
@@ -69,7 +71,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getRoles = async () => {
     try {
       const roles = await apiCompany.getAllRolesCompany(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (roles) {
@@ -81,7 +83,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   };
 
   useEffect(() => {
-    getRoles();
+    if (is_profile === false) {
+      getRoles();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
@@ -114,11 +118,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="addressTitle"
         >
-          {
-            language?.role_at_business
-          }
-          {' '}
-          <span style={{ color: 'red' }}>*</span>
+          {language?.role_at_business} <span style={{ color: 'red' }}>*</span>
         </Typography>
 
         <Autocomplete
@@ -130,11 +130,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={
-                language?.company_page?.place_role
-              }
+              placeholder={language?.company_page?.place_role}
               size="small"
-            // value={dataCompany?.companyRole?.name}
+              // value={dataCompany?.companyRole?.name}
             />
           )}
           isOptionEqualToValue={(option, value) => {
@@ -161,11 +159,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           onChange={handleEditCompanyWeb}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={
-            language?.company_page?.place_web
-          }
+          placeholder={language?.company_page?.place_web}
           disabled={is_profile ? true : false}
-        //   error={titleError} // Đánh dấu lỗi
+          //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>

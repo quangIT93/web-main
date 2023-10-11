@@ -87,25 +87,29 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [day, setDay] = useState(
     profile?.birthday ? moment(new Date(profile?.birthday)) : moment(),
   ); // Giá trị mặc định là ngày hiện tại
-  const [dataProvinces, setDataProvinces] = useState<any>();
+  // const [dataProvinces, setDataProvinces] = useState<any>();
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.addressText
       ? {
-        province_id: Number(profile?.addressText?.id),
-        province_fullName: profile?.addressText.fullName,
-      }
+          province_id: Number(profile?.addressText?.id),
+          province_fullName: profile?.addressText.fullName,
+        }
       : null,
   );
 
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
-  const language = useSelector((state: RootState) => state.dataLanguage.languages);
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const [name, setName] = useState(profile?.name);
   const [jobTypeName, setJobTypeName] = useState(profileV3?.jobTypeName);
   const [introduction, setIntroduction] = useState(profile?.introduction);
 
   const [messageApi, contextHolder] = message.useMessage();
-
+  const dataProvinces = useSelector(
+    (state: RootState) => state.dataLocation.data,
+  );
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
@@ -137,26 +141,26 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     setJobTypeName(e.target.value);
   };
 
-  const getAllProvinces = async () => {
-    try {
-      const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
+  // const getAllProvinces = async () => {
+  //   try {
+  //     const allLocation = await locationApi.getAllLocation(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
 
-      if (allLocation) {
-        setDataProvinces(allLocation.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (allLocation) {
+  //       setDataProvinces(allLocation.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getAllProvinces();
-    // getAllLocations()
-    // delete param when back to page
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  // getAllProvinces();
+  // getAllLocations()
+  // delete param when back to page
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [languageRedux]);
 
   const handleDateChange = (date: any) => {
     setDay(moment(date._d));
@@ -300,7 +304,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -348,7 +352,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       helperText: 'DD/MM/YYYY',
                     },
                   }}
-                // format="DD/MM/YYYY"
+                  // format="DD/MM/YYYY"
                 />
               </div>
             </LocalizationProvider>
@@ -368,9 +372,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={
                 selectedProvince && dataProvinces?.length > 0
                   ? dataProvinces?.find(
-                    (province: any) =>
-                      province.province_id === selectedProvince.province_id,
-                  )
+                      (province: any) =>
+                        province.province_id === selectedProvince.province_id,
+                    )
                   : null
               }
               defaultValue={selectedProvince}
@@ -406,7 +410,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               placeholder={
                 languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
           </Box>
           <Box sx={styleChildBox}>
@@ -430,12 +434,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.introduce_yourself_to_the_recruiter}
               error={!introduction} // Đánh dấu lỗi
-            // onKeyDown={(event) => {
-            //   // if (event.key === 'Enter') {
-            //   //   event.preventDefault();
-            //   // }
-            //   console.log(event.target);
-            // }}
+              // onKeyDown={(event) => {
+              //   // if (event.key === 'Enter') {
+              //   //   event.preventDefault();
+              //   // }
+              //   console.log(event.target);
+              // }}
             />
           </Box>
         </form>

@@ -116,6 +116,12 @@ const CandidateNewDetail = () => {
     } catch (error) {}
   };
 
+  React.useEffect(() => {
+    if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
+      window.open('/', '_parent');
+    }
+  }, [profileV3]);
+
   const getBookMark = async () => {
     try {
       const resultBookmark = await candidateSearch.getBookmarkCandidate(
@@ -142,7 +148,6 @@ const CandidateNewDetail = () => {
 
   const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
   const handleCancleSave = () => dispatch<any>(setAlert(false));
-  console.log('profileV3', profileV3);
 
   return (
     <div className="candidate-new-detail">

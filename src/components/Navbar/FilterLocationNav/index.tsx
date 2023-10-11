@@ -1,5 +1,5 @@
 import React, { useState, memo, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 // import Box from '@mui/material/Box';
 import { Cascader, Divider, Typography } from 'antd';
@@ -13,6 +13,8 @@ import { AddressFilterIcon, ArrowFilterIcon } from '#components/Icons';
 import { getCookie } from 'cookies';
 // import api
 import locationApi from 'api/locationApi';
+
+import { setLocationApi } from 'store/reducer/locationReducer';
 
 // import redux
 import { RootState } from 'store';
@@ -59,13 +61,19 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [dataLocations, setDataLocations] = React.useState<any>(null);
+  // const [dataLocations, setDataLocations] = React.useState<any>(null);
   // const [dataDistrict, setDataDistrict] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
   const [locId, setLocId] = useState<string[]>([]);
   // const [messageApi, contextHolder] = message.useMessage();
 
   const userProfile = useSelector((state: RootState) => state.profile.profile);
+
+  const dataLocations = useSelector(
+    (state: RootState) => state.dataLocation.data,
+  );
+
+  const dispatch = useDispatch();
 
   // const [listLocation];
 
@@ -115,7 +123,8 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
         languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
-        setDataLocations(result.data);
+        // setDataLocations(result.data);
+        dispatch(setLocationApi(result));
       }
 
       if (
@@ -145,7 +154,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     // }
     onChange(listLocation.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [languageRedux]);
 
   const onChange = (value: any) => {
     // Xử lý giá trị thay đổi

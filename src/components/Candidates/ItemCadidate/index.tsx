@@ -40,14 +40,14 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
       return;
     }
     try {
-      const result = await candidateSearch.postCountShowCandidate(
-        item.accountId,
-      );
+      // const result = await candidateSearch.postCountShowCandidate(
+      //   item.accountId,
+      // );
 
-      if (result) {
-        localStorage.setItem('candidateId', accountId);
-        window.open('/candidate-new-detail');
-      }
+      // if (result) {
+      // }
+      localStorage.setItem('candidateId', accountId);
+      window.open('/candidate-new-detail');
     } catch (error) {
       if (profileV3.typeRoleData === 0) {
         window.open('/', '_parent');

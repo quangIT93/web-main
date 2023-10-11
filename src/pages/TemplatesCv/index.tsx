@@ -119,7 +119,7 @@ const TemplatesCv: React.FC = () => {
             setOpenModalSuccessDownCv({ open: true, id: result.data.id });
             // setOpenModalChooseCv(true);
             // console.log('lưu cv thành công');
-            handleSaveCv();
+            // handleSaveCv();
           }
         }
       }

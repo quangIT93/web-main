@@ -24,7 +24,13 @@ interface IEditPostAddress {
 }
 
 const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
-  const { dataPostById, setEditDataPosted, editDataPosted, language, languageRedux } = props;
+  const {
+    dataPostById,
+    setEditDataPosted,
+    editDataPosted,
+    language,
+    languageRedux,
+  } = props;
 
   const [dataProvinces, setDataProvinces] = useState<any>(null);
   const [dataDistricts, setDataDistrict] = useState<any>(null);
@@ -73,7 +79,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
   const getAllProvinces = async () => {
     try {
       const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (allLocation) {
@@ -90,7 +96,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
       if (dataPostById && dataDistricts === null) {
         const districts = await locationApi.getDistrictsById(
           dataPostById?.province_id,
-          languageRedux === 1 ? "vi" : "en",
+          languageRedux === 1 ? 'vi' : 'en',
         );
 
         if (districts) {
@@ -100,7 +106,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedProvince) {
           const districts = await locationApi.getDistrictsById(
             selectedProvince?.province_id,
-            languageRedux === 1 ? "vi" : "en",
+            languageRedux === 1 ? 'vi' : 'en',
           );
           if (districts) {
             setDataDistrict(districts.data);
@@ -118,7 +124,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
       if (dataDistricts && dataWards === null) {
         const allward = await locationApi.getWardsId(
           dataPostById.district_id,
-          languageRedux === 1 ? "vi" : "en",
+          languageRedux === 1 ? 'vi' : 'en',
         );
         if (allward) {
           setDataWard(allward.data);
@@ -127,7 +133,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedDistrict) {
           const allward = await locationApi.getWardsId(
             selectedDistrict?.id,
-            languageRedux === 1 ? "vi" : "en",
+            languageRedux === 1 ? 'vi' : 'en',
           );
           if (allward) {
             setDataWard(allward.data);
@@ -195,10 +201,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="addressTitle"
           >
-            {
-              language?.post_page.city
-            }{' '}
-            <span style={{ color: 'red' }}>*</span>
+            {language?.post_page.city} <span style={{ color: 'red' }}>*</span>
           </Typography>
 
           <Autocomplete
@@ -209,9 +212,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder={
-                  language?.post_page.place_city
-                }
+                placeholder={language?.post_page.place_city}
                 size="small"
                 value={selectedProvince?.province_fullName}
               />
@@ -230,9 +231,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page.district
-            }{' '}
+            {language?.post_page.district}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
@@ -241,9 +240,11 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             value={selectedDistrict || null}
             onChange={handleDistrictChange}
             renderInput={(params: any) => (
-              <TextField {...params} placeholder={
-                language?.post_page.place_district
-              } size="small" />
+              <TextField
+                {...params}
+                placeholder={language?.post_page.place_district}
+                size="small"
+              />
             )}
             isOptionEqualToValue={(option, value) => {
               return option.full_name === value.full_name;
@@ -260,10 +261,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page.ward
-            }{' '}
-            <span style={{ color: 'red' }}>*</span>
+            {language?.post_page.ward} <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             options={dataWards ? dataWards : []}
@@ -271,9 +269,11 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             value={selectedWard || null}
             onChange={handleChangeWardId}
             renderInput={(params) => (
-              <TextField {...params} placeholder={
-                language?.post_page.place_ward
-              } size="small" />
+              <TextField
+                {...params}
+                placeholder={language?.post_page.place_ward}
+                size="small"
+              />
             )}
             isOptionEqualToValue={(option, value) => {
               return option.full_name === value.full_name;
@@ -289,9 +289,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page.address
-            }{' '}
+            {language?.post_page.address}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
@@ -302,9 +300,7 @@ const EditPostAddress: React.FC<IEditPostAddress> = memo((props) => {
             onChange={handleChangeAddress}
             size="small"
             sx={{ width: '100%', marginTop: '0.5rem' }}
-            placeholder={
-              language?.post_page.place_address
-            }
+            placeholder={language?.post_page.place_address}
           />
         </div>
       </div>

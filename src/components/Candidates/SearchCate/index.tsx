@@ -88,7 +88,9 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
   };
 
   React.useEffect(() => {
-    getCategories();
+    if (dataCategories === null) {
+      getCategories();
+    }
     // if (listCate.length > 2) {
     //   setDisable(true)
     // }

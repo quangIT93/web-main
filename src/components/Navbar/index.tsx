@@ -158,7 +158,9 @@ const Navbar: React.FC = () => {
   } = useContext(ChatContext);
 
   // const [showTap, setShowTap] = React.useState(false);
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   // const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -189,7 +191,7 @@ const Navbar: React.FC = () => {
   const [userFiltered, setUserFiltered] = useState<any>();
 
   const [countChat, setCountChat] = useState<number>(0);
-  const [languageId, setLanguageId] = useState<number>(1);
+  const [languageId, setLanguageId] = useState<number>(languageRedux);
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
   const [openRadioGroup, setOpenRadioGroup] = useState<boolean>(false);
@@ -248,6 +250,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
     setLanguageId(userLanguageSelected);
+    console.log(languageId);
   }, [languageId]);
 
   // console.log('jobTYpe', jobType);
@@ -320,10 +323,6 @@ const Navbar: React.FC = () => {
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   // console.log('profileV3', profileV3);
 
-  const languageRedux = useSelector(
-    (state: RootState) => state.changeLaguage.language,
-  );
-
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
 
   const languageData = useSelector((state: RootState) => {
@@ -343,9 +342,6 @@ const Navbar: React.FC = () => {
   // const handleClickInput = () => {
   //   setOpenCollapse(!openCollapse)
   // }
-
-  // const [role, setRole] = React.useState<any>(roleRedux);
-  console.log('profileV3', profileV3);
 
   const getCompanyInforByAccount = async () => {
     try {
@@ -427,7 +423,6 @@ const Navbar: React.FC = () => {
     // dispatch(getProfile() as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
-  console.log('profile');
 
   // get count unread
   const getCountUnread = async () => {
@@ -856,16 +851,16 @@ const Navbar: React.FC = () => {
     }
   };
 
-  // const getPropfileV3New = async () => {
-  //   try {
-  //     const result = await profileApi.getProfileV3(
-  //       languageRedux === 1 ? 'vi' : 'en',
-  //     );
-  //     if (result) {
-  //       dispatch(setProfileV3(result));
-  //     }
-  //   } catch (error) {}
-  // };
+  const getPropfileV3New = async () => {
+    try {
+      const result = await profileApi.getProfileV3(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      if (result) {
+        dispatch(setProfileV3(result));
+      }
+    } catch (error) {}
+  };
 
   // useEffect(() => {
   //   getPropfileV3New();
@@ -961,7 +956,7 @@ const Navbar: React.FC = () => {
     setLanguageId(e.target.value);
     setCookie('languageId', JSON.stringify(e.target.value), 365);
     await dispatch<any>(setLanguage(e.target.value));
-    await dispatch(getLanguages(e.target.value) as any);
+    // await dispatch(getLanguages(e.target.value) as any);
 
     // try {
     //   const result = await languageApi.getLanguage(
@@ -979,8 +974,12 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
     if (userLanguageSelected) {
+      setLanguageId(userLanguageSelected);
+      console.log('2222222');
       dispatch(getLanguages(userLanguageSelected) as any);
     } else {
+      console.log('33333333');
+      setLanguageId(1);
       dispatch(getLanguages('1') as any);
     }
   }, [languageId]);
@@ -1046,7 +1045,7 @@ const Navbar: React.FC = () => {
             style={{
               display:
                 profileV3.length !== 0
-                  ? roleRedux === 0
+                  ? roleRedux === 0 || profileV3?.typeRoleData === 0
                     ? 'flex'
                     : 'none'
                   : 'none',
@@ -1084,7 +1083,7 @@ const Navbar: React.FC = () => {
             style={{
               display:
                 profileV3.length !== 0
-                  ? roleRedux === 0
+                  ? roleRedux === 0 || profileV3?.typeRoleData === 0
                     ? 'none'
                     : 'flex'
                   : 'none',
@@ -1280,7 +1279,9 @@ const Navbar: React.FC = () => {
                   className="sub-login_item"
                   style={{
                     borderBottom:
-                      roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
+                      roleRedux === 0 || profileV3?.typeRoleData === 0
+                        ? 'none'
+                        : '1px solid rgb(170, 170, 170)',
                   }}
                   // onClick={() => {
                   //   window.open('/history', "_top")
@@ -1293,7 +1294,10 @@ const Navbar: React.FC = () => {
               <div
                 className="sub-history_status"
                 style={{
-                  display: roleRedux === 0 ? 'flex' : 'none',
+                  display:
+                    roleRedux === 0 || profileV3?.typeRoleData === 0
+                      ? 'flex'
+                      : 'none',
                 }}
               >
                 <span>
@@ -1456,7 +1460,12 @@ const Navbar: React.FC = () => {
       <div className="switch-container-responsive">
         <div
           className="search-job-switch-responsive "
-          style={{ display: roleRedux === 0 ? 'flex' : 'none' }}
+          style={{
+            display:
+              roleRedux === 0 || profileV3?.typeRoleData === 0
+                ? 'flex'
+                : 'none',
+          }}
         >
           {/* <p>
         {
@@ -1615,7 +1624,9 @@ const Navbar: React.FC = () => {
                   className="sub-login_item"
                   style={{
                     borderBottom:
-                      roleRedux === 0 ? 'none' : '1px solid rgb(170, 170, 170)',
+                      roleRedux === 0 || profileV3?.typeRoleData === 0
+                        ? 'none'
+                        : '1px solid rgb(170, 170, 170)',
                   }}
                   // onClick={() => {
                   //   window.open('/history', "_top")
@@ -1628,7 +1639,10 @@ const Navbar: React.FC = () => {
               <div
                 className="sub-history_status"
                 style={{
-                  display: roleRedux === 0 ? 'flex' : 'none',
+                  display:
+                    roleRedux === 0 || profileV3?.typeRoleData === 0
+                      ? 'flex'
+                      : 'none',
                 }}
               >
                 <span>
@@ -1951,8 +1965,65 @@ const Navbar: React.FC = () => {
           ) : (
             <></>
           )}
-          <div className="filter-wraps">
-            <div className="filter-wrap_top">
+
+          {window.innerWidth > 768 ? (
+            <div className="filter-wraps">
+              <div className="filter-wrap_top">
+                <FilterLocationNav
+                  listDis={listDis}
+                  setListDis={setListDis}
+                  reset={reset}
+                  setReset={setReset}
+                  language={languageData}
+                />
+                <FilterCateloriesNav
+                  listCateProps={listCate}
+                  setListCate={setListCate}
+                  reset={reset}
+                  setReset={setReset}
+                  language={languageData}
+                />
+                <FilterTypeJob
+                  valueTypeJob={jobType}
+                  setTypeJob={setJobType}
+                  reset={reset}
+                  setReset={setReset}
+                  language={languageData}
+                />
+              </div>
+              <div className="filter-wrap_bottom">
+                <FilterTypeSalary
+                  setSalaryType={setSalaryType}
+                  reset={reset}
+                  setReset={setReset}
+                />
+                <FilterSalary
+                  salaryType={salaryType}
+                  typeMoney={typeMoney}
+                  setTypeMoney={setTypeMoney}
+                  salaryMin={salaryMin}
+                  salaryMax={salaryMax}
+                  setSalaryMin={setSalaryMin}
+                  setSalaryMax={setSalaryMax}
+                  reset={reset}
+                  setReset={setReset}
+                />
+                <FilterTimeJob
+                  setIsWorkingWeekend={setIsWorkingWeekend}
+                  isWorkingWeekend={isWorkingWeekend}
+                  isRemotely={isRemotely}
+                  setIsRemotely={setIsRemotely}
+                  reset={reset}
+                  setReset={setReset}
+                />
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
+
+          {window.innerWidth <= 768 ? (
+            <div className="filter-wrap_respone">
               <FilterLocationNav
                 listDis={listDis}
                 setListDis={setListDis}
@@ -1974,84 +2045,36 @@ const Navbar: React.FC = () => {
                 setReset={setReset}
                 language={languageData}
               />
-            </div>
-            <div className="filter-wrap_bottom">
               <FilterTypeSalary
                 setSalaryType={setSalaryType}
                 reset={reset}
                 setReset={setReset}
               />
-              <FilterSalary
-                salaryType={salaryType}
-                typeMoney={typeMoney}
-                setTypeMoney={setTypeMoney}
-                salaryMin={salaryMin}
-                salaryMax={salaryMax}
-                setSalaryMin={setSalaryMin}
-                setSalaryMax={setSalaryMax}
-                reset={reset}
-                setReset={setReset}
-              />
-              <FilterTimeJob
-                setIsWorkingWeekend={setIsWorkingWeekend}
-                isWorkingWeekend={isWorkingWeekend}
-                isRemotely={isRemotely}
-                setIsRemotely={setIsRemotely}
-                reset={reset}
-                setReset={setReset}
-              />
+              <div className="filter-wrap-respone_bottom">
+                <FilterSalary
+                  salaryType={salaryType}
+                  typeMoney={typeMoney}
+                  setTypeMoney={setTypeMoney}
+                  salaryMin={salaryMin}
+                  salaryMax={salaryMax}
+                  setSalaryMin={setSalaryMin}
+                  setSalaryMax={setSalaryMax}
+                  reset={reset}
+                  setReset={setReset}
+                />
+                <FilterTimeJob
+                  setIsWorkingWeekend={setIsWorkingWeekend}
+                  isWorkingWeekend={isWorkingWeekend}
+                  isRemotely={isRemotely}
+                  setIsRemotely={setIsRemotely}
+                  reset={reset}
+                  setReset={setReset}
+                />
+              </div>
             </div>
-          </div>
-
-          <div className="filter-wrap_respone">
-            <FilterLocationNav
-              listDis={listDis}
-              setListDis={setListDis}
-              reset={reset}
-              setReset={setReset}
-              language={languageData}
-            />
-            <FilterCateloriesNav
-              listCateProps={listCate}
-              setListCate={setListCate}
-              reset={reset}
-              setReset={setReset}
-              language={languageData}
-            />
-            <FilterTypeJob
-              valueTypeJob={jobType}
-              setTypeJob={setJobType}
-              reset={reset}
-              setReset={setReset}
-              language={languageData}
-            />
-            <FilterTypeSalary
-              setSalaryType={setSalaryType}
-              reset={reset}
-              setReset={setReset}
-            />
-            <div className="filter-wrap-respone_bottom">
-              <FilterSalary
-                salaryType={salaryType}
-                typeMoney={typeMoney}
-                setTypeMoney={setTypeMoney}
-                salaryMin={salaryMin}
-                salaryMax={salaryMax}
-                setSalaryMin={setSalaryMin}
-                setSalaryMax={setSalaryMax}
-                reset={reset}
-                setReset={setReset}
-              />
-              <FilterTimeJob
-                setIsWorkingWeekend={setIsWorkingWeekend}
-                isWorkingWeekend={isWorkingWeekend}
-                isRemotely={isRemotely}
-                setIsRemotely={setIsRemotely}
-                reset={reset}
-                setReset={setReset}
-              />
-            </div>
-          </div>
+          ) : (
+            <></>
+          )}
 
           <div className="btn-filter_nav">
             <Button type="default" onClick={handleResetValue}>
