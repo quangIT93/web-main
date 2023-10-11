@@ -77,7 +77,9 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   );
   const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const [dataCategories, setDataCategories] = React.useState<any>(null);
-  const [valueNameCv, setValueNameCv] = React.useState<any>('');
+  const [valueNameCv, setValueNameCv] = React.useState<any>(
+    `Resume ${Number(localStorage.getItem('cv-id')) || 1}`
+  );
   const [cvId, setCvId] = React.useState<any>(1);
 
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
@@ -202,12 +204,13 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     }
   }, [getThemeCv]);
 
-  const handleChangeCategory = async () => {};
+  const handleChangeCategory = async () => { };
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
     setValueNameCv(name);
     localStorage.setItem('cv-id', id);
+    localStorage.setItem('nameCv', name);
   };
 
   const getTheme = async () => {
@@ -216,7 +219,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const styles = StyleSheet.create({
@@ -312,11 +315,20 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           />
         </Box> */}
 
+        <div className='list-template-title'>
+          <h3>
+            {
+              languageRedux === 1 ?
+                "Chọn mẫu CV" : "Choose resume template"
+            }
+          </h3>
+        </div>
         <div className="list-template">
           {getThemeCv.map((item: any, index: any) => (
             <div
               className={
-                item?.id === Number(localStorage.getItem('cv-id'))
+                item?.id === (Number(localStorage.getItem('cv-id')) ?
+                  Number(localStorage.getItem('cv-id')) : 1)
                   ? 'template-item active'
                   : 'template-item'
               }
@@ -428,7 +440,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
         <div
           className="contentCv-bottom-right_cv"
           id="page"
-          // dangerouslySetInnerHTML={{ __html: htmlCv }}
+        // dangerouslySetInnerHTML={{ __html: htmlCv }}
         >
           <>
             {/* <PreviewTheme1 /> */}

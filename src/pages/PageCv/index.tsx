@@ -45,7 +45,15 @@ const PageCv = () => {
           </p>
           <div
             className="button-update_profile"
-            onClick={() => window.open('/profile', '_parent')}
+            onClick={() => {
+              if (!localStorage.getItem('accessToken')) {
+                setOpenModalLogin(true);
+                return
+              } else {
+                window.open('/profile', '_parent')
+              }
+            }
+            }
           >
             Cập nhật hồ sơ
           </div>

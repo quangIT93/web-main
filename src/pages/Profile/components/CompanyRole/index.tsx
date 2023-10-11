@@ -90,7 +90,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                                     cursor: 'pointer',
                                     display: 'flex',
                                 }}
-                                onClick={() => window.open(`/company-role-infor`, '_parent')}
+                                onClick={() => window.open(`/company-infor`, '_parent')}
                             >
                                 <div className="edit-icon">
                                     <PencilIcon width={15} height={15} />

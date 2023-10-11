@@ -61,6 +61,8 @@ const TemplatesCv: React.FC = () => {
   });
   const [searchParams, setSearchParams] = useSearchParams();
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const [unUp, setUnUp] = React.useState(true)
+  const [unDown, setUnDown] = React.useState(false)
 
   React.useEffect(() => {
     roleRedux === 1 && window.open(`/`, '_parent');
@@ -68,15 +70,29 @@ const TemplatesCv: React.FC = () => {
   }, []);
 
   const handleClickMinusCircle = () => {
-    if (fontSizeCV > 16) {
+    setUnUp(false);
+    if (fontSizeCV > 20) {
       setFontSizeCV(fontSizeCV - 2);
     }
+    if (fontSizeCV === 20) {
+      setUnDown(true)
+      console.log(unDown);
+
+    }
+    console.log(fontSizeCV);
+
   };
 
   const handleClickPlusCircle = () => {
-    if (fontSizeCV < 20) {
+    setUnDown(false)
+    if (fontSizeCV < 24) {
       setFontSizeCV(fontSizeCV + 2);
     }
+    if (fontSizeCV === 24) {
+      setUnUp(true);
+      console.log(unUp);
+    }
+    console.log(fontSizeCV);
   };
 
   const handlePickColor = (color: number) => {
@@ -89,11 +105,16 @@ const TemplatesCv: React.FC = () => {
     setOpenModalChooseCv(true);
   };
 
+  React.useEffect(() => {
+
+  }, [])
+
   const handleClickSaveCv = async () => {
     console.log('1111111111111111');
 
     const selectedTemplate = templatesCv.find(
-      (template) => template.id === Number(localStorage.getItem('cv-id')) && 1,
+      (template) => template.id === Number(localStorage.getItem('cv-id')) ?
+        Number(localStorage.getItem('cv-id')) : 1,
     );
     try {
       if (selectedTemplate) {
@@ -108,10 +129,14 @@ const TemplatesCv: React.FC = () => {
             profile={profileV3}
           />,
         ).toBlob();
+
+        const name = localStorage.getItem('nameCv') !== null ?
+          localStorage.getItem('nameCv') : 'Resume 1'
+
         if (pdfBlob) {
           const formData = new FormData();
           formData.append('file', pdfBlob);
-          formData.append('name', localStorage.getItem('nameCv')!);
+          formData.append('name', name!);
           // formData.append('status', '1');
 
           const result = await apiCv.postCv(formData);
@@ -230,11 +255,11 @@ const TemplatesCv: React.FC = () => {
           </div>
           <div className="change-styles">
             <div className="change-styles_font">
-              <div className="minusCircle" onClick={handleClickMinusCircle}>
+              <div className={unDown ? "minusCircle unable" : "minusCircle"} onClick={handleClickMinusCircle}>
                 <MinusCircle />
               </div>
               <p style={{ fontSize: fontSizeCV }}>A</p>
-              <div className="plusCircle" onClick={handleClickPlusCircle}>
+              <div className={unUp ? "plusCircle unable" : "plusCircle"} onClick={handleClickPlusCircle}>
                 <PlusCircle />
               </div>
             </div>
