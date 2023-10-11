@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -55,14 +55,20 @@ interface ITypeofWork {
 
 const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
   const { setOpenModalTypeofWork, openModalTypeofWork, jobTypeId } = props;
-  const [valueType, setValueType] = React.useState<number | null>(null);
+  const [valueType, setValueType] = React.useState<number | null>(jobTypeId);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setValueType(jobTypeId)
+  }, [jobTypeId])
 
   const handleClose = () => {
     setOpenModalTypeofWork(false);
+    handleSubmit()
   };
 
   const handleChange = (e: any) => {
@@ -79,7 +85,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
         dispatch(setProfileV3(resultProfileV3));
         setOpenModalTypeofWork(false);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -112,7 +118,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
           align="center"
         >
           {/* {language?.working_location} */}
-          Type of work
+          {languageRedux === 1 ? 'Loại hình công việc' : 'Type of work'}
         </Typography>
 
         {/* <Box sx={styleChildBox}>
@@ -151,7 +157,7 @@ const ModalTypeofWork: React.FC<ITypeofWork> = (props) => {
             placeholder={'Loại công việc'}
             size="small"
             sx={{ width: '100%' }}
-            // error={!gender} // Đánh dấu lỗi
+          // error={!gender} // Đánh dấu lỗi
           >
             <MenuItem value={1}>
               {languageRedux === 1 ? 'Toàn thời gian' : 'Fulltime'}
