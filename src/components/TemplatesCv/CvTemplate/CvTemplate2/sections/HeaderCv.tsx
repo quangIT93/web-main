@@ -118,15 +118,33 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
           <Image
             // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
             style={{ objectFit: 'cover' }}
-            src={avatar}
-            source={avatar}
+            src={{
+              uri: profile.avatarPath !== null ? profile.avatarPath : '',
+              method: 'GET',
+              body: '',
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Cache-Control': 'no-cache',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': '*',
+              },
+            }}
           />
         ) : (
           <Image
             // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
             style={{ objectFit: 'cover' }}
-            src={avatar}
-            source={avatar}
+            src={{
+              uri: profile.avatarPath !== null ? profile.avatarPath : '',
+              method: 'GET',
+              body: '',
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Cache-Control': 'no-cache',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': '*',
+              },
+            }}
           />
         )}
       </View>

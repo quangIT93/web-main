@@ -231,11 +231,14 @@ const Header: React.FC<ICvHeader> = (props) => {
               // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
               style={styles.image}
               src={{
-                uri: profile.avatarPath,
+                uri: profile.avatarPath !== null ? profile.avatarPath : '',
                 method: 'GET',
                 body: '',
                 headers: {
                   'Access-Control-Allow-Origin': '*',
+                  'Cache-Control': 'no-cache',
+                  'Access-Control-Allow-Methods': '*',
+                  'Access-Control-Allow-Headers': '*',
                 },
               }}
             />
@@ -243,15 +246,21 @@ const Header: React.FC<ICvHeader> = (props) => {
             <Image
               // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
               style={styles.image}
+              // src={{
+              //   uri: profile.avatarPath,
+              //   method: 'GET',
+              //   headers: { 'Cache-Control': 'no-cache' },
+              //   body: '',
+              // }}
               src={{
-                uri: profile.avatarPath,
+                uri: profile.avatarPath !== null ? profile.avatarPath : '',
                 method: 'GET',
                 body: '',
                 headers: {
                   'Access-Control-Allow-Origin': '*',
-                  accept: '*/*',
-                  'Referrer-Policy': 'strict-origin-when-cross-origin',
-                  'sec-fetch-mode': 'cors',
+                  'Cache-Control': 'no-cache',
+                  'Access-Control-Allow-Methods': '*',
+                  'Access-Control-Allow-Headers': '*',
                 },
               }}
             />

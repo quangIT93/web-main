@@ -50,13 +50,12 @@ import CvTemplate7 from '../CvTemplate/CvTemplate7';
 
 import templatesCv from '../CvTemplate/ListTheme';
 import { template } from '@babel/core';
-import axios from 'axios';
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/legacy/build/pdf.worker.min.js',
 //   import.meta.url,
 // ).toString();
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 const styleChildBox = {
   marginBottom: '12px',
 };
@@ -87,23 +86,6 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
   const TemplateId = Number(localStorage.getItem('cv-id')) || 1;
-
-  const handleImage = async () => {
-    try {
-      if (profile.length !== 0) {
-        const response = await axios.get(profile.avatarPath, {
-          responseType: 'blob',
-        });
-        // console.log('response', response);
-      }
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  useEffect(() => {
-    handleImage();
-  }, [profile]);
 
   // const templatesCv = [
   //   {
@@ -239,12 +221,10 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const handleChangeCategory = async () => {};
 
   const handleSelectTemplate = (id: any, name: string) => {
-    setTimeout(() => {
-      setSelectedThemeId(id);
-      setValueNameCv(name);
-      localStorage.setItem('cv-id', id);
-      localStorage.setItem('nameCv', name);
-    }, 2000);
+    setSelectedThemeId(id);
+    setValueNameCv(name);
+    localStorage.setItem('cv-id', id);
+    localStorage.setItem('nameCv', name);
   };
 
   const getTheme = async () => {
@@ -478,7 +458,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           <>
             {/* <PreviewTheme1 /> */}
 
-            {profileV3.length !== 0 && (
+            {profileV3.length !== 0 ? (
               <Document
                 loading={<Spin indicator={antIcon} />}
                 noData={<Spin indicator={antIcon} />}
@@ -504,6 +484,8 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                     />
                   ))}
               </Document>
+            ) : (
+              <></>
             )}
           </>
         </div>

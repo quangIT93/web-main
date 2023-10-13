@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 // import pdfjsLib from 'jspdf';
-import * as pdfjsLib from 'pdfjs-dist';
+// import * as pdfjsLib from 'pdfjs-dist';
 import CVItem from '#components/Profile/CV';
 import { Button, Popconfirm, Skeleton, Space, message } from 'antd';
 import { DownloadCVIcon, PencilIcon, TickIcon } from '#components/Icons';
@@ -244,33 +244,33 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
     window.open(`/pdfView?idPdf=${id}`);
   };
 
-  const handleShow = () => {
-    var pdfViewer = document.getElementById('pdfViewer');
-    // Sử dụng PDF.js để hiển thị PDF từ URL
-    pdfjsLib.getDocument('pdfUrl').promise.then(function (pdfDoc: any) {
-      var numPages = pdfDoc.numPages;
-      var currentPage = 1; // Trang mặc định là trang đầu tiên
+  // const handleShow = () => {
+  //   var pdfViewer = document.getElementById('pdfViewer');
+  //   // Sử dụng PDF.js để hiển thị PDF từ URL
+  //   pdfjsLib.getDocument('pdfUrl').promise.then(function (pdfDoc: any) {
+  //     var numPages = pdfDoc.numPages;
+  //     var currentPage = 1; // Trang mặc định là trang đầu tiên
 
-      // Hiển thị trang đầu tiên
-      pdfDoc.getPage(currentPage).then(function (page: any) {
-        var canvas = document.createElement('canvas');
-        var context = canvas.getContext('2d');
-        var viewport = page.getViewport({ scale: 1.0 }); // Điều chỉnh scale nếu cần
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        if (pdfViewer) {
-          pdfViewer.innerHTML = ''; // Xóa nội dung cũ trước khi thêm mới
-          pdfViewer.appendChild(canvas);
-          page.render({
-            canvasContext: context,
-            viewport: viewport,
-          });
-        }
+  //     // Hiển thị trang đầu tiên
+  //     pdfDoc.getPage(currentPage).then(function (page: any) {
+  //       var canvas = document.createElement('canvas');
+  //       var context = canvas.getContext('2d');
+  //       var viewport = page.getViewport({ scale: 1.0 }); // Điều chỉnh scale nếu cần
+  //       canvas.height = viewport.height;
+  //       canvas.width = viewport.width;
+  //       if (pdfViewer) {
+  //         pdfViewer.innerHTML = ''; // Xóa nội dung cũ trước khi thêm mới
+  //         pdfViewer.appendChild(canvas);
+  //         page.render({
+  //           canvasContext: context,
+  //           viewport: viewport,
+  //         });
+  //       }
 
-        // Vẽ nội dung PDF lên canvas
-      });
-    });
-  };
+  //       // Vẽ nội dung PDF lên canvas
+  //     });
+  //   });
+  // };
 
   return (
     <div style={{ display: display, width: '100%' }}>
