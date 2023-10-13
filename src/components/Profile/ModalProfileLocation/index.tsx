@@ -31,6 +31,7 @@ import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 
 import './style.scss';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -83,33 +84,38 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const { openModalLocation, setOpenModalLocation, locations } = props;
-  const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
+  // const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
   // const [open, setOpen] = React.useState<any>([]);
   const [treeData, setTransformedData] = React.useState<any>(null);
-  const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
-
-  const [value, setValue] = React.useState(
-    locations?.map((v: any, i) => v.district_id),
+  const dataAllLocation = useSelector(
+    (state: RootState) => state.dataLocation.data,
   );
+  // const [language, setLanguageState] = React.useState<any>();
+
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
+
+  const [value, setValue] = React.useState(locations?.map((v: any, i) => v.id));
 
   // const [location, setLocation] = React.useState<any>(
   //   locations?.map((v: any, i) => v.district),
@@ -120,33 +126,34 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   // );
 
   const dispatch = useDispatch();
+
   const handleClose = () => {
     handleSubmit();
     setOpenModalLocation(false);
   };
-  const allLocation = async () => {
-    try {
-      const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
+  // const allLocation = async () => {
+  //   try {
+  //     const allLocation = await locationApi.getAllLocation(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
 
-      if (allLocation) {
-        setDataAllLocation(allLocation.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (allLocation) {
+  //       setDataAllLocation(allLocation.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  // allLocation();
+  // getAllLocations()
+  // delete param when back to page
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [languageRedux]);
 
   React.useEffect(() => {
-    allLocation();
-    // getAllLocations()
-    // delete param when back to page
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
-
-  React.useEffect(() => {
-    if (dataAllLocation) {
+    if (dataAllLocation.length !== 0) {
       const transformedData = dataAllLocation.map((item: any) => {
         return {
           title: item?.province_name,
@@ -168,7 +175,7 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
   }, [dataAllLocation]);
 
   useEffect(() => {
-    setValue(locations?.map((v: any, i) => v.district_id) || []);
+    setValue(locations?.map((v: any, i) => v.id) || []);
 
     if (dataAllLocation && dataAllLocation.length > 0) {
       // setOpen(Array(dataAllLocation.length).fill(false));
@@ -241,6 +248,8 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
     try {
       if (value.length > 10) {
         message.error(language?.limit_10_location);
+
+        setValue(locations?.map((v: any, i) => v.id));
         return;
       }
       const result = await profileApi.updateProfileLocation(
@@ -248,7 +257,10 @@ const ModalProfileLocation: React.FC<IModalProfileLocation> = (props) => {
         // locationId,
       );
       if (result) {
-        await dispatch(getProfile() as any);
+        const getProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        await dispatch(setProfileV3(getProfileV3) as any);
         setOpenModalLocation(false);
       }
     } catch (error) {

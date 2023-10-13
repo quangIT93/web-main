@@ -1,0 +1,88 @@
+.viewPdf-container {
+    max-width: 1080px;
+    margin: 100px auto 0 auto;
+    .viewPdf-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 50px;
+        flex-direction: column;
+        .header-content-viewPdf {
+            display: flex;
+            justify-content: center;
+            // width: 100%;
+            padding: 24px 0;
+            gap: 12px;
+            flex-direction: column;
+            align-items: center;
+
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .installCV {
+                width: fit-content;
+                cursor: pointer;
+
+                p {
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    border: 1px solid #ccc;
+                    // box-shadow: 1px 1px 5px #ccc;
+                    // width: auto;
+                    text-align: center;
+                    &:hover {
+                        background-color: #ccc !important;
+                        transition: all linear 0.3s;
+                    }
+                }
+            }
+        }
+
+        .react-pdf__Document {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            .react-pdf__Page {
+                box-shadow: 1px 1px 5px #ccc;
+            }
+
+            .page-cv-reviewer {
+                // width: 900px;
+                // height: 1200px;
+
+                .react-pdf__Page__canvas {
+                    // width: 900px;
+                    // height: 1200px;
+                }
+                @media screen and (max-width: 900px) {
+                    width: 600px !important;
+                    height: 900px !important;
+                    .react-pdf__Page__canvas {
+                        width: 600px !important;
+                         height: 900px !important;
+                    }
+                }
+
+                @media screen and (max-width: 600px) {
+                    width: 420px !important;
+                    height: 600px !important;
+                    .react-pdf__Page__canvas {
+                        width: 420px !important;
+                        height: 600px !important;
+                    }
+                }
+
+                @media screen and (max-width: 420px) {
+                    width: 300px !important;
+                    height: 520px !important;
+                    .react-pdf__Page__canvas {
+                        width: 300px !important;
+                        height: 520px !important;
+                    }
+                }
+            }
+        }
+    }
+}

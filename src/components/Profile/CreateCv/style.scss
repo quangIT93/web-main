@@ -1,0 +1,115 @@
+.create-cv-container {
+    .create-cv-btn {
+        // display: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row-reverse;
+        width: 60px !important;
+        height: 60px !important;
+        position: fixed;
+        right: 24px;
+        border-radius: 30px !important;
+        background-color: #0d99ff;
+        // bottom: 260px;
+        font-size: 24px !important;
+        z-index: 5;
+        transition: width 0.8s;
+
+        // transition: all 0.5s ease-in-out;
+        &:hover {
+            width: 280px !important;
+            background-color: #0d99ff;
+            // padding: 24px;
+            gap: 16px;
+        }
+
+        &:hover h3 {
+            width: fit-content;
+        }
+
+        h3 {
+            width: 0;
+            overflow: hidden;
+            transition: width 0.8s;
+            font-family: Roboto;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            letter-spacing: 0em;
+            text-align: left;
+        }
+    }
+
+    .iconDiv {
+        height: 60px;
+        width: 60px;
+        padding: 14px;
+        flex-direction: row-reverse;
+        border-radius: 30px;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        overflow: hidden;
+        cursor: pointer;
+        position: fixed;
+        right: 24px;
+        background-color: #0d99ff;
+        // bottom: 260px;
+        font-size: 24px !important;
+        z-index: 5;
+        transition: width 300ms ease-in-out 0s, background-color 300ms linear 200ms;
+        color: #FFFFFF;
+
+        &:hover,
+        &:focus-visible {
+            // width: 233px;
+            // background-color: rgb(51 65 85);
+            transition: width 300ms ease-in-out 0s, background-color 100ms linear 0s;
+        }
+
+        &:focus-visible {
+            outline: 1px solid #0d99ff;
+            outline-offset: 4px;
+        }
+
+        &:active {
+            opacity: 0.9;
+        }
+
+        &:after {
+            // content: "Preview Your Resume";
+            margin-right: 16px;
+            animation: fadeIn 600ms linear forwards;
+            font-family: Roboto;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            letter-spacing: 0em;
+            text-align: left;
+        }
+
+        .iconSVG {
+            height: fit-content;
+            width: fit-content;
+            display: grid;
+            place-items: center;
+            aspect-ratio: 1 / 1;
+        }
+    }
+
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+}

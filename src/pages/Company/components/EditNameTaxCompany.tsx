@@ -17,32 +17,36 @@ const styleLabel = {
 interface IEditNameFaxCompany {
   setDataCompany: any;
   dataCompany: any;
+  is_profile: boolean;
 }
 
 const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { dataCompany, setDataCompany } = props;
-  const [language, setLanguageState] = React.useState<any>();
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+  const { dataCompany, setDataCompany, is_profile } = props;
+  // const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   const handleEditCompanyFax = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -84,7 +88,8 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_name}
-          //   error={titleError} // Đánh dấu lỗi
+          disabled={is_profile ? true : false}
+        //   error={titleError} // Đánh dấu lỗi
         />
       </div>
       <div className="edit-tax-company">
@@ -105,7 +110,8 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
           placeholder={language?.company_page?.place_tax}
-          //   error={titleError} // Đánh dấu lỗi
+          disabled={is_profile ? true : false}
+        //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>

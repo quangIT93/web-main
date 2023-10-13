@@ -75,6 +75,7 @@ import languageApi from 'api/languageApi';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import { searchResultVi } from 'validations/lang/vi/searchResult';
 import { searchResultEn } from 'validations/lang/en/searchResult';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const { SHOW_CHILD } = Cascader;
 
@@ -155,6 +156,9 @@ const NewJobs: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [page, setPage] = React.useState(0);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [searchData, setSearchData] = React.useState<any>();
@@ -213,31 +217,33 @@ const NewJobs: React.FC = () => {
   const [locationOneItem, setLocationOneItem] = React.useState<string[]>([]);
   const [cateloryOneItem, setCateloryOneItem] = React.useState<number[]>([]);
 
-  const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
+  // const [dataAllLocation, setDataAllLocation] = React.useState<any>(null);
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [categoriesId, setCategoriesId] = React.useState<string[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
   const analytics: any = getAnalytics();
-  const [language, setLanguage] = React.useState<any>();
-
+  // const [language, setLanguage] = React.useState<any>();
+  const dataAllLocation = useSelector(
+    (state: RootState) => state.dataLocation.data,
+  );
   const [hasMore, setHasMore] = React.useState(true);
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
@@ -333,27 +339,27 @@ const NewJobs: React.FC = () => {
 
   // console.log('userFiltered: ', userFiltered);
 
-  const allLocation = async () => {
-    try {
-      const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
+  // const allLocation = async () => {
+  //   try {
+  //     const allLocation = await locationApi.getAllLocation(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
 
-      if (allLocation) {
-        setDataAllLocation(allLocation.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (allLocation) {
+  //       setDataAllLocation(allLocation.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    allLocation();
-    // getAllLocations()
-    // delete param when back to page
-    // console.log('search parameters: ', Number(searchParams.get('job-type')));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  // allLocation();
+  // getAllLocations()
+  // delete param when back to page
+  // console.log('search parameters: ', Number(searchParams.get('job-type')));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [languageRedux]);
 
   const getCategories = async () => {
     try {
@@ -914,7 +920,7 @@ const NewJobs: React.FC = () => {
   return (
     <>
       <Navbar />
-
+      <CategoryDropdown />
       <div className="search-result">
         {contextHolder}
         {

@@ -8,7 +8,7 @@ import NavBar from '../../components/Navbar/index';
 import { AxiosResponse } from 'axios';
 import Footer from '../../components/Footer/Footer';
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 // import api
 import postApi from '../../api/postApi';
@@ -104,6 +104,7 @@ import { postDetailEn } from 'validations/lang/en/postDetail';
 
 import RollTop from '#components/RollTop';
 import { setCookie } from 'cookies';
+import CategoryDropdown from '#components/CategoryDropdown';
 // import { Language } from '#components/Navbar/Css';
 
 // const itemsShare = [
@@ -177,6 +178,9 @@ const Detail = () => {
   //   actionCreators,
   //   dispatch
   // )
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -193,7 +197,7 @@ const Detail = () => {
     null,
   );
   const [automatic, setAutomatic] = React.useState<Boolean>(false);
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
   const [textButton, setTextButton] = React.useState<string>(
     language?.post_detail_page?.apply,
   );
@@ -214,23 +218,23 @@ const Detail = () => {
     (state: RootState) => state.changeLaguage.language,
   );
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
   const itemsShare = [
     {
       nameShare: language?.post_detail_page?.copy_link,
@@ -623,6 +627,12 @@ const Detail = () => {
     //   window.location.href = messengerLink;
     // }
     if (nameShare === 'Facebook') {
+      // const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      //   post?.data?.companyResourceData?.name === 'HIJOB'
+      //     ? post?.data.shareLink
+      //     : post?.data.shareLink,
+      // )}`;
+
       const titleShare = 'hijob chia sẻ công việc cho bạn';
 
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
@@ -1131,6 +1141,7 @@ const Detail = () => {
       {automatic && (
         <div className="detail">
           <NavBar />
+          <CategoryDropdown />
           {/* <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
@@ -1217,6 +1228,7 @@ const Detail = () => {
                       />
                       <h3>{post?.data.resource.company_resource_name}</h3>
                     </div> */}
+
                     <div className="actions-item" onClick={handleClickShare}>
                       <ShareIcon width={24} height={24} />
                       {/* <div className="items-share">

@@ -3,12 +3,14 @@ import React, { useEffect, FormEvent, useState } from 'react';
 // import { useSearchParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 // import moment, { Moment } from 'moment';
-import { Skeleton } from 'antd';
+import { Skeleton, Space } from 'antd';
 import { message } from 'antd';
+
+import { useLocation } from 'react-router-dom';
+
 // import component
 // @ts-ignore
 import { Navbar } from '#components';
-
 import EditLogoCompany from './components/EditLogoCompany';
 import EditNameTaxCompany from './components/EditNameTaxCompany';
 import EditAddressCompany from './components/EditAddressCompany';
@@ -40,6 +42,9 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import apiCompany from 'api/apiCompany';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
+import EditImageCompany from './components/EditImageCompany';
+import { PencilIcon } from '#components/Icons';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 export interface FormValues {
   id: string;
@@ -93,16 +98,26 @@ export interface FormCompanyValues {
   logo: string;
 }
 
-const Company = () => {
+interface ICompany {
+  display: string;
+  is_profile: boolean;
+}
+
+const Company: React.FC<ICompany> = (props) => {
+  const { display, is_profile } = props;
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [loading, setLoading] = useState<boolean>(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [haveCompany, setHaveCompany] = useState(false);
 
   const [companyId, setCompanyId] = useState<any>();
-
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const [dataCompany, setDataCompany] = useState<any | null>({
     // id: '',
     name: '',
@@ -118,26 +133,26 @@ const Company = () => {
     description: '',
     logoPath: '',
   });
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
+  const location = useLocation();
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
-  console.log('dataCompany', dataCompany);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
+  // console.log('dataCompany', dataCompany);
   const [openModalEditCompany, setOpenModalEditCompanySuccess] =
     React.useState(false);
 
@@ -158,21 +173,21 @@ const Company = () => {
       page_title: '/web_company' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, language]);
+  }, [languageRedux]);
 
   const getCompanyInforByAccount = async () => {
     try {
       setLoading(true);
-      const result = await apiCompany.getCampanyByAccountApi(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result && result?.data?.companyInfomation?.id != null) {
+      // const result = await apiCompany.getCampanyByAccountApi(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+      if (profileV3?.companyInfomation !== null) {
         setTimeout(() => {
           setLoading(false);
         }, 1000);
         setHaveCompany(true);
-        setCompanyId(result?.data?.companyInfomation?.id);
-        setDataCompany(result?.data?.companyInfomation);
+        setCompanyId(profileV3?.companyInfomation?.id);
+        setDataCompany(profileV3?.companyInfomation);
       } else {
         setTimeout(() => {
           setLoading(false);
@@ -185,9 +200,18 @@ const Company = () => {
   };
 
   useEffect(() => {
-    getCompanyInforByAccount();
+    if (profileV3.length !== 0) {
+      getCompanyInforByAccount();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, profileV3]);
+
+  useEffect(() => {
+    if (roleRedux === 0) {
+      window.open(`/`, '_parent');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // console.log("dataCompany api: ", dataCompany);
 
@@ -404,50 +428,114 @@ const Company = () => {
 
   // if (dataPostById) {
   return (
-    <div className="company-container">
+    <div
+      className="company-container"
+      style={{
+        display: display,
+        // marginTop: is_profile ? '30px' : '70px',
+        marginTop: is_profile ? '30px' : '100px',
+        width: is_profile ? '100%' : 'unset',
+      }}
+    >
       {contextHolder}
-      <Navbar />
-      <div className="company-content">
-        <h1>{language?.company_info}</h1>
+      <div style={{ display: is_profile ? 'none' : 'block' }}>
+        <Navbar />
+        {location?.pathname === '/company-infor' ? <CategoryDropdown /> : <></>}
+      </div>
+      <div
+        className="company-content"
+        style={{
+          padding: is_profile ? '0px' : '50px 0px',
+        }}
+      >
+        <div
+          className="company-title"
+          style={{
+            marginBottom: is_profile ? '24px' : '32px',
+          }}
+        >
+          <div className="company-title_top">
+            <h1>{language?.company_info}</h1>
+
+            <Space
+              style={{
+                cursor: 'pointer',
+                display: is_profile ? 'flex' : 'none',
+              }}
+              onClick={() => window.open(`/company-infor`, '_parent')}
+            >
+              <div className="edit-icon">
+                <PencilIcon width={15} height={15} />
+              </div>
+
+              <p style={{ color: '#0D99FF', fontSize: '14px' }}>
+                {language?.edit}
+              </p>
+            </Space>
+          </div>
+          <div
+            className="company-title_bottom"
+            style={{ display: is_profile ? 'block' : 'none' }}
+          >
+            <p>
+              {languageRedux === 1
+                ? 'Bạn cần điền thông tin công ty của mình để đăng tin tuyển dụng, tìm kiếm ứng viên.'
+                : 'You need to fill in your company information to post job vacancies, search for candidates.'}
+            </p>
+          </div>
+        </div>
         <Skeleton loading={loading} active>
           <form action="">
             <EditLogoCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               language={language}
+              is_profile={is_profile}
             />
             <EditNameTaxCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
             <EditAddressCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
             <EditPhoneMailCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
             <EditRoleWebCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
 
             <EditFieldScaleCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
+            />
+            <EditImageCompany
+              dataCompany={dataCompany}
+              setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
             <EditDescripeCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
+              is_profile={is_profile}
             />
 
             <button
               type="submit"
               onClick={handleSubmit}
               className="btn-edit_submitForm"
+              style={{ display: is_profile ? 'none' : 'block' }}
             >
-              {language?.company_page?.finish}
+              {language?.save}
             </button>
           </form>
         </Skeleton>
@@ -458,8 +546,10 @@ const Company = () => {
         languageRedux={languageRedux}
         language={language}
       />
-      <RollTop />
-      <Footer />
+      <div style={{ display: is_profile ? 'none' : 'block' }}>
+        <RollTop />
+        <Footer />
+      </div>
     </div>
   );
   // } else {

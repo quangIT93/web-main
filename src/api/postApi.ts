@@ -37,13 +37,12 @@ const postApi = {
 
 
   getPostByThemeId: (
-    themeId: number,
+    themeId: number | null,
     limit: Number,
     threshold: Number | null,
     lang: string
   ) => {
-    const URL = `v1/posts/theme?tid=${themeId}&limit=${limit}&threshold=${threshold ? threshold : ''
-      }&lang=${lang}`
+    const URL = `v1/posts/theme?${themeId ? `tid=${themeId}&`: `tid=1&`}limit=${limit}&lang=${lang}`
     return axiosClient.get(URL
       // ,
       // {
@@ -85,7 +84,7 @@ const postApi = {
   getPostNewestV3: (
     childrenCategoryId: number[] | null,
     parentCategoryId: number | null,
-    districtIds: [] | null,
+    districtIds: any[] | null,
     provinceId: number | null,
     limit: number | null,
     threshold: number | null,
@@ -100,7 +99,7 @@ const postApi = {
       }` +
       `${parentCategoryId && parentCategoryId !== 1 ? `&parentCategoryId=${parentCategoryId}&` : ``}` +
       `${districtIds
-        ? `${districtIds?.map((n, index) => `districtIds[${index}]=${n}`).join('&')}`
+        ? `${districtIds?.map((n: any, index) => `districtIds=${n}`).join('&')}&`
         : ``
       }` +
       `${provinceId ? `provinceId=${provinceId}&` : ``}` +

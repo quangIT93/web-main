@@ -96,10 +96,11 @@ interface IDetailPosted {
 const DetailPosted: React.FC<IDetailPosted> = (props) => {
   const { detailPosted } = props;
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const language = useSelector((state: RootState) => state.dataLanguage.languages);
   const [dataCandidates, setDadaCandidates] = useState<any>(null);
   // const [loading, setLoading] = useState<boolean>(true);
   const [status, setStatus] = useState(detailPosted?.status);
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
   const [post, setPost] = React.useState<any>();
   const [dataProvinces, setDataProvinces] = useState<any>(null);
 
@@ -124,23 +125,23 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     getPostById()
   }, [languageRedux])
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
   useEffect(() => {
     window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps

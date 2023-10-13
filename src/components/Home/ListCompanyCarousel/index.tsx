@@ -115,7 +115,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
 
       const result = await postApi.getPostByThemeId(
         newValue,
-        19,
+        9,
         null,
         languageRedux === 1 ? 'vi' : 'en',
       );
@@ -136,14 +136,14 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     try {
       const themeId = searchParams.get(`theme-id`)
         ? searchParams.get(`theme-id`)
-        : listTheme?.data[0].id;
+        : listTheme?.data[0]?.id;
 
       var result;
       if (themeId) {
         // setOpenBackdrop(true);
         result = await postApi.getPostByThemeId(
           Number(themeId),
-          19,
+          9,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
@@ -165,6 +165,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   }, [searchParams, languageRedux]);
 
   // console.log('value', value);
+  // console.log('listTheme', listTheme);
 
   return (
     <Box
@@ -268,7 +269,12 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                   // screen_name: screenName as string,
                   web_page_home: `/place_category_${item.title}` as string,
                 });
+                console.log('item', item);
 
+                localStorage.setItem(
+                  'job-type',
+                  `place--${item.id}--${item.number_of_posts}--${item.title}--${item.image}`,
+                );
                 handleChange(event, item.id);
               }}
               style={{

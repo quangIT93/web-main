@@ -1,5 +1,6 @@
 .comunity-container {
-    margin-top: 70px;
+    // margin-top: 70px;
+    margin-top: 115px;
 
     .comunity-content {
         padding: 50px 0px;
@@ -45,11 +46,12 @@
         .comunityPostNew {
             width: 100% !important;
             max-width: 1080px;
-            
+
             @media screen and (min-width: 1024px) and (max-width: 1280px) {
                 padding: 0px 24px !important;
                 // width: 100% !important;
             }
+
             // padding: 0 24px;
             // @media screen and (min-width: 350px) and (max-width: 1023px) {
             //     width: 98% !important;

@@ -20,15 +20,17 @@ interface NumericInputProps {
   onChange: (value: any) => any;
   languageRedux: any;
   language: any;
+  is_profile: boolean;
 }
 
 interface IEditPhoneMailCompany {
   setDataCompany: any;
   dataCompany: any;
+  is_profile: boolean;
 }
 
 const NumericInput = (props: NumericInputProps) => {
-  const { value, onChange, languageRedux, language } = props;
+  const { value, onChange, languageRedux, language, is_profile } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
@@ -60,32 +62,36 @@ const NumericInput = (props: NumericInputProps) => {
       inputProps={{ maxLength: 10 }}
       size="small"
       sx={{ width: '100%', marginTop: '8px' }}
+      disabled={is_profile ? true : false}
     />
   );
 };
 
 const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
   const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const { dataCompany, setDataCompany } = props;
-  const [language, setLanguageState] = React.useState<any>();
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+  const { dataCompany, setDataCompany, is_profile } = props;
+  // const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
 
   const handleEditCompanyMail = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -126,6 +132,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           onChange={setDataCompany}
           languageRedux={languageRedux}
           language={language}
+          is_profile={is_profile}
         />
       </div>
       <div className="edit-mail-company">
@@ -148,6 +155,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           placeholder={
             language?.company_page?.place_email
           }
+          disabled={is_profile ? true : false}
         //   error={titleError} // Đánh dấu lỗi
         />
       </div>

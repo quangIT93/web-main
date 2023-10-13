@@ -47,6 +47,7 @@ import { RootState } from '../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 export interface FormValues {
   id: string;
@@ -121,7 +122,9 @@ const EditPosted = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [dataPostAccount, SetDataPostAccount] = React.useState<any>([]);
 
   const [openModalEditPost, setOpenModalEditPost] = React.useState(false);
@@ -134,25 +137,25 @@ const EditPosted = () => {
 
   const analytics: any = getAnalytics();
 
-  const [language, setLanguage] = useState<any>();
+  // const [language, setLanguage] = useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   React.useEffect(() => {
     // Cập nhật title và screen name trong Firebase Analytics
@@ -487,6 +490,7 @@ const EditPosted = () => {
       <div className="edit-posted">
         {contextHolder}
         <Navbar />
+        <CategoryDropdown />
         <div className="edit-posted_main">
           <div className="edit-title_post">
             <h1>{language?.post_page?.edit_post}</h1>

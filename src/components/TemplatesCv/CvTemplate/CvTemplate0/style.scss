@@ -1,0 +1,92 @@
+.cv-1-container {
+    width: 100%;
+    height: 100%;
+
+    .cv-1-content {
+        width: 100%;
+        height: 100%;
+        padding: 32.041pt 0 24.888pt 35.745pt;
+
+        .header {
+            position: relative;
+            height: 271.112pt;
+
+            &_left {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 271.112pt;
+                height: 271.112pt;
+                z-index: 1;
+                background-color: #D0E3FF;
+            }
+
+            &_center {
+                position: absolute;
+                bottom: 0;
+                right: 142.148pt;
+                width: 164.474pt;
+                height: 224.053pt;
+                background-color: transparent;
+                z-index: 2;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                gap: 15.106pt;
+
+                .MuiAvatar-root {
+                    width: 164.474pt;
+                    height: 164.474pt;
+                    border: 1px solid #aaa;
+                    background-color: #FFFFFF;
+                    color: #000;
+                }
+
+            }
+
+            .language {
+                position: absolute;
+                bottom: 0;
+                left: 278.552pt;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                z-index: 2;
+
+                h3 {
+                    font-family: 'Montserrat', sans-serif !important;
+                    letter-spacing: 0.4;
+                    font-size: 8.37pt;
+                    margin-bottom: 18.307pt;
+                }
+
+                .overal {
+                    display: flex;
+                    gap: 9.903pt;
+                    font-family: 'Montserrat', sans-serif;
+                    letter-spacing: 0.4;
+                    font-size: 7.44pt;
+                    margin-bottom: 7.367pt;
+                }
+
+                .border-bot {
+                    width: 63.42pt;
+                    height: 2.25pt;
+                    background-color: #000;
+                }
+            }
+
+            &_right {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 146.376pt;
+                height: 47.059pt;
+                background-color: #D0E3FF;
+                z-index: 1;
+            }
+        }
+    }
+}

@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { MoreICon, SuggestIcon, LoginArrowIcon } from '#components/Icons';
+import { MoreICon, SuggestIcon, LoginArrowIcon, ArrowrightIcon } from '#components/Icons';
 
 // @ts-ignore
 // import moment from 'moment';
@@ -105,7 +105,7 @@ const ThemesJob: React.FC = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-
+  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   // state redux
   // const { post } = useSelector((state: RootState) => state);
   // const dispatch = useDispatch();
@@ -170,8 +170,13 @@ const ThemesJob: React.FC = () => {
   const getPostByThemeId = async () => {
     try {
       const result = await nearByApi.getNearByJob(
+        // null,
+        // Number(searchParams.get('categories-id')),
+        profile && profile?.profileLocations?.length > 0 &&
+        profile?.profileLocations?.map((item: any) => {
+          return item.province.id
+        }),
         null,
-        Number(searchParams.get('categories-id')),
         null,
         11,
         null,
@@ -227,12 +232,24 @@ const ThemesJob: React.FC = () => {
   //   // setSearchParams(searchParams)
 
   // }, [localStorage.getItem("accessToken")])
+  const handleMoveToMoreJob = () => {
+    localStorage.setItem('job-type', 'suggested');
+    window.open('/more-jobs', '_parent');
+  }
 
   return (
-    <Box sx={{ flexGrow: 1 }} className="box-subjectJob" id="box-subjectJob">
-      <div style={{ display: 'flex', gap: '0.5rem', margin: '5px 0' }}>
-        <SuggestIcon width={25} height={25} />
-        <h2>{language?.nearby_jobs}</h2>
+    <Box sx={{ flexGrow: 1 }} className="box-suggestedJob" id="box-suggestedJob">
+      <div className='title-container'>
+        <div className='title'>
+          <SuggestIcon width={25} height={25} />
+          <h2>{language?.nearby_jobs}</h2>
+        </div>
+        <div className='view-all' onClick={handleMoveToMoreJob}>
+          <p>
+            {language?.home_page?.view_all}
+          </p>
+          <ArrowrightIcon width={20} height={20} />
+        </div>
       </div>
 
       {!localStorage.getItem('accessToken') ? (
@@ -272,7 +289,7 @@ const ThemesJob: React.FC = () => {
               container
               spacing={3}
               columns={{ xs: 12, sm: 4, md: 12 }}
-              sx={{ marginTop: '-8px' }}
+            // sx={{ marginTop: '-8px' }}
             >
               {nearJob.map((item: PostTheme, index: number) => (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -280,7 +297,7 @@ const ThemesJob: React.FC = () => {
                 </Grid>
               ))}
             </Grid>
-            <Stack
+            {/* <Stack
               spacing={2}
               sx={{
                 display: 'flex',
@@ -289,15 +306,6 @@ const ThemesJob: React.FC = () => {
                 // marginBottom: '50px',
               }}
             >
-              {/* <Pagination count={10} shape="rounded" /> */}
-              {/* Test page: {page} */}
-              {/* <Pagination
-                  count={10}
-                  variant="outlined"
-                  shape="rounded"
-                  page={page}
-                  onChange={handleChange}
-                /> */}
               <Space
                 className="div-hover-more-suggest-job"
                 style={{ width: '100%' }}
@@ -331,7 +339,7 @@ const ThemesJob: React.FC = () => {
                   </div>
                 )}
               </Space>
-            </Stack>
+            </Stack> */}
             <Backdrop
               sx={{
                 color: '#0d99ff ',
@@ -339,7 +347,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //   onClick={handleClose}
+            //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

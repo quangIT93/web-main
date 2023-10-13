@@ -7,7 +7,9 @@ import TextField from '@mui/material/TextField';
 import locationApi from '../../../api/locationApi';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
-
+import { useSelector } from 'react-redux';
+// import redux
+import { RootState } from 'store';
 interface IPostAddress {
   setWardId: React.Dispatch<React.SetStateAction<any>>;
   setAddress: React.Dispatch<React.SetStateAction<string>>;
@@ -40,11 +42,13 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   } = props;
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
-  const [dataProvinces, setDataProvinces] = useState<any>(null);
+  // const [dataProvinces, setDataProvinces] = useState<any>(null);
   const [dataDistrict, setDataDistrict] = useState<any>(null);
   const [dataWard, setDataWard] = useState<any>(null);
   const [selectedWard, setSelectedWard] = useState<any>(null);
-
+  const dataProvinces = useSelector(
+    (state: RootState) => state.dataLocation.data,
+  );
   const styleLabel = {
     fontWeight: 600,
     color: '#000000',
@@ -64,19 +68,19 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
   // }
 
   // get All locations by location id
-  const getAllProvinces = async () => {
-    try {
-      const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
+  // const getAllProvinces = async () => {
+  //   try {
+  //     const allLocation = await locationApi.getAllLocation(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
 
-      if (allLocation) {
-        setDataProvinces(allLocation.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (allLocation) {
+  //       setDataProvinces(allLocation.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // get All locations by location id
 
@@ -114,12 +118,12 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     }
   };
 
-  React.useEffect(() => {
-    getAllProvinces();
-    // getAllLocations()
-    // delete param when back to page
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  // getAllProvinces();
+  // getAllLocations()
+  // delete param when back to page
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [languageRedux]);
 
   React.useEffect(() => {
     getDataDistrict();

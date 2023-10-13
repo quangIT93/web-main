@@ -54,6 +54,7 @@ import { candidateDetail } from 'validations/lang/vi/candidateDetail';
 import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 // const SmallAvatar = styled(Avatar)(({ theme }) => ({
 //   width: 22,
@@ -83,6 +84,9 @@ const CandidateDetail: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [loading, setLoading] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [dataPost, setDataPost] = useState<any>(null);
@@ -92,25 +96,25 @@ const CandidateDetail: React.FC = () => {
     dataCandidate?.applicationProfile?.application_status,
   );
   const [open, setOpen] = useState(false);
-  const [language, setLanguage] = useState<any>();
+  // const [language, setLanguage] = useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   const analytics: any = getAnalytics();
 
@@ -222,6 +226,7 @@ const CandidateDetail: React.FC = () => {
   return (
     <div className="candidate-detail">
       <Navbar />
+      <CategoryDropdown />
       <Box className="containerCandidate">
         <Skeleton loading={loading} active>
           <Card
@@ -248,7 +253,7 @@ const CandidateDetail: React.FC = () => {
                   src={`${dataPost?.image}?w=164&h=164&fit=crop&auto=format`}
                   srcSet={`aaa?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                   alt="anh job"
-                  loading="lazy"
+                  //loading="lazy"
                   style={{
                     width: '120px',
                     maxWidth: 'auto',
@@ -497,8 +502,7 @@ const CandidateDetail: React.FC = () => {
                         window.open(
                           `/message?post_id=${searchParams.get(
                             'post-id',
-                          )}&user_id=${
-                            dataCandidate.applicationProfile.account_id
+                          )}&user_id=${dataCandidate.applicationProfile.account_id
                           }&application_id=${searchParams.get(
                             'application_id',
                           )} `,
@@ -547,8 +551,8 @@ const CandidateDetail: React.FC = () => {
                   <p>
                     {dataCandidate?.applicationProfile?.birthday
                       ? moment(
-                          new Date(dataCandidate?.applicationProfile?.birthday),
-                        ).format('DD/MM/yyyy')
+                        new Date(dataCandidate?.applicationProfile?.birthday),
+                      ).format('DD/MM/yyyy')
                       : language?.unupdated}
                   </p>
                   <p>
@@ -651,12 +655,12 @@ const CandidateDetail: React.FC = () => {
               <Space wrap className="item-info-work">
                 {dataCandidate?.categories?.length !== 0
                   ? dataCandidate?.categories?.map(
-                      (item: ICategories, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item.child_category}
-                        </Button>
-                      ),
-                    )
+                    (item: ICategories, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item.child_category}
+                      </Button>
+                    ),
+                  )
                   : language?.unupdated}
               </Space>
             </div>
@@ -673,12 +677,12 @@ const CandidateDetail: React.FC = () => {
               <Space wrap className="item-info-work">
                 {dataCandidate?.locations?.length !== 0
                   ? dataCandidate?.locations?.map(
-                      (item: any, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item?.district}
-                        </Button>
-                      ),
-                    )
+                    (item: any, index: number) => (
+                      <Button key={index} className="btn" type="text">
+                        {item?.district}
+                      </Button>
+                    ),
+                  )
                   : language?.unupdated}
               </Space>
             </div>

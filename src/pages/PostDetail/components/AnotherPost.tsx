@@ -58,7 +58,7 @@ const AnotherPost: React.FC<any> = (props) => {
               src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
               srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt={props.item?.title}
-              loading="lazy"
+              //loading="lazy"
               className="anotherPost_image"
             />
             <div className="anotherPost_info">

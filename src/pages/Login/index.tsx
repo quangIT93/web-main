@@ -83,7 +83,6 @@ const Login = () => {
     try {
       const result = await signInEmailApi.signInGoogle(response.credential);
       if (result) {
-        console.log(result);
       }
     } catch (error) {
       console.log('error: ', error);

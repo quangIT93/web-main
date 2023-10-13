@@ -23,33 +23,38 @@ const styleLabel = {
 interface IEditPostAddress {
   setDataCompany: any;
   dataCompany: any;
+  is_profile: boolean;
 }
 
 const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const { setDataCompany, dataCompany } = props;
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const { setDataCompany, dataCompany, is_profile } = props;
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [dataRoles, setDataRoles] = useState<any>(null);
   const [selectedRole, setSelectedRole] = useState<any>(null);
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
 
   useEffect(() => {
     if (dataRoles && !selectedRole) {
@@ -66,7 +71,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getRoles = async () => {
     try {
       const roles = await apiCompany.getAllRolesCompany(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (roles) {
@@ -78,7 +83,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   };
 
   useEffect(() => {
-    getRoles();
+    if (is_profile === false) {
+      getRoles();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
@@ -111,14 +118,11 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="addressTitle"
         >
-          {
-            language?.role_at_business
-          }
-          {' '}
-          <span style={{ color: 'red' }}>*</span>
+          {language?.role_at_business} <span style={{ color: 'red' }}>*</span>
         </Typography>
 
         <Autocomplete
+          disabled={is_profile ? true : false}
           options={dataRoles ? dataRoles : []}
           getOptionLabel={(option: any) => option?.nameText || ''}
           value={selectedRole || null}
@@ -126,11 +130,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={
-                language?.company_page?.place_role
-              }
+              placeholder={language?.company_page?.place_role}
               size="small"
-            // value={dataCompany?.companyRole?.name}
+              // value={dataCompany?.companyRole?.name}
             />
           )}
           isOptionEqualToValue={(option, value) => {
@@ -157,10 +159,9 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           onChange={handleEditCompanyWeb}
           size="small"
           sx={{ width: '100%', marginTop: '8px' }}
-          placeholder={
-            language?.company_page?.place_web
-          }
-        //   error={titleError} // Đánh dấu lỗi
+          placeholder={language?.company_page?.place_web}
+          disabled={is_profile ? true : false}
+          //   error={titleError} // Đánh dấu lỗi
         />
       </div>
     </div>

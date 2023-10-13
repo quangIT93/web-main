@@ -1,0 +1,56 @@
+.more-job-page-container {
+    // margin: 100px auto;
+    // margin: 176px auto 100px;
+    // margin: 280px auto 100px;
+    max-width: 1080px;
+
+    .MuiGrid-root {
+        .MuiPaper-root {
+            position: relative;
+        }
+    }
+
+
+    .more-job-title-container {
+        display: flex;
+        align-items: center;
+        // flex-direction: column;
+        gap: 12px;
+        justify-content: space-between;
+        width: 100%;
+
+        h3 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 24px;
+            font-weight: 700;
+
+            span {
+                font-weight: 400;
+            }
+        }
+
+        svg {
+            color: #0d99ff;
+        }
+
+        @media screen and (max-width: 520px) {
+            flex-direction: column;
+        }
+
+        .filter-hotjob {
+            .filter-provinces {
+                .ant-space-item {}
+            }
+        }
+    }
+
+
+
+    @media screen and (min-width: 300px) and (max-width: 1080px) {
+        padding: 0px 24px;
+    }
+}

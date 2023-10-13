@@ -124,7 +124,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
     // }
     onChange(listCate?.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProfile]);
+  }, []);
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
@@ -150,7 +150,6 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           <BagFilterIcon width={20} height={20} />
         </div>
         <Cascader
-          // open
           dropdownRender={DropdownRender}
           suffixIcon={<ArrowFilterIcon width={14} height={10} />}
           options={

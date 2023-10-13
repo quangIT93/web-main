@@ -29,6 +29,8 @@ export const HomeValueContext = React.createContext<{
   openNotificate: boolean;
   setSearch: React.Dispatch<React.SetStateAction<boolean>>;
   search: boolean;
+  setOpenCategoryDropdown: React.Dispatch<React.SetStateAction<boolean>>;
+  openCategoryDropdown: boolean;
 }>({
   childCateloriesArray: [],
   setChildCateloriesArray: () => {},
@@ -53,6 +55,8 @@ export const HomeValueContext = React.createContext<{
   openNotificate: false,
   setSearch: () => {},
   search: false,
+  setOpenCategoryDropdown: () => {},
+  openCategoryDropdown: false,
 });
 
 type ParentComponentProps = {
@@ -91,6 +95,8 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
   );
 
   const [navTouchCatelory, setNavTouchCatelory] = useState<boolean>(false);
+  const [openCategoryDropdown, setOpenCategoryDropdown] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -142,6 +148,8 @@ const HomeValueContextProvider = ({ children }: ParentComponentProps) => {
     openNotificate,
     setSearch,
     search,
+    setOpenCategoryDropdown,
+    openCategoryDropdown,
   };
 
   return (

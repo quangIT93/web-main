@@ -66,11 +66,11 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
         }}
         className="applied-posted-card"
         onClick={(e) => {
-          handleClickItem(e, props.item.post_id, props.item.type);
+          handleClickItem(e, props.item.post_id, props.type);
         }}
       >
         <div
-          style={{ display: props.item.type === 'post' ? 'block' : 'none' }}
+          style={{ display: props.type === 'post' ? 'block' : 'none' }}
           className="applied-posted-card_bag"
         >
           <BagHomeIcon width={24} height={24} />
@@ -91,7 +91,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
               src={`${props.item.image}?w=164&h=164&fit=crop&auto=format`}
               srcSet={`${props.item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt={props.item.title}
-              loading="lazy"
+              //loading="lazy"
               style={{
                 width: '80px !important',
                 height: '80px !important',
@@ -200,7 +200,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             <Space
               style={{
                 justifyContent: 'space-between',
-                display: props.item.type === 'application' ? 'flex' : 'none',
+                display: props.type === 'application' ? 'flex' : 'none',
               }}
               direction="vertical"
               align="center"
@@ -239,7 +239,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
           <div className="applied-posted-card_date">
             <span
               style={{
-                display: props.item.type === 'application' ? 'block' : 'none',
+                display: props.type === 'application' ? 'block' : 'none',
                 fontSize: '12px',
               }}
             >
@@ -251,7 +251,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             </span>
             <span
               style={{
-                display: props.item.type === 'post' ? 'block' : 'none',
+                display: props.type === 'post' ? 'block' : 'none',
                 fontSize: '12px',
               }}
             >
@@ -269,15 +269,15 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
           </div>
           <div
             style={{
-              display: props.item.type === 'application' ? 'flex' : 'none',
+              display: props.type === 'application' ? 'flex' : 'none',
               backgroundColor:
                 props.item.application_status === 1
                   ? 'rgba(220, 220, 220, 1)'
                   : props.item.application_status === 2
-                  ? 'rgba(92, 178, 101, 1)'
-                  : props.item.application_status === 3
-                  ? 'rgba(189, 49, 49, 1)'
-                  : 'rgba(13, 153, 255, 1)',
+                    ? 'rgba(92, 178, 101, 1)'
+                    : props.item.application_status === 3
+                      ? 'rgba(189, 49, 49, 1)'
+                      : 'rgba(13, 153, 255, 1)',
               color:
                 props.item.application_status === 1
                   ? '#575757'
@@ -289,13 +289,13 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
             {props.item.application_status === 1
               ? language?.applied1
               : props.item.application_status === 2
-              ? language?.approved
-              : props.item.application_status === 3
-              ? language?.rejected
-              : language?.hired}
+                ? language?.approved
+                : props.item.application_status === 3
+                  ? language?.rejected
+                  : language?.hired}
           </div>
           <div
-            style={{ display: props.item.type === 'post' ? 'flex' : 'none' }}
+            style={{ display: props.type === 'post' ? 'flex' : 'none' }}
             className="button-check"
           >
             {language?.check_now}

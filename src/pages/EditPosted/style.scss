@@ -1,10 +1,13 @@
 .edit-posted {
-  margin-top: 70px;
+  // margin-top: 70px;
+  margin-top: 115px;
+
   .edit-posted_main {
     padding: 50px 180px;
     margin: 0 auto;
     transition: all l;
     margin-bottom: 36px;
+
     @media screen and (max-width: 1200px) {
       padding-inline: 10px;
     }

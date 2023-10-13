@@ -5,9 +5,9 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Collapse } from 'antd';
-import { Box, Typography } from '@mui/material';
-
+import { Box, iconClasses, Typography } from '@mui/material';
 import { RightOutlined } from '@ant-design/icons';
+
 import { Space } from 'antd';
 
 // import component
@@ -16,6 +16,7 @@ import CardsPosted from '#components/History/CardsPosted';
 import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
 import CardsListBlog from '#components/History/CardsListBlog';
+import CardListCandidate from '#components/History/CardListCandidate';
 
 import RollTop from '#components/RollTop';
 
@@ -41,6 +42,7 @@ import { RootState } from '../../store/reducer/index';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
 import { setCookie } from 'cookies';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 const { Panel } = Collapse;
 
@@ -68,17 +70,29 @@ const HistoryPost = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const queryParams = queryString.parse(window.location.search);
   // const hotjobtype = Number(searchParams.get('post'));
   const hotjobtype = Number(queryParams['post']);
   const community_post = Number(queryParams['community_post']);
+  const saved_jobs = Number(queryParams['saved_jobs']);
+  const recruitment_post = queryParams['recruitment_post'];
+  const candidate = Number(queryParams['candidate']);
   const [activeChild, setActiveChild] = React.useState(
     hotjobtype === 2
       ? '2-0'
+      : candidate === 4
+      ? '4-0'
       : community_post === 31
       ? '3-1'
       : community_post === 30
       ? '3-0'
+      : saved_jobs === 1
+      ? '1-0'
+      : recruitment_post === 'opening'
+      ? '2-1'
+      : recruitment_post === 'closed'
+      ? '2-2'
       : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
@@ -88,6 +102,10 @@ const HistoryPost = () => {
       ? 3
       : community_post === 30
       ? 3
+      : candidate === 4
+      ? 4
+      : saved_jobs === 1
+      ? 1
       : 0,
   );
   const [showDetailPosted, setShowDetailPosted] =
@@ -97,32 +115,34 @@ const HistoryPost = () => {
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     // event.preventDefault()
   }
-
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const analytics: any = getAnalytics();
 
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   const dataItem = [
     {
-      id: 1,
+      id: 0,
       // title: language?.history_page?.applied_jobs,
       // childs: [language?.all],
       title:
@@ -130,14 +150,14 @@ const HistoryPost = () => {
       childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
     },
     {
-      id: 2,
+      id: 1,
       // title: language?.history_page?.saved_jobs,
       // childs: [language?.all],
       title: languageRedux === 1 ? 'Các công việc đã lưu' : 'Saved jobs',
       childs: [languageRedux === 1 ? 'Tất cả' : 'All'],
     },
     {
-      id: 3,
+      id: 2,
       // title: language?.history_page?.posted_jobs,
       title:
         languageRedux === 1 ? 'Các công việc đã đăng tuyển' : 'Posted jobs',
@@ -152,12 +172,23 @@ const HistoryPost = () => {
       ],
     },
     {
-      id: 4,
+      id: 3,
       // title: language?.history_page?.list_of_articles,
       title: languageRedux === 1 ? 'Danh sách bài viết' : 'List of articles',
       childs: [
         languageRedux === 1 ? 'Đã lưu' : 'Saved',
         languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
+        // language?.history_page?.saved,
+        // language?.history_page?.posts_created,
+      ],
+    },
+    {
+      id: 4,
+      // title: language?.history_page?.list_of_articles,
+      title: languageRedux === 1 ? 'Danh sách ứng viên' : 'List of candidates',
+      childs: [
+        languageRedux === 1 ? 'Tất cả' : 'All',
+        // languageRedux === 1 ? 'Bài viết bạn đã tạo' : 'Posts',
         // language?.history_page?.saved,
         // language?.history_page?.posts_created,
       ],
@@ -202,11 +233,15 @@ const HistoryPost = () => {
       {language?.history_page?.history}
     </Link>,
     <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
-      {ItemLeft === dataItem[0].id - 1
+      {ItemLeft === dataItem[0].id
         ? dataItem[0].title
-        : ItemLeft === dataItem[1].id - 1
+        : ItemLeft === dataItem[1].id
         ? dataItem[1].title
-        : dataItem[2].title}
+        : ItemLeft === dataItem[2].id
+        ? dataItem[2].title
+        : ItemLeft === dataItem[3].id
+        ? dataItem[3].title
+        : dataItem[4].title}
     </Typography>,
     <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {activeChild === '0-0'
@@ -231,6 +266,8 @@ const HistoryPost = () => {
         : activeChild === '3-1'
         ? language?.history_page?.have_been_created
         : ''}
+
+      {activeChild === '4-0' ? language?.all : ''}
     </Typography>,
   ];
   const CardsPost = useMemo(() => {
@@ -268,6 +305,15 @@ const HistoryPost = () => {
     return null;
   }, [ItemLeft, activeChild]);
 
+  console.log('ItemLEFT', ItemLeft);
+
+  const CardListCandidates = useMemo(() => {
+    if (ItemLeft === 4) {
+      return <CardListCandidate />;
+    }
+    return null;
+  }, [ItemLeft, activeChild]);
+
   const handleChildClick = useCallback((childKey: string) => {
     setActiveChild(childKey);
     // console.log('childKey', childKey);
@@ -292,21 +338,59 @@ const HistoryPost = () => {
     if (hotjobtype === 2) {
       setItemLeft(2);
       setActiveChild('2-0');
+      return;
     }
     if (community_post === 31) {
       setItemLeft(3);
       setActiveChild('3-1');
+      return;
     }
     if (community_post === 30) {
       setItemLeft(3);
       setActiveChild('3-0');
+      return;
     }
+    if (saved_jobs === 1) {
+      setItemLeft(1);
+      setActiveChild('1-0');
+      return;
+    }
+    if (recruitment_post === 'opening') {
+      setItemLeft(2);
+      setActiveChild('2-1');
+      return;
+    }
+    if (recruitment_post === 'closed') {
+      setItemLeft(2);
+      setActiveChild('2-2');
+      return;
+    }
+    if (candidate === 4) {
+      setItemLeft(4);
+      setActiveChild('4-0');
+      return;
+    }
+    if (roleRedux === 0) {
+      setItemLeft(0);
+      setActiveChild('0-0');
+      return;
+    } else {
+      setItemLeft(2);
+      setActiveChild('2-0');
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (!localStorage.getItem('accessToken')) window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="post-history">
       <Navbar />
+      <CategoryDropdown />
       <div className="post-history_main">
         <Box>
           <Breadcrumbs
@@ -322,6 +406,9 @@ const HistoryPost = () => {
         >
           <Box className="history-post_left">
             <Collapse
+              // expandIcon={(e: any) => {
+              //   return <RightOutlined onClick={(e) => e.stopPropagation()} />;
+              // }}
               defaultActiveKey={
                 hotjobtype && hotjobtype === 2
                   ? ['2', '0']
@@ -329,7 +416,13 @@ const HistoryPost = () => {
                   ? ['3', '1']
                   : community_post && community_post === 30
                   ? ['3', '0']
-                  : ['0', '0']
+                  : saved_jobs === 1
+                  ? ['1', '0']
+                  : candidate === 4
+                  ? ['4', '0']
+                  : roleRedux === 0
+                  ? ['0', '0']
+                  : ['2', '0']
               }
               accordion
               bordered={false}
@@ -352,6 +445,16 @@ const HistoryPost = () => {
                     }
                     key={index}
                     className={`history-left_item`}
+                    style={{
+                      display:
+                        roleRedux === 0
+                          ? item?.id === 2 || item.id === 4
+                            ? 'none'
+                            : 'block'
+                          : item?.id === 0
+                          ? 'none'
+                          : 'block',
+                    }}
                   >
                     {item.childs.map((child: string, idx: number) => (
                       <div
@@ -361,7 +464,9 @@ const HistoryPost = () => {
                             ? 'active-child child-item'
                             : 'child-item'
                         }
-                        onClick={() => handleChildClick(`${index}-${idx}`)}
+                        onClick={() => {
+                          handleChildClick(`${index}-${idx}`);
+                        }}
                       >
                         {child}
                       </div>
@@ -377,6 +482,7 @@ const HistoryPost = () => {
             {CardsApply}
             {CardsSave}
             {CardListBlog}
+            {CardListCandidates}
           </Box>
         </Box>
       </div>

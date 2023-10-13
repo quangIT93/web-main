@@ -41,12 +41,16 @@ import WorkingStoryCard from '#components/Community/WorkingStoryCard';
 import { setAlertSave } from 'store/reducer/alertReducer';
 import HijobNewsCard from '#components/Community/HijobNewsCard';
 import { getCookie } from 'cookies';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 // const { Panel } = Collapse;
 
 const ComunityNewPost = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
   );
   const [openMenu, setOpenMenu] = React.useState(false);
   const [stories, setStories] = React.useState<any>([]);
@@ -95,7 +99,7 @@ const ComunityNewPost = () => {
         duration: 2,
         maxCount: 3,
       });
-      // message.error('Đã hết bài viết');
+      message.error(languageRedux === 1 ? 'Không còn bài viết để hiển thị' : 'No more posts to show');
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
     }
@@ -167,25 +171,25 @@ const ComunityNewPost = () => {
 
   // console.log('page', page);
 
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
   const footerRef = React.useRef<any>(null);
 
   React.useEffect(() => {
@@ -221,6 +225,7 @@ const ComunityNewPost = () => {
   return (
     <div className="comunity-container">
       <Navbar />
+      <CategoryDropdown />
       <div className="comunity-content">
         <div className="comunityPostNew">
           <div className="title-comunity">
@@ -233,10 +238,10 @@ const ComunityNewPost = () => {
                   loading
                     ? 'Loading...'
                     : languageRedux === 1
-                    ? `${new Intl.NumberFormat('en-US').format(
+                      ? `${new Intl.NumberFormat('en-US').format(
                         total,
                       )} bài viết mới`
-                    : `${new Intl.NumberFormat('en-US').format(
+                      : `${new Intl.NumberFormat('en-US').format(
                         total,
                       )} new posts`
 

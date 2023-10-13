@@ -2,6 +2,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .div-item-left {
+        margin-right: 12px;
+    }
 
+    .div-item-right{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
 
 }

@@ -1,0 +1,47 @@
+@import '../../../scss/mixins';
+
+.list-candidate-container {
+    // margin: 32px 0;
+
+    margin-bottom: 24px !important;
+    padding: 0 !important;
+    scroll-padding-top: 30px;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+
+    .list-candidate-home {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 24px;
+
+        @media screen and (max-width: 1280px) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media screen and (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @include breakpoint(mobile) {
+        margin-bottom: 24px !important;
+
+    }
+
+    @include breakpoint(tablet) {
+        margin-bottom: 24px !important;
+
+    }
+
+    @include breakpoint(largeTablet) {
+        margin-bottom: 24px !important;
+
+    }
+
+    @include breakpoint(destop) {
+        margin-bottom: 24px !important;
+
+    }
+
+
+}

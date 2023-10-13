@@ -14,8 +14,8 @@ export const accent = {
 export const Container = styled('div')({
   padding: '0 24px',
   minHeight: '70px',
-  boxShadow: '0px 1px 3px #aaa',
-  zIndex: '10',
+  // boxShadow: '0px 1px 3px #aaa',
+  zIndex: '11',
   position: 'fixed',
   width: '100%',
   top: '0',

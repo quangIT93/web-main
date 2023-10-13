@@ -1,11 +1,13 @@
 @import '../../../scss//mixins';
+
 .new-job {
-    
+    scroll-padding-top: 20px;
+
     .MuiGrid-item {
         @include breakpoint(mobile) {
             height: 142px;
         }
-    
+
         @media (max-width: 768px) {
             max-width: 100% !important;
         }
@@ -28,6 +30,7 @@
         height: 120px;
         justify-content: space-between;
         width: 80%;
+
         p {
             color: #575757;
         }
@@ -112,9 +115,11 @@
 
     @include breakpoint(mobile) {
         width: 70%;
+
         .MuiImageListItem-root {
             display: flex;
             align-items: flex-start !important;
+
             .MuiImageListItem-img {
                 width: 82px !important;
                 height: 82px !important;
@@ -124,16 +129,18 @@
 
             .div-card-post-left_info {
                 justify-content: unset !important;
+
                 .MuiTypography-root:nth-child(2),
                 .MuiTypography-root:nth-child(1) {
                     width: 85% !important;
                 }
+
                 .text-card-post-left_info {
-                        .MuiTypography-root {
-                            width: 77% !important;
-                            color: #575757;
-                        }
-                    
+                    .MuiTypography-root {
+                        width: 77% !important;
+                        color: #575757;
+                    }
+
                 }
 
                 .MuiTypography-root:nth-child(2) {
@@ -148,7 +155,7 @@
         width: 100%;
 
         // &__icon {
-            // font-size: small;
+        // font-size: small;
         // }
     }
 }

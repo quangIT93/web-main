@@ -4,27 +4,32 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 // import nodata from '../../../public/images/history/nodata.png'
 import { RootState } from '../../store/reducer/index';
-const NoDataComponent: React.FC = () => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const [language, setLanguage] = React.useState<any>();
+const NoDataComponent: React.FC<any> = (props) => {
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
   return (
     <div
       style={{
@@ -45,8 +50,13 @@ const NoDataComponent: React.FC = () => {
       />
       <p style={{ fontSize: 20, color: 'gray', marginBottom: 20 }}>
         {
-          language?.history_page?.no_job_page
-        }
+          props.loading === true ?
+            languageRedux === 1
+              ? 'Đang tải dữ liệu'
+              : 'Loading data...' :
+            languageRedux === 1
+              ? 'Không có thông tin hiển thị'
+              : 'No display information'}
       </p>
     </div>
   );
