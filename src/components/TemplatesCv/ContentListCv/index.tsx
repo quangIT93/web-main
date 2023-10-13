@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 // import api
-import jsPDF from 'jspdf';
+
 import { PDFDownloadLink, BlobProvider } from '@react-pdf/renderer';
 
 import categoriesApi from 'api/categoriesApi';
@@ -51,10 +51,11 @@ import CvTemplate7 from '../CvTemplate/CvTemplate7';
 import templatesCv from '../CvTemplate/ListTheme';
 import { template } from '@babel/core';
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/legacy/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   'pdfjs-dist/legacy/build/pdf.worker.min.js',
+//   import.meta.url,
+// ).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 const styleChildBox = {
   marginBottom: '12px',
 };
