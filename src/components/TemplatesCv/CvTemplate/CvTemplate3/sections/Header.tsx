@@ -221,7 +221,7 @@ const Header: React.FC<ICvHeader> = (props) => {
               <Image
                 style={styles.image}
                 // src={profile.avatarPath ? profile.avatarPath : 'a'}
-                source={profile.avatarPath ? profile.avatarPath : null_avatar}
+                src={profile.avatarPath ? profile.avatarPath : null_avatar}
               />
             </View>
             <View style={styles.info}>

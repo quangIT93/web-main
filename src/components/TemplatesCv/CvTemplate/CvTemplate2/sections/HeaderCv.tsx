@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Image, Text, View, StyleSheet, Svg, Line } from '@react-pdf/renderer';
 
@@ -10,6 +10,10 @@ interface IHeaderCv {
 
 const HeaderCv: React.FC<IHeaderCv> = (props) => {
   const { fontSize, color, profile } = props;
+  const [avatar, setAvatar] = React.useState(profile.avatarPath);
+  useEffect(() => {
+    setAvatar(profile.avatarPath);
+  }, [profile]);
   const styles = StyleSheet.create({
     header: {
       display: 'flex',
@@ -109,19 +113,23 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
           />
         </Svg>
       </View>
-      {profile.avatarPath ? (
-        <Image
-          // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
-          style={{ width: '5cm', height: '4.5cm', objectFit: 'cover' }}
-          source={profile.avatarPath ? profile.avatarPath : ''}
-        />
-      ) : (
-        <Image
-          // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
-          style={{ width: '5cm', height: '4.5cm', objectFit: 'cover' }}
-          source={profile.avatarPath ? profile.avatarPath : ''}
-        />
-      )}
+      <View style={{ width: '5cm', height: '4.5cm' }}>
+        {profile.avatarPath ? (
+          <Image
+            // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+            style={{ objectFit: 'cover' }}
+            src={avatar}
+            source={avatar}
+          />
+        ) : (
+          <Image
+            // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+            style={{ objectFit: 'cover' }}
+            src={avatar}
+            source={avatar}
+          />
+        )}
+      </View>
       ;
       {/* <View style={{ width: '5cm', height: '4.5cm' }}>
     </View> */}

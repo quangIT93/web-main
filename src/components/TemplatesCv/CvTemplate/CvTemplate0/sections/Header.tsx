@@ -183,7 +183,9 @@ const Header: React.FC<ICvHeader> = (props) => {
       <View style={styles.content}>
         <View style={styles.leftDiv}>
           <View style={styles.topLeftDiv}>
-            <Text style={styles.bigTitle}>HELLO! I'M</Text>
+            <Text style={styles.bigTitle}>
+              HELLO! I'M ddddddddddddddddddddddddddddddddd
+            </Text>
             <View style={styles.name}>
               <Text style={styles.lastName}>
                 {profile?.name?.split(' ').length > 2
@@ -215,7 +217,7 @@ const Header: React.FC<ICvHeader> = (props) => {
               )}
               {profile?.facebook ? (
                 <Link style={styles.subtitle} src={profile?.facebook}>
-                  Facebook
+                  Facebook 0000000000000000000000000000000000000000
                 </Link>
               ) : (
                 <></>
@@ -226,13 +228,24 @@ const Header: React.FC<ICvHeader> = (props) => {
         <View style={styles.avatarDiv}>
           <Image
             // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+            // type SourceURLObject =  { uri: string; method: HTTPMethod; body: any; headers: any }
+
             style={styles.image}
-            source={
-              profile.avatarPath
-                ? // ? profile.avatarPath
-                  'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697090710464-3350951a-bda0-47f5-97fd-0269e1da7615.jpg'
-                : 'https://react-pdf.org/images/logo.png'
-            }
+            // src={
+            //   profile.avatarPath
+            //     ? // ? profile.avatarPath
+            //       'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697090710464-3350951a-bda0-47f5-97fd-0269e1da7615.jpg'
+            //     : 'https://react-pdf.org/images/logo.png'
+            // }
+            src={{
+              uri: profile.avatarPath,
+              method: 'GET',
+              body: '',
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+              },
+            }}
+            // cache={true}
           />
         </View>
         {/* <View style={styles.language}>
