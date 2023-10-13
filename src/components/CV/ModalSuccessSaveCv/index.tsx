@@ -16,7 +16,7 @@ interface IModalSuccessDownCv {
 const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
   const { openModalSuccessDownCv, setOpenModalSuccessDownCv } = props;
 
-  const [checkedDefault, setCheckedDefault] = useState(false);
+  const [checkedDefault, setCheckedDefault] = useState(true);
 
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -93,8 +93,8 @@ const ModalSuccessSaveCv: React.FC<IModalSuccessDownCv> = (props) => {
           onClick={async () => {
             if (checkedDefault && openModalSuccessDownCv.open) {
               await apiCv.putThemeCv(openModalSuccessDownCv?.id, 1);
-              window.open('/profile-cv', '_parent');
             }
+            window.open('/profile-cv', '_parent');
           }}
         >
           {languageRedux === 1 ? 'List CV/Hồ sơ' : 'Cv/Resume list'}

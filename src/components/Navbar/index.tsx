@@ -1049,7 +1049,7 @@ const Navbar: React.FC = () => {
             style={{
               display:
                 profileV3.length !== 0
-                  ? roleRedux === 0 || profileV3?.typeRoleData === 0
+                  ? profileV3?.typeRoleData === 0
                     ? 'flex'
                     : 'none'
                   : 'none',
@@ -1087,7 +1087,7 @@ const Navbar: React.FC = () => {
             style={{
               display:
                 profileV3.length !== 0
-                  ? roleRedux === 0 || profileV3?.typeRoleData === 0
+                  ? profileV3?.typeRoleData === 0
                     ? 'none'
                     : 'flex'
                   : 'none',

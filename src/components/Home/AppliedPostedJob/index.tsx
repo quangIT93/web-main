@@ -265,6 +265,7 @@ const AppliedPostedJob: React.FC = () => {
                     width: '100%',
                     maxHeight: '301px',
                     height: 'auto',
+                    cursor: 'pointer'
                   }}
                   variant="square"
                   src={banner}
@@ -279,7 +280,7 @@ const AppliedPostedJob: React.FC = () => {
                   spaceBetween={30}
                   centeredSlides={true}
                   autoplay={{
-                    delay: 2500,
+                    delay: 3500,
                     disableOnInteraction: false,
                   }}
                   // navigation={true}
@@ -519,6 +520,23 @@ const AppliedPostedJob: React.FC = () => {
             {language?.sign_in}
           </Button>
         </div>
+
+        <Avatar
+          sx={{
+            width: '100%',
+            maxHeight: '301px',
+            height: 'auto',
+            marginTop: '24px',
+            cursor: 'pointer'
+          }}
+          variant="square"
+          src={banner}
+          onClick={() => {
+            window.open('/page-cv', '_parent');
+          }}
+        >
+          Banner
+        </Avatar>
         <ModalLogin
           openModalLogin={openModalLogin}
           setOpenModalLogin={setOpenModalLogin}

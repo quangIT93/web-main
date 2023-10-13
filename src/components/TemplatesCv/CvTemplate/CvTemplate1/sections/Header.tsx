@@ -224,15 +224,29 @@ const Header: React.FC<ICvHeader> = (props) => {
           </View>
         </View>
         <View style={styles.avatarDiv}>
-          <Image
-            // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
-            style={styles.image}
-            source={
-              profile.avatarPath
-                ? profile.avatarPath
-                : 'https://react-pdf.org/images/logo.png'
-            }
-          />
+          {profile.avatarPath ? (
+            <Image
+              // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+              style={styles.image}
+              source={
+                profile.avatarPath
+                  ? profile.avatarPath
+                  : // 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697088375229-88331f0b-ed12-4f88-a25d-52d8ee906d40.jpg'
+                    ''
+              }
+            />
+          ) : (
+            <Image
+              // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+              style={styles.image}
+              source={
+                profile.avatarPath
+                  ? profile.avatarPath
+                  : // 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697088375229-88331f0b-ed12-4f88-a25d-52d8ee906d40.jpg'
+                    ''
+              }
+            />
+          )}
         </View>
         {/* <View style={styles.language}>
                     <View>

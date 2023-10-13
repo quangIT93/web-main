@@ -83,12 +83,15 @@ const Contact: React.FC<ICvHeader> = (props) => {
     subtitle: {
       fontSize: 10,
       justifySelf: 'flex-end',
-      fontFamily: 'OpenSans-Regular',
+      // fontFamily: 'OpenSans-Regular',
       color: '#4A4747',
       //   textDecoration: 'none',
-      textTransform: 'uppercase',
+      width: '40mm',
+      // textTransform: 'uppercase',
       textAlign: 'justify',
-      wordWrap: 'wrap',
+      // wordWrap: 'wrap',
+      flexWrap: 'wrap',
+      alignItems: 'center',
     },
     bigTitle: {
       fontFamily: 'OpenSans-Regular',

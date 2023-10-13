@@ -53,7 +53,8 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
         window.open('/candidate-new-detail');
       } else {
         console.log(profileV3);
-        setOpenModalNoteWorker(true);
+        // setOpenModalNoteWorker(true);
+        window.open('/page-cv');
         return;
       }
     } catch (error) {

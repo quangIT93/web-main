@@ -78,8 +78,8 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
   const [infor, setInfor] = React.useState<any>();
 
   React.useEffect(() => {
-    setInfor(props.item)
-  }, [props.item])
+    setInfor(props.item);
+  }, [props.item]);
 
   const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     window.open(`/post-detail?post-id=${id}`);
@@ -89,8 +89,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
     setError(true);
   };
 
-  console.log(infor);
-
+  // console.log(infor);
 
   return (
     <>
@@ -272,14 +271,13 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                 >
                   {new Intl.NumberFormat('en-US').format(infor?.salaryMin)}{' '}
                   {infor?.moneyType} -{' '}
-                  {new Intl.NumberFormat('en-US').format(
-                    infor?.salaryMax,
-                  ) +
+                  {new Intl.NumberFormat('en-US').format(infor?.salaryMax) +
                     ` ${infor?.moneyType}` +
                     `/${infor?.salaryType?.name}`}
                 </Typography>
               </div>
-              <div className="div-card-post-left_info__jobtype"
+              <div
+                className="div-card-post-left_info__jobtype"
                 style={{
                   marginTop: 5,
                 }}

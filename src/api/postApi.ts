@@ -42,7 +42,7 @@ const postApi = {
     threshold: Number | null,
     lang: string
   ) => {
-    const URL = `v1/posts/theme?${themeId ? `tid=${themeId}&`: `tid=1&`}limit=${limit}&${themeId ? `tid=${themeId}&`: ``}lang=${lang}`
+    const URL = `v1/posts/theme?${themeId ? `tid=${themeId}&`: `tid=1&`}limit=${limit}&lang=${lang}`
     return axiosClient.get(URL
       // ,
       // {

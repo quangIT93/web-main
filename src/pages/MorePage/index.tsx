@@ -22,13 +22,9 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import RollTop from '#components/RollTop';
 
 // import icon
-//@ts-ignore
-import {
-  FilterIconHotjob,
-  MoreICon,
-  FilterIcon,
-  LightFilterIcon,
-} from '#components/Icons';
+
+// @ts-ignore
+import { BackIcon } from '#components/Icons';
 
 import { Skeleton, Radio, Select, Space, message, Spin } from 'antd';
 import type { SelectProps, RadioChangeEvent } from 'antd';
@@ -125,6 +121,16 @@ const MoreJobsPage: React.FC = () => {
   const [templateId, setTemplateId] = React.useState<any>(
     localStorage.getItem('job-type'),
   );
+
+  const [imageHotPlace, setImageHotPlace] = React.useState<string | undefined>(
+    '',
+  );
+  const [titleHotPlace, setTitleHotPlace] = React.useState<string | undefined>(
+    '',
+  );
+  const [numberPostHotPlace, setNumberPostHotPlace] = React.useState<
+    string | undefined
+  >('');
   const [openBackdrop, setOpenBackdrop] = React.useState<any>(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
@@ -141,13 +147,23 @@ const MoreJobsPage: React.FC = () => {
 
   const getTemplateId = () => {
     const templateId = localStorage.getItem('job-type');
-    setTemplateId(templateId?.split('-').at(1));
+    if (templateId !== 'new' && templateId !== 'suggested') {
+      console.log('la new');
+      setTemplateId(templateId && templateId?.split('--').at(1));
+      setImageHotPlace(templateId?.split('--').at(4));
+      setTitleHotPlace(templateId?.split('--').at(3));
+      setNumberPostHotPlace(templateId?.split('--').at(2));
+    }
   };
+
+  console.log('getTemplateId', localStorage.getItem('job-type'));
+  console.log('getTemplateId', templateId);
 
   React.useEffect(() => {
     setTypeJob(localStorage.getItem('job-type'));
     getTemplateId();
-  }, [profile]);
+    console.log('set lai');
+  }, []);
 
   React.useEffect(() => {
     getProvinces();
@@ -157,16 +173,17 @@ const MoreJobsPage: React.FC = () => {
           ? 'HiJob - Công việc mới nhất'
           : 'HiJob - Newest Jobs'
         : typeJob === 'suggested'
-          ? languageRedux === 1
-            ? 'HiJob - Công việc gợi ý'
-            : 'HiJob - Suggested jobs in your city'
-          : languageRedux === 1
-            ? 'HiJob - Công việc theo chủ đề'
-            : 'HiJob - job by hot places';
+        ? languageRedux === 1
+          ? 'HiJob - Công việc gợi ý'
+          : 'HiJob - Suggested jobs in your city'
+        : languageRedux === 1
+        ? 'HiJob - Công việc theo chủ đề'
+        : 'HiJob - job by hot places';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
     });
+    console.log('set lai');
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
@@ -224,35 +241,35 @@ const MoreJobsPage: React.FC = () => {
       const result =
         typeJob === 'new'
           ? await postApi.getPostNewestV3(
-            childCateloriesArray,
-            // userSelectedId,
-            userSelected.userSelectedId,
-            // null,
-            // null,
-            // profile && profile?.profileLocations?.length > 0 &&
-            // profile?.profileLocations?.map((item: any) => {
-            //     return item.id
-            // }),
-            null,
-            null,
-            20,
-            null,
-            languageRedux === 1 ? 'vi' : 'en',
-          )
+              childCateloriesArray,
+              // userSelectedId,
+              userSelected.userSelectedId,
+              // null,
+              // null,
+              // profile && profile?.profileLocations?.length > 0 &&
+              // profile?.profileLocations?.map((item: any) => {
+              //     return item.id
+              // }),
+              null,
+              null,
+              20,
+              null,
+              languageRedux === 1 ? 'vi' : 'en',
+            )
           : typeJob === 'suggested'
-            ? await nearByApi.getNearByJob(
+          ? await nearByApi.getNearByJob(
               profile &&
-              profile?.profileLocations?.length > 0 &&
-              profile?.profileLocations?.map((item: any) => {
-                return item.province.id;
-              }),
+                profile?.profileLocations?.length > 0 &&
+                profile?.profileLocations?.map((item: any) => {
+                  return item.province.id;
+                }),
               null,
               null,
               19,
               null,
               languageRedux === 1 ? 'vi' : 'en',
             )
-            : await postApi.getPostByThemeId(
+          : await postApi.getPostByThemeId(
               templateId,
               19,
               null,
@@ -299,34 +316,34 @@ const MoreJobsPage: React.FC = () => {
       const result =
         typeJob === 'new'
           ? await postApi.getPostNewestV3(
-            childCateloriesArray,
-            userSelected.userSelectedId,
-            // null,
-            // null,
-            // profile && profile?.profileLocations?.length > 0 &&
-            // profile?.profileLocations?.map((item: any) => {
-            //     return item.id
-            // }),
-            null,
-            null,
-            20,
-            thersholdId,
-            languageRedux === 1 ? 'vi' : 'en',
-          )
+              childCateloriesArray,
+              userSelected.userSelectedId,
+              // null,
+              // null,
+              // profile && profile?.profileLocations?.length > 0 &&
+              // profile?.profileLocations?.map((item: any) => {
+              //     return item.id
+              // }),
+              null,
+              null,
+              20,
+              thersholdId,
+              languageRedux === 1 ? 'vi' : 'en',
+            )
           : typeJob === 'suggested'
-            ? await nearByApi.getNearByJob(
+          ? await nearByApi.getNearByJob(
               profile &&
-              profile?.profileLocations?.length > 0 &&
-              profile?.profileLocations?.map((item: any) => {
-                return item.province.id;
-              }),
+                profile?.profileLocations?.length > 0 &&
+                profile?.profileLocations?.map((item: any) => {
+                  return item.province.id;
+                }),
               null,
               null,
               19,
               thersholdId,
               languageRedux === 1 ? 'vi' : 'en',
             )
-            : await postApi.getPostByThemeId(
+          : await postApi.getPostByThemeId(
               templateId,
               19,
               thersholdId,
@@ -353,9 +370,8 @@ const MoreJobsPage: React.FC = () => {
             : 'No more job to show',
         );
       }
-    } catch (error) { }
+    } catch (error) {}
   };
-
   React.useEffect(() => {
     let userSelected = JSON.parse(
       getCookie('userSelected') || '{}',
@@ -371,6 +387,7 @@ const MoreJobsPage: React.FC = () => {
     //   }
     // }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log('set lai');
   }, [
     languageRedux,
     idFilterProvinces,
@@ -432,6 +449,7 @@ const MoreJobsPage: React.FC = () => {
       });
       setOptionsProvinces(newOptionsProvinces);
     }
+    console.log('set lai');
   }, [provincesData, languageRedux]);
 
   const handleChangeFilterHotjob = (value: string) => {
@@ -445,9 +463,10 @@ const MoreJobsPage: React.FC = () => {
       <Navbar />
       <CategoryDropdown />
 
-      <div className="more-job-page-container"
+      <div
+        className="more-job-page-container"
         style={{
-          margin: typeJob === 'new' ? '280px auto 100px' : '140px auto 100px'
+          margin: typeJob === 'new' ? '280px auto 100px' : '140px auto 100px',
         }}
       >
         <div style={{ display: typeJob === 'new' ? 'block' : 'none' }}>
@@ -457,6 +476,54 @@ const MoreJobsPage: React.FC = () => {
         {
           // automatic && (
           <Box sx={{ flexGrow: 1 }} ref={listRef}>
+            {templateId !== 'new' && templateId !== 'suggested' ? (
+              <>
+                {/* <div
+                  className="back"
+                  onClick={() => {
+                    // localStorage.setItem(
+                    //   'theme-id',
+                    //   templateId?.split('--').at(1),
+                    // );
+                    window.open(`/?theme-id=${10}`);
+                  }}
+                >
+                  <div className="icon-back">
+                    <BackIcon width={15} height={15} fill="white" />
+                  </div>
+                  <h3>Job By Hot Places</h3>
+                </div> */}
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div>
+                    <img
+                      src={imageHotPlace}
+                      alt=""
+                      style={{
+                        width: '120px',
+                        height: '120px',
+                        borderRadius: '12px',
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      gap: '8px',
+                    }}
+                  >
+                    <h3 style={{ fontSize: '16px' }}>{titleHotPlace}</h3>
+                    <p style={{ fontSize: '12px' }}>
+                      {languageRedux === 1 ? 'Số lượng' : 'Counts'}:{' '}
+                      {numberPostHotPlace}
+                    </p>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
             <div
               style={{
                 display: 'flex',
@@ -476,8 +543,8 @@ const MoreJobsPage: React.FC = () => {
                   {typeJob === 'new'
                     ? language?.newest_jobs
                     : typeJob === 'suggested'
-                      ? language?.nearby_jobs
-                      : language?.jobs_by_theme}
+                    ? language?.nearby_jobs
+                    : language?.jobs_by_theme}
                 </h3>
                 {/* <div
                                     className="filter-moreJob"

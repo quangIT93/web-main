@@ -195,7 +195,7 @@ const CandidateNewDetail = () => {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               >
                 <Avatar
-                  style={{ height: '70px', width: '70px' }}
+                  style={{ height: '70px', width: '70px', filter: 'blur(3px)' }}
                   alt={candidate?.avatarPath}
                   src={candidate?.avatarPath ? candidate?.avatarPath : ''}
                 />

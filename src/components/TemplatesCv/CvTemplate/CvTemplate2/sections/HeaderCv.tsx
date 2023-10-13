@@ -109,15 +109,19 @@ const HeaderCv: React.FC<IHeaderCv> = (props) => {
           />
         </Svg>
       </View>
-      <Image
-        // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
-        style={{ width: '5cm', height: '4.5cm', objectFit: 'cover' }}
-        source={
-          profile.avatarPath
-            ? profile.avatarPath
-            : 'https://react-pdf.org/images/logo.png'
-        }
-      />
+      {profile.avatarPath ? (
+        <Image
+          // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+          style={{ width: '5cm', height: '4.5cm', objectFit: 'cover' }}
+          source={profile.avatarPath ? profile.avatarPath : ''}
+        />
+      ) : (
+        <Image
+          // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+          style={{ width: '5cm', height: '4.5cm', objectFit: 'cover' }}
+          source={profile.avatarPath ? profile.avatarPath : ''}
+        />
+      )}
       ;
       {/* <View style={{ width: '5cm', height: '4.5cm' }}>
     </View> */}

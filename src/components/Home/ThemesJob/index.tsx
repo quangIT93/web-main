@@ -164,13 +164,13 @@ const ThemesJob: React.FC = () => {
       const result = await themeApi.getThemesEnable(
         languageRedux === 1 ? 'vi' : 'en',
       );
-      console.log(result);
+      console.log('getThemesEnable', result);
 
       if (result) {
         setListThem(result);
         const list = await postApi?.getPostByThemeId(
           result?.data[0]?.id,
-          19,
+          9,
           null,
           languageRedux === 1 ? 'vi' : 'en',
         );
@@ -212,7 +212,6 @@ const ThemesJob: React.FC = () => {
   // }, [localStorage.getItem("accessToken")])
 
   const handleMoveToMoreJob = () => {
-    localStorage.setItem('job-type', `place-${themeId}`);
     window.open('/more-jobs', '_parent');
   };
 

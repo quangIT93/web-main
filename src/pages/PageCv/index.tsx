@@ -19,35 +19,48 @@ import ModalLogin from '#components/Home/ModalLogin';
 // );
 
 const PageCv = () => {
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role)
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [isLogin, setIsLogin] = useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
   useEffect(() => {
     if (!localStorage.getItem('accessToken')) {
       setIsLogin(false);
     } else {
       setIsLogin(true);
     }
-  }, [])
+  }, []);
 
   return (
     <div className="wrap-page_Cv">
       <Navbar />
       <div className="wrap-item_pageCv">
         <div className="item-update_profile item-page_Cv">
-          <h5>Tạo vào lưu nhiều mẫu</h5>
-          <h3>Cv trên Hijob</h3>
+          <h5>
+            {languageRedux === 1
+              ? 'Tạo và lưu nhiều mẫu'
+              : 'Create and save multiple templates'}
+          </h5>
+          <h3>{languageRedux === 1 ? `CV trên Hijob` : 'CV on Hijob'}</h3>
           <p>
-            Chức năng tạo và lưu được nhiều CV giúp bạn có nhiều lựa chọn CV để
-            ứng tuyển công việc phù hợp hoặc chia sẻ CV của bạn với các Nhà
-            tuyển dụng!
+            {languageRedux === 1
+              ? ' Chức năng tạo và lưu được nhiều CV giúp bạn có nhiều lựa chọn CV để ứng tuyển công việc phù hợp hoặc chia sẻ CV của bạn với các Nhà tuyển dụng!'
+              : 'The function to create and save multiple CVs gives you many CV options to choose from Apply for suitable jobs or share your CV with Houses recruitment!'}
           </p>
           <div
             className="button-update_profile"
-            onClick={() => window.open('/profile', '_parent')}
+            onClick={() => {
+              if (!localStorage.getItem('accessToken')) {
+                setOpenModalLogin(true);
+                return;
+              } else {
+                window.open('/profile', '_parent');
+              }
+            }}
           >
-            Cập nhật hồ sơ
+            {languageRedux === 1 ? ' Cập nhật hồ sơ' : 'Update Profile'}
           </div>
         </div>
         {/* <div className="item-imageCv_banner item-page_Cv">
@@ -89,7 +102,8 @@ const PageCv = () => {
               Chỉ với vài thao tác đơn giản, bạn đã có thể tạo ngay cho mình một
               bản CV chuyên nghiệp để tạo ấn tượng tốt với Nhà tuyển dụng.
             </p>
-            <div className="wrap-bnt_bannerShow"
+            <div
+              className="wrap-bnt_bannerShow"
               onClick={() => window.open('/profile-cv', '_parent')}
             >
               <span className="btn-bannerShow">Xem các mẫu CV</span>
@@ -104,7 +118,8 @@ const PageCv = () => {
               Tổng hợp danh sách mẫu CV xin việc làm online phù hợp với nhiều vị
               trí ngành nghề hiện nay.
             </p>
-            <div className="wrap-cvchange_login"
+            <div
+              className="wrap-cvchange_login"
               style={{ display: isLogin ? 'none' : 'block' }}
               onClick={() => setOpenModalLogin(true)}
             >
@@ -130,7 +145,8 @@ const PageCv = () => {
               tự động từ hồ sơ có sẵn của bạn trên HiJob và sử dụng để tìm việc
               ngay.
             </p>
-            <div className="wrap-cvchange_login"
+            <div
+              className="wrap-cvchange_login"
               style={{ display: isLogin ? 'none' : 'block' }}
               onClick={() => setOpenModalLogin(true)}
             >
@@ -146,7 +162,7 @@ const PageCv = () => {
           <div className="banner-show_title">
             <h3>Mục lục</h3>
             <ul>
-              <li>Cv là gì? Những điều bạn cần lưu ý khi viết CV xin việc</li>
+              <li>CV là gì? Những điều bạn cần lưu ý khi viết CV xin việc</li>
               <li>Cách viết CV xin việc chuẩn</li>
               <li>Cách tạo mẫu CV xin việc đơn giản</li>
               <li>Một số lưu ý khi viết CV và nộp CV bạn nên nắm rõ</li>

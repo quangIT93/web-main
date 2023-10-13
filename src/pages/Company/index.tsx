@@ -207,7 +207,9 @@ const Company: React.FC<ICompany> = (props) => {
   }, [languageRedux, profileV3]);
 
   useEffect(() => {
-    roleRedux === 0 && !is_profile && window.open(`/`, '_parent');
+    if (roleRedux === 0) {
+      window.open(`/`, '_parent');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -431,7 +433,7 @@ const Company: React.FC<ICompany> = (props) => {
       style={{
         display: display,
         // marginTop: is_profile ? '30px' : '70px',
-        marginTop: is_profile ? '30px' : '146px',
+        marginTop: is_profile ? '30px' : '100px',
         width: is_profile ? '100%' : 'unset',
       }}
     >

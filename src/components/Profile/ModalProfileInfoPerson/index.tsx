@@ -215,7 +215,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
           name: name,
           birthday: new Date(day.toString()).getTime(),
           gender: gender,
-          address: selectedProvince.province_id,
+          address: selectedProvince.province_id.toString(),
           introduction: introduction,
           jobTypeName: jobTypeName,
         };

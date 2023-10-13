@@ -14,23 +14,14 @@ const Header: React.FC<ICvHeader> = (props) => {
   const styles = StyleSheet.create({
     container: {
       width: '100%',
-      height: '190.699pt',
+      height: '9.521cm',
       // marginTop: '32.041pt',
       // paddingLeft: '35.745pt',
-      // border: '1px solid red'
     },
     content: {
       width: '100%',
       height: '100%',
       position: 'relative',
-
-      // paddingTop: '47,291pt',
-      // paddingLeft: '103.428pt',
-      // border: '1px solid green'
-    },
-    info: {
-      marginLeft: '25pt',
-      // border: '1px solid red'
     },
     name: {
       color:
@@ -49,22 +40,21 @@ const Header: React.FC<ICvHeader> = (props) => {
       justifyContent: 'center',
       // border: '1px solid red',
       width: '100%',
-      gap: '9.447px',
+      // gap: '-0.5cm'
     },
     lastName: {
       fontSize: 33,
-      fontFamily: 'Archivo SemiExpanded Bold',
+      fontFamily: 'Archivo SemiExpanded Regular',
       width: '100%',
-      letterSpacing: '2px',
-      // background: 'red',
+      background: 'red',
       // border: '1px solid black',
     },
     firstName: {
       fontSize: 33,
-      fontFamily: 'Archivo SemiExpanded Bold',
+      fontFamily: 'Archivo SemiExpanded Regular',
       width: '100%',
-      letterSpacing: '2px',
-      // background: 'red',
+      // marginBottom: '0.5cm',
+      background: 'red',
       // border: '1px solid black',
     },
     subtitle: {
@@ -75,18 +65,16 @@ const Header: React.FC<ICvHeader> = (props) => {
       textDecoration: 'none',
     },
     bigTitle: {
-      fontFamily: 'Archivo SemiExpanded Regular',
-      fontSize: 15,
-      letterSpacing: '4px',
+      fontFamily: 'Montserrat Regular',
+      fontSize: 13,
+      letterSpacing: '2px',
       color: '#1B1212',
-      marginTop: '12.34px',
-      width: '100mm',
     },
     topLeftDiv: {
       // marginTop: '2.066cm',
       display: 'flex',
-      alignItems: 'center',
-      flexDirection: 'row',
+      alignItems: 'flex-start',
+      flexDirection: 'column',
       // gap: '0.25cm',
       // border: '1px solid green',
       width: '100%',
@@ -98,71 +86,52 @@ const Header: React.FC<ICvHeader> = (props) => {
       alignItems: 'flex-end',
       // marginBottom: '46.086px',
       gap: '0.418cm',
-      flexWrap: 'wrap',
     },
-    lineRight: {
-      position: 'absolute',
-      top: '107.31pt',
-      right: -30,
-      width: '46pt',
-      height: '9pt',
-      backgroundColor: '#DBE2EF',
-    },
-    lineLeft: {
-      position: 'absolute',
-      top: '107.31pt',
-      left: -30,
-      width: '108pt',
-      height: '9pt',
-      backgroundColor: '#DBE2EF',
+    line: {
+      width: '0.5px',
+      minHeight: '60px',
+      height: '100%',
+      backgroundColor: '#282828',
     },
     contact: {
       display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
       gap: '0.284cm',
       fontSize: '7px',
       fontFamily: 'Montserrat Regular',
     },
-    midDiv: {
+    leftDiv: {
       position: 'absolute',
-      top: '0',
-      left: '0',
-      // transform: 'translate(-50%, -50%)',
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'transparent',
+      top: 0,
+      left: 0,
+      width: '9.521cm',
+      height: '9.521cm',
+      backgroundColor: '#D0E3FF',
       display: 'flex',
       flexDirection: 'column',
-      // alignItems: 'flex-start',
-      // justifyContent: 'center',
-      paddingLeft: '90pt',
-      paddingTop: 15,
-      // paddingRight: '1.136cm',
-      gap: '20.229pt',
-      // border: '1px solid black',
-      zIndex: 1,
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      paddingLeft: '1.136cm',
+      paddingRight: '1.136cm',
+      gap: '0.5cm',
     },
     rightDiv: {
       position: 'absolute',
-      top: '27.31pt',
-      right: -30,
-      width: '46pt',
-      height: '78pt',
-      backgroundColor: '#DBE2EF',
-    },
-    leftDiv: {
-      position: 'absolute',
-      top: '27.31pt',
-      left: -30,
-      width: '108pt',
-      height: '78pt',
-      backgroundColor: '#DBE2EF',
+      top: 0,
+      right: '-1cm',
+      width: '5.123cm',
+      height: '1.66cm',
+      backgroundColor: '#D0E3FF',
     },
     avatarDiv: {
-      width: '112pt',
-      height: '112pt',
-      backgroundColor: '#DBE2EF',
+      position: 'absolute',
+      top: '1.66cm',
+      right: '4.023cm',
+      width: '5.802cm',
+      height: '5.802cm',
+      // backgroundColor: '#FFFFFF',
+      border: '1px solid #AAAAAA',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -212,68 +181,85 @@ const Header: React.FC<ICvHeader> = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.leftDiv}></View>
-        <View style={styles.lineLeft}></View>
-        <View style={styles.midDiv}>
+        <View style={styles.leftDiv}>
           <View style={styles.topLeftDiv}>
-            <View style={styles.avatarDiv}>
-              <Image
-                source={profile.avatarPath ? profile.avatarPath : 'a'}
-                style={styles.image}
-              />
+            <Text style={styles.bigTitle}>HELLO! I'M</Text>
+            <View style={styles.name}>
+              <Text style={styles.lastName}>
+                {profile?.name?.split(' ').length > 2
+                  ? profile?.name?.split(' ').slice(0, -2).join(' ')
+                  : profile?.name?.split(' ').slice(0, -1).join(' ')}
+              </Text>
+              <Text style={styles.firstName}>
+                {profile?.name?.split(' ').length > 2
+                  ? profile?.name?.split(' ').slice(-2).join(' ')
+                  : profile?.name?.split(' ').slice(-1).join(' ')}
+              </Text>
             </View>
-            <View style={styles.info}>
-              <View style={styles.name}>
-                <Text style={styles.lastName}>
-                  {profile?.name?.split(' ').length > 2
-                    ? profile?.name?.split(' ').slice(0, -2).join(' ')
-                    : profile?.name?.split(' ').slice(0, -1).join(' ')}
-                </Text>
-                <Text style={styles.firstName}>
-                  {profile?.name?.split(' ').length > 2
-                    ? profile?.name?.split(' ').slice(-2).join(' ')
-                    : profile?.name?.split(' ').slice(-1).join(' ')}
-                </Text>
-              </View>
-              <Text style={styles.bigTitle}>{profile?.jobTypeName}</Text>
-            </View>
+            <Text style={styles.bigTitle}>{profile?.jobTypeName}</Text>
           </View>
           <View style={styles.botLeftDiv}>
+            <View style={styles.line}></View>
             <View style={styles.contact}>
               <Text style={styles.subtitle}>{profile?.phone}</Text>
-              <Text style={styles.subtitle}>|</Text>
               <Text style={styles.subtitle}>{profile?.email}</Text>
-            </View>
-
-            <View style={styles.contact}>
               <Text style={styles.subtitle}>
                 {profile?.addressText?.fullName}
               </Text>
               {profile?.linkedin ? (
-                <>
-                  <Text style={styles.subtitle}>|</Text>
-                  <Link style={styles.subtitle} src={profile?.linkedin}>
-                    Linkedin
-                  </Link>
-                </>
+                <Link style={styles.subtitle} src={profile?.linkedin}>
+                  Linkedin
+                </Link>
               ) : (
                 <></>
               )}
               {profile?.facebook ? (
-                <>
-                  <Text style={styles.subtitle}>|</Text>
-                  <Link style={styles.subtitle} src={profile?.facebook}>
-                    Facebook
-                  </Link>
-                </>
+                <Link style={styles.subtitle} src={profile?.facebook}>
+                  Facebook
+                </Link>
               ) : (
                 <></>
               )}
             </View>
           </View>
         </View>
+        <View style={styles.avatarDiv}>
+          <Image
+            // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+            style={styles.image}
+            source={
+              profile.avatarPath
+                ? // ? profile.avatarPath
+                  'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697090710464-3350951a-bda0-47f5-97fd-0269e1da7615.jpg'
+                : 'https://react-pdf.org/images/logo.png'
+            }
+          />
+        </View>
+        {/* <View style={styles.language}>
+                    <View>
+                        <Text style={styles.languageTitle}>LANGUAGE</Text>
+                    </View>
+                    {
+                        profile?.profilesLanguages && profile?.profilesLanguages?.map((item: any, i: any) => {
+                            return (
+                                <View style={styles.languageDetail} key={i}>
+                                    <Text style={styles.languageDetailLeft}>
+                                        {
+                                            item?.languageName
+                                        }
+                                    </Text>
+                                    <Text style={styles.languageDetailRight}>
+                                        {
+                                            item?.dataLevel?.data
+                                        }
+                                    </Text>
+                                </View>
+                            )
+                        })
+                    }
+                    <View style={styles.borderBot}></View>
+                </View> */}
         <View style={styles.rightDiv}></View>
-        <View style={styles.lineRight}></View>
       </View>
     </View>
   );

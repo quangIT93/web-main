@@ -19,7 +19,7 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
   // const profileV3 = useSelector((state: RootState) => state.dataProfileV3);
   //0: candidate, 1: employer
   // const { role, setRole } = props;
-
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const handleOnchange = async (e: any) => {
     try {
       if (e.target.checked) {
@@ -61,10 +61,14 @@ const ChangeRoleButton: React.FC<IChangeRole> = (props) => {
       <label className="switch btn-color-mode-switch">
         <input
           type="checkbox"
-          checked={roleRedux === 0 ? false : true}
+          checked={
+            profileV3.length !== 0 && profileV3.typeRoleData === 0
+              ? false
+              : true
+          }
           name="color_mode"
           id="color_mode"
-          value={roleRedux}
+          value={profileV3.length !== 0 && profileV3.typeRoleData === 0 ? 0 : 1}
           onChange={handleOnchange}
         />
         <label

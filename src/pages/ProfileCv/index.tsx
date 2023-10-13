@@ -164,7 +164,7 @@ const ProfileCv: React.FC = () => {
           <div className="profile-cv-title_left">
             <p>
               {languageRedux === 1
-                ? 'Số cv của bạn:'
+                ? 'Số CV của bạn:'
                 : 'Number of your resume:'}
             </p>
             {profileV3.profilesCvs ? (
@@ -205,10 +205,11 @@ const ProfileCv: React.FC = () => {
                       <div
                         className="cv-item_left"
                         onClick={() => {
-                          setModalShowCvPdf({
-                            open: true,
-                            urlPdf: item.pdfURL,
-                          });
+                          // setModalShowCvPdf({
+                          //   open: true,
+                          //   urlPdf: item.pdfURL,
+                          // });
+                          window.open(`/pdfView?idPdf=${item.id}`);
                           setLinkPdfUrl(item.pdfURL);
                         }}
                       >

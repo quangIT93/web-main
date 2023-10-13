@@ -1,4 +1,5 @@
 // cvTemplates.js
+import CvTemplate0 from '../CvTemplate0';
 import CvTemplate1 from '../CvTemplate1';
 import CvTemplate2 from '../CvTemplate2';
 import CvTemplate3 from '../CvTemplate3';
@@ -10,6 +11,10 @@ import CvTemplate8 from '../CvTemplate8';
 import CvTemplate9 from '../CvTemplate9';
 
 const templatesCv = [
+  {
+    id: 0,
+    component: CvTemplate0,
+  },
   {
     id: 1,
     component: CvTemplate1,
@@ -32,11 +37,11 @@ const templatesCv = [
   },
   {
     id: 6,
-    component: CvTemplate4,
+    component: CvTemplate8,
   },
   {
     id: 7,
-    component: CvTemplate7,
+    component: CvTemplate4,
   },
   {
     id: 8,
@@ -44,7 +49,7 @@ const templatesCv = [
   },
   {
     id: 9,
-    component: CvTemplate9,
+    component: CvTemplate5,
   },
 ];
 

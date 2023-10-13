@@ -29,11 +29,11 @@ interface SuggestItemProps {
 }
 interface ItemAppy {
   id?: number | null;
-  company_name?: String;
+  companyName?: String;
   major?: String;
-  start_date?: number;
-  end_date?: number;
-  extra_information?: string;
+  startDate?: number;
+  endDate?: number;
+  extraInformation?: string;
   title?: String;
 }
 
@@ -61,6 +61,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const [openModalExperienceUpdate, setOpenModalExperienceUpdate] =
     useState(false);
   // const [language, setLanguage] = useState<any>();
+  console.log('logging education', item);
 
   const handleDeleteEducation = async (id?: number | null) => {
     setOpenModalDeleteEducation(true);
@@ -121,11 +122,11 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
               wordBreak: 'break-word',
             }}
           >
-            <h3>{item?.company_name}</h3>
+            <h3>{item?.startDate}</h3>
             <p>{typeItem === 'experiences' ? item?.title : item?.major}</p>
             <p>
-              {`${moment(item?.start_date).format('MM/YYYY')}`} - {` `}
-              {`${moment(item?.end_date).format('MM/YYYY')}`}
+              {`${moment(item?.startDate).format('MM/YYYY')}`} - {` `}
+              {`${moment(item?.endDate).format('MM/YYYY')}`}
             </p>
 
             <div
@@ -136,7 +137,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
                 wordBreak: 'break-all',
               }}
             >
-              {item?.extra_information}
+              {item?.extraInformation}
             </div>
           </Space>
         </div>

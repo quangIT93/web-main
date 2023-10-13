@@ -38,7 +38,7 @@ interface CvTemplate {
   profile: any;
 }
 
-const CvTemplate0: React.FC<CvTemplate> = (props) => {
+const CvTemplate1: React.FC<CvTemplate> = (props) => {
   const { color, fontSize, profile } = props;
   const styles = StyleSheet.create({
     page: {
@@ -221,4 +221,4 @@ const CvTemplate0: React.FC<CvTemplate> = (props) => {
   );
 };
 
-export default memo(CvTemplate0);
+export default memo(CvTemplate1);

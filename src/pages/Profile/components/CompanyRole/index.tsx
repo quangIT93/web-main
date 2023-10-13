@@ -41,7 +41,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [loading, setLoading] = useState<boolean>(false);
 
   const styleLabel = {

@@ -61,6 +61,7 @@ const NewestGigWorker = () => {
     } else {
       console.log(profileV3);
       setOpenModalNoteWorker(true);
+      window.open('/page-cv', '_parent');
     }
   };
 
@@ -87,24 +88,28 @@ const NewestGigWorker = () => {
           <FireIcon width={25} height={25} />
           <h2>{languageRedux === 1 ? 'Ứng viên mới' : 'Newest gig worker'}</h2>
         </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '16px',
-            cursor: 'pointer',
-            color: '#0d99ff',
-          }}
-        >
-          <p
-            onClick={handleChangeRouteNewestWorker}
-            style={{ cursor: 'pointer' }}
+        {profileV3?.typeRoleData === 1 ? (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '16px',
+              cursor: 'pointer',
+              color: '#0d99ff',
+            }}
           >
-            {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
-          </p>
-          <ArrowrightIcon width={20} height={20} />
-        </div>
+            <p
+              onClick={handleChangeRouteNewestWorker}
+              style={{ cursor: 'pointer' }}
+            >
+              {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
+            </p>
+            <ArrowrightIcon width={20} height={20} />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className="list-candidate-home">

@@ -239,11 +239,19 @@ const Header: React.FC<ICvHeader> = (props) => {
 
   return (
     <View style={styles.container}>
+      {/* <Image
+        source={
+          profile.avatarPath
+            ? profile.avatarPath
+            : 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697098744355-12343233-fa6a-446d-838f-73c5ded17fbd.jpg'
+        }
+        style={styles.image}
+      /> */}
       <View style={styles.content}>
         <View style={styles.topHead}>
           <View style={styles.avatarDiv}>
             <Image
-              source={profile.avatarPath ? profile.avatarPath : 'a'}
+              source={profile.avatarPath ? profile.avatarPath : ''}
               style={styles.image}
             />
           </View>
