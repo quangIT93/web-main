@@ -511,7 +511,7 @@ const HotJobpage: React.FC = () => {
                       // language?.hot_job_page?.result
                       languageRedux === 1 && hotjob.length !== 0
                         ? 'kết quả'
-                        : hotJobTotal > 2 && hotjob.length !== 0
+                        : hotJobTotal >= 2 && hotjob.length !== 0
                         ? 'results'
                         : hotJobTotal < 2 && hotjob.length !== 0
                         ? 'result'

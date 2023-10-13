@@ -8,6 +8,9 @@ import { Collapse } from 'antd';
 import { Box, iconClasses, Typography } from '@mui/material';
 import { RightOutlined } from '@ant-design/icons';
 
+import { RightOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
+
 // import component
 import Footer from '../../components/Footer/Footer';
 import CardsPosted from '#components/History/CardsPosted';
