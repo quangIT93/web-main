@@ -4,6 +4,7 @@ import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
 import profileApi from 'api/profileApi';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import axios from 'axios';
 interface ICvHeader {
   color: any;
   profile: any;
@@ -11,6 +12,7 @@ interface ICvHeader {
 
 const Header: React.FC<ICvHeader> = (props) => {
   const { color, profile } = props;
+
   const styles = StyleSheet.create({
     container: {
       width: '100%',
@@ -208,7 +210,7 @@ const Header: React.FC<ICvHeader> = (props) => {
               </Text>
               {profile?.linkedin ? (
                 <Link style={styles.subtitle} src={profile?.linkedin}>
-                  Linkedin
+                  Linkedin sssssssssssssssssssssssssss
                 </Link>
               ) : (
                 <></>
@@ -228,23 +230,30 @@ const Header: React.FC<ICvHeader> = (props) => {
             <Image
               // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
               style={styles.image}
-              source={
-                profile.avatarPath
-                  ? profile.avatarPath
-                  : // 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697088375229-88331f0b-ed12-4f88-a25d-52d8ee906d40.jpg'
-                    ''
-              }
+              src={{
+                uri: profile.avatarPath,
+                method: 'GET',
+                body: '',
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                },
+              }}
             />
           ) : (
             <Image
               // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
               style={styles.image}
-              source={
-                profile.avatarPath
-                  ? profile.avatarPath
-                  : // 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697088375229-88331f0b-ed12-4f88-a25d-52d8ee906d40.jpg'
-                    ''
-              }
+              src={{
+                uri: profile.avatarPath,
+                method: 'GET',
+                body: '',
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  accept: '*/*',
+                  'Referrer-Policy': 'strict-origin-when-cross-origin',
+                  'sec-fetch-mode': 'cors',
+                },
+              }}
             />
           )}
         </View>

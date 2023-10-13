@@ -50,12 +50,13 @@ import CvTemplate7 from '../CvTemplate/CvTemplate7';
 
 import templatesCv from '../CvTemplate/ListTheme';
 import { template } from '@babel/core';
+import axios from 'axios';
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/legacy/build/pdf.worker.min.js',
 //   import.meta.url,
 // ).toString();
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 const styleChildBox = {
   marginBottom: '12px',
 };
@@ -86,6 +87,24 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
   const TemplateId = Number(localStorage.getItem('cv-id')) || 1;
+
+  const handleImage = async () => {
+    try {
+      if (profile.length !== 0) {
+        const response = await axios.get(profile.avatarPath, {
+          responseType: 'blob',
+        });
+        // console.log('response', response);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  useEffect(() => {
+    handleImage();
+  }, [profile]);
+
   // const templatesCv = [
   //   {
   //     id: 1,
@@ -121,6 +140,17 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     );
     if (selectedTemplate) {
       if (profileV3.avatarPath) {
+        const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
+
+        // Tạo một biến để lưu trữ mẫu CV được chọn
+        setSelectedDocument(
+          <CvComponent
+            color={colorCV}
+            fontSize={fontSizeCV}
+            profile={profileV3}
+          />,
+        );
+      } else {
         const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
 
         // Tạo một biến để lưu trữ mẫu CV được chọn
@@ -292,8 +322,6 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     });
   };
 
-  console.log('profileV3', profileV3);
-
   return (
     <div className="contentCV-bottom">
       <div className="contentCV-bottom-left">
@@ -456,6 +484,9 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                 noData={<Spin indicator={antIcon} />}
                 file={profileV3.length !== 0 ? instance.url : ''}
                 onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={(error) =>
+                  console.error('Error loading document:', error)
+                }
                 className="page-cv-wrapper"
               >
                 {Array.apply(null, Array(numPages))
