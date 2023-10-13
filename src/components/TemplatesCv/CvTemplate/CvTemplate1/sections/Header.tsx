@@ -247,7 +247,6 @@ const Header: React.FC<ICvHeader> = (props) => {
                 uri: profile.avatarPath,
                 method: 'GET',
                 body: '',
-
                 headers: {
                   'Access-Control-Allow-Origin': '*',
                   accept: '*/*',

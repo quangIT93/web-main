@@ -94,7 +94,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
         const response = await axios.get(profile.avatarPath, {
           responseType: 'blob',
         });
-        console.log('response', response);
+        // console.log('response', response);
       }
     } catch (error) {
       console.log('error', error);
@@ -321,8 +321,6 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       }
     });
   };
-
-  console.log('profileV3', profileV3);
 
   return (
     <div className="contentCV-bottom">
