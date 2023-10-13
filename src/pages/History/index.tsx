@@ -6,6 +6,7 @@ import Link from '@mui/material/Link';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Collapse } from 'antd';
 import { Box, iconClasses, Typography } from '@mui/material';
+import { RightOutlined } from '@ant-design/icons';
 
 import { Space } from 'antd';
 
