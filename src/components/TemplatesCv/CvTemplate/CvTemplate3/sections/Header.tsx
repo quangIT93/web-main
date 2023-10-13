@@ -221,7 +221,20 @@ const Header: React.FC<ICvHeader> = (props) => {
               <Image
                 style={styles.image}
                 // src={profile.avatarPath ? profile.avatarPath : 'a'}
-                src={profile.avatarPath ? profile.avatarPath : null_avatar}
+                src={{
+                  uri:
+                    profile.avatarPath !== null
+                      ? profile.avatarPath
+                      : null_avatar,
+                  method: 'GET',
+                  body: '',
+                  headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Cache-Control': 'no-cache',
+                    'Access-Control-Allow-Methods': '*',
+                    'Access-Control-Allow-Headers': '*',
+                  },
+                }}
               />
             </View>
             <View style={styles.info}>

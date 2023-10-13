@@ -4,6 +4,7 @@ import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
 
 import fb from '../../images/fb.png';
 import linkedin from '../../images/in.png';
+import null_avatar from '../../images/null_avatar.png';
 interface ICvHeader {
   color: any;
   profile: any;
@@ -243,7 +244,17 @@ const Header: React.FC<ICvHeader> = (props) => {
       </View>
       <View style={styles.avatarDiv}>
         <Image
-          src={profile.avatarPath ? profile.avatarPath : 'a'}
+          src={{
+            uri: profile.avatarPath !== null ? profile.avatarPath : null_avatar,
+            method: 'GET',
+            body: '',
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Cache-Control': 'no-cache',
+              'Access-Control-Allow-Methods': '*',
+              'Access-Control-Allow-Headers': '*',
+            },
+          }}
           style={styles.image}
         />
       </View>
