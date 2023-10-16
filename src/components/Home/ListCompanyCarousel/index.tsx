@@ -272,7 +272,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                 console.log('item', item);
 
                 localStorage.setItem(
-                  'job-type',
+                  'job_by_place',
                   `place--${item.id}--${item.number_of_posts}--${item.title}--${item.image}`,
                 );
                 handleChange(event, item.id);

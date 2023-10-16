@@ -52,7 +52,9 @@ const CandidateNewDetail = () => {
   const [bookmarkCandidate, setBookmarkCandidate] = useState<any>(0);
   const [total, setTotal] = useState<any>(0);
   const [openModalMaxUnlock, setOpenModalMaxUnlock] = useState<any>(false);
-
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [modalShowCvPDF, setModalShowCvPdf] = React.useState<{
     open: boolean;
     urlPdf: string;
@@ -75,7 +77,10 @@ const CandidateNewDetail = () => {
     const id = localStorage.getItem('candidateId');
     try {
       if (id) {
-        const result = await profileApi.getProfileByAccountId('vi', id);
+        const result = await profileApi.getProfileByAccountId(
+          languageRedux === 1 ? 'vi' : 'en',
+          id,
+        );
 
         if (result) {
           setCandidate(result.data);
@@ -207,7 +212,9 @@ const CandidateNewDetail = () => {
                 />
               </Badge>
               <div style={{ marginLeft: '10px' }}>
-                <h2>{candidate?.name ? candidate?.name : 'Chưa cập nhật'}</h2>
+                <h2>
+                  {candidate?.name ? candidate?.name : language?.unupdated}
+                </h2>
               </div>
             </div>
             <div className="buttons-candidate">
@@ -271,7 +278,7 @@ const CandidateNewDetail = () => {
           >
             {candidate?.introduction
               ? candidate?.introduction
-              : 'Chưa cập nhật'}
+              : language?.unupdated}
           </div>
         </div>
         <div className="candidate-profile-info">
@@ -282,13 +289,17 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Thông tin ứng viên</h3>
+            <h3>
+              {languageRedux === 1
+                ? 'Thông tin ứng viên'
+                : 'Candidate information'}
+            </h3>
           </div>
           <div className="info-detail">
             <div className="div-detail-row left">
-              <p>Ngày sinh</p>
-              <p>Giới tính</p>
-              <p>Địa chỉ</p>
+              <p>{language?.date_of_birth}</p>
+              <p>{language?.sex}</p>
+              <p>{language?.location}</p>
             </div>
             <div className="div-detail-row right">
               <p>
@@ -298,17 +309,17 @@ const CandidateNewDetail = () => {
                       .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
                   ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                  : 'Chưa cập nhật'}
+                  : language?.unupdated}
               </p>
               <p>
                 {candidate?.genderText
                   ? candidate?.genderText
-                  : 'Chưa cập nhật'}
+                  : language?.unupdated}
               </p>
               <p>
                 {candidate?.addressText
                   ? candidate?.addressText.fullName
-                  : 'Chưa cập nhật'}
+                  : language?.unupdated}
               </p>
             </div>
           </div>
@@ -322,11 +333,11 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Thông tin liên hệ</h3>
+            <h3>{language?.contact_information}</h3>
           </div>
           <div className="info-detail">
             <div className="div-detail-row left">
-              <p>Số điện thoại</p>
+              <p>{language?.phone_number}</p>
               <p>Email</p>
 
               <p>Facebook</p>
@@ -335,22 +346,26 @@ const CandidateNewDetail = () => {
             </div>
             <div className="div-detail-row right">
               <p>
-                {candidate?.phoneData ? candidate?.phoneData : 'Chưa cập nhật'}
+                {candidate?.phoneData
+                  ? candidate?.phoneData
+                  : language?.unupdated}
               </p>
               <p>
-                {candidate?.emailData ? candidate?.emailData : 'Chưa cập nhật'}
+                {candidate?.emailData
+                  ? candidate?.emailData
+                  : language?.unupdated}
               </p>
 
               <p>
                 {candidate?.facebookData
                   ? candidate?.facebookData
-                  : 'Chưa cập nhật'}
+                  : language?.unupdated}
               </p>
 
               <p>
                 {candidate?.linkedinData
                   ? candidate?.linkedinData
-                  : 'Chưa cập nhật'}
+                  : language?.unupdated}
               </p>
             </div>
           </div>
@@ -389,7 +404,7 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Lĩnh vực quan tâm</h3>
+            <h3>{language?.career_objective}</h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
@@ -400,7 +415,7 @@ const CandidateNewDetail = () => {
                     </Button>
                   ),
                 )
-              : 'Chưa cập nhật'}
+              : language?.unupdated}
           </Space>
         </div>
         <div className="candidate-profile-info">
@@ -411,7 +426,7 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Khu vực làm việc</h3>
+            <h3>{language?.working_location}</h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
@@ -420,7 +435,7 @@ const CandidateNewDetail = () => {
                     {item?.fullName}
                   </Button>
                 ))
-              : 'Chưa cập nhật'}
+              : language?.unupdated}
           </Space>
         </div>
 
@@ -432,7 +447,7 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Trình độ học vấn</h3>
+            <h3>{language?.education}</h3>
           </div>
           {candidate?.profilesEducations?.length !== 0 ? (
             candidate?.profilesEducations?.map(
@@ -441,7 +456,7 @@ const CandidateNewDetail = () => {
               ),
             )
           ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -461,14 +476,14 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Kinh nghiệm làm việc</h3>
+            <h3>{language?.working_experience}</h3>
           </div>
           {candidate?.profilesExperiences?.length !== 0 ? (
             candidate?.profilesExperiences?.map((item: any, index: number) => (
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -495,7 +510,7 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -522,7 +537,7 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -552,7 +567,7 @@ const CandidateNewDetail = () => {
                     <span>{item.dataLevel.data}</span>
                   </Button>
                 ))
-              : 'Chưa cập nhật'}
+              : language?.unupdated}
           </Space>
         </div>
 
@@ -576,7 +591,7 @@ const CandidateNewDetail = () => {
                     </Button>
                   ),
                 )
-              : 'Chưa cập nhật'}
+              : language?.unupdated}
           </Space>
         </div>
       </Box>
