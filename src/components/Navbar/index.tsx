@@ -66,6 +66,8 @@ import {
   // KeyOutlined,
   LoadingOutlined,
   // CloseOutlined,
+  MailOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
 
 // import component
@@ -1218,15 +1220,23 @@ const Navbar: React.FC = () => {
                       : languageData?.home_page?.un_update_infor}
                   </h2>
                   <span className="sub-login_text">
-                    <CompanySubLoginIcon />
-                    <p>
-                      {companyName
-                        ? companyName
-                        : languageData?.home_page?.un_update_infor}
-                    </p>
+                    {/* <CompanySubLoginIcon /> */}
+                    {/* <MailOutlined /> */}
+                    {profileV3?.typeRoleData === 1 ? (
+                      <>
+                        <HomeOutlined />
+                        <p>
+                          {companyName
+                            ? companyName
+                            : languageData?.home_page?.un_update_infor}
+                        </p>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </span>
                   <span className="sub-login_text">
-                    <MailInfoIcon />
+                    <MailOutlined />
                     {/* <PhoneOutlined /> */}
                     <p>
                       {profileV3?.typeRoleData === 1
@@ -1242,13 +1252,20 @@ const Navbar: React.FC = () => {
                     <span className="sub-login_text">
                       <PhoneOutlined />
                       <p>
+                        {profileV3?.companyInfomation !== null
+                          ? profileV3?.companyInfomation?.phone
+                          : languageData?.home_page?.un_update_infor}
+                      </p>
+                    </span>
+                  ) : (
+                    <span className="sub-login_text">
+                      <PhoneOutlined />
+                      <p>
                         {profileV3?.phone
                           ? profileV3?.phone
                           : languageData?.home_page?.un_update_infor}
                       </p>
                     </span>
-                  ) : (
-                    <></>
                   )}
                   {/* <span className="sub-login_text">
                   <LoginHomeIcon />
@@ -1257,35 +1274,41 @@ const Navbar: React.FC = () => {
                 </div>
               </div>
               <div className="sub-login_info__bottom">
-                <div className="sub-login_detail__bottom">
-                  <span
-                    className="sub-login_text__bottom"
-                    onClick={() => window.open(`/profile`, '_parent')}
-                  >
-                    <MapInfoIcon />
-                    <p>
-                      {profileV3?.profileLocations?.length > 0
-                        ? profileV3?.profileLocations?.map((location: any) => {
-                            return `${location.fullName} , `;
-                          })
-                        : languageData?.home_page?.un_update_infor}
-                    </p>
-                  </span>
-                  <span
-                    className="sub-login_text__bottom"
-                    onClick={() => window.open(`/profile`, '_parent')}
-                  >
-                    <BagInfoJob />
+                {profileV3?.typeRoleData === 0 ? (
+                  <div className="sub-login_detail__bottom">
+                    <span
+                      className="sub-login_text__bottom"
+                      onClick={() => window.open(`/profile`, '_parent')}
+                    >
+                      <MapInfoIcon />
+                      <p>
+                        {profileV3?.profileLocations?.length > 0
+                          ? profileV3?.profileLocations?.map(
+                              (location: any) => {
+                                return `${location.fullName} , `;
+                              },
+                            )
+                          : languageData?.home_page?.un_update_infor}
+                      </p>
+                    </span>
+                    <span
+                      className="sub-login_text__bottom"
+                      onClick={() => window.open(`/profile`, '_parent')}
+                    >
+                      <BagInfoJob />
 
-                    <p>
-                      {profileV3 && profileV3?.profileCategories?.length > 0
-                        ? profileV3?.profileCategories.map((profile: any) => {
-                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                          })
-                        : languageData?.home_page?.un_update_infor}
-                    </p>
-                  </span>
-                </div>
+                      <p>
+                        {profileV3 && profileV3?.profileCategories?.length > 0
+                          ? profileV3?.profileCategories.map((profile: any) => {
+                              return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                            })
+                          : languageData?.home_page?.un_update_infor}
+                      </p>
+                    </span>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
             </Space>
             <div className="sub-login_items">

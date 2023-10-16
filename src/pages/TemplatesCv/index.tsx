@@ -113,6 +113,10 @@ const TemplatesCv: React.FC = () => {
     const selectedTemplate = templatesCv.find((template) => {
       console.log(template.id);
       console.log(Number(localStorage.getItem('cv-id')));
+      if (!Number(localStorage.getItem('cv-id'))) {
+        return 1;
+      }
+
       if (template.id === Number(localStorage.getItem('cv-id')))
         return Number(localStorage.getItem('cv-id'));
       // return template.id === Number(localStorage.getItem('cv-id'))

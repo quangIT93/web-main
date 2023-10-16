@@ -63,21 +63,6 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
       }
     }
   };
-  const analytics: any = getAnalytics();
-  React.useEffect(() => {
-    // Cập nhật title và screen name trong Firebase Analytics
-    // document.title =
-    //   language?.company_page?.title_page;
-    document.title =
-      languageRedux === 1
-        ? 'Hijob - Tìm kiếm nhân tài'
-        : 'Hijob - Search for talent';
-    logEvent(analytics, 'screen_view' as string, {
-      // screen_name: screenName as string,
-      page_title: '/list-candidate' as string,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
 
   return (
     <>
