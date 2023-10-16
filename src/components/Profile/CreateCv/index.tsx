@@ -51,11 +51,11 @@ const CreateCv: React.FC<ICreateCv> = (props) => {
           '&:after': {
             content:
               languageRedux === 1
-                ? '"Xem CV của bạn"'
-                : '"Preview Your Resume"',
+                ? '"Tạo mới CV"'
+                : '"Create a new CV"',
           },
           '&:hover': {
-            width: languageRedux === 1 ? '194px' : '233px',
+            width: languageRedux === 1 ? '194px' : '230px',
           },
           bottom: role === 0 ? '140px' : '',
         }}

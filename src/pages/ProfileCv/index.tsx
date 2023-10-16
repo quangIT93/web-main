@@ -14,6 +14,8 @@ import {
   SectionEditIcon,
   DownloadCVIcon,
   SectionDeleteIcon,
+  CandidateIcon,
+  Icon4PointedStar,
 } from '#components/Icons';
 
 // import Component
@@ -98,7 +100,7 @@ const ProfileCv: React.FC = () => {
         );
         dispatch(setProfileV3(resultProfileV3));
       }
-    } catch (error) {}
+    } catch (error) { }
 
     // setSelectedId(id);
   };
@@ -177,6 +179,17 @@ const ProfileCv: React.FC = () => {
             <Button
               type="primary"
               onClick={() => {
+                window.open(`/templates-cv`, '_parent');
+              }}
+            >
+              {/* <UserLineOutCVIcon /> */}
+              {languageRedux === 1
+                ? 'Tạo mới CV'
+                : 'Create a new CV'}
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => {
                 window.open(`/profile`, '_parent');
               }}
             >
@@ -230,13 +243,13 @@ const ProfileCv: React.FC = () => {
                           <p>
                             {languageRedux === 1
                               ? 'Cập nhật cuối: ' +
-                                moment(new Date()).format('HH:mm') +
-                                ', ' +
-                                moment(new Date()).format('DD/MM/YYYY')
+                              moment(new Date()).format('HH:mm') +
+                              ', ' +
+                              moment(new Date()).format('DD/MM/YYYY')
                               : 'Last update: ' +
-                                moment(new Date()).format('HH:mm') +
-                                ', ' +
-                                moment(new Date()).format('DD/MM/YYYY')}
+                              moment(new Date()).format('HH:mm') +
+                              ', ' +
+                              moment(new Date()).format('DD/MM/YYYY')}
                           </p>
                         </div>
                         <div className="cv-item_right__actions">
@@ -313,7 +326,7 @@ const ProfileCv: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-              //  onClick={handleClose}
+            //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -321,6 +334,77 @@ const ProfileCv: React.FC = () => {
         ) : (
           <Nodata />
         )}
+
+        <div className="banner-containter">
+          <div className="banner-content">
+            <div className="banner-image">
+              <CandidateIcon width={262} height={209} />
+            </div>
+            <div className="banner-contents">
+              <div className="banner-contents_title">
+                {
+                  languageRedux === 1 ?
+                    "Thiết kế CV trên HiJob, bạn có thể:" :
+                    "Designing your CV on HiJob, you can:"
+                }
+              </div>
+              <div className="banner-content_detail">
+                <div className="banner-content_detail_wraper">
+                  <div className="banner-content_detail_item">
+                    <div className='item_icon'>
+                      <Icon4PointedStar />
+                    </div>
+                    <p>
+                      {
+                        languageRedux === 1 ?
+                          "Tạo bản CV chuyên nghiệp và hấp dẫn (tối đa đến 10 bản)." :
+                          "Create a professional and attractive CV (up to 10 copies)."
+                      }
+                    </p>
+                  </div>
+                  <div className="banner-content_detail_item">
+                    <div className='item_icon'>
+                      <Icon4PointedStar />
+                    </div>
+                    <p>
+                      {
+                        languageRedux === 1 ?
+                          "Khả năng thu hút sự chú ý của nhà tuyển dụng." :
+                          "Ability to attract employer attention."
+                      }
+                    </p>
+                  </div>
+                </div>
+                <div className="banner-content_detail_wraper">
+                  <div className="banner-content_detail_item">
+                    <div className='item_icon'>
+                      <Icon4PointedStar />
+                    </div>
+                    <p>
+                      {
+                        languageRedux === 1 ?
+                          "Tiết kiệm thời gian." :
+                          "Save time."
+                      }
+                    </p>
+                  </div>
+                  <div className="banner-content_detail_item">
+                    <div className='item_icon'>
+                      <Icon4PointedStar />
+                    </div>
+                    <p>
+                      {
+                        languageRedux === 1 ?
+                          "Cập nhật và chỉnh sửa dễ dàng." :
+                          "Update and edit easily."
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* {linkPdfUrl ? (
           <div className="show-cv">

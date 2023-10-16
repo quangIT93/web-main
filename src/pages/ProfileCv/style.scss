@@ -47,6 +47,9 @@
             }
 
             .profile-cv-title_right {
+                display: flex;
+                align-items: center;
+                gap: 8px;
 
                 .ant-btn {
                     font-family: Roboto;
@@ -264,6 +267,89 @@
                 display: flex;
                 align-items: center;
                 background: #eeeeee;
+            }
+        }
+
+        .banner-containter {
+            width: 100%;
+            height: 209px;
+            margin-top: 24px;
+
+            @media screen and (max-width: 425px) {
+                height: auto;
+            }
+
+            .banner-content {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                gap: 52px;
+                align-items: center;
+                justify-content: space-between;
+
+                @media screen and (max-width: 425px) {
+                    flex-direction: column;
+                }
+
+                .banner-image {
+                    width: 262px;
+                    height: 100%;
+                }
+
+                .banner-contents {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    align-items: flex-start;
+
+                    .banner-contents_title {
+                        font-family: Roboto;
+                        font-size: 24px;
+                        font-weight: 700;
+                        letter-spacing: 0em;
+                        text-align: left;
+                    }
+
+                    .banner-content_detail {
+                        display: flex;
+                        gap: 16px 58px;
+                        align-items: flex-start;
+                        justify-content: space-between;
+
+                        @media screen and (max-width: 425px) {
+                            flex-direction: column;
+                        }
+
+                        .banner-content_detail_wraper {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            gap: 16px;
+
+                            .banner-content_detail_item {
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-start;
+                                gap: 12px;
+
+                                .item_icon {
+                                    display: grid;
+                                    place-items: center;
+                                }
+
+                                P {
+                                    font-family: Roboto;
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    letter-spacing: 0em;
+                                    text-align: left;
+
+                                }
+                            }
+
+                        }
+                    }
+                }
             }
         }
     }

@@ -86,6 +86,13 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
   const TemplateId = Number(localStorage.getItem('cv-id')) || 1;
+  console.log(profile.name);
+
+  useEffect(() => {
+    setValueNameCv(
+      `${profile.name} - Resume ${Number(localStorage.getItem('cv-id')) || 1}`
+    )
+  }, [profile])
 
   // const templatesCv = [
   //   {
@@ -212,19 +219,19 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       // setValueNameCv(localStorage.getItem('nameCv'));
       getThemeCv.map((value: any) => {
         if (Number(localStorage.getItem('cv-id')) === value.id) {
-          setValueNameCv(value.name);
+          setValueNameCv(`${profile.name} - ${value.name}`);
         }
       });
     }
   }, [getThemeCv]);
 
-  const handleChangeCategory = async () => {};
+  const handleChangeCategory = async () => { };
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
-    setValueNameCv(name);
+    setValueNameCv(`${profile.name} - ${name}`);
     localStorage.setItem('cv-id', id);
-    localStorage.setItem('nameCv', name);
+    localStorage.setItem('nameCv', `${profile.name} - ${name}`);
   };
 
   const getTheme = async () => {
@@ -233,7 +240,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // console.log('aaa');
@@ -290,7 +297,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
         <div className="list-template-title">
           <h3>
-            {languageRedux === 1 ? 'Chọn mẫu CV' : 'Choose resume template'}
+            {languageRedux === 1 ? 'Chọn mẫu CV' : 'Choose CV template'}
           </h3>
         </div>
         <div className="list-template">
@@ -298,16 +305,16 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
             <div
               className={
                 item?.id ===
-                (Number(localStorage.getItem('cv-id'))
-                  ? Number(localStorage.getItem('cv-id'))
-                  : 1)
+                  (Number(localStorage.getItem('cv-id'))
+                    ? Number(localStorage.getItem('cv-id'))
+                    : 1)
                   ? 'template-item active'
                   : 'template-item'
               }
               key={index}
               onClick={() => {
                 // localStorage.setItem('nameCv', item?.name);
-                setValueNameCv(item?.name);
+                setValueNameCv(`${profile.name} - ${item?.name}`);
                 handleSelectTemplate(item?.id, item?.name);
               }}
             >
@@ -412,7 +419,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
         <div
           className="contentCv-bottom-right_cv"
           id="page"
-          // dangerouslySetInnerHTML={{ __html: htmlCv }}
+        // dangerouslySetInnerHTML={{ __html: htmlCv }}
         >
           <>
             {/* <PreviewTheme1 /> */}
@@ -421,11 +428,11 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
               <Document
                 loading={<Spin indicator={antIcon} />}
                 noData={<Spin indicator={antIcon} />}
-                file={profileV3.length !== 0 ? instance.url : ''}
+                file={profileV3.length !== 0 ? instance.url : null}
                 onLoadSuccess={onDocumentLoadSuccess}
-                onLoadError={(error) =>
-                  console.error('Error loading document:', error)
-                }
+                // onLoadError={(error) =>
+                //   console.error('Error loading document:', error)
+                // }
                 className="page-cv-wrapper"
               >
                 {Array.apply(null, Array(numPages))

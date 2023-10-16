@@ -144,7 +144,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         result = await postApi.getPostByThemeId(
           Number(themeId),
           9,
-          null,
+          0,
           languageRedux === 1 ? 'vi' : 'en',
         );
       }
@@ -282,8 +282,8 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                   item.id === value
                     ? '2px solid #0d99ff'
                     : index === 0 && value === 0
-                    ? '2px solid #0d99ff'
-                    : '',
+                      ? '2px solid #0d99ff'
+                      : '',
               }}
             >
               <div className="slide-item">

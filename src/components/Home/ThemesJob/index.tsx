@@ -171,7 +171,7 @@ const ThemesJob: React.FC = () => {
         const list = await postApi?.getPostByThemeId(
           result?.data[0]?.id,
           9,
-          null,
+          0,
           languageRedux === 1 ? 'vi' : 'en',
         );
         if (list) {
@@ -215,7 +215,7 @@ const ThemesJob: React.FC = () => {
     window.open('/more-jobs', '_parent');
   };
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
   return (
     <Box
       sx={{ flexGrow: 1, paddingBottom: '24px' }}
@@ -314,7 +314,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>
