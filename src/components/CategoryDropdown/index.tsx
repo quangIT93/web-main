@@ -139,13 +139,8 @@ const CategoryDropdown: React.FC = () => {
   };
 
   const moveToNewestJob = () => {
-    if (location?.pathname === '/') {
-      setOpenCategoryDropdown(false);
-      handleScrollIntoViewDiv('new-job');
-    } else {
-      localStorage.setItem('home', 'new');
-      window.open('/', '_parent');
-    }
+    localStorage.setItem('job-type', 'new');
+    window.open('/more-jobs', '_parent');
   };
 
   const moveToOpeningPost = () => {
@@ -196,12 +191,11 @@ const CategoryDropdown: React.FC = () => {
   };
 
   const moveToSuggestedJob = () => {
-    if (location?.pathname === '/') {
-      setOpenCategoryDropdown(false);
-      handleScrollIntoViewDiv('box-suggestedJob');
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
     } else {
-      localStorage.setItem('home', 'suggested');
-      window.open('/', '_parent');
+      localStorage.setItem('job-type', 'suggested');
+      window.open('/more-jobs', '_parent');
     }
   };
 
@@ -612,7 +606,7 @@ const CategoryDropdown: React.FC = () => {
               >
                 <h3 onClick={moveToWorkingStory}>
                   {languageRedux === 1
-                    ? 'Câu chuyện làm việc'
+                    ? 'Câu chuyện việc làm'
                     : 'Working story'}
                 </h3>
                 <h3 onClick={moveToHijobNews}>

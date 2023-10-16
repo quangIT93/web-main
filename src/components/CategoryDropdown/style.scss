@@ -7,10 +7,10 @@
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: rgba(1, 1, 1, 0.1);
+    // background-color: rgba(1, 1, 1, 0.1);
 
     z-index: 9;
-   
+
 }
 
 .category-dropdown-container {
@@ -29,6 +29,7 @@
     //     padding: 0 20px !important;
     // }
     border-bottom: 1px solid #ccc;
+
     .category-dropdown-content {
         height: 100%;
         // height: 40px;
@@ -231,6 +232,7 @@
                 .ant-select-selection-item {
 
                     font-size: 12px;
+
                     .ant-select-selection-placeholder {
                         inset-inline-start: 39px;
                         font-size: 12px;
