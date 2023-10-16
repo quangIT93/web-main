@@ -767,7 +767,7 @@ const Profile: React.FC = () => {
         </Skeleton>
 
         <CandidateProfile
-          display={roleRedux === 0 ? 'block' : 'none'}
+          display={profileV3?.typeRoleData === 0 ? 'block' : 'none'}
           profile={profileV3}
           loading={loading}
           language={language}
@@ -785,12 +785,12 @@ const Profile: React.FC = () => {
         />
 
         {/* <Company
-          display={roleRedux === 0 ? 'none' : 'block'}
+          display={profileV3.typeRoleData === 0 ? 'none' : 'block'}
           is_profile={true}
         /> */}
 
         <CompanyRole
-          display={roleRedux === 0 ? 'none' : 'block'}
+          display={profileV3?.typeRoleData === 0 ? 'none' : 'block'}
           companyData={profileV3.companyInfomation}
         />
 
@@ -875,7 +875,7 @@ const Profile: React.FC = () => {
       </div>
 
       <RollTop />
-      <CreateCv role={roleRedux} />
+      <CreateCv role={profileV3?.typeRoleData} />
       <Footer />
     </div>
   );
