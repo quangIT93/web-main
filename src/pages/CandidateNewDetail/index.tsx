@@ -460,7 +460,7 @@ const CandidateNewDetail = () => {
               ),
             )
           ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -487,7 +487,7 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -514,7 +514,7 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
           )}
 
           <div
@@ -541,7 +541,7 @@ const CandidateNewDetail = () => {
               <ItemApply typeItem="experiences" key={index} item={item} />
             ))
           ) : (
-            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+            <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
           )}
 
           <div
