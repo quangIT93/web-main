@@ -241,7 +241,7 @@ const CandidatesAll = () => {
           setHasMore(true);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   React.useEffect(() => {
     getAllCandidates();
@@ -348,7 +348,7 @@ const CandidatesAll = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   const analytics: any = getAnalytics();
   React.useEffect(() => {
@@ -373,7 +373,13 @@ const CandidatesAll = () => {
       {contextHolder}
       <div className="candidate">
         <div className="header-candidate">
-          <h3>Looking for candidates</h3>
+          <h3>
+            {
+              languageRedux === 1 ?
+                "Tìm kiếm ứng viên" :
+                "Looking for candidates"
+            }
+          </h3>
           <Button
             type="primary"
             onClick={() => window.open(`/history?candidate=4`, '_parent')}
@@ -384,7 +390,13 @@ const CandidatesAll = () => {
           </Button>
         </div>
         <div className="search-candidate">
-          <p>Find the right candidate for your company!</p>
+          <p>
+            {
+              languageRedux === 1 ?
+                "Tìm ứng viên phù hợp với công ty của bạn!" :
+                "Find the right candidate for your company!"
+            }
+          </p>
           <div className="list-search">
             {/* <div className="list-search_top">
             </div>
@@ -441,8 +453,10 @@ const CandidatesAll = () => {
         <div className="list-candidates">
           <div className="list-candidates_title">
             <h3>
-              Found results:
-              <span>{` ${total}`} candidates</span>
+              {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
+              <span>{` ${total}`}
+                {languageRedux === 1 ? ' ứng vử viên' : ' candidates'}
+              </span>
             </h3>
           </div>
           <InfiniteScroll
