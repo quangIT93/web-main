@@ -141,9 +141,11 @@ const PageCv = () => {
           <div className="banner-show_title">
             <h3>Tạo và tải CV online nhanh chóng</h3>
             <p>
-              Sau khi đăng nhập bạn có thể tạo CV với những thông tin được điền
-              tự động từ hồ sơ có sẵn của bạn trên HiJob và sử dụng để tìm việc
-              ngay.
+              {languageRedux === 1
+                ? `Sau khi đăng nhập bạn có thể tạo CV với những thông tin được điền
+                tự động từ hồ sơ có sẵn của bạn trên HiJob và sử dụng để tìm việc
+                ngay.`
+                : `After logging in, you can create a CV with information automatically filled in from your existing profile on HiJob and use it to find a job immediately.`}
             </p>
             <div
               className="wrap-cvchange_login"
@@ -160,13 +162,33 @@ const PageCv = () => {
 
         <div className="item-imageCv_index item-page_Cv">
           <div className="banner-show_title">
-            <h3>Mục lục</h3>
+            <h3>{languageRedux === 1 ? 'Mục lục' : 'Table of contents'}</h3>
             <ul>
-              <li>CV là gì? Những điều bạn cần lưu ý khi viết CV xin việc</li>
-              <li>Cách viết CV xin việc chuẩn</li>
-              <li>Cách tạo mẫu CV xin việc đơn giản</li>
-              <li>Một số lưu ý khi viết CV và nộp CV bạn nên nắm rõ</li>
-              <li>Cách gửi CV qua email</li>
+              <li>
+                {languageRedux === 1
+                  ? `CV là gì? Những điều bạn cần lưu ý khi viết CV xin việc`
+                  : `What is CV? Things you need to keep in mind when writing your CV`}
+              </li>
+              <li>
+                {languageRedux === 1
+                  ? `Cách viết CV xin việc chuẩn`
+                  : `How to write a standard job application CV`}
+              </li>
+              <li>
+                {languageRedux === 1
+                  ? `Cách tạo mẫu CV xin việc đơn giản`
+                  : `How to create a simple CV template?`}
+              </li>
+              <li>
+                {languageRedux === 1
+                  ? `Một số lưu ý khi viết CV và nộp CV bạn nên nắm rõ`
+                  : `Some notes when writing and submitting CV for you`}
+              </li>
+              <li>
+                {languageRedux === 1
+                  ? `Cách gửi CV qua email`
+                  : `How to send CV via email`}
+              </li>
             </ul>
           </div>
           <div className="wrap-img_index">
