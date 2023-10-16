@@ -113,7 +113,7 @@ const CandidateNewDetail = () => {
       }
     }
     try {
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleClickBookmarkCandidate = async (accountId: string) => {
@@ -127,7 +127,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -147,7 +147,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -218,7 +218,9 @@ const CandidateNewDetail = () => {
                   // onClick={() => handleUnLockCandidate(candidate?.accountId)}
                   style={{ backgroundColor: 'transparent', color: 'black' }}
                 >
-                  Unlock Candidates
+                  {languageRedux === 1
+                    ? 'Mở khóa ứng viên'
+                    : 'Unlock Candidates'}
                 </Button>
               ) : (
                 <Button
@@ -226,7 +228,9 @@ const CandidateNewDetail = () => {
                   disabled={candidate && candidate?.isUnlocked}
                   onClick={() => handleUnLockCandidate(candidate?.accountId)}
                 >
-                  Unlock Candidates
+                  {languageRedux === 1
+                    ? 'Mở khóa ứng viên'
+                    : 'Unlock Candidates'}
                 </Button>
               )}
 
@@ -239,7 +243,7 @@ const CandidateNewDetail = () => {
                   );
                 }}
               >
-                View Resume
+                {languageRedux === 1 ? 'Xem hồ sơ' : 'View Resume'}
               </Button>
 
               <div
@@ -290,11 +294,11 @@ const CandidateNewDetail = () => {
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                    .format('DD/MM/YYYY')
-                    .replace(/\d{2}$/, 'xx')
+                      .format('DD/MM/YYYY')
+                      .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
-                    ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                    : 'Chưa cập nhật'}
+                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
+                  : 'Chưa cập nhật'}
               </p>
               <p>
                 {candidate?.genderText
@@ -390,12 +394,12 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.fullName}
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.fullName}
+                    </Button>
+                  ),
+                )
               : 'Chưa cập nhật'}
           </Space>
         </div>
@@ -412,10 +416,10 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  {item?.fullName}
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    {item?.fullName}
+                  </Button>
+                ))
               : 'Chưa cập nhật'}
           </Space>
         </div>
@@ -543,11 +547,11 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  <span>{item.skillName}</span>
-                  <span>{item.dataLevel.data}</span>
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.skillName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ))
               : 'Chưa cập nhật'}
           </Space>
         </div>
@@ -565,13 +569,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.languageName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      <span>{item.languageName}</span>
+                      <span>{item.dataLevel.data}</span>
+                    </Button>
+                  ),
+                )
               : 'Chưa cập nhật'}
           </Space>
         </div>

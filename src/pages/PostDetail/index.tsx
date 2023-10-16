@@ -172,7 +172,8 @@ const Detail = () => {
   // const { Search } = Input
   // test redux
   // const userProfile = useSelector((state: RootState) => state.profileUser);
-  const userProfile = useSelector((state: RootState) => state.profile.profile);
+  // const userProfile = useSelector((state: RootState) => state.profile.profile);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   // const dispatch = useDispatch()
   // const { setPostByTheme, setProvince } = bindActionCreators(
   //   actionCreators,
@@ -448,6 +449,8 @@ const Detail = () => {
 
   // handle click button
   const onclick = async () => {
+    console.log('click', profileV3);
+
     try {
       if (!ACCESS_TOKEN) {
         setOpenModalLogin(true);
@@ -495,13 +498,13 @@ const Detail = () => {
         return;
       }
       if (
-        !userProfile.name ||
-        !userProfile.address ||
-        !userProfile.birthday ||
-        userProfile.gender === null ||
-        userProfile.gender === undefined ||
-        !userProfile.phone ||
-        !userProfile.email
+        !profileV3.name ||
+        !profileV3.addressText ||
+        !profileV3.birthday ||
+        profileV3.gender === null ||
+        profileV3.gender === undefined ||
+        !profileV3.phone ||
+        !profileV3.email
       ) {
         api.info({
           message: language?.post_detail_page?.update_infor_mess,
@@ -744,13 +747,13 @@ const Detail = () => {
 
   const handleApply = async () => {
     if (
-      !userProfile.name ||
-      !userProfile.address ||
-      !userProfile.birthday ||
-      userProfile.gender === null ||
-      userProfile.gender === undefined ||
-      !userProfile.phone ||
-      !userProfile.email
+      !profileV3.name ||
+      !profileV3.addressText ||
+      !profileV3.birthday ||
+      profileV3.genderText === null ||
+      profileV3.gender === undefined ||
+      !profileV3.phone ||
+      !profileV3.email
     ) {
       api.info({
         message: language?.post_detail_page?.update_infor_mess,
