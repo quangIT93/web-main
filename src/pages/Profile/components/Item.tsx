@@ -61,7 +61,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const [openModalExperienceUpdate, setOpenModalExperienceUpdate] =
     useState(false);
   // const [language, setLanguage] = useState<any>();
-  console.log('logging education', item);
+  // console.log('logging education', item);
 
   const handleDeleteEducation = async (id?: number | null) => {
     setOpenModalDeleteEducation(true);
