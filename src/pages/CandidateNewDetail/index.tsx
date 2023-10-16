@@ -112,7 +112,9 @@ const CandidateNewDetail = () => {
         }
         setTotal(viewProfile.total);
         const result = await profileApi.getProfileByAccountId(
-          languageRedux === 1 ? 'vi' : 'en', id);
+          languageRedux === 1 ? 'vi' : 'en',
+          id,
+        );
         if (result) {
           setCandidate(result.data);
         }
@@ -158,7 +160,7 @@ const CandidateNewDetail = () => {
 
   useEffect(() => {
     getBookMark();
-  }, [languageRedux]);
+  }, []);
 
   const handleClickItemCv = async (urlPdf: string, id: string) => {
     if (total > 0) {
