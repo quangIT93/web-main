@@ -147,7 +147,7 @@ const MoreJobsPage: React.FC = () => {
   const analytics: any = getAnalytics();
 
   const getTemplateId = () => {
-    const templateId = localStorage.getItem('job-type');
+    const templateId = localStorage.getItem('job_by_place');
     if (templateId && templateId !== 'new' && templateId !== 'suggested') {
       console.log('la new');
       setTemplateId(templateId && templateId?.split('--').at(1));
@@ -157,7 +157,7 @@ const MoreJobsPage: React.FC = () => {
     }
   };
 
-  console.log('getTemplateId', localStorage.getItem('job-type'));
+  console.log('getTemplateId', localStorage.getItem('job_by_place'));
   console.log('getTemplateId', templateId);
 
   React.useEffect(() => {
@@ -280,6 +280,14 @@ const MoreJobsPage: React.FC = () => {
       setHasMore(true);
       if (result) {
         setLoading(false);
+        if (typeJob !== 'new') {
+          if (result.data.posts.length < 20) {
+            setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
+            setHasMore(false);
+            setOpenBackdrop(false);
+            return;
+          }
+        }
         if (result.data.length < 20) {
           setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
           setHasMore(false);
@@ -477,7 +485,7 @@ const MoreJobsPage: React.FC = () => {
         {
           // automatic && (
           <Box sx={{ flexGrow: 1 }} ref={listRef}>
-            {templateId !== 'new' && templateId !== 'suggested' ? (
+            {typeJob === 'place' ? (
               <>
                 {/* <div
                   className="back"

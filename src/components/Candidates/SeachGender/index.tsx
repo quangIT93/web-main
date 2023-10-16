@@ -54,7 +54,7 @@ const CustomOption = ({
   return (
     <div className="wrap-radio_candidate">
       <div className="title-candidate">
-        <h3>Giới tính</h3>
+        <h3>{languageRedux === 1 ? 'Giới tính' : 'Sex'}</h3>
       </div>
       <Radio.Group
         style={{ width: '100%' }}
@@ -63,7 +63,7 @@ const CustomOption = ({
         value={
           reset ? -1 : typeAcademic === -1 ? -1 : typeAcademic === 0 ? 0 : 1
         }
-        // defaultValue={jobType ? jobType : 5}
+      // defaultValue={jobType ? jobType : 5}
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           {genderType?.map((value: any, index: number) => {
@@ -118,7 +118,7 @@ const SeachGender: React.FC<ISeachGender> = (props) => {
     },
   ];
 
-  const onChange = (value: string[][]) => {};
+  const onChange = (value: string[][]) => { };
   const handleChange = (value1: string) => {
     setReset(false);
   };
