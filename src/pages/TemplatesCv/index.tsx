@@ -110,8 +110,6 @@ const TemplatesCv: React.FC = () => {
   // React.useEffect(() => {}, []);
 
   const handleClickSaveCv = async () => {
-    console.log('1111111111111111');
-
     const selectedTemplate = templatesCv.find((template) => {
       console.log(template.id);
       console.log(Number(localStorage.getItem('cv-id')));
@@ -203,7 +201,7 @@ const TemplatesCv: React.FC = () => {
   const fileNameCv = createFileName(profile?.name ? profile?.name : 'Your');
 
   React.useEffect(() => {
-    if (!localStorage.getItem('accessToken') || roleRedux === 1)
+    if (!localStorage.getItem('accessToken') || profileV3.typeRoleData === 1)
       window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -400,7 +398,7 @@ const TemplatesCv: React.FC = () => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={loading}
-        // onClick={handleClose}
+          // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>

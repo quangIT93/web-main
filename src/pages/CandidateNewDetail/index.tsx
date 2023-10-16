@@ -38,6 +38,7 @@ import ModalUnlockCandidate from './ModalUnlockCandidate';
 
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
+import ModalMaxUnlock from './ModalMaxUnlock';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -50,6 +51,7 @@ const CandidateNewDetail = () => {
   const [candidate, setCandidate] = useState<any>([]);
   const [bookmarkCandidate, setBookmarkCandidate] = useState<any>(0);
   const [total, setTotal] = useState<any>(0);
+  const [openModalMaxUnlock, setOpenModalMaxUnlock] = useState<any>(false);
 
   const [modalShowCvPDF, setModalShowCvPdf] = React.useState<{
     open: boolean;
@@ -99,6 +101,10 @@ const CandidateNewDetail = () => {
     if (id) {
       const viewProfile: any = await candidateSearch.postCountShowCandidate(id);
       if (viewProfile.status === 200) {
+        if (viewProfile.total === 0) {
+          setOpenModalMaxUnlock(true);
+          return;
+        }
         setTotal(viewProfile.total);
         const result = await profileApi.getProfileByAccountId('vi', id);
         if (result) {
@@ -107,7 +113,7 @@ const CandidateNewDetail = () => {
       }
     }
     try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleClickBookmarkCandidate = async (accountId: string) => {
@@ -121,7 +127,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -141,7 +147,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -284,11 +290,11 @@ const CandidateNewDetail = () => {
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                      .format('DD/MM/YYYY')
-                      .replace(/\d{2}$/, 'xx')
+                    .format('DD/MM/YYYY')
+                    .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
-                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                  : 'Chưa cập nhật'}
+                    ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
+                    : 'Chưa cập nhật'}
               </p>
               <p>
                 {candidate?.genderText
@@ -384,12 +390,12 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.fullName}
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.fullName}
+                  </Button>
+                ),
+              )
               : 'Chưa cập nhật'}
           </Space>
         </div>
@@ -406,10 +412,10 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.fullName}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item?.fullName}
+                </Button>
+              ))
               : 'Chưa cập nhật'}
           </Space>
         </div>
@@ -537,11 +543,11 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.skillName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  <span>{item.skillName}</span>
+                  <span>{item.dataLevel.data}</span>
+                </Button>
+              ))
               : 'Chưa cập nhật'}
           </Space>
         </div>
@@ -559,13 +565,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      <span>{item.languageName}</span>
-                      <span>{item.dataLevel.data}</span>
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.languageName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ),
+              )
               : 'Chưa cập nhật'}
           </Space>
         </div>
@@ -613,6 +619,10 @@ const CandidateNewDetail = () => {
         </Snackbar>
       </Stack>
 
+      <ModalMaxUnlock
+        openModalMaxUnlock={openModalMaxUnlock}
+        setOpenModalMaxUnlock={setOpenModalMaxUnlock}
+      />
       {/* <ModalUnlockCandidate /> */}
     </div>
   );

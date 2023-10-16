@@ -41,9 +41,10 @@
 
         .wrap-name-age {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 8px;
             flex-direction: column;
+            width: 76px;
 
             .wrap-name-age_item {
                 display: flex;
