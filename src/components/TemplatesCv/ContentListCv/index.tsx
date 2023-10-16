@@ -428,11 +428,11 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
               <Document
                 loading={<Spin indicator={antIcon} />}
                 noData={<Spin indicator={antIcon} />}
-                file={profileV3.length !== 0 ? instance.url : ''}
+                file={profileV3.length !== 0 ? instance.url : null}
                 onLoadSuccess={onDocumentLoadSuccess}
-                onLoadError={(error) =>
-                  console.error('Error loading document:', error)
-                }
+                // onLoadError={(error) =>
+                //   console.error('Error loading document:', error)
+                // }
                 className="page-cv-wrapper"
               >
                 {Array.apply(null, Array(numPages))
