@@ -261,7 +261,7 @@ const TemplatesCv: React.FC = () => {
               <BackIcon width={15} height={15} fill="white" />
             </div>
             <p>
-              {languageRedux === 1 ? 'Về trang chỉnh sửa' : 'Back to editor'}
+              {languageRedux === 1 ? 'Quay lại trang chỉnh sửa' : 'Back to profile Edit'}
             </p>
           </div>
           <div className="change-styles">

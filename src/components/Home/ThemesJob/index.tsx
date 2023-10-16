@@ -212,6 +212,7 @@ const ThemesJob: React.FC = () => {
   // }, [localStorage.getItem("accessToken")])
 
   const handleMoveToMoreJob = () => {
+    localStorage.setItem('job-type', 'place');
     window.open('/more-jobs', '_parent');
   };
 
