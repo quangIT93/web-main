@@ -99,7 +99,7 @@ const CandidateNewDetail = () => {
     // if (profileV3.typeRoleData !== 1) {
     //   window.open('/', '_parent');
     // }
-  }, []);
+  }, [languageRedux]);
 
   const handleUnLockCandidate = async (accountId: string) => {
     const id = localStorage.getItem('candidateId');
@@ -111,7 +111,8 @@ const CandidateNewDetail = () => {
           return;
         }
         setTotal(viewProfile.total);
-        const result = await profileApi.getProfileByAccountId('vi', id);
+        const result = await profileApi.getProfileByAccountId(
+          languageRedux === 1 ? 'vi' : 'en', id);
         if (result) {
           setCandidate(result.data);
         }
@@ -157,7 +158,7 @@ const CandidateNewDetail = () => {
 
   useEffect(() => {
     getBookMark();
-  }, []);
+  }, [languageRedux]);
 
   const handleClickItemCv = async (urlPdf: string, id: string) => {
     if (total > 0) {
