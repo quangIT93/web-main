@@ -520,7 +520,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'Suggested jobs'
                     : languageRedux === 1
                     ? 'Thông tin công ty'
-                    : 'Company information'}
+                    : "Company's information"}
                 </h3>
               </div>
             </div>
