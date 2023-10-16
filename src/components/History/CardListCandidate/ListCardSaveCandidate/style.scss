@@ -28,6 +28,7 @@
             border-radius: 4px;
             // height: 100%;
             filter: blur(3px);
+
             @media screen and (max-width: 350px) {
                 width: 118px;
             }
@@ -35,9 +36,10 @@
 
         .wrap-name-age {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 8px;
             flex-direction: column;
+            width: 76px;
 
             .wrap-name-age_item {
                 display: flex;
