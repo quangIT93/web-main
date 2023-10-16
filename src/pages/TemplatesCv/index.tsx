@@ -41,6 +41,7 @@ import CvTemplate5 from '#components/TemplatesCv/CvTemplate/CvTemplate5';
 import CvTemplate6 from '#components/TemplatesCv/CvTemplate/CvTemplate6';
 import CvTemplate7 from '#components/TemplatesCv/CvTemplate/CvTemplate7';
 import CategoryDropdown from '#components/CategoryDropdown';
+import { Backdrop, CircularProgress } from '@mui/material';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -52,6 +53,7 @@ const TemplatesCv: React.FC = () => {
   const [colorCV, setColorCV] = React.useState(1);
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [openModalSuccessDownCv, setOpenModalSuccessDownCv] = React.useState<{
     open: boolean;
     id: number | null;
@@ -120,7 +122,7 @@ const TemplatesCv: React.FC = () => {
     });
     try {
       console.log(selectedTemplate);
-
+      setLoading(true);
       if (selectedTemplate) {
         const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
 
@@ -147,6 +149,7 @@ const TemplatesCv: React.FC = () => {
 
           const result = await apiCv.postCv(formData);
           if (result) {
+            setLoading(false);
             setOpenModalSuccessDownCv({ open: true, id: result.data.id });
             // setOpenModalChooseCv(true);
             // console.log('lưu cv thành công');
@@ -256,7 +259,7 @@ const TemplatesCv: React.FC = () => {
               <BackIcon width={15} height={15} fill="white" />
             </div>
             <p>
-              {languageRedux === 1 ? 'Về trang chỉnh sửa' : 'Back to Editor'}
+              {languageRedux === 1 ? 'Về trang chỉnh sửa' : 'Back to editor'}
             </p>
           </div>
           <div className="change-styles">
@@ -385,6 +388,18 @@ const TemplatesCv: React.FC = () => {
             </Button> */}
           </div>
         </div>
+
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            backgroundColor: 'transparent',
+            zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          }}
+          open={loading}
+        // onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
 
         <ContentListCv colorCV={colorCV} fontSizeCV={fontSizeCV} />
         <ModalShare

@@ -132,6 +132,8 @@ const Company: React.FC<ICompany> = (props) => {
     website: '',
     description: '',
     logoPath: '',
+    images: [],
+    deleteImages: [],
   });
   // const [language, setLanguageState] = React.useState<any>();
   const location = useLocation();
@@ -218,11 +220,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -339,6 +341,7 @@ const Company: React.FC<ICompany> = (props) => {
           const result = await apiCompany.createCampany(formData);
           if (result) {
             // setOpenModalEditPost(true);
+            setOpenModalEditCompanySuccess(true);
             messageApi.open({
               type: 'success',
               content: language?.company_page?.create_success,
@@ -413,6 +416,7 @@ const Company: React.FC<ICompany> = (props) => {
     );
     formData.append('categoryId', String(dataCompany?.companyCategory?.id));
     formData.append('logo', dataCompany?.logoPath);
+    formData.append('images', dataCompany?.images);
 
     // setDataCompany((preValue: any) => ({
     //     ...preValue,

@@ -242,8 +242,8 @@ const Home: React.FC = () => {
         <Breadcrumbs /> */}
         <AppliedPostedJob />
         <HotJob />
-        <NewJobs />
         <NewestGigWorker />
+        <NewJobs />
         <SuggestJob />
         <ThemesJob />
         <Community />

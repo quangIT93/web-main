@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { message } from 'antd';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { validatePostImages } from 'validations';
@@ -35,6 +35,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     maxSizeMB: 1,
     maxWidthOrHeight: 840,
   };
+
+  useEffect(() => {
+    setSelectedImages(dataCompany.images)
+  }, [dataCompany])
+  console.log(dataCompany);
 
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -92,6 +97,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               //     preview: window.URL.createObjectURL(image),
               // })),
             ]);
+            setDataCompany((preValue: any) => ({
+              ...preValue,
+              images: compressedImages,
+            }));
+
           }
         } catch (error) {
           console.log(error);
@@ -184,6 +194,11 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
 
       if (selectedImages.length < 5) {
         setSelectedFiles(newFileSelected);
+        setDataCompany((preValue: any) => ({
+          ...preValue,
+          images: newFileSelected,
+        }));
+
       }
 
       const newImages: string[] = [];
@@ -231,8 +246,17 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       updatedFiles.splice(index, 1);
       return updatedFiles;
     });
+    setDataCompany((preValue: any) => ({
+      ...preValue,
+      images: preValue.images.splice(index, 1),
+    }));
     setDeleteImages((prevImages) => {
       const deletedImages = [...prevImages];
+      deletedImages.push(deleteId);
+      return deletedImages;
+    });
+    setDataCompany((preValue: any) => {
+      const deletedImages = [...preValue.deleteImages];
       deletedImages.push(deleteId);
       return deletedImages;
     });
@@ -301,7 +325,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                     display:
                       (selectedImages.length === 0 &&
                         selectedFiles.length === 0) ||
-                      isDragActive
+                        isDragActive
                         ? 'flex'
                         : 'none',
                   }}
