@@ -236,47 +236,6 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
     } catch (error) {}
   };
 
-  const styles = StyleSheet.create({
-    page: {
-      flexDirection: 'column',
-      backgroundColor: '#ffffff',
-      padding: 20,
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: 20,
-    },
-    headerLeft: {
-      width: '30%',
-    },
-    headerRight: {
-      width: '70%',
-    },
-    headerImage: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
-    },
-    content: {
-      flexDirection: 'row',
-    },
-    contentLeft: {
-      width: '30%',
-    },
-    contentRight: {
-      width: '70%',
-    },
-    section: {
-      marginBottom: 10,
-    },
-    flexCol: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-  });
-
   // console.log('aaa');
   // const element = document.querySelector('.scalable-element') as any;
   // const currentWidth = element?.offsetWidth; // Lấy chiều rộng hiện tại

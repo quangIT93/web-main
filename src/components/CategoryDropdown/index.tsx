@@ -70,20 +70,27 @@ const CategoryDropdown: React.FC = () => {
 
   useEffect(() => {
     updateWindowWidth();
-  }, []);
+  }, [window.innerWidth]);
 
-  window.addEventListener('resize', () => {
-    const currentWidth = window.innerWidth;
-    if (currentWidth > 560) {
-      setWindowWidth(true);
-      setExpand([1, 2, 3, 4]);
-    } else {
-      setWindowWidth(false);
-      // setOpen(true);
-      setExpand([]);
-    }
-    // console.log('Current window width:', currentWidth);
-  });
+  React.useEffect(() => {
+    const handleResize = () => {
+      const currentWidth = window.innerWidth;
+      console.log('resize');
+
+      if (currentWidth > 560) {
+        setWindowWidth(true);
+        setExpand([1, 2, 3, 4]);
+      } else {
+        setWindowWidth(false);
+        // setOpen(true);
+        setExpand([]);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleExpand = (id: any) => {
     if (expand.includes(id)) {
@@ -439,8 +446,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Thông tin việc làm'
                       : 'Job information'
                     : languageRedux === 1
-                      ? 'Thông tin tuyển dụng'
-                      : 'Employment information'}
+                    ? 'Thông tin tuyển dụng'
+                    : 'Employment information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -470,8 +477,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Việc làm đã lưu'
                       : 'Saved jobs'
                     : languageRedux === 1
-                      ? 'Việc làm tuyển dụng đã đăng'
-                      : 'Recruitment posted'}
+                    ? 'Việc làm tuyển dụng đã đăng'
+                    : 'Recruitment posted'}
                 </h3>
                 <h3
                   onClick={
@@ -483,8 +490,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc mới nhất'
                       : 'Newest jobs'
                     : languageRedux === 1
-                      ? 'Bài tuyển dụng đang mở'
-                      : 'Job posting is opening'}
+                    ? 'Bài tuyển dụng đang mở'
+                    : 'Job posting is opening'}
                 </h3>
                 <h3 onClick={roleRedux === 0 ? moveToHotJob : moveToClosedPost}>
                   {roleRedux === 0
@@ -492,8 +499,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc nổi bật'
                       : 'Hot jobs'
                     : languageRedux === 1
-                      ? 'Bài tuyển dụng đã đóng'
-                      : 'Job posting is closed'}
+                    ? 'Bài tuyển dụng đã đóng'
+                    : 'Job posting is closed'}
                 </h3>
                 <h3
                   onClick={
@@ -505,8 +512,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc theo chủ đề'
                       : 'Job by hot places'
                     : languageRedux === 1
-                      ? 'Đăng bài tuyển dụng'
-                      : 'Post recruitment posts'}
+                    ? 'Đăng bài tuyển dụng'
+                    : 'Post recruitment posts'}
                 </h3>
                 <h3
                   onClick={
@@ -518,14 +525,14 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc gợi ý'
                       : 'Suggested jobs'
                     : languageRedux === 1
-                      ? 'Thông tin công ty'
-                      : 'Company information'}
+                    ? 'Thông tin công ty'
+                    : 'Company information'}
                 </h3>
               </div>
             </div>
             <div
               className="category-dropdown-item"
-            // style={{ display: roleRedux === 0 ? 'block' : 'none' }}
+              // style={{ display: roleRedux === 0 ? 'block' : 'none' }}
             >
               <div className="top-item" onClick={() => handleExpand(2)}>
                 <h3>
@@ -534,8 +541,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Hồ sơ & CV'
                       : 'Resume & CV'
                     : languageRedux === 1
-                      ? 'Thông tin nhân tài'
-                      : 'Candidates information'}
+                    ? 'Thông tin nhân tài'
+                    : 'Candidates information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -557,8 +564,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Tạo mới CV'
                       : 'Create a new CV'
                     : languageRedux === 1
-                      ? 'Danh sách nhân tài mới nhất'
-                      : 'Newest candidate list'}
+                    ? 'Danh sách nhân tài mới nhất'
+                    : 'Newest candidate list'}
                 </h3>
                 <h3
                   onClick={
@@ -570,8 +577,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Quản lý CV'
                       : 'CV management'
                     : languageRedux === 1
-                      ? 'Tìm kiếm nhân tài'
-                      : 'Search for candidate'}
+                    ? 'Tìm kiếm nhân tài'
+                    : 'Search for candidate'}
                 </h3>
                 <h3
                   onClick={
@@ -585,8 +592,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Hướng dẫn tạo CV'
                       : 'Instructions for creating a CV'
                     : languageRedux === 1
-                      ? 'Danh sách nhân tài đã lưu'
-                      : 'Saved candidate list'}
+                    ? 'Danh sách nhân tài đã lưu'
+                    : 'Saved candidate list'}
                 </h3>
               </div>
             </div>
