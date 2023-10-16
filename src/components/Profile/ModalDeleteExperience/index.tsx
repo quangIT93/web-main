@@ -13,6 +13,7 @@ import { RootState } from '../../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -59,27 +60,32 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
 
   const dispatch = useDispatch();
   const { setProfileUser } = bindActionCreators(actionCreators, dispatch);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   const handleClose = () => setOpenModalDeleteExperience(false);
 
@@ -87,12 +93,20 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
     try {
       const result = await profileApi.deleteProfileExperience(experienceId);
       if (result) {
-        const profile = await profileApi.getProfile('vi');
-        if (profile) {
-          setProfileUser(profile.data);
+        // const profile = await profileApi.getProfile(
+        //   languageRedux === 1 ? 'vi' : 'en',
+        // );
+        // if (profile) {
+        //   setProfileUser(profile.data);
+        // }
+        const getProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (getProfileV3) {
+          await dispatch(setProfileV3(getProfileV3) as any);
+          await dispatch(setAlert(true));
+          setOpenModalDeleteExperience(false);
         }
-        await dispatch(setAlert(true));
-        setOpenModalDeleteExperience(false);
       }
     } catch (error) {
       console.log(error);
@@ -117,9 +131,7 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {
-            language?.profile_page?.alert_delete_info
-          }
+          {language?.profile_page?.alert_delete_info}
         </Typography>
         <Box sx={{ display: 'flex', gap: '100px' }}>
           <Button
@@ -128,15 +140,11 @@ const ModalDelete: React.FC<IModalProfileDelete> = (props) => {
             onClick={handleSubmitDelete}
             color="error"
           >
-            {
-              language?.profile_page?.delete
-            }
+            {language?.profile_page?.delete}
           </Button>
 
           <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>
-            {
-              language?.profile_page?.return
-            }
+            {language?.profile_page?.return}
           </Button>
         </Box>
       </Box>

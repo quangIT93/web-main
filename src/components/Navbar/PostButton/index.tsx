@@ -40,10 +40,9 @@ const PostButton: React.FC<Iprops> = (props) => {
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const style = {
-
     // Adding media query..
     bottom: '140px',
-    '@media (max-width: 640px)': {
+    '@media and (maxWidth: 640px)': {
       display: roleRedux === 1 ? 'block' : 'none',
     },
   };

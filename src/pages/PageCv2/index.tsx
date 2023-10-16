@@ -53,7 +53,7 @@ const PageCv2 = () => {
   function onSlideChange(currentSlide: number) {
     // Lấy danh sách các phần tử .slick-active trong Slider
     const activeSlides = document.querySelectorAll('.slick-active');
-    if (activeSlides) {
+    if (activeSlides.length !== 0) {
       activeSlides[1].classList.add('slick-slider-center');
       activeSlides[0].classList.remove('slick-slider-center');
       activeSlides[2].classList.remove('slick-slider-center');

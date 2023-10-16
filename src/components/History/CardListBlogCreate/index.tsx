@@ -25,6 +25,9 @@ const CardListBlogCreate = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [showText, setShowText] = React.useState('');
   const [openMenu, setOpenMenu] = React.useState(false);
   const [page, setPage] = React.useState<any>('0');
@@ -71,25 +74,25 @@ const CardListBlogCreate = () => {
   };
 
   const footerRef = React.useRef<any>(null);
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   React.useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -269,8 +272,8 @@ const CardListBlogCreate = () => {
                   {item?.createdAtText
                     ? item?.createdAtText
                     : new Date(item?.createdAt).toLocaleDateString('en-GB') +
-                      ', ' +
-                      moment(new Date(item?.createdAt)).format('HH:mm')}
+                    ', ' +
+                    moment(new Date(item?.createdAt)).format('HH:mm')}
                 </p>
               </div>
               <div className="body-item-actions">

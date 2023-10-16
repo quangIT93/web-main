@@ -42,7 +42,10 @@ const Message = () => {
   const { setApply } = useContext(ChatContext);
   // const { openCollapseFilter } = useContext(HomeValueContext);
   const [openListChat, setOpenListChat] = useState(false);
-  const [language, setLanguage] = useState<any>();
+  // const [language, setLanguage] = useState<any>();
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [innerHeight, setInnerHeight] = useState<string>('100vh');
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -56,23 +59,23 @@ const Message = () => {
   //   document.title = 'Hijob - Nhắn tin';
   // });
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   useEffect(() => {
     // document.title = language?.messages_page?.title_page;

@@ -12,7 +12,7 @@ const style = {
   top: '0',
   left: '50%',
   transform: 'translate(-50%, 70px)',
-  width: 660,
+  width: 840,
   bgcolor: 'background.paper',
   border: 'none',
   outline: 'none',
@@ -75,7 +75,7 @@ const ModalShowCv: React.FC<IModalShowCv> = (props) => {
         >
           <CloseOutlined style={{ fontSize: '30px' }} />
         </div>
-        <h3>Show Cv</h3>
+        <h3>Show CV</h3>
         {modalShowCvPDF.urlPdf ? (
           <Document
             file={modalShowCvPDF.urlPdf} // Thay đổi đường dẫn tới file PDF của bạn

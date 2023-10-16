@@ -37,13 +37,12 @@ const postApi = {
 
 
   getPostByThemeId: (
-    themeId: number,
+    themeId: number | null,
     limit: Number,
     threshold: Number | null,
     lang: string
   ) => {
-    const URL = `v1/posts/theme?tid=${themeId}&limit=${limit}&threshold=${threshold ? threshold : ''
-      }&lang=${lang}`
+    const URL = `v1/posts/theme?${themeId ? `tid=${themeId}&`: `tid=1&`}limit=${limit}&lang=${lang}`
     return axiosClient.get(URL
       // ,
       // {

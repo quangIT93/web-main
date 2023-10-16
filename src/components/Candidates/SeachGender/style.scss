@@ -4,7 +4,7 @@
     .filter-input_candidate {
         position: absolute;
         z-index: 10;
-        top: 8px;
+        top: 12px;
         left: 10px;
     }
 
@@ -12,9 +12,12 @@
         .ant-select-selector {
             .ant-select-selection-item {
                 margin-left: 20px;
+                font-size: 12px;
+
             }
 
             .ant-select-selection-placeholder {
+                font-size: 12px;
                 margin-left: 20px;
             }
         }

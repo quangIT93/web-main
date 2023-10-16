@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import { CloseOutlined } from '@ant-design/icons';
 
 import { RootState } from '../../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
@@ -18,6 +18,7 @@ import languageApi from 'api/languageApi';
 // data
 import profileApi from 'api/profileApi';
 import { message } from 'antd';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 // import { useDispatch } from 'react-redux';
 // import {
 //   getProfile,
@@ -82,7 +83,12 @@ interface IInfoExperience {
 const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
   props,
 ) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const {
     openModalExperienceCreate,
     setOpenModalExperienceCreate,
@@ -107,25 +113,25 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
     endDate: new Date(2023, 4, 30, 0, 0).getTime(),
     extraInformation: '',
   });
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
+  const dispatch = useDispatch();
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   // console.log('endDate', endDate)
 
@@ -181,63 +187,57 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
 
   // submit
   const validValue = () => {
-    if (
-      experience.title?.trim() === ''
-    ) {
+    if (experience.title?.trim() === '') {
       return {
-        messageError: languageRedux === 1 ?
-          "Tiêu đề không được bỏ trống" :
-          "Professional title cannot be empty",
+        messageError:
+          languageRedux === 1
+            ? 'Tiêu đề không được bỏ trống'
+            : 'Professional title cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      experience.title?.trim().length > 50
-    ) {
+    if (experience.title?.trim().length > 50) {
       return {
-        messageError: languageRedux === 1 ?
-          "Tiêu đề không được vượt quá 50 ký tự" :
-          "Professional title cannot exceed 50 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Tiêu đề không được vượt quá 50 ký tự'
+            : 'Professional title cannot exceed 50 characters',
         checkForm: false,
       };
     }
-    if (
-      experience.companyName?.trim() === ''
-    ) {
+    if (experience.companyName?.trim() === '') {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên công ty không được bỏ trống" :
-          "Company names cannot be empty",
+        messageError:
+          languageRedux === 1
+            ? 'Tên công ty không được bỏ trống'
+            : 'Company names cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      experience.companyName?.trim().length > 50
-    ) {
+    if (experience.companyName?.trim().length > 50) {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên công ty không được vượt quá 50 ký tự" :
-          "Company names cannot exceed 50 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Tên công ty không được vượt quá 50 ký tự'
+            : 'Company names cannot exceed 50 characters',
         checkForm: false,
       };
     }
-    if (
-      experience.extraInformation?.trim() === ''
-    ) {
+    if (experience.extraInformation?.trim() === '') {
       return {
-        messageError: languageRedux === 1 ?
-          "Thông tin thêm không được bỏ trống" :
-          "Additional information cannot be empty",
+        messageError:
+          languageRedux === 1
+            ? 'Thông tin thêm không được bỏ trống'
+            : 'Additional information cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      experience.extraInformation?.trim().length > 50
-    ) {
+    if (experience.extraInformation?.trim().length > 500) {
       return {
-        messageError: languageRedux === 1 ?
-          "Thông tin thêm không được vượt quá 50 ký tự" :
-          "Additional information cannot exceed 50 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Thông tin thêm không được vượt quá 500 ký tự'
+            : 'Additional information cannot exceed 500 characters',
         checkForm: false,
       };
     }
@@ -254,7 +254,13 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
       if (checkForm) {
         const result = await profileApi.createProfileExperience(experience);
         if (result) {
-          setOpenModalExperienceCreate(false);
+          const getProfileV3 = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (getProfileV3) {
+            setOpenModalExperienceCreate(false);
+            await dispatch(setProfileV3(getProfileV3) as any);
+          }
         }
       } else {
         message.error(messageError);
@@ -277,9 +283,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style}
-        className="Modal-personnal-info"
-      >
+      <Box sx={style} className="Modal-personnal-info">
         <div
           style={{
             position: 'absolute',
@@ -301,9 +305,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {
-            language?.profile_page?.add_working_experience
-          }
+          {language?.profile_page?.add_working_experience}
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -312,9 +314,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            {
-              language?.professional_titles
-            }{' '}
+            {language?.professional_titles}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
@@ -325,9 +325,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             onChange={handleChangeTitle}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={
-              language?.professional_titles
-            }
+            placeholder={language?.professional_titles}
           // error={titleError} // Đánh dấu lỗi
           />
         </Box>
@@ -338,9 +336,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            {
-              language?.company_organization
-            }{' '}
+            {language?.company_organization}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
@@ -351,9 +347,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={
-              language?.company_organization
-            }
+            placeholder={language?.company_organization}
           // error={titleError} // Đánh dấu lỗi
           />
         </Box>
@@ -371,9 +365,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  {
-                    language?.start_time
-                  }{' '}
+                  {language?.start_time}{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
@@ -391,9 +383,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  {
-                    language?.finish_time
-                  }{' '}
+                  {language?.finish_time}{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
@@ -415,9 +405,7 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             component="label"
             htmlFor="startTime"
           >
-            {
-              language?.additional_information
-            }{' '}
+            {language?.additional_information}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
@@ -427,16 +415,12 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
             multiline
             rows={4}
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder={
-              language?.profile_page?.place_additional_information
-            }
+            placeholder={language?.profile_page?.place_additional_information}
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {
-            language?.profile_page?.save_info
-          }
+          {language?.profile_page?.save_info}
         </Button>
       </Box>
     </Modal>

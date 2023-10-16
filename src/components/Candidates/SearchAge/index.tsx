@@ -9,8 +9,16 @@ import { RootState } from 'store';
 
 import { EnvironmentOutlined } from '@ant-design/icons';
 
-import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons';
-
+import { ArrowFilterIcon } from '#components/Icons';
+import {
+  PersonIcon,
+  SchoolIcon,
+  LocationIcon,
+  CateIcon,
+  CalendarIcon,
+  GenderIcon,
+  CandidateHijob,
+} from '#components/Icons/iconCandidate';
 import candidateSearch from 'api/apiCandidates';
 
 // import ant
@@ -102,20 +110,11 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
   );
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
-  const gender = [
-    {
-      id: 1,
-      data: 'male',
-    },
-    {
-      id: 0,
-      data: 'female',
-    },
-  ];
-
   const academicTypesFnc = async () => {
     try {
-      const result = await candidateSearch.getAcademicTypes('vi');
+      const result = await candidateSearch.getAcademicTypes(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setAcademicType(result.data);
       }
@@ -128,9 +127,7 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
     academicTypesFnc();
   }, []);
 
-  const onChange = (value: string[][]) => {
-    console.log(value);
-  };
+  const onChange = (value: string[][]) => {};
   const handleChange = (value1: string) => {
     setReset(false);
   };
@@ -149,8 +146,6 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
       }
       const element1 = document.querySelector('.wrap-radio_candidateAge');
 
-      console.log(element1?.contains(event.target));
-
       if (
         (selectRef.current && selectRef.current?.contains(event.target)) ||
         (element && element.contains(event.target))
@@ -166,12 +161,11 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [isSelectOpen]);
-  console.log('age', ageMax);
 
   return (
     <div className="filter-candidate" ref={selectRef}>
       <div className="filter-input_candidate">
-        <PaperFilterIcon width={20} height={20} />
+        <CalendarIcon />
       </div>
       <Select
         // ref={selectRef}
@@ -183,14 +177,14 @@ const SeachAge: React.FC<ISeachAge> = (props) => {
         }
         className=""
         size="large"
-        placeholder="Độ tuổi"
+        placeholder={languageRedux === 1 ? 'Độ tuổi' : 'Age'}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
         open={isSelectOpen}
         dropdownRender={(menu) => (
           <div className="wrap-radio_candidateAge">
             {/* {menu} */}
             <div className="title-search_age">
-              <h3>Độ tuổi</h3>
+              <h3>{languageRedux === 1 ? 'Độ tuổi' : 'Age'}</h3>
             </div>
 
             <Divider style={{ margin: '8px 0' }} />

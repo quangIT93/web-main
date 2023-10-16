@@ -2,10 +2,13 @@ import React from 'react';
 import Box from '@mui/material/Box';
 
 import ItemCadidate from '#components/Candidates/ItemCadidate';
+import ModalNoteWorker from './ModalNoteWorker';
 
 import { FireIcon, ArrowrightIcon } from '#components/Icons';
 import candidateSearch from 'api/apiCandidates';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/reducer/index';
 import './style.scss';
 
 const NewestGigWorker = () => {
@@ -15,12 +18,21 @@ const NewestGigWorker = () => {
   const [educations, setEducations] = React.useState<number | undefined>(
     undefined,
   );
-  const [gender, setGender] = React.useState(1);
-  const [ageMin, setAgeMin] = React.useState(1);
+  const [gender, setGender] = React.useState(undefined);
+  const [ageMin, setAgeMin] = React.useState(18);
   const [ageMax, setAgeMax] = React.useState(60);
   const [page, setPage] = React.useState<any>('0');
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+
+  const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
+
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const getAllCandidates = async () => {
     try {
+      const logout = localStorage.getItem('accessToken');
       const result = await candidateSearch.getCandidates(
         addresses,
         categories,
@@ -28,11 +40,11 @@ const NewestGigWorker = () => {
         gender,
         ageMin,
         ageMax,
-        18,
+        !logout ? 6 : roleRedux === 0 ? 6 : 18,
         page,
-        'vi',
+        languageRedux === 1 ? 'vi' : 'en',
       );
-      console.log(result);
+
       if (result) {
         setListData(result.data.cvFilters);
       }
@@ -42,6 +54,17 @@ const NewestGigWorker = () => {
   React.useEffect(() => {
     getAllCandidates();
   }, []);
+
+  const handleChangeRouteNewestWorker = () => {
+    if (profileV3?.typeRoleData === 1) {
+      window.open('/candidatesAll', '_parent');
+    } else {
+      console.log(profileV3);
+      setOpenModalNoteWorker(true);
+      window.open('/page-cv', '_parent');
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -63,33 +86,41 @@ const NewestGigWorker = () => {
       >
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <FireIcon width={25} height={25} />
-          <h2>West Gig Worker</h2>
+          <h2>{languageRedux === 1 ? 'Ứng viên mới' : 'Newest gig worker'}</h2>
         </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '16px',
-            cursor: 'pointer',
-            color: '#0d99ff',
-          }}
-        >
-          <p
-            onClick={() => window.open('/candidatesAll', '_parent')}
-            style={{ cursor: 'pointer' }}
+        {profileV3?.typeRoleData === 1 ? (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '16px',
+              cursor: 'pointer',
+              color: '#0d99ff',
+            }}
           >
-            Xem tất cả
-          </p>
-          <ArrowrightIcon width={20} height={20} />
-        </div>
+            <p
+              onClick={handleChangeRouteNewestWorker}
+              style={{ cursor: 'pointer' }}
+            >
+              {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
+            </p>
+            <ArrowrightIcon width={20} height={20} />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
 
       <div className="list-candidate-home">
-        {listData?.map((item: any) => {
-          return <ItemCadidate item={item} />;
+        {listData?.map((item: any, index: number) => {
+          return <ItemCadidate item={item} key={index} />;
         })}
       </div>
+      <ModalNoteWorker
+        openModalNoteWorker={openModalNoteWorker}
+        setOpenModalNoteWorker={setOpenModalNoteWorker}
+      />
     </Box>
   );
 };

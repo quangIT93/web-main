@@ -24,35 +24,42 @@ interface IEditPostAddress {
 }
 
 const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const { setDataCompany, dataCompany, is_profile } = props;
 
-  const [dataProvinces, setDataProvinces] = useState<any>(null);
+  // const [dataProvinces, setDataProvinces] = useState<any>(null);
   const [dataDistricts, setDataDistrict] = useState<any>(null);
   const [dataWards, setDataWard] = useState<any>(null);
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
   const [selectedWard, setSelectedWard] = useState<any>(null);
+  const dataProvinces = useSelector(
+    (state: RootState) => state.dataLocation.data,
+  );
+  // const [language, setLanguageState] = React.useState<any>();
 
-  const [language, setLanguageState] = React.useState<any>();
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
 
   // console.log("dataDistricts", dataDistricts);
   // console.log("dataWards", dataWards);
@@ -60,7 +67,6 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   // console.log("selectedDistrict", selectedDistrict);
   // console.log("selectedWard", selectedWard);
   // console.log("dataProvinces", dataProvinces);
-
 
   useEffect(() => {
     if (dataProvinces && !selectedProvince) {
@@ -100,19 +106,19 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataWards, languageRedux]);
 
-  const getAllProvinces = async () => {
-    try {
-      const allLocation = await locationApi.getAllLocation(
-        languageRedux === 1 ? "vi" : "en"
-      );
+  // const getAllProvinces = async () => {
+  //   try {
+  //     const allLocation = await locationApi.getAllLocation(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
 
-      if (allLocation) {
-        setDataProvinces(allLocation?.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (allLocation) {
+  //       setDataProvinces(allLocation?.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // get All locations by location id
   const getDataDistrict = async () => {
@@ -123,7 +129,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       ) {
         const districts = await locationApi.getDistrictsById(
           dataCompany?.companyLocation?.district?.province?.id,
-          languageRedux === 1 ? "vi" : "en",
+          languageRedux === 1 ? 'vi' : 'en',
         );
 
         if (districts) {
@@ -133,7 +139,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedProvince) {
           const districts = await locationApi.getDistrictsById(
             selectedProvince?.province_id,
-            languageRedux === 1 ? "vi" : "en",
+            languageRedux === 1 ? 'vi' : 'en',
           );
           if (districts) {
             setDataDistrict(districts?.data);
@@ -151,7 +157,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
       if (dataDistricts && dataWards === null) {
         const allward = await locationApi.getWardsId(
           dataCompany?.companyLocation?.district?.id,
-          languageRedux === 1 ? "vi" : "en",
+          languageRedux === 1 ? 'vi' : 'en',
         );
 
         if (allward) {
@@ -161,7 +167,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
         if (selectedDistrict) {
           const allward = await locationApi.getWardsId(
             selectedDistrict?.id,
-            languageRedux === 1 ? "vi" : "en",
+            languageRedux === 1 ? 'vi' : 'en',
           );
           if (allward) {
             setDataWard(allward?.data);
@@ -173,12 +179,12 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
     }
   };
 
-  React.useEffect(() => {
-    getAllProvinces();
-    // getAllLocations()
-    // delete param when back to page
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  // getAllProvinces();
+  // getAllLocations()
+  // delete param when back to page
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [languageRedux]);
 
   React.useEffect(() => {
     getDataDistrict();
@@ -232,10 +238,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="addressTitle"
           >
-            {
-              language?.post_page?.city
-            }{' '}
-            <span style={{ color: 'red' }}>*</span>
+            {language?.post_page?.city} <span style={{ color: 'red' }}>*</span>
           </Typography>
 
           <Autocomplete
@@ -250,9 +253,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                placeholder={
-                  language?.post_page?.place_city
-                }
+                placeholder={language?.post_page?.place_city}
                 size="small"
                 value={selectedProvince?.province_fullName}
               />
@@ -271,9 +272,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page?.district
-            }{' '}
+            {language?.post_page?.district}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
@@ -283,9 +282,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             value={selectedDistrict || null}
             onChange={handleDistrictChange}
             renderInput={(params: any) => (
-              <TextField {...params} placeholder={
-                language?.post_page?.place_district
-              } size="small" />
+              <TextField
+                {...params}
+                placeholder={language?.post_page?.place_district}
+                size="small"
+              />
             )}
             isOptionEqualToValue={(option, value) => {
               return option.full_name === value.full_name;
@@ -302,10 +303,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.post_page?.ward
-            }{' '}
-            <span style={{ color: 'red' }}>*</span>
+            {language?.post_page?.ward} <span style={{ color: 'red' }}>*</span>
           </Typography>
           <Autocomplete
             disabled={is_profile ? true : false}
@@ -314,9 +312,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             value={selectedWard || null}
             onChange={handleChangeWardId}
             renderInput={(params) => (
-              <TextField {...params} placeholder={
-                language?.post_page?.place_ward
-              } size="small" />
+              <TextField
+                {...params}
+                placeholder={language?.post_page?.place_ward}
+                size="small"
+              />
             )}
             isOptionEqualToValue={(option, value) => {
               return option.full_name === value.full_name;
@@ -332,10 +332,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             component="label"
             htmlFor="jobTitle"
           >
-            {
-              language?.address1
-            }{' '}
-            <span style={{ color: 'red' }}>*</span>
+            {language?.address1} <span style={{ color: 'red' }}>*</span>
           </Typography>
           <TextField
             type="text"
@@ -345,9 +342,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             onChange={handleChangeAddress}
             size="small"
             sx={{ width: '100%', marginTop: '8px' }}
-            placeholder={
-              language?.post_page.place_address
-            }
+            placeholder={language?.post_page.place_address}
             disabled={is_profile ? true : false}
           />
         </div>

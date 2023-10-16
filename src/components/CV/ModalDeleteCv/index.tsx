@@ -39,9 +39,11 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+
   const { openModalDeleteCv, setOpenModalDeleteCv } = props;
 
   const dispatch = useDispatch();
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   const handleCancel = () => {
     setOpenModalDeleteCv({
@@ -57,31 +59,66 @@ const ModalDeleteCv: React.FC<IModalShare> = (props) => {
   };
 
   const handleSubmit = async () => {
-    const result = await apiCv.deleteCvById([
-      openModalDeleteCv?.item?.id as number,
-    ]);
+    if (openModalDeleteCv) {
+      const result = await apiCv.deleteCvById([
+        openModalDeleteCv?.item?.id as number,
+      ]);
+      if (result) {
+        if (profileV3) {
+          if (profileV3?.profilesCvs.length > 1) {
+            if (openModalDeleteCv?.item?.id !== profileV3?.profilesCvs[profileV3?.profilesCvs.length - 1]?.id) {
 
-    if (result) {
-      const resultProfileV3 = await profileApi.getProfileV3(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
+              await apiCv.putThemeCv(
+                profileV3?.profilesCvs[profileV3?.profilesCvs.length - 1]?.id,
+                1,
+              );
+            } else {
+              await apiCv.putThemeCv(
+                profileV3?.profilesCvs[profileV3?.profilesCvs.length - 2]?.id,
+                1,
+              );
+            }
+            const resultProfileV3L2 = await profileApi.getProfileV3(
+              languageRedux === 1 ? 'vi' : 'en',
+            );
+            if (resultProfileV3L2) {
+              dispatch(setProfileV3(resultProfileV3L2));
+            }
 
-      if (resultProfileV3) {
-        dispatch(setProfileV3(resultProfileV3));
-        setOpenModalDeleteCv({
-          open: false,
-          item: {
-            id: null,
-            imageURL: '',
-            name: '',
-            pdfURL: '',
-            status: null,
-          },
-        });
+            setOpenModalDeleteCv({
+              open: false,
+              item: {
+                id: null,
+                imageURL: '',
+                name: '',
+                pdfURL: '',
+                status: null,
+              },
+            });
+          } else {
+            const resultProfileV3L2 = await profileApi.getProfileV3(
+              languageRedux === 1 ? 'vi' : 'en',
+            );
+            if (resultProfileV3L2) {
+              dispatch(setProfileV3(resultProfileV3L2));
+              setOpenModalDeleteCv({
+                open: false,
+                item: {
+                  id: null,
+                  imageURL: '',
+                  name: '',
+                  pdfURL: '',
+                  status: null,
+                },
+              });
+            }
+          }
+        }
       }
     }
+
     try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (

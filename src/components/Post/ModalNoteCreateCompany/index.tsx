@@ -42,26 +42,31 @@ interface IPropModalNoteCreatePost {
 }
 const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
   const { openModalNoteCreateCompany, setOpenModalNoteCreateCompany } = props;
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language,);
-  const [language, setLanguage] = React.useState<any>();
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
 
   const handleCreateCompany = () => {
     setOpenModalNoteCreateCompany(false);
@@ -91,11 +96,7 @@ const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
           >
             <CloseIcon />
           </IconButton>
-          <h2 className="title-post_guide">
-            {
-              language?.you_have_not_company
-            }
-          </h2>
+          <h2 className="title-post_guide">{language?.you_have_not_company}</h2>
           <div className="wrap-imagePost_guide">
             <img
               src="./images/guide.png"
@@ -105,11 +106,9 @@ const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
           </div>
           <div className="wrap-textPost_guide">
             <p>
-              {
-                languageRedux === 1 ?
-                  "Bài đăng của bạn sẽ được nhiều ứng viên hơn khi có thông tin công ty. Hãy cập nhật thông tin công ty để nhiều ứng viên quan tâm hơn!" :
-                  "Your post will be more candidates when there is company information. Please update company information so that more candidates are interested!"
-              }
+              {languageRedux === 1
+                ? 'Bài đăng của bạn sẽ được nhiều ứng viên hơn khi có thông tin công ty. Hãy cập nhật thông tin công ty để nhiều ứng viên quan tâm hơn!'
+                : 'Your post will be more candidates when there is company information. Please update company information so that more candidates are interested!'}
             </p>
           </div>
           {/* <div className="wrap-list_guide">
@@ -148,11 +147,9 @@ const ModalNoteCreateCompany: React.FC<IPropModalNoteCreatePost> = (props) => {
             type="primary"
             onClick={handleCreateCompany}
           >
-            {
-              languageRedux === 1 ?
-                "Tạo thông tin công ty" :
-                "Create company information"
-            }
+            {languageRedux === 1
+              ? 'Tạo thông tin công ty'
+              : 'Create company information'}
           </Button>
         </Box>
       </Modal>

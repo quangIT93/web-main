@@ -8,6 +8,8 @@ import { Collapse } from 'antd';
 import { Box, iconClasses, Typography } from '@mui/material';
 import { RightOutlined } from '@ant-design/icons';
 
+import { Space } from 'antd';
+
 // import component
 import Footer from '../../components/Footer/Footer';
 import CardsPosted from '#components/History/CardsPosted';
@@ -113,28 +115,30 @@ const HistoryPost = () => {
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     // event.preventDefault()
   }
-
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const analytics: any = getAnalytics();
 
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   const dataItem = [
     {
@@ -361,6 +365,11 @@ const HistoryPost = () => {
       setActiveChild('2-2');
       return;
     }
+    if (candidate === 4) {
+      setItemLeft(4);
+      setActiveChild('4-0');
+      return;
+    }
     if (roleRedux === 0) {
       setItemLeft(0);
       setActiveChild('0-0');
@@ -409,6 +418,8 @@ const HistoryPost = () => {
                   ? ['3', '0']
                   : saved_jobs === 1
                   ? ['1', '0']
+                  : candidate === 4
+                  ? ['4', '0']
                   : roleRedux === 0
                   ? ['0', '0']
                   : ['2', '0']
@@ -437,7 +448,7 @@ const HistoryPost = () => {
                     style={{
                       display:
                         roleRedux === 0
-                          ? item?.id === 2
+                          ? item?.id === 2 || item.id === 4
                             ? 'none'
                             : 'block'
                           : item?.id === 0

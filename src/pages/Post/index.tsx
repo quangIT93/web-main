@@ -182,7 +182,7 @@ const Post: React.FC = () => {
   const [endTime, setEndTime] = React.useState<any>(
     new Date(1970, 0, 2, 17, 0).getTime(),
   );
-
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   // const [startTime, setStartTime] = React.useState<string>('00:00');
   // const [endTime, setEndTime] = React.useState<string>('00:00');
   const [startDate, setStartDate] = React.useState<any>(new Date().getTime());
@@ -217,7 +217,9 @@ const Post: React.FC = () => {
 
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
     React.useState(false);
-
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   // fill data
   const [fillWardId, setFillWardId] = React.useState<any>({
     id: '',
@@ -231,36 +233,39 @@ const Post: React.FC = () => {
   const [selectedFillImages, setSelectedFillImages] = React.useState<string[]>(
     [],
   );
-  const [language, setLanguage] = useState<any>();
+  // const [language, setLanguage] = useState<any>();
 
-  const getlanguageApi = async () => {
-    if (!localStorage.getItem('accessToken')) {
-      window.location.replace(`/`);
-      return;
-    }
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   if (!localStorage.getItem('accessToken')) {
+  //     window.location.replace(`/`);
+  //     return;
+  //   }
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   // submit
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | FormEvent,
   ) => {
     e.preventDefault();
-    console.log('selected File', selectedFiles);
+    // if () {
+    //   setNotiCreateCompany(true)
+    //   return;
+    // }
     const formData = new FormData();
     formData.append('title', titleJob);
     formData.append('companyName', companyName);
@@ -438,36 +443,37 @@ const Post: React.FC = () => {
 
   const handleFillCompany = async () => {
     try {
-      const result = await apiCompany.getCampanyByAccountApi('vi');
+      // const result = await apiCompany.getCampanyByAccountApi(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
 
-      if (result.data.companyInfomation) {
-        setCompanyName(result.data.companyInfomation.name);
+      if (profileV3.length !== 0) {
+        setCompanyName(profileV3.companyInfomation.name);
         setFillDistrict({
-          id: result.data.companyInfomation.companyLocation.district.id,
+          id: profileV3.companyInfomation.companyLocation.district.id,
           full_name:
-            result.data.companyInfomation.companyLocation.district.fullName,
+            profileV3.companyInfomation.companyLocation.district.fullName,
         });
         setFillProvince({
-          id: result.data.companyInfomation.companyLocation.district.province
-            .id,
+          id: profileV3.companyInfomation.companyLocation.district.province.id,
           province_fullName:
-            result.data.companyInfomation.companyLocation.district.province
+            profileV3.companyInfomation.companyLocation.district.province
               .fullName,
         });
 
         // setSelectedProvince(result.data.companyInfomation.company
 
         setFillWardId({
-          id: result.data.companyInfomation.companyLocation.id,
-          full_name: result.data.companyInfomation.companyLocation.fullName,
+          id: profileV3.companyInfomation.companyLocation.id,
+          full_name: profileV3.companyInfomation.companyLocation.fullName,
         });
-        setWardId(result.data.companyInfomation.companyLocation.id);
+        setWardId(profileV3.companyInfomation.companyLocation.id);
 
-        setAddress(result.data.companyInfomation.address);
+        setAddress(profileV3.companyInfomation.address);
       } else {
         setOpenModalNoteCreateCompany(true);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   if (localStorage.getItem('accessToken')) {
@@ -479,7 +485,7 @@ const Post: React.FC = () => {
         <div className="post-main">
           <div
             className="post-main_fillData"
-          // style={{ textAlign: 'center', display: 'block' }}
+            // style={{ textAlign: 'center', display: 'block' }}
           >
             <h1>{language?.profile_page?.create_post}</h1>
             <div className="post-main_switch">
@@ -618,28 +624,26 @@ const Post: React.FC = () => {
               onClick={handleSubmit}
               className="btn-submitForm"
             >
-              {language?.post1}
+              {language?.save}
             </button>
           </form>
         </div>
         <Footer />
+        1``
         <RollTop />
         <ModalPost
           openModalPost={openModalPost}
           setOpenModalPost={setOpenModalPost}
         />
-
         <ModalNoteCreatePost
           setOpenModalNoteCreatePost={setOpenModalNoteCreatePost}
           openModalNoteCreatePost={openModalNoteCreatePost}
           language={language}
         />
-
         <ModalNoteCreateCompany
           openModalNoteCreateCompany={openModalNoteCreateCompany}
           setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
         />
-
         <ModalFillDataPost
           setOpenFillDataPost={setOpenFillDataPost}
           openModalFillDataPost={openModalFillDataPost}

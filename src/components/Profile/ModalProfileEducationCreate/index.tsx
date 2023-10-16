@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Modal, Typography } from '@mui/material';
+import { Box, TextField, Modal, Typography, MenuItem } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -12,11 +12,13 @@ import { CloseOutlined } from '@ant-design/icons';
 // data
 import profileApi from 'api/profileApi';
 import { RootState } from '../../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 import { message } from 'antd';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import candidateSearch from 'api/apiCandidates';
 // import { useDispatch } from 'react-redux';
 // import {
 //   getProfile,
@@ -61,6 +63,7 @@ interface IEducation {
   startDate: number;
   endDate: number;
   extraInformation: string;
+  academicTypeId: number | null;
 }
 
 interface IModalProfileEducationCreate {
@@ -76,12 +79,18 @@ interface IInfoEducation {
   startDate: number;
   endDate: number;
   extraInformation: string;
+  academicTypeId: number | null;
 }
 
 const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
   props,
 ) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const {
     openModalEducationCreate,
     setOpenModalEducationCreate,
@@ -99,33 +108,40 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
   // )
   // const [major, setMajor] = useState<string>('')
   // const [extraInformation, setExtraInformation] = useState<string>('')
+  const dispatch = useDispatch();
   const [education, setEducation] = useState<IInfoEducation>({
     companyName: '',
     major: '',
     startDate: new Date(2017, 4, 1, 0, 0).getTime(),
     endDate: new Date(2023, 4, 30, 0, 0).getTime(),
     extraInformation: '',
+    academicTypeId: 8,
   });
 
-  const [language, setLanguageState] = React.useState<any>();
+  const [typeAcademic, setTypeAcademic] = React.useState([]);
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const [language, setLanguageState] = React.useState<any>();
+
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
   React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+    // getlanguageApi();
+    if (openModalEducationCreate) {
+      getTypeAcademic();
+    }
+  }, [languageRedux, openModalEducationCreate]);
 
   const handleClose = () => setOpenModalEducationCreate(false);
 
@@ -174,57 +190,48 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
 
   // submit
   const validValue = () => {
-    if (
-      education.companyName?.trim() === ''
-    ) {
+    if (education.companyName?.trim() === '') {
       return {
         messageError: language?.profile_page?.err_school,
         checkForm: false,
       };
     }
-    if (
-      education.companyName?.trim().length > 50
-    ) {
+    if (education.companyName?.trim().length > 50) {
       return {
-        messageError: languageRedux === 1 ?
-          "Trường học/Tổ chức không được vượt quá 50 ký tự" :
-          "School/Organization cannot exceed 50 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Trường học/Tổ chức không được vượt quá 50 ký tự'
+            : 'School/Organization cannot exceed 50 characters',
         checkForm: false,
       };
     }
-    if (
-      education.major?.trim() === ''
-    ) {
+    if (education.major?.trim() === '') {
       return {
         messageError: language?.profile_page?.err_major,
         checkForm: false,
       };
     }
-    if (
-      education.major?.trim().length > 50
-    ) {
+    if (education.major?.trim().length > 50) {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên ngành không được vượt quá 50 ký tự" :
-          "Major cannot exceed 50 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Tên ngành không được vượt quá 50 ký tự'
+            : 'Major cannot exceed 50 characters',
         checkForm: false,
       };
     }
-    if (
-      education.extraInformation?.trim() === ''
-    ) {
+    if (education.extraInformation?.trim() === '') {
       return {
         messageError: language?.profile_page?.err_additional_information,
         checkForm: false,
       };
     }
-    if (
-      education.extraInformation?.trim().length > 50
-    ) {
+    if (education.extraInformation?.trim().length > 500) {
       return {
-        messageError: languageRedux === 1 ?
-          "Thông tin thêm không được vượt quá 50 ký tự" :
-          "Additional information cannot exceed 50 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Thông tin thêm không được vượt quá 500 ký tự'
+            : 'Additional information cannot exceed 500 characters',
         checkForm: false,
       };
     }
@@ -241,10 +248,14 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       if (checkForm) {
         const result = await profileApi.createProfileEducation(education);
         if (result) {
+          const getProfileV3 = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          await dispatch(setProfileV3(getProfileV3) as any);
           setOpenModalEducationCreate(false);
         }
       } else {
-        message.error(messageError)
+        message.error(messageError);
       }
     } catch (error) {
       console.log(error);
@@ -256,6 +267,23 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       handleSubmit();
     }
   };
+
+  const handleChangeAcademic = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setEducation((preValue: any) => {
+      return { ...preValue, academicTypeId: e.target.value };
+    });
+  };
+
+  const getTypeAcademic = async () => {
+    const result = await candidateSearch.getAcademicTypes(
+      languageRedux === 1 ? 'vi' : 'en',
+    );
+    if (result) {
+      setTypeAcademic(result.data);
+    }
+  };
   return (
     <Modal
       open={openModalEducationCreate}
@@ -264,9 +292,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style}
-        className="Modal-personnal-info"
-      >
+      <Box sx={style} className="Modal-personnal-info">
         <div
           style={{
             position: 'absolute',
@@ -288,9 +314,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {
-            language?.profile_page?.add_education
-          }
+          {language?.profile_page?.add_education}
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -299,9 +323,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            {
-              language?.school_organization
-            }{' '}
+            {language?.school_organization}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
@@ -312,10 +334,8 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             onChange={handleChangeSchool}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={
-              language?.profile_page?.place_school
-            }
-          // error={titleError} // Đánh dấu lỗi
+            placeholder={language?.profile_page?.place_school}
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -326,10 +346,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="nameProfile"
           >
-            {
-              language?.major
-            }{' '}
-            <span className="color-asterisk">*</span>
+            {language?.major} <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="text"
@@ -339,10 +356,8 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             onChange={handleChangeMajor}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={
-              language?.major
-            }
-          // error={titleError} // Đánh dấu lỗi
+            placeholder={language?.major}
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -358,9 +373,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  {
-                    language?.start_time
-                  }{' '}
+                  {language?.start_time}{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
@@ -378,9 +391,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
                   component="label"
                   htmlFor="startTime"
                 >
-                  {
-                    language?.finish_time
-                  }{' '}
+                  {language?.finish_time}{' '}
                   <span className="color-asterisk">*</span>
                 </Typography>
                 <DatePicker
@@ -402,9 +413,46 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             component="label"
             htmlFor="startTime"
           >
-            {
-              language?.additional_information
-            }{' '}
+            {languageRedux === 1 ? 'Trình độ học vấn ' : 'Academic level '}
+            <span className="color-asterisk">*</span>
+          </Typography>
+          <TextField
+            select
+            id="sex"
+            value={education.academicTypeId}
+            defaultValue={education.academicTypeId && 8}
+            onChange={handleChangeAcademic}
+            variant="outlined"
+            placeholder={'Loại công việc'}
+            size="small"
+            sx={{ width: '100%' }}
+            // error={!gender} // Đánh dấu lỗi
+          >
+            {typeAcademic?.map((value: any, index: number) => {
+              return <MenuItem value={index + 1}>{value.data}</MenuItem>;
+            })}
+            {/* <MenuItem value={1}>
+              {languageRedux === 1 ? 'Toàn thời gian' : 'Fulltime'}
+            </MenuItem>
+            <MenuItem value={2}>
+              {languageRedux === 1 ? 'Bán thời gian' : 'Parttime'}
+            </MenuItem>
+            <MenuItem value={4}>
+              {languageRedux === 1 ? 'Làm việc tự do' : 'Freelancer'}
+            </MenuItem>
+            <MenuItem value={7}>
+              {languageRedux === 1 ? 'Thực tập' : 'Intern'}
+            </MenuItem> */}
+          </TextField>
+        </Box>
+        <Box sx={styleChildBox}>
+          <Typography
+            // sx={styleLabel}
+            variant="body1"
+            component="label"
+            htmlFor="startTime"
+          >
+            {language?.additional_information}{' '}
             <span className="color-asterisk">*</span>
           </Typography>
           <TextField
@@ -414,17 +462,12 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             multiline
             rows={4}
             // label="Một số đặc điểm nhận diện công ty"
-            placeholder={
-              language?.profile_page?.place_additional_information
-            }
-
+            placeholder={language?.profile_page?.place_additional_information}
           />
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {
-            language?.profile_page?.save_info
-          }
+          {language?.profile_page?.save_info}
         </Button>
       </Box>
     </Modal>

@@ -78,16 +78,16 @@ const CategoryCarousel: React.FC = () => {
     setRefCatelory,
     navTouchCatelory,
   }: // openCollapseFilter,
-    {
-      setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
-      childCateloriesArray: number[];
-      valueJobChild: IvalueJobChild;
-      setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
-      setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
-      setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
-      navTouchCatelory: boolean;
-      openCollapseFilter: boolean;
-    } = useContext(HomeValueContext);
+  {
+    setChildCateloriesArray: React.Dispatch<React.SetStateAction<number[]>>;
+    childCateloriesArray: number[];
+    valueJobChild: IvalueJobChild;
+    setValueJobChild: React.Dispatch<React.SetStateAction<IvalueJobChild>>;
+    setRefCatelories: React.Dispatch<React.SetStateAction<number>>;
+    setRefCatelory: React.Dispatch<React.SetStateAction<DivRef>>;
+    navTouchCatelory: boolean;
+    openCollapseFilter: boolean;
+  } = useContext(HomeValueContext);
 
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -156,33 +156,33 @@ const CategoryCarousel: React.FC = () => {
       '.bread-crumb-container',
     ) as HTMLElement;
 
-    console.log('tavbs', tabs);
-    console.log('breadCrumb', breadCrumb);
     // tabs.style.top = '70px';
     // breadCrumb.style.marginTop = '192px';
     if (tabs && breadCrumb) {
       // tabs.style.top = '70px';
       // breadCrumb.style.marginTop = '192px';
       setTimeout(() => {
-        tabs.style.top = '70px';
-        breadCrumb.style.marginTop = '192px';
+        // tabs.style.top = '70px';
+        // breadCrumb.style.marginTop = '192px';
+        tabs.style.top = '115px';
+        breadCrumb.style.marginTop = '0';
       }, 0);
     }
 
     // const sectionToNavigate = document.getElementById('new-job');
-    if (windowWidth > 519 && localStorage.getItem('accessToken')) {
-      window.scrollTo(0, 530);
-
-      // sectionToNavigate?.scrollIntoView();
-      // window.scrollTo({ top: 0, behavior: 'smooth' });
-      // document.create;
-    } else if (windowWidth <= 519 && localStorage.getItem('accessToken')) {
-      window.scrollTo(0, 560);
-    } else if (windowWidth > 519) {
-      window.scrollTo(0, 530);
-    } else if (windowWidth <= 519) {
-      window.scrollTo(0, 800);
-    }
+    // if (windowWidth > 519 && localStorage.getItem('accessToken')) {
+    //   window.scrollTo(0, 530);
+    //   // sectionToNavigate?.scrollIntoView();
+    //   // window.scrollTo({ top: 0, behavior: 'smooth' });
+    //   // document.create;
+    // } else if (windowWidth <= 519 && localStorage.getItem('accessToken')) {
+    //   window.scrollTo(0, 560);
+    // } else if (windowWidth > 519) {
+    //   window.scrollTo(0, 530);
+    // } else if (windowWidth <= 519) {
+    //   window.scrollTo(0, 800);
+    // }
+    window.scrollTo(0, 0);
 
     try {
       // setOpenBackdrop(true); // Mở backdrop
@@ -190,6 +190,7 @@ const CategoryCarousel: React.FC = () => {
       // Lấy chiều cao của màn hình
 
       // const element = document.getElementById('new-job');
+      const element = document.getElementById('hot-job-title-container');
       // element?.scrollIntoView();
 
       // window.scrollTo(0, 300)
@@ -235,45 +236,45 @@ const CategoryCarousel: React.FC = () => {
 
       // console.log('newValue: ' + newValue);
 
-      if (newValue === 1) {
-        // result = await postApi.getPostNewest(
-        //   null,
-        //   null,
-        //   null,
-        //   19,
-        //   null,
-        //   languageRedux === 1 ? 'vi' : 'en',
-        // );
+      // if (newValue === 1) {
+      //   // result = await postApi.getPostNewest(
+      //   //   null,
+      //   //   null,
+      //   //   null,
+      //   //   19,
+      //   //   null,
+      //   //   languageRedux === 1 ? 'vi' : 'en',
+      //   // );
 
-        resultV3 = await postApi.getPostNewestV3(
-          null,
-          null,
-          null,
-          null,
-          20,
-          null,
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-      } else {
-        // result = await postApi.getPostNewest(
-        //   Number(newValue),
-        //   null,
-        //   null,
-        //   19,
-        //   null,
-        //   languageRedux === 1 ? 'vi' : 'en',
-        // );
+      //   resultV3 = await postApi.getPostNewestV3(
+      //     null,
+      //     null,
+      //     null,
+      //     null,
+      //     20,
+      //     null,
+      //     languageRedux === 1 ? 'vi' : 'en',
+      //   );
+      // } else {
+      //   // result = await postApi.getPostNewest(
+      //   //   Number(newValue),
+      //   //   null,
+      //   //   null,
+      //   //   19,
+      //   //   null,
+      //   //   languageRedux === 1 ? 'vi' : 'en',
+      //   // );
 
-        resultV3 = await postApi.getPostNewestV3(
-          null,
-          Number(newValue),
-          null,
-          null,
-          20,
-          null,
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-      }
+      //   resultV3 = await postApi.getPostNewestV3(
+      //     null,
+      //     Number(newValue),
+      //     null,
+      //     null,
+      //     20,
+      //     null,
+      //     languageRedux === 1 ? 'vi' : 'en',
+      //   );
+      // }
 
       // if (result) {
       //   setPostNewest(result);
@@ -281,7 +282,7 @@ const CategoryCarousel: React.FC = () => {
       // }
 
       if (resultV3) {
-        dispatch(setPostNewestApiV3(resultV3));
+        // dispatch(setPostNewestApiV3(resultV3));
         // dispatch(setPostNewestApi(result));
       }
     } catch (error) {
@@ -559,7 +560,7 @@ const CategoryCarousel: React.FC = () => {
         //     ? '283px'
         //     : '',
 
-        top: '70px',
+        top: '115px',
         zIndex: 2,
         // margin: '0 180px',
         // zIndex: navTouchCatelory ? ' 2' : '',
@@ -688,7 +689,7 @@ const CategoryCarousel: React.FC = () => {
                     >
                       {isLogin && item.id === 1
                         ? // ? language?.home_page?.suggested_work
-                        languageRedux === 1
+                          languageRedux === 1
                           ? 'Công việc gợi ý'
                           : 'Suggested'
                         : item.name}

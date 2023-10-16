@@ -53,7 +53,6 @@ const AwardItem: React.FC<IInternshipProps> = (props) => {
   const [activityId, setActivityId] = useState<any>();
   const [openModalEditAward, setOpenModalEditAward] = useState(false);
   const [openModalDeleteAwards, setOpenModalDeleteAwards] = useState(false);
-  console.log('index', index);
 
   const dispatch = useDispatch();
   const handleUpdateAward = () => {

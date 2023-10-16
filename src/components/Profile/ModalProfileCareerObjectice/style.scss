@@ -5,7 +5,7 @@
 // }
 
 .ant-select-dropdown {
-  z-index: 1301 !important;
+  z-index: 10 !important;
 }
 
 .ant-tree-checkbox-wrapper:not(.ant-tree-checkbox-wrapper-disabled):not(.ant-tree-checkbox-wrapper-halfChecked):not(.ant-tree-checkbox-wrapper-checked)>.ant-tree-checkbox {
@@ -16,4 +16,7 @@
   .ant-select-selector {
     max-width: 100%;
   }
+}
+.ant-tree-select-dropdown {
+  z-index: 1300 !important;
 }

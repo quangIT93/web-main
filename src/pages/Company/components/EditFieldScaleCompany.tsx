@@ -12,6 +12,7 @@ import { RootState } from '../../../store/reducer';
 import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
 import languageApi from 'api/languageApi';
+import { useLocation } from 'react-router-dom';
 
 // import { StringArraySupportOption } from 'prettier';
 const styleLabel = {
@@ -26,32 +27,38 @@ interface IEditPostAddress {
 }
 
 const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const { setDataCompany, dataCompany, is_profile } = props;
 
   const [dataSizes, setDataSizes] = useState<any>(null);
   const [selectedSize, setSelectedSize] = useState<any>(null);
   const [dataCategories, setDataCategories] = useState<any>(null);
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
-  const [language, setLanguageState] = React.useState<any>();
+  const location = useLocation();
+  // const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? "vi" : "en"
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi()
+  // }, [languageRedux])
   useEffect(() => {
     if (dataSizes && !selectedSize) {
       setSelectedSize(
@@ -78,7 +85,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getSizes = async () => {
     try {
       const sizes = await apiCompany.getAllSizesCompany(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (sizes) {
@@ -91,7 +98,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   const getCateogrys = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataCategories(result.data);
@@ -107,7 +114,9 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   }, []);
 
   useEffect(() => {
-    getCateogrys();
+    if (is_profile === false) {
+      getCateogrys();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -141,9 +150,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="addressTitle"
         >
-          {
-            language?.company_page?.field
-          }{' '}
+          {language?.company_page?.field}{' '}
           <span style={{ color: 'red' }}>*</span>
         </Typography>
 
@@ -156,9 +163,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={
-                language?.company_page?.place_field
-              }
+              placeholder={language?.company_page?.place_field}
               size="small"
               value={selectedCategory?.parent_category}
             />
@@ -177,10 +182,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           component="label"
           htmlFor="jobTitle"
         >
-          {
-            language?.company_size
-          }{' '}
-          <span style={{ color: 'red' }}>*</span>
+          {language?.company_size} <span style={{ color: 'red' }}>*</span>
         </Typography>
         <Autocomplete
           disabled={is_profile ? true : false}
@@ -191,9 +193,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              placeholder={
-                language?.company_page?.place_size
-              }
+              placeholder={language?.company_page?.place_size}
               size="small"
               value={selectedSize?.nameText}
             />

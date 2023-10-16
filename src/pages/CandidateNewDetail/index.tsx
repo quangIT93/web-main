@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import moment from 'moment';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store/reducer/index';
+import {
+  setAlertSuccess,
+  setAlert,
+} from 'store/reducer/profileReducer/alertProfileReducer';
 // materi
 import { Box, Typography } from '@mui/material';
 import { Space, Tooltip } from 'antd';
@@ -23,11 +30,27 @@ import {
 
 import './style.scss';
 import ModalShowCv from '#components/Profile/ModalShowCv';
+import CategoryDropdown from '#components/CategoryDropdown';
+import MuiAlert from '@mui/material/Alert';
+import { Stack, AlertProps, Snackbar } from '@mui/material';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import ModalUnlockCandidate from './ModalUnlockCandidate';
+
+// firebase
+import { getAnalytics, logEvent } from 'firebase/analytics';
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const CandidateNewDetail = () => {
-  const [candidate, setCandidate] = useState<any>(null);
+  const [candidate, setCandidate] = useState<any>([]);
   const [bookmarkCandidate, setBookmarkCandidate] = useState<any>(0);
-  const [unlock, setUnlock] = useState<boolean>(false);
+  const [total, setTotal] = useState<any>(0);
+
   const [modalShowCvPDF, setModalShowCvPdf] = React.useState<{
     open: boolean;
     urlPdf: string;
@@ -35,15 +58,22 @@ const CandidateNewDetail = () => {
     open: false,
     urlPdf: '',
   });
-  const dataCandidates = async (unclock: boolean) => {
+  const alertSuccess = useSelector(
+    (state: any) => state.alertProfile.alertSuccess,
+  );
+
+  const alert = useSelector((state: any) => state.alertProfile.alert);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const dispatch = useDispatch();
+
+  const dataCandidates = async () => {
     const id = localStorage.getItem('candidateId');
     try {
       if (id) {
-        const result = await profileApi.getProfileByAccountId(
-          'vi',
-          id,
-          unclock,
-        );
+        const result = await profileApi.getProfileByAccountId('vi', id);
 
         if (result) {
           setCandidate(result.data);
@@ -53,21 +83,28 @@ const CandidateNewDetail = () => {
       }
     } catch (error) {
       console.log('error', error);
-      window.open('/', 'parent');
     }
   };
 
   useEffect(() => {
-    dataCandidates(unlock);
-  }, [unlock]);
+    dataCandidates();
 
-  console.log(candidate);
+    // if (profileV3.typeRoleData !== 1) {
+    //   window.open('/', '_parent');
+    // }
+  }, []);
 
   const handleUnLockCandidate = async (accountId: string) => {
-    if (unlock) {
-      setUnlock(false);
-    } else {
-      setUnlock(true);
+    const id = localStorage.getItem('candidateId');
+    if (id) {
+      const viewProfile: any = await candidateSearch.postCountShowCandidate(id);
+      if (viewProfile.status === 200) {
+        setTotal(viewProfile.total);
+        const result = await profileApi.getProfileByAccountId('vi', id);
+        if (result) {
+          setCandidate(result.data);
+        }
+      }
     }
     try {
     } catch (error) {}
@@ -77,16 +114,33 @@ const CandidateNewDetail = () => {
     try {
       const result = await candidateSearch.postBookmarkCandidate(accountId);
       if (result) {
-        dataCandidates(unlock);
+        dataCandidates();
+        if (result.status === 200) {
+          dispatch<any>(setAlert(true));
+        } else {
+          dispatch<any>(setAlertSuccess(true));
+        }
       }
     } catch (error) {}
   };
 
+  React.useEffect(() => {
+    if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
+      window.open('/', '_parent');
+    }
+  }, [profileV3]);
+
   const getBookMark = async () => {
     try {
-      const resultBookmark = await candidateSearch.getBookmarkCandidate('vi');
+      const resultBookmark = await candidateSearch.getBookmarkCandidate(
+        0,
+        1,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
-      if (resultBookmark) setBookmarkCandidate(resultBookmark.data.total);
+      if (resultBookmark) {
+        setBookmarkCandidate(resultBookmark.data.total);
+      }
     } catch (error) {}
   };
 
@@ -94,17 +148,40 @@ const CandidateNewDetail = () => {
     getBookMark();
   }, []);
 
-  const handleClickItemCv = async (urlPdf: string) => {
-    console.log('urlPdf', urlPdf);
-
-    setModalShowCvPdf({ open: true, urlPdf });
+  const handleClickItemCv = async (urlPdf: string, id: string) => {
+    if (total > 0) {
+      setModalShowCvPdf({ open: true, urlPdf });
+    }
   };
+
+  const handleCloseAlertCv = () => dispatch<any>(setAlertSuccess(false));
+  const handleCancleSave = () => dispatch<any>(setAlert(false));
+
+  const analytics: any = getAnalytics();
+
+  React.useEffect(() => {
+    // Cập nhật title và screen name trong Firebase Analytics
+    // document.title =
+    //   language?.company_page?.title_page;
+    if (candidate.length !== 0) {
+      document.title =
+        languageRedux === 1
+          ? `HiJob - ${candidate && candidate?.name}`
+          : `HiJob - ${candidate && candidate?.name}`;
+      logEvent(analytics, 'screen_view' as string, {
+        // screen_name: screenName as string,
+        page_title: '/candidate-new-detail' as string,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languageRedux, candidate]);
 
   return (
     <div className="candidate-new-detail">
       <Navbar />
-      <Box sx={{ marginTop: '10px' }} className="containerNewCandidate">
-        <div className="candidate-profile-avatar">
+      <CategoryDropdown />
+      <Box className="containerNewCandidate">
+        <div className="candidates-profile-avatar">
           <div className="candidate-profile-avatar">
             <div
               style={{
@@ -118,7 +195,7 @@ const CandidateNewDetail = () => {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               >
                 <Avatar
-                  style={{ height: '70px', width: '70px' }}
+                  style={{ height: '70px', width: '70px', filter: 'blur(3px)' }}
                   alt={candidate?.avatarPath}
                   src={candidate?.avatarPath ? candidate?.avatarPath : ''}
                 />
@@ -128,17 +205,32 @@ const CandidateNewDetail = () => {
               </div>
             </div>
             <div className="buttons-candidate">
-              <Button
-                type="primary"
-                onClick={() => handleUnLockCandidate(candidate?.accountId)}
-              >
-                Unlock Candidates
-              </Button>
+              {candidate?.isUnlocked === true ? (
+                <Button
+                  type="primary"
+                  disabled={candidate && candidate?.isUnlocked}
+                  // onClick={() => handleUnLockCandidate(candidate?.accountId)}
+                  style={{ backgroundColor: 'transparent', color: 'black' }}
+                >
+                  Unlock Candidates
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  disabled={candidate && candidate?.isUnlocked}
+                  onClick={() => handleUnLockCandidate(candidate?.accountId)}
+                >
+                  Unlock Candidates
+                </Button>
+              )}
 
               <Button
                 type="primary"
                 onClick={(event) => {
-                  handleClickItemCv(candidate?.profilesCvs[0]?.pdfURL);
+                  handleClickItemCv(
+                    candidate?.profilesCvs[0]?.pdfURL,
+                    candidate?.accountId,
+                  );
                 }}
               >
                 View Resume
@@ -190,11 +282,11 @@ const CandidateNewDetail = () => {
             </div>
             <div className="div-detail-row right">
               <p>
-                {candidate?.birthdayData && !unlock
+                {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
                       .format('DD/MM/YYYY')
                       .replace(/\d{2}$/, 'xx')
-                  : candidate?.birthdayData && unlock
+                  : candidate?.isUnlocked
                   ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
                   : 'Chưa cập nhật'}
               </p>
@@ -483,6 +575,45 @@ const CandidateNewDetail = () => {
         modalShowCvPDF={modalShowCvPDF}
         setModalShowCvPdf={setModalShowCvPdf}
       />
+      <Stack spacing={2} sx={{ width: '100%' }}>
+        <Snackbar
+          open={alertSuccess}
+          autoHideDuration={3000}
+          onClose={handleCloseAlertCv}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert
+            onClose={handleCloseAlertCv}
+            severity="success"
+            sx={{ width: '100%', backgroundColor: '#000000' }}
+          >
+            {languageRedux === 1
+              ? 'Bạn đã lưu ứng viên thành công !'
+              : 'You have successfully saved the candidate!'}
+          </Alert>
+        </Snackbar>
+      </Stack>
+
+      <Stack spacing={2} sx={{ width: '100%' }}>
+        <Snackbar
+          open={alert}
+          autoHideDuration={3000}
+          onClose={handleCancleSave}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert
+            onClose={handleCancleSave}
+            severity="success"
+            sx={{ width: '100%', backgroundColor: '#000000' }}
+          >
+            {languageRedux === 1
+              ? 'Bạn đã hủy lưu ứng viên thành công!'
+              : 'You have successfully unsaved the candidate!'}
+          </Alert>
+        </Snackbar>
+      </Stack>
+
+      {/* <ModalUnlockCandidate /> */}
     </div>
   );
 };

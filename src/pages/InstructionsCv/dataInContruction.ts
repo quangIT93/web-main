@@ -6,7 +6,7 @@ export const dataInstruction = [
             {
                 id: 1,
                 title: "1.1. CV là gì?",
-                content: `CV  là viết tắt của "Curriculum Vitae" được hiểu nghĩa là sơ yếu lý lịch. Về bản chất,  CV xin việc  không phải là tờ khai lý lịch tự thuật mà là bản tóm tắt những thông tin cơ bản nhất về ứng viên, cũng như trình độ học vấn, kinh nghiệm làm việc, các kỹ năng liên quan tới công việc mà ứng viên muốn ứng tuyển. CV xin việc  được coi là sự kết nối gián tiếp giữa ứng viên và nhà tuyển dụng, thông qua đó giúp cho nhà tuyển dụng chọn lọc ra những ứng viên phù hợp với tính chất công việc và môi trường làm việc tại công ty. Vì vậy CV thường được chăm chút kỹ càng từ nội dung tới hình thức.`,
+                content: `CV là viết tắt của "Curriculum Vitae" được hiểu nghĩa là sơ yếu lý lịch. Về bản chất,  CV xin việc  không phải là tờ khai lý lịch tự thuật mà là bản tóm tắt những thông tin cơ bản nhất về ứng viên, cũng như trình độ học vấn, kinh nghiệm làm việc, các kỹ năng liên quan tới công việc mà ứng viên muốn ứng tuyển. CV xin việc  được coi là sự kết nối gián tiếp giữa ứng viên và nhà tuyển dụng, thông qua đó giúp cho nhà tuyển dụng chọn lọc ra những ứng viên phù hợp với tính chất công việc và môi trường làm việc tại công ty. Vì vậy CV thường được chăm chút kỹ càng từ nội dung tới hình thức.`,
                 itemsChild: [
                     {
                         id: 1,

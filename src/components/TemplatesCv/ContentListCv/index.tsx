@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 // import api
-import jsPDF from 'jspdf';
+
 import { PDFDownloadLink, BlobProvider } from '@react-pdf/renderer';
 
 import categoriesApi from 'api/categoriesApi';
@@ -51,10 +51,11 @@ import CvTemplate7 from '../CvTemplate/CvTemplate7';
 import templatesCv from '../CvTemplate/ListTheme';
 import { template } from '@babel/core';
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/legacy/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   'pdfjs-dist/legacy/build/pdf.worker.min.js',
+//   import.meta.url,
+// ).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 const styleChildBox = {
   marginBottom: '12px',
 };
@@ -77,12 +78,15 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   );
   const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const [dataCategories, setDataCategories] = React.useState<any>(null);
-  const [valueNameCv, setValueNameCv] = React.useState<any>('');
+  const [valueNameCv, setValueNameCv] = React.useState<any>(
+    `Resume ${Number(localStorage.getItem('cv-id')) || 1}`,
+  );
   const [cvId, setCvId] = React.useState<any>(1);
 
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
   const TemplateId = Number(localStorage.getItem('cv-id')) || 1;
+
   // const templatesCv = [
   //   {
   //     id: 1,
@@ -117,17 +121,29 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       (template) => template.id === TemplateId,
     );
     if (selectedTemplate) {
-      const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
+      if (profileV3.avatarPath) {
+        const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
 
-      // Tạo một biến để lưu trữ mẫu CV được chọn
+        // Tạo một biến để lưu trữ mẫu CV được chọn
+        setSelectedDocument(
+          <CvComponent
+            color={colorCV}
+            fontSize={fontSizeCV}
+            profile={profileV3}
+          />,
+        );
+      } else {
+        const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
 
-      setSelectedDocument(
-        <CvComponent
-          color={colorCV}
-          fontSize={fontSizeCV}
-          profile={profileV3}
-        />,
-      );
+        // Tạo một biến để lưu trữ mẫu CV được chọn
+        setSelectedDocument(
+          <CvComponent
+            color={colorCV}
+            fontSize={fontSizeCV}
+            profile={profileV3}
+          />,
+        );
+      }
     }
   }, [TemplateId, colorCV, fontSizeCV, profileV3]);
 
@@ -186,21 +202,29 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       Number(localStorage.getItem('cv-id')) === 0
         ? 1
         : localStorage.getItem('cv-id');
-    if (valueNameCv === '') {
-      setValueNameCv(localStorage.getItem('nameCv'));
-    }
+
     //convert string to number
     cv_id && setCvId(+cv_id);
   }, [languageRedux]);
 
-  // console.log('dataCategories', dataCategories);
+  React.useEffect(() => {
+    if (!valueNameCv) {
+      // setValueNameCv(localStorage.getItem('nameCv'));
+      getThemeCv.map((value: any) => {
+        if (Number(localStorage.getItem('cv-id')) === value.id) {
+          setValueNameCv(value.name);
+        }
+      });
+    }
+  }, [getThemeCv]);
 
-  const handleChangeCategory = async () => { };
+  const handleChangeCategory = async () => {};
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
     setValueNameCv(name);
     localStorage.setItem('cv-id', id);
+    localStorage.setItem('nameCv', name);
   };
 
   const getTheme = async () => {
@@ -209,49 +233,8 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       if (result) {
         setGetThemeCv(result.data);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
-
-  const styles = StyleSheet.create({
-    page: {
-      flexDirection: 'column',
-      backgroundColor: '#ffffff',
-      padding: 20,
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: 20,
-    },
-    headerLeft: {
-      width: '30%',
-    },
-    headerRight: {
-      width: '70%',
-    },
-    headerImage: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
-    },
-    content: {
-      flexDirection: 'row',
-    },
-    contentLeft: {
-      width: '30%',
-    },
-    contentRight: {
-      width: '70%',
-    },
-    section: {
-      marginBottom: 10,
-    },
-    flexCol: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-  });
 
   // console.log('aaa');
   // const element = document.querySelector('.scalable-element') as any;
@@ -305,17 +288,26 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
           />
         </Box> */}
 
+        <div className="list-template-title">
+          <h3>
+            {languageRedux === 1 ? 'Chọn mẫu CV' : 'Choose resume template'}
+          </h3>
+        </div>
         <div className="list-template">
           {getThemeCv.map((item: any, index: any) => (
             <div
               className={
-                item?.id === Number(localStorage.getItem('cv-id'))
+                item?.id ===
+                (Number(localStorage.getItem('cv-id'))
+                  ? Number(localStorage.getItem('cv-id'))
+                  : 1)
                   ? 'template-item active'
                   : 'template-item'
               }
               key={index}
               onClick={() => {
-                localStorage.setItem('nameCv', item?.name);
+                // localStorage.setItem('nameCv', item?.name);
+                setValueNameCv(item?.name);
                 handleSelectTemplate(item?.id, item?.name);
               }}
             >
@@ -350,7 +342,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                   }
                   key={item}
                   onClick={() => {
-                    localStorage.setItem('nameCv', item?.name);
+                    // localStorage.setItem('nameCv', item?.name);
                     handleSelectTemplate(item?.id, item?.name);
                   }}
                 >
@@ -420,16 +412,20 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
         <div
           className="contentCv-bottom-right_cv"
           id="page"
-        // dangerouslySetInnerHTML={{ __html: htmlCv }}
+          // dangerouslySetInnerHTML={{ __html: htmlCv }}
         >
           <>
             {/* <PreviewTheme1 /> */}
-            {profileV3 && (
+
+            {profileV3.length !== 0 ? (
               <Document
                 loading={<Spin indicator={antIcon} />}
                 noData={<Spin indicator={antIcon} />}
-                file={instance.url}
+                file={profileV3.length !== 0 ? instance.url : ''}
                 onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={(error) =>
+                  console.error('Error loading document:', error)
+                }
                 className="page-cv-wrapper"
               >
                 {Array.apply(null, Array(numPages))
@@ -447,6 +443,8 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                     />
                   ))}
               </Document>
+            ) : (
+              <></>
             )}
           </>
         </div>

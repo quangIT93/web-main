@@ -174,9 +174,9 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
   const [openModalDeleteSkill, setOpenModalDeleteSkill] = useState(false);
   const [openModalDeleteLanguage, setOpenModalDeleteLanguage] = useState(false);
   const [openModalDeleteHobbies, setOpenModalDeleteHobbies] = useState(false);
-  const [openModalDeleteReferences, setOpenModalDeleteReferences] = useState(false);
+  const [openModalDeleteReferences, setOpenModalDeleteReferences] =
+    useState(false);
 
-  console.log('profileV3', profileV3);
   const dispatch = useDispatch();
   const onChangeShowSkill = () => {
     setShowSkill(!showSkill);
@@ -201,8 +201,8 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
   };
 
   React.useEffect(() => {
-    setHobbieValues(profileV3?.profileHobbies?.description)
-  }, [profileV3])
+    setHobbieValues(profileV3?.profileHobbies?.description);
+  }, [profileV3]);
 
   const handleCloseSection = async (section: number) => {
     if (sections.includes(section)) {
@@ -300,19 +300,19 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
       if (hobbieValues?.trim() === '' || hobbieValues?.trim() === undefined) {
         // dispatch(setAlertLackInfo(true));
         message.error(
-          languageRedux === 1 ?
-            "Sở thích không được bỏ trống" :
-            "Hobbies cannot be empty",
-        )
+          languageRedux === 1
+            ? 'Sở thích không được bỏ trống'
+            : 'Hobbies cannot be empty',
+        );
         return;
       }
       if (hobbieValues?.trim().length > 1000) {
         // dispatch(setAlertLackInfo(true));
         message.error(
-          languageRedux === 1 ?
-            "Sở thích không được vượt quá 1000 ký tự" :
-            "Hobbies cannot exceed 1000 characters",
-        )
+          languageRedux === 1
+            ? 'Sở thích không được vượt quá 1000 ký tự'
+            : 'Hobbies cannot exceed 1000 characters',
+        );
         return;
       }
       const result = await apiCv.postProfileHobbies(hobbieValues);
@@ -436,7 +436,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileV3?.profilesLanguages?.length !== 0 ||
-                  sections.includes(1)
+                sections.includes(1)
                   ? 'block'
                   : 'none',
             }}
@@ -588,10 +588,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 }}
                 onClick={handleSaveHobbies}
               >
-                {
-                  languageRedux === 1 ?
-                    "Lưu" : "Save"
-                }
+                {languageRedux === 1 ? 'Lưu' : 'Save'}
                 <IconSaveProfile />
               </div>
             </div>
@@ -636,7 +633,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileV3?.profilesReferences?.length !== 0 ||
-                  sections.includes(3)
+                sections.includes(3)
                   ? 'block'
                   : 'none',
             }}
@@ -817,7 +814,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
             style={{
               display:
                 profileV3?.profileActivities?.length !== 0 ||
-                  sections.includes(5)
+                sections.includes(5)
                   ? 'block'
                   : 'none',
             }}
@@ -1093,7 +1090,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileV3?.profilesLanguages?.length !== 0 ||
-                      sections.includes(1)
+                    sections.includes(1)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1120,7 +1117,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileV3?.profilesReferences?.length !== 0 ||
-                      sections.includes(3)
+                    sections.includes(3)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1149,7 +1146,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileV3?.profileActivities?.length !== 0 ||
-                      sections.includes(5)
+                    sections.includes(5)
                       ? 'section-item disable'
                       : 'section-item'
                   }
@@ -1178,7 +1175,7 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                 <div
                   className={
                     profileV3?.profileAwards?.length !== 0 ||
-                      sections.includes(7)
+                    sections.includes(7)
                       ? 'section-item disable'
                       : 'section-item'
                   }

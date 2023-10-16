@@ -49,6 +49,9 @@ const ComunityNewPost = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [openMenu, setOpenMenu] = React.useState(false);
   const [stories, setStories] = React.useState<any>([]);
   const [page, setPage] = React.useState<any>('0');
@@ -168,25 +171,25 @@ const ComunityNewPost = () => {
 
   // console.log('page', page);
 
-  const [language, setLanguage] = React.useState<any>();
+  // const [language, setLanguage] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
   const footerRef = React.useRef<any>(null);
 
   React.useEffect(() => {

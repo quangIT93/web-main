@@ -3,8 +3,8 @@ import { Box, TextField, Modal, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 // data
 import profileApi from 'api/profileApi';
-
-// import { useDispatch } from 'react-redux';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import { useDispatch } from 'react-redux';
 // import { RootState } from '../../../store/reducer/index';
 // import { bindActionCreators } from 'redux';
 // import { actionCreators } from 'store/index';
@@ -66,7 +66,12 @@ interface IModalProfileContact {
 }
 
 const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const { openModalContact, setOpenModalContact, profile } = props;
   const [phone, setPhone] = useState(profile?.phone ? profile?.phone : '');
   const [email, setEmail] = useState(profile?.email ? profile?.email : '');
@@ -74,25 +79,26 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   const [linkIn, setLinkIn] = useState(
     profile?.linkedin ? profile?.linkedin : '',
   );
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? "vi" : "en"
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  const dispatch = useDispatch();
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi()
-  }, [languageRedux])
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   const handleClose = () => setOpenModalContact(false);
   // const dispatch = useDispatch();
@@ -130,6 +136,13 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
 
       const result = await profileApi.updateContact(info);
       if (result) {
+        const getProfileV3 = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+
+        if (getProfileV3) {
+          dispatch(setProfileV3(getProfileV3));
+        }
         setOpenModalContact(false);
       }
     } catch (error) {
@@ -173,9 +186,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {
-            language?.contact_information
-          }
+          {language?.contact_information}
         </Typography>
         <Box sx={styleChildBox}>
           <Typography
@@ -184,10 +195,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             component="label"
             htmlFor="nameProfile"
           >
-            {
-              language?.phone_number
-            }{' '}
-            <span className="color-asterisk">*</span>
+            {language?.phone_number} <span className="color-asterisk">*</span>
           </Typography>
           <TextField
             type="tel"
@@ -197,9 +205,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             onChange={handleSetPhone}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={
-              language?.phone_number
-            }
+            placeholder={language?.phone_number}
             inputMode="numeric"
           // error={titleError} // Đánh dấu lỗi
           />
@@ -272,9 +278,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {
-            language?.profile_page?.save_info
-          }
+          {language?.profile_page?.save_info}
         </Button>
       </Box>
     </Modal>

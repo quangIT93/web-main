@@ -18,7 +18,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
-import { Navigation, Mousewheel, Pagination } from 'swiper';
+import { Navigation, Mousewheel, Pagination, Autoplay } from 'swiper';
 // @ts-ignore
 // import { useSearchParams } from 'react-router-dom';
 
@@ -40,7 +40,9 @@ import {
 } from '#components/Icons';
 
 import AppliedPostedJobCard from './Components/AppliedPostedJobCard';
-import banner from '../../../img/Banner/banner_for_candidates_1.png';
+import banner from '../../../img/Banner/banner-for-candidates-2.png';
+import banner_recruit_1 from '../../../img/Banner/banner-for-rescruit-1.png';
+import banner_recruit_2 from '../../../img/Banner/banner-for-rescruit-2.png';
 import './styles.scss';
 
 import ModalLogin from '../../../components/Home/ModalLogin';
@@ -112,17 +114,17 @@ const AppliedPostedJob: React.FC = () => {
       const result =
         roleRedux === 0
           ? await historyApplicator.getAllSubmitedApplied(
-              null,
-              10,
-              1,
-              languageRedux === 1 ? 'vi' : 'en',
-            )
+            null,
+            10,
+            1,
+            languageRedux === 1 ? 'vi' : 'en',
+          )
           : await historyRecruiter.GetInformationAndCandidatesCount(
-              0,
-              10,
-              '1',
-              languageRedux === 1 ? 'vi' : 'en',
-            );
+            0,
+            10,
+            '1',
+            languageRedux === 1 ? 'vi' : 'en',
+          );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
       //   languageRedux === 1 ? 'vi' : 'en',
@@ -132,7 +134,7 @@ const AppliedPostedJob: React.FC = () => {
         setTimeout(() => {
           setloading(false);
         }, 1000);
-        console.log('result: ', result);
+
         setAppliedPostedJob(result.data);
         // roleRedux === 0
         //   ? setAppliedPostedJob(
@@ -200,7 +202,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -213,26 +215,21 @@ const AppliedPostedJob: React.FC = () => {
             paddingBottom: '24px',
             flexDirection: 'column',
             padding:
-              roleRedux === 0 && appliedPostedJob.length !== 0 ? '0px' : '0',
+              roleRedux === 0 && appliedPostedJob.length !== 0
+                ? '1px 0 0 0'
+                : '1px 0 0 0',
           }}
           className="applied-posted-jobs-container"
         >
           <div
             className="advertisement-job-not-loging"
             style={{
-              display:
-                roleRedux === 0 && cvHijob.length !== 0 ? 'flex' : 'none',
-              marginBottom:
-                roleRedux === 0 && appliedPostedJob.length !== 0 ? '24px' : '0',
+              display: cvHijob.length !== 0 ? 'flex' : 'none',
+              marginBottom: appliedPostedJob.length !== 0 ? '24px' : '0',
             }}
           >
             {/* <AdsCVIcon /> */}
-            <div
-              className="advertisement-job-not-loging-content"
-              onClick={() => {
-                window.open('/page-cv', '_parent');
-              }}
-            >
+            <div className="advertisement-job-not-loging-content">
               {/* <h3 style={{ marginTop: '12px' }}>
                 {languageRedux === 1
                   ? 'Dễ dàng tạo cv của riêng bạn'
@@ -262,17 +259,55 @@ const AppliedPostedJob: React.FC = () => {
                   </li>
                 </ul>
               </div> */}
-              <Avatar
-                sx={{
-                  width: '100%',
-                  maxHeight: '301px',
-                  height: 'auto',
-                }}
-                variant="square"
-                src={banner}
-              >
-                Banner
-              </Avatar>
+              {roleRedux === 0 ? (
+                <Avatar
+                  sx={{
+                    width: '100%',
+                    maxHeight: '301px',
+                    height: 'auto',
+                    cursor: 'pointer'
+                  }}
+                  variant="square"
+                  src={banner}
+                  onClick={() => {
+                    window.open('/page-cv', '_parent');
+                  }}
+                >
+                  Banner
+                </Avatar>
+              ) : (
+                <Swiper
+                  spaceBetween={30}
+                  centeredSlides={true}
+                  autoplay={{
+                    delay: 3500,
+                    disableOnInteraction: false,
+                  }}
+                  // navigation={true}
+                  modules={[Autoplay, Navigation]}
+                  className="banner-rescruit-swiper"
+                  loop={true}
+                >
+                  <SwiperSlide>
+                    <img
+                      onClick={() => {
+                        window.open('/post', '_parent');
+                      }}
+                      src={banner_recruit_1}
+                      alt=""
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <img
+                      onClick={() => {
+                        window.open('/candidatesAll', '_parent');
+                      }}
+                      src={banner_recruit_2}
+                      alt=""
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              )}
             </div>
             {/* <Button
               type="primary"
@@ -283,7 +318,7 @@ const AppliedPostedJob: React.FC = () => {
           </div>
           <Skeleton loading={false} active>
             {appliedPostedJob.length !== 0 &&
-            localStorage.getItem('accessToken') ? (
+              localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -298,8 +333,8 @@ const AppliedPostedJob: React.FC = () => {
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                    ? 'Công việc đã đã tuyển'
-                    : 'Posted Job'}
+                      ? 'Công việc đã tuyển'
+                      : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -485,6 +520,23 @@ const AppliedPostedJob: React.FC = () => {
             {language?.sign_in}
           </Button>
         </div>
+
+        <Avatar
+          sx={{
+            width: '100%',
+            maxHeight: '301px',
+            height: 'auto',
+            marginTop: '24px',
+            cursor: 'pointer'
+          }}
+          variant="square"
+          src={banner}
+          onClick={() => {
+            window.open('/page-cv', '_parent');
+          }}
+        >
+          Banner
+        </Avatar>
         <ModalLogin
           openModalLogin={openModalLogin}
           setOpenModalLogin={setOpenModalLogin}

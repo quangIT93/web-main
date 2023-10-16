@@ -134,7 +134,6 @@ const index: React.FC<CvTemplate> = (props) => {
                 {/* </> */}
               </View>
               <View style={{ width: '70%' }}>
-                <Activity color={color} fontSize={fontSize} profile={profile} />
                 <Experiences
                   color={color}
                   fontSize={fontSize}
@@ -145,6 +144,7 @@ const index: React.FC<CvTemplate> = (props) => {
                   fontSize={fontSize}
                   profile={profile}
                 />
+                <Activity color={color} fontSize={fontSize} profile={profile} />
                 <ReferenceCv
                   color={color}
                   fontSize={fontSize}

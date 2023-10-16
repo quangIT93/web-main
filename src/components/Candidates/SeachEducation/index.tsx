@@ -9,8 +9,16 @@ import { RootState } from 'store';
 
 import { EnvironmentOutlined } from '@ant-design/icons';
 
-import { PaperFilterIcon, ArrowFilterIcon } from '#components/Icons';
-
+import { ArrowFilterIcon } from '#components/Icons';
+import {
+  PersonIcon,
+  SchoolIcon,
+  LocationIcon,
+  CateIcon,
+  CalendarIcon,
+  GenderIcon,
+  CandidateHijob,
+} from '#components/Icons/iconCandidate';
 import candidateSearch from 'api/apiCandidates';
 
 // import ant
@@ -46,7 +54,7 @@ const CustomOption = ({
     // console.log('valueRender Loai cong viec', valueRender);
     // console.log('valueRender Loai cong viec value', value);
     const valueRender = academicType.find((item: any) => item.id === value);
-    console.log('valueRender Loai cong viec value', valueRender);
+
     setEducations(value);
     if (valueRender) {
       setValueRender(valueRender);
@@ -72,8 +80,6 @@ const CustomOption = ({
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           {academicType?.map((value: any, index: number) => {
-            console.log(value.id);
-
             return (
               <Radio key={index} style={{ width: '100%' }} value={value.id}>
                 {value.data}
@@ -107,7 +113,9 @@ const SeachEducation: React.FC<ISeachEducation> = (props) => {
 
   const academicTypesFnc = async () => {
     try {
-      const result = await candidateSearch.getAcademicTypes('vi');
+      const result = await candidateSearch.getAcademicTypes(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setAcademicType(result.data);
       }
@@ -118,11 +126,9 @@ const SeachEducation: React.FC<ISeachEducation> = (props) => {
 
   React.useEffect(() => {
     academicTypesFnc();
-  }, []);
+  }, [languageRedux]);
 
-  const onChange = (value: string[][]) => {
-    console.log(value);
-  };
+  const onChange = (value: string[][]) => {};
   const handleChange = (value1: number) => {
     setReset(false);
   };
@@ -133,13 +139,10 @@ const SeachEducation: React.FC<ISeachEducation> = (props) => {
     }
   }, [reset]);
 
-  console.log('reset', reset);
-  console.log('valueRnder', valueRender);
-
   return (
     <div className="filter-candidate">
       <div className="filter-input_candidate">
-        <PaperFilterIcon width={20} height={20} />
+        <SchoolIcon />
       </div>
       <Select
         style={{ width: 120 }}
@@ -148,18 +151,22 @@ const SeachEducation: React.FC<ISeachEducation> = (props) => {
         value={reset && valueRender ? undefined : valueRender?.data}
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder="Trình độ học vấn"
+        placeholder={languageRedux === 1 ? 'Trình độ học vấn' : 'Education'}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
+        // open={true}
+        // onMouseLeave={set}
       >
         <Option className="type-salary" value={valueRender?.id} label="">
-          <CustomOption
-            academicType={academicType}
-            setTypeAcademic={setTypeAcademic}
-            setEducations={setEducations}
-            typeAcademic={typeAcademic}
-            setValueRender={setValueRender}
-            reset={reset}
-          />
+          <div className="sssssssssssssssssssssssssss">
+            <CustomOption
+              academicType={academicType}
+              setTypeAcademic={setTypeAcademic}
+              setEducations={setEducations}
+              typeAcademic={typeAcademic}
+              setValueRender={setValueRender}
+              reset={reset}
+            />
+          </div>
         </Option>
       </Select>
     </div>

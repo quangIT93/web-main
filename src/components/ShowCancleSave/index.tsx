@@ -29,28 +29,31 @@ const ShowCancleSave: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   // const { setShowNofySave, showNofySave } = props;
   const dispatch = useDispatch();
   const cancleSave = useSelector((state: any) => state.showAlert.cancalAlert);
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   // const alert = false;
 

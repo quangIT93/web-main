@@ -37,14 +37,56 @@ interface ICardsApplied {
 
 const CardListCandidate: React.FC = () => {
   const [candidateData, setCandidateData] = useState<any>();
+  const [uploading, setUploading] = useState(false);
+  const [pageNumber, setPageNumber] = React.useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
 
   const dataCandidates = async () => {
-    const id = 'f429b393-8367-4a5d-8b74-48cc3f29c4d8';
     try {
-      const result = await candidateSearch.getBookmarkCandidate('vi');
+      const result = await candidateSearch.getBookmarkCandidate(
+        0,
+        10,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
 
       if (result) {
         setCandidateData(result.data);
+        if (result.data.candidateBookmarks.length < 10) {
+          setIsVisible(false)
+        }
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const handleGetmoreCandidates = async () => {
+    try {
+      setUploading(true);
+      const nextPage = pageNumber + 1;
+      const result = await candidateSearch.getBookmarkCandidate(
+        nextPage,
+        10,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
+      if (result && result.data.candidateBookmarks.length !== 0) {
+        setCandidateData((prev: any) => [...prev, ...result?.data?.candidateBookmarks]);
+        setPageNumber(nextPage);
+        setUploading(false);
+      } else {
+        setIsVisible(false);
+        setPageNumber(0);
+        setUploading(false);
+        message.error(languageRedux === 1 ?
+          'Không còn ứng cử viên để xem'
+          : 'No more candidates to see');
       }
     } catch (error) {
       console.log('error', error);
@@ -55,7 +97,16 @@ const CardListCandidate: React.FC = () => {
     dataCandidates();
   }, []);
 
-  console.log(candidateData);
+  const hanhleClicKCandleSaveCandidate = async (e: any, accountId: string) => {
+    try {
+      const result = await candidateSearch.postBookmarkCandidate(accountId);
+      if (result) {
+        dataCandidates();
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   return (
     <>
@@ -74,7 +125,11 @@ const CardListCandidate: React.FC = () => {
             lineHeight: '24px',
           }}
         >
-          Danh sách ứng viên đã lưu
+          {
+            languageRedux === 1
+              ? 'Danh sách ứng viên đã lưu'
+              : 'Saved candidate list'
+          }
         </Typography>
       </Box>
       <Backdrop
@@ -84,7 +139,7 @@ const CardListCandidate: React.FC = () => {
           zIndex: (theme: any) => theme.zIndex.drawer + 1,
         }}
         open={false}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -96,11 +151,14 @@ const CardListCandidate: React.FC = () => {
                 // <Skeleton loading={loading} active>
                 <ListCardSaveCandidate
                   item={dataBookmark}
-                  handleDeleteBookmark={() => {}}
+                  handleDeleteBookmark={() => { }}
                   index={i}
                   key={i}
                   language={[]}
                   languageRedux={1}
+                  hanhleClicKCandleSaveCandidate={
+                    hanhleClicKCandleSaveCandidate
+                  }
                 />
                 //</Skeleton>
               ),
@@ -122,13 +180,13 @@ const CardListCandidate: React.FC = () => {
                 backgroundColor: `#0D99FF`,
                 color: '#FFFFFF',
                 fontWeight: 'bold',
-                display: true ? 'block' : 'none',
+                display: isVisible ? 'block' : 'none',
               }}
-              //   loading={uploading}
-              //   onClick={handleClickAddItem}
+              loading={uploading}
+              onClick={handleGetmoreCandidates}
             >
-              {/* {language?.more} */}
-              Xem thêm
+              {language?.more}
+              {/* Xem thêm */}
             </Button>
           </Box>
         </div>

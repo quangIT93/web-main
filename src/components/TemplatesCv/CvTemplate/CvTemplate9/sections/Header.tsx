@@ -4,6 +4,7 @@ import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
 
 import fb from '../../images/fb.png';
 import linkedin from '../../images/in.png';
+import null_avatar from '../../images/null_avatar.png';
 interface ICvHeader {
   color: any;
   profile: any;
@@ -49,15 +50,16 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontFamily: 'OpenSans-Semi-Bold',
       width: '100%',
       textTransform: 'uppercase',
-      color: color === 1
-        ? '#152D35'
-        : color === 2
+      color:
+        color === 1
+          ? '#152D35'
+          : color === 2
           ? '#0D99FF'
           : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       // background: 'red',
       // border: '1px solid black',
     },
@@ -107,15 +109,16 @@ const Header: React.FC<ICvHeader> = (props) => {
     line: {
       width: '100%',
       height: '1px',
-      backgroundColor: color === 1
-        ? '#404BA0'
-        : color === 2
+      backgroundColor:
+        color === 1
+          ? '#404BA0'
+          : color === 2
           ? '#0D99FF'
           : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       marginTop: '14.411pt',
     },
     contact: {
@@ -169,21 +172,22 @@ const Header: React.FC<ICvHeader> = (props) => {
     lineHead: {
       width: '100%',
       height: '2px',
-      backgroundColor: color === 1
-        ? '#404BA0'
-        : color === 2
+      backgroundColor:
+        color === 1
+          ? '#404BA0'
+          : color === 2
           ? '#0D99FF'
           : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     image: {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
-      borderRadius: '50%'
+      borderRadius: '50%',
     },
     language: {
       position: 'absolute',
@@ -231,9 +235,7 @@ const Header: React.FC<ICvHeader> = (props) => {
           <View style={styles.rightDiv}>
             <View style={styles.info}>
               <View style={styles.name}>
-                <Text style={styles.lastName}>
-                  {profile?.name}
-                </Text>
+                <Text style={styles.lastName}>{profile?.name}</Text>
               </View>
               <Text style={styles.bigTitle}>{profile?.jobTypeName}</Text>
             </View>
@@ -241,7 +243,20 @@ const Header: React.FC<ICvHeader> = (props) => {
         </View>
       </View>
       <View style={styles.avatarDiv}>
-        <Image src={profile.avatarPath !== null ? profile.avatarPath : 'a'} style={styles.image} />
+        <Image
+          src={{
+            uri: profile.avatarPath !== null ? profile.avatarPath : null_avatar,
+            method: 'GET',
+            body: '',
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Cache-Control': 'no-cache',
+              'Access-Control-Allow-Methods': '*',
+              'Access-Control-Allow-Headers': '*',
+            },
+          }}
+          style={styles.image}
+        />
       </View>
     </View>
   );

@@ -149,11 +149,9 @@ const Activity: React.FC<IActivity> = (props) => {
                   <View style={styles.itemsText}>
                     <View style={styles.itemText}>
                       <Text style={styles.textRight}>
-                        <Text>+</Text>{' '}
                         <Text style={styles.paragraph}>{act?.description}</Text>
                       </Text>
                     </View>
-                    ;
                   </View>
                 </View>
               </View>

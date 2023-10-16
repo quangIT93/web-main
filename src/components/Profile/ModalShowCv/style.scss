@@ -41,6 +41,8 @@
 
             .react-pdf__Page__canvas {
                 border: 1px solid #ccc;
+                width: 786px !important;
+                height: 1110px !important;
 
                 @media screen and (max-width: 640px) {
                     width: 354px !important;

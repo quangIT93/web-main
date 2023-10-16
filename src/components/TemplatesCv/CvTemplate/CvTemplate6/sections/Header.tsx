@@ -4,6 +4,7 @@ import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
 
 import fb from '../../images/fb.png';
 import linkedin from '../../images/in.png';
+import null_avatar from '../../images/null_avatar.png';
 interface ICvHeader {
   color: any;
   profile: any;
@@ -39,12 +40,12 @@ const Header: React.FC<ICvHeader> = (props) => {
         color === 1
           ? '#213555'
           : color === 2
-            ? '#0D99FF'
-            : color === 3
-              ? '#FBBC04'
-              : color === 4
-                ? '#5CB265'
-                : '#D80000',
+          ? '#0D99FF'
+          : color === 3
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       // marginTop: '12.404px',
       // border: '1px solid red',
       width: '100%',
@@ -77,7 +78,7 @@ const Header: React.FC<ICvHeader> = (props) => {
       fontSize: 15,
       color: '#213555',
       marginTop: '7.191pt',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
     },
     topLeftDiv: {
       // marginTop: '2.066cm',
@@ -99,15 +100,16 @@ const Header: React.FC<ICvHeader> = (props) => {
     line: {
       width: '100%',
       height: '1px',
-      backgroundColor: color === 1
-        ? '#213555'
-        : color === 2
+      backgroundColor:
+        color === 1
+          ? '#213555'
+          : color === 2
           ? '#0D99FF'
           : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
       marginTop: '14.411pt',
     },
     contact: {
@@ -171,15 +173,16 @@ const Header: React.FC<ICvHeader> = (props) => {
     lineHead: {
       width: '100%',
       height: '19.494pt',
-      backgroundColor: color === 1
-        ? '#213555'
-        : color === 2
+      backgroundColor:
+        color === 1
+          ? '#213555'
+          : color === 2
           ? '#0D99FF'
           : color === 3
-            ? '#FBBC04'
-            : color === 4
-              ? '#5CB265'
-              : '#D80000',
+          ? '#FBBC04'
+          : color === 4
+          ? '#5CB265'
+          : '#D80000',
     },
     image: {
       width: '100%',
@@ -237,27 +240,46 @@ const Header: React.FC<ICvHeader> = (props) => {
 
   return (
     <View style={styles.container}>
+      {/* <Image
+        src={
+          profile.avatarPath
+            ? profile.avatarPath
+            : 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697098744355-12343233-fa6a-446d-838f-73c5ded17fbd.jpg'
+        }
+        style={styles.image}
+      /> */}
       <View style={styles.content}>
         <View style={styles.topHead}>
           <View style={styles.avatarDiv}>
-            <Image src={profile.avatarPath !== null ? profile.avatarPath : 'a'} style={styles.image} />
+            <Image
+              src={{
+                uri:
+                  profile.avatarPath !== null
+                    ? profile.avatarPath
+                    : null_avatar,
+                method: 'GET',
+                body: '',
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  'Cache-Control': 'no-cache',
+                  //  'Access-Control-Allow-Methods': '*',
+                  // 'Access-Control-Allow-Headers': '*',
+                },
+              }}
+              style={styles.image}
+            />
           </View>
           <View style={styles.leftDiv}>
             <View style={styles.lineHead}></View>
             <View style={styles.info}>
               <View style={styles.name}>
-                <Text style={styles.firstName}>
-                  {profile?.name}
-                </Text>
+                <Text style={styles.firstName}>{profile?.name}</Text>
               </View>
               <Text style={styles.bigTitle}>{profile?.jobTypeName}</Text>
               <View style={styles.contact}>
                 {profile?.facebook ? (
                   <>
-                    <Image
-                      src={fb}
-                      style={styles.icon5}
-                    />
+                    <Image src={fb} style={styles.icon5} />
                     <Link style={styles.subtitle} src={profile?.facebook}>
                       Facebook
                     </Link>
@@ -267,10 +289,7 @@ const Header: React.FC<ICvHeader> = (props) => {
                 )}
                 {profile?.linkedin ? (
                   <>
-                    <Image
-                      src={linkedin}
-                      style={styles.icon4}
-                    />
+                    <Image src={linkedin} style={styles.icon4} />
                     <Link style={styles.subtitle} src={profile?.linkedin}>
                       Linkedin
                     </Link>

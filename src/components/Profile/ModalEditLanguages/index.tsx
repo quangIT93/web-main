@@ -99,30 +99,28 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
   const handleOnchangeLevel = (e: any) => {
     setLevel(e.target.value);
   };
-  console.log('openModalEditLanguages', openModalEditlanguages);
+
   useEffect(() => {
     setLanguage(openModalEditlanguages.name);
     setLevel(openModalEditlanguages.idLevel);
   }, [openModalEditlanguages]);
 
   const validValue = () => {
-    if (
-      language?.trim() === ''
-    ) {
+    if (language?.trim() === '') {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên ngôn ngữ không được bỏ trống" :
-          "Language names cannot be empty",
+        messageError:
+          languageRedux === 1
+            ? 'Tên ngôn ngữ không được bỏ trống'
+            : 'Language names cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      language?.trim().length > 255
-    ) {
+    if (language?.trim().length > 255) {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên ngôn ngữ không được vượt quá 255 ký tự" :
-          "Language names cannot exceed 255 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Tên ngôn ngữ không được vượt quá 255 ký tự'
+            : 'Language names cannot exceed 255 characters',
         checkForm: false,
       };
     }
@@ -134,7 +132,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
   };
 
   const handleSubmit = async () => {
-    const { messageError, checkForm } = validValue()
+    const { messageError, checkForm } = validValue();
     try {
       if (checkForm) {
         const result = await apiCv.putProfileLanguage(
@@ -161,9 +159,9 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
           }
         }
       } else {
-        message.error(messageError)
+        message.error(messageError);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleClose = () => {
@@ -207,8 +205,8 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
           {languageRedux === 1
             ? 'Sửa ngoại ngữ'
             : languageRedux === 0
-              ? 'Edit Languages'
-              : ''}
+            ? 'Edit Languages'
+            : ''}
         </Typography>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -230,7 +228,7 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>

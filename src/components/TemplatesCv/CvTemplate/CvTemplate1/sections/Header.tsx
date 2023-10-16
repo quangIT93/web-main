@@ -4,6 +4,7 @@ import { Image, Text, View, StyleSheet, Link } from '@react-pdf/renderer';
 import profileApi from 'api/profileApi';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import axios from 'axios';
 interface ICvHeader {
   color: any;
   profile: any;
@@ -11,6 +12,7 @@ interface ICvHeader {
 
 const Header: React.FC<ICvHeader> = (props) => {
   const { color, profile } = props;
+
   const styles = StyleSheet.create({
     container: {
       width: '100%',
@@ -208,7 +210,7 @@ const Header: React.FC<ICvHeader> = (props) => {
               </Text>
               {profile?.linkedin ? (
                 <Link style={styles.subtitle} src={profile?.linkedin}>
-                  Linkedin
+                  Linkedin sssssssssssssssssssssssssss
                 </Link>
               ) : (
                 <></>
@@ -224,10 +226,43 @@ const Header: React.FC<ICvHeader> = (props) => {
           </View>
         </View>
         <View style={styles.avatarDiv}>
-          <Image
-            src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
-            style={styles.image}
-          />
+          {profile.avatarPath ? (
+            <Image
+              // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+              style={styles.image}
+              src={{
+                uri: profile.avatarPath !== null ? profile.avatarPath : '',
+                method: 'GET',
+                body: '',
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  'Cache-Control': 'no-cache',
+                },
+              }}
+            />
+          ) : (
+            <Image
+              // src={profile.avatarPath !== null ? profile.avatarPath : 'a'}
+              style={styles.image}
+              // src={{
+              //   uri: profile.avatarPath,
+              //   method: 'GET',
+              //   headers: { 'Cache-Control': 'no-cache' },
+              //   body: '',
+              // }}
+              src={{
+                uri: profile.avatarPath !== null ? profile.avatarPath : '',
+                method: 'GET',
+                body: '',
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  'Cache-Control': 'no-cache',
+                  // 'Access-Control-Allow-Methods': '*',
+                  // 'Access-Control-Allow-Headers': '*',
+                },
+              }}
+            />
+          )}
         </View>
         {/* <View style={styles.language}>
                     <View>

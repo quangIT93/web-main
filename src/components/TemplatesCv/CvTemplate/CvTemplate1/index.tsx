@@ -38,7 +38,7 @@ interface CvTemplate {
   profile: any;
 }
 
-const CvTemplate1: React.FC<CvTemplate> = (props) => {
+const CvTemplate0: React.FC<CvTemplate> = (props) => {
   const { color, fontSize, profile } = props;
   const styles = StyleSheet.create({
     page: {
@@ -137,8 +137,6 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
     src: Archivo,
   });
 
-  console.log(profile);
-
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
       <Header color={color} profile={profile} />
@@ -223,4 +221,4 @@ const CvTemplate1: React.FC<CvTemplate> = (props) => {
   );
 };
 
-export default memo(CvTemplate1);
+export default memo(CvTemplate0);

@@ -101,6 +101,19 @@
                         display: flex;
                         align-items: center;
                         cursor: pointer;
+
+                        svg {
+                            color: #000000;
+                        }
+                    }
+
+                    .unable {
+                        // pointer-events: none;
+                        cursor: no-drop !important;
+
+                        svg {
+                            color: #575757 !important;
+                        }
                     }
 
                     p {

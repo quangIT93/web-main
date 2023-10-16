@@ -18,20 +18,22 @@ import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperi
 import ModalDeleteExperience from '#components/Profile/ModalDeleteExperience';
 
 import { RootState } from '../../../store/reducer/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import profileApi from 'api/profileApi';
 interface SuggestItemProps {
   typeItem?: string;
   item?: ItemAppy;
 }
 interface ItemAppy {
   id?: number | null;
-  company_name?: String;
+  companyName?: String;
   major?: String;
-  start_date?: number;
-  end_date?: number;
-  extra_information?: string;
+  startDate?: number;
+  endDate?: number;
+  extraInformation?: string;
   title?: String;
 }
 
@@ -46,6 +48,10 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
+  const dispatch = useDispatch();
   const [openModalDeleteEducation, setOpenModalDeleteEducation] =
     useState(false);
   const [openModalEducationUpdate, setOpenModalEducationUpdate] =
@@ -54,9 +60,10 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
     useState(false);
   const [openModalExperienceUpdate, setOpenModalExperienceUpdate] =
     useState(false);
-  const [language, setLanguage] = useState<any>();
+  // const [language, setLanguage] = useState<any>();
+  console.log('logging education', item);
 
-  const handleDeleteEducation = (id?: number | null) => {
+  const handleDeleteEducation = async (id?: number | null) => {
     setOpenModalDeleteEducation(true);
   };
 
@@ -64,30 +71,30 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
     setOpenModalEducationUpdate(true);
   };
 
-  const handleDeleteExperience = (id?: number | null) => {
+  const handleDeleteExperience = async (id?: number | null) => {
     setOpenModalDeleteExperience(true);
   };
 
   const handleUpdateExperience = (id?: number | null) => {
     setOpenModalExperienceUpdate(true);
   };
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguage(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguage(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
 
   // console.log('item?.start_date', item?.start_date);
   return (
@@ -115,11 +122,11 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
               wordBreak: 'break-word',
             }}
           >
-            <h3>{item?.company_name}</h3>
+            <h3>{item?.startDate}</h3>
             <p>{typeItem === 'experiences' ? item?.title : item?.major}</p>
             <p>
-              {`${moment(item?.start_date).format('MM/YYYY')}`} - {` `}
-              {`${moment(item?.end_date).format('MM/YYYY')}`}
+              {`${moment(item?.startDate).format('MM/YYYY')}`} - {` `}
+              {`${moment(item?.endDate).format('MM/YYYY')}`}
             </p>
 
             <div
@@ -130,7 +137,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
                 wordBreak: 'break-all',
               }}
             >
-              {item?.extra_information}
+              {item?.extraInformation}
             </div>
           </Space>
         </div>

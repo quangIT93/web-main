@@ -5,6 +5,9 @@ import Footer from '../../components/Footer/Footer';
 // import moment, { Moment } from 'moment';
 import { Skeleton, Space } from 'antd';
 import { message } from 'antd';
+
+import { useLocation } from 'react-router-dom';
+
 // import component
 // @ts-ignore
 import { Navbar } from '#components';
@@ -105,13 +108,16 @@ const Company: React.FC<ICompany> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [loading, setLoading] = useState<boolean>(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [haveCompany, setHaveCompany] = useState(false);
 
   const [companyId, setCompanyId] = useState<any>();
-
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const [dataCompany, setDataCompany] = useState<any | null>({
     // id: '',
     name: '',
@@ -127,25 +133,25 @@ const Company: React.FC<ICompany> = (props) => {
     description: '',
     logoPath: '',
   });
-  const [language, setLanguageState] = React.useState<any>();
+  // const [language, setLanguageState] = React.useState<any>();
+  const location = useLocation();
+  // const getlanguageApi = async () => {
+  //   try {
+  //     const result = await languageApi.getLanguage(
+  //       languageRedux === 1 ? 'vi' : 'en',
+  //     );
+  //     if (result) {
+  //       setLanguageState(result.data);
+  //       // setUser(result);
+  //     }
+  //   } catch (error) {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  const getlanguageApi = async () => {
-    try {
-      const result = await languageApi.getLanguage(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setLanguageState(result.data);
-        // setUser(result);
-      }
-    } catch (error) {
-      // setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    getlanguageApi();
-  }, [languageRedux]);
+  // React.useEffect(() => {
+  //   getlanguageApi();
+  // }, [languageRedux]);
   // console.log('dataCompany', dataCompany);
   const [openModalEditCompany, setOpenModalEditCompanySuccess] =
     React.useState(false);
@@ -167,21 +173,21 @@ const Company: React.FC<ICompany> = (props) => {
       page_title: '/web_company' as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, language]);
+  }, [languageRedux]);
 
   const getCompanyInforByAccount = async () => {
     try {
       setLoading(true);
-      const result = await apiCompany.getCampanyByAccountApi(
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result && result?.data?.companyInfomation?.id != null) {
+      // const result = await apiCompany.getCampanyByAccountApi(
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+      if (profileV3?.companyInfomation !== null) {
         setTimeout(() => {
           setLoading(false);
         }, 1000);
         setHaveCompany(true);
-        setCompanyId(result?.data?.companyInfomation?.id);
-        setDataCompany(result?.data?.companyInfomation);
+        setCompanyId(profileV3?.companyInfomation?.id);
+        setDataCompany(profileV3?.companyInfomation);
       } else {
         setTimeout(() => {
           setLoading(false);
@@ -194,12 +200,16 @@ const Company: React.FC<ICompany> = (props) => {
   };
 
   useEffect(() => {
-    getCompanyInforByAccount();
+    if (profileV3.length !== 0) {
+      getCompanyInforByAccount();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, profileV3]);
 
   useEffect(() => {
-    roleRedux === 0 && !is_profile && window.open(`/`, '_parent');
+    if (roleRedux === 0) {
+      window.open(`/`, '_parent');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -423,14 +433,14 @@ const Company: React.FC<ICompany> = (props) => {
       style={{
         display: display,
         // marginTop: is_profile ? '30px' : '70px',
-        marginTop: is_profile ? '30px' : '146px',
+        marginTop: is_profile ? '30px' : '100px',
         width: is_profile ? '100%' : 'unset',
       }}
     >
       {contextHolder}
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         <Navbar />
-        <CategoryDropdown />
+        {location?.pathname === '/company-infor' ? <CategoryDropdown /> : <></>}
       </div>
       <div
         className="company-content"
@@ -452,7 +462,7 @@ const Company: React.FC<ICompany> = (props) => {
                 cursor: 'pointer',
                 display: is_profile ? 'flex' : 'none',
               }}
-              onClick={() => window.open(`/company-infor/`, '_parent')}
+              onClick={() => window.open(`/company-infor`, '_parent')}
             >
               <div className="edit-icon">
                 <PencilIcon width={15} height={15} />
@@ -525,7 +535,7 @@ const Company: React.FC<ICompany> = (props) => {
               className="btn-edit_submitForm"
               style={{ display: is_profile ? 'none' : 'block' }}
             >
-              {language?.company_page?.finish}
+              {language?.save}
             </button>
           </form>
         </Skeleton>

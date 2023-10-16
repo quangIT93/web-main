@@ -169,39 +169,39 @@ const SearchInput: React.FC<SearchProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getSuggestKeyWord = async () => {
-    try {
-      var response = null;
-      setLoading(true);
-      if (localStorage.getItem('accessToken')) {
-        const result = await searchApi.getHistoryKeyWord(10, 'vi');
-        if (result) {
-          response = result.data.listHistorySearch;
-        }
-      } else {
-        const result = await searchApi.getSuggestKeyWord(10, 'vi');
-        if (result) {
-          response = result.data;
-        }
-      }
-      if (response) {
-        const data = response.map((item: any) => ({
-          value: item.keyword,
-          text: item.keyword,
-        }));
+  // const getSuggestKeyWord = async () => {
+  //   try {
+  //     var response = null;
+  //     setLoading(true);
+  //     if (localStorage.getItem('accessToken')) {
+  //       const result = await searchApi.getHistoryKeyWord(10, 'vi');
+  //       if (result) {
+  //         response = result.data.listHistorySearch;
+  //       }
+  //     } else {
+  //       const result = await searchApi.getSuggestKeyWord(10, 'vi');
+  //       if (result) {
+  //         response = result.data;
+  //       }
+  //     }
+  //     if (response) {
+  //       const data = response.map((item: any) => ({
+  //         value: item.keyword,
+  //         text: item.keyword,
+  //       }));
 
-        setData(data);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //       setData(data);
+  //       setLoading(false);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  React.useEffect(() => {
-    getSuggestKeyWord();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // React.useEffect(() => {
+  // getSuggestKeyWord();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const getDataSearch = async () => {
     try {
@@ -230,6 +230,7 @@ const SearchInput: React.FC<SearchProps> = ({
   };
 
   // console.log('resultSuggest', dataSuggest.data);
+  // console.log('value', value);
 
   React.useEffect(() => {
     getDataSearch();
@@ -306,8 +307,8 @@ const SearchInput: React.FC<SearchProps> = ({
   };
 
   const handleClearItem = () => {
-    getSuggestKeyWord();
-
+    // getSuggestKeyWord();
+    getDataSearch();
     setValue('');
   };
 
@@ -329,7 +330,9 @@ const SearchInput: React.FC<SearchProps> = ({
 
   const getTotalUserSearch = async () => {
     try {
-      const result = await apiTotalJob.getTotalJob('vi');
+      const result = await apiTotalJob.getTotalJob(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
       if (result) {
         setTotalJob(result?.data?.total);
       }

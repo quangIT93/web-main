@@ -70,20 +70,27 @@ const CategoryDropdown: React.FC = () => {
 
   useEffect(() => {
     updateWindowWidth();
-  }, []);
+  }, [window.innerWidth]);
 
-  window.addEventListener('resize', () => {
-    const currentWidth = window.innerWidth;
-    if (currentWidth > 560) {
-      setWindowWidth(true);
-      setExpand([1, 2, 3, 4]);
-    } else {
-      setWindowWidth(false);
-      // setOpen(true);
-      setExpand([]);
-    }
-    // console.log('Current window width:', currentWidth);
-  });
+  React.useEffect(() => {
+    const handleResize = () => {
+      const currentWidth = window.innerWidth;
+      console.log('resize');
+
+      if (currentWidth > 560) {
+        setWindowWidth(true);
+        setExpand([1, 2, 3, 4]);
+      } else {
+        setWindowWidth(false);
+        // setOpen(true);
+        setExpand([]);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleExpand = (id: any) => {
     if (expand.includes(id)) {
@@ -127,7 +134,7 @@ const CategoryDropdown: React.FC = () => {
     let newJobOffsetTop = 0;
     if (div) {
       newJobOffsetTop = document.getElementById(id) ? div.offsetTop : 0;
-      window.scrollTo(0, newJobOffsetTop - 170);
+      window.scrollTo(0, newJobOffsetTop - 140);
     }
   };
 
@@ -225,7 +232,7 @@ const CategoryDropdown: React.FC = () => {
       setOpenModalLogin(true);
       return;
     }
-    window.open('/candidateAlls', '_parent');
+    window.open('/candidatesAll', '_parent');
   };
 
   const moveToCvManage = () => {
@@ -246,7 +253,7 @@ const CategoryDropdown: React.FC = () => {
       setOpenModalLogin(true);
       return;
     }
-    window.open('/candidateAlls', '_parent');
+    window.open('/candidatesAll', '_parent');
   };
 
   const moveToIntroductionCv = () => {
@@ -263,7 +270,7 @@ const CategoryDropdown: React.FC = () => {
       setOpenModalLogin(true);
       return;
     }
-    window.open('/history', '_parent');
+    window.open('/history?candidate=4', '_parent');
   };
 
   const moveToWorkingStory = () => {
@@ -345,7 +352,7 @@ const CategoryDropdown: React.FC = () => {
         sx={{
           // maxWidth: { xs: 320, sm: 480, lg: 1320, xl: 1420, md: 720 },
           padding: '0 24px',
-          boxShadow: '0px 1px 3px #aaa',
+          // boxShadow: '0px 1px 3px #aaa',
           zIndex: '9',
           position: 'fixed',
           width: '100%',
@@ -365,13 +372,13 @@ const CategoryDropdown: React.FC = () => {
           <div
             className="category-dropdown-left"
             onMouseEnter={() => setOpenCategoryDropdown(true)}
-            // onMouseLeave={() => setOpenCategoryDropdown(false)}
+            onMouseLeave={() => setOpenCategoryDropdown(false)}
             onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
           >
             <IconMenu />
-            <h3>{languageRedux === 1 ? 'Danh mục' : 'Category'}</h3>
+            <h3>{languageRedux === 1 ? 'Danh mục' : 'Menu'}</h3>
           </div>
-          <div className="category-dropdown-line"></div>
+          {/* <div className="category-dropdown-line"></div>
           <div className="category-dropdown-right">
             <JobInfoDropDown
               moveToAppliedJob={moveToAppliedJob}
@@ -407,12 +414,13 @@ const CategoryDropdown: React.FC = () => {
               moveToSupportTerms={moveToSupportTerms}
               moveToMemberGuide={moveToMemberGuide}
             />
-          </div>
+          </div> */}
         </div>
         <Collapse
           in={openCategoryDropdown}
           // sx={collapseCssFilter}
           onMouseLeave={() => setOpenCategoryDropdown(false)}
+          onMouseEnter={() => setOpenCategoryDropdown(true)}
           sx={
             location.pathname === '/'
               ? { maxWidth: '1280px' }
@@ -420,6 +428,15 @@ const CategoryDropdown: React.FC = () => {
           }
           className="category-dropdown-collapse"
         >
+          <div
+            style={{
+              background: 'transparent',
+              position: 'absolute',
+              width: '100%',
+              height: '30px',
+              top: '-30px',
+            }}
+          ></div>
           <div className="category-dropdown-wraps">
             <div className="category-dropdown-item">
               <div className="top-item" onClick={() => handleExpand(1)}>
@@ -525,7 +542,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'Resume & CV'
                     : languageRedux === 1
                     ? 'Thông tin nhân tài'
-                    : 'Talent information'}
+                    : 'Candidates information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -548,7 +565,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'Create a new CV'
                     : languageRedux === 1
                     ? 'Danh sách nhân tài mới nhất'
-                    : 'Newest talent list'}
+                    : 'Newest candidate list'}
                 </h3>
                 <h3
                   onClick={
@@ -561,7 +578,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'CV management'
                     : languageRedux === 1
                     ? 'Tìm kiếm nhân tài'
-                    : 'Search for talent'}
+                    : 'Search for candidate'}
                 </h3>
                 <h3
                   onClick={
@@ -576,7 +593,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'Instructions for creating a CV'
                     : languageRedux === 1
                     ? 'Danh sách nhân tài đã lưu'
-                    : 'Saved talent list'}
+                    : 'Saved candidate list'}
                 </h3>
               </div>
             </div>

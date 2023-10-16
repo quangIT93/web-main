@@ -66,26 +66,29 @@ const ModalDeleteReferences: React.FC<IModalProfileDelete> = (props) => {
     const languageRedux = useSelector(
         (state: RootState) => state.changeLaguage.language,
     );
+    const language = useSelector(
+        (state: RootState) => state.dataLanguage.languages,
+    );
 
-    const [reference, setLanguage] = React.useState<any>();
+    // const [language, setLanguage] = React.useState<any>();
 
-    const getlanguageApi = async () => {
-        try {
-            const result = await languageApi.getLanguage(
-                languageRedux === 1 ? 'vi' : 'en',
-            );
-            if (result) {
-                setLanguage(result.data);
-                // setUser(result);
-            }
-        } catch (error) {
-            // setLoading(false);
-        }
-    };
+    // const getlanguageApi = async () => {
+    //     try {
+    //         const result = await languageApi.getLanguage(
+    //             languageRedux === 1 ? 'vi' : 'en',
+    //         );
+    //         if (result) {
+    //             setLanguage(result.data);
+    //             // setUser(result);
+    //         }
+    //     } catch (error) {
+    //         // setLoading(false);
+    //     }
+    // };
 
-    React.useEffect(() => {
-        getlanguageApi();
-    }, [languageRedux]);
+    // React.useEffect(() => {
+    //     getlanguageApi();
+    // }, [languageRedux]);
 
     const handleClose = () => setOpenModalDeleteReferences(false);
 
@@ -110,7 +113,7 @@ const ModalDeleteReferences: React.FC<IModalProfileDelete> = (props) => {
                 //             : 'Deleted all languages'
                 //         : languageRedux === 1
                 //             ? `Bạn đã xóa người giới thiệu thành công`
-                //             : `You deleted the reference successfully !`,
+                //             : `You deleted the language successfully !`,
                 // );
 
                 setOpenModalDeleteReferences(false);
@@ -139,7 +142,7 @@ const ModalDeleteReferences: React.FC<IModalProfileDelete> = (props) => {
                     align="center"
                     sx={{ marginBottom: '12px' }}
                 >
-                    {reference?.profile_page?.alert_delete_info}
+                    {language?.profile_page?.alert_delete_info}
                 </Typography>
                 <Box sx={{ display: deleteAll ? 'block' : 'none' }}>
                     <Typography
@@ -161,11 +164,11 @@ const ModalDeleteReferences: React.FC<IModalProfileDelete> = (props) => {
                         onClick={handleSubmitDelete}
                         color="error"
                     >
-                        {reference?.profile_page?.delete}
+                        {language?.profile_page?.delete}
                     </Button>
 
                     <Button variant="contained" fullWidth onClick={handleSubmitRefuse}>
-                        {reference?.profile_page?.return}
+                        {language?.profile_page?.return}
                     </Button>
                 </Box>
             </Box>
