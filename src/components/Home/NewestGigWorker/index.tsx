@@ -48,7 +48,7 @@ const NewestGigWorker = () => {
       if (result) {
         setListData(result.data.cvFilters);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -98,9 +98,9 @@ const NewestGigWorker = () => {
               cursor: 'pointer',
               color: '#0d99ff',
             }}
+            onClick={handleChangeRouteNewestWorker}
           >
             <p
-              onClick={handleChangeRouteNewestWorker}
               style={{ cursor: 'pointer' }}
             >
               {languageRedux === 1 ? 'Xem tất cả' : 'View all'}

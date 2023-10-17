@@ -65,8 +65,6 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
     }
   };
 
-  console.log('item', item);
-
   return (
     <>
       <div

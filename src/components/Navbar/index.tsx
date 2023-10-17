@@ -252,7 +252,6 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
     setLanguageId(userLanguageSelected);
-    console.log(languageId);
   }, [languageId]);
 
   // console.log('jobTYpe', jobType);
@@ -981,10 +980,8 @@ const Navbar: React.FC = () => {
     let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
     if (userLanguageSelected) {
       setLanguageId(userLanguageSelected);
-      console.log('2222222');
       dispatch(getLanguages(userLanguageSelected) as any);
     } else {
-      console.log('33333333');
       setLanguageId(1);
       dispatch(getLanguages('1') as any);
     }
@@ -1043,87 +1040,87 @@ const Navbar: React.FC = () => {
         <ENSubLoginIcon width={24} height={24} />
       )}
     </div>,
-    <React.Fragment key="2">
-      {localStorage.getItem('accessToken') ? (
-        <div className="switch-container">
-          <div
-            className="search-job-switch"
-            style={{
-              display:
-                profileV3.length !== 0
-                  ? profileV3?.typeRoleData === 0
-                    ? 'flex'
-                    : 'none'
-                  : 'none',
-            }}
-          >
-            {/* <p>
-          {
-            searchJob ?
-              languageRedux === 1 ?
-                `Trạng thái tìm việc: bật` :
-                `Job search status is: on` :
-              languageRedux === 1 ?
-                `Trạng thái tìm việc: tắt` :
-                `Job search status is: off`
-          }
-        </p> */}
-            <Switch
-              checked={profileV3.isSearch === 1}
-              loading={loadingSwitch}
-              onChange={handleOnchangeSearchJob}
-            />
-            <div className="switch__hover__container">
-              <div className="switch__hover">
-                <div className="switch__hover__p">
-                  <p>
-                    {languageRedux === 1
-                      ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
-                      : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            style={{
-              display:
-                profileV3.length !== 0
-                  ? profileV3?.typeRoleData === 0
-                    ? 'none'
-                    : 'flex'
-                  : 'none',
-            }}
-            key="1"
-            className="btn btn__post"
-            onClick={() => {
-              if (profileV3 && localStorage.getItem('refreshToken')) {
-                if (profileV3.companyInfomation === null) {
-                  setOpenModalNoteCreateCompany(true);
-                } else {
-                  window.open('/post', '_parent');
-                }
-              } else {
-                setOpenModalLogin(true);
-              }
-            }}
-          >
-            <FormOutlined style={{ color: 'white' }} />
-            <p style={{ marginLeft: 10, color: 'white' }}>
-              {/* {languageData
-          ? languageData.post
-          : languageRedux === 1
-          ? `Đăng bài`
-          : `Post`} */}
-              {languageData ? languageData.post : ''}
-              {/* {languageRedux === 1 ? `Đăng bài` : `Post`} */}
-            </p>
-          </button>
-        </div>
-      ) : (
-        <></>
-      )}
-    </React.Fragment>,
+    // <React.Fragment key="2">
+    //   {localStorage.getItem('accessToken') ? (
+    //     <div className="switch-container">
+    //       <div
+    //         className="search-job-switch"
+    //         style={{
+    //           display:
+    //             profileV3.length !== 0
+    //               ? profileV3?.typeRoleData === 0
+    //                 ? 'flex'
+    //                 : 'none'
+    //               : 'none',
+    //         }}
+    //       >
+    //         {/* <p>
+    //       {
+    //         searchJob ?
+    //           languageRedux === 1 ?
+    //             `Trạng thái tìm việc: bật` :
+    //             `Job search status is: on` :
+    //           languageRedux === 1 ?
+    //             `Trạng thái tìm việc: tắt` :
+    //             `Job search status is: off`
+    //       }
+    //     </p> */}
+    //         <Switch
+    //           checked={profileV3.isSearch === 1}
+    //           loading={loadingSwitch}
+    //           onChange={handleOnchangeSearchJob}
+    //         />
+    //         <div className="switch__hover__container">
+    //           <div className="switch__hover">
+    //             <div className="switch__hover__p">
+    //               <p>
+    //                 {languageRedux === 1
+    //                   ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
+    //                   : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
+    //               </p>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <button
+    //         style={{
+    //           display:
+    //             profileV3.length !== 0
+    //               ? profileV3?.typeRoleData === 0
+    //                 ? 'none'
+    //                 : 'flex'
+    //               : 'none',
+    //         }}
+    //         key="1"
+    //         className="btn btn__post"
+    //         onClick={() => {
+    //           if (profileV3 && localStorage.getItem('refreshToken')) {
+    //             if (profileV3.companyInfomation === null) {
+    //               setOpenModalNoteCreateCompany(true);
+    //             } else {
+    //               window.open('/post', '_parent');
+    //             }
+    //           } else {
+    //             setOpenModalLogin(true);
+    //           }
+    //         }}
+    //       >
+    //         <FormOutlined style={{ color: 'white' }} />
+    //         <p style={{ marginLeft: 10, color: 'white' }}>
+    //           {/* {languageData
+    //       ? languageData.post
+    //       : languageRedux === 1
+    //       ? `Đăng bài`
+    //       : `Post`} */}
+    //           {languageData ? languageData.post : ''}
+    //           {/* {languageRedux === 1 ? `Đăng bài` : `Post`} */}
+    //         </p>
+    //       </button>
+    //     </div>
+    //   ) : (
+    //     <></>
+    //   )}
+    // </React.Fragment>,
     <div
       className="actions-login"
       ref={refLogin}
@@ -1501,7 +1498,7 @@ const Navbar: React.FC = () => {
           <ENSubLoginIcon width={24} height={24} />
         )}
       </div>
-      <div className="switch-container-responsive">
+      {/* <div className="switch-container-responsive">
         <div
           className="search-job-switch-responsive "
           style={{
@@ -1511,7 +1508,7 @@ const Navbar: React.FC = () => {
                 : 'none',
           }}
         >
-          {/* <p>
+          <p>
         {
           searchJob ?
             languageRedux === 1 ?
@@ -1521,7 +1518,7 @@ const Navbar: React.FC = () => {
               `Trạng thái tìm việc: tắt` :
               `Job search status is: off`
         }
-      </p> */}
+      </p>
           <Switch
             checked={searchJob}
             loading={loadingSwitch}
@@ -1539,7 +1536,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>,
     // <div className="switch-container-responsive">
     //   <div className="search-job-switch-responsive " style={{ display: role === 0 ? 'flex' : 'none' }}>
@@ -1796,7 +1793,7 @@ const Navbar: React.FC = () => {
           setOpenModalLogin={setOpenModalLogin}
         />
 
-        <ModalNoteCreateCompany
+        {/* <ModalNoteCreateCompany
           openModalNoteCreateCompany={openModalNoteCreateCompany}
           setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
         />
@@ -1806,7 +1803,7 @@ const Navbar: React.FC = () => {
           setOpenModalTurnOffStatus={setOpenModalTurnOffStatus}
           setSearchJob={setSearchJob}
           setLoadingSwitch={setLoadingSwitch}
-        />
+        /> */}
         {/* <ModalLoginNav
           openModalLogin={openModalLogin}
           setOpenModalLogin={setOpenModalLogin}
@@ -1897,6 +1894,7 @@ const Navbar: React.FC = () => {
                 </Button>
                 {openNotificate ? <Notificate /> : <></>}
               </div>
+
               <div
                 className="wrap-btn_notice btn-noti_icon 
             border-aniation_download
@@ -2136,7 +2134,7 @@ const Navbar: React.FC = () => {
         </Collapse>
         {/* {openNotificate ? <Notificate /> : <></>} */}
       </Container>
-      <PostButton setOpenModalLogin={setOpenModalLogin} role={roleRedux} />
+      {/* <PostButton setOpenModalLogin={setOpenModalLogin} role={roleRedux} /> */}
     </div>
   );
 };
