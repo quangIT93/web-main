@@ -107,7 +107,9 @@ const CandidateNewDetail = () => {
     const id = localStorage.getItem('candidateId');
     try {
       if (id) {
-        const viewProfile: any = await candidateSearch.postCountShowCandidate(id);
+        const viewProfile: any = await candidateSearch.postCountShowCandidate(
+          id,
+        );
         if (viewProfile.status === 200) {
           if (viewProfile.total === 0) {
             setOpenModalMaxUnlock(true);
@@ -115,13 +117,15 @@ const CandidateNewDetail = () => {
           }
           setTotal(viewProfile.total);
           const result = await profileApi.getProfileByAccountId(
-            languageRedux === 1 ? 'vi' : 'en', id);
+            languageRedux === 1 ? 'vi' : 'en',
+            id,
+          );
           if (result) {
             setCandidate(result.data);
           }
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleClickBookmarkCandidate = async (accountId: string) => {
@@ -135,7 +139,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -155,7 +159,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -165,9 +169,9 @@ const CandidateNewDetail = () => {
   const handleClickItemCv = async (urlPdf: string, id: string) => {
     if (candidate.isUnlocked === true && urlPdf !== undefined) {
       setModalShowCvPdf({ open: true, urlPdf });
-      return
+      return;
     } else {
-      setOpenModalNoneCv(true)
+      setOpenModalNoneCv(true);
     }
   };
 
@@ -192,6 +196,8 @@ const CandidateNewDetail = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, candidate]);
+
+  console.log('candidate', candidate);
 
   return (
     <div className="candidate-new-detail">
@@ -311,11 +317,11 @@ const CandidateNewDetail = () => {
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                    .format('DD/MM/YYYY')
-                    .replace(/\d{2}$/, 'xx')
+                      .format('DD/MM/YYYY')
+                      .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
-                    ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                    : language?.unupdated}
+                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
+                  : language?.unupdated}
               </p>
               <p>
                 {candidate?.genderText
@@ -415,12 +421,12 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item.fullName}
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      {item.fullName}
+                    </Button>
+                  ),
+                )
               : language?.unupdated}
           </Space>
         </div>
@@ -437,10 +443,10 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  {item?.fullName}
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    {item?.fullName}
+                  </Button>
+                ))
               : language?.unupdated}
           </Space>
         </div>
@@ -568,11 +574,11 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                <Button key={index} className="btn" type="text">
-                  <span>{item.skillName}</span>
-                  <span>{item.dataLevel.data}</span>
-                </Button>
-              ))
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.skillName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ))
               : language?.unupdated}
           </Space>
         </div>
@@ -590,13 +596,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                (item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.languageName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ),
-              )
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      <span>{item.languageName}</span>
+                      <span>{item.dataLevel.data}</span>
+                    </Button>
+                  ),
+                )
               : language?.unupdated}
           </Space>
         </div>
@@ -653,7 +659,6 @@ const CandidateNewDetail = () => {
         setOpenModalNoneCv={setOpenModalNoneCv}
         unLock={candidate.isUnlocked}
         urlPdf={candidate?.profilesCvs?.at(0)?.pdfURL}
-
       />
       {/* <ModalUnlockCandidate /> */}
     </div>

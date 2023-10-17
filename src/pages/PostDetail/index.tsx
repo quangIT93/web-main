@@ -598,7 +598,7 @@ const Detail = () => {
     if (nameShare === 'Mail') {
       // window.location.href = `mailto:quangbk54@gmail.com`;
       const subject = 'HiJob đề xuất công việc dành cho bạn';
-      const title = 'Nội dung khi share qua mail nè';
+      const title = 'Hãy nhập nội dung email tại đây.';
 
       const content = `
         HiJob mong muốn sẽ giúp bạn tìm được công việc mơ ước của mình. Chúng tôi đã tìm được những công việc mới nhất có thể phù hợp với bạn bạn.

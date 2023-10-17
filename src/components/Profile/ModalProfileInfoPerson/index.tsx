@@ -98,7 +98,6 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   );
   console.log("profile", profile);
 
-
   // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,

@@ -241,7 +241,7 @@ const CandidatesAll = () => {
           setHasMore(true);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   React.useEffect(() => {
     getAllCandidates();
@@ -348,7 +348,7 @@ const CandidatesAll = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   const analytics: any = getAnalytics();
   React.useEffect(() => {
@@ -374,11 +374,9 @@ const CandidatesAll = () => {
       <div className="candidate">
         <div className="header-candidate">
           <h3>
-            {
-              languageRedux === 1 ?
-                "Tìm kiếm ứng viên" :
-                "Looking for candidates"
-            }
+            {languageRedux === 1
+              ? 'Tìm kiếm ứng viên'
+              : 'Looking for candidates'}
           </h3>
           <Button
             type="primary"
@@ -391,11 +389,9 @@ const CandidatesAll = () => {
         </div>
         <div className="search-candidate">
           <p>
-            {
-              languageRedux === 1 ?
-                "Tìm ứng viên phù hợp với công ty của bạn!" :
-                "Find the right candidate for your company!"
-            }
+            {languageRedux === 1
+              ? 'Tìm ứng viên phù hợp với công ty của bạn!'
+              : 'Find the right candidate for your company!'}
           </p>
           <div className="list-search">
             {/* <div className="list-search_top">
@@ -454,7 +450,8 @@ const CandidatesAll = () => {
           <div className="list-candidates_title">
             <h3>
               {languageRedux === 1 ? 'Kết quả tìm kiếm:' : 'Found results:'}
-              <span>{` ${total}`}
+              <span>
+                {` ${total}`}
                 {languageRedux === 1 ? ' ứng vử viên' : ' candidates'}
               </span>
             </h3>
