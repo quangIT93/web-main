@@ -249,7 +249,7 @@ const MoreJobsPage: React.FC = () => {
               // profile && profile?.profileLocations?.length > 0 &&
               profile.length !== 0 ? profile?.profileLocations : null,
               profile.length !== 0
-                ? profile?.profileLocations[0]?.profileLocations?.id
+                ? profile?.profileLocations[0]?.province?.id
                 : null,
               // null,
               20,

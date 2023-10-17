@@ -39,6 +39,7 @@ import ModalUnlockCandidate from './ModalUnlockCandidate';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalMaxUnlock from './ModalMaxUnlock';
+import ModalNoneCV from './ModalNoneCv';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -52,6 +53,7 @@ const CandidateNewDetail = () => {
   const [bookmarkCandidate, setBookmarkCandidate] = useState<any>(0);
   const [total, setTotal] = useState<any>(0);
   const [openModalMaxUnlock, setOpenModalMaxUnlock] = useState<any>(false);
+  const [openModalNoneCv, setOpenModalNoneCv] = useState<any>(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -103,25 +105,23 @@ const CandidateNewDetail = () => {
 
   const handleUnLockCandidate = async (accountId: string) => {
     const id = localStorage.getItem('candidateId');
-    if (id) {
-      const viewProfile: any = await candidateSearch.postCountShowCandidate(id);
-      if (viewProfile.status === 200) {
-        if (viewProfile.total === 0) {
-          setOpenModalMaxUnlock(true);
-          return;
-        }
-        setTotal(viewProfile.total);
-        const result = await profileApi.getProfileByAccountId(
-          languageRedux === 1 ? 'vi' : 'en',
-          id,
-        );
-        if (result) {
-          setCandidate(result.data);
+    try {
+      if (id) {
+        const viewProfile: any = await candidateSearch.postCountShowCandidate(id);
+        if (viewProfile.status === 200) {
+          if (viewProfile.total === 0) {
+            setOpenModalMaxUnlock(true);
+            return;
+          }
+          setTotal(viewProfile.total);
+          const result = await profileApi.getProfileByAccountId(
+            languageRedux === 1 ? 'vi' : 'en', id);
+          if (result) {
+            setCandidate(result.data);
+          }
         }
       }
-    }
-    try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleClickBookmarkCandidate = async (accountId: string) => {
@@ -135,7 +135,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -155,7 +155,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -163,8 +163,11 @@ const CandidateNewDetail = () => {
   }, []);
 
   const handleClickItemCv = async (urlPdf: string, id: string) => {
-    if (total > 0) {
+    if (candidate.isUnlocked === true && urlPdf !== undefined) {
       setModalShowCvPdf({ open: true, urlPdf });
+      return
+    } else {
+      setOpenModalNoneCv(true)
     }
   };
 
@@ -308,11 +311,11 @@ const CandidateNewDetail = () => {
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                      .format('DD/MM/YYYY')
-                      .replace(/\d{2}$/, 'xx')
+                    .format('DD/MM/YYYY')
+                    .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
-                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                  : language?.unupdated}
+                    ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
+                    : language?.unupdated}
               </p>
               <p>
                 {candidate?.genderText
@@ -412,12 +415,12 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.fullName}
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.fullName}
+                  </Button>
+                ),
+              )
               : language?.unupdated}
           </Space>
         </div>
@@ -434,10 +437,10 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.fullName}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item?.fullName}
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -506,7 +509,7 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Activities</h3>
+            <h3>{languageRedux === 1 ? 'Các hoạt động' : 'Activities'}</h3>
           </div>
           {candidate?.profileActivities?.length !== 0 ? (
             candidate?.profileActivities?.map((item: any, index: number) => (
@@ -533,7 +536,7 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Awards</h3>
+            <h3>{languageRedux === 1 ? 'Các giải thưởng' : 'Awards'}</h3>
           </div>
           {candidate?.profileAwards?.length !== 0 ? (
             candidate?.profileAwards?.map((item: any, index: number) => (
@@ -560,16 +563,16 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Skill</h3>
+            <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.skillName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  <span>{item.skillName}</span>
+                  <span>{item.dataLevel.data}</span>
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -582,18 +585,18 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Languages</h3>
+            <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      <span>{item.languageName}</span>
-                      <span>{item.dataLevel.data}</span>
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.languageName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ),
+              )
               : language?.unupdated}
           </Space>
         </div>
@@ -644,6 +647,13 @@ const CandidateNewDetail = () => {
       <ModalMaxUnlock
         openModalMaxUnlock={openModalMaxUnlock}
         setOpenModalMaxUnlock={setOpenModalMaxUnlock}
+      />
+      <ModalNoneCV
+        openModalNoneCv={openModalNoneCv}
+        setOpenModalNoneCv={setOpenModalNoneCv}
+        unLock={candidate.isUnlocked}
+        urlPdf={candidate?.profilesCvs?.at(0)?.pdfURL}
+
       />
       {/* <ModalUnlockCandidate /> */}
     </div>
