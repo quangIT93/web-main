@@ -263,7 +263,7 @@ const HotJobpage: React.FC = () => {
         setHotJobType(hotjobtype);
         setIsVisible(true);
         // setHotJobTotal(hotjob.data.length);
-        setHasMore(false);
+        // setHasMore(false);
         setPage('0');
         return;
       } else if (hotjob && hotjob.data.length >= 18 && hotjobtype === 3) {
@@ -271,7 +271,7 @@ const HotJobpage: React.FC = () => {
         setHotJobType(hotjobtype);
         setIsVisible(true);
         // setHotJobTotal(hotjob.data.length);
-        setLoading(false);
+        // setLoading(false);
         return;
       }
 
@@ -282,14 +282,14 @@ const HotJobpage: React.FC = () => {
         // setHotJobTotal(hotjob.data.length);
         setHasMore(false);
         setPage('0');
-        setLoading(false);
+        // setLoading(false);
         return;
       } else if (hotjob && hotjob.data.length !== 0) {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
         // setHotJobTotal(hotjob.data.length);
-        setLoading(false);
+        // setLoading(false);
         return;
       } else {
         setHotJob([]);
@@ -341,13 +341,13 @@ const HotJobpage: React.FC = () => {
     // setPageNumber(0)
     getHotJob();
     setLoading(true);
-    // setTimeout(() => {
-    //   if (hotjob.length !== 0) {
-    //     setLoading(false);
-    //   } else {
-    //     setLoading(false);
-    //   }
-    // }, 1000);
+    setTimeout(() => {
+      if (hotjob.length !== 0) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, idFilterProvinces]);
 
