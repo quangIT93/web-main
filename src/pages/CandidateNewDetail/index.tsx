@@ -509,7 +509,7 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Activities</h3>
+            <h3>{languageRedux === 1 ? 'Các hoạt động' : 'Activities'}</h3>
           </div>
           {candidate?.profileActivities?.length !== 0 ? (
             candidate?.profileActivities?.map((item: any, index: number) => (
@@ -536,7 +536,7 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Awards</h3>
+            <h3>{languageRedux === 1 ? 'Các giải thưởng' : 'Awards'}</h3>
           </div>
           {candidate?.profileAwards?.length !== 0 ? (
             candidate?.profileAwards?.map((item: any, index: number) => (
@@ -563,7 +563,7 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Skill</h3>
+            <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
@@ -585,7 +585,7 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Languages</h3>
+            <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
           </div>
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0

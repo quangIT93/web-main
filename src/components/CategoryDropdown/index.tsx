@@ -687,7 +687,7 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Quản lý CV'
                       : 'CV management'
                     : languageRedux === 1
-                      ? 'Tìm kiếm nhân tài'
+                      ? 'Tìm kiếm ứng viên'
                       : 'Search for candidate'}
                 </h3>
                 <h3
