@@ -96,6 +96,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         }
       : null,
   );
+  console.log('profile', profile);
 
   // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const language = useSelector(
@@ -326,7 +327,6 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               placeholder={language?.sex}
               size="small"
               sx={{ width: '100%' }}
-              error={!gender} // Đánh dấu lỗi
             >
               <MenuItem value={1}>{language?.male}</MenuItem>
               <MenuItem value={0}>{language?.female}</MenuItem>

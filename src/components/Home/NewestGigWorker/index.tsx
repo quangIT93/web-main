@@ -48,7 +48,7 @@ const NewestGigWorker = () => {
       if (result) {
         setListData(result.data.cvFilters);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {

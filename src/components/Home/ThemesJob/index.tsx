@@ -58,6 +58,7 @@ import JobCard from '../JobCard';
 import { Skeleton } from 'antd';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
+import { getCookie } from 'cookies';
 
 interface PostTheme {
   id: number;
@@ -161,14 +162,19 @@ const ThemesJob: React.FC = () => {
   // get post by theme id
   const getPostByThemeId = async () => {
     try {
+      let storedSettings = JSON.parse(
+        getCookie('hotPlaceId') || '{}',
+      )
+
       const result = await themeApi.getThemesEnable(
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
         setListThem(result);
+
         const list = await postApi?.getPostByThemeId(
-          result?.data[0]?.id,
+          storedSettings?.placeId ? storedSettings?.placeId : result?.data[0]?.id,
           9,
           0,
           languageRedux === 1 ? 'vi' : 'en',
