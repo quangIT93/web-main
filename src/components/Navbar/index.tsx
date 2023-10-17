@@ -1479,6 +1479,53 @@ const Navbar: React.FC = () => {
         <BellIcon />
       </Button>
     </Badge>,
+    <div key="4"
+      className="wrap-btn_notice btn-noti_icon 
+border-aniation_download
+"
+    >
+      <Button
+        className="btn-notice"
+        // onClick={() => setOpenNotificate(!openNotificate)}
+        name="btn-down"
+        ref={bellRef}
+      >
+        <div className="button-download">
+          {/* <DownloadIcon /> */}
+
+          <img src="./images/down.gif" alt="" />
+        </div>
+        {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
+      </Button>
+      <div className="sub-icon_qr">
+        <h2>{languageData?.download_hijob_app}</h2>
+        <img
+          src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
+          alt={languageData?.err_none_img}
+        />
+        <div className="sub-icon_apps">
+          <Link
+            to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+            target="_seft"
+          >
+            <img
+              id="img-gallery"
+              src={require('../../img/langdingPage/image 43.png')}
+              alt={languageData?.err_none_img}
+            />
+          </Link>
+          <Link
+            to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+            target="_seft"
+          >
+            <img
+              src={require('../../img/langdingPage/image 45.png')}
+              alt={languageData?.err_none_img}
+            />
+          </Link>
+        </div>
+      </div>
+    </div>,
     <div
       style={{
         display: 'flex',
@@ -1487,7 +1534,7 @@ const Navbar: React.FC = () => {
         alignItems: 'center',
         marginLeft: '4px',
       }}
-      key="4"
+      key="5"
     >
       <div
         className="language"

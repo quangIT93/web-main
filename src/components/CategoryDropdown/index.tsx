@@ -424,7 +424,9 @@ const CategoryDropdown: React.FC = () => {
                           : 'none',
                     }}
                   >
-                    <p>
+                    <p style={{
+                      color: profileV3.isSearch === 1 ? "#000000" : "#575757"
+                    }}>
                       {
                         // profileV3.isSearch === 1 ?
                         //   languageRedux === 1 ?

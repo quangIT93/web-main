@@ -158,8 +158,8 @@
 
                     .category-dropdown-switch__hover__container {
                         position: absolute;
-                        top: 50px;
-                        right: -30px;
+                        top: 40px;
+                        right: -0px;
                         z-index: 10;
                         display: none;
                         animation-duration: 0.55s;
@@ -182,8 +182,8 @@
                             &::after {
                                 content: "";
                                 position: absolute;
-                                top: -11px;
-                                right: 45px;
+                                top: -8px;
+                                right: 30px;
                                 width: 0;
                                 height: 0;
                                 border-left: 7px solid transparent;
