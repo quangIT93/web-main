@@ -528,7 +528,9 @@ const HotJobpage: React.FC = () => {
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       // value={'01'}
-                      defaultValue={profileV3.addressText.id}
+                      defaultValue={
+                        profileV3.length !== 0 ? profileV3.addressText.id : '79'
+                      }
                       onChange={handleChangeFilterHotjob}
                       placeholder={
                         languageRedux === 1 ? 'Chọn địa chỉ' : 'Select Address'
