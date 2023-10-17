@@ -357,7 +357,7 @@ const CandidatesAll = () => {
     //   language?.company_page?.title_page;
     document.title =
       languageRedux === 1
-        ? 'Hijob - Tìm kiếm nhân tài'
+        ? 'Hijob - Tìm kiếm ứng viên'
         : 'Hijob - Search for talent';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,

@@ -42,6 +42,7 @@ import CvTemplate6 from '#components/TemplatesCv/CvTemplate/CvTemplate6';
 import CvTemplate7 from '#components/TemplatesCv/CvTemplate/CvTemplate7';
 import CategoryDropdown from '#components/CategoryDropdown';
 import { Backdrop, CircularProgress } from '@mui/material';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -110,6 +111,13 @@ const TemplatesCv: React.FC = () => {
   // React.useEffect(() => {}, []);
 
   const handleClickSaveCv = async () => {
+    const analytics: any = getAnalytics();
+
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: `/web_click_create_cv` as string,
+    });
+
     const selectedTemplate = templatesCv.find((template) => {
       // console.log(template.id);
       // console.log(Number(localStorage.getItem('cv-id')));
@@ -400,7 +408,7 @@ const TemplatesCv: React.FC = () => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={loading}
-          // onClick={handleClose}
+        // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>

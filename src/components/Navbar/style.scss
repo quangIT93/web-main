@@ -1566,7 +1566,30 @@
         box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
       }
 
+      .wrap-btn_notice {
+        @media screen and (max-width: 375px) {
+          display: none;
+        }
 
+        button {
+          padding: 0 !important;
+
+          .button-download {
+            border: 2px solid transparent;
+            display: grid;
+            place-items: center;
+            transform: unset !important;
+            left: unset !important;
+            top: unset !important;
+            position: unset !important;
+          }
+        }
+
+        .sub-icon_qr {
+          right: 0;
+          left: unset !important;
+        }
+      }
 
 
       .menu {
@@ -1974,17 +1997,17 @@
   padding-left: 20px;
 
   .btn-noti_icon {
-    @include breakpoint(mobile) {
-      display: none;
-      padding-left: 0px;
+    // @include breakpoint(mobile) {
+    //   display: none;
+    //   padding-left: 0px;
 
-    }
+    // }
 
-    @include breakpoint(tablet) {
-      display: none;
-      padding-left: 0px;
+    // @include breakpoint(tablet) {
+    //   display: none;
+    //   padding-left: 0px;
 
-    }
+    // }
 
     button {
       min-width: 52px;
