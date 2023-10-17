@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { CopyCVIcon, EmailCVIcon, FaceCVIcon } from '#components/Icons';
+import { CopyCVIcon, EmailCVIcon, FaceCVIcon, IconCall, IconEmail, IconMaxUnlock } from '#components/Icons';
 
 import './style.scss';
 import { getCookie } from 'cookies';
@@ -38,8 +38,8 @@ const ModalMaxUnlock: React.FC<IModalMaxUnlock> = (props) => {
                     }}
                 >
                     {languageRedux === 1
-                        ? 'Đã vượt quá số lần thử mở khóa'
-                        : 'The number of unlock attempts has been exceeded'}
+                        ? 'Không thể mở khóa thông tin ứng viên'
+                        : 'Unable to unlock candidate information'}
                 </h3>
             }
             footer={null}
@@ -47,30 +47,38 @@ const ModalMaxUnlock: React.FC<IModalMaxUnlock> = (props) => {
             // onOk={handleOk}
             onCancel={handleCancel}
         >
+            <div className="max-unlock-modal-image">
+                <IconMaxUnlock />
+            </div>
             <p
                 style={{
                     fontFamily: 'Roboto',
                     fontSize: '16px',
                     fontWeight: '400',
-                    lineHeight: '24px',
                     letterSpacing: '0.5px',
                     textAlign: 'left',
+                    marginTop: '24px',
                 }}
             >
                 {
                     languageRedux === 1
-                        ? 'Chỉ có thể mở khóa tối đa 3 ứng viên/ 1 ngày'
-                        : 'Can only unlock a maximum of 3 candidates/day'
+                        ? 'Tài khoản của bạn hiện không đủ Point/lượt mở khóa thông tin ứng viên.\n\nVui lòng liên hệ nhân viên hỗ trợ để xử lý vấn đề này.'
+                        : 'Your account currently does not have enough Points/turns to unlock candidate information.\n\nPlease contact support staff to resolve this issue.'
                 }
             </p>
-            <div className="unlock-candidate-buttons-modal">
-                <Button onClick={handleCancel} type="primary" shape="round">
-                    {
-                        languageRedux === 1 ?
-                            "Đã hiểu" :
-                            "OK"
-                    }
-                </Button>
+            <div className="unlock-candidate-info-modal">
+                <div className="unlock-candidate-info-item">
+                    <div className="unlock-candidate-info-icon">
+                        <IconCall />
+                    </div>
+                    <p className="unlock-candidate-info-content">(028) 35358983</p>
+                </div>
+                <div className="unlock-candidate-info-item">
+                    <div className="unlock-candidate-info-icon">
+                        <IconEmail />
+                    </div>
+                    <p className="unlock-candidate-info-content">contact.hijob@gmail.com</p>
+                </div>
             </div>
         </Modal>
     );

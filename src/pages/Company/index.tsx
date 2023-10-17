@@ -169,7 +169,7 @@ const Company: React.FC<ICompany> = (props) => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Thông tin công ty'
-        : 'HiJob - Company Information';
+        : "HiJob - Company's Information";
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_company' as string,
@@ -220,11 +220,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -459,7 +459,11 @@ const Company: React.FC<ICompany> = (props) => {
           }}
         >
           <div className="company-title_top">
-            <h1>{language?.company_info}</h1>
+            <h1>
+              {languageRedux === 1
+                ? 'Thông tin công ty'
+                : "Company's information"}
+            </h1>
 
             <Space
               style={{

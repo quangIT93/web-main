@@ -109,7 +109,7 @@ const SeachEducation: React.FC<ISeachEducation> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
 
   const academicTypesFnc = async () => {
     try {

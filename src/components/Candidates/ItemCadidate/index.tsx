@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import male_null_avatar from '../../../img/male_null_avatar.png';
+import female_null_avatar from '../../../img/female_null_avatar.png';
 import ModalLogin from '#components/Home/ModalLogin';
 import ModalNoteWorker from '#components/Home/NewestGigWorker/ModalNoteWorker';
 interface ICadidate {
@@ -77,7 +78,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
             src={
               item?.imageData?.avatar
                 ? item?.imageData?.avatar
-                : male_null_avatar
+                : item.genderData === 'Nam'
+                ? male_null_avatar
+                : female_null_avatar
             }
             style={{
               filter: item?.imageData?.avatar ? 'blur(3px)' : 'none',

@@ -163,7 +163,6 @@ const MoreJobsPage: React.FC = () => {
   React.useEffect(() => {
     setTypeJob(localStorage.getItem('job-type'));
     getTemplateId();
-    console.log('set lai');
   }, []);
 
   React.useEffect(() => {
@@ -184,7 +183,6 @@ const MoreJobsPage: React.FC = () => {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
     });
-    console.log('set lai');
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
@@ -239,6 +237,7 @@ const MoreJobsPage: React.FC = () => {
         getCookie('userSelected') || '{}',
       ) as UserSelected;
       setOpenBackdrop(true);
+
       const result =
         typeJob === 'new'
           ? await postApi.getPostNewestV3(
@@ -248,11 +247,11 @@ const MoreJobsPage: React.FC = () => {
               // null,
               // null,
               // profile && profile?.profileLocations?.length > 0 &&
-              // profile?.profileLocations?.map((item: any) => {
-              //     return item.id
-              // }),
-              null,
-              null,
+              profile.length !== 0 ? profile?.profileLocations : null,
+              profile.length !== 0
+                ? profile?.profileLocations[0]?.profileLocations?.id
+                : null,
+              // null,
               20,
               null,
               languageRedux === 1 ? 'vi' : 'en',
@@ -386,6 +385,7 @@ const MoreJobsPage: React.FC = () => {
       getCookie('userSelected') || '{}',
     ) as UserSelected;
     setUserSelectedId(userSelected.userSelectedId);
+
     getMoreJob();
     // setLoading(true);
     // setTimeout(() => {
@@ -395,12 +395,12 @@ const MoreJobsPage: React.FC = () => {
     //     setLoading(false);
     //   }
     // }, 1000);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    console.log('set lai');
   }, [
     languageRedux,
     idFilterProvinces,
-    // profile,
+    profile,
     typeJob,
     childCateloriesArray,
     // JSON.parse(
@@ -458,7 +458,6 @@ const MoreJobsPage: React.FC = () => {
       });
       setOptionsProvinces(newOptionsProvinces);
     }
-    console.log('set lai');
   }, [provincesData, languageRedux]);
 
   const handleChangeFilterHotjob = (value: string) => {

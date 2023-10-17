@@ -1,21 +1,40 @@
-.unlock-candidate-buttons-modal {
-    margin-top: 12px;
+.max-unlock-modal-image {
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.unlock-candidate-info-modal {
+    margin-top: 16px;
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-direction: column;
 
-    button {
-        width: 153px;
-        height: 42px;
-        font-family: Roboto;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 18px;
-        letter-spacing: 0em;
-        text-align: center;
+    .unlock-candidate-info-item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
 
-        &:first-child {
+        .unlock-candidate-info-icon {
+            width: 30px;
+            min-width: 30px;
+            height: 30px;
+            border-radius: 50%;
             background: #0D99FF;
+            display: grid;
+            place-items: center;
+        }
+
+        p {
+            font-family: Roboto;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0em;
+            text-align: left;
+
         }
     }
 }
