@@ -39,6 +39,7 @@ import ModalUnlockCandidate from './ModalUnlockCandidate';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalMaxUnlock from './ModalMaxUnlock';
+import ModalNoneCV from './ModalNoneCv';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -52,6 +53,7 @@ const CandidateNewDetail = () => {
   const [bookmarkCandidate, setBookmarkCandidate] = useState<any>(0);
   const [total, setTotal] = useState<any>(0);
   const [openModalMaxUnlock, setOpenModalMaxUnlock] = useState<any>(false);
+  const [openModalNoneCv, setOpenModalNoneCv] = useState<any>(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -103,22 +105,22 @@ const CandidateNewDetail = () => {
 
   const handleUnLockCandidate = async (accountId: string) => {
     const id = localStorage.getItem('candidateId');
-    if (id) {
-      const viewProfile: any = await candidateSearch.postCountShowCandidate(id);
-      if (viewProfile.status === 200) {
-        if (viewProfile.total === 0) {
-          setOpenModalMaxUnlock(true);
-          return;
-        }
-        setTotal(viewProfile.total);
-        const result = await profileApi.getProfileByAccountId(
-          languageRedux === 1 ? 'vi' : 'en', id);
-        if (result) {
-          setCandidate(result.data);
+    try {
+      if (id) {
+        const viewProfile: any = await candidateSearch.postCountShowCandidate(id);
+        if (viewProfile.status === 200) {
+          if (viewProfile.total === 0) {
+            setOpenModalMaxUnlock(true);
+            return;
+          }
+          setTotal(viewProfile.total);
+          const result = await profileApi.getProfileByAccountId(
+            languageRedux === 1 ? 'vi' : 'en', id);
+          if (result) {
+            setCandidate(result.data);
+          }
         }
       }
-    }
-    try {
     } catch (error) { }
   };
 
@@ -161,8 +163,11 @@ const CandidateNewDetail = () => {
   }, [languageRedux]);
 
   const handleClickItemCv = async (urlPdf: string, id: string) => {
-    if (total > 0) {
+    if (candidate.isUnlocked === true && urlPdf !== undefined) {
       setModalShowCvPdf({ open: true, urlPdf });
+      return
+    } else {
+      setOpenModalNoneCv(true)
     }
   };
 
@@ -646,6 +651,13 @@ const CandidateNewDetail = () => {
       <ModalMaxUnlock
         openModalMaxUnlock={openModalMaxUnlock}
         setOpenModalMaxUnlock={setOpenModalMaxUnlock}
+      />
+      <ModalNoneCV
+        openModalNoneCv={openModalNoneCv}
+        setOpenModalNoneCv={setOpenModalNoneCv}
+        unLock={candidate.isUnlocked}
+        urlPdf={candidate?.profilesCvs?.at(0)?.pdfURL}
+
       />
       {/* <ModalUnlockCandidate /> */}
     </div>
