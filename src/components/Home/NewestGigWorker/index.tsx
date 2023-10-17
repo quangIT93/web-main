@@ -48,7 +48,7 @@ const NewestGigWorker = () => {
       if (result) {
         setListData(result.data.cvFilters);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -86,7 +86,9 @@ const NewestGigWorker = () => {
       >
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <FireIcon width={25} height={25} />
-          <h2>{languageRedux === 1 ? 'Ứng viên mới' : 'Newest gig worker'}</h2>
+          <h2>
+            {languageRedux === 1 ? 'Ứng viên mới nhất' : 'Newest workers'}
+          </h2>
         </div>
         {profileV3?.typeRoleData === 1 ? (
           <div
@@ -100,9 +102,7 @@ const NewestGigWorker = () => {
             }}
             onClick={handleChangeRouteNewestWorker}
           >
-            <p
-              style={{ cursor: 'pointer' }}
-            >
+            <p style={{ cursor: 'pointer' }}>
               {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
             </p>
             <ArrowrightIcon width={20} height={20} />
