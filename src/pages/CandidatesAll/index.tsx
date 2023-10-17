@@ -331,7 +331,7 @@ const CandidatesAll = () => {
         ageMax,
         19,
         nextPage,
-        'vi',
+        languageRedux === 1 ? 'vi' : 'en',
       );
       // const result = await hotJobApi.getHotJobById(
       //   url,

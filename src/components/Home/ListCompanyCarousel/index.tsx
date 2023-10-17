@@ -20,7 +20,7 @@ import 'swiper/css/navigation';
 import { Navigation, Mousewheel, Pagination } from 'swiper';
 
 // @ts-ignore
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { Space } from 'antd';
 
@@ -37,6 +37,8 @@ import './style.scss';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer';
+import { setPalceId } from 'store/reducer/placeIdReducer';
+import { getCookie, setCookie } from 'cookies';
 
 interface ItemTheme {
   id: number;
@@ -56,14 +58,14 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   const [value, setValue] = React.useState<Number>(0);
   // const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [index, setIndex] = React.useState(0);
-
+  const placeIdRedux = useSelector((state: RootState) => state.placeIdReducer.placeId)
   // const [addressIdCookie, setAddressIdCookie] = React.useState(0);
-
+  const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
   // get post by theme id when click theme item
-
+  const [placeIdCookie, setPlaceIdCookie] = React.useState(0);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -94,6 +96,20 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   //   }
   //   return null;
   // }
+  const location = useLocation()
+  React.useEffect(() => {
+    // Retrieve the user's settings from cookies
+    let storedSettings = JSON.parse(
+      getCookie('hotPlaceId') || '{}',
+    )
+    setSelectedItemIndex(storedSettings.id);
+    setPlaceIdCookie(storedSettings.placeId);
+    if (storedSettings.userSelectedId !== 1) {
+      const slide = document.querySelector('.swiper-slide');
+      slide?.classList.remove('swiper-slide-clicked');
+    }
+  }, [value]);
+
 
   const handleChange = async (
     event: React.SyntheticEvent,
@@ -104,26 +120,28 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       // setIndex(newValue);
       // setOpenBackdrop(!openBackdrop);
       const categoryId = searchParams.get('categories-id');
-      if (categoryId) {
-        setSearchParams({
-          'theme-id': `${newValue}`,
-          'categories-id': `${Number(categoryId) === 1 ? 'all' : categoryId}`,
-        });
-      } else {
-        setSearchParams({ 'theme-id': `${newValue}` });
-      }
+      // if (categoryId) {
+      //   setSearchParams({
+      //     'theme-id': `${newValue}`,
+      //     'categories-id': `${Number(categoryId) === 1 ? 'all' : categoryId}`,
+      //   });
+      // } else {
+      //   setSearchParams({ 'theme-id': `${newValue}` });
+      // }
 
-      const result = await postApi.getPostByThemeId(
-        newValue,
-        9,
-        null,
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      if (result) {
-        setPostByTheme(result);
-        // set backdrop
-        // setOpenBackdrop(false);
-      }
+      // if (location.pathname === '/') {
+      //   const result = await postApi.getPostByThemeId(
+      //     newValue,
+      //     9,
+      //     0,
+      //     languageRedux === 1 ? 'vi' : 'en',
+      //   );
+      //   if (result) {
+      //     setPostByTheme(result);
+      //     // set backdrop
+      //     // setOpenBackdrop(false);
+      //   }
+      // }
     } catch (error) {
       console.log(error);
     }
@@ -133,21 +151,24 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   //   setOpenBackdrop(false);
   // };
   const getPostNewestByThemeId = async () => {
+    let storedSettings = JSON.parse(
+      getCookie('hotPlaceId') || '{}',
+    )
     try {
-      const themeId = searchParams.get(`theme-id`)
-        ? searchParams.get(`theme-id`)
-        : listTheme?.data[0]?.id;
+      // const themeId = searchParams.get(`theme-id`)
+      //   ? searchParams.get(`theme-id`)
+      //   : listTheme?.data[0]?.id;
 
-      var result;
-      if (themeId) {
-        // setOpenBackdrop(true);
-        result = await postApi.getPostByThemeId(
-          Number(themeId),
-          9,
-          0,
-          languageRedux === 1 ? 'vi' : 'en',
-        );
-      }
+      // var result;
+      // if (themeId) {
+      // setOpenBackdrop(true);
+      const result = await postApi.getPostByThemeId(
+        storedSettings?.placeId ? storedSettings?.placeId : listTheme?.data[0]?.id,
+        9,
+        0,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      // }
 
       if (result) {
         setPostByTheme(result);
@@ -160,17 +181,19 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   };
   React.useEffect(() => {
     getPostNewestByThemeId();
-    setValue(Number(searchParams.get('theme-id')));
+    // setValue(Number(searchParams.get('theme-id')));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, languageRedux]);
+  }, [languageRedux, value]);
 
   // console.log('value', value);
   // console.log('listTheme', listTheme);
+  console.log('selectedItemIndex', selectedItemIndex);
 
   return (
     <Box
       sx={{
-        maxWidth: { xs: 320, sm: 480 },
+        // maxWidth: { xs: 320, sm: 480 },
+        width: '100%',
         bgcolor: 'background.paper',
         position: 'relative',
         paddingBottom: '16px',
@@ -219,6 +242,15 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         // mousewheel={true}
         spaceBetween={24}
         slidesPerView="auto"
+        // initialSlide={selectedItemIndex}
+        initialSlide={
+          JSON.parse(
+            getCookie('hotPlaceId') || '{}',
+          ).id ?
+            JSON.parse(
+              getCookie('hotPlaceId') || '{}',
+            ).id - 1 : 0
+        }
         // breakpoints={{
         //   320: {
         //     slidesPerView: 3,
@@ -271,17 +303,24 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                 });
                 console.log('item', item);
 
-                localStorage.setItem(
-                  'job_by_place',
-                  `place--${item.id}--${item.number_of_posts}--${item.title}--${item.image}`,
-                );
+                dispatch<any>(setPalceId(item.id));
+                setCookie('hotPlaceId', JSON.stringify({
+                  id: index,
+                  placeId: item.id,
+                }), 365)
+
+                // localStorage.setItem(
+                //   'job_by_place',
+                //   `place--${item.id}--${item.number_of_posts}--${item.title}--${item.image}`,
+                // );
+
                 handleChange(event, item.id);
               }}
               style={{
                 borderBottom:
-                  item.id === value
+                  item.id === placeIdCookie
                     ? '2px solid #0d99ff'
-                    : index === 0 && value === 0
+                    : index === 0 && placeIdCookie === undefined
                       ? '2px solid #0d99ff'
                       : '',
               }}

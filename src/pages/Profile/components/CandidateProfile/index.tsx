@@ -409,10 +409,13 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 ? 'Hồ sơ CV/Hồ sơ để ứng tuyển'
                 : 'Profile CV/Resume to apply'}
             </h3>
-            <Space
+            <div
               style={{
                 cursor: 'pointer',
-                display: profileV3?.profilesCvs?.length === 0 ? 'none' : 'flex',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                // display: profileV3?.profilesCvs?.length === 0 ? 'none' : 'flex',
               }}
             // onClick={() => setOpenModalLocation(true)}
             >
@@ -420,21 +423,25 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
                 <PencilIcon width={15} height={15} />
               </div> */}
 
-              <p
-                style={{ color: '#0D99FF', fontSize: '14px' }}
+              <Button type="primary" shape="round"
+                style={{ background: '#0D99FF', fontSize: '14px' }}
                 onClick={() => window.open('/templates-cv', '_parent')}
               >
                 {/* {language?.edit} */}
                 {languageRedux === 1 ? 'Tạo mới CV' : 'Create a new CV'}
-              </p>
+              </Button>
               <p
-                style={{ color: '#0D99FF', fontSize: '14px' }}
+                style={{
+                  color: '#0D99FF',
+                  fontSize: '14px',
+                  display: profileV3?.profilesCvs?.length === 0 ? 'none' : 'flex',
+                }}
                 onClick={() => window.open('/profile-cv', '_parent')}
               >
                 {/* {language?.edit} */}
                 {languageRedux === 1 ? 'Xem tất cả' : 'View all'}
               </p>
-            </Space>
+            </div>
           </div>
           <div className="list-cv-container">
             {profileV3.profilesCvs?.length !== 0 ? (
