@@ -111,8 +111,8 @@ const TemplatesCv: React.FC = () => {
 
   const handleClickSaveCv = async () => {
     const selectedTemplate = templatesCv.find((template) => {
-      console.log(template.id);
-      console.log(Number(localStorage.getItem('cv-id')));
+      // console.log(template.id);
+      // console.log(Number(localStorage.getItem('cv-id')));
       if (!Number(localStorage.getItem('cv-id'))) {
         return 1;
       }
@@ -261,7 +261,9 @@ const TemplatesCv: React.FC = () => {
               <BackIcon width={15} height={15} fill="white" />
             </div>
             <p>
-              {languageRedux === 1 ? 'Quay lại trang chỉnh sửa' : 'Back to profile Edit'}
+              {languageRedux === 1
+                ? 'Quay lại trang chỉnh sửa'
+                : 'Back to profile Edit'}
             </p>
           </div>
           <div className="change-styles">
