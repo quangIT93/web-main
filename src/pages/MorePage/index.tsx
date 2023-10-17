@@ -120,7 +120,7 @@ const MoreJobsPage: React.FC = () => {
   );
   const [templateId, setTemplateId] = React.useState<any>(
     // localStorage.getItem('job-type'),
-    '18'
+    '18',
   );
 
   const [imageHotPlace, setImageHotPlace] = React.useState<string | undefined>(
@@ -149,7 +149,7 @@ const MoreJobsPage: React.FC = () => {
   const getTemplateId = () => {
     const templateId = localStorage.getItem('job_by_place');
     if (templateId && templateId !== 'new' && templateId !== 'suggested') {
-      console.log('la new');
+      // console.log('la new');
       setTemplateId(templateId && templateId?.split('--').at(1));
       setImageHotPlace(templateId?.split('--').at(4));
       setTitleHotPlace(templateId?.split('--').at(3));
@@ -157,13 +157,12 @@ const MoreJobsPage: React.FC = () => {
     }
   };
 
-  console.log('getTemplateId', localStorage.getItem('job_by_place'));
-  console.log('getTemplateId', templateId);
+  // console.log('getTemplateId', localStorage.getItem('job-type'));
+  // console.log('getTemplateId', templateId);
 
   React.useEffect(() => {
     setTypeJob(localStorage.getItem('job-type'));
     getTemplateId();
-    console.log('set lai');
   }, []);
 
   React.useEffect(() => {
@@ -174,17 +173,16 @@ const MoreJobsPage: React.FC = () => {
           ? 'HiJob - Công việc mới nhất'
           : 'HiJob - Newest Jobs'
         : typeJob === 'suggested'
-          ? languageRedux === 1
-            ? 'HiJob - Công việc gợi ý'
-            : 'HiJob - Suggested jobs in your city'
-          : languageRedux === 1
-            ? 'HiJob - Công việc theo chủ đề'
-            : 'HiJob - job by hot places';
+        ? languageRedux === 1
+          ? 'HiJob - Công việc gợi ý'
+          : 'HiJob - Suggested jobs in your city'
+        : languageRedux === 1
+        ? 'HiJob - Công việc theo chủ đề'
+        : 'HiJob - job by hot places';
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_hotJob' as string,
     });
-    console.log('set lai');
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
@@ -239,38 +237,39 @@ const MoreJobsPage: React.FC = () => {
         getCookie('userSelected') || '{}',
       ) as UserSelected;
       setOpenBackdrop(true);
+
       const result =
         typeJob === 'new'
           ? await postApi.getPostNewestV3(
-            childCateloriesArray,
-            // userSelectedId,
-            userSelected.userSelectedId,
-            // null,
-            // null,
-            // profile && profile?.profileLocations?.length > 0 &&
-            // profile?.profileLocations?.map((item: any) => {
-            //     return item.id
-            // }),
-            null,
-            null,
-            20,
-            null,
-            languageRedux === 1 ? 'vi' : 'en',
-          )
+              childCateloriesArray,
+              // userSelectedId,
+              userSelected.userSelectedId,
+              // null,
+              // null,
+              // profile && profile?.profileLocations?.length > 0 &&
+              profile.length !== 0 ? profile?.profileLocations : null,
+              profile.length !== 0
+                ? profile?.profileLocations[0]?.profileLocations?.id
+                : null,
+              // null,
+              20,
+              null,
+              languageRedux === 1 ? 'vi' : 'en',
+            )
           : typeJob === 'suggested'
-            ? await nearByApi.getNearByJob(
+          ? await nearByApi.getNearByJob(
               profile &&
-              profile?.profileLocations?.length > 0 &&
-              profile?.profileLocations?.map((item: any) => {
-                return item.province.id;
-              }),
+                profile?.profileLocations?.length > 0 &&
+                profile?.profileLocations?.map((item: any) => {
+                  return item.province.id;
+                }),
               null,
               null,
               19,
               null,
               languageRedux === 1 ? 'vi' : 'en',
             )
-            : await postApi.getPostByThemeId(
+          : await postApi.getPostByThemeId(
               templateId,
               19,
               0,
@@ -325,34 +324,34 @@ const MoreJobsPage: React.FC = () => {
       const result =
         typeJob === 'new'
           ? await postApi.getPostNewestV3(
-            childCateloriesArray,
-            userSelected.userSelectedId,
-            // null,
-            // null,
-            // profile && profile?.profileLocations?.length > 0 &&
-            // profile?.profileLocations?.map((item: any) => {
-            //     return item.id
-            // }),
-            null,
-            null,
-            20,
-            thersholdId,
-            languageRedux === 1 ? 'vi' : 'en',
-          )
+              childCateloriesArray,
+              userSelected.userSelectedId,
+              // null,
+              // null,
+              // profile && profile?.profileLocations?.length > 0 &&
+              // profile?.profileLocations?.map((item: any) => {
+              //     return item.id
+              // }),
+              null,
+              null,
+              20,
+              thersholdId,
+              languageRedux === 1 ? 'vi' : 'en',
+            )
           : typeJob === 'suggested'
-            ? await nearByApi.getNearByJob(
+          ? await nearByApi.getNearByJob(
               profile &&
-              profile?.profileLocations?.length > 0 &&
-              profile?.profileLocations?.map((item: any) => {
-                return item.province.id;
-              }),
+                profile?.profileLocations?.length > 0 &&
+                profile?.profileLocations?.map((item: any) => {
+                  return item.province.id;
+                }),
               null,
               null,
               19,
               thersholdId,
               languageRedux === 1 ? 'vi' : 'en',
             )
-            : await postApi.getPostByThemeId(
+          : await postApi.getPostByThemeId(
               templateId,
               19,
               thersholdId,
@@ -379,13 +378,14 @@ const MoreJobsPage: React.FC = () => {
             : 'No more job to show',
         );
       }
-    } catch (error) { }
+    } catch (error) {}
   };
   React.useEffect(() => {
     let userSelected = JSON.parse(
       getCookie('userSelected') || '{}',
     ) as UserSelected;
     setUserSelectedId(userSelected.userSelectedId);
+
     getMoreJob();
     // setLoading(true);
     // setTimeout(() => {
@@ -395,12 +395,12 @@ const MoreJobsPage: React.FC = () => {
     //     setLoading(false);
     //   }
     // }, 1000);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    console.log('set lai');
   }, [
     languageRedux,
     idFilterProvinces,
-    // profile,
+    profile,
     typeJob,
     childCateloriesArray,
     // JSON.parse(
@@ -458,7 +458,6 @@ const MoreJobsPage: React.FC = () => {
       });
       setOptionsProvinces(newOptionsProvinces);
     }
-    console.log('set lai');
   }, [provincesData, languageRedux]);
 
   const handleChangeFilterHotjob = (value: string) => {
@@ -552,8 +551,8 @@ const MoreJobsPage: React.FC = () => {
                   {typeJob === 'new'
                     ? language?.newest_jobs
                     : typeJob === 'suggested'
-                      ? language?.nearby_jobs
-                      : language?.jobs_by_theme}
+                    ? language?.nearby_jobs
+                    : language?.jobs_by_theme}
                 </h3>
                 {/* <div
                                     className="filter-moreJob"

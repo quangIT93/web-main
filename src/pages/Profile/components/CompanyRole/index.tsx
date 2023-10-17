@@ -83,7 +83,11 @@ const CompanyRole: React.FC<ICompany> = (props) => {
             }}
           >
             <div className="company-role-title_top">
-              <h1>{language?.company_info}</h1>
+              <h1>
+                {languageRedux === 1
+                  ? 'Thông tin công ty'
+                  : "Company's information"}
+              </h1>
 
               <Space
                 style={{

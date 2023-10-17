@@ -81,7 +81,7 @@ const CandidateNewDetail = () => {
       if (id) {
         const result = await profileApi.getProfileByAccountId(
           languageRedux === 1 ? 'vi' : 'en',
-          id
+          id,
         );
 
         if (result) {
@@ -160,7 +160,7 @@ const CandidateNewDetail = () => {
 
   useEffect(() => {
     getBookMark();
-  }, [languageRedux]);
+  }, []);
 
   const handleClickItemCv = async (urlPdf: string, id: string) => {
     if (candidate.isUnlocked === true && urlPdf !== undefined) {
@@ -218,7 +218,9 @@ const CandidateNewDetail = () => {
                 />
               </Badge>
               <div style={{ marginLeft: '10px' }}>
-                <h2>{candidate?.name ? candidate?.name : language?.unupdated}</h2>
+                <h2>
+                  {candidate?.name ? candidate?.name : language?.unupdated}
+                </h2>
               </div>
             </div>
             <div className="buttons-candidate">
@@ -229,11 +231,9 @@ const CandidateNewDetail = () => {
                   // onClick={() => handleUnLockCandidate(candidate?.accountId)}
                   style={{ backgroundColor: 'transparent', color: 'black' }}
                 >
-                  {
-                    languageRedux === 1 ?
-                      "Mở khóa ứng viên" :
-                      "Unlock Candidates"
-                  }
+                  {languageRedux === 1
+                    ? 'Mở khóa ứng viên'
+                    : 'Unlock Candidates'}
                 </Button>
               ) : (
                 <Button
@@ -241,11 +241,9 @@ const CandidateNewDetail = () => {
                   disabled={candidate && candidate?.isUnlocked}
                   onClick={() => handleUnLockCandidate(candidate?.accountId)}
                 >
-                  {
-                    languageRedux === 1 ?
-                      "Mở khóa ứng viên" :
-                      "Unlock Candidates"
-                  }
+                  {languageRedux === 1
+                    ? 'Mở khóa ứng viên'
+                    : 'Unlock Candidates'}
                 </Button>
               )}
 
@@ -258,11 +256,7 @@ const CandidateNewDetail = () => {
                   );
                 }}
               >
-                {
-                  languageRedux === 1 ?
-                    "Xem hồ sơ" :
-                    "View Resume"
-                }
+                {languageRedux === 1 ? 'Xem hồ sơ' : 'View Resume'}
               </Button>
 
               <div
@@ -302,11 +296,9 @@ const CandidateNewDetail = () => {
             }}
           >
             <h3>
-              {
-                languageRedux === 1 ?
-                  "Thông tin ứng viên" :
-                  "Candidate information"
-              }
+              {languageRedux === 1
+                ? 'Thông tin ứng viên'
+                : 'Candidate information'}
             </h3>
           </div>
           <div className="info-detail">
@@ -360,10 +352,14 @@ const CandidateNewDetail = () => {
             </div>
             <div className="div-detail-row right">
               <p>
-                {candidate?.phoneData ? candidate?.phoneData : language?.unupdated}
+                {candidate?.phoneData
+                  ? candidate?.phoneData
+                  : language?.unupdated}
               </p>
               <p>
-                {candidate?.emailData ? candidate?.emailData : language?.unupdated}
+                {candidate?.emailData
+                  ? candidate?.emailData
+                  : language?.unupdated}
               </p>
 
               <p>

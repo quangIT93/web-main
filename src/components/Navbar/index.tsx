@@ -140,17 +140,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-    {
-      openCollapseFilter: boolean;
-      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-      // heightNavbar: number
-      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-      openNotificate: boolean;
-      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-      search: boolean;
-    } = useContext(HomeValueContext);
+  {
+    openCollapseFilter: boolean;
+    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+    // heightNavbar: number
+    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+    openNotificate: boolean;
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    search: boolean;
+  } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -227,7 +227,7 @@ const Navbar: React.FC = () => {
         setOpenModalTurnOffStatus(true);
         setSearchJob(false);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -252,7 +252,6 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
     setLanguageId(userLanguageSelected);
-    console.log(languageId);
   }, [languageId]);
 
   // console.log('jobTYpe', jobType);
@@ -420,7 +419,7 @@ const Navbar: React.FC = () => {
         dispatch(setProfileV3(result));
         setRole(result.data.typeRoleData);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -865,7 +864,7 @@ const Navbar: React.FC = () => {
       if (result) {
         dispatch(setProfileV3(result));
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // useEffect(() => {
@@ -981,10 +980,8 @@ const Navbar: React.FC = () => {
     let userLanguageSelected = JSON.parse(getCookie('languageId') || '1');
     if (userLanguageSelected) {
       setLanguageId(userLanguageSelected);
-      console.log('2222222');
       dispatch(getLanguages(userLanguageSelected) as any);
     } else {
-      console.log('33333333');
       setLanguageId(1);
       dispatch(getLanguages('1') as any);
     }
@@ -1128,8 +1125,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="3"
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -1159,8 +1156,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-              openLogin &&
-              location?.pathname === '/'
+            openLogin &&
+            location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1244,8 +1241,8 @@ const Navbar: React.FC = () => {
                           ? profileV3?.companyInfomation?.email
                           : languageData?.home_page?.un_update_infor
                         : profileV3?.email
-                          ? profileV3?.email
-                          : languageData?.home_page?.un_update_infor}
+                        ? profileV3?.email
+                        : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
                   {profileV3?.typeRoleData === 1 ? (
@@ -1284,10 +1281,10 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3?.profileLocations?.length > 0
                           ? profileV3?.profileLocations?.map(
-                            (location: any) => {
-                              return `${location.fullName} , `;
-                            },
-                          )
+                              (location: any) => {
+                                return `${location.fullName} , `;
+                              },
+                            )
                           : languageData?.home_page?.un_update_infor}
                       </p>
                     </span>
@@ -1300,8 +1297,8 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3 && profileV3?.profileCategories?.length > 0
                           ? profileV3?.profileCategories.map((profile: any) => {
-                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                          })
+                              return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                            })
                           : languageData?.home_page?.un_update_infor}
                       </p>
                     </span>
@@ -1327,9 +1324,9 @@ const Navbar: React.FC = () => {
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1399,9 +1396,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                // style={{
-                //   display: openRadioGroup ? 'flex' : 'none',
-                // }}
+                  // style={{
+                  //   display: openRadioGroup ? 'flex' : 'none',
+                  // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1681,8 +1678,8 @@ border-aniation_download
                     <p>
                       {profileV3?.profileLocations?.length > 0
                         ? profileV3?.profileLocations?.map((location: any) => {
-                          return `${location.fullName} , `;
-                        })
+                            return `${location.fullName} , `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1695,8 +1692,8 @@ border-aniation_download
                     <p>
                       {profileV3 && profileV3?.profileCategories?.length > 0
                         ? profileV3?.profileCategories.map((profile: any) => {
-                          return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                        })
+                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                          })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1719,9 +1716,9 @@ border-aniation_download
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                // onClick={() => {
-                //   window.open('/history', "_top")
-                // }}
+                  // onClick={() => {
+                  //   window.open('/history', "_top")
+                  // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1833,8 +1830,9 @@ border-aniation_download
 
   return (
     <div
-      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
-        }`}
+      className={`modal-navbar ${
+        openCollapseFilter ? 'show-modal_navbar' : ''
+      }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1943,6 +1941,7 @@ border-aniation_download
                 </Button>
                 {openNotificate ? <Notificate /> : <></>}
               </div>
+
               <div
                 className="wrap-btn_notice btn-noti_icon 
             border-aniation_download

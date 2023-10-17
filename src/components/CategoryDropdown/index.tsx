@@ -71,7 +71,7 @@ const CategoryDropdown: React.FC = () => {
     useState<boolean>(false);
   const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
     React.useState<any>(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const updateWindowWidth = () => {
     if (window.innerWidth > 560) {
@@ -636,7 +636,7 @@ const CategoryDropdown: React.FC = () => {
                       : 'Suggested jobs'
                     : languageRedux === 1
                       ? 'Thông tin công ty'
-                      : 'Company information'}
+                      : "Company's information"}
                 </h3>
               </div>
             </div>

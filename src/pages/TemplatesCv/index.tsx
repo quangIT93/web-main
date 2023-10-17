@@ -42,6 +42,7 @@ import CvTemplate6 from '#components/TemplatesCv/CvTemplate/CvTemplate6';
 import CvTemplate7 from '#components/TemplatesCv/CvTemplate/CvTemplate7';
 import CategoryDropdown from '#components/CategoryDropdown';
 import { Backdrop, CircularProgress } from '@mui/material';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -110,7 +111,12 @@ const TemplatesCv: React.FC = () => {
   // React.useEffect(() => {}, []);
 
   const handleClickSaveCv = async () => {
-    console.log('1111111111111111');
+    const analytics: any = getAnalytics();
+
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: `/web_click_create_cv` as string,
+    });
 
     const selectedTemplate = templatesCv.find((template) => {
       console.log(template.id);
@@ -203,7 +209,7 @@ const TemplatesCv: React.FC = () => {
   const fileNameCv = createFileName(profile?.name ? profile?.name : 'Your');
 
   React.useEffect(() => {
-    if (!localStorage.getItem('accessToken') || roleRedux === 1)
+    if (!localStorage.getItem('accessToken') || profileV3.typeRoleData === 1)
       window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
