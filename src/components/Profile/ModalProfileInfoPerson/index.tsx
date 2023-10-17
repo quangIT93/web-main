@@ -91,19 +91,19 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.addressText
       ? {
-          province_id: Number(profile?.addressText?.id),
+          province_id: profile?.addressText?.id,
           province_fullName: profile?.addressText.fullName,
         }
       : null,
   );
 
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
 
   const [name, setName] = useState(profile?.name);
-  const [jobTypeName, setJobTypeName] = useState(profileV3?.jobTypeName);
+  const [jobTypeName, setJobTypeName] = useState(profile?.jobTypeName);
   const [introduction, setIntroduction] = useState(profile?.introduction);
 
   const [messageApi, contextHolder] = message.useMessage();

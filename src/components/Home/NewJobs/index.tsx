@@ -203,10 +203,14 @@ const NewJobs: React.FC = () => {
     // );
 
     const result2 = await postApi.getPostNewestV3(
-      childCateloriesArray,
-      Number(categoryId),
-      profileV3?.profileLocations,
-      profileV3?.addressText?.id,
+      // childCateloriesArray,
+      // Number(categoryId),
+      // profileV3?.profileLocations,
+      // profileV3?.addressText?.id,
+      null,
+      null,
+      null,
+      null,
       10,
       thersholdId,
       languageRedux === 1 ? 'vi' : 'en',
@@ -251,12 +255,16 @@ const NewJobs: React.FC = () => {
       const result2 = await postApi.getPostNewestV3(
         // profileCategories,
         // userSelected.userSelectedId,
-        profileV3.length !== 0 ? profileV3?.profileCategories : null,
-        profileV3.length !== 0
-          ? profileV3?.profileCategories[0]?.parentCategory?.id
-          : null,
-        profileV3.length !== 0 ? profileV3?.profileLocations : null,
-        profileV3.length !== 0 ? profileV3?.addressText?.id : null,
+        // profileV3.length !== 0 ? profileV3?.profileCategories : null,
+        // profileV3.length !== 0
+        //   ? profileV3?.profileCategories[0]?.parentCategory?.id
+        //   : null,
+        // profileV3.length !== 0 ? profileV3?.profileLocations : null,
+        // profileV3.length !== 0 ? profileV3?.addressText?.id : null,
+        null,
+        null,
+        null,
+        null,
         20,
         null,
         languageRedux === 1 ? 'vi' : 'en',
