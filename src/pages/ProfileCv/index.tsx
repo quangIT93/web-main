@@ -87,7 +87,7 @@ const ProfileCv: React.FC = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    roleRedux === 1 && window.open(`/`, '_parent');
+    profileV3.typeRoleData === 1 && window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -100,7 +100,7 @@ const ProfileCv: React.FC = () => {
         );
         dispatch(setProfileV3(resultProfileV3));
       }
-    } catch (error) { }
+    } catch (error) {}
 
     // setSelectedId(id);
   };
@@ -183,9 +183,7 @@ const ProfileCv: React.FC = () => {
               }}
             >
               {/* <UserLineOutCVIcon /> */}
-              {languageRedux === 1
-                ? 'Tạo mới CV'
-                : 'Create a new CV'}
+              {languageRedux === 1 ? 'Tạo mới CV' : 'Create a new CV'}
             </Button>
             <Button
               type="primary"
@@ -243,13 +241,13 @@ const ProfileCv: React.FC = () => {
                           <p>
                             {languageRedux === 1
                               ? 'Cập nhật cuối: ' +
-                              moment(new Date()).format('HH:mm') +
-                              ', ' +
-                              moment(new Date()).format('DD/MM/YYYY')
+                                moment(new Date()).format('HH:mm') +
+                                ', ' +
+                                moment(new Date()).format('DD/MM/YYYY')
                               : 'Last update: ' +
-                              moment(new Date()).format('HH:mm') +
-                              ', ' +
-                              moment(new Date()).format('DD/MM/YYYY')}
+                                moment(new Date()).format('HH:mm') +
+                                ', ' +
+                                moment(new Date()).format('DD/MM/YYYY')}
                           </p>
                         </div>
                         <div className="cv-item_right__actions">
@@ -326,7 +324,7 @@ const ProfileCv: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //  onClick={handleClose}
+              //  onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -342,62 +340,52 @@ const ProfileCv: React.FC = () => {
             </div>
             <div className="banner-contents">
               <div className="banner-contents_title">
-                {
-                  languageRedux === 1 ?
-                    "Thiết kế CV trên HiJob, bạn có thể:" :
-                    "Designing your CV on HiJob, you can:"
-                }
+                {languageRedux === 1
+                  ? 'Thiết kế CV trên HiJob, bạn có thể:'
+                  : 'Designing your CV on HiJob, you can:'}
               </div>
               <div className="banner-content_detail">
                 <div className="banner-content_detail_wraper">
                   <div className="banner-content_detail_item">
-                    <div className='item_icon'>
+                    <div className="item_icon">
                       <Icon4PointedStar />
                     </div>
                     <p>
-                      {
-                        languageRedux === 1 ?
-                          "Tạo bản CV chuyên nghiệp và hấp dẫn (tối đa đến 10 bản)." :
-                          "Create a professional and attractive CV (up to 10 copies)."
-                      }
+                      {languageRedux === 1
+                        ? 'Tạo bản CV chuyên nghiệp và hấp dẫn (tối đa đến 10 bản).'
+                        : 'Create a professional and attractive CV (up to 10 copies).'}
                     </p>
                   </div>
                   <div className="banner-content_detail_item">
-                    <div className='item_icon'>
+                    <div className="item_icon">
                       <Icon4PointedStar />
                     </div>
                     <p>
-                      {
-                        languageRedux === 1 ?
-                          "Khả năng thu hút sự chú ý của nhà tuyển dụng." :
-                          "Ability to attract employer attention."
-                      }
+                      {languageRedux === 1
+                        ? 'Khả năng thu hút sự chú ý của nhà tuyển dụng.'
+                        : 'Ability to attract employer attention.'}
                     </p>
                   </div>
                 </div>
                 <div className="banner-content_detail_wraper">
                   <div className="banner-content_detail_item">
-                    <div className='item_icon'>
+                    <div className="item_icon">
                       <Icon4PointedStar />
                     </div>
                     <p>
-                      {
-                        languageRedux === 1 ?
-                          "Tiết kiệm thời gian." :
-                          "Save time."
-                      }
+                      {languageRedux === 1
+                        ? 'Tiết kiệm thời gian.'
+                        : 'Save time.'}
                     </p>
                   </div>
                   <div className="banner-content_detail_item">
-                    <div className='item_icon'>
+                    <div className="item_icon">
                       <Icon4PointedStar />
                     </div>
                     <p>
-                      {
-                        languageRedux === 1 ?
-                          "Cập nhật và chỉnh sửa dễ dàng." :
-                          "Update and edit easily."
-                      }
+                      {languageRedux === 1
+                        ? 'Cập nhật và chỉnh sửa dễ dàng.'
+                        : 'Update and edit easily.'}
                     </p>
                   </div>
                 </div>

@@ -37,6 +37,10 @@
     }
 }
 
+.ant-select-dropdown:has(.filter-candidate){
+    z-index: 8 !important;
+}
+
 
 .ant-select-dropdown {
     position: fixed;

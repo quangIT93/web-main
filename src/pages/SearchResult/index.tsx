@@ -585,7 +585,7 @@ const NewJobs: React.FC = () => {
   // console.log('cae', cateloryOneItem);
 
   const DropdownRenderLocation = (menus: React.ReactNode) => (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%' }} className="noti-keyword">
       <Text className="title-filter_location">
         {language?.search_results_page?.palce_location}
       </Text>
@@ -605,7 +605,7 @@ const NewJobs: React.FC = () => {
   );
 
   const DropdownRenderCategory = (menus: React.ReactNode) => (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%' }} className="noti-keyword">
       <Text className="title-filter_location">
         {language?.search_results_page?.palce_cate}
       </Text>
@@ -917,6 +917,17 @@ const NewJobs: React.FC = () => {
       // console.log('Đã hết bài viết để hiển thị', result);
     }
   };
+
+  useEffect(() => {
+    // Tìm các phần tử có class 'ant-select-dropdown' trong cây DOM
+    const dropdownElements = document.querySelectorAll('.ant-select-dropdown');
+
+    // Lặp qua các phần tử và thêm class tùy chỉnh
+    dropdownElements.forEach((element) => {
+      element.classList.add('my-custom-dropdown-class');
+    });
+  }, []); // Chạy chỉ một lần sau khi thành phần render
+
   return (
     <>
       <Navbar />
