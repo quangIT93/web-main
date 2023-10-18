@@ -106,9 +106,9 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
               src={
                 item?.profileData?.imageData
                   ? item?.profileData?.imageData?.avatar
-                  : item?.profileData.genderData === 'Nam'
-                  ? male_null_avatar
-                  : female_null_avatar
+                  : item?.profileData.genderData === 'Nam' || item.genderData === 'Male'
+                    ? male_null_avatar
+                    : female_null_avatar
               }
               style={{
                 filter: item?.profileData?.imageData?.avatar
@@ -167,25 +167,25 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   title={
                     item?.profileData?.profilesEducationsData?.length !== 0
                       ? item?.profileData?.profilesEducationsData?.map(
-                          (value: any) => {
-                            return `${value.data}, `;
-                          },
-                        )
+                        (value: any) => {
+                          return `${value.data}, `;
+                        },
+                      )
                       : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'
                   }
                 >
                   <span className="text-info-candidate">
                     {item?.profileData?.profilesEducationsData?.length !== 0
                       ? item?.profileData?.profilesEducationsData?.map(
-                          (value: any) => {
-                            return `${value.data}, `;
-                          },
-                        )
+                        (value: any) => {
+                          return `${value.data}, `;
+                        },
+                      )
                       : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'}
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
                   </span>
                 </Tooltip>
               </li>
@@ -198,25 +198,25 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   title={
                     item?.profileData?.profilesLocationsData?.length !== 0
                       ? item?.profileData?.profilesLocationsData?.map(
-                          (loc: any) => {
-                            return `${loc.full_name}, `;
-                          },
-                        )
+                        (loc: any) => {
+                          return `${loc.full_name}, `;
+                        },
+                      )
                       : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'
                   }
                 >
                   <span className="text-info-candidate">
                     {item?.profileData?.profilesLocationsData?.length !== 0
                       ? item?.profileData?.profilesLocationsData?.map(
-                          (loc: any) => {
-                            return `${loc.full_name}, `;
-                          },
-                        )
+                        (loc: any) => {
+                          return `${loc.full_name}, `;
+                        },
+                      )
                       : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'}
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
                   </span>
                 </Tooltip>
               </li>
@@ -229,25 +229,25 @@ const ListCardSaveCandidate: React.FC<IitemNewJob> = (props) => {
                   title={
                     item?.profileData?.childCategoriesData?.length !== 0
                       ? item?.profileData?.childCategoriesData?.map(
-                          (value: any) => {
-                            return `${value.fullName}, `;
-                          },
-                        )
+                        (value: any) => {
+                          return `${value.fullName}, `;
+                        },
+                      )
                       : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'
                   }
                 >
                   <span className="text-info-candidate">
                     {item?.profileData?.childCategoriesData?.length !== 0
                       ? item?.profileData?.childCategoriesData?.map(
-                          (value: any) => {
-                            return `${value.fullName}, `;
-                          },
-                        )
+                        (value: any) => {
+                          return `${value.fullName}, `;
+                        },
+                      )
                       : languageRedux === 1
-                      ? 'Thông tin chưa cập nhật'
-                      : 'Not updated information'}
+                        ? 'Thông tin chưa cập nhật'
+                        : 'Not updated information'}
                   </span>
                 </Tooltip>
               </li>

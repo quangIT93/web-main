@@ -111,10 +111,6 @@ const CandidateNewDetail = () => {
           id,
         );
         if (viewProfile.status === 200) {
-          if (viewProfile.total === 0) {
-            setOpenModalMaxUnlock(true);
-            return;
-          }
           setTotal(viewProfile.total);
           const result = await profileApi.getProfileByAccountId(
             languageRedux === 1 ? 'vi' : 'en',
@@ -125,7 +121,10 @@ const CandidateNewDetail = () => {
           }
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      setOpenModalMaxUnlock(true);
+      return;
+    }
   };
 
   const handleClickBookmarkCandidate = async (accountId: string) => {
@@ -139,7 +138,7 @@ const CandidateNewDetail = () => {
           dispatch<any>(setAlertSuccess(true));
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   React.useEffect(() => {
@@ -159,7 +158,7 @@ const CandidateNewDetail = () => {
       if (resultBookmark) {
         setBookmarkCandidate(resultBookmark.data.total);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -317,11 +316,11 @@ const CandidateNewDetail = () => {
               <p>
                 {!candidate?.isUnlocked
                   ? moment(candidate?.birthdayData)
-                      .format('DD/MM/YYYY')
-                      .replace(/\d{2}$/, 'xx')
+                    .format('DD/MM/YYYY')
+                    .replace(/\d{2}$/, 'xx')
                   : candidate?.isUnlocked
-                  ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
-                  : language?.unupdated}
+                    ? moment(candidate?.birthdayData).format('DD/MM/YYYY')
+                    : language?.unupdated}
               </p>
               <p>
                 {candidate?.genderText
@@ -421,12 +420,12 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileCategories?.length !== 0
               ? candidate?.profileCategories?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      {item.fullName}
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    {item.fullName}
+                  </Button>
+                ),
+              )
               : language?.unupdated}
           </Space>
         </div>
@@ -443,10 +442,10 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profileLocations?.length !== 0
               ? candidate?.profileLocations?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    {item?.fullName}
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  {item?.fullName}
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -574,11 +573,11 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesSkills?.length !== 0
               ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.skillName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ))
+                <Button key={index} className="btn" type="text">
+                  <span>{item.skillName}</span>
+                  <span>{item.dataLevel.data}</span>
+                </Button>
+              ))
               : language?.unupdated}
           </Space>
         </div>
@@ -596,13 +595,13 @@ const CandidateNewDetail = () => {
           <Space wrap className="item-info-work">
             {candidate?.profilesLanguages?.length !== 0
               ? candidate?.profilesLanguages?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      <span>{item.languageName}</span>
-                      <span>{item.dataLevel.data}</span>
-                    </Button>
-                  ),
-                )
+                (item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.languageName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ),
+              )
               : language?.unupdated}
           </Space>
         </div>

@@ -43,6 +43,7 @@ import CvTemplate7 from '#components/TemplatesCv/CvTemplate/CvTemplate7';
 import CategoryDropdown from '#components/CategoryDropdown';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { getAnalytics, logEvent } from 'firebase/analytics';
+import ModalOver10Cv from '#components/CV/ModalOver10Cv';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -66,6 +67,7 @@ const TemplatesCv: React.FC = () => {
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const [unUp, setUnUp] = React.useState(true);
   const [unDown, setUnDown] = React.useState(false);
+  const [openModalOver10Cv, setOpenModalOver10Cv] = React.useState(false);
 
   React.useEffect(() => {
     profileV3.length !== 0 &&
@@ -178,6 +180,8 @@ const TemplatesCv: React.FC = () => {
       // const pdfData = new Uint8Array(arrayBuffer);
     } catch (error) {
       console.log('error', error);
+      setOpenModalOver10Cv(true);
+      setLoading(false);
     }
   };
   const removeVietnameseTones = (str: string) => {
@@ -426,6 +430,11 @@ const TemplatesCv: React.FC = () => {
         <ModalSuccessSaveCv
           openModalSuccessDownCv={openModalSuccessDownCv}
           setOpenModalSuccessDownCv={setOpenModalSuccessDownCv}
+        />
+
+        <ModalOver10Cv
+          openModalOver10Cv={openModalOver10Cv}
+          setOpenModalOver10Cv={setOpenModalOver10Cv}
         />
       </div>
       <RollTop />

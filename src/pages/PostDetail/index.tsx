@@ -182,6 +182,9 @@ const Detail = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+  const roleRedux = useSelector(
+    (state: RootState) => state.changeRole.role,
+  );
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -307,14 +310,14 @@ const Detail = () => {
 
   const getDataCompany = () => {
     try {
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
     getDataCompany();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
-  console.log('backgroundButton', backgroundButton);
+  console.log('roleRedux', roleRedux);
 
   // get post by id-post
   const getPostById = async () => {
@@ -357,8 +360,14 @@ const Detail = () => {
           setBackgroundButton('gray');
           setTextButton(languageRedux === 1 ? 'Đã ứng tuyển' : 'Applied');
         } else {
-          setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
-          setBackgroundButton('#0D99FF');
+          if (roleRedux === 0) {
+            setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
+          } else {
+            setTextButton(languageRedux === 1 ? 'Xem' : 'View')
+          }
+          result?.data?.companyResourceData?.name === "HIJOB" && roleRedux === 1 ?
+            setBackgroundButton('gray') :
+            setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
         }
         // else if (result.data.application_status === 2) {
@@ -450,7 +459,10 @@ const Detail = () => {
   // handle click button
   const onclick = async () => {
     console.log('click', profileV3);
-
+    if (post?.data?.companyResourceData?.name === 'HIJOB' &&
+      profileV3.typeRoleData === 1) {
+      return;
+    }
     try {
       if (!ACCESS_TOKEN) {
         setOpenModalLogin(true);
@@ -698,22 +710,23 @@ const Detail = () => {
   const handleClickShowMap = () => {
     window.open(
       'https://www.google.com/maps/place/' +
-        `${post?.data.address}, ${
-          post?.data.location ? post?.data.location.fullName : ''
-        }, ${
-          post?.data?.location?.district
-            ? post?.data?.location?.district?.fullName
-            : ''
-        }, ${
-          post?.data?.location?.district?.province
-            ? post?.data.district?.province?.fullName
-            : ''
-        }`,
+      `${post?.data.address}, ${post?.data.location ? post?.data.location.fullName : ''
+      }, ${post?.data?.location?.district
+        ? post?.data?.location?.district?.fullName
+        : ''
+      }, ${post?.data?.location?.district?.province
+        ? post?.data.district?.province?.fullName
+        : ''
+      }`,
     );
   };
 
   const handleClickChangePage = () => {
     window.open(post?.data?.companyResourceData?.postUrl, '_blank');
+    if (roleRedux === 1) {
+      setOpenModalApply(false);
+      return;
+    }
     setIsApplied(true);
   };
 
@@ -941,8 +954,8 @@ const Detail = () => {
                   <h5>
                     {post?.data.expiredDate
                       ? `${new Date(post?.data.expiredDate).toLocaleDateString(
-                          'en-GB',
-                        )}`
+                        'en-GB',
+                      )}`
                       : language?.post_detail_page?.indefinite}
                   </h5>
                 </div>
@@ -971,15 +984,14 @@ const Detail = () => {
                   return;
                 }
                 window.open(
-                  `/message?post_id=${searchParams.get('post-id')}&user_id=${
-                    post?.data?.accountId
+                  `/message?post_id=${searchParams.get('post-id')}&user_id=${post?.data?.accountId
                   } `,
                   '_parent',
                 );
               }}
-              // onClick={() => {
-              //   console.log(post?.data);
-              // }}
+            // onClick={() => {
+            //   console.log(post?.data);
+            // }}
             ></Button>
             <Button
               onClick={onclick}
@@ -991,6 +1003,9 @@ const Detail = () => {
                 backgroundColor: `${backgroundButton}`,
                 color: 'white',
                 fontWeight: 'normal',
+                cursor: post?.data?.companyResourceData?.name === 'HIJOB' &&
+                  roleRedux === 1
+                  ? 'no-drop' : 'pointer',
                 // position: 'absolute',
                 // bottom: '-212px',
               }}
@@ -1084,8 +1099,8 @@ const Detail = () => {
                     <h5>
                       {post?.data?.postCompanyInformation
                         ? `${post?.data?.postCompanyInformation?.companyLocation?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
-                          `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.fullName}, ` +
+                        `${post?.data?.postCompanyInformation?.companyLocation?.district?.province?.fullName}`
                         : language?.post_detail_page?.not_update}
                     </h5>
                   </div>
@@ -1191,17 +1206,14 @@ const Detail = () => {
                   </div>
                   <div className="mid-title_companyAddress">
                     <AddressDetailPostIcon width={24} height={24} />
-                    <h3>{`${post?.data.address}, ${
-                      post?.data?.location ? post?.data?.location?.fullName : ''
-                    }, ${
-                      post?.data?.location?.district
+                    <h3>{`${post?.data.address}, ${post?.data?.location ? post?.data?.location?.fullName : ''
+                      }, ${post?.data?.location?.district
                         ? post?.data?.location?.district?.fullName
                         : ''
-                    }, ${
-                      post?.data?.location?.district?.province
+                      }, ${post?.data?.location?.district?.province
                         ? post?.data?.location?.district?.province?.fullName
                         : ''
-                    }`}</h3>
+                      }`}</h3>
                     <h3>|</h3>
                     <h3
                       onClick={handleClickShowMap}
@@ -1402,7 +1414,7 @@ const Detail = () => {
                       <div className="description-buttons">
                         <div
                           className="description-button_previous"
-                          // onClick={handlePreviousPost}
+                        // onClick={handlePreviousPost}
                         >
                           <div className="icon">
                             <BackIcon width={17} height={17} />
@@ -1522,19 +1534,16 @@ const Detail = () => {
                     <Typography sx={{ ml: 2 }}>
                       <AddressDetailPostIcon width={16} height={16} />
                       <span style={{ marginLeft: '8px' }}>
-                        {`${post?.data.address}, ${
-                          post?.data?.location
-                            ? post?.data?.location?.fullName
-                            : ''
-                        }, ${
-                          post?.data?.location?.district
+                        {`${post?.data.address}, ${post?.data?.location
+                          ? post?.data?.location?.fullName
+                          : ''
+                          }, ${post?.data?.location?.district
                             ? post?.data?.location?.district?.fullName
                             : ''
-                        }, ${
-                          post?.data?.location?.district?.province
+                          }, ${post?.data?.location?.district?.province
                             ? post?.data?.location?.district?.province?.fullName
                             : ''
-                        }`}
+                          }`}
                       </span>
                     </Typography>
                     {/* <div className="mid-title_companyName">
@@ -1608,7 +1617,15 @@ const Detail = () => {
                 component="h2"
                 sx={{ textAlign: 'center', color: '#0d99ff' }}
               >
-                {language?.post_detail_page?.apply_this_job_mess}
+                {
+                  roleRedux === 0 ?
+                    languageRedux === 1 ?
+                      "Ứng tuyển cho công việc này" :
+                      "Apply for this job" :
+                    languageRedux === 1 ?
+                      "Xem công việc này" :
+                      "View this job"
+                }
               </Typography>
               <Typography
                 id="modal-modal-title"
@@ -1619,8 +1636,8 @@ const Detail = () => {
                 {post?.data?.companyResourceData?.name === 'HIJOB'
                   ? language?.post_detail_page?.apply_this_job_des
                   : isApplied
-                  ? language?.post_detail_page?.have_applied_yet
-                  : language?.post_detail_page?.forward_des}
+                    ? language?.post_detail_page?.have_applied_yet
+                    : language?.post_detail_page?.forward_des}
               </Typography>
 
               <Box
@@ -1650,8 +1667,8 @@ const Detail = () => {
                     post?.data?.companyResourceData?.name === 'HIJOB'
                       ? handleApply
                       : isApplied
-                      ? handleChangeStatus
-                      : handleClickChangePage
+                        ? handleChangeStatus
+                        : handleClickChangePage
                   }
                   style={{
                     width: '300px',
