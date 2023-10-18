@@ -95,7 +95,7 @@ const postApi = {
     const URL =
       `/v3/posts/newest?` +
       `${childrenCategoryId
-        ? `${childrenCategoryId?.map((n, index) => `childrenCategoryId[${index}]=${n.id}`).join('&')}`
+        ? `${childrenCategoryId?.map((n, index) => `childrenCategoryId[${index}]=${n}`).join('&')}`
         : ``
       }` +
       `${parentCategoryId && parentCategoryId !== 1 ? `&parentCategoryId=${parentCategoryId}&` : ``}` +

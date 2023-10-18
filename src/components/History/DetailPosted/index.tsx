@@ -349,8 +349,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                   return null;
                 })}
               </div>
-              <div className="item-candidate">
-                <PersonIcon fontSize="small" className="icon-candidate" />
+              <div className="item-detail-candidate">
+                <PersonIcon fontSize="small" className="icon-detail-candidate" />
                 <p>
                   {candidate.gender === 0 ?
                     language?.female
@@ -358,14 +358,14 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                   {moment(candidate.birthday).format('DD/MM/YYYY')}
                 </p>
               </div>
-              <div className="item-candidate">
-                <LocationOnIcon fontSize="small" className="icon-candidate" />
+              <div className="item-detail-candidate">
+                <LocationOnIcon fontSize="small" className="icon-detail-candidate" />
                 <p>{candidate.province_name}</p>
               </div>
-              <div className="item-candidate">
+              <div className="item-detail-candidate">
                 <BusinessCenterIcon
                   fontSize="small"
-                  className="icon-candidate"
+                  className="icon-detail-candidate"
                 />
                 <p>
                   {

@@ -78,9 +78,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
             src={
               item?.imageData?.avatar
                 ? item?.imageData?.avatar
-                : item.genderData === 'Nam'
-                ? male_null_avatar
-                : female_null_avatar
+                : item.genderData === 'Nam' || item.genderData === 'Male'
+                  ? male_null_avatar
+                  : female_null_avatar
             }
             style={{
               filter: item?.imageData?.avatar ? 'blur(3px)' : 'none',
@@ -140,23 +140,23 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 title={
                   item?.profilesEducationsData?.length !== 0
                     ? item.profilesEducationsData?.map((value: any) => {
-                        return `${value.data}, `;
-                      })
+                      return `${value.data}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'
                 }
               >
                 <span className="text-info-candidate">
                   {item.profilesEducationsData.length !== 0
                     ? item.profilesEducationsData.map(
-                        (value: any, index: number) => {
-                          return `${value.data}, `;
-                        },
-                      )
+                      (value: any, index: number) => {
+                        return `${value.data}, `;
+                      },
+                    )
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'}
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'}
                 </span>
               </Tooltip>
             </li>
@@ -169,21 +169,21 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 title={
                   item?.profilesLocationsData?.length !== 0
                     ? item.profilesLocationsData?.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                      return `${value.fullName}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'
                 }
               >
                 <span className="text-info-candidate">
                   {item.profilesLocationsData.length !== 0
                     ? item.profilesLocationsData.map((loc: any) => {
-                        return `${loc.fullName}, `;
-                      })
+                      return `${loc.fullName}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'}
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'}
                 </span>
               </Tooltip>
             </li>
@@ -196,21 +196,21 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 title={
                   item?.categoriesData?.length !== 0
                     ? item.categoriesData?.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                      return `${value.fullName}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'
                 }
               >
                 <span className="text-info-candidate">
                   {item.categoriesData.length !== 0
                     ? item.categoriesData.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                      return `${value.fullName}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'}
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'}
                 </span>
               </Tooltip>
             </li>

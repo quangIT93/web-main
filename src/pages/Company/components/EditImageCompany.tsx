@@ -38,7 +38,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
 
   useEffect(() => {
     setSelectedImages(dataCompany.images)
-  }, [dataCompany])
+  }, [])
   console.log(dataCompany);
 
   const handleImageChange = async (
@@ -255,12 +255,17 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       deletedImages.push(deleteId);
       return deletedImages;
     });
-    setDataCompany((preValue: any) => {
-      const deletedImages = [...preValue.deleteImages];
-      deletedImages.push(deleteId);
-      return deletedImages;
-    });
+    if (deleteId && !dataCompany.deletedImages.includes(deleteId)) {
+      setDataCompany((preValue: any) => ({
+        ...preValue,
+        deletedImages: [...preValue.deletedImages, deleteId],
+      }));
+    }
   };
+
+  console.log('selectedImages', selectedImages);
+  console.log('deleteImage', deleteImages);
+
 
   return (
     <div
@@ -284,7 +289,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               cursor: 'pointer',
             }}
           >
-            <label htmlFor="submit">
+            <label style={{ cursor: 'pointer' }} htmlFor="submit">
               {languageRedux === 1 ? 'Thêm hình ảnh' : 'Add images'}
             </label>
             <input

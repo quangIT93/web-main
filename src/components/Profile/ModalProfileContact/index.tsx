@@ -21,6 +21,7 @@ import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
+import { message } from 'antd';
 interface InfoContact {
   phone: string;
   email: string;
@@ -133,6 +134,15 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         facebook: fb,
         linkedin: linkIn,
       };
+
+      if (info.facebook.length > 100 || info.linkedin.length > 100) {
+        message.error(
+          languageRedux === 1 ?
+            "Link Facebook và Link Linkedin không được vượt quá 100 ký tự" :
+            "Link Facebook and Link Linkedin cannot exceed 100 characters"
+
+        )
+      }
 
       const result = await profileApi.updateContact(info);
       if (result) {

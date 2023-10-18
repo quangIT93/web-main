@@ -40,7 +40,7 @@ const BreadcrumbsCpn: React.FC = () => {
   // Contexts
   const {
     setChildCateloriesArray,
-
+    childCateloriesArray,
     valueJobChild,
   }: {
     navTouchCatelory: boolean;
@@ -119,6 +119,7 @@ const BreadcrumbsCpn: React.FC = () => {
     getAllChildCategoriesById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueJobChild?.id, languageRedux]);
+  console.log('childCateloriesArray', childCateloriesArray);
 
   useEffect(() => {
     setCheckedItems(
@@ -160,12 +161,14 @@ const BreadcrumbsCpn: React.FC = () => {
         return null;
       })
       .filter((filterArrayId: any | null) => filterArrayId !== null);
+    console.log('array', array);
 
     setArrayChild(array);
 
     setChildCateloriesArray(
       array?.map((arr: { id: number; name: string }) => arr.id),
     );
+
     // const thersholdId =
     // postNewest?.data?.posts[postNewest.data.posts.length - 1]?.id;
     const thersholdId = postNewestV3.data[postNewestV3.data.length - 1]?.id;
@@ -327,12 +330,12 @@ const BreadcrumbsCpn: React.FC = () => {
               ? `Tất cả`
               : `All`
             : arrayChild?.map(
-              (value: { id: number; name: string }, index: number) => (
-                <div key={index}>
-                  {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
-                </div>
-              ),
-            )}
+                (value: { id: number; name: string }, index: number) => (
+                  <div key={index}>
+                    {value.name} {index !== arrayChild.length - 1 ? '/ ' : ''}
+                  </div>
+                ),
+              )}
           {open ? (
             <ExpandLess className="icon-breadcrumb" />
           ) : (
@@ -409,7 +412,7 @@ const BreadcrumbsCpn: React.FC = () => {
                     disabled={
                       checkedItems
                         ? !checkedItems[index]?.checked &&
-                        checkItemsCount >= MAX_CHECKED_ITEMS
+                          checkItemsCount >= MAX_CHECKED_ITEMS
                         : false
                     }
                   />
