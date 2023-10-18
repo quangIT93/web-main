@@ -122,7 +122,7 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
               wordBreak: 'break-word',
             }}
           >
-            <h3>{item?.startDate}</h3>
+            <h3>{item?.companyName}</h3>
             <p>{typeItem === 'experiences' ? item?.title : item?.major}</p>
             <p>
               {`${moment(item?.startDate).format('MM/YYYY')}`} - {` `}

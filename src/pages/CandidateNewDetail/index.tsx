@@ -38,6 +38,7 @@ import ModalUnlockCandidate from './ModalUnlockCandidate';
 
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
+import { Link } from 'react-router-dom';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -175,7 +176,7 @@ const CandidateNewDetail = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, candidate]);
-
+  console.log('candidate', candidate);
   return (
     <div className="candidate-new-detail">
       <Navbar />
@@ -332,15 +333,23 @@ const CandidateNewDetail = () => {
               </p>
 
               <p>
-                {candidate?.facebookData
-                  ? candidate?.facebookData
-                  : 'Chưa cập nhật'}
+                {candidate?.facebookData ? (
+                  <Link to={candidate?.facebookData} target="_blank">
+                    {candidate?.facebookData}
+                  </Link>
+                ) : (
+                  'Chưa cập nhật'
+                )}
               </p>
 
               <p>
-                {candidate?.linkedinData
-                  ? candidate?.linkedinData
-                  : 'Chưa cập nhật'}
+                {candidate?.linkedinData ? (
+                  <Link to={candidate?.linkedinData} target="_blank">
+                    {candidate?.linkedinData}
+                  </Link>
+                ) : (
+                  'Chưa cập nhật'
+                )}
               </p>
             </div>
           </div>
@@ -422,6 +431,31 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
+            <h3>Loại hình công việc</h3>
+          </div>
+          <Space wrap className="item-info-work">
+            {candidate.profilesJobType ? (
+              <Button
+                key={candidate.profilesJobType.id}
+                className="btn"
+                type="text"
+              >
+                {candidate.profilesJobType.data}
+              </Button>
+            ) : (
+              'Chưa cập nhật'
+            )}
+          </Space>
+        </div>
+
+        <div className="candidate-profile-info">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
             <h3>Trình độ học vấn</h3>
           </div>
           {candidate?.profilesEducations?.length !== 0 ? (
@@ -468,6 +502,52 @@ const CandidateNewDetail = () => {
               justifyContent: 'center',
             }}
           ></div>
+        </div>
+
+        <div className="candidate-profile-info">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+          </div>
+          <Space wrap className="item-info-work">
+            {candidate?.profilesSkills?.length !== 0
+              ? candidate?.profilesSkills?.map((item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.skillName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ))
+              : 'Chưa cập nhật'}
+          </Space>
+        </div>
+
+        <div className="candidate-profile-info">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <h3>{languageRedux === 1 ? 'Ngôn ngữ' : 'Languages'}</h3>
+          </div>
+          <Space wrap className="item-info-work">
+            {candidate?.profilesLanguages?.length !== 0
+              ? candidate?.profilesLanguages?.map(
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      <span>{item.languageName}</span>
+                      <span>{item.dataLevel.data}</span>
+                    </Button>
+                  ),
+                )
+              : 'Chưa cập nhật'}
+          </Space>
         </div>
 
         <div className="candidate-profile-info">
@@ -532,42 +612,24 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>Skill</h3>
+            <h3>Hobbies</h3>
           </div>
-          <Space wrap className="item-info-work">
-            {candidate?.profilesSkills?.length !== 0
-              ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.skillName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ))
-              : 'Chưa cập nhật'}
-          </Space>
-        </div>
+          
+          {/* {candidate?.profileAwards?.length !== 0 ? (
+            candidate?.profileAwards?.map((item: any, index: number) => (
+              <ItemApply typeItem="experiences" key={index} item={item} />
+            ))
+          ) : (
+            <div style={{ marginTop: '16px' }}>Chưa cập nhật</div>
+          )} */}
 
-        <div className="candidate-profile-info">
           <div
             style={{
               display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              width: '100%',
+              justifyContent: 'center',
             }}
-          >
-            <h3>Languages</h3>
-          </div>
-          <Space wrap className="item-info-work">
-            {candidate?.profilesLanguages?.length !== 0
-              ? candidate?.profilesLanguages?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      <span>{item.languageName}</span>
-                      <span>{item.dataLevel.data}</span>
-                    </Button>
-                  ),
-                )
-              : 'Chưa cập nhật'}
-          </Space>
+          ></div>
         </div>
       </Box>
       <Footer />
