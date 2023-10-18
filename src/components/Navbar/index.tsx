@@ -125,6 +125,7 @@ import languageApi from 'api/languageApi';
 import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
 import { setRole } from 'store/reducer/roleReducer';
 import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
+import notificationApi from 'api/notification';
 // import { set } from 'immer/dist/internal';
 
 // import redux
@@ -193,6 +194,7 @@ const Navbar: React.FC = () => {
   const [userFiltered, setUserFiltered] = useState<any>();
 
   const [countChat, setCountChat] = useState<number>(0);
+  const [countNoti, setCountNoti] = useState<number>(0);
   const [languageId, setLanguageId] = useState<number>(languageRedux);
   // check search results
   const [checkSeacrh, setCheckSeacrh] = useState<boolean>(false);
@@ -435,6 +437,7 @@ const Navbar: React.FC = () => {
       const result = await messageApi.getUnread(
         languageRedux === 1 ? 'vi' : 'en',
       );
+
       if (result) {
         setCountChat(result.data.quantity);
       }
@@ -452,6 +455,26 @@ const Navbar: React.FC = () => {
     setReceivedMessages,
     setReceivedMessages,
   ]);
+
+  const getCountAppliedNew = async () => {
+    try {
+      const result = await notificationApi.getNotificationCountNew(
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+      console.log('result: ', result);
+
+      if (result) {
+        setCountNoti(result.data.total);
+      }
+    } catch (error) {
+      console.error('error', error);
+    }
+  };
+
+  useEffect(() => {
+    getCountAppliedNew();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // console.log('receivedMessages', receivedMessages)
   // console.log('sendMessages', sendMessages)
@@ -845,7 +868,11 @@ const Navbar: React.FC = () => {
 
   const getAppliedPostedJobs = async () => {
     try {
-      const result = await applitedPostedApi.getAllApplitedPostedApi(0, 'vi');
+      const result = await applitedPostedApi.getAllApplitedPostedApi(
+        0,
+        languageRedux === 1 ? 'vi' : 'en',
+      );
+
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
 
@@ -1460,7 +1487,7 @@ const Navbar: React.FC = () => {
         <ChatIcon />
       </Button>
     </Badge>,
-    <Badge key="3" count={countChat} className="box-right-responsive_badge">
+    <Badge key="3" count={countNoti} className="box-right-responsive_badge">
       <Button
         key="3"
         className="btn-notice"
@@ -1476,7 +1503,8 @@ const Navbar: React.FC = () => {
         <BellIcon />
       </Button>
     </Badge>,
-    <div key="4"
+    <div
+      key="4"
       className="wrap-btn_notice btn-noti_icon 
 border-aniation_download
 "
@@ -1925,20 +1953,26 @@ border-aniation_download
               </Badge>
 
               <div className="wrap-btn_notice ">
-                <Button
-                  className="btn-notice"
-                  name="btn-notice"
-                  onClick={() => {
-                    if (profileV3 && localStorage.getItem('accessToken')) {
-                      setOpenNotificate(!openNotificate);
-                    } else {
-                      setOpenModalLogin(true);
-                    }
-                  }}
-                  ref={bellRef}
+                <Badge
+                  key="3"
+                  count={countNoti}
+                  className="box-right-responsive_badge"
                 >
-                  <BellIcon />
-                </Button>
+                  <Button
+                    className="btn-notice"
+                    name="btn-notice"
+                    onClick={() => {
+                      if (profileV3 && localStorage.getItem('accessToken')) {
+                        setOpenNotificate(!openNotificate);
+                      } else {
+                        setOpenModalLogin(true);
+                      }
+                    }}
+                    ref={bellRef}
+                  >
+                    <BellIcon />
+                  </Button>
+                </Badge>
                 {openNotificate ? <Notificate /> : <></>}
               </div>
 

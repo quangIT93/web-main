@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 // import ReactHtmlParser from 'react-html-parser'
 
-import { Tooltip, Switch, Button } from 'antd';
-
+import { Tooltip, Switch, Button, Spin, notification } from 'antd';
 import { DeleteKeywordIcon } from '#components/Icons';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
+// import antIcon
+import { LoadingOutlined } from '@ant-design/icons';
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import { styled, lighten, darken } from '@mui/system';
 // import {
@@ -65,6 +66,8 @@ import { postDetailEn } from 'validations/lang/en/postDetail';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
 
+// scroll data
+import InfiniteScroll from 'react-infinite-scroll-component';
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
 
@@ -88,11 +91,11 @@ const Notificate = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const [dataNotification, setDataNotification] = useState<any>([]);
+  const [dataNotification, setDataNotification] = useState<any>();
   const [dataNotificationKeyword, setDataNotificationkeyword] = useState<any>(
     [],
   );
-
+  const [page, setPage] = React.useState<any>('0');
   const [activeSystem, setActiveSystem] = useState(true);
   const [activeKeyword, setActiveKeyword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -107,12 +110,13 @@ const Notificate = () => {
   );
 
   const [idKeyWords, setIdKeywords] = useState<number[]>([]);
-
+  const [hasMore, setHasMore] = React.useState(true);
   const [openModalDeleteKeyword, setOpenModalDeleteKeyword] =
     React.useState(false);
 
   const refNotification = React.useRef<HTMLDivElement | null>(null);
 
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -137,10 +141,13 @@ const Notificate = () => {
       setIsLoading(true);
       const result = await notificationApi.getNotificationV2(
         languageRedux === 1 ? 'vi' : 'en',
+        20,
+        '0',
       );
+
       if (result) {
         setIsLoading(false);
-        setDataNotification(result.data);
+        setDataNotification(result.data.notifications);
       }
     } catch (error) {}
   };
@@ -203,30 +210,50 @@ const Notificate = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClickNotiKey = (postId: number) => {
-    window.open(`post-detail?post-id=${postId}`, '_blank');
+  const handleClickNotiKey = async (
+    postId: number,
+    typeText: string,
+    notiId: number,
+  ) => {
+    try {
+      const result = await notificationApi.putProfileSkill(notiId, typeText);
+      if (result) {
+        window.open(`post-detail?post-id=${postId}`, '_parent');
+      }
+    } catch (error) {}
   };
 
-  const handleClickNoty = (
+  const handleClickNoty = async (
     postId: number,
     commentId: number,
     applicationId: number,
     typeText: string,
+    notiId: number,
   ) => {
-    if (typeText === 'recruiter') {
-      window.open(
-        `candidate-detail?post-id=${postId}&application_id=${applicationId}`,
-        '_parent',
-      );
-    }
+    try {
+      if (notiId && typeText) {
+        const result = await notificationApi.putProfileSkill(notiId, typeText);
+        if (result) {
+          if (typeText === 'recruiter') {
+            window.open(
+              `candidate-detail?post-id=${postId}&application_id=${applicationId}`,
+              '_parent',
+            );
+          }
 
-    if (typeText === 'applicator') {
-      window.open(`post-detail?post-id=${postId}`, '_parent');
-    }
+          if (typeText === 'applicator') {
+            window.open(`post-detail?post-id=${postId}`, '_parent');
+          }
 
-    if (typeText === 'communicationComment') {
-      window.open(`detail-comunity?post-community=${commentId}`, '_parent');
-    }
+          if (typeText === 'communicationComment') {
+            window.open(
+              `detail-comunity?post-community=${commentId}`,
+              '_parent',
+            );
+          }
+        }
+      }
+    } catch (error) {}
   };
 
   const handleChangeEmail = async (e: any) => {
@@ -306,6 +333,44 @@ const Notificate = () => {
     setOpenModalDeleteKeyword(false);
   };
 
+  console.log('dataNotification', dataNotification);
+  console.log('dataNotificationKeyword', dataNotificationKeyword);
+
+  const fetchMoreData = async () => {
+    setHasMore(true);
+    try {
+      const nextPage = (parseInt(page) + 1).toString();
+      console.log('nextPage', nextPage);
+
+      const result = await notificationApi.getNotificationV2(
+        languageRedux === 1 ? 'vi' : 'en',
+        20,
+        nextPage,
+      );
+
+      if (result && result.data.notifications.length >= 20) {
+        setPage(nextPage);
+        console.log(',result?.data', result?.data);
+
+        setDataNotification((prev: any) => [
+          ...prev,
+          ...result?.data?.notifications,
+        ]);
+      } else if (result && result.data.notifications.length < 20) {
+        setDataNotification((prev: any) => [
+          ...prev,
+          ...result?.data?.notifications,
+        ]);
+        setHasMore(false);
+      } else {
+        setHasMore(false);
+      }
+    } catch (error) {
+      setHasMore(false);
+      setPage('0');
+    }
+  };
+
   return (
     <div className="notification" ref={refNotification}>
       <div className="top-notificate">
@@ -326,133 +391,150 @@ const Notificate = () => {
           {language?.keyword2}
         </div>
       </div>
-      <div className="bottom-notificate">
+      <div className="bottom-notificate" id="scrollableDiv">
         {isLoading ? (
           <CircularProgress sx={{ marginTop: '50%', color: '#0d99ff' }} />
         ) : activeSystem ? (
-          dataNotification?.notifications?.map(
-            (notificate: any, index: number) => {
-              if (notificate.data.typeText === 'keyword') {
-                return (
-                  <div
-                    key={index}
-                    className="wrap-system"
-                    onClick={() => handleClickNotiKey(notificate.data.postId)}
-                  >
-                    <div className="wrap-img_keyword">
-                      <img
-                        src={notificate.data.image}
-                        alt={language?.err_none_img}
-                      />
-                    </div>
-                    <div className="content-notificate">
-                      <div className="wrap-title_contentNotificate">
-                        <Tooltip
-                          placement="top"
-                          title={notificate.data.postTitle}
-                        >
-                          <h3>{notificate.data.postTitle}</h3>
-                        </Tooltip>
-                        {notificate.data.companyResource.log ? (
-                          <img
-                            src={notificate.data.companyResource.logo}
-                            alt=""
-                          />
-                        ) : (
-                          <></>
-                        )}
+          dataNotification && dataNotification.length !== 0 ? (
+            <InfiniteScroll
+              dataLength={dataNotification && dataNotification?.length}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={<Spin style={{ width: '100%' }} indicator={antIcon} />}
+              style={{ overflow: 'unset' }}
+              scrollableTarget="scrollableDiv"
+            >
+              {dataNotification?.map((notificate: any, index: number) => {
+                if (notificate.data.typeText === 'keyword') {
+                  return (
+                    <div
+                      key={index}
+                      className="wrap-system"
+                      onClick={() =>
+                        handleClickNotiKey(
+                          notificate.data.postId,
+                          notificate.data.typeText,
+                          notificate.data.notificationId,
+                        )
+                      }
+                    >
+                      <div className="wrap-img_keyword">
+                        <img
+                          src={notificate.data.image}
+                          alt={language?.err_none_img}
+                        />
                       </div>
-                      <Tooltip
-                        placement="top"
-                        title={notificate.data.companyResource.companyName}
-                      >
-                        <h5>{notificate.data.companyResource.companyName}</h5>
-                      </Tooltip>
-                      <ul>
+                      <div className="content-notificate">
+                        <div className="wrap-title_contentNotificate">
+                          <Tooltip
+                            placement="top"
+                            title={notificate.data.postTitle}
+                          >
+                            <h3>{notificate.data.postTitle}</h3>
+                          </Tooltip>
+                          {notificate.data.companyResource.log ? (
+                            <img
+                              src={notificate.data.companyResource.logo}
+                              alt=""
+                            />
+                          ) : (
+                            <></>
+                          )}
+                        </div>
                         <Tooltip
                           placement="top"
-                          title={`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
+                          title={notificate.data.companyResource.companyName}
                         >
+                          <h5>{notificate.data.companyResource.companyName}</h5>
+                        </Tooltip>
+                        <ul>
+                          <Tooltip
+                            placement="top"
+                            title={`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
+                          >
+                            <li>
+                              {/* <LocationIcon /> */}
+                              <LocationHomeIcon />
+                              <p>
+                                {`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
+                              </p>
+                            </li>
+                          </Tooltip>
                           <li>
-                            {/* <LocationIcon /> */}
-                            <LocationHomeIcon />
+                            <CateIcon />
                             <p>
-                              {`${notificate.data.location.province.name}, ${notificate.data.location.district.name}`}
+                              {notificate.data.category.map(
+                                (cate: any, index: number) => {
+                                  return `${cate.child_category}${' '}`;
+                                },
+                              )}
                             </p>
                           </li>
-                        </Tooltip>
-                        <li>
-                          <CateIcon />
-                          <p>
-                            {notificate.data.category.map(
-                              (cate: any, index: number) => {
-                                return `${cate.child_category}${' '}`;
-                              },
-                            )}
-                          </p>
-                        </li>
-                      </ul>
-                      <div className="time-content_keyword">
-                        <div className="wrap-time">
-                          <p>
-                            {new Date(
-                              notificate.data.createdAt,
-                            ).toLocaleTimeString([], {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                          </p>
-                          <p>
-                            {new Date(
-                              notificate.data.createdAt,
-                            ).toLocaleDateString('en-GB')}
-                          </p>
+                        </ul>
+                        <div className="time-content_keyword">
+                          <div className="wrap-time">
+                            <p>
+                              {new Date(
+                                notificate.data.createdAt,
+                              ).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </p>
+                            <p>
+                              {new Date(
+                                notificate.data.createdAt,
+                              ).toLocaleDateString('en-GB')}
+                            </p>
+                          </div>
+                          <p>{notificate.data.jobType.name}</p>
                         </div>
-                        <p>{notificate.data.jobType.name}</p>
                       </div>
                     </div>
-                  </div>
-                );
-              } else {
-                return (
-                  <div
-                    key={index}
-                    className="wrap-notificate_system"
-                    onClick={() =>
-                      handleClickNoty(
-                        notificate.data.postId,
-                        notificate.data.communicationId,
-                        notificate.data.applicationId,
-                        notificate.data.typeText,
-                      )
-                    }
-                  >
-                    <h3>{notificate.content_app.title}</h3>
-                    <h5
-                      dangerouslySetInnerHTML={{
-                        __html: notificate.content_app.body,
-                      }}
-                    />
-                    <div className="wrap-time">
-                      <p>
-                        {new Date(notificate.data.createdAt).toLocaleTimeString(
-                          [],
-                          {
+                  );
+                } else {
+                  return (
+                    <div
+                      key={index}
+                      className="wrap-notificate_system"
+                      onClick={() =>
+                        handleClickNoty(
+                          notificate.data.postId,
+                          notificate.data.communicationId,
+                          notificate.data.applicationId,
+                          notificate.data.typeText,
+                          notificate.data.notificationId,
+                        )
+                      }
+                    >
+                      <h3>{notificate.content_app.title}</h3>
+                      <h5
+                        dangerouslySetInnerHTML={{
+                          __html: notificate.content_app.body,
+                        }}
+                      />
+                      <div className="wrap-time">
+                        <p>
+                          {new Date(
+                            notificate.data.createdAt,
+                          ).toLocaleTimeString([], {
                             hour: '2-digit',
                             minute: '2-digit',
-                          },
-                        )}
-                      </p>
-                      <p>
-                        {new Date(notificate.data.createdAt).toLocaleDateString(
-                          'en-GB',
-                        )}
-                      </p>
+                          })}
+                        </p>
+                        <p>
+                          {new Date(
+                            notificate.data.createdAt,
+                          ).toLocaleDateString('en-GB')}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                );
-              }
-            },
+                  );
+                }
+              })}
+            </InfiniteScroll>
+          ) : (
+            <></>
           )
         ) : (
           <div className="wrap-keyword">
