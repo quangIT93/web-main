@@ -59,7 +59,6 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
   const TemplateId = Number(localStorage.getItem('cv-id')) || 1;
-  console.log(profile.name);
 
   useEffect(() => {
     setValueNameCv(
