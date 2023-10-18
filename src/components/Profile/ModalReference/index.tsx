@@ -310,7 +310,7 @@ const ModalReference: React.FC<IModalReference> = (props) => {
             onChange={handleOnchangeMail}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={languageRedux === 1 ? 'Email' : 'Email'}
+            placeholder='example@gmail.com'
           // error={titleError} // Đánh dấu lỗi
           />
         </Box>

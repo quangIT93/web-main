@@ -173,6 +173,36 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
       };
     }
 
+    if (new Date(activity.startDate).getFullYear() > new Date().getFullYear()) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? "Năm bắt đầu không được vượt quá năm hiện tại" :
+            "The starting year cannot exceed the current year",
+        checkForm: false,
+      };
+    }
+
+    if (new Date(activity.endDate).getFullYear() > new Date().getFullYear()) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? "Năm kết thúc không được vượt quá năm hiện tại" :
+            "The final year cannot exceed the current year",
+        checkForm: false,
+      };
+    }
+
+    if (new Date(activity.startDate).getFullYear() > new Date(activity.endDate).getFullYear()) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? "Năm bắt đầu không được vượt quá năm kết thúc" :
+            "The starting year cannot exceed the final year",
+        checkForm: false,
+      };
+    }
+
     return {
       messageError: '',
       checkForm: true,
@@ -268,7 +298,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
             placeholder={
               languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'
             }
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
@@ -290,14 +320,14 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+            //   sx={{ display: 'flex' }}
             >
               <div className="activity-time-wraper">
                 <Typography
@@ -324,7 +354,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-              //   sx={{ display: 'flex' }}
+            //   sx={{ display: 'flex' }}
             >
               <div className="activity-time-wraper">
                 <Typography
@@ -374,7 +404,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                 ? 'Mô tả quá trình thực tập của bạn'
                 : 'Description your activity'
             }
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>

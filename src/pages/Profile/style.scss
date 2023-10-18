@@ -24,7 +24,7 @@
     // width: 80%;
     max-width: 1080px;
     margin: 0 100px auto;
-    padding: 52px 0px 50px 0px;
+    padding: 24px 0px 50px 0px;
     // margin-top: 100px;
     margin-top: 116px;
 
@@ -303,6 +303,7 @@
                   .wrap-img_cv {
                     position: relative;
                     margin-bottom: 4px;
+
                     &:hover {
                       .choose-cv-container {
                         visibility: visible !important;
