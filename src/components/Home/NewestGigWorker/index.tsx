@@ -53,7 +53,7 @@ const NewestGigWorker = () => {
 
   React.useEffect(() => {
     getAllCandidates();
-  }, []);
+  }, [languageRedux]);
 
   const handleChangeRouteNewestWorker = () => {
     if (profileV3?.typeRoleData === 1) {

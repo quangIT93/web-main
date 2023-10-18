@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -191,7 +192,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
     }
     if (experience.title?.trim().length > 50) {
       return {
-        messageError:
+        message:
           languageRedux === 1
             ? 'Tiêu đề không được vượt quá 50 ký tự'
             : 'Professional title cannot exceed 50 characters',
@@ -207,7 +208,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
     }
     if (experience.companyName?.trim().length > 50) {
       return {
-        messageError:
+        message:
           languageRedux === 1
             ? 'Tên công ty không được vượt quá 50 ký tự'
             : 'Company names cannot exceed 50 characters',
@@ -223,7 +224,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
     }
     if (experience.extraInformation?.trim().length > 500) {
       return {
-        messageError:
+        message:
           languageRedux === 1
             ? 'Thông tin thêm không được vượt quá 500 ký tự'
             : 'Additional information cannot exceed 500 characters',
@@ -265,11 +266,11 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileExperience(experience);
         if (result) {
-          const profile = await profileApi.getProfile(
+          const profile = await profileApi.getProfileV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (profile) {
-            setProfileUser(profile.data);
+            dispatch(setProfileV3(profile));
           }
           setOpenModalExperienceUpdate(false);
         }

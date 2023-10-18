@@ -1,8 +1,8 @@
 .image-cadidate_wrap {
   width: 120px;
 
-  border-radius: 50%;
-  background-color: #aaa;
+  // border-radius: 50%;
+  // background-color: #aaa;
 
   .image-cadidate {
     min-width: 120px;
@@ -13,12 +13,12 @@
   }
 }
 
-.item-candidate {
+.item-detail-candidate {
   display: flex;
   align-items: center;
 
   // margin: 4px;
-  .icon-candidate {
+  .icon-detail-candidate {
     margin: 0 8px;
     font-size: 15px;
     color: #575757;
