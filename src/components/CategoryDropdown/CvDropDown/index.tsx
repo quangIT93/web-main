@@ -50,7 +50,7 @@ const CvDropDown: React.FC<ICvDropDown> = (props) => {
               ? 'Quản lý CV'
               : 'CV management'
             : languageRedux === 1
-              ? 'Tìm kiếm nhân tài'
+              ? 'Tìm kiếm ứng viên'
               : 'Search for candidate'}
         </a>
       ),

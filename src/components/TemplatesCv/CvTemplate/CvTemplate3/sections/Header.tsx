@@ -231,8 +231,8 @@ const Header: React.FC<ICvHeader> = (props) => {
                   headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache',
-                    'Access-Control-Allow-Methods': '*',
-                    'Access-Control-Allow-Headers': '*',
+                    // 'Access-Control-Allow-Methods': '*',
+                    // 'Access-Control-Allow-Headers': '*',
                   },
                 }}
               />

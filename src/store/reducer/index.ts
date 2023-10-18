@@ -28,6 +28,8 @@ import profileReducerV3 from './profileReducerV3'
 
 import locationReducer from './locationReducer'
 
+import placeIdReducer from './placeIdReducer'
+
 const reducers = combineReducers({
   post: postReducer,
   postNewest: postNewestReducer,
@@ -41,14 +43,14 @@ const reducers = combineReducers({
   changeRole: roleReducer,
   isNew: isNewReducer,
   showAlert: alertReducer,
-  
+
   //quản lý state navbar
   navbarState: navbarSlice,
-  
+
   dataLanguage: dataLanguage,
   dataLocation: locationReducer,
-  dataProfileV3: profileReducerV3
-
+  dataProfileV3: profileReducerV3,
+  placeIdReducer: placeIdReducer,
 })
 
 export default reducers

@@ -132,6 +132,8 @@ const Company: React.FC<ICompany> = (props) => {
     website: '',
     description: '',
     logoPath: '',
+    images: [],
+    deleteImages: [],
   });
   // const [language, setLanguageState] = React.useState<any>();
   const location = useLocation();
@@ -167,7 +169,7 @@ const Company: React.FC<ICompany> = (props) => {
     document.title =
       languageRedux === 1
         ? 'HiJob - Thông tin công ty'
-        : 'HiJob - Company Information';
+        : "HiJob - Company's Information";
     logEvent(analytics, 'screen_view' as string, {
       // screen_name: screenName as string,
       page_title: '/web_company' as string,
@@ -339,6 +341,7 @@ const Company: React.FC<ICompany> = (props) => {
           const result = await apiCompany.createCampany(formData);
           if (result) {
             // setOpenModalEditPost(true);
+            setOpenModalEditCompanySuccess(true);
             messageApi.open({
               type: 'success',
               content: language?.company_page?.create_success,
@@ -413,6 +416,7 @@ const Company: React.FC<ICompany> = (props) => {
     );
     formData.append('categoryId', String(dataCompany?.companyCategory?.id));
     formData.append('logo', dataCompany?.logoPath);
+    formData.append('images', dataCompany?.images);
 
     // setDataCompany((preValue: any) => ({
     //     ...preValue,
@@ -455,7 +459,11 @@ const Company: React.FC<ICompany> = (props) => {
           }}
         >
           <div className="company-title_top">
-            <h1>{language?.company_info}</h1>
+            <h1>
+              {languageRedux === 1
+                ? 'Thông tin công ty'
+                : "Company's information"}
+            </h1>
 
             <Space
               style={{

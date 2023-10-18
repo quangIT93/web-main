@@ -152,6 +152,8 @@ const NewJobs: React.FC = () => {
     return state.newWestReducerV3;
   });
 
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+
   const dispatch = useDispatch();
   const { setPostNewest, setPostNewestMore } = bindActionCreators(
     actionCreators,
@@ -201,8 +203,12 @@ const NewJobs: React.FC = () => {
     // );
 
     const result2 = await postApi.getPostNewestV3(
-      childCateloriesArray,
-      Number(categoryId),
+      // childCateloriesArray,
+      // Number(categoryId),
+      // profileV3?.profileLocations,
+      // profileV3?.addressText?.id,
+      null,
+      null,
       null,
       null,
       10,
@@ -247,8 +253,14 @@ const NewJobs: React.FC = () => {
       // console.log('storeduserSelectedSettings', userSelected.userSelectedId);
 
       const result2 = await postApi.getPostNewestV3(
-        // childCateloriesArray,
+        // profileCategories,
         // userSelected.userSelectedId,
+        // profileV3.length !== 0 ? profileV3?.profileCategories : null,
+        // profileV3.length !== 0
+        //   ? profileV3?.profileCategories[0]?.parentCategory?.id
+        //   : null,
+        // profileV3.length !== 0 ? profileV3?.profileLocations : null,
+        // profileV3.length !== 0 ? profileV3?.addressText?.id : null,
         null,
         null,
         null,
@@ -281,10 +293,11 @@ const NewJobs: React.FC = () => {
   const handleMoveToMoreJob = () => {
     localStorage.setItem('job-type', 'new');
     window.open('/more-jobs', '_parent');
-  }
+  };
 
   React.useEffect(() => {
     localStorage.getItem('accessToken') && setIslogined(true);
+
     getPostNewest();
     // delete param when back to page
     // searchParams.delete("theme-id")
@@ -298,9 +311,9 @@ const NewJobs: React.FC = () => {
       }
     }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux]);
+  }, [languageRedux, profileV3]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   return (
     <>
@@ -316,8 +329,8 @@ const NewJobs: React.FC = () => {
           ref={listRef}
           id="new-job"
         >
-          <div className='title-container'>
-            <div className='title'>
+          <div className="title-container">
+            <div className="title">
               <NewJobIcon width={25} height={25} />
               <h2>{language?.newest_jobs}</h2>
               <div className="help-search" onClick={handleClickHelpSearch}>
@@ -344,10 +357,8 @@ const NewJobs: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className='view-all' onClick={handleMoveToMoreJob}>
-              <p>
-                {language?.home_page?.view_all}
-              </p>
+            <div className="view-all" onClick={handleMoveToMoreJob}>
+              <p>{language?.home_page?.view_all}</p>
               <ArrowrightIcon width={20} height={20} />
             </div>
           </div>

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { DownOutlined, SmileOutlined } from '@ant-design/icons';
+import { DownOutlined, FormOutlined, SmileOutlined } from '@ant-design/icons';
 import { Box, Button, Collapse } from '@mui/material';
 import { HomeValueContext } from 'context/HomeValueContextProvider';
-import { Dropdown, Space } from 'antd';
+import { Dropdown, Space, Switch } from 'antd';
 import type { MenuProps } from 'antd';
 
 import './style.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { ArrowIcon, IconMenu } from '#components/Icons';
 import { useLocation } from 'react-router-dom';
@@ -17,6 +17,10 @@ import JobInfoDropDown from './JobInforDropDown';
 import CvDropDown from './CvDropDown';
 import ComunityDropDown from './ComunityDropDown';
 import CustomerDropDown from './CustomerDropDown';
+import profileApi from 'api/profileApi';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import ModalNoteCreateCompany from '#components/Post/ModalNoteCreateCompany';
+import ModalTurnOffStatus from '#components/Profile/ModalTurnOffStatus';
 const titleContainer: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
@@ -48,15 +52,26 @@ const CategoryDropdown: React.FC = () => {
     openCategoryDropdown: boolean;
     setOpenCategoryDropdown: React.Dispatch<React.SetStateAction<boolean>>;
   } = useContext(HomeValueContext);
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
+  );
+  const languageData = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
   );
   const location = useLocation();
   const [expand, setExpand] = useState<any>([]);
   const [open, setOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
+  const [loadingSwitch, setLoadingSwitch] = useState(false);
+  const [searchJob, setSearchJob] = useState<boolean>(true);
+  const [openModalTurnOffStatus, setOpenModalTurnOffStatus] =
+    useState<boolean>(false);
+  const [openModalNoteCreateCompany, setOpenModalNoteCreateCompany] =
+    React.useState<any>(false);
+  const dispatch = useDispatch();
 
   const updateWindowWidth = () => {
     if (window.innerWidth > 560) {
@@ -139,13 +154,8 @@ const CategoryDropdown: React.FC = () => {
   };
 
   const moveToNewestJob = () => {
-    if (location?.pathname === '/') {
-      setOpenCategoryDropdown(false);
-      handleScrollIntoViewDiv('new-job');
-    } else {
-      localStorage.setItem('home', 'new');
-      window.open('/', '_parent');
-    }
+    localStorage.setItem('job-type', 'new');
+    window.open('/more-jobs', '_parent');
   };
 
   const moveToOpeningPost = () => {
@@ -196,12 +206,11 @@ const CategoryDropdown: React.FC = () => {
   };
 
   const moveToSuggestedJob = () => {
-    if (location?.pathname === '/') {
-      setOpenCategoryDropdown(false);
-      handleScrollIntoViewDiv('box-suggestedJob');
+    if (!localStorage.getItem('accessToken')) {
+      setOpenModalLogin(true);
     } else {
-      localStorage.setItem('home', 'suggested');
-      window.open('/', '_parent');
+      localStorage.setItem('job-type', 'suggested');
+      window.open('/more-jobs', '_parent');
     }
   };
 
@@ -343,6 +352,28 @@ const CategoryDropdown: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleOnchangeSearchJob = async (checked: any) => {
+    try {
+      if (checked === true) {
+        // e.preventDefault();
+        const result = await profileApi.putProfileJobV3(null, 1);
+        if (result) {
+          setSearchJob(true);
+          const resultProfileV3 = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
+          if (resultProfileV3) {
+            dispatch(setProfileV3(resultProfileV3));
+          }
+        }
+      } else {
+        setLoadingSwitch(true);
+        setOpenModalTurnOffStatus(true);
+        setSearchJob(false);
+      }
+    } catch (error) { }
+  };
+
   return (
     <div className={`${openCategoryDropdown ? 'show-dropdown' : ''}`}>
       <Box
@@ -377,6 +408,85 @@ const CategoryDropdown: React.FC = () => {
           >
             <IconMenu />
             <h3>{languageRedux === 1 ? 'Danh mục' : 'Menu'}</h3>
+          </div>
+          <div className="category-dropdown-right">
+            {
+              localStorage.getItem('accessToken') ? (
+                <div className="category-dropdown-switch-container">
+                  <div
+                    className="category-dropdown-switch"
+                    style={{
+                      display:
+                        profileV3.length !== 0
+                          ? profileV3?.typeRoleData === 0
+                            ? 'flex'
+                            : 'none'
+                          : 'none',
+                    }}
+                  >
+                    <p style={{
+                      color: profileV3.isSearch === 1 ? "#000000" : "#575757"
+                    }}>
+                      {
+                        // profileV3.isSearch === 1 ?
+                        //   languageRedux === 1 ?
+                        //     "Trạng thái tìm việc đang bật:" :
+                        //     "Job search status is on:" :
+                        languageRedux === 1 ?
+                          `Trạng thái tìm việc đang ${profileV3.isSearch === 1 ? 'bật' : 'tắt'}:` :
+                          `Job search status is ${profileV3.isSearch === 1 ? 'on' : 'off'}:`
+
+                      }
+                    </p>
+                    <Switch
+                      checked={profileV3.isSearch === 1}
+                      loading={loadingSwitch}
+                      onChange={handleOnchangeSearchJob}
+                    />
+                    <div className="category-dropdown-switch__hover__container">
+                      <div className="category-dropdown-switch__hover">
+                        <div className="category-dropdown-switch__hover__p">
+                          <p>
+                            {languageRedux === 1
+                              ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
+                              : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    style={{
+                      display:
+                        profileV3.length !== 0
+                          ? profileV3?.typeRoleData === 0
+                            ? 'none'
+                            : 'flex'
+                          : 'none',
+                    }}
+                    className="category-dropdown-btn__post"
+                    onClick={() => {
+                      if (profileV3 && localStorage.getItem('refreshToken')) {
+                        if (profileV3.companyInfomation === null) {
+                          setOpenModalNoteCreateCompany(true);
+                        } else {
+                          window.open('/post', '_parent');
+                        }
+                      } else {
+                        setOpenModalLogin(true);
+                      }
+                    }}
+                  >
+                    <FormOutlined style={{ color: 'white' }} />
+                    <p style={{ marginLeft: 10, color: 'white' }}>
+                      {languageData && languageData.post}
+                    </p>
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )
+            }
           </div>
           {/* <div className="category-dropdown-line"></div>
           <div className="category-dropdown-right">
@@ -446,8 +556,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Thông tin việc làm'
                       : 'Job information'
                     : languageRedux === 1
-                    ? 'Thông tin tuyển dụng'
-                    : 'Employment information'}
+                      ? 'Thông tin tuyển dụng'
+                      : 'Employment information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -477,8 +587,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Việc làm đã lưu'
                       : 'Saved jobs'
                     : languageRedux === 1
-                    ? 'Việc làm tuyển dụng đã đăng'
-                    : 'Recruitment posted'}
+                      ? 'Việc làm tuyển dụng đã đăng'
+                      : 'Recruitment posted'}
                 </h3>
                 <h3
                   onClick={
@@ -490,8 +600,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc mới nhất'
                       : 'Newest jobs'
                     : languageRedux === 1
-                    ? 'Bài tuyển dụng đang mở'
-                    : 'Job posting is opening'}
+                      ? 'Bài tuyển dụng đang mở'
+                      : 'Job posting is opening'}
                 </h3>
                 <h3 onClick={roleRedux === 0 ? moveToHotJob : moveToClosedPost}>
                   {roleRedux === 0
@@ -499,8 +609,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc nổi bật'
                       : 'Hot jobs'
                     : languageRedux === 1
-                    ? 'Bài tuyển dụng đã đóng'
-                    : 'Job posting is closed'}
+                      ? 'Bài tuyển dụng đã đóng'
+                      : 'Job posting is closed'}
                 </h3>
                 <h3
                   onClick={
@@ -512,8 +622,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc theo chủ đề'
                       : 'Job by hot places'
                     : languageRedux === 1
-                    ? 'Đăng bài tuyển dụng'
-                    : 'Post recruitment posts'}
+                      ? 'Đăng bài tuyển dụng'
+                      : 'Post recruitment posts'}
                 </h3>
                 <h3
                   onClick={
@@ -525,14 +635,14 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Công việc gợi ý'
                       : 'Suggested jobs'
                     : languageRedux === 1
-                    ? 'Thông tin công ty'
-                    : 'Company information'}
+                      ? 'Thông tin công ty'
+                      : "Company's information"}
                 </h3>
               </div>
             </div>
             <div
               className="category-dropdown-item"
-              // style={{ display: roleRedux === 0 ? 'block' : 'none' }}
+            // style={{ display: roleRedux === 0 ? 'block' : 'none' }}
             >
               <div className="top-item" onClick={() => handleExpand(2)}>
                 <h3>
@@ -541,8 +651,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Hồ sơ & CV'
                       : 'Resume & CV'
                     : languageRedux === 1
-                    ? 'Thông tin nhân tài'
-                    : 'Candidates information'}
+                      ? 'Thông tin nhân tài'
+                      : 'Candidates information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -564,8 +674,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Tạo mới CV'
                       : 'Create a new CV'
                     : languageRedux === 1
-                    ? 'Danh sách nhân tài mới nhất'
-                    : 'Newest candidate list'}
+                      ? 'Danh sách nhân tài mới nhất'
+                      : 'Newest candidate list'}
                 </h3>
                 <h3
                   onClick={
@@ -577,8 +687,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Quản lý CV'
                       : 'CV management'
                     : languageRedux === 1
-                    ? 'Tìm kiếm nhân tài'
-                    : 'Search for candidate'}
+                      ? 'Tìm kiếm ứng viên'
+                      : 'Search for candidate'}
                 </h3>
                 <h3
                   onClick={
@@ -592,8 +702,8 @@ const CategoryDropdown: React.FC = () => {
                       ? 'Hướng dẫn tạo CV'
                       : 'Instructions for creating a CV'
                     : languageRedux === 1
-                    ? 'Danh sách nhân tài đã lưu'
-                    : 'Saved candidate list'}
+                      ? 'Danh sách nhân tài đã lưu'
+                      : 'Saved candidate list'}
                 </h3>
               </div>
             </div>
@@ -612,7 +722,7 @@ const CategoryDropdown: React.FC = () => {
               >
                 <h3 onClick={moveToWorkingStory}>
                   {languageRedux === 1
-                    ? 'Câu chuyện làm việc'
+                    ? 'Câu chuyện việc làm'
                     : 'Working story'}
                 </h3>
                 <h3 onClick={moveToHijobNews}>
@@ -663,6 +773,17 @@ const CategoryDropdown: React.FC = () => {
           </div>
         </Collapse>
       </Box>
+      <ModalNoteCreateCompany
+        openModalNoteCreateCompany={openModalNoteCreateCompany}
+        setOpenModalNoteCreateCompany={setOpenModalNoteCreateCompany}
+      />
+
+      <ModalTurnOffStatus
+        openModalTurnOffStatus={openModalTurnOffStatus}
+        setOpenModalTurnOffStatus={setOpenModalTurnOffStatus}
+        setSearchJob={setSearchJob}
+        setLoadingSwitch={setLoadingSwitch}
+      />
       <ModalLogin
         openModalLogin={openModalLogin}
         setOpenModalLogin={setOpenModalLogin}

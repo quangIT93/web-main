@@ -86,6 +86,13 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
   const TemplateId = Number(localStorage.getItem('cv-id')) || 1;
+  console.log(profile.name);
+
+  useEffect(() => {
+    setValueNameCv(
+      `${profile.name} - Resume ${Number(localStorage.getItem('cv-id')) || 1}`,
+    );
+  }, [profile]);
 
   // const templatesCv = [
   //   {
@@ -212,7 +219,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
       // setValueNameCv(localStorage.getItem('nameCv'));
       getThemeCv.map((value: any) => {
         if (Number(localStorage.getItem('cv-id')) === value.id) {
-          setValueNameCv(value.name);
+          setValueNameCv(`${profile.name} - ${value.name}`);
         }
       });
     }
@@ -222,9 +229,9 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
 
   const handleSelectTemplate = (id: any, name: string) => {
     setSelectedThemeId(id);
-    setValueNameCv(name);
+    setValueNameCv(`${profile.name} - ${name}`);
     localStorage.setItem('cv-id', id);
-    localStorage.setItem('nameCv', name);
+    localStorage.setItem('nameCv', `${profile.name} - ${name}`);
   };
 
   const getTheme = async () => {
@@ -289,9 +296,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
         </Box> */}
 
         <div className="list-template-title">
-          <h3>
-            {languageRedux === 1 ? 'Chọn mẫu CV' : 'Choose resume template'}
-          </h3>
+          <h3>{languageRedux === 1 ? 'Chọn mẫu CV' : 'Choose CV template'}</h3>
         </div>
         <div className="list-template">
           {getThemeCv.map((item: any, index: any) => (
@@ -307,7 +312,7 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
               key={index}
               onClick={() => {
                 // localStorage.setItem('nameCv', item?.name);
-                setValueNameCv(item?.name);
+                setValueNameCv(`${profile.name} - ${item?.name}`);
                 handleSelectTemplate(item?.id, item?.name);
               }}
             >
@@ -421,11 +426,11 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
               <Document
                 loading={<Spin indicator={antIcon} />}
                 noData={<Spin indicator={antIcon} />}
-                file={profileV3.length !== 0 ? instance.url : ''}
+                file={profileV3.length !== 0 ? instance.url : null}
                 onLoadSuccess={onDocumentLoadSuccess}
-                onLoadError={(error) =>
-                  console.error('Error loading document:', error)
-                }
+                // onLoadError={(error) =>
+                //   console.error('Error loading document:', error)
+                // }
                 className="page-cv-wrapper"
               >
                 {Array.apply(null, Array(numPages))
@@ -434,9 +439,19 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
                     <Page
                       className="page-cv"
                       loading={
-                        page === 1 ? <Spin indicator={antIcon} /> : <></>
+                        page === 1 ? (
+                          <Spin indicator={antIcon} />
+                        ) : (
+                          <Spin indicator={antIcon} />
+                        )
                       }
-                      noData={page === 1 ? <Spin indicator={antIcon} /> : <></>}
+                      noData={
+                        page === 1 ? (
+                          <Spin indicator={antIcon} />
+                        ) : (
+                          <Spin indicator={antIcon} />
+                        )
+                      }
                       pageNumber={page}
                       renderAnnotationLayer={false}
                       renderTextLayer={false}

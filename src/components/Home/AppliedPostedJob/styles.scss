@@ -5,6 +5,15 @@
     margin-top: 116px !important;
     margin-bottom: 24px !important;
 
+    .MuiAvatar-root {
+        img {
+            max-width: 100%;
+            max-height: 301px;
+            height: auto;
+            object-fit: fill
+        }
+    }
+
     .help-search {
         position: relative;
         cursor: pointer;
@@ -266,11 +275,12 @@
             max-height: 301px;
             width: 100%;
             cursor: pointer;
+
             img {
                 max-width: 100%;
                 max-height: 301px;
                 height: auto;
-                object-fit: fill
+                object-fit: contain
             }
 
             .banner-rescruit-swiper {

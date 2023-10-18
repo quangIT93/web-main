@@ -114,7 +114,7 @@ const JobInfoDropDown: React.FC<IJobInfoDropDown> = (props) => {
               : 'Suggested jobs'
             : languageRedux === 1
             ? 'Thông tin công ty'
-            : 'Company information'}
+            : "Company's information"}
         </a>
       ),
     },

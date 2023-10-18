@@ -243,6 +243,7 @@ const Header: React.FC<ICvHeader> = (props) => {
               body: '',
               headers: {
                 'Access-Control-Allow-Origin': '*',
+                'Cache-Control': 'no-cache',
               },
             }}
             // cache={true}

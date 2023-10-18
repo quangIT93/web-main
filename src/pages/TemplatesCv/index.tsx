@@ -41,6 +41,8 @@ import CvTemplate5 from '#components/TemplatesCv/CvTemplate/CvTemplate5';
 import CvTemplate6 from '#components/TemplatesCv/CvTemplate/CvTemplate6';
 import CvTemplate7 from '#components/TemplatesCv/CvTemplate/CvTemplate7';
 import CategoryDropdown from '#components/CategoryDropdown';
+import { Backdrop, CircularProgress } from '@mui/material';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 const TemplatesCv: React.FC = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
@@ -52,6 +54,7 @@ const TemplatesCv: React.FC = () => {
   const [colorCV, setColorCV] = React.useState(1);
   const [openModalShare, setOpenModalShare] = React.useState(false);
   const [openModalChooseCv, setOpenModalChooseCv] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [openModalSuccessDownCv, setOpenModalSuccessDownCv] = React.useState<{
     open: boolean;
     id: number | null;
@@ -108,11 +111,20 @@ const TemplatesCv: React.FC = () => {
   // React.useEffect(() => {}, []);
 
   const handleClickSaveCv = async () => {
-    console.log('1111111111111111');
+    const analytics: any = getAnalytics();
+
+    logEvent(analytics, 'screen_view' as string, {
+      // screen_name: screenName as string,
+      page_title: `/web_click_create_cv` as string,
+    });
 
     const selectedTemplate = templatesCv.find((template) => {
-      console.log(template.id);
-      console.log(Number(localStorage.getItem('cv-id')));
+      // console.log(template.id);
+      // console.log(Number(localStorage.getItem('cv-id')));
+      if (!Number(localStorage.getItem('cv-id'))) {
+        return 1;
+      }
+
       if (template.id === Number(localStorage.getItem('cv-id')))
         return Number(localStorage.getItem('cv-id'));
       // return template.id === Number(localStorage.getItem('cv-id'))
@@ -120,7 +132,7 @@ const TemplatesCv: React.FC = () => {
     });
     try {
       console.log(selectedTemplate);
-
+      setLoading(true);
       if (selectedTemplate) {
         const CvComponent = selectedTemplate.component; // Lấy component của mẫu CV
 
@@ -147,6 +159,7 @@ const TemplatesCv: React.FC = () => {
 
           const result = await apiCv.postCv(formData);
           if (result) {
+            setLoading(false);
             setOpenModalSuccessDownCv({ open: true, id: result.data.id });
             // setOpenModalChooseCv(true);
             // console.log('lưu cv thành công');
@@ -196,7 +209,7 @@ const TemplatesCv: React.FC = () => {
   const fileNameCv = createFileName(profile?.name ? profile?.name : 'Your');
 
   React.useEffect(() => {
-    if (!localStorage.getItem('accessToken') || roleRedux === 1)
+    if (!localStorage.getItem('accessToken') || profileV3.typeRoleData === 1)
       window.open(`/`, '_parent');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -256,7 +269,9 @@ const TemplatesCv: React.FC = () => {
               <BackIcon width={15} height={15} fill="white" />
             </div>
             <p>
-              {languageRedux === 1 ? 'Về trang chỉnh sửa' : 'Back to Editor'}
+              {languageRedux === 1
+                ? 'Quay lại trang chỉnh sửa'
+                : 'Back to profile Edit'}
             </p>
           </div>
           <div className="change-styles">
@@ -385,6 +400,18 @@ const TemplatesCv: React.FC = () => {
             </Button> */}
           </div>
         </div>
+
+        <Backdrop
+          sx={{
+            color: '#0d99ff ',
+            backgroundColor: 'transparent',
+            zIndex: (theme: any) => theme.zIndex.drawer + 1,
+          }}
+          open={loading}
+        // onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
 
         <ContentListCv colorCV={colorCV} fontSizeCV={fontSizeCV} />
         <ModalShare
