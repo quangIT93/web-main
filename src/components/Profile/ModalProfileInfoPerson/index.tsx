@@ -84,7 +84,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   );
   const { openModelPersonalInfo, setOpenModalPersonalInfo, profile } = props;
   const [gender, setGender] = React.useState(profile.gender === 1 ? 1 : 0);
-  const [day, setDay] = useState(
+  const [day, setDay] = useState<any>(
     profile?.birthday ? moment(new Date(profile?.birthday)) : moment(),
   ); // Giá trị mặc định là ngày hiện tại
   // const [dataProvinces, setDataProvinces] = useState<any>();
@@ -191,10 +191,58 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         checkForm: false,
       };
     }
+    if (name.trim().length > 255) {
+      return {
+        message: languageRedux === 1 ?
+          "Tên không được vượt quá 255 ký tự" :
+          "Full name cannot exceed 255 characters",
+        checkForm: false,
+      };
+    }
+    if (selectedProvince === '') {
+      return {
+        message: languageRedux === 1 ?
+          "Địa chỉ không được bỏ trống" :
+          "Location cannot be left blank",
+        checkForm: false,
+      };
+    }
+    if (new Date(day).getFullYear() > new Date().getFullYear()) {
+      return {
+        message: languageRedux === 1 ?
+          "Năm sinh không được vượt quá năm hiện tại" :
+          "Year of birth cannot exceed the current year",
+        checkForm: false,
+      };
+    }
+    if (jobTypeName === '') {
+      return {
+        message: languageRedux === 1 ?
+          "Vị trí không được để trống" :
+          "The position cannot be left blank",
+        checkForm: false,
+      };
+    }
+    if (jobTypeName.trim().length > 255) {
+      return {
+        message: languageRedux === 1 ?
+          "Vị trí không được vượt quá 255 ký tự" :
+          "Position cannot exceed 255 characters",
+        checkForm: false,
+      };
+    }
 
     if (introduction === '') {
       return {
         message: language?.profile_page?.err_intro,
+        checkForm: false,
+      };
+    }
+    if (introduction.trim().length > 500) {
+      return {
+        message: languageRedux === 1 ?
+          "Giới thiệu bản thân không được vượt quá 500 ký tự" :
+          "Introduce yourself cannot exceed 500 characters",
         checkForm: false,
       };
     }

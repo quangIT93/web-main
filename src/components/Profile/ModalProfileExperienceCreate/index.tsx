@@ -242,6 +242,50 @@ const ModalProfileExperienceCreate: React.FC<IModalProfileExperienceCreate> = (
       };
     }
 
+    if (!experience.startDate) {
+      return {
+        messageError: language?.profile_page?.err_start_time,
+        checkForm: false,
+      };
+    }
+
+    if (new Date(experience.startDate).getFullYear() > new Date().getFullYear()) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? "Năm bắt đầu không được vượt quá năm hiện tại" :
+            "The starting year cannot exceed the current year",
+        checkForm: false,
+      };
+    }
+
+    if (!experience.endDate) {
+      return {
+        messageError: language?.profile_page?.err_finish_time,
+        checkForm: false,
+      };
+    }
+
+    if (new Date(experience.endDate).getFullYear() > new Date().getFullYear()) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? "Năm kết thúc không được vượt quá năm hiện tại" :
+            "The final year cannot exceed the current year",
+        checkForm: false,
+      };
+    }
+
+    if (new Date(experience.startDate).getFullYear() > new Date(experience.endDate).getFullYear()) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? "Năm bắt đầu không được vượt quá năm kết thúc" :
+            "The starting year cannot exceed the final year",
+        checkForm: false,
+      };
+    }
+
     return {
       messageError: '',
       checkForm: true,
