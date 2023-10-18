@@ -53,7 +53,7 @@ const CategoryDropdown: React.FC = () => {
     setOpenCategoryDropdown: React.Dispatch<React.SetStateAction<boolean>>;
   } = useContext(HomeValueContext);
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -371,7 +371,7 @@ const CategoryDropdown: React.FC = () => {
         setOpenModalTurnOffStatus(true);
         setSearchJob(false);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -410,83 +410,86 @@ const CategoryDropdown: React.FC = () => {
             <h3>{languageRedux === 1 ? 'Danh mục' : 'Menu'}</h3>
           </div>
           <div className="category-dropdown-right">
-            {
-              localStorage.getItem('accessToken') ? (
-                <div className="category-dropdown-switch-container">
-                  <div
-                    className="category-dropdown-switch"
+            {localStorage.getItem('accessToken') ? (
+              <div className="category-dropdown-switch-container">
+                <div
+                  className="category-dropdown-switch"
+                  style={{
+                    display:
+                      profileV3.length !== 0
+                        ? profileV3?.typeRoleData === 0
+                          ? 'flex'
+                          : 'none'
+                        : 'none',
+                  }}
+                >
+                  <p
                     style={{
-                      display:
-                        profileV3.length !== 0
-                          ? profileV3?.typeRoleData === 0
-                            ? 'flex'
-                            : 'none'
-                          : 'none',
+                      color: profileV3.isSearch === 1 ? '#000000' : '#575757',
                     }}
                   >
-                    <p style={{
-                      color: profileV3.isSearch === 1 ? "#000000" : "#575757"
-                    }}>
-                      {
-                        // profileV3.isSearch === 1 ?
-                        //   languageRedux === 1 ?
-                        //     "Trạng thái tìm việc đang bật:" :
-                        //     "Job search status is on:" :
-                        languageRedux === 1 ?
-                          `Trạng thái tìm việc đang ${profileV3.isSearch === 1 ? 'bật' : 'tắt'}:` :
-                          `Job search status is ${profileV3.isSearch === 1 ? 'on' : 'off'}:`
-
-                      }
-                    </p>
-                    <Switch
-                      checked={profileV3.isSearch === 1}
-                      loading={loadingSwitch}
-                      onChange={handleOnchangeSearchJob}
-                    />
-                    <div className="category-dropdown-switch__hover__container">
-                      <div className="category-dropdown-switch__hover">
-                        <div className="category-dropdown-switch__hover__p">
-                          <p>
-                            {languageRedux === 1
-                              ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
-                              : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
-                          </p>
-                        </div>
+                    {
+                      // profileV3.isSearch === 1 ?
+                      //   languageRedux === 1 ?
+                      //     "Trạng thái tìm việc đang bật:" :
+                      //     "Job search status is on:" :
+                      languageRedux === 1
+                        ? `Trạng thái tìm việc đang ${
+                            profileV3.isSearch === 1 ? 'bật' : 'tắt'
+                          }:`
+                        : `Job search status is ${
+                            profileV3.isSearch === 1 ? 'on' : 'off'
+                          }:`
+                    }
+                  </p>
+                  <Switch
+                    checked={profileV3.isSearch === 1}
+                    loading={loadingSwitch}
+                    onChange={handleOnchangeSearchJob}
+                  />
+                  <div className="category-dropdown-switch__hover__container">
+                    <div className="category-dropdown-switch__hover">
+                      <div className="category-dropdown-switch__hover__p">
+                        <p>
+                          {languageRedux === 1
+                            ? `Trạng thái tìm kiếm việc làm của bạn được bật để Nhà tuyển dụng có thể tìm thấy bạn dễ dàng, khả năng nhận được công việc phù hợp sẽ cao hơn!`
+                            : `Your job search status is turned on so that Recruiters can find you easily, the possibility of getting a suitable job is higher!`}
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <button
-                    style={{
-                      display:
-                        profileV3.length !== 0
-                          ? profileV3?.typeRoleData === 0
-                            ? 'none'
-                            : 'flex'
-                          : 'none',
-                    }}
-                    className="category-dropdown-btn__post"
-                    onClick={() => {
-                      if (profileV3 && localStorage.getItem('refreshToken')) {
-                        if (profileV3.companyInfomation === null) {
-                          setOpenModalNoteCreateCompany(true);
-                        } else {
-                          window.open('/post', '_parent');
-                        }
-                      } else {
-                        setOpenModalLogin(true);
-                      }
-                    }}
-                  >
-                    <FormOutlined style={{ color: 'white' }} />
-                    <p style={{ marginLeft: 10, color: 'white' }}>
-                      {languageData && languageData.post}
-                    </p>
-                  </button>
                 </div>
-              ) : (
-                <></>
-              )
-            }
+                <button
+                  style={{
+                    display:
+                      profileV3.length !== 0
+                        ? profileV3?.typeRoleData === 0
+                          ? 'none'
+                          : 'flex'
+                        : 'none',
+                  }}
+                  className="category-dropdown-btn__post"
+                  onClick={() => {
+                    if (profileV3 && localStorage.getItem('refreshToken')) {
+                      if (profileV3.companyInfomation === null) {
+                        setOpenModalNoteCreateCompany(true);
+                      } else {
+                        window.open('/post', '_parent');
+                      }
+                    } else {
+                      setOpenModalLogin(true);
+                    }
+                  }}
+                >
+                  <FormOutlined style={{ color: 'white' }} />
+                  <p style={{ marginLeft: 10, color: 'white' }}>
+                    {languageData && languageData.post}
+                  </p>
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
           {/* <div className="category-dropdown-line"></div>
           <div className="category-dropdown-right">
@@ -551,13 +554,13 @@ const CategoryDropdown: React.FC = () => {
             <div className="category-dropdown-item">
               <div className="top-item" onClick={() => handleExpand(1)}>
                 <h3>
-                  {roleRedux === 0
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Thông tin việc làm'
                       : 'Job information'
                     : languageRedux === 1
-                      ? 'Thông tin tuyển dụng'
-                      : 'Employment information'}
+                    ? 'Thông tin tuyển dụng'
+                    : 'Employment information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -570,7 +573,9 @@ const CategoryDropdown: React.FC = () => {
                 }}
               >
                 <h3
-                  style={{ display: roleRedux === 0 ? 'block' : 'none' }}
+                  style={{
+                    display: profileV3.typeRoleData === 0 ? 'block' : 'none',
+                  }}
                   onClick={moveToAppliedJob}
                 >
                   {languageRedux === 1
@@ -579,80 +584,94 @@ const CategoryDropdown: React.FC = () => {
                 </h3>
                 <h3
                   onClick={
-                    roleRedux === 0 ? moveToSaveJob : moveToRecruimentPost
+                    profileV3.typeRoleData === 0
+                      ? moveToSaveJob
+                      : moveToRecruimentPost
                   }
                 >
-                  {roleRedux === 0
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Việc làm đã lưu'
                       : 'Saved jobs'
                     : languageRedux === 1
-                      ? 'Việc làm tuyển dụng đã đăng'
-                      : 'Recruitment posted'}
+                    ? 'Việc làm tuyển dụng đã đăng'
+                    : 'Recruitment posted'}
                 </h3>
                 <h3
                   onClick={
-                    roleRedux === 0 ? moveToNewestJob : moveToOpeningPost
+                    profileV3.typeRoleData === 0
+                      ? moveToNewestJob
+                      : moveToOpeningPost
                   }
                 >
-                  {roleRedux === 0
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Công việc mới nhất'
                       : 'Newest jobs'
                     : languageRedux === 1
-                      ? 'Bài tuyển dụng đang mở'
-                      : 'Job posting is opening'}
+                    ? 'Bài tuyển dụng đang mở'
+                    : 'Job posting is opening'}
                 </h3>
-                <h3 onClick={roleRedux === 0 ? moveToHotJob : moveToClosedPost}>
-                  {roleRedux === 0
+                <h3
+                  onClick={
+                    profileV3.typeRoleData === 0
+                      ? moveToHotJob
+                      : moveToClosedPost
+                  }
+                >
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Công việc nổi bật'
                       : 'Hot jobs'
                     : languageRedux === 1
-                      ? 'Bài tuyển dụng đã đóng'
-                      : 'Job posting is closed'}
+                    ? 'Bài tuyển dụng đã đóng'
+                    : 'Job posting is closed'}
                 </h3>
                 <h3
                   onClick={
-                    roleRedux === 0 ? moveToJobByHotPlace : moveToPostjob
+                    profileV3.typeRoleData === 0
+                      ? moveToJobByHotPlace
+                      : moveToPostjob
                   }
                 >
-                  {roleRedux === 0
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Công việc theo chủ đề'
                       : 'Job by hot places'
                     : languageRedux === 1
-                      ? 'Đăng bài tuyển dụng'
-                      : 'Post recruitment posts'}
+                    ? 'Đăng bài tuyển dụng'
+                    : 'Post recruitment posts'}
                 </h3>
                 <h3
                   onClick={
-                    roleRedux === 0 ? moveToSuggestedJob : moveToCompanyInfor
+                    profileV3.typeRoleData === 0
+                      ? moveToSuggestedJob
+                      : moveToCompanyInfor
                   }
                 >
-                  {roleRedux === 0
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Công việc gợi ý'
                       : 'Suggested jobs'
                     : languageRedux === 1
-                      ? 'Thông tin công ty'
-                      : "Company's information"}
+                    ? 'Thông tin công ty'
+                    : "Company's information"}
                 </h3>
               </div>
             </div>
             <div
               className="category-dropdown-item"
-            // style={{ display: roleRedux === 0 ? 'block' : 'none' }}
+              // style={{ display: profileV3.typeRoleData === 0 ? 'block' : 'none' }}
             >
               <div className="top-item" onClick={() => handleExpand(2)}>
                 <h3>
-                  {roleRedux === 0
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Hồ sơ & CV'
                       : 'Resume & CV'
                     : languageRedux === 1
-                      ? 'Thông tin nhân tài'
-                      : 'Candidates information'}
+                    ? 'Thông tin nhân tài'
+                    : 'Candidates information'}
                 </h3>
                 <ArrowIcon fill="black" />
               </div>
@@ -666,44 +685,48 @@ const CategoryDropdown: React.FC = () => {
               >
                 <h3
                   onClick={
-                    roleRedux === 0 ? moveToCreateCv : moveToCadidateList
+                    profileV3.typeRoleData === 0
+                      ? moveToCreateCv
+                      : moveToCadidateList
                   }
                 >
-                  {roleRedux === 0
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Tạo mới CV'
                       : 'Create a new CV'
                     : languageRedux === 1
-                      ? 'Danh sách nhân tài mới nhất'
-                      : 'Newest candidate list'}
+                    ? 'Danh sách nhân tài mới nhất'
+                    : 'Newest candidate list'}
                 </h3>
                 <h3
                   onClick={
-                    roleRedux === 0 ? moveToCvManage : moveToSearchCandidate
+                    profileV3.typeRoleData === 0
+                      ? moveToCvManage
+                      : moveToSearchCandidate
                   }
                 >
-                  {roleRedux === 0
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Quản lý CV'
                       : 'CV management'
                     : languageRedux === 1
-                      ? 'Tìm kiếm ứng viên'
-                      : 'Search for candidate'}
+                    ? 'Tìm kiếm ứng viên'
+                    : 'Search for candidate'}
                 </h3>
                 <h3
                   onClick={
-                    roleRedux === 0
+                    profileV3.typeRoleData === 0
                       ? moveToIntroductionCv
                       : moveToSavedCandidateList
                   }
                 >
-                  {roleRedux === 0
+                  {profileV3.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Hướng dẫn tạo CV'
                       : 'Instructions for creating a CV'
                     : languageRedux === 1
-                      ? 'Danh sách nhân tài đã lưu'
-                      : 'Saved candidate list'}
+                    ? 'Danh sách nhân tài đã lưu'
+                    : 'Saved candidate list'}
                 </h3>
               </div>
             </div>

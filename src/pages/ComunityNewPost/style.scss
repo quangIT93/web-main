@@ -3,7 +3,7 @@
     margin-top: 115px;
 
     .comunity-content {
-        padding: 50px 0px;
+        padding: 24px 0px 50px;
         max-width: 1080px;
         margin: 0 auto;
         transition: all linear 0.2s;
@@ -18,15 +18,15 @@
         // }
 
         @media screen and (max-width: 599px) {
-            padding: 50px 24px;
+            padding: 24px 0px 50px;
         }
 
         @media screen and (min-width: 600px) and (max-width: 767px) {
-            padding: 50px 24px;
+            padding: 24px 0px 50px;
         }
 
         @media screen and (min-width: 768px) and (max-width: 1023px) {
-            padding: 50px 24px;
+            padding: 24px 0px 50px;
 
             .comunity-detail_post {
                 width: 100% !important;
@@ -34,11 +34,11 @@
         }
 
         @media screen and (min-width: 1024px) and (max-width: 1280px) {
-            padding: 50px 0px !important;
+            padding: 24px 0px 50px !important;
         }
 
         @media screen and (min-width: 1280px) and (max-width: 1600px) {
-            padding: 50px 0px !important;
+            padding: 24px 0px 50px !important;
         }
 
 

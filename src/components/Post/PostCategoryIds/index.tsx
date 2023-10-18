@@ -54,7 +54,7 @@ const PostCategoryIds: React.FC<IPostCategoryIds> = (props) => {
 
   const getAllParentCategories = async () => {
     try {
-      const result = await categoriesApi.getAllParentCategories("vi");
+      const result = await categoriesApi.getAllParentCategories('vi');
       if (result) {
         setCategories(result.data);
       }

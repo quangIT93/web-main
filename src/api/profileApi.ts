@@ -58,12 +58,12 @@ const profileApi = {
     // unlock=${unclock}&
     const URL = `/v3/profiles/${accountId}?lang=${lang}`
     return axiosClient.get(URL, {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
     })
   },
-  putProfileJobV3: (jobTypeId: number| null, isSearch: number | null) => {
+  putProfileJobV3: (jobTypeId: number | null, isSearch: number | null) => {
     const URL = `/v3/profiles/job`
     return axiosClient.put(URL, {
       jobTypeId,

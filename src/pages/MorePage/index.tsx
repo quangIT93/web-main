@@ -541,11 +541,11 @@ const MoreJobsPage: React.FC = () => {
               style={{
                 display: 'flex',
                 // flexDirection: 'column',
-                margin: '20px 0',
+                margin: '24px 0',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 // background: '#aaaaaa',
-                padding: '8px 0',
+                // padding: '8px 0',
               }}
             >
               <div

@@ -218,12 +218,24 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             dispatch(setProfileV3(resultProfile));
             dispatch(setAlertEditInfo(true));
           }
+
+          setFullName('');
+          setDescription('');
+          setPhone('');
+          setMail('');
+          setOpenModalEditReference({
+            open: false,
+            name: '',
+            email: '',
+            phone: '',
+            id: null,
+            description: '',
+          });
         }
       } else {
         message.error(messageError)
       }
     } catch (error) { }
-
     // setReferenceValues((prev: any) => [
     //   {
     //     fullName: fullName,
@@ -231,18 +243,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
     //   },
     //   ...prev,
     // ]);
-    setFullName('');
-    setDescription('');
-    setPhone('');
-    setMail('');
-    setOpenModalEditReference({
-      open: false,
-      name: '',
-      email: '',
-      phone: '',
-      id: null,
-      description: '',
-    });
+
   };
 
   const handleClose = () => {

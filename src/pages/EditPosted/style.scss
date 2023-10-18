@@ -3,11 +3,11 @@
   margin-top: 115px;
 
   .edit-posted_main {
-    padding: 50px 180px;
+    padding: 50px 0px;
     margin: 0 auto;
     transition: all l;
     margin-bottom: 36px;
-
+    max-width: 1080px;
     @media screen and (max-width: 1200px) {
       padding-inline: 10px;
     }
