@@ -222,10 +222,6 @@ const CandidateDetail: React.FC = () => {
     return null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusApplication, setStatusApplication]);
-  console.log(
-    '          dataCandidate?.applicationProfile?.avatar',
-    dataCandidate?.applicationProfile?.avatar,
-  );
 
   return (
     <div className="candidate-detail">
