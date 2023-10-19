@@ -180,7 +180,10 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} className="Modal-personnal-info">
+      <Box
+        sx={style}
+        className="Modal-personnal-info modal-person modal-languageProfile"
+      >
         <div
           style={{
             position: 'absolute',
@@ -230,6 +233,26 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
             placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
             // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {language && language.length > 255 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tên ngôn ngữ không được vượt quá 255 ký tự'
+                  : 'Language names cannot exceed 255 characters'}
+              </span>
+            ) : !language ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tên ngôn ngữ không được bỏ trống'
+                  : 'Language names cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              language ? language.length : '0'
+            }/255`}</span>
+          </div>
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography

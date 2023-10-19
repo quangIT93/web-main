@@ -17,3 +17,23 @@
     overflow-y: scroll;
   }
 }
+
+.modal-person {
+
+
+  .wrap-noti_input {
+    margin-left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    .helper-text {
+      color: red;
+      font-size: 12px;
+    }
+  
+    .number-text {
+      font-size: 16px;
+      color: #aaa;
+    }
+  }
+}

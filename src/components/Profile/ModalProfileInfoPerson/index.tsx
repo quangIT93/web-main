@@ -62,6 +62,9 @@ const style = {
 
 const styleChildBox = {
   marginBottom: '12px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '4px',
 };
 
 interface IModalProfileInfoPerson {
@@ -180,6 +183,8 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     });
   };
 
+  console.log('new Date(day).getFullYear()', new Date(day).getFullYear());
+
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIntroduction(e.target.value);
   };
@@ -191,43 +196,48 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
         checkForm: false,
       };
     }
-    if (name.trim().length > 255) {
+    if (name.trim().length > 90) {
       return {
-        message: languageRedux === 1 ?
-          "Tên không được vượt quá 255 ký tự" :
-          "Full name cannot exceed 255 characters",
+        message:
+          languageRedux === 1
+            ? 'Tên không được vượt quá 90 ký tự'
+            : 'Full name cannot exceed 90 characters',
         checkForm: false,
       };
     }
     if (selectedProvince === '') {
       return {
-        message: languageRedux === 1 ?
-          "Địa chỉ không được bỏ trống" :
-          "Location cannot be left blank",
+        message:
+          languageRedux === 1
+            ? 'Địa chỉ không được bỏ trống'
+            : 'Location cannot be left blank',
         checkForm: false,
       };
     }
     if (new Date(day).getFullYear() > new Date().getFullYear()) {
       return {
-        message: languageRedux === 1 ?
-          "Năm sinh không được vượt quá năm hiện tại" :
-          "Year of birth cannot exceed the current year",
+        message:
+          languageRedux === 1
+            ? 'Năm sinh không được vượt quá năm hiện tại'
+            : 'Year of birth cannot exceed the current year',
         checkForm: false,
       };
     }
     if (jobTypeName === '') {
       return {
-        message: languageRedux === 1 ?
-          "Vị trí không được để trống" :
-          "The position cannot be left blank",
+        message:
+          languageRedux === 1
+            ? 'Vị trí không được để trống'
+            : 'The position cannot be left blank',
         checkForm: false,
       };
     }
-    if (jobTypeName.trim().length > 255) {
+    if (jobTypeName.trim().length > 100) {
       return {
-        message: languageRedux === 1 ?
-          "Vị trí không được vượt quá 255 ký tự" :
-          "Position cannot exceed 255 characters",
+        message:
+          languageRedux === 1
+            ? 'Vị trí không được vượt quá 100 ký tự'
+            : 'Position cannot exceed 100 characters',
         checkForm: false,
       };
     }
@@ -240,9 +250,10 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     }
     if (introduction.trim().length > 500) {
       return {
-        message: languageRedux === 1 ?
-          "Giới thiệu bản thân không được vượt quá 500 ký tự" :
-          "Introduce yourself cannot exceed 500 characters",
+        message:
+          languageRedux === 1
+            ? 'Giới thiệu bản thân không được vượt quá 500 ký tự'
+            : 'Introduce yourself cannot exceed 500 characters',
         checkForm: false,
       };
     }
@@ -309,7 +320,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
       onKeyDown={handleKeyDown}
       sx={{ minWidth: '300px' }}
     >
-      <Box sx={style} className="Modal-personnal-info">
+      <Box sx={style} className="Modal-personnal-info modal-person">
         {contextHolder}
         <form action="">
           <div
@@ -355,6 +366,24 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               placeholder="Họ và tên"
               // error={titleError} // Đánh dấu lỗi
             />
+            <div className="wrap-noti_input">
+              {name.length > 90 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tên không được vượt quá 90 ký tự'
+                    : 'Full name cannot exceed 90 characters'}
+                </span>
+              ) : name.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tên không được để trống'
+                    : 'Full name cannot be blank'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${name.length}/90`}</span>
+            </div>
           </Box>
           <Box sx={styleChildBox}>
             <Typography
@@ -402,6 +431,29 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   }}
                   // format="DD/MM/YYYY"
                 />
+              </div>
+              <div className="wrap-noti_input">
+                {new Date(day).getFullYear() > new Date().getFullYear() ? (
+                  <span className="helper-text">
+                    {languageRedux === 1
+                      ? 'Năm sinh không được vượt quá năm hiện tại'
+                      : 'Year of birth cannot exceed the current year'}
+                  </span>
+                ) : !new Date(day).getFullYear() ? (
+                  <span className="helper-text">
+                    {languageRedux === 1
+                      ? 'Vui lòng nhập ngày sinh'
+                      : 'Please enter date of birth'}
+                  </span>
+                ) : new Date(day).getFullYear() < 1900 ? (
+                  <span className="helper-text">
+                    {languageRedux === 1
+                      ? 'Năm sinh không được nhỏ hơn 1900'
+                      : 'Year of birth cannot be less than 1900'}
+                  </span>
+                ) : (
+                  ''
+                )}
               </div>
             </LocalizationProvider>
           </Box>
@@ -460,6 +512,24 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               }
               // error={titleError} // Đánh dấu lỗi
             />
+            <div className="wrap-noti_input">
+              {jobTypeName.length > 100 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Vị trí không được vượt quá 100 ký tự'
+                    : 'Position cannot exceed 100 characters'}
+                </span>
+              ) : jobTypeName.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Vị trí không được vượt quá 100 ký tự'
+                    : 'Position cannot exceed 100 characters'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${jobTypeName.length}/100`}</span>
+            </div>
           </Box>
           <Box sx={styleChildBox}>
             <Typography
@@ -481,7 +551,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               id="profile-introduction"
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.introduce_yourself_to_the_recruiter}
-              error={!introduction} // Đánh dấu lỗi
+              error={introduction.length > 500} // Đánh dấu lỗi
               // onKeyDown={(event) => {
               //   // if (event.key === 'Enter') {
               //   //   event.preventDefault();
@@ -489,6 +559,24 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               //   console.log(event.target);
               // }}
             />
+            <div className="wrap-noti_input">
+              {introduction.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Thông tin thêm không được bỏ trống'
+                    : 'Additional information cannot be empty'}
+                </span>
+              ) : introduction.length > 500 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Thông tin thêm không được vượt quá 500 ký tự'
+                    : 'Additional information cannot exceed 500 characters'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${introduction.length}/500`}</span>
+            </div>
           </Box>
         </form>
         <Button variant="contained" fullWidth onClick={handleSubmit}>

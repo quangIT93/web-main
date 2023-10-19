@@ -617,6 +617,26 @@ const SectionCv: React.FC<ISectionCv> = (props) => {
                   dispatch(setAlertLackInfo(true));
                 }}
               />
+              <div className="wrap-noti_input">
+                {hobbieValues && hobbieValues.length > 1000 ? (
+                  <span className="helper-text">
+                    {languageRedux === 1
+                      ? 'Tên kỹ năng không được vượt quá 1000 ký tự'
+                      : 'Skill names cannot exceed 1000 characters'}
+                  </span>
+                ) : !hobbieValues ? (
+                  <span className="helper-text">
+                    {languageRedux === 1
+                      ? 'Tên kỹ năng không được bỏ trống'
+                      : 'Skill names cannot be empty'}
+                  </span>
+                ) : (
+                  <></>
+                )}
+                <span className="number-text">{`${
+                  hobbieValues ? hobbieValues.length : '0'
+                }/1000`}</span>
+              </div>
             </div>
           </div>
           <ModalDeleteHobbies

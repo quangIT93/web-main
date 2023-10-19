@@ -77,8 +77,6 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
     categories && categories?.map((v: any, i) => v.id.toString()),
   );
 
-  console.log('value', value);
-
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   // const [originalValue, setOriginalValue] = useState<string[]>([]);
   // const [checkClick, setCheckList] = React.useState<boolean>(false);
@@ -121,8 +119,6 @@ const ModalProfileCareerObjectice: React.FC<IModalProfileCareerObjectice> = (
       console.error(error);
     }
   };
-
-  console.log('edit');
 
   React.useEffect(() => {
     getCategories();
