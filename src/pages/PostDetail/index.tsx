@@ -173,12 +173,16 @@ const Detail = () => {
   // test redux
   // const userProfile = useSelector((state: RootState) => state.profileUser);
   // const userProfile = useSelector((state: RootState) => state.profile.profile);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector((state: RootState) => {
+    console.log('state', state);
+    return state.dataProfileV3.data;
+  });
   // const dispatch = useDispatch()
   // const { setPostByTheme, setProvince } = bindActionCreators(
   //   actionCreators,
   //   dispatch
   // )
+  console.log('profileV3', profileV3);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -327,7 +331,7 @@ const Detail = () => {
         languageRedux === 1 ? 'vi' : 'en',
       );
       // console.log('result', result2);
-      if (result) {
+      if (result && profileV3) {
         // const list = result?.data.categories.map((category: any) =>
         //   Number(category.child_category_id)
         // )
@@ -357,7 +361,15 @@ const Detail = () => {
           setBackgroundButton('gray');
           setTextButton(languageRedux === 1 ? 'Đã ứng tuyển' : 'Applied');
         } else {
-          setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
+          setTextButton(
+            languageRedux === 1
+              ? profileV3.typeRoleData === 1
+                ? 'Xem ngay'
+                : 'Ứng tuyển ngay'
+              : profileV3.typeRoleData === 1
+              ? 'View'
+              : 'Apply',
+          );
           setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
         }

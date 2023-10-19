@@ -18,6 +18,7 @@ import {
   message,
   Spin,
 } from 'antd';
+
 import { EnvironmentOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import { Box, Button } from '@mui/material';
@@ -949,7 +950,7 @@ const NewJobs: React.FC = () => {
                     </span>
                   </>
                 ) : (
-                  <span>Loadding</span>
+                  <span>Loading</span>
                 )}
               </div>
               <div
@@ -1148,10 +1149,7 @@ const NewJobs: React.FC = () => {
                 fontSize: '12px',
               }}
             />
-            {/* 
-            <Cascader>
 
-            </Cascader> */}
             <Cascader
               dropdownRender={DropdownRenderCategory}
               options={
