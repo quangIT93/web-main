@@ -112,83 +112,75 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
   const regexCheckPhone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
   const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const validValue = () => {
-    if (
-      fullName?.trim() === ''
-    ) {
+    if (fullName?.trim() === '') {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên không được bỏ trống" :
-          "Full name cannot be empty",
+        messageError:
+          languageRedux === 1
+            ? 'Tên không được bỏ trống'
+            : 'Full name cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      fullName?.trim().length > 255
-    ) {
+    if (fullName?.trim().length > 255) {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên không được vượt quá 255 ký tự" :
-          "Full name cannot exceed 255 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Tên không được vượt quá 255 ký tự'
+            : 'Full name cannot exceed 255 characters',
         checkForm: false,
       };
     }
-    if (
-      phone?.trim() === ''
-    ) {
+    if (phone?.trim() === '') {
       return {
-        messageError: languageRedux === 1 ?
-          "Số điện thoại không được bỏ trống" :
-          "Phone cannot be empty",
+        messageError:
+          languageRedux === 1
+            ? 'Số điện thoại không được bỏ trống'
+            : 'Phone cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      regexCheckPhone.test(phone) === false
-    ) {
+    if (regexCheckPhone.test(phone) === false) {
       return {
-        messageError: languageRedux === 1 ?
-          "Số điện thoại không đúng định dạng" :
-          "The phone number is not in the correct format",
+        messageError:
+          languageRedux === 1
+            ? 'Số điện thoại không đúng định dạng'
+            : 'The phone number is not in the correct format',
         checkForm: false,
       };
     }
-    if (
-      mail?.trim() === ''
-    ) {
+    if (mail?.trim() === '') {
       return {
-        messageError: languageRedux === 1 ?
-          "Email không được bỏ trống" :
-          "Email cannot be empty",
+        messageError:
+          languageRedux === 1
+            ? 'Email không được bỏ trống'
+            : 'Email cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      regexCheckEmail.test(mail) === false
-    ) {
+    if (regexCheckEmail.test(mail) === false) {
       return {
-        messageError: languageRedux === 1 ?
-          "Email không đúng định dạng" :
-          "The Email is not in the correct format",
+        messageError:
+          languageRedux === 1
+            ? 'Email không đúng định dạng'
+            : 'The Email is not in the correct format',
         checkForm: false,
       };
     }
-    if (
-      description?.trim() === ''
-    ) {
+    if (description?.trim() === '') {
       return {
-        messageError: languageRedux === 1 ?
-          "Thông tin thêm không được bỏ trống" :
-          "Additional information cannot be empty",
+        messageError:
+          languageRedux === 1
+            ? 'Thông tin thêm không được bỏ trống'
+            : 'Additional information cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      description?.trim().length > 1000
-    ) {
+    if (description?.trim().length > 1000) {
       return {
-        messageError: languageRedux === 1 ?
-          "Thông tin thêm không được vượt quá 1000 ký tự" :
-          "Additional information cannot exceed 1000 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Thông tin thêm không được vượt quá 1000 ký tự'
+            : 'Additional information cannot exceed 1000 characters',
         checkForm: false,
       };
     }
@@ -200,7 +192,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
   };
 
   const handleSubmit = async () => {
-    const { messageError, checkForm } = validValue()
+    const { messageError, checkForm } = validValue();
     try {
       if (checkForm) {
         const result = await apiCv.putProfileReference(
@@ -233,9 +225,9 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
           });
         }
       } else {
-        message.error(messageError)
+        message.error(messageError);
       }
-    } catch (error) { }
+    } catch (error) {}
     // setReferenceValues((prev: any) => [
     //   {
     //     fullName: fullName,
@@ -243,7 +235,6 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
     //   },
     //   ...prev,
     // ]);
-
   };
 
   const handleClose = () => {
@@ -264,7 +255,10 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} className="Modal-personnal-info">
+      <Box
+        sx={style}
+        className="Modal-personnal-info modal-person modal-refProfile"
+      >
         <div
           style={{
             position: 'absolute',
@@ -286,7 +280,7 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
           align="center"
           sx={{ marginBottom: '12px' }}
         >
-          {languageRedux === 1 ? 'Thêm tham khảo' : 'Add Reference'}
+          {languageRedux === 1 ? 'Sửa người giới thiệu' : 'Edit Reference'}
         </Typography>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -309,8 +303,28 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Họ và tên' : 'Full name'}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {fullName && fullName.length > 255 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tên kỹ năng không được vượt quá 255 ký tự'
+                  : 'Skill names cannot exceed 255 characters'}
+              </span>
+            ) : !fullName ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tên kỹ năng không được bỏ trống'
+                  : 'Skill names cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              fullName ? fullName.length : '0'
+            }/255`}</span>
+          </div>
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -331,8 +345,26 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Số điện thoại' : 'Phone number'}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {regexCheckPhone.test(phone) === false ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Số điện thoại không đúng định dạng'
+                  : 'The phone number is not in the correct format'}
+              </span>
+            ) : phone.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Số điện thoại không được bỏ trống'
+                  : 'Phone cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${phone.length}/11`}</span>
+          </div>
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -353,8 +385,26 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Email' : 'Email'}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {regexCheckEmail.test(mail) === false ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Email không đúng định dạng'
+                  : 'The Email is not in the correct format'}
+              </span>
+            ) : mail.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Email không được bỏ trống'
+                  : 'Email cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${phone.length}/50`}</span>
+          </div>
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -374,9 +424,27 @@ const ModalEditReference: React.FC<IModalReference> = (props) => {
             multiline
             rows={4}
             id="extraExp_info"
-          // label="Một số đặc điểm nhận diện công ty"
-          // placeholder={language?.profile_page?.place_additional_information}
+            // label="Một số đặc điểm nhận diện công ty"
+            // placeholder={language?.profile_page?.place_additional_information}
           />
+          <div className="wrap-noti_input">
+            {description.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Thông tin thêm không được bỏ trống'
+                  : 'Additional information cannot be empty'}
+              </span>
+            ) : description.length > 1000 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Thông tin thêm không được vượt quá 1000 ký tự'
+                  : 'Additional information cannot exceed 1000 characters'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${description.length}/1000`}</span>
+          </div>
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {language?.profile_page?.save_info}

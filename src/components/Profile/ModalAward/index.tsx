@@ -100,12 +100,12 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
   };
 
   const validValue = () => {
-    if (award.title.trim().length > 250 || award.title.trim().length === 0) {
+    if (award.title.trim().length > 255 || award.title.trim().length === 0) {
       return {
         messageError:
           languageRedux === 1
-            ? 'Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 250'
-            : 'Title length must be greater than 0 and less than 250',
+            ? 'Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 255'
+            : 'Title length must be greater than 0 and less than 255',
         checkForm: false,
       };
     }
@@ -219,6 +219,26 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
             }
             // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {award.title && award.title.length > 255 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tiêu đề không được vượt quá 255 ký tự'
+                  : 'Title cannot exceed 255 characters'}
+              </span>
+            ) : !award.title ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tiêu đề không được bỏ trống'
+                  : 'Title cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              award.title ? award.title.length : '0'
+            }/255`}</span>
+          </div>
         </Box>
         {/* <Box sx={{ marginBottom: '12px' }}>
                     <Typography
@@ -277,6 +297,24 @@ const ModalAward: React.FC<IModalActivity> = (props) => {
             }
             // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {award.description.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Thông tin thêm không được bỏ trống'
+                  : 'Additional information cannot be empty'}
+              </span>
+            ) : award.description.length > 1000 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Thông tin thêm không được vượt quá 1000 ký tự'
+                  : 'Additional information cannot exceed 1000 characters'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${award.description.length}/1000`}</span>
+          </div>
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {language?.profile_page?.save_info}

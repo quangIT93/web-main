@@ -135,27 +135,27 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
 
   const validValue = () => {
     if (
-      activity.title.trim().length > 250 ||
+      activity.title.trim().length > 255 ||
       activity.title.trim().length === 0
     ) {
       return {
         messageError:
           languageRedux === 1
-            ? 'Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 250'
-            : 'Title length must be greater than 0 and less than 250',
+            ? 'Độ dài tiêu đề phải lớn hơn 0 và nhỏ hơn 255'
+            : 'Title length must be greater than 0 and less than 255',
         checkForm: false,
       };
     }
 
     if (
-      activity.organization.trim().length > 250 ||
+      activity.organization.trim().length > 255 ||
       activity.organization.trim().length === 0
     ) {
       return {
         messageError:
           languageRedux === 1
-            ? 'Độ dài nhà tuyển dụng phải lớn hơn 0 và nhỏ hơn 250'
-            : 'Employer length must be greater than 0 and less than 250',
+            ? 'Độ dài nhà tuyển dụng phải lớn hơn 0 và nhỏ hơn 255'
+            : 'Employer length must be greater than 0 and less than 255',
         checkForm: false,
       };
     }
@@ -177,8 +177,8 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
       return {
         messageError:
           languageRedux === 1
-            ? "Năm bắt đầu không được vượt quá năm hiện tại" :
-            "The starting year cannot exceed the current year",
+            ? 'Năm bắt đầu không được vượt quá năm hiện tại'
+            : 'The starting year cannot exceed the current year',
         checkForm: false,
       };
     }
@@ -187,18 +187,21 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
       return {
         messageError:
           languageRedux === 1
-            ? "Năm kết thúc không được vượt quá năm hiện tại" :
-            "The final year cannot exceed the current year",
+            ? 'Năm kết thúc không được vượt quá năm hiện tại'
+            : 'The final year cannot exceed the current year',
         checkForm: false,
       };
     }
 
-    if (new Date(activity.startDate).getFullYear() > new Date(activity.endDate).getFullYear()) {
+    if (
+      new Date(activity.startDate).getFullYear() >
+      new Date(activity.endDate).getFullYear()
+    ) {
       return {
         messageError:
           languageRedux === 1
-            ? "Năm bắt đầu không được vượt quá năm kết thúc" :
-            "The starting year cannot exceed the final year",
+            ? 'Năm bắt đầu không được vượt quá năm kết thúc'
+            : 'The starting year cannot exceed the final year',
         checkForm: false,
       };
     }
@@ -253,7 +256,10 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
       aria-describedby="modal-modal-description"
       className="modal-activity-container"
     >
-      <Box sx={style} className="Modal-personnal-info">
+      <Box
+        sx={style}
+        className="Modal-personnal-info modal-person modal-actProfile"
+      >
         <div
           style={{
             position: 'absolute',
@@ -298,8 +304,28 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
             placeholder={
               languageRedux === 1 ? 'Tiêu đề hoạt động' : 'Function Title'
             }
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {activity.title && activity.title.length > 255 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tiêu đề hoạt động không được vượt quá 255 ký tự'
+                  : 'Function title cannot exceed 255 characters'}
+              </span>
+            ) : !activity.title ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tiêu đề hoạt động không được bỏ trống'
+                  : 'Function title cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              activity.title ? activity.title.length : '0'
+            }/255`}</span>
+          </div>
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -320,14 +346,34 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Nhà tuyển dụng' : 'Employer'}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {activity.organization && activity.organization.length > 255 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Nhà tuyển dụng không được vượt quá 255 ký tự'
+                  : 'Recruitment must not exceed 255 characters'}
+              </span>
+            ) : !activity.organization ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Nhà tuyển dụng không được bỏ trống'
+                  : 'Recruitment cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              activity.organization ? activity.organization.length : '0'
+            }/255`}</span>
+          </div>
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-            //   sx={{ display: 'flex' }}
+              //   sx={{ display: 'flex' }}
             >
               <div className="activity-time-wraper">
                 <Typography
@@ -346,6 +392,25 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                   openTo="month"
                   format="MM/YYYY"
                 />
+                <div className="wrap-noti_input">
+                  {activity.endDate &&
+                  new Date(activity.startDate).getFullYear() >
+                    new Date().getFullYear() ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                    </span>
+                  ) : !new Date(activity.startDate).getFullYear() ? (
+                    <span className="helper-text">
+                      Vui lòng nhập Thời gian bắt đầu
+                    </span>
+                  ) : new Date(activity.startDate).getFullYear() < 1900 ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể nhỏ hơn 1900
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </DemoContainer>
           </LocalizationProvider>
@@ -354,7 +419,7 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DemoContainer
               components={['DatePicker']}
-            //   sx={{ display: 'flex' }}
+              //   sx={{ display: 'flex' }}
             >
               <div className="activity-time-wraper">
                 <Typography
@@ -373,6 +438,25 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                   openTo="month"
                   format="MM/YYYY"
                 />
+                <div className="wrap-noti_input">
+                  {activity.endDate &&
+                  new Date(activity.endDate).getFullYear() >
+                    new Date().getFullYear() ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                    </span>
+                  ) : !new Date(activity.endDate).getFullYear() ? (
+                    <span className="helper-text">
+                      Vui lòng nhập Thời gian bắt đầu
+                    </span>
+                  ) : new Date(activity.endDate).getFullYear() < 1900 ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể nhỏ hơn 1900
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </DemoContainer>
           </LocalizationProvider>
@@ -404,8 +488,26 @@ const ModalEditActivity: React.FC<IModalInternship> = (props) => {
                 ? 'Mô tả quá trình thực tập của bạn'
                 : 'Description your activity'
             }
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {activity.description.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Thông tin thêm không được bỏ trống'
+                  : 'Additional information cannot be empty'}
+              </span>
+            ) : activity.description.length > 1000 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Thông tin thêm không được vượt quá 1000 ký tự'
+                  : 'Additional information cannot exceed 1000 characters'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${activity.description.length}/1000`}</span>
+          </div>
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
           {language?.profile_page?.save_info}
