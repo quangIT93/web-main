@@ -300,7 +300,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
           >
             <div className="image-cadidate_wrap">
               <img
-                src={!candidate.avatar ? candidate.avatar : female_null_avatar}
+                src={candidate.avatar ? candidate.avatar : female_null_avatar}
                 alt={candidate.name}
                 className="image-cadidate"
               />

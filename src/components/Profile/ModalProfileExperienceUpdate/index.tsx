@@ -548,7 +548,7 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             {experience.extraInformation &&
             experience.extraInformation.length > 500 ? (
               <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
-            ) : experience.extraInformation.length === 0 ? (
+            ) : !experience.extraInformation ? (
               <span className="helper-text">
                 Vui lòng nhập thông tin bổ sung
               </span>

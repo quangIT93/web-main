@@ -390,16 +390,18 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             // error={titleError} // Đánh dấu lỗi
           />
           <div className="wrap-noti_input">
-            {education.companyName.length > 50 ? (
+            {education.companyName && education.companyName.length > 50 ? (
               <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
-            ) : education.companyName.length === 0 ? (
+            ) : !education.companyName ? (
               <span className="helper-text">
                 Vui lòng nhập tên trường/tổ chức
               </span>
             ) : (
               <></>
             )}
-            <span className="number-text">{`${education.companyName.length}/50`}</span>
+            <span className="number-text">{`${
+              education.companyName ? education.companyName.length : '0'
+            }/50`}</span>
           </div>
         </Box>
 
