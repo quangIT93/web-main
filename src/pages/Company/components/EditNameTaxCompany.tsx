@@ -9,6 +9,8 @@ import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
 import languageApi from 'api/languageApi';
 
+import "./style.scss"
+
 const styleLabel = {
   fontWeight: 700,
   color: '#000000',
@@ -69,7 +71,7 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
   };
 
   return (
-    <div className="edit-name-tax-company-container">
+    <div className="edit-name-tax-company-container modal-person editCompany">
       <div className="edit-name-company">
         <Typography
           sx={styleLabel}
@@ -91,6 +93,24 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           disabled={is_profile ? true : false}
         //   error={titleError} // Đánh dấu lỗi
         />
+                  <div className="wrap-noti_input">
+              {dataCompany?.name.length > 255 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tên công ty không được vượt quá 255 ký tự'
+                    : 'Company name cannot exceed 255 characters'}
+                </span>
+              ) : dataCompany?.name.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tên công ty được để trống'
+                    : 'Company name cannot be blank'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${dataCompany?.name.length}/255`}</span>
+            </div>
       </div>
       <div className="edit-tax-company">
         <Typography
@@ -113,6 +133,18 @@ const EditNameFaxCompany: React.FC<IEditNameFaxCompany> = (props) => {
           disabled={is_profile ? true : false}
         //   error={titleError} // Đánh dấu lỗi
         />
+           <div className="wrap-noti_input">
+              {dataCompany?.taxCode.length > 255 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Mã số thuế không được vượt quá 255 ký tự'
+                    : 'Tax code cannot exceed 255 characters'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${dataCompany?.taxCode.length}/255`}</span>
+            </div>
       </div>
     </div>
   );

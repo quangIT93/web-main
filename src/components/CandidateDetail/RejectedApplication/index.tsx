@@ -5,9 +5,9 @@ import { RootState } from '../../../store/reducer';
 import { useSelector } from 'react-redux';
 const RejectedApplication: React.FC = () => {
   // const [language, setLanguageState] = React.useState<any>();
-  const languageRedux = useSelector(
-    (state: RootState) => state.changeLaguage.language,
-  );
+  // const languageRedux = useSelector(
+  //   (state: RootState) => state.changeLaguage.language,
+  // );
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );

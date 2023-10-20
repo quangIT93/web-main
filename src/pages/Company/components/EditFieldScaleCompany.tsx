@@ -125,7 +125,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
     setDataCompany((preValue: any) => ({
       ...preValue,
       companySizeInfomation: {
-        id: value?.id,
+        id: value ? value?.id:"",
       },
     }));
   };
@@ -134,7 +134,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyCategory: {
-        id: value?.parent_category_id,
+        id: value ? value?.parent_category_id:"",
       },
     }));
   };
@@ -142,7 +142,7 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
   // console.log('selectedCategory', selectedCategory);
 
   return (
-    <div className="edit-field-scale-company-container">
+    <div className="edit-field-scale-company-container modal-person editCompany">
       <div className="edit-field-company">
         <Typography
           sx={styleLabel}
@@ -173,6 +173,17 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           }}
           style={{ marginTop: '8px' }}
         />
+          <div className="wrap-noti_input">
+            {!selectedCategory ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Vui lòng chọn lĩnh vực hoạt động'
+                  : 'Please select your field of activity'}
+              </span>
+            ) : (
+              <></>
+            )}
+          </div>
       </div>
 
       <div className="edit-scale-company">
@@ -203,6 +214,17 @@ const EditFieldScaleCompany: React.FC<IEditPostAddress> = memo((props) => {
           }}
           style={{ marginTop: '8px' }}
         />
+        <div className="wrap-noti_input">
+            {!selectedCategory ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Vui lòng chọn quy mô công ty'
+                  : 'Please select company size'}
+              </span>
+            ) : (
+              <></>
+            )}
+          </div>
       </div>
     </div>
   );

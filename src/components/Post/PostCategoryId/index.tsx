@@ -19,7 +19,14 @@ interface ICategories {
 }
 
 const CheckboxesTags: React.FC<ICategories> = (props) => {
-  const { setCategoriesId, categoriesId, fillCate, setFillCate, language, languageRedux } = props;
+  const {
+    setCategoriesId,
+    categoriesId,
+    fillCate,
+    setFillCate,
+    language,
+    languageRedux,
+  } = props;
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
@@ -32,9 +39,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
     <div style={{ width: '520px' }} className="filter-loca-cate">
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ?
-          language?.limit_2_cate
-          : ''}
+        {disable ? language?.limit_2_cate : ''}
       </Divider>
     </div>
   );
@@ -54,7 +59,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataCategories(result.data);
@@ -84,7 +89,7 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         display: 'flex',
         flexDirection: 'column',
       }}
-      className="post_cate"
+      className="post_cate modal-person"
     >
       <Typography
         sx={{ fontWeight: 600, color: '#000000' }}
@@ -92,14 +97,12 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         component="label"
         htmlFor="jobTitle"
       >
-        {
-          language?.category
-        }{' '}
-        <span style={{ color: 'red' }}>*</span>
+        {language?.category} <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
         defaultValue={fillCate}
         value={fillCate}
+        placeholder="Loại hình công việc"
         options={
           dataCategories
             ? dataCategories.map((parentCategory: any) => ({
@@ -137,6 +140,20 @@ const CheckboxesTags: React.FC<ICategories> = (props) => {
         showCheckedStrategy={SHOW_CHILD}
         style={{ borderRadius: '2px' }}
       />
+      <div
+        className="wrap-noti_input"
+        // style={{ position: 'absolute', bottom: '-15px' }}
+      >
+        {fillCate.length === 0 ? (
+          <span className="helper-text">
+            {languageRedux === 1
+              ? 'Vui lòng nhập tên phường'
+              : 'Please enter ward name'}
+          </span>
+        ) : (
+          <></>
+        )}
+      </div>
     </Box>
   );
 };

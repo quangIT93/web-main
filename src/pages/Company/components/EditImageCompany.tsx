@@ -263,8 +263,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     }
   };
 
-  console.log('selectedImages', selectedImages);
-  console.log('deleteImage', deleteImages);
+
 
 
   return (

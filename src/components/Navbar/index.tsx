@@ -1934,7 +1934,7 @@ border-aniation_download
                 <BlackSearchIcon width={20} height={20} />
               </Button>
 
-              <Badge count={countChat} className="btn-badge">
+              <Badge count={window.innerWidth < 426 ? "": countChat} className="btn-badge">
                 <Button
                   className="btn-notice"
                   name="btn-chat"
@@ -1955,7 +1955,7 @@ border-aniation_download
               <div className="wrap-btn_notice ">
                 <Badge
                   key="3"
-                  count={countNoti}
+                  count={window.innerWidth < 426 ? "": countNoti}
                   className="box-right-responsive_badge"
                 >
                   <Button

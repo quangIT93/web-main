@@ -7,6 +7,8 @@ import { Input } from 'antd';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
 
+import "./style.scss"
+
 interface IPhoneNumber {
   setPhoneNumber: React.Dispatch<React.SetStateAction<string>>;
   phone: string;
@@ -24,7 +26,6 @@ interface NumericInputProps {
 
 const NumericInput = (props: NumericInputProps) => {
   const { value, onChange, languageRedux, language } = props;
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
     const reg = /^-?\d*(\.\d*)?$/;
@@ -32,7 +33,7 @@ const NumericInput = (props: NumericInputProps) => {
       onChange(inputValue);
     }
   };
-
+  
   // '.' at the end or only '-' in the input box.
   const handleBlur = () => {
     let valueTemp = value;
@@ -41,6 +42,7 @@ const NumericInput = (props: NumericInputProps) => {
     }
     onChange(valueTemp.replace(/(\d+)/, '$1'));
   };
+
   return (
     <Input
       {...props}
@@ -57,7 +59,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
     fontWeight: 600,
     color: '#000000',
   };
-
+  let regexCheckPhone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
   // const handleChangeNumber = (
   //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   // ) => {
@@ -65,7 +67,7 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
   // };
 
   return (
-    <Box sx={{ marginTop: '24px' }}>
+    <Box sx={{ marginTop: '24px' }} className="modal-person numberPhone-post">
       <Typography
         sx={styleLabel}
         variant="body1"
@@ -94,6 +96,24 @@ const PostNumberPhone: React.FC<IPhoneNumber> = (props) => {
         languageRedux={languageRedux}
         language={language}
       />
+          <div className="wrap-noti_input">
+            {regexCheckPhone.test(phone) === false ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Số điện thoại không đúng định dạng'
+                  : 'The phone number is not in the correct format'}
+              </span>
+            ) : phone && phone.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Số điện thoại không được bỏ trống'
+                  : 'Phone cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${phone ? phone.length: "0"}/11`}</span>
+          </div>
       {/* <Input
         value={`${phone}d`}
         onChange={handleChangeNumber}

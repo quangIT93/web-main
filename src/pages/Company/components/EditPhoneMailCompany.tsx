@@ -35,6 +35,7 @@ const NumericInput = (props: NumericInputProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
     const reg = /^-?\d*(\.\d*)?$/;
+
     if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
       onChange((preValue: any) => ({ ...preValue, phone: inputValue }));
     }
@@ -73,6 +74,8 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
     (state: RootState) => state.dataLanguage.languages,
   );
   const { dataCompany, setDataCompany, is_profile } = props;
+  let regexCheckPhone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+  const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // const [language, setLanguageState] = React.useState<any>();
 
   // const getlanguageApi = async () => {
@@ -114,7 +117,7 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
   //   };
 
   return (
-    <div className="edit-phone-mail-company-container">
+    <div className="edit-phone-mail-company-container modal-person editCompany">
       <div className="edit-phone-company">
         <Typography
           sx={styleLabel}
@@ -134,6 +137,24 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           language={language}
           is_profile={is_profile}
         />
+        <div className="wrap-noti_input">
+            {regexCheckPhone.test(dataCompany?.phone) === false ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Số điện thoại không đúng định dạng'
+                  : 'The phone number is not in the correct format'}
+              </span>
+            ) : dataCompany && dataCompany?.phone.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Số điện thoại không được bỏ trống'
+                  : 'Phone cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${dataCompany ? dataCompany?.phone.length: "0"}/10`}</span>
+          </div>
       </div>
       <div className="edit-mail-company">
         <Typography
@@ -158,6 +179,30 @@ const EditPhoneMailCompany: React.FC<IEditPhoneMailCompany> = (props) => {
           disabled={is_profile ? true : false}
         //   error={titleError} // Đánh dấu lỗi
         />
+         <div className="wrap-noti_input">
+            {dataCompany?.email.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Email không được bỏ trống'
+                  : 'Email cannot be empty'}
+              </span>
+            ) : dataCompany?.email.length > 50 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Email không được bỏ trống'
+                  : 'Email cannot exceed 50 characters'}
+              </span>
+            ) : regexCheckEmail.test(dataCompany?.email) === false ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Email không đúng định dạng'
+                  : 'The Email is not in the correct format'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${dataCompany?.email.length}/50`}</span>
+          </div>
       </div>
     </div>
   );
