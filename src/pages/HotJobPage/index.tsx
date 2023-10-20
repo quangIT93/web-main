@@ -239,10 +239,11 @@ const HotJobpage: React.FC = () => {
       // const provinceId = localStorage.getItem('filterHotjobProvince');
 
       const url = localStorage.getItem('hotjobApi');
+      
       let hotjob: any = await hotJobApi.getHotJobById(
-        url,
+        `/v3/posts/topic/${searchParams.get("hotjob-id")}?a=394,370`,
         pageNumber,
-        searchParams.get('hotjob-id') === '1' ? 18 : 20,
+        searchParams.get('hotjob-type') === '1' ? 18 : 20,
         languageRedux === 1 ? 'vi' : 'en',
         // idFilterProvinces && provinceId,
         idFilterProvinces,
@@ -258,7 +259,7 @@ const HotJobpage: React.FC = () => {
       setHotJobTotal(hotjob.total);
 
       setHasMore(true);
-      if (hotjob && hotjob.data.length < 18 && hotjobtype === 3) {
+      if (hotjob && hotjob.data.length < 18 && hotjobtype === 2) {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
@@ -266,7 +267,7 @@ const HotJobpage: React.FC = () => {
         // setHasMore(false);
         setPage('0');
         return;
-      } else if (hotjob && hotjob.data.length >= 18 && hotjobtype === 3) {
+      } else if (hotjob && hotjob.data.length >= 18 && hotjobtype === 2) {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
@@ -275,7 +276,7 @@ const HotJobpage: React.FC = () => {
         return;
       }
 
-      if (hotjob && hotjob.data.length < 20 && hotjobtype !== 3) {
+      if (hotjob && hotjob.data.length < 20 && hotjobtype !== 2) {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
@@ -447,9 +448,9 @@ const HotJobpage: React.FC = () => {
       const nextPage = parseInt(page) + 1;
       const url = localStorage.getItem('hotjobApi');
       const result = await hotJobApi.getHotJobById(
-        url,
+        `/v3/posts/topic/${searchParams.get("hotjob-id")}?a=394,370`,
         nextPage,
-        searchParams.get('hotjob-id') === '1' ? 18 : 20,
+        searchParams.get('hotjob-type') === '1' ? 18 : 20,
         languageRedux === 1 ? 'vi' : 'en',
         idFilterProvinces,
       );
@@ -487,18 +488,28 @@ const HotJobpage: React.FC = () => {
             <div className="hot-job-title-container">
               <h3>
                 {/* {language?.title_hot_jobs}{' '} */}
-                {hotJobType === 1
+                {searchParams.get("hotjob-id") === "2"
                   ? language?.remote_work
-                  : hotJobType === 3
+                  : searchParams.get("hotjob-id") === "1"
                   ? 'Influencer'
-                  : hotJobType === 4
+                  : searchParams.get("hotjob-id") === "3"
                   ? language?.hot_job_page?.short_time
-                  : hotJobType === 5
+                  : searchParams.get("hotjob-id") === "4"
                   ? language?.hot_job_page?.job_today
-                  : hotJobType === 6
+                  : searchParams.get("hotjob-id") === "5"
                   ? 'Freelancer'
-                  : hotJobType === 7
-                  ? 'Delivery/Driver'
+                  : searchParams.get("hotjob-id") === "6"
+                  ? 'Driver'
+                  : searchParams.get("hotjob-id") === "7"
+                  ? 'Restaurant Service'
+                  : searchParams.get("hotjob-id") === "8"
+                  ? 'Restaurant Service'
+                  : searchParams.get("hotjob-id") === "9"
+                  ? 'Parttime'
+                  : searchParams.get("hotjob-id") === "10"
+                  ? 'Marketing'
+                  : searchParams.get("hotjob-id") === "11"
+                  ? 'Beauty'
                   : 'Loading...'}{' '}
                 {languageRedux === 1 ? 'có' : 'has'}{' '}
                 {hotjob.length !== 0
@@ -615,11 +626,11 @@ const HotJobpage: React.FC = () => {
                         item
                         xs={12}
                         sm={6}
-                        md={hotJobType === 3 ? 4 : 6}
+                        md={hotJobType === 2 ? 4 : 6}
                         lg={4}
                         key={index}
                       >
-                        {hotJobType === 3 ? (
+                        {hotJobType === 1 ? (
                           <InfluencerCard item={item} />
                         ) : (
                           <JobCardHotJob item={item} />

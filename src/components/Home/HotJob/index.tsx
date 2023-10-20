@@ -80,16 +80,17 @@ const HotJob: React.FC = () => {
     query: any,
   ) => {
     const queyObj = query[0];
+    
     let keyOfQuery = Object.keys(queyObj)[0];
     let url =
       api.replace('/api', '') + '?' + keyOfQuery + '=' + queyObj[keyOfQuery];
 
-    // console.log('query', query);
-    // console.log('keyOfQuery', keyOfQuery);
-    // console.log('api', api);
-    // console.log('total', total);
-    // console.log('type', type);
-    // console.log('id', id);
+    console.log('query', query);
+    console.log('keyOfQuery', keyOfQuery);
+    console.log('api', api);
+    console.log('total', total);
+    console.log('type', type);
+    console.log('id', id);
     setCookie('hotjobTotal', JSON.stringify(total), 365);
     localStorage.setItem('hotjobApi', url);
     window.open(`/hotjobs?hotjob-id=${id}&hotjob-type=${type}`, '_self');
@@ -162,13 +163,13 @@ const HotJob: React.FC = () => {
     handleClickItem(
       event,
       item.id,
-      item.type,
+      item.themeId,
       item.count,
       item.api,
       item.query,
     );
   };
-
+  console.log("hotjob", hotjob)
   return (
     <Box
       sx={{
@@ -206,7 +207,7 @@ const HotJob: React.FC = () => {
                   handleClickItem(
                     event,
                     item.id,
-                    item.type,
+                    item.themeId,
                     item.count,
                     item.api,
                     item.query,

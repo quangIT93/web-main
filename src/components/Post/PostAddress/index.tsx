@@ -160,8 +160,10 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setAddress(e.target.value);
   };
 
-  console.log('fillProvince', fillProvince);
-  console.log('selectedProvince', selectedProvince);
+  console.log('selectedWard', selectedWard);
+  console.log('fillward', fillWardId);
+  console.log('fillward', fillDistrict);
+  console.log('fillward', fillProvince);
 
   return (
     <div className="post-address modal-person">
@@ -197,7 +199,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             className="wrap-noti_input"
             // style={{ position: 'absolute', bottom: '-15px' }}
           >
-            {selectedProvince === null ? (
+            {!fillProvince && selectedProvince === null  ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập tên công ty'
@@ -240,7 +242,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             className="wrap-noti_input"
             // style={{ position: 'absolute', bottom: '-15px' }}
           >
-            {selectedDistrict === null ? (
+            {selectedDistrict === null && !fillDistrict? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập tên quận'
@@ -284,7 +286,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             className="wrap-noti_input"
             // style={{ position: 'absolute', bottom: '-15px' }}
           >
-            {selectedWard === null ? (
+            {selectedWard === null && fillWardId.id === "" ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập tên phường'

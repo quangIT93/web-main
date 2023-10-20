@@ -138,6 +138,11 @@
           }
         }
       }
+      .post-address.modal-person {
+        .wrap-noti_input {
+          margin-top: 4px;
+        }
+      }
 
       .post-jobCompany {
         display: flex;
@@ -149,6 +154,12 @@
 
         .post-title {
           flex: 1;
+        }
+      }
+
+      .post-jobCompany.modal-person {
+        .wrap-noti_input {
+          margin-top: 4px;
         }
       }
 

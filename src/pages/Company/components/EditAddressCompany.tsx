@@ -213,10 +213,11 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const handleChangeWardId = (event: any, value: any) => {
     setSelectedWard(value);
+    
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyLocation: {
-        id: value.id,
+        id: value ? value.id: ""
       },
     }));
   };
@@ -229,7 +230,7 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
   };
 
   return (
-    <div className="edit-address-company-container">
+    <div className="edit-address-company-container modal-person editCompany">
       <div className="edit-address-company">
         <div className="edit-titleAddress">
           <Typography
@@ -263,6 +264,17 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             }}
             style={{ marginTop: '8px' }}
           />
+          <div className="wrap-noti_input">
+          {!selectedProvince ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Vui lòng chọn Thành phố'
+                : 'Please select City'}
+            </span>
+          ) :(
+            <></>
+          )}
+        </div>
         </div>
 
         <div className="edit-titleAddress">
@@ -293,6 +305,17 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             }}
             style={{ marginTop: '8px' }}
           />
+            <div className="wrap-noti_input">
+              {!selectedDistrict ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Vui lòng chọn quận'
+                    : 'Please select district'}
+                </span>
+              ) :(
+                <></>
+              )}
+            </div>
         </div>
       </div>
       <div className="edit-address-company">
@@ -316,13 +339,24 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
                 {...params}
                 placeholder={language?.post_page?.place_ward}
                 size="small"
-              />
+              />  
             )}
             isOptionEqualToValue={(option, value) => {
               return option.full_name === value.full_name;
             }}
             style={{ marginTop: '8px' }}
           />
+            <div className="wrap-noti_input">
+              {!selectedWard ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Vui lòng chọn phường'
+                    : 'Please select award'}
+                </span>
+              ) :(
+                <></>
+              )}
+            </div>
         </div>
 
         <div className="edit-titleAddress">
@@ -345,6 +379,27 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
             placeholder={language?.post_page.place_address}
             disabled={is_profile ? true : false}
           />
+          <div className="wrap-noti_input">
+              { dataCompany && dataCompany?.address.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Vui lòng nhập địa chỉ'
+                    : 'Please enter address'}
+                </span>
+              ) : dataCompany && dataCompany?.address.length > 255 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Độ dài địa chỉ không được vượt quá 255 ký tự'
+                    : 'Address length cannot exceed 255 characters'}
+                </span>
+              ) : (
+                <></>
+              )}
+                   <span className="number-text">{`${
+                      dataCompany ? dataCompany?.address?.length : '0'
+                    }/255`}
+                    </span>
+            </div>
         </div>
       </div>
     </div>

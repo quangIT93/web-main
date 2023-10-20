@@ -49,11 +49,11 @@ import CVItem from '#components/Profile/CV';
 import './style.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
-import languageApi from 'api/languageApi';
-import { candidateDetail } from 'validations/lang/vi/candidateDetail';
-import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
-import { historyVi } from 'validations/lang/vi/history';
-import { historyEn } from 'validations/lang/en/history';
+// import languageApi from 'api/languageApi';
+// import { candidateDetail } from 'validations/lang/vi/candidateDetail';
+// import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
+// import { historyVi } from 'validations/lang/vi/history';
+// import { historyEn } from 'validations/lang/en/history';
 import CategoryDropdown from '#components/CategoryDropdown';
 
 // const SmallAvatar = styled(Avatar)(({ theme }) => ({
@@ -466,15 +466,15 @@ const CandidateDetail: React.FC = () => {
                 >
                   <Badge
                     overlap="circular"
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    
                   >
                     <Avatar
                       src={
-                        // dataCandidate?.applicationProfile?.avatar
-                        'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697190564373-1b072f22-916b-49f4-8ab8-fd37e3f3b6a4.jpg'
+                        dataCandidate?.applicationProfile?.avatar as any
+                        // 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697190564373-1b072f22-916b-49f4-8ab8-fd37e3f3b6a4.jpg'
                       }
                       style={{ height: '70px', width: '70px' }}
-                      // alt={'ảnh lỗi'}
+                      alt={'ảnh lỗi'}
                     />
                   </Badge>
                   <div style={{ marginLeft: '10px' }}>
@@ -483,6 +483,7 @@ const CandidateDetail: React.FC = () => {
                         ? dataCandidate?.applicationProfile?.name
                         : language?.unupdated}
                     </h2>
+                    
                   </div>
                 </div>
                 <Box>

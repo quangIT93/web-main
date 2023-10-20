@@ -114,6 +114,7 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
         justifyContent: 'center',
         flexDirection: 'column',
       }}
+      className="modal-person"
     >
       <Space size={50} style={{ marginTop: 24 }}>
         <Space direction="vertical">
@@ -141,6 +142,20 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             )}
             disabled={salaryType === 6}
           />
+            <div
+            className="wrap-noti_input"
+            // style={{ position: 'absolute', bottom: '-15px' }}
+          >
+            {salaryMin === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Vui lòng nhập mức lương'
+                  : 'Please enter salary'}
+              </span>
+            ) : (
+              <></>
+            )}
+          </div>
         </Space>
 
         <Space direction="vertical">
@@ -168,6 +183,20 @@ const PostFilterSalary: React.FC<PropsSalaryFilterSubnav> = (props) => {
             )}
             disabled={salaryType === 6}
           />
+            <div
+            className="wrap-noti_input"
+            // style={{ position: 'absolute', bottom: '-15px' }}
+          >
+            {salaryMin === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Vui lòng nhập mức lương'
+                  : 'Please enter salary'}
+              </span>
+            ) : (
+              <></>
+            )}
+          </div>
         </Space>
       </Space>
     </Box>
