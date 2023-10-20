@@ -114,7 +114,7 @@
         .post-address_bottom,
         .post-address_top {
           gap: 32px;
-          align-items: flex-end;
+          align-items: flex-start;
           display: flex;
 
           @include breakpoint(mobile) {

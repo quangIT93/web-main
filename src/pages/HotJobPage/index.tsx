@@ -539,7 +539,6 @@ const HotJobpage: React.FC = () => {
                       {optionsProvinces.map((v: any) => {
                         return <MenuItem value={v.value}>{v.label}</MenuItem>;
                       })}
-                      <MenuItem value={10}>Ten</MenuItem>
                     </Select>
                   ) : (
                     <></>

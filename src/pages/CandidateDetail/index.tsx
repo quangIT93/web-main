@@ -222,6 +222,11 @@ const CandidateDetail: React.FC = () => {
     return null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusApplication, setStatusApplication]);
+  console.log('dataPost', dataPost);
+  console.log(
+    'dataCandidate?.applicationProfile?.avatar',
+    dataCandidate?.applicationProfile?.avatar,
+  );
 
   return (
     <div className="candidate-detail">
@@ -464,9 +469,12 @@ const CandidateDetail: React.FC = () => {
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   >
                     <Avatar
+                      src={
+                        // dataCandidate?.applicationProfile?.avatar
+                        'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697190564373-1b072f22-916b-49f4-8ab8-fd37e3f3b6a4.jpg'
+                      }
                       style={{ height: '70px', width: '70px' }}
-                      alt={dataCandidate?.applicationProfile?.avatar}
-                      src={dataCandidate?.applicationProfile?.avatar}
+                      // alt={'ảnh lỗi'}
                     />
                   </Badge>
                   <div style={{ marginLeft: '10px' }}>

@@ -25,7 +25,14 @@ interface IRecruitmentTime {
 }
 
 const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
-  const { startDate, endDate, setStartDate, setEndDate, languageRedux, language } = props;
+  const {
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+    languageRedux,
+    language,
+  } = props;
 
   const handleChangeStartTime = (newValue: any, e: any) => {
     setStartDate(new Date(newValue._d).getTime());
@@ -42,7 +49,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
         wrap={true}
         size={[16, 8]}
         style={{ width: '100%' }}
-        className="wrapper-time-day"
+        className="wrapper-time-day modal-person"
       >
         <div className="wrapTimeDay">
           <Typography
@@ -51,9 +58,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            {
-              language?.post_page?.start_date
-            }{' '}
+            {language?.post_page?.start_date}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
@@ -62,8 +67,31 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             format="DD/MM/YYYY"
             disablePast={true}
           />
+          <div className="wrap-noti_input">
+            {new Date(startDate).getFullYear() > new Date().getFullYear() ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Năm sinh không được vượt quá năm hiện tại'
+                  : 'Year of birth cannot exceed the current year'}
+              </span>
+            ) : !new Date(startDate).getFullYear() ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Vui lòng nhập ngày sinh'
+                  : 'Please enter date of birth'}
+              </span>
+            ) : new Date(startDate).getFullYear() < 1900 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Năm sinh không được nhỏ hơn 1900'
+                  : 'Year of birth cannot be less than 1900'}
+              </span>
+            ) : (
+              ''
+            )}
+          </div>
         </div>
-        <div className="connect">-</div>
+        {/* <div className="connect">-</div> */}
         <div className="wrapTimeDay">
           <Typography
             sx={styleLabel}
@@ -71,9 +99,7 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             component="label"
             htmlFor="startTime"
           >
-            {
-              language?.post_page?.end_date
-            }{' '}
+            {language?.post_page?.end_date}{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>
           <DatePicker
@@ -84,6 +110,29 @@ const RecruitmentTime: React.FC<IRecruitmentTime> = (props) => {
             minDate={moment(startDate)}
             disablePast // Chặn việc chọn các ngày trong quá khứ
           />
+          <div className="wrap-noti_input">
+            {new Date(endDate).getFullYear() > new Date().getFullYear() ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Năm sinh không được vượt quá năm hiện tại'
+                  : 'Year of birth cannot exceed the current year'}
+              </span>
+            ) : !new Date(endDate).getFullYear() ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Vui lòng nhập ngày sinh'
+                  : 'Please enter date of birth'}
+              </span>
+            ) : new Date(endDate).getFullYear() < 1900 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Năm sinh không được nhỏ hơn 1900'
+                  : 'Year of birth cannot be less than 1900'}
+              </span>
+            ) : (
+              ''
+            )}
+          </div>
         </div>
       </Space>
     </LocalizationProvider>

@@ -209,7 +209,7 @@ const Company: React.FC<ICompany> = (props) => {
   }, [languageRedux, profileV3]);
 
   useEffect(() => {
-    if (roleRedux === 0) {
+    if (profileV3.length !== 0 && profileV3.typeRoleData === 0) {
       window.open(`/`, '_parent');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

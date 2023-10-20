@@ -1,20 +1,26 @@
 .wrapper-time-day {
+  display: flex;
+  flex-direction: column;
   .wrapTimeDay {
     display: flex;
     flex-direction: column;
     width: 100%;
+    align-items: flex-start;
 
+    .MuiFormControl-root {
+      width: 100%;
+    }
     input {
       padding: 12px;
     }
   }
 
   .ant-space-item {
-    min-width: 30%;
+    width: 63%;
   }
 
   .ant-space-item:nth-child(2) {
-    min-width: unset !important;
+    // min-width: unset !important;
 
     .connect {
       transform: translateY(100%);
