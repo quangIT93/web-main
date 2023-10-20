@@ -98,6 +98,7 @@ const EditPostFilterSalary: React.FC<IEditPostFilterSalary> = (props) => {
           >
             {
               language?.post_page.min_salary
+              
             }{' '}
             <span style={{ color: 'red' }}>*</span>
           </Typography>

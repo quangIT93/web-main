@@ -1,11 +1,10 @@
-import { setRole } from 'store/reducer/roleReducer';
+
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import signInEmailApi from '../../../api/authApi'
 import { AxiosError } from 'axios'
-import { useSelector, useDispatch } from 'react-redux';
+
 //@ts-ignore
-import { RootState } from '..';
-import { setIsNew } from '../isNewReducer';
+
 interface AuthState {
   isLoggedIn: boolean
   isverifyOtp: boolean

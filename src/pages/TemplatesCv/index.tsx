@@ -9,8 +9,7 @@ import {
   MinusCircle,
   PlusCircle,
   BackIcon,
-  LoginArrowIcon,
-  ShareCvIcon,
+
   TickIcon,
 } from '#components/Icons';
 
@@ -20,26 +19,20 @@ import templatesCv from '#components/TemplatesCv/CvTemplate/ListTheme';
 
 import './style.scss';
 
-import { Modal, Button, Avatar } from 'antd';
+
 import ModalShare from '#components/CV/ModalShare';
 import ModalChooseCv from '#components/CV/ModalChooseCv';
 import ModalSuccessSaveCv from '#components/CV/ModalSuccessSaveCv';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { setCookie } from 'cookies';
+// import { setCookie } from 'cookies';
 import RollTop from '#components/RollTop';
-import CvTemplate1 from '#components/TemplatesCv/CvTemplate/CvTemplate1';
-import CvTemplate2 from '#components/TemplatesCv/CvTemplate/CvTemplate2';
+
 import { pdf } from '@react-pdf/renderer';
-import ReactPDF from '@react-pdf/renderer';
+
 import apiCv from 'api/apiCv';
 
-import { useSearchParams } from 'react-router-dom';
-import CvTemplate3 from '#components/TemplatesCv/CvTemplate/CvTemplate3';
-import CvTemplate4 from '#components/TemplatesCv/CvTemplate/CvTemplate4';
-import CvTemplate5 from '#components/TemplatesCv/CvTemplate/CvTemplate5';
-import CvTemplate6 from '#components/TemplatesCv/CvTemplate/CvTemplate6';
-import CvTemplate7 from '#components/TemplatesCv/CvTemplate/CvTemplate7';
+
 import CategoryDropdown from '#components/CategoryDropdown';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { getAnalytics, logEvent } from 'firebase/analytics';
@@ -49,7 +42,7 @@ const TemplatesCv: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
   const profile = useSelector((state: RootState) => state.dataProfileV3.data);
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  // const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const [fontSizeCV, setFontSizeCV] = React.useState(24);
   //1: black, 2: blue, 3: yellow, 4:green, 5:red
   const [colorCV, setColorCV] = React.useState(1);
@@ -63,7 +56,7 @@ const TemplatesCv: React.FC = () => {
     open: false,
     id: null,
   });
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const [unUp, setUnUp] = React.useState(true);
   const [unDown, setUnDown] = React.useState(false);
@@ -104,11 +97,11 @@ const TemplatesCv: React.FC = () => {
     setColorCV(color);
   };
 
-  const handleSaveCv = () => {
-    // setCookie('firstCv', '1', 365);
-    localStorage.setItem('firstCv', '1');
-    setOpenModalChooseCv(true);
-  };
+  // const handleSaveCv = () => {
+  //   // setCookie('firstCv', '1', 365);
+  //   localStorage.setItem('firstCv', '1');
+  //   setOpenModalChooseCv(true);
+  // };
 
   // React.useEffect(() => {}, []);
 

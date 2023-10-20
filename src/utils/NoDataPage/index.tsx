@@ -1,4 +1,4 @@
-import languageApi from 'api/languageApi';
+// import languageApi from 'api/languageApi';
 import React from 'react';
 // @ts-ignore
 import { useSelector } from 'react-redux';
@@ -8,9 +8,9 @@ const NoDataComponent: React.FC<any> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const language = useSelector(
-    (state: RootState) => state.dataLanguage.languages,
-  );
+  // const language = useSelector(
+  //   (state: RootState) => state.dataLanguage.languages,
+  // );
   // const [language, setLanguage] = React.useState<any>();
 
   // const getlanguageApi = async () => {
