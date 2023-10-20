@@ -11,6 +11,7 @@ import './style.scss';
 
 import { Button } from 'antd';
 import RollTop from '#components/RollTop';
+
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { setCookie } from 'cookies';
@@ -45,8 +46,8 @@ const ComunityCreateSuccess = () => {
 
   return (
     <div className="comunity-create-success-container">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <div className="comunity-create-success-content">
         <div className="create-success-message">
           <div className="create-success-message_header">
@@ -71,7 +72,7 @@ const ComunityCreateSuccess = () => {
         </div>
       </div>
       <RollTop />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

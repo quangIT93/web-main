@@ -51,13 +51,10 @@ import { setCookie } from 'cookies';
 
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
 
-import Footer from '../../components/Footer/Footer';
-
 // import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 // @ts-ignore
-import { Navbar } from '#components';
 
 //import jobcard
 // import JobCard from '../../components/Home/JobCard';
@@ -97,7 +94,6 @@ import { hotjobPageEn } from 'validations/lang/en/hotjobPage';
 import { getCookie } from 'cookies';
 import NoDataComponent from 'utils/NoDataPage';
 import HotJob from '#components/Home/HotJob';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
@@ -468,8 +464,8 @@ const HotJobpage: React.FC = () => {
   return (
     <>
       {contextHolder}
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
 
       <div className="hot-job-page-container">
         <Box sx={{ flexGrow: 1 }} ref={listRef}>
@@ -650,7 +646,7 @@ const HotJobpage: React.FC = () => {
       <ShowNotificativeSave />
       <ShowCancleSave />
       <RollTop />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

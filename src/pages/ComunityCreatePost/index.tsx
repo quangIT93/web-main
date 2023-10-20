@@ -430,7 +430,7 @@ const ComunityCreatePost = () => {
           content: message,
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const createCommunity = async (formData: any) => {
@@ -461,8 +461,8 @@ const ComunityCreatePost = () => {
 
   return (
     <div className="comunity-create-post-container">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       {contextHolder}
       <div className="comunity-create-post-content">
         <div className="create-post-header">
@@ -472,8 +472,8 @@ const ComunityCreatePost = () => {
                 ? 'Sửa bài viết'
                 : 'Edit post'
               : languageRedux === 1
-                ? 'Tạo bài viết mới'
-                : 'Creat new post'}
+              ? 'Tạo bài viết mới'
+              : 'Creat new post'}
           </h3>
         </div>
         <div className="create-post-body">
@@ -577,7 +577,7 @@ const ComunityCreatePost = () => {
                         display:
                           (selectedImages.length === 0 &&
                             selectedFiles.length === 0) ||
-                            isDragActive
+                          isDragActive
                             ? 'flex'
                             : 'none',
                       }}
@@ -627,18 +627,18 @@ const ComunityCreatePost = () => {
               className={
                 valueTitle === '' || valueContent === ''
                   ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                  'submit'
+                    'submit'
                   : 'submit full-info'
               }
             >
               {valueTitle === '' || valueContent === ''
                 ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                languageRedux === 1
+                  languageRedux === 1
                   ? 'Lưu bài'
                   : 'Save post'
                 : languageRedux === 1
-                  ? 'Đăng bài viết'
-                  : 'Post an article'}
+                ? 'Đăng bài viết'
+                : 'Post an article'}
             </Button>
           </div>
         </div>
@@ -652,7 +652,7 @@ const ComunityCreatePost = () => {
       >
         <img alt="example" style={{ width: '100%' }} src={previewImage} />
       </Modal>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

@@ -1,9 +1,14 @@
 // import React, { lazy } from 'react'
-import ComunityCreateSuccess from './idex';
+import MainLayout from 'layouts/main';
+import ComunityCreateSuccess from '.';
 import RouteProps from '../routes';
 const route: RouteProps = {
   path: '/comunity-create-success-content',
-  component: <ComunityCreateSuccess />,
+  component: (
+    <MainLayout>
+      <ComunityCreateSuccess />
+    </MainLayout>
+  ),
 };
 
 export default route;

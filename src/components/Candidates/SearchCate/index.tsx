@@ -121,7 +121,7 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
   };
 
   const DropdownRender = (menus: React.ReactNode) => (
-    <div className="filter-loca-cate">
+    <div className="filter-loca-cate filter-candidate">
       <Text className="title-filter_location">
         {languageRedux === 1 ? 'Ngành nghề' : 'Career'}
       </Text>

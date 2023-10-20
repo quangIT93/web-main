@@ -122,7 +122,7 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
   };
 
   const DropdownRender = (menus: React.ReactNode) => (
-    <div className="filter-loca-cate">
+    <div className="filter-loca-cate filter-candidate">
       <Text className="title-filter_location">Địa điểm</Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
@@ -142,7 +142,14 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
   return (
     <div className="wrap-search_candidate">
       <div
-        style={{ position: 'absolute', zIndex: '8', top: '10px', left: '10px', display: 'grid', placeItems: 'center' }}
+        style={{
+          position: 'absolute',
+          zIndex: '8',
+          top: '10px',
+          left: '10px',
+          display: 'grid',
+          placeItems: 'center',
+        }}
       >
         <LocationIcon />
       </div>
@@ -161,28 +168,28 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
         options={
           dataLocations
             ? dataLocations?.map((dataLocation: any) => ({
-              value: dataLocation.province_id,
-              label: dataLocation.province_fullName,
-              children: dataLocation.districts.map(
-                (child: { district_id: string; district: string }) => {
-                  var dis = false;
-                  // if (disable) {
-                  //   dis = true;
-                  //   for (const elem of locId) {
-                  //     if (elem === child.district_id) {
-                  //       dis = false;
-                  //       break;
-                  //     }
-                  //   }
-                  // }
-                  return {
-                    value: child.district_id,
-                    label: child.district,
-                    disabled: dis,
-                  };
-                },
-              ),
-            }))
+                value: dataLocation.province_id,
+                label: dataLocation.province_fullName,
+                children: dataLocation.districts.map(
+                  (child: { district_id: string; district: string }) => {
+                    var dis = false;
+                    // if (disable) {
+                    //   dis = true;
+                    //   for (const elem of locId) {
+                    //     if (elem === child.district_id) {
+                    //       dis = false;
+                    //       break;
+                    //     }
+                    //   }
+                    // }
+                    return {
+                      value: child.district_id,
+                      label: child.district,
+                      disabled: dis,
+                    };
+                  },
+                ),
+              }))
             : []
         }
         placeholder={languageRedux === 1 ? 'Địa điểm' : 'Location'}

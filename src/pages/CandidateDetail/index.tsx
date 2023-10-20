@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 
 import moment from 'moment';
 import Card from '@mui/material/Card';
-import { Space, Tooltip } from 'antd';
+import { Space, Tooltip, Input } from 'antd';
 // import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import ImageListItem from '@mui/material/ImageListItem';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -22,7 +22,6 @@ import historyRecruiter from 'api/historyRecruiter';
 // import component
 import RollTop from '#components/RollTop';
 
-import Footer from '../../components/Footer/Footer';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
@@ -32,7 +31,6 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // import icon
 
 // @ts-ignore
-import { Navbar } from '#components';
 
 // import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
@@ -54,7 +52,7 @@ import { candidateDetail } from 'validations/lang/vi/candidateDetail';
 import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
-import CategoryDropdown from '#components/CategoryDropdown';
+import profileApi from 'api/profileApi';
 
 // const SmallAvatar = styled(Avatar)(({ theme }) => ({
 //   width: 22,
@@ -62,6 +60,8 @@ import CategoryDropdown from '#components/CategoryDropdown';
 //   border: `2px solid ${theme.palette.background.paper}`,
 //   backgroundColor: 'white',
 // }));
+
+const { TextArea } = Input;
 
 interface ItemAppy {
   id?: number | null;
@@ -74,10 +74,9 @@ interface ItemAppy {
 }
 
 interface ICategories {
-  child_category_id: number;
-  parent_category_id: number;
-  parent_category: string;
-  child_category: string;
+  id: number;
+  fullName: string;
+  parentCategory: { id: number; fullName: string };
 }
 
 const CandidateDetail: React.FC = () => {
@@ -87,6 +86,7 @@ const CandidateDetail: React.FC = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+
   const [loading, setLoading] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [dataPost, setDataPost] = useState<any>(null);
@@ -141,28 +141,40 @@ const CandidateDetail: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataCandidate]);
-  console.log('dataCandidate', dataCandidate?.applicationProfile?.avatar);
+  console.log('dataCandidate', dataCandidate);
 
   const getPostById = async () => {
     try {
       const postId = parseInt(searchParams.get('post-id') ?? '');
-      const candidateId = searchParams.get('application_id') ?? '';
+      const applicationId = searchParams.get('application_id') ?? '';
+      const candidateId = searchParams.get('candidate-id') ?? '';
+
       const result = await postApi.getById(
         postId,
         languageRedux === 1 ? 'vi' : 'en',
       );
-
+      console.log('post', result);
       if (result) {
         setDataPost(result.data);
       }
-      const detailCandidate = await historyRecruiter.GetAJobApplication(
-        postId,
-        candidateId,
+
+      // const detailCandidate = await historyRecruiter.GetAJobApplication(
+      //   postId,
+      //   applicationId,
+      //   languageRedux === 1 ? 'vi' : 'en',
+      // );
+      // console.log('detailCandidate', detailCandidate);
+      // if (detailCandidate) {
+      //   setDataCandidate(detailCandidate.data);
+      // }
+
+      const detailV3Candidate = await profileApi.getProfileByAccountId(
         languageRedux === 1 ? 'vi' : 'en',
+        candidateId,
       );
 
-      if (detailCandidate) {
-        setDataCandidate(detailCandidate.data);
+      if (detailV3Candidate) {
+        setDataCandidate(detailV3Candidate.data);
       }
     } catch (error) {
       console.log('error', error);
@@ -223,10 +235,11 @@ const CandidateDetail: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusApplication, setStatusApplication]);
 
+  console.log('dataCandidate', dataCandidate);
   return (
     <div className="candidate-detail">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <Box className="containerCandidate">
         <Skeleton loading={loading} active>
           <Card
@@ -449,13 +462,14 @@ const CandidateDetail: React.FC = () => {
           >
             {language?.candidate_resume}
           </p>
+
           <Box sx={{ marginTop: '10px' }}>
             <div className="div-profile-avatar">
               <div className="div-avatar">
                 <div
                   style={{
                     display: 'flex',
-                    flexDirection: 'row',
+                    // flexDirection: 'row',
                     alignItems: 'center',
                   }}
                 >
@@ -467,7 +481,7 @@ const CandidateDetail: React.FC = () => {
                       style={{ height: '70px', width: '70px' }}
                       alt="U"
                       src={
-                        dataCandidate?.applicationProfile?.avatar
+                        dataCandidate?.avatarPath
                         // ? dataCandidate?.applicationProfile?.avatar
                         // : ''
                       }
@@ -475,8 +489,8 @@ const CandidateDetail: React.FC = () => {
                   </Badge>
                   <div style={{ marginLeft: '10px' }}>
                     <h2>
-                      {dataCandidate?.applicationProfile?.name
-                        ? dataCandidate?.applicationProfile?.name
+                      {dataCandidate?.name
+                        ? dataCandidate?.name
                         : language?.unupdated}
                     </h2>
                   </div>
@@ -503,7 +517,7 @@ const CandidateDetail: React.FC = () => {
                           `/message?post_id=${searchParams.get(
                             'post-id',
                           )}&user_id=${
-                            dataCandidate.applicationProfile.account_id
+                            dataCandidate && dataCandidate.accountId
                           }&application_id=${searchParams.get(
                             'application_id',
                           )} `,
@@ -527,11 +541,12 @@ const CandidateDetail: React.FC = () => {
                   fontSize: '14px',
                 }}
               >
-                {dataCandidate?.applicationProfile?.introduction
-                  ? dataCandidate?.applicationProfile?.introduction
+                {dataCandidate?.introduction
+                  ? dataCandidate?.introduction
                   : language?.unupdated}
               </div>
             </div>
+
             <div className="div-profile-info">
               <div
                 style={{
@@ -550,22 +565,22 @@ const CandidateDetail: React.FC = () => {
                 </div>
                 <div className="div-detail-row right">
                   <p>
-                    {dataCandidate?.applicationProfile?.birthday
-                      ? moment(
-                          new Date(dataCandidate?.applicationProfile?.birthday),
-                        ).format('DD/MM/yyyy')
+                    {dataCandidate?.birthdayData
+                      ? moment(new Date(dataCandidate?.birthdayData)).format(
+                          'DD/MM/yyyy',
+                        )
                       : language?.unupdated}
                   </p>
                   <p>
-                    {dataCandidate?.applicationProfile?.gender
-                      ? dataCandidate?.applicationProfile?.gender === 1
+                    {dataCandidate?.gender
+                      ? dataCandidate?.gender === 1
                         ? language?.male
                         : language?.female
                       : language?.male}
                   </p>
                   <p>
-                    {dataCandidate?.applicationProfile?.address?.name
-                      ? dataCandidate?.applicationProfile?.address?.name
+                    {dataCandidate?.addressText?.fullName
+                      ? dataCandidate?.addressText?.fullName
                       : language?.unupdated}
                   </p>
                 </div>
@@ -593,31 +608,32 @@ const CandidateDetail: React.FC = () => {
                 </div>
                 <div className="div-detail-row right">
                   <p>
-                    {dataCandidate?.applicationProfile?.phone
-                      ? dataCandidate?.applicationProfile?.phone
+                    {dataCandidate?.phoneData
+                      ? dataCandidate?.phoneData
                       : language?.unupdated}
                   </p>
                   <p>
-                    {dataCandidate?.applicationProfile?.email
-                      ? dataCandidate?.applicationProfile?.email
-                      : language?.unupdated}
-                  </p>
-
-                  <p>
-                    {dataCandidate?.applicationProfile?.facebook
-                      ? dataCandidate?.applicationProfile?.facebook
+                    {dataCandidate?.emailData
+                      ? dataCandidate?.emailData
                       : language?.unupdated}
                   </p>
 
                   <p>
-                    {dataCandidate?.applicationProfile?.linkedin
-                      ? dataCandidate?.applicationProfile?.linkedin
+                    {dataCandidate?.facebookData
+                      ? dataCandidate?.facebookData
+                      : language?.unupdated}
+                  </p>
+
+                  <p>
+                    {dataCandidate?.linkedinlinkedinData
+                      ? dataCandidate?.linkedinData
                       : language?.unupdated}
                   </p>
                 </div>
               </div>
             </div>
 
+            {/* CV/Resume */}
             <div className="div-profile-info">
               <div
                 style={{
@@ -629,9 +645,9 @@ const CandidateDetail: React.FC = () => {
                 <h3>CV/ Resume</h3>
               </div>
               <Space wrap className="item-info-work">
-                {dataCandidate?.applicationProfile?.cv_url ? (
+                {dataCandidate?.cv_url ? (
                   <CVItem
-                    url={dataCandidate?.applicationProfile?.cv_url}
+                    url={dataCandidate?.cv_url}
                     open={open}
                     setOpen={setOpen}
                     isProfile={false}
@@ -654,33 +670,11 @@ const CandidateDetail: React.FC = () => {
                 <h3>{language?.career_objective}</h3>
               </div>
               <Space wrap className="item-info-work">
-                {dataCandidate?.categories?.length !== 0
-                  ? dataCandidate?.categories?.map(
-                      (item: ICategories, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item.child_category}
-                        </Button>
-                      ),
-                    )
-                  : language?.unupdated}
-              </Space>
-            </div>
-            <div className="div-profile-info">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <h3>{language?.working_location}</h3>
-              </div>
-              <Space wrap className="item-info-work">
-                {dataCandidate?.locations?.length !== 0
-                  ? dataCandidate?.locations?.map(
-                      (item: any, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          {item?.district}
+                {dataCandidate?.profileCategories?.length !== 0
+                  ? dataCandidate?.profileCategories?.map(
+                      (item: ICategories) => (
+                        <Button key={item.id} className="btn" type="text">
+                          {item.fullName}
                         </Button>
                       ),
                     )
@@ -696,12 +690,56 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
+                <h3>{language?.working_location}</h3>
+              </div>
+              <Space wrap className="item-info-work">
+                {dataCandidate?.profileLocations.length !== 0
+                  ? dataCandidate?.profileLocations.map((item: any) => (
+                      <Button key={item.id} className="btn" type="text">
+                        {item?.fullName}
+                      </Button>
+                    ))
+                  : language?.unupdated}
+              </Space>
+            </div>
+
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>
+                  {languageRedux === 1 ? 'Loại hình công việc' : 'Type of work'}
+                </h3>
+              </div>
+              <Space wrap className="item-info-work">
+                {dataCandidate?.profilesJobType ? (
+                  <Button className="btn" type="text">
+                    {dataCandidate?.profilesJobType.data}
+                  </Button>
+                ) : (
+                  language?.unupdated
+                )}
+              </Space>
+            </div>
+
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
                 <h3>{language?.education}</h3>
               </div>
-              {dataCandidate?.educations?.length !== 0 ? (
-                dataCandidate?.educations?.map(
-                  (education: ItemAppy, index: number) => (
-                    <ItemApply item={education} key={index} />
+              {dataCandidate?.profilesEducations.length !== 0 ? (
+                dataCandidate?.profilesEducations?.map(
+                  (education: ItemAppy) => (
+                    <ItemApply item={education} key={education.id} />
                   ),
                 )
               ) : (
@@ -727,9 +765,9 @@ const CandidateDetail: React.FC = () => {
               >
                 <h3>{language?.working_experience}</h3>
               </div>
-              {dataCandidate?.experiences?.length !== 0 ? (
-                dataCandidate?.experiences?.map((item: any, index: number) => (
-                  <ItemApply typeItem="experiences" key={index} item={item} />
+              {dataCandidate?.profilesExperiences?.length !== 0 ? (
+                dataCandidate?.profilesExperiences?.map((item: any) => (
+                  <ItemApply typeItem="experiences" key={item.id} item={item} />
                 ))
               ) : (
                 <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
@@ -743,11 +781,170 @@ const CandidateDetail: React.FC = () => {
                 }}
               ></div>
             </div>
+
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>{languageRedux === 1 ? 'Các hoạt động' : 'Activities'}</h3>
+              </div>
+              {dataCandidate?.profileActivities?.length !== 0 ? (
+                dataCandidate?.profileActivities?.map(
+                  (item: any, index: number) => (
+                    <ItemApply typeItem="experiences" key={index} item={item} />
+                  ),
+                )
+              ) : (
+                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+              )}
+
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'center',
+                }}
+              ></div>
+            </div>
+
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>{languageRedux === 1 ? 'Các giải thưởng' : 'Awards'}</h3>
+              </div>
+              {dataCandidate?.profileAwards?.length !== 0 ? (
+                dataCandidate?.profileAwards?.map(
+                  (item: any, index: number) => (
+                    <ItemApply typeItem="experiences" key={index} item={item} />
+                  ),
+                )
+              ) : (
+                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
+              )}
+
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'center',
+                }}
+              ></div>
+            </div>
+
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+              </div>
+              <Space wrap className="item-info-work">
+                {dataCandidate?.profilesSkills?.length !== 0
+                  ? dataCandidate?.profilesSkills?.map(
+                      (item: any, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          <span>{item.skillName}</span>
+                          <span>{item.dataLevel.data}</span>
+                        </Button>
+                      ),
+                    )
+                  : language?.unupdated}
+              </Space>
+            </div>
+
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
+              </div>
+              <Space wrap className="item-info-work">
+                {dataCandidate?.profilesLanguages?.length !== 0
+                  ? dataCandidate?.profilesLanguages?.map(
+                      (item: any, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          <span>{item.languageName}</span>
+                          <span>{item.dataLevel.data}</span>
+                        </Button>
+                      ),
+                    )
+                  : language?.unupdated}
+              </Space>
+            </div>
+
+            {/* Hobbies */}
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>{languageRedux === 1 ? 'Sở thích' : 'Hobbies'}</h3>
+              </div>
+              <Space
+                wrap
+                className="item-info-work"
+                style={{ width: '100%' }}
+                direction="vertical"
+              >
+                {dataCandidate?.profileHobbies ? (
+                  <Button className="btn" type="text" block>
+                    {dataCandidate?.profileHobbies.description}
+                  </Button>
+                ) : (
+                  language?.unupdated
+                )}
+              </Space>
+            </div>
+
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>
+                  {languageRedux === 1 ? 'Người giới thiệu' : 'References'}
+                </h3>
+              </div>
+              <Space wrap className="item-info-work">
+                {dataCandidate?.profilesReferences?.length !== 0
+                  ? dataCandidate?.profilesReferences?.map((item: any) => (
+                      <Button key={item.id} className="btn" type="text">
+                        <h3>{item.fullName}</h3>
+                        <span>{item.phone}</span>
+                        <span>{item.email}</span>
+                        <span>{item.description}</span>
+                      </Button>
+                    ))
+                  : language?.unupdated}
+              </Space>
+            </div>
           </Box>
         </Skeleton>
       </Box>
       <RollTop />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

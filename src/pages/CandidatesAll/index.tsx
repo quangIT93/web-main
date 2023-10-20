@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 // @ts-ignore
-import { Navbar } from '#components';
-import Footer from '../../components/Footer/Footer';
 
 // import ant
 import { Button, Cascader, Divider, Typography, Spin } from 'antd';
@@ -23,7 +21,6 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 // scroll data
 import InfiniteScroll from 'react-infinite-scroll-component';
-import CategoryDropdown from '#components/CategoryDropdown';
 import { useSelector } from 'react-redux';
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
@@ -368,8 +365,8 @@ const CandidatesAll = () => {
 
   return (
     <div className="container-candidate">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       {contextHolder}
       <div className="candidate">
         <div className="header-candidate">
@@ -472,7 +469,7 @@ const CandidatesAll = () => {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

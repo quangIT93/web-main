@@ -1,11 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
 
-import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
-// import api
-
-import { PDFDownloadLink, BlobProvider } from '@react-pdf/renderer';
-
 import categoriesApi from 'api/categoriesApi';
 
 import './style.scss';
@@ -13,19 +7,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Avatar, Spin } from 'antd';
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
-import { ResumeIcon, PencilIcon } from '#components/Icons';
+import { ResumeIcon } from '#components/Icons';
 
 // Import Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { spacing } from '../Styles';
-import { initialSettings } from '../Setting/settingsSlice';
-// import component
-//@ts-ignore
-import ItemCV from '../ItemCV';
-//@ts-ignore
-import Theme1 from '../Themes/Theme1';
-import { htmlCv } from './../CvTemplate/themeHtml/index';
-import PreviewTheme1 from '../PreviewTheme/PreviewTheme1';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -34,19 +19,10 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Mousewheel, Pagination } from 'swiper';
-import { Link, useSearchParams } from 'react-router-dom';
-import PdfDocument from './PDFDocument';
-import CvTemplate1 from '../CvTemplate/CvTemplate1';
-import CvTemplate2 from '../CvTemplate/CvTemplate2';
 
-import { usePDF, StyleSheet } from '@react-pdf/renderer';
+import { usePDF } from '@react-pdf/renderer';
 import { Document, Page, pdfjs } from 'react-pdf';
 import apiCv from 'api/apiCv';
-import CvTemplate3 from '../CvTemplate/CvTemplate3';
-import CvTemplate4 from '../CvTemplate/CvTemplate4';
-import CvTemplate5 from '../CvTemplate/CvTemplate5';
-import CvTemplate6 from '../CvTemplate/CvTemplate6';
-import CvTemplate7 from '../CvTemplate/CvTemplate7';
 
 import templatesCv from '../CvTemplate/ListTheme';
 import { template } from '@babel/core';
@@ -56,9 +32,6 @@ import { template } from '@babel/core';
 //   import.meta.url,
 // ).toString();
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-const styleChildBox = {
-  marginBottom: '12px',
-};
 
 interface IContentListCv {
   colorCV: any;
@@ -86,7 +59,6 @@ const ContentListCv: React.FC<IContentListCv> = (props) => {
   const [getThemeCv, setGetThemeCv] = React.useState<any>([]);
 
   const TemplateId = Number(localStorage.getItem('cv-id')) || 1;
-  console.log(profile.name);
 
   useEffect(() => {
     setValueNameCv(

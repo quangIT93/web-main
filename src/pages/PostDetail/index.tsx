@@ -186,6 +186,7 @@ const Detail = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const componentRef = React.useRef<HTMLDivElement>(null);
   const componentRefJob = React.useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -318,7 +319,7 @@ const Detail = () => {
     getDataCompany();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
-  console.log('backgroundButton', backgroundButton);
+  // console.log('roleRedux', roleRedux);
 
   // get post by id-post
   const getPostById = async () => {
@@ -462,7 +463,12 @@ const Detail = () => {
   // handle click button
   const onclick = async () => {
     console.log('click', profileV3);
-
+    if (
+      post?.data?.companyResourceData?.name === 'HIJOB' &&
+      profileV3.typeRoleData === 1
+    ) {
+      return;
+    }
     try {
       if (!ACCESS_TOKEN) {
         setOpenModalLogin(true);
@@ -726,6 +732,10 @@ const Detail = () => {
 
   const handleClickChangePage = () => {
     window.open(post?.data?.companyResourceData?.postUrl, '_blank');
+    if (profileV3.typeRoleData === 1) {
+      setOpenModalApply(false);
+      return;
+    }
     setIsApplied(true);
   };
 
@@ -1003,6 +1013,11 @@ const Detail = () => {
                 backgroundColor: `${backgroundButton}`,
                 color: 'white',
                 fontWeight: 'normal',
+                cursor:
+                  post?.data?.companyResourceData?.name === 'HIJOB' &&
+                  profileV3.typeRoleData === 1
+                    ? 'no-drop'
+                    : 'pointer',
                 // position: 'absolute',
                 // bottom: '-212px',
               }}
@@ -1620,7 +1635,13 @@ const Detail = () => {
                 component="h2"
                 sx={{ textAlign: 'center', color: '#0d99ff' }}
               >
-                {language?.post_detail_page?.apply_this_job_mess}
+                {profileV3.typeRoleData === 0
+                  ? languageRedux === 1
+                    ? 'Ứng tuyển cho công việc này'
+                    : 'Apply for this job'
+                  : languageRedux === 1
+                  ? 'Xem công việc này'
+                  : 'View this job'}
               </Typography>
               <Typography
                 id="modal-modal-title"

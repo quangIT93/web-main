@@ -232,3 +232,7 @@
 
   }
 }
+
+.ant-select-dropdown:has(.noti-keyword){
+  z-index: 1300 !important;
+}

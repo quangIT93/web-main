@@ -1,8 +1,6 @@
 import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
-// import moment, { Moment } from 'moment';
 import { Skeleton, Space } from 'antd';
 import { message } from 'antd';
 
@@ -10,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 
 // import component
 // @ts-ignore
-import { Navbar } from '#components';
 import EditLogoCompany from './components/EditLogoCompany';
 import EditNameTaxCompany from './components/EditNameTaxCompany';
 import EditAddressCompany from './components/EditAddressCompany';
@@ -44,7 +41,6 @@ import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
 import EditImageCompany from './components/EditImageCompany';
 import { PencilIcon } from '#components/Icons';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 export interface FormValues {
   id: string;
@@ -437,20 +433,20 @@ const Company: React.FC<ICompany> = (props) => {
       style={{
         display: display,
         // marginTop: is_profile ? '30px' : '70px',
-        marginTop: is_profile ? '30px' : '100px',
+        // marginTop: is_profile ? '30px' : '0px',
         width: is_profile ? '100%' : 'unset',
       }}
     >
       {contextHolder}
       <div style={{ display: is_profile ? 'none' : 'block' }}>
-        <Navbar />
-        {location?.pathname === '/company-infor' ? <CategoryDropdown /> : <></>}
+        {/* <Navbar />
+        {location?.pathname === '/company-infor' ? <CategoryDropdown /> : <></>} */}
       </div>
       <div
         className="company-content"
-        style={{
-          padding: is_profile ? '0px' : '50px 0px',
-        }}
+        // style={{
+        //   padding: is_profile ? '0px' : '50px 0px',
+        // }}
       >
         <div
           className="company-title"
@@ -556,7 +552,7 @@ const Company: React.FC<ICompany> = (props) => {
       />
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         <RollTop />
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
   );

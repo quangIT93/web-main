@@ -105,6 +105,8 @@ const HotJob: React.FC = () => {
       const result = await hotJobApi.getHotJobTheme(
         languageRedux === 1 ? 'vi' : 'en',
       );
+      console.log('result', result);
+
       if (result) {
         setHotJob(result.data);
       }

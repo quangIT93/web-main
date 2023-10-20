@@ -7,7 +7,8 @@ import Card from '@mui/material/Card';
 // import ImageListItem from '@mui/material/ImageListItem';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Box, Typography, Button } from '@mui/material';
-
+import male_null_avatar from '../../../img/male_null_avatar.png';
+import female_null_avatar from '../../../img/female_null_avatar.png';
 // import SubIcon from '../CardsPosted/SubIcon';
 
 import 'intl';
@@ -95,8 +96,12 @@ interface IDetailPosted {
 
 const DetailPosted: React.FC<IDetailPosted> = (props) => {
   const { detailPosted } = props;
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language);
-  const language = useSelector((state: RootState) => state.dataLanguage.languages);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
+  const language = useSelector(
+    (state: RootState) => state.dataLanguage.languages,
+  );
   const [dataCandidates, setDadaCandidates] = useState<any>(null);
   // const [loading, setLoading] = useState<boolean>(true);
   const [status, setStatus] = useState(detailPosted?.status);
@@ -122,8 +127,8 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
   };
 
   useEffect(() => {
-    getPostById()
-  }, [languageRedux])
+    getPostById();
+  }, [languageRedux]);
 
   // const getlanguageApi = async () => {
   //   try {
@@ -211,7 +216,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
         detailPosted?.post_id,
         5,
         null,
-        languageRedux === 1 ? "vi" : "en",
+        languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
@@ -247,15 +252,14 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     applicationId: number,
     postId: number,
+    candidate: any,
   ) => {
-    // console.log('applicationId', applicationId)
     window.open(
-      `/candidate-detail?post-id=${postId}&application_id=${applicationId}`,
+      `/candidate-detail?post-id=${postId}&application_id=${applicationId}&candidate-id=${candidate.account_id}`,
     );
   };
 
   // console.log("dataCandidates", dataCandidates);
-
 
   return (
     <div className="history-post">
@@ -269,9 +273,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
       />
       <Box>
         <h3 style={{ margin: '12px 0' }}>
-          {
-            language?.history_page?.list_of_candidates
-          }
+          {language?.history_page?.list_of_candidates}
         </h3>
         {dataCandidates?.applications.map((candidate: any, index: number) => (
           <Card
@@ -288,25 +290,29 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               boxShadow: 'none',
               borderRadius: '5px',
               margin: '8px 0',
-              background: `${candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
-                }`,
+              background: `${
+                candidate.application_status === 0 ? '#F3F8FB' : '#ffffff'
+              }`,
             }}
             onClick={(e) =>
-              handleClickCandidate(e, candidate.id, detailPosted?.id)
+              handleClickCandidate(e, candidate.id, detailPosted?.id, candidate)
             }
           >
             <div className="image-cadidate_wrap">
-              {candidate.avatar ? (
-                <img
-                  src={candidate.avatar}
-                  alt={candidate.name}
-                  className="image-cadidate"
-                />
-              ) : (
-                <div className="image-cadidate"></div>
-              )}
+              <img
+                src={!candidate.avatar ? candidate.avatar : female_null_avatar}
+                alt={candidate.name}
+                className="image-cadidate"
+              />
             </div>
-            <Box sx={{ marginLeft: '12px' }}>
+            <Box
+              sx={{
+                marginLeft: '12px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+              }}
+            >
               <div
                 style={{
                   display: 'flex',
@@ -317,7 +323,11 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                 <Typography
                   variant="h6"
                   color="text.secondary"
-                  sx={{ marginLeft: '12px' }}
+                  sx={{
+                    marginLeft: '12px',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                  }}
                 >
                   {candidate.name}
                 </Typography>
@@ -340,6 +350,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                           height: `${statusCandidate.height}`,
                           marginLeft: '60px',
                           fontStyle: 'italic  ',
+                          fontSize: '12px',
                         }}
                       >
                         {statusCandidate.statusName}
@@ -349,28 +360,30 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
                   return null;
                 })}
               </div>
-              <div className="item-candidate">
-                <PersonIcon fontSize="small" className="icon-candidate" />
+              <div className="item-detail-candidate">
+                <PersonIcon
+                  fontSize="small"
+                  className="icon-detail-candidate"
+                />
                 <p>
-                  {candidate.gender === 0 ?
-                    language?.female
-                    : language?.male} -{' '}
+                  {candidate.gender === 0 ? language?.female : language?.male} -{' '}
                   {moment(candidate.birthday).format('DD/MM/YYYY')}
                 </p>
               </div>
-              <div className="item-candidate">
-                <LocationOnIcon fontSize="small" className="icon-candidate" />
+              <div className="item-detail-candidate">
+                <LocationOnIcon
+                  fontSize="small"
+                  className="icon-detail-candidate"
+                />
                 <p>{candidate.province_name}</p>
               </div>
-              <div className="item-candidate">
+              <div className="item-detail-candidate">
                 <BusinessCenterIcon
                   fontSize="small"
-                  className="icon-candidate"
+                  className="icon-detail-candidate"
                 />
                 <p>
-                  {
-                    language?.career_objective
-                  }{' '}
+                  {language?.career_objective}{' '}
                   {candidate.categories.map((candid: any, index: number) => (
                     <span key={index}> {candid.child_category}, </span>
                   ))}
@@ -388,11 +401,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
           }}
         >
           {dataCandidates?.length > 0 ? (
-            <Button variant="contained">
-              {
-                language?.more
-              }
-            </Button>
+            <Button variant="contained">{language?.more}</Button>
           ) : (
             <></>
           )}

@@ -1,30 +1,22 @@
 .comunity-create-post-container {
     // margin-top: 70px;
-    margin-top: 115px;
+    // margin-top: 115px;
 
     .comunity-create-post-content {
-        // padding: 50px 180px;
 
         margin: 0 auto;
         transition: all l;
-        margin-bottom: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         gap: 24px;
         max-width: 1080px;
-        padding: 50px 0px;
 
         .create-post-header {
             h3 {
                 font-size: 24px;
             }
-        }
-
-
-        @media screen and (max-width: 1280px) {
-            padding: 50px 24px;
         }
 
         .create-post-body {
@@ -34,9 +26,8 @@
             width: 100%;
 
             @media screen and (max-width: 1120px) {
-                padding: 50px 0px;
+                padding: 24px 0px;
                 width: 100%;
-
             }
 
             .create-post-body_input {
@@ -232,13 +223,34 @@
                     }
                 }
 
-                @media screen and (max-width: 379px) {
-                    // width: 320px;
+                @media screen and (min-width: 601px) and (max-width: 767px) {
+                    // width: 500px;
                     width: 100%;
 
                     .input-title {
                         padding: 12px;
                         height: 52px;
+                        font-size: 16px;
+                    }
+
+                    .input-content {
+                        padding: 12px;
+                        font-size: 16px;
+                    }
+                }
+
+                @media screen and (min-width: 450px) and (max-width: 600px) {
+                    // width: 440px;
+                    width: 100%;
+
+                    .input-title {
+                        padding: 12px;
+                        height: 52px;
+                        font-size: 16px;
+                    }
+
+                    .input-content {
+                        padding: 12px;
                         font-size: 16px;
                     }
                 }
@@ -260,8 +272,8 @@
 
                 }
 
-                @media screen and (min-width: 450px) and (max-width: 600px) {
-                    // width: 440px;
+                @media screen and (max-width: 379px) {
+                    // width: 320px;
                     width: 100%;
 
                     .input-title {
@@ -269,28 +281,17 @@
                         height: 52px;
                         font-size: 16px;
                     }
-
                     .input-content {
                         padding: 12px;
                         font-size: 16px;
                     }
                 }
 
-                @media screen and (min-width: 601px) and (max-width: 767px) {
-                    // width: 500px;
-                    width: 100%;
 
-                    .input-title {
-                        padding: 12px;
-                        height: 52px;
-                        font-size: 16px;
-                    }
 
-                    .input-content {
-                        padding: 12px;
-                        font-size: 16px;
-                    }
-                }
+
+
+
 
             }
 

@@ -1,26 +1,30 @@
 .image-cadidate_wrap {
   width: 120px;
-
-  border-radius: 50%;
+  height: 120px;
+  border-radius: 5px;
   background-color: #aaa;
-
+  border: 1px solid #ccc;
   .image-cadidate {
     min-width: 120px;
     height: 120px;
-    border-radius: 60px;
+    border-radius: 5px;
     object-fit: cover;
 
   }
 }
 
-.item-candidate {
+.item-detail-candidate {
   display: flex;
   align-items: center;
 
   // margin: 4px;
-  .icon-candidate {
+  .icon-detail-candidate {
     margin: 0 8px;
     font-size: 15px;
     color: #575757;
+  }
+
+  p {
+    font-size: 12px;
   }
 }

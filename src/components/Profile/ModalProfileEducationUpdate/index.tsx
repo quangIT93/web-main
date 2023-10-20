@@ -23,6 +23,7 @@ import { message } from 'antd';
 
 import '../style.scss';
 import candidateSearch from 'api/apiCandidates';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -194,6 +195,8 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   };
 
   // submit
+  // console.log(education.extraInformation.length);
+
 
   const validValue = () => {
     if (education.major === '') {
@@ -204,7 +207,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
     }
     if (education.major?.trim().length > 50) {
       return {
-        messageError:
+        message:
           languageRedux === 1
             ? 'Tên ngành không được vượt quá 50 ký tự'
             : 'Major cannot exceed 50 characters',
@@ -221,7 +224,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
 
     if (education.companyName?.trim().length > 50) {
       return {
-        messageError:
+        message:
           languageRedux === 1
             ? 'Trường học/Tổ chức không được vượt quá 50 ký tự'
             : 'School/Organization cannot exceed 50 characters',
@@ -236,9 +239,9 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       };
     }
 
-    if (education.extraInformation?.trim().length > 500) {
+    if (education.extraInformation.length > 500) {
       return {
-        messageError:
+        message:
           languageRedux === 1
             ? 'Thông tin thêm không được vượt quá 500 ký tự'
             : 'Additional information cannot exceed 500 characters',
@@ -253,10 +256,39 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
         checkForm: false,
       };
     }
+    if (new Date(education.startDate).getFullYear() > new Date().getFullYear()) {
+      return {
+        message:
+          languageRedux === 1
+            ? "Năm bắt đầu không được vượt quá năm hiện tại" :
+            "The starting year cannot exceed the current year",
+        checkForm: false,
+      };
+    }
 
     if (!education.endDate) {
       return {
         message: language?.profile_page?.err_finish_time,
+        checkForm: false,
+      };
+    }
+
+    if (new Date(education.endDate).getFullYear() > new Date().getFullYear()) {
+      return {
+        message:
+          languageRedux === 1
+            ? "Năm kết thúc không được vượt quá năm hiện tại" :
+            "The final year cannot exceed the current year",
+        checkForm: false,
+      };
+    }
+
+    if (new Date(education.startDate).getFullYear() > new Date(education.endDate).getFullYear()) {
+      return {
+        message:
+          languageRedux === 1
+            ? "Năm bắt đầu không được vượt quá năm kết thúc" :
+            "The starting year cannot exceed the final year",
         checkForm: false,
       };
     }
@@ -280,11 +312,11 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       if (checkForm) {
         const result = await profileApi.updateProfileEducation(education);
         if (result) {
-          const profile = await profileApi.getProfile(
+          const profile = await profileApi.getProfileV3(
             languageRedux === 1 ? 'vi' : 'en',
           );
           if (profile) {
-            setProfileUser(profile.data);
+            dispatch(setProfileV3(profile));
           }
           setOpenModalEducationUpdate(false);
         }
@@ -378,7 +410,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.profile_page?.place_school}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -400,7 +432,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.major}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -474,7 +506,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             placeholder={'Loại công việc'}
             size="small"
             sx={{ width: '100%' }}
-            // error={!gender} // Đánh dấu lỗi
+          // error={!gender} // Đánh dấu lỗi
           >
             {typeAcademic?.map((value: any, index: number) => {
               return <MenuItem value={index + 1}>{value.data}</MenuItem>;

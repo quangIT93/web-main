@@ -21,6 +21,7 @@ import { useSelector } from 'react-redux';
 import { profileVi } from 'validations/lang/vi/profile';
 import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
+import { message } from 'antd';
 interface InfoContact {
   phone: string;
   email: string;
@@ -124,26 +125,129 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
     setLinkIn(e.target.value);
   };
 
+  const validURL = (str: string) => {
+    var pattern = new RegExp(
+      '^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+      'i',
+    ); // fragment locator
+    return !!pattern.test(str);
+  };
+
+  const regexCheckPhone = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+  const regexCheckEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  const validValue = () => {
+    if (
+      phone?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Số điện thoại không được bỏ trống" :
+          "Phone number cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      regexCheckPhone.test(phone) === false
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Số điện thoại không đúng định dạng" :
+          "The phone number is not in the correct format",
+        checkForm: false,
+      };
+    }
+    if (
+      email?.trim() === ''
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Email không được bỏ trống" :
+          "Email cannot be empty",
+        checkForm: false,
+      };
+    }
+    if (
+      regexCheckEmail.test(email) === false
+    ) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Email không đúng định dạng" :
+          "The Email is not in the correct format",
+        checkForm: false,
+      };
+    }
+
+    if (validURL(fb) === false) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Link Facebook không đúng định dạng" :
+          "The Facebook link is not in the correct format",
+        checkForm: false,
+      };
+    }
+    if (validURL(linkIn) === false) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Link Linkedin không đúng định dạng" :
+          "The Linkedin link is not in the correct format",
+        checkForm: false,
+      };
+    }
+
+    if (fb.length > 100) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Link Facebook không được vượt quá 100 ký tự" :
+          "The Facebook link cannot exceed 100 characters",
+        checkForm: false,
+      };
+    }
+    if (linkIn.length > 100) {
+      return {
+        messageError: languageRedux === 1 ?
+          "Link Linkedin không được vượt quá 100 ký tự" :
+          "The Linkedin link cannot exceed 100 characters",
+        checkForm: false,
+      };
+    }
+
+    return {
+      messageError: '',
+      checkForm: true,
+    };
+  };
+
   // handle update information contact
   const handleSubmit = async () => {
+    const { messageError, checkForm } = validValue()
     try {
-      const info: InfoContact = {
-        phone: phone,
-        email: email,
-        facebook: fb,
-        linkedin: linkIn,
-      };
+      if (checkForm) {
+        const info: InfoContact = {
+          phone: phone,
+          email: email,
+          facebook: fb,
+          linkedin: linkIn,
+        };
 
-      const result = await profileApi.updateContact(info);
-      if (result) {
-        const getProfileV3 = await profileApi.getProfileV3(
-          languageRedux === 1 ? 'vi' : 'en',
-        );
+        const result = await profileApi.updateContact(info);
+        if (result) {
+          const getProfileV3 = await profileApi.getProfileV3(
+            languageRedux === 1 ? 'vi' : 'en',
+          );
 
-        if (getProfileV3) {
-          dispatch(setProfileV3(getProfileV3));
+          if (getProfileV3) {
+            dispatch(setProfileV3(getProfileV3));
+          }
+          setOpenModalContact(false);
         }
-        setOpenModalContact(false);
+      } else {
+        message.error(messageError)
       }
     } catch (error) {
       console.log(error);
@@ -228,7 +332,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
             onChange={handleSetEmail}
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Email"
+            placeholder="example@.gamil.com"
           // error={titleError} // Đánh dấu lỗi
           />
         </Box>

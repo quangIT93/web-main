@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Navbar } from '#components';
 import Footer from '../../components/Footer/Footer';
 
-import CV1 from './components/cv_1';
+import CV1 from './component/cv_1';
 
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';

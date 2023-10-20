@@ -9,9 +9,8 @@ import {
   setAlert,
 } from 'store/reducer/profileReducer/alertProfileReducer';
 // materi
-import { Box, Typography } from '@mui/material';
-import { Space, Tooltip } from 'antd';
-import { Button, Skeleton } from 'antd';
+import { Box } from '@mui/material';
+import { Space, Popover, Button } from 'antd';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 
@@ -111,10 +110,6 @@ const CandidateNewDetail = () => {
           id,
         );
         if (viewProfile.status === 200) {
-          if (viewProfile.total === 0) {
-            setOpenModalMaxUnlock(true);
-            return;
-          }
           setTotal(viewProfile.total);
           const result = await profileApi.getProfileByAccountId(
             languageRedux === 1 ? 'vi' : 'en',
@@ -125,7 +120,10 @@ const CandidateNewDetail = () => {
           }
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      setOpenModalMaxUnlock(true);
+      return;
+    }
   };
 
   const handleClickBookmarkCandidate = async (accountId: string) => {
@@ -197,12 +195,10 @@ const CandidateNewDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, candidate]);
 
-  console.log('candidate', candidate);
-
   return (
     <div className="candidate-new-detail">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <Box className="containerNewCandidate">
         <div className="candidates-profile-avatar">
           <div className="candidate-profile-avatar">
@@ -227,10 +223,15 @@ const CandidateNewDetail = () => {
                 <h2>
                   {candidate?.name ? candidate?.name : language?.unupdated}
                 </h2>
+                <p style={{ lineHeight: '30px' }}>
+                  {candidate?.jobTypeName !== null
+                    ? candidate?.jobTypeName
+                    : language.unupdated}
+                </p>
               </div>
             </div>
             <div className="buttons-candidate">
-              {candidate?.isUnlocked === true ? (
+              {/* {candidate?.isUnlocked === true ? (
                 <Button
                   type="primary"
                   disabled={candidate && candidate?.isUnlocked}
@@ -251,10 +252,90 @@ const CandidateNewDetail = () => {
                     ? 'Mở khóa ứng viên'
                     : 'Unlock Candidates'}
                 </Button>
+              )} */}
+
+              {/* test */}
+              {candidate?.isUnlocked === false && (
+                <Popover
+                  placement="bottom"
+                  color="black"
+                  content={
+                    languageRedux === 1 ? (
+                      <p style={{ color: '#fff' }}>
+                        Dùng 1 lượt/Point để xem thông tin liên hệ của ứng viên
+                        này
+                      </p>
+                    ) : (
+                      <p style={{ color: '#fff' }}>
+                        Use 1 turn/Point to view candidate contact information
+                      </p>
+                    )
+                  }
+                >
+                  <Button
+                    type="primary"
+                    disabled={candidate && candidate?.isUnlocked}
+                    onClick={() => handleUnLockCandidate(candidate?.accountId)}
+                    style={{ backgroundColor: '#252525', color: '#fff' }}
+                  >
+                    <div className="contentBtnLock">
+                      <div>
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 25"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M19.5 8.28644H16.5V6.03644C16.5 4.84296 16.0259 3.69837 15.182 2.85446C14.3381 2.01054 13.1935 1.53644 12 1.53644C10.8065 1.53644 9.66193 2.01054 8.81802 2.85446C7.97411 3.69837 7.5 4.84296 7.5 6.03644V8.28644H4.5C4.10218 8.28644 3.72064 8.44447 3.43934 8.72578C3.15804 9.00708 3 9.38861 3 9.78644V20.2864C3 20.6843 3.15804 21.0658 3.43934 21.3471C3.72064 21.6284 4.10218 21.7864 4.5 21.7864H19.5C19.8978 21.7864 20.2794 21.6284 20.5607 21.3471C20.842 21.0658 21 20.6843 21 20.2864V9.78644C21 9.38861 20.842 9.00708 20.5607 8.72578C20.2794 8.44447 19.8978 8.28644 19.5 8.28644ZM9 6.03644C9 5.24079 9.31607 4.47773 9.87868 3.91512C10.4413 3.35251 11.2044 3.03644 12 3.03644C12.7956 3.03644 13.5587 3.35251 14.1213 3.91512C14.6839 4.47773 15 5.24079 15 6.03644V8.28644H9V6.03644ZM19.5 20.2864H4.5V9.78644H19.5V20.2864Z"
+                            fill="white"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        {languageRedux === 1
+                          ? 'Mở khóa ứng viên'
+                          : 'Unlock Candidates'}
+                      </div>
+                    </div>
+                  </Button>
+                </Popover>
+              )}
+
+              {candidate?.isUnlocked === true && (
+                <Button
+                  type="primary"
+                  disabled={candidate && candidate?.isUnlocked}
+                  // onClick={() => handleUnLockCandidate(candidate?.accountId)}
+                  style={{ backgroundColor: '#252525', color: '#fff' }}
+                >
+                  <div className="contentBtnLock">
+                    <div>
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 25"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19.5 8.28644H16.5V6.03644C16.5 4.84296 16.0259 3.69837 15.182 2.85446C14.3381 2.01054 13.1935 1.53644 12 1.53644C10.8065 1.53644 9.66193 2.01054 8.81802 2.85446C7.97411 3.69837 7.5 4.84296 7.5 6.03644V8.28644H4.5C4.10218 8.28644 3.72064 8.44447 3.43934 8.72578C3.15804 9.00708 3 9.38861 3 9.78644V20.2864C3 20.6843 3.15804 21.0658 3.43934 21.3471C3.72064 21.6284 4.10218 21.7864 4.5 21.7864H19.5C19.8978 21.7864 20.2794 21.6284 20.5607 21.3471C20.842 21.0658 21 20.6843 21 20.2864V9.78644C21 9.38861 20.842 9.00708 20.5607 8.72578C20.2794 8.44447 19.8978 8.28644 19.5 8.28644ZM9 6.03644C9 5.24079 9.31607 4.47773 9.87868 3.91512C10.4413 3.35251 11.2044 3.03644 12 3.03644C12.7956 3.03644 13.5587 3.35251 14.1213 3.91512C14.6839 4.47773 15 5.24079 15 6.03644V8.28644H9V6.03644ZM19.5 20.2864H4.5V9.78644H19.5V20.2864Z"
+                          fill="white"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      {languageRedux === 1
+                        ? 'Mở khóa ứng viên'
+                        : 'Unlock Candidates'}
+                    </div>
+                  </div>
+                </Button>
               )}
 
               <Button
-                type="primary"
+                className="btnView"
                 onClick={(event) => {
                   handleClickItemCv(
                     candidate?.profilesCvs[0]?.pdfURL,
@@ -262,7 +343,47 @@ const CandidateNewDetail = () => {
                   );
                 }}
               >
-                {languageRedux === 1 ? 'Xem hồ sơ' : 'View Resume'}
+                <div className="contentBtnLock">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_12961_352323)">
+                      <path
+                        d="M24 0.786438H0V24.7864H24V0.786438Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M12 6.03644C4.5 6.03644 1.5 12.7864 1.5 12.7864C1.5 12.7864 4.5 19.5364 12 19.5364C19.5 19.5364 22.5 12.7864 22.5 12.7864C22.5 12.7864 19.5 6.03644 12 6.03644Z"
+                        stroke="#AAAAAA"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M12 16.5364C14.0711 16.5364 15.75 14.8575 15.75 12.7864C15.75 10.7154 14.0711 9.03644 12 9.03644C9.92893 9.03644 8.25 10.7154 8.25 12.7864C8.25 14.8575 9.92893 16.5364 12 16.5364Z"
+                        stroke="#AAAAAA"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_12961_352323">
+                        <rect
+                          width="24"
+                          height="24"
+                          fill="white"
+                          transform="translate(0 0.786438)"
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                <div>{languageRedux === 1 ? 'Xem hồ sơ' : 'View Resume'}</div>
               </Button>
 
               <div
@@ -303,7 +424,7 @@ const CandidateNewDetail = () => {
           >
             <h3>
               {languageRedux === 1
-                ? 'Thông tin ứng viên'
+                ? 'Thông tin cá nhân'
                 : 'Candidate information'}
             </h3>
           </div>
@@ -480,6 +601,7 @@ const CandidateNewDetail = () => {
           ></div>
         </div>
 
+        {/* Work experience */}
         <div className="candidate-profile-info">
           <div
             style={{
@@ -507,6 +629,55 @@ const CandidateNewDetail = () => {
           ></div>
         </div>
 
+        {/* Skills */}
+        <div className="candidate-profile-info">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+          </div>
+          <Space wrap className="item-info-work">
+            {candidate?.profilesSkills?.length !== 0
+              ? candidate?.profilesSkills?.map((item: any, index: number) => (
+                  <Button key={index} className="btn" type="text">
+                    <span>{item.skillName}</span>
+                    <span>{item.dataLevel.data}</span>
+                  </Button>
+                ))
+              : language?.unupdated}
+          </Space>
+        </div>
+
+        {/* Languages */}
+        <div className="candidate-profile-info">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
+          </div>
+          <Space wrap className="item-info-work">
+            {candidate?.profilesLanguages?.length !== 0
+              ? candidate?.profilesLanguages?.map(
+                  (item: any, index: number) => (
+                    <Button key={index} className="btn" type="text">
+                      <span>{item.languageName}</span>
+                      <span>{item.dataLevel.data}</span>
+                    </Button>
+                  ),
+                )
+              : language?.unupdated}
+          </Space>
+        </div>
+
+        {/* Activities */}
         <div className="candidate-profile-info">
           <div
             style={{
@@ -534,6 +705,32 @@ const CandidateNewDetail = () => {
           ></div>
         </div>
 
+        {/* Reference */}
+        <div className="candidate-profile-info">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <h3>{languageRedux === 1 ? 'Người giới thiệu' : 'References'}</h3>
+          </div>
+          <Space wrap className="item-info-work">
+            {candidate?.profilesReferences?.length !== 0
+              ? candidate?.profilesReferences?.map((item: any) => (
+                  <Button key={item.id} className="btn" type="text">
+                    <h3>{item.fullName}</h3>
+                    <span>{item.phone}</span>
+                    <span>{item.email}</span>
+                    <span>{item.description}</span>
+                  </Button>
+                ))
+              : language?.unupdated}
+          </Space>
+        </div>
+
+        {/* Award */}
         <div className="candidate-profile-info">
           <div
             style={{
@@ -569,45 +766,25 @@ const CandidateNewDetail = () => {
               justifyContent: 'space-between',
             }}
           >
-            <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
+            <h3>{languageRedux === 1 ? 'Sở thích' : 'Hobbies'}</h3>
           </div>
-          <Space wrap className="item-info-work">
-            {candidate?.profilesSkills?.length !== 0
-              ? candidate?.profilesSkills?.map((item: any, index: number) => (
-                  <Button key={index} className="btn" type="text">
-                    <span>{item.skillName}</span>
-                    <span>{item.dataLevel.data}</span>
-                  </Button>
-                ))
-              : language?.unupdated}
-          </Space>
-        </div>
-
-        <div className="candidate-profile-info">
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
+          <Space
+            wrap
+            className="item-info-work"
+            style={{ width: '100%' }}
+            direction="vertical"
           >
-            <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
-          </div>
-          <Space wrap className="item-info-work">
-            {candidate?.profilesLanguages?.length !== 0
-              ? candidate?.profilesLanguages?.map(
-                  (item: any, index: number) => (
-                    <Button key={index} className="btn" type="text">
-                      <span>{item.languageName}</span>
-                      <span>{item.dataLevel.data}</span>
-                    </Button>
-                  ),
-                )
-              : language?.unupdated}
+            {candidate?.profileHobbies ? (
+              <p className="textArea">
+                {candidate?.profileHobbies.description}
+              </p>
+            ) : (
+              language?.unupdated
+            )}
           </Space>
         </div>
       </Box>
-      <Footer />
+      {/* <Footer /> */}
       <ModalShowCv
         modalShowCvPDF={modalShowCvPDF}
         setModalShowCvPdf={setModalShowCvPdf}

@@ -68,12 +68,10 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
   // const [defaultValue, setDefaultValue] = React.useState<number[]>([]);
 
   const DropdownRender = (menus: React.ReactNode) => (
-    <div style={{ width: '520px' }} className="filter-loca-cate">
+    <div style={{ width: '520px' }} className="filter-loca-cate ">
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ?
-          language?.limit_2_cate
-          : ''}
+        {disable ? language?.limit_2_cate : ''}
       </Divider>
     </div>
   );
@@ -98,7 +96,7 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
   const getCategories = async () => {
     try {
       const result = await categoriesApi.getAllCategorise(
-        languageRedux === 1 ? "vi" : "en"
+        languageRedux === 1 ? 'vi' : 'en',
       );
       if (result) {
         setDataCategories(result.data);
@@ -129,10 +127,7 @@ const EditPostCategoryId: React.FC<IEditPostCategoryId> = (props) => {
         component="label"
         htmlFor="jobTitle"
       >
-        {
-          language?.category
-        }{' '}
-        <span style={{ color: 'red' }}>*</span>
+        {language?.category} <span style={{ color: 'red' }}>*</span>
       </Typography>
       <Cascader
         defaultValue={dataPost?.map((cata: any) => [

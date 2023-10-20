@@ -41,4 +41,8 @@
     }
 }
 
+.ant-select-dropdown:has(#rc_select_6_list){
+    z-index: 8 !important;
+}
+
 

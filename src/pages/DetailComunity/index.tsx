@@ -1,7 +1,6 @@
 import React from 'react'; // , { useEffect, FormEvent, useState }
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
 // import Breadcrumbs from '@mui/material/Breadcrumbs';
 // import Link from '@mui/material/Link';
 // import { Box, Typography } from '@mui/material';
@@ -32,7 +31,6 @@ import { useSearchParams } from 'react-router-dom';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 // @ts-ignore
-import { Navbar } from '#components';
 import { Modal } from 'antd';
 import './style.scss';
 import communityApi from 'api/apiCommunity';
@@ -55,7 +53,6 @@ import { setAlertCancleSave, setAlertSave } from 'store/reducer/alertReducer';
 
 import ModalLogin from '../../components/Home/ModalLogin';
 import { getCookie, setCookie } from 'cookies';
-import CategoryDropdown from '#components/CategoryDropdown';
 const { TextArea } = Input;
 interface FormPostCommunityComment {
   communicationId: number;
@@ -326,8 +323,8 @@ const Comunity = () => {
 
   return (
     <div className="comunity-container">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <div className="comunity-content">
         <div className="comunity-detail_post">
           <div className="back" onClick={handleMoveToList}>
@@ -662,7 +659,7 @@ const Comunity = () => {
       </Modal>
       <ShowCancleSave />
       <ShowNotificativeSave />
-      <Footer />
+      {/* <Footer /> */}
       <ModalLogin
         openModalLogin={openModalLogin}
         setOpenModalLogin={setOpenModalLogin}

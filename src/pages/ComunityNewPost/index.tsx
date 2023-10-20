@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
 import { UserOutlined } from '@ant-design/icons';
 // import moment, { Moment } from 'moment';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -26,7 +25,6 @@ import {
 } from '#components/Icons';
 
 // @ts-ignore
-import { Navbar } from '#components';
 // @ts-ignore
 import InfiniteScroll from 'react-infinite-scroll-component';
 import RollTop from '#components/RollTop';
@@ -41,7 +39,6 @@ import WorkingStoryCard from '#components/Community/WorkingStoryCard';
 import { setAlertSave } from 'store/reducer/alertReducer';
 import HijobNewsCard from '#components/Community/HijobNewsCard';
 import { getCookie } from 'cookies';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 // const { Panel } = Collapse;
 
@@ -99,7 +96,11 @@ const ComunityNewPost = () => {
         duration: 2,
         maxCount: 3,
       });
-      message.error(languageRedux === 1 ? 'Không còn bài viết để hiển thị' : 'No more posts to show');
+      message.error(
+        languageRedux === 1
+          ? 'Không còn bài viết để hiển thị'
+          : 'No more posts to show',
+      );
       setIsVisible(false);
       // console.log('Đã hết bài viết để hiển thị', result);
     }
@@ -224,9 +225,9 @@ const ComunityNewPost = () => {
 
   return (
     <div className="comunity-container">
-      <Navbar />
-      <CategoryDropdown />
-      <div className="comunity-content">
+      {/* <Navbar />
+      <CategoryDropdown /> */}
+      <div className="comunityContent">
         <div className="comunityPostNew">
           <div className="title-comunity">
             <div className="title-comunity-new-content">
@@ -238,10 +239,10 @@ const ComunityNewPost = () => {
                   loading
                     ? 'Loading...'
                     : languageRedux === 1
-                      ? `${new Intl.NumberFormat('en-US').format(
+                    ? `${new Intl.NumberFormat('en-US').format(
                         total,
                       )} bài viết mới`
-                      : `${new Intl.NumberFormat('en-US').format(
+                    : `${new Intl.NumberFormat('en-US').format(
                         total,
                       )} new posts`
 
@@ -376,7 +377,7 @@ const ComunityNewPost = () => {
                 </Stack> */}
       </div>
       <RollTop />
-      <Footer />
+      {/* <Footer /> */}
       <ModalLogin
         openModalLogin={openModalLogin}
         setOpenModalLogin={setOpenModalLogin}

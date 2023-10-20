@@ -1,9 +1,14 @@
 import React from 'react';
 import ComunityCreatePost from '.';
 import RouteProps from '../routes';
+import MainLayout from 'layouts/main';
 const route: RouteProps = {
   path: '/comunity_create_post',
-  component: <ComunityCreatePost />,
+  component: (
+    <MainLayout>
+      <ComunityCreatePost />
+    </MainLayout>
+  ),
 };
 
 export default route;

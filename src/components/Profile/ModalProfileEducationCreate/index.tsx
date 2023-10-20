@@ -236,6 +236,50 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
       };
     }
 
+    if (!education.startDate) {
+      return {
+        messageError: language?.profile_page?.err_start_time,
+        checkForm: false,
+      };
+    }
+    if (new Date(education.startDate).getFullYear() > new Date().getFullYear()) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? "Năm bắt đầu không được vượt quá năm hiện tại" :
+            "The starting year cannot exceed the current year",
+        checkForm: false,
+      };
+    }
+
+
+    if (!education.endDate) {
+      return {
+        messageError: language?.profile_page?.err_finish_time,
+        checkForm: false,
+      };
+    }
+
+    if (new Date(education.endDate).getFullYear() > new Date().getFullYear()) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? "Năm kết thúc không được vượt quá năm hiện tại" :
+            "The final year cannot exceed the current year",
+        checkForm: false,
+      };
+    }
+
+    if (new Date(education.startDate).getFullYear() > new Date(education.endDate).getFullYear()) {
+      return {
+        messageError:
+          languageRedux === 1
+            ? "Năm bắt đầu không được vượt quá năm kết thúc" :
+            "The starting year cannot exceed the final year",
+        checkForm: false,
+      };
+    }
+
     return {
       messageError: '',
       checkForm: true,
@@ -335,7 +379,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.profile_page?.place_school}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
 
@@ -357,7 +401,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.major}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Box sx={styleChildBox}>
@@ -426,7 +470,7 @@ const ModalProfileEducationCreate: React.FC<IModalProfileEducationCreate> = (
             placeholder={'Loại công việc'}
             size="small"
             sx={{ width: '100%' }}
-            // error={!gender} // Đánh dấu lỗi
+          // error={!gender} // Đánh dấu lỗi
           >
             {typeAcademic?.map((value: any, index: number) => {
               return <MenuItem value={index + 1}>{value.data}</MenuItem>;

@@ -153,11 +153,11 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
           );
 
           resultProfile && dispatch(setProfileV3(resultProfile));
-          message.success(
-            languageRedux === 1
-              ? 'Cập nhật thông tin thành công !'
-              : 'Update information successfully !',
-          );
+          // message.success(
+          //   languageRedux === 1
+          //     ? 'Cập nhật thông tin thành công !'
+          //     : 'Update information successfully !',
+          // );
           setOpenModalEditAward(false);
           dispatch(setAlertEditInfo(true));
         }
@@ -224,7 +224,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
             placeholder={
               languageRedux === 1 ? 'Tiêu đề giải thưởng' : 'Award Title'
             }
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         {/* <Box sx={{ marginBottom: '12px' }}>
@@ -282,7 +282,7 @@ const ModalEditAward: React.FC<IModalActivity> = (props) => {
                 ? 'Mô tả giải thưởng của bạn'
                 : 'Description your award'
             }
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
         </Box>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
