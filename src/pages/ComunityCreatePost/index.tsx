@@ -460,9 +460,9 @@ const ComunityCreatePost = () => {
   };
 
   return (
-    <div className="comunity-create-post-container">
-      {/* <Navbar />
-      <CategoryDropdown /> */}
+    <div className="comunity-create-post-container modal-person comunitypost">
+      <Navbar />
+      <CategoryDropdown />
       {contextHolder}
       <div className="comunity-create-post-content">
         <div className="create-post-header">
@@ -497,6 +497,24 @@ const ComunityCreatePost = () => {
                 languageRedux === 1 ? 'Chủ đề cần chia sẻ' : 'Topics to share'
               }
             />
+            <div className="wrap-noti_input">
+              {valueTitle.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Chủ đề không được bỏ trống'
+                    : 'Topics cannot be empty'}
+                </span>
+              ) : valueTitle.length > 500 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Chủ đề không được vượt quá 500 ký tự'
+                    : 'Topics cannot exceed 500 characters'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${valueTitle.length}/500`}</span>
+            </div>
           </div>
           <div className="create-post-body_input">
             <h3>{languageRedux === 1 ? '2. Nội dung' : '2. Contents'}</h3>
@@ -521,6 +539,24 @@ const ComunityCreatePost = () => {
               }
               autoSize={{ minRows: 5, maxRows: 9 }}
             />
+            <div className="wrap-noti_input">
+              {valueContent.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'nội dung thêm không được bỏ trống'
+                    : 'Content cannot be empty'}
+                </span>
+              ) : valueContent.length > 1000 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Nội dung thêm không được vượt quá 1000 ký tự'
+                    : 'Content cannot exceed 1000 characters'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${valueContent.length}/1000`}</span>
+            </div>
           </div>
           <div className="create-post-body_input">
             <h3>

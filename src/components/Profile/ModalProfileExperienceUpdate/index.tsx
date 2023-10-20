@@ -24,6 +24,8 @@ import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
+import './style.scss';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -240,12 +242,14 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       };
     }
 
-    if (new Date(experience.startDate).getFullYear() > new Date().getFullYear()) {
+    if (
+      new Date(experience.startDate).getFullYear() > new Date().getFullYear()
+    ) {
       return {
         message:
           languageRedux === 1
-            ? "Năm bắt đầu không được vượt quá năm hiện tại" :
-            "The starting year cannot exceed the current year",
+            ? 'Năm bắt đầu không được vượt quá năm hiện tại'
+            : 'The starting year cannot exceed the current year',
         checkForm: false,
       };
     }
@@ -261,18 +265,21 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       return {
         message:
           languageRedux === 1
-            ? "Năm kết thúc không được vượt quá năm hiện tại" :
-            "The final year cannot exceed the current year",
+            ? 'Năm kết thúc không được vượt quá năm hiện tại'
+            : 'The final year cannot exceed the current year',
         checkForm: false,
       };
     }
 
-    if (new Date(experience.startDate).getFullYear() > new Date(experience.endDate).getFullYear()) {
+    if (
+      new Date(experience.startDate).getFullYear() >
+      new Date(experience.endDate).getFullYear()
+    ) {
       return {
         message:
           languageRedux === 1
-            ? "Năm bắt đầu không được vượt quá năm kết thúc" :
-            "The starting year cannot exceed the final year",
+            ? 'Năm bắt đầu không được vượt quá năm kết thúc'
+            : 'The starting year cannot exceed the final year',
         checkForm: false,
       };
     }
@@ -333,7 +340,10 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style} className="Modal-personnal-info">
+      <Box
+        sx={style}
+        className="Modal-personnal-info modal-person modal-educationProfileUpdate"
+      >
         {contextHolder}
         <div
           style={{
@@ -377,8 +387,20 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.professional_titles}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {experience.title && experience.title.length > 50 ? (
+              <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
+            ) : !experience.title ? (
+              <span className="helper-text">Vui lòng nhập chức danh</span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              experience.title ? experience.title.length : '0'
+            }/50`}</span>
+          </div>
         </Box>
         <Box sx={styleChildBox}>
           <Typography
@@ -399,8 +421,22 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.company_organization}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {experience.companyName && experience.companyName.length > 50 ? (
+              <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
+            ) : !experience.companyName ? (
+              <span className="helper-text">
+                Vui lòng nhập tên trường/tổ chức
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              experience.companyName ? experience.companyName.length : '0'
+            }/50`}</span>
+          </div>
         </Box>
 
         <Box sx={styleChildBox}>
@@ -426,6 +462,25 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   openTo="month"
                   format="MM/YYYY"
                 />
+                <div className="wrap-noti_input">
+                  {experience.startDate &&
+                  new Date(experience.startDate).getFullYear() >
+                    new Date().getFullYear() ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                    </span>
+                  ) : !new Date(experience.startDate).getFullYear() ? (
+                    <span className="helper-text">
+                      Vui lòng nhập Thời gian bắt đầu
+                    </span>
+                  ) : new Date(experience.startDate).getFullYear() < 1900 ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể nhỏ hơn 1900
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
               <div className="wrapTimeDay">
                 <Typography
@@ -445,6 +500,25 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
                   minDate={moment(experience.startDate)}
                   format="MM/YYYY"
                 />
+                <div className="wrap-noti_input">
+                  {experience.endDate &&
+                  new Date(experience.endDate).getFullYear() >
+                    new Date().getFullYear() ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                    </span>
+                  ) : !new Date(experience.endDate).getFullYear() ? (
+                    <span className="helper-text">
+                      Vui lòng nhập Thời gian bắt đầu
+                    </span>
+                  ) : new Date(experience.endDate).getFullYear() < 1900 ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể nhỏ hơn 1900
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </DemoContainer>
           </LocalizationProvider>
@@ -470,6 +544,23 @@ const ModalProfileExperienceUpdate: React.FC<IModalProfileExperienceUpdate> = (
             // label="Một số đặc điểm nhận diện công ty"
             placeholder={language?.profile_page?.place_additional_information}
           />
+          <div className="wrap-noti_input">
+            {experience.extraInformation &&
+            experience.extraInformation.length > 500 ? (
+              <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
+            ) : !experience.extraInformation ? (
+              <span className="helper-text">
+                Vui lòng nhập thông tin bổ sung
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              experience.extraInformation
+                ? experience.extraInformation.length
+                : '0'
+            }/500`}</span>
+          </div>
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>

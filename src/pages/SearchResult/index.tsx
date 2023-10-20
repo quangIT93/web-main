@@ -200,8 +200,9 @@ const NewJobs: React.FC = () => {
   //   district_id: '',
   //   wards: [],
   // });
+  encodeURIComponent(`${queryParams['q']}`);
   const [openModal, setOpenModal] = React.useState(false);
-  const QUERY = decodeURIComponent(`${queryParams['q']}`);
+  const QUERY = decodeURIComponent(encodeURIComponent(`${queryParams['q']}`));
   const [valueKeyword, setValueKeyword] = React.useState(QUERY ? QUERY : '');
   // const [districtId, setDistrictId] = React.useState<string>('');
 

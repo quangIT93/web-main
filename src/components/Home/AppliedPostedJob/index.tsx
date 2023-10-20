@@ -417,8 +417,6 @@ const AppliedPostedJob: React.FC = () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  console.log('click');
-
                   setOpenModalLogin(true);
                 }}
               >

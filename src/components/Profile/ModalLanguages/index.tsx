@@ -24,6 +24,8 @@ import {
   setAlertLackInfo,
 } from 'store/reducer/profileReducer/alertProfileReducer';
 import { message } from 'antd';
+
+import './style.scss';
 interface IModalSkills {
   openModallanguages: boolean;
   setOpenModallanguages: React.Dispatch<React.SetStateAction<boolean>>;
@@ -82,23 +84,21 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
   };
 
   const validValue = () => {
-    if (
-      language?.trim() === ''
-    ) {
+    if (language?.trim() === '') {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên ngôn ngữ không được bỏ trống" :
-          "Language names cannot be empty",
+        messageError:
+          languageRedux === 1
+            ? 'Tên ngôn ngữ không được bỏ trống'
+            : 'Language names cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      language?.trim().length > 255
-    ) {
+    if (language?.trim().length > 255) {
       return {
-        messageError: languageRedux === 1 ?
-          "Tên ngôn ngữ không được vượt quá 255 ký tự" :
-          "Language names cannot exceed 255 characters",
+        messageError:
+          languageRedux === 1
+            ? 'Tên ngôn ngữ không được vượt quá 255 ký tự'
+            : 'Language names cannot exceed 255 characters',
         checkForm: false,
       };
     }
@@ -110,7 +110,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
   };
 
   const handleSubmit = async () => {
-    const { messageError, checkForm } = validValue()
+    const { messageError, checkForm } = validValue();
     try {
       if (checkForm) {
         const result = await apiCv.postProfileLanguage(level, language);
@@ -134,15 +134,15 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
           }
         }
       } else {
-        message.error(messageError)
+        message.error(messageError);
       }
     } catch (error: any) {
       console.log('error', error);
-      if (error?.response?.data?.message === "Languege already exists") {
+      if (error?.response?.data?.message === 'Languege already exists') {
         message.error(
-          languageRedux === 1 ?
-            "Ngôn ngữ này đã tồn tại" :
-            "This language is already exists",
+          languageRedux === 1
+            ? 'Ngôn ngữ này đã tồn tại'
+            : 'This language is already exists',
         );
       }
     }
@@ -159,7 +159,10 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} className="Modal-personnal-info">
+      <Box
+        sx={style}
+        className="Modal-personnal-info modal-person modal-languageProfile"
+      >
         <div
           style={{
             position: 'absolute',
@@ -184,8 +187,8 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
           {languageRedux === 1
             ? 'Thêm ngoại ngữ'
             : languageRedux === 0 && searchParams.get('type') === 'create'
-              ? 'Add Languages'
-              : ''}
+            ? 'Add Languages'
+            : ''}
         </Typography>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -206,8 +209,26 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {language.length > 255 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tên ngôn ngữ không được vượt quá 255 ký tự'
+                  : 'Language names cannot exceed 255 characters'}
+              </span>
+            ) : language.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tên ngôn ngữ không được bỏ trống'
+                  : 'Language names cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${language.length}/255`}</span>
+          </div>
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography

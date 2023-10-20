@@ -47,12 +47,12 @@ import CVItem from '#components/Profile/CV';
 import './style.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
-import languageApi from 'api/languageApi';
-import { candidateDetail } from 'validations/lang/vi/candidateDetail';
-import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
-import { historyVi } from 'validations/lang/vi/history';
-import { historyEn } from 'validations/lang/en/history';
-import profileApi from 'api/profileApi';
+// import languageApi from 'api/languageApi';
+// import { candidateDetail } from 'validations/lang/vi/candidateDetail';
+// import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
+// import { historyVi } from 'validations/lang/vi/history';
+// import { historyEn } from 'validations/lang/en/history';
+import CategoryDropdown from '#components/CategoryDropdown';
 
 // const SmallAvatar = styled(Avatar)(({ theme }) => ({
 //   width: 22,
@@ -158,23 +158,14 @@ const CandidateDetail: React.FC = () => {
         setDataPost(result.data);
       }
 
-      // const detailCandidate = await historyRecruiter.GetAJobApplication(
-      //   postId,
-      //   applicationId,
-      //   languageRedux === 1 ? 'vi' : 'en',
-      // );
-      // console.log('detailCandidate', detailCandidate);
-      // if (detailCandidate) {
-      //   setDataCandidate(detailCandidate.data);
-      // }
-
-      const detailV3Candidate = await profileApi.getProfileByAccountId(
+      const detailCandidate = await historyRecruiter.GetAJobApplication(
+        postId,
+        applicationId,
         languageRedux === 1 ? 'vi' : 'en',
-        candidateId,
       );
-
-      if (detailV3Candidate) {
-        setDataCandidate(detailV3Candidate.data);
+      console.log('detailCandidate', detailCandidate);
+      if (detailCandidate) {
+        setDataCandidate(detailCandidate.data);
       }
     } catch (error) {
       console.log('error', error);
@@ -234,6 +225,11 @@ const CandidateDetail: React.FC = () => {
     return null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusApplication, setStatusApplication]);
+  console.log('dataPost', dataPost);
+  console.log(
+    'dataCandidate?.applicationProfile?.avatar',
+    dataCandidate?.applicationProfile?.avatar,
+  );
 
   console.log('dataCandidate', dataCandidate);
   return (
@@ -473,18 +469,14 @@ const CandidateDetail: React.FC = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <Badge
-                    overlap="circular"
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                  >
+                  <Badge overlap="circular">
                     <Avatar
-                      style={{ height: '70px', width: '70px' }}
-                      alt="U"
                       src={
-                        dataCandidate?.avatarPath
-                        // ? dataCandidate?.applicationProfile?.avatar
-                        // : ''
+                        dataCandidate?.applicationProfile?.avatar as any
+                        // 'https://gig-app-upload.s3-ap-southeast-1.amazonaws.com/images/avatar/1697190564373-1b072f22-916b-49f4-8ab8-fd37e3f3b6a4.jpg'
                       }
+                      style={{ height: '70px', width: '70px' }}
+                      alt={'ảnh lỗi'}
                     />
                   </Badge>
                   <div style={{ marginLeft: '10px' }}>
@@ -517,7 +509,7 @@ const CandidateDetail: React.FC = () => {
                           `/message?post_id=${searchParams.get(
                             'post-id',
                           )}&user_id=${
-                            dataCandidate && dataCandidate.accountId
+                            dataCandidate.applicationProfile.account_id
                           }&application_id=${searchParams.get(
                             'application_id',
                           )} `,
@@ -565,10 +557,10 @@ const CandidateDetail: React.FC = () => {
                 </div>
                 <div className="div-detail-row right">
                   <p>
-                    {dataCandidate?.birthdayData
-                      ? moment(new Date(dataCandidate?.birthdayData)).format(
-                          'DD/MM/yyyy',
-                        )
+                    {dataCandidate?.applicationProfile?.birthday
+                      ? moment(
+                          new Date(dataCandidate?.applicationProfile?.birthday),
+                        ).format('DD/MM/yyyy')
                       : language?.unupdated}
                   </p>
                   <p>

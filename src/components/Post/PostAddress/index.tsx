@@ -160,10 +160,18 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
     setAddress(e.target.value);
   };
 
+  console.log('selectedWard', selectedWard);
+  console.log('fillward', fillWardId);
+  console.log('fillward', fillDistrict);
+  console.log('fillward', fillProvince);
+
   return (
-    <div className="post-address">
+    <div className="post-address modal-person">
       <div className="post-address_top">
-        <div className="post-title">
+        <div
+          className="post-title"
+          // style={{ position: 'relative' }}
+        >
           <Typography
             sx={styleLabel}
             variant="body1"
@@ -187,8 +195,25 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             )}
             style={{ marginTop: '0.5rem' }}
           />
+          <div
+            className="wrap-noti_input"
+            // style={{ position: 'absolute', bottom: '-15px' }}
+          >
+            {!fillProvince && selectedProvince === null  ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Vui lòng nhập tên công ty'
+                  : 'Please enter company name'}
+              </span>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
-        <div className="post-title">
+        <div
+          className="post-title"
+          // style={{ position: 'relative' }}
+        >
           <Typography
             sx={styleLabel}
             variant="body1"
@@ -213,10 +238,27 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             )}
             style={{ marginTop: '0.5rem' }}
           />
+          <div
+            className="wrap-noti_input"
+            // style={{ position: 'absolute', bottom: '-15px' }}
+          >
+            {selectedDistrict === null && !fillDistrict? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Vui lòng nhập tên quận'
+                  : 'Please enter district name'}
+              </span>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
       <div className="post-address_bottom">
-        <div className="post-title">
+        <div
+          className="post-title"
+          // style={{ position: 'relative' }}
+        >
           <Typography
             sx={styleLabel}
             variant="body1"
@@ -240,6 +282,20 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             )}
             style={{ marginTop: '0.5rem' }}
           />
+          <div
+            className="wrap-noti_input"
+            // style={{ position: 'absolute', bottom: '-15px' }}
+          >
+            {selectedWard === null && fillWardId.id === "" ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Vui lòng nhập tên phường'
+                  : 'Please enter ward name'}
+              </span>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
         <div className="post-title">
           <Typography
@@ -261,6 +317,26 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             sx={{ width: '100%', marginTop: '0.5rem' }}
             placeholder={language?.post_page?.place_address}
           />
+          <div className="wrap-noti_input">
+            {address && address.length > 255 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Địa chỉ không được vượt quá 255 ký tự'
+                  : 'Address cannot exceed 255 characters'}
+              </span>
+            ) : !address ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Địa chỉ không được bỏ trống'
+                  : 'Address cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              address ? address.length : '0'
+            }/255`}</span>
+          </div>
         </div>
       </div>
     </div>

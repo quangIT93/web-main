@@ -59,6 +59,8 @@ const CompanyRole: React.FC<ICompany> = (props) => {
     onDrop: () => {},
   });
 
+  console.log("companyData",companyData)
+
   return (
     <Skeleton loading={loading} active>
       <div
@@ -329,6 +331,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 disabled={true}
                 //   error={titleError} // Đánh dấu lỗi
               />
+              
             </div>
 
             <div className="edit-web-company">

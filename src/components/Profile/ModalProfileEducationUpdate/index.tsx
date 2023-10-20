@@ -21,7 +21,7 @@ import { actionCreators } from 'store/index';
 import languageApi from 'api/languageApi';
 import { message } from 'antd';
 
-import '../style.scss';
+import './style.scss';
 import candidateSearch from 'api/apiCandidates';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
 
@@ -54,6 +54,8 @@ const style = {
 
 const styleChildBox = {
   marginBottom: '12px',
+  display: 'flex',
+  flexDirection: 'column',
 };
 
 // interface IEducation {
@@ -197,7 +199,6 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
   // submit
   // console.log(education.extraInformation.length);
 
-
   const validValue = () => {
     if (education.major === '') {
       return {
@@ -256,12 +257,14 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
         checkForm: false,
       };
     }
-    if (new Date(education.startDate).getFullYear() > new Date().getFullYear()) {
+    if (
+      new Date(education.startDate).getFullYear() > new Date().getFullYear()
+    ) {
       return {
         message:
           languageRedux === 1
-            ? "Năm bắt đầu không được vượt quá năm hiện tại" :
-            "The starting year cannot exceed the current year",
+            ? 'Năm bắt đầu không được vượt quá năm hiện tại'
+            : 'The starting year cannot exceed the current year',
         checkForm: false,
       };
     }
@@ -277,18 +280,21 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       return {
         message:
           languageRedux === 1
-            ? "Năm kết thúc không được vượt quá năm hiện tại" :
-            "The final year cannot exceed the current year",
+            ? 'Năm kết thúc không được vượt quá năm hiện tại'
+            : 'The final year cannot exceed the current year',
         checkForm: false,
       };
     }
 
-    if (new Date(education.startDate).getFullYear() > new Date(education.endDate).getFullYear()) {
+    if (
+      new Date(education.startDate).getFullYear() >
+      new Date(education.endDate).getFullYear()
+    ) {
       return {
         message:
           languageRedux === 1
-            ? "Năm bắt đầu không được vượt quá năm kết thúc" :
-            "The starting year cannot exceed the final year",
+            ? 'Năm bắt đầu không được vượt quá năm kết thúc'
+            : 'The starting year cannot exceed the final year',
         checkForm: false,
       };
     }
@@ -366,7 +372,10 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
       aria-describedby="modal-modal-description"
       onKeyDown={handleKeyDown}
     >
-      <Box sx={style} className="Modal-personnal-info">
+      <Box
+        sx={style}
+        className="Modal-personnal-info modal-person modal-educationProfileUpdate"
+      >
         {contextHolder}
         <div
           style={{
@@ -410,8 +419,18 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.profile_page?.place_school}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {education.companyName && education.companyName.length > 50 ? (
+              <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              education.companyName ? education.companyName.length : '0'
+            }/50`}</span>
+          </div>
         </Box>
 
         <Box sx={styleChildBox}>
@@ -432,8 +451,20 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={language?.major}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {education.major && education.major.length > 50 ? (
+              <span className="helper-text">Bạn đã nhập quá 50 ký tự</span>
+            ) : !education.major ? (
+              <span className="helper-text">Vui lòng nhập chuyên ngành</span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              education.major ? education.major.length : '0'
+            }/50`}</span>
+          </div>
         </Box>
         <Box sx={styleChildBox}>
           <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -462,6 +493,25 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   openTo="month"
                   format="MM/YYYY"
                 />
+                <div className="wrap-noti_input">
+                  {education.startDate &&
+                  new Date(education.startDate).getFullYear() >
+                    new Date().getFullYear() ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể lớn hơn thời gian hiện tại
+                    </span>
+                  ) : !new Date(education.startDate).getFullYear() ? (
+                    <span className="helper-text">
+                      Vui lòng nhập Thời gian bắt đầu
+                    </span>
+                  ) : new Date(education.startDate).getFullYear() < 1900 ? (
+                    <span className="helper-text">
+                      Thời gian bắt đầu không thể nhỏ hơn 1900
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
               <div className="wrapTimeDay">
                 <Typography
@@ -482,6 +532,25 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
                   minDate={moment(education.startDate)}
                   format="MM/YYYY"
                 />
+                <div className="wrap-noti_input">
+                  {education.endDate &&
+                  new Date(education.endDate).getFullYear() >
+                    new Date().getFullYear() ? (
+                    <span className="helper-text">
+                      Thời gian kết thúc không thể lớn hơn thời gian hiện tại
+                    </span>
+                  ) : !new Date(education.endDate).getFullYear() ? (
+                    <span className="helper-text">
+                      Vui lòng nhập Thời gian kết thúc
+                    </span>
+                  ) : new Date(education.endDate).getFullYear() < 1900 ? (
+                    <span className="helper-text">
+                      Thời gian kết thúc không thể nhỏ hơn 1900
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </DemoContainer>
           </LocalizationProvider>
@@ -506,7 +575,7 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             placeholder={'Loại công việc'}
             size="small"
             sx={{ width: '100%' }}
-          // error={!gender} // Đánh dấu lỗi
+            // error={!gender} // Đánh dấu lỗi
           >
             {typeAcademic?.map((value: any, index: number) => {
               return <MenuItem value={index + 1}>{value.data}</MenuItem>;
@@ -546,6 +615,19 @@ const ModalProfileEducationUpdate: React.FC<IModalProfileEducationUpdate> = (
             // label="Một số đặc điểm nhận diện công ty"
             placeholder={language?.profile_page?.place_additional_information}
           />
+          <div className="wrap-noti_input">
+            {education.extraInformation &&
+            education.extraInformation.length > 500 ? (
+              <span className="helper-text">Bạn đã nhập quá 500 ký tự</span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${
+              education.extraInformation
+                ? education.extraInformation.length
+                : '0'
+            }/500`}</span>
+          </div>
         </Box>
 
         <Button variant="contained" fullWidth onClick={handleSubmit}>

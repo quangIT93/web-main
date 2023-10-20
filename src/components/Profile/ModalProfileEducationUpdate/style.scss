@@ -1,0 +1,16 @@
+.modal-person.modal-educationProfileUpdate {
+    .MuiBox-root {
+        .MuiStack-root {
+            flex-direction: column !important;
+            gap: 16px;
+            .wrapTimeDay{
+                display: flex;
+                flex-direction: column !important;
+                .wrap-noti_input{
+                    margin-top: 4px;
+
+                }
+            }
+        }
+    }
+}

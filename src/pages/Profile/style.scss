@@ -596,6 +596,21 @@
         p {
           font-size: 14px;
         }
+
+        .wrap-noti_input {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          .helper-text {
+            color: red;
+            font-size: 12px;
+          }
+
+          .number-text {
+            color: #aaa;
+            font-size: 16px;
+          }
+        }
       }
 
       .donot-show {

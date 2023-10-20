@@ -96,7 +96,6 @@ const ItemInfoLeft: React.FC<SuggestItemProps> = ({ typeItem, item }) => {
   //   getlanguageApi();
   // }, [languageRedux]);
 
-  console.log('item?.start_date', item);
   return (
     <div className="div-apply-item">
       <div className="div-item-left">

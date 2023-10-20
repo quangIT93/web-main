@@ -1,4 +1,5 @@
 // import React, { lazy } from 'react';
+import MainLayout from 'layouts/main';
 import InstructionsCv from '.';
 import RouteProps from '../routes';
 
@@ -6,7 +7,11 @@ import RouteProps from '../routes';
 
 const route: RouteProps = {
   path: '/intructionsCv',
-  component: <InstructionsCv />,
+  component: (
+    <MainLayout>
+      <InstructionsCv />
+    </MainLayout>
+  ),
 };
 
 export default route;

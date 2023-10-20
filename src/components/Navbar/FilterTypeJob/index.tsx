@@ -115,7 +115,10 @@ const FilterTypeJob: React.FC<TypeJob> = ({
   // console.log('type', TYPE_JOB);
   const getTypeJob = async () => {
     const result = await siteApi.getJobType(languageRedux === 1 ? 'vi' : 'en');
-    const updatedData = [{ id: 5, name: language?.all }, ...result.data];
+    const updatedData = [
+      { id: 5, name: languageRedux === 1 ? 'Tất cả' : 'All' },
+      ...result.data,
+    ];
     // console.log('updatedData', updatedData);
     if (updatedData) {
       setData(updatedData);

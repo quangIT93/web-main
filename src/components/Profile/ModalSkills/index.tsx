@@ -22,7 +22,7 @@ import {
   setAlertEditInfo,
 } from 'store/reducer/profileReducer/alertProfileReducer';
 import { message } from 'antd';
-
+import './style.scss';
 interface IModalSkills {
   openModalSkills: boolean;
   setOpenModalSkills: React.Dispatch<React.SetStateAction<boolean>>;
@@ -69,23 +69,21 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
   const [level, setLevel] = React.useState<any>(1);
   const [messageApi, contextHolder] = message.useMessage();
   const validValue = () => {
-    if (
-      skill?.trim() === ''
-    ) {
+    if (skill?.trim() === '') {
       return {
-        message: languageRedux === 1 ?
-          "Tên kỹ năng không được bỏ trống" :
-          "Skill names cannot be empty",
+        message:
+          languageRedux === 1
+            ? 'Tên kỹ năng không được bỏ trống'
+            : 'Skill names cannot be empty',
         checkForm: false,
       };
     }
-    if (
-      skill?.trim().length > 255
-    ) {
+    if (skill?.trim().length > 255) {
       return {
-        message: languageRedux === 1 ?
-          "Tên kỹ năng không được vượt quá 255 ký tự" :
-          "Skill names cannot exceed 255 characters",
+        message:
+          languageRedux === 1
+            ? 'Tên kỹ năng không được vượt quá 255 ký tự'
+            : 'Skill names cannot exceed 255 characters',
         checkForm: false,
       };
     }
@@ -128,12 +126,13 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
       }
     } catch (error: any) {
       console.log('error', error);
-      if (error?.response?.data?.message === "Skill Role already exists") {
+      if (error?.response?.data?.message === 'Skill Role already exists') {
         messageApi.open({
           type: 'error',
-          content: languageRedux === 1 ?
-            "Kỹ năng này đã tồn tại" :
-            "This skill is already exists",
+          content:
+            languageRedux === 1
+              ? 'Kỹ năng này đã tồn tại'
+              : 'This skill is already exists',
         });
       }
     }
@@ -150,7 +149,10 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} className="Modal-personnal-info">
+      <Box
+        sx={style}
+        className="Modal-personnal-info modal-person modal-personSkill"
+      >
         {contextHolder}
         <div
           style={{
@@ -194,8 +196,26 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
-          // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
           />
+          <div className="wrap-noti_input">
+            {skill.length > 255 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tên kỹ năng không được vượt quá 255 ký tự'
+                  : 'Skill names cannot exceed 255 characters'}
+              </span>
+            ) : skill.length === 0 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Tên kỹ năng không được bỏ trống'
+                  : 'Skill names cannot be empty'}
+              </span>
+            ) : (
+              <></>
+            )}
+            <span className="number-text">{`${skill.length}/255`}</span>
+          </div>
         </Box>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography

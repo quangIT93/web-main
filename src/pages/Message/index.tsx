@@ -7,8 +7,7 @@ import ListUserChat from '#components/Message/ListUser/ListUser';
 import { useSearchParams } from 'react-router-dom';
 
 // @ts-ignore
-import Navbar from '#components/Navbar';
-import Footer from '#components/Footer/Footer';
+
 import RollTop from '#components/RollTop';
 // import ui antd
 // import { Typography } from 'antd';
@@ -32,7 +31,6 @@ import { messEn } from 'validations/lang/en/mess';
 // const { Text } = Typography;
 
 import { ChatContext } from 'context/ChatContextProvider';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 const Message = () => {
   const languageRedux = useSelector(
@@ -121,8 +119,8 @@ const Message = () => {
 
   return (
     <div className="message-page" style={{ height: `${innerHeight}` }}>
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       {windowWidth >= 555 ? (
         <div className="message-page_main">
           {/* <div className="header-message">
@@ -174,7 +172,7 @@ const Message = () => {
       )}
 
       <RollTop />
-      {windowWidth > 784 ? <Footer /> : <></>}
+      {/* {windowWidth > 784 ? <Footer /> : <></>} */}
     </div>
   );
 };
