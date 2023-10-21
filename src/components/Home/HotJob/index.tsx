@@ -80,7 +80,7 @@ const HotJob: React.FC = () => {
     query: any,
   ) => {
     const queyObj = query[0];
-    
+
     let keyOfQuery = Object.keys(queyObj)[0];
     let url =
       api.replace('/api', '') + '?' + keyOfQuery + '=' + queyObj[keyOfQuery];
@@ -106,7 +106,6 @@ const HotJob: React.FC = () => {
       const result = await hotJobApi.getHotJobTheme(
         languageRedux === 1 ? 'vi' : 'en',
       );
-      console.log('result', result);
 
       if (result) {
         setHotJob(result.data);
@@ -169,7 +168,7 @@ const HotJob: React.FC = () => {
       item.query,
     );
   };
-  console.log("hotjob", hotjob)
+  console.log('hotjob', hotjob);
   return (
     <Box
       sx={{
