@@ -58,7 +58,9 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   const [value, setValue] = React.useState<Number>(0);
   // const [openBackdrop, setOpenBackdrop] = React.useState(false);
   // const [index, setIndex] = React.useState(0);
-  const placeIdRedux = useSelector((state: RootState) => state.placeIdReducer.placeId)
+  const placeIdRedux = useSelector(
+    (state: RootState) => state.placeIdReducer.placeId,
+  );
   // const [addressIdCookie, setAddressIdCookie] = React.useState(0);
   const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -96,12 +98,10 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   //   }
   //   return null;
   // }
-  const location = useLocation()
+  const location = useLocation();
   React.useEffect(() => {
     // Retrieve the user's settings from cookies
-    let storedSettings = JSON.parse(
-      getCookie('hotPlaceId') || '{}',
-    )
+    let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
     setSelectedItemIndex(storedSettings.id);
     setPlaceIdCookie(storedSettings.placeId);
     if (storedSettings.userSelectedId !== 1) {
@@ -109,7 +109,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       slide?.classList.remove('swiper-slide-clicked');
     }
   }, [value]);
-
 
   const handleChange = async (
     event: React.SyntheticEvent,
@@ -151,9 +150,7 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   //   setOpenBackdrop(false);
   // };
   const getPostNewestByThemeId = async () => {
-    let storedSettings = JSON.parse(
-      getCookie('hotPlaceId') || '{}',
-    )
+    let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
     try {
       // const themeId = searchParams.get(`theme-id`)
       //   ? searchParams.get(`theme-id`)
@@ -163,7 +160,9 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       // if (themeId) {
       // setOpenBackdrop(true);
       const result = await postApi.getPostByThemeId(
-        storedSettings?.placeId ? storedSettings?.placeId : listTheme?.data[0]?.id,
+        storedSettings?.placeId
+          ? storedSettings?.placeId
+          : listTheme?.data[0]?.id,
         9,
         0,
         languageRedux === 1 ? 'vi' : 'en',
@@ -184,10 +183,6 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
     // setValue(Number(searchParams.get('theme-id')));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, value]);
-
-  // console.log('value', value);
-  // console.log('listTheme', listTheme);
-  console.log('selectedItemIndex', selectedItemIndex);
 
   return (
     <Box
@@ -244,12 +239,9 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
         slidesPerView="auto"
         // initialSlide={selectedItemIndex}
         initialSlide={
-          JSON.parse(
-            getCookie('hotPlaceId') || '{}',
-          ).id ?
-            JSON.parse(
-              getCookie('hotPlaceId') || '{}',
-            ).id - 1 : 0
+          JSON.parse(getCookie('hotPlaceId') || '{}').id
+            ? JSON.parse(getCookie('hotPlaceId') || '{}').id - 1
+            : 0
         }
         // breakpoints={{
         //   320: {
@@ -304,10 +296,14 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                 console.log('item', item);
 
                 dispatch<any>(setPalceId(item.id));
-                setCookie('hotPlaceId', JSON.stringify({
-                  id: index,
-                  placeId: item.id,
-                }), 365)
+                setCookie(
+                  'hotPlaceId',
+                  JSON.stringify({
+                    id: index,
+                    placeId: item.id,
+                  }),
+                  365,
+                );
 
                 // localStorage.setItem(
                 //   'job_by_place',
@@ -321,8 +317,8 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
                   item.id === placeIdCookie
                     ? '2px solid #0d99ff'
                     : index === 0 && placeIdCookie === undefined
-                      ? '2px solid #0d99ff'
-                      : '',
+                    ? '2px solid #0d99ff'
+                    : '',
               }}
             >
               <div className="slide-item">
