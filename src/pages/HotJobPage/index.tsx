@@ -475,11 +475,11 @@ const HotJobpage: React.FC = () => {
             style={{
               display: 'flex',
               // flexDirection: 'column',
-              margin: '20px 0',
+              marginBottom: '20px',
               alignItems: 'center',
               justifyContent: 'space-between',
               // background: '#aaaaaa',
-              padding: '8px 0',
+              paddingBottom: '8px',
             }}
           >
             <div className="hot-job-title-container">
