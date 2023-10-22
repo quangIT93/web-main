@@ -1062,9 +1062,11 @@
       }
     }
 
+    
+
     @include breakpoint(mobile) {
       display: none;
-      // flex: none;
+      flex: none;
       margin-right: 10px;
 
       .ant-select {
@@ -1092,8 +1094,9 @@
     @media screen and (max-width: 480px) {
 
       // }
-      display: flex;
-      // flex: none;
+      // display: flex;
+      flex: none;
+      display: none;
       margin-right: 0px;
 
 
@@ -1564,6 +1567,9 @@
 
       .box-right-responsive_badge {
         box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+        .ant-scroll-number {
+          z-index: 10;
+        }
       }
 
       .wrap-btn_notice {

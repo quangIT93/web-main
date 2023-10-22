@@ -234,15 +234,20 @@ const HotJobpage: React.FC = () => {
 
       // const provinceId = localStorage.getItem('filterHotjobProvince');
 
-      const url = localStorage.getItem('hotjobApi');
-      
+      // const url = localStorage.getItem('hotjobApi');
+
       let hotjob: any = await hotJobApi.getHotJobById(
-        `/v3/posts/topic/${searchParams.get("hotjob-id")}?a=394,370`,
+        `/v3/posts/topic/${searchParams.get('hotjob-id')}?a=394,370`,
         pageNumber,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
         languageRedux === 1 ? 'vi' : 'en',
         // idFilterProvinces && provinceId,
-        idFilterProvinces,
+        // idFilterProvinces,
+        !idFilterProvinces && profileV3.length !== 0
+          ? profileV3.addressText.id
+          : idFilterProvinces
+          ? idFilterProvinces
+          : '79',
       );
 
       // console.log('hotjob.data.total', hotjob['total'] as any);
@@ -255,43 +260,31 @@ const HotJobpage: React.FC = () => {
       setHotJobTotal(hotjob.total);
 
       setHasMore(true);
-      if (hotjob && hotjob.data.length < 18 && hotjobtype === 2) {
-        setHotJob(hotjob.data);
-        setHotJobType(hotjobtype);
-        setIsVisible(true);
-        // setHotJobTotal(hotjob.data.length);
-        // setHasMore(false);
-        setPage('0');
-        return;
-      } else if (hotjob && hotjob.data.length >= 18 && hotjobtype === 2) {
-        setHotJob(hotjob.data);
-        setHotJobType(hotjobtype);
-        setIsVisible(true);
-        // setHotJobTotal(hotjob.data.length);
-        // setLoading(false);
-        return;
-      }
 
-      if (hotjob && hotjob.data.length < 20 && hotjobtype !== 2) {
+      if (hotjob && hotjob.data.length === 18 && hotjobtype === 1) {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
-        // setHotJobTotal(hotjob.data.length);
-        setHasMore(false);
-        setPage('0');
-        // setLoading(false);
-        return;
-      } else if (hotjob && hotjob.data.length !== 0) {
+      } else if (hotjob && hotjob.data.length === 20 && hotjobtype === 2) {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
-        // setHotJobTotal(hotjob.data.length);
-        // setLoading(false);
-        return;
+      } else if (hotjob && hotjob.data.length < 18 && hotjobtype === 1) {
+        setHotJob(hotjob.data);
+        setHotJobType(hotjobtype);
+        setIsVisible(true);
+      } else if (hotjob && hotjob.data.length < 20 && hotjobtype === 2) {
+        setHotJob(hotjob.data);
+        setHotJobType(hotjobtype);
+        setIsVisible(true);
       } else {
-        setHotJob([]);
+        setHotJob(hotjob.data);
+        setHotJobType(hotjobtype);
+        setIsVisible(true);
+        // setHotJobTotal(hotjob.data.length);
         setHasMore(false);
         setPage('0');
+        return;
       }
 
       setTotalPage(Math.round(Number(hotjobtotal) / 20) + 1);
@@ -442,13 +435,20 @@ const HotJobpage: React.FC = () => {
   const fetchMoreData = async () => {
     try {
       const nextPage = parseInt(page) + 1;
-      const url = localStorage.getItem('hotjobApi');
-      const result = await hotJobApi.getHotJobById(
-        `/v3/posts/topic/${searchParams.get("hotjob-id")}?a=394,370`,
+      // const url = localStorage.getItem('hotjobApi');
+
+      let result: any = await hotJobApi.getHotJobById(
+        `/v3/posts/topic/${searchParams.get('hotjob-id')}?a=394,370`,
         nextPage,
         searchParams.get('hotjob-type') === '1' ? 18 : 20,
         languageRedux === 1 ? 'vi' : 'en',
-        idFilterProvinces,
+        // idFilterProvinces && provinceId,
+        // idFilterProvinces,
+        !idFilterProvinces && profileV3.length !== 0
+          ? profileV3.addressText.id
+          : idFilterProvinces
+          ? idFilterProvinces
+          : '79',
       );
 
       if (result && result.data.length !== 0) {
@@ -458,9 +458,10 @@ const HotJobpage: React.FC = () => {
         setHasMore(false);
         setPage('0');
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log('error', error);
+    }
   };
-  // console.log('hothob', hotjob);
 
   return (
     <>
@@ -484,27 +485,27 @@ const HotJobpage: React.FC = () => {
             <div className="hot-job-title-container">
               <h3>
                 {/* {language?.title_hot_jobs}{' '} */}
-                {searchParams.get("hotjob-id") === "2"
+                {searchParams.get('hotjob-id') === '2'
                   ? language?.remote_work
-                  : searchParams.get("hotjob-id") === "1"
+                  : searchParams.get('hotjob-id') === '1'
                   ? 'Influencer'
-                  : searchParams.get("hotjob-id") === "3"
+                  : searchParams.get('hotjob-id') === '3'
                   ? language?.hot_job_page?.short_time
-                  : searchParams.get("hotjob-id") === "4"
+                  : searchParams.get('hotjob-id') === '4'
                   ? language?.hot_job_page?.job_today
-                  : searchParams.get("hotjob-id") === "5"
+                  : searchParams.get('hotjob-id') === '5'
                   ? 'Freelancer'
-                  : searchParams.get("hotjob-id") === "6"
+                  : searchParams.get('hotjob-id') === '6'
                   ? 'Driver'
-                  : searchParams.get("hotjob-id") === "7"
+                  : searchParams.get('hotjob-id') === '7'
                   ? 'Restaurant Service'
-                  : searchParams.get("hotjob-id") === "8"
+                  : searchParams.get('hotjob-id') === '8'
                   ? 'Restaurant Service'
-                  : searchParams.get("hotjob-id") === "9"
+                  : searchParams.get('hotjob-id') === '9'
                   ? 'Parttime'
-                  : searchParams.get("hotjob-id") === "10"
+                  : searchParams.get('hotjob-id') === '10'
                   ? 'Marketing'
-                  : searchParams.get("hotjob-id") === "11"
+                  : searchParams.get('hotjob-id') === '11'
                   ? 'Beauty'
                   : 'Loading...'}{' '}
                 {languageRedux === 1 ? 'có' : 'has'}{' '}
@@ -622,11 +623,11 @@ const HotJobpage: React.FC = () => {
                         item
                         xs={12}
                         sm={6}
-                        md={hotJobType === 2 ? 4 : 6}
+                        md={searchParams.get('hotjob-type') === '2' ? 4 : 6}
                         lg={4}
                         key={index}
                       >
-                        {hotJobType === 1 ? (
+                        {searchParams.get('hotjob-type') === '1' ? (
                           <InfluencerCard item={item} />
                         ) : (
                           <JobCardHotJob item={item} />

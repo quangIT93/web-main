@@ -461,7 +461,6 @@ const Navbar: React.FC = () => {
       const result = await notificationApi.getNotificationCountNew(
         languageRedux === 1 ? 'vi' : 'en',
       );
-      console.log('result: ', result);
 
       if (result) {
         setCountNoti(result.data.total);
@@ -1934,7 +1933,10 @@ border-aniation_download
                 <BlackSearchIcon width={20} height={20} />
               </Button>
 
-              <Badge count={window.innerWidth < 426 ? "": countChat} className="btn-badge">
+              <Badge
+                count={window.innerWidth < 426 ? '' : countChat}
+                className="btn-badge"
+              >
                 <Button
                   className="btn-notice"
                   name="btn-chat"
@@ -1955,7 +1957,7 @@ border-aniation_download
               <div className="wrap-btn_notice ">
                 <Badge
                   key="3"
-                  count={window.innerWidth < 426 ? "": countNoti}
+                  count={window.innerWidth < 426 ? '' : countNoti}
                   className="box-right-responsive_badge"
                 >
                   <Button
@@ -2035,7 +2037,7 @@ border-aniation_download
                 '& > *': {
                   m: 1,
                 },
-                [`@media (max-width: 426px)`]: {
+                [`@media (max-width: 480px)`]: {
                   display: 'flex',
                 },
               }}
@@ -2053,7 +2055,7 @@ border-aniation_download
                 '& > *': {
                   m: 1,
                 },
-                [`@media (max-width: 426px)`]: {
+                [`@media (max-width: 480px)`]: {
                   display: 'none',
                 },
               }}
