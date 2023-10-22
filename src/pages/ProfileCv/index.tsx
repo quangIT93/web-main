@@ -1,8 +1,6 @@
 import * as React from 'react';
 
 // @ts-ignore
-import { Navbar } from '#components';
-import Footer from '../../components/Footer/Footer';
 import axios from 'axios';
 // import icon
 import Nodata from 'utils/NoDataPage';
@@ -42,7 +40,6 @@ import { setProfileV3 } from 'store/reducer/profileReducerV3';
 import { Document, Page } from 'react-pdf';
 
 import ModalShowCv from '#components/Profile/ModalShowCv';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 const ProfileCv: React.FC = () => {
   const languageRedux = useSelector(
@@ -159,8 +156,8 @@ const ProfileCv: React.FC = () => {
 
   return (
     <div className="profile-cv-container">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <div className="profile-cv-content">
         <div className="profile-cv-title">
           <div className="profile-cv-title_left">
@@ -439,7 +436,7 @@ const ProfileCv: React.FC = () => {
         />
       </div>
       <RollTop />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

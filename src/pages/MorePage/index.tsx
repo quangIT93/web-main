@@ -45,14 +45,10 @@ import { setCookie } from 'cookies';
 // import postApi from 'api/postApi'
 
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
-
-import Footer from '../../components/Footer/Footer';
-
 // import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 // @ts-ignore
-import { Navbar } from '#components';
 
 //import jobcard
 // import JobCard from '../../components/Home/JobCard';
@@ -87,7 +83,6 @@ import locationApi from 'api/locationApi';
 import { getCookie } from 'cookies';
 import NoDataComponent from 'utils/NoDataPage';
 import HotJob from '#components/Home/HotJob';
-import CategoryDropdown from '#components/CategoryDropdown';
 import postApi from 'api/postApi';
 import JobCardMoreNewJob from './JobCardMoreNewJob';
 import nearByApi from 'api/apiNearBy';
@@ -273,7 +268,10 @@ const MoreJobsPage: React.FC = () => {
     prevHeight = currentHeight;
   };
 
-  window.addEventListener('scroll', handleScroll);
+  React.useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const getMoreJob = async () => {
     console.log('re');
@@ -521,13 +519,13 @@ const MoreJobsPage: React.FC = () => {
 
   return (
     <>
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
 
       <div
         className="more-job-page-container"
         style={{
-          margin: typeJob === 'new' ? '280px auto 100px' : '140px auto 100px',
+          margin: typeJob === 'new' ? '287px auto 0px' : '0 auto',
         }}
       >
         <div style={{ display: typeJob === 'new' ? 'block' : 'none' }}>
@@ -646,7 +644,7 @@ const MoreJobsPage: React.FC = () => {
       <ShowNotificativeSave />
       <ShowCancleSave />
       <RollTop />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

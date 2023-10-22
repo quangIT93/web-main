@@ -3,16 +3,15 @@
 .cv-container {
     // margin-top: 70px;
     // margin: 70px auto;
-    margin: 141px auto;
 
-    .cv-content {
-        padding: 0px 0 30px;
-        margin: 12px auto;
+    .cv_content {
+        // padding: 0px 0 30px;
+        // margin: 12px auto;
         max-width: 1080px;
-
-        @media screen and (max-width: 1130px) {
-            margin: 12px 24px;
-        }
+        width: 100%;
+        // @media screen and (max-width: 1130px) {
+        //     margin: 12px 24px;
+        // }
 
         .contentCV-top {
             display: flex;

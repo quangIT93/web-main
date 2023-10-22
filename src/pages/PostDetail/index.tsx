@@ -4,9 +4,7 @@ import copy from 'clipboard-copy';
 import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import NavBar from '../../components/Navbar/index';
 import { AxiosResponse } from 'axios';
-import Footer from '../../components/Footer/Footer';
 // @ts-ignore
 import { Link, useSearchParams } from 'react-router-dom';
 
@@ -104,7 +102,6 @@ import { postDetailEn } from 'validations/lang/en/postDetail';
 
 import RollTop from '#components/RollTop';
 import { setCookie } from 'cookies';
-import CategoryDropdown from '#components/CategoryDropdown';
 // import { Language } from '#components/Navbar/Css';
 
 // const itemsShare = [
@@ -1170,8 +1167,8 @@ const Detail = () => {
     <>
       {automatic && (
         <div className="detail">
-          <NavBar />
-          <CategoryDropdown />
+          {/* <NavBar />
+          <CategoryDropdown /> */}
           {/* <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
@@ -1702,7 +1699,7 @@ const Detail = () => {
             setOpenModalLogin={setOpenModalLogin}
           />
           <RollTop />
-          <Footer />
+          {/* <Footer /> */}
         </div>
       )}
     </>

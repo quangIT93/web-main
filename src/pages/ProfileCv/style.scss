@@ -2,17 +2,16 @@
 
 .profile-cv-container {
     // margin-top: 70px;
-    margin: 115px auto;
 
     .profile-cv-content {
-        padding: 24px 0 30px;
-        margin: 12px auto;
+        // padding: 24px 0 30px;
+        // margin: 12px auto;
         max-width: 1080px;
         position: relative;
 
-        @media screen and (max-width: 1130px) {
-            margin: 12px 24px;
-        }
+        // @media screen and (max-width: 1130px) {
+        //     margin: 12px 24px;
+        // }
 
         .profile-cv-title {
             display: flex;

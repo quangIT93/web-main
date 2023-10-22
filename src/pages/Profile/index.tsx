@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 // @ts-ignore
-import { Navbar } from '#components';
 import {
   CameraIcon,
   PencilIcon,
@@ -46,8 +45,6 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
 import { RootState } from '../../store/reducer/index';
-
-import Footer from '../../components/Footer/Footer';
 import ItemApply from './components/Item';
 
 import apiCompany from 'api/apiCompany';
@@ -102,7 +99,6 @@ import CreateCv from '#components/Profile/CreateCv';
 import ChangeRoleButton from './components/ChangeRoleButton';
 import CandidateProfile from './components/CandidateProfile';
 import Company from 'pages/Company';
-import CategoryDropdown from '#components/CategoryDropdown';
 import ModalIntroduceCv from '#components/Profile/ModalIntroduceCv';
 import { prototype } from 'module';
 import CompanyRole from './components/CompanyRole';
@@ -502,9 +498,9 @@ const Profile: React.FC = () => {
 
   return (
     <div className="profile">
-      <Navbar />
-      <CategoryDropdown />
-      <div className="container">
+      {/* <Navbar />s
+      <CategoryDropdown /> */}
+      <div className="containerProfile">
         <Skeleton className="skeleton-item" avatar loading={loading} active>
           <div className="div-profile-avatar">
             <div className="div-avatar">
@@ -876,7 +872,7 @@ const Profile: React.FC = () => {
 
       <RollTop />
       <CreateCv role={profileV3?.typeRoleData} />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

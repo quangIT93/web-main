@@ -3,7 +3,6 @@ import React, { useState, FormEvent } from 'react';
 import { Switch } from 'antd';
 
 // @ts-ignore
-import { Navbar } from '#components';
 
 //@ts-ignore
 import ModalNoteCreatePost from '#components/Post/ModalNoteCreatePost';
@@ -34,8 +33,6 @@ import PostCategoryId from '#components/Post/PostCategoryId';
 
 import PostSalaryType from '#components/Post/PostSalaryType';
 
-import Footer from '../../components/Footer/Footer';
-
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
 
@@ -55,7 +52,6 @@ import { RootState } from '../../store/reducer/index';
 import { useSelector } from 'react-redux';
 import { post } from 'validations/lang/vi/post';
 import { postEn } from 'validations/lang/en/post';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 // redux
 // import { RootState } from 'store';
@@ -479,8 +475,8 @@ const Post: React.FC = () => {
   if (localStorage.getItem('accessToken')) {
     return (
       <div className="post">
-        <Navbar />
-        <CategoryDropdown />
+        {/* <Navbar />
+        <CategoryDropdown /> */}
         {contextHolder}
         <div className="post-main">
           <div
@@ -628,8 +624,7 @@ const Post: React.FC = () => {
             </button>
           </form>
         </div>
-        <Footer />
-        1``
+        {/* <Footer /> */}
         <RollTop />
         <ModalPost
           openModalPost={openModalPost}

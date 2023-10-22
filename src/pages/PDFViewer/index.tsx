@@ -5,8 +5,6 @@ import { Avatar, Spin } from 'antd';
 import { LoadingOutlined, CloseOutlined } from '@ant-design/icons';
 import { useSearchParams } from 'react-router-dom';
 //@ts-ignore
-import Footer from '#components/Footer/Footer';
-import Navbar from '#components/Navbar';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
@@ -83,7 +81,7 @@ function PDFViewer() {
 
   return (
     <div className="viewPdf-container">
-      <Navbar />
+      {/* <Navbar /> */}
       {urlPdf.id ? (
         <div className="viewPdf-content">
           <div className="header-content-viewPdf">
@@ -121,7 +119,7 @@ function PDFViewer() {
       ) : (
         <div>Khong co gi de hien thi</div>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
