@@ -252,10 +252,9 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     applicationId: number,
     postId: number,
-    candidate: any,
   ) => {
     window.open(
-      `/candidate-detail?post-id=${postId}&application_id=${applicationId}&candidate-id=${candidate.account_id}`,
+      `/candidate-detail?post-id=${postId}&application_id=${applicationId}`,
     );
   };
 
@@ -295,7 +294,7 @@ const DetailPosted: React.FC<IDetailPosted> = (props) => {
               }`,
             }}
             onClick={(e) =>
-              handleClickCandidate(e, candidate.id, detailPosted?.id, candidate)
+              handleClickCandidate(e, candidate.id, detailPosted?.id)
             }
           >
             <div className="image-cadidate_wrap">

@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 
 import moment from 'moment';
 import Card from '@mui/material/Card';
-import { Space, Tooltip, Input } from 'antd';
+import { Space, Tooltip } from 'antd';
 // import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import ImageListItem from '@mui/material/ImageListItem';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -22,6 +22,7 @@ import historyRecruiter from 'api/historyRecruiter';
 // import component
 import RollTop from '#components/RollTop';
 
+import Footer from '../../components/Footer/Footer';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
@@ -31,6 +32,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // import icon
 
 // @ts-ignore
+import { Navbar } from '#components';
 
 // import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
@@ -61,8 +63,6 @@ import CategoryDropdown from '#components/CategoryDropdown';
 //   backgroundColor: 'white',
 // }));
 
-const { TextArea } = Input;
-
 interface ItemAppy {
   id?: number | null;
   company_name?: string;
@@ -74,9 +74,10 @@ interface ItemAppy {
 }
 
 interface ICategories {
-  id: number;
-  fullName: string;
-  parentCategory: { id: number; fullName: string };
+  child_category_id: number;
+  parent_category_id: number;
+  parent_category: string;
+  child_category: string;
 }
 
 const CandidateDetail: React.FC = () => {
@@ -86,7 +87,6 @@ const CandidateDetail: React.FC = () => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-
   const [loading, setLoading] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [dataPost, setDataPost] = useState<any>(null);
@@ -141,29 +141,26 @@ const CandidateDetail: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataCandidate]);
-  console.log('dataCandidate', dataCandidate);
+  console.log('dataCandidate', dataCandidate?.applicationProfile?.avatar);
 
   const getPostById = async () => {
     try {
       const postId = parseInt(searchParams.get('post-id') ?? '');
-      const applicationId = searchParams.get('application_id') ?? '';
-      const candidateId = searchParams.get('candidate-id') ?? '';
-
+      const candidateId = searchParams.get('application_id') ?? '';
       const result = await postApi.getById(
         postId,
         languageRedux === 1 ? 'vi' : 'en',
       );
-      console.log('post', result);
+
       if (result) {
         setDataPost(result.data);
       }
-
       const detailCandidate = await historyRecruiter.GetAJobApplication(
         postId,
-        applicationId,
+        candidateId,
         languageRedux === 1 ? 'vi' : 'en',
       );
-      console.log('detailCandidate', detailCandidate);
+
       if (detailCandidate) {
         setDataCandidate(detailCandidate.data);
       }
@@ -231,11 +228,10 @@ const CandidateDetail: React.FC = () => {
     dataCandidate?.applicationProfile?.avatar,
   );
 
-  console.log('dataCandidate', dataCandidate);
   return (
     <div className="candidate-detail">
-      {/* <Navbar />
-      <CategoryDropdown /> */}
+      <Navbar />
+      <CategoryDropdown />
       <Box className="containerCandidate">
         <Skeleton loading={loading} active>
           <Card
@@ -458,14 +454,13 @@ const CandidateDetail: React.FC = () => {
           >
             {language?.candidate_resume}
           </p>
-
           <Box sx={{ marginTop: '10px' }}>
             <div className="div-profile-avatar">
               <div className="div-avatar">
                 <div
                   style={{
                     display: 'flex',
-                    // flexDirection: 'row',
+                    flexDirection: 'row',
                     alignItems: 'center',
                   }}
                 >
@@ -481,8 +476,8 @@ const CandidateDetail: React.FC = () => {
                   </Badge>
                   <div style={{ marginLeft: '10px' }}>
                     <h2>
-                      {dataCandidate?.name
-                        ? dataCandidate?.name
+                      {dataCandidate?.applicationProfile?.name
+                        ? dataCandidate?.applicationProfile?.name
                         : language?.unupdated}
                     </h2>
                   </div>
@@ -533,12 +528,11 @@ const CandidateDetail: React.FC = () => {
                   fontSize: '14px',
                 }}
               >
-                {dataCandidate?.introduction
-                  ? dataCandidate?.introduction
+                {dataCandidate?.applicationProfile?.introduction
+                  ? dataCandidate?.applicationProfile?.introduction
                   : language?.unupdated}
               </div>
             </div>
-
             <div className="div-profile-info">
               <div
                 style={{
@@ -564,15 +558,15 @@ const CandidateDetail: React.FC = () => {
                       : language?.unupdated}
                   </p>
                   <p>
-                    {dataCandidate?.gender
-                      ? dataCandidate?.gender === 1
+                    {dataCandidate?.applicationProfile?.gender
+                      ? dataCandidate?.applicationProfile?.gender === 1
                         ? language?.male
                         : language?.female
                       : language?.male}
                   </p>
                   <p>
-                    {dataCandidate?.addressText?.fullName
-                      ? dataCandidate?.addressText?.fullName
+                    {dataCandidate?.applicationProfile?.address?.name
+                      ? dataCandidate?.applicationProfile?.address?.name
                       : language?.unupdated}
                   </p>
                 </div>
@@ -600,32 +594,31 @@ const CandidateDetail: React.FC = () => {
                 </div>
                 <div className="div-detail-row right">
                   <p>
-                    {dataCandidate?.phoneData
-                      ? dataCandidate?.phoneData
+                    {dataCandidate?.applicationProfile?.phone
+                      ? dataCandidate?.applicationProfile?.phone
                       : language?.unupdated}
                   </p>
                   <p>
-                    {dataCandidate?.emailData
-                      ? dataCandidate?.emailData
-                      : language?.unupdated}
-                  </p>
-
-                  <p>
-                    {dataCandidate?.facebookData
-                      ? dataCandidate?.facebookData
+                    {dataCandidate?.applicationProfile?.email
+                      ? dataCandidate?.applicationProfile?.email
                       : language?.unupdated}
                   </p>
 
                   <p>
-                    {dataCandidate?.linkedinlinkedinData
-                      ? dataCandidate?.linkedinData
+                    {dataCandidate?.applicationProfile?.facebook
+                      ? dataCandidate?.applicationProfile?.facebook
+                      : language?.unupdated}
+                  </p>
+
+                  <p>
+                    {dataCandidate?.applicationProfile?.linkedin
+                      ? dataCandidate?.applicationProfile?.linkedin
                       : language?.unupdated}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* CV/Resume */}
             <div className="div-profile-info">
               <div
                 style={{
@@ -637,9 +630,9 @@ const CandidateDetail: React.FC = () => {
                 <h3>CV/ Resume</h3>
               </div>
               <Space wrap className="item-info-work">
-                {dataCandidate?.cv_url ? (
+                {dataCandidate?.applicationProfile?.cv_url ? (
                   <CVItem
-                    url={dataCandidate?.cv_url}
+                    url={dataCandidate?.applicationProfile?.cv_url}
                     open={open}
                     setOpen={setOpen}
                     isProfile={false}
@@ -662,11 +655,33 @@ const CandidateDetail: React.FC = () => {
                 <h3>{language?.career_objective}</h3>
               </div>
               <Space wrap className="item-info-work">
-                {dataCandidate?.profileCategories?.length !== 0
-                  ? dataCandidate?.profileCategories?.map(
-                      (item: ICategories) => (
-                        <Button key={item.id} className="btn" type="text">
-                          {item.fullName}
+                {dataCandidate?.categories?.length !== 0
+                  ? dataCandidate?.categories?.map(
+                      (item: ICategories, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          {item.child_category}
+                        </Button>
+                      ),
+                    )
+                  : language?.unupdated}
+              </Space>
+            </div>
+            <div className="div-profile-info">
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>{language?.working_location}</h3>
+              </div>
+              <Space wrap className="item-info-work">
+                {dataCandidate?.locations?.length !== 0
+                  ? dataCandidate?.locations?.map(
+                      (item: any, index: number) => (
+                        <Button key={index} className="btn" type="text">
+                          {item?.district}
                         </Button>
                       ),
                     )
@@ -682,56 +697,12 @@ const CandidateDetail: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h3>{language?.working_location}</h3>
-              </div>
-              <Space wrap className="item-info-work">
-                {dataCandidate?.profileLocations.length !== 0
-                  ? dataCandidate?.profileLocations.map((item: any) => (
-                      <Button key={item.id} className="btn" type="text">
-                        {item?.fullName}
-                      </Button>
-                    ))
-                  : language?.unupdated}
-              </Space>
-            </div>
-
-            <div className="div-profile-info">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <h3>
-                  {languageRedux === 1 ? 'Loại hình công việc' : 'Type of work'}
-                </h3>
-              </div>
-              <Space wrap className="item-info-work">
-                {dataCandidate?.profilesJobType ? (
-                  <Button className="btn" type="text">
-                    {dataCandidate?.profilesJobType.data}
-                  </Button>
-                ) : (
-                  language?.unupdated
-                )}
-              </Space>
-            </div>
-
-            <div className="div-profile-info">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
                 <h3>{language?.education}</h3>
               </div>
-              {dataCandidate?.profilesEducations.length !== 0 ? (
-                dataCandidate?.profilesEducations?.map(
-                  (education: ItemAppy) => (
-                    <ItemApply item={education} key={education.id} />
+              {dataCandidate?.educations?.length !== 0 ? (
+                dataCandidate?.educations?.map(
+                  (education: ItemAppy, index: number) => (
+                    <ItemApply item={education} key={index} />
                   ),
                 )
               ) : (
@@ -757,9 +728,9 @@ const CandidateDetail: React.FC = () => {
               >
                 <h3>{language?.working_experience}</h3>
               </div>
-              {dataCandidate?.profilesExperiences?.length !== 0 ? (
-                dataCandidate?.profilesExperiences?.map((item: any) => (
-                  <ItemApply typeItem="experiences" key={item.id} item={item} />
+              {dataCandidate?.experiences?.length !== 0 ? (
+                dataCandidate?.experiences?.map((item: any, index: number) => (
+                  <ItemApply typeItem="experiences" key={index} item={item} />
                 ))
               ) : (
                 <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
@@ -773,170 +744,11 @@ const CandidateDetail: React.FC = () => {
                 }}
               ></div>
             </div>
-
-            <div className="div-profile-info">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <h3>{languageRedux === 1 ? 'Các hoạt động' : 'Activities'}</h3>
-              </div>
-              {dataCandidate?.profileActivities?.length !== 0 ? (
-                dataCandidate?.profileActivities?.map(
-                  (item: any, index: number) => (
-                    <ItemApply typeItem="experiences" key={index} item={item} />
-                  ),
-                )
-              ) : (
-                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
-              )}
-
-              <div
-                style={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'center',
-                }}
-              ></div>
-            </div>
-
-            <div className="div-profile-info">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <h3>{languageRedux === 1 ? 'Các giải thưởng' : 'Awards'}</h3>
-              </div>
-              {dataCandidate?.profileAwards?.length !== 0 ? (
-                dataCandidate?.profileAwards?.map(
-                  (item: any, index: number) => (
-                    <ItemApply typeItem="experiences" key={index} item={item} />
-                  ),
-                )
-              ) : (
-                <div style={{ marginTop: '16px' }}>{language?.unupdated}</div>
-              )}
-
-              <div
-                style={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'center',
-                }}
-              ></div>
-            </div>
-
-            <div className="div-profile-info">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <h3>{languageRedux === 1 ? 'Kỹ năng' : 'Skills'}</h3>
-              </div>
-              <Space wrap className="item-info-work">
-                {dataCandidate?.profilesSkills?.length !== 0
-                  ? dataCandidate?.profilesSkills?.map(
-                      (item: any, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          <span>{item.skillName}</span>
-                          <span>{item.dataLevel.data}</span>
-                        </Button>
-                      ),
-                    )
-                  : language?.unupdated}
-              </Space>
-            </div>
-
-            <div className="div-profile-info">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <h3>{languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}</h3>
-              </div>
-              <Space wrap className="item-info-work">
-                {dataCandidate?.profilesLanguages?.length !== 0
-                  ? dataCandidate?.profilesLanguages?.map(
-                      (item: any, index: number) => (
-                        <Button key={index} className="btn" type="text">
-                          <span>{item.languageName}</span>
-                          <span>{item.dataLevel.data}</span>
-                        </Button>
-                      ),
-                    )
-                  : language?.unupdated}
-              </Space>
-            </div>
-
-            {/* Hobbies */}
-            <div className="div-profile-info">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <h3>{languageRedux === 1 ? 'Sở thích' : 'Hobbies'}</h3>
-              </div>
-              <Space
-                wrap
-                className="item-info-work"
-                style={{ width: '100%' }}
-                direction="vertical"
-              >
-                {dataCandidate?.profileHobbies ? (
-                  <Button className="btn" type="text" block>
-                    {dataCandidate?.profileHobbies.description}
-                  </Button>
-                ) : (
-                  language?.unupdated
-                )}
-              </Space>
-            </div>
-
-            <div className="div-profile-info">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <h3>
-                  {languageRedux === 1 ? 'Người giới thiệu' : 'References'}
-                </h3>
-              </div>
-              <Space wrap className="item-info-work">
-                {dataCandidate?.profilesReferences?.length !== 0
-                  ? dataCandidate?.profilesReferences?.map((item: any) => (
-                      <Button key={item.id} className="btn" type="text">
-                        <h3>{item.fullName}</h3>
-                        <span>{item.phone}</span>
-                        <span>{item.email}</span>
-                        <span>{item.description}</span>
-                      </Button>
-                    ))
-                  : language?.unupdated}
-              </Space>
-            </div>
           </Box>
         </Skeleton>
       </Box>
       <RollTop />
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
