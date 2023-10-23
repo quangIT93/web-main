@@ -1,7 +1,7 @@
 // import React from 'react'
 // import Feed from '.'
 
-import MainLayout from 'layouts/main';
+import MainLayout from 'layouts/MainLayout';
 import CandidateDetail from '.';
 import RouteProps from '../routes';
 

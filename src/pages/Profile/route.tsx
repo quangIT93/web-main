@@ -1,5 +1,5 @@
 // import React, { lazy } from 'react'
-import MainLayout from 'layouts/main';
+import MainLayout from 'layouts/MainLayout';
 import Profile from '.';
 import RouteProps from '../routes';
 const route: RouteProps = {

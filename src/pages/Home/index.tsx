@@ -260,8 +260,8 @@ const Home: React.FC = () => {
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
         // role={role}
       />
-      {/* <RollTop /> */}
-      {/* <Footer /> */}
+      {/* <RollTop />
+      <Footer /> */}
     </div>
   );
 };

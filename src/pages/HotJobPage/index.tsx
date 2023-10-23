@@ -460,7 +460,6 @@ const HotJobpage: React.FC = () => {
       console.log('error', error);
     }
   };
-
   return (
     <>
       {contextHolder}
@@ -473,11 +472,11 @@ const HotJobpage: React.FC = () => {
             style={{
               display: 'flex',
               // flexDirection: 'column',
-              marginBottom: '20px',
+              margin: '20px 0',
               alignItems: 'center',
               justifyContent: 'space-between',
               // background: '#aaaaaa',
-              paddingBottom: '8px',
+              padding: '8px 0',
             }}
           >
             <div className="hot-job-title-container">
@@ -654,8 +653,8 @@ const HotJobpage: React.FC = () => {
       </div>
       <ShowNotificativeSave />
       <ShowCancleSave />
-      {/* <RollTop /> */}
-      {/* <Footer /> */}
+      {/* <RollTop />
+      <Footer /> */}
     </>
   );
 };

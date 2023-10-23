@@ -1,4 +1,4 @@
-import MainLayout from 'layouts/main';
+import MainLayout from 'layouts/MainLayout';
 import MoreJobsPage from '.';
 import RouteProps from '../routes';
 const route: RouteProps = {

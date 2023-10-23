@@ -136,7 +136,7 @@ const CandidateDetail: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataCandidate]);
-  console.log('dataCandidate', dataCandidate?.applicationProfile?.avatar);
+  console.log('dataCandidateDetail', dataCandidate?.applicationProfile?.avatar);
 
   const getPostById = async () => {
     try {
