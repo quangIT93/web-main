@@ -67,7 +67,6 @@ import ModalProfileLocation from '#components/Profile/ModalProfileLocation';
 // import ModalProfileExperienceUpdate from '#components/Profile/ModalProfileExperienceUpdate';
 import ModalProfileExperienceCreate from '#components/Profile/ModalProfileExperienceCreate';
 
-import RollTop from '#components/RollTop';
 // import ModalProfileEducationUpdate from '#components/Profile/ModalProfileEducationUpdate';
 import CVItem from '#components/Profile/CV';
 
@@ -870,7 +869,7 @@ const Profile: React.FC = () => {
         )}
       </div>
 
-      <RollTop />
+      {/* <RollTop /> */}
       <CreateCv role={profileV3?.typeRoleData} />
       {/* <Footer /> */}
     </div>

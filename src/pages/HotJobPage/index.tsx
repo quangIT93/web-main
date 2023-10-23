@@ -19,8 +19,6 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // scroll data
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import RollTop from '#components/RollTop';
-
 // import icon
 //@ts-ignore
 import {
@@ -656,7 +654,7 @@ const HotJobpage: React.FC = () => {
       </div>
       <ShowNotificativeSave />
       <ShowCancleSave />
-      <RollTop />
+      {/* <RollTop /> */}
       {/* <Footer /> */}
     </>
   );

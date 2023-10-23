@@ -15,8 +15,6 @@ import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 
 // @ts-ignore
-import { Navbar } from '#components';
-import Footer from '../../components/Footer/Footer';
 import profileApi from 'api/profileApi';
 import candidateSearch from 'api/apiCandidates';
 
@@ -29,7 +27,6 @@ import {
 
 import './style.scss';
 import ModalShowCv from '#components/Profile/ModalShowCv';
-import CategoryDropdown from '#components/CategoryDropdown';
 import MuiAlert from '@mui/material/Alert';
 import { Stack, AlertProps, Snackbar } from '@mui/material';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';

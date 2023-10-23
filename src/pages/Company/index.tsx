@@ -23,8 +23,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 import languageApi from 'api/languageApi';
 
-import RollTop from '#components/RollTop';
-
 // import NotFound from 'pages/NotFound';
 import './style.scss';
 
@@ -551,7 +549,7 @@ const Company: React.FC<ICompany> = (props) => {
         language={language}
       />
       <div style={{ display: is_profile ? 'none' : 'block' }}>
-        <RollTop />
+        {/* <RollTop /> */}
         {/* <Footer /> */}
       </div>
     </div>

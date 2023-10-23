@@ -2,10 +2,8 @@ import React, { useState, FormEvent } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
 
-import Footer from '../../components/Footer/Footer';
 // import moment, { Moment } from 'moment';
 // @ts-ignore
-import { Navbar } from '#components';
 import './style.scss';
 import imageCompression from 'browser-image-compression';
 
@@ -13,7 +11,7 @@ import { Button, Input, message, Upload, Modal } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 
 // @ts-ignore
-import RollTop from '#components/RollTop';
+
 // import { InboxOutlined } from '@ant-design/icons';
 // import type { UploadProps } from 'antd';
 import { useSearchParams } from 'react-router-dom';
@@ -31,7 +29,6 @@ import { validatePostImages } from 'validations';
 import apiCommunity from '../../api/apiCommunity';
 import communityApi from '../../api/apiCommunity';
 import { setCookie } from 'cookies';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 const ComunityCreatePost = () => {
   const language = useSelector(
@@ -461,8 +458,8 @@ const ComunityCreatePost = () => {
 
   return (
     <div className="comunity-create-post-container modal-person comunitypost">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       {contextHolder}
       <div className="comunity-create-post-content">
         <div className="create-post-header">
@@ -679,7 +676,7 @@ const ComunityCreatePost = () => {
           </div>
         </div>
       </div>
-      <RollTop />
+      {/* <RollTop /> */}
       <Modal
         open={previewOpen}
         title={previewTitle}

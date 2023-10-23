@@ -27,8 +27,6 @@ import EditDescription from '#components/EditPosted/EditDescription';
 import EditPostTypeSalary from '#components/EditPosted/EditPostTypeSalary';
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 
-import RollTop from '#components/RollTop';
-
 import NotFound from 'pages/NotFound';
 
 import './style.scss';
@@ -617,7 +615,7 @@ const EditPosted = () => {
           languageRedux={languageRedux}
           language={language}
         />
-        <RollTop />
+        {/* <RollTop /> */}
         {/* <Footer /> */}
       </div>
     );

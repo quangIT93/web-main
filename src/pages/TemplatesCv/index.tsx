@@ -19,7 +19,6 @@ import ModalSuccessSaveCv from '#components/CV/ModalSuccessSaveCv';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 // import { setCookie } from 'cookies';
-import RollTop from '#components/RollTop';
 
 import { pdf } from '@react-pdf/renderer';
 
@@ -421,7 +420,7 @@ const TemplatesCv: React.FC = () => {
           setOpenModalOver10Cv={setOpenModalOver10Cv}
         />
       </div>
-      <RollTop />
+      {/* <RollTop /> */}
       {/* <Footer /> */}
     </div>
   );

@@ -2,7 +2,6 @@ import React, { useEffect, FormEvent, useState } from 'react';
 import { Spin } from 'antd';
 import { message } from 'antd';
 import { Space } from 'antd';
-import RollTop from '#components/RollTop';
 import { Stack } from '@mui/material';
 // import component
 // @ts-ignore
@@ -348,7 +347,7 @@ const ComunityNews = () => {
                     </Space>
                 </Stack> */}
       </div>
-      <RollTop />
+      {/* <RollTop /> */}
       {/* <Footer /> */}
     </div>
   );

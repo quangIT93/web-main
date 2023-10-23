@@ -23,7 +23,6 @@ import SalaryType from '#components/Post/SalaryType';
 import Description from '#components/Post/Description';
 import PostImage from '#components/Post/PostImage';
 
-import RollTop from '#components/RollTop';
 // import PostCategoryIds from '#components/Post/PostCategoryIds'
 import PostTime from '#components/Post/PostTime';
 
@@ -625,7 +624,7 @@ const Post: React.FC = () => {
           </form>
         </div>
         {/* <Footer /> */}
-        <RollTop />
+        {/* <RollTop /> */}
         <ModalPost
           openModalPost={openModalPost}
           setOpenModalPost={setOpenModalPost}

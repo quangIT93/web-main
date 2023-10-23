@@ -24,8 +24,6 @@ import { NewestGigWorker } from '#components';
 
 import HotJob from '#components/Home/HotJob';
 
-import RollTop from '#components/RollTop';
-
 import Box from '@mui/material/Box';
 
 // import ModalLogin from '#components/Home/ModalLogin'
@@ -262,7 +260,7 @@ const Home: React.FC = () => {
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
         // role={role}
       />
-      <RollTop />
+      {/* <RollTop /> */}
       {/* <Footer /> */}
     </div>
   );

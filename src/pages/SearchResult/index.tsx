@@ -38,7 +38,6 @@ import searchApi from 'api/searchApi';
 import profileApi from 'api/profileApi';
 import locationApi from 'api/locationApi';
 import categoriesApi from 'api/categoriesApi';
-import RollTop from '#components/RollTop';
 
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -1362,7 +1361,7 @@ const NewJobs: React.FC = () => {
       </div>
       <ShowCancleSave />
       <ShowNotificativeSave />
-      <RollTop />
+      {/* <RollTop /> */}
       {/* <Footer /> */}
     </>
   );

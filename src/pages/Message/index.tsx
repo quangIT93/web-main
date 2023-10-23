@@ -7,8 +7,6 @@ import ListUserChat from '#components/Message/ListUser/ListUser';
 import { useSearchParams } from 'react-router-dom';
 
 // @ts-ignore
-
-import RollTop from '#components/RollTop';
 // import ui antd
 // import { Typography } from 'antd';
 
@@ -171,7 +169,7 @@ const Message = () => {
         </div>
       )}
 
-      <RollTop />
+      {/* <RollTop /> */}
       {/* {windowWidth > 784 ? <Footer /> : <></>} */}
     </div>
   );

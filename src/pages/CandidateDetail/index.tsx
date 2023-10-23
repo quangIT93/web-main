@@ -20,9 +20,6 @@ import {
 import postApi from 'api/postApi';
 import historyRecruiter from 'api/historyRecruiter';
 // import component
-import RollTop from '#components/RollTop';
-
-import Footer from '../../components/Footer/Footer';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
@@ -32,7 +29,6 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 // import icon
 
 // @ts-ignore
-import { Navbar } from '#components';
 
 // import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
@@ -54,7 +50,6 @@ import { RootState } from '../../store/reducer';
 // import { candidateDetailEn } from 'validations/lang/en/cnadidateDetail';
 // import { historyVi } from 'validations/lang/vi/history';
 // import { historyEn } from 'validations/lang/en/history';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 // const SmallAvatar = styled(Avatar)(({ theme }) => ({
 //   width: 22,
@@ -227,11 +222,11 @@ const CandidateDetail: React.FC = () => {
     'dataCandidate?.applicationProfile?.avatar',
     dataCandidate?.applicationProfile?.avatar,
   );
-
+  console.log('dataCandidate', dataCandidate);
   return (
     <div className="candidate-detail">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <Box className="containerCandidate">
         <Skeleton loading={loading} active>
           <Card
@@ -747,8 +742,8 @@ const CandidateDetail: React.FC = () => {
           </Box>
         </Skeleton>
       </Box>
-      <RollTop />
-      <Footer />
+      {/* <RollTop />
+      <Footer /> */}
     </div>
   );
 };

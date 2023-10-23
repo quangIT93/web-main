@@ -100,7 +100,6 @@ import AnotherPost from './components/AnotherPost';
 import { postDetail } from 'validations/lang/vi/postDetail';
 import { postDetailEn } from 'validations/lang/en/postDetail';
 
-import RollTop from '#components/RollTop';
 import { setCookie } from 'cookies';
 // import { Language } from '#components/Navbar/Css';
 
@@ -1698,7 +1697,7 @@ const Detail = () => {
             openModalLogin={openModalLogin}
             setOpenModalLogin={setOpenModalLogin}
           />
-          <RollTop />
+          {/* <RollTop /> */}
           {/* <Footer /> */}
         </div>
       )}

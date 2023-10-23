@@ -18,8 +18,6 @@ import CardsSavedJob from '#components/History/CardsSavedJob';
 import CardsListBlog from '#components/History/CardsListBlog';
 import CardListCandidate from '#components/History/CardListCandidate';
 
-import RollTop from '#components/RollTop';
-
 import ShowCancleSave from '#components/ShowCancleSave';
 
 // firebase
@@ -487,7 +485,7 @@ const HistoryPost = () => {
       </div>
       <ShowCancleSave />
       <ShowNotificativeSave />
-      <RollTop />
+      {/* <RollTop /> */}
       {/* <Footer /> */}
     </div>
   );

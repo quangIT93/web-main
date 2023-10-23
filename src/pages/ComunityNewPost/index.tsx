@@ -27,7 +27,6 @@ import {
 // @ts-ignore
 // @ts-ignore
 import InfiniteScroll from 'react-infinite-scroll-component';
-import RollTop from '#components/RollTop';
 import languageApi from 'api/languageApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer/index';
@@ -376,7 +375,7 @@ const ComunityNewPost = () => {
                     </Space>
                 </Stack> */}
       </div>
-      <RollTop />
+      {/* <RollTop /> */}
       {/* <Footer /> */}
       <ModalLogin
         openModalLogin={openModalLogin}

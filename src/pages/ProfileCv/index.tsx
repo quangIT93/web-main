@@ -32,7 +32,6 @@ import {
 import moment from 'moment';
 import { Backdrop, Box, CircularProgress, Grid } from '@mui/material';
 import ModalShare from '#components/CV/ModalShare';
-import RollTop from '#components/RollTop';
 import ModalDeleteCv from '#components/CV/ModalDeleteCv';
 import apiCv from 'api/apiCv';
 import profileApi from 'api/profileApi';
@@ -435,7 +434,7 @@ const ProfileCv: React.FC = () => {
           setOpenModalDeleteCv={setOpenModalDeleteCv}
         />
       </div>
-      <RollTop />
+      {/* <RollTop /> */}
       {/* <Footer /> */}
     </div>
   );
