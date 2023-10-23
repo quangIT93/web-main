@@ -49,6 +49,9 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
+  const checkPost = useSelector(
+    (state: RootState) => state.checkPost.data,
+  );
   const [detailPosted, setDetailPosted] = React.useState<any>(null);
   const [dataPosted, setDataPosted] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -61,6 +64,7 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
   const [isVisible, setIsVisible] = useState(true);
 
   // const [language, setLanguage] = React.useState<any>();
+  console.log('checkPost', checkPost);
 
   // const getlanguageApi = async () => {
   //   try {

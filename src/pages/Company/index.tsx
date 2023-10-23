@@ -220,11 +220,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -437,7 +437,7 @@ const Company: React.FC<ICompany> = (props) => {
       style={{
         display: display,
         // marginTop: is_profile ? '30px' : '70px',
-        marginTop: is_profile ? '30px' : '100px',
+        marginTop: is_profile ? '30px' : '115px',
         width: is_profile ? '100%' : 'unset',
       }}
     >
@@ -449,7 +449,7 @@ const Company: React.FC<ICompany> = (props) => {
       <div
         className="company-content"
         style={{
-          padding: is_profile ? '0px' : '50px 0px',
+          padding: is_profile ? '0px' : '24px 0px',
         }}
       >
         <div

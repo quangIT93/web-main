@@ -250,8 +250,8 @@ const HotJobpage: React.FC = () => {
         !idFilterProvinces && profileV3.length !== 0
           ? profileV3.addressText.id
           : idFilterProvinces
-          ? idFilterProvinces
-          : '79',
+            ? idFilterProvinces
+            : '79',
       );
 
       // console.log('hotjob.data.total', hotjob['total'] as any);
@@ -427,7 +427,7 @@ const HotJobpage: React.FC = () => {
     }
   }, [provincesData, languageRedux]);
 
-  const handleClickFilterHotjob = () => {};
+  const handleClickFilterHotjob = () => { };
 
   const handleChangeFilterHotjob = (event: SelectChangeEvent) => {
     // localStorage.setItem('filterHotjobProvince', value);
@@ -451,8 +451,8 @@ const HotJobpage: React.FC = () => {
         !idFilterProvinces && profileV3.length !== 0
           ? profileV3.addressText.id
           : idFilterProvinces
-          ? idFilterProvinces
-          : '79',
+            ? idFilterProvinces
+            : '79',
       );
 
       if (result && result.data.length !== 0) {
@@ -479,11 +479,11 @@ const HotJobpage: React.FC = () => {
             style={{
               display: 'flex',
               // flexDirection: 'column',
-              margin: '20px 0',
+              margin: '0px 0px 24px',
               alignItems: 'center',
               justifyContent: 'space-between',
               // background: '#aaaaaa',
-              padding: '8px 0',
+              // padding: '8px 0',
             }}
           >
             <div className="hot-job-title-container">
@@ -492,33 +492,33 @@ const HotJobpage: React.FC = () => {
                 {searchParams.get('hotjob-id') === '2'
                   ? language?.remote_work
                   : searchParams.get('hotjob-id') === '1'
-                  ? 'Influencer'
-                  : searchParams.get('hotjob-id') === '3'
-                  ? language?.hot_job_page?.short_time
-                  : searchParams.get('hotjob-id') === '4'
-                  ? language?.hot_job_page?.job_today
-                  : searchParams.get('hotjob-id') === '5'
-                  ? 'Freelancer'
-                  : searchParams.get('hotjob-id') === '6'
-                  ? 'Driver'
-                  : searchParams.get('hotjob-id') === '7'
-                  ? 'Restaurant Service'
-                  : searchParams.get('hotjob-id') === '8'
-                  ? 'Restaurant Service'
-                  : searchParams.get('hotjob-id') === '9'
-                  ? 'Parttime'
-                  : searchParams.get('hotjob-id') === '10'
-                  ? 'Marketing'
-                  : searchParams.get('hotjob-id') === '11'
-                  ? 'Beauty'
-                  : 'Loading...'}{' '}
+                    ? 'Influencer'
+                    : searchParams.get('hotjob-id') === '3'
+                      ? language?.hot_job_page?.short_time
+                      : searchParams.get('hotjob-id') === '4'
+                        ? language?.hot_job_page?.job_today
+                        : searchParams.get('hotjob-id') === '5'
+                          ? 'Freelancer'
+                          : searchParams.get('hotjob-id') === '6'
+                            ? 'Driver'
+                            : searchParams.get('hotjob-id') === '7'
+                              ? 'Restaurant Service'
+                              : searchParams.get('hotjob-id') === '8'
+                                ? 'Restaurant Service'
+                                : searchParams.get('hotjob-id') === '9'
+                                  ? 'Parttime'
+                                  : searchParams.get('hotjob-id') === '10'
+                                    ? 'Marketing'
+                                    : searchParams.get('hotjob-id') === '11'
+                                      ? 'Beauty'
+                                      : 'Loading...'}{' '}
                 {languageRedux === 1 ? 'có' : 'has'}{' '}
                 {hotjob.length !== 0
                   ? // ? Number(hotJobTotal.toLocaleString())
-                    new Intl.NumberFormat('en-US').format(hotJobTotal)
+                  new Intl.NumberFormat('en-US').format(hotJobTotal)
                   : languageRedux === 1
-                  ? '0 kết quả'
-                  : '0 result'}
+                    ? '0 kết quả'
+                    : '0 result'}
                 <span>
                   {' '}
                   {
@@ -526,10 +526,10 @@ const HotJobpage: React.FC = () => {
                     languageRedux === 1 && hotjob.length !== 0
                       ? 'kết quả'
                       : hotJobTotal >= 2 && hotjob.length !== 0
-                      ? 'results'
-                      : hotJobTotal < 2 && hotjob.length !== 0
-                      ? 'result'
-                      : ''
+                        ? 'results'
+                        : hotJobTotal < 2 && hotjob.length !== 0
+                          ? 'result'
+                          : ''
                   }
                 </span>
               </h3>
@@ -652,7 +652,7 @@ const HotJobpage: React.FC = () => {
               zIndex: (theme: any) => theme.zIndex.drawer + 1,
             }}
             open={openBackdrop}
-            //  onClick={handleClose}
+          //  onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>

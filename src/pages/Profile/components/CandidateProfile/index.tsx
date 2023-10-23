@@ -336,7 +336,7 @@ const CandidateProfile: React.FC<ICandidateProfile> = (props) => {
             {profile?.profileLocations?.length !== 0
               ? profile?.profileLocations?.map((item: any, index: number) => (
                 <Button key={index} className="btn" type="text">
-                  {item?.fullName}
+                  {item?.fullName}{', '}{item?.province?.fullName}
                 </Button>
               ))
               : language?.unupdated}
