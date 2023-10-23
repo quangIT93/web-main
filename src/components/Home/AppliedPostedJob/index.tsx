@@ -67,6 +67,7 @@ const AppliedPostedJob: React.FC = () => {
     (state: RootState) => state.changeLaguage.language,
   );
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
   const [loading, setloading] = React.useState(false);
@@ -112,19 +113,19 @@ const AppliedPostedJob: React.FC = () => {
     try {
       setloading(true);
       const result =
-        roleRedux === 0
+        profile?.typeRoleData === 0
           ? await historyApplicator.getAllSubmitedApplied(
-              null,
-              10,
-              1,
-              languageRedux === 1 ? 'vi' : 'en',
-            )
+            null,
+            10,
+            1,
+            languageRedux === 1 ? 'vi' : 'en',
+          )
           : await historyRecruiter.GetInformationAndCandidatesCount(
-              0,
-              10,
-              '1',
-              languageRedux === 1 ? 'vi' : 'en',
-            );
+            0,
+            10,
+            '1',
+            languageRedux === 1 ? 'vi' : 'en',
+          );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
       //   languageRedux === 1 ? 'vi' : 'en',
@@ -157,7 +158,7 @@ const AppliedPostedJob: React.FC = () => {
     getAppliedPostedJobs();
     localStorage.getItem('accessToken') && setIslogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, roleRedux]);
+  }, [languageRedux, roleRedux, profile?.typeRoleData]);
 
   const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
   const slidesPerView = windowWidth <= 576 ? 1 : 'auto';
@@ -202,7 +203,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -215,7 +216,7 @@ const AppliedPostedJob: React.FC = () => {
             paddingBottom: '24px',
             flexDirection: 'column',
             padding:
-              roleRedux === 0 && appliedPostedJob.length !== 0
+              profile?.typeRoleData === 0 && appliedPostedJob.length !== 0
                 ? '1px 0 0 0'
                 : '1px 0 0 0',
           }}
@@ -259,7 +260,7 @@ const AppliedPostedJob: React.FC = () => {
                   </li>
                 </ul>
               </div> */}
-              {roleRedux === 0 ? (
+              {profile?.typeRoleData === 0 ? (
                 <Avatar
                   sx={{
                     width: '100%',
@@ -318,7 +319,7 @@ const AppliedPostedJob: React.FC = () => {
           </div>
           <Skeleton loading={false} active>
             {appliedPostedJob.length !== 0 &&
-            localStorage.getItem('accessToken') ? (
+              localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -328,13 +329,13 @@ const AppliedPostedJob: React.FC = () => {
               >
                 <AppliedPostedIcon width={30} height={30} />
                 <h2>
-                  {roleRedux === 0
+                  {profile?.typeRoleData === 0
                     ? languageRedux === 1
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                    ? 'Công việc đã tuyển'
-                    : 'Posted Job'}
+                      ? 'Công việc đã tuyển'
+                      : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -407,12 +408,22 @@ const AppliedPostedJob: React.FC = () => {
                   {language?.applied_posted_jobs?.are_you_a_recruiter}
                 </h3>
                 <p style={{ marginBottom: '12px' }}>
-                  {language?.applied_posted_jobs?.post_now}
+                  {
+                    languageRedux === 1 ?
+                      "Đăng tin tuyển dụng nhanh chóng và có thể tìm kiếm hồ sơ các ứng viên" :
+                      "Post job postings quickly and searchable candidates' profiles"
+                  }
                 </p>
                 <h3>
                   {language?.applied_posted_jobs?.are_you_looking_for_job}
                 </h3>
-                <p>{language?.applied_posted_jobs?.all_jobs_in_VN}</p>
+                <p>
+                  {
+                    languageRedux === 1 ?
+                      "Bạn có thể xem tin tuyển dụng và ứng tuyển vào các công việc mới nhất theo danh mục, có thể tạo và quản lý CV của bạn." :
+                      "You can view job postings and apply for the latest jobs by category, can create and manage your CV."
+                  }
+                </p>
               </div>
               <Button
                 type="primary"
@@ -454,7 +465,7 @@ const AppliedPostedJob: React.FC = () => {
                 >
                   <AppliedPostedJobCard
                     item={item}
-                    type={roleRedux === 0 ? 'application' : 'post'}
+                    type={profile?.typeRoleData === 0 ? 'application' : 'post'}
                   />
                 </SwiperSlide>
               ))}
@@ -508,10 +519,20 @@ const AppliedPostedJob: React.FC = () => {
               {language?.applied_posted_jobs?.are_you_a_recruiter}
             </h3>
             <p style={{ marginBottom: '12px' }}>
-              {language?.applied_posted_jobs?.post_now}
+              {
+                languageRedux === 1 ?
+                  "Đăng tin tuyển dụng nhanh chóng và có thể tìm kiếm hồ sơ các ứng viên" :
+                  "Post job postings quickly and searchable candidates' profiles"
+              }
             </p>
             <h3>{language?.applied_posted_jobs?.are_you_looking_for_job}</h3>
-            <p>{language?.applied_posted_jobs?.all_jobs_in_VN}</p>
+            <p>
+              {
+                languageRedux === 1 ?
+                  "Bạn có thể xem tin tuyển dụng và ứng tuyển vào các công việc mới nhất theo danh mục, có thể tạo và quản lý CV của bạn." :
+                  "You can view job postings and apply for the latest jobs by category, can create and manage your CV."
+              }
+            </p>
           </div>
           <Button type="primary" onClick={() => setOpenModalLogin(true)}>
             <LoginArrowIcon />

@@ -122,6 +122,8 @@ const CandidateNewDetail = () => {
         }
       }
     } catch (error) {
+      // console.log(error.response);
+      // error?.response?.data?.message === "Not enough points"
       setOpenModalMaxUnlock(true);
       return;
     }

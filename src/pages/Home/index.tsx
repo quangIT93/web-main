@@ -51,6 +51,7 @@ import ModalSelectRole from '#components/Home/ModalSelectRole';
 import ModalUpdateInfo from '#components/Home/ModalUpdateInfo';
 import { setIsNew } from 'store/reducer/isNewReducer';
 import CategoryDropdown from '#components/CategoryDropdown';
+import Advertise from '#components/Home/Advertise';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -247,6 +248,7 @@ const Home: React.FC = () => {
         <SuggestJob />
         <ThemesJob />
         <Community />
+        <Advertise />
         {/* {reachedEndShowSubjectJob ? (
           <>
           </>

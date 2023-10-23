@@ -33,7 +33,7 @@ import { Navigation, Mousewheel, Grid, Pagination } from 'swiper';
 // import { actionCreators } from '../../../store/index';
 // import { RootState } from '../../../store/reducer';
 
-import { FireIcon, BagIcon, IconBriefCase } from '#components/Icons';
+import { FireIcon, BagIcon, IconBriefCase, ArrowrightIcon } from '#components/Icons';
 
 // firebase
 import { getAnalytics, logEvent } from 'firebase/analytics';
@@ -146,6 +146,11 @@ const HotJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
+  const handleMoveToMoreJob = () => {
+    localStorage.setItem('job-type', 'hot-job');
+    window.open('/more-jobs', '_parent');
+  };
+
   const handleMoveToHotJobPage = (item: any, event: any) => {
     const analytics: any = getAnalytics();
 
@@ -180,9 +185,21 @@ const HotJob: React.FC = () => {
       className="hot-job-container"
       id="hot-job-container"
     >
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <FireIcon width={25} height={25} />
-        <h2>{language?.hot_jobs}</h2>
+      <div className="title-container" >
+        <div className="title">
+          <FireIcon width={25} height={25} />
+          <h2>
+            {
+              languageRedux === 1 ?
+                "Công việc nổi bật" :
+                "Hot Jobs"
+            }
+          </h2>
+        </div>
+        <div className="view-all" onClick={handleMoveToMoreJob}>
+          <p>{language?.home_page?.view_all}</p>
+          <ArrowrightIcon width={20} height={20} />
+        </div>
       </div>
       <div className="hotjob-content">
         {hotjob &&

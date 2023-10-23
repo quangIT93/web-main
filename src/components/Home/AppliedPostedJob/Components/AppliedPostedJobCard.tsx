@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 //import scss
 
 //MUI
@@ -20,27 +20,39 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/reducer';
 import { home } from 'validations/lang/vi/home';
 import { homeEn } from 'validations/lang/en/home';
+import { setDataCheckPost } from 'store/reducer/checkPost';
 // import bookMarkApi from 'api/bookMarkApi';
 
 const AppliedPostedJobCard: React.FC<any> = (props) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
   const [error, setError] = React.useState(false);
   // const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
-
-  const handleClickItem = (
+  const checkPost = useSelector(
+    (state: RootState) => state.checkPost.data,
+  );
+  const handleClickItem = async (
     e: React.MouseEvent<HTMLDivElement>,
     id: number,
     type: string,
   ) => {
     // window.open(`/post-detail?post-id=${id}`);
-    type === 'application'
-      ? window.open(`/post-detail?post-id=${id}`, '_blank')
-      : window.open(`/history?post=2`, '_parent');
+    // type === 'application'
+    //   ? window.open(`/post-detail?post-id=${id}`, '_blank')
+    //   : window.open(`/history?post=2`, '_parent');
+    if (type === 'application') {
+      window.open(`/post-detail?post-id=${id}`, '_blank')
+    } else {
+      window.open(`/history?post=2`, '_parent');
+      await dispatch<any>(setDataCheckPost(props.item));
+    }
   };
+
+  console.log(checkPost);
+
 
   const handleImageError = () => {
     setError(true);

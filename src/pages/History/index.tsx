@@ -70,7 +70,10 @@ const HistoryPost = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const roleRedux = useSelector((state: RootState) => state.changeRole.role);
+  const checkPost = useSelector(
+    (state: RootState) => state.checkPost.data,
+  );
+  const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const queryParams = queryString.parse(window.location.search);
   // const hotjobtype = Number(searchParams.get('post'));
   const hotjobtype = Number(queryParams['post']);
@@ -80,33 +83,33 @@ const HistoryPost = () => {
   const candidate = Number(queryParams['candidate']);
   const [activeChild, setActiveChild] = React.useState(
     hotjobtype === 2
-      ? '2-0'
-      : candidate === 4
-      ? '4-0'
-      : community_post === 31
-      ? '3-1'
-      : community_post === 30
-      ? '3-0'
-      : saved_jobs === 1
-      ? '1-0'
-      : recruitment_post === 'opening'
       ? '2-1'
-      : recruitment_post === 'closed'
-      ? '2-2'
-      : '0-0',
+      : candidate === 4
+        ? '4-0'
+        : community_post === 31
+          ? '3-1'
+          : community_post === 30
+            ? '3-0'
+            : saved_jobs === 1
+              ? '1-0'
+              : recruitment_post === 'opening'
+                ? '2-1'
+                : recruitment_post === 'closed'
+                  ? '2-2'
+                  : '0-0',
   );
   const [ItemLeft, setItemLeft] = React.useState<null | number>(
     hotjobtype === 2
       ? 2
       : community_post === 31
-      ? 3
-      : community_post === 30
-      ? 3
-      : candidate === 4
-      ? 4
-      : saved_jobs === 1
-      ? 1
-      : 0,
+        ? 3
+        : community_post === 30
+          ? 3
+          : candidate === 4
+            ? 4
+            : saved_jobs === 1
+              ? 1
+              : 0,
   );
   const [showDetailPosted, setShowDetailPosted] =
     React.useState<boolean>(false);
@@ -119,7 +122,8 @@ const HistoryPost = () => {
     (state: RootState) => state.dataLanguage.languages,
   );
   const analytics: any = getAnalytics();
-
+  // console.log(profile?.typeRoleData);
+  console.log(checkPost);
   // const [language, setLanguage] = React.useState<any>();
 
   // const getlanguageApi = async () => {
@@ -236,36 +240,36 @@ const HistoryPost = () => {
       {ItemLeft === dataItem[0].id
         ? dataItem[0].title
         : ItemLeft === dataItem[1].id
-        ? dataItem[1].title
-        : ItemLeft === dataItem[2].id
-        ? dataItem[2].title
-        : ItemLeft === dataItem[3].id
-        ? dataItem[3].title
-        : dataItem[4].title}
+          ? dataItem[1].title
+          : ItemLeft === dataItem[2].id
+            ? dataItem[2].title
+            : ItemLeft === dataItem[3].id
+              ? dataItem[3].title
+              : dataItem[4].title}
     </Typography>,
     <Typography key="3" color="text.primary" sx={{ fontSize: '12px' }}>
       {activeChild === '0-0'
         ? language?.all
         : // : activeChild === '0-1'
-          // ? 'Đã được duyệt'
-          // : activeChild === '0-2'
-          // ? 'Đang chờ duyệt'
-          ''}
+        // ? 'Đã được duyệt'
+        // : activeChild === '0-2'
+        // ? 'Đang chờ duyệt'
+        ''}
 
       {activeChild === '1-0' ? language?.all : ''}
 
       {activeChild === '2-0'
         ? language?.all
         : activeChild === '2-1'
-        ? language?.history_page?.not_closed_yet
-        : activeChild === '2-2'
-        ? language?.closed
-        : ''}
+          ? language?.history_page?.not_closed_yet
+          : activeChild === '2-2'
+            ? language?.closed
+            : ''}
       {activeChild === '3-0'
         ? language?.history_page?.saved
         : activeChild === '3-1'
-        ? language?.history_page?.have_been_created
-        : ''}
+          ? language?.history_page?.have_been_created
+          : ''}
 
       {activeChild === '4-0' ? language?.all : ''}
     </Typography>,
@@ -337,7 +341,7 @@ const HistoryPost = () => {
     setCookie('fromHistory', '0', 365);
     if (hotjobtype === 2) {
       setItemLeft(2);
-      setActiveChild('2-0');
+      setActiveChild('2-1');
       return;
     }
     if (community_post === 31) {
@@ -370,7 +374,7 @@ const HistoryPost = () => {
       setActiveChild('4-0');
       return;
     }
-    if (roleRedux === 0) {
+    if (profile?.typeRoleData === 0) {
       setItemLeft(0);
       setActiveChild('0-0');
       return;
@@ -411,18 +415,18 @@ const HistoryPost = () => {
               // }}
               defaultActiveKey={
                 hotjobtype && hotjobtype === 2
-                  ? ['2', '0']
+                  ? ['2', '1']
                   : community_post && community_post === 31
-                  ? ['3', '1']
-                  : community_post && community_post === 30
-                  ? ['3', '0']
-                  : saved_jobs === 1
-                  ? ['1', '0']
-                  : candidate === 4
-                  ? ['4', '0']
-                  : roleRedux === 0
-                  ? ['0', '0']
-                  : ['2', '0']
+                    ? ['3', '1']
+                    : community_post && community_post === 30
+                      ? ['3', '0']
+                      : saved_jobs === 1
+                        ? ['1', '0']
+                        : candidate === 4
+                          ? ['4', '0']
+                          : profile?.typeRoleData === 0
+                            ? ['0', '0']
+                            : ['2', '0']
               }
               accordion
               bordered={false}
@@ -435,9 +439,8 @@ const HistoryPost = () => {
                     header={
                       <div
                         onClick={() => handleClickSubTitle(index)}
-                        className={`${
-                          ItemLeft === index ? 'activeItem' : ''
-                        } panel-title_text`}
+                        className={`${ItemLeft === index ? 'activeItem' : ''
+                          } panel-title_text`}
                       >
                         <RightOutlined style={{ fontSize: '12px' }} />
                         <span style={{ marginLeft: '8px' }}>{item.title}</span>
@@ -447,13 +450,13 @@ const HistoryPost = () => {
                     className={`history-left_item`}
                     style={{
                       display:
-                        roleRedux === 0
+                        profile?.typeRoleData === 0
                           ? item?.id === 2 || item.id === 4
                             ? 'none'
                             : 'block'
                           : item?.id === 0
-                          ? 'none'
-                          : 'block',
+                            ? 'none'
+                            : 'block',
                     }}
                   >
                     {item.childs.map((child: string, idx: number) => (

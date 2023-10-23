@@ -1,7 +1,7 @@
 @import '/src/scss//mixins';
 
 .community-container {
-    margin-bottom: 90px !important;
+    margin-bottom: 24px !important;
     // border-radius: 16px;
     // border: 1px solid rgba(170, 170, 170, 1);
     display: flex;
@@ -9,11 +9,11 @@
     gap: 16px;
 
     @media screen and (min-width: 768px) and (max-width: 1219px) {
-        margin: 0 10px;
+        // margin: 0 10px;
     }
 
     @media screen and (max-width: 767px) {
-        margin: 0 12px;
+        // margin: 0 12px;
     }
 
     .community-title {
@@ -76,7 +76,7 @@
 
                     h3 {
                         font-family: Roboto;
-                        font-size: 16px;
+                        font-size: 12px;
                         font-weight: 700;
                         letter-spacing: 0em;
                         text-align: left;
@@ -187,7 +187,7 @@
                                 width: 500px;
                                 text-overflow: ellipsis;
                                 overflow: hidden;
-                                font-size: 16px;
+                                font-size: 12px;
                                 font-weight: 500;
                                 color: #000;
                                 font-style: normal;
@@ -259,7 +259,7 @@
 
                             p {
                                 font-family: Roboto;
-                                font-size: 14px;
+                                font-size: 12px;
                                 font-weight: 700;
                                 letter-spacing: 0em;
                                 text-align: left;
@@ -372,7 +372,7 @@
                                     width: 500px;
                                     text-overflow: ellipsis;
                                     overflow: hidden;
-                                    font-size: 16px;
+                                    font-size: 12px;
                                     font-weight: 500;
                                     color: #000;
                                     font-style: normal;
@@ -401,7 +401,7 @@
 
                                     @media screen and (max-width: 430px) {
                                         width: 150px;
-                                        font-size: 16px !important;
+                                        font-size: 12px !important;
                                     }
                                 }
                             }
