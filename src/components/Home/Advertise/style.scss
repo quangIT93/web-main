@@ -1,0 +1,103 @@
+.advertise-container {
+    margin-bottom: 90px;
+    max-width: 100%;
+
+    .advertise-content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        // justify-content: space-between;
+        column-gap: 80px;
+
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+            row-gap: 24px;
+        }
+
+        .advertsie-content_left {
+            img {
+                // max-width: 500px;
+                // max-height: 500px;
+                height: auto;
+            }
+
+        }
+
+        .advertsie-content_right {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .content_top {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+
+                h3 {
+                    font-family: Roboto;
+                    font-size: 24px;
+                    font-weight: 700;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: #0D99FF;
+
+                }
+
+                p {
+                    font-family: Roboto;
+                    font-size: 16px;
+                    font-weight: 400;
+                    letter-spacing: 0em;
+                    text-align: left;
+
+                }
+            }
+
+            .content_bot {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+
+                h3 {
+                    font-family: Roboto;
+                    font-size: 20px;
+                    font-weight: 700;
+                    letter-spacing: 0em;
+                    text-align: center;
+
+                }
+
+                .qr_content {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 32px;
+
+                    .qr_left {
+                        img {
+                            height: 131px;
+                            width: 131px;
+                        }
+                    }
+
+                    .qr_right {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 22px;
+
+                        img {
+                            height: 54px;
+                            width: 182px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

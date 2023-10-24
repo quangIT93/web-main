@@ -25,6 +25,7 @@ import male_null_avatar from '../../../img/male_null_avatar.png';
 import female_null_avatar from '../../../img/female_null_avatar.png';
 import ModalLogin from '#components/Home/ModalLogin';
 import ModalNoteWorker from '#components/Home/NewestGigWorker/ModalNoteWorker';
+import ModalNotRecruitment from '../ModalNotRecruitment';
 interface ICadidate {
   item: any;
 }
@@ -37,6 +38,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
   );
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
+  const [openModalNotRecruitment, setOpenModalNotRecruitment] = React.useState(false);
   const handleClickItemCandidate = async (accountId: any) => {
     if (!localStorage.getItem('accessToken')) {
       setOpenModalLogin(true);
@@ -55,7 +57,8 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
       } else {
         console.log(profileV3);
         // setOpenModalNoteWorker(true);
-        window.open('/page-cv');
+        setOpenModalNotRecruitment(true)
+        // window.open('/page-cv');
         return;
       }
     } catch (error) {
@@ -79,8 +82,8 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
               item?.imageData?.avatar
                 ? item?.imageData?.avatar
                 : item.genderData === 'Nam' || item.genderData === 'Male'
-                ? male_null_avatar
-                : female_null_avatar
+                  ? male_null_avatar
+                  : female_null_avatar
             }
             style={{
               filter: item?.imageData?.avatar ? 'blur(3px)' : 'none',
@@ -140,23 +143,23 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 title={
                   item?.profilesEducationsData?.length !== 0
                     ? item.profilesEducationsData?.map((value: any) => {
-                        return `${value.data}, `;
-                      })
+                      return `${value.data}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'
                 }
               >
                 <span className="text-info-candidate">
                   {item.profilesEducationsData.length !== 0
                     ? item.profilesEducationsData.map(
-                        (value: any, index: number) => {
-                          return `${value.data}, `;
-                        },
-                      )
+                      (value: any, index: number) => {
+                        return `${value.data}, `;
+                      },
+                    )
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'}
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'}
                 </span>
               </Tooltip>
             </li>
@@ -169,21 +172,21 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 title={
                   item?.profilesLocationsData?.length !== 0
                     ? item.profilesLocationsData?.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                      return `${value.fullName}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'
                 }
               >
                 <span className="text-info-candidate">
                   {item.profilesLocationsData.length !== 0
                     ? item.profilesLocationsData.map((loc: any) => {
-                        return `${loc.fullName}, `;
-                      })
+                      return `${loc.fullName}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'}
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'}
                 </span>
               </Tooltip>
             </li>
@@ -196,21 +199,21 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
                 title={
                   item?.categoriesData?.length !== 0
                     ? item.categoriesData?.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                      return `${value.fullName}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'
                 }
               >
                 <span className="text-info-candidate">
                   {item.categoriesData.length !== 0
                     ? item.categoriesData.map((value: any) => {
-                        return `${value.fullName}, `;
-                      })
+                      return `${value.fullName}, `;
+                    })
                     : languageRedux === 1
-                    ? 'Thông tin chưa cập nhật'
-                    : 'Not updated information'}
+                      ? 'Thông tin chưa cập nhật'
+                      : 'Not updated information'}
                 </span>
               </Tooltip>
             </li>
@@ -232,6 +235,10 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
       <ModalNoteWorker
         openModalNoteWorker={openModalNoteWorker}
         setOpenModalNoteWorker={setOpenModalNoteWorker}
+      />
+      <ModalNotRecruitment
+        openModalNotRecruitment={openModalNotRecruitment}
+        setOpenModalNotRecruitment={setOpenModalNotRecruitment}
       />
     </>
   );

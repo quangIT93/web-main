@@ -8,6 +8,37 @@
     scroll-snap-align: start;
     scroll-snap-stop: normal;
 
+    .title-container {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 16px;
+
+        .title {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .view-all {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            gap: 16px;
+
+            p {
+                color: #0D99FF;
+            }
+
+            svg {
+                color: #0D99FF;
+            }
+        }
+    }
+
     @include breakpoint(mobile) {
         margin-bottom: 24px !important;
 
@@ -84,7 +115,7 @@
                 // width: 100%;
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
+                align-items: flex-start;
                 flex-direction: column;
                 gap: 8px;
                 // padding: 0 24px;
@@ -94,13 +125,13 @@
                     h5 {
                         font-weight: 500;
                         font-size: 20px;
-                        text-align: center;
+                        text-align: left;
                         width: 112px;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
-                
-        
+
+
                     }
                 }
 

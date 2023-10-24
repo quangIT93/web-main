@@ -170,7 +170,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       <div className="post-address_top">
         <div
           className="post-title"
-          // style={{ position: 'relative' }}
+        // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -197,9 +197,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           />
           <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
-            {!fillProvince && selectedProvince === null  ? (
+            {!fillProvince && selectedProvince === null ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập tên công ty'
@@ -212,7 +212,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
         </div>
         <div
           className="post-title"
-          // style={{ position: 'relative' }}
+        // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -240,9 +240,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           />
           <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
-            {selectedDistrict === null && !fillDistrict? (
+            {selectedDistrict === null && !fillDistrict ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập tên quận'
@@ -257,7 +257,7 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
       <div className="post-address_bottom">
         <div
           className="post-title"
-          // style={{ position: 'relative' }}
+        // style={{ position: 'relative' }}
         >
           <Typography
             sx={styleLabel}
@@ -284,9 +284,9 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
           />
           <div
             className="wrap-noti_input"
-            // style={{ position: 'absolute', bottom: '-15px' }}
+          // style={{ position: 'absolute', bottom: '-15px' }}
           >
-            {selectedWard === null && fillWardId.id === "" ? (
+            {selectedWard === null && fillWardId?.id === "" ? (
               <span className="helper-text">
                 {languageRedux === 1
                   ? 'Vui lòng nhập tên phường'
@@ -333,9 +333,8 @@ const PostAddress: React.FC<IPostAddress> = (props) => {
             ) : (
               <></>
             )}
-            <span className="number-text">{`${
-              address ? address.length : '0'
-            }/255`}</span>
+            <span className="number-text">{`${address ? address.length : '0'
+              }/255`}</span>
           </div>
         </div>
       </div>

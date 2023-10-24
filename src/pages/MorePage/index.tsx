@@ -210,6 +210,10 @@ const MoreJobsPage: React.FC = () => {
         ? languageRedux === 1
           ? 'HiJob - Công việc mới nhất'
           : 'HiJob - Newest Jobs'
+        : typeJob === 'hot-job'
+        ? languageRedux === 1
+          ? 'HiJob - Xem tất cả loại công việc'
+          : 'HiJob - View all category jobs'
         : typeJob === 'suggested'
         ? languageRedux === 1
           ? 'HiJob - Công việc gợi ý'
@@ -283,71 +287,87 @@ const MoreJobsPage: React.FC = () => {
 
       let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
 
-      const result =
-        typeJob === 'new'
-          ? await postApi.getPostNewestV3(
-              childCateloriesArray,
-              // userSelectedId,
-              userSelected.userSelectedId,
-              // null,
-              // null,
-              // profile && profile?.profileLocations?.length > 0 &&
-              profile.length !== 0 ? profile?.profileLocations : null,
-              profile.length !== 0
-                ? profile?.profileLocations[0]?.province?.id
-                : null,
-              // null,
-              20,
-              null,
-              languageRedux === 1 ? 'vi' : 'en',
-            )
-          : typeJob === 'suggested'
-          ? await nearByApi.getNearByJob(
-              profile &&
-                profile?.profileLocations?.length > 0 &&
-                profile?.profileLocations?.map((item: any) => {
-                  return item.province.id;
-                }),
-              null,
-              null,
-              19,
-              null,
-              languageRedux === 1 ? 'vi' : 'en',
-            )
-          : await postApi.getPostByThemeId(
-              storedSettings?.placeId ? storedSettings?.placeId : placeIdRedux,
-              19,
-              0,
-              languageRedux === 1 ? 'vi' : 'en',
-            );
+      if (profile.length !== 0) {
+        const result =
+          typeJob === 'new' || typeJob === 'hot-job'
+            ? await postApi.getPostNewestV3(
+                childCateloriesArray,
+                // userSelectedId,
+                userSelected.userSelectedId,
+                // null,
+                // null,
+                // profile && profile?.profileLocations?.length > 0 &&
+                profile.length !== 0 ? profile?.profileLocations : null,
+                profile.length !== 0
+                  ? profile?.profileLocations[0]?.province?.id
+                  : null,
+                // null,
+                20,
+                null,
+                languageRedux === 1 ? 'vi' : 'en',
+              )
+            : typeJob === 'suggested'
+            ? await nearByApi.getNearByJob(
+                profile &&
+                  profile?.profileLocations?.length > 0 &&
+                  profile?.profileLocations?.map((item: any) => {
+                    return item.province.id;
+                  }),
+                null,
+                null,
+                19,
+                null,
+                languageRedux === 1 ? 'vi' : 'en',
+              )
+            : await postApi.getPostByThemeId(
+                storedSettings?.placeId
+                  ? storedSettings?.placeId
+                  : placeIdRedux,
+                19,
+                0,
+                languageRedux === 1 ? 'vi' : 'en',
+              );
 
-      setHasMore(true);
-      if (result) {
-        setLoading(false);
-        if (typeJob !== 'new') {
-          if (result.data.posts.length < 20) {
-            setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
+        setHasMore(true);
+        if (result) {
+          setLoading(false);
+          if (typeJob !== 'new' && typeJob !== 'hot-job') {
+            if (result.data.posts.length < 20) {
+              setMoreJob(
+                typeJob === 'new' || typeJob === 'hot-job'
+                  ? result.data
+                  : result.data.posts,
+              );
+              setHasMore(false);
+              setOpenBackdrop(false);
+              return;
+            }
+          }
+          if (result.data.length < 20) {
+            setMoreJob(
+              typeJob === 'new' || typeJob === 'hot-job'
+                ? result.data
+                : result.data.posts,
+            );
             setHasMore(false);
             setOpenBackdrop(false);
             return;
+          } else if (
+            result.data &&
+            (result.data.length !== 0 || result.data.posts.length !== 0)
+          ) {
+            setMoreJob(
+              typeJob === 'new' || typeJob === 'hot-job'
+                ? result.data
+                : result.data.posts,
+            );
+            setOpenBackdrop(false);
+            return;
+          } else {
+            setMoreJob([]);
+            setHasMore(false);
+            setOpenBackdrop(false);
           }
-        }
-        if (result.data.length < 20) {
-          setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
-          setHasMore(false);
-          setOpenBackdrop(false);
-          return;
-        } else if (
-          result.data &&
-          (result.data.length !== 0 || result.data.posts.length !== 0)
-        ) {
-          setMoreJob(typeJob === 'new' ? result.data : result.data.posts);
-          setOpenBackdrop(false);
-          return;
-        } else {
-          setMoreJob([]);
-          setHasMore(false);
-          setOpenBackdrop(false);
         }
       }
     } catch (error) {
@@ -370,7 +390,7 @@ const MoreJobsPage: React.FC = () => {
 
       const thersholdId = moreJob[moreJob.length - 1]?.id;
       const result =
-        typeJob === 'new'
+        typeJob === 'new' || typeJob === 'hot-job'
           ? await postApi.getPostNewestV3(
               childCateloriesArray,
               userSelected.userSelectedId,
@@ -410,7 +430,7 @@ const MoreJobsPage: React.FC = () => {
         result &&
         (result.data.length !== 0 || result.data.posts.length !== 0)
       ) {
-        typeJob === 'new'
+        typeJob === 'new' || typeJob === 'hot-job'
           ? setMoreJob((prev: any) => [...prev, ...result?.data])
           : setMoreJob((prev: any) => [...prev, ...result?.data.posts]);
       } else {
@@ -523,10 +543,18 @@ const MoreJobsPage: React.FC = () => {
       <div
         className="more-job-page-container"
         style={{
-          margin: typeJob === 'new' ? '287px auto 0px' : '0 auto',
+          margin:
+            typeJob === 'new' || typeJob === 'hot-job'
+              ? '280px auto 0px'
+              : '0px auto 0px',
         }}
       >
-        <div style={{ display: typeJob === 'new' ? 'block' : 'none' }}>
+        <div
+          style={{
+            display:
+              typeJob === 'new' || typeJob === 'hot-job' ? 'block' : 'none',
+          }}
+        >
           <CategoryCarousel />
           <Breadcrumbs />
         </div>
@@ -551,6 +579,10 @@ const MoreJobsPage: React.FC = () => {
                 <h3>
                   {typeJob === 'new'
                     ? language?.newest_jobs
+                    : typeJob === 'hot-job'
+                    ? languageRedux === 1
+                      ? 'Xem tất cả loại công việc'
+                      : 'View all category jobs'
                     : typeJob === 'suggested'
                     ? language?.nearby_jobs
                     : language?.jobs_by_theme}
@@ -610,7 +642,7 @@ const MoreJobsPage: React.FC = () => {
                     {moreJob.map((item: any, index: number) => (
                       <Skeleton loading={loading} active>
                         <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                          {typeJob === 'new' ? (
+                          {typeJob === 'new' || typeJob === 'hot-job' ? (
                             <JobCardMoreNewJob item={item} />
                           ) : (
                             <JobCardMoreJob item={item} />

@@ -30,6 +30,8 @@ import locationReducer from './locationReducer'
 
 import placeIdReducer from './placeIdReducer'
 
+import checkPost from './checkPost'
+
 const reducers = combineReducers({
   post: postReducer,
   postNewest: postNewestReducer,
@@ -51,6 +53,8 @@ const reducers = combineReducers({
   dataLocation: locationReducer,
   dataProfileV3: profileReducerV3,
   placeIdReducer: placeIdReducer,
+
+  checkPost: checkPost,
 })
 
 export default reducers

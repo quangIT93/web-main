@@ -358,16 +358,17 @@ const Detail = () => {
           setBackgroundButton('gray');
           setTextButton(languageRedux === 1 ? 'Đã ứng tuyển' : 'Applied');
         } else {
-          setTextButton(
-            languageRedux === 1
-              ? profileV3.typeRoleData === 1
-                ? 'Xem ngay'
-                : 'Ứng tuyển ngay'
-              : profileV3.typeRoleData === 1
-              ? 'View'
-              : 'Apply',
-          );
-          setBackgroundButton('#0D99FF');
+          if (profileV3.length !== 0) {
+            if (profileV3.typeRoleData === 0) {
+              setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
+            } else {
+              setTextButton(languageRedux === 1 ? 'Xem' : 'View');
+            }
+          }
+          result?.data?.companyResourceData?.name === 'HIJOB' &&
+          profileV3.typeRoleData === 1
+            ? setBackgroundButton('gray')
+            : setBackgroundButton('#0D99FF');
           // setCheckPostUser(true);
         }
         // else if (result.data.application_status === 2) {
@@ -438,7 +439,7 @@ const Detail = () => {
     //get post next
     getAnotherPost(POST_ID + 1, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookmarked, POST_ID, languageRedux, language]);
+  }, [bookmarked, POST_ID, languageRedux, language, profileV3]);
 
   // set size for Breadcrumb
   // React.useEffect(() => {

@@ -233,7 +233,7 @@ const CandidateDetail: React.FC = () => {
             sx={{
               background: '#D5EDFF',
               padding: '12px',
-              margin: '8px 0',
+              // margin: '8px 0',
               display: 'flex',
               justifyContent: 'space-between',
               minWidth: '100%',

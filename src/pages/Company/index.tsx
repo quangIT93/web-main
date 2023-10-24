@@ -442,9 +442,9 @@ const Company: React.FC<ICompany> = (props) => {
       </div>
       <div
         className="company-content"
-        // style={{
-        //   padding: is_profile ? '0px' : '50px 0px',
-        // }}
+        style={{
+          padding: is_profile ? '0px' : '24px 0px',
+        }}
       >
         <div
           className="company-title"

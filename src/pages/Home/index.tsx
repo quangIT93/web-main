@@ -47,6 +47,8 @@ import ModalSelectRole from '#components/Home/ModalSelectRole';
 import ModalUpdateInfo from '#components/Home/ModalUpdateInfo';
 import { setIsNew } from 'store/reducer/isNewReducer';
 
+import Advertise from '#components/Home/Advertise';
+
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
   const languageRedux = useSelector(
@@ -242,6 +244,7 @@ const Home: React.FC = () => {
         <SuggestJob />
         <ThemesJob />
         <Community />
+        <Advertise />
         {/* {reachedEndShowSubjectJob ? (
           <>
           </>
