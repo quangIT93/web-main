@@ -440,12 +440,7 @@ const Company: React.FC<ICompany> = (props) => {
         {/* <Navbar />
         {location?.pathname === '/company-infor' ? <CategoryDropdown /> : <></>} */}
       </div>
-      <div
-        className="company-content"
-        style={{
-          padding: is_profile ? '0px' : '24px 0px',
-        }}
-      >
+      <div className="company-content">
         <div
           className="company-title"
           style={{

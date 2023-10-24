@@ -17,21 +17,8 @@
   .containerNewCandidate {
     // width: 80%;
     width: 100%;
-    margin-top: 141px;
-    margin-bottom: 100px;
     padding: 0px;
 
-    @include breakpoint(mobile) {
-      // width: 95%;
-      width: 100%;
-      padding: 0px 24px;
-    }
-
-    @include breakpoint(tablet) {
-      // width: 95%;
-      padding: 0px 24px;
-      width: 100%;
-    }
 
     .candidates-profile-avatar {
       width: 100%;
