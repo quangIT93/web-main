@@ -94,9 +94,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.addressText
       ? {
-          province_id: profile?.addressText?.id,
-          province_fullName: profile?.addressText.fullName,
-        }
+        province_id: profile?.addressText?.id,
+        province_fullName: profile?.addressText.fullName,
+      }
       : null,
   );
   console.log('profile', profile);
@@ -106,9 +106,11 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     (state: RootState) => state.dataLanguage.languages,
   );
 
-  const [name, setName] = useState(profile?.name);
-  const [jobTypeName, setJobTypeName] = useState(profile?.jobTypeName);
-  const [introduction, setIntroduction] = useState(profile?.introduction);
+  const [name, setName] = useState(profile?.name && '');
+  const [jobTypeName, setJobTypeName] = useState(profile?.jobTypeName === null ? '' :
+    profile?.jobTypeName);
+  const [introduction, setIntroduction] = useState(profile?.introduction === null ? '' :
+    profile?.introduction);
 
   const [messageApi, contextHolder] = message.useMessage();
   const dataProvinces = useSelector(
@@ -364,16 +366,16 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
-              {name.length > 90 ? (
+              {name?.length > 90 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tên không được vượt quá 90 ký tự'
                     : 'Full name cannot exceed 90 characters'}
                 </span>
-              ) : name.length === 0 ? (
+              ) : name?.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Tên không được để trống'
@@ -382,7 +384,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${name.length}/90`}</span>
+              <span className="number-text">{`${name?.length}/90`}</span>
             </div>
           </Box>
           <Box sx={styleChildBox}>
@@ -429,7 +431,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       helperText: 'DD/MM/YYYY',
                     },
                   }}
-                  // format="DD/MM/YYYY"
+                // format="DD/MM/YYYY"
                 />
               </div>
               <div className="wrap-noti_input">
@@ -472,9 +474,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={
                 selectedProvince && dataProvinces?.length > 0
                   ? dataProvinces?.find(
-                      (province: any) =>
-                        province.province_id === selectedProvince.province_id,
-                    )
+                    (province: any) =>
+                      province.province_id === selectedProvince.province_id,
+                  )
                   : null
               }
               defaultValue={selectedProvince}
@@ -484,7 +486,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   {...params}
                   placeholder={language?.profile_page?.place_address}
                   size="small"
-                  error={!selectedProvince}
+                // error={!selectedProvince}
                 />
               )}
             />
@@ -510,16 +512,16 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               placeholder={
                 languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
               }
-              // error={titleError} // Đánh dấu lỗi
+            // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
-              {jobTypeName.length > 100 ? (
+              {jobTypeName?.length > 100 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vị trí không được vượt quá 100 ký tự'
                     : 'Position cannot exceed 100 characters'}
                 </span>
-              ) : jobTypeName.length === 0 ? (
+              ) : jobTypeName?.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vị trí không được vượt quá 100 ký tự'
@@ -528,7 +530,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${jobTypeName.length}/100`}</span>
+              <span className="number-text">{`${jobTypeName?.length}/100`}</span>
             </div>
           </Box>
           <Box sx={styleChildBox}>
@@ -551,22 +553,22 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               id="profile-introduction"
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.introduce_yourself_to_the_recruiter}
-              error={introduction.length > 500} // Đánh dấu lỗi
-              // onKeyDown={(event) => {
-              //   // if (event.key === 'Enter') {
-              //   //   event.preventDefault();
-              //   // }
-              //   console.log(event.target);
-              // }}
+              error={introduction?.length > 500} // Đánh dấu lỗi
+            // onKeyDown={(event) => {
+            //   // if (event.key === 'Enter') {
+            //   //   event.preventDefault();
+            //   // }
+            //   console.log(event.target);
+            // }}
             />
             <div className="wrap-noti_input">
-              {introduction.length === 0 ? (
+              {introduction?.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được bỏ trống'
                     : 'Additional information cannot be empty'}
                 </span>
-              ) : introduction.length > 500 ? (
+              ) : introduction?.length > 500 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được vượt quá 500 ký tự'
@@ -575,7 +577,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${introduction.length}/500`}</span>
+              <span className="number-text">{`${introduction?.length}/500`}</span>
             </div>
           </Box>
         </form>
