@@ -225,7 +225,7 @@ const CandidateNewDetail = () => {
                 <p style={{ lineHeight: '30px' }}>
                   {candidate?.jobTypeName !== null
                     ? candidate?.jobTypeName
-                    : language.unupdated}
+                    : language?.unupdated}
                 </p>
               </div>
             </div>
@@ -277,7 +277,7 @@ const CandidateNewDetail = () => {
                     onClick={() => handleUnLockCandidate(candidate?.accountId)}
                     style={{ backgroundColor: '#252525', color: '#fff' }}
                   >
-                    <div className="contentBtnLock">
+                    <div className="contentBtn">
                       <div>
                         <svg
                           width="24"
@@ -307,9 +307,9 @@ const CandidateNewDetail = () => {
                   type="primary"
                   disabled={candidate && candidate?.isUnlocked}
                   // onClick={() => handleUnLockCandidate(candidate?.accountId)}
-                  style={{ backgroundColor: '#252525', color: '#fff' }}
+                  style={{ background: '#AAAAAA', color: '#fff' }}
                 >
-                  <div className="contentBtnLock">
+                  <div className="contentBtn">
                     <div>
                       <svg
                         width="24"
@@ -342,47 +342,50 @@ const CandidateNewDetail = () => {
                   );
                 }}
               >
-                <div className="contentBtnLock">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 25"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g clip-path="url(#clip0_12961_352323)">
-                      <path
-                        d="M24 0.786438H0V24.7864H24V0.786438Z"
-                        fill="white"
-                      />
-                      <path
-                        d="M12 6.03644C4.5 6.03644 1.5 12.7864 1.5 12.7864C1.5 12.7864 4.5 19.5364 12 19.5364C19.5 19.5364 22.5 12.7864 22.5 12.7864C22.5 12.7864 19.5 6.03644 12 6.03644Z"
-                        stroke="#AAAAAA"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M12 16.5364C14.0711 16.5364 15.75 14.8575 15.75 12.7864C15.75 10.7154 14.0711 9.03644 12 9.03644C9.92893 9.03644 8.25 10.7154 8.25 12.7864C8.25 14.8575 9.92893 16.5364 12 16.5364Z"
-                        stroke="#AAAAAA"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_12961_352323">
-                        <rect
-                          width="24"
-                          height="24"
+                <div className="contentBtn">
+                  <div>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 25"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      style={{ marginTop: '5px' }}
+                    >
+                      <g clip-path="url(#clip0_12961_352323)">
+                        <path
+                          d="M24 0.786438H0V24.7864H24V0.786438Z"
                           fill="white"
-                          transform="translate(0 0.786438)"
                         />
-                      </clipPath>
-                    </defs>
-                  </svg>
+                        <path
+                          d="M12 6.03644C4.5 6.03644 1.5 12.7864 1.5 12.7864C1.5 12.7864 4.5 19.5364 12 19.5364C19.5 19.5364 22.5 12.7864 22.5 12.7864C22.5 12.7864 19.5 6.03644 12 6.03644Z"
+                          stroke="#AAAAAA"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M12 16.5364C14.0711 16.5364 15.75 14.8575 15.75 12.7864C15.75 10.7154 14.0711 9.03644 12 9.03644C9.92893 9.03644 8.25 10.7154 8.25 12.7864C8.25 14.8575 9.92893 16.5364 12 16.5364Z"
+                          stroke="#AAAAAA"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_12961_352323">
+                          <rect
+                            width="24"
+                            height="24"
+                            fill="white"
+                            transform="translate(0 0.786438)"
+                          />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
+                  <div>{languageRedux === 1 ? 'Xem hồ sơ' : 'View Resume'}</div>
                 </div>
-                <div>{languageRedux === 1 ? 'Xem hồ sơ' : 'View Resume'}</div>
               </Button>
 
               <div

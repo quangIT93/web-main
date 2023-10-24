@@ -537,7 +537,7 @@ const HotJobpage: React.FC = () => {
                       defaultValue={
                         Object.keys(profileV3).length !== 0 &&
                         profileV3.addressText !== null
-                          ? profileV3.addressText?.id
+                          ? profileV3.addressText.id
                           : '79'
                       }
                       onChange={handleChangeFilterHotjob}
