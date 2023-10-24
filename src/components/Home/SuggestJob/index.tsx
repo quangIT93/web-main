@@ -10,7 +10,12 @@ import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { MoreICon, SuggestIcon, LoginArrowIcon, ArrowrightIcon } from '#components/Icons';
+import {
+  MoreICon,
+  SuggestIcon,
+  LoginArrowIcon,
+  ArrowrightIcon,
+} from '#components/Icons';
 
 // @ts-ignore
 // import moment from 'moment';
@@ -172,10 +177,11 @@ const ThemesJob: React.FC = () => {
       const result = await nearByApi.getNearByJob(
         // null,
         // Number(searchParams.get('categories-id')),
-        profile && profile?.profileLocations?.length > 0 &&
-        profile?.profileLocations?.map((item: any) => {
-          return item.province.id
-        }),
+        profile &&
+          profile?.profileLocations?.length > 0 &&
+          profile?.profileLocations?.map((item: any) => {
+            return item.province.id;
+          }),
         null,
         null,
         11,
@@ -235,19 +241,21 @@ const ThemesJob: React.FC = () => {
   const handleMoveToMoreJob = () => {
     localStorage.setItem('job-type', 'suggested');
     window.open('/more-jobs', '_parent');
-  }
+  };
 
   return (
-    <Box sx={{ flexGrow: 1 }} className="box-suggestedJob" id="box-suggestedJob">
-      <div className='title-container'>
-        <div className='title'>
+    <Box
+      sx={{ flexGrow: 1 }}
+      className="box-suggestedJob"
+      id="box-suggestedJob"
+    >
+      <div className="title-container">
+        <div className="title">
           <SuggestIcon width={25} height={25} />
           <h2>{language?.nearby_jobs}</h2>
         </div>
-        <div className='view-all' onClick={handleMoveToMoreJob}>
-          <p>
-            {language?.home_page?.view_all}
-          </p>
+        <div className="view-all" onClick={handleMoveToMoreJob}>
+          <p>{language?.home_page?.view_all}</p>
           <ArrowrightIcon width={20} height={20} />
         </div>
       </div>
@@ -289,7 +297,7 @@ const ThemesJob: React.FC = () => {
               container
               spacing={3}
               columns={{ xs: 12, sm: 4, md: 12 }}
-            // sx={{ marginTop: '-8px' }}
+              // sx={{ marginTop: '-8px' }}
             >
               {nearJob.map((item: PostTheme, index: number) => (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
@@ -347,7 +355,7 @@ const ThemesJob: React.FC = () => {
                 zIndex: (theme: any) => theme.zIndex.drawer + 1,
               }}
               open={openBackdrop}
-            //   onClick={handleClose}
+              //   onClick={handleClose}
             >
               <CircularProgress color="inherit" />
             </Backdrop>

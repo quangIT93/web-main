@@ -196,7 +196,7 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
           <div className="wrap-noti_input">
             {skill.length > 255 ? (
@@ -240,16 +240,16 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
             error={!level} // Đánh dấu lỗi
           >
             <MenuItem value={1}>
-              {languageRedux === 1 ? 'Người mới' : 'Novice'}
+              {languageRedux === 1 ? 'Tập sự' : 'Novice'}
             </MenuItem>
             <MenuItem value={2}>
-              {languageRedux === 1 ? 'Người bắt đầu' : 'Beginner'}
+              {languageRedux === 1 ? 'Sơ cấp' : 'Beginner'}
             </MenuItem>
             <MenuItem value={3}>
-              {languageRedux === 1 ? 'Khéo léo' : 'Skillful'}
+              {languageRedux === 1 ? 'Kinh nghiệm' : 'Experienced'}
             </MenuItem>
             <MenuItem value={4}>
-              {languageRedux === 1 ? 'Có kinh nghiệm' : 'Experienced'}
+              {languageRedux === 1 ? 'Thành thạo' : 'Skillful'}
             </MenuItem>
             <MenuItem value={5}>
               {languageRedux === 1 ? 'Chuyên gia' : 'Expert'}

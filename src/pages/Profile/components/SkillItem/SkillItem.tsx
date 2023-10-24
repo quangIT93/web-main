@@ -105,27 +105,7 @@ const SkillItem: React.FC<ISkillItem> = (props) => {
           >
             <h3>{item?.skillName}</h3>
             <p>
-              {item?.dataLevel.id === 1
-                ? languageRedux === 1
-                  ? 'Người mới'
-                  : 'Novice'
-                : item?.dataLevel.id === 2
-                  ? languageRedux === 1
-                    ? 'Người bắt đầu'
-                    : 'Beginner'
-                  : item?.dataLevel.id === 3
-                    ? languageRedux === 1
-                      ? 'Khéo léo'
-                      : 'Skillful'
-                    : item?.dataLevel.id === 4
-                      ? languageRedux === 1
-                        ? 'Có kinh nghiệm'
-                        : 'Experienced'
-                      : item?.dataLevel.id === 5
-                        ? languageRedux === 1
-                          ? 'Chuyên gia'
-                          : 'Expert'
-                        : ''}
+              {item?.dataLevel?.data}
             </p>
           </Space>
         </div>

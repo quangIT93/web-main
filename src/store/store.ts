@@ -10,7 +10,7 @@ import storage from 'redux-persist/lib/storage'
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['changeLaguage', 'changeRole'],
+  whitelist: ['changeLaguage', 'changeRole', 'checkPost'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
