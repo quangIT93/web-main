@@ -18,7 +18,7 @@ const MainLayout = ({ children }: Props) => {
       <CategoryDropdown />
       <div className="childrenContainer">{children}</div>
       <RollTop />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
