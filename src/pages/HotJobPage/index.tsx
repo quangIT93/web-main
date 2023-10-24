@@ -624,8 +624,8 @@ const HotJobpage: React.FC = () => {
                         item
                         xs={12}
                         sm={6}
-                        md={searchParams.get('hotjob-type') === '2' ? 4 : 6}
-                        lg={4}
+                        md={searchParams.get('hotjob-type') === '2' ? 6 : 6}
+                        lg={6}
                         key={index}
                       >
                         {searchParams.get('hotjob-type') === '1' ? (
