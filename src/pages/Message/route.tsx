@@ -1,15 +1,11 @@
 // import React, { lazy } from 'react'
-import MainLayout from 'layouts/MainLayout';
+
 import Message from '.';
 import RouteProps from '../routes';
 
 const route: RouteProps = {
   path: 'message',
-  component: (
-    <MainLayout>
-      <Message />
-    </MainLayout>
-  ),
+  component: <Message />,
 };
 
 export default route;

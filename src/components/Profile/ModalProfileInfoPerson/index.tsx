@@ -513,13 +513,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
-              {jobTypeName.length > 100 ? (
+              {jobTypeName?.length > 100 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vị trí không được vượt quá 100 ký tự'
                     : 'Position cannot exceed 100 characters'}
                 </span>
-              ) : jobTypeName.length === 0 ? (
+              ) : jobTypeName?.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Vị trí không được vượt quá 100 ký tự'
@@ -528,7 +528,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${jobTypeName.length}/100`}</span>
+              <span className="number-text">{`${jobTypeName?.length}/100`}</span>
             </div>
           </Box>
           <Box sx={styleChildBox}>
@@ -551,7 +551,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               id="profile-introduction"
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.introduce_yourself_to_the_recruiter}
-              error={introduction.length > 500} // Đánh dấu lỗi
+              error={introduction?.length > 500} // Đánh dấu lỗi
               // onKeyDown={(event) => {
               //   // if (event.key === 'Enter') {
               //   //   event.preventDefault();
@@ -560,13 +560,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               // }}
             />
             <div className="wrap-noti_input">
-              {introduction.length === 0 ? (
+              {introduction?.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được bỏ trống'
                     : 'Additional information cannot be empty'}
                 </span>
-              ) : introduction.length > 500 ? (
+              ) : introduction?.length > 500 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Thông tin thêm không được vượt quá 500 ký tự'
@@ -575,7 +575,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               ) : (
                 <></>
               )}
-              <span className="number-text">{`${introduction.length}/500`}</span>
+              <span className="number-text">{`${introduction?.length}/500`}</span>
             </div>
           </Box>
         </form>
