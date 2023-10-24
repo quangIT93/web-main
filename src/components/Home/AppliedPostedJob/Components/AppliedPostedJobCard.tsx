@@ -51,7 +51,7 @@ const AppliedPostedJobCard: React.FC<any> = (props) => {
     }
   };
 
-  console.log(checkPost);
+  // console.log(checkPost);
 
 
   const handleImageError = () => {

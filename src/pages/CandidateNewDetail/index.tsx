@@ -121,10 +121,10 @@ const CandidateNewDetail = () => {
           }
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       // console.log(error.response);
-      // error?.response?.data?.message === "Not enough points"
-      setOpenModalMaxUnlock(true);
+      error?.response?.data?.message === "Not enough points" &&
+        setOpenModalMaxUnlock(true);
       return;
     }
   };
@@ -168,11 +168,15 @@ const CandidateNewDetail = () => {
   }, []);
 
   const handleClickItemCv = async (urlPdf: string, id: string) => {
+    if (candidate.isUnlocked === false) {
+      setOpenModalNoneCv(true);
+      return;
+    }
     if (candidate.isUnlocked === true && urlPdf !== undefined) {
       setModalShowCvPdf({ open: true, urlPdf });
       return;
     } else {
-      setOpenModalNoneCv(true);
+      // setOpenModalNoneCv(true);
     }
   };
 
@@ -256,14 +260,22 @@ const CandidateNewDetail = () => {
 
               <Button
                 type="primary"
-                onClick={(event) => {
-                  handleClickItemCv(
-                    candidate?.profilesCvs[0]?.pdfURL,
-                    candidate?.accountId,
-                  );
-                }}
+                onClick={
+                  (event) => {
+                    handleClickItemCv(
+                      candidate?.profilesCvs[0]?.pdfURL,
+                      candidate?.accountId,
+                    );
+                  }
+                }
               >
-                {languageRedux === 1 ? 'Xem hồ sơ' : 'View Resume'}
+                {
+                  candidate?.isUnlocked === true ?
+                    candidate?.profilesCvs[0]?.pdfURL !== undefined ?
+                      languageRedux === 1 ? 'Xem hồ sơ' : 'Have a resume' :
+                      languageRedux === 1 ? 'Không có hồ sơ' : 'Not have a resume'
+                    : languageRedux === 1 ? 'Xem hồ sơ' : 'View resume'
+                }
               </Button>
 
               <div

@@ -36,6 +36,9 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
+  const roleRedux = useSelector(
+    (state: RootState) => state.changeRole.role,
+  );
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
   const [openModalNotRecruitment, setOpenModalNotRecruitment] = React.useState(false);
@@ -51,7 +54,7 @@ const ItemCadidate: React.FC<ICadidate> = (props) => {
 
       // if (result) {
       // }
-      if (profileV3?.typeRoleData === 1) {
+      if (roleRedux === 1) {
         localStorage.setItem('candidateId', accountId);
         window.open('/candidate-new-detail');
       } else {

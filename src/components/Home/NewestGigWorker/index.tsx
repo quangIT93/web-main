@@ -40,7 +40,7 @@ const NewestGigWorker = () => {
         gender,
         ageMin,
         ageMax,
-        !logout ? 6 : roleRedux === 0 ? 6 : 18,
+        !logout ? 6 : profileV3?.typeRoleData === 0 ? 6 : 18,
         page,
         languageRedux === 1 ? 'vi' : 'en',
       );

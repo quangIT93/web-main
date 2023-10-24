@@ -187,8 +187,8 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
           {languageRedux === 1
             ? 'Thêm ngoại ngữ'
             : languageRedux === 0 && searchParams.get('type') === 'create'
-            ? 'Add Languages'
-            : ''}
+              ? 'Add Languages'
+              : ''}
         </Typography>
         <Box sx={{ marginBottom: '12px' }}>
           <Typography
@@ -209,7 +209,7 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
             size="small"
             sx={{ width: '100%', marginTop: '4px' }}
             placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
-            // error={titleError} // Đánh dấu lỗi
+          // error={titleError} // Đánh dấu lỗi
           />
           <div className="wrap-noti_input">
             {language.length > 255 ? (
@@ -256,13 +256,13 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
               {languageRedux === 1 ? 'Sơ cấp' : 'Primary'}
             </MenuItem>
             <MenuItem value={2}>
-              {languageRedux === 1 ? 'Trung cấp' : 'Intermediate'}
+              {languageRedux === 1 ? 'Trung cấp' : 'Intermediate level'}
             </MenuItem>
             <MenuItem value={3}>
-              {languageRedux === 1 ? 'Trình độ cao' : 'High - level'}
+              {languageRedux === 1 ? 'Trình độ cao' : 'High level'}
             </MenuItem>
             <MenuItem value={4}>
-              {languageRedux === 1 ? 'Thành thạo' : 'Native'}
+              {languageRedux === 1 ? 'Thành thạo' : 'Competently'}
             </MenuItem>
           </TextField>
         </Box>

@@ -39,14 +39,14 @@ const ModalNoneCV: React.FC<IModalMaxUnlock> = (props) => {
                     }}
                 >
                     {
-                        !unLock ?
-                            languageRedux === 1
-                                ? "Không thể xem CV của ứng viên"
-                                : "Unable to view candidate's CV"
-                            : unLock && !urlPdf &&
-                                languageRedux === 1
-                                ? "Ứng viên không có CV"
-                                : "Candidate does not have a CV"
+                        // !unLock ?
+                        languageRedux === 1
+                            ? "Không thể xem CV của ứng viên"
+                            : "Unable to view candidate's CV"
+                        // : unLock && !urlPdf &&
+                        //     languageRedux === 1
+                        //     ? "Ứng viên không có CV"
+                        //     : "Candidate does not have a CV"
                     }
                 </h3>
             }
@@ -66,14 +66,14 @@ const ModalNoneCV: React.FC<IModalMaxUnlock> = (props) => {
                 }}
             >
                 {
-                    !unLock ?
-                        languageRedux === 1
-                            ? "Bạn phải mở khóa ứng viên trước khi xem CV."
-                            : "You must unlock candidates before viewing CV."
-                        : unLock && !urlPdf &&
-                            languageRedux === 1
-                            ? "Hiện tại ứng viên chưa cập nhật CV."
-                            : "Currently the candidate has not updated their CV."
+                    // !unLock ?
+                    languageRedux === 1
+                        ? "Bạn phải mở khóa ứng viên trước khi xem CV."
+                        : "You must unlock candidates before viewing CV."
+                    // : unLock && !urlPdf &&
+                    //     languageRedux === 1
+                    //     ? "Hiện tại ứng viên chưa cập nhật CV."
+                    //     : "Currently the candidate has not updated their CV."
 
                 }
             </p>
