@@ -158,7 +158,7 @@ const AppliedPostedJob: React.FC = () => {
     getAppliedPostedJobs();
     localStorage.getItem('accessToken') && setIslogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, roleRedux, profile?.typeRoleData]);
+  }, [languageRedux, roleRedux, profile?.typeRoleData, profile]);
 
   const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
   const slidesPerView = windowWidth <= 576 ? 1 : 'auto';
