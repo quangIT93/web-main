@@ -1029,7 +1029,7 @@
 
     @media screen and (min-width: 920px) {
       // padding-left: 100px;
-      padding-left: 60px;
+      padding-left: 250px;
     }
 
     .btn-badge {
@@ -1062,7 +1062,7 @@
       }
     }
 
-    
+
 
     @include breakpoint(mobile) {
       display: none;
@@ -1567,13 +1567,14 @@
 
       .box-right-responsive_badge {
         box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+
         .ant-scroll-number {
           z-index: 10;
         }
       }
 
       .wrap-btn_notice {
-   
+
         @media screen and (max-width: 375px) {
           display: none;
         }
@@ -1597,7 +1598,7 @@
           left: unset !important;
         }
 
-      
+
       }
 
 
@@ -1874,9 +1875,11 @@
 
 .wrap-btn_notice {
   position: relative;
+
   .ant-scroll-number {
     z-index: 10;
   }
+
   // min-width: 52px;
   // min-height: 50px;
   .sub-icon_qr {

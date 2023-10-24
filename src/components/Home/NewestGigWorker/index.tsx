@@ -40,7 +40,8 @@ const NewestGigWorker = () => {
         gender,
         ageMin,
         ageMax,
-        !logout ? 6 : profileV3?.typeRoleData === 0 ? 6 : 18,
+        !logout ? 6 :
+          profileV3.length !== 0 && profileV3?.typeRoleData === 0 ? 6 : 18,
         page,
         languageRedux === 1 ? 'vi' : 'en',
       );
@@ -53,7 +54,7 @@ const NewestGigWorker = () => {
 
   React.useEffect(() => {
     getAllCandidates();
-  }, [languageRedux]);
+  }, [languageRedux, profileV3]);
 
   const handleChangeRouteNewestWorker = () => {
     if (profileV3?.typeRoleData === 1) {
