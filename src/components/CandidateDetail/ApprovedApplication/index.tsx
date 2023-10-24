@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import appplicationApi from 'api/appplication';
 import { Box, Typography, Modal } from '@mui/material';
 import { Button } from 'antd';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -28,6 +30,8 @@ const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
   const [OpenRecruit, setOpenRecruit] = useState(false);
 
   const handleClose = () => setOpenRecruit(false);
+
+  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
 
   // const handleClickApproveApplication = async () => {
   //   const candidateId = parseInt(searchParams.get('application_id') ?? '')
@@ -70,7 +74,11 @@ const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
         }}
         onClick={() => setOpenRecruit(true)}
       >
-        Xác nhận tuyển ứng viên
+        {
+          languageRedux === 1 ?
+            "Xác nhận tuyển ứng viên" :
+            "Confirm recruitment of candidates"
+        }
       </Button>
       <Modal
         open={OpenRecruit}
@@ -80,10 +88,18 @@ const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Xác nhận tuyển?
+            {
+              languageRedux === 1 ?
+                "Xác nhận tuyển ?" :
+                "Confirmed recruitment ?"
+            }
           </Typography>
           <Typography id="modal-modal-description" sx={{ my: 3 }}>
-            Hãy đảm bảo bạn và ứng viên đã liên hệ và sẽ làm việc cùng nhau.
+            {
+              languageRedux === 1 ?
+                "Hãy đảm bảo bạn và ứng viên đã liên hệ và sẽ làm việc cùng nhau." :
+                "Make sure you and the candidate have made contact and will work together."
+            }
           </Typography>
           <div className="button-modal_reject">
             <Button
@@ -92,14 +108,20 @@ const ApprovedApplication: React.FC<IApprovalApplication> = (props) => {
               onClick={() => setOpenRecruit(false)}
               name="cancleApprovedApply"
             >
-              Huỷ
+              {
+                languageRedux === 1 ?
+                  "Huỷ" : "Cancel"
+              }
             </Button>
             <Button
               type="primary"
               onClick={handleClickPassRecruitment}
               name="submitApprovedApply"
             >
-              Đồng ý
+              {
+                languageRedux === 1 ?
+                  "Đồng ý" : "Ok"
+              }
             </Button>
           </div>
         </Box>

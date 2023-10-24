@@ -141,17 +141,17 @@ const Navbar: React.FC = () => {
     setSearch,
     search,
   }: // setRefNav,
-  {
-    openCollapseFilter: boolean;
-    setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-    // heightNavbar: number
-    // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
-    SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
-    setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
-    openNotificate: boolean;
-    setSearch: React.Dispatch<React.SetStateAction<boolean>>;
-    search: boolean;
-  } = useContext(HomeValueContext);
+    {
+      openCollapseFilter: boolean;
+      setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
+      // heightNavbar: number
+      // setHeightNavbar: React.Dispatch<React.SetStateAction<number>>
+      SetRefNav: React.Dispatch<React.SetStateAction<DivRef1>>;
+      setOpenNotificate: React.Dispatch<React.SetStateAction<boolean>>;
+      openNotificate: boolean;
+      setSearch: React.Dispatch<React.SetStateAction<boolean>>;
+      search: boolean;
+    } = useContext(HomeValueContext);
 
   const {
     receivedMessages,
@@ -170,7 +170,7 @@ const Navbar: React.FC = () => {
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
   const [openInfoUser, setOpenInfoUser] = React.useState(false);
   // const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [openLogin, setOpenLogin] = React.useState(true);
+  const [openLogin, setOpenLogin] = React.useState(false);
   const [spinning, setSpinning] = React.useState(false);
   const [reset, setReset] = React.useState<Boolean>(false);
 
@@ -192,7 +192,7 @@ const Navbar: React.FC = () => {
   const [isRemotely, setIsRemotely] = useState<number>(0);
   const [isWorkingWeekend, setIsWorkingWeekend] = useState<number>(0);
   const [userFiltered, setUserFiltered] = useState<any>();
-
+  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const [countChat, setCountChat] = useState<number>(0);
   const [countNoti, setCountNoti] = useState<number>(0);
   const [languageId, setLanguageId] = useState<number>(languageRedux);
@@ -229,17 +229,18 @@ const Navbar: React.FC = () => {
         setOpenModalTurnOffStatus(true);
         setSearchJob(false);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
     // if(localStorage.getItem('accessToken')){
     //   set
     // }
+    setOpenLogin(true);
     setTimeout(() => {
       setOpenLogin(false);
-    }, 5000);
-  }, []);
+    }, 7000);
+  }, [profileV3?.typeRoleData]);
 
   const handleOpenRadioGroup = () => {
     setOpenRadioGroup(!openRadioGroup);
@@ -323,7 +324,7 @@ const Navbar: React.FC = () => {
   // const dataProfile = useSelector((state: RootState) => state.profileUser);
 
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   // console.log('profileV3', profileV3);
 
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
@@ -421,7 +422,7 @@ const Navbar: React.FC = () => {
         dispatch(setProfileV3(result));
         setRole(result.data.typeRoleData);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -846,6 +847,8 @@ const Navbar: React.FC = () => {
             (key) => key !== exceptionKey,
           );
 
+          await dispatch<any>(setProfileV3([]))
+
           for (const key of keysToRemove) {
             localStorage.removeItem(key);
           }
@@ -890,7 +893,7 @@ const Navbar: React.FC = () => {
       if (result) {
         dispatch(setProfileV3(result));
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // useEffect(() => {
@@ -1151,8 +1154,8 @@ const Navbar: React.FC = () => {
       className="actions-login"
       ref={refLogin}
       key="3"
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
-      // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') && 'none'}}
+    // style={{ pointerEvents: !localStorage.getItem('accessToken') ? "none" : "auto" }}
     >
       <button className="btn btn__login" onClick={handleClickLogin}>
         <div style={{ display: 'flex' }}>
@@ -1182,8 +1185,8 @@ const Navbar: React.FC = () => {
           // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
           display:
             !localStorage.getItem('accessToken') &&
-            openLogin &&
-            location?.pathname === '/'
+              openLogin &&
+              location?.pathname === '/'
               ? 'block'
               : 'none',
         }}
@@ -1208,6 +1211,34 @@ const Navbar: React.FC = () => {
             <LoginArrowBlackIcon />
             {languageRedux === 1 ? home.sign_in : homeEn.sign_in}
           </Button> */}
+        </div>
+      </div>
+      <div
+        className="login__hover__container"
+        style={{
+          // visibility: localStorage.getItem('accessToken') ? "hidden" : "visible"
+          display:
+            localStorage.getItem('accessToken') &&
+              profileV3?.name === "Your name" &&
+              profileV3?.phone === "" &&
+              profileV3?.typeRoleData !== null &&
+              openLogin &&
+              location?.pathname === '/'
+              ? 'block'
+              : 'none',
+        }}
+      >
+        <div className="login__hover">
+          <h3>{languageRedux === 1 ? 'Cập nhật hồ sơ' : 'Update profile'}</h3>
+          <div className="login__hover__p">
+            <p>
+              {
+                languageRedux === 1 ?
+                  "Hoàn thành hồ sơ và bạn sẽ có cơ hội được nhà tuyển dụng tìm kiếm liên hệ." :
+                  "Complete your profile and you'll have a chance to be contacted by the recruiter you're looking for."
+              }
+            </p>
+          </div>
         </div>
       </div>
       <Spin indicator={antIcon} spinning={spinning}>
@@ -1251,7 +1282,11 @@ const Navbar: React.FC = () => {
                         <p>
                           {companyName
                             ? companyName
-                            : languageData?.home_page?.un_update_infor}
+                            :
+                            languageRedux === 1 ?
+                              "Hãy cập nhật thông tin công ty" :
+                              "Please update company information"
+                          }
                         </p>
                       </>
                     ) : (
@@ -1265,10 +1300,12 @@ const Navbar: React.FC = () => {
                       {profileV3?.typeRoleData === 1
                         ? profileV3?.companyInfomation?.email
                           ? profileV3?.companyInfomation?.email
-                          : languageData?.home_page?.un_update_infor
+                          : languageRedux === 1 ?
+                            "Hãy cập nhật thông tin công ty" :
+                            "Please update company information"
                         : profileV3?.email
-                        ? profileV3?.email
-                        : languageData?.home_page?.un_update_infor}
+                          ? profileV3?.email
+                          : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
                   {profileV3?.typeRoleData === 1 ? (
@@ -1277,7 +1314,9 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3?.companyInfomation !== null
                           ? profileV3?.companyInfomation?.phone
-                          : languageData?.home_page?.un_update_infor}
+                          : languageRedux === 1 ?
+                            "Hãy cập nhật thông tin công ty" :
+                            "Please update company information"}
                       </p>
                     </span>
                   ) : (
@@ -1307,10 +1346,10 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3?.profileLocations?.length > 0
                           ? profileV3?.profileLocations?.map(
-                              (location: any) => {
-                                return `${location.fullName} , `;
-                              },
-                            )
+                            (location: any) => {
+                              return `${location.fullName} , `;
+                            },
+                          )
                           : languageData?.home_page?.un_update_infor}
                       </p>
                     </span>
@@ -1323,8 +1362,8 @@ const Navbar: React.FC = () => {
                       <p>
                         {profileV3 && profileV3?.profileCategories?.length > 0
                           ? profileV3?.profileCategories.map((profile: any) => {
-                              return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                            })
+                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                          })
                           : languageData?.home_page?.un_update_infor}
                       </p>
                     </span>
@@ -1350,9 +1389,9 @@ const Navbar: React.FC = () => {
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1422,9 +1461,9 @@ const Navbar: React.FC = () => {
                   defaultValue={languageId}
                   className="sub-login-radio-group"
                   onChange={handleChangeLanguage}
-                  // style={{
-                  //   display: openRadioGroup ? 'flex' : 'none',
-                  // }}
+                // style={{
+                //   display: openRadioGroup ? 'flex' : 'none',
+                // }}
                 >
                   <Radio value={1}>
                     <VNSubLoginIcon />
@@ -1502,54 +1541,54 @@ const Navbar: React.FC = () => {
         <BellIcon />
       </Button>
     </Badge>,
-    <div
-      key="4"
-      className="wrap-btn_notice btn-noti_icon 
-border-aniation_download
-"
-    >
-      <Button
-        className="btn-notice"
-        // onClick={() => setOpenNotificate(!openNotificate)}
-        name="btn-down"
-        ref={bellRef}
-      >
-        <div className="button-download">
-          {/* <DownloadIcon /> */}
+    //     <div
+    //       key="4"
+    //       className="wrap-btn_notice btn-noti_icon 
+    // border-aniation_download
+    // "
+    //     >
+    //       <Button
+    //         className="btn-notice"
+    //         // onClick={() => setOpenNotificate(!openNotificate)}
+    //         name="btn-down"
+    //         ref={bellRef}
+    //       >
+    //         <div className="button-download">
+    //           {/* <DownloadIcon /> */}
 
-          <img src="./images/down.gif" alt="" />
-        </div>
-        {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
-      </Button>
-      <div className="sub-icon_qr">
-        <h2>{languageData?.download_hijob_app}</h2>
-        <img
-          src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
-          alt={languageData?.err_none_img}
-        />
-        <div className="sub-icon_apps">
-          <Link
-            to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
-            target="_seft"
-          >
-            <img
-              id="img-gallery"
-              src={require('../../img/langdingPage/image 43.png')}
-              alt={languageData?.err_none_img}
-            />
-          </Link>
-          <Link
-            to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
-            target="_seft"
-          >
-            <img
-              src={require('../../img/langdingPage/image 45.png')}
-              alt={languageData?.err_none_img}
-            />
-          </Link>
-        </div>
-      </div>
-    </div>,
+    //           <img src="./images/down.gif" alt="" />
+    //         </div>
+    //         {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
+    //       </Button>
+    //       <div className="sub-icon_qr">
+    //         <h2>{languageData?.download_hijob_app}</h2>
+    //         <img
+    //           src="https://hi-job-app-upload.s3.ap-southeast-1.amazonaws.com/images/web/public/qr-code.jpg"
+    //           alt={languageData?.err_none_img}
+    //         />
+    //         <div className="sub-icon_apps">
+    //           <Link
+    //             to="https://play.google.com/store/apps/details?id=com.neoworks.hijob"
+    //             target="_seft"
+    //           >
+    //             <img
+    //               id="img-gallery"
+    //               src={require('../../img/langdingPage/image 43.png')}
+    //               alt={languageData?.err_none_img}
+    //             />
+    //           </Link>
+    //           <Link
+    //             to="https://apps.apple.com/vn/app/hijob-search-job-in-vietnam/id6446360701?l=vi"
+    //             target="_seft"
+    //           >
+    //             <img
+    //               src={require('../../img/langdingPage/image 45.png')}
+    //               alt={languageData?.err_none_img}
+    //             />
+    //           </Link>
+    //         </div>
+    //       </div>
+    //     </div>,
     <div
       style={{
         display: 'flex',
@@ -1705,8 +1744,8 @@ border-aniation_download
                     <p>
                       {profileV3?.profileLocations?.length > 0
                         ? profileV3?.profileLocations?.map((location: any) => {
-                            return `${location.fullName} , `;
-                          })
+                          return `${location.fullName} , `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1719,8 +1758,8 @@ border-aniation_download
                     <p>
                       {profileV3 && profileV3?.profileCategories?.length > 0
                         ? profileV3?.profileCategories.map((profile: any) => {
-                            return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
-                          })
+                          return `${profile.parentCategory.fullName} / ${profile.fullName}, `;
+                        })
                         : languageData?.home_page?.un_update_infor}
                     </p>
                   </span>
@@ -1743,9 +1782,9 @@ border-aniation_download
                         ? 'none'
                         : '1px solid rgb(170, 170, 170)',
                   }}
-                  // onClick={() => {
-                  //   window.open('/history', "_top")
-                  // }}
+                // onClick={() => {
+                //   window.open('/history', "_top")
+                // }}
                 >
                   <PaperSubLoginIcon />
                   <span>{languageData?.history}</span>
@@ -1857,9 +1896,8 @@ border-aniation_download
 
   return (
     <div
-      className={`modal-navbar ${
-        openCollapseFilter ? 'show-modal_navbar' : ''
-      }`}
+      className={`modal-navbar ${openCollapseFilter ? 'show-modal_navbar' : ''
+        }`}
     >
       <Container className="nav" ref={ref}>
         <ModalLogin
@@ -1978,7 +2016,7 @@ border-aniation_download
                 {openNotificate ? <Notificate /> : <></>}
               </div>
 
-              <div
+              {/* <div
                 className="wrap-btn_notice btn-noti_icon 
             border-aniation_download
             "
@@ -1990,11 +2028,10 @@ border-aniation_download
                   ref={bellRef}
                 >
                   <div className="button-download">
-                    {/* <DownloadIcon /> */}
 
                     <img src="./images/down.gif" alt="" />
                   </div>
-                  {/* <img src="images/gif/icons8-installing-updates.gif" alt="" /> */}
+                  <img src="images/gif/icons8-installing-updates.gif" alt="" />
                 </Button>
                 <div className="sub-icon_qr">
                   <h2>{languageData?.download_hijob_app}</h2>
@@ -2024,7 +2061,7 @@ border-aniation_download
                     </Link>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </Center>
           </div>
           <Right className="div-nav-right">
