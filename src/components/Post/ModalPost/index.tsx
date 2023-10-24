@@ -45,7 +45,9 @@ interface IModalPost {
 const ModalPost: React.FC<IModalPost> = (props) => {
   const { openModalPost, setOpenModalPost } = props;
   const handleClose = () => setOpenModalPost(false);
-  const languageRedux = useSelector((state: RootState) => state.changeLaguage.language)
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
 
   const onclick = async () => {
     window.location.reload();
@@ -70,11 +72,9 @@ const ModalPost: React.FC<IModalPost> = (props) => {
               position: 'relative',
             }}
           >
-            {
-              languageRedux === 1 ?
-                "Đã đăng tuyển thành công!" :
-                "Successfully posted!"
-            }
+            {languageRedux === 1
+              ? 'Đã đăng tuyển thành công!'
+              : 'Successfully posted!'}
             <IconButton
               aria-label="close"
               onClick={handleClose}
@@ -92,11 +92,9 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             className="modal-text_modalPost"
             style={{ margin: '24px 0', fontSize: '15px' }}
           >
-            {
-              languageRedux === 1 ?
-                "Bạn có thể theo dõi bài đăng tuyển của mình thông qua:" :
-                "You can track your job posting through:"
-            }
+            {languageRedux === 1
+              ? 'Bạn có thể theo dõi bài đăng tuyển của mình thông qua:'
+              : 'You can track your job posting through:'}
           </h6>
 
           {/* <h4
@@ -152,7 +150,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
           >
             <Button
               onClick={() => {
-                window.open(`/history?post=2`, '_parent');
+                window.open(`/history`, '_parent');
               }}
               className="btn-apply"
               type={'primary'}
@@ -165,11 +163,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
                 backgroundColor: '#0d99ff',
               }}
             >
-              {
-                languageRedux === 1 ?
-                  "Đến trang lịch sử" :
-                  "Go to history page"
-              }
+              {languageRedux === 1 ? 'Đến trang lịch sử' : 'Go to history page'}
             </Button>
             {/* <Button
               onClick={onclick}

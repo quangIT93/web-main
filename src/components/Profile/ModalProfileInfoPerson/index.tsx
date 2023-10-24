@@ -94,23 +94,24 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   const [selectedProvince, setSelectedProvince] = useState<any>(
     profile?.addressText
       ? {
-        province_id: profile?.addressText?.id,
-        province_fullName: profile?.addressText.fullName,
-      }
+          province_id: profile?.addressText?.id,
+          province_fullName: profile?.addressText.fullName,
+        }
       : null,
   );
-  console.log('profile', profile);
 
   // const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
 
-  const [name, setName] = useState(profile?.name && '');
-  const [jobTypeName, setJobTypeName] = useState(profile?.jobTypeName === null ? '' :
-    profile?.jobTypeName);
-  const [introduction, setIntroduction] = useState(profile?.introduction === null ? '' :
-    profile?.introduction);
+  const [name, setName] = useState(profile?.name !== null ? profile?.name : '');
+  const [jobTypeName, setJobTypeName] = useState(
+    profile?.jobTypeName === null ? '' : profile?.jobTypeName,
+  );
+  const [introduction, setIntroduction] = useState(
+    profile?.introduction === null ? '' : profile?.introduction,
+  );
 
   const [messageApi, contextHolder] = message.useMessage();
   const dataProvinces = useSelector(
@@ -366,7 +367,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               size="small"
               sx={{ width: '100%', marginTop: '4px' }}
               placeholder="Họ và tên"
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {name?.length > 90 ? (
@@ -431,7 +432,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                       helperText: 'DD/MM/YYYY',
                     },
                   }}
-                // format="DD/MM/YYYY"
+                  // format="DD/MM/YYYY"
                 />
               </div>
               <div className="wrap-noti_input">
@@ -474,9 +475,9 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={
                 selectedProvince && dataProvinces?.length > 0
                   ? dataProvinces?.find(
-                    (province: any) =>
-                      province.province_id === selectedProvince.province_id,
-                  )
+                      (province: any) =>
+                        province.province_id === selectedProvince.province_id,
+                    )
                   : null
               }
               defaultValue={selectedProvince}
@@ -486,7 +487,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                   {...params}
                   placeholder={language?.profile_page?.place_address}
                   size="small"
-                // error={!selectedProvince}
+                  // error={!selectedProvince}
                 />
               )}
             />
@@ -512,7 +513,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               placeholder={
                 languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
               }
-            // error={titleError} // Đánh dấu lỗi
+              // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
               {jobTypeName?.length > 100 ? (
@@ -554,12 +555,12 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               // label="Một số đặc điểm nhận diện công ty"
               placeholder={language?.introduce_yourself_to_the_recruiter}
               error={introduction?.length > 500} // Đánh dấu lỗi
-            // onKeyDown={(event) => {
-            //   // if (event.key === 'Enter') {
-            //   //   event.preventDefault();
-            //   // }
-            //   console.log(event.target);
-            // }}
+              // onKeyDown={(event) => {
+              //   // if (event.key === 'Enter') {
+              //   //   event.preventDefault();
+              //   // }
+              //   console.log(event.target);
+              // }}
             />
             <div className="wrap-noti_input">
               {introduction?.length === 0 ? (
