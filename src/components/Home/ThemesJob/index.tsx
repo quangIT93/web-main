@@ -97,7 +97,9 @@ const ThemesJob: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate();
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
-  const [loading, setLoading] = React.useState(false);
+  const [loadingCarousel, setLoadingCarousel] = React.useState(true);
+  const [loadingThemeList, setLoadingThemeList] = React.useState(true);
+  const [loading, setLoadingT] = React.useState(false);
 
   const [endData, setEndData] = React.useState(0);
   // state redux
@@ -163,14 +165,15 @@ const ThemesJob: React.FC = () => {
   const getPostByThemeId = async () => {
     try {
       let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
-
+      setLoadingCarousel(true)
       const result = await themeApi.getThemesEnable(
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
+        setLoadingCarousel(false)
         setListThem(result);
-
+        setLoadingThemeList(true)
         const list = await postApi?.getPostByThemeId(
           storedSettings?.placeId
             ? storedSettings?.placeId
@@ -182,6 +185,7 @@ const ThemesJob: React.FC = () => {
         if (list) {
           setPostByTheme(list);
           setAutomatic(true);
+          setLoadingThemeList(false)
         }
       }
     } catch (error) {
@@ -196,14 +200,14 @@ const ThemesJob: React.FC = () => {
     searchParams.delete('theme-id');
     searchParams.delete('categories-id');
     setSearchParams(searchParams);
-    setLoading(true);
-    setTimeout(() => {
-      if (listTheme) {
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    }, 1000);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   if (listTheme) {
+    //     setLoading(false);
+    //   } else {
+    //     setLoading(false);
+    //   }
+    // }, 3000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
@@ -221,7 +225,7 @@ const ThemesJob: React.FC = () => {
     window.open('/more-jobs', '_parent');
   };
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
   return (
     <Box
       sx={{ flexGrow: 1, paddingBottom: '24px' }}
@@ -275,11 +279,11 @@ const ThemesJob: React.FC = () => {
       ) : (
         <></>
       )}
-      <Skeleton loading={loading} active>
+      <Skeleton loading={loadingCarousel} active>
         <ListCompanyCarousel listTheme={listTheme} />
       </Skeleton>
 
-      <Skeleton loading={loading} active>
+      <Skeleton loading={loadingThemeList} active>
         <>
           {automatic && (
             <>
@@ -320,7 +324,7 @@ const ThemesJob: React.FC = () => {
                   zIndex: (theme: any) => theme.zIndex.drawer + 1,
                 }}
                 open={openBackdrop}
-                //   onClick={handleClose}
+              //   onClick={handleClose}
               >
                 <CircularProgress color="inherit" />
               </Backdrop>

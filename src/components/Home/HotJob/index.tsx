@@ -48,6 +48,7 @@ import { RootState } from '../../../store/reducer';
 // import { homeEn } from 'validations/lang/en/home';
 
 import { setCookie } from 'cookies';
+import { Skeleton } from 'antd';
 
 // interface ItemTheme {
 //   id: number;
@@ -63,6 +64,7 @@ const HotJob: React.FC = () => {
   // const [openBackdrop, setOpenBackdrop] = React.useState(false);
 
   const [hotjob, setHotJob] = React.useState<any>([]);
+  const [loading, setLoading] = React.useState<any>(false);
 
   // const dispatch = useDispatch();
   // const { setPostByTheme } = bindActionCreators(actionCreators, dispatch);
@@ -103,12 +105,16 @@ const HotJob: React.FC = () => {
 
   const getHotJob = async () => {
     try {
+      setLoading(true);
       const result = await hotJobApi.getHotJobTheme(
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
         setHotJob(result.data);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1500);
       }
     } catch (error) {
       console.log(error);
@@ -173,7 +179,7 @@ const HotJob: React.FC = () => {
       item.query,
     );
   };
-  console.log('hotjob', hotjob);
+  // console.log('hotjob', hotjob);
   return (
     <Box
       sx={{
@@ -201,51 +207,54 @@ const HotJob: React.FC = () => {
           <ArrowrightIcon width={20} height={20} />
         </div>
       </div>
-      <div className="hotjob-content">
-        {hotjob &&
-          hotjob.map((item: any, index: number) => {
-            return (
-              <div
-                className="slide-hotjob-item"
-                key={index}
-                onClick={(event) => {
-                  const analytics: any = getAnalytics();
+      <Skeleton loading={loading} active>
+        <div className="hotjob-content">
+          {hotjob &&
+            hotjob.map((item: any, index: number) => {
+              return (
+                <div
+                  className="slide-hotjob-item"
+                  key={index}
+                  onClick={(event) => {
+                    const analytics: any = getAnalytics();
 
-                  logEvent(analytics, 'screen_view' as string, {
-                    // screen_name: screenName as string,
-                    page_title: `/web_click_hotJob_${item.title}` as string,
-                  });
+                    logEvent(analytics, 'screen_view' as string, {
+                      // screen_name: screenName as string,
+                      page_title: `/web_click_hotJob_${item.title}` as string,
+                    });
 
-                  logEvent(analytics, 'event_web_click_HiJob' as string, {
-                    // screen_name: screenName as string,
-                    web_page_home: `/hotJob_${item?.title}` as string,
-                  });
-                  handleClickItem(
-                    event,
-                    item.id,
-                    item.themeId,
-                    item.count,
-                    item.api,
-                    item.query,
-                  );
-                }}
-              >
-                <div className="div-img-themes-item">
-                  <img src={item?.image} alt={language?.err_none_img} />
-                </div>
-                <div className="div-info-themes-item">
-                  <div className="div-info-themes-item_top">
-                    <h5>{item?.title}</h5>
+                    logEvent(analytics, 'event_web_click_HiJob' as string, {
+                      // screen_name: screenName as string,
+                      web_page_home: `/hotJob_${item?.title}` as string,
+                    });
+                    handleClickItem(
+                      event,
+                      item.id,
+                      item.themeId,
+                      item.count,
+                      item.api,
+                      item.query,
+                    );
+                  }}
+                >
+                  <div className="div-img-themes-item">
+                    <img src={item?.image} alt={language?.err_none_img} />
                   </div>
-                  <div className="div-info-themes-item_bot">
-                    <IconBriefCase />
-                    <h6>{item?.count}</h6>
+                  <div className="div-info-themes-item">
+                    <div className="div-info-themes-item_top">
+                      <h5>{item?.title}</h5>
+                    </div>
+                    <div className="div-info-themes-item_bot">
+                      <IconBriefCase />
+                      <h6>{item?.count}</h6>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-      </div>
+              );
+            })}
+        </div>
+      </Skeleton>
+
       {/* <Swiper
         navigation={true}
         // mousewheel={true}

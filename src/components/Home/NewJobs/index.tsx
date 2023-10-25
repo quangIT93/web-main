@@ -245,7 +245,7 @@ const NewJobs: React.FC = () => {
       //   languageRedux === 1 ? 'vi' : 'en',
       // );
       // console.log('childCateloriesArray', childCateloriesArray);
-
+      setLoading(true);
       let userSelected = JSON.parse(
         getCookie('userSelected') || '{}',
       ) as UserSelected;
@@ -276,6 +276,9 @@ const NewJobs: React.FC = () => {
       if (result2) {
         dispatch(setPostNewestApiV3(result2));
         setOpenBackdrop(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2500);
       }
 
       // if (result2) {
@@ -298,22 +301,22 @@ const NewJobs: React.FC = () => {
   React.useEffect(() => {
     localStorage.getItem('accessToken') && setIslogined(true);
 
+    setLoading(true);
     getPostNewest();
     // delete param when back to page
     // searchParams.delete("theme-id")
     // setSearchParams(searchParams)
-    setLoading(true);
     setTimeout(() => {
       const AppliedPostedJobs = localStorage.getItem('numberAppliedPostedJobs');
       Number(AppliedPostedJobs) > 0 && setIsAppliedPostedJobs(true);
-      if (postNewest.data) {
-        setLoading(false);
-      }
-    }, 1000);
+      // if (postNewest.data) {
+      //   setLoading(false);
+      // }
+    }, 2500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, profileV3]);
 
-  const handleClickHelpSearch = () => {};
+  const handleClickHelpSearch = () => { };
 
   return (
     <>
@@ -332,7 +335,13 @@ const NewJobs: React.FC = () => {
           <div className="title-container">
             <div className="title">
               <NewJobIcon width={25} height={25} />
-              <h2>{language?.newest_jobs}</h2>
+              <h2>
+                {
+                  languageRedux === 1 ?
+                    "Công việc mới nhất" :
+                    "Newest Jobs"
+                }
+              </h2>
               <div className="help-search" onClick={handleClickHelpSearch}>
                 <QuestionMarkIcon />
                 <div className={`login__hover__container `}>
@@ -363,15 +372,15 @@ const NewJobs: React.FC = () => {
             </div>
           </div>
 
-          <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
-            {postNewestV3.data.map((item: PostNewestV3, index: number) => (
-              <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                <Skeleton loading={loading} active>
+          <Skeleton loading={loading} active>
+            <Grid container spacing={3} columns={{ xs: 12, sm: 4, md: 12 }}>
+              {postNewestV3.data.map((item: PostNewestV3, index: number) => (
+                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                   <JobCardV3 item={item} />
-                </Skeleton>
-              </Grid>
-            ))}
-          </Grid>
+                </Grid>
+              ))}
+            </Grid>
+          </Skeleton>
           {/* <Stack
             spacing={2}
             sx={{ display: 'flex', alignItems: 'center', margin: '24px 0' }}

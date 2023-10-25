@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Avatar } from 'antd';
+import { Avatar, Skeleton } from 'antd';
 
 import {
   NewsPaperIcon,
@@ -25,9 +25,10 @@ const HijobNews = () => {
   const [news, setNews] = React.useState<any>();
   const [like, setLike] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const [loading, setLoading] = React.useState<any>(false);
   const handleGetHijobNews = async () => {
     try {
+      setLoading(true)
       const result = await communityApi.getCommunityNews(
         '',
         '5',
@@ -37,6 +38,9 @@ const HijobNews = () => {
       );
       if (result) {
         setNews(result?.data?.communications);
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
       }
     } catch (error) {
       console.log(error);
@@ -83,79 +87,81 @@ const HijobNews = () => {
         </p>
       </div>
       <div className="community-content-body">
-        {news &&
-          news.map((newsItem: any, index: any) => (
-            <div
-              className="community-content-body-right_item"
-              key={index}
-              onClick={() => handleMoveToDetailPage(newsItem?.id)}
-            >
-              <div className="community-content-body_left">
-                {newsItem?.images.length !== 0 ? (
-                  <Avatar
-                    shape="square"
-                    size={50}
-                    src={newsItem?.images[0]?.image}
-                  />
-                ) : (
-                  <Avatar shape="square" size={50} src="./images/news.jpg" />
-                )}
-              </div>
-              <div className="community-content-body_right">
-                <div className="body-item-title">
-                  {/* <Tooltip title={newsItem?.title}> */}
-                  {/* <h3>{newsItem?.title}</h3> */}
-                  {/* </Tooltip> */}
-                  {/* <div className="title"> */}
-                  <Typography
-                    component="div"
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      fontSize: '12px',
-                      margin: 0,
-                      whiteSpace: 'nowrap',
-                      width: '75%',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      fontWeight: '500',
-                      lineheight: '20px',
-                      color: '#000000',
-                    }}
-                  >
-                    {newsItem?.title}
-                  </Typography>
-                  {/* </div> */}
-                  <p>{newsItem?.createdAtText}</p>
+        <Skeleton loading={loading} active>
+          {news &&
+            news.map((newsItem: any, index: any) => (
+              <div
+                className="community-content-body-right_item"
+                key={index}
+                onClick={() => handleMoveToDetailPage(newsItem?.id)}
+              >
+                <div className="community-content-body_left">
+                  {newsItem?.images.length !== 0 ? (
+                    <Avatar
+                      shape="square"
+                      size={50}
+                      src={newsItem?.images[0]?.image}
+                    />
+                  ) : (
+                    <Avatar shape="square" size={50} src="./images/news.jpg" />
+                  )}
                 </div>
-                <div
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
-                  <div></div>
-                  <div className="body-item-actions">
-                    <div className="action-item">
-                      <EysIcon />
-                      <p>{newsItem?.communicationViewsCount}</p>
-                    </div>
-                    <div
-                      className={
-                        newsItem.liked ? 'action-item liked' : 'action-item'
-                      }
-                      onClick={(e) => handleLikeCommunity(newsItem?.id, e)}
+                <div className="community-content-body_right">
+                  <div className="body-item-title">
+                    {/* <Tooltip title={newsItem?.title}> */}
+                    {/* <h3>{newsItem?.title}</h3> */}
+                    {/* </Tooltip> */}
+                    {/* <div className="title"> */}
+                    <Typography
+                      component="div"
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        fontSize: '12px',
+                        margin: 0,
+                        whiteSpace: 'nowrap',
+                        width: '75%',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden',
+                        fontWeight: '500',
+                        lineheight: '20px',
+                        color: '#000000',
+                      }}
                     >
-                      <LikeIcon />
-                      <p>{newsItem?.communicationLikesCount}</p>
-                    </div>
-                    <div className="action-item">
-                      <CommentIcon />
-                      <p>{newsItem?.communicationCommentsCount}</p>
+                      {newsItem?.title}
+                    </Typography>
+                    {/* </div> */}
+                    <p>{newsItem?.createdAtText}</p>
+                  </div>
+                  <div
+                    style={{ display: 'flex', justifyContent: 'space-between' }}
+                  >
+                    <div></div>
+                    <div className="body-item-actions">
+                      <div className="action-item">
+                        <EysIcon />
+                        <p>{newsItem?.communicationViewsCount}</p>
+                      </div>
+                      <div
+                        className={
+                          newsItem.liked ? 'action-item liked' : 'action-item'
+                        }
+                        onClick={(e) => handleLikeCommunity(newsItem?.id, e)}
+                      >
+                        <LikeIcon />
+                        <p>{newsItem?.communicationLikesCount}</p>
+                      </div>
+                      <div className="action-item">
+                        <CommentIcon />
+                        <p>{newsItem?.communicationCommentsCount}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div className="border-line"></div>
               </div>
-              <div className="border-line"></div>
-            </div>
-          ))}
+            ))}
+        </Skeleton>
       </div>
       <ModalLogin
         openModalLogin={openModalLogin}
