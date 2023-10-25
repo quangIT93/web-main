@@ -448,7 +448,7 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    getCountUnread();
+    localStorage.getItem('accessToken') && getCountUnread();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     receivedMessages,
@@ -472,7 +472,7 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    getCountAppliedNew();
+    localStorage.getItem('accessToken') && getCountAppliedNew();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -901,7 +901,7 @@ const Navbar: React.FC = () => {
   // }, []);
 
   React.useEffect(() => {
-    getAppliedPostedJobs();
+    if (localStorage.getItem('accessToken')) getAppliedPostedJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -70,7 +70,7 @@ const AppliedPostedJob: React.FC = () => {
   const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
-  const [loading, setloading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   // const [index, setIndex] = React.useState(0);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
@@ -111,7 +111,7 @@ const AppliedPostedJob: React.FC = () => {
 
   const getAppliedPostedJobs = async () => {
     try {
-      setloading(true);
+      setLoading(true);
       const result =
         profile?.typeRoleData === 0
           ? await historyApplicator.getAllSubmitedApplied(
@@ -133,7 +133,7 @@ const AppliedPostedJob: React.FC = () => {
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
         setTimeout(() => {
-          setloading(false);
+          setLoading(false);
         }, 1000);
 
         setAppliedPostedJob(result.data);
@@ -155,7 +155,7 @@ const AppliedPostedJob: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getAppliedPostedJobs();
+    localStorage.getItem('accessToken') && getAppliedPostedJobs();
     localStorage.getItem('accessToken') && setIslogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, roleRedux, profile?.typeRoleData]);
@@ -260,54 +260,62 @@ const AppliedPostedJob: React.FC = () => {
                   </li>
                 </ul>
               </div> */}
-              {profile?.typeRoleData === 0 ? (
-                <Avatar
-                  sx={{
-                    width: '100%',
-                    maxHeight: '301px',
-                    height: 'auto',
-                    cursor: 'pointer',
-                  }}
-                  variant="square"
-                  src={banner}
-                  onClick={() => {
-                    window.open('/page-cv', '_parent');
-                  }}
-                >
-                  Banner
-                </Avatar>
+              {profile.length !== 0 ? (
+                profile?.typeRoleData === 0 ? (
+                  <Avatar
+                    sx={{
+                      width: '100%',
+                      maxHeight: '301px',
+                      height: 'auto',
+                      cursor: 'pointer',
+                    }}
+                    variant="square"
+                    src={banner}
+                    onClick={() => {
+                      window.open('/page-cv', '_parent');
+                    }}
+                  >
+                    Banner
+                  </Avatar>
+                ) : (
+                  <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    autoplay={{
+                      delay: 3500,
+                      disableOnInteraction: false,
+                    }}
+                    // navigation={true}
+                    modules={[Autoplay, Navigation]}
+                    className="banner-rescruit-swiper"
+                    loop={true}
+                  >
+                    <SwiperSlide>
+                      <img
+                        onClick={() => {
+                          window.open('/post', '_parent');
+                        }}
+                        src={banner_recruit_1}
+                        alt=""
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        onClick={() => {
+                          window.open('/candidatesAll', '_parent');
+                        }}
+                        src={banner_recruit_2}
+                        alt=""
+                      />
+                    </SwiperSlide>
+                  </Swiper>
+                )
               ) : (
-                <Swiper
-                  spaceBetween={30}
-                  centeredSlides={true}
-                  autoplay={{
-                    delay: 3500,
-                    disableOnInteraction: false,
-                  }}
-                  // navigation={true}
-                  modules={[Autoplay, Navigation]}
-                  className="banner-rescruit-swiper"
-                  loop={true}
-                >
-                  <SwiperSlide>
-                    <img
-                      onClick={() => {
-                        window.open('/post', '_parent');
-                      }}
-                      src={banner_recruit_1}
-                      alt=""
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img
-                      onClick={() => {
-                        window.open('/candidatesAll', '_parent');
-                      }}
-                      src={banner_recruit_2}
-                      alt=""
-                    />
-                  </SwiperSlide>
-                </Swiper>
+                <Skeleton.Button
+                  style={{ height: '301px' }}
+                  active={true}
+                  block={true}
+                />
               )}
             </div>
             {/* <Button
@@ -317,7 +325,7 @@ const AppliedPostedJob: React.FC = () => {
               {languageRedux === 1 ? 'Tạo cv của bạn' : 'Create Your Resume'}
             </Button> */}
           </div>
-          <Skeleton loading={false} active>
+          <Skeleton loading={loading} active>
             {appliedPostedJob.length !== 0 &&
             localStorage.getItem('accessToken') ? (
               <div

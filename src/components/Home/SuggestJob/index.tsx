@@ -43,7 +43,7 @@ import {
 // import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
 
-import { Button } from 'antd';
+import { Button, Skeleton } from 'antd';
 
 // import postApi from 'api/postApi';
 import nearByApi from 'api/apiNearBy';
@@ -100,7 +100,7 @@ const ThemesJob: React.FC = () => {
   // const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const [loading, setLoading] = React.useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate();
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
@@ -174,6 +174,7 @@ const ThemesJob: React.FC = () => {
 
   const getPostByThemeId = async () => {
     try {
+      setLoading(true);
       const result = await nearByApi.getNearByJob(
         // null,
         // Number(searchParams.get('categories-id')),
@@ -202,14 +203,22 @@ const ThemesJob: React.FC = () => {
         setAutomatic(true);
         // }
         setNearJob(result.data.posts);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      } else {
+        setLoading(false);
       }
     } catch (error) {
       setAutomatic(true);
       console.log(error);
+      // setLoading(false);
     }
   };
   React.useEffect(() => {
-    getPostByThemeId();
+    if (localStorage.getItem('accessToken')) {
+      getPostByThemeId();
+    }
 
     // delete param when back to page
     searchParams.delete('theme-id');
@@ -297,21 +306,22 @@ const ThemesJob: React.FC = () => {
       )}
 
       <>
-        {automatic && (
-          <>
-            <Grid
-              container
-              spacing={3}
-              columns={{ xs: 12, sm: 4, md: 12 }}
-              // sx={{ marginTop: '-8px' }}
-            >
-              {nearJob.map((item: PostTheme, index: number) => (
-                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                  <JobCard item={item} />
-                </Grid>
-              ))}
-            </Grid>
-            {/* <Stack
+        <Skeleton loading={loading} active>
+          {automatic && (
+            <>
+              <Grid
+                container
+                spacing={3}
+                columns={{ xs: 12, sm: 4, md: 12 }}
+                // sx={{ marginTop: '-8px' }}
+              >
+                {nearJob.map((item: PostTheme, index: number) => (
+                  <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                    <JobCard item={item} />
+                  </Grid>
+                ))}
+              </Grid>
+              {/* <Stack
               spacing={2}
               sx={{
                 display: 'flex',
@@ -354,19 +364,20 @@ const ThemesJob: React.FC = () => {
                 )}
               </Space>
             </Stack> */}
-            <Backdrop
-              sx={{
-                color: '#0d99ff ',
-                backgroundColor: 'transparent',
-                zIndex: (theme: any) => theme.zIndex.drawer + 1,
-              }}
-              open={openBackdrop}
-              //   onClick={handleClose}
-            >
-              <CircularProgress color="inherit" />
-            </Backdrop>
-          </>
-        )}
+              <Backdrop
+                sx={{
+                  color: '#0d99ff ',
+                  backgroundColor: 'transparent',
+                  zIndex: (theme: any) => theme.zIndex.drawer + 1,
+                }}
+                open={openBackdrop}
+                //   onClick={handleClose}
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            </>
+          )}
+        </Skeleton>
       </>
       <ModalLogin
         openModalLogin={openModalLogin}
