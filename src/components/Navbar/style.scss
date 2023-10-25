@@ -549,7 +549,7 @@
       display: flex;
 
       @media screen and (max-width: 1024px) and (min-width: 630px) {
-        width: 50%;
+        // width: 50%;
       }
 
       @media screen and (max-width: 629px) {
@@ -1025,7 +1025,7 @@
   }
 
   .div-nav-center {
-    padding-left: 10px;
+    padding-left: 100px;
 
     @media screen and (min-width: 920px) {
       // padding-left: 100px;

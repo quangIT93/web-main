@@ -54,12 +54,12 @@ const CompanyRole: React.FC<ICompany> = (props) => {
       'image/*': [],
     },
     // maxFiles: 5,
-    onDragEnter: () => {},
-    onDragLeave: () => {},
-    onDrop: () => {},
+    onDragEnter: () => { },
+    onDragLeave: () => { },
+    onDrop: () => { },
   });
 
-  console.log("companyData",companyData)
+  console.log("companyData", companyData)
 
   return (
     <Skeleton loading={loading} active>
@@ -153,7 +153,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '8px' }}
                 disabled={true}
-                //   error={titleError} // Đánh dấu lỗi
+              //   error={titleError} // Đánh dấu lỗi
               />
             </div>
             <div className="edit-tax-company-role">
@@ -285,7 +285,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '8px' }}
                 disabled={true}
-                //   error={titleError} // Đánh dấu lỗi
+              //   error={titleError} // Đánh dấu lỗi
               />
             </div>
             <div className="edit-mail-company">
@@ -305,7 +305,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '8px' }}
                 disabled={true}
-                //   error={titleError} // Đánh dấu lỗi
+              //   error={titleError} // Đánh dấu lỗi
               />
             </div>
           </div>
@@ -329,9 +329,9 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '8px' }}
                 disabled={true}
-                //   error={titleError} // Đánh dấu lỗi
+              //   error={titleError} // Đánh dấu lỗi
               />
-              
+
             </div>
 
             <div className="edit-web-company">
@@ -351,7 +351,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '8px' }}
                 disabled={true}
-                //   error={titleError} // Đánh dấu lỗi
+              //   error={titleError} // Đánh dấu lỗi
               />
             </div>
           </div>
@@ -375,7 +375,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '8px' }}
                 disabled={true}
-                //   error={titleError} // Đánh dấu lỗi
+              //   error={titleError} // Đánh dấu lỗi
               />
             </div>
 
@@ -396,7 +396,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 size="small"
                 sx={{ width: '100%', marginTop: '8px' }}
                 disabled={true}
-                //   error={titleError} // Đánh dấu lỗi
+              //   error={titleError} // Đánh dấu lỗi
               />
             </div>
           </div>
@@ -451,12 +451,12 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                       <div className="item-image" key={index}>
                         <img
                           key={index}
-                          src={item?.image}
+                          src={item?.imagePath}
                           alt={language?.err_none_img}
                         />
-                        <div className="deleteButton">
+                        {/* <div className="deleteButton">
                           <DeleteImageComunityIcon />
-                        </div>
+                        </div> */}
                       </div>
                     ))}
                   </Box>
@@ -485,7 +485,7 @@ const CompanyRole: React.FC<ICompany> = (props) => {
                 value={companyData?.description}
                 sx={{ width: '100%', marginTop: '8px', fontSize: '14px' }}
                 placeholder={language?.company_page?.place_des}
-                //   error={titleError} // Đánh dấu lỗi
+              //   error={titleError} // Đánh dấu lỗi
               />
             </div>
           </div>

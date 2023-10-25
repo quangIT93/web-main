@@ -497,7 +497,7 @@ const ComunityCreatePost = () => {
                 languageRedux === 1 ? 'Chủ đề cần chia sẻ' : 'Topics to share'
               }
             />
-             <div className="wrap-noti_input">
+            <div className="wrap-noti_input">
               {valueTitle.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
@@ -513,8 +513,8 @@ const ComunityCreatePost = () => {
               ) : (
                 <></>
               )}
-            <span className="number-text">{`${valueTitle.length}/500`}</span>
-          </div>
+              <span className="number-text">{`${valueTitle.length}/500`}</span>
+            </div>
           </div>
           <div className="create-post-body_input">
             <h3>{languageRedux === 1 ? '2. Nội dung' : '2. Contents'}</h3>
@@ -539,7 +539,7 @@ const ComunityCreatePost = () => {
               }
               autoSize={{ minRows: 5, maxRows: 9 }}
             />
-              <div className="wrap-noti_input">
+            <div className="wrap-noti_input">
               {valueContent.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
@@ -555,8 +555,8 @@ const ComunityCreatePost = () => {
               ) : (
                 <></>
               )}
-            <span className="number-text">{`${valueContent.length}/1000`}</span>
-          </div>
+              <span className="number-text">{`${valueContent.length}/1000`}</span>
+            </div>
           </div>
           <div className="create-post-body_input">
             <h3>
