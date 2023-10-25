@@ -94,10 +94,10 @@ import ModalLogin from '../../../components/Home/ModalLogin';
 // };
 
 interface SearchProps {
-  value: string | undefined;
-  setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
+  value: string | undefined | null;
+  setValue: React.Dispatch<React.SetStateAction<string | undefined | null>>;
   setOpenCollapseFilter: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSearchIcon: (event: any, params: string | undefined) => any;
+  handleSearchIcon: (event: any, params: string | undefined | null) => any;
   openCollapseFilter: boolean;
   checkSearch: boolean;
 }
@@ -412,7 +412,7 @@ const SearchInput: React.FC<SearchProps> = ({
         optionFilterProp="children"
         size="large"
         value={value !== '' ? value : undefined}
-        searchValue={value}
+        searchValue={(value as string) || null || undefined}
         defaultValue={QUERY ? QUERY : null}
         // defaultValue={null}
         placeholder={

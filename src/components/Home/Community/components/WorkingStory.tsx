@@ -42,7 +42,7 @@ const WorkingStory = () => {
       );
       if (result) {
         setStories(result?.data?.communications);
-        setLike(result?.data?.communications?.liked);
+        setLike(false);
       }
     } catch (error) {
       console.log(error);
