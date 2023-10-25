@@ -322,7 +322,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
     >
       <Box sx={style} className="Modal-personnal-info modal-person">
         {contextHolder}
-        <form action="">
+        <form action="" style={{ fontSize: '14px' }}>
           <div
             style={{
               position: 'absolute',
@@ -352,6 +352,7 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               variant="body1"
               component="label"
               htmlFor="nameProfile"
+              sx={{ fontSize: '14px' }}
             >
               {language?.full_name} <span className="color-asterisk">*</span>
             </Typography>
@@ -362,8 +363,13 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
               value={name}
               onChange={handleSetFullName}
               size="small"
-              sx={{ width: '100%', marginTop: '4px' }}
+              sx={{ width: '100%', marginTop: '4px', fontSize: '14px' }}
               placeholder="Họ và tên"
+              inputProps={{
+                style: {
+                  fontSize: '14px',
+                },
+              }}
               // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
