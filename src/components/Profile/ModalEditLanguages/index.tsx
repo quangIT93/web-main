@@ -10,6 +10,7 @@ import {
   MenuItem,
   Button,
 } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CloseOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
@@ -70,6 +71,38 @@ const style = {
     width: 640,
   },
 };
+
+// Style Mui
+const theme = createTheme({
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        body1: {
+          fontSize: '14px',
+        },
+        h6: {
+          fontSize: '20px',
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        InputProps: {
+          style: {
+            fontSize: '14px',
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+        },
+      },
+    },
+  },
+});
 
 const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
   const {
@@ -174,127 +207,129 @@ const ModalEditLanguages: React.FC<IModalSkills> = (props) => {
   };
 
   return (
-    <Modal
-      open={openModalEditlanguages.open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box
-        sx={style}
-        className="Modal-personnal-info modal-person modal-languageProfile"
+    <ThemeProvider theme={theme}>
+      <Modal
+        open={openModalEditlanguages.open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        <div
-          style={{
-            position: 'absolute',
-            right: '20px',
-            top: '20px',
-            cursor: 'pointer',
-            // border: '1px solid',
-            borderRadius: '50%',
-            padding: '1px',
-          }}
-          onClick={handleClose}
+        <Box
+          sx={style}
+          className="Modal-personnal-info modal-person modal-languageProfile"
         >
-          <CloseOutlined style={{ fontSize: '30px' }} />
-        </div>
-        <Typography
-          id="modal-modal-title"
-          variant="h6"
-          component="h2"
-          align="center"
-          sx={{ marginBottom: '12px' }}
-        >
-          {languageRedux === 1
-            ? 'Sửa ngoại ngữ'
-            : languageRedux === 0
-            ? 'Edit Languages'
-            : ''}
-        </Typography>
-        <Box sx={{ marginBottom: '12px' }}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
+          <div
+            style={{
+              position: 'absolute',
+              right: '20px',
+              top: '20px',
+              cursor: 'pointer',
+              // border: '1px solid',
+              borderRadius: '50%',
+              padding: '1px',
+            }}
+            onClick={handleClose}
           >
-            {languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}{' '}
-            <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            type="text"
-            id="skill"
-            name="skill"
-            value={language}
-            onChange={handleOnchangeSkill}
-            defaultValue={openModalEditlanguages.name}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {language && language.length > 255 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Tên ngôn ngữ không được vượt quá 255 ký tự'
-                  : 'Language names cannot exceed 255 characters'}
-              </span>
-            ) : !language ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Tên ngôn ngữ không được bỏ trống'
-                  : 'Language names cannot be empty'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${
-              language ? language.length : '0'
-            }/255`}</span>
+            <CloseOutlined style={{ fontSize: '30px' }} />
           </div>
-        </Box>
-        <Box sx={{ marginBottom: '12px' }}>
           <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="sex"
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            align="center"
+            sx={{ marginBottom: '12px' }}
           >
-            {languageRedux === 1 ? 'Cấp độ' : 'Level'}{' '}
-            <span className="color-asterisk">*</span>
+            {languageRedux === 1
+              ? 'Sửa ngoại ngữ'
+              : languageRedux === 0
+              ? 'Edit Languages'
+              : ''}
           </Typography>
-          <TextField
-            select
-            id="level"
-            value={level}
-            defaultValue={openModalEditlanguages.idLevel}
-            onChange={handleOnchangeLevel}
-            variant="outlined"
-            placeholder={languageRedux === 1 ? 'Tháng/ Năm' : 'Month/ Year'}
-            size="small"
-            sx={{ width: '100%' }}
-            error={!level} // Đánh dấu lỗi
-          >
-            <MenuItem value={1}>
-              {languageRedux === 1 ? 'Sơ cấp' : 'Primary'}
-            </MenuItem>
-            <MenuItem value={2}>
-              {languageRedux === 1 ? 'Trung cấp' : 'Intermediate'}
-            </MenuItem>
-            <MenuItem value={3}>
-              {languageRedux === 1 ? 'Trình độ cao' : 'High - level'}
-            </MenuItem>
-            <MenuItem value={4}>
-              {languageRedux === 1 ? 'Thành thạo' : 'Native'}
-            </MenuItem>
-          </TextField>
+          <Box sx={{ marginBottom: '12px' }}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
+            >
+              {languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="text"
+              id="skill"
+              name="skill"
+              value={language}
+              onChange={handleOnchangeSkill}
+              defaultValue={openModalEditlanguages.name}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder={languageRedux === 1 ? 'Ngoại ngữ' : 'Languages'}
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {language && language.length > 255 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tên ngôn ngữ không được vượt quá 255 ký tự'
+                    : 'Language names cannot exceed 255 characters'}
+                </span>
+              ) : !language ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tên ngôn ngữ không được bỏ trống'
+                    : 'Language names cannot be empty'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${
+                language ? language.length : '0'
+              }/255`}</span>
+            </div>
+          </Box>
+          <Box sx={{ marginBottom: '12px' }}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="sex"
+            >
+              {languageRedux === 1 ? 'Cấp độ' : 'Level'}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              select
+              id="level"
+              value={level}
+              defaultValue={openModalEditlanguages.idLevel}
+              onChange={handleOnchangeLevel}
+              variant="outlined"
+              placeholder={languageRedux === 1 ? 'Tháng/ Năm' : 'Month/ Year'}
+              size="small"
+              sx={{ width: '100%' }}
+              error={!level} // Đánh dấu lỗi
+            >
+              <MenuItem value={1}>
+                {languageRedux === 1 ? 'Sơ cấp' : 'Primary'}
+              </MenuItem>
+              <MenuItem value={2}>
+                {languageRedux === 1 ? 'Trung cấp' : 'Intermediate'}
+              </MenuItem>
+              <MenuItem value={3}>
+                {languageRedux === 1 ? 'Trình độ cao' : 'High - level'}
+              </MenuItem>
+              <MenuItem value={4}>
+                {languageRedux === 1 ? 'Thành thạo' : 'Native'}
+              </MenuItem>
+            </TextField>
+          </Box>
+          <Button variant="contained" fullWidth onClick={handleSubmit}>
+            {languageData?.profile_page?.save_info}
+          </Button>
         </Box>
-        <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {languageData?.profile_page?.save_info}
-        </Button>
-      </Box>
-    </Modal>
+      </Modal>
+    </ThemeProvider>
   );
 };
 
