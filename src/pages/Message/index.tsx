@@ -121,8 +121,8 @@ const Message = () => {
 
   return (
     <div className="message-page" style={{ height: `${innerHeight}` }}>
-      {/* <Navbar />
-      <CategoryDropdown /> */}
+      <Navbar />
+      <CategoryDropdown />
       {windowWidth >= 555 ? (
         <div className="message-page_main">
           {/* <div className="header-message">
@@ -173,7 +173,7 @@ const Message = () => {
         </div>
       )}
 
-      {/* <RollTop /> */}
+      <RollTop />
       {windowWidth > 784 ? <Footer /> : <></>}
     </div>
   );

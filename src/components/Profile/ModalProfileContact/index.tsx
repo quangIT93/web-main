@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, TextField, Modal, Typography } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 // data
 import profileApi from 'api/profileApi';
@@ -62,6 +63,32 @@ const styleChildBox = {
   flexDirection: 'column',
   gap: '4px',
 };
+
+// STyle MUI
+const theme = createTheme({
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        body1: {
+          fontSize: '14px',
+        },
+        h6: {
+          fontSize: '20px',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {},
+      defaultProps: {
+        InputProps: {
+          style: {
+            fontSize: '14px',
+          },
+        },
+      },
+    },
+  },
+});
 
 interface IModalProfileContact {
   openModalContact: boolean;
@@ -273,209 +300,211 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
   };
 
   return (
-    <Modal
-      open={openModalContact}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      onKeyDown={handleKeyDown}
-    >
-      <Box sx={style} className="modal-person">
-        <div
-          style={{
-            position: 'absolute',
-            right: '20px',
-            top: '20px',
-            cursor: 'pointer',
-            // border: '1px solid',
-            borderRadius: '50%',
-            padding: '1px',
-          }}
-          onClick={handleClose}
-        >
-          <CloseOutlined style={{ fontSize: '30px' }} />
-        </div>
-        <Typography
-          id="modal-modal-title"
-          variant="h6"
-          component="h2"
-          align="center"
-          sx={{ marginBottom: '12px' }}
-        >
-          {language?.contact_information}
-        </Typography>
-        <Box sx={styleChildBox}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
+    <ThemeProvider theme={theme}>
+      <Modal
+        open={openModalContact}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        onKeyDown={handleKeyDown}
+      >
+        <Box sx={style} className="modal-person">
+          <div
+            style={{
+              position: 'absolute',
+              right: '20px',
+              top: '20px',
+              cursor: 'pointer',
+              // border: '1px solid',
+              borderRadius: '50%',
+              padding: '1px',
+            }}
+            onClick={handleClose}
           >
-            {language?.phone_number} <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            type="tel"
-            id="nameProfile"
-            name="title"
-            value={phone}
-            onChange={handleSetPhone}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={language?.phone_number}
-            inputMode="numeric"
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {regexCheckPhone.test(phone) === false ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Số điện thoại không đúng định dạng'
-                  : 'The phone number is not in the correct format'}
-              </span>
-            ) : phone.length === 0 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Số điện thoại không được bỏ trống'
-                  : 'Phone cannot be empty'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${phone.length}/11`}</span>
+            <CloseOutlined style={{ fontSize: '30px' }} />
           </div>
-        </Box>
-
-        <Box sx={styleChildBox}>
           <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            align="center"
+            sx={{ marginBottom: '12px' }}
           >
-            Email <span className="color-asterisk">*</span>
+            {language?.contact_information}
           </Typography>
-          <TextField
-            type="text"
-            id="nameProfile"
-            name="title"
-            value={email}
-            onChange={handleSetEmail}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="example@.gamil.com"
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {email.length === 0 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Email không được bỏ trống'
-                  : 'Email cannot be empty'}
-              </span>
-            ) : email.length > 50 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Email không được bỏ trống'
-                  : 'Email cannot exceed 50 characters'}
-              </span>
-            ) : regexCheckEmail.test(email) === false ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Email không đúng định dạng'
-                  : 'The Email is not in the correct format'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${email.length}/50`}</span>
-          </div>
-        </Box>
+          <Box sx={styleChildBox}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
+            >
+              {language?.phone_number} <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="tel"
+              id="nameProfile"
+              name="title"
+              value={phone}
+              onChange={handleSetPhone}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder={language?.phone_number}
+              inputMode="numeric"
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {regexCheckPhone.test(phone) === false ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Số điện thoại không đúng định dạng'
+                    : 'The phone number is not in the correct format'}
+                </span>
+              ) : phone.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Số điện thoại không được bỏ trống'
+                    : 'Phone cannot be empty'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${phone.length}/11`}</span>
+            </div>
+          </Box>
 
-        <Box sx={styleChildBox}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
-          >
-            Link Facebook
-          </Typography>
-          <TextField
-            type="text"
-            id="nameProfile"
-            name="title"
-            value={fb}
-            onChange={handleSetFB}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Facebook"
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {fb.length > 100 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Link Facebook không được vượt quá 100 ký tự'
-                  : 'The Facebook link cannot exceed 100 characters'}
-              </span>
-            ) : validURL(fb) === false ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Link Facebook không đúng định dạng'
-                  : 'The Facebook link is not in the correct format'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${fb.length}/100`}</span>
-          </div>
-        </Box>
+          <Box sx={styleChildBox}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
+            >
+              Email <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="text"
+              id="nameProfile"
+              name="title"
+              value={email}
+              onChange={handleSetEmail}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder="example@.gamil.com"
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {email.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Email không được bỏ trống'
+                    : 'Email cannot be empty'}
+                </span>
+              ) : email.length > 50 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Email không được bỏ trống'
+                    : 'Email cannot exceed 50 characters'}
+                </span>
+              ) : regexCheckEmail.test(email) === false ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Email không đúng định dạng'
+                    : 'The Email is not in the correct format'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${email.length}/50`}</span>
+            </div>
+          </Box>
 
-        <Box sx={styleChildBox}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
-          >
-            Link Linkedin
-          </Typography>
-          <TextField
-            type="text"
-            id="nameProfile"
-            name="title"
-            value={linkIn}
-            onChange={handleLinkIn}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder="Linkedin"
-            // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {linkIn.length > 100 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Link Linkedin không được vượt quá 100 ký tự'
-                  : 'The Linkedin link cannot exceed 100 characters'}
-              </span>
-            ) : validURL(linkIn) === false ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Link Linkedin không đúng định dạng'
-                  : 'The Linkedin link is not in the correct format'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${linkIn.length}/100`}</span>
-          </div>
-        </Box>
+          <Box sx={styleChildBox}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
+            >
+              Link Facebook
+            </Typography>
+            <TextField
+              type="text"
+              id="nameProfile"
+              name="title"
+              value={fb}
+              onChange={handleSetFB}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder="Facebook"
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {fb.length > 100 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Link Facebook không được vượt quá 100 ký tự'
+                    : 'The Facebook link cannot exceed 100 characters'}
+                </span>
+              ) : validURL(fb) === false ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Link Facebook không đúng định dạng'
+                    : 'The Facebook link is not in the correct format'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${fb.length}/100`}</span>
+            </div>
+          </Box>
 
-        <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
-        </Button>
-      </Box>
-    </Modal>
+          <Box sx={styleChildBox}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
+            >
+              Link Linkedin
+            </Typography>
+            <TextField
+              type="text"
+              id="nameProfile"
+              name="title"
+              value={linkIn}
+              onChange={handleLinkIn}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder="Linkedin"
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {linkIn.length > 100 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Link Linkedin không được vượt quá 100 ký tự'
+                    : 'The Linkedin link cannot exceed 100 characters'}
+                </span>
+              ) : validURL(linkIn) === false ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Link Linkedin không đúng định dạng'
+                    : 'The Linkedin link is not in the correct format'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${linkIn.length}/100`}</span>
+            </div>
+          </Box>
+
+          <Button variant="contained" fullWidth onClick={handleSubmit}>
+            {language?.profile_page?.save_info}
+          </Button>
+        </Box>
+      </Modal>
+    </ThemeProvider>
   );
 };
 
