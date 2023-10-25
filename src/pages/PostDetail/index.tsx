@@ -364,6 +364,8 @@ const Detail = () => {
             } else {
               setTextButton(languageRedux === 1 ? 'Xem' : 'View');
             }
+          } else {
+            setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
           }
           result?.data?.companyResourceData?.name === 'HIJOB' &&
           profileV3.typeRoleData === 1
