@@ -31,7 +31,7 @@ interface DistrictProps {
   setReset: React.Dispatch<React.SetStateAction<Boolean>>;
   language: any;
 }
-const { SHOW_CHILD } = Cascader;
+const { SHOW_CHILD, SHOW_PARENT } = Cascader;
 
 // const DropdownRender = (menus: React.ReactNode) => (
 //   <div style={{ width: '100%' }}>
@@ -65,6 +65,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
   // const [dataDistrict, setDataDistrict] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
   const [locId, setLocId] = useState<string[]>([]);
+  const [proviId, setProviId] = useState<string[]>([]);
   // const [messageApi, contextHolder] = message.useMessage();
 
   const userProfile = useSelector((state: RootState) => state.profile.profile);
@@ -89,7 +90,11 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
       <Text className="title-filter_location">{language?.select_location}</Text>
       {menus}
       <Divider style={{ margin: '8px 5px' }}>
-        {disable ? language?.limit_10_location : ''}
+        {proviId.length === 2
+          ? languageRedux === 1
+            ? 'Chỉ có thể có tối đa 10 khu vực'
+            : 'Only up to 10 areas can be'
+          : ''}
       </Divider>
       {/* <div style={{ padding: 12, display: 'flex', justifyContent: 'flex-end' }}>
         <Button type="default" onClick={() => {}}>
@@ -162,7 +167,18 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
     setReset(false);
     setDisable(false);
     const secondValues = value?.map((item: any) => item[1]);
+    // const provinceValues = value?.map((item: any) => item[0]);
+    // const uniqueArr = [...new Set(provinceValues)] as string[];
 
+    // if (uniqueArr?.length <= 2) {
+    //   setLocId(secondValues);
+    //   setListDis(value);
+    //   setProviId(uniqueArr);
+    // }
+
+    // if (uniqueArr?.length >= 3) {
+    //   setDisable(true);
+    // }
     if (secondValues?.length <= 10) {
       setLocId(secondValues);
       setListDis(value);
@@ -207,6 +223,13 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
                 ? dataLocations?.map((dataLocation: any) => ({
                     value: dataLocation.province_id,
                     label: dataLocation.province_fullName,
+                    // disabled:
+                    //   proviId.length < 2
+                    //     ? false
+                    //     : proviId.length <= 2 &&
+                    //       proviId.includes(dataLocation.province_id)
+                    //     ? false
+                    //     : true,
                     children: dataLocation.districts.map(
                       (child: { district_id: string; district: string }) => {
                         var dis = false;
@@ -232,7 +255,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             onChange={onChange}
             changeOnSelect
             className="inputFilterLocationNav input-filter_nav"
-            showCheckedStrategy={SHOW_CHILD}
+            showCheckedStrategy={Cascader.SHOW_CHILD}
           />
         </div>
       </>
