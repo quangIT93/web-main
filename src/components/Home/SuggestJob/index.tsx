@@ -10,7 +10,12 @@ import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 // import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { MoreICon, SuggestIcon, LoginArrowIcon, ArrowrightIcon } from '#components/Icons';
+import {
+  MoreICon,
+  SuggestIcon,
+  LoginArrowIcon,
+  ArrowrightIcon,
+} from '#components/Icons';
 
 // @ts-ignore
 // import moment from 'moment';
@@ -38,7 +43,7 @@ import {
 // import { actionCreators } from '../../../store/index';
 import { RootState } from '../../../store/reducer';
 
-import { Button } from 'antd';
+import { Button, Skeleton } from 'antd';
 
 // import postApi from 'api/postApi';
 import nearByApi from 'api/apiNearBy';
@@ -95,7 +100,7 @@ const ThemesJob: React.FC = () => {
   // const [listTheme, setListThem] = React.useState<AxiosResponse | null>(null);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const [loading, setLoading] = React.useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate();
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
@@ -169,13 +174,15 @@ const ThemesJob: React.FC = () => {
 
   const getPostByThemeId = async () => {
     try {
+      setLoading(true);
       const result = await nearByApi.getNearByJob(
         // null,
         // Number(searchParams.get('categories-id')),
-        profile && profile?.profileLocations?.length > 0 &&
-        profile?.profileLocations?.map((item: any) => {
-          return item.province.id
-        }),
+        profile &&
+          profile?.profileLocations?.length > 0 &&
+          profile?.profileLocations?.map((item: any) => {
+            return item.province.id;
+          }),
         null,
         null,
         11,
@@ -196,21 +203,29 @@ const ThemesJob: React.FC = () => {
         setAutomatic(true);
         // }
         setNearJob(result.data.posts);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      } else {
+        setLoading(false);
       }
     } catch (error) {
       setAutomatic(true);
       console.log(error);
+      // setLoading(false);
     }
   };
   React.useEffect(() => {
-    getPostByThemeId();
+    if (localStorage.getItem('accessToken')) {
+      getPostByThemeId();
+    }
 
     // delete param when back to page
     searchParams.delete('theme-id');
     // searchParams.delete('categories-id');
     // setSearchParams(searchParams);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProfile, languageRedux, searchParams.get('categories-id')]);
+  }, [languageRedux, searchParams.get('categories-id')]);
 
   const listSuggestJob = () => {
     try {
@@ -235,19 +250,27 @@ const ThemesJob: React.FC = () => {
   const handleMoveToMoreJob = () => {
     localStorage.setItem('job-type', 'suggested');
     window.open('/more-jobs', '_parent');
-  }
+  };
 
   return (
-    <Box sx={{ flexGrow: 1 }} className="box-suggestedJob" id="box-suggestedJob">
-      <div className='title-container'>
-        <div className='title'>
+    <Box
+      sx={{ flexGrow: 1 }}
+      className="box-suggestedJob"
+      id="box-suggestedJob"
+    >
+      <div className="title-container">
+        <div className="title">
           <SuggestIcon width={25} height={25} />
           <h2>{language?.nearby_jobs}</h2>
         </div>
-        <div className='view-all' onClick={handleMoveToMoreJob}>
-          <p>
-            {language?.home_page?.view_all}
-          </p>
+        <div
+          className="view-all"
+          onClick={handleMoveToMoreJob}
+          style={{
+            display: !localStorage.getItem('accessToken') ? 'none' : 'flex',
+          }}
+        >
+          <p>{language?.home_page?.view_all}</p>
           <ArrowrightIcon width={20} height={20} />
         </div>
       </div>
@@ -283,21 +306,22 @@ const ThemesJob: React.FC = () => {
       )}
 
       <>
-        {automatic && (
-          <>
-            <Grid
-              container
-              spacing={3}
-              columns={{ xs: 12, sm: 4, md: 12 }}
-            // sx={{ marginTop: '-8px' }}
-            >
-              {nearJob.map((item: PostTheme, index: number) => (
-                <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                  <JobCard item={item} />
-                </Grid>
-              ))}
-            </Grid>
-            {/* <Stack
+        <Skeleton loading={loading} active>
+          {automatic && (
+            <>
+              <Grid
+                container
+                spacing={3}
+                columns={{ xs: 12, sm: 4, md: 12 }}
+                // sx={{ marginTop: '-8px' }}
+              >
+                {nearJob.map((item: PostTheme, index: number) => (
+                  <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                    <JobCard item={item} />
+                  </Grid>
+                ))}
+              </Grid>
+              {/* <Stack
               spacing={2}
               sx={{
                 display: 'flex',
@@ -340,19 +364,20 @@ const ThemesJob: React.FC = () => {
                 )}
               </Space>
             </Stack> */}
-            <Backdrop
-              sx={{
-                color: '#0d99ff ',
-                backgroundColor: 'transparent',
-                zIndex: (theme: any) => theme.zIndex.drawer + 1,
-              }}
-              open={openBackdrop}
-            //   onClick={handleClose}
-            >
-              <CircularProgress color="inherit" />
-            </Backdrop>
-          </>
-        )}
+              <Backdrop
+                sx={{
+                  color: '#0d99ff ',
+                  backgroundColor: 'transparent',
+                  zIndex: (theme: any) => theme.zIndex.drawer + 1,
+                }}
+                open={openBackdrop}
+                //   onClick={handleClose}
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            </>
+          )}
+        </Skeleton>
       </>
       <ModalLogin
         openModalLogin={openModalLogin}

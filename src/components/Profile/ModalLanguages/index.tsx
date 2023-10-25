@@ -292,13 +292,13 @@ const ModalLanguages: React.FC<IModalSkills> = (props) => {
                 {languageRedux === 1 ? 'Sơ cấp' : 'Primary'}
               </MenuItem>
               <MenuItem value={2}>
-                {languageRedux === 1 ? 'Trung cấp' : 'Intermediate'}
+                {languageRedux === 1 ? 'Trung cấp' : 'Intermediate level'}
               </MenuItem>
               <MenuItem value={3}>
-                {languageRedux === 1 ? 'Trình độ cao' : 'High - level'}
+                {languageRedux === 1 ? 'Trình độ cao' : 'High level'}
               </MenuItem>
               <MenuItem value={4}>
-                {languageRedux === 1 ? 'Thành thạo' : 'Native'}
+                {languageRedux === 1 ? 'Thành thạo' : 'Competently'}
               </MenuItem>
             </TextField>
           </Box>

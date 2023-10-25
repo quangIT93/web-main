@@ -118,23 +118,7 @@ const LanguageItem: React.FC<ISkillItem> = (props) => {
           >
             <h3>{item?.languageName}</h3>
             <p>
-              {item?.dataLevel.id === 1
-                ? languageRedux === 1
-                  ? 'Sơ cấp'
-                  : 'Primary'
-                : item?.dataLevel.id === 2
-                  ? languageRedux === 1
-                    ? 'Trung cấp'
-                    : 'Intermediate'
-                  : item?.dataLevel.id === 3
-                    ? languageRedux === 1
-                      ? 'Trình độ cao'
-                      : 'High - level'
-                    : item?.dataLevel.id === 4
-                      ? languageRedux === 1
-                        ? 'Thành thạo'
-                        : 'Native'
-                      : ''}
+              {item?.dataLevel.data}
             </p>
           </Space>
         </div>

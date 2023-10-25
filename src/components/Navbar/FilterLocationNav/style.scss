@@ -1,3 +1,15 @@
+.filter-all {
+  .ant-cascader-menus {
+      .ant-cascader-menu {
+          .ant-cascader-menu-item-expand {
+              .ant-cascader-checkbox {
+                  display: block;
+              }
+          }
+      }
+  }
+}
+
 .inputFilterLocationNav {
   width: 100%;
 }

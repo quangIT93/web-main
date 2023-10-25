@@ -119,28 +119,28 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       // setIndex(newValue);
       // setOpenBackdrop(!openBackdrop);
       const categoryId = searchParams.get('categories-id');
-      // if (categoryId) {
-      //   setSearchParams({
-      //     'theme-id': `${newValue}`,
-      //     'categories-id': `${Number(categoryId) === 1 ? 'all' : categoryId}`,
-      //   });
-      // } else {
-      //   setSearchParams({ 'theme-id': `${newValue}` });
-      // }
+      if (categoryId) {
+        setSearchParams({
+          'theme-id': `${newValue}`,
+          'categories-id': `${Number(categoryId) === 1 ? 'all' : categoryId}`,
+        });
+      } else {
+        setSearchParams({ 'theme-id': `${newValue}` });
+      }
 
-      // if (location.pathname === '/') {
-      //   const result = await postApi.getPostByThemeId(
-      //     newValue,
-      //     9,
-      //     0,
-      //     languageRedux === 1 ? 'vi' : 'en',
-      //   );
-      //   if (result) {
-      //     setPostByTheme(result);
-      //     // set backdrop
-      //     // setOpenBackdrop(false);
-      //   }
-      // }
+      if (location.pathname === '/') {
+        const result = await postApi.getPostByThemeId(
+          newValue,
+          9,
+          0,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (result) {
+          setPostByTheme(result);
+          // set backdrop
+          // setOpenBackdrop(false);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -149,40 +149,8 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
   // const handleClose = () => {
   //   setOpenBackdrop(false);
   // };
-  const getPostNewestByThemeId = async () => {
-    let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
-    try {
-      // const themeId = searchParams.get(`theme-id`)
-      //   ? searchParams.get(`theme-id`)
-      //   : listTheme?.data[0]?.id;
 
-      // var result;
-      // if (themeId) {
-      // setOpenBackdrop(true);
-      const result = await postApi.getPostByThemeId(
-        storedSettings?.placeId
-          ? storedSettings?.placeId
-          : listTheme?.data[0]?.id,
-        9,
-        0,
-        languageRedux === 1 ? 'vi' : 'en',
-      );
-      // }
-
-      if (result) {
-        setPostByTheme(result);
-        // setOpenBackdrop(false);
-      }
-    } catch (error) {
-      console.error(error);
-      // setOpenBackdrop(false);
-    }
-  };
-  React.useEffect(() => {
-    getPostNewestByThemeId();
-    // setValue(Number(searchParams.get('theme-id')));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [languageRedux, value]);
+  console.log('value', value);
 
   return (
     <Box

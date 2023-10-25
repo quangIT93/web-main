@@ -120,7 +120,7 @@ const HistoryPost = () => {
   );
   const analytics: any = getAnalytics();
   // console.log(profile?.typeRoleData);
-  console.log(checkPost);
+  // console.log(checkPost);
   // const [language, setLanguage] = React.useState<any>();
 
   // const getlanguageApi = async () => {

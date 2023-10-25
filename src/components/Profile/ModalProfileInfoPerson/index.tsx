@@ -474,13 +474,6 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                         helperText: 'DD/MM/YYYY',
                       },
                     }}
-                    sx={{
-                      '& input': {
-                        fontSize: '14px',
-                        padding: '8.5px 14px',
-                      },
-                    }}
-
                     // format="DD/MM/YYYY"
                   />
                 </div>
@@ -538,11 +531,6 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
                     {...params}
                     placeholder={language?.profile_page?.place_address}
                     size="small"
-                    sx={{
-                      '& input': {
-                        fontSize: '14px',
-                      },
-                    }}
                     // error={!selectedProvince}
                   />
                 )}

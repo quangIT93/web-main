@@ -70,7 +70,7 @@ const AppliedPostedJob: React.FC = () => {
   const profile = useSelector((state: RootState) => state.dataProfileV3.data);
   const [openBackdrop, setOpenBackdrop] = React.useState(false);
   const [isLogined, setIslogined] = React.useState(false);
-  const [loading, setloading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   // const [index, setIndex] = React.useState(0);
   const [appliedPostedJob, setAppliedPostedJob] = React.useState<any>([]);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
@@ -111,21 +111,21 @@ const AppliedPostedJob: React.FC = () => {
 
   const getAppliedPostedJobs = async () => {
     try {
-      setloading(true);
+      setLoading(true);
       const result =
         profile?.typeRoleData === 0
           ? await historyApplicator.getAllSubmitedApplied(
-            null,
-            10,
-            1,
-            languageRedux === 1 ? 'vi' : 'en',
-          )
+              null,
+              10,
+              1,
+              languageRedux === 1 ? 'vi' : 'en',
+            )
           : await historyRecruiter.GetInformationAndCandidatesCount(
-            0,
-            10,
-            '1',
-            languageRedux === 1 ? 'vi' : 'en',
-          );
+              0,
+              10,
+              '1',
+              languageRedux === 1 ? 'vi' : 'en',
+            );
       // const result = await applitedPostedApi.getAllApplitedPostedApi(
       //   0,
       //   languageRedux === 1 ? 'vi' : 'en',
@@ -133,7 +133,7 @@ const AppliedPostedJob: React.FC = () => {
       if (result) {
         localStorage.setItem('numberAppliedPostedJobs', result.data.length);
         setTimeout(() => {
-          setloading(false);
+          setLoading(false);
         }, 1000);
 
         setAppliedPostedJob(result.data);
@@ -155,7 +155,7 @@ const AppliedPostedJob: React.FC = () => {
   };
 
   React.useEffect(() => {
-    getAppliedPostedJobs();
+    localStorage.getItem('accessToken') && getAppliedPostedJobs();
     localStorage.getItem('accessToken') && setIslogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux, roleRedux, profile?.typeRoleData]);
@@ -203,7 +203,7 @@ const AppliedPostedJob: React.FC = () => {
   //     setValue(Number(searchParams.get('theme-id')));
   // }, [searchParams.get('theme-id')]);
 
-  const handleClickHelpSearch = () => { };
+  const handleClickHelpSearch = () => {};
 
   if (localStorage.getItem('accessToken')) {
     return (
@@ -260,54 +260,62 @@ const AppliedPostedJob: React.FC = () => {
                   </li>
                 </ul>
               </div> */}
-              {profile?.typeRoleData === 0 ? (
-                <Avatar
-                  sx={{
-                    width: '100%',
-                    maxHeight: '301px',
-                    height: 'auto',
-                    cursor: 'pointer',
-                  }}
-                  variant="square"
-                  src={banner}
-                  onClick={() => {
-                    window.open('/page-cv', '_parent');
-                  }}
-                >
-                  Banner
-                </Avatar>
+              {profile.length !== 0 ? (
+                profile?.typeRoleData === 0 ? (
+                  <Avatar
+                    sx={{
+                      width: '100%',
+                      maxHeight: '301px',
+                      height: 'auto',
+                      cursor: 'pointer',
+                    }}
+                    variant="square"
+                    src={banner}
+                    onClick={() => {
+                      window.open('/page-cv', '_parent');
+                    }}
+                  >
+                    Banner
+                  </Avatar>
+                ) : (
+                  <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    autoplay={{
+                      delay: 3500,
+                      disableOnInteraction: false,
+                    }}
+                    // navigation={true}
+                    modules={[Autoplay, Navigation]}
+                    className="banner-rescruit-swiper"
+                    loop={true}
+                  >
+                    <SwiperSlide>
+                      <img
+                        onClick={() => {
+                          window.open('/post', '_parent');
+                        }}
+                        src={banner_recruit_1}
+                        alt=""
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <img
+                        onClick={() => {
+                          window.open('/candidatesAll', '_parent');
+                        }}
+                        src={banner_recruit_2}
+                        alt=""
+                      />
+                    </SwiperSlide>
+                  </Swiper>
+                )
               ) : (
-                <Swiper
-                  spaceBetween={30}
-                  centeredSlides={true}
-                  autoplay={{
-                    delay: 3500,
-                    disableOnInteraction: false,
-                  }}
-                  // navigation={true}
-                  modules={[Autoplay, Navigation]}
-                  className="banner-rescruit-swiper"
-                  loop={true}
-                >
-                  <SwiperSlide>
-                    <img
-                      onClick={() => {
-                        window.open('/post', '_parent');
-                      }}
-                      src={banner_recruit_1}
-                      alt=""
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img
-                      onClick={() => {
-                        window.open('/candidatesAll', '_parent');
-                      }}
-                      src={banner_recruit_2}
-                      alt=""
-                    />
-                  </SwiperSlide>
-                </Swiper>
+                <Skeleton.Button
+                  style={{ height: '301px' }}
+                  active={true}
+                  block={true}
+                />
               )}
             </div>
             {/* <Button
@@ -317,9 +325,9 @@ const AppliedPostedJob: React.FC = () => {
               {languageRedux === 1 ? 'Tạo cv của bạn' : 'Create Your Resume'}
             </Button> */}
           </div>
-          <Skeleton loading={false} active>
+          <Skeleton loading={loading} active>
             {appliedPostedJob.length !== 0 &&
-              localStorage.getItem('accessToken') ? (
+            localStorage.getItem('accessToken') ? (
               <div
                 style={{
                   display: 'flex',
@@ -334,8 +342,8 @@ const AppliedPostedJob: React.FC = () => {
                       ? 'Công việc đã ứng tuyển'
                       : 'Applied Job'
                     : languageRedux === 1
-                      ? 'Công việc đã tuyển'
-                      : 'Posted Job'}
+                    ? 'Công việc đã tuyển'
+                    : 'Posted Job'}
                 </h2>
                 <div className="help-search" onClick={handleClickHelpSearch}>
                   <QuestionMarkIcon />
@@ -408,21 +416,17 @@ const AppliedPostedJob: React.FC = () => {
                   {language?.applied_posted_jobs?.are_you_a_recruiter}
                 </h3>
                 <p style={{ marginBottom: '12px' }}>
-                  {
-                    languageRedux === 1 ?
-                      "Đăng tin tuyển dụng nhanh chóng và có thể tìm kiếm hồ sơ các ứng viên" :
-                      "Post job postings quickly and searchable candidates' profiles"
-                  }
+                  {languageRedux === 1
+                    ? 'Đăng tin tuyển dụng nhanh chóng và có thể tìm kiếm hồ sơ các ứng viên'
+                    : "Post job postings quickly and searchable candidates' profiles"}
                 </p>
                 <h3>
                   {language?.applied_posted_jobs?.are_you_looking_for_job}
                 </h3>
                 <p>
-                  {
-                    languageRedux === 1 ?
-                      "Bạn có thể xem tin tuyển dụng và ứng tuyển vào các công việc mới nhất theo danh mục, có thể tạo và quản lý CV của bạn." :
-                      "You can view job postings and apply for the latest jobs by category, can create and manage your CV."
-                  }
+                  {languageRedux === 1
+                    ? 'Bạn có thể xem tin tuyển dụng và ứng tuyển vào các công việc mới nhất theo danh mục, có thể tạo và quản lý CV của bạn.'
+                    : 'You can view job postings and apply for the latest jobs by category, can create and manage your CV.'}
                 </p>
               </div>
               <Button
@@ -519,19 +523,15 @@ const AppliedPostedJob: React.FC = () => {
               {language?.applied_posted_jobs?.are_you_a_recruiter}
             </h3>
             <p style={{ marginBottom: '12px' }}>
-              {
-                languageRedux === 1 ?
-                  "Đăng tin tuyển dụng nhanh chóng và có thể tìm kiếm hồ sơ các ứng viên" :
-                  "Post job postings quickly and searchable candidates' profiles"
-              }
+              {languageRedux === 1
+                ? 'Đăng tin tuyển dụng nhanh chóng và có thể tìm kiếm hồ sơ các ứng viên'
+                : "Post job postings quickly and searchable candidates' profiles"}
             </p>
             <h3>{language?.applied_posted_jobs?.are_you_looking_for_job}</h3>
             <p>
-              {
-                languageRedux === 1 ?
-                  "Bạn có thể xem tin tuyển dụng và ứng tuyển vào các công việc mới nhất theo danh mục, có thể tạo và quản lý CV của bạn." :
-                  "You can view job postings and apply for the latest jobs by category, can create and manage your CV."
-              }
+              {languageRedux === 1
+                ? 'Bạn có thể xem tin tuyển dụng và ứng tuyển vào các công việc mới nhất theo danh mục, có thể tạo và quản lý CV của bạn.'
+                : 'You can view job postings and apply for the latest jobs by category, can create and manage your CV.'}
             </p>
           </div>
           <Button type="primary" onClick={() => setOpenModalLogin(true)}>

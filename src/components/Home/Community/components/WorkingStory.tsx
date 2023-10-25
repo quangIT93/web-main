@@ -9,7 +9,7 @@ import {
 import communityApi from 'api/apiCommunity';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { Tooltip } from 'antd';
+import { Skeleton, Tooltip } from 'antd';
 import ModalLogin from '../../../../components/Home/ModalLogin';
 import { Typography } from '@mui/material';
 
@@ -25,7 +25,7 @@ const WorkingStory = () => {
   const [position, setPosition] = React.useState<any>();
   const [like, setLike] = React.useState(false);
   const [openModalLogin, setOpenModalLogin] = React.useState(false);
-
+  const [loading, setLoading] = React.useState<any>(false);
   const handleMoveToDetailPage = (id: any) => {
     window.open(`/detail-comunity?post-community=${id}&type=1`, '_parent');
     localStorage.setItem('community', '.community-container');
@@ -33,6 +33,7 @@ const WorkingStory = () => {
 
   const handleGetWorkingStory = async () => {
     try {
+      setLoading(true);
       const result = await communityApi.getCommunityNews(
         '',
         '5',
@@ -42,7 +43,10 @@ const WorkingStory = () => {
       );
       if (result) {
         setStories(result?.data?.communications);
-        setLike(result?.data?.communications?.liked);
+        setLike(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
       }
     } catch (error) {
       console.log(error);
@@ -91,67 +95,69 @@ const WorkingStory = () => {
         </p>
       </div>
       <div className="community-content-body">
-        {stories &&
-          stories.map((story: any, index: any) => (
-            <div
-              className="community-content-body_item"
-              key={index}
-              onClick={() => handleMoveToDetailPage(story?.id)}
-            >
-              <div className="body-item-title">
-                {/* <Tooltip title={story?.title}> */}
-                {/* <h3>{story?.title}</h3> */}
-                {/* </Tooltip> */}
-                {/* <div className="title"> */}
-                <Typography
-                  component="div"
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{
-                    fontSize: '12px',
-                    margin: 0,
-                    whiteSpace: 'nowrap',
-                    width: '75%',
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    fontWeight: '500',
-                    lineheight: '20px',
-                    color: '#000000',
-                  }}
-                >
-                  {story?.title}
-                </Typography>
-                {/* </div> */}
-                <p>{story?.createdAtText}</p>
-              </div>
-              <div className="body-item_bottom">
-                <div className="body-item-user">
-                  <UseCircleIcon />
-                  <p>{story?.profileData?.name.slice(0, 2) + '...'}</p>
-                </div>
-                <div className="body-item-actions">
-                  <div className="action-item">
-                    <EysIcon />
-                    <p>{story?.communicationViewsCount}</p>
-                  </div>
-                  <div
-                    className={
-                      story.liked ? 'action-item liked' : 'action-item'
-                    }
-                    onClick={(e) => handleLikeCommunity(story?.id, e)}
+        <Skeleton loading={loading} active>
+          {stories &&
+            stories.map((story: any, index: any) => (
+              <div
+                className="community-content-body_item"
+                key={index}
+                onClick={() => handleMoveToDetailPage(story?.id)}
+              >
+                <div className="body-item-title">
+                  {/* <Tooltip title={story?.title}> */}
+                  {/* <h3>{story?.title}</h3> */}
+                  {/* </Tooltip> */}
+                  {/* <div className="title"> */}
+                  <Typography
+                    component="div"
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      fontSize: '12px',
+                      margin: 0,
+                      whiteSpace: 'nowrap',
+                      width: '75%',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      fontWeight: '500',
+                      lineheight: '20px',
+                      color: '#000000',
+                    }}
                   >
-                    <LikeIcon />
-                    <p>{story?.communicationLikesCount}</p>
-                  </div>
-                  <div className="action-item">
-                    <CommentIcon />
-                    <p>{story?.communicationCommentsCount}</p>
-                  </div>
+                    {story?.title}
+                  </Typography>
+                  {/* </div> */}
+                  <p>{story?.createdAtText}</p>
                 </div>
-                <div className="border-line"></div>
+                <div className="body-item_bottom">
+                  <div className="body-item-user">
+                    <UseCircleIcon />
+                    <p>{story?.profileData?.name.slice(0, 2) + '...'}</p>
+                  </div>
+                  <div className="body-item-actions">
+                    <div className="action-item">
+                      <EysIcon />
+                      <p>{story?.communicationViewsCount}</p>
+                    </div>
+                    <div
+                      className={
+                        story.liked ? 'action-item liked' : 'action-item'
+                      }
+                      onClick={(e) => handleLikeCommunity(story?.id, e)}
+                    >
+                      <LikeIcon />
+                      <p>{story?.communicationLikesCount}</p>
+                    </div>
+                    <div className="action-item">
+                      <CommentIcon />
+                      <p>{story?.communicationCommentsCount}</p>
+                    </div>
+                  </div>
+                  <div className="border-line"></div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </Skeleton>
       </div>
       <ModalLogin
         openModalLogin={openModalLogin}

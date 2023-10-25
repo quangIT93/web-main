@@ -218,7 +218,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
       };
     }
 
-    if (validURL(fb) === false) {
+    if (fb.trim() !== '' && validURL(fb) === false) {
       return {
         messageError:
           languageRedux === 1
@@ -227,7 +227,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         checkForm: false,
       };
     }
-    if (validURL(linkIn) === false) {
+    if (linkIn.trim() !== '' && validURL(linkIn) === false) {
       return {
         messageError:
           languageRedux === 1
@@ -237,7 +237,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
       };
     }
 
-    if (fb.length > 100) {
+    if (fb.trim() !== '' && fb.trim().length > 100) {
       return {
         messageError:
           languageRedux === 1
@@ -246,7 +246,7 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
         checkForm: false,
       };
     }
-    if (linkIn.length > 100) {
+    if (linkIn.trim() !== '' && linkIn.trim().length > 100) {
       return {
         messageError:
           languageRedux === 1
@@ -440,13 +440,13 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
-              {fb.length > 100 ? (
+              {fb.trim() !== '' && fb.length > 100 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Link Facebook không được vượt quá 100 ký tự'
                     : 'The Facebook link cannot exceed 100 characters'}
                 </span>
-              ) : validURL(fb) === false ? (
+              ) : fb.trim() !== '' && validURL(fb) === false ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Link Facebook không đúng định dạng'
@@ -480,13 +480,13 @@ const ModalProfileContact: React.FC<IModalProfileContact> = (props) => {
               // error={titleError} // Đánh dấu lỗi
             />
             <div className="wrap-noti_input">
-              {linkIn.length > 100 ? (
+              {linkIn.trim() !== '' && linkIn.length > 100 ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Link Linkedin không được vượt quá 100 ký tự'
                     : 'The Linkedin link cannot exceed 100 characters'}
                 </span>
-              ) : validURL(linkIn) === false ? (
+              ) : linkIn.trim() !== '' && validURL(linkIn) === false ? (
                 <span className="helper-text">
                   {languageRedux === 1
                     ? 'Link Linkedin không đúng định dạng'

@@ -30,7 +30,7 @@ const postApi = {
     })
   },
 
-  getById: (params: number, lang: string) => {
+  getById: (params: number, lang: string) => { 
     const URL = `v1/posts/${params}?lang=${lang}`
     return axiosClient.get(URL)
   },

@@ -36,6 +36,7 @@ import { historyEn } from 'validations/lang/en/history';
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import queryString from 'query-string';
 
 interface CardsPostedOpen {
   setShowDetailPosted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -173,6 +174,16 @@ const CardsPostedOpen: React.FC<CardsPostedOpen> = (props) => {
     setShowDetailPosted(true);
     setDetailPosted(posted);
   };
+
+  useEffect(() => {
+    const queryParams = queryString.parse(window.location.search);
+    // const hotjobtype = Number(searchParams.get('post'));
+    const hotjobtype = Number(queryParams['post']);
+    if (checkPost && hotjobtype === 2) {
+      setShowDetailPosted(true);
+      setDetailPosted(checkPost);
+    }
+  }, [])
 
   const handleChange = (event: any) => {
     setnewOld(event.target.value);

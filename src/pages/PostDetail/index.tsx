@@ -364,6 +364,8 @@ const Detail = () => {
             } else {
               setTextButton(languageRedux === 1 ? 'Xem' : 'View');
             }
+          } else {
+            setTextButton(languageRedux === 1 ? 'Ứng tuyển ngay' : 'Apply');
           }
           result?.data?.companyResourceData?.name === 'HIJOB' &&
           profileV3.typeRoleData === 1
@@ -439,7 +441,7 @@ const Detail = () => {
     //get post next
     getAnotherPost(POST_ID + 1, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookmarked, POST_ID, languageRedux, language, profileV3]);
+  }, [bookmarked, POST_ID, languageRedux]);
 
   // set size for Breadcrumb
   // React.useEffect(() => {

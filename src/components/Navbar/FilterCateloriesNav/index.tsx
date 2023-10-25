@@ -128,11 +128,22 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
 
   const [dataCategories, setDataCategories] = React.useState<any>(null);
   const [disable, setDisable] = React.useState<Boolean>(false);
-
+  // const [cateId, setCateId] = useState<string[]>([]);
   const onChange = (value: any) => {
     setReset(false);
     setDisable(false);
     const secondValues = value?.map((item: any) => item[1]);
+    // const cateId = value?.map((item: any) => item[0]);
+    // const uniqueArr = [...new Set(cateId)] as string[];
+    // if (uniqueArr.length <= 2) {
+    //   setCategoriesId(secondValues);
+    //   setListCate(value);
+    //   setCateId(uniqueArr);
+    // }
+
+    // if (uniqueArr.length >= 3) {
+    //   setDisable(true);
+    // }
 
     if (secondValues?.length <= 10) {
       setCategoriesId(secondValues);
@@ -157,6 +168,13 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
               ? dataCategories.map((parentCategory: any) => ({
                   value: parentCategory.parent_category_id,
                   label: parentCategory.parent_category,
+                  // disabled:
+                  //   cateId.length < 2
+                  //     ? false
+                  //     : cateId.length <= 2 &&
+                  //       cateId.includes(parentCategory.parent_category_id)
+                  //     ? false
+                  //     : true,
                   children: parentCategory.childs.map((child: any) => {
                     var dis = false;
                     //check id child  when disable = true

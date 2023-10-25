@@ -48,6 +48,9 @@ const WorkingStoryCard: React.FC<IWorkingStoryCard> = (props) => {
   const location = useLocation();
   const dispatch = useDispatch();
   // console.log('item', item);
+  React.useEffect(() => {
+    setBookmark(item?.bookmarked);
+  }, [item])
 
   React.useEffect(() => {
     if (contentRef.current) {

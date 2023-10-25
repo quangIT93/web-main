@@ -8,6 +8,8 @@ import { CandidateIcon, RecruiterIcon } from '#components/Icons';
 import { setRole } from 'store/reducer/roleReducer';
 
 import typeUser from 'api/apiTypeUser';
+import { setProfileV3 } from 'store/reducer/profileReducerV3';
+import profileApi from 'api/profileApi';
 interface IModalSelectRole {
   openModalSelectRole: boolean;
   setOpenModalSelectRole: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,6 +44,12 @@ const ModalSelectRole: React.FC<IModalSelectRole> = (props) => {
       const result = await typeUser.putTypeUser(role);
       if (result) {
         dispatch<any>(setRole(role));
+        const getProfileV3Data = await profileApi.getProfileV3(
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (getProfileV3Data) {
+          dispatch<any>(setProfileV3(getProfileV3Data));
+        }
         setOpenModalUpdateInfo(true);
         setOpenModalSelectRole(false);
         handleCancel();

@@ -10,6 +10,7 @@ import candidateSearch from 'api/apiCandidates';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducer/index';
 import './style.scss';
+import { Skeleton } from 'antd';
 
 const NewestGigWorker = () => {
   const [listData, setListData] = React.useState<any>([]);
@@ -25,13 +26,14 @@ const NewestGigWorker = () => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-
+  const [loading, setLoading] = React.useState<any>(false);
   const [openModalNoteWorker, setOpenModalNoteWorker] = React.useState(false);
 
   const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
   const roleRedux = useSelector((state: RootState) => state.changeRole.role);
   const getAllCandidates = async () => {
     try {
+      setLoading(true)
       const logout = localStorage.getItem('accessToken');
       const result = await candidateSearch.getCandidates(
         addresses,
@@ -40,12 +42,16 @@ const NewestGigWorker = () => {
         gender,
         ageMin,
         ageMax,
-        !logout ? 6 : roleRedux === 0 ? 6 : 18,
+        !logout ? 6 :
+          profileV3.length !== 0 && profileV3?.typeRoleData === 0 ? 6 : 18,
         page,
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
         setListData(result.data.cvFilters);
       }
     } catch (error) { }
@@ -113,9 +119,15 @@ const NewestGigWorker = () => {
       </div>
 
       <div className="list-candidate-home">
-        {listData?.map((item: any, index: number) => {
-          return <ItemCadidate item={item} key={index} />;
-        })}
+        <Skeleton loading={loading} active>
+          {listData?.map((item: any, index: number) => {
+            return (
+              <>
+                <ItemCadidate item={item} key={index} />
+              </>
+            )
+          })}
+        </Skeleton>
       </div>
       <ModalNoteWorker
         openModalNoteWorker={openModalNoteWorker}

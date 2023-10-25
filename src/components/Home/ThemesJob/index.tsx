@@ -97,7 +97,9 @@ const ThemesJob: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate();
   // const [checkBookMark, setCheckBookMark] = React.useState(true);
-  const [loading, setLoading] = React.useState(false);
+  const [loadingCarousel, setLoadingCarousel] = React.useState(true);
+  const [loadingThemeList, setLoadingThemeList] = React.useState(true);
+  const [loading, setLoadingT] = React.useState(false);
 
   const [endData, setEndData] = React.useState(0);
   // state redux
@@ -117,37 +119,37 @@ const ThemesJob: React.FC = () => {
     ? searchParams.get(`theme-id`)
     : listTheme?.data[0]?.id;
 
-  const handleChange = async (
-    event: React.ChangeEvent<unknown>,
-    value: number,
-  ) => {
-    setPage(value);
-    setOpenBackdrop(!openBackdrop);
-    // const test = [1, 2]
-    // const p = createSearchParams({ page: `${test}`})
-    // navigate(`/?${p}`);
-    // console.log(searchParams.get(`page`))
-    const themeId = searchParams.get(`theme-id`)
-      ? searchParams.get(`theme-id`)
-      : listTheme?.data[0].id;
+  // const handleChange = async (
+  //   event: React.ChangeEvent<unknown>,
+  //   value: number,
+  // ) => {
+  //   setPage(value);
+  //   setOpenBackdrop(!openBackdrop);
+  //   // const test = [1, 2]
+  //   // const p = createSearchParams({ page: `${test}`})
+  //   // navigate(`/?${p}`);
+  //   // console.log(searchParams.get(`page`))
+  //   const themeId = searchParams.get(`theme-id`)
+  //     ? searchParams.get(`theme-id`)
+  //     : listTheme?.data[0].id;
 
-    const threshold = post.data.posts[post.data.posts.length - 1].id;
-    const result = await postApi.getPostByThemeId(
-      Number(themeId),
-      9,
-      threshold,
-      languageRedux === 1 ? 'vi' : 'en',
-    );
+  //   const threshold = post.data.posts[post.data.posts.length - 1].id;
+  //   const result = await postApi.getPostByThemeId(
+  //     Number(themeId),
+  //     9,
+  //     threshold,
+  //     languageRedux === 1 ? 'vi' : 'en',
+  //   );
 
-    if (result) {
-      if (result.data.posts.length === 0) {
-        setEndData(result.data.posts.length);
-      }
-      setPostThemeMore(result);
+  //   if (result) {
+  //     if (result.data.posts.length === 0) {
+  //       setEndData(result.data.posts.length);
+  //     }
+  //     setPostThemeMore(result);
 
-      setOpenBackdrop(false);
-    }
-  };
+  //     setOpenBackdrop(false);
+  //   }
+  // };
 
   // handle click post details
   // const handleClickItem = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -162,19 +164,20 @@ const ThemesJob: React.FC = () => {
   // get post by theme id
   const getPostByThemeId = async () => {
     try {
-      let storedSettings = JSON.parse(
-        getCookie('hotPlaceId') || '{}',
-      )
-
+      let storedSettings = JSON.parse(getCookie('hotPlaceId') || '{}');
+      setLoadingCarousel(true);
       const result = await themeApi.getThemesEnable(
         languageRedux === 1 ? 'vi' : 'en',
       );
 
       if (result) {
+        setLoadingCarousel(false);
         setListThem(result);
-
+        setLoadingThemeList(true);
         const list = await postApi?.getPostByThemeId(
-          storedSettings?.placeId ? storedSettings?.placeId : result?.data[0]?.id,
+          storedSettings?.placeId
+            ? storedSettings?.placeId
+            : result?.data[0]?.id,
           9,
           0,
           languageRedux === 1 ? 'vi' : 'en',
@@ -182,6 +185,7 @@ const ThemesJob: React.FC = () => {
         if (list) {
           setPostByTheme(list);
           setAutomatic(true);
+          setLoadingThemeList(false);
         }
       }
     } catch (error) {
@@ -196,14 +200,14 @@ const ThemesJob: React.FC = () => {
     searchParams.delete('theme-id');
     searchParams.delete('categories-id');
     setSearchParams(searchParams);
-    setLoading(true);
-    setTimeout(() => {
-      if (listTheme) {
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    }, 1000);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   if (listTheme) {
+    //     setLoading(false);
+    //   } else {
+    //     setLoading(false);
+    //   }
+    // }, 3000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageRedux]);
 
@@ -275,11 +279,11 @@ const ThemesJob: React.FC = () => {
       ) : (
         <></>
       )}
-      <Skeleton loading={loading} active>
+      <Skeleton loading={loadingCarousel} active>
         <ListCompanyCarousel listTheme={listTheme} />
       </Skeleton>
 
-      <Skeleton loading={loading} active>
+      <Skeleton loading={loadingThemeList} active>
         <>
           {automatic && (
             <>

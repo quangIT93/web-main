@@ -9,6 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 import './style.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -43,6 +45,9 @@ interface IModalPost {
 const ModalPost: React.FC<IModalPost> = (props) => {
   const { openModalPost, setOpenModalPost } = props;
   const handleClose = () => setOpenModalPost(false);
+  const languageRedux = useSelector(
+    (state: RootState) => state.changeLaguage.language,
+  );
 
   const onclick = async () => {
     window.location.reload();
@@ -67,7 +72,9 @@ const ModalPost: React.FC<IModalPost> = (props) => {
               position: 'relative',
             }}
           >
-            Đã đăng tuyển thành công!
+            {languageRedux === 1
+              ? 'Đã đăng tuyển thành công!'
+              : 'Successfully posted!'}
             <IconButton
               aria-label="close"
               onClick={handleClose}
@@ -85,7 +92,9 @@ const ModalPost: React.FC<IModalPost> = (props) => {
             className="modal-text_modalPost"
             style={{ margin: '24px 0', fontSize: '15px' }}
           >
-            Bạn có thể theo dõi bài đăng tuyển của mình thông qua:
+            {languageRedux === 1
+              ? 'Bạn có thể theo dõi bài đăng tuyển của mình thông qua:'
+              : 'You can track your job posting through:'}
           </h6>
 
           {/* <h4
@@ -141,7 +150,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
           >
             <Button
               onClick={() => {
-                window.open(`/history?post=2`, '_parent');
+                window.open(`/history`, '_parent');
               }}
               className="btn-apply"
               type={'primary'}
@@ -150,12 +159,13 @@ const ModalPost: React.FC<IModalPost> = (props) => {
                 marginTop: 10,
                 height: 40,
                 fontWeight: 'bold',
-                backgroundColor: 'rgb(189, 49, 49)',
+                // backgroundColor: 'rgb(189, 49, 49)',
+                backgroundColor: '#0d99ff',
               }}
             >
-              Đến trang lịch sử
+              {languageRedux === 1 ? 'Đến trang lịch sử' : 'Go to history page'}
             </Button>
-            <Button
+            {/* <Button
               onClick={onclick}
               className="btn-apply"
               type={'primary'}
@@ -168,7 +178,7 @@ const ModalPost: React.FC<IModalPost> = (props) => {
               }}
             >
               Tiếp tục đăng bài
-            </Button>
+            </Button> */}
           </div>
         </Box>
       </Modal>
