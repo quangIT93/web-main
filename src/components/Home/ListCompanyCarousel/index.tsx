@@ -119,28 +119,28 @@ const ListCompanyCarousel: React.FC<PropsThemesType> = ({ listTheme }) => {
       // setIndex(newValue);
       // setOpenBackdrop(!openBackdrop);
       const categoryId = searchParams.get('categories-id');
-      // if (categoryId) {
-      //   setSearchParams({
-      //     'theme-id': `${newValue}`,
-      //     'categories-id': `${Number(categoryId) === 1 ? 'all' : categoryId}`,
-      //   });
-      // } else {
-      //   setSearchParams({ 'theme-id': `${newValue}` });
-      // }
+      if (categoryId) {
+        setSearchParams({
+          'theme-id': `${newValue}`,
+          'categories-id': `${Number(categoryId) === 1 ? 'all' : categoryId}`,
+        });
+      } else {
+        setSearchParams({ 'theme-id': `${newValue}` });
+      }
 
-      // if (location.pathname === '/') {
-      //   const result = await postApi.getPostByThemeId(
-      //     newValue,
-      //     9,
-      //     0,
-      //     languageRedux === 1 ? 'vi' : 'en',
-      //   );
-      //   if (result) {
-      //     setPostByTheme(result);
-      //     // set backdrop
-      //     // setOpenBackdrop(false);
-      //   }
-      // }
+      if (location.pathname === '/') {
+        const result = await postApi.getPostByThemeId(
+          newValue,
+          9,
+          0,
+          languageRedux === 1 ? 'vi' : 'en',
+        );
+        if (result) {
+          setPostByTheme(result);
+          // set backdrop
+          // setOpenBackdrop(false);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
