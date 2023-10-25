@@ -10,8 +10,11 @@ const nearByApi = {
     threshold: Number | null,
     lang: string
   ) => {
+    console.log("pvId",[...new Set(pvId)] as string[]);
+    console.log("pvId",pvId);
+    
     const URL = `/v1/posts/nearby?${pvId && pvId.length > 0 ?
-      `${(pvId?.filter(item => pvId.indexOf(item) === pvId.lastIndexOf(item)))
+      `${([...new Set(pvId)] as string[])
         ?.map((n: any, index) => `pvid=${n}`).join('&')}&`
       : `pvid=${79}&`}` +
       `${pcid ? `pcid=${pcid}&` : ``}` +
