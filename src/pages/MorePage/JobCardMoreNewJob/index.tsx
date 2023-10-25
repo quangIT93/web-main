@@ -85,11 +85,11 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
     window.open(`/post-detail?post-id=${id}`);
   };
 
-  const handleImageError = () => {
-    setError(true);
+  const handleImageError = (image: string | null) => {
+    if (image) {
+      setError(true);
+    }
   };
-
-  // console.log(infor);
 
   return (
     <>
@@ -211,7 +211,7 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                   </Typography>
                 </Tooltip>
                 <div>
-                  {!error && (
+                  {infor?.companyResourceData?.logo && (
                     <img
                       className="img-resource-company"
                       src={
@@ -220,7 +220,9 @@ const JobCardMoreNewJob: React.FC<Iprops> = (props) => {
                           : ''
                       }
                       alt="ảnh"
-                      onError={handleImageError}
+                      onError={() =>
+                        handleImageError(infor?.companyResourceData?.logo)
+                      }
                     />
                   )}
                 </div>
