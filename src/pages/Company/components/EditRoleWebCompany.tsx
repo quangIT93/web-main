@@ -24,13 +24,14 @@ interface IEditPostAddress {
   setDataCompany: any;
   dataCompany: any;
   is_profile: boolean;
+  setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { setDataCompany, dataCompany, is_profile } = props;
+  const { setDataCompany, dataCompany, is_profile, setUnsavedChanges } = props;
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -111,10 +112,11 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
 
   const handleEditCompanyRole = (event: any, value: any) => {
     setSelectedRole(value);
+    setUnsavedChanges(true);
     setDataCompany((preValue: any) => ({
       ...preValue,
       companyRoleInfomation: {
-        id: value ? value.id: "",
+        id: value ? value.id : '',
       },
     }));
   };
@@ -123,6 +125,7 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { value } = e.target;
+    setUnsavedChanges(true);
     setDataCompany((preValue: any) => ({
       ...preValue,
       website: value,
@@ -161,16 +164,16 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           style={{ marginTop: '8px' }}
         />
         <div className="wrap-noti_input">
-            {!selectedRole ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Email không được bỏ trống'
-                  : 'Email cannot be empty'}
-              </span>
-            ) : (
-              <></>
-            )}
-          </div>
+          {!selectedRole ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Email không được bỏ trống'
+                : 'Email cannot be empty'}
+            </span>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
 
       <div className="edit-web-company">
@@ -195,23 +198,23 @@ const EditRoleWebCompany: React.FC<IEditPostAddress> = memo((props) => {
           //   error={titleError} // Đánh dấu lỗi
         />
         <div className="wrap-noti_input">
-            {dataCompany?.website.length > 100 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Link web không được vượt quá 100 ký tự'
-                  : 'Web link cannot exceed 100 characters'}
-              </span>
-            ) : validURL(dataCompany?.website) === false ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Link web không đúng định dạng'
-                  : 'Web link is not in the correct format'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${dataCompany?.website.length}/100`}</span>
-          </div>
+          {dataCompany?.website.length > 100 ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Link web không được vượt quá 100 ký tự'
+                : 'Web link cannot exceed 100 characters'}
+            </span>
+          ) : validURL(dataCompany?.website) === false ? (
+            <span className="helper-text">
+              {languageRedux === 1
+                ? 'Link web không đúng định dạng'
+                : 'Web link is not in the correct format'}
+            </span>
+          ) : (
+            <></>
+          )}
+          <span className="number-text">{`${dataCompany?.website.length}/100`}</span>
+        </div>
       </div>
     </div>
   );

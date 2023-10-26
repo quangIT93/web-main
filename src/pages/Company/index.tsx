@@ -18,10 +18,10 @@ import EditDescripeCompany from './components/EditDescripeCompany';
 
 import ModalEditSuccess from '#components/EditPosted/ModalEditSuccess';
 import ModalEditCompanySuccess from './components/ModalEditCompanySuccess';
-
+import ModalUnsaveCompany from './components/ModalUnsaveCompany';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
-import languageApi from 'api/languageApi';
+// import languageApi from 'api/languageApi';
 
 // import NotFound from 'pages/NotFound';
 import './style.scss';
@@ -129,6 +129,9 @@ const Company: React.FC<ICompany> = (props) => {
     images: [],
     deleteImages: [],
   });
+
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
+  const [ShowModalUnsave, setShowModalUnsave] = useState(false);
   // const [language, setLanguageState] = React.useState<any>();
   const location = useLocation();
   // const getlanguageApi = async () => {
@@ -424,7 +427,34 @@ const Company: React.FC<ICompany> = (props) => {
     }
   };
 
-  // if (dataPostById) {
+  // useEffect(() => {
+  //   const handleOutsideClick = (e: any) => {
+  //     // Kiểm tra xem người dùng đã click bên ngoài container hay chưa
+  //     const container = document.querySelector('.company-container');
+  //     const buttonCancle = document.querySelector('.cancleChangeRoute');
+  //     console.log(
+  //       ' !container?.contains(e.target)',
+  //       !container?.contains(e.target),
+  //     );
+  //     console.log('ShowModalUnsave', ShowModalUnsave);
+  //     console.log('unsavedChanges', unsavedChanges);
+  //     console.log('buttonCancle', buttonCancle);
+
+  //     if (unsavedChanges && !container?.contains(e.target)) {
+  //       setShowModalUnsave(true);
+  //       console.log('hien looooooooooooo');
+  //       e.preventDefault();
+  //     }
+  //   };
+
+  //   // Lắng nghe sự kiện click trên toàn bộ trang
+  //   window.addEventListener('click', handleOutsideClick);
+
+  //   return () => {
+  //     window.removeEventListener('click', handleOutsideClick);
+  //   };
+  // }, [unsavedChanges]);
+
   return (
     <div
       className="company-container"
@@ -488,42 +518,50 @@ const Company: React.FC<ICompany> = (props) => {
               setDataCompany={setDataCompany}
               language={language}
               is_profile={is_profile}
+              setUnsavedChanges={setUnsavedChanges}
             />
             <EditNameTaxCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
+              setUnsavedChanges={setUnsavedChanges}
             />
             <EditAddressCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
+              setUnsavedChanges={setUnsavedChanges}
             />
             <EditPhoneMailCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
+              setUnsavedChanges={setUnsavedChanges}
             />
             <EditRoleWebCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
+              setUnsavedChanges={setUnsavedChanges}
             />
 
             <EditFieldScaleCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
+              setUnsavedChanges={setUnsavedChanges}
             />
             <EditImageCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
+              setUnsavedChanges={setUnsavedChanges}
             />
             <EditDescripeCompany
               dataCompany={dataCompany}
               setDataCompany={setDataCompany}
               is_profile={is_profile}
+              setUnsavedChanges={setUnsavedChanges}
             />
 
             <button
@@ -542,6 +580,11 @@ const Company: React.FC<ICompany> = (props) => {
         setOpenModalEditCompanySuccess={setOpenModalEditCompanySuccess}
         languageRedux={languageRedux}
         language={language}
+      />
+      <ModalUnsaveCompany
+        setShowModalUnsave={setShowModalUnsave}
+        ShowModalUnsave={ShowModalUnsave}
+        languageRedux={languageRedux}
       />
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         {/* <RollTop /> */}

@@ -21,13 +21,20 @@ interface IEditLogoCompany {
   setDataCompany: any;
   language: any;
   is_profile: boolean;
+  setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
-  const { dataCompany, setDataCompany, language, is_profile } = props;
+  const {
+    dataCompany,
+    setDataCompany,
+    language,
+    is_profile,
+    setUnsavedChanges,
+  } = props;
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewTitle, setPreviewTitle] = useState('');
   const [previewImage, setPreviewImage] = useState('');
@@ -48,6 +55,7 @@ const EditLogoCompany: React.FC<IEditLogoCompany> = (props) => {
 
   const propsUpload: UploadProps = {
     onChange: ({ fileList: newFileList }) => {
+      setUnsavedChanges(true);
       setFileList(newFileList);
       setDataCompany((preValue: any) => ({
         ...preValue,
