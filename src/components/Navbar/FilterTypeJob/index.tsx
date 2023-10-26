@@ -144,13 +144,20 @@ const FilterTypeJob: React.FC<TypeJob> = ({
       <div className="filter-input_icon">
         <PaperFilterIcon width={20} height={20} />
       </div>
+
       <Select
         getPopupContainer={(triggerNode) => triggerNode.parentElement}
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"
         value={
-          reset ? language?.all : valueRender ? valueRender.name : undefined
+          reset
+            ? languageRedux === 1
+              ? 'Loại hình công việc'
+              : 'Job type'
+            : valueRender
+            ? valueRender.name
+            : undefined
         }
         className="inputTypeSalary input-filter_nav"
         size="large"
@@ -158,6 +165,18 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="5" label="">
+          <div
+            style={{
+              padding: '10px 0',
+              textAlign: 'center',
+              borderBottom: '1px solid #ccc',
+              marginBottom: '12px',
+              fontWeight: '600',
+              fontSize: '16px',
+            }}
+          >
+            Loại hình công việc
+          </div>
           <CustomOption
             jobType={TYPE_JOB}
             data={data}
