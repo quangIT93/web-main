@@ -1,0 +1,18 @@
+.wrapLoading{
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    background-color: #edf2f9;
+    h2{
+      padding:1.2em;
+      text-align:center;
+      font-size: 4vw;
+      color: #0d99ff;
+      text-shadow:5px 6px 5px gray;
+      letter-spacing: 4px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }

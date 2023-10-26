@@ -1,20 +1,16 @@
 import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
 // import moment, { Moment } from 'moment';
 // @ts-ignore
-
-import { Navbar } from '#components';
 
 import './style.scss';
 
 import { Button } from 'antd';
-import RollTop from '#components/RollTop';
+
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { setCookie } from 'cookies';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 const ComunityCreateSuccess = () => {
   const dataProfile = useSelector((state: RootState) => state.profile.profile);
@@ -45,8 +41,8 @@ const ComunityCreateSuccess = () => {
 
   return (
     <div className="comunity-create-success-container">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <div className="comunity-create-success-content">
         <div className="create-success-message">
           <div className="create-success-message_header">
@@ -70,8 +66,8 @@ const ComunityCreateSuccess = () => {
           </Button>
         </div>
       </div>
-      <RollTop />
-      <Footer />
+      {/* <RollTop /> */}
+      {/* <Footer /> */}
     </div>
   );
 };

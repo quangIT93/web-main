@@ -2,10 +2,8 @@ import React, { useState, FormEvent } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
 
-import Footer from '../../components/Footer/Footer';
 // import moment, { Moment } from 'moment';
 // @ts-ignore
-import { Navbar } from '#components';
 import './style.scss';
 import imageCompression from 'browser-image-compression';
 
@@ -13,7 +11,7 @@ import { Button, Input, message, Upload, Modal } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 
 // @ts-ignore
-import RollTop from '#components/RollTop';
+
 // import { InboxOutlined } from '@ant-design/icons';
 // import type { UploadProps } from 'antd';
 import { useSearchParams } from 'react-router-dom';
@@ -31,7 +29,6 @@ import { validatePostImages } from 'validations';
 import apiCommunity from '../../api/apiCommunity';
 import communityApi from '../../api/apiCommunity';
 import { setCookie } from 'cookies';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 const ComunityCreatePost = () => {
   const language = useSelector(
@@ -430,7 +427,7 @@ const ComunityCreatePost = () => {
           content: message,
         });
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const createCommunity = async (formData: any) => {
@@ -461,8 +458,8 @@ const ComunityCreatePost = () => {
 
   return (
     <div className="comunity-create-post-container modal-person comunitypost">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       {contextHolder}
       <div className="comunity-create-post-content">
         <div className="create-post-header">
@@ -472,8 +469,8 @@ const ComunityCreatePost = () => {
                 ? 'Sửa bài viết'
                 : 'Edit post'
               : languageRedux === 1
-                ? 'Tạo bài viết mới'
-                : 'Creat new post'}
+              ? 'Tạo bài viết mới'
+              : 'Creat new post'}
           </h3>
         </div>
         <div className="create-post-body">
@@ -497,7 +494,7 @@ const ComunityCreatePost = () => {
                 languageRedux === 1 ? 'Chủ đề cần chia sẻ' : 'Topics to share'
               }
             />
-             <div className="wrap-noti_input">
+            <div className="wrap-noti_input">
               {valueTitle.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
@@ -513,8 +510,8 @@ const ComunityCreatePost = () => {
               ) : (
                 <></>
               )}
-            <span className="number-text">{`${valueTitle.length}/500`}</span>
-          </div>
+              <span className="number-text">{`${valueTitle.length}/500`}</span>
+            </div>
           </div>
           <div className="create-post-body_input">
             <h3>{languageRedux === 1 ? '2. Nội dung' : '2. Contents'}</h3>
@@ -539,7 +536,7 @@ const ComunityCreatePost = () => {
               }
               autoSize={{ minRows: 5, maxRows: 9 }}
             />
-              <div className="wrap-noti_input">
+            <div className="wrap-noti_input">
               {valueContent.length === 0 ? (
                 <span className="helper-text">
                   {languageRedux === 1
@@ -555,8 +552,8 @@ const ComunityCreatePost = () => {
               ) : (
                 <></>
               )}
-            <span className="number-text">{`${valueContent.length}/1000`}</span>
-          </div>
+              <span className="number-text">{`${valueContent.length}/1000`}</span>
+            </div>
           </div>
           <div className="create-post-body_input">
             <h3>
@@ -613,7 +610,7 @@ const ComunityCreatePost = () => {
                         display:
                           (selectedImages.length === 0 &&
                             selectedFiles.length === 0) ||
-                            isDragActive
+                          isDragActive
                             ? 'flex'
                             : 'none',
                       }}
@@ -663,23 +660,23 @@ const ComunityCreatePost = () => {
               className={
                 valueTitle === '' || valueContent === ''
                   ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                  'submit'
+                    'submit'
                   : 'submit full-info'
               }
             >
               {valueTitle === '' || valueContent === ''
                 ? // (selectedImages.length === 0 && selectedFiles.length === 0)
-                languageRedux === 1
+                  languageRedux === 1
                   ? 'Lưu bài'
                   : 'Save post'
                 : languageRedux === 1
-                  ? 'Đăng bài viết'
-                  : 'Post an article'}
+                ? 'Đăng bài viết'
+                : 'Post an article'}
             </Button>
           </div>
         </div>
       </div>
-      <RollTop />
+      {/* <RollTop /> */}
       <Modal
         open={previewOpen}
         title={previewTitle}
@@ -688,7 +685,7 @@ const ComunityCreatePost = () => {
       >
         <img alt="example" style={{ width: '100%' }} src={previewImage} />
       </Modal>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

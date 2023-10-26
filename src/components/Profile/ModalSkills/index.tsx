@@ -7,6 +7,7 @@ import {
   MenuItem,
   Button,
 } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CloseOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
@@ -55,6 +56,38 @@ const style = {
     width: 640,
   },
 };
+
+// Style Mui
+const theme = createTheme({
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        body1: {
+          fontSize: '14px',
+        },
+        h6: {
+          fontSize: '20px',
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        InputProps: {
+          style: {
+            fontSize: '14px',
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+        },
+      },
+    },
+  },
+});
 
 const ModalSkills: React.FC<IModalSkills> = (props) => {
   const { openModalSkills, setOpenModalSkills, setSkillValues } = props;
@@ -143,124 +176,126 @@ const ModalSkills: React.FC<IModalSkills> = (props) => {
   };
 
   return (
-    <Modal
-      open={openModalSkills}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box
-        sx={style}
-        className="Modal-personnal-info modal-person modal-personSkill"
+    <ThemeProvider theme={theme}>
+      <Modal
+        open={openModalSkills}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        {contextHolder}
-        <div
-          style={{
-            position: 'absolute',
-            right: '20px',
-            top: '20px',
-            cursor: 'pointer',
-            // border: '1px solid',
-            borderRadius: '50%',
-            padding: '1px',
-          }}
-          onClick={handleClose}
+        <Box
+          sx={style}
+          className="Modal-personnal-info modal-person modal-personSkill"
         >
-          <CloseOutlined style={{ fontSize: '30px' }} />
-        </div>
-        <Typography
-          id="modal-modal-title"
-          variant="h6"
-          component="h2"
-          align="center"
-          sx={{ marginBottom: '12px' }}
-        >
-          {languageRedux === 1 ? 'Thêm kỹ năng' : 'Add Skills'}
-        </Typography>
-        <Box sx={{ marginBottom: '12px' }}>
-          <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="nameProfile"
+          {contextHolder}
+          <div
+            style={{
+              position: 'absolute',
+              right: '20px',
+              top: '20px',
+              cursor: 'pointer',
+              // border: '1px solid',
+              borderRadius: '50%',
+              padding: '1px',
+            }}
+            onClick={handleClose}
           >
-            {languageRedux === 1 ? 'Kỹ năng' : 'Skill'}{' '}
-            <span className="color-asterisk">*</span>
-          </Typography>
-          <TextField
-            type="text"
-            id="skill"
-            name="skill"
-            value={skill}
-            onChange={handleOnchangeSkill}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
-          // error={titleError} // Đánh dấu lỗi
-          />
-          <div className="wrap-noti_input">
-            {skill.length > 255 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Tên kỹ năng không được vượt quá 255 ký tự'
-                  : 'Skill names cannot exceed 255 characters'}
-              </span>
-            ) : skill.length === 0 ? (
-              <span className="helper-text">
-                {languageRedux === 1
-                  ? 'Tên kỹ năng không được bỏ trống'
-                  : 'Skill names cannot be empty'}
-              </span>
-            ) : (
-              <></>
-            )}
-            <span className="number-text">{`${skill.length}/255`}</span>
+            <CloseOutlined style={{ fontSize: '30px' }} />
           </div>
-        </Box>
-        <Box sx={{ marginBottom: '12px' }}>
           <Typography
-            // sx={styleLabel}
-            variant="body1"
-            component="label"
-            htmlFor="sex"
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            align="center"
+            sx={{ marginBottom: '12px' }}
           >
-            {languageRedux === 1 ? 'Cấp độ' : 'Level'}{' '}
-            <span className="color-asterisk">*</span>
+            {languageRedux === 1 ? 'Thêm kỹ năng' : 'Add Skills'}
           </Typography>
-          <TextField
-            select
-            id="level"
-            value={level}
-            defaultValue={1}
-            onChange={handleOnchangeLevel}
-            variant="outlined"
-            placeholder={languageRedux === 1 ? 'Tháng/ Năm' : 'Month/ Year'}
-            size="small"
-            sx={{ width: '100%', marginTop: '4px' }}
-            error={!level} // Đánh dấu lỗi
-          >
-            <MenuItem value={1}>
-              {languageRedux === 1 ? 'Tập sự' : 'Novice'}
-            </MenuItem>
-            <MenuItem value={2}>
-              {languageRedux === 1 ? 'Sơ cấp' : 'Beginner'}
-            </MenuItem>
-            <MenuItem value={3}>
-              {languageRedux === 1 ? 'Kinh nghiệm' : 'Experienced'}
-            </MenuItem>
-            <MenuItem value={4}>
-              {languageRedux === 1 ? 'Thành thạo' : 'Skillful'}
-            </MenuItem>
-            <MenuItem value={5}>
-              {languageRedux === 1 ? 'Chuyên gia' : 'Expert'}
-            </MenuItem>
-          </TextField>
+          <Box sx={{ marginBottom: '12px' }}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="nameProfile"
+            >
+              {languageRedux === 1 ? 'Kỹ năng' : 'Skill'}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              type="text"
+              id="skill"
+              name="skill"
+              value={skill}
+              onChange={handleOnchangeSkill}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              placeholder={languageRedux === 1 ? 'Kỹ năng' : 'Skill'}
+              // error={titleError} // Đánh dấu lỗi
+            />
+            <div className="wrap-noti_input">
+              {skill.length > 255 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tên kỹ năng không được vượt quá 255 ký tự'
+                    : 'Skill names cannot exceed 255 characters'}
+                </span>
+              ) : skill.length === 0 ? (
+                <span className="helper-text">
+                  {languageRedux === 1
+                    ? 'Tên kỹ năng không được bỏ trống'
+                    : 'Skill names cannot be empty'}
+                </span>
+              ) : (
+                <></>
+              )}
+              <span className="number-text">{`${skill.length}/255`}</span>
+            </div>
+          </Box>
+          <Box sx={{ marginBottom: '12px' }}>
+            <Typography
+              // sx={styleLabel}
+              variant="body1"
+              component="label"
+              htmlFor="sex"
+            >
+              {languageRedux === 1 ? 'Cấp độ' : 'Level'}{' '}
+              <span className="color-asterisk">*</span>
+            </Typography>
+            <TextField
+              select
+              id="level"
+              value={level}
+              defaultValue={1}
+              onChange={handleOnchangeLevel}
+              variant="outlined"
+              placeholder={languageRedux === 1 ? 'Tháng/ Năm' : 'Month/ Year'}
+              size="small"
+              sx={{ width: '100%', marginTop: '4px' }}
+              error={!level} // Đánh dấu lỗi
+            >
+              <MenuItem value={1}>
+                {languageRedux === 1 ? 'Tập sự' : 'Novice'}
+              </MenuItem>
+              <MenuItem value={2}>
+                {languageRedux === 1 ? 'Sơ cấp' : 'Beginner'}
+              </MenuItem>
+              <MenuItem value={3}>
+                {languageRedux === 1 ? 'Kinh nghiệm' : 'Experienced'}
+              </MenuItem>
+              <MenuItem value={4}>
+                {languageRedux === 1 ? 'Thành thạo' : 'Skillful'}
+              </MenuItem>
+              <MenuItem value={5}>
+                {languageRedux === 1 ? 'Chuyên gia' : 'Expert'}
+              </MenuItem>
+            </TextField>
+          </Box>
+          <Button variant="contained" fullWidth onClick={handleSubmit}>
+            {language?.profile_page?.save_info}
+          </Button>
         </Box>
-        <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
-        </Button>
-      </Box>
-    </Modal>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

@@ -1,17 +1,11 @@
 import * as React from 'react';
 
 // @ts-ignore
-import { Navbar } from '#components';
-import Footer from '../../components/Footer/Footer';
+// import { Navbar } from '#components';
+// import Footer from '../../components/Footer/Footer';
 
 // import icon
-import {
-  MinusCircle,
-  PlusCircle,
-  BackIcon,
-
-  TickIcon,
-} from '#components/Icons';
+import { MinusCircle, PlusCircle, BackIcon, TickIcon } from '#components/Icons';
 
 // import Component
 import ContentListCv from '#components/TemplatesCv/ContentListCv';
@@ -19,21 +13,17 @@ import templatesCv from '#components/TemplatesCv/CvTemplate/ListTheme';
 
 import './style.scss';
 
-
 import ModalShare from '#components/CV/ModalShare';
 import ModalChooseCv from '#components/CV/ModalChooseCv';
 import ModalSuccessSaveCv from '#components/CV/ModalSuccessSaveCv';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 // import { setCookie } from 'cookies';
-import RollTop from '#components/RollTop';
 
 import { pdf } from '@react-pdf/renderer';
 
 import apiCv from 'api/apiCv';
 
-
-import CategoryDropdown from '#components/CategoryDropdown';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import ModalOver10Cv from '#components/CV/ModalOver10Cv';
@@ -219,9 +209,9 @@ const TemplatesCv: React.FC = () => {
 
   return (
     <div className="cv-container">
-      <Navbar />
-      <CategoryDropdown />
-      <div className="cv-content">
+      {/* <Navbar />
+      <CategoryDropdown /> */}
+      <div className="cv_content">
         {/* <div className="cv-content-page">
                     <div className="page" id="divToPrint1">
                         <div className="subpage">
@@ -405,7 +395,7 @@ const TemplatesCv: React.FC = () => {
             zIndex: (theme: any) => theme.zIndex.drawer + 1,
           }}
           open={loading}
-        // onClick={handleClose}
+          // onClick={handleClose}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -430,8 +420,8 @@ const TemplatesCv: React.FC = () => {
           setOpenModalOver10Cv={setOpenModalOver10Cv}
         />
       </div>
-      <RollTop />
-      <Footer />
+      {/* <RollTop /> */}
+      {/* <Footer /> */}
     </div>
   );
 };

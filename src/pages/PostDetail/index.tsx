@@ -4,9 +4,7 @@ import copy from 'clipboard-copy';
 import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import NavBar from '../../components/Navbar/index';
 import { AxiosResponse } from 'axios';
-import Footer from '../../components/Footer/Footer';
 // @ts-ignore
 import { Link, useSearchParams } from 'react-router-dom';
 
@@ -102,9 +100,7 @@ import AnotherPost from './components/AnotherPost';
 import { postDetail } from 'validations/lang/vi/postDetail';
 import { postDetailEn } from 'validations/lang/en/postDetail';
 
-import RollTop from '#components/RollTop';
 import { setCookie } from 'cookies';
-import CategoryDropdown from '#components/CategoryDropdown';
 // import { Language } from '#components/Navbar/Css';
 
 // const itemsShare = [
@@ -173,12 +169,16 @@ const Detail = () => {
   // test redux
   // const userProfile = useSelector((state: RootState) => state.profileUser);
   // const userProfile = useSelector((state: RootState) => state.profile.profile);
-  const profileV3 = useSelector((state: RootState) => state.dataProfileV3.data);
+  const profileV3 = useSelector((state: RootState) => {
+    console.log('state', state);
+    return state.dataProfileV3.data;
+  });
   // const dispatch = useDispatch()
   // const { setPostByTheme, setProvince } = bindActionCreators(
   //   actionCreators,
   //   dispatch
   // )
+  console.log('profileV3', profileV3);
   const language = useSelector(
     (state: RootState) => state.dataLanguage.languages,
   );
@@ -328,7 +328,7 @@ const Detail = () => {
         languageRedux === 1 ? 'vi' : 'en',
       );
       // console.log('result', result2);
-      if (result) {
+      if (result && profileV3) {
         // const list = result?.data.categories.map((category: any) =>
         //   Number(category.child_category_id)
         // )
@@ -1169,8 +1169,8 @@ const Detail = () => {
     <>
       {automatic && (
         <div className="detail">
-          <NavBar />
-          <CategoryDropdown />
+          {/* <NavBar />
+          <CategoryDropdown /> */}
           {/* <div className="div-include-breadcrumb">
             <div className="job-breadcrumb">
               <div className="div-breadcrumb" style={{ width: `${width}px` }}>
@@ -1700,8 +1700,8 @@ const Detail = () => {
             openModalLogin={openModalLogin}
             setOpenModalLogin={setOpenModalLogin}
           />
-          <RollTop />
-          <Footer />
+          {/* <RollTop /> */}
+          {/* <Footer /> */}
         </div>
       )}
     </>

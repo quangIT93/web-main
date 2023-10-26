@@ -1,6 +1,5 @@
 import React from 'react';
 // @ts-ignore
-import { Navbar } from '#components';
 
 import './style.scss';
 
@@ -14,7 +13,7 @@ const InstructionsCv = () => {
 
   return (
     <div className="instructionsCv">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="instructionCv-container">
         <div className="instructionCv-container_top">
           <div className="container-top_content">

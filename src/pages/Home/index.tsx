@@ -3,7 +3,6 @@ import React, { memo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // @ts-ignore
-import { Navbar } from '#components';
 
 // @ts-ignore
 import { Breadcrumbs } from '#components';
@@ -25,8 +24,6 @@ import { NewestGigWorker } from '#components';
 
 import HotJob from '#components/Home/HotJob';
 
-import RollTop from '#components/RollTop';
-
 import Box from '@mui/material/Box';
 
 // import ModalLogin from '#components/Home/ModalLogin'
@@ -43,14 +40,13 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 
 // component
 import Community from '#components/Home/Community';
-import Footer from '../../components/Footer/Footer';
 
 import { RootState } from '../../store/reducer';
 import { setCookie } from 'cookies';
 import ModalSelectRole from '#components/Home/ModalSelectRole';
 import ModalUpdateInfo from '#components/Home/ModalUpdateInfo';
 import { setIsNew } from 'store/reducer/isNewReducer';
-import CategoryDropdown from '#components/CategoryDropdown';
+
 import Advertise from '#components/Home/Advertise';
 
 const Home: React.FC = () => {
@@ -225,8 +221,8 @@ const Home: React.FC = () => {
 
   return (
     <div className="home">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       {/* <script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8881781217169539"
@@ -260,15 +256,15 @@ const Home: React.FC = () => {
         openModalSelectRole={openModalSelectRole}
         setOpenModalSelectRole={setOpenModalSelectRole}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // setRole={setRole}
+        // setRole={setRole}
       />
       <ModalUpdateInfo
         openModalUpdateInfo={openModalUpdateInfo}
         setOpenModalUpdateInfo={setOpenModalUpdateInfo}
-      // role={role}
+        // role={role}
       />
-      <RollTop />
-      <Footer />
+      {/* <RollTop />
+      <Footer /> */}
     </div>
   );
 };

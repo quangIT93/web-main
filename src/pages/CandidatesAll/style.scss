@@ -1,14 +1,7 @@
 .container-candidate {
     .candidate {
         max-width: 1080px;
-        padding: 0px 0;
-        padding-top: 24px;
-        margin: 115px auto;
-        // margin: 176px auto;
-
-        @media screen and (max-width: 1080px) {
-            padding: 24px 24px;
-        }
+        margin: 0 auto;
 
         .header-candidate {
             display: flex;

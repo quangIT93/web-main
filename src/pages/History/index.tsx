@@ -11,14 +11,12 @@ import { RightOutlined } from '@ant-design/icons';
 import { Space } from 'antd';
 
 // import component
-import Footer from '../../components/Footer/Footer';
+
 import CardsPosted from '#components/History/CardsPosted';
 import CardsApplied from '#components/History/CardsApplied';
 import CardsSavedJob from '#components/History/CardsSavedJob';
 import CardsListBlog from '#components/History/CardsListBlog';
 import CardListCandidate from '#components/History/CardListCandidate';
-
-import RollTop from '#components/RollTop';
 
 import ShowCancleSave from '#components/ShowCancleSave';
 
@@ -33,7 +31,7 @@ import ShowNotificativeSave from '#components/ShowNotificativeSave';
 
 import './style.scss';
 // @ts-ignore
-import { Navbar } from '#components';
+
 // import Item from 'antd/es/list/Item'
 import languageApi from 'api/languageApi';
 
@@ -42,7 +40,6 @@ import { RootState } from '../../store/reducer/index';
 import { historyVi } from 'validations/lang/vi/history';
 import { historyEn } from 'validations/lang/en/history';
 import { setCookie } from 'cookies';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 const { Panel } = Collapse;
 
@@ -393,8 +390,8 @@ const HistoryPost = () => {
 
   return (
     <div className="post-history">
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <div className="post-history_main">
         <Box>
           <Breadcrumbs
@@ -491,8 +488,8 @@ const HistoryPost = () => {
       </div>
       <ShowCancleSave />
       <ShowNotificativeSave />
-      <RollTop />
-      <Footer />
+      {/* <RollTop /> */}
+      {/* <Footer /> */}
     </div>
   );
 };

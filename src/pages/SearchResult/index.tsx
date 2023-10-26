@@ -18,6 +18,7 @@ import {
   message,
   Spin,
 } from 'antd';
+
 import { EnvironmentOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import { Box, Button } from '@mui/material';
@@ -37,8 +38,6 @@ import searchApi from 'api/searchApi';
 import profileApi from 'api/profileApi';
 import locationApi from 'api/locationApi';
 import categoriesApi from 'api/categoriesApi';
-import Footer from '../../components/Footer/Footer';
-import RollTop from '#components/RollTop';
 
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -46,7 +45,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 // @ts-ignore
-import { Navbar } from '#components';
 import { CreateKeywordIconSmall, MoreICon } from '#components/Icons';
 import { CloseOutlined } from '@ant-design/icons';
 
@@ -75,7 +73,6 @@ import languageApi from 'api/languageApi';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import { searchResultVi } from 'validations/lang/vi/searchResult';
 import { searchResultEn } from 'validations/lang/en/searchResult';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 const { SHOW_CHILD } = Cascader;
 
@@ -931,8 +928,8 @@ const NewJobs: React.FC = () => {
 
   return (
     <>
-      <Navbar />
-      <CategoryDropdown />
+      {/* <Navbar />
+      <CategoryDropdown /> */}
       <div className="search-result">
         {contextHolder}
         {
@@ -961,7 +958,7 @@ const NewJobs: React.FC = () => {
                     </span>
                   </>
                 ) : (
-                  <span>Loadding</span>
+                  <span>Loading</span>
                 )}
               </div>
               <div
@@ -1160,10 +1157,7 @@ const NewJobs: React.FC = () => {
                 fontSize: '12px',
               }}
             />
-            {/* 
-            <Cascader>
 
-            </Cascader> */}
             <Cascader
               dropdownRender={DropdownRenderCategory}
               options={
@@ -1367,8 +1361,8 @@ const NewJobs: React.FC = () => {
       </div>
       <ShowCancleSave />
       <ShowNotificativeSave />
-      <RollTop />
-      <Footer />
+      {/* <RollTop /> */}
+      {/* <Footer /> */}
     </>
   );
 };

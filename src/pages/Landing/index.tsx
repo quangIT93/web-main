@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // @ts-ignore
 import { Link } from 'react-router-dom';
 import NaviBar from '../Landing/components/navBar';
@@ -7,7 +7,7 @@ import ItemInfoLeft from '../Landing/components/item/itemInfoLeft';
 import ItemInfoRight from '../Landing/components/item/itemInfoRight';
 // import Popup from './popup/index'
 // import useModal from './popup/useModal'
-import Footer from '../../components/Footer/index';
+import Footer from '../../components/Footer/Footer';
 import RollTop from '#components/RollTop';
 import './style.scss';
 

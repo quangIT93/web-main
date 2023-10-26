@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, MenuItem, TextField, Modal, Typography } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 // import { DatePicker } from '@mui/lab'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -33,6 +34,7 @@ import { profileEn } from 'validations/lang/en/profile';
 import languageApi from 'api/languageApi';
 import { provinces } from 'pages/Post/data/data';
 import { setProfileV3 } from 'store/reducer/profileReducerV3';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -66,6 +68,45 @@ const styleChildBox = {
   flexDirection: 'column',
   gap: '4px',
 };
+
+// Style Mui
+const theme = createTheme({
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        body1: {
+          fontSize: '14px',
+        },
+        h6: {
+          fontSize: '20px',
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        InputProps: {
+          style: {
+            fontSize: '14px',
+          },
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        input: {
+          fontSize: '14px',
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+        },
+      },
+    },
+  },
+});
 
 interface IModalProfileInfoPerson {
   openModelPersonalInfo: boolean;
@@ -315,278 +356,282 @@ const ModalProfileInfoPerson: React.FC<IModalProfileInfoPerson> = (props) => {
   };
 
   return (
-    <Modal
-      open={openModelPersonalInfo}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      onKeyDown={handleKeyDown}
-      sx={{ minWidth: '300px' }}
-    >
-      <Box sx={style} className="Modal-personnal-info modal-person">
-        {contextHolder}
-        <form action="">
-          <div
-            style={{
-              position: 'absolute',
-              right: '20px',
-              top: '20px',
-              cursor: 'pointer',
-              // border: '1px solid',
-              borderRadius: '50%',
-              padding: '1px',
-            }}
-            onClick={handleClose}
-          >
-            <CloseOutlined style={{ fontSize: '30px' }} />
-          </div>
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            align="center"
-            sx={{ marginBottom: '12px' }}
-          >
-            {language?.personal_information}
-          </Typography>
-          <Box sx={styleChildBox}>
-            <Typography
-              // sx={styleLabel}
-              variant="body1"
-              component="label"
-              htmlFor="nameProfile"
+    <ThemeProvider theme={theme}>
+      <Modal
+        open={openModelPersonalInfo}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        onKeyDown={handleKeyDown}
+        sx={{ minWidth: '300px' }}
+      >
+        <Box sx={style} className="Modal-personnal-info modal-person">
+          {contextHolder}
+          <form action="">
+            <div
+              style={{
+                position: 'absolute',
+                right: '20px',
+                top: '20px',
+                cursor: 'pointer',
+                // border: '1px solid',
+                borderRadius: '50%',
+                padding: '1px',
+              }}
+              onClick={handleClose}
             >
-              {language?.full_name} <span className="color-asterisk">*</span>
-            </Typography>
-            <TextField
-              type="text"
-              id="nameProfile"
-              name="title"
-              value={name}
-              onChange={handleSetFullName}
-              size="small"
-              sx={{ width: '100%', marginTop: '4px' }}
-              placeholder="Họ và tên"
-              // error={titleError} // Đánh dấu lỗi
-            />
-            <div className="wrap-noti_input">
-              {name?.length > 90 ? (
-                <span className="helper-text">
-                  {languageRedux === 1
-                    ? 'Tên không được vượt quá 90 ký tự'
-                    : 'Full name cannot exceed 90 characters'}
-                </span>
-              ) : name?.length === 0 ? (
-                <span className="helper-text">
-                  {languageRedux === 1
-                    ? 'Tên không được để trống'
-                    : 'Full name cannot be blank'}
-                </span>
-              ) : (
-                <></>
-              )}
-              <span className="number-text">{`${name?.length}/90`}</span>
+              <CloseOutlined style={{ fontSize: '30px' }} />
             </div>
-          </Box>
-          <Box sx={styleChildBox}>
             <Typography
-              // sx={styleLabel}
-              variant="body1"
-              component="label"
-              htmlFor="sex"
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              align="center"
+              sx={{ marginBottom: '12px' }}
             >
-              {language?.sex} <span className="color-asterisk">*</span>
+              {language?.personal_information}
             </Typography>
-            <TextField
-              select
-              id="sex"
-              value={gender}
-              // defaultValue={gender}
-              onChange={handleChange}
-              variant="outlined"
-              placeholder={language?.sex}
-              size="small"
-              sx={{ width: '100%' }}
-            >
-              <MenuItem value={1}>{language?.male}</MenuItem>
-              <MenuItem value={0}>{language?.female}</MenuItem>
-            </TextField>
-          </Box>
-          <Box sx={styleChildBox}>
-            <LocalizationProvider dateAdapter={AdapterMoment}>
-              <div className="wrapModalBirth">
-                <Typography
-                  variant="body1"
-                  component="label"
-                  htmlFor="startTime"
-                >
-                  {language?.date_of_birth}{' '}
-                  <span className="color-asterisk">*</span>
-                </Typography>
-                <DatePicker
-                  value={day}
-                  onChange={handleDateChange}
-                  format="DD/MM/YYYY"
-                  slotProps={{
-                    textField: {
-                      helperText: 'DD/MM/YYYY',
-                    },
-                  }}
-                  // format="DD/MM/YYYY"
-                />
-              </div>
+            <Box sx={styleChildBox}>
+              <Typography
+                // sx={styleLabel}
+                variant="body1"
+                component="label"
+                htmlFor="nameProfile"
+              >
+                {language?.full_name} <span className="color-asterisk">*</span>
+              </Typography>
+              <TextField
+                type="text"
+                id="nameProfile"
+                name="title"
+                value={name}
+                onChange={handleSetFullName}
+                size="small"
+                sx={{ width: '100%', marginTop: '4px' }}
+                placeholder="Họ và tên"
+                // error={titleError} // Đánh dấu lỗi
+              />
               <div className="wrap-noti_input">
-                {new Date(day).getFullYear() > new Date().getFullYear() ? (
+                {name?.length > 90 ? (
                   <span className="helper-text">
                     {languageRedux === 1
-                      ? 'Năm sinh không được vượt quá năm hiện tại'
-                      : 'Year of birth cannot exceed the current year'}
+                      ? 'Tên không được vượt quá 90 ký tự'
+                      : 'Full name cannot exceed 90 characters'}
                   </span>
-                ) : !new Date(day).getFullYear() ? (
+                ) : name?.length === 0 ? (
                   <span className="helper-text">
                     {languageRedux === 1
-                      ? 'Vui lòng nhập ngày sinh'
-                      : 'Please enter date of birth'}
-                  </span>
-                ) : new Date(day).getFullYear() < 1900 ? (
-                  <span className="helper-text">
-                    {languageRedux === 1
-                      ? 'Năm sinh không được nhỏ hơn 1900'
-                      : 'Year of birth cannot be less than 1900'}
+                      ? 'Tên không được để trống'
+                      : 'Full name cannot be blank'}
                   </span>
                 ) : (
-                  ''
+                  <></>
                 )}
+                <span className="number-text">{`${name?.length}/90`}</span>
               </div>
-            </LocalizationProvider>
-          </Box>
-          <Box sx={styleChildBox}>
-            <Typography
-              // sx={styleLabel}
-              variant="body1"
-              component="label"
-              htmlFor="jobTitle"
-            >
-              {language?.location} <span className="color-asterisk">*</span>
-            </Typography>
-            <Autocomplete
-              options={dataProvinces ? dataProvinces : []}
-              getOptionLabel={(option: any) => option?.province_fullName || ''}
-              value={
-                selectedProvince && dataProvinces?.length > 0
-                  ? dataProvinces?.find(
-                      (province: any) =>
-                        province.province_id === selectedProvince.province_id,
-                    )
-                  : null
-              }
-              defaultValue={selectedProvince}
-              onChange={handleProvinceChange}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder={language?.profile_page?.place_address}
-                  size="small"
-                  // error={!selectedProvince}
-                />
-              )}
-            />
-          </Box>
-          <Box sx={styleChildBox}>
-            <Typography
-              // sx={styleLabel}
-              variant="body1"
-              component="label"
-              htmlFor="nameProfile"
-            >
-              {languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}{' '}
-              <span className="color-asterisk">*</span>
-            </Typography>
-            <TextField
-              type="text"
-              id="nameProfile"
-              name="title"
-              value={jobTypeName}
-              onChange={handleJobTypeName}
-              size="small"
-              sx={{ width: '100%', marginTop: '4px' }}
-              placeholder={
-                languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
-              }
-              // error={titleError} // Đánh dấu lỗi
-            />
-            <div className="wrap-noti_input">
-              {jobTypeName?.length > 100 ? (
-                <span className="helper-text">
-                  {languageRedux === 1
-                    ? 'Vị trí không được vượt quá 100 ký tự'
-                    : 'Position cannot exceed 100 characters'}
-                </span>
-              ) : jobTypeName?.length === 0 ? (
-                <span className="helper-text">
-                  {languageRedux === 1
-                    ? 'Vị trí không được vượt quá 100 ký tự'
-                    : 'Position cannot exceed 100 characters'}
-                </span>
-              ) : (
-                <></>
-              )}
-              <span className="number-text">{`${jobTypeName?.length}/100`}</span>
-            </div>
-          </Box>
-          <Box sx={styleChildBox}>
-            <Typography
-              // sx={styleLabel}
-              variant="body1"
-              component="label"
-              htmlFor="startTime"
-            >
-              {language?.self_describtion}{' '}
-              <span className="color-asterisk">*</span>
-            </Typography>
-            <TextField
-              // className={classes.textarea}
-              onChange={handleChangeDescription}
-              sx={{ width: '100%', marginTop: '4px' }}
-              multiline
-              rows={4}
-              value={introduction}
-              id="profile-introduction"
-              // label="Một số đặc điểm nhận diện công ty"
-              placeholder={language?.introduce_yourself_to_the_recruiter}
-              error={introduction?.length > 500} // Đánh dấu lỗi
-              // onKeyDown={(event) => {
-              //   // if (event.key === 'Enter') {
-              //   //   event.preventDefault();
-              //   // }
-              //   console.log(event.target);
-              // }}
-            />
-            <div className="wrap-noti_input">
-              {introduction?.length === 0 ? (
-                <span className="helper-text">
-                  {languageRedux === 1
-                    ? 'Thông tin thêm không được bỏ trống'
-                    : 'Additional information cannot be empty'}
-                </span>
-              ) : introduction?.length > 500 ? (
-                <span className="helper-text">
-                  {languageRedux === 1
-                    ? 'Thông tin thêm không được vượt quá 500 ký tự'
-                    : 'Additional information cannot exceed 500 characters'}
-                </span>
-              ) : (
-                <></>
-              )}
-              <span className="number-text">{`${introduction?.length}/500`}</span>
-            </div>
-          </Box>
-        </form>
-        <Button variant="contained" fullWidth onClick={handleSubmit}>
-          {language?.profile_page?.save_info}
-        </Button>
-      </Box>
-    </Modal>
+            </Box>
+            <Box sx={styleChildBox}>
+              <Typography
+                // sx={styleLabel}
+                variant="body1"
+                component="label"
+                htmlFor="sex"
+              >
+                {language?.sex} <span className="color-asterisk">*</span>
+              </Typography>
+              <TextField
+                select
+                id="sex"
+                value={gender}
+                // defaultValue={gender}
+                onChange={handleChange}
+                variant="outlined"
+                placeholder={language?.sex}
+                size="small"
+                sx={{ width: '100%' }}
+              >
+                <MenuItem value={1}>{language?.male}</MenuItem>
+                <MenuItem value={0}>{language?.female}</MenuItem>
+              </TextField>
+            </Box>
+            <Box sx={styleChildBox}>
+              <LocalizationProvider dateAdapter={AdapterMoment}>
+                <div className="wrapModalBirth">
+                  <Typography
+                    variant="body1"
+                    component="label"
+                    htmlFor="startTime"
+                  >
+                    {language?.date_of_birth}{' '}
+                    <span className="color-asterisk">*</span>
+                  </Typography>
+                  <DatePicker
+                    value={day}
+                    onChange={handleDateChange}
+                    format="DD/MM/YYYY"
+                    slotProps={{
+                      textField: {
+                        helperText: 'DD/MM/YYYY',
+                      },
+                    }}
+                    // format="DD/MM/YYYY"
+                  />
+                </div>
+                <div className="wrap-noti_input">
+                  {new Date(day).getFullYear() > new Date().getFullYear() ? (
+                    <span className="helper-text">
+                      {languageRedux === 1
+                        ? 'Năm sinh không được vượt quá năm hiện tại'
+                        : 'Year of birth cannot exceed the current year'}
+                    </span>
+                  ) : !new Date(day).getFullYear() ? (
+                    <span className="helper-text">
+                      {languageRedux === 1
+                        ? 'Vui lòng nhập ngày sinh'
+                        : 'Please enter date of birth'}
+                    </span>
+                  ) : new Date(day).getFullYear() < 1900 ? (
+                    <span className="helper-text">
+                      {languageRedux === 1
+                        ? 'Năm sinh không được nhỏ hơn 1900'
+                        : 'Year of birth cannot be less than 1900'}
+                    </span>
+                  ) : (
+                    ''
+                  )}
+                </div>
+              </LocalizationProvider>
+            </Box>
+            <Box sx={styleChildBox}>
+              <Typography
+                // sx={styleLabel}
+                variant="body1"
+                component="label"
+                htmlFor="jobTitle"
+              >
+                {language?.location} <span className="color-asterisk">*</span>
+              </Typography>
+              <Autocomplete
+                options={dataProvinces ? dataProvinces : []}
+                getOptionLabel={(option: any) =>
+                  option?.province_fullName || ''
+                }
+                value={
+                  selectedProvince && dataProvinces?.length > 0
+                    ? dataProvinces?.find(
+                        (province: any) =>
+                          province.province_id === selectedProvince.province_id,
+                      )
+                    : null
+                }
+                defaultValue={selectedProvince}
+                onChange={handleProvinceChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder={language?.profile_page?.place_address}
+                    size="small"
+                    // error={!selectedProvince}
+                  />
+                )}
+              />
+            </Box>
+            <Box sx={styleChildBox}>
+              <Typography
+                // sx={styleLabel}
+                variant="body1"
+                component="label"
+                htmlFor="nameProfile"
+              >
+                {languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'}{' '}
+                <span className="color-asterisk">*</span>
+              </Typography>
+              <TextField
+                type="text"
+                id="nameProfile"
+                name="title"
+                value={jobTypeName}
+                onChange={handleJobTypeName}
+                size="small"
+                sx={{ width: '100%', marginTop: '4px' }}
+                placeholder={
+                  languageRedux === 1 ? 'Vị trí ứng tuyển' : 'Position'
+                }
+                // error={titleError} // Đánh dấu lỗi
+              />
+              <div className="wrap-noti_input">
+                {jobTypeName?.length > 100 ? (
+                  <span className="helper-text">
+                    {languageRedux === 1
+                      ? 'Vị trí không được vượt quá 100 ký tự'
+                      : 'Position cannot exceed 100 characters'}
+                  </span>
+                ) : jobTypeName?.length === 0 ? (
+                  <span className="helper-text">
+                    {languageRedux === 1
+                      ? 'Vị trí không được vượt quá 100 ký tự'
+                      : 'Position cannot exceed 100 characters'}
+                  </span>
+                ) : (
+                  <></>
+                )}
+                <span className="number-text">{`${jobTypeName?.length}/100`}</span>
+              </div>
+            </Box>
+            <Box sx={styleChildBox}>
+              <Typography
+                // sx={styleLabel}
+                variant="body1"
+                component="label"
+                htmlFor="startTime"
+              >
+                {language?.self_describtion}{' '}
+                <span className="color-asterisk">*</span>
+              </Typography>
+              <TextField
+                // className={classes.textarea}
+                onChange={handleChangeDescription}
+                sx={{ width: '100%', marginTop: '4px' }}
+                multiline
+                rows={4}
+                value={introduction}
+                id="profile-introduction"
+                // label="Một số đặc điểm nhận diện công ty"
+                placeholder={language?.introduce_yourself_to_the_recruiter}
+                error={introduction?.length > 500} // Đánh dấu lỗi
+                // onKeyDown={(event) => {
+                //   // if (event.key === 'Enter') {
+                //   //   event.preventDefault();
+                //   // }
+                //   console.log(event.target);
+                // }}
+              />
+              <div className="wrap-noti_input">
+                {introduction?.length === 0 ? (
+                  <span className="helper-text">
+                    {languageRedux === 1
+                      ? 'Thông tin thêm không được bỏ trống'
+                      : 'Additional information cannot be empty'}
+                  </span>
+                ) : introduction?.length > 500 ? (
+                  <span className="helper-text">
+                    {languageRedux === 1
+                      ? 'Thông tin thêm không được vượt quá 500 ký tự'
+                      : 'Additional information cannot exceed 500 characters'}
+                  </span>
+                ) : (
+                  <></>
+                )}
+                <span className="number-text">{`${introduction?.length}/500`}</span>
+              </div>
+            </Box>
+          </form>
+          <Button variant="contained" fullWidth onClick={handleSubmit}>
+            {language?.profile_page?.save_info}
+          </Button>
+        </Box>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

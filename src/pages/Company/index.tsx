@@ -1,8 +1,6 @@
 import React, { useEffect, FormEvent, useState } from 'react';
 // import { useHomeState } from '../Home/HomeState'
 // import { useSearchParams } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
-// import moment, { Moment } from 'moment';
 import { Skeleton, Space } from 'antd';
 import { message } from 'antd';
 
@@ -10,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 
 // import component
 // @ts-ignore
-import { Navbar } from '#components';
 import EditLogoCompany from './components/EditLogoCompany';
 import EditNameTaxCompany from './components/EditNameTaxCompany';
 import EditAddressCompany from './components/EditAddressCompany';
@@ -25,8 +22,6 @@ import ModalEditCompanySuccess from './components/ModalEditCompanySuccess';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducer';
 import languageApi from 'api/languageApi';
-
-import RollTop from '#components/RollTop';
 
 // import NotFound from 'pages/NotFound';
 import './style.scss';
@@ -44,7 +39,6 @@ import { company } from 'validations/lang/vi/company';
 import { companyEn } from 'validations/lang/en/company';
 import EditImageCompany from './components/EditImageCompany';
 import { PencilIcon } from '#components/Icons';
-import CategoryDropdown from '#components/CategoryDropdown';
 
 export interface FormValues {
   id: string;
@@ -220,11 +214,11 @@ const Company: React.FC<ICompany> = (props) => {
   const validURL = (str: string) => {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);
@@ -437,21 +431,16 @@ const Company: React.FC<ICompany> = (props) => {
       style={{
         display: display,
         // marginTop: is_profile ? '30px' : '70px',
-        marginTop: is_profile ? '30px' : '115px',
+        // marginTop: is_profile ? '30px' : '0px',
         width: is_profile ? '100%' : 'unset',
       }}
     >
       {contextHolder}
       <div style={{ display: is_profile ? 'none' : 'block' }}>
-        <Navbar />
-        {location?.pathname === '/company-infor' ? <CategoryDropdown /> : <></>}
+        {/* <Navbar />
+        {location?.pathname === '/company-infor' ? <CategoryDropdown /> : <></>} */}
       </div>
-      <div
-        className="company-content"
-        style={{
-          padding: is_profile ? '0px' : '24px 0px',
-        }}
-      >
+      <div className="company-content">
         <div
           className="company-title"
           style={{
@@ -555,8 +544,8 @@ const Company: React.FC<ICompany> = (props) => {
         language={language}
       />
       <div style={{ display: is_profile ? 'none' : 'block' }}>
-        <RollTop />
-        <Footer />
+        {/* <RollTop /> */}
+        {/* <Footer /> */}
       </div>
     </div>
   );

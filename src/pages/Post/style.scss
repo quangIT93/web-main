@@ -1,11 +1,9 @@
 @import "../../scss/mixins";
 
 .post {
-  // margin-top: 70px;
-  margin-top: 115px;
 
   .post-main {
-    padding: 52px 0px;
+    // padding: 52px 0px;
     margin: 0 auto;
     max-width: 1080px;
 
@@ -50,7 +48,6 @@
         .post-main_switch {
           margin-bottom: 12px;
 
-          h4 {}
         }
       }
     }
@@ -69,28 +66,6 @@
           h4 {}
         }
       }
-    }
-
-    @media screen and (max-width: 1080px) {
-      // padding-inline: 10px;
-
-      padding-inline: 24px;
-
-      // @include breakpoint(tablet) {
-      //   padding: 0 0px;
-      // }
-
-      // @include breakpoint(mobile) {
-      //   padding: 0 20px;
-      // }
-
-      // @include breakpoint(largeTablet) {
-      //   padding: 0 40px;
-      // }
-
-      // @include breakpoint(destop) {
-      //   padding: 0 20px;
-      // }
     }
 
     h1 {
