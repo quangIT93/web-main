@@ -7,6 +7,7 @@ import { validatePostImages } from 'validations';
 import imageCompression from 'browser-image-compression';
 import { useDropzone } from 'react-dropzone';
 import { CameraComunityIcon, DeleteImageComunityIcon } from '#components/Icons';
+import apiCompany from 'api/apiCompany';
 
 interface IEditImageCompany {
   dataCompany: any;
@@ -25,12 +26,13 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
   const [selectedImages, setSelectedImages] = React.useState<
     {
       id: any;
-      image: any;
+      imagePath: any;
     }[]
   >([]);
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
   const [isDragActive, setIsDragActive] = React.useState(false);
   const [deleteImages, setDeleteImages] = React.useState<any[]>([]);
+  const [existedIamgeId, setExistedIamgeId] = React.useState<any[]>([]);
 
   const options = {
     maxSizeMB: 1,
@@ -39,8 +41,13 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
 
   useEffect(() => {
     setSelectedImages(dataCompany.images);
+    //have to set array of existed iamge ids .
+    // Because when adding new images,
+    // the images array of dataCompany have only file image to upload server
+    // it doesn't have containing existing images.
+    setExistedIamgeId(dataCompany.images.map((image: any) => image.id));
   }, []);
-  console.log(dataCompany);
+  // console.log(dataCompany);
 
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -67,6 +74,8 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     // console.log(' imagesToCheck', imagesToCheck)
     // console.log(' imagesToCheck.length', imagesToCheck.length)
     // console.log('imagesToCheck', imagesToCheck);
+
+    // console.log(dataCompany.images);
 
     if (imagesToCheck.length > 0) {
       const validateImagesReply = validatePostImages(imagesToCheck);
@@ -130,7 +139,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               ...selectedImages,
               ...newImages.map((item: any, index: number) => ({
                 id: index,
-                image: item,
+                imagePath: item,
               })),
             ];
             if (newImageSelected.length > 5) {
@@ -161,6 +170,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     },
     onDrop: async (acceptedFiles: File[]) => {
       setIsDragActive(false);
+      // console.log(dataCompany.images);
 
       const fileUploaded = acceptedFiles.map((file: any) =>
         Object.assign(file, {
@@ -216,7 +226,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
               ...selectedImages,
               ...newImages.map((item: any, index: number) => ({
                 id: index,
-                image: item,
+                imagePath: item,
               })),
             ];
             if (newImageSelected.length > 5) {
@@ -234,7 +244,10 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
     },
   });
 
-  const handleDeleteImage = (index: number, deleteId: any) => {
+  const handleDeleteImage = async (index: number, deleteId: any) => {
+    console.log('index', index);
+    console.log('deleteId', deleteId);
+
     setSelectedImages((prevImages) => {
       const updatedImages = [...prevImages];
       updatedImages.splice(index, 1);
@@ -245,20 +258,39 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       updatedFiles.splice(index, 1);
       return updatedFiles;
     });
-    setDataCompany((preValue: any) => ({
-      ...preValue,
-      images: preValue.images.splice(index, 1),
-    }));
+    setDataCompany((preValue: any) => {
+      const updatedImages = [...preValue.images];
+      updatedImages.splice(index, 1);
+      return {
+        ...preValue,
+        images: updatedImages,
+      };
+    });
     setDeleteImages((prevImages) => {
       const deletedImages = [...prevImages];
       deletedImages.push(deleteId);
       return deletedImages;
     });
-    if (deleteId && !dataCompany.deletedImages.includes(deleteId)) {
-      setDataCompany((preValue: any) => ({
-        ...preValue,
-        deletedImages: [...preValue.deletedImages, deleteId],
-      }));
+    if (dataCompany.deletedImages) {
+      if (deleteId && !dataCompany.deletedImages.includes(deleteId)) {
+        setDataCompany((preValue: any) => ({
+          ...preValue,
+          deletedImages: [...preValue.deletedImages, deleteId],
+        }));
+      }
+    }
+
+    //delete existed images
+    if (deleteId && existedIamgeId.includes(deleteId)) {
+      const formDataImages = new FormData();
+      formDataImages.append('imagesId', deleteId);
+      // for (const pair of formDataImages.entries()) {
+      //   console.log(`${pair[0]}, ${pair[1]}`);
+      // }
+      const resultImages = await apiCompany.updateCampanyImages(
+        dataCompany.id,
+        formDataImages,
+      );
     }
   };
 
@@ -272,8 +304,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
       <div className="edit-image-company-content">
         <h3>
           <span>
-            {languageRedux === 1 ? 'Hình ảnh công ty' : "Company's image"}{' '}
-            <span style={{ color: 'red' }}>*</span>
+            {languageRedux === 1 ? 'Hình ảnh công ty' : "Company's image"}
           </span>
           <p
             style={{
@@ -344,7 +375,7 @@ const EditImageCompany: React.FC<IEditImageCompany> = (props) => {
                 <div className="item-image" key={index}>
                   <img
                     key={index}
-                    src={item?.image}
+                    src={item?.imagePath}
                     alt={language?.err_none_img}
                   />
                   <div

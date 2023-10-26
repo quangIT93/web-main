@@ -92,6 +92,11 @@ export interface FormCompanyValues {
   logo: string;
 }
 
+export interface FormCompanyImages {
+  imagesId: [] | null;
+  images: any | null;
+}
+
 interface ICompany {
   display: string;
   is_profile: boolean;
@@ -127,7 +132,7 @@ const Company: React.FC<ICompany> = (props) => {
     description: '',
     logoPath: '',
     images: [],
-    deleteImages: [],
+    deletedImages: [],
   });
 
   const [unsavedChanges, setUnsavedChanges] = useState(false);
@@ -361,20 +366,28 @@ const Company: React.FC<ICompany> = (props) => {
       console.error('error', error);
     }
   };
-  const handleUpdateCompany = async (formData: any) => {
+  const handleUpdateCompany = async (formData: any, formDataImages: any) => {
     // valid value form data
     const { message, checkForm } = validValue();
     try {
       if (checkForm) {
         if (Array.from(formData.values()).some((value) => value !== '')) {
           const result = await apiCompany.updateCampany(companyId, formData);
-          if (result) {
+
+          const resultImages = await apiCompany.updateCampanyImages(companyId, formDataImages);
+
+          if (result || resultImages) {
             setOpenModalEditCompanySuccess(true);
             messageApi.open({
               type: 'success',
               content: language?.company_page?.update_success,
             });
             // console.log("update company result", result);
+          } else {
+            messageApi.open({
+              type: 'error',
+              content: 'Lỗi update images',
+            });
           }
         }
       } else {
@@ -413,8 +426,20 @@ const Company: React.FC<ICompany> = (props) => {
     );
     formData.append('categoryId', String(dataCompany?.companyCategory?.id));
     formData.append('logo', dataCompany?.logoPath);
-    formData.append('images', dataCompany?.images);
+    // formData.append('images', dataCompany?.images);
+    dataCompany?.images.forEach((image: any) => {
+      formData.append('images', image);
+    });
 
+    const formDataImages = new FormData();
+    // if (dataCompany?.deletedImages && dataCompany?.deletedImages.length !== 0) {
+    //   dataCompany?.deletedImages.forEach((id: any) => {
+    //     formDataImages.append('imagesId', id);
+    //   });
+    // }
+    dataCompany?.images.forEach((image: any) => {
+      formDataImages.append('images', image);
+    });
     // setDataCompany((preValue: any) => ({
     //     ...preValue,
     //     images: [],
@@ -422,7 +447,7 @@ const Company: React.FC<ICompany> = (props) => {
     // }));
     if (formData) {
       haveCompany
-        ? handleUpdateCompany(formData)
+        ? handleUpdateCompany(formData, formDataImages)
         : handleCreateCompany(formData);
     }
   };

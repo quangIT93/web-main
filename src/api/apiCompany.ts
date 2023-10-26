@@ -1,6 +1,7 @@
 import axiosClient from './axiosClient'
 // api/productApi.js
 import { FormCompanyValues } from 'pages/Company'
+import { FormCompanyImages } from 'pages/Company'
 
 
 const apiCompany = {
@@ -23,6 +24,20 @@ const apiCompany = {
         return axiosClient.patch(
             URL,
             updateCompany,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    ' Content-Type': 'multipart/form-data',
+                },
+            }
+        )
+    },
+    updateCampanyImages: (companyId: number, updateCompanyImages: any) => {
+        const URL = `/v3/companies/${companyId}/images`
+
+        return axiosClient.patch(
+            URL,
+            updateCompanyImages,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
