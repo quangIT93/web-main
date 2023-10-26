@@ -175,7 +175,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
               fontSize: '16px',
             }}
           >
-            Loại hình công việc
+            {languageRedux === 1 ? 'Loại hình công việc' : 'Job type'}
           </div>
           <CustomOption
             jobType={TYPE_JOB}

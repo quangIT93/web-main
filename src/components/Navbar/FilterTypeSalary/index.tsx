@@ -158,7 +158,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
               fontSize: '16px',
             }}
           >
-            Trả lương theo
+            {languageRedux === 1 ? 'Trả lương theo' : 'Payment by'}
           </div>
           <CustomOption
             salaryType={SALARY_TYPE}
