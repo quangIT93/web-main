@@ -2,7 +2,9 @@
 
 .profile-cv-container {
     // margin-top: 70px;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .profile-cv-content {
         // padding: 24px 0 30px;
         // margin: 12px auto;
@@ -275,7 +277,7 @@
             height: 209px;
             // margin-top: 24px;
 
-            @media screen and (max-width: 425px) {
+            @media screen and (max-width: 720px) {
                 height: auto;
             }
 
@@ -287,7 +289,7 @@
                 align-items: center;
                 justify-content: space-between;
 
-                @media screen and (max-width: 425px) {
+                @media screen and (max-width: 720px) {
                     flex-direction: column;
                 }
 
@@ -316,7 +318,7 @@
                         align-items: flex-start;
                         justify-content: space-between;
 
-                        @media screen and (max-width: 425px) {
+                        @media screen and (max-width: 720px) {
                             flex-direction: column;
                         }
 

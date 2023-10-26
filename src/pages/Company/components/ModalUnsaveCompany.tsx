@@ -42,6 +42,7 @@ const ModalUnsaveCompany: React.FC<IModalUnsaveCompany> = (props) => {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className="modal-unsave"
     >
       <Box sx={style}>
         <Typography
