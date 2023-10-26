@@ -148,6 +148,7 @@ const SearchCate: React.FC<ISearchCate> = (props) => {
         <CateIcon />
       </div>
       <Cascader
+        getPopupContainer={(triggerNode) => triggerNode.parentElement}
         style={{ width: '100%' }}
         onChange={onChange as any}
         multiple

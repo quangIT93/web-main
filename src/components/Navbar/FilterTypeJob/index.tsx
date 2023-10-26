@@ -145,6 +145,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         <PaperFilterIcon width={20} height={20} />
       </div>
       <Select
+        getPopupContainer={(triggerNode) => triggerNode.parentElement}
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"

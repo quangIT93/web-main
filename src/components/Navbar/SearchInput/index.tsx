@@ -150,6 +150,7 @@ const SearchInput: React.FC<SearchProps> = ({
     //   // , setFet
     // );
     // console.log('search', newValue);
+
     setValue(newValue);
     // console.log('coloe', newValue);
   };
@@ -402,10 +403,10 @@ const SearchInput: React.FC<SearchProps> = ({
       </div>
     </div>
   ));
-
   return (
     <div className="search-input-wrapper">
       <Select
+        getPopupContainer={(triggerNode) => triggerNode.parentElement}
         labelInValue
         showSearch
         autoClearSearchValue

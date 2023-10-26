@@ -198,6 +198,7 @@ const FilterLocationNav: React.FC<DistrictProps> = ({
             <AddressFilterIcon width={20} height={20} />
           </div>
           <Cascader
+            getPopupContainer={(triggerNode) => triggerNode.parentElement}
             multiple
             maxTagCount="responsive"
             size="large"

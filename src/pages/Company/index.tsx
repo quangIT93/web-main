@@ -431,17 +431,18 @@ const Company: React.FC<ICompany> = (props) => {
   //   const handleOutsideClick = (e: any) => {
   //     // Kiểm tra xem người dùng đã click bên ngoài container hay chưa
   //     const container = document.querySelector('.company-container');
-  //     const buttonCancle = document.querySelector('.cancleChangeRoute');
+  //     const logo = document.querySelector('.nav .logo');
   //     console.log(
   //       ' !container?.contains(e.target)',
   //       !container?.contains(e.target),
   //     );
   //     console.log('ShowModalUnsave', ShowModalUnsave);
   //     console.log('unsavedChanges', unsavedChanges);
-  //     console.log('buttonCancle', buttonCancle);
+  //     console.log('logo', logo);
 
   //     if (unsavedChanges && !container?.contains(e.target)) {
   //       setShowModalUnsave(true);
+  //       setUnsavedChanges(false);
   //       console.log('hien looooooooooooo');
   //       e.preventDefault();
   //     }

@@ -125,6 +125,7 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
       </div>
       <Select
         // defaultValue="lucy"
+        getPopupContainer={(triggerNode) => triggerNode.parentElement}
         style={{ width: 120 }}
         onChange={handleChange}
         optionLabelProp="label"

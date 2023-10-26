@@ -154,6 +154,7 @@ const SeachLocation: React.FC<ISearchLocation> = (props) => {
         <LocationIcon />
       </div>
       <Cascader
+        getPopupContainer={(triggerNode) => triggerNode.parentElement}
         allowClear
         style={{ width: '100%' }}
         onChange={onChange as any}

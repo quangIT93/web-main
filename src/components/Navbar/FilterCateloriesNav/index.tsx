@@ -161,6 +161,7 @@ const FilterCateloriesNav: React.FC<DistrictProps> = ({
           <BagFilterIcon width={20} height={20} />
         </div>
         <Cascader
+          getPopupContainer={(triggerNode) => triggerNode.parentElement}
           dropdownRender={DropdownRender}
           suffixIcon={<ArrowFilterIcon width={14} height={10} />}
           options={
