@@ -390,6 +390,12 @@ const EditAddressCompany: React.FC<IEditPostAddress> = memo((props) => {
                   ? 'Vui lòng nhập địa chỉ'
                   : 'Please enter address'}
               </span>
+            ) : dataCompany && dataCompany?.address.length < 10 ? (
+              <span className="helper-text">
+                {languageRedux === 1
+                  ? 'Độ dài địa chỉ phải nhiều hơn 10 ký tự'
+                  : 'Address length must be more than 10 characters'}
+              </span>
             ) : dataCompany && dataCompany?.address.length > 255 ? (
               <span className="helper-text">
                 {languageRedux === 1

@@ -6,11 +6,11 @@ import HomeValueContextProvider from 'context/HomeValueContextProvider';
 const route: RouteProps = {
   path: '/search-results',
   component: (
-    <MainLayout>
-      <HomeValueContextProvider>
+    <HomeValueContextProvider>
+      <MainLayout>
         <SearchResult />
-      </HomeValueContextProvider>
-    </MainLayout>
+      </MainLayout>
+    </HomeValueContextProvider>
   ),
 };
 

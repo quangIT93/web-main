@@ -88,7 +88,6 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
         }}
       >
         <div className="detail-history-top">
-          <div>2</div>
           <ul className="div-card-post-left">
             <ImageListItem
               key={props.item?.image}
