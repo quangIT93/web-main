@@ -1,8 +1,8 @@
-// import React, { lazy } from 'react';
+import React, { lazy } from 'react';
 import MainLayout from 'layouts/MainLayout';
-import Home from '.';
+// import Home from '.';
 import RouteProps from '../routes';
-
+const Home = lazy(() => import('.'));
 // import HomeValueContextProvider from 'context/HomeValueContextProvider';
 
 const route: RouteProps = {
