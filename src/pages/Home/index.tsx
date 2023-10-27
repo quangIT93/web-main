@@ -232,26 +232,23 @@ const Home: React.FC = () => {
       {/* <Carousel /> */}
       <Helmet>
         <title>'HiJob - Tìm việc làm, tuyển dụng</title>
-        <meta
+        {/* <meta
           property="og:url"
           content="https://hijob.site/post-detail?post-id=125383"
-        ></meta>
-        <meta property="og:type" content="article"></meta>
-        <meta
-          property="og:title"
-          content="'HiJob - Tìm việc làm, tuyển dụng"
-        ></meta>
+        ></meta> */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="'HiJob - Tìm việc làm, tuyển dụng" />
         <meta
           property="og:description"
           content="Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được
         cập nhật mỗi ngày - Tìm việc làm nhanh chóng trên toàn quốc, tiện lợi –
         Đa dạng ngành nghề, mức lương hấp dẫn"
-        ></meta>
+        />
 
         <meta
           property="og:image"
-          content="https://fullstack.edu.vn/courses/lessons-for-newbie"
-        ></meta>
+          content="https://files.fullstack.edu.vn/f8-prod/courses/7.png"
+        />
       </Helmet>
       <h1 style={{ visibility: 'hidden', display: 'none' }}>
         Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được
