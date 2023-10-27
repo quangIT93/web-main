@@ -232,11 +232,8 @@ const Home: React.FC = () => {
       {/* <Carousel /> */}
       <Helmet>
         <title>'HiJob - Tìm việc làm, tuyển dụng</title>
-        {/* <meta
-          property="og:url"
-          content="https://hijob.site/post-detail?post-id=125383"
-        ></meta> */}
         <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://hijob.site/" />
         <meta property="og:title" content="'HiJob - Tìm việc làm, tuyển dụng" />
         <meta
           property="og:description"
