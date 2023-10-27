@@ -1175,7 +1175,7 @@ const Detail = () => {
             <title>Tuyển dụng</title>
             <meta
               property="og:url"
-              content="https://hijob.site/post-detail?post-id=125435"
+              content="https://hijob.site/post-detail?post-id=125383"
             ></meta>
             <meta property="og:type" content="article"></meta>
             <meta property="og:title" content="Tuyển nhân viên"></meta>
@@ -1183,9 +1183,10 @@ const Detail = () => {
               property="og:description"
               content="Tuyển nhân viên Hijob"
             ></meta>
+
             <meta
               property="og:image"
-              content="https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/125509/1698391152094-9f7f7a91-2e91-4866-94a3-c7c8fdf5745b.png?w=164&h=164&fit=crop&auto=format"
+              content="https://fullstack.edu.vn/courses/lessons-for-newbie"
             ></meta>
           </Helmet>
           {/* <NavBar />
