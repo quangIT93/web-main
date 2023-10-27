@@ -105,6 +105,8 @@ const Comunity = () => {
   };
 
   const handleGetDetailCommunityById = async () => {
+    console.log('get lai data');
+
     try {
       if (POST_COMMUNITY_ID) {
         const result = await communityApi.getCommunityDetailId(
@@ -138,15 +140,7 @@ const Comunity = () => {
 
   React.useEffect(() => {
     handleGetDetailCommunityById();
-  }, [
-    POST_COMMUNITY_ID,
-    like,
-    bookmark,
-    cmt,
-    languageRedux,
-    language,
-    deleteCmt,
-  ]);
+  }, [POST_COMMUNITY_ID, like, bookmark, cmt, languageRedux, deleteCmt]);
 
   const srcset = (image: string, size: number, rows = 1, cols = 1) => {
     console.log('image', image);
