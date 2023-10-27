@@ -48,6 +48,7 @@ import ModalUpdateInfo from '#components/Home/ModalUpdateInfo';
 import { setIsNew } from 'store/reducer/isNewReducer';
 
 import Advertise from '#components/Home/Advertise';
+import { Helmet } from 'react-helmet';
 
 const Home: React.FC = () => {
   const analytics: any = getAnalytics();
@@ -229,6 +230,29 @@ const Home: React.FC = () => {
         crossOrigin="anonymous"
       ></script> */}
       {/* <Carousel /> */}
+      <Helmet>
+        <title>'HiJob - Tìm việc làm, tuyển dụng</title>
+        <meta
+          property="og:url"
+          content="https://hijob.site/post-detail?post-id=125383"
+        ></meta>
+        <meta property="og:type" content="article"></meta>
+        <meta
+          property="og:title"
+          content="'HiJob - Tìm việc làm, tuyển dụng"
+        ></meta>
+        <meta
+          property="og:description"
+          content="Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được
+        cập nhật mỗi ngày - Tìm việc làm nhanh chóng trên toàn quốc, tiện lợi –
+        Đa dạng ngành nghề, mức lương hấp dẫn"
+        ></meta>
+
+        <meta
+          property="og:image"
+          content="https://fullstack.edu.vn/courses/lessons-for-newbie"
+        ></meta>
+      </Helmet>
       <h1 style={{ visibility: 'hidden', display: 'none' }}>
         Trang tìm việc làm chất lượng nhất, 10,000 công việc tại Việt Nam được
         cập nhật mỗi ngày - Tìm việc làm nhanh chóng trên toàn quốc, tiện lợi –
