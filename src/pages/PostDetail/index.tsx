@@ -1172,22 +1172,19 @@ const Detail = () => {
       {automatic && (
         <div className="detail">
           <Helmet>
-            <title>Tuyển dụng</title>
-            <meta
+            <title>Tuyển nhân viên</title>
+            {/* <meta
               property="og:url"
               content="https://hijob.site/post-detail?post-id=125383"
-            ></meta>
-            <meta property="og:type" content="article"></meta>
-            <meta property="og:title" content="Tuyển nhân viên"></meta>
-            <meta
-              property="og:description"
-              content="Tuyển nhân viên Hijob"
-            ></meta>
+            ></meta> */}
+            <meta property="og:type" content="article" />
+            <meta property="og:title" content="Tuyển nhân viên" />
+            <meta property="og:description" content="Tuyển nhân viên Hijob" />
 
             <meta
               property="og:image"
-              content="https://fullstack.edu.vn/courses/lessons-for-newbie"
-            ></meta>
+              content="https://files.fullstack.edu.vn/f8-prod/courses/7.png"
+            />
           </Helmet>
           {/* <NavBar />
           <CategoryDropdown /> */}
