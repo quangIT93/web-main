@@ -658,7 +658,7 @@ const Detail = () => {
 
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         // post?.data.shareLink,
-        'https://hijob.site',
+        'https://hijob.site/',
       )}&quote=${encodeURIComponent(titleShare)}}&display=iframe`;
       window.open(url);
     }
@@ -1174,13 +1174,13 @@ const Detail = () => {
           <Helmet>
             <title>Tuyển nhân viên</title>
             <meta property="og:type" content="article" />
-            <meta property="og:url" content="https://hijob.site/" />
+            <meta property="og:url" content="https://hijob.site/post-detail/" />
             <meta property="og:title" content="Tuyển nhân viên" />
-            <meta property="og:description" content="Tuyển nhân viên Hijob" />
+            <meta property="og:description" content="Tuyển nhân viên" />
 
             <meta
               property="og:image"
-              content="https://files.fullstack.edu.vn/f8-prod/courses/7.png"
+              content="https://files.fullstack.edu.vn/f8-prod/courses/1.png"
             />
           </Helmet>
           {/* <NavBar />
