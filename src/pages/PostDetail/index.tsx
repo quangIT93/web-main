@@ -658,7 +658,7 @@ const Detail = () => {
 
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         // post?.data.shareLink,
-        'https://localhost:3000/post-detail?post-id=84471',
+        'https://hijob.site/post-detail?post-id=125383',
       )}&quote=${encodeURIComponent(titleShare)}}&display=iframe`;
       window.open(url);
     }
