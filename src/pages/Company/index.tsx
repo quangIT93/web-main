@@ -374,7 +374,10 @@ const Company: React.FC<ICompany> = (props) => {
         if (Array.from(formData.values()).some((value) => value !== '')) {
           const result = await apiCompany.updateCampany(companyId, formData);
 
-          const resultImages = await apiCompany.updateCampanyImages(companyId, formDataImages);
+          const resultImages = await apiCompany.updateCampanyImages(
+            companyId,
+            formDataImages,
+          );
 
           if (result || resultImages) {
             setOpenModalEditCompanySuccess(true);
@@ -452,34 +455,46 @@ const Company: React.FC<ICompany> = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   const handleOutsideClick = (e: any) => {
-  //     // Kiểm tra xem người dùng đã click bên ngoài container hay chưa
-  //     const container = document.querySelector('.company-container');
-  //     const logo = document.querySelector('.nav .logo');
-  //     console.log(
-  //       ' !container?.contains(e.target)',
-  //       !container?.contains(e.target),
-  //     );
-  //     console.log('ShowModalUnsave', ShowModalUnsave);
-  //     console.log('unsavedChanges', unsavedChanges);
-  //     console.log('logo', logo);
+  useEffect(() => {
+    const handleOutsideClick = (e: any) => {
+      // Kiểm tra xem người dùng đã click bên ngoài container hay chưa
+      const container = document.querySelector('.company-container');
+      const buttonPost = document.querySelector('.category-dropdown-btn__post');
 
-  //     if (unsavedChanges && !container?.contains(e.target)) {
-  //       setShowModalUnsave(true);
-  //       setUnsavedChanges(false);
-  //       console.log('hien looooooooooooo');
-  //       e.preventDefault();
-  //     }
-  //   };
+      const logo = document.querySelector('.nav .logo');
+      console.log(
+        ' !container?.contains(e.target)',
+        !container?.contains(e.target),
+      );
+      console.log('ShowModalUnsave', ShowModalUnsave);
+      console.log('unsavedChanges', unsavedChanges);
+      console.log('logo', !logo?.contains(e.target));
+      console.log('showDropdown', !buttonPost?.contains(e.target));
 
-  //   // Lắng nghe sự kiện click trên toàn bộ trang
-  //   window.addEventListener('click', handleOutsideClick);
+      if (
+        (unsavedChanges &&
+          !container?.contains(e.target) &&
+          logo?.contains(e.target) &&
+          buttonPost?.contains(e.target)) ||
+        (unsavedChanges &&
+          !container?.contains(e.target) &&
+          logo?.contains(e.target) &&
+          !buttonPost?.contains(e.target))
+        // buttonPost?.contains(e.target) &&
+      ) {
+        e.preventDefault();
+        setShowModalUnsave(true);
+        setUnsavedChanges(false);
+      }
+    };
 
-  //   return () => {
-  //     window.removeEventListener('click', handleOutsideClick);
-  //   };
-  // }, [unsavedChanges]);
+    // Lắng nghe sự kiện click trên toàn bộ trang
+    window.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, [unsavedChanges]);
 
   return (
     <div
@@ -611,6 +626,7 @@ const Company: React.FC<ICompany> = (props) => {
         setShowModalUnsave={setShowModalUnsave}
         ShowModalUnsave={ShowModalUnsave}
         languageRedux={languageRedux}
+        handleSubmit={handleSubmit}
       />
       <div style={{ display: is_profile ? 'none' : 'block' }}>
         {/* <RollTop /> */}

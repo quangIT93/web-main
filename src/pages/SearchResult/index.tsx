@@ -614,9 +614,6 @@ const NewJobs: React.FC = () => {
     </div>
   );
 
-  console.log('localOneItem', locationOneItem);
-  console.log('category', cateloryOneItem);
-
   const fetchDataProfileUser = async () => {
     try {
       await dispatch(getProfile() as any);
@@ -756,10 +753,10 @@ const NewJobs: React.FC = () => {
           SALARY_MAX,
           null,
           null,
-          JOB_TYPE,
+          JOB_TYPE[0] !== 6 ? JOB_TYPE : [],
           LIST_CATEGORIES_ID,
           LIST_DIS_ID,
-          SALARY_TYPE,
+          SALARY_TYPE !== -1 ? SALARY_TYPE : null,
           languageRedux === 1 ? 'vi' : 'en',
         );
         // const result = await searchApi.getSearchByQueryV2(
@@ -886,10 +883,10 @@ const NewJobs: React.FC = () => {
       SALARY_MAX,
       null,
       null,
-      JOB_TYPE,
+      JOB_TYPE[0] !== 6 ? JOB_TYPE : [],
       LIST_CATEGORIES_ID,
       LIST_DIS_ID,
-      SALARY_TYPE,
+      SALARY_TYPE !== -1 ? SALARY_TYPE : null,
       languageRedux === 1 ? 'vi' : 'en',
     );
 

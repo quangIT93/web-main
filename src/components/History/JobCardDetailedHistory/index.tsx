@@ -94,8 +94,8 @@ const JobCardDetailPostedHistory: React.FC<IitemNewJob> = (props) => {
               sx={{ flex: 1, display: 'flex' }}
             >
               <img
-                src={`${props.item?.image}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${props.item?.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                src={`${props.item?.postCompanyInformation?.logoPath}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${props.item?.postCompanyInformation?.logoPath}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={props.item?.title}
                 //loading="lazy"
                 style={{
