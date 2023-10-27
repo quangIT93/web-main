@@ -101,6 +101,7 @@ import { postDetail } from 'validations/lang/vi/postDetail';
 import { postDetailEn } from 'validations/lang/en/postDetail';
 
 import { setCookie } from 'cookies';
+import { Helmet } from 'react-helmet';
 // import { Language } from '#components/Navbar/Css';
 
 // const itemsShare = [
@@ -656,7 +657,8 @@ const Detail = () => {
       const titleShare = 'hijob chia sẻ công việc cho bạn';
 
       const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        post?.data.shareLink,
+        // post?.data.shareLink,
+        'https://localhost:3000/post-detail?post-id=84471',
       )}&quote=${encodeURIComponent(titleShare)}}&display=iframe`;
       window.open(url);
     }
@@ -1169,6 +1171,23 @@ const Detail = () => {
     <>
       {automatic && (
         <div className="detail">
+          <Helmet>
+            <title>Tuyển dụng</title>
+            <meta
+              property="og:url"
+              content="https://hijob.site/post-detail?post-id=125435"
+            ></meta>
+            <meta property="og:type" content="article"></meta>
+            <meta property="og:title" content="Tuyển nhân viên"></meta>
+            <meta
+              property="og:description"
+              content="Tuyển nhân viên Hijob"
+            ></meta>
+            <meta
+              property="og:image"
+              content="https://hi-job-app-upload.s3-ap-southeast-1.amazonaws.com/images/posts-images/125509/1698391152094-9f7f7a91-2e91-4866-94a3-c7c8fdf5745b.png?w=164&h=164&fit=crop&auto=format"
+            ></meta>
+          </Helmet>
           {/* <NavBar />
           <CategoryDropdown /> */}
           {/* <div className="div-include-breadcrumb">

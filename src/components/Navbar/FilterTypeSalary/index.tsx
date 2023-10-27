@@ -137,13 +137,11 @@ const FilterTypeSalary: React.FC<SalaryFilter> = ({
               : 'Payment by'
             : valueRender
             ? valueRender.value
-            : languageRedux === 1
-            ? 'Tất cả'
-            : 'All'
+            : undefined
         }
         className="inputTypeSalary input-filter_nav"
         size="large"
-        placeholder={language?.job_type}
+        placeholder={languageRedux === 1 ? 'Trả lương theo' : 'Payment by'}
         suffixIcon={<ArrowFilterIcon width={14} height={10} />}
       >
         <Option className="type-salary" value="1" label={language?.job_type}>

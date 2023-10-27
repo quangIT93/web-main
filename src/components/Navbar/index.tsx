@@ -972,14 +972,14 @@ const Navbar: React.FC = () => {
     setCookie('userFiltered', JSON.stringify(filter), 365);
 
     let typeJobReset = {
-      id: 5,
-      name: 'Tất cả',
+      id: 6,
+      name: languageRedux === 1 ? 'Loại công việc' : 'Job type',
     };
     setCookie('userTypejobFiltered', JSON.stringify(typeJobReset), 365);
 
     let typeSalaryReset = {
-      id: 0,
-      value: 'Tất cả',
+      id: -1,
+      value: languageRedux === 1 ? 'Trả lương theo' : 'Payment by',
     };
     setCookie('userTypeSalaryFiltered', JSON.stringify(typeSalaryReset), 365);
   };

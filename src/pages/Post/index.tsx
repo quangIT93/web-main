@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 
 import { Switch } from 'antd';
-
+import { Helmet } from 'react-helmet';
 // @ts-ignore
 
 //@ts-ignore
@@ -476,6 +476,7 @@ const Post: React.FC = () => {
       <div className="post">
         {/* <Navbar />
         <CategoryDropdown /> */}
+
         {contextHolder}
         <div className="post-main">
           <div
@@ -487,8 +488,8 @@ const Post: React.FC = () => {
               <h4>{language?.post_page?.auto_fill}</h4>
               <Switch
                 checked={openModalFillDataPost}
-                checkedChildren=""
-                unCheckedChildren=""
+                // checkedHelmetren=""
+                // unCheckedChildren=""
                 onChange={() => setOpenFillDataPost(!openModalFillDataPost)}
               />
             </div>

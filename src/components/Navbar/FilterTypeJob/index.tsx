@@ -31,13 +31,13 @@ const CustomOption = ({
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     const valueRender = data.find((item: any) => item.id === value);
 
-    // console.log('valueRender Loai cong viec', valueRender);
     // console.log('valueRender Loai cong viec value', value);
     setValueRender(valueRender);
 
     setValue(value);
     setCookie('userTypejobFiltered', JSON.stringify(valueRender), 365);
   };
+
   const languageRedux = useSelector(
     (state: RootState) => state.changeLaguage.language,
   );
@@ -47,7 +47,7 @@ const CustomOption = ({
       style={{ width: '100%' }}
       name="radiogroup"
       onChange={onChange}
-      value={jobType ? jobType : 5}
+      value={jobType ? jobType : undefined}
       // defaultValue={jobType ? jobType : 5}
     >
       <Space direction="vertical" style={{ width: '100%' }}>
@@ -153,7 +153,7 @@ const FilterTypeJob: React.FC<TypeJob> = ({
         value={
           reset
             ? languageRedux === 1
-              ? 'Loại hình công việc'
+              ? 'Loại công việc'
               : 'Job type'
             : valueRender
             ? valueRender.name

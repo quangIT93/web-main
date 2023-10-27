@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent } from 'react';
 // import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box';
 
@@ -28,10 +28,12 @@ interface IModalUnsaveCompany {
   ShowModalUnsave: boolean;
   setShowModalUnsave: React.Dispatch<React.SetStateAction<boolean>>;
   languageRedux: any;
+  handleSubmit: (e: any) => void;
 }
 
 const ModalUnsaveCompany: React.FC<IModalUnsaveCompany> = (props) => {
-  const { ShowModalUnsave, setShowModalUnsave, languageRedux } = props;
+  const { ShowModalUnsave, setShowModalUnsave, languageRedux, handleSubmit } =
+    props;
 
   const handleClose = () => {
     setShowModalUnsave(false);
@@ -51,7 +53,9 @@ const ModalUnsaveCompany: React.FC<IModalUnsaveCompany> = (props) => {
           component="h2"
           sx={{ textAlign: 'center', color: '#0d99ff' }}
         >
-          aaaaaaaaaaaaaaaaaaaaaaaaaaa
+          {languageRedux === 1
+            ? 'Bạn chưa lưu thông tin công ty'
+            : 'You have not saved your company information'}
         </Typography>
         <Typography
           id="modal-modal-title"
@@ -59,7 +63,9 @@ const ModalUnsaveCompany: React.FC<IModalUnsaveCompany> = (props) => {
           component="h4"
           sx={{ margin: '24px 0', fontSize: '15px', textAlign: 'center' }}
         >
-          aaaaaaaaaaaaaaaaaaa
+          {languageRedux === 1
+            ? 'Bạn có muốn lưu thông tin công ty trước khi chuyển trang không?'
+            : 'Do you want to save your company information before switching pages?'}
         </Typography>
 
         <Box
@@ -84,9 +90,9 @@ const ModalUnsaveCompany: React.FC<IModalUnsaveCompany> = (props) => {
           </Button>
           <Button
             type="primary"
-            onClick={() => {
-              setShowModalUnsave(false);
-              window.open('/profile', '_self');
+            onClick={(e) => {
+              handleClose();
+              handleSubmit(e as any);
             }}
             style={{
               width: '300px',
