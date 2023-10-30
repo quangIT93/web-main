@@ -476,7 +476,6 @@ const Post: React.FC = () => {
       <div className="post">
         {/* <Navbar />
         <CategoryDropdown /> */}
-
         {contextHolder}
         <div className="post-main">
           <div
