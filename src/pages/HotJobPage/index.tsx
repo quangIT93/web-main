@@ -271,10 +271,12 @@ const HotJobpage: React.FC = () => {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
+        setHasMore(false);
       } else if (hotjob && hotjob.data.length < 20 && hotjobtype === 2) {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
         setIsVisible(true);
+        setHasMore(false);
       } else {
         setHotJob(hotjob.data);
         setHotJobType(hotjobtype);
@@ -428,6 +430,7 @@ const HotJobpage: React.FC = () => {
     // setCookie('filterHotjobProvince', value, 365);
 
     setIdFilterProvinces(event.target.value);
+    setPage('0');
   };
 
   const fetchMoreData = async () => {

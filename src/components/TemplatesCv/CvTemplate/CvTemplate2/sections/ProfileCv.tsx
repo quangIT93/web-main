@@ -17,7 +17,7 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
   const styles = StyleSheet.create({
     title: {
       // fontFamily: 'Lato Bold',
-      fontSize: '13.67pt',
+      fontSize: fontSize - 10,
       fontFamily: 'Montserrat Medium',
       marginLeft: '0.4cm',
       textTransform: 'uppercase',
@@ -36,7 +36,7 @@ const ProfileCv: React.FC<IProfileCv> = (props) => {
       // marginBottom: 10,
     },
     text: {
-      fontSize: '7.81pt',
+      fontSize: fontSize - 15,
       // marginBottom: 10,
     },
     image: {

@@ -17,7 +17,7 @@ const HobbieCv: React.FC<IHobbieCv> = (props) => {
   const styles = StyleSheet.create({
     title: {
       // fontFamily: 'Lato Bold',
-      fontSize: '13.67pt',
+      fontSize: fontSize - 10,
       fontFamily: 'Montserrat Medium',
       marginLeft: '0.4cm',
       textTransform: 'uppercase',
@@ -45,7 +45,7 @@ const HobbieCv: React.FC<IHobbieCv> = (props) => {
       // Cho phép xuống dòng// Ẩn nội dung vượt quá chiều rộng
     },
     text: {
-      fontSize: '7.81pt',
+      fontSize: fontSize - 15,
       // marginBottom: 10,
       wordWrap: 'break-word',
       width: '100%',

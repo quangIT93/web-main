@@ -135,7 +135,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
     },
     pageNumber: {
       position: 'absolute',
-      fontSize: 12,
+      fontSize: fontSize - 12,
       bottom: 10,
       left: 0,
       right: 0,
@@ -144,7 +144,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
     },
     hijob: {
       position: 'absolute',
-      fontSize: 12,
+      fontSize: fontSize - 12,
       bottom: 10,
       // left: 0,
       right: 25,
@@ -197,7 +197,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
 
   const Resume = (props: any) => (
     <Page {...props} style={styles.page}>
-      <Header color={color} profile={profile} />
+      <Header color={color} profile={profile} fontSize={fontSize} />
       <View style={styles.rightDiv} fixed>
         <View style={styles.topLine} fixed></View>
       </View>
@@ -208,19 +208,19 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
                         style={styles.image}
                     /> */}
           <View style={styles.leftColumnContent}>
-            <Profile color={color} profile={profile} />
+            <Profile color={color} profile={profile} fontSize={fontSize} />
             {profile?.profilesLanguages &&
             profile?.profilesLanguages?.length > 0 ? (
-              <Languages color={color} profile={profile} />
+              <Languages color={color} profile={profile} fontSize={fontSize} />
             ) : (
               <></>
             )}
             <View style={styles.borderBot}></View>
-            <Education color={color} profile={profile} />
+            <Education color={color} profile={profile} fontSize={fontSize} />
             <View style={styles.borderBot}></View>
             {profile?.profilesSkills && profile?.profilesSkills?.length > 0 ? (
               <>
-                <Skills color={color} profile={profile} />
+                <Skills color={color} profile={profile} fontSize={fontSize} />
                 <View style={styles.borderBot}></View>
               </>
             ) : (
@@ -228,7 +228,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
             )}
             {profile?.profileAwards && profile?.profileAwards?.length > 0 ? (
               <>
-                <Awards color={color} profile={profile} />
+                <Awards color={color} profile={profile} fontSize={fontSize} />
                 <View style={styles.borderBot}></View>
               </>
             ) : (
@@ -239,12 +239,16 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
         </View>
         <View style={styles.rightColumn}>
           <View style={styles.rightColumnContent}>
-            <Experience color={color} profile={profile} />
+            <Experience color={color} profile={profile} fontSize={fontSize} />
             <View style={styles.borderBot}></View>
             {profile?.profileActivities &&
             profile?.profileActivities?.length > 0 ? (
               <>
-                <Activities color={color} profile={profile} />
+                <Activities
+                  color={color}
+                  profile={profile}
+                  fontSize={fontSize}
+                />
                 <View style={styles.borderBot}></View>
               </>
             ) : (
@@ -252,7 +256,7 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
             )}
             {profile?.profileHobbies ? (
               <>
-                <Hobbies color={color} profile={profile} />
+                <Hobbies color={color} profile={profile} fontSize={fontSize} />
                 <View style={styles.borderBot}></View>
               </>
             ) : (
@@ -261,7 +265,11 @@ const CvTemplate3: React.FC<CvTemplate> = (props) => {
             {profile?.profilesReferences &&
             profile?.profilesReferences?.length > 0 ? (
               <>
-                <References color={color} profile={profile} />
+                <References
+                  color={color}
+                  profile={profile}
+                  fontSize={fontSize}
+                />
                 <View style={styles.borderBot}></View>
               </>
             ) : (

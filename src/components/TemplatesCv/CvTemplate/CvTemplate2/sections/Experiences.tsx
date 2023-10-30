@@ -19,7 +19,7 @@ const Experiences: React.FC<IEducation> = (props) => {
   const styles = StyleSheet.create({
     title: {
       fontFamily: 'Montserrat Medium',
-      fontSize: '13.67pt',
+      fontSize: fontSize - 10,
       letterSpacing: '1px',
       textTransform: 'uppercase',
       marginLeft: '0.4cm',
@@ -35,27 +35,27 @@ const Experiences: React.FC<IEducation> = (props) => {
           : '#D80000',
     },
     textTitleLeft: {
-      fontSize: '7.81pt',
+      fontSize: fontSize - 12,
       marginBottom: '0.37cm',
       fontFamily: 'Montserrat Medium',
       color: '#252525',
       width: '80%',
     },
     textTitleLeftTime: {
-      fontSize: '7.81pt',
+      fontSize: fontSize - 15,
       marginBottom: '0.37cm',
       fontFamily: 'Montserrat Regular',
       color: '#252525',
     },
     textTitleRight: {
-      fontSize: '10pt',
+      fontSize: fontSize - 12,
       marginBottom: '0.18cm',
       fontFamily: 'Montserrat Medium',
       color: '#252525',
       fontWeight: 'bold',
     },
     textRight: {
-      fontSize: '7.81pt',
+      fontSize: fontSize - 15,
       fontFamily: 'Montserrat Regular',
       flexGrow: 1,
       textAlign: 'justify',
@@ -68,7 +68,7 @@ const Experiences: React.FC<IEducation> = (props) => {
     },
     paragraph: {
       // textIndent: 20,
-      fontSize: '7.81pt', // Độ lệch của gạch đầu dòng
+      fontSize: fontSize - 15, // Độ lệch của gạch đầu dòng
       whiteSpace: 'nowrap',
       fontFamily: 'Montserrat Regular',
     },

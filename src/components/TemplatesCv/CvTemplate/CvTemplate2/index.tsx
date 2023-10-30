@@ -68,7 +68,7 @@ const index: React.FC<CvTemplate> = (props) => {
     },
     pageNumber: {
       position: 'absolute',
-      fontSize: 12,
+      fontSize: fontSize - 12,
       bottom: 10,
       left: 0,
       right: 0,
@@ -77,7 +77,7 @@ const index: React.FC<CvTemplate> = (props) => {
     },
     hijob: {
       position: 'absolute',
-      fontSize: 12,
+      fontSize: fontSize - 12,
       bottom: 10,
       // left: 0,
       right: 25,

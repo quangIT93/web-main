@@ -438,9 +438,14 @@ const Detail = () => {
   React.useEffect(() => {
     getPostById();
     //get post prev
-    getAnotherPost(POST_ID - 1, 0);
+    setTimeout(() => {
+      getAnotherPost(POST_ID - 1, 0);
+    }, 1000);
+
+    setTimeout(() => {
+      getAnotherPost(POST_ID + 1, 1);
+    }, 1500);
     //get post next
-    getAnotherPost(POST_ID + 1, 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookmarked, POST_ID, languageRedux]);
 
@@ -656,10 +661,9 @@ const Detail = () => {
 
       const titleShare = 'hijob chia sẻ công việc cho bạn';
 
-      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        // post?.data.shareLink,
-        `https://hijob.site/post-đetail/post-id=${postId}`,
-      )}&quote=${encodeURIComponent(titleShare)}}&display=iframe`;
+      const url = `https://www.facebook.com/sharer/sharer.php?u=https://hijob.site/post-đetail/post-id=${postId}&quote=${encodeURIComponent(
+        titleShare,
+      )}}&display=iframe`;
       window.open(url);
     }
     if (nameShare === 'Zalo') {

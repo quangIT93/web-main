@@ -1,9 +1,10 @@
 // import React, { lazy } from 'react'
-import Post from '.';
 import { ToastContainer } from 'react-toastify';
 
 import RouteProps from '../routes';
 import MainLayout from 'layouts/MainLayout';
+import { lazy } from 'react';
+const Post = lazy(() => import('.'));
 const route: RouteProps = {
   path: '/post',
   component: (
